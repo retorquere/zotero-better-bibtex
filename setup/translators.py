@@ -24,7 +24,7 @@ for option in displayOptions:
     DisplayOptions += f'  {option}?: boolean\n'
 DisplayOptions += "}"
 open('gen/translators.ts', 'w').write(f"""
-/* eslint-disable @typescript-eslint/quotes, quote-props, comma-dangle */
+/* eslint-disable @stylistic/quote-props, @stylistic/quotes, comma-dangle */
 import type {{ Translators }} from '../typings/translators.d.ts'
 
 export const displayOptions = {json.dumps(displayOptions, indent='  ')}
@@ -38,4 +38,4 @@ export const bySlug: Record<string, Translators.Header> = {{}}
 for (const header of headers) {{
   byId[header.translatorID] = byLabel[header.label] = bySlug[header.label.replace(/ /g, '')] = header
 }}
-""")
+""".lstrip())

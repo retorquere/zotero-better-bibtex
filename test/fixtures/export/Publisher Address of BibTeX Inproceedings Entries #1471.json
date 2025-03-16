@@ -10,7 +10,7 @@
       "asciiBibTeX": false,
       "biblatexExtendedNameFormat": true,
       "bibtexURL": "url",
-      "citekeyFormat": "[auth:lower][year]",
+      "citekeyFormat": "auth(n=0,m=1,creator=\"*\",initials=false).fold.lower + year",
       "postscript": "\nif (Translator.BetterBibTeX && item.itemType === 'conferencePaper' && item.extra) {\n  for (const line of item.extra.split('\\n')) {\n    try {\n      const [ , keyword, value ] = line.match(/([^:]+):s*(.*)/)\n      switch (keyword) {\n        case 'Sponsor':\n          reference.add({name: 'organization', value })\n          break\n      }\n    } catch (err) {\n      if (!(err instanceof TypeError)) throw err\n    }\n  }\n}\n",
       "skipFields": "abstract,file,keywords,note"
     }
@@ -45,7 +45,7 @@
       "itemType": "conferencePaper",
       "language": "en-US",
       "libraryCatalog": "ACM Digital Library",
-      "pages": "339\u2013350",
+      "pages": "339–350",
       "publicationTitle": "Proceedings of the 29th ACM international conference on supercomputing",
       "publisher": "Association for Computing Machinery",
       "rights": "Copyright is held by the owner/author(s). Publication rights licensed to ACM.",

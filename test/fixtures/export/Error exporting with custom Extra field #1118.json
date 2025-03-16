@@ -7,7 +7,7 @@
       "exportNotes": true
     },
     "preferences": {
-      "citekeyFormat": "[auth][shorttitle][year]",
+      "citekeyFormat": "auth(n=0,m=1,creator=\"*\",initials=false).fold + shorttitle + year",
       "itemObserverDelay": 100,
       "kuroshiro": true
     }
@@ -37,7 +37,7 @@
       "notes": [
         "<p>MR 46:7018</p>"
       ],
-      "pages": "247\u2013261",
+      "pages": "247–261",
       "publicationTitle": "Pacific Journal of Mathematics",
       "title": "A combinatorial problem; stability and order for models and theories in infinitary languages",
       "volume": "41"

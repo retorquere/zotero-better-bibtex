@@ -14,8 +14,6 @@ better-bibtex_citekey_set_toomany = Si può cambiare una sola chiave alla volta
 better-bibtex_error-report = 
     .title = Better BibTeX log di debug
 better-bibtex_error-report_better-bibtex_cache = Dimensioni cache: { $entries } voci.
-better-bibtex_error-report_better-bibtex_oom = Zotero ha esaurito la memoria! Zotero su Windows ha delle limitazioni nell'uso della memoria che saranno migliorate con Zotero 7. Nel frattempo, disattivare il caching di Better BibTeX e riavviare Zotero.
-    .value = { better-bibtex_error-report_better-bibtex_oom }
 better-bibtex_error-report_better-bibtex_current = La versione in uso di Better BibTeX è { $version }
 better-bibtex_error-report_better-bibtex_latest = L'ultima versione disponibile di Better BibTeX è { $version }
 better-bibtex_error-report_context = 
@@ -45,7 +43,7 @@ better-bibtex_error-report_report-id = ID del log di debug:
 better-bibtex_error-report_restart-with-logging-enabled = 
     .label = Riavvio con log abilitato…
 better-bibtex_error-report_review =
-    The data below is about to submitted to Better BibTeX for debugging. You can preview the data here, or save a copy of the log to get the precise data about to be sent, to see whether there's sensitive information that you do not wish to send. Please think carefully about whether unchecking options below is necessary for your environment. We will generally needs more communication (= time) if you remove parts of the log this way.
+    The data below is about to submitted to Better BibTeX for debugging. You can preview the data here, or save a copy of the log to get the precise data about to be sent, to see whether there's sensitive information that you do not wish to send. Please think carefully about whether unchecking options below is necessary for your environment. We will generally need more communication (= time) if you remove parts of the log this way.
     
     If you are OK with sending this data, please proceed to the next screen where you will be presented a red debug ID, and post this ID on the issue tracker at
     
@@ -63,13 +61,14 @@ better-bibtex_item-pane_section_sidenav =
     .tooltip = { -citation-key }
 better-bibtex_item-pane_section_header = 
     .label = { -citation-key }
-better-bibtex_item-pane_info_citation-key = 
-    .label = { -citation-key }
+better-bibtex_item-pane_info_citation-key_label = { -citation-key }
 better-bibtex_preferences_advanced_export_brace-protection = 
     .label = Includi le parole in maiuscolo tra graffe per preservare i caratteri così come scritti
 better-bibtex_preferences_advanced_export_brace-protection_warning = Se si vuole ignorare sia le buone pratiche di BibTeX/BibLaTeX (vedi le FAQ di BBT) e le raccomandazioni di Zotero sulle maiuscole, si può disattivare questa opzione per prevenire la protezione con graffe delle parole in maiuscolo.
 better-bibtex_preferences_advanced_export_retain-cache = 
     .label = Mantieni la cache delle esportazioni tra gli aggiornamenti
+better-bibtex_preferences_advanced_export_reset-cache = 
+    .label = Cache will be recreated on next start
 better-bibtex_preferences_advanced_export_retain-cache_warning =
     Di default BBT cancella tutte le cache ogni volta che BBT o Zotero sono aggiornati. Poiché non è possibile prevedere quando una modifica in Zotero o in BBT andrà a cambiare l'output generato a partire da un elemento, le cache sono eliminate ogni volta che viene rilevata una nuova versione di uno dei due, così da assicurare che vengano usate le ultime modifiche che riguardano le esportazioni. Tuttavia, se si è in possesso di una libreria molto grande di cui si esporta frequentemente porzioni significative, si può desiderare di mantenere gli elementi nella cache, anche se ciò espone al rischio di non usufruire dei miglioramenti introdotti con gli aggiornamenti più recenti.
     
@@ -158,7 +157,8 @@ better-bibtex_preferences_auto-export_run =
 better-bibtex_preferences_auto-export_status = Status
 better-bibtex_preferences_auto-export_status_done = fatto
 better-bibtex_preferences_auto-export_status_error = errore
-better-bibtex_preferences_auto-export_status_preparing = in preparazione
+better-bibtex_preferences_auto-export_status_preparing = preparing { $translator }
+better-bibtex_preferences_auto-export_status_preparing_delayed = preparing { $translator }, { $pending } exports pending
 better-bibtex_preferences_auto-export_status_running = in esecuzione
 better-bibtex_preferences_auto-export_status_scheduled = programmato
 better-bibtex_preferences_auto-export_target = File di output
@@ -303,7 +303,7 @@ better-bibtex_preferences_prefpane_loading = Caricamento di Better BibTeX in cor
 better-bibtex_preferences_rescan-citekeys = 
     .label = Ri-esamina le chiavi fissate
 better-bibtex_preferences_reset-cache = 
-    .label = Reset della cache
+    .label = Reset cache on next start
 better-bibtex_preferences_tab_auto-export = Esportazione automatica
     .label = { better-bibtex_preferences_tab_auto-export }
 better-bibtex_preferences_tab_citekey = Chiavi di citazione

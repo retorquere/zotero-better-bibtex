@@ -1,0 +1,73 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "preferences": {
+      "DOIandURL": "doi",
+      "ascii": "–",
+      "asciiBibLaTeX": true,
+      "asciiBibTeX": false,
+      "autoExport": "idle",
+      "autoPinDelay": 1,
+      "automaticTags": false,
+      "biblatexExtractEprint": false,
+      "cacheRetain": true,
+      "charmap": "{\"·\":{\"text\":\"·\",\"math\":\"\"},\"ș\":{\"text\":\"ș\",\"math\":\"\"}}",
+      "citekeyFormat": "auth.transliterate.lower+year",
+      "exportSort": "off",
+      "exportTitleCase": false,
+      "extraMergeCSL": true,
+      "keyConflictPolicy": "change",
+      "keyScope": "global",
+      "postscript": "if (Translator.BetterBibLaTeX) {\n  if (\n    [\n      \"book\",\n      \"bookSection\",\n      \"journalArticle\",\n      \"newspaperArticle\",\n      \"thesis\",\n      \"report\",\n    ].includes(item.itemType)\n  ) {\n    delete this.has.url;\n    delete this.has.urldate;\n\n    if ([\"book\", \"bookSection\"].includes(item.itemType)) {\n      delete this.has.number;\n    }\n\n    if (item.itemType == \"newspaperArticle\") {\n      delete this.has.location;\n    }\n  }\n\n  // Remove number and pubstate for arXiv preprints\n  if (item.DOI && item.DOI.includes(\"arXiv\")) {\n    delete this.has.number;\n    delete this.has.pubstate;\n  }\n\n  // Check if more than 10% of the title is CJK\n  // https://github.com/retorquere/zotero-better-bibtex/issues/2810\n  for (const field of [\"title\", \"shorttitle\"]) {\n    const value = tex.has[field]?.value;\n    if (\n      value &&\n      value.replace(/[^\\u4E00-\\u9FFF]/g, \"\").length / value.length > 0.1\n    ) {\n      tex.add({ name: field, value, enc: \"minimal\" });\n    }\n  }\n}\n\nif (Translator.BetterCSLJSON) {\n  delete csl.ISBN;\n  delete csl.ISSN;\n\n  if (\n    [\n      \"book\",\n      \"bookSection\",\n      \"journalArticle\",\n      \"newspaperArticle\",\n      \"thesis\",\n      \"report\",\n    ].includes(item.itemType)\n  ) {\n    delete csl.URL;\n    delete csl[\"accessed\"];\n    delete csl.PMID;\n    delete csl.PMCID;\n  }\n\n  if (csl.DOI && csl.URL) {\n    delete csl.URL;\n    delete csl[\"accessed\"];\n  }\n}",
+      "quickCopyMode": "selectlink",
+      "skipFields": "language, langid, annotation, shortjournal, eprint, pmcid, eprinttype, editortype, issn, isbn, series, editora, editorb, editoratype, editorbtype, pagetotal, origtitle, original-title, collection-title, source, container-title-short, title-short, number-of-pages, event-place, license, citation-key, call-number, collection-number, collection-editor, journalsubtitle, keywords, abstract, note, file"
+    }
+  },
+  "items": [
+    {
+      "DOI": "10.1108/02632771111101304",
+      "ISSN": "0263-2772",
+      "abstractNote": "Purpose – Generic use of the term “knowledge worker” has resulted in a generic approach to designing office environments for this group. The purpose of this paper is to probe the mobility patterns and motivations of knowledge workers in order to provide a classification of different types of knowledge worker. Design/methodology/approach – The study was undertaken using a range of qualitative research methods including semi‐structured interviews with 20 knowledge workers representing different levels of mobility and experience, ethnographic studies in a media company, real estate business and a public relations firm, and a user workshop. A novel drawing exercise was introduced to elicit responses during the interview process. Findings – Four knowledge worker “character types” emerged from the research: the Anchor and the Connector, who are mainly office‐based, and the Gatherer and the Navigator, who work more widely afield. Research limitations/implications – This is a small study revealing characteristics particular to the participating individuals and organisations. However, it has wider implications in that the more complex set of requirements revealed by the project requires a more responsive and service‐led approach to office design for knowledge workers and the development of new protocols of use within office space. Originality/value – The originality/value lies in giving designers and facilities managers an insight into the different needs of knowledge workers, who are commonly treated as a homogeneous group. The typologies are an active tool for better brief‐making in design for creative facilities.",
+      "accessDate": "2021-10-08T10:35:16Z",
+      "citationKey": "greene2011",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "C.",
+          "lastName": "Greene"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "J.",
+          "lastName": "Myerson"
+        }
+      ],
+      "date": "2011-01-01",
+      "extra": [
+        "Citation Key: greene2011"
+      ],
+      "issue": "1-2",
+      "itemID": 1,
+      "itemType": "journalArticle",
+      "language": "en",
+      "libraryCatalog": "Emerald Insight",
+      "pages": "19-30",
+      "publicationTitle": "Facilities",
+      "shortTitle": "Space for thought",
+      "tags": [
+        {
+          "tag": "Design",
+          "type": 1
+        },
+        {
+          "tag": "Productivity rate",
+          "type": 1
+        }
+      ],
+      "title": "Space for thought: designing for knowledge workers",
+      "url": "https://www.emerald.com/insight/content/doi/10.1108/02632771111101304/full/html",
+      "volume": "29"
+    }
+  ]
+}

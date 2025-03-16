@@ -9,7 +9,7 @@
     "preferences": {
       "autoAbbrevStyle": "http://www.zotero.org/styles/american-medical-association",
       "bibtexURL": "note",
-      "citekeyFormat": "[auth][year]"
+      "citekeyFormat": "auth(n=0,m=1,creator=\"*\",initials=false).fold + year"
     }
   },
   "items": [
@@ -50,7 +50,7 @@
       "itemID": 1,
       "itemType": "conferencePaper",
       "libraryCatalog": "Google Scholar",
-      "pages": "1\u201310",
+      "pages": "1–10",
       "publicationTitle": "High Performance Computing (HiPC), 2011 18th international conference on",
       "publisher": "IEEE",
       "tags": [
@@ -108,7 +108,7 @@
       "itemID": 2,
       "itemType": "conferencePaper",
       "libraryCatalog": "ACM Digital Library",
-      "pages": "819\u2013829",
+      "pages": "819–829",
       "place": "Piscataway, NJ, USA",
       "publicationTitle": "Proceedings of the international conference for High Performance Computing, Networking, Storage and Analysis",
       "publisher": "IEEE Press",

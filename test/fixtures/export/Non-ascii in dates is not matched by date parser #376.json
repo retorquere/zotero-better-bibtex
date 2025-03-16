@@ -5,7 +5,7 @@
     "localeDateOrder": "ymd",
     "preferences": {
       "bibtexURL": "note",
-      "citekeyFormat": "[auth][year]"
+      "citekeyFormat": "auth(n=0,m=1,creator=\"*\",initials=false).fold + year"
     }
   },
   "items": [
@@ -39,7 +39,7 @@
           "lastName": "Hamm"
         }
       ],
-      "date": "M\u00e4rz 1, 2008",
+      "date": "März 1, 2008",
       "extra": [
         "Citation Key: Wendt2008BrainW.L.W.H.H+",
         "tex.journaltitle= Psychophysiology",
@@ -48,7 +48,7 @@
       "issue": "2",
       "itemID": 1,
       "itemType": "journalArticle",
-      "pages": "205\u2013215",
+      "pages": "205–215",
       "tags": [
         {
           "tag": "Amygdala"

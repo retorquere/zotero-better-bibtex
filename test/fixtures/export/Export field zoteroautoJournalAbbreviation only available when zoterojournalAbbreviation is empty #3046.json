@@ -1,0 +1,80 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "preferences": {
+      "autoAbbrev": true,
+      "autoExport": "off",
+      "bibtexURL": "url-ish",
+      "citekeyFormat": "auth(n=0,m=1,creator=\"*\",initials=false).fold.lower + shorttitle(1,2) + year",
+      "extraMergeCSL": true,
+      "extraMergeCitekeys": true,
+      "extraMergeTeX": true,
+      "postscript": "if (Translator.BetterBibTeX && zotero.itemType === 'journalArticle') {\n  if (tex.has.journal){\n    tex.remove('journal');\n    tex.add({ name: 'journal', value: zotero.autoJournalAbbreviation });\n  }\nelse\n  tex.add({ name: 'journal', value: zotero.autoJournalAbbreviation });\n}\n\nif (Translator.BetterBibTeX && zotero.itemType === 'preprint' && zotero.arXiv) {\n  {\n    tex.remove('journal');\n    tex.add({ name: 'howpublished', value: 'arXiv:' + zotero.arXiv.id });\n  }\n}\n",
+      "skipFields": "month,file,abstract,journaltitle",
+      "verbatimFields": "url,doi,file,eprint,verba,verbb,verbc,groups"
+    }
+  },
+  "items": [
+    {
+      "DOI": "10.1016/S0021-9800(70)80055-2",
+      "ISSN": "00219800",
+      "abstractNote": "The definitions and lattice hierarchy previously established for tiling regions with individual polyominoes are extended to finite sets of polyominoes. The problem of tiling the infinite plane with replicas of a finite set of polyominoes is proved to be logically equivalent to Wang's \"domino problem,\" which is known to be algorithmically undecidable. Several different ways of extending the notion of rep-tility from single polyominoes to sets of polyominoes are discussed. Some related results of Ikeno regarding tiling with polyiamonds (shapes composed of equilateral triangles) are mentioned.",
+      "accessDate": "2023-10-07T01:25:05Z",
+      "citationKey": "golombTiling1970",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Solomon W.",
+          "lastName": "Golomb"
+        }
+      ],
+      "date": "07/1970",
+      "issue": "1",
+      "itemID": 1,
+      "itemType": "journalArticle",
+      "journalAbbreviation": "Journal of Combinatorial Theory",
+      "language": "en",
+      "libraryCatalog": "DOI.org (Crossref)",
+      "pages": "60-71",
+      "publicationTitle": "Journal of Combinatorial Theory",
+      "title": "Tiling with sets of polyominoes",
+      "url": "https://linkinghub.elsevier.com/retrieve/pii/S0021980070800552",
+      "volume": "9"
+    },
+    {
+      "DOI": "10.1063/5.0070300",
+      "ISSN": "0022-2488",
+      "abstractNote": "Using precise random matrix theory tools and the Kac\u2013Rice formula, we provide sharp O(1) asymptotics for the average number of deep minima of the (p, k) spiked tensor model. These sharp estimates allow us to prove that, when the signal-to-noise ratio is large enough, the expected number of deep minima is asymptotically finite as N tends to infinity and to establish the occurrence of topological trivialization by showing that this number vanishes when the strength of the signal-to-noise ratio diverges. We also derive an explicit formula for the value of the absolute minimum (the limiting ground state energy) on the N-dimensional sphere, similar to the recent work of Jagannath, Lopatto, and Miolane [Ann. Appl. Probab. 4, 1910\u20131933 (2020)].",
+      "accessDate": "2023-10-15T19:17:05Z",
+      "citationKey": "auffingerSharp2022",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Antonio",
+          "lastName": "Auffinger"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Gerard",
+          "lastName": "Ben Arous"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Zhehua",
+          "lastName": "Li"
+        }
+      ],
+      "date": "2022-04-08",
+      "issue": "4",
+      "itemID": 2,
+      "itemType": "journalArticle",
+      "libraryCatalog": "Silverchair",
+      "pages": "043303",
+      "publicationTitle": "Journal of Mathematical Physics",
+      "title": "Sharp complexity asymptotics and topological trivialization for the (p, k) spiked tensor model",
+      "url": "https://doi.org/10.1063/5.0070300",
+      "volume": "63"
+    }
+  ]
+}

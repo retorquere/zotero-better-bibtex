@@ -10,7 +10,7 @@
       "DOIandURL": "doi",
       "autoAbbrevStyle": "http://www.zotero.org/styles/american-geophysical-union",
       "bibtexURL": "note",
-      "citekeyFormat": "[auth:lower][Title:fold:nopunct:skipwords:select,1,1:lower:alphanum:prefix,_][year:prefix,_][0]",
+      "citekeyFormat": "auth(n=0,m=1,creator=\"*\",initials=false).fold.lower + Title.transliterate.nopunct.skipwords.select(1,1).lower.alphanum.prefix(_) + year.prefix(_) + postfix(\"-%(n)s\")",
       "exportBibTeXStrings": "detect"
     }
   },

@@ -8,7 +8,7 @@
     },
     "preferences": {
       "autoAbbrevStyle": "http://www.zotero.org/styles/cell",
-      "citekeyFormat": "[zotero]",
+      "citekeyFormat": "zotero",
       "itemObserverDelay": 100,
       "quickCopyMode": "pandoc",
       "quickCopyPandocBrackets": true,
@@ -18,7 +18,7 @@
   "items": [
     {
       "ISBN": "979-10-239-0085-9",
-      "abstractNote": "Le Cine\u00b4ma, art subversif est un livre culte dans l'histoire de la cine\u00b4philie, cite\u00b4 en re\u00b4fe\u00b4rence par de nombreux cine\u00b4astes et artistes depuis sa parution en 1974. Ce\u00b4le\u00b4brant les formes de la subversion au cine\u00b4ma, Amos Vogel analyse comment les films peuvent contourner, transgresser ou annihiler les re`gles et les conventions e\u00b4tablies, qu'elles soient esthe\u00b4tiques ou morales. Illustre\u00b4 par plus de 300 images, souvent side\u00b4rantes, l'ouvrage alterne textes the\u00b4oriques et notules critiques, consacre\u00b4es aussi bien a` des \u0153uvres ce\u00b4le`bres qu'a` des films inconnus, de tous pays et de toutes e\u00b4poques. Contre les tabous, contre toute forme de censure, c'est une ode a` la liberte\u00b4 cine\u00b4matographique. Traduit en franc\u00b8ais en 1977, Le Cine\u00b4ma, art subversif n'avait jamais e\u00b4te\u00b4 re\u00b4e\u00b4dite\u00b4. A` l'heure ou` la subversion, rele\u00b4gue\u00b4e dans les marges, semble avoir de\u00b4serte\u00b4 les e\u00b4crans, il apparai^t plus indispensable que jamais. Amos Vogel (1921-2012) est le fondateur et programmateur du Cinema 16, le plus influent cine\u00b4-club d'avant-garde new- yorkais. Il est le premier a` y avoir montre\u00b4 aux E\u00b4tats-Unis les films de Roman Polanski, John Cassavetes, Nagisa Oshima, Jacques Rivette ou encore Alain Resnais. Il a e\u00b4galement co-fonde\u00b4 le Festival du Film de New York, dont il a dirige\u00b4 la programmation jusqu'en 1968",
+      "abstractNote": "Le Cine´ma, art subversif est un livre culte dans l'histoire de la cine´philie, cite´ en re´fe´rence par de nombreux cine´astes et artistes depuis sa parution en 1974. Ce´le´brant les formes de la subversion au cine´ma, Amos Vogel analyse comment les films peuvent contourner, transgresser ou annihiler les re`gles et les conventions e´tablies, qu'elles soient esthe´tiques ou morales. Illustre´ par plus de 300 images, souvent side´rantes, l'ouvrage alterne textes the´oriques et notules critiques, consacre´es aussi bien a` des œuvres ce´le`bres qu'a` des films inconnus, de tous pays et de toutes e´poques. Contre les tabous, contre toute forme de censure, c'est une ode a` la liberte´ cine´matographique. Traduit en franc¸ais en 1977, Le Cine´ma, art subversif n'avait jamais e´te´ re´e´dite´. A` l'heure ou` la subversion, rele´gue´e dans les marges, semble avoir de´serte´ les e´crans, il apparai^t plus indispensable que jamais. Amos Vogel (1921-2012) est le fondateur et programmateur du Cinema 16, le plus influent cine´-club d'avant-garde new- yorkais. Il est le premier a` y avoir montre´ aux E´tats-Unis les films de Roman Polanski, John Cassavetes, Nagisa Oshima, Jacques Rivette ou encore Alain Resnais. Il a e´galement co-fonde´ le Festival du Film de New York, dont il a dirige´ la programmation jusqu'en 1968",
       "accessDate": "2017-06-29 14:17:18",
       "callNumber": "791.430 1",
       "creators": [
@@ -30,24 +30,24 @@
         {
           "creatorType": "translator",
           "firstName": "Claude",
-          "lastName": "Fr\u00e9gnac"
+          "lastName": "Frégnac"
         }
       ],
       "date": "2016 [1974]",
       "itemID": 1,
       "itemType": "book",
       "language": "fre",
-      "libraryCatalog": "BnF Catalogue g\u00e9n\u00e9ral (http://catalogue.bnf.fr)",
+      "libraryCatalog": "BnF Catalogue général (http://catalogue.bnf.fr)",
       "numPages": "349",
       "place": "Paris",
       "publisher": "Capricci",
       "tags": [
         {
-          "tag": "Cin\u00e9ma",
+          "tag": "Cinéma",
           "type": 1
         },
         {
-          "tag": "Cin\u00e9ma et politique",
+          "tag": "Cinéma et politique",
           "type": 1
         },
         {
@@ -55,7 +55,7 @@
           "type": 1
         }
       ],
-      "title": "Le Cin\u00e9ma, art subversif"
+      "title": "Le Cinéma, art subversif"
     }
   ]
 }

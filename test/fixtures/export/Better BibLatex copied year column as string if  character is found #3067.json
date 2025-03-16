@@ -1,0 +1,41 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "preferences": {
+      "kuroshiro": true
+    }
+  },
+  "items": [
+    {
+      "DOI": "10.1109/82.204108",
+      "ISSN": "10577130",
+      "accessDate": "2024-11-21T08:43:57Z",
+      "citationKey": "leungMultibitSigmaDelta1992",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "B.H.",
+          "lastName": "Leung"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "S.",
+          "lastName": "Sutarja"
+        }
+      ],
+      "date": "Jan./1992",
+      "issue": "1",
+      "itemID": 1,
+      "itemType": "journalArticle",
+      "journalAbbreviation": "IEEE Trans. Circuits Syst. II",
+      "libraryCatalog": "DOI.org (Crossref)",
+      "pages": "35-51",
+      "publicationTitle": "IEEE Transactions on Circuits and Systems II: Analog and Digital Signal Processing",
+      "rights": "https://ieeexplore.ieee.org/Xplorehelp/downloads/license-information/IEEE.html",
+      "title": "Multibit Sigma - Delta A/D converter incorporating a novel class of dynamic element matching techniques",
+      "url": "http://ieeexplore.ieee.org/document/204108/",
+      "volume": "39"
+    }
+  ]
+}

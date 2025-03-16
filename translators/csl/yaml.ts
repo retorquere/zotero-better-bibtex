@@ -7,7 +7,7 @@ import { Translation } from '../lib/translator'
 import type { MarkupNode } from '../../typings/markup'
 
 import { CSLExporter } from './csl'
-import { log } from '../../content/logger/simple'
+import { log } from '../../content/logger'
 import { ParsedDate } from '../../content/dateparser'
 import { HTMLParser } from '../../content/text'
 
@@ -175,5 +175,5 @@ export function generateCSLYAML(collected: Collected): Translation {
 
 export function parseCSLYAML(input: string): any {
   input = input.replace(/\n---[\r\n]*$/, '\n...\n')
-  return YAML.load(input) // eslint-disable-line @typescript-eslint/no-unsafe-return
+  return YAML.load(input)
 }

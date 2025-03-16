@@ -1,13 +1,14 @@
-import { Preference } from '../prefs'
-import { Events } from '../events'
-// import { CJK } from '../text'
-import { discard } from '../logger/simple'
-
-declare const ChromeUtils: any
-
+/*
+declare var Services: any
 if (typeof Services == 'undefined') {
   var { Services } = ChromeUtils.import('resource://gre/modules/Services.jsm') // eslint-disable-line no-var
 }
+*/
+
+import { Preference } from '../prefs'
+import { Events } from '../events'
+// import { CJK } from '../text'
+import { discard } from '../logger'
 
 import type { jieba as jiebaFunc, pinyin as pinyinFunc } from './chinese-optional'
 

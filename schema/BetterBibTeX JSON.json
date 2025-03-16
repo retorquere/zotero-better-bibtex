@@ -129,9 +129,6 @@
             "autoAbbrev": {
               "type": "boolean"
             },
-            "autoAbbrevStyle": {
-              "type": "string"
-            },
             "autoExport": {
               "enum": [
                 "immediate",
@@ -193,6 +190,12 @@
               "type": "string"
             },
             "cache": {
+              "type": "boolean"
+            },
+            "cacheDelete": {
+              "type": "boolean"
+            },
+            "cacheRetain": {
               "type": "boolean"
             },
             "charmap": {
@@ -409,9 +412,6 @@
               "type": "string"
             },
             "relativeFilePaths": {
-              "type": "boolean"
-            },
-            "retainCache": {
               "type": "boolean"
             },
             "scrubDatabase": {

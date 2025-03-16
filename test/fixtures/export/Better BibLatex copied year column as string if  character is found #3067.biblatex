@@ -1,0 +1,14 @@
+@article{leungMultibitSigmaDelta1992,
+  title = {Multibit {{Sigma}} - {{Delta A}}/{{D}} Converter Incorporating a Novel Class of Dynamic Element Matching Techniques},
+  author = {Leung, B.H. and Sutarja, S.},
+  date = {1992-01},
+  journaltitle = {IEEE Transactions on Circuits and Systems II: Analog and Digital Signal Processing},
+  shortjournal = {IEEE Trans. Circuits Syst. II},
+  volume = {39},
+  number = {1},
+  pages = {35--51},
+  issn = {10577130},
+  doi = {10.1109/82.204108},
+  url = {http://ieeexplore.ieee.org/document/204108/},
+  urldate = {2024-11-21}
+}

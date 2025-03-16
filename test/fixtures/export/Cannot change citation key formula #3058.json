@@ -1,0 +1,40 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "preferences": {
+      "citekeyFormat": "(authetal2 || shorttitle(3,0) || title).lower + '_' + year"
+    }
+  },
+  "items": [
+    {
+      "ISBN": "978-0-646-55621-5",
+      "citationKey": "McDougallTJ.Barker-delete-me",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Trevor J",
+          "lastName": "McDougall"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Paul M",
+          "lastName": "Barker"
+        }
+      ],
+      "date": "2011",
+      "extra": [
+        "OCLC: 724024071",
+        "Citation Key: McDougallTJ.Barker-delete-me"
+      ],
+      "itemID": 1,
+      "itemType": "book",
+      "language": "English",
+      "libraryCatalog": "Open WorldCat",
+      "place": "Battery Point, Tasmania, Australia",
+      "publisher": "Trevor J McDougall",
+      "title": "Getting started with TEOS-10 and the Gibbs Seawater (GSW) Oceanographic Toolbox",
+      "url": "https://www.teos-10.org/pubs/Getting_Started.pdf"
+    }
+  ]
+}

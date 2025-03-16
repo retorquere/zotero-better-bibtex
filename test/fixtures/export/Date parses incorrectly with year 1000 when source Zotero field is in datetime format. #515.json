@@ -9,7 +9,7 @@
     "preferences": {
       "autoAbbrevStyle": "http://www.zotero.org/styles/cell",
       "autoExport": "idle",
-      "citekeyFormat": "[Auth:condense,_:lower]_[year]_[veryshorttitle:lower]",
+      "citekeyFormat": "auth(n=0,m=1,creator=\"*\",initials=false).condense(_).lower + \"_\" + year + \"_\" + veryshorttitle.lower",
       "postscript": "const order = ['author', 'date', 'title', 'publisher']; const keys = Object.keys(this.has); for (const field of keys.sort((a, b) => ((order.indexOf(a) + 1) || (keys.length + 1)) - ((order.indexOf(b) + 1) || (keys.length + 1)))) { const value = this.has[field]; delete this.has[field]; this.has[field] = value; }"
     }
   },

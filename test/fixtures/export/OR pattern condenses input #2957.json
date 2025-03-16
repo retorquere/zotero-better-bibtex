@@ -1,0 +1,73 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "preferences": {
+      "citekeyFold": false,
+      "citekeyFormat": "(ShortTitle || Title).condense(_)",
+      "skipFields": "file,abstract,urldate,annotation",
+      "verbatimFields": "url,doi,file,eprint,verba,verbb,verbc,groups"
+    }
+  },
+  "items": [
+    {
+      "ISBN": "978-1-4612-6814-7 978-1-4612-0551-7",
+      "accessDate": "2024-08-23T14:44:49Z",
+      "citationKey": "TheTheoryofClassicalValuations",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Paulo",
+          "lastName": "Ribenboim"
+        }
+      ],
+      "date": "1999",
+      "extra": [
+        "DOI: 10.1007/978-1-4612-0551-7"
+      ],
+      "itemID": 1,
+      "itemType": "book",
+      "libraryCatalog": "DOI.org (Crossref)",
+      "place": "New York, NY",
+      "publisher": "Springer",
+      "rights": "http://www.springer.com/tdm",
+      "series": "Springer Monographs in Mathematics",
+      "tags": [
+        {
+          "tag": "Algebra",
+          "type": 1
+        },
+        {
+          "tag": "commutative property",
+          "type": 1
+        },
+        {
+          "tag": "Division",
+          "type": 1
+        },
+        {
+          "tag": "Finite",
+          "type": 1
+        },
+        {
+          "tag": "function",
+          "type": 1
+        },
+        {
+          "tag": "fundamental theorem",
+          "type": 1
+        },
+        {
+          "tag": "theorem",
+          "type": 1
+        },
+        {
+          "tag": "Topology",
+          "type": 1
+        }
+      ],
+      "title": "The Theory of Classical Valuations",
+      "url": "http://link.springer.com/10.1007/978-1-4612-0551-7"
+    }
+  ]
+}

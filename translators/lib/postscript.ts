@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
-
 export type Allow = {
   cache: boolean
   write: boolean
@@ -7,7 +5,7 @@ export type Allow = {
 import type { Translation } from '../lib/translator'
 
 import type { Fields as ExtraFields } from '../../content/extra'
-import { log } from '../../content/logger/simple'
+import { log } from '../../content/logger'
 
 export type Postscript = (target: any, source: any, translator: Translation, extra: ExtraFields) => Allow
 
@@ -47,6 +45,6 @@ export function postscript(kind: 'csl' | 'tex', main: string, guard?: string): P
   return new Function('target', 'source', 'Translator', 'Zotero', 'extra', body) as Postscript
 }
 
-export const noop: Postscript = function(_entry: any, _item: any, _translator: Translation, _extra: ExtraFields): Allow { // eslint-disable-line prefer-arrow/prefer-arrow-functions
+export const noop: Postscript = function(_entry: any, _item: any, _translator: Translation, _extra: ExtraFields): Allow {
   return { cache: true, write: true }
 }

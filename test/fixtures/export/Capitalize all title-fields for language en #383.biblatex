@@ -1,4 +1,3 @@
-
 @book{_alkanethiolate,
   title = {Alkanethiolate Gold Cluster Molecules with Core Diameters from 1.5 to 5.2~{{nm}}},
   langid = {american}
@@ -26,7 +25,7 @@
 }
 
 @article{_pleistocene,
-  title = {Pleistocene {{{\emph{Homo sapiens}}}} from {{Middle Awash}}, {{Ethiopia}}},
+  title = {Pleistocene {{{\mkbibemph{Homo sapiens}}}} from {{Middle Awash}}, {{Ethiopia}}},
   langid = {british}
 }
 
@@ -39,5 +38,3 @@
   title = {A Stochastic Model of {{TCP Reno}} Congestion Avoidance and Control},
   langid = {american}
 }
-
-

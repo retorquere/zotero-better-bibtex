@@ -8,7 +8,7 @@
       "asciiBibTeX": false,
       "autoAbbrevStyle": "http://www.zotero.org/styles/elsevier-harvard",
       "bibtexURL": "note",
-      "citekeyFormat": "[auth:nopunct][year][Title:skipwords:nopunct:select,1,2:capitalize:fold:alphanum]",
+      "citekeyFormat": "auth(n=0,m=1,creator=\"*\",initials=false).fold.nopunct + year + Title.skipwords.nopunct.select(1,2).capitalize.transliterate.alphanum",
       "skipFields": "abstract,note,file"
     }
   },
@@ -17,8 +17,8 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "Sune Br\u00f8ndum",
-          "lastName": "W\u00f8ller"
+          "firstName": "Sune Brøndum",
+          "lastName": "Wøller"
         }
       ],
       "date": "2011",
@@ -28,15 +28,15 @@
       "notes": [
         "<p>CTR-Projekt</p>"
       ],
-      "title": "CTR Det multiple ark\u00e6ologiske objekt. Et studie af materialitet og ark\u00e6ologiske tekstiler",
+      "title": "CTR Det multiple arkæologiske objekt. Et studie af materialitet og arkæologiske tekstiler",
       "type": "phdthesis"
     },
     {
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "Sune Br\u00f8ndum",
-          "lastName": "W\u00f8ller"
+          "firstName": "Sune Brøndum",
+          "lastName": "Wøller"
         }
       ],
       "date": "2011",
@@ -46,7 +46,7 @@
       "notes": [
         "<p>CTR-Projekt</p>"
       ],
-      "title": "Det multiple ark\u00e6ologiske objekt. Et studie af materialitet og ark\u00e6ologiske tekstiler",
+      "title": "Det multiple arkæologiske objekt. Et studie af materialitet og arkæologiske tekstiler",
       "type": "mastersthesis"
     }
   ]

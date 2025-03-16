@@ -1,23 +1,15 @@
-import { is7 } from './client'
-
 declare const ChromeUtils: any
-declare const XPCOMUtils: any
-
-import { stringify } from './stringify'
 
 import { Formatter } from './cayw/formatter'
 import { TeXstudio } from './tex-studio'
 import { flash } from './flash'
-import { log } from './logger'
+import { log, stringify } from './logger'
 import { orchestrator } from './orchestrator'
 import { Server } from './server'
 import { toClipboard } from './text'
 
-/* eslint-disable max-classes-per-file */
-
 class FieldEnumerator {
-  // eslint-disable-next-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
-  public QueryInterface = (is7 ? ChromeUtils : XPCOMUtils).generateQI([ Components.interfaces.nsISupports, Components.interfaces.nsISimpleEnumerator ])
+  public QueryInterface = ChromeUtils.generateQI([ Components.interfaces.nsISupports, Components.interfaces.nsISimpleEnumerator ])
   public doc: Document
   public idx: number
 
@@ -286,7 +278,7 @@ class Document {
 }
 
 // export singleton: https://k94n.com/es6-modules-single-instance-pattern
-export const Application = new class { // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
+export const Application = new class {
   public primaryFieldType = 'Field'
   public secondaryFieldType = 'Bookmark'
   public fields: any[] = []
@@ -339,6 +331,8 @@ export async function pick(options: any): Promise<string> {
 
     if (options.select && picked.length) {
       const zoteroPane = Zotero.getActiveZoteroPane()
+
+      // don't know why zotero-types is not picked up here
       await zoteroPane.selectItems(picked.map(item => item.id), true)
     }
 
@@ -398,13 +392,13 @@ class Handler {
       }
       const style
         = getStyle(options.style)
-        || getStyle(`http://www.zotero.org/styles/${ options.style }`)
-        || getStyle(`http://juris-m.github.io/styles/${ options.style }`)
+          || getStyle(`http://www.zotero.org/styles/${ options.style }`)
+          || getStyle(`http://juris-m.github.io/styles/${ options.style }`)
       options.style = style ? style.url : 'http://www.zotero.org/styles/apa'
 
       const citation = options.selected ? (await selected(options)) : (await pick(options))
 
-      if (options.minimize) Zotero.getMainWindow()?.minimize()
+      if (options.minimize) (Zotero.getMainWindow() as any)?.minimize()
 
       if (options.texstudio) {
         if (!TeXstudio.enabled) return [ this.SERVER_ERROR, 'application/text', 'TeXstudio not found' ]

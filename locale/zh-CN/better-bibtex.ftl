@@ -14,8 +14,6 @@ better-bibtex_citekey_set_toomany = 一次只能修改一条引用
 better-bibtex_error-report = 
     .title = Better BibTeX 调试日志
 better-bibtex_error-report_better-bibtex_cache = 缓存大小：{ $entries } 个条目。
-better-bibtex_error-report_better-bibtex_oom = Zotero 内存不足！在 Windows 上，Zotero 有内存使用量限制，这将在 Zotero 7 中得到改善。在此期间，请关闭 Better BibTeX 缓存并重启 Zotero。
-    .value = { better-bibtex_error-report_better-bibtex_oom }
 better-bibtex_error-report_better-bibtex_current = 当前 Better BibTeX版本为 { $version }
 better-bibtex_error-report_better-bibtex_latest = 最新 Better BibTeX 版本为 { $version }
 better-bibtex_error-report_context = 
@@ -45,7 +43,7 @@ better-bibtex_error-report_report-id = 调试日志 ID：
 better-bibtex_error-report_restart-with-logging-enabled = 
     .label = 启用日志记录并重启…
 better-bibtex_error-report_review =
-    以下数据将被提交至 Better BibTeX 以供调试。您可以现在预览数据，或保存日志副本以获取将被发送的准确数据，以检查是否有您不希望发送的敏感信息。请仔细考虑在您的环境下是否有必要取消下面的选项。如果您以这种方式移除了部分日志，那么我们一般需要更多交流（=更多时间）。
+    以下数据将被提交至 Better BibTeX 以供调试。您可以现在预览数据，或保存日志副本以获取将被发送的准确数据，以检查是否有您不希望发送的敏感信息。请仔细考虑在您的环境下是否有必要取消下面的选项。如果您以这种方式移除了部分日志，那么我们一般需要更多沟通（=更多时间）。
     
     如果您允许发送数据，请进行下一步，并将以红色字体显示的调试 ID 提交至问题追踪器（issue tracker）：
     
@@ -63,13 +61,14 @@ better-bibtex_item-pane_section_sidenav =
     .tooltip = { -citation-key }
 better-bibtex_item-pane_section_header = 
     .label = { -citation-key }
-better-bibtex_item-pane_info_citation-key = 
-    .label = { -citation-key }
+better-bibtex_item-pane_info_citation-key_label = { -citation-key }
 better-bibtex_preferences_advanced_export_brace-protection = 
     .label = 使用大括号括起首字母大写的单词以保持大小写格式
 better-bibtex_preferences_advanced_export_brace-protection_warning = 若您坚持忽略 BibTeX/BibLaTeX 最佳做法（见 BBT FAQ）和 Zotero 关于标题/句子大小写格式的建议，您可以关闭该选项以禁止自动使用括号对含大写字母单词进行大小写保护。
 better-bibtex_preferences_advanced_export_retain-cache = 
     .label = 升级后保留导出缓存
+better-bibtex_preferences_advanced_export_reset-cache = 
+    .label = 缓存将在下次启动时被重建
 better-bibtex_preferences_advanced_export_retain-cache_warning =
     默认情况下，升级 BBT 或 Zotero 后 BBT 会清除所有缓存。我无法预测 BBT 或 Zotero 的更改是否会影响条目引用的生成结果，因此，为了确保您能受益于对引用生成有影响的更新和修复，当检测到组件更新时，缓存将被清除。然而，如果您有一个十分庞大的文库，且您经常需要导出其中的大量条目，那么您可能希望保留缓存的引用，即便这将带来在导出时获得（已在更新中修复的）旧有的错误输出的风险。
     
@@ -159,7 +158,8 @@ better-bibtex_preferences_auto-export_run =
 better-bibtex_preferences_auto-export_status = 状态
 better-bibtex_preferences_auto-export_status_done = 已完成
 better-bibtex_preferences_auto-export_status_error = 错误
-better-bibtex_preferences_auto-export_status_preparing = 准备中
+better-bibtex_preferences_auto-export_status_preparing = 正在准备 { $translator }
+better-bibtex_preferences_auto-export_status_preparing_delayed = 正在准备 { $translator }，待导出：{ $pending }
 better-bibtex_preferences_auto-export_status_running = 运行中
 better-bibtex_preferences_auto-export_status_scheduled = 已预定
 better-bibtex_preferences_auto-export_target = 输出文件
@@ -304,7 +304,7 @@ better-bibtex_preferences_prefpane_loading = 正在加载 Better BibTeX
 better-bibtex_preferences_rescan-citekeys = 
     .label = 重新扫描固定的引用
 better-bibtex_preferences_reset-cache = 
-    .label = 清除缓存
+    .label = 在下次启动时重置缓存
 better-bibtex_preferences_tab_auto-export = 自动导出
     .label = { better-bibtex_preferences_tab_auto-export }
 better-bibtex_preferences_tab_citekey = 引用

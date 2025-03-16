@@ -5,7 +5,7 @@
     "localeDateOrder": "ymd",
     "options": {},
     "preferences": {
-      "citekeyFormat": "[authshort:nopunct][shortyear]",
+      "citekeyFormat": "authshort(creator=\"*\",initials=false,sep=\".\").fold.nopunct + shortyear",
       "itemObserverDelay": 100,
       "kuroshiro": true
     }

@@ -6,7 +6,7 @@
     "options": {},
     "preferences": {
       "bibtexURL": "note",
-      "citekeyFormat": "[authors3+initials]"
+      "citekeyFormat": "authorsn(n=3,creator=\"*\",initials=true,sep=\" \").fold"
     }
   },
   "items": [

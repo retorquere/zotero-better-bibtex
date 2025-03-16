@@ -1,14 +1,8 @@
-/* eslint-disable max-len */
-declare const Services: any
-
-import { Shim } from './os'
 import * as client from './client'
-const $OS = client.is7 ? Shim : OS
+import { File } from './file'
 
 import { Events } from './events'
 import type { CharMap } from 'unicode2latex'
-
-declare const Zotero: any
 
 import { Preferences as $Preferences, PreferenceName, defaults } from '../gen/preferences/meta'
 import { PreferenceManager as PreferenceManagerBase } from '../gen/preferences'
@@ -19,7 +13,7 @@ import { pick } from './object'
 
 export const Preference = new class PreferenceManager extends PreferenceManagerBase {
   public prefix = 'translators.better-bibtex.'
-  private observers: number[] = []
+  private observers: symbol[] = []
   private minimum = {
     autoExportIdleWait: 1,
     autoExportDelay: 1,
@@ -33,7 +27,7 @@ export const Preference = new class PreferenceManager extends PreferenceManagerB
       this.repair(pref)
     }
 
-    this.baseAttachmentPath = Zotero.Prefs.get('baseAttachmentPath')
+    this.baseAttachmentPath = <string>Zotero.Prefs.get('baseAttachmentPath')
     this.observers.push(Zotero.Prefs.registerObserver('baseAttachmentPath', val => { this.baseAttachmentPath = val }))
 
     this.migrate()
@@ -86,8 +80,8 @@ export const Preference = new class PreferenceManager extends PreferenceManagerB
             break
         }
       }
-      catch {
-        error = `could not set default for ${ pref } to ${ typeof value } ${ JSON.stringify(value) }`
+      catch (err) {
+        error = `could not set default for ${pref} to ${typeof value} ${JSON.stringify(value)} (${err.message})`
       }
       if (error) {
         const v = Zotero.Prefs.get(`translators.better-bibtex.${ pref }`)
@@ -128,8 +122,8 @@ export const Preference = new class PreferenceManager extends PreferenceManagerB
 
     // clear out old keys
     const oops = 'extensions.translators.better-bibtex.'
-    for (key of Services.prefs.getBranch(oops).getChildList('', {}) as string[]) {
-      Zotero.Prefs.clear(oops + key, true) // eslint-disable-line @typescript-eslint/restrict-plus-operands
+    for (key of Services.prefs.getBranch(oops).getChildList('', {})) {
+      Zotero.Prefs.clear(oops + key, true)
     }
 
     // migrate ancient keys
@@ -154,6 +148,7 @@ export const Preference = new class PreferenceManager extends PreferenceManagerB
     Zotero.Prefs.clear('translators.better-bibtex.caching')
     Zotero.Prefs.clear('translators.better-bibtex.citekeyFormatBackup')
 
+    this.move('retainCache', 'cacheRetain', old => old ? 1 : 0)
     this.move('autoPin', 'autoPinDelay', old => old ? 1 : 0)
     this.move('suppressNoCase', 'importCaseProtection', old => old ? 'off' : 'as-needed')
     this.move('suppressSentenceCase', 'importSentenceCase', old => old ? 'off' : 'on+guess')
@@ -190,8 +185,8 @@ export const Preference = new class PreferenceManager extends PreferenceManagerB
   private async loadFromCSV(pref: string, path: string, dflt: string, transform: (row: any) => any) {
     const key = `${ this.prefix }${ pref }`
     const modified = {
-      pref: Zotero.Prefs.get(`${ key }.modified`) || 0,
-      file: (await $OS.File.exists(path)) ? (await $OS.File.stat(path)).lastModificationDate.getTime() : 0,
+      pref: <number>Zotero.Prefs.get(`${ key }.modified`) || 0,
+      file: (await File.exists(path)) ? await File.lastModified(path) : 0,
     }
     if (modified.pref >= modified.file) return
 
@@ -208,7 +203,7 @@ export const Preference = new class PreferenceManager extends PreferenceManagerB
 
   public async startup(dir: string) {
     // load from csv for easier editing
-    await this.loadFromCSV('charmap', $OS.Path.join(dir, 'charmap.csv'), '{}', (rows: Record<string, string>[]) => JSON.stringify(
+    await this.loadFromCSV('charmap', PathUtils.join(dir, 'charmap.csv'), '{}', (rows: Record<string, string>[]) => JSON.stringify(
       rows.reduce((acc: CharMap, row: { unicode: string; text: string; math: string }) => {
         if (row.unicode && (row.math || row.text)) acc[row.unicode] = { text: row.text, math: row.math }
         return acc

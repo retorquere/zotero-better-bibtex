@@ -50,7 +50,6 @@ export function doExport(): void {
 
     const author = []
     if (add.authors && ref.creators && ref.creators.length) {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
       const name = ref.creators?.map(creator => (creator.name || creator.lastName || '').replace(/"/g, '\'')).filter(creator => creator).join(', ')
       if (name) author.push(name)
     }

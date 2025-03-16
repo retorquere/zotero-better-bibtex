@@ -1,6 +1,5 @@
-
 @article{physicalviolentvolcanology,
-  title = {The {\emph{Physical}}, Violent Volcanology of the 1600 Eruption of {{Huaynaputina}}, Southern {{Peru}}},
+  title = {The {\mkbibemph{Physical}}, Violent Volcanology of the 1600 Eruption of {{Huaynaputina}}, Southern {{Peru}}},
   author = {Adams, Nancy K and DeSilva, Shanaka L and Self, Steven and Salas, Guido and Schubring, Steven and Permenter, Jason L and Arbesman, Kendra},
   date = {2001},
   journaltitle = {Title, with comma},
@@ -8,5 +7,3 @@
   pages = {493--518},
   keywords = {breadcrust,plinian,Vulcanian eruptions}
 }
-
-

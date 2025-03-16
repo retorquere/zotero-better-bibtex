@@ -6,7 +6,7 @@
       "exportNotes": true
     },
     "preferences": {
-      "citekeyFormat": "[=book]book:[auth:lower]:[PublicationTitle:skipwords:abbr:lower:alphanum][volume:prefix=-][issue:prefix=_] | [=conferencePaper][auth:lower]:[extra=tex.shortconf:lower:>0][shortyear] | [=conferencePaper][auth:lower]:[conferenceName:skipwords:abbr:lower:alphanum][shortyear] | [auth:lower][shortyear]",
+      "citekeyFormat": "type(book) + \"book:\" + auth(n=0,m=1,creator=\"*\",initials=false).fold.lower + \":\" + PublicationTitle.skipwords.abbr.lower.alphanum + Volume.prefix(\"-\") + Issue.prefix(_);\ntype(conferencePaper) + auth(n=0,m=1,creator=\"*\",initials=false).fold.lower + \":\" + extra(\"tex.shortconf\").lower.len + shortyear;\ntype(conferencePaper) + auth(n=0,m=1,creator=\"*\",initials=false).fold.lower + \":\" + ConferenceName.skipwords.abbr.lower.alphanum + shortyear;\nauth(n=0,m=1,creator=\"*\",initials=false).fold.lower + shortyear;",
       "extraMergeCSL": true,
       "extraMergeCitekeys": true,
       "extraMergeTeX": true,

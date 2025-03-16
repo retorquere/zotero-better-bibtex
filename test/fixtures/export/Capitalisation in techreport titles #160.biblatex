@@ -1,6 +1,6 @@
 @report{Hald_2000,
-  title = {\emph{Salmonella} in {{Pork}} ({{SALINPORK}}): {{Pre-harvest}} and {{Harvest Control Options Based}} on {{Epidemiologic}}, {{Diagnostic}} and {{Economic Research}}: {{Final Report}}},
-  shorttitle = {\emph{Salmonella} in {{Pork}} ({{SALINPORK}})},
+  title = {\mkbibemph{Salmonella} in {{Pork}} ({{SALINPORK}}): {{Pre-harvest}} and {{Harvest Control Options Based}} on {{Epidemiologic}}, {{Diagnostic}} and {{Economic Research}}: {{Final Report}}},
+  shorttitle = {\mkbibemph{Salmonella} in {{Pork}} ({{SALINPORK}})},
   author = {Hald, T. and Wong, D.M.A.L.F.},
   date = {2000},
   institution = {{Royal Veterinary and Agricultural University, Department of Animal Health and Animal Science, Division of Ethology and Health}},

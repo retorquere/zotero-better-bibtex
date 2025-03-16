@@ -8,7 +8,7 @@
     },
     "preferences": {
       "asciiBibTeX": false,
-      "citekeyFormat": "[Auth.etal].[origyear].[PublicationTitle:postfix=.][shorttitle3_3].[firstpage]",
+      "citekeyFormat": "authEtAl(creator=\"*\",initials=false,sep=\" \") + \".\" + origyear + \".\" + PublicationTitle.postfix(\".\") + shorttitle(3,3) + \".\" + firstpage",
       "keyScope": "global",
       "qualityReport": true,
       "quickCopyMode": "orgRef",
@@ -59,7 +59,7 @@
       "place": "Rio de Janeiro",
       "publicationTitle": "700 Experimentos da Conscienciologia",
       "publisher": "Instituto Internacional de Projeciologia",
-      "title": "Cap\u00edtulo 5"
+      "title": "Capítulo 5"
     }
   ]
 }

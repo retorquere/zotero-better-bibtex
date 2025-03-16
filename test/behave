@@ -7,7 +7,7 @@ import os
 import re
 import shutil, shlex
 import subprocess
-import sys
+import sys, time, threading
 import tarfile
 from pygit2 import Repository
 import glob
@@ -71,7 +71,7 @@ parser.add_argument('--inspire-hep', '--no-inspire-hep', dest='inspireHEP', acti
 parser.add_argument('--worker', '--no-worker', dest='worker', action=BooleanAction, default=False)
 parser.add_argument('--logging', '--no-logging', dest='logging', action=BooleanAction, default=False)
 parser.add_argument('--caching', '--no-caching', dest='caching', action=BooleanAction, default=True)
-parser.add_argument('--headless', '--no-headless', dest='headless', action=BooleanAction, default=platform.system() == 'Linux')
+parser.add_argument('--headless', '--no-headless', dest='headless', action=BooleanAction, default=platform.system() == 'Linux' and not os.getenv('XDG_SESSION_TYPE'))
 parser.add_argument('--this', action='store_true')
 parser.add_argument('--test-this', action='store_true')
 parser.add_argument('--slow', action='store_true',
@@ -81,8 +81,9 @@ parser.add_argument('--slow', action='store_true',
             CI.tag != ''
 )
 parser.add_argument('--whopper', action='store_true', default = CI.event == 'schedule')
-parser.add_argument('--test')
+parser.add_argument('-t', '--test', action='append', default=[])
 parser.add_argument('--import', dest='import_at_start')
+parser.add_argument('--profile')
 parser.add_argument('--durations')
 parser.add_argument('--bin')
 parser.add_argument('--bins')
@@ -122,10 +123,10 @@ if args.build:
 if args.this or args.test_this:
   assert re.match(r'^gh-[0-9]+$', BRANCH)
   if args.this: args.this = BRANCH.replace('gh-', '@')
-  if args.test_this: args.test = BRANCH.replace('gh-', '')
+  if args.test_this: args.test = list(set(args.test + [ BRANCH.replace('gh-', '') ]))
 
-if args.test or args.this or args.nightly or args.tagged: args.slow = True
-if args.test: args.stop = False
+if len(args.test) > 0 or args.this or args.nightly or args.tagged: args.slow = True
+if len(args.test) > 0: args.stop = False
 
 if args.client == 'jurism':
   print(f"********* JURISM NO LONGER SUPPORTED ***********")
@@ -148,10 +149,11 @@ if args.beta and args.legacy:
 if args.beta: sys.argv.extend(['--define', 'beta=true'])
 if args.legacy: sys.argv.extend(['--define', 'legacy=true'])
 
-if args.test: sys.argv.extend(['--define', f'test={args.test}'])
+if len(args.test) > 0: sys.argv.extend(['--define', f'test={shlex.quote(json.dumps(args.test))}'])
 if args.headless: sys.argv.extend(['--define', f'headless=true'])
 if args.durations: sys.argv.extend(['--define', f'durations={args.durations}'])
 if args.import_at_start: sys.argv.extend(['--define', f'import={args.import_at_start}'])
+if args.profile: sys.argv.extend(['--define', f'profile={args.profile}'])
 if args.this: sys.argv.extend(['--tags', args.this ])
 if args.log_memory_every: sys.argv.extend(['--define', f'log_memory_every={args.log_memory_every}'])
 

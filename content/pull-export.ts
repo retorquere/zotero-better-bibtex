@@ -12,15 +12,17 @@ import { getItemsAsync } from './get-items-async'
 import { fromPairs } from './object'
 import { orchestrator } from './orchestrator'
 import { Server } from './server'
+import { log } from './logger'
 
+const isTrue = new Set([ 'y', 'yes', 'true' ])
 function displayOptions(request) {
-  const isTrue = new Set([ 'y', 'yes', 'true' ])
   const query = Server.queryParams(request)
 
   return {
     // exportCharset: query.exportCharset || 'utf8',
     exportNotes: isTrue.has(query.exportNotes),
     useJournalAbbreviation: isTrue.has(query.useJournalAbbreviation),
+    worker: !query.worker || isTrue.has(query.worker),
   }
 }
 
@@ -36,7 +38,22 @@ class CollectionHandler {
 
       const libID = parseInt(lib || '0') || Zotero.Libraries.userLibraryID
 
-      const collection = Zotero.Collections.getByLibraryAndKey(libID, path) || (await getCollection(`/${ libID }/${ path }`))
+      let collection
+      try {
+        collection = Zotero.Collections.getByLibraryAndKey(libID, path)
+      }
+      catch (err) {
+        log.error('pull-export: resolve by key error:', err)
+      }
+      if (!collection) {
+        try {
+          collection = await getCollection(`/${ libID }/${ path }`)
+        }
+        catch (err) {
+          log.error('pull-export: resolve by path error:', err)
+        }
+      }
+
       if (!collection) return [ NOT_FOUND, 'text/plain', `Could not export bibliography: path '${ path }' not found` ]
 
       return [ OK, 'text/plain', await Translators.exportItems({

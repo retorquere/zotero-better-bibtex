@@ -5,23 +5,25 @@ on:
     types: [opened, edited, closed, reopened]
   issue_comment:
     types: [created, edited, closed]
+  workflow_dispatch:
 
 jobs:
   nag:
     runs-on: ubuntu-latest
     steps:
       - uses: retorquere/label-gun@main
+        id: labelgun
         with:
           token: ${{ github.token }}
-          label.exempt: question
+          label.canclose: question
           label.awaiting: awaiting-user-feedback
-          label.log-required: needs-debug-log
           label.reopened: reopened
-          log-id: "([A-Z0-9]{8}(-refs)?-(apse|euc))|([A-Z0-9]{8}-[^-]+)"
-          message.log-required: |
+          log.regex: "([A-Z0-9]{8}(-refs)?-(apse|euc))|([A-Z0-9]{8}-[^-]+)"
+          log.label: needs-debug-log
+          log.message: |
             Hello @{{username}},
 
-            `@retorquere` is ready to assist you with Better BibTeX. In order to do so efficiently, a debug log is generally required. The information it containst is key to him understanding, replicating, and resolving your issue.
+            `@retorquere` is ready to assist you with Better BibTeX. In order to do so efficiently, a debug log is generally required. The information it containst is key to him understanding, replicating, and resolving your issue. If you have shared a `D<number>` log, those go to the Zotero team, `@retorquere` cannot access those.
 
             **Here’s how you can share your debug log:**
 
@@ -35,7 +37,61 @@ jobs:
 
             Sharing your debug log gives `@retorquere` a view of your Better BibTeX configuration and the elements contributing to the issue. This helps him address your concerns more efficiently.
 
+            If you have submitted a debug log and its ID looks like `D<number>`, that debug log goes to the Zotero team, not to `@retorquere`. Please see the points above how to send a BBT debug log.
+
             Thank you.
 
             **PS: If the Debug Log menu is not available, or if it fails to send the debug log**, you can use the option under “Help” > “Send debug log to file.io”.
-          message.no-close: Thanks for the feedback! Just so you know, GitHub doesn't let me control who can close issues, and @retorquere likes to leave bug reports and enhancements open as a nudge to merge them into the next release.
+
+          close.message: Thanks for the feedback! Just so you know, GitHub doesn't let me control who can close issues, and @retorquere likes to leave bug reports and enhancements open as a nudge to merge them into the next release.
+
+          verbose: true
+          assign: true
+
+      - name: slash commands
+        id: command
+        continue-on-error: true
+        uses: xt0rted/slash-command-action@v2
+        with:
+          repo-token: ${{ github.token }}
+          command: debuglog
+          reaction: "false"
+          allow-edits: "true"
+          permission-level: admin
+      - name: ask for log
+        if: steps.command.outputs.command-name == 'debuglog'
+        run: "gh issue comment ${{ github.event.issue.number }} --body-file $GITHUB_WORKSPACE/.github/workflows/debug-log.md --edit-last"
+      - run: echo Status = ${{ steps.labelgun.outputs.status != '' }}
+
+      - uses: actions/add-to-project@v1.0.2
+        if: ${{ steps.labelgun.outputs.status != '' }}
+        with:
+          project-url: https://github.com/users/retorquere/projects/5
+          github-token: ${{ secrets.PROJECT_TOKEN }}
+
+      - name: Set status
+        if: ${{ steps.labelgun.outputs.status != '' }}
+        uses: nipe0324/update-project-v2-item-field@v2.0.2
+        with:
+          project-url: https://github.com/users/retorquere/projects/5
+          github-token: ${{ secrets.PROJECT_TOKEN }}
+          field-name: "Status"
+          field-value: "${{ steps.labelgun.outputs.status }}"
+
+      - name: Set end date
+        if: ${{ steps.labelgun.outputs.status != '' && steps.labelgun.outputs.lastactive != '' }}
+        uses: nipe0324/update-project-v2-item-field@v2.0.2
+        with:
+          project-url: https://github.com/users/retorquere/projects/5
+          github-token: ${{ secrets.PROJECT_TOKEN }}
+          field-name: "End date"
+          field-value: "${{ steps.labelgun.outputs.lastactive }}"
+
+      - name: Set users
+        if: ${{ steps.labelgun.outputs.status != '' && steps.actor.outputs.users != '' }}
+        uses: nipe0324/update-project-v2-item-field@v2.0.2
+        with:
+          project-url: https://github.com/users/retorquere/projects/5
+          github-token: ${{ secrets.PROJECT_TOKEN }}
+          field-name: "Users"
+          field-value: "${{ steps.actor.outputs.users }}"

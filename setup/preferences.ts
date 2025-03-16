@@ -73,6 +73,8 @@ class ASTWalker extends BaseASTWalker {
         return l10n.tr(val)
       case 'number':
         return val
+      case 'boolean':
+        return val
       default:
         error('unexpected type', typeof val)
     }
@@ -117,6 +119,7 @@ class Flex extends ASTWalker {
         case 'deck':
           if (!flex) node.attrs.push({ name: 'flex', val: '\'1\'', mustEscape: false })
           break
+
         case 'prefpane':
         case 'groupbox':
         case 'prefwindow':
@@ -128,7 +131,6 @@ class Flex extends ASTWalker {
         case 'popupset':
         case 'tooltip':
         case 'description':
-        case 'label':
         case 'checkbox':
         case 'radio':
         case 'button':
@@ -140,6 +142,10 @@ class Flex extends ASTWalker {
         case 'menulist':
           if (flex) throw new Error(`${ node.name } has flex ${ flex }`)
           break
+
+        case 'label':
+          break
+
         default:
           throw `no flex on ${ node.name }` // eslint-disable-line no-throw-literal
       }
@@ -362,7 +368,7 @@ class Docs extends ASTWalker {
       case 'tooltip':
         if (id = this.attr(node, 'id', true)) {
           pref = id.replace('bbt-tooltip-', 'extensions.zotero.translators.better-bibtex.')
-          if (!this.preferences[pref]) error(pref, 'does not exist')
+          if (!this.preferences[pref]) error('tooltip:', pref, 'does not exist')
           this.description(this.text(node), pref)
         }
         break
@@ -731,6 +737,20 @@ render('content/Preferences/xhtml.pug', 'build/content/preferences.xhtml', {
       walk(XHTML, ast)
       walk(SelfClosing, ast)
       walk(Lint, ast)
+
+      if (ast.type !== 'Block' || ast.nodes.length !== 1 || ast.nodes[0].type !== 'Tag' || ast.nodes[0].name !== 'vbox') throw new Error(`unexpected root`)
+      let onload = ast.nodes[0].attrs.filter(attr => attr.name === 'onload')
+      const ns = ast.nodes[0].attrs.filter(attr => attr.name !== 'onload')
+
+      ast = ast.nodes[0].block
+      for (const node of ast.nodes) {
+        const nodes = node.type === 'Block' ? node.nodes : [ node ]
+
+        for (const n of nodes) {
+          n.attrs = [...n.attrs, ...onload, ...ns]
+          onload = []
+        }
+      }
 
       return ast
     },

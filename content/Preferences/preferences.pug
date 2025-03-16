@@ -62,7 +62,7 @@ preferences
   bbt:doc Hyperlink to select items in your library
 
   // the zero-width-space is a marker to re-save the current default so it doesn't get replaced when the default changes later, which would change new keys suddenly
-  preference(name="extensions.zotero.translators.better-bibtex.citekeyFormat" bbt:affects="" type="string" default="\u200bauth.lower + shorttitle(3,3) + year")
+  preference(name="extensions.zotero.translators.better-bibtex.citekeyFormat" bbt:affects="" type="string" default="auth.lower + shorttitle(3,3) + year")
   bbt:doc Set the pattern used to generate citation keys. The format of the keys is documented [here]({{ ref . "citing" }}).
 
   preference(name="extensions.zotero.translators.better-bibtex.citekeyFormatEditing" bbt:affects="" type="string" default="")
@@ -140,10 +140,10 @@ preferences
   preference(name="extensions.zotero.translators.better-bibtex.autoAbbrev" bbt:affects="*" type="bool" default="false")
   bbt:doc If set, generates journal abbreviations on export using the Zotero journal abbreviator, according to the abbreviation style selected in the list below the checkbox.
 
-  preference(name="extensions.zotero.translators.better-bibtex.autoAbbrevStyle" bbt:affects="*" type="string" default="")
-  bbt:doc.
-    Select the style for auto-abbreviation. Only applicable to Juris-M; in Zotero, the style for automatic
-    abbreviation is not configurable.
+  //- preference(name="extensions.zotero.translators.better-bibtex.autoAbbrevStyle" bbt:affects="*" type="string" default="")
+  //- bbt:doc.
+  //-   Select the style for auto-abbreviation. Only applicable to Juris-M; in Zotero, the style for automatic
+  //-   abbreviation is not configurable.
 
   preference(name="extensions.zotero.translators.better-bibtex.autoExportIdleWait" bbt:affects="" type="int" default="10")
   bbt:doc Number of seconds to wait after your system goes idle before kicking off auto-exports.
@@ -332,7 +332,8 @@ preferences
     Details of these packages and what they add can be found [here]({{ ref . "exporting/unicode.md" }}).
 
   // documented in tooltip
-  preference(name="extensions.zotero.translators.better-bibtex.retainCache" bbt:affects="" type="bool" default="false")
+  preference(name="extensions.zotero.translators.better-bibtex.cacheRetain" bbt:affects="" type="bool" default="false")
+  preference(name="extensions.zotero.translators.better-bibtex.cacheDelete" bbt:affects="" type="bool" default="false")
   preference(name="extensions.zotero.translators.better-bibtex.exportTitleCase" bbt:affects="tex" type="bool" default="true")
   preference(name="extensions.zotero.translators.better-bibtex.importCaseProtection" bbt:affects="" type="string" default="as-needed")
   preference(name="extensions.zotero.translators.better-bibtex.bibtexURL" bbt:affects="bibtex" type="string" default="off")

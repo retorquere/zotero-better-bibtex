@@ -10,7 +10,7 @@
       "autoExportDelay": 60,
       "automaticTags": false,
       "biblatexExtendedNameFormat": true,
-      "citekeyFormat": "[auth:lower][shorttitle3_3][year]",
+      "citekeyFormat": "auth(n=0,m=1,creator=\"*\",initials=false).fold.lower + shorttitle(3,3) + year",
       "exportBraceProtection": false,
       "exportTitleCase": false,
       "keyScope": "global"
@@ -31,9 +31,9 @@
       "itemID": 1,
       "itemType": "journalArticle",
       "language": "english",
-      "pages": "1\u201317",
+      "pages": "1–17",
       "publicationTitle": "Indo-Iranian Journal",
-      "title": "Vedic anu\u1e63\u1e6dh\u00fa and anu\u1e63\u1e6dh(u)y\u0101\u0301",
+      "title": "Vedic anuṣṭhú and anuṣṭh(u)yā́",
       "volume": "16"
     }
   ]

@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-unsafe-argument, prefer-rest-params, @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-unsafe-return */
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 
 declare const Cc: any
 declare const Ci: any
@@ -29,33 +29,6 @@ function log(msg) {
   }
 }
 
-// Loads default preferences from prefs.js in Zotero 6
-function setDefaultPrefs(rootURI) {
-  const branch = Services.prefs.getDefaultBranch('')
-  const obj = {
-    pref: (pref, value) => {
-      switch (typeof value) {
-        case 'boolean':
-          branch.setBoolPref(pref, value)
-          break
-        case 'string':
-          branch.setStringPref(pref, value)
-          break
-        case 'number':
-          branch.setIntPref(pref, value)
-          break
-        default:
-          log(`Invalid type '${ typeof (value) }' for pref '${ pref }'`)
-      }
-    },
-  }
-  Services.scriptloader.loadSubScriptWithOptions(`${ rootURI }prefs.js`, {
-    target: obj,
-    charset: 'utf-8',
-    // ignoreCache: true
-  })
-}
-
 export function install(_data: any, _reason: ReasonId) {
   log('install, nothing to do')
 }
@@ -63,6 +36,12 @@ export function install(_data: any, _reason: ReasonId) {
 export function onMainWindowLoad({ window }) {
   log('onMainWindowLoad')
   window.MozXULElement.insertFTLIfNeeded('better-bibtex.ftl')
+  Zotero.BetterBibTeX.onMainWindowLoad({ window })
+}
+
+export function onMainWindowUnload({ window }) {
+  log('onMainWindowUnload')
+  Zotero.BetterBibTeX.onMainWindowUnload({ window })
 }
 
 let chromeHandle
@@ -76,54 +55,52 @@ export async function startup({ resourceURI, rootURI = resourceURI.spec }, reaso
 
     if (Zotero.BetterBibTeX) throw new Error('Better BibTeX is already started')
 
-    setDefaultPrefs(rootURI)
+    const $window = Cc['@mozilla.org/appshell/appShellService;1'].getService(Ci.nsIAppShellService).hiddenDOMWindow
+    Services.scriptloader.loadSubScriptWithOptions(`${ rootURI }content/better-bibtex.js`, {
+      charset: 'utf=8',
+      // ignoreCache: true,
+      target: {
+        Zotero,
+        // because the Zotero sample code assumes you're doing everything in bootstrap.js
+        rootURI,
 
-    const $window = Zotero.getMainWindow()
-    if ($window) {
-      Services.scriptloader.loadSubScriptWithOptions(`${ rootURI }content/better-bibtex.js`, {
-        charset: 'utf=8',
-        // ignoreCache: true,
-        target: {
-          Zotero,
-          // because the Zotero sample code assumes you're doing everything in bootstrap.js
-          rootURI,
+        // to pacify libraries that do env-detection
+        window: $window,
+        document: $window.document,
 
-          // to pacify libraries that do env-detection
-          window: $window,
-          document: $window.document,
+        setTimeout,
+        clearTimeout,
+        setInterval,
+        clearInterval,
 
-          setTimeout,
-          clearTimeout,
-          setInterval,
-          clearInterval,
+        /*
+        // indexedDB: $window.indexedDB,
+        IDBRequest: $window.IDBRequest,
+        IDBTransaction: $window.IDBTransaction,
+        IDBDatabase: $window.IDBDatabase,
+        IDBObjectStore: $window.IDBObjectStore,
+        IDBIndex: $window.IDBIndex,
+        IDBCursor: $window.IDBCursor,
+        IDBKeyRange: $window.IDBKeyRange,
+        Event: $window.Event,
+        */
+      },
+    })
 
-          indexedDB: $window.indexedDB,
-          IDBRequest: $window.IDBRequest,
-          IDBTransaction: $window.IDBTransaction,
-          IDBDatabase: $window.IDBDatabase,
-          IDBObjectStore: $window.IDBObjectStore,
-          IDBIndex: $window.IDBIndex,
-          IDBCursor: $window.IDBCursor,
-          IDBKeyRange: $window.IDBKeyRange,
-          Event: $window.Event,
-        },
-      })
-
-      await Zotero.BetterBibTeX.startup(BOOTSTRAP_REASONS[reason])
-      Zotero.PreferencePanes.register({
-        pluginID: 'better-bibtex@iris-advies.com',
-        src: `${ rootURI }content/preferences.xhtml`,
-        stylesheets: [`${ rootURI }content/preferences.css`],
-        label: 'Better BibTeX',
-        defaultXUL: true,
-      })
-      log('startup done')
-      onMainWindowLoad({ window: $window })
-    }
+    await Zotero.BetterBibTeX.startup(BOOTSTRAP_REASONS[reason])
+    await Zotero.PreferencePanes.register({
+      pluginID: 'better-bibtex@iris-advies.com',
+      src: `${ rootURI }content/preferences.xhtml`,
+      stylesheets: [`${ rootURI }content/preferences.css`],
+      label: 'Better BibTeX',
+      defaultXUL: true,
+    })
+    log('startup done')
+    onMainWindowLoad({ window: Zotero.getMainWindow() })
   }
   catch (err) {
-    alert({ title: 'Better BibTeX startup failed', text: `${ err }` })
-    log(`${ err }\n${ err.stack }`)
+    alert({ title: 'Better BibTeX startup failed', text: `${err}\n${err.stack}` })
+    log(`${ err }\n${err.stack}`)
   }
 }
 

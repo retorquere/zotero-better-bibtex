@@ -5,7 +5,7 @@
     "localeDateOrder": "ymd",
     "preferences": {
       "bibtexURL": "note",
-      "citekeyFormat": "[auth][year]"
+      "citekeyFormat": "auth(n=0,m=1,creator=\"*\",initials=false).fold + year"
     }
   },
   "items": [
@@ -16,7 +16,7 @@
         {
           "creatorType": "bookAuthor",
           "firstName": "Jean",
-          "lastName": "Cavaill\u00e8s"
+          "lastName": "Cavaillès"
         },
         {
           "creatorType": "author",
@@ -29,9 +29,9 @@
       "itemType": "bookSection",
       "language": "french",
       "libraryCatalog": "Library of Congress ISBN",
-      "pages": "665\u201386",
+      "pages": "665–86",
       "place": "Paris",
-      "publicationTitle": "\u0152uvres compl\u00e8tes de philosophie des sciences",
+      "publicationTitle": "Œuvres complètes de philosophie des sciences",
       "publisher": "Hermann",
       "tags": [
         {
