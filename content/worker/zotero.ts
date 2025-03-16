@@ -3,16 +3,17 @@
 // import registerPromiseWorker from '@kotorik/promise-worker/register'
 import { Server as WorkerServerBase } from './json-rpc'
 import { Exporter as ExporterInterface } from './interface'
+import type { Item } from '../../gen/typings/serialized-item'
 
 import allSettled = require('promise.allsettled')
 allSettled.shim()
 
-import { ExportedItemMetadata, Cache, Context, Running } from './cache'
+import { ExportedItem, ExportedItemMetadata, Cache, Context } from './cache'
 
-import flatMap from 'array.prototype.flatmap'
-flatMap.shim()
-import matchAll from 'string.prototype.matchall'
-matchAll.shim()
+// import flatMap from 'array.prototype.flatmap'
+// flatMap.shim()
+// import matchAll from 'string.prototype.matchall'
+// matchAll.shim()
 
 declare const IOUtils: any
 
@@ -156,7 +157,7 @@ declare const doExport: () => void
 import * as DateParser from '../../content/dateparser'
 // import * as Extra from '../../content/extra'
 import itemCreators from '../../gen/items/creators.json'
-import { log } from '../../content/logger'
+import { log, $dump } from '../../content/logger'
 import { Collection } from '../../gen/typings/serialized-item'
 // import { CSL_MAPPINGS } from '../../gen/items/items'
 
@@ -165,7 +166,53 @@ import jurism_schema from '../../schema/jurism.json'
 const schema = client.slug === 'zotero' ? zotero_schema : jurism_schema
 import dateFormats from '../../schema/dateFormats.json'
 
-export const TranslationWorker: { job?: Partial<Job> } = {}
+class Running {
+  public serialized: Item[]
+  public exported: Map<number, ExportedItem>
+  public context: number
+  public hits = 0
+  public misses = 0
+
+  private pending: ExportedItem[] = []
+
+  constructor(public job: Job) {
+  }
+
+  public async load(): Promise<void> {
+    const itemIDs = this.job.data.items
+    const translator = this.job.translator
+    const context = this.job.autoExport || Context.make(this.job.translator, this.job.options)
+    if (context) {
+      ({ context: this.context, items: this.exported } = await Cache.Exports.load(translator, context))
+    }
+    else {
+      this.context = -1
+      this.exported = new Map
+    }
+    this.serialized = await Cache.Serialized.get(itemIDs)
+  }
+
+  public fetch(itemID: number): ExportedItem {
+    const item = this.exported.get(itemID)
+    if (item) {
+      this.hits++
+    }
+    else {
+      this.misses++
+    }
+    return item
+  }
+
+  public store(item: Omit<ExportedItem, 'context'>): void {
+    this.pending.push({ ...item, context: this.context })
+  }
+
+  public async flush(): Promise<void> {
+    await Cache.Exports.store(this.pending)
+    Cache.updateStats(this.hits, this.misses)
+    this.pending = []
+  }
+}
 
 class WorkerZoteroBetterBibTeX {
   public clientName = client.name
@@ -182,7 +229,7 @@ class WorkerZoteroBetterBibTeX {
   }
 
   public setProgress(percent: number) {
-    Zotero.send({ kind: 'progress', percent, translator: TranslationWorker.job.translator, autoExport: TranslationWorker.job.autoExport })
+    Zotero.send({ kind: 'progress', percent, translator: Zotero.running.job.translator, autoExport: Zotero.running.job.autoExport })
   }
 
   public getContents(path: string): string {
@@ -373,32 +420,27 @@ class WorkerZotero {
   public Date = ZD
   public Schema: any
 
-  public async start() {
+  public async start(job: Job): Promise<{ output: string; cacheRate: number }> {
     this.Date.init(dateFormats)
+    Object.assign(job.preferences, { platform: client.platform, client: client.slug })
+    this.running = new Running(job)
+    await this.running.load()
 
-    TranslationWorker.job.preferences.platform = client.platform
-    TranslationWorker.job.preferences.client = client.slug
     this.output = ''
 
-    this.running = await Cache.initExport(
-      TranslationWorker.job.data.items,
-      TranslationWorker.job.translator,
-      TranslationWorker.job.autoExport || Context.make(TranslationWorker.job.translator, TranslationWorker.job.options)
-    )
-
-    if (TranslationWorker.job.options.exportFileData) {
+    if (job.options.exportFileData) {
       for (const item of this.running.serialized) {
         this.patchAttachments(item)
       }
     }
 
-    if (TranslationWorker.job.output) {
-      if (TranslationWorker.job.options.exportFileData) { // output path is a directory
-        this.exportDirectory = TranslationWorker.job.output
+    if (job.output) {
+      if (job.options.exportFileData) { // output path is a directory
+        this.exportDirectory = job.output
         this.exportFile = PathUtils.join(this.exportDirectory, `${Path.basename(this.exportDirectory)}.${ZOTERO_TRANSLATOR_INFO.target}`)
       }
       else {
-        this.exportFile = TranslationWorker.job.output
+        this.exportFile = job.output
         const ext = `.${ ZOTERO_TRANSLATOR_INFO.target }`
         if (!this.exportFile.endsWith(ext)) this.exportFile += ext
         this.exportDirectory = PathUtils.parent(this.exportFile)
@@ -413,6 +455,11 @@ class WorkerZotero {
     doExport()
 
     if (this.exportFile) await IOUtils.writeUTF8(this.exportFile, this.output)
+
+    await this.running.flush()
+    const cacheRate = this.running.hits + this.running.misses ? this.running.hits / (this.running.hits + this.running.misses) : 0
+    this.running = null
+    return { output: Zotero.output, cacheRate }
   }
 
   public send(message: Message) {
@@ -424,15 +471,15 @@ class WorkerZotero {
   }
 
   public getHiddenPref(pref) {
-    return TranslationWorker.job.preferences[pref.replace(/^better-bibtex\./, '')]
+    return this.running.job.preferences[pref.replace(/^better-bibtex\./, '')]
   }
 
   public getOption(option) {
-    return TranslationWorker.job.options[option]
+    return this.running.job.options[option]
   }
 
   public debug(message) {
-    if (TranslationWorker.job.debugEnabled) this.send({ kind: 'debug', message })
+    if (!this.running || this.running.job.debugEnabled) this.send({ kind: 'debug', message })
   }
 
   public logError(err: Error | string) {
@@ -446,12 +493,12 @@ class WorkerZotero {
   }
 
   public nextItem() {
-    this.send({ kind: 'item', item: this.running.serialized.length - TranslationWorker.job.data.items.length })
+    this.send({ kind: 'item', item: this.running.serialized.length - this.running.job.data.items.length })
     return this.running.serialized.shift()
   }
 
   public nextCollection(): Collection {
-    return TranslationWorker.job.data.collections.shift()
+    return this.running.job.data.collections.shift()
   }
 
   private patchAttachments(item): void {
@@ -479,20 +526,23 @@ class WorkerServer extends WorkerServerBase implements ExporterInterface {
   async initialize(config: { CSL_MAPPINGS: any; dateFormatsJSON: any; lastUpdated: string }): Promise<void> {
     Zotero.Schema = { ...config.CSL_MAPPINGS }
     ZD.init(config.dateFormatsJSON)
-    await Cache.open(config.lastUpdated)
+
+    try {
+      $dump(`json-rpc: initialize: cache open ${config.lastUpdated}`)
+      await Cache.open(config.lastUpdated)
+      $dump('json-rpc: initialize: cache open check')
+    }
+    catch (err) {
+      $dump(`json-rpc: initialize: cache open boo: ${err.message}\n${err.stack}`)
+    }
   }
 
   async start(job: Job): Promise<{ output: string; cacheRate: number }> {
-    TranslationWorker.job = job
-
-    importScripts(`chrome://zotero-better-bibtex/content/resource/${ TranslationWorker.job.translator }.js`)
+    importScripts(`chrome://zotero-better-bibtex/content/resource/${ job.translator }.js`)
     try {
-      await Zotero.start()
-      const cacheRate = Zotero.running.hits + Zotero.running.misses ? Zotero.running.hits / (Zotero.running.hits + Zotero.running.misses) : 0
-      return { output: Zotero.output, cacheRate }
+      return await Zotero.start(job)
     }
     finally {
-      await Zotero.running?.flush()
       Zotero.running = null
     }
   }

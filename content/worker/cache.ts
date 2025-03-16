@@ -34,8 +34,6 @@ import stringify from 'safe-stable-stringify'
 
 import { pick, unpick } from '../object'
 
-var IDBKeyRange // eslint-disable-line no-var
-
 import { byLabel } from '../../gen/translators'
 import { version } from '../../gen/version.json'
 // import { main as probe } from './cache-test'
@@ -70,49 +68,6 @@ async function allSettled(promises): Promise<string> {
   }
   catch (err) {
     return `[[${err.message}]]`
-  }
-}
-
-export class Running {
-  public serialized: Item[]
-  public exported: Map<number, ExportedItem>
-  public context: number
-  public hits = 0
-  public misses = 0
-
-  private pending: ExportedItem[] = []
-
-  public async load(itemIDs: number[], translator: string, context: string): Promise<Running> {
-    if (context) {
-      ({ context: this.context, items: this.exported } = await Cache.Exports.load(translator, context))
-    }
-    else {
-      this.context = -1
-      this.exported = new Map
-    }
-    this.serialized = await Cache.Serialized.get(itemIDs)
-    return this
-  }
-
-  public fetch(itemID: number): ExportedItem {
-    const item = this.exported.get(itemID)
-    if (item) {
-      this.hits++
-    }
-    else {
-      this.misses++
-    }
-    return item
-  }
-
-  public store(item: Omit<ExportedItem, 'context'>): void {
-    this.pending.push({ ...item, context: this.context })
-  }
-
-  public async flush(): Promise<void> {
-    await Cache.Exports.store(this.pending)
-    Cache.updateStats(this)
-    this.pending = []
   }
 }
 
@@ -163,7 +118,8 @@ export class ExportCache {
     const tx = Cache.db.transaction(['ExportContext', 'Export'], 'readwrite')
     const exportContextStore = tx.objectStore('ExportContext')
     const exportContextIndex = exportContextStore.index('translator')
-    const contextIDs: number[] = await exportContextIndex.getAllKeys<number>(IDBKeyRange.only(translator))
+    // https://github.com/MockingMagician/promised-db/issues/12
+    const contextIDs: number[] = await exportContextIndex.getAllKeys<number>(translator as never)
 
     if (contextIDs.length > 0) {
       const deletes: Promise<void>[] = []
@@ -506,13 +462,9 @@ class $Cache implements CacheInterface {
     return count
   }
 
-  public async initExport(itemIDs: number[], translator: string, path: string): Promise<Running> {
-    return await (new Running).load(itemIDs, translator, path)
-  }
-
-  public updateStats(run: Running): void {
+  public updateStats(hits: number, misses: number): void {
     // average over 10 runs
-    this.cacheRate[''] = this.cacheRate[''] + (run.hits - (this.cacheRate[''] * (run.hits + run.misses))) / 10
+    if (hits + misses) this.cacheRate[''] = this.cacheRate[''] + (hits - (this.cacheRate[''] * (hits + misses))) / 10
   }
 
   public async dump(): Promise<Record<string, any>> {
@@ -553,7 +505,9 @@ class $Cache implements CacheInterface {
   }
 
   public async drop(names: '*' | string[]): Promise<void> {
-    if (names === '*') names = this.db.objectStoreNames
+    names = !names || names === '*' ? this.db.objectStoreNames : names.filter(name => this.db.objectStoreNames.includes(name))
+    if (!names.length) return
+
     const tx = Cache.db.transaction(names, 'readwrite')
     for (const name of names) {
       const store = tx.objectStore(name)
