@@ -176,34 +176,9 @@ class InstallLastRunner(Runner):
     if install: locations.append(install)
     return locations
 
-def cancel_proxy():
-  for i in range(20):
-    print('cancel-proxy: looking for proxy auth window')
-    result = subprocess.run(['wmctrl', '-l'], capture_output=True, text=True)
-    window_id = None
-    for line in result.stdout.splitlines():
-      if 'Authentication Required - Zotero' in line:
-        window_id = line.split()[0]
-        break
-
-    time.sleep(5)
-    if window_id:
-      print('cancel proxy:', window_id)
-      time.sleep(3)
-      subprocess.run(['xdotool', 'windowactivate', '--sync', window_id, 'key', 'Escape'])
-      return
-
-  print('cancel proxy: no window found')
-
 def main():
   config = Configuration()
-  thread = None
-  if platform.system() == 'Linux':
-    thread = threading.Thread(target=cancel_proxy)
-    thread.start()
   sys.exit(run_behave(config, runner_class=InstallLastRunner))
-  if thread:
-    thread.join()
 
 if args.headless:
   from xvfbwrapper import Xvfb
