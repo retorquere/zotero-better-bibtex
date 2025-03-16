@@ -21,6 +21,8 @@ const patcher = module.exports.patcher = new class {
   load(dir) {
     let filter = []
     for (let patchfile of fs.readdirSync(dir)) {
+      if (patchfile.includes('xmldom-lib')) continue
+
       patchfile = path.join(dir, patchfile)
       const patches = diff.parsePatch(fs.readFileSync(patchfile, 'utf-8'))
       if (patches.length !== 1) throw new Error(`${patchfile} has ${patches.length} patches, expected 1`)
