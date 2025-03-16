@@ -242,6 +242,7 @@ export const Translators = new class {
 
     items = items.filter(item => !item.isAnnotation() && !item.isFeedItem && (item.isRegularItem() || item.isNote() || item.isAttachment()))
     const missing = new Set(await Cache.Serialized.missing(items.map(item => item.id)))
+    log.info('json-rpc: cache fill', missing.size, '/', items.length)
     await Cache.Serialized.fill(await serializer.serialize(items.filter(item => missing.has(item.id))))
 
     config.data.items = items.map(item => item.id)
@@ -257,6 +258,7 @@ export const Translators = new class {
     }
 
     const { cacheRate, output } = await Exporter.start(config)
+    log.info(`json-rpc: export cache use ${cacheRate}%`)
     if (job.autoExport) Cache.rate[job.autoExport] = cacheRate
     return output
   }
