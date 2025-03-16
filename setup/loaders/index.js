@@ -10,64 +10,6 @@ const child_process = require('child_process')
 const jsesc = require('jsesc')
 const pug = require('pug')
 
-const patcher = module.exports.patcher = new class {
-  constructor() {
-    this.current = null
-    this.silent = false
-    this.patched = {}
-    this.used = new Set
-  }
-
-  load(dir) {
-    let filter = []
-    for (let patchfile of fs.readdirSync(dir)) {
-      if (patchfile.includes('xmldom-lib')) continue
-
-      patchfile = path.join(dir, patchfile)
-      const patches = diff.parsePatch(fs.readFileSync(patchfile, 'utf-8'))
-      if (patches.length !== 1) throw new Error(`${patchfile} has ${patches.length} patches, expected 1`)
-      for (const patch of patches) {
-        if (!patch.oldFileName.endsWith('.js')) throw new Error(`${patchfile} patches non-js file ${patch.oldFileName}`)
-        if (patch.newFileName != patch.oldFileName) {
-          throw new Error(`${patchfile} renames ${JSON.stringify(patch.oldFileName)} to ${JSON.stringify(patch.newFileName)}`)
-        }
-        if (!patch.oldFileName.match(/^(node_modules|submodules|gen)/)) {
-          throw new Error(`${patchfile} patches ${JSON.stringify(patch.oldFileName)} outside node_modules/submodules`)
-        }
-        filter.push(patch.oldFileName)
-
-        const patched = path.join(process.cwd(), patch.oldFileName)
-
-        if (this.patched[patched]) throw new Error(`${patchfile} re-patches ${JSON.stringify(patch.oldFileName)}`)
-        if (!fs.existsSync(patched)) throw new Error(`${patchfile} patches non-existent ${JSON.stringify(patch.oldFileName)}`)
-
-        const cmd = `patch --quiet -o - ${JSON.stringify(patched)} ${JSON.stringify(patchfile)}`
-        this.patched[patched] = child_process.execSync(cmd).toString()
-        if (!this.patched[patched]) throw new Error(`${cmd} failed:\n${stderr || ''}`)
-      }
-    }
-    
-    filter = filter
-      .map(p => p.replace(/[.*+?^${}()\|\[\]\\\/]/g, c => c === '[' || c === ']' ? `\\${c}` : `[${c}]`))
-      .map(p => `([/]${p}$)`)
-      .join('|')
-
-    this.plugin = {
-      name: 'patcher',
-      setup(build) {
-        build.onLoad({ filter: new RegExp(filter) }, (args) => {
-          const contents = patcher.patched[args.path]
-          if (!contents) throw new Error(`${args.path} should have been patched, but no patch was found among ${JSON.stringify(Object.keys(patcher.patched))}`)
-          patcher.used.add(args.path)
-          if (!patcher.silent) console.log('  loading patched', path.relative(process.cwd(), args.path))
-          // , Object.keys(patcher.patched).filter(p => !patcher.used.has(p)).length, 'unused')
-          return { contents, loader: 'js' }
-        })
-      }
-    }
-  }
-}
-
 module.exports.text = {
   name: 'text',
   setup(build) {
