@@ -85,7 +85,7 @@ async function pathSearch(bin: string, installationDirectory: { mac?: string[]; 
         return exe
       }
       catch (err) {
-        log.error('path-search:', err)
+        log.error('path-search for', bin + ext, ':', err)
       }
     }
   }
