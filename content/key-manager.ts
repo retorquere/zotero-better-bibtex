@@ -204,24 +204,31 @@ export const KeyManager = new class _KeyManager {
       }
     }
 
+    const save: Set<number> = new Set
     const items = (await getItemsAsync(ids)).filter(item => {
       // these get no key
       if (item.isFeedItem || !item.isRegularItem()) return false
 
-      // leave pinned keys alone
-      if (Extra.get(item.getField('extra'), 'zotero', { citationKey: true }).extraFields.citationKey) return false
+      const pinned = Extra.get(item.getField('extra'), 'zotero', { citationKey: true })
+      if (pinned.extraFields.citationKey) {
+        if (manual) {
+          item.setField('extra', pinned.extra)
+          save.add(item.id)
+        }
+        else {
+          return false
+        }
+      }
 
       return true
     })
 
     if (!items.length) return
-    ids = items.map(item => item.id as number) as number[]
 
     // clear before refresh so they can update without hitting "claimed keys" in the deleted set
-    this.clear(ids)
+    this.clear(items.map(item => item.id as number))
 
-    const updates: Zotero.Item[] = []
-    const progress: Progress = ids.length > 10 ? new Progress(ids.length, 'Refreshing citation keys') : null
+    const progress: Progress = items.length > 10 ? new Progress(items.length, 'Refreshing citation keys') : null
     for (const item of items) {
       const citationKey = this.update(item)
 
@@ -236,17 +243,20 @@ export const KeyManager = new class _KeyManager {
         else {
           item.setField('extra', aliases.extra)
         }
-        await item.saveTx()
-        await Zotero.Promise.delay(10)
-      }
-      else {
-        updates.push(item)
+        save.add(item.id)
       }
 
       progress?.next()
     }
     progress?.done()
 
+    for (const item of items) {
+      if (!save.has(item.id)) continue
+      await item.saveTx()
+      await Zotero.Promise.delay(10)
+    }
+
+    const updates: Zotero.Item[] = items.filter(item => !save.has(item.id))
     if (updates.length) void Events.emit('items-changed', { items: updates, action: 'modify', reason: 'refresh' })
   }
 
