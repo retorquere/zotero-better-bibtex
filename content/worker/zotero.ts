@@ -172,10 +172,17 @@ class Running {
   public context: number
   public hits = 0
   public misses = 0
+  public items: number
 
   private pending: ExportedItem[] = []
 
+  public get progress() {
+    if (!this.serialized.length || !this.items) return 100
+    return ((this.items - this.serialized.length) / this.items) * 100
+  }
+
   constructor(public job: Job) {
+    this.items = job.data.items.length
   }
 
   public async load(): Promise<void> {
@@ -421,6 +428,7 @@ class WorkerZotero {
   public Schema: any
 
   public async start(job: Job): Promise<{ output: string; cacheRate: number }> {
+    this.BetterBibTeX.setProgress(0)
     this.Date.init(dateFormats)
     Object.assign(job.preferences, { platform: client.platform, client: client.slug })
     this.running = new Running(job)
@@ -459,6 +467,7 @@ class WorkerZotero {
     await this.running.flush()
     const cacheRate = this.running.hits + this.running.misses ? this.running.hits / (this.running.hits + this.running.misses) : 0
     this.running = null
+    this.BetterBibTeX.setProgress(100)
     return { output: Zotero.output, cacheRate }
   }
 
@@ -493,7 +502,7 @@ class WorkerZotero {
   }
 
   public nextItem() {
-    this.send({ kind: 'item', item: this.running.serialized.length - this.running.job.data.items.length })
+    this.BetterBibTeX.setProgress(this.running.progress)
     return this.running.serialized.shift()
   }
 
