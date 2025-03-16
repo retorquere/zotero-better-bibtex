@@ -213,7 +213,7 @@ class ItemListener extends ZoteroListener {
           }
         }
       }
-      const parentIDs: number[] = []
+      const parentIDs: Set<number> = new Set
       // safe to use Zotero.Items.get(...) rather than Zotero.Items.getAsync here
       // https://groups.google.com/forum/#!topic/zotero-dev/99wkhAk-jm0
 
@@ -225,19 +225,21 @@ class ItemListener extends ZoteroListener {
         if (item.isFeedItem) return false
 
         if (item.isAttachment() || item.isNote() || item.isAnnotation?.()) { // should I keep top-level notes/attachments for BBT-JSON?
-          if (typeof item.parentID === 'number' && !ids.includes(item.parentID)) parentIDs.push(item.parentID)
+          if (typeof item.parentID === 'number') parentIDs.add(item.parentID)
           return false
         }
 
         return true
       })
 
+      log.debug('3135: items changed:', ids, 'with parents', [...parentIDs])
+
       await Events.itemsChanged(action, ids)
       if (items.length) await Events.emit('items-changed', { items, action })
 
       let parents: Zotero.Item[] = []
-      if (parentIDs.length) {
-        parents = Zotero.Items.get(parentIDs)
+      if (parentIDs.size) {
+        parents = Zotero.Items.get([...parentIDs])
         void Events.emit('items-changed', { items: parents, action: 'modify', reason: `parent-${ action }` })
       }
 
