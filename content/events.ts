@@ -225,7 +225,7 @@ class ItemListener extends ZoteroListener {
         if (item.isFeedItem) return false
 
         if (item.isAttachment() || item.isNote() || item.isAnnotation?.()) { // should I keep top-level notes/attachments for BBT-JSON?
-          if (typeof item.parentID === 'number' && ids.includes(item.parentID)) parentIDs.push(item.parentID)
+          if (typeof item.parentID === 'number' && !ids.includes(item.parentID)) parentIDs.push(item.parentID)
           return false
         }
 
