@@ -157,7 +157,7 @@ declare const doExport: () => void
 import * as DateParser from '../../content/dateparser'
 // import * as Extra from '../../content/extra'
 import itemCreators from '../../gen/items/creators.json'
-import { log, $dump } from '../../content/logger'
+import { log } from '../../content/logger'
 import { Collection } from '../../gen/typings/serialized-item'
 // import { CSL_MAPPINGS } from '../../gen/items/items'
 
@@ -535,15 +535,7 @@ class WorkerServer extends WorkerServerBase implements ExporterInterface {
   async initialize(config: { CSL_MAPPINGS: any; dateFormatsJSON: any; lastUpdated: string }): Promise<void> {
     Zotero.Schema = { ...config.CSL_MAPPINGS }
     ZD.init(config.dateFormatsJSON)
-
-    try {
-      $dump(`json-rpc: initialize: cache open ${config.lastUpdated}`)
-      await Cache.open(config.lastUpdated)
-      $dump('json-rpc: initialize: cache open check')
-    }
-    catch (err) {
-      $dump(`json-rpc: initialize: cache open boo: ${err.message}\n${err.stack}`)
-    }
+    await Cache.open(config.lastUpdated)
   }
 
   async start(job: Job): Promise<{ output: string; cacheRate: number }> {
