@@ -428,11 +428,11 @@ class WorkerZotero {
   public Schema: any
 
   public async start(job: Job): Promise<{ output: string; cacheRate: number }> {
-    this.BetterBibTeX.setProgress(0)
     this.Date.init(dateFormats)
     Object.assign(job.preferences, { platform: client.platform, client: client.slug })
     this.running = new Running(job)
     await this.running.load()
+    this.BetterBibTeX.setProgress(0)
 
     this.output = ''
 
@@ -466,8 +466,8 @@ class WorkerZotero {
 
     await this.running.flush()
     const cacheRate = this.running.hits + this.running.misses ? this.running.hits / (this.running.hits + this.running.misses) : 0
-    this.running = null
     this.BetterBibTeX.setProgress(100)
+    this.running = null
     return { output: Zotero.output, cacheRate }
   }
 
