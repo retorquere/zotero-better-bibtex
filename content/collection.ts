@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-return */
-
 import { get as getLibrary } from './library'
 
 class CollectionError extends Error {
@@ -17,7 +15,7 @@ class CollectionError extends Error {
 }
 
 async function getCollection(parent, name, path, create) {
-  const children = parent instanceof Zotero.Library ? Zotero.Collections.getByLibrary(parent.id) : Zotero.Collections.getByParent(parent.id)
+  const children = parent instanceof Zotero.Library ? Zotero.Collections.getByLibrary(parent.libraryID) : Zotero.Collections.getByParent(parent.id)
   let found = children.filter(coll => coll.name === name)
   switch (found.length) {
     case 0:
@@ -54,7 +52,7 @@ export async function get(path: string, create = false): Promise<any> {
   const root = names.shift()
   if (names.length === 0) throw new CollectionError('path is too short', 'notfound')
 
-  let collection = root.match(/^[0-9]+$/) ? Zotero.Libraries.get(root) : getLibrary(root)
+  let collection = root.match(/^\d+$/) ? Zotero.Libraries.get(parseInt(root)) : getLibrary(root)
   if (!collection) throw new CollectionError(`Library ${ root } not found`, 'notfound')
   let tmp_path = `/${ root }`
 

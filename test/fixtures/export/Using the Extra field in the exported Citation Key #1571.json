@@ -9,7 +9,7 @@
     "preferences": {
       "baseAttachmentPath": "/Users/Hermes/GSuite/AppSyncs/ZoteroStorage",
       "citekeyFold": false,
-      "citekeyFormat": "[auth:postfix=_][extra=vns:postfix=_][year]",
+      "citekeyFormat": "auth(n=0,m=1,creator=\"*\",initials=false).fold.postfix(_) + extra(vns).postfix(_) + year",
       "extraMergeCSL": true,
       "extraMergeCitekeys": true,
       "extraMergeTeX": true,
@@ -44,7 +44,7 @@
       "itemID": 1,
       "itemType": "conferencePaper",
       "libraryCatalog": "ACM Digital Library",
-      "pages": "43\u201352",
+      "pages": "43–52",
       "place": "New York, NY, USA",
       "publicationTitle": "Proceedings of the 2013 International Workshop on Principles of Software Evolution",
       "publisher": "Association for Computing Machinery",

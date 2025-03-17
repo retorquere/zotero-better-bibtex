@@ -10,7 +10,7 @@
       "asciiBibTeX": false,
       "biblatexExtendedNameFormat": true,
       "bibtexURL": "url",
-      "citekeyFormat": "[auth:lower][year]",
+      "citekeyFormat": "auth(n=0,m=1,creator=\"*\",initials=false).fold.lower + year",
       "postscript": "if (Translator.BetterBibTeX && item.itemType === 'conferencePaper' && item.extra) {\n    const lines = item.extra.split('\\n')\n    for (let line of lines) {\n        let matches = /^([A-Za-z0-9]+): *(.+)$/.exec(line)\n        if (matches === null || matches[1] !== 'Sponsor') {\n            continue\n        }\n        reference.add({name: 'organization', value: matches[2]})\n    }\n}\n\n//if (Translator.BetterBibTeX && item.itemType === 'conferencePaper' && item.extra && item.publisher) {\n//  Zotero.debug(JSON.stringify(item))\n//\n//    var event_place = ''\n//    var publisher_place = ''\n//\n//    const lines = item.extra.split('\\n')\n//    for (let line of lines) {\n//        let matches = /^([A-Za-z0-9]+): *(.+)$/.exec(line)\n//        if (matches !== null && matches[1] === 'Event Place') {\n//            event_place = matches[2]\n//        } else if (matches !== null && matches[1] === 'Publisher Place') {\n//            publisher_place = matches[2]\n//        }\n//    }\n//\n//    if (event_place !== '' && publisher_place !== '') {\n//        reference.add({name: 'address', value: event_place})\n//        reference.add({name: 'publisher', value: item.publisher + ', ' + publisher_place})\n//    }\n//}",
       "skipFields": "abstract,file,keywords,note"
     }
@@ -60,7 +60,7 @@
       "place": "Waltham, MA, USA",
       "publicationTitle": "High performance parallelism pearls: multicore and many-core programming approaches",
       "publisher": "Morgan Kaufmann",
-      "rights": "\u00a9 2015 Elsevier Inc.",
+      "rights": "© 2015 Elsevier Inc.",
       "shortTitle": "Sparse matrix-vector multiplication",
       "tags": [
         {
@@ -108,7 +108,7 @@
           "type": 1
         },
         {
-          "tag": "\u00admultiplication",
+          "tag": "­multiplication",
           "type": 1
         },
         {

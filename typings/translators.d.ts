@@ -1,6 +1,7 @@
 import { Item, Attachment, Collection, Tag } from '../gen/typings/serialized-item'
 
 export namespace Translators {
+  /*
   namespace Worker {
     type Environment = {
       version: string
@@ -9,34 +10,18 @@ export namespace Translators {
       localeDateOrder: string
     }
 
-    type Job = {
-      translator: string
-      autoExport?: string
-
-      preferences: any
-      options: any
-
-      output: string
-      debugEnabled: boolean
-
-      data?: {
-        items: number[]
-        collections: Collection[]
-      }
-    }
-
     type Message = 
         { kind: 'initialize', CSL_MAPPINGS: any, dateFormatsJSON: any }
+      | { kind: 'terminate' }
       | { kind: 'configure', environment: Environment }
       | { kind: 'start', config: Job }
-      | { kind: 'done', output: boolean | string }
+      | { kind: 'done', output: string, cacheRate: number }
       | { kind: 'debug', message: string }
       | { kind: 'error', message: string, stack?: string }
       | { kind: 'item', item: number }
-      | { kind: 'ping' }
-      | { kind: 'stop' }
       | { kind: 'progress', percent: number, translator: string, autoExport: string }
   }
+  */
 
   namespace BibTeX {
     interface Field {
@@ -88,7 +73,6 @@ export namespace Translators {
     minVersion: string
     maxVersion: string
     translatorType: number
-    browserSupport: string
     inRepository: false
     priority: number
     target: string

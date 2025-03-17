@@ -1,0 +1,38 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "preferences": {
+      "DOIandURL": "doi",
+      "autoAbbrev": true,
+      "autoPinDelay": 1,
+      "citekeyFormat": "auth.lower+year+shorttitle(3,3)+type.abbr(4).capitalize",
+      "keyConflictPolicy": "change",
+      "keyScope": "global",
+      "language": "both",
+      "skipFields": "file,biburl,bibsource,abstract,eissn,timestamp"
+    }
+  },
+  "items": [
+    {
+      "ISBN": "978-0-521-19956-8",
+      "citationKey": "DBLP:books/daglib/0032853",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Scott",
+          "lastName": "Aaronson"
+        }
+      ],
+      "date": "2013",
+      "extra": [
+        "Citation Key: DBLP:books/daglib/0032853"
+      ],
+      "itemID": 1,
+      "itemType": "book",
+      "publisher": "Cambridge University Press",
+      "title": "Quantum computing since democritus",
+      "url": "http://www.cambridge.org/de/academic/subjects/physics/quantum-physics-quantum-information-and-quantum-computation/quantum-computing-democritus?format=PB"
+    }
+  ]
+}

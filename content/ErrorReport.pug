@@ -25,7 +25,6 @@ wizard#better-bibtex-error-report(
     tooltip#better-bibtex-error-report-info &better-bibtex_error-report_review;
     textbox#better-bibtex-report-current.plain(flex='1' readonly='true')
     textbox#better-bibtex-report-latest.plain.textbox-emph(flex='1' readonly='true')
-    textbox#better-bibtex-report-oom.plain.textbox-emph(hidden='true' flex='1' multiline='true' readonly='true' value='&better-bibtex_error-report_better-bibtex_oom.value;')
     textbox#better-bibtex-report-cache.plain(flex='1' readonly='true')
     checkbox.better-bibtex-error-report-facet#better-bibtex-error-report-include-errors(label='&better-bibtex_error-report_include-errors.label;')/
     checkbox.better-bibtex-error-report-facet#better-bibtex-error-report-include-log(label='&better-bibtex_error-report_include-log.label;')/
@@ -67,5 +66,5 @@ wizard#better-bibtex-error-report(
   script(src='chrome://zotero/content/include.js')
   script.
     window.addEventListener('load', function() {
-      (new Zotero.BetterBibTeX.ErrorReport).load(window).catch(err => Zotero.debug(`BBT.ErrorReport: error: ${err}`))
+      Zotero.BetterBibTeX.ErrorReport.load(window).catch(err => Zotero.debug(`BBT.ErrorReport: error: ${err}`))
     })

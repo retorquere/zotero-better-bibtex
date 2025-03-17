@@ -11,7 +11,7 @@
       "asciiBibLaTeX": true,
       "autoExport": "off",
       "automaticTags": false,
-      "citekeyFormat": "[auth:lower][shorttitle1_1][year]",
+      "citekeyFormat": "auth(n=0,m=1,creator=\"*\",initials=false).fold.lower + shorttitle(1,1) + year",
       "exportBibTeXStrings": "match+reverse",
       "exportBraceProtection": false,
       "importBibTeXStrings": false,
@@ -31,7 +31,7 @@
         {
           "creatorType": "author",
           "firstName": "Emil",
-          "lastName": "Bj\u00f6rnson"
+          "lastName": "Björnson"
         },
         {
           "creatorType": "author",

@@ -1,7 +1,5 @@
 <dl>
-  {{ range $func, $description := .Site.Data.citekeyformatters.functions }}
-    <dt>{{ $func | safeHTML }}</dt><dd>{{ $description | safeHTML }}</dd>
+  {{ range .Site.Data.citekeyformatters.functions }}
+    <dt>{{ .summary | safeHTML }}</dt><dd>{{ .description | safeHTML }}</dd>
   {{ end }}
 </dl>
-
-(type names marked <sup>JM</sup> are only available in Juris-M).

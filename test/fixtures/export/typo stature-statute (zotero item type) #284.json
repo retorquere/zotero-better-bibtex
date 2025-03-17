@@ -9,21 +9,21 @@
     "preferences": {
       "autoAbbrevStyle": "http://www.zotero.org/styles/fr-legal",
       "bibtexURL": "note",
-      "citekeyFormat": "[auth:lower][Title:fold:nopunct:skipwords:select,1,1:lower:alphanum:prefix,_][year:prefix,_][0]",
+      "citekeyFormat": "auth(n=0,m=1,creator=\"*\",initials=false).fold.lower + Title.transliterate.nopunct.skipwords.select(1,1).lower.alphanum.prefix(_) + year.prefix(_) + postfix(\"-%(n)s\")",
       "skipFields": "file,editora,editoratype,editorb,editorbtype"
     }
   },
   "items": [
     {
-      "abstractNote": "JORF n\u00b00137 du 16 juin 2009 page 9784\ntexte n\u00b0 1",
+      "abstractNote": "JORF n°0137 du 16 juin 2009 page 9784\ntexte n° 1",
       "code": "JORF",
       "date": "15 juin 2009",
       "itemID": 1,
       "itemType": "statute",
-      "language": "fran\u00e7ais",
+      "language": "français",
       "number": "PRMX0908015L",
       "pages": "9784",
-      "title": "Loi n\u00b0 2009-689 du 15 juin 2009 tendant \u00e0 modifier l\u2019ordonnance n\u00b0 58-1100 du 17 novembre 1958 relative au fonctionnement des assembl\u00e9es parlementaires et \u00e0 compl\u00e9ter le code de justice administrative",
+      "title": "Loi n° 2009-689 du 15 juin 2009 tendant à modifier l’ordonnance n° 58-1100 du 17 novembre 1958 relative au fonctionnement des assemblées parlementaires et à compléter le code de justice administrative",
       "url": "http://www.legifrance.gouv.fr/WAspad/UnTexteDeJorf?numjo=PRMX0908015L"
     }
   ]

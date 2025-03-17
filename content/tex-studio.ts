@@ -3,7 +3,7 @@ import { log } from './logger'
 import { orchestrator } from './orchestrator'
 
 // export singleton: https://k94n.com/es6-modules-single-instance-pattern
-export const TeXstudio = new class { // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
+export const TeXstudio = new class {
   public enabled: boolean
   public texstudio: string
 
@@ -29,7 +29,6 @@ export const TeXstudio = new class { // eslint-disable-line @typescript-eslint/n
       try {
         const pane = Zotero.getActiveZoteroPane() // can Zotero 5 have more than one pane at all?
         const items = pane.getSelectedItems()
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-return
         citation = items.map(item => Zotero.BetterBibTeX.KeyManager.get(item.id).citationKey).filter(citekey => citekey).join(',')
       }
       catch (err) { // zoteroPane.getSelectedItems() doesn't test whether there's a selection and errors out if not

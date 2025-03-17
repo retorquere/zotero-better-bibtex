@@ -1,0 +1,54 @@
+diff --git a/node_modules/sprintf-js/src/sprintf.js b/node_modules/sprintf-js/src/sprintf.js
+index 65d6324..cc46bd6 100644
+--- a/node_modules/sprintf-js/src/sprintf.js
++++ b/node_modules/sprintf-js/src/sprintf.js
+@@ -30,6 +30,10 @@
+         return sprintf.apply(null, [fmt].concat(argv || []))
+     }
+ 
++    function optional(v) {
++        return typeof v === 'undefined' ? '' : v
++    }
++
+     function sprintf_format(parse_tree, argv) {
+         var cursor = 1, tree_length = parse_tree.length, arg, output = '', i, k, ph, pad, pad_character, pad_length, is_positive, sign
+         for (i = 0; i < tree_length; i++) {
+@@ -44,18 +48,18 @@
+                         if (arg == undefined) {
+                             throw new Error(sprintf('[sprintf] Cannot access property "%s" of undefined value "%s"', ph.keys[k], ph.keys[k-1]))
+                         }
+-                        arg = arg[ph.keys[k]]
++                        arg = optional(arg[ph.keys[k]])
+                     }
+                 }
+                 else if (ph.param_no) { // positional argument (explicit)
+-                    arg = argv[ph.param_no]
++                    arg = optional(argv[ph.param_no])
+                 }
+                 else { // positional argument (implicit)
+                     arg = argv[cursor++]
+                 }
+ 
+                 if (re.not_type.test(ph.type) && re.not_primitive.test(ph.type) && arg instanceof Function) {
+-                    arg = arg()
++                    arg = optional(arg())
+                 }
+ 
+                 if (re.numeric_arg.test(ph.type) && (typeof arg !== 'number' && isNaN(arg))) {
+@@ -132,7 +136,7 @@
+                     pad_character = ph.pad_char ? ph.pad_char === '0' ? '0' : ph.pad_char.charAt(1) : ' '
+                     pad_length = ph.width - (sign + arg).length
+                     pad = ph.width ? (pad_length > 0 ? pad_character.repeat(pad_length) : '') : ''
+-                    output += ph.align ? sign + arg + pad : (pad_character === '0' ? sign + pad + arg : pad + sign + arg)
++                    if (typeof arg === 'number' || arg) output += ph.align ? sign + arg + pad : (pad_character === '0' ? sign + pad + arg : pad + sign + arg)
+                 }
+             }
+         }
+@@ -211,6 +215,7 @@
+      */
+     /* eslint-disable quote-props */
+     if (typeof exports !== 'undefined') {
++        exports['parse'] = sprintf_parse
+         exports['sprintf'] = sprintf
+         exports['vsprintf'] = vsprintf
+     }

@@ -9,7 +9,7 @@
     "preferences": {
       "asciiBibLaTeX": true,
       "bibtexURL": "url",
-      "citekeyFormat": "[auth:lower]_[shorttitle1_1:lower]_[year]",
+      "citekeyFormat": "auth(n=0,m=1,creator=\"*\",initials=false).fold.lower + \"_\" + shorttitle(1,1).lower + \"_\" + year",
       "itemObserverDelay": 100,
       "skipFields": "file"
     }

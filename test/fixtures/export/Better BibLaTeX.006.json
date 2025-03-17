@@ -5,7 +5,7 @@
     "localeDateOrder": "ymd",
     "preferences": {
       "bibtexURL": "note",
-      "citekeyFormat": "[auth][year]"
+      "citekeyFormat": "auth(n=0,m=1,creator=\"*\",initials=false).fold + year"
     }
   },
   "items": [
@@ -15,7 +15,7 @@
       ],
       "itemID": 1,
       "itemType": "journalArticle",
-      "title": "non-breaking space: ; accented characters: \u00f1 and \u00f1; tilde in URL: http://example.com/~user"
+      "title": "non-breaking space: ; accented characters: ñ and ñ; tilde in URL: http://example.com/~user"
     }
   ]
 }

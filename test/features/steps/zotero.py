@@ -183,6 +183,7 @@ class Config:
 
 class Library:
   def __init__(self, path=None, body=None, client=None, variant='', ext=None):
+    #utils.print(f'\n\npath={path}, body={type(body)}, client={type(client)}, variant={variant}, ext={ext}')
     if path and not os.path.isabs(path):
       path = os.path.join(FIXTURES, path)
 

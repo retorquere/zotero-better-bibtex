@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/quotes, max-len */
+/* eslint-disable @stylistic/comma-spacing, @stylistic/quotes, max-len */
 
 declare const Zotero: any
 
@@ -46,7 +46,6 @@ it.preferences.forEach(pref => {
 })
 -%>
   get all(): Preferences {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return Object.keys(defaults).reduce((acc: Partial<Preferences>, pref: string) => { acc[pref] = this[pref]; return acc }, {} as Partial<Preferences>) as Preferences
   }
 }

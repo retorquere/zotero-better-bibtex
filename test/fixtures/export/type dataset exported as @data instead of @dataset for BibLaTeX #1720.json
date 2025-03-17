@@ -10,7 +10,7 @@
       "biblatexExtendedNameFormat": true,
       "bibtexURL": "url",
       "citekeyFold": false,
-      "citekeyFormat": "[auth:capitalize][year]",
+      "citekeyFormat": "auth(n=0,m=1,creator=\"*\",initials=false).fold.capitalize + year",
       "exportBraceProtection": false,
       "exportTitleCase": false,
       "itemObserverDelay": 100,

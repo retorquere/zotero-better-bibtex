@@ -5,7 +5,7 @@
 declare const Zotero: any
 
 import { RegularItem as Item } from '../../gen/typings/serialized-item'
-import type { ExportedItemMetadata } from '../../content/db/cache'
+import type { ExportedItemMetadata } from '../../content/worker/cache'
 import type { Translators } from '../../typings/translators'
 import * as DateParser from '../../content/dateparser'
 import fold2ascii from 'fold-to-ascii'
@@ -170,7 +170,8 @@ export class Entry {
   public eprintType = {
     arxiv: 'arXiv',
     jstor: 'JSTOR',
-    pubmed: 'PMID',
+    pmid: 'pubmed',
+    pmcid: 'pubmed',
     hdl: 'HDL',
     googlebooks: 'GoogleBooksID',
   }
@@ -404,7 +405,9 @@ export class Entry {
   }
 
   /** normalize dashes, mainly for use in `pages` */
-  public normalizeDashes(ranges: string): string {
+  public normalizeDashes(ranges: string | number): string {
+    if (typeof ranges === 'number') return `${ranges}`
+
     ranges = (ranges || '').trim()
 
     if (this.item.raw) return ranges
@@ -506,7 +509,7 @@ export class Entry {
 
       if (!this.inPostscript && !field.replace) {
         const value = field.bibtex ? 'bibtex' : 'value'
-        throw new Error(`duplicate field '${ field.name }' for ${ this.item.citationKey }: old: ${ this.has[field.name][value] }, new: ${ field[value] }`)
+        throw new Error(`duplicate field '${ field.name }' for ${ this.item.citationKey }: old: ${ this.has[field.name][value] }, new: ${ field[value] as string }`)
       }
 
       if (!field.replace) {
@@ -516,7 +519,7 @@ export class Entry {
           v_old = v_old.toLowerCase()
           v_new = v_new.toLowerCase()
         }
-        if (v_old !== v_new) this.quality_report.push(`duplicate "${ field.name }" ("${ this.has[field.name].value }") ignored`)
+        if (v_old !== v_new) this.quality_report.push(`duplicate "${ field.name }" ("${ this.has[field.name].value }") ignored`.replace(/\n/g, ' '))
       }
 
       delete this.has[field.name]
@@ -525,7 +528,7 @@ export class Entry {
     if (!field.bibtex) {
       let bibstring = ''
       if ((typeof field.value === 'number') || (field.bibtexStrings && (bibstring = this.getBibString(field.value)))) {
-        field.bibtex = `${ bibstring || field.value }`
+        field.bibtex = `${ bibstring || field.value as string }`
       }
       else {
         let value
@@ -1154,7 +1157,6 @@ export class Entry {
       from.shift()
       to.shift()
     }
-    // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
     return `..${ this.translation.paths.sep }`.repeat(from.length) + to.join(this.translation.paths.sep)
   }
 
@@ -1396,7 +1398,6 @@ export class Entry {
       in the label, use {\relax van} Gogh or something like this.
     */
 
-    // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
     if (name['non-dropping-particle']) family = new String(this._enc_creators_pad_particle(name['non-dropping-particle']) + family)
     if (Zotero.Utilities.XRegExp.test(family, this.re.startsWithLowercase) || Zotero.Utilities.XRegExp.test(family, this.re.hasLowercaseWord)) family = new String(family)
 
@@ -1489,7 +1490,7 @@ export class Entry {
 
     report = report.concat(this.quality_report)
 
-    let used_values: Array<string | number> = Object.values(this.has) // eslint-disable-line @typescript-eslint/array-type
+    let used_values: Array<string | number> = Object.values(this.has)
       .filter(field => typeof field.value === 'string' || typeof field.value === 'number')
       .map(field => `${ field.value }`)
       .filter(value => value)

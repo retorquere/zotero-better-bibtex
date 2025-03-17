@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-unsafe-argument, prefer-rest-params, @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-unsafe-return */
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 
 declare const Cc: any
 declare const Ci: any
@@ -88,7 +88,7 @@ export async function startup({ resourceURI, rootURI = resourceURI.spec }, reaso
     })
 
     await Zotero.BetterBibTeX.startup(BOOTSTRAP_REASONS[reason])
-    Zotero.PreferencePanes.register({
+    await Zotero.PreferencePanes.register({
       pluginID: 'better-bibtex@iris-advies.com',
       src: `${ rootURI }content/preferences.xhtml`,
       stylesheets: [`${ rootURI }content/preferences.css`],

@@ -132,6 +132,8 @@ def before_all(context):
   TestBin.load(context)
   context.memory = Munch(total=None, increase=None)
   context.zotero = Zotero(context.config.userdata)
+  context.tests = None
+  if 'test' in context.config.userdata: context.tests = [ test.lower() for test in json.loads(context.config.userdata['test']) ]
   setup_active_tag_values(active_tag_value_provider, context.config.userdata)
   # test whether the existing references, if any, have gotten a cite key
   if not 'import' in context.config.userdata:
@@ -149,7 +151,10 @@ def before_scenario(context, scenario):
     #scenario.skip(f'TESTED IN BIN {TestBin.test_in(scenario)}')
     scenario.skip()
     return
-  if 'test' in context.config.userdata and not any(test in scenario.name.lower() for test in context.config.userdata['test'].lower().split(',')):
+  #utils.print(scenario.name.lower())
+  #utils.print(json.dumps(context.tests))
+  #utils.print(json.dumps([test in scenario.name.lower() for test in context.tests]))
+  if context.tests and not any(test in scenario.name.lower() for test in context.tests):
     #scenario.skip(f"ONLY TESTING SCENARIOS WITH {context.config.userdata['test']}")
     scenario.skip()
     return

@@ -9,7 +9,7 @@
     "preferences": {
       "DOIandURL": "doi",
       "autoAbbrev": true,
-      "citekeyFormat": "[auth:lower][year][shorttitle3_3]",
+      "citekeyFormat": "auth(n=0,m=1,creator=\"*\",initials=false).fold.lower + year + shorttitle(3,3)",
       "postscript": "if (Translator.BetterTeX) {\n  // the bib(la)tex fields are ordered according to this array.\n  // If a field is not in this list, it will show up at after the ordered fields.\n  // https://github.com/retorquere/zotero-better-bibtex/issues/512\n\n  const order = ['author', 'editor', 'title', 'shorttitle', 'booktitle', 'journaltitle', 'shortjournal', 'edition', 'volume', 'pages', 'publisher', 'address', 'institution', 'location', 'date', 'issn', 'doi', 'url', 'urldate']\n  for (const field of order.concat(Object.keys(reference.has).filter(other => !order.includes(other)))) {\n    const value = reference.has[field]\n    if (value) {\n      delete reference.has[field]\n      reference.has[field] = value\n    }\n  }\n}\n",
       "qualityReport": true,
       "skipFields": "file, abstract, note"

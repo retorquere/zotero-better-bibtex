@@ -5,7 +5,7 @@
     "localeDateOrder": "ymd",
     "preferences": {
       "bibtexURL": "note",
-      "citekeyFormat": "[auth][year]"
+      "citekeyFormat": "auth(n=0,m=1,creator=\"*\",initials=false).fold + year"
     }
   },
   "items": [
@@ -17,10 +17,10 @@
           "lastName": "Seeley"
         }
       ],
-      "date": "January 30\u2013February 3, 1989",
+      "date": "January 30–February 3, 1989",
       "itemID": 3,
       "itemType": "conferencePaper",
-      "pages": "287\u2013304",
+      "pages": "287–304",
       "place": "San Diego, California, USA",
       "publicationTitle": "Proceedings of the Winter 1989 USENIX Conference",
       "publisher": "USENIX",
@@ -125,7 +125,7 @@
       "itemID": 5,
       "itemType": "conferencePaper",
       "libraryCatalog": "ACM Digital Library",
-      "pages": "203\u2013220",
+      "pages": "203–220",
       "place": "Austin, TX",
       "publicationTitle": "Proceedings of the 1986 ACM Conference on Computer-supported Cooperative Work (CSCW '86)",
       "publisher": "ACM",
@@ -180,7 +180,7 @@
       "date": "22-26 June 2015",
       "itemID": 1,
       "itemType": "journalArticle",
-      "pages": "493\u2013518",
+      "pages": "493–518",
       "publicationTitle": "Bulletin of Volcanology",
       "tags": [
         {
@@ -241,10 +241,10 @@
           "lastName": "Arbesman"
         }
       ],
-      "date": "June 18\u201323, 2017",
+      "date": "June 18–23, 2017",
       "itemID": 2,
       "itemType": "journalArticle",
-      "pages": "493\u2013518",
+      "pages": "493–518",
       "publicationTitle": "Bulletin of Volcanology",
       "tags": [
         {

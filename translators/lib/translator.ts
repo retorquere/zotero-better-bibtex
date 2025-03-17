@@ -1,9 +1,8 @@
 declare const Zotero: any
 declare const __estrace: any // eslint-disable-line no-underscore-dangle
 
-import { Shim } from '../../content/os'
 import * as client from '../../content/client'
-const $OS = client.is7 ? Shim : OS
+import { Path } from '../../content/file'
 
 import * as Prefs from '../../gen/preferences/meta'
 const PrefNames: Set<string> = new Set(Object.keys(Prefs.defaults))
@@ -37,10 +36,10 @@ class Override {
       return false
     }
 
-    const candidates = [
-      $OS.Path.basename(this.exportPath).replace(/\.[^.]+$/, '') + extension,
+    const candidates: string[] = [
+      Path.basename(this.exportPath).replace(/\.[^.]+$/, '') + extension,
       override,
-    ].map(filename => <string>$OS.Path.join(this.exportDir, filename))
+    ].map(filename => PathUtils.join(this.exportDir, filename))
 
     for (const candidate of candidates) {
       try {
@@ -64,7 +63,6 @@ class Override {
             log.error(`better-bibtex: preference override for ${ pref }: expected ${ typeof Prefs.defaults[pref] }, got ${ typeof value }`)
           }
           else if (Prefs.options[pref] && !Prefs.options[pref][value]) {
-            // eslint-disable-next-line @typescript-eslint/no-base-to-string
             log.error(`better-bibtex: preference override for ${ pref }: expected ${ Object.keys(Prefs.options[pref]).join(' / ') }, got ${ value }`)
           }
           else {
@@ -83,7 +81,7 @@ class Override {
   }
 }
 
-export class Translation { // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
+export class Translation {
   public importToExtra: Record<string, 'plain' | 'force'>
   public skipFields: string[]
   public skipField: RegExp
@@ -96,7 +94,6 @@ export class Translation { // eslint-disable-line @typescript-eslint/naming-conv
 
   public charmap: CharMap
 
-  /* eslint-disable @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match */
   public BetterBibLaTeX?: boolean
   public BetterBibTeX?: boolean
   public BetterTeX: boolean
@@ -107,7 +104,6 @@ export class Translation { // eslint-disable-line @typescript-eslint/naming-conv
   public BetterBibTeXJSON?: boolean
   public Citationgraph?: boolean
   public Collectednotes?: boolean
-  /* eslint-enable */
   // public TeX: boolean
   // public CSL: boolean
 
@@ -220,9 +216,9 @@ export class Translation { // eslint-disable-line @typescript-eslint/naming-conv
         },
         get: (object, property: Prefs.PreferenceName) => {
           // JSON.stringify will attempt to get this
-          if (property as unknown as string === 'toJSON') return object[property] // eslint-disable-line @typescript-eslint/no-unsafe-return
+          if (property as unknown as string === 'toJSON') return object[property]
           if (!(property in allowedPreferences)) new TypeError(`Preference ${ property } claims not to affect ${ collected.translator.label }`)
-          return object[property] // eslint-disable-line @typescript-eslint/no-unsafe-return
+          return object[property]
         },
       })
     }

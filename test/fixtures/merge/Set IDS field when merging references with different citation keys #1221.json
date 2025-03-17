@@ -5,7 +5,7 @@
     "localeDateOrder": "ymd",
     "options": {},
     "preferences": {
-      "citekeyFormat": "[auth][shorttitle][year]",
+      "citekeyFormat": "auth + shorttitle + year",
       "itemObserverDelay": 100,
       "kuroshiro": true
     }

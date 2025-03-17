@@ -209,7 +209,7 @@
       "extra": [
         "Citation Key: 10.1:12a",
         "Number: 1",
-        "Pages: 51\u2013104",
+        "Pages: 51–104",
         "Type: periodical",
         "Volume: 6",
         "tex.issuetitle: Special section"
@@ -421,7 +421,7 @@
       "issue": "1",
       "itemID": 20,
       "itemType": "journalArticle",
-      "pages": "17\u201339",
+      "pages": "17–39",
       "publicationTitle": "Journal of Postsecondary Education and Disability",
       "title": "A descriptive review of ADHD coaching research. Implications for college students",
       "url": "https://www.ahead.org/professional-resources/publications/jped/archived-jped/jped-volume-31",
@@ -624,7 +624,7 @@
       "itemID": 29,
       "itemType": "report",
       "publisher": "Pearson",
-      "title": "Minnesota Multiphasic Personality Inventory\u20132 Restructured Form (MMPI-2-RF). Technical manual",
+      "title": "Minnesota Multiphasic Personality Inventory–2 Restructured Form (MMPI-2-RF). Technical manual",
       "type": "manual"
     },
     {
@@ -804,7 +804,7 @@
       ],
       "itemID": 36,
       "itemType": "film",
-      "publisher": "Nouvelles \u00c9ditions de Films",
+      "publisher": "Nouvelles Éditions de Films",
       "title": "Goodbye children"
     },
     {
@@ -925,7 +925,7 @@
       "itemID": 41,
       "itemType": "videoRecording",
       "publisher": "YouTube",
-      "title": "Bren\u00e9 Brown. Listening to shame",
+      "title": "Brené Brown. Listening to shame",
       "url": "https://www.youtube.com/watch?v=psN1DORYYV0"
     },
     {
@@ -1074,7 +1074,7 @@
       "creators": [
         {
           "creatorType": "contributor",
-          "name": "Beyonc\u00e9"
+          "name": "Beyoncé"
         }
       ],
       "date": "2016",
@@ -1440,7 +1440,7 @@
       ],
       "itemID": 66,
       "itemType": "webpage",
-      "title": "College students are forming mental-health clubs\u2013and they're making a difference @washingtonpost. Thumbnail with link attached",
+      "title": "College students are forming mental-health clubs–and they're making a difference @washingtonpost. Thumbnail with link attached",
       "url": "https://twitter.com/apaeducation/status/1012810490530140161"
     },
     {
@@ -2250,13 +2250,13 @@
       ],
       "date": "2022",
       "extra": [
-        "Citation Key: 10.2:35d",
-        "Publication title: Encyclopedia of Cleveland history"
+        "Citation Key: 10.2:35d"
       ],
       "itemID": 104,
       "itemType": "encyclopediaArticle",
-      "publicationTitle": "Cleveland FreeNet",
-      "publisher": "Case Western Reserve University"
+      "publicationTitle": "Encyclopedia of Cleveland history",
+      "publisher": "Case Western Reserve University",
+      "title": "Cleveland FreeNet"
     },
     {
       "citationKey": "10.2:36",
@@ -2354,7 +2354,7 @@
       ],
       "itemID": 107,
       "itemType": "bookSection",
-      "pages": "287\u2013314",
+      "pages": "287–314",
       "publicationTitle": "Culturally responsive cognitive behaviour therapy",
       "publisher": "American Psychological Association",
       "title": "Affirmative cognitive behaviour therapy with sexual and gender minority people"
@@ -2390,7 +2390,7 @@
       ],
       "itemID": 108,
       "itemType": "bookSection",
-      "pages": "7\u201313",
+      "pages": "7–13",
       "publicationTitle": "Principles and practise of forensic psychiatry",
       "publisher": "CRC Press",
       "title": "Defining forensic psychiatry. Roles and responsibilities"
@@ -2431,7 +2431,7 @@
       ],
       "itemID": 109,
       "itemType": "bookSection",
-      "pages": "55\u201363",
+      "pages": "55–63",
       "publicationTitle": "Ethnicity and family therapy",
       "publisher": "Guilford Press",
       "title": "Back to the future. An Examination of the Native American Holocaust experience",
@@ -2443,24 +2443,24 @@
         {
           "creatorType": "author",
           "firstName": "N.",
-          "lastName": "Carcavilla Gonz\u00e1lez"
+          "lastName": "Carcavilla González"
         },
         {
           "creatorType": "editor",
           "firstName": "J. J.",
-          "lastName": "Garcia Meil\u00e1n"
+          "lastName": "Garcia Meilán"
         }
       ],
       "date": "2015",
       "extra": [
         "Citation Key: 10.3:41",
-        "Original title: Terapia senorial auditiva: Activation cerebral por medio de la m\u00fasica"
+        "Original title: Terapia senorial auditiva: Activation cerebral por medio de la música"
       ],
       "itemID": 110,
       "itemType": "bookSection",
-      "pages": "67\u201386",
-      "publicationTitle": "Gu\u00eda pr\u00e1ctica de terapias estimulativas en el Alzh\u00e9imer",
-      "publisher": "Editorial S\u00edntesis",
+      "pages": "67–86",
+      "publicationTitle": "Guía práctica de terapias estimulativas en el Alzhéimer",
+      "publisher": "Editorial Síntesis",
       "title": "Auditory sensory therapy. Brain activation through music",
       "url": "http://www.sintesis.com/guias-profesionales-203/guia-practica-de-terapias-estimulativas-en-el-alzheimer-libro-1943.html"
     },
@@ -2490,7 +2490,7 @@
       ],
       "itemID": 111,
       "itemType": "bookSection",
-      "pages": "111\u2013138",
+      "pages": "111–138",
       "publicationTitle": "Basic writings",
       "publisher": "Harper Perennial Modern Thought",
       "title": "On the essence of truth"
@@ -2528,7 +2528,7 @@
       ],
       "itemID": 112,
       "itemType": "bookSection",
-      "pages": "100\u2013108",
+      "pages": "100–108",
       "publicationTitle": "Cognitive psychology",
       "publisher": "Psychology Press",
       "title": "Calling a squirrel and squirrel but a canoe a wigwam. A category-specific deficit for artefactual objects and body parts"
@@ -2556,7 +2556,7 @@
       ],
       "itemID": 113,
       "itemType": "bookSection",
-      "pages": "72\u201340",
+      "pages": "72–40",
       "publicationTitle": "Making human beings human",
       "publisher": "SAGE Publications",
       "title": "The social ecology of human development. A retrospective conclusion"
@@ -2573,7 +2573,7 @@
       "date": "1973",
       "extra": [
         "Citation Key: 10.3:44r",
-        "Pages: 113\u2013123"
+        "Pages: 113–123"
       ],
       "itemID": 114,
       "itemType": "book",
@@ -2608,7 +2608,7 @@
       ],
       "itemID": 115,
       "itemType": "bookSection",
-      "pages": "339\u2013380",
+      "pages": "339–380",
       "publicationTitle": "Handbook of child psychology and developmental science",
       "publisher": "John Wiley & Sons",
       "title": "Gesture and cognitive development"
@@ -2636,7 +2636,7 @@
       ],
       "itemID": 116,
       "itemType": "bookSection",
-      "pages": "265\u2013284",
+      "pages": "265–284",
       "publicationTitle": "The complete social scientist",
       "publisher": "American Psychological Association",
       "title": "Group decision and social change"
@@ -2658,13 +2658,13 @@
       "date": "2019",
       "edition": "Summer 2019 ed.",
       "extra": [
-        "Citation Key: 10.3:48",
-        "Publication title: The Stanford encyclopedia of philosophy"
+        "Citation Key: 10.3:48"
       ],
       "itemID": 117,
       "itemType": "encyclopediaArticle",
-      "publicationTitle": "Behaviourism",
+      "publicationTitle": "The Stanford encyclopedia of philosophy",
       "publisher": "Stanford University",
+      "title": "Behaviourism",
       "url": "https://plato.stanford.edu/archives/sum2019/entries/behaviourism"
     },
     {
@@ -3166,7 +3166,7 @@
       ],
       "itemID": 140,
       "itemType": "thesis",
-      "publisher": "ProQuest Dissertations and Theses Global / University of Wisconsin\u2013Madison",
+      "publisher": "ProQuest Dissertations and Theses Global / University of Wisconsin–Madison",
       "title": "Resistance to authority. Methodological innovations and new lessons from the Milgram experiment",
       "type": "phd"
     },
@@ -3608,7 +3608,7 @@
       "date": "2015",
       "extra": [
         "Citation Key: 11.5:10",
-        "Place: 20 U.S.C \u00a7 6301"
+        "Place: 20 U.S.C § 6301"
       ],
       "itemID": 164,
       "itemType": "statute",
@@ -3632,7 +3632,7 @@
       "date": "1972",
       "extra": [
         "Citation Key: 11.5:12",
-        "Place: 20 U.S.C \u00a7 1681 <i>et seq.</i>"
+        "Place: 20 U.S.C § 1681 <i>et seq.</i>"
       ],
       "itemID": 166,
       "itemType": "statute",
@@ -3645,7 +3645,7 @@
       "extra": [
         "Citation Key: 11.5:13",
         "Original Date: 1971",
-        "Place: Fla. Stat. \u00a7 394"
+        "Place: Fla. Stat. § 394"
       ],
       "itemID": 167,
       "itemType": "statute",
@@ -3657,7 +3657,7 @@
       "date": "1990",
       "extra": [
         "Citation Key: 11.5:8",
-        "Place: 42 U.S.C \u00a7 12101 <i>et seq.</i>"
+        "Place: 42 U.S.C § 12101 <i>et seq.</i>"
       ],
       "itemID": 168,
       "itemType": "statute",
@@ -3669,7 +3669,7 @@
       "date": "1964",
       "extra": [
         "Citation Key: 11.5:9",
-        "Place: Pub. L. No. 88\u2013352, 78 Stat. 241"
+        "Place: Pub. L. No. 88–352, 78 Stat. 241"
       ],
       "itemID": 169,
       "itemType": "statute",
@@ -3752,7 +3752,7 @@
       "date": "2009",
       "extra": [
         "Citation Key: 11.7:19",
-        "tex.citation: 45 C.F.R. \u00a7 46"
+        "tex.citation: 45 C.F.R. § 46"
       ],
       "itemID": 175,
       "itemType": "statute",
@@ -3769,7 +3769,7 @@
       "itemID": 176,
       "itemType": "statute",
       "notes": [
-        "to be codified at 29 C.F.R. \u00a7 541"
+        "to be codified at 29 C.F.R. § 541"
       ],
       "shortTitle": "Defining and delimiting",
       "tags": [
@@ -3886,7 +3886,7 @@
       "extra": [
         "Citation Key: 11.9:27",
         "Type: constitution",
-        "tex.amendment: I\u2013X",
+        "tex.amendment: I–X",
         "tex.source: us"
       ],
       "itemID": 183,
@@ -4112,7 +4112,7 @@
         {
           "creatorType": "author",
           "firstName": "C.",
-          "lastName": "de On\u00eds"
+          "lastName": "de Onís"
         }
       ],
       "extra": [
@@ -4208,7 +4208,7 @@
         {
           "creatorType": "author",
           "firstName": "M. E.",
-          "lastName": "L\u00f3pez"
+          "lastName": "López"
         }
       ],
       "extra": [
@@ -4224,7 +4224,7 @@
         {
           "creatorType": "author",
           "firstName": "G.",
-          "lastName": "L\u00f3pez de Molina"
+          "lastName": "López de Molina"
         }
       ],
       "extra": [
@@ -5020,7 +5020,7 @@
       "notes": [
         "This book chapter provides an overview of the psychosociological concept of work-life balance. The authors discuss findings from studies showing harmful effects of work-life conflict on psychological and behavioural health as well as beneficial effects of work-life facilitation, wherein one role makes a positive contribution to the other. The chapter concludes with a description of work-life balance initiatives that organizations have adopted to help employees manage their dual work and nonwork obligations and some of the key factors influencing their effectiveness."
       ],
-      "pages": "111\u2013113",
+      "pages": "111–113",
       "publicationTitle": "The psychologically healthy workplace",
       "publisher": "American Psychological Association",
       "title": "Work-life balance. Contemporary perspectives"
@@ -5062,7 +5062,7 @@
       ],
       "itemID": 248,
       "itemType": "bookSection",
-      "pages": "109\u2013131",
+      "pages": "109–131",
       "publicationTitle": "New science of learning",
       "publisher": "Springer",
       "title": "Metacognitive control of learning and remembering"
@@ -5487,7 +5487,7 @@
       "issue": "2",
       "itemID": 261,
       "itemType": "journalArticle",
-      "pages": "161\u2013174",
+      "pages": "161–174",
       "publicationTitle": "Organizational Behaviour",
       "title": "General and specific measures in organizational behaviour research. Considerations, examples, and recommandations for researchers",
       "volume": "33"
@@ -5540,7 +5540,7 @@
       ],
       "itemID": 262,
       "itemType": "conferencePaper",
-      "pages": "225-\u2013240",
+      "pages": "225-–240",
       "publicationTitle": "Learning and intelligent optimization",
       "publisher": "Springer",
       "title": "Probability estimation by an adapted genetic algorithm in web insurance"
@@ -5612,7 +5612,7 @@
       "issue": "6",
       "itemID": 263,
       "itemType": "journalArticle",
-      "pages": "1115\u20131122",
+      "pages": "1115–1122",
       "publicationTitle": "Neurological Sciences",
       "tags": [
         {
@@ -5634,22 +5634,22 @@
         {
           "creatorType": "author",
           "firstName": "C.",
-          "lastName": "G\u00f3mez Calero"
+          "lastName": "Gómez Calero"
         },
         {
           "creatorType": "author",
           "firstName": "J. J.",
-          "lastName": "Fern\u00e1ndez-Mu\u00f1oz"
+          "lastName": "Fernández-Muñoz"
         },
         {
           "creatorType": "author",
           "firstName": "A.",
-          "lastName": "Toledano-Mu\u00f1oz"
+          "lastName": "Toledano-Muñoz"
         },
         {
           "creatorType": "author",
           "firstName": "J.",
-          "lastName": "Fern\u00e1ndez-Heute"
+          "lastName": "Fernández-Heute"
         },
         {
           "creatorType": "author",
@@ -5659,24 +5659,24 @@
         {
           "creatorType": "author",
           "firstName": "D.",
-          "lastName": "Palacios-Ce\u00f1a"
+          "lastName": "Palacios-Ceña"
         },
         {
           "creatorType": "author",
           "firstName": "C.",
-          "lastName": "Pe\u00f1acoba-Puente"
+          "lastName": "Peñacoba-Puente"
         }
       ],
       "date": "2018",
       "extra": [
         "Citation Key: 10.1:9",
-        "Original title: La anosmia neurosensorial: Relaci\u00f3n entre subtipo, tiempo de reconocimiento y edad"
+        "Original title: La anosmia neurosensorial: Relación entre subtipo, tiempo de reconocimiento y edad"
       ],
       "issue": "3",
       "itemID": 264,
       "itemType": "journalArticle",
-      "pages": "155\u2013161",
-      "publicationTitle": "Cl\u00ednica y Salud",
+      "pages": "155–161",
+      "publicationTitle": "Clínica y Salud",
       "title": "Sensorineural anosmia. Relationship between subtype, recognition time, and age",
       "volume": "28"
     },
@@ -5738,7 +5738,7 @@
       "itemID": 265,
       "itemType": "journalArticle",
       "journalAbbreviation": "Cortex",
-      "pages": "1585\u20131597",
+      "pages": "1585–1597",
       "publicationTitle": "Cortex; a journal devoted to the study of the nervous system and behavior",
       "tags": [
         {
@@ -5779,7 +5779,7 @@
       "issue": "10",
       "itemID": 266,
       "itemType": "journalArticle",
-      "pages": "1122\u20131128",
+      "pages": "1122–1128",
       "publicationTitle": "Midwifery",
       "title": "What does it take to have a strong and independent profession of midwifery? Lessons from the Netherlands",
       "volume": "29"
@@ -5836,7 +5836,7 @@
       "issue": "4",
       "itemID": 268,
       "itemType": "journalArticle",
-      "pages": "758\u2013775",
+      "pages": "758–775",
       "publicationTitle": "Journal of Applied Psychology",
       "title": "On the value of aiming high. The causes and consequences of ambition",
       "volume": "97"
@@ -5871,7 +5871,7 @@
       "notes": [
         "9.51:2 conducted an empirical study to examine the multiple paths through which work and family variables can affect work outcomes. Whereas 9.51:1 explored how work obligations can increase stress or enhance fulfillment at home, 9.51:2 viewed work demands as raising family stress, with potential negative consequences on work performance. Results supported a model in which direct effects of work demands and spillover effects of work demands to work-to-family conflict led to a lower job satisfaction and affective commitment, as well as crossover effects of work-to-family conflict, spousal stress transmission, and later family-to-work conflict on organizational citizenship and absenteeism. Overall, the study demonstrated a link from work demands to work outcomes when considering the family, but those paths differed depending on whether attitudinal or behavioural work outcomes were examined."
       ],
-      "pages": "214\u2013228",
+      "pages": "214–228",
       "publicationTitle": "Journal of Applied Psychology",
       "title": "Double crossed. The spillover and crossover effect of work demands on work outcomes through the family",
       "volume": "104"
@@ -5895,7 +5895,7 @@
       "issue": "6",
       "itemID": 270,
       "itemType": "journalArticle",
-      "pages": "611\u2013618",
+      "pages": "611–618",
       "publicationTitle": "American Journal of Orthopsychiatry",
       "title": "Marking time in the land of plenty. Reflections on mental health in the United States",
       "volume": "84"
@@ -5922,7 +5922,7 @@
       "issue": "1",
       "itemID": 271,
       "itemType": "journalArticle",
-      "pages": "1\u201351",
+      "pages": "1–51",
       "publicationTitle": "Psychological Review",
       "title": "Language learning as language use. A cross-linguistic model of child language development",
       "url": "http://some.url",
@@ -5953,7 +5953,7 @@
       "issue": "4",
       "itemID": 272,
       "itemType": "journalArticle",
-      "pages": "499\u2013500",
+      "pages": "499–500",
       "publicationTitle": "Psychology of Sexual Orientation and Gender Diversity",
       "title": "Bringing LGBTQ youth theater into the spotlight",
       "volume": "3"
@@ -6000,7 +6000,7 @@
       ],
       "itemID": 273,
       "itemType": "conferencePaper",
-      "pages": "23499\u201323504",
+      "pages": "23499–23504",
       "publicationTitle": "Proceedings of the national academy of sciences, USA",
       "title": "Cognitive and noncognitive predictors of success",
       "volume": "116"
@@ -6028,7 +6028,7 @@
       "itemID": 274,
       "itemType": "journalArticle",
       "journalAbbreviation": "Memory",
-      "pages": "1151\u20131158",
+      "pages": "1151–1158",
       "publicationTitle": "Memory (Hove, England)",
       "title": "Younger and older adults' associative memory for medication interactions of varying severity",
       "volume": "26"
@@ -6043,7 +6043,7 @@
       "issue": "3",
       "itemID": 275,
       "itemType": "journalArticle",
-      "pages": "391\u2013402",
+      "pages": "391–402",
       "publicationTitle": "American Journal of Orthopsychiatry",
       "title": "Marking time in the land of plenty. Reflections on mental health in the United States",
       "volume": "51"
@@ -6066,7 +6066,7 @@
       "issue": "6422",
       "itemID": 276,
       "itemType": "journalArticle",
-      "pages": "33\u201334",
+      "pages": "33–34",
       "publicationTitle": "Science",
       "title": "Really cool neutral plasmas",
       "volume": "363"
@@ -6099,7 +6099,7 @@
       "issue": "1",
       "itemID": 277,
       "itemType": "journalArticle",
-      "pages": "1\u201312",
+      "pages": "1–12",
       "publicationTitle": "Human Development",
       "title": "Intellectual evolution from adolescence to adulthood",
       "volume": "15"
@@ -6238,7 +6238,7 @@
       "issue": "1",
       "itemID": 282,
       "itemType": "journalArticle",
-      "pages": "73\u201386",
+      "pages": "73–86",
       "publicationTitle": "Cognitive Neuropsychology",
       "title": "Calling a squirrel and squirrel but a canoe a wigwam. A category-specific deficit for artefactual objects and body parts",
       "volume": "9"
@@ -6365,7 +6365,7 @@
       "issue": "3",
       "itemID": 283,
       "itemType": "journalArticle",
-      "pages": "437\u2013471",
+      "pages": "437–471",
       "publicationTitle": "Bulletin of the American Meteorological Society",
       "title": "The NCEP/NCAR 40-year reanalysis project",
       "volume": "77"

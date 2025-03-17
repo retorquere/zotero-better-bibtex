@@ -1,17 +1,13 @@
-import { Shim } from './os'
-import { is7 } from './client'
-const $OS = is7 ? Shim : OS
-
-if (!is7) Components.utils.import('resource://gre/modules/osfile.jsm')
+import { Path, File } from './file'
 
 import { Translators } from './translators'
 import { Preference } from './prefs'
-import { pick } from './file-picker'
+import { FilePickerHelper } from 'zotero-plugin-toolkit'
 import { findBinary } from './path-search'
 import { log } from './logger'
 import { alert } from './prompt'
 
-const version = require('../gen/version.js')
+import { version } from '../gen/version.json'
 
 type Source = 'MarkDown' | 'BibTeX AUX'
 
@@ -20,13 +16,13 @@ type Collection = {
   key: string
   replace?: boolean
 }
-export const AUXScanner = new class { // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
+export const AUXScanner = new class {
   private pandoc: string
 
-  public async pick(): Promise<string> { // eslint-disable-line @typescript-eslint/no-unsafe-return
+  public async pick(): Promise<string> {
     if (typeof this.pandoc !== 'string') this.pandoc = await findBinary('pandoc')
     const filters: [string, string][] = this.pandoc ? [[ 'AUX/Markdown', '*.aux; *.md; *.txt; *.markdown' ]] : [[ 'AUX file', '*.aux' ]]
-    return await pick(Zotero.getString('fileInterface.import'), 'open', filters)
+    return (await new FilePickerHelper(Zotero.getString('fileInterface.import'), 'open', filters).open()) || ''
   }
 
   public async scan(path: string, options: { tag?: string; libraryID?: number; collection?: Collection } = {}) {
@@ -72,7 +68,7 @@ export const AUXScanner = new class { // eslint-disable-line @typescript-eslint/
       }
     }
 
-    const basename = $OS.Path.basename(path).replace(/\.[^.]*$/, '')
+    const basename = Path.basename(path).replace(/\.[^.]*$/, '')
     if (options.tag) {
       await this.saveToTag(itemIDs, options.tag, libraryID)
     }
@@ -91,7 +87,7 @@ export const AUXScanner = new class { // eslint-disable-line @typescript-eslint/
 
   private async read(path) {
     const decoder: TextDecoder = new TextDecoder
-    return decoder.decode(await $OS.File.read(path) as BufferSource)
+    return decoder.decode(await IOUtils.read(path) as BufferSource)
   }
 
   private async parse(path: string, citekeys: string[], bibfiles: Record<string, string>): Promise<Source> {
@@ -117,39 +113,31 @@ export const AUXScanner = new class { // eslint-disable-line @typescript-eslint/
   }
 
   private async luaFilter(): Promise<string> {
-    const lua = `list-citekeys-${ version }.lua`
+    const filter: string = PathUtils.join(Zotero.BetterBibTeX.dir, `list-citekeys-${version}.lua`)
 
-    const filters: string[] = []
-    const iterator = new $OS.File.DirectoryIterator(Zotero.BetterBibTeX.dir)
-    try {
-      await iterator.forEach(entry => {
-        if (entry.isFile && entry.name !== lua && entry.name.match(/^list-citekeys.*\.lua$/)) filters.push(entry.name)
-      })
-    }
-    finally {
-      iterator.close()
-    }
-    for (const old of filters) {
-      await $OS.File.remove($OS.Path.join(Zotero.BetterBibTeX.dir, old))
+    for (const old of await IOUtils.getChildren(Zotero.BetterBibTeX.dir)) {
+      if (old !== filter && PathUtils.filename(old).match(/^list-citekeys-.*[.]lua$/) && await File.isFile(old)) await IOUtils.remove(old)
     }
 
-    const filter = $OS.Path.join(Zotero.BetterBibTeX.dir, lua)
-    if (!(await $OS.File.exists(filter))) {
+    if (!(await File.exists(filter))) {
       const url = 'chrome://zotero-better-bibtex/content/resource/list-citekeys.lua'
       const file = Zotero.File.pathToFile(filter)
       const contents = Zotero.File.getContentsFromURL(url)
       Zotero.File.putContents(file, contents)
     }
-    return <string>filter
+    return filter
   }
 
   private async parseMD(path: string, citekeys: string[]) {
     const filter = await this.luaFilter()
-    const output: string = $OS.Path.join(Zotero.getTempDirectory().path, `citekeys_${ Zotero.Utilities.randomString() }.txt`)
+    const output: string = PathUtils.join(Zotero.getTempDirectory().path, `citekeys_${ Zotero.Utilities.randomString() }.txt`)
     try {
       await Zotero.Utilities.Internal.exec(this.pandoc, [ '--lua-filter', filter, '-t', 'markdown', '-o', output, path ])
-      for (const citekey of (await Zotero.File.getContentsAsync(output)).split(/\s+/)) {
-        if (citekey) citekeys.push(citekey)
+      const md = await Zotero.File.getContentsAsync(output)
+      if (typeof md === 'string') {
+        for (const citekey of md.split(/\s+/)) {
+          if (citekey) citekeys.push(citekey)
+        }
       }
     }
     catch (e) {
@@ -158,7 +146,7 @@ export const AUXScanner = new class { // eslint-disable-line @typescript-eslint/
       return
     }
     finally {
-      Zotero.File.removeIfExists(output)
+      await Zotero.File.removeIfExists(output)
     }
   }
 
@@ -166,14 +154,14 @@ export const AUXScanner = new class { // eslint-disable-line @typescript-eslint/
     let m, re
 
     const contents = await this.read(path)
-    const parent = $OS.Path.dirname(path)
+    const parent = PathUtils.parent(path)
 
     if (bibfiles) {
       // bib files used
       re = /\\bibdata\{([^}]+)\}/g
       while (m = re.exec(contents)) {
         for (const bib of [ m[1], `${ m[1] }.bib` ]) {
-          if (!bibfiles[bib] && await $OS.File.exists(bib)) {
+          if (!bibfiles[bib] && await File.exists(bib)) {
             bibfiles[bib] = await this.read(bib)
             break
           }
@@ -191,7 +179,7 @@ export const AUXScanner = new class { // eslint-disable-line @typescript-eslint/
     // include files
     re = /\\@input\{([^}]+)\}/g
     while (m = re.exec(contents)) {
-      await this.parseAUX($OS.Path.join(parent, m[1]), citekeys, bibfiles)
+      await this.parseAUX(PathUtils.join(parent, m[1]), citekeys, bibfiles)
     }
   }
 

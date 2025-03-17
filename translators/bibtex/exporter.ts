@@ -9,7 +9,7 @@ import { simplifyForExport } from '../../gen/items/simplify'
 import * as bibtexParser from '@retorquere/bibtex-parser'
 import { Postfix } from './postfix'
 import * as Extra from '../../content/extra'
-import type { ExportedItem } from '../../content/db/cache'
+import type { ExportedItem } from '../../content/worker/cache'
 import { HTMLConverter, Mode as ConversionMode, ConverterOptions, ParseResult } from './unicode_translator'
 
 export class Exporter {

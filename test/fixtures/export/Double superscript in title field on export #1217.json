@@ -9,7 +9,7 @@
     "preferences": {
       "autoAbbrev": true,
       "bibtexURL": "url",
-      "citekeyFormat": "[auth][year]",
+      "citekeyFormat": "auth(n=0,m=1,creator=\"*\",initials=false).fold + year",
       "itemObserverDelay": 100
     }
   },
@@ -44,7 +44,7 @@
       "journalAbbreviation": "Phys Rev B",
       "pages": "184301",
       "publicationTitle": "Phys. Rev. B",
-      "title": "\u00b3\u00b9P NMR study of discrete time-crystalline signatures in an ordered crystal of ammonium dihydrogen phosphate",
+      "title": "³¹P NMR study of discrete time-crystalline signatures in an ordered crystal of ammonium dihydrogen phosphate",
       "url": "https://link.aps.org/doi/10.1103/PhysRevB.97.184301",
       "volume": "97"
     }
