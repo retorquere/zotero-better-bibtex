@@ -195,7 +195,11 @@ class ItemListener extends ZoteroListener {
       // https://groups.google.com/forum/#!topic/zotero-dev/yGP4uJQCrMc
       await Zotero.Promise.delay(Events.itemObserverDelay)
 
-      const touched: Record<string, Set<number>> = { collections: new Set, libraries: new Set }
+      const touched = {
+        collections: new Set<number>,
+        libraries: new Set<number>,
+      }
+
       if (action === 'delete' && extraData) {
         for (const ed of Object.values(extraData)) {
           if (typeof ed.libraryID === 'number') touched.libraries.add(ed.libraryID)
