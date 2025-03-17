@@ -59,6 +59,6 @@ export const Path = new class {
   }
 
   public isAbsolute(path: string): boolean {
-    return isWin ? !!path.match(/:\\/) : path[0] === '/'
+    return PathUtils.isAbsolute(path)
   }
 }
