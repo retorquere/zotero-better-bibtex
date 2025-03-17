@@ -1,6 +1,6 @@
 declare const location: any
 
-export const worker: boolean = typeof location !== 'undefined' && location.search
+export const worker: boolean = typeof location !== 'undefined' && !!location.search
 const searchParams = worker && new URLSearchParams(location.search)
 
 export const name: string = (() => {

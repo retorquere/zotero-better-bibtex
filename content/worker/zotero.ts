@@ -1,19 +1,10 @@
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 
-// import registerPromiseWorker from '@kotorik/promise-worker/register'
 import { Server as WorkerServerBase } from './json-rpc'
 import { Exporter as ExporterInterface } from './interface'
 import type { Item } from '../../gen/typings/serialized-item'
 
-// import allSettled = require('promise.allsettled')
-// allSettled.shim()
-
 import { ExportedItem, ExportedItemMetadata, Cache, Context } from './cache'
-
-// import flatMap from 'array.prototype.flatmap'
-// flatMap.shim()
-// import matchAll from 'string.prototype.matchall'
-// matchAll.shim()
 
 declare const IOUtils: any
 
