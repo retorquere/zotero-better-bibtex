@@ -8,8 +8,8 @@ export function load({ application }) {
   application.converter.on(Converter.EVENT_CREATE_DECLARATION, saveDefaultValues)
   application.converter.on(Converter.EVENT_CREATE_PARAMETER, saveDefaultValues)
 
-  function saveDefaultValues(_context, reflection) {
-    const node = reflection.project.getSymbolFromReflection(reflection)?.declarations?.[0]
+  function saveDefaultValues(context, reflection) {
+    const node = context.getSymbolFromReflection(reflection)?.declarations?.[0]
     if (!node || !node.initializer) return
 
     // Unfortunately can't just set defaultValue right here, this happens before TD sets it.

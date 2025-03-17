@@ -5,8 +5,8 @@ import { Server as WorkerServerBase } from './json-rpc'
 import { Exporter as ExporterInterface } from './interface'
 import type { Item } from '../../gen/typings/serialized-item'
 
-import allSettled = require('promise.allsettled')
-allSettled.shim()
+// import allSettled = require('promise.allsettled')
+// allSettled.shim()
 
 import { ExportedItem, ExportedItemMetadata, Cache, Context } from './cache'
 
@@ -157,7 +157,7 @@ declare const doExport: () => void
 import * as DateParser from '../../content/dateparser'
 // import * as Extra from '../../content/extra'
 import itemCreators from '../../gen/items/creators.json'
-import { log, $dump } from '../../content/logger'
+import { log } from '../../content/logger'
 import { Collection } from '../../gen/typings/serialized-item'
 // import { CSL_MAPPINGS } from '../../gen/items/items'
 
@@ -172,10 +172,17 @@ class Running {
   public context: number
   public hits = 0
   public misses = 0
+  public items: number
 
   private pending: ExportedItem[] = []
 
+  public get progress() {
+    if (!this.serialized.length || !this.items) return 100
+    return ((this.items - this.serialized.length) / this.items) * 100
+  }
+
   constructor(public job: Job) {
+    this.items = job.data.items.length
   }
 
   public async load(): Promise<void> {
@@ -425,6 +432,7 @@ class WorkerZotero {
     Object.assign(job.preferences, { platform: client.platform, client: client.slug })
     this.running = new Running(job)
     await this.running.load()
+    this.BetterBibTeX.setProgress(0)
 
     this.output = ''
 
@@ -458,6 +466,7 @@ class WorkerZotero {
 
     await this.running.flush()
     const cacheRate = this.running.hits + this.running.misses ? this.running.hits / (this.running.hits + this.running.misses) : 0
+    this.BetterBibTeX.setProgress(100)
     this.running = null
     return { output: Zotero.output, cacheRate }
   }
@@ -493,7 +502,7 @@ class WorkerZotero {
   }
 
   public nextItem() {
-    this.send({ kind: 'item', item: this.running.serialized.length - this.running.job.data.items.length })
+    this.BetterBibTeX.setProgress(this.running.progress)
     return this.running.serialized.shift()
   }
 
@@ -526,15 +535,7 @@ class WorkerServer extends WorkerServerBase implements ExporterInterface {
   async initialize(config: { CSL_MAPPINGS: any; dateFormatsJSON: any; lastUpdated: string }): Promise<void> {
     Zotero.Schema = { ...config.CSL_MAPPINGS }
     ZD.init(config.dateFormatsJSON)
-
-    try {
-      $dump(`json-rpc: initialize: cache open ${config.lastUpdated}`)
-      await Cache.open(config.lastUpdated)
-      $dump('json-rpc: initialize: cache open check')
-    }
-    catch (err) {
-      $dump(`json-rpc: initialize: cache open boo: ${err.message}\n${err.stack}`)
-    }
+    await Cache.open(config.lastUpdated)
   }
 
   async start(job: Job): Promise<{ output: string; cacheRate: number }> {

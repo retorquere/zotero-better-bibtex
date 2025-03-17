@@ -14,7 +14,7 @@ export type Message =
 //  | { kind: 'done', output: string, cacheRate: number }
     { kind: 'debug'; message: string }
   | { kind: 'error'; message: string; stack?: string }
-  | { kind: 'item'; item: number }
+//  | { kind: 'item'; item: number }
   | { kind: 'cache-delete' }
   | { kind: 'progress'; percent: number; translator: string; autoExport: string }
 
@@ -42,9 +42,9 @@ const params = new URLSearchParams({
 url.search = params.toString()
 
 declare class ChromeWorker extends Worker { }
-$dump(`json-rpc: main booting worker ${url.toString()}`)
+$dump(`json-rpc: main booting worker ${url.toString()}`) // eslint-disable-line no-restricted-syntax
 export const worker: ChromeWorker = new ChromeWorker(url.toString())
-$dump('json-rpc: main worker started')
+$dump('json-rpc: main worker started') // eslint-disable-line no-restricted-syntax
 
 class ExporterClient extends WorkerClient implements ExporterInterface {
   public ready = false

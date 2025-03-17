@@ -39,7 +39,7 @@ Generate a bibliography for the given citekeys
 
 
 
-**item.citationkey**(item_keys: string[]): Record<string, string>
+**item.citationkey**(item_keys: (string[] | "selected")): Record<string, string>
 
 * item_keys: A list of [libraryID]:[itemKey] strings. If [libraryID] is omitted, assume 'My Library'
 Fetch citationkeys given item keys
