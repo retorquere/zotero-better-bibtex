@@ -257,10 +257,21 @@ export const Translators = new class {
       })
     }
 
-    const { cacheRate, output } = await Exporter.start(config)
-    log.info(`json-rpc: export cache use ${cacheRate}%`)
-    if (job.autoExport) Cache.rate[job.autoExport] = cacheRate
-    return output
+    try {
+      const { cacheRate, output } = await Exporter.start(config)
+      log.info(`json-rpc: export cache use ${cacheRate}%`)
+      if (job.autoExport) Cache.rate[job.autoExport] = cacheRate
+
+      if (job.translate) {
+        job.translate.string = output // eslint-disable-line id-blacklist
+        job.translate.complete(output)
+      }
+      return output
+    }
+    catch (err) {
+      log.error('translation failed:', err)
+      if (job.translate) job.translate.complete(false, err)
+    }
   }
 
   public displayOptions(translatorID: string, displayOptions: any): any {
