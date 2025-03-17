@@ -57,8 +57,4 @@ export const Path = new class {
     const m = path.match(this.#basenameRE)
     return m ? m[2] : path
   }
-
-  public isAbsolute(path: string): boolean {
-    return PathUtils.isAbsolute(path)
-  }
 }
