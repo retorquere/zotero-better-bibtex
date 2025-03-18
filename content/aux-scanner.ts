@@ -16,15 +16,20 @@ type Collection = {
   key: string
   replace?: boolean
 }
+
+const markdown = '*.md; *.txt; *.markdown; *.qmd; *.Rmd'
+const aux = '*.aux'
+
 export const AUXScanner = new class {
   private pandoc: string
-
   private filters: Record<'pandoc' | 'aux', [string, string][]> = {
     pandoc: [
-      [ 'AUX file', '*.aux' ],
-      [ 'Markdown', '*.md; *.txt; *.markdown; *.qmd; *.Rmd' ],
+      [ `AUX file (${aux})`, aux ],
+      [ `Markdown (${markdown})`, markdown ],
     ],
-    aux: [[ 'AUX file', '*.aux' ]],
+    aux: [
+      [ `AUX file (${aux})`, aux ],
+    ],
   }
   public async pick(): Promise<string> {
     if (typeof this.pandoc !== 'string') this.pandoc = await findBinary('pandoc')
