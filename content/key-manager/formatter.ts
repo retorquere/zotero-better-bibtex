@@ -1320,8 +1320,9 @@ export class PatternFormatter {
 
   /**
     * word segmentation for Chinese items. Uses substantial memory, and adds about 7 seconds to BBTs startup time; must be enabled under Preferences -> Better BibTeX -> Advanced -> Citekeys
+    * @param mode for backwards compatibility, this param will be accepted, but it is a no-op since the switch to jieba-rs. It will be removed eventually.
     */
-  public _jieba(input: string): string {
+  public _jieba(input: string, mode?: string): string { // eslint-disable-line @typescript-eslint/no-unused-vars
     if (!chinese.load(Preference.jieba)) return input
     return chinese.jieba(input).join(' ').trim()
   }
