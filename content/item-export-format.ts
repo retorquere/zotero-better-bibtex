@@ -3,7 +3,6 @@ import { Path } from './file'
 import { log } from './logger'
 import { getItemsAsync } from './get-items-async'
 import type { Attachment, RegularItem, Item, Note } from '../gen/typings/serialized-item'
-export type Serialized = RegularItem | Attachment | Item
 
 import { JournalAbbrev } from './journal-abbrev'
 import { Preference } from './prefs'
@@ -14,11 +13,10 @@ export class Serializer {
       serialized.localPath = att.getFilePath()
       if (serialized.localPath) serialized.defaultPath = `files/${att.id}/${Path.basename(serialized.localPath)}`
     }
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return serialized
   }
 
-  private async item(item: Zotero.Item, selectedLibraryID: number): Promise<Serialized> {
+  private async item(item: Zotero.Item, selectedLibraryID: number): Promise<Item> {
     if (item.libraryID !== selectedLibraryID) await item.loadAllData()
 
     let serialized: Item = item.toJSON() as unknown as Item
@@ -42,10 +40,10 @@ export class Serializer {
         break
     }
 
-    return <Serialized>JSON.parse(JSON.stringify(fix(serialized, item)))
+    return <Item>JSON.parse(JSON.stringify(fix(serialized, item)))
   }
 
-  public async serialize(items: Zotero.Item[]): Promise<Serialized[]> {
+  public async serialize(items: Zotero.Item[]): Promise<Item[]> {
     const selectedLibraryID = Zotero.getActiveZoteroPane().getSelectedLibraryID()
     return Promise.all(items.map(item => this.item(item, selectedLibraryID)))
   }
@@ -79,6 +77,5 @@ export function fix(serialized: Item, item: Zotero.Item): Item {
   serialized.itemKey = item.key
   serialized.libraryID = item.libraryID
 
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
   return serialized as unknown as Item
 }

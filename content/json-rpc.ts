@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/only-throw-error, @typescript-eslint/require-await, max-len */
+/* eslint-disable @typescript-eslint/no-unsafe-return, @typescript-eslint/only-throw-error, @typescript-eslint/require-await */
 
 import { getItemsAsync } from './get-items-async'
 import { AUXScanner } from './aux-scanner'
@@ -10,6 +10,8 @@ import { log } from './logger'
 import { Preference } from './prefs'
 import { orchestrator } from './orchestrator'
 import { Server } from './server'
+
+import { version as BBTVersion } from '../gen/version.json'
 
 import { methods } from '../gen/api/json-rpc'
 
@@ -205,14 +207,12 @@ export class NSItem {
     const items = await getItemsAsync(Array.from(ids))
     const libraries = {}
 
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return items.map(item => {
       if (!libraries[item.libraryID]) {
         const lib = Zotero.Libraries.get(item.libraryID)
         libraries[item.libraryID] = lib ? lib.name : `library#${item.libraryID}`
       }
 
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
       return {
         ...Zotero.Utilities.Item.itemToCSLJSON(item),
         library: libraries[item.libraryID],
@@ -225,7 +225,7 @@ export class NSItem {
    * List attachments for an item with the given citekey
    *
    * @param citekey  The citekey to search for
-   * @param library  The libraryID to search in (optional)
+   * @param library  The libraryID to search in (optional). Pass `*` to search across your library and all groups.
    */
   public async attachments(citekey: string, library?: string | number): Promise<any> {
     const where: Query = { citationKey: citekey.replace(/^@/, '') }
@@ -315,7 +315,6 @@ export class NSItem {
         seen[key] = col
       }
 
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
       return seen[key]
     }
 
@@ -334,7 +333,6 @@ export class NSItem {
           col.parentCollection = recurseParents(item.libraryID, col.parentCollection)
         }
 
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-return
         return col
       })
     }
@@ -362,7 +360,6 @@ export class NSItem {
     const notes = {}
     for (const key of keys) {
       const item = await getItemsAsync(key.itemID)
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
       notes[key.citationKey] = (await getItemsAsync(item.getNotes())).map(note => note.getNote())
     }
     return notes
@@ -372,11 +369,11 @@ export class NSItem {
    * Generate a bibliography for the given citekeys
    *
    * @param citekeys An array of citekeys
-   * @param format   A specification of how the bibliography should be formatted
-   * @param.quickCopy    Format as specified in the Zotero quick-copy settings
-   * @param.contentType  Output as HTML or text
-   * @param.locale       Locale to use to generate the bibliography
-   * @param.id           CSL style to use
+   * @param {object} format   A specification of how the bibliography should be formatted
+   * @param {string} format.quickCopy    Format as specified in the Zotero quick-copy settings
+   * @param {} format.contentType  Output as HTML or text
+   * @param {} format.locale       Locale to use to generate the bibliography
+   * @param {} format.id           CSL style to use
    *
    * @returns  A formatted bibliography
    */
@@ -408,11 +405,9 @@ export class NSItem {
       where.citationKey = { in: citekeys }
     }
 
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     const items = await getItemsAsync(Zotero.BetterBibTeX.KeyManager.find({ where }).map(key => key.itemID))
 
     const bibliography = Zotero.QuickCopy.getContentFromItems(items, { ...format, mode: 'bibliography' }, null, false)
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return bibliography[format.contentType || 'html']
   }
 
@@ -421,8 +416,21 @@ export class NSItem {
    *
    * @param item_keys  A list of [libraryID]:[itemKey] strings. If [libraryID] is omitted, assume 'My Library'
    */
-  public async citationkey(item_keys: string[]): Promise<Record<string, string>> {
+  public async citationkey(item_keys: string[] | 'selected'): Promise<Record<string, string>> {
     const keys = {}
+
+    if (item_keys === 'selected') {
+      for (const item of Zotero.getActiveZoteroPane().getSelectedItems()) {
+        if (item.isFeedItem) continue
+        if (item.isRegularItem()) {
+          keys[item.key] = Zotero.BetterBibTeX.KeyManager.first({ where: { libraryID: item.libraryID, itemKey: item.key }})?.citationKey || null
+        }
+        else if (item.isAttachment() && typeof item.parentID === 'number') {
+          keys[item.key] = Zotero.BetterBibTeX.KeyManager.first({ where: { libraryID: item.libraryID, itemID: item.parentID }})?.citationKey || null
+        }
+      }
+      return keys
+    }
 
     let libraryIDstr: string
     let libraryID: number
@@ -495,11 +503,10 @@ export class NSItem {
       throw { code: INVALID_PARAMETERS, message }
     }
 
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return await Translators.queueJob({
       translatorID: Translators.getTranslatorId(translator),
       displayOptions: { worker: true },
-      scope: { type: 'items', items: await getItemsAsync(found.map(key => key.itemID)) }, // eslint-disable-line @typescript-eslint/no-unsafe-return
+      scope: { type: 'items', items: await getItemsAsync(found.map(key => key.itemID)) },
     })
   }
 
@@ -585,7 +592,6 @@ export class NSItem {
       citeproc.free()
     }
     else {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
       for (const item of items.map(i => Zotero.Utilities.Internal.itemToExportFormat(i, false, true))) {
         result.items[item.citationKey] = item
       }
@@ -608,11 +614,10 @@ export class NSViewer {
     if (!item) throw { code: INVALID_PARAMETERS, message: `invalid URI ${ id }` }
     let attachments = await item.getBestAttachments()
 
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     attachments = attachments.filter(x => x.isPDFAttachment())
 
     if (!attachments.length) throw { code: INVALID_PARAMETERS, message: `no PDF found for URI ${ id }` }
-    return await Zotero.OpenPDF.openToPage(attachments[0], page + 1) // eslint-disable-line @typescript-eslint/no-unsafe-return
+    return await Zotero.OpenPDF.openToPage(attachments[0], page + 1)
   }
 }
 
@@ -621,7 +626,7 @@ export class NSAPI {
    * Returns the Zotero and BetterBibTeX version to show the JSON-RPC API is ready.
    */
   public async ready(): Promise<{ zotero: string; betterbibtex: string }> {
-    return { zotero: Zotero.version, betterbibtex: require('../gen/version.js') }
+    return { zotero: Zotero.version, betterbibtex: BBTVersion }
   }
 }
 
@@ -724,12 +729,12 @@ orchestrator.add({
   description: 'JSON-RPC endpoint',
   needs: ['translators'],
 
-  startup: async () => { // eslint-disable-line @typescript-eslint/require-await
+  startup: async () => {
     Server.register('/better-bibtex/json-rpc', Handler)
     Server.startup()
   },
 
-  shutdown: async () => { // eslint-disable-line @typescript-eslint/require-await
+  shutdown: async () => {
     Server.shutdown()
   },
 })

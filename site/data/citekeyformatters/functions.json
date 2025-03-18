@@ -72,8 +72,8 @@
     "description": "<p>Tests whether the item is in the given group library</p>"
   },
   {
-    "summary": "<b>infix</b>(format: string = &#39;%(a)s&#39;, start: number = 0)",
-    "description": "<p>a pseudo-function that sets the citekey disambiguation infix using an <a href=\"https://www.npmjs.com/package/sprintf-js\">sprintf-js</a> format spec\nfor when a key is generated that already exists. The infix charachter appears at the place of this function of the formula instead of at the and (as postfix does).\nYou <em>must</em> include <em>exactly one</em> of the placeholders <code>%(n)s</code> (number), <code>%(a)s</code> (alpha, lowercase) or <code>%(A)s</code> (alpha, uppercase).\nFor the rest of the disambiguator you can use things like padding and extra text as sprintf-js allows. With start set to <code>1</code> the disambiguator is always included,\neven if there is no need for it when no duplicates exist. The default  format is <code>%(a)s</code>.</p>"
+    "summary": "<b>infix</b>(format: &#96;sprintf-style format template&#96; = &#39;%(a)s&#39;, start: (string | number) = 0)",
+    "description": "<p>a pseudo-function that sets the citekey disambiguation infix using an <a href=\"https://www.npmjs.com/package/sprintf-js\">sprintf-js</a> format spec\nfor when a key is generated that already exists. The infix charachter appears at the place of this function of the formula instead of at the and (as postfix does).\nYou <em>must</em> include <em>exactly one</em> of the placeholders <code>%(n)s</code> (number), <code>%(a)s</code> (alpha, lowercase) or <code>%(A)s</code> (alpha, uppercase).\nFor the rest of the disambiguator you can use things like padding and extra text as sprintf-js allows. With start set to <code>1</code> the disambiguator is always included,\neven if there is no need for it when no duplicates exist. The default  format is <code>%(a)s</code>.</p>\n<p>in the template, you can use:</p>\n<ul>\n<li><code>%(a)s</code>: lower-case alphabetic disambiguator</li>\n<li><code>%(A)s</code>: upper-case alphabetic disambiguator</li>\n<li><code>%(n)s</code>: numeric disambiguator</li>\n</ul>"
   },
   {
     "summary": "<b>inspireHep</b>",
@@ -116,7 +116,7 @@
     "description": "<p>the original year of the publication</p>"
   },
   {
-    "summary": "<b>postfix</b>(format: &#96;sprintf-style format template&#96; = &#39;%(a)s&#39;, start: number = 0)",
+    "summary": "<b>postfix</b>(format: &#96;sprintf-style format template&#96; = &#39;%(a)s&#39;, start: (string | number) = 0)",
     "description": "<p>a pseudo-function that sets the citekey disambiguation postfix using an <a href=\"https://www.npmjs.com/package/sprintf-js\">sprintf-js</a> format spec\nfor when a key is generated that already exists. Does not add any text to the citekey otherwise.\nYou <em>must</em> include <em>exactly one</em> of the placeholders <code>%(n)s</code> (number), <code>%(a)s</code> (alpha, lowercase) or <code>%(A)s</code> (alpha, uppercase).\nFor the rest of the disambiguator you can use things like padding and extra text as sprintf-js allows. With start set to <code>1</code> the disambiguator is always included,\neven if there is no need for it when no duplicates exist. The default  format is <code>%(a)s</code>.</p>\n<p>in the template, you can use:</p>\n<ul>\n<li><code>%(a)s</code>: lower-case alphabetic disambiguator</li>\n<li><code>%(A)s</code>: upper-case alphabetic disambiguator</li>\n<li><code>%(n)s</code>: numeric disambiguator</li>\n</ul>"
   },
   {

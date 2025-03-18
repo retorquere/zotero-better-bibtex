@@ -27,7 +27,7 @@ async function prelocalize(id_with_branch: string): Promise<void> {
 
 export function localize(id_with_branch: string, params?: Record<string, string | number>): string {
   const l = localized[id_with_branch] || `?? ${id_with_branch}`
-  return params ? l.replace(/[{]\s*([^\s]+)\s*[}]/g, (m, term) => typeof params[term] === 'undefined' ? m : `${params[term]}`) : l
+  return params ? l.replace(/[{]\s*[$]([a-z]+)\s*[}]/gi, (m, term) => typeof params[term] === 'undefined' ? m : `${params[term]}`) : l
 }
 
 export async function initialize(): Promise<void> {
@@ -58,8 +58,8 @@ export async function initialize(): Promise<void> {
     prelocalize('better-bibtex_translate_error_target_no_parent'),
     prelocalize('better-bibtex_translate_error_target_not_a_file'),
     prelocalize('better-bibtex_zotero-pane_add-citation-links'),
-    prelocalize('better-bibtex_zotero-pane_biblatex_to_clipboard-bibtex_zotero-pane_citekey_refresh'),
-    prelocalize('better-bibtex_zotero-pane_bibtex_to_clipboard-bibtex_zotero-pane_citekey_refresh'),
+    prelocalize('better-bibtex_zotero-pane_biblatex_to_clipboard'),
+    prelocalize('better-bibtex_zotero-pane_bibtex_to_clipboard'),
     prelocalize('better-bibtex_zotero-pane_citekey_pin_inspire-hep'),
     prelocalize('better-bibtex_zotero-pane_citekey_refresh'),
     prelocalize('better-bibtex_zotero-pane_column_citekey'),

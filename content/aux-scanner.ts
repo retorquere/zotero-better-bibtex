@@ -7,7 +7,7 @@ import { findBinary } from './path-search'
 import { log } from './logger'
 import { alert } from './prompt'
 
-const version = require('../gen/version.js')
+import { version } from '../gen/version.json'
 
 type Source = 'MarkDown' | 'BibTeX AUX'
 
@@ -16,7 +16,7 @@ type Collection = {
   key: string
   replace?: boolean
 }
-export const AUXScanner = new class { // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
+export const AUXScanner = new class {
   private pandoc: string
 
   private filters: Record<'pandoc' | 'aux', [string, string][]> = {
@@ -26,7 +26,7 @@ export const AUXScanner = new class { // eslint-disable-line @typescript-eslint/
     ],
     aux: [[ 'AUX file', '*.aux' ]],
   }
-  public async pick(): Promise<string> { // eslint-disable-line @typescript-eslint/no-unsafe-return
+  public async pick(): Promise<string> {
     if (typeof this.pandoc !== 'string') this.pandoc = await findBinary('pandoc')
     const filters = this.pandoc ? this.filters.pandoc : this.filters.aux
     return (await new FilePickerHelper(Zotero.getString('fileInterface.import'), 'open', filters).open()) || ''

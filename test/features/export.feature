@@ -13,6 +13,8 @@ Feature: Export
 
     Examples:
       | file                                                                                                                     | references |
+      | Uncommented-out notes in the generated bib file #3176                                                                    | 1          |
+      # | Unexpected output result with quotation marks in Title field #1573                                                       | 1          |
       | pmid versus pubmed #3146                                                                                                 | 1          |
       | Ensure en-dash is used for volumeissue ranges in exported BibTeXBiBibTeX #3118                                           | 1          |
       | Add option to translate ii to mkbibemph instead of emph #3096                                                            | 1          |
@@ -832,15 +834,18 @@ Feature: Export
   Scenario: OR pattern condenses input #2957
     Given I import 1 reference from "export/*.json"
     When I select the item with a field that contains "Valuations"
-
     When I set preference .citekeyFormat to "(ShortTitle.condense(_) || Title.condense(_))"
     And I refresh the citation key
     Then the citation key should be "The_Theory_of_Classical_Valuations"
-
     When I set preference .citekeyFormat to "(ShortTitle || Title).condense(_)"
     And I refresh the citation key
     Then the citation key should be "The_Theory_of_Classical_Valuations"
-
     When I set preference .citekeyFormat to "(ShortTitle ? ShortTitle : Title).condense(_)"
     And I refresh the citation key
     Then the citation key should be "The_Theory_of_Classical_Valuations"
+
+  Scenario: refresh fails for pinned keys #3173
+    Given I import 1 reference from "export/*.json"
+    When I select the item with a field that contains "Quantum"
+    And I refresh the citation key
+    Then the citation key should be "DBLP:books/daglib/0032853"

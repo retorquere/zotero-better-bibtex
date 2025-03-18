@@ -1,5 +1,3 @@
-/* eslint-disable prefer-rest-params */
-
 import Emittery from 'emittery'
 
 import { log } from './logger'
@@ -125,7 +123,7 @@ class WindowListener {
 
   onOpenWindow(xulWindow) {
     const win = xulWindow.QueryInterface(Components.interfaces.nsIInterfaceRequestor).getInterface(Components.interfaces.nsIDOMWindow)
-    win.addEventListener('load', function load() { // eslint-disable-line prefer-arrow/prefer-arrow-functions
+    win.addEventListener('load', function load() {
       win.removeEventListener('load', load)
       void Events.emit('window-loaded', { win, href: win.location.href })
     }, false)
@@ -227,7 +225,7 @@ class ItemListener extends ZoteroListener {
         if (item.isFeedItem) return false
 
         if (item.isAttachment() || item.isNote() || item.isAnnotation?.()) { // should I keep top-level notes/attachments for BBT-JSON?
-          if (typeof item.parentID === 'number' && ids.includes(item.parentID)) parentIDs.push(item.parentID)
+          if (typeof item.parentID === 'number' && !ids.includes(item.parentID)) parentIDs.push(item.parentID)
           return false
         }
 

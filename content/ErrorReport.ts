@@ -1,7 +1,7 @@
 import * as client from './client'
 import { Path, File } from './file'
 
-import { Cache } from './db/cache'
+import { Cache } from './translators/worker'
 import { regex as escapeRE } from './escape'
 
 import { Preference } from './prefs'
@@ -38,6 +38,8 @@ type Wizard = HTMLElement & {
   advance: () => void
   rewind: () => void
 }
+
+import { version as running } from '../gen/version.json'
 
 type Report = {
   context: string
@@ -77,8 +79,6 @@ export class ErrorReport {
     wizard.getButton('cancel').disabled = true
     wizard.canRewind = false
 
-    const version = require('../gen/version.js')
-
     try {
       await Zotero.HTTP.request('PUT', `${ this.bucket }/${ this.zipfile() }`, {
         noCache: true,
@@ -95,8 +95,7 @@ export class ErrorReport {
 
       wizard.advance();
 
-      // eslint-disable-next-line no-magic-numbers
-      (<HTMLInputElement> this.document.getElementById('better-bibtex-report-id')).value = `${ this.name() }/${version}`
+      (<HTMLInputElement> this.document.getElementById('better-bibtex-report-id')).value = `${ this.name() }/${running}`
       this.document.getElementById('better-bibtex-report-result').hidden = false
     }
     catch (err) {
@@ -135,7 +134,6 @@ export class ErrorReport {
 
   private async latest(): Promise<string> {
     try {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
       const latest = JSON.parse((await Zotero.HTTP.request('GET', 'https://github.com/retorquere/zotero-better-bibtex/releases/download/release/updates.json', { noCache: true })).response)
       return latest.addons['better-bibtex@iris-advies.com'].updates[0].version as string
     }
@@ -296,7 +294,6 @@ export class ErrorReport {
     if (!this.config.errors) delete this.report.errors
     if (!this.config.log) delete this.report.log
 
-    log.info(`cache: errorreport ${Cache.opened}`)
     this.setValue('better-bibtex-error-context', this.report.context)
     this.setValue('better-bibtex-error-errors', this.report.errors || '')
     this.setValue('better-bibtex-error-log', this.preview(this.report.log || ''))
@@ -359,14 +356,13 @@ export class ErrorReport {
 
     await this.reload()
 
-    const current = require('../gen/version.js')
-    this.setValue('better-bibtex-report-current', l10n.localize('better-bibtex_error-report_better-bibtex_current', { version: current }))
+    this.setValue('better-bibtex-report-current', l10n.localize('better-bibtex_error-report_better-bibtex_current', { version: running }))
 
     try {
       const latest = await this.latest()
 
       const show_latest = <HTMLInputElement> this.document.getElementById('better-bibtex-report-latest')
-      if (current === latest) {
+      if (running === latest) {
         show_latest.hidden = true
       }
       else {

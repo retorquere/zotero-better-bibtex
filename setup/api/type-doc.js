@@ -8,8 +8,18 @@ const ts = require('typescript')
 
 const plugin = path.resolve(path.join(__dirname, 'type-doc-all-defaults.mjs'))
 
+function shlexQuote(s) {
+  if (typeof s !== 'string') {
+    throw new TypeError(`Expected a string, git ${typeof s}`)
+  }
+  if (/^[a-zA-Z0-9_\/.-]+$/.test(s)) {
+    return s;
+  }
+  return `'${s.replace(/'/g, "'\\''")}'`;
+}
+
 function run(cmd, args) {
-  console.log(cmd, ...args)
+  console.log(shlexQuote(cmd), ...args.map(shlexQuote))
   return spawnSync(cmd, args)
 }
 
@@ -19,7 +29,17 @@ function parse(src, tgt) {
     ? { name: path.resolve(tgt), removeCallback: () => {} }
     : tmp.fileSync({ postfix: '.json' })
 
-  const result = run('npx', ['typedoc', '--json', tgt.name, '--plugin', plugin, '--externalPattern', 'gen/items/items.ts', '--excludeExternals', src])
+  // const tsconfig = path.resolve(__dirname, `../../tsconfig${Math.random()}.json`)
+  // fs.writeFileSync(tsconfig, JSON.stringify({ ...require('../../tsconfig.json'), moduleResolution: 'node' }))
+  const result = run('npx', [
+    'typedoc',
+    // '--tsconfig', tsconfig,
+    '--json', tgt.name,
+    '--plugin', plugin,
+    '--externalPattern', '**/*/{items,zotero}.ts',
+    '--excludeExternals',
+    src,
+  ])
   if (result.error) {
     console.error(`Error: ${result.error}`)
     process.exit(1)
@@ -51,6 +71,7 @@ function parse(src, tgt) {
   }))
   fs.writeFileSync(tgt.name, JSON.stringify(doc, null, 2))
   tgt.removeCallback()
+  // fs.unlinkSync(tsconfig)
   return doc
 }
 

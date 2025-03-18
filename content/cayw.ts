@@ -1,19 +1,14 @@
 declare const ChromeUtils: any
 
-import { stringify } from './stringify'
-
 import { Formatter } from './cayw/formatter'
 import { TeXstudio } from './tex-studio'
 import { flash } from './flash'
-import { log } from './logger'
+import { log, stringify } from './logger'
 import { orchestrator } from './orchestrator'
 import { Server } from './server'
 import { toClipboard } from './text'
 
-/* eslint-disable max-classes-per-file */
-
 class FieldEnumerator {
-  // eslint-disable-next-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
   public QueryInterface = ChromeUtils.generateQI([ Components.interfaces.nsISupports, Components.interfaces.nsISimpleEnumerator ])
   public doc: Document
   public idx: number
@@ -283,7 +278,7 @@ class Document {
 }
 
 // export singleton: https://k94n.com/es6-modules-single-instance-pattern
-export const Application = new class { // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
+export const Application = new class {
   public primaryFieldType = 'Field'
   public secondaryFieldType = 'Bookmark'
   public fields: any[] = []
@@ -338,7 +333,7 @@ export async function pick(options: any): Promise<string> {
       const zoteroPane = Zotero.getActiveZoteroPane()
 
       // don't know why zotero-types is not picked up here
-      await zoteroPane.selectItems(picked.map(item => item.id), true) // eslint-disable-line @typescript-eslint/await-thenable
+      await zoteroPane.selectItems(picked.map(item => item.id), true)
     }
 
     return citation
