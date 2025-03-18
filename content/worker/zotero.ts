@@ -289,7 +289,12 @@ const WorkerZoteroUtilities = {
 }
 
 async function makeDirs(path) {
-  if (!PathUtils.isAbsolute(path)) throw new Error(`Will not create relative path ${path}`)
+  log.debug('3172: testing', path)
+  if (!PathUtils.isAbsolute(path)) {
+    log.error(`Will not create relative path ${path}`)
+    return
+  }
+  log.debug('3172:', path, 'OK')
   await IOUtils.makeDirectory(path, { ignoreExisting: true, createAncestors: true })
 }
 
