@@ -83,9 +83,9 @@ const Mode = {
   },
 
   orgcite(items) {
-    for (const item of items) {
-      Zotero.write(`[cite:@${item.citationKey}]\n`);
-    }
+    if (!items.length) return ''
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+    Zotero.write(`[cite:@${items.map(item => item.citationKey).join('; @')}]`)
   },
 
   orgmode(items) {
