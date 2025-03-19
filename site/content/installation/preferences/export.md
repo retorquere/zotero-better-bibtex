@@ -181,13 +181,6 @@ Used for drag-and-drop/quick copy citations in `Pandoc` format. You can use this
 to have these pandoc citations surrounded with brackets or not.
 
 
-#### Org-mode Citation link
-
-OrgMode built-in citation link.
-
-No options.
-
-
 
 #### Org-mode select link
 
