@@ -1324,6 +1324,7 @@ export class PatternFormatter {
     */
   public _jieba(input: string, mode?: string): string { // eslint-disable-line @typescript-eslint/no-unused-vars
     if (!chinese.load(Preference.jieba)) return input
+    log.debug('formula:jieba:', input, '=>', chinese.jieba(input))
     return chinese.jieba(input).join(' ').trim()
   }
 
@@ -1588,7 +1589,8 @@ export class PatternFormatter {
       log.error('formula:', e)
     }
     else {
-      log.info('formula:', k, '=>', v)
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+      log.info('formula:', k.replace(/^([$_])/, (m, kind) => ({$: '', _: '  .'}[kind])), '=>', JSON.stringify(v))
     }
     return v
   }
