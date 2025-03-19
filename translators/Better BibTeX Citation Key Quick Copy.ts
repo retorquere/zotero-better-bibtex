@@ -82,6 +82,12 @@ const Mode = {
     Zotero.write(`cite:&${ items.map(item => item.citationKey).join(';&') }`)
   },
 
+  orgcite(items) {
+    for (const item of items) {
+      Zotero.write(`[cite:@${item.citationKey}]\n`);
+    }
+  },
+
   orgmode(items) {
     switch (Zotero.getHiddenPref('better-bibtex.quickCopyOrgMode')) {
       case 'zotero':

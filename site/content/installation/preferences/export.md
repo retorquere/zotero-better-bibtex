@@ -154,6 +154,7 @@ Options:
 * GitBook
 * org-ref citation
 * org-ref v3 citation
+* Org-mode citation link
 * Org-mode select link
 * Pandoc citation
 * Roam Cite Key
@@ -178,6 +179,13 @@ default: `no`
 
 Used for drag-and-drop/quick copy citations in `Pandoc` format. You can use this option to select whether you want
 to have these pandoc citations surrounded with brackets or not.
+
+
+#### Org-mode Citation link
+
+OrgMode built-in citation link.
+
+No options.
 
 
 
