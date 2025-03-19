@@ -508,6 +508,34 @@ const protect = {
     return node
   },
 }
+const reset = {
+  leave(node, parent) {
+    switch (node.type) {
+      case 'Program': {
+        const body = []
+        for (const formula of node.body) {
+          body.push({
+            type: 'CallExpression',
+            callee: {
+              type: 'MemberExpression',
+              object: {
+                type: 'ThisExpression',
+              },
+              property: {
+                type: 'Identifier',
+                name: 'formula_reset',
+              },
+            },
+            arguments: [],
+          })
+          body.push(formula)
+        }
+        node.body = body
+        break
+      }
+    }
+  }
+}
 
 const logging = {
   leave(node, parent) {
@@ -598,6 +626,8 @@ function compile(code, options) {
   estraverse.replace(ast, protect)
 
   if (options?.logging) estraverse.replace(ast, logging)
+
+  estraverse.replace(ast, reset)
 
   const generatedCode = [
     'let citekey',

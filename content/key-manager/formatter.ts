@@ -352,6 +352,8 @@ export class PatternFormatter {
 
   private skipWords: Set<string>
 
+  private creatorName: Template<'creator'> = '%(f)s'
+
   constructor() {
     Events.on('preference-changed', pref => {
       switch (pref) {
@@ -387,7 +389,6 @@ export class PatternFormatter {
       if (!formula) continue
 
       try {
-        this.$postfix()
         const formatter = compile(formula, { logging: Preference.testing })
         log.info('formula:', formula, '=>\n', formatter)
         this.generate = (new Function(formatter) as () => string)
@@ -551,7 +552,7 @@ export class PatternFormatter {
   public $creators(
     n: number | [number, number] = 0,
     type: CreatorType | CreatorTypeArray | CreatorTypeCollection | '*' = [[ 'primary', 'editor', 'translator', '*' ]],
-    name: Template<'creator'> = '%(f)s',
+    name: Template<'creator'> | '' = '',
     etal = '',
     sep = ' ',
     min = 0,
@@ -599,7 +600,7 @@ export class PatternFormatter {
   public $$creators(
     n: number | [number, number] = 0,
     type: CreatorType | CreatorTypeArray | CreatorTypeCollection | '*' = [[ 'primary', 'editor', 'translator', '*' ]],
-    name: Template<'creator'> = '%(f)s',
+    name: Template<'creator'> | '' = '',
     etal = '',
     sep = ' ',
     min = 0,
@@ -610,6 +611,15 @@ export class PatternFormatter {
   }
 
   /**
+   * Sets the sprintf-template default for representing creator names. Default is '%(f)s'.
+   * @param template template string
+   */
+  public $creatornames(template: Template<'creator'>): string {
+    this.creatorName = template
+    return ''
+  }
+
+  /**
    * The last names of the first `n` (default: all) authors.
    * @param n         the number of characters to take from the name, 0 = all
    * @param creator   kind of creator to select, `*` selects `author` first, and if not present, `editor`, `translator` or `collaborator`, in that order.
@@ -617,9 +627,7 @@ export class PatternFormatter {
    * @param sep       use this character between authors
    */
   public $authorsn(n = 0, creator: AuthorType = '*', initials = false, sep = ' '): string {
-    let name = '%(f)s'
-    if (initials) name += '%(I)s'
-    let author = this.creators(creator, name)
+    let author = this.creators(creator, initials ? `${this.creatorName}%(I)s` : this.creatorName)
     if (n && n < author.length) author = author.slice(0, n).concat('EtAl')
     return author.join(sep)
   }
@@ -632,8 +640,8 @@ export class PatternFormatter {
    * @param initials  add author initials
    */
   public $auth(n = 0, m = 1, creator: AuthorType = '*', initials = false): string {
-    const family = n ? `%(f).${ n }s` : '%(f)s'
-    const name = initials ? `${ family }%(I)s` : family
+    const family = n ? `${this.creatorName}.${n}s` : this.creatorName
+    const name = initials ? `${family}%(I)s` : family
     const author: string = this.creators(creator, name)[m - 1] || ''
     return author
   }
@@ -663,7 +671,7 @@ export class PatternFormatter {
    * @param initials  add author initials
    */
   public $authorLast(creator: AuthorType = '*', initials = false): string {
-    const authors = this.creators(creator, initials ? '%(f)s%(I)s' : '%(f)s')
+    const authors = this.creators(creator, initials ? `${this.creatorName}%(I)s` : this.creatorName)
     const author = authors[authors.length - 1] || ''
     return author
   }
@@ -676,7 +684,7 @@ export class PatternFormatter {
    * @param sep     use this character between authors
    */
   public $authorsAlpha(creator: AuthorType = '*', initials = false, sep = ' '): string {
-    const authors = this.creators(creator, initials ? '%(f)s%(I)s' : '%(f)s')
+    const authors = this.creators(creator, initials ? `${this.creatorName}%(I)s` : this.creatorName)
     if (!authors.length) return ''
 
     switch (authors.length) {
@@ -700,7 +708,7 @@ export class PatternFormatter {
    * @param sep     use this character between authors
    */
   public $authIni(n = 0, creator: AuthorType = '*', initials = false, sep = '.'): string {
-    const authors = this.creators(creator, initials ? '%(f)s%(I)s' : '%(f)s')
+    const authors = this.creators(creator, initials ? `${this.creatorName}%(I)s` : this.creatorName)
     if (!authors.length) return ''
     return authors.map(auth => auth.substring(0, n)).join(sep)
   }
@@ -712,7 +720,7 @@ export class PatternFormatter {
    * @param sep     use this character between authors
    */
   public $authorIni(creator: AuthorType = '*', initials = false, sep = '.'): string {
-    const authors = this.creators(creator, initials ? '%(f)s%(I)s' : '%(f)s')
+    const authors = this.creators(creator, initials ? `${this.creatorName}%(I)s` : this.creatorName)
     if (!authors.length) return ''
     const firstAuthor = authors.shift()
 
@@ -726,7 +734,7 @@ export class PatternFormatter {
    * @param sep     use this character between authors
    */
   public $authAuthEa(creator: AuthorType = '*', initials = false, sep = '.'): string {
-    const authors = this.creators(creator, initials ? '%(f)s%(I)s' : '%(f)s')
+    const authors = this.creators(creator, initials ? `${this.creatorName}%(I)s` : this.creatorName)
     if (!authors.length) return ''
 
     return authors.slice(0, 2).concat(authors.length > 2 ? ['ea'] : []).join(sep)
@@ -743,7 +751,7 @@ export class PatternFormatter {
    * @param sep     use this character between authors
    */
   public $authEtAl(creator: AuthorType = '*', initials = false, sep = ' '): string {
-    const authors = this.creators(creator, initials ? '%(f)s%(I)s' : '%(f)s')
+    const authors = this.creators(creator, initials ? `${this.creatorName}%(I)s` : this.creatorName)
     if (!authors.length) return ''
 
     return authors.length === 2
@@ -758,7 +766,7 @@ export class PatternFormatter {
    * @param sep     use this character between authors
    */
   public $authEtal2(creator: AuthorType = '*', initials = false, sep = '.'): string {
-    const authors = this.creators(creator, initials ? '%(f)s%(I)s' : '%(f)s')
+    const authors = this.creators(creator, initials ? `${this.creatorName}%(I)s` : this.creatorName)
     if (!authors.length) return ''
 
     return authors.length === 2
@@ -776,7 +784,7 @@ export class PatternFormatter {
    * @param sep     use this character between authors
    */
   public $authshort(creator: AuthorType = '*', initials = false, sep = '.'): string {
-    const authors = this.creators(creator, initials ? '%(f)s%(I)s' : '%(f)s')
+    const authors = this.creators(creator, initials ? `${this.creatorName}%(I)s` : this.creatorName)
 
     switch (authors.length) {
       case 0:
@@ -1323,8 +1331,7 @@ export class PatternFormatter {
     * @param mode for backwards compatibility, this param will be accepted, but it is a no-op since the switch to jieba-rs. It will be removed eventually.
     */
   public _jieba(input: string, mode?: string): string { // eslint-disable-line @typescript-eslint/no-unused-vars
-    if (!chinese.load(Preference.jieba)) return input
-    log.debug('formula:jieba:', input, '=>', chinese.jieba(input))
+    if (!chinese.loaded) return input
     return chinese.jieba(input).join(' ').trim()
   }
 
@@ -1341,7 +1348,7 @@ export class PatternFormatter {
 
   /** transliterates the citation key to pinyin */
   public _pinyin(input: string): string {
-    return chinese.load(Preference.jieba) ? chinese.pinyin(input) : input
+    return chinese.loaded?.pinyin(input) || input
   }
 
   /**
@@ -1377,7 +1384,7 @@ export class PatternFormatter {
       case 'zh':
       case 'chinese-traditional':
       case 'chinese':
-        if (chinese.load(Preference.jieba)) str = chinese.pinyin(str)
+        str = chinese.loaded?.pinyin(str) || str
         break
 
       case 'ja':
@@ -1450,7 +1457,7 @@ export class PatternFormatter {
       .filter(word => word && !(options.skipWords && ucs2decode(word).length === 1 && !word.match(/^\d+$/) && !word.match(CJK)))
 
     // apply jieba.cut and flatten.
-    if (chinese.load(Preference.jieba) && options.skipWords && this.item.transliterateMode.startsWith('chinese')) {
+    if (chinese.loaded && options.skipWords && this.item.transliterateMode.startsWith('chinese')) {
       words = [].concat(...words.map((word: string) => chinese.jieba(word)))
       // remove CJK skipwords
       words = words.filter((word: string) => !this.skipWords.has(word.toLowerCase()))
@@ -1470,7 +1477,7 @@ export class PatternFormatter {
         else if (Preference.kuroshiro && kuroshiro.enabled) {
           return this.transliterate(kuroshiro.convert(word, { to: 'romaji' }), 'minimal')
         }
-        else if (chinese.load(Preference.jieba)) {
+        else if (chinese.loaded) {
           return this.transliterate(chinese.pinyin(word), 'minimal')
         }
         else {
@@ -1521,16 +1528,25 @@ export class PatternFormatter {
     return initials
   }
 
-  private name(creator: Creator, template: string): string {
-    return sprintf(template, {
-      f: this.stripQuotes(this.innerText(creator.lastName || creator.name)),
+  private name(creator: Creator, template: Template<'creators'>): string {
+    const name = creator.lastName || creator.name
+    const vars = {
+      f: this.stripQuotes(this.innerText(name)),
       g: this.stripQuotes(this.innerText(creator.firstName || '')),
       I: this.initials(creator),
       i: this.initials(creator, false),
-    }) as string
+    }
+    Object.assign(vars, {
+      f_chinese: chinese.loaded?.splitName(name).familyName.name || vars.f,
+      f_chinese_translit: chinese.loaded?.splitName(name).familyName.transliteration || vars.f,
+      g_chinese: chinese.loaded?.splitName(name).givenName.name || vars.g,
+      g_chinese_translit: chinese.loaded?.splitName(name).givenName.transliteration || vars.g,
+    })
+    return sprintf(template, vars) as string
   }
 
-  private creators(select: AuthorType, template: string): string[] {
+  private creators(select: AuthorType, template?: Template<'creators'>): string[] {
+    template = template || this.creatorName
     const types = itemCreators[client.slug][this.item.itemType] || []
     const primary = types[0]
 
@@ -1579,6 +1595,11 @@ export class PatternFormatter {
       if (creators[kind].length) return creators[kind] as string[]
     }
     return []
+  }
+
+  public formula_reset(): void {
+    this.creatorName = '%(f)s'
+    this.$postfix()
   }
 
   public formula_log(k: string, v: string, e?: Error & { next?: boolean }): string {
