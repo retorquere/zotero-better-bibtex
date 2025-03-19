@@ -537,6 +537,15 @@ const reset = {
   }
 }
 
+function trim(args) {
+  args = [...args]
+  let last
+  while (args.length && (last = args[args.length - 1]) && ((last.type === 'Literal' && !last.value) || (last.type === 'Identifier' && last.name === 'undefined'))) {
+    args.pop()
+  }
+  return args
+}
+
 const logging = {
   leave(node, parent) {
     if (node.type === 'CallExpression') {
@@ -550,7 +559,17 @@ const logging = {
           object: { type: 'ThisExpression' },
           property: { type: 'Identifier', name: 'formula_log' },
         },
-        arguments: [ { type: 'Literal', value: node.callee.property.name }, node ],
+        arguments: [
+          {
+            type: 'Literal',
+            value: astring.generate({
+              ...node,
+              callee: node.callee.property,
+              arguments: trim(node.callee.property.name[0] === '$' ? node.arguments : node.arguments.slice(1)),
+            })
+          },
+          node,
+        ],
       }
     }
     else if (node.type === 'CatchClause') {
@@ -627,7 +646,7 @@ function compile(code, options) {
 
   if (options?.logging) estraverse.replace(ast, logging)
 
-  estraverse.replace(ast, reset)
+  // estraverse.replace(ast, reset)
 
   const generatedCode = [
     'let citekey',

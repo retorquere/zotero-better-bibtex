@@ -418,7 +418,7 @@ export class PatternFormatter {
         return ''
     }
 
-    this.$postfix()
+    this.formula_reset() // should leave this to _reset inside the compiled formula
     let citekey = this.generate()
     if (citekey && Preference.citekeyFold) citekey = this.transliterate(citekey)
     citekey = citekey.replace(this.re.unsafechars, '')
@@ -640,7 +640,8 @@ export class PatternFormatter {
    * @param initials  add author initials
    */
   public $auth(n = 0, m = 1, creator: AuthorType = '*', initials = false): string {
-    const family = n ? `${this.creatorName}.${n}s` : this.creatorName
+    const family = n ? this.creatorName.replace(/%\(([fg][_a-z]*)\)s/gi, `%($1).${n}s`) : this.creatorName
+    if (n) log.debug('formula: $auth template = ', n, this.creatorName, '=>', family)
     const name = initials ? `${family}%(I)s` : family
     const author: string = this.creators(creator, name)[m - 1] || ''
     return author
@@ -1529,6 +1530,7 @@ export class PatternFormatter {
   }
 
   private name(creator: Creator, template: Template<'creators'>): string {
+    log.debug('formula: name template =', template)
     const name = creator.lastName || creator.name
     const vars = {
       f: this.stripQuotes(this.innerText(name)),
@@ -1598,7 +1600,7 @@ export class PatternFormatter {
   }
 
   public formula_reset(): void {
-    this.creatorName = '%(f)s'
+    this.$creatornames('%(f)s')
     this.$postfix()
   }
 
