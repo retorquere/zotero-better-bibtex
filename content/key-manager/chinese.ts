@@ -1,14 +1,14 @@
 import { Preference } from '../prefs'
 import { Events } from '../events'
-import { discard } from '../logger'
+// import { discard } from '../logger'
 
 import type { splitName as splitNameFunc, jieba as jiebaFunc, pinyin as pinyinFunc } from './chinese-optional'
 
 // Replace the console object with the empty shim
 export const chinese = new class {
-  public window: Window
-  public document: Document
-  public console = discard
+  // public window: Window
+  // public document: Document
+  // public console = discard
 
   public jieba: typeof jiebaFunc
   public pinyin: typeof pinyinFunc
@@ -27,8 +27,8 @@ export const chinese = new class {
   private load(): void {
     if (!Preference.jieba || this.jieba) return
 
-    this.window = this.window || Zotero.getMainWindow()
-    this.document = this.document || this.window.document
+    // this.window = this.window || Zotero.getMainWindow()
+    // this.document = this.document || this.window.document
     Services.scriptloader.loadSubScriptWithOptions('chrome://zotero-better-bibtex/content/key-manager/chinese-optional.js', {
       target: this,
       charset: 'utf-8',
