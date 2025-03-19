@@ -48,7 +48,7 @@
     "description": "<p>Treat ideaographs as individual words</p>"
   },
   {
-    "summary": "<b>jieba</b>",
+    "summary": "<b>jieba</b>(mode?: string)",
     "description": "<p>word segmentation for Chinese items. Uses substantial memory, and adds about 7 seconds to BBTs startup time; must be enabled under Preferences -&gt; Better BibTeX -&gt; Advanced -&gt; Citekeys</p>"
   },
   {
