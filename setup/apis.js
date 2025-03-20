@@ -37,7 +37,7 @@ ajv.addKeyword({
   schemaType: 'string',
   code(cxt) {
     const { data, schema } = cxt
-    cxt.fail(_`typeof ${data} !== 'string' || !(${data}.replace(/%(?:(\\d*)[$]|\\(([a-zA-Z]+)\\))[+]?(?:0|'.)?-?\\d*(?:[.]\\d+)?([bcdieufgostTvxXj])/g, ((m, num, name, mod) => {
+    cxt.fail(_`typeof ${data} !== 'string' || !(${data}.replace(/%(?:(\\d*)[$]|\\(([_a-zA-Z]+)\\))[+]?(?:0|'.)?-?\\d*(?:[.]\\d+)?([bcdieufgostTvxXj])/g, ((m, num, name, mod) => {
       if (typeof num === 'string') return '\\x15'
       return ${schema}.includes('%' + name + mod) ? '\\x06' : '\\x15'
     })).match(/^(?=.*\\x06)(?!.*\\x15)/))`)
@@ -223,11 +223,16 @@ class SchemaBuilder {
               '',
               'in the creator template, you can use:',
               '* `%(f)s`: family ("last") name',
+              '* `%(f_zh)s`: family ("last") name extracted from chinese compound names. Need `jieba` to be enabled',
+              '* `%(f_zh_Latn)s`: family ("last") name extracted from chinese compound names, transliterated. Need `jieba` to be enabled',
               '* `%(g)s`: given ("first") name',
+              '* `%(g_zh)s`: given ("first") name extracted from chinese compound names. Need `jieba` to be enabled',
+              '* `%(g_zh_Latn)s`: given ("first") name extracted from chinese compound names, transliterated. Need `jieba` to be enabled',
               '* `%(i)s`: given-name initials',
+              '* `%(I)s`: given-name initials, upper-case',
               '',
             ].join('\n')
-            return { sprintf: '%fs%gs%is' }
+            return { sprintf: '%fs%gs%is%Is%g_zhs%g_zh_Latns%f_zhs%f_zh_Latns' }
           case 'postfix':
             this.#description.postfixTemplate = [
               '',
