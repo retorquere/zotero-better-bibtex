@@ -642,7 +642,6 @@ export class PatternFormatter {
    */
   public $auth(n = 0, m = 1, creator: AuthorType = '*', initials = false): string {
     const family = n ? this.creatorName.replace(/%\(([fg][_a-z]*)\)s/gi, `%($1).${n}s`) : this.creatorName
-    if (n) log.debug('formula: $auth template = ', n, this.creatorName, '=>', family)
     const name = initials ? `${family}%(I)s` : family
     const author: string = this.creators(creator, name)[m - 1] || ''
     return author
@@ -1531,7 +1530,6 @@ export class PatternFormatter {
   }
 
   private name(creator: Creator, template: Template<'creators'>): string {
-    log.debug('formula: name template =', template)
     const name = creator.lastName || creator.name
     const vars = {
       f: this.stripQuotes(this.innerText(name)),
