@@ -233,6 +233,7 @@ async function rebuild() {
     exportGlobals: true,
     plugins: [
       loader.__dirname,
+      loader.resettableBinary,
       // shims,
     ],
     // inject: ['./setup/loaders/globals.js'],

@@ -1,17 +1,15 @@
 import Pinyin from 'pinyin'
-import createJieba from 'js-jieba'
-import * as cn from 'jieba-zh-cn'
-import * as tw from 'jieba-zh-tw'
+import _wasm from 'wasmjieba-web/wasmjieba-web_bg.wasm'
+import { cut, initSync } from 'wasmjieba-web'
 
-const cutter = {
-  cn: createJieba(cn.JiebaDict, cn.HMMModel, cn.UserDict, cn.IDF, cn.StopWords),
-  tw: createJieba(tw.JiebaDict, tw.HMMModel, tw.UserDict, tw.IDF, tw.StopWords),
-}
+const wasm = _wasm as unknown as { bytes: Uint8Array }
+initSync(wasm.bytes)
+wasm.bytes = null
 
-export function jieba(input: string, mode: 'cn' | 'tw' = 'cn'): string[] {
-  return cutter[mode].cut(input, true).filter((w: string) => w.trim())
+export function jieba(input: string): string[] {
+  return (cut(input, true) as string[]).filter(w => w.trim())
 }
 
 export function pinyin(str: string): string {
-  return Pinyin(str).map((c: string[]) => c[0]).join('')
+  return Pinyin(str).join('')
 }

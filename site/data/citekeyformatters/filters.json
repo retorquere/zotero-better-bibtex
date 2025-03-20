@@ -48,7 +48,7 @@
     "description": "<p>Treat ideaographs as individual words</p>"
   },
   {
-    "summary": "<b>jieba</b>(mode?: (&quot;cn&quot; | &quot;tw&quot; | &quot;hant&quot;))",
+    "summary": "<b>jieba</b>(mode?: string)",
     "description": "<p>word segmentation for Chinese items. Uses substantial memory, and adds about 7 seconds to BBTs startup time; must be enabled under Preferences -&gt; Better BibTeX -&gt; Advanced -&gt; Citekeys</p>"
   },
   {
@@ -112,7 +112,7 @@
     "description": "<p><code>substring(start,n)</code> selects <code>n</code> (default: all) characters starting at <code>start</code></p>"
   },
   {
-    "summary": "<b>transliterate</b>(mode?: (&quot;ar&quot; | &quot;de&quot; | &quot;minimal&quot; | &quot;tw&quot; | &quot;mn&quot; | &quot;arabic&quot; | &quot;chinese&quot; | &quot;german&quot; | &quot;japanese&quot; | &quot;mongolian&quot; | &quot;russian&quot; | &quot;ru&quot; | &quot;uk&quot; | &quot;ja&quot; | &quot;zh&quot; | &quot;zh-hant&quot; | &quot;ukranian&quot;))",
+    "summary": "<b>transliterate</b>(mode?: (&quot;ar&quot; | &quot;de&quot; | &quot;minimal&quot; | &quot;mn&quot; | &quot;arabic&quot; | &quot;chinese&quot; | &quot;german&quot; | &quot;japanese&quot; | &quot;mongolian&quot; | &quot;russian&quot; | &quot;ru&quot; | &quot;uk&quot; | &quot;ja&quot; | &quot;zh&quot; | &quot;zh-hant&quot; | &quot;tw&quot; | &quot;ukranian&quot;))",
     "description": "<p>transliterates the citation key. If you don't specify a mode, the mode is derived from the item language field</p>"
   },
   {

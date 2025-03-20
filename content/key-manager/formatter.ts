@@ -1320,13 +1320,11 @@ export class PatternFormatter {
 
   /**
     * word segmentation for Chinese items. Uses substantial memory, and adds about 7 seconds to BBTs startup time; must be enabled under Preferences -> Better BibTeX -> Advanced -> Citekeys
-    * @param mode segmentation mode
+    * @param mode for backwards compatibility, this param will be accepted, but it is a no-op since the switch to jieba-rs. It will be removed eventually.
     */
-  public _jieba(input: string, mode?: 'cn' | 'tw' | 'hant'): string {
+  public _jieba(input: string, mode?: string): string { // eslint-disable-line @typescript-eslint/no-unused-vars
     if (!chinese.load(Preference.jieba)) return input
-    if (mode === 'hant') mode = 'tw'
-    mode = mode || (this.item.transliterateMode === 'chinese-traditional' ? 'tw' : 'cn')
-    return chinese.jieba(input, mode).join(' ').trim()
+    return chinese.jieba(input).join(' ').trim()
   }
 
   /** word segmentation for Japanese items. Uses substantial memory; must be enabled under Preferences -> Better BibTeX -> Advanced -> Citekeys */
@@ -1452,10 +1450,9 @@ export class PatternFormatter {
 
     // apply jieba.cut and flatten.
     if (chinese.load(Preference.jieba) && options.skipWords && this.item.transliterateMode.startsWith('chinese')) {
-      const mode = this.item.transliterateMode === 'chinese-traditional' ? 'tw' : 'cn'
-      words = words
-        .flatMap((word: string) => chinese.jieba(word, mode))
-        .filter((word: string) => !this.skipWords.has(word.toLowerCase())) // remove CJK skipwords
+      words = [].concat(...words.map((word: string) => chinese.jieba(word)))
+      // remove CJK skipwords
+      words = words.filter((word: string) => !this.skipWords.has(word.toLowerCase()))
     }
 
     if (Preference.kuroshiro && kuroshiro.enabled && options.skipWords && this.item.transliterateMode === 'japanese') {
