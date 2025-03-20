@@ -175,6 +175,8 @@ class ItemListener extends ZoteroListener {
   }
 
   public async notify(action: ZoteroAction, type: string, ids: number[], extraData?: Record<number, { libraryID?: number }>) {
+    log.debug('3135:', { action, type, ids })
+
     try {
       switch (action) {
         case 'trash':
@@ -229,15 +231,17 @@ class ItemListener extends ZoteroListener {
         if (action === 'modify' && item.deleted) return false
         if (item.isFeedItem) return false
 
+        touch(item)
+
         if (item.isAttachment() || item.isNote() || item.isAnnotation?.()) { // should I keep top-level notes/attachments for BBT-JSON?
-          if (typeof item.parentID === 'number' && !ids.includes(item.parentID)) parentIDs.add(item.parentID)
+          if (typeof item.parentID === 'number') parentIDs.add(item.parentID)
           return false
         }
 
-        touch(item)
-
         return true
       })
+
+      log.debug('3135:', { action, type, ids, items: items.map(item => item.id), touched })
 
       await Events.itemsChanged(action, ids)
       if (items.length) await Events.emit('items-changed', { items, action })
