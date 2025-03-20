@@ -63,7 +63,7 @@ const parens = {
   },
 
   BinaryExpression(node, parent) {
-    if (node.operator !== '+') throw new Error(`${astring.generate(node)} not supported`)
+    if (!node.operator.match(/^[+]|[<>]=?|[!=]=$/)) throw new Error(`${astring.generate(node)} not supported`)
   },
 
   MemberExpression(node, parent) {

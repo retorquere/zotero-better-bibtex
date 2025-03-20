@@ -232,7 +232,7 @@ class SchemaBuilder {
               '* `%(I)s`: given-name initials, upper-case',
               '',
             ].join('\n')
-            return { sprintf: '%fs%gs%is%Is%g_chineses%g_chinese_translits%f_chineses%f_chinese_translits' }
+            return { sprintf: '%fs%gs%is%Is%g_zhs%g_zh_latns%f_zhs%f_zh_latns' }
           case 'postfix':
             this.#description.postfixTemplate = [
               '',
