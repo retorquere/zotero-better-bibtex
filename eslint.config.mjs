@@ -40,7 +40,7 @@ const config = [
       'gen/**/*.{d.ts,ts,js,mjs}',
       'util/**/*.{ts,js}',
       'setup/**/*.{ts,js,mjs}',
-      'submodules/**/*.{ts,js,mjs}',
+      'submodules/**/*.{ts,js,mjs,tsx,cjs}',
       'setup/**/*.{ts,js}',
       'util/*.ts',
       'minitests/**/*.{ts,js}',
