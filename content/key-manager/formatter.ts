@@ -558,6 +558,7 @@ export class PatternFormatter {
     min = 0,
     max = 0
   ): string {
+    name = name || this.creatorName
     const include: string[] = []
     const exclude: string[] = []
     const primary = itemCreators[client.slug][this.item.itemType][0]
