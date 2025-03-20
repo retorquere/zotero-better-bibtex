@@ -234,7 +234,7 @@ class ItemListener extends ZoteroListener {
         touch(item)
 
         if (item.isAttachment() || item.isNote() || item.isAnnotation?.()) { // should I keep top-level notes/attachments for BBT-JSON?
-          if (typeof item.parentID === 'number') parentIDs.add(item.parentID)
+          if (typeof item.parentID === 'number' && !ids.includes(item.parentID)) parentIDs.add(item.parentID)
           return false
         }
 
@@ -245,7 +245,13 @@ class ItemListener extends ZoteroListener {
 
       await Events.itemsChanged(action, ids)
       if (items.length) await Events.emit('items-changed', { items, action })
-      if (parentIDs.size) void Events.emit('items-changed', { items: Zotero.Items.get([...parentIDs]), action: 'modify', reason: `parent-${ action }` })
+      if (parentIDs.size) {
+        const parents = Zotero.Items.get([...parentIDs])
+        for (const item of parents) {
+          touch(item)
+        }
+        void Events.emit('items-changed', { items: parents, action: 'modify', reason: `parent-${ action }` })
+      }
 
       Zotero.Promise.delay(Events.itemObserverDelay).then(() => {
         if (touched.collections.size) void Events.emit('collections-changed', [...touched.collections])
