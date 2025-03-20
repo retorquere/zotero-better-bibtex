@@ -169,13 +169,17 @@ abstract class ZoteroListener {
   }
 }
 
+function types(items) {
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+  return items.reduce((acc, item) => ({...acc, [item.id]: Zotero.ItemTypes.getName(item.itemTypeID) }), {})
+}
 class ItemListener extends ZoteroListener {
   constructor() {
     super('item')
   }
 
   public async notify(action: ZoteroAction, type: string, ids: number[], extraData?: Record<number, { libraryID?: number }>) {
-    log.debug('3135:', { action, type, ids })
+    log.debug('3135:', { action, type, ids, types: types(Zotero.Items.get(ids)) })
 
     try {
       switch (action) {
@@ -247,6 +251,7 @@ class ItemListener extends ZoteroListener {
       if (items.length) await Events.emit('items-changed', { items, action })
       if (parentIDs.size) {
         const parents = Zotero.Items.get([...parentIDs])
+        log.debug('3135: parents', { action: 'modify', type, ids: [...parentIDs], types: types(parents) })
         for (const item of parents) {
           touch(item)
         }
