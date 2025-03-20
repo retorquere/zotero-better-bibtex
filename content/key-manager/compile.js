@@ -125,7 +125,7 @@ const len = {
             name: '_len',
           },
         },
-        arguments: [node.left, node.right],
+        arguments: [node.left, { type: 'Literal', value: node.operator }, node.right],
       }
     }
   },
