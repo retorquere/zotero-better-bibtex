@@ -1539,9 +1539,9 @@ export class PatternFormatter {
     }
     Object.assign(vars, {
       f_zh: chinese.loaded?.splitName(name).familyName.name || vars.f,
-      f_zh_latn: chinese.loaded?.splitName(name).familyName.transliteration || vars.f,
+      f_zh_Latn: chinese.loaded?.splitName(name).familyName.transliteration || vars.f,
       g_zh: chinese.loaded?.splitName(name).givenName.name || vars.g,
-      g_zh_latn: chinese.loaded?.splitName(name).givenName.transliteration || vars.g,
+      g_zh_Latn: chinese.loaded?.splitName(name).givenName.transliteration || vars.g,
     })
     return sprintf(template, vars) as string
   }

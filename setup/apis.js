@@ -224,15 +224,15 @@ class SchemaBuilder {
               'in the creator template, you can use:',
               '* `%(f)s`: family ("last") name',
               '* `%(f_zh)s`: family ("last") name extracted from chinese compound names. Need `jieba` to be enabled',
-              '* `%(f_zh_latn)s`: family ("last") name extracted from chinese compound names, transliterated. Need `jieba` to be enabled',
+              '* `%(f_zh_Latn)s`: family ("last") name extracted from chinese compound names, transliterated. Need `jieba` to be enabled',
               '* `%(g)s`: given ("first") name',
               '* `%(g_zh)s`: given ("first") name extracted from chinese compound names. Need `jieba` to be enabled',
-              '* `%(g_zh_latn)s`: given ("first") name extracted from chinese compound names, transliterated. Need `jieba` to be enabled',
+              '* `%(g_zh_Latn)s`: given ("first") name extracted from chinese compound names, transliterated. Need `jieba` to be enabled',
               '* `%(i)s`: given-name initials',
               '* `%(I)s`: given-name initials, upper-case',
               '',
             ].join('\n')
-            return { sprintf: '%fs%gs%is%Is%g_zhs%g_zh_latns%f_zhs%f_zh_latns' }
+            return { sprintf: '%fs%gs%is%Is%g_zhs%g_zh_Latns%f_zhs%f_zh_Latns' }
           case 'postfix':
             this.#description.postfixTemplate = [
               '',
