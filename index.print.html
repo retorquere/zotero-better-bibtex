@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="height=device-height, width=device-width, initial-scale=1.0, minimum-scale=1.0">
     <meta name="generator" content="Hugo 0.145.0">
-    <meta name="generator" content="Relearn 7.5.0+bc0011fc05abbd9f079145b753dab4fa6b823077">
+    <meta name="generator" content="Relearn 7.5.0+a05b2124652293b1be3742f26aa3913861f956de">
     <meta name="description" content="Make Zotero more useful for us LaTeX holdouts">
     <meta name="author" content="">
     <meta name="twitter:card" content="summary">
@@ -38,7 +38,7 @@
       window.relearn = window.relearn || {};
       // configuration
       window.relearn.min = `.min`;
-      window.relearn.path='\/zotero-better-bibtex\/index.html';
+      window.relearn.path='\/index.html';
       window.relearn.relBasePath='.';
       window.relearn.relBaseUri='..';
       window.relearn.absBaseUri='\/zotero-better-bibtex';
@@ -11806,13 +11806,31 @@ of up to three authors' last names if more than one author is
 given. A plus character is added, if there are more than three
 authors.</p></dd>
   
-    <dt><b>creators</b>(n: (number | [ number, number ]) = 0, type: (&quot;*&quot; | Creator | Creator[] | (Creator | &quot;*&quot;)[][]) = [[&#39;primary&#39;, &#39;editor&#39;, &#39;translator&#39;, &#39;*&#39;]], name: &#96;sprintf-style format template&#96; = &#39;%(f)s&#39;, etal: string = &#39;&#39;, sep: string = &#39; &#39;, min: number = 0, max: number = 0)</dt><dd><p>Author/editor information.</p>
+    <dt><b>creatornames</b>(template: &#96;sprintf-style format template&#96;)</dt><dd><p>Sets the sprintf-template default for representing creator names. Default is '%(f)s'.</p>
+<p>in the creator template, you can use:</p>
+<ul>
+<li><code>%(f)s</code>: family ("last") name</li>
+<li><code>%(f_zh)s</code>: family ("last") name extracted from chinese compound names. Need <code>jieba</code> to be enabled</li>
+<li><code>%(f_zh_latn)s</code>: family ("last") name extracted from chinese compound names, transliterated. Need <code>jieba</code> to be enabled</li>
+<li><code>%(g)s</code>: given ("first") name</li>
+<li><code>%(g_zh)s</code>: given ("first") name extracted from chinese compound names. Need <code>jieba</code> to be enabled</li>
+<li><code>%(g_zh_latn)s</code>: given ("first") name extracted from chinese compound names, transliterated. Need <code>jieba</code> to be enabled</li>
+<li><code>%(i)s</code>: given-name initials</li>
+<li><code>%(I)s</code>: given-name initials, upper-case</li>
+</ul></dd>
+  
+    <dt><b>creators</b>(n: (number | [ number, number ]) = 0, type: (&quot;*&quot; | Creator | Creator[] | (Creator | &quot;*&quot;)[][]) = [[&#39;primary&#39;, &#39;editor&#39;, &#39;translator&#39;, &#39;*&#39;]], name: (&quot;&quot; | &#96;sprintf-style format template&#96;) = &#39;&#39;, etal: string = &#39;&#39;, sep: string = &#39; &#39;, min: number = 0, max: number = 0)</dt><dd><p>Author/editor information.</p>
 <p>creator type can be one of <code>artist</code>, <code>attorneyAgent</code>, <code>author</code>, <code>bookAuthor</code>, <code>cartographer</code>, <code>castMember</code>, <code>commenter</code>, <code>composer</code>, <code>contributor</code>, <code>cosponsor</code>, <code>counsel</code>, <code>director</code>, <code>editor</code>, <code>guest</code>, <code>interviewee</code>, <code>interviewer</code>, <code>inventor</code>, <code>performer</code>, <code>podcaster</code>, <code>presenter</code>, <code>producer</code>, <code>programmer</code>, <code>recipient</code>, <code>reviewedAuthor</code>, <code>scriptwriter</code>, <code>seriesEditor</code>, <code>sponsor</code>, <code>translator</code>, <code>wordsBy</code></p>
 <p>in the creator template, you can use:</p>
 <ul>
 <li><code>%(f)s</code>: family ("last") name</li>
+<li><code>%(f_zh)s</code>: family ("last") name extracted from chinese compound names. Need <code>jieba</code> to be enabled</li>
+<li><code>%(f_zh_latn)s</code>: family ("last") name extracted from chinese compound names, transliterated. Need <code>jieba</code> to be enabled</li>
 <li><code>%(g)s</code>: given ("first") name</li>
+<li><code>%(g_zh)s</code>: given ("first") name extracted from chinese compound names. Need <code>jieba</code> to be enabled</li>
+<li><code>%(g_zh_latn)s</code>: given ("first") name extracted from chinese compound names, transliterated. Need <code>jieba</code> to be enabled</li>
 <li><code>%(i)s</code>: given-name initials</li>
+<li><code>%(I)s</code>: given-name initials, upper-case</li>
 </ul></dd>
   
     <dt><b>creatortypes</b>(match?: RegExp)</dt><dd><p>This will return a comma-separated list of creator type information for all creators on the item
@@ -13254,10 +13272,10 @@ means a lot) so I can save up for a replacement a year or so down
 the line, head on over to <a href="https://www.patreon.com/retorquere" rel="external" target="_blank">Patreon</a>,
 but mind that Patreon takes a fairly large cut of what you give.</p>
 <p>Many, many thanks, also to the existing contributors &ndash; thanks to you I&rsquo;ve hit my first target and have been able to replace my trusty macbook air with a newer macbook pro which has much more breathing room.</p>
-<p><a href="#R-image-22bf7381c4a86f55e97e36a6b2e24e80" class="lightbox-link"><img alt="My github stats" class="lazy lightbox figure-image" loading="lazy" src="https://github-readme-stats.vercel.app/api?username=retorquere&show_icons=true&hide_border=true&theme=dark" style=" height: auto; width: auto;"></a>
-<a href="javascript:history.back();" class="lightbox-back" id="R-image-22bf7381c4a86f55e97e36a6b2e24e80"><img alt="My github stats" class="lazy lightbox lightbox-image" loading="lazy" src="https://github-readme-stats.vercel.app/api?username=retorquere&show_icons=true&hide_border=true&theme=dark"></a></p>
-<p><a href="#R-image-578857b07dec280c6162001fdd06e6e9" class="lightbox-link"><img alt="Metrics" class="lazy lightbox figure-image" loading="lazy" src="https://metrics.lecoq.io/retorquere?template=classic&config.timezone=Europe%2FOslo" style=" height: auto; width: auto;"></a>
-<a href="javascript:history.back();" class="lightbox-back" id="R-image-578857b07dec280c6162001fdd06e6e9"><img alt="Metrics" class="lazy lightbox lightbox-image" loading="lazy" src="https://metrics.lecoq.io/retorquere?template=classic&config.timezone=Europe%2FOslo"></a></p>
+<p><a href="#R-image-987eb32c5cc4be7ec30bb59ef43970ff" class="lightbox-link"><img alt="My github stats" class="lazy lightbox figure-image" loading="lazy" src="https://github-readme-stats.vercel.app/api?username=retorquere&show_icons=true&hide_border=true&theme=dark" style=" height: auto; width: auto;"></a>
+<a href="javascript:history.back();" class="lightbox-back" id="R-image-987eb32c5cc4be7ec30bb59ef43970ff"><img alt="My github stats" class="lazy lightbox lightbox-image" loading="lazy" src="https://github-readme-stats.vercel.app/api?username=retorquere&show_icons=true&hide_border=true&theme=dark"></a></p>
+<p><a href="#R-image-6cc749d3596468d462bd2b60ba9b3f41" class="lightbox-link"><img alt="Metrics" class="lazy lightbox figure-image" loading="lazy" src="https://metrics.lecoq.io/retorquere?template=classic&config.timezone=Europe%2FOslo" style=" height: auto; width: auto;"></a>
+<a href="javascript:history.back();" class="lightbox-back" id="R-image-6cc749d3596468d462bd2b60ba9b3f41"><img alt="Metrics" class="lazy lightbox lightbox-image" loading="lazy" src="https://metrics.lecoq.io/retorquere?template=classic&config.timezone=Europe%2FOslo"></a></p>
 
   <footer class="footline">
   </footer>
