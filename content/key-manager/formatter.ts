@@ -1540,10 +1540,10 @@ export class PatternFormatter {
       i: this.initials(creator, false),
     }
     Object.assign(vars, {
-      f_chinese: chinese.loaded?.splitName(name).familyName.name || vars.f,
-      f_chinese_translit: chinese.loaded?.splitName(name).familyName.transliteration || vars.f,
-      g_chinese: chinese.loaded?.splitName(name).givenName.name || vars.g,
-      g_chinese_translit: chinese.loaded?.splitName(name).givenName.transliteration || vars.g,
+      f_zh: chinese.loaded?.splitName(name).familyName.name || vars.f,
+      f_zh_latn: chinese.loaded?.splitName(name).familyName.transliteration || vars.f,
+      g_zh: chinese.loaded?.splitName(name).givenName.name || vars.g,
+      g_zh_latn: chinese.loaded?.splitName(name).givenName.transliteration || vars.g,
     })
     return sprintf(template, vars) as string
   }
