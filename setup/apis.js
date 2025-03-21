@@ -88,57 +88,68 @@ function flattenUnion(type) {
   }
 }
 
-function printType(type) {
-  type = flattenUnion(patch(type))
+class TypePrinter {
+  #source = null
 
-  switch (typeName(type)) {
-    case 'number':
-    case 'string':
-    case 'boolean':
-    case 'any':
-    case 'void':
-      return type.name
+  constructor(source) {
+    this.#source = source
+  }
 
-    case 'union':
-      return `(${type.types.map(printType).join(' | ')})`
+  print(type) {
+    type = flattenUnion(patch(type))
 
-    case 'literal':
-      return JSON.stringify(type.value)
+    switch (typeName(type)) {
+      case 'number':
+      case 'string':
+      case 'boolean':
+      case 'any':
+      case 'void':
+        return type.name
 
-    case 'reference.typescript.RegExp':
-      return type.name
+      case 'union':
+        return `(${type.types.map(t => this.print(t)).join(' | ')})`
 
-    case 'reference.typescript.Record':
-      return `Record<${type.typeArguments.map(printType).join(', ')}>`
+      case 'literal':
+        return JSON.stringify(type.value)
 
-    case 'tuple':
-      return `[ ${type.elements.map(printType).join(', ')} ]`
+      case 'reference.typescript.RegExp':
+        return type.name
 
-    case 'array':
-      return `${printType(type.elementType)}[]`
+      case 'reference.typescript.Record':
+        return `Record<${type.typeArguments.map(t => this.print(t)).join(', ')}>`
 
-    case 'reference.zotero-better-bibtex.Template':
-      return '`sprintf-style format template`'
+      case 'tuple':
+        return `[ ${type.elements.map(t => this.print(t)).join(', ')} ]`
 
-    case 'reference.zotero-better-bibtex.AuthorType':
-      return printType({
-        type: 'union',
-        types: ['author', 'editor', 'translator', 'collaborator', '*'].map(a => ({ type: 'literal', value: a })),
-      })
+      case 'array':
+        return `${this.print(type.elementType)}[]`
 
-    case 'reference.zotero-better-bibtex.CreatorType':
-      return 'Creator'
+      case 'reference.zotero-better-bibtex.Template':
+        return '`sprintf-style format template`'
 
-    case 'reflection':
-      if (type.declaration.children) return `{ ${type.declaration.children.map(t => `${t.name}: ${printType(t.type)}`).join('; ')} }`
-      if (type.typeArguments?.length === 1) return printType(type.typeArguments[0])
-      throw type
+      case 'reference.zotero-better-bibtex.AuthorType':
+        return this.print({
+          type: 'union',
+          types: ['author', 'editor', 'translator', 'collaborator', '*'].map(a => ({ type: 'literal', value: a })),
+        })
 
-    case 'reference.zotero-types.Collection':
-      return type.name
+      case 'reference.zotero-better-bibtex.CreatorType':
+        return 'Creator'
 
-    default:
-      throw new Error(JSON.stringify(type))
+      case 'reflection':
+        if (type.declaration.children) return `{ ${type.declaration.children.map(t => `${t.name}: ${this.print(t.type)}`).join('; ')} }`
+        if (type.typeArguments?.length === 1) return this.print(type.typeArguments[0])
+        throw type
+
+      case 'reference.zotero-types.Collection':
+        return type.name
+
+      case 'reference.zotero-better-bibtex.TransliterateMode':
+        return this.print(this.#source.children.find(node => node.name == 'TransliterateMode' && node.variant == 'declaration').type)
+
+      default:
+        throw new Error(JSON.stringify(type))
+    }
   }
 }
 
@@ -180,6 +191,11 @@ function patch(type) {
 
 class SchemaBuilder {
   #description = {}
+  #source = null
+
+  constructor(source) {
+    this.#source = source
+  }
 
   make(type) {
     type = flattenUnion(patch(type))
@@ -224,15 +240,13 @@ class SchemaBuilder {
               'in the creator template, you can use:',
               '* `%(f)s`: family ("last") name',
               '* `%(f_zh)s`: family ("last") name extracted from chinese compound names. Need `jieba` to be enabled',
-              '* `%(f_zh_Latn)s`: family ("last") name extracted from chinese compound names, transliterated. Need `jieba` to be enabled',
               '* `%(g)s`: given ("first") name',
               '* `%(g_zh)s`: given ("first") name extracted from chinese compound names. Need `jieba` to be enabled',
-              '* `%(g_zh_Latn)s`: given ("first") name extracted from chinese compound names, transliterated. Need `jieba` to be enabled',
               '* `%(i)s`: given-name initials',
               '* `%(I)s`: given-name initials, upper-case',
               '',
             ].join('\n')
-            return { sprintf: '%fs%gs%is%Is%g_zhs%g_zh_Latns%f_zhs%f_zh_Latns' }
+            return { sprintf: '%fs%gs%is%Is%g_zhs%f_zhs' }
           case 'postfix':
             this.#description.postfixTemplate = [
               '',
@@ -266,6 +280,9 @@ class SchemaBuilder {
         this.#description.babelLanguage = `\nlanguage can be one of ${Babel.languages.map(t => '`' + t + '`').join(', ')}\n`
         return { type: 'string', format: 'babel-language' }
 
+      case 'reference.zotero-better-bibtex.TransliterateMode':
+        return this.make(this.#source.children.find(node => node.name == 'TransliterateMode' && node.variant == 'declaration').type)
+
       case 'reflection':
         if (type.typeArguments?.length === 1) return this.make(type.typeArguments[0])
         return {
@@ -274,6 +291,7 @@ class SchemaBuilder {
         }
 
       default:
+        console.log(type.declaration)
         throw new Error(JSON.stringify({ name: typeName(type), type }, null, 2))
     }
   }
@@ -316,7 +334,8 @@ function escapeHTML(str) {
   return str.replace(/[&<>"'`]/g, char => escapeChars[char])
 }
 
-const formatter = ast(path.join(root, 'content/key-manager/formatter.ts')).children.find(child => child.name === 'PatternFormatter')
+const Formatter = ast(path.join(root, 'content/key-manager/formatter.ts'))
+const formatter = Formatter.children.find(child => child.name === 'PatternFormatter')
 const methods = formatter.children.filter(child => child.variant === 'declaration' && child.name.match(/^[$_]/))
 
 function KeyManager() {
@@ -344,8 +363,9 @@ function KeyManager() {
     },
   }
 
+  const typePrinter = new TypePrinter(Formatter)
   for (const method of methods.sort((a, b) => a.name.toLowerCase().localeCompare(b.name.toLowerCase()))) {
-    const builder = new SchemaBuilder
+    const builder = new SchemaBuilder(Formatter)
 
     if (method.name.match(/^[_$][_$]/)) continue
 
@@ -382,7 +402,7 @@ function KeyManager() {
       if (!p.flags.isOptional && !p.defaultValue) apispec[_name].required.push(p.name)
 
       const name = (p.flags.isRest ? `...${p.name}` : p.name) + (p.flags.isOptional ? '?' : '')
-      const type = printType(p.type)
+      const type = typePrinter.print(p.type)
       const dflt = typeof p.defaultValue === 'undefined' ? '' : ` = ${p.defaultValue}`
       return `${name}: ${type}${dflt}`
     }).join(', ')
@@ -419,7 +439,9 @@ module.exports.fields = ${jsesc(Zotero.fieldLookup, { compact: false, indent: ' 
 }
 
 function JSONRPC() {
-  const jsonrpc = ast(path.join(root, 'content/json-rpc.ts')).children.filter(child => child.name.startsWith('NS'))
+  const JsonRpc = ast(path.join(root, 'content/json-rpc.ts'))
+  const jsonrpc = JsonRpc.children.filter(child => child.name.startsWith('NS'))
+  const typePrinter = new TypePrinter(JsonRpc)
 
   const apispec = {}
   const page = []
@@ -455,11 +477,11 @@ function JSONRPC() {
         apispec[methodname].validate[p.name] = makeValidator(builder.make(p.type))
 
         const name = (p.flags.isRest ? `...${p.name}` : p.name) + (p.flags.isOptional ? '?' : '')
-        const type = printType(p.type)
+        const type = typePrinter.print(p.type)
         const dflt = typeof p.defaultValue === 'undefined' ? '' : ` = ${p.defaultValue}`
         return `${name}: ${type}${dflt}`
       }).join(', ')
-      const returnType = `: ${printType(signature.type.typeArguments[0])}`.replace(': void', '')
+      const returnType = `: ${typePrinter.print(signature.type.typeArguments[0])}`.replace(': void', '')
 
       description += signature.comment.summary.map(s => {
         if (!s.kind.match(/^(code|text)$/)) throw s
