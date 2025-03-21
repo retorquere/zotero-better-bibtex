@@ -1537,12 +1537,14 @@ export class PatternFormatter {
       I: this.initials(creator),
       i: this.initials(creator, false),
     }
-    Object.assign(vars, {
-      f_zh: chinese.loaded?.splitName(name).familyName.name || vars.f,
-      f_zh_Latn: chinese.loaded?.splitName(name).familyName.transliteration || vars.f,
-      g_zh: chinese.loaded?.splitName(name).givenName.name || vars.g,
-      g_zh_Latn: chinese.loaded?.splitName(name).givenName.transliteration || vars.g,
-    })
+    if (template.includes('_zh') {
+      Object.assign(vars, {
+        f_zh: chinese.loaded?.splitName(name).familyName.name || vars.f,
+        f_zh_Latn: chinese.loaded?.splitName(name).familyName.transliteration || vars.f,
+        g_zh: chinese.loaded?.splitName(name).givenName.name || vars.g,
+        g_zh_Latn: chinese.loaded?.splitName(name).givenName.transliteration || vars.g,
+      })
+    }
     return sprintf(template, vars) as string
   }
 
