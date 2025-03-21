@@ -272,6 +272,7 @@ const queue = new class TaskQueue {
 
   public cancel(path: string) {
     this.scheduler.cancel(path)
+    log.debug('3135: canceled', path)
   }
 
   public run(path: string) {
@@ -279,6 +280,7 @@ const queue = new class TaskQueue {
   }
 
   private async runAsync(path: string) {
+    log.debug('3135: running', path)
     await Zotero.BetterBibTeX.ready
 
     const ae = AutoExport.get(path)
@@ -369,6 +371,7 @@ const queue = new class TaskQueue {
 
     void Events.emit('export-progress', { pct: 100, message: `${ translator.label } export finished`, ae: path })
     AutoExport.status(path, 'done')
+    log.debug('3135: ran', path)
   }
 
   private getCollectionPath(coll: { name: string; parentID: number }, root: number): string[] {
@@ -664,7 +667,11 @@ export const AutoExport = new class $AutoExport {
   public schedule(type: 'collection' | 'library', ids: number[]) {
     if (!ids.length) return
 
+    log.debug('3135: scheduling', { type, ids })
+
     for (const ae of this.find(type, ids)) {
+      log.debug('3135: adding', ae, 'to run queue')
+
       queue.add(ae.path)
     }
   }
