@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="height=device-height, width=device-width, initial-scale=1.0, minimum-scale=1.0">
     <meta name="generator" content="Hugo 0.145.0">
-    <meta name="generator" content="Relearn 7.5.0+a05b2124652293b1be3742f26aa3913861f956de">
+    <meta name="generator" content="Relearn 7.5.0+e2a1704c3c230050d3777be3bae36285a7fa0d8e">
     <meta name="description" content="Install by downloading the latest release – if you use Firefox, make sure to right-click and save the XPI file, not just clicking it – and then in Zotero:
 In the main menu go to Tools &gt; Add-ons Select ‘Plugins’ Click on the gear in the top-right corner and choose ‘Install Add-on From File…’ Choose .xpi that you’ve just downloaded, click ‘Install’ If you’re using Zotero 6, restart Zotero. Installation in Zotero 7 requires no restart. After the initial installation, the plugin will auto-update to newer releases, so you should need to perform the process described here only once.">
     <meta name="author" content="">
@@ -41,7 +41,7 @@ In the main menu go to Tools &gt; Add-ons Select ‘Plugins’ Click on the gear
       window.relearn = window.relearn || {};
       // configuration
       window.relearn.min = `.min`;
-      window.relearn.path='installation\/index.html';
+      window.relearn.path='\/installation\/index.html';
       window.relearn.relBasePath='..';
       window.relearn.relBaseUri='..\/..';
       window.relearn.absBaseUri='\/zotero-better-bibtex';
@@ -60,14 +60,12 @@ In the main menu go to Tools &gt; Add-ons Select ‘Plugins’ Click on the gear
         document.documentElement.dataset.rThemeVariant = variant;
         if (oldVariant != variant) {
           document.dispatchEvent( new CustomEvent('themeVariantLoaded', { detail: { variant, oldVariant } }) );
+          window.relearn.markVariant();
         }
       }
       window.relearn.markVariant = function() {
         var variant = window.localStorage.getItem(window.relearn.absBaseUri + "/variant");
-        var select = document.querySelector("#R-select-variant");
-        if (select) {
-          select.value = variant;
-        }
+        document.querySelectorAll(".R-variantswitcher select").forEach((select) => {select.value = variant;});
       }
       window.relearn.initVariant = function() {
         var variant = window.localStorage.getItem(window.relearn.absBaseUri + "/variant") ?? "";

@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="height=device-height, width=device-width, initial-scale=1.0, minimum-scale=1.0">
     <meta name="generator" content="Hugo 0.145.0">
-    <meta name="generator" content="Relearn 7.5.0+a05b2124652293b1be3742f26aa3913861f956de">
+    <meta name="generator" content="Relearn 7.5.0+e2a1704c3c230050d3777be3bae36285a7fa0d8e">
     <meta name="description" content="Make Zotero more useful for us LaTeX holdouts">
     <meta name="author" content="">
     <meta name="twitter:card" content="summary">
@@ -57,14 +57,12 @@
         document.documentElement.dataset.rThemeVariant = variant;
         if (oldVariant != variant) {
           document.dispatchEvent( new CustomEvent('themeVariantLoaded', { detail: { variant, oldVariant } }) );
+          window.relearn.markVariant();
         }
       }
       window.relearn.markVariant = function() {
         var variant = window.localStorage.getItem(window.relearn.absBaseUri + "/variant");
-        var select = document.querySelector("#R-select-variant");
-        if (select) {
-          select.value = variant;
-        }
+        document.querySelectorAll(".R-variantswitcher select").forEach((select) => {select.value = variant;});
       }
       window.relearn.initVariant = function() {
         var variant = window.localStorage.getItem(window.relearn.absBaseUri + "/variant") ?? "";
@@ -11806,15 +11804,13 @@ of up to three authors' last names if more than one author is
 given. A plus character is added, if there are more than three
 authors.</p></dd>
   
-    <dt><b>creatornames</b>(template: &#96;sprintf-style format template&#96;)</dt><dd><p>Sets the sprintf-template default for representing creator names. Default is '%(f)s'.</p>
+    <dt><b>creatornames</b>(template?: &#96;sprintf-style format template&#96;, transliterate?: boolean)</dt><dd><p>Sets the sprintf-template default for representing creator names. Default is '%(f)s'.</p>
 <p>in the creator template, you can use:</p>
 <ul>
 <li><code>%(f)s</code>: family ("last") name</li>
 <li><code>%(f_zh)s</code>: family ("last") name extracted from chinese compound names. Need <code>jieba</code> to be enabled</li>
-<li><code>%(f_zh_Latn)s</code>: family ("last") name extracted from chinese compound names, transliterated. Need <code>jieba</code> to be enabled</li>
 <li><code>%(g)s</code>: given ("first") name</li>
 <li><code>%(g_zh)s</code>: given ("first") name extracted from chinese compound names. Need <code>jieba</code> to be enabled</li>
-<li><code>%(g_zh_Latn)s</code>: given ("first") name extracted from chinese compound names, transliterated. Need <code>jieba</code> to be enabled</li>
 <li><code>%(i)s</code>: given-name initials</li>
 <li><code>%(I)s</code>: given-name initials, upper-case</li>
 </ul></dd>
@@ -11825,10 +11821,8 @@ authors.</p></dd>
 <ul>
 <li><code>%(f)s</code>: family ("last") name</li>
 <li><code>%(f_zh)s</code>: family ("last") name extracted from chinese compound names. Need <code>jieba</code> to be enabled</li>
-<li><code>%(f_zh_Latn)s</code>: family ("last") name extracted from chinese compound names, transliterated. Need <code>jieba</code> to be enabled</li>
 <li><code>%(g)s</code>: given ("first") name</li>
 <li><code>%(g_zh)s</code>: given ("first") name extracted from chinese compound names. Need <code>jieba</code> to be enabled</li>
-<li><code>%(g_zh_Latn)s</code>: given ("first") name extracted from chinese compound names, transliterated. Need <code>jieba</code> to be enabled</li>
 <li><code>%(i)s</code>: given-name initials</li>
 <li><code>%(I)s</code>: given-name initials, upper-case</li>
 </ul></dd>
@@ -11905,6 +11899,8 @@ even if there is no need for it when no duplicates exist. The default  format is
     <dt><b>shortyear</b></dt><dd><p>The last 2 digits of the publication year</p></dd>
   
     <dt><b>title</b></dt><dd><p>Capitalize all the significant words of the title, and concatenate them. For example, <code>An awesome paper on JabRef</code> will become <code>AnAwesomePaperJabref</code></p></dd>
+  
+    <dt><b>transliterate</b>(mode: (&quot;minimal&quot; | &quot;de&quot; | &quot;german&quot; | &quot;ja&quot; | &quot;japanese&quot; | &quot;zh&quot; | &quot;chinese&quot; | &quot;chinese-traditional&quot; | &quot;tw&quot; | &quot;zh-hant&quot; | &quot;ar&quot; | &quot;arabic&quot; | &quot;uk&quot; | &quot;ukranian&quot; | &quot;mn&quot; | &quot;mongolian&quot; | &quot;ru&quot; | &quot;russian&quot;))</dt><dd><p>Set the default transliteration mode. If you don't specify a mode, the mode for an entry is derived from the item language field</p></dd>
   
     <dt><b>type</b>(...allowed: string[])</dt><dd><p>Without arguments, returns the item type.
 When arguments as passed, tests whether the item is of any of the given types, and skips to the next pattern if not, eg <code>type(book) + veryshorttitle | auth + year</code>.</p>
@@ -12435,7 +12431,7 @@ Note that this filter is always applied with <code>nopunct</code> on if you use 
   
   <dt><b>substring</b>(start: number = 1, n?: number)</dt><dd><p><code>substring(start,n)</code> selects <code>n</code> (default: all) characters starting at <code>start</code></p></dd>
   
-  <dt><b>transliterate</b>(mode?: (&quot;ar&quot; | &quot;de&quot; | &quot;minimal&quot; | &quot;mn&quot; | &quot;arabic&quot; | &quot;chinese&quot; | &quot;german&quot; | &quot;japanese&quot; | &quot;mongolian&quot; | &quot;russian&quot; | &quot;ru&quot; | &quot;uk&quot; | &quot;ja&quot; | &quot;zh&quot; | &quot;zh-hant&quot; | &quot;tw&quot; | &quot;ukranian&quot;))</dt><dd><p>transliterates the citation key. If you don't specify a mode, the mode is derived from the item language field</p></dd>
+  <dt><b>transliterate</b>(mode?: (&quot;minimal&quot; | &quot;de&quot; | &quot;german&quot; | &quot;ja&quot; | &quot;japanese&quot; | &quot;zh&quot; | &quot;chinese&quot; | &quot;chinese-traditional&quot; | &quot;tw&quot; | &quot;zh-hant&quot; | &quot;ar&quot; | &quot;arabic&quot; | &quot;uk&quot; | &quot;ukranian&quot; | &quot;mn&quot; | &quot;mongolian&quot; | &quot;ru&quot; | &quot;russian&quot;))</dt><dd><p>transliterates the citation key. If you don't specify a mode, the mode is derived from the item language field</p></dd>
   
   <dt><b>upper</b></dt><dd><p>Forces the text inserted by the field marker to be in uppercase. For example, <code>auth.upper</code> expands the last name of the first author in uppercase.</p></dd>
   
@@ -13272,10 +13268,10 @@ means a lot) so I can save up for a replacement a year or so down
 the line, head on over to <a href="https://www.patreon.com/retorquere" rel="external" target="_blank">Patreon</a>,
 but mind that Patreon takes a fairly large cut of what you give.</p>
 <p>Many, many thanks, also to the existing contributors &ndash; thanks to you I&rsquo;ve hit my first target and have been able to replace my trusty macbook air with a newer macbook pro which has much more breathing room.</p>
-<p><a href="#R-image-02a78dfff0954e81b74329aeafa7bb57" class="lightbox-link"><img alt="My github stats" class="lazy lightbox figure-image" loading="lazy" src="https://github-readme-stats.vercel.app/api?username=retorquere&show_icons=true&hide_border=true&theme=dark" style=" height: auto; width: auto;"></a>
-<a href="javascript:history.back();" class="lightbox-back" id="R-image-02a78dfff0954e81b74329aeafa7bb57"><img alt="My github stats" class="lazy lightbox lightbox-image" loading="lazy" src="https://github-readme-stats.vercel.app/api?username=retorquere&show_icons=true&hide_border=true&theme=dark"></a></p>
-<p><a href="#R-image-bddc441c4828e2e405c159bba09c9a42" class="lightbox-link"><img alt="Metrics" class="lazy lightbox figure-image" loading="lazy" src="https://metrics.lecoq.io/retorquere?template=classic&config.timezone=Europe%2FOslo" style=" height: auto; width: auto;"></a>
-<a href="javascript:history.back();" class="lightbox-back" id="R-image-bddc441c4828e2e405c159bba09c9a42"><img alt="Metrics" class="lazy lightbox lightbox-image" loading="lazy" src="https://metrics.lecoq.io/retorquere?template=classic&config.timezone=Europe%2FOslo"></a></p>
+<p><a href="#R-image-10f7e5e92ab36fa46b31ecfd6d1004b1" class="lightbox-link"><img alt="My github stats" class="lazy lightbox figure-image" loading="lazy" src="https://github-readme-stats.vercel.app/api?username=retorquere&show_icons=true&hide_border=true&theme=dark" style=" height: auto; width: auto;"></a>
+<a href="javascript:history.back();" class="lightbox-back" id="R-image-10f7e5e92ab36fa46b31ecfd6d1004b1"><img alt="My github stats" class="lazy lightbox lightbox-image" loading="lazy" src="https://github-readme-stats.vercel.app/api?username=retorquere&show_icons=true&hide_border=true&theme=dark"></a></p>
+<p><a href="#R-image-b92d11419793f26c86d9af0c13696ad6" class="lightbox-link"><img alt="Metrics" class="lazy lightbox figure-image" loading="lazy" src="https://metrics.lecoq.io/retorquere?template=classic&config.timezone=Europe%2FOslo" style=" height: auto; width: auto;"></a>
+<a href="javascript:history.back();" class="lightbox-back" id="R-image-b92d11419793f26c86d9af0c13696ad6"><img alt="Metrics" class="lazy lightbox lightbox-image" loading="lazy" src="https://metrics.lecoq.io/retorquere?template=classic&config.timezone=Europe%2FOslo"></a></p>
 
   <footer class="footline">
   </footer>
