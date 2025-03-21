@@ -50,6 +50,26 @@ type BabelLanguage = keyof typeof BabelTag
 
 class Template<K> extends String {} // eslint-disable-line @typescript-eslint/no-unused-vars
 
+export type TransliterateMode =
+    'minimal'
+  | 'de'
+  | 'german'
+  | 'ja'
+  | 'japanese'
+  | 'zh'
+  | 'chinese'
+  | 'chinese-traditional'
+  | 'tw'
+  | 'zh-hant'
+  | 'ar'
+  | 'arabic'
+  | 'uk'
+  | 'ukranian'
+  | 'mn'
+  | 'mongolian'
+  | 'ru'
+  | 'russian'
+
 function skip() {
   throw { next: true } // eslint-disable-line @typescript-eslint/only-throw-error
 }
@@ -352,7 +372,8 @@ export class PatternFormatter {
 
   private skipWords: Set<string>
 
-  private creatorName: Template<'creator'> = '%(f)s'
+  private creatorNames: { template: Template<'creator'>; transliterate: boolean } = { template: '%(f)s', transliterate: false }
+  private transliterateMode: TransliterateMode | '' = ''
 
   constructor() {
     Events.on('preference-changed', pref => {
@@ -558,7 +579,7 @@ export class PatternFormatter {
     min = 0,
     max = 0
   ): string {
-    name = name || this.creatorName
+    name = name || this.creatorNames.template
     const include: string[] = []
     const exclude: string[] = []
     const primary = itemCreators[client.slug][this.item.itemType][0]
@@ -614,9 +635,11 @@ export class PatternFormatter {
   /**
    * Sets the sprintf-template default for representing creator names. Default is '%(f)s'.
    * @param template template string
+   * @param transliterate transliterate the returned name
    */
-  public $creatornames(template: Template<'creator'>): string {
-    this.creatorName = template
+  public $creatornames(template?: Template<'creator'>, transliterate?: boolean): string { // eslint-disable-line @typescript-eslint/no-shadow
+    if (typeof template !== 'undefined') this.creatorNames.template = template
+    if (typeof transliterate !== 'undefined') this.creatorNames.transliterate = transliterate
     return ''
   }
 
@@ -628,7 +651,7 @@ export class PatternFormatter {
    * @param sep       use this character between authors
    */
   public $authorsn(n = 0, creator: AuthorType = '*', initials = false, sep = ' '): string {
-    let author = this.creators(creator, initials ? `${this.creatorName}%(I)s` : this.creatorName)
+    let author = this.creators(creator, initials ? `${this.creatorNames.template}%(I)s` : this.creatorNames.template)
     if (n && n < author.length) author = author.slice(0, n).concat('EtAl')
     return author.join(sep)
   }
@@ -641,7 +664,7 @@ export class PatternFormatter {
    * @param initials  add author initials
    */
   public $auth(n = 0, m = 1, creator: AuthorType = '*', initials = false): string {
-    const family = n ? this.creatorName.replace(/%\(([fg][_a-z]*)\)s/gi, `%($1).${n}s`) : this.creatorName
+    const family = n ? this.creatorNames.template.replace(/%\(([fg][_a-z]*)\)s/gi, `%($1).${n}s`) : this.creatorNames.template
     const name = initials ? `${family}%(I)s` : family
     const author: string = this.creators(creator, name)[m - 1] || ''
     return author
@@ -672,7 +695,7 @@ export class PatternFormatter {
    * @param initials  add author initials
    */
   public $authorLast(creator: AuthorType = '*', initials = false): string {
-    const authors = this.creators(creator, initials ? `${this.creatorName}%(I)s` : this.creatorName)
+    const authors = this.creators(creator, initials ? `${this.creatorNames.template}%(I)s` : this.creatorNames.template)
     const author = authors[authors.length - 1] || ''
     return author
   }
@@ -685,7 +708,7 @@ export class PatternFormatter {
    * @param sep     use this character between authors
    */
   public $authorsAlpha(creator: AuthorType = '*', initials = false, sep = ' '): string {
-    const authors = this.creators(creator, initials ? `${this.creatorName}%(I)s` : this.creatorName)
+    const authors = this.creators(creator, initials ? `${this.creatorNames.template}%(I)s` : this.creatorNames.template)
     if (!authors.length) return ''
 
     switch (authors.length) {
@@ -709,7 +732,7 @@ export class PatternFormatter {
    * @param sep     use this character between authors
    */
   public $authIni(n = 0, creator: AuthorType = '*', initials = false, sep = '.'): string {
-    const authors = this.creators(creator, initials ? `${this.creatorName}%(I)s` : this.creatorName)
+    const authors = this.creators(creator, initials ? `${this.creatorNames.template}%(I)s` : this.creatorNames.template)
     if (!authors.length) return ''
     return authors.map(auth => auth.substring(0, n)).join(sep)
   }
@@ -721,7 +744,7 @@ export class PatternFormatter {
    * @param sep     use this character between authors
    */
   public $authorIni(creator: AuthorType = '*', initials = false, sep = '.'): string {
-    const authors = this.creators(creator, initials ? `${this.creatorName}%(I)s` : this.creatorName)
+    const authors = this.creators(creator, initials ? `${this.creatorNames.template}%(I)s` : this.creatorNames.template)
     if (!authors.length) return ''
     const firstAuthor = authors.shift()
 
@@ -735,7 +758,7 @@ export class PatternFormatter {
    * @param sep     use this character between authors
    */
   public $authAuthEa(creator: AuthorType = '*', initials = false, sep = '.'): string {
-    const authors = this.creators(creator, initials ? `${this.creatorName}%(I)s` : this.creatorName)
+    const authors = this.creators(creator, initials ? `${this.creatorNames.template}%(I)s` : this.creatorNames.template)
     if (!authors.length) return ''
 
     return authors.slice(0, 2).concat(authors.length > 2 ? ['ea'] : []).join(sep)
@@ -752,7 +775,7 @@ export class PatternFormatter {
    * @param sep     use this character between authors
    */
   public $authEtAl(creator: AuthorType = '*', initials = false, sep = ' '): string {
-    const authors = this.creators(creator, initials ? `${this.creatorName}%(I)s` : this.creatorName)
+    const authors = this.creators(creator, initials ? `${this.creatorNames.template}%(I)s` : this.creatorNames.template)
     if (!authors.length) return ''
 
     return authors.length === 2
@@ -767,7 +790,7 @@ export class PatternFormatter {
    * @param sep     use this character between authors
    */
   public $authEtal2(creator: AuthorType = '*', initials = false, sep = '.'): string {
-    const authors = this.creators(creator, initials ? `${this.creatorName}%(I)s` : this.creatorName)
+    const authors = this.creators(creator, initials ? `${this.creatorNames.template}%(I)s` : this.creatorNames.template)
     if (!authors.length) return ''
 
     return authors.length === 2
@@ -785,7 +808,7 @@ export class PatternFormatter {
    * @param sep     use this character between authors
    */
   public $authshort(creator: AuthorType = '*', initials = false, sep = '.'): string {
-    const authors = this.creators(creator, initials ? `${this.creatorName}%(I)s` : this.creatorName)
+    const authors = this.creators(creator, initials ? `${this.creatorNames.template}%(I)s` : this.creatorNames.template)
 
     switch (authors.length) {
       case 0:
@@ -1353,15 +1376,23 @@ export class PatternFormatter {
   }
 
   /**
+   * Set the default transliteration mode. If you don't specify a mode, the mode for an entry is derived from the item language field
+   * @param mode specialized translateration modes for german, japanese or chinese.
+   */
+  public $transliterate(mode: TransliterateMode): string {
+    this.transliterateMode = mode
+    return ''
+  }
+  /**
    * transliterates the citation key. If you don't specify a mode, the mode is derived from the item language field
    * @param mode specialized translateration modes for german, japanese or chinese.
    */
-  public _transliterate(input: string, mode?: 'minimal' | 'de' | 'german' | 'ja' | 'japanese' | 'zh' | 'chinese' | 'tw' | 'zh-hant' | 'ar' | 'arabic' | 'uk' | 'ukranian' | 'mn' | 'mongolian' | 'ru' | 'russian'): string {
+  public _transliterate(input: string, mode?: TransliterateMode): string {
     return this.transliterate(input, mode)
   }
 
-  private transliterate(str: string, mode?: 'minimal' | 'de' | 'german' | 'ja' | 'japanese' | 'zh' | 'chinese' | 'tw' | 'zh-hant' | 'chinese-traditional' | 'ar' | 'arabic' | 'uk' | 'ukranian' | 'mn' | 'mongolian' | 'ru' | 'russian'): string {
-    mode = mode || this.item.transliterateMode || 'minimal'
+  private transliterate(str: string, mode?: TransliterateMode): string {
+    mode = mode || this.transliterateMode || this.item.transliterateMode || 'minimal'
 
     let replace: Record<string, string> = {}
     switch (mode) {
@@ -1537,19 +1568,22 @@ export class PatternFormatter {
       I: this.initials(creator),
       i: this.initials(creator, false),
     }
-    if (template.includes('_zh') {
+    if (template.includes('_zh') && chinese.loaded) {
+      const zh = chinese.splitName(name)
       Object.assign(vars, {
-        f_zh: chinese.loaded?.splitName(name).familyName.name || vars.f,
-        f_zh_Latn: chinese.loaded?.splitName(name).familyName.transliteration || vars.f,
-        g_zh: chinese.loaded?.splitName(name).givenName.name || vars.g,
-        g_zh_Latn: chinese.loaded?.splitName(name).givenName.transliteration || vars.g,
+        f_zh: zh.isName ? zh.familyName[this.creatorNames.transliterate ? 'transliteration' : 'name'] : vars.f,
+        g_zh: zh.isName ? zh.givenName[this.creatorNames.transliterate ? 'transliteration' : 'name'] : vars.g,
       })
+    }
+    else if (this.creatorNames.transliterate) {
+      vars.f = this.transliterate(vars.f)
+      vars.g = this.transliterate(vars.g)
     }
     return sprintf(template, vars) as string
   }
 
   private creators(select: AuthorType, template?: Template<'creators'>): string[] {
-    template = template || this.creatorName
+    template = template || this.creatorNames.template
     const types = itemCreators[client.slug][this.item.itemType] || []
     const primary = types[0]
 
@@ -1601,7 +1635,7 @@ export class PatternFormatter {
   }
 
   public formula_reset(): void {
-    this.$creatornames('%(f)s')
+    this.$creatornames('%(f)s', false)
     this.$postfix()
   }
 
