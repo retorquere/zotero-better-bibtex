@@ -4,7 +4,7 @@
     "label": "BetterBibTeX JSON",
     "preferences": {
       "citekeyFormat": "creatornames('%(f_zh)s', transliterate=true); // sets the default behavior\nauth + '.' + (year > 0);\nauth + '.' + title",
-      "jieba": true
+      "chinese": true
     }
   },
   "items": [
@@ -13,13 +13,13 @@
       "creators": [
         {
           "creatorType": "author",
-          "name": "肖发民"
+          "name": "\u8096\u53d1\u6c11"
         }
       ],
       "itemID": 1,
       "itemType": "book",
       "language": "zh-Hans",
-      "title": "法医学铁道损伤图谱"
+      "title": "\u6cd5\u533b\u5b66\u94c1\u9053\u635f\u4f24\u56fe\u8c31"
     },
     {
       "citationKey": "changsunwuji",
@@ -385,6 +385,5 @@
       "language": "zh-CN",
       "title": "Hans Author: Zhuge Liang"
     }
-
   ]
 }

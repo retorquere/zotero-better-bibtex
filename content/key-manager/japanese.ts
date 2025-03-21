@@ -33,16 +33,16 @@ export const kuroshiro = new class {
 
   public async init() {
     Events.on('preference-changed', pref => {
-      if (pref === 'kuroshiro') this.load().catch(err => log.error('kuroshiro load failed:', err))
+      if (pref === 'japanese') this.load().catch(err => log.error('kuroshiro load failed:', err))
     })
     await this.load()
   }
 
   private async load() {
     try {
-      if (!Preference.kuroshiro || this.enabled) return
+      if (!Preference.japanese || this.enabled) return
 
-      this.kuroshiro = (new Kuroshiro)
+      this.kuroshiro = new Kuroshiro
       const analyzer = new KuromojiAnalyzer(client.slug === 'node' ? undefined : 'chrome://zotero-better-bibtex/content/resource/kuromoji')
       await this.kuroshiro.init(analyzer)
       this.kuromoji = analyzer._analyzer // eslint-disable-line no-underscore-dangle

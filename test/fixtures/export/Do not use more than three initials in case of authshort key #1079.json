@@ -7,7 +7,7 @@
     "preferences": {
       "citekeyFormat": "authshort(creator=\"*\",initials=false,sep=\".\").fold.nopunct + shortyear",
       "itemObserverDelay": 100,
-      "kuroshiro": true
+      "japanese": true
     }
   },
   "items": [
