@@ -16,21 +16,5 @@ export function pinyin(str: string): string {
 }
 
 export function splitName(name: string): CjkName {
-  return $splitName(name, pinyin, 'Chinese')
+  return $splitName(name, 'Chinese', pinyin)
 }
-
-/*
-CjkName {
-  familyName: CjkNamePart {
-    name: '東方',
-    transliteration: 'Dongfang',
-    language: 'Chinese'
-  },
-  givenName: CjkNamePart {
-    name: '不敗',
-    transliteration: 'Sample Pinyin',
-    language: 'Chinese'
-  },
-  isName: true
-}
-*/
