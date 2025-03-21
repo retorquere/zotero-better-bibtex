@@ -3,7 +3,7 @@
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
     "preferences": {
-      "citekeyFormat": "creatornames('%(f_zh_Latn)s'); // sets the default behavior\nauth + '.' + (year > 0);\nauth + '.' + title",
+      "citekeyFormat": "creatornames('%(f_zh)s', transliterate=true); // sets the default behavior\nauth.transliterate + '.' + (year > 0);\nauth.transliterate + '.' + title",
       "jieba": true
     }
   },
