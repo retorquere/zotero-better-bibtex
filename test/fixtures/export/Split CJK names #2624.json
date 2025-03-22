@@ -6,7 +6,7 @@
       "citekeyFormat": "creatornames('%(f)s', transliterate=true);\nauth.capitalize + '.' + title",
       "chinese": true,
       "japanese": true,
-      "splitName": true
+      "chineseSplitName": true
     }
   },
   "items": [

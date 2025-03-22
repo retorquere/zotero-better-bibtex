@@ -100,7 +100,7 @@ When on, BBT will make Chinese word segmentation (jieba) and transliteration (pi
 
 ### Split all Chinese-like single-field names, unless the item's language is set to Japanese and Japanese support is enabled.
 
-default: `no`
+default: `yes`
 
 Split all Chinese-like single-field names.
 
