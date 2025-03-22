@@ -52,23 +52,43 @@ class Template<K> extends String {} // eslint-disable-line @typescript-eslint/no
 
 export type TransliterateMode =
     'minimal'
-  | 'de'
   | 'german'
-  | 'ja'
   | 'japanese'
-  | 'zh'
   | 'chinese'
-  | 'chinese-traditional'
-  | 'tw'
-  | 'zh-hant'
-  | 'ar'
   | 'arabic'
-  | 'uk'
   | 'ukranian'
-  | 'mn'
   | 'mongolian'
-  | 'ru'
   | 'russian'
+
+export type TransliterateModeAlias = TransliterateMode | 'de' | 'ja' | 'chinese-traditional' | 'zh-hant' | 'zh' | 'tw' | 'ar' | 'uk' | 'mn' | 'ru'
+
+const unaliasTransliterateMode: Record<TransliterateModeAlias, TransliterateMode> = {
+  minimal: 'minimal',
+
+  german: 'german',
+  de: 'german',
+
+  japanese: 'japanese',
+  ja: 'japanese',
+
+  chinese: 'chinese',
+  'chinese-traditional': 'chinese',
+  'zh-hant': 'chinese',
+  zh: 'chinese',
+  tw: 'chinese',
+
+  arabic: 'arabic',
+  ar: 'arabic',
+
+  ukranian: 'ukranian',
+  uk: 'ukranian',
+
+  mongolian: 'mongolian',
+  mn: 'mongolian',
+
+  russian: 'russian',
+  ru: 'russian',
+}
 
 function skip() {
   throw { next: true } // eslint-disable-line @typescript-eslint/only-throw-error
@@ -226,7 +246,7 @@ class Item {
   public key: string
   public id: number
   public libraryID: number
-  public transliterateMode: 'german' | 'japanese' | 'chinese' | 'chinese-traditional' | 'arabic' | 'ukranian' | 'mongolian' | 'russian' | ''
+  public transliterateMode: TransliterateMode | ''
   public getField: (name: string) => number | string
   public extra: string
   public extraFields: Extra.Fields
@@ -257,43 +277,8 @@ class Item {
     this.title = item.getField('title', false, true)
 
     this.language = babelLanguage((this.getField('language') as string) || '')
-    switch (this.babelTag()) {
-      case 'de':
-        this.transliterateMode = 'german'
-        break
-
-      case 'ja':
-        this.transliterateMode = 'japanese'
-        break
-
-      case 'zh':
-        this.transliterateMode = 'chinese'
-        break
-
-      case 'zh-hant':
-        this.transliterateMode = 'chinese-traditional'
-        break
-
-      case 'ar':
-        this.transliterateMode = 'arabic'
-        break
-
-      case 'uk':
-        this.transliterateMode = 'ukranian'
-        break
-
-      case 'mn':
-        this.transliterateMode = 'mongolian'
-        break
-
-      case 'ru':
-        this.transliterateMode = 'russian'
-        break
-
-      default:
-        this.transliterateMode = ''
-        break
-    }
+    const babelTag = this.babelTag() as TransliterateMode
+    this.transliterateMode = unaliasTransliterateMode[babelTag] || babelTag
 
     const extraFields = Extra.get(this.getField('extra') as string, 'zotero', { kv: true, tex: true })
     this.extra = extraFields.extra
@@ -373,7 +358,6 @@ export class PatternFormatter {
   private skipWords: Set<string>
 
   private creatorNames: { template: Template<'creator'>; transliterate: boolean } = { template: '%(f)s', transliterate: false }
-  private transliterateMode: TransliterateMode | '' = ''
 
   constructor() {
     Events.on('preference-changed', pref => {
@@ -1379,27 +1363,26 @@ export class PatternFormatter {
    * Set the default transliteration mode. If you don't specify a mode, the mode for an entry is derived from the item language field
    * @param mode specialized translateration modes for german, japanese or chinese.
    */
-  public $transliterate(mode: TransliterateMode): string {
-    this.transliterateMode = mode
+  public $transliterate(mode: TransliterateModeAlias): string {
+    this.item.transliterateMode = (unaliasTransliterateMode[mode] || mode) as TransliterateMode
     return ''
   }
   /**
    * transliterates the citation key. If you don't specify a mode, the mode is derived from the item language field
    * @param mode specialized translateration modes for german, japanese or chinese.
    */
-  public _transliterate(input: string, mode?: TransliterateMode): string {
-    return this.transliterate(input, mode)
+  public _transliterate(input: string, mode?: TransliterateModeAlias): string {
+    return this.transliterate(input, (unaliasTransliterateMode[mode] || mode) as TransliterateMode)
   }
 
   private transliterate(str: string, mode?: TransliterateMode): string {
-    mode = mode || this.transliterateMode || this.item.transliterateMode || 'minimal'
+    mode = mode || this.item.transliterateMode || 'minimal'
 
     let replace: Record<string, string> = {}
     switch (mode) {
       case 'minimal':
         break
 
-      case 'de':
       case 'german':
         replace = {
           ä: 'ae',
@@ -1411,35 +1394,26 @@ export class PatternFormatter {
         }
         break
 
-      case 'tw':
-      case 'zh-hant':
-      case 'zh':
-      case 'chinese-traditional':
       case 'chinese':
         str = chinese.enabled?.pinyin(str) || str
         break
 
-      case 'ja':
       case 'japanese':
         if (japanese.enabled) str = japanese.convert(str, { to: 'romaji' })
         break
 
-      case 'ar':
       case 'arabic':
         str = arabic(str)
         break
 
-      case 'uk':
       case 'ukranian':
         str = ukranian(str)
         break
 
-      case 'mn':
       case 'mongolian':
         str = mongolian(str)
         break
 
-      case 'ru':
       case 'russian':
         str = russian(str)
         break
@@ -1489,7 +1463,7 @@ export class PatternFormatter {
       .filter(word => word && !(options.skipWords && ucs2decode(word).length === 1 && !word.match(/^\d+$/) && !word.match(CJK)))
 
     // apply jieba.cut and flatten.
-    if (chinese.enabled && options.skipWords && this.item.transliterateMode.startsWith('chinese')) {
+    if (chinese.enabled && options.skipWords && this.item.transliterateMode === 'chinese') {
       words = [].concat(...words.map((word: string) => chinese.jieba(word)))
       // remove CJK skipwords
       words = words.filter((word: string) => !this.skipWords.has(word.toLowerCase()))

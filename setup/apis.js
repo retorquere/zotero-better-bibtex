@@ -110,7 +110,7 @@ class TypePrinter {
         return `(${type.types.map(t => this.print(t)).join(' | ')})`
 
       case 'literal':
-        return JSON.stringify(type.value)
+        return typeof type.value === 'string' ? `'${jsesc(type.value)}'` : JSON.stringify(type.value)
 
       case 'reference.typescript.RegExp':
         return type.name
@@ -146,6 +146,8 @@ class TypePrinter {
 
       case 'reference.zotero-better-bibtex.TransliterateMode':
         return this.print(this.#source.children.find(node => node.name == 'TransliterateMode' && node.variant == 'declaration').type)
+      case 'reference.zotero-better-bibtex.TransliterateModeAlias':
+        return this.print(this.#source.children.find(node => node.name == 'TransliterateModeAlias' && node.variant == 'declaration').type)
 
       default:
         throw new Error(JSON.stringify(type))
@@ -282,6 +284,8 @@ class SchemaBuilder {
 
       case 'reference.zotero-better-bibtex.TransliterateMode':
         return this.make(this.#source.children.find(node => node.name == 'TransliterateMode' && node.variant == 'declaration').type)
+      case 'reference.zotero-better-bibtex.TransliterateModeAlias':
+        return this.make(this.#source.children.find(node => node.name == 'TransliterateModeAlias' && node.variant == 'declaration').type)
 
       case 'reflection':
         if (type.typeArguments?.length === 1) return this.make(type.typeArguments[0])
