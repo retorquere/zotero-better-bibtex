@@ -1380,9 +1380,6 @@ export class PatternFormatter {
 
     let replace: Record<string, string> = {}
     switch (mode) {
-      case 'minimal':
-        break
-
       case 'german':
         replace = {
           ä: 'ae',
@@ -1418,8 +1415,9 @@ export class PatternFormatter {
         str = russian(str)
         break
 
+      case 'minimal':
       default:
-        throw new Error(`Unsupported fold mode "${ mode }"`)
+        break
     }
 
     str = transliterate(str || '', {
