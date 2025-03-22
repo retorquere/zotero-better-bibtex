@@ -26,30 +26,40 @@ if (client.slug !== 'node') {
   }
 }
 
-export const kuroshiro = new class {
+export const japanese = new class {
   public enabled: typeof this = null
   private kuroshiro: any
   private kuromoji: any
 
   public async init() {
-    Events.on('preference-changed', pref => {
-      if (pref === 'japanese') this.load().catch(err => log.error('kuroshiro load failed:', err))
+    Events.on('preference-changed', async pref => {
+      if (pref === 'japanese') {
+        this.enabled = null
+        await this.load()
+        if (Preference.japanese) this.enabled = this
+      }
     })
     await this.load()
   }
 
   private async load() {
     try {
-      if (!Preference.japanese || this.enabled) return
-
-      this.kuroshiro = new Kuroshiro
-      const analyzer = new KuromojiAnalyzer(client.slug === 'node' ? undefined : 'chrome://zotero-better-bibtex/content/resource/kuromoji')
-      await this.kuroshiro.init(analyzer)
-      this.kuromoji = analyzer._analyzer // eslint-disable-line no-underscore-dangle
-      this.enabled = this
+      if (!Preference.japanese) {
+        this.enabled = null
+      }
+      else {
+        if (!this.kuroshiro) {
+          this.kuroshiro = new Kuroshiro
+          const analyzer = new KuromojiAnalyzer(client.slug === 'node' ? undefined : 'chrome://zotero-better-bibtex/content/resource/kuromoji')
+          await this.kuroshiro.init(analyzer)
+          this.kuromoji = analyzer._analyzer // eslint-disable-line no-underscore-dangle
+        }
+        this.enabled = this
+      }
     }
     catch (err) {
       this.enabled = null
+      this.kuroshiro = null
       log.error(`kuroshiro: initializing failed ${ await err }`)
       throw await err
     }
