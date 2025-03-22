@@ -25,7 +25,7 @@ export const chinese = new class {
   }
 
   private load(): void {
-    if (!Preference.jieba || this.jieba) return
+    if (!Preference.chinese || this.jieba) return
 
     // this.window = this.window || Zotero.getMainWindow()
     // this.document = this.document || this.window.document
@@ -38,7 +38,7 @@ export const chinese = new class {
 
   init() {
     Events.on('preference-changed', pref => {
-      if (pref === 'jieba') this.load()
+      if (pref === 'chinese') this.load()
     })
   }
 }

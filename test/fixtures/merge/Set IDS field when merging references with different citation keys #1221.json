@@ -7,7 +7,7 @@
     "preferences": {
       "citekeyFormat": "auth + shorttitle + year",
       "itemObserverDelay": 100,
-      "kuroshiro": true
+      "japanese": true
     }
   },
   "items": [

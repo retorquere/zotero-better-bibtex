@@ -1361,7 +1361,7 @@ export class PatternFormatter {
 
   /** word segmentation for Japanese items. Uses substantial memory; must be enabled under Preferences -> Better BibTeX -> Advanced -> Citekeys */
   public _kuromoji(input: string): string {
-    if (!Preference.kuroshiro || !kuroshiro.enabled) return input
+    if (!Preference.japanese || !kuroshiro.enabled) return input
     return kuroshiro.tokenize(input || '').join(' ').trim()
   }
 
@@ -1421,7 +1421,7 @@ export class PatternFormatter {
 
       case 'ja':
       case 'japanese':
-        if (Preference.kuroshiro && kuroshiro.enabled) str = kuroshiro.convert(str, { to: 'romaji' })
+        if (Preference.japanese && kuroshiro.enabled) str = kuroshiro.convert(str, { to: 'romaji' })
         break
 
       case 'ar':
@@ -1495,7 +1495,7 @@ export class PatternFormatter {
       words = words.filter((word: string) => !this.skipWords.has(word.toLowerCase()))
     }
 
-    if (Preference.kuroshiro && kuroshiro.enabled && options.skipWords && this.item.transliterateMode === 'japanese') {
+    if (Preference.japanese && kuroshiro.enabled && options.skipWords && this.item.transliterateMode === 'japanese') {
       words = words
         .flatMap((word: string) => kuroshiro.tokenize(word))
         .filter((word: string) => !this.skipWords.has(word.toLowerCase()))
@@ -1506,7 +1506,7 @@ export class PatternFormatter {
         if (this.item.transliterateMode) {
           return this.transliterate(word)
         }
-        else if (Preference.kuroshiro && kuroshiro.enabled) {
+        else if (Preference.japanese && kuroshiro.enabled) {
           return this.transliterate(kuroshiro.convert(word, { to: 'romaji' }), 'minimal')
         }
         else if (chinese.loaded) {

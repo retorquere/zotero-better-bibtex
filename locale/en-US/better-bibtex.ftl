@@ -113,10 +113,10 @@ better-bibtex_preferences_advanced_extra_merge-tex =
 better-bibtex_preferences_advanced_ideographs = Ideographs in citekeys
   .label = { better-bibtex_preferences_advanced_ideographs }
 
-better-bibtex_preferences_advanced_ideographs_jieba = 
+better-bibtex_preferences_advanced_ideographs_chinese = 
   .label = Enable 'jieba'/'pinyin' filters in citekey patterns. Uses a lot of memory.
 
-better-bibtex_preferences_advanced_ideographs_kuroshiro = 
+better-bibtex_preferences_advanced_ideographs_japanese = 
   .label = Apply kuroshiro romajization in Japanese names/titles. Uses a lot of memory.
 
 better-bibtex_preferences_advanced_import_case-protection = Insert case-protection for braces:
