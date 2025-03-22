@@ -13,7 +13,7 @@ Feature: Export
 
     Examples:
       | file                                                                                                                     | references |
-      | Split CJK names #2624                                                                                                    | 33         |
+      | Split CJK names #2624                                                                                                    | 35         |
       | Uncommented-out notes in the generated bib file #3176                                                                    | 1          |
       # | Unexpected output result with quotation marks in Title field #1573                                                       | 1          |
       | pmid versus pubmed #3146                                                                                                 | 1          |

@@ -201,3 +201,9 @@
   author = {林, 秀贞},
   langid = {japanese}
 }
+
+@book{Alibaba.ZhNotName,
+  title = {Zh Not Name},
+  author = {{阿里巴巴}},
+  langid = {chinese}
+}
