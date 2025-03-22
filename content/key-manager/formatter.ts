@@ -1569,13 +1569,13 @@ export class PatternFormatter {
       i: this.initials(creator, false),
     }
     let isNameSplit = false
-    if (vars.g === '' && Preference.splitName && this.item.transliterateMode !== 'japanese') {
+    if (template.includes('_zh') && vars.g === '' && Preference.chinese && (!Preference.japanese || this.item.transliterateMode !== 'japanese')) {
       const zh = chinese.splitName(name)
-      if (zh.isName) {
-        isNameSplit = true
-        vars.f = zh.familyName[this.creatorNames.transliterate ? 'transliteration' : 'name']
-        vars.g = zh.givenName[this.creatorNames.transliterate ? 'transliteration' : 'name']
-      }
+      isNameSplit = zh.isName
+      Object.assign(vars, {
+        f_zh: isNameSplit ? zh.familyName[this.creatorNames.transliterate ? 'transliteration' : 'name'] : vars.f,
+        g_zh: isNameSplit ? zh.givenName[this.creatorNames.transliterate ? 'transliteration' : 'name'] : vars.g,
+      })
     }
     if (this.creatorNames.transliterate && !isNameSplit) {
       vars.f = this.transliterate(vars.f)

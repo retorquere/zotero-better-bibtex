@@ -98,13 +98,6 @@ default: `no`
 When on, BBT will make Chinese word segmentation (jieba) and transliteration (pinyin) available for citation keys generation. This uses a lot of memory, easily 70MB, and adds several seconds to the startup time of BBT. If you don't have Chinese titles/names, keep this off.
 
 
-### Split all Chinese-like single-field names.
-
-default: `no`
-
-Split all Chinese-like single-field names.
-
-
 ## Warn me when changing citation keys in bulk
 
 default: `10`
