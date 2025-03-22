@@ -172,28 +172,28 @@
   langid = {chinese-traditional}
 }
 
-@book{JohnSmith.ARandomBook,
+@book{JohnSmith.RandomBook,
   title = {A Random Book},
   author = {{John Smith}},
-  langid = {chinese}
+  langid = {chinese-simplified}
 }
 
-@book{Smith.ARandomBook,
+@book{Smith.RandomBook,
   title = {A Random Book},
   author = {Smith, John},
-  langid = {chinese}
+  langid = {chinese-simplified}
 }
 
 @book{Lin.ZhSingleField,
   title = {Zh Single Field},
   author = {{林秀贞}},
-  langid = {chinese}
+  langid = {chinese-simplified}
 }
 
 @book{Lin.ZhSplitField,
   title = {Zh Split Field},
   author = {林, 秀贞},
-  langid = {chinese}
+  langid = {chinese-simplified}
 }
 
 @book{Ayashi.JaSplitField,
@@ -205,5 +205,5 @@
 @book{Alibaba.ZhNotName,
   title = {Zh Not Name},
   author = {{阿里巴巴}},
-  langid = {chinese}
+  langid = {chinese-simplified}
 }

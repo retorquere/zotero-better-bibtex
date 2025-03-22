@@ -3,7 +3,7 @@
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
     "preferences": {
-      "citekeyFormat": "creatornames('%(f)s', transliterate=true); // sets the default behavior\nauth + '.' + (year > 0);\nauth + '.' + title",
+      "citekeyFormat": "creatornames('%(f)s', transliterate=true);\nauth.capitalize + '.' + title",
       "chinese": true,
       "japanese": true,
       "splitName": true
