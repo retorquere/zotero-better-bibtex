@@ -268,34 +268,34 @@ that yields a non-empty string. If all return a empty string, a random key will 
 <h4 id="functions">Functions</h4>
 <dl>
   
-    <dt><b>auth</b>(n: number = 0, m: number = 1, creator: (&quot;author&quot; | &quot;editor&quot; | &quot;translator&quot; | &quot;collaborator&quot; | &quot;*&quot;) = &#39;*&#39;, initials: boolean = false)</dt><dd><p>The first <code>n</code> (default: all) characters of the <code>m</code>th (default: first) author's last name.</p></dd>
+    <dt><b>auth</b>(n: number = 0, m: number = 1, creator: (&#39;author&#39; | &#39;editor&#39; | &#39;translator&#39; | &#39;collaborator&#39; | &#39;*&#39;) = &#39;*&#39;, initials: boolean = false)</dt><dd><p>The first <code>n</code> (default: all) characters of the <code>m</code>th (default: first) author's last name.</p></dd>
   
-    <dt><b>authAuthEa</b>(creator: (&quot;author&quot; | &quot;editor&quot; | &quot;translator&quot; | &quot;collaborator&quot; | &quot;*&quot;) = &#39;*&#39;, initials: boolean = false, sep: string = &#39;.&#39;)</dt><dd><p>The last name of the first two authors, and ".ea" if there are more than two.</p></dd>
+    <dt><b>authAuthEa</b>(creator: (&#39;author&#39; | &#39;editor&#39; | &#39;translator&#39; | &#39;collaborator&#39; | &#39;*&#39;) = &#39;*&#39;, initials: boolean = false, sep: string = &#39;.&#39;)</dt><dd><p>The last name of the first two authors, and ".ea" if there are more than two.</p></dd>
   
-    <dt><b>authEtAl</b>(creator: (&quot;author&quot; | &quot;editor&quot; | &quot;translator&quot; | &quot;collaborator&quot; | &quot;*&quot;) = &#39;*&#39;, initials: boolean = false, sep: string = &#39; &#39;)</dt><dd><p>The last name of the first author, and the last name of the
+    <dt><b>authEtAl</b>(creator: (&#39;author&#39; | &#39;editor&#39; | &#39;translator&#39; | &#39;collaborator&#39; | &#39;*&#39;) = &#39;*&#39;, initials: boolean = false, sep: string = &#39; &#39;)</dt><dd><p>The last name of the first author, and the last name of the
 second author if there are two authors or "EtAl" if there are
 more than two. This is similar to <code>auth.etal</code>. The difference
 is that the authors are not separated by "." and in case of
 more than 2 authors "EtAl" instead of ".etal" is appended.</p></dd>
   
-    <dt><b>authEtal2</b>(creator: (&quot;author&quot; | &quot;editor&quot; | &quot;translator&quot; | &quot;collaborator&quot; | &quot;*&quot;) = &#39;*&#39;, initials: boolean = false, sep: string = &#39;.&#39;)</dt><dd><p>The last name of the first author, and the last name of the second author if there are two authors or ".etal" if there are more than two.</p></dd>
+    <dt><b>authEtal2</b>(creator: (&#39;author&#39; | &#39;editor&#39; | &#39;translator&#39; | &#39;collaborator&#39; | &#39;*&#39;) = &#39;*&#39;, initials: boolean = false, sep: string = &#39;.&#39;)</dt><dd><p>The last name of the first author, and the last name of the second author if there are two authors or ".etal" if there are more than two.</p></dd>
   
-    <dt><b>authForeIni</b>(creator: (&quot;author&quot; | &quot;editor&quot; | &quot;translator&quot; | &quot;collaborator&quot; | &quot;*&quot;) = &#39;*&#39;)</dt><dd><p>The given-name initial of the first author.</p></dd>
+    <dt><b>authForeIni</b>(creator: (&#39;author&#39; | &#39;editor&#39; | &#39;translator&#39; | &#39;collaborator&#39; | &#39;*&#39;) = &#39;*&#39;)</dt><dd><p>The given-name initial of the first author.</p></dd>
   
-    <dt><b>authIni</b>(n: number = 0, creator: (&quot;author&quot; | &quot;editor&quot; | &quot;translator&quot; | &quot;collaborator&quot; | &quot;*&quot;) = &#39;*&#39;, initials: boolean = false, sep: string = &#39;.&#39;)</dt><dd><p>The beginning of each author's last name, using no more than <code>n</code> characters (0 = all).</p></dd>
+    <dt><b>authIni</b>(n: number = 0, creator: (&#39;author&#39; | &#39;editor&#39; | &#39;translator&#39; | &#39;collaborator&#39; | &#39;*&#39;) = &#39;*&#39;, initials: boolean = false, sep: string = &#39;.&#39;)</dt><dd><p>The beginning of each author's last name, using no more than <code>n</code> characters (0 = all).</p></dd>
   
-    <dt><b>authorIni</b>(creator: (&quot;author&quot; | &quot;editor&quot; | &quot;translator&quot; | &quot;collaborator&quot; | &quot;*&quot;) = &#39;*&#39;, initials: boolean = false, sep: string = &#39;.&#39;)</dt><dd><p>The first 5 characters of the first author's last name, and the last name initials of the remaining authors.</p></dd>
+    <dt><b>authorIni</b>(creator: (&#39;author&#39; | &#39;editor&#39; | &#39;translator&#39; | &#39;collaborator&#39; | &#39;*&#39;) = &#39;*&#39;, initials: boolean = false, sep: string = &#39;.&#39;)</dt><dd><p>The first 5 characters of the first author's last name, and the last name initials of the remaining authors.</p></dd>
   
-    <dt><b>authorLast</b>(creator: (&quot;author&quot; | &quot;editor&quot; | &quot;translator&quot; | &quot;collaborator&quot; | &quot;*&quot;) = &#39;*&#39;, initials: boolean = false)</dt><dd><p>The last name of the last author</p></dd>
+    <dt><b>authorLast</b>(creator: (&#39;author&#39; | &#39;editor&#39; | &#39;translator&#39; | &#39;collaborator&#39; | &#39;*&#39;) = &#39;*&#39;, initials: boolean = false)</dt><dd><p>The last name of the last author</p></dd>
   
-    <dt><b>authorLastForeIni</b>(creator: (&quot;author&quot; | &quot;editor&quot; | &quot;translator&quot; | &quot;collaborator&quot; | &quot;*&quot;) = &#39;*&#39;)</dt><dd><p>The given-name initial of the last author.</p></dd>
+    <dt><b>authorLastForeIni</b>(creator: (&#39;author&#39; | &#39;editor&#39; | &#39;translator&#39; | &#39;collaborator&#39; | &#39;*&#39;) = &#39;*&#39;)</dt><dd><p>The given-name initial of the last author.</p></dd>
   
-    <dt><b>authorsAlpha</b>(creator: (&quot;author&quot; | &quot;editor&quot; | &quot;translator&quot; | &quot;collaborator&quot; | &quot;*&quot;) = &#39;*&#39;, initials: boolean = false, sep: string = &#39; &#39;)</dt><dd><p>Corresponds to the BibTeX style "alpha". One author: First three letters of the last name. Two to four authors: First letters of last names concatenated.
+    <dt><b>authorsAlpha</b>(creator: (&#39;author&#39; | &#39;editor&#39; | &#39;translator&#39; | &#39;collaborator&#39; | &#39;*&#39;) = &#39;*&#39;, initials: boolean = false, sep: string = &#39; &#39;)</dt><dd><p>Corresponds to the BibTeX style "alpha". One author: First three letters of the last name. Two to four authors: First letters of last names concatenated.
 More than four authors: First letters of last names of first three authors concatenated. "+" at the end.</p></dd>
   
-    <dt><b>authorsn</b>(n: number = 0, creator: (&quot;author&quot; | &quot;editor&quot; | &quot;translator&quot; | &quot;collaborator&quot; | &quot;*&quot;) = &#39;*&#39;, initials: boolean = false, sep: string = &#39; &#39;)</dt><dd><p>The last names of the first <code>n</code> (default: all) authors.</p></dd>
+    <dt><b>authorsn</b>(n: number = 0, creator: (&#39;author&#39; | &#39;editor&#39; | &#39;translator&#39; | &#39;collaborator&#39; | &#39;*&#39;) = &#39;*&#39;, initials: boolean = false, sep: string = &#39; &#39;)</dt><dd><p>The last names of the first <code>n</code> (default: all) authors.</p></dd>
   
-    <dt><b>authshort</b>(creator: (&quot;author&quot; | &quot;editor&quot; | &quot;translator&quot; | &quot;collaborator&quot; | &quot;*&quot;) = &#39;*&#39;, initials: boolean = false, sep: string = &#39;.&#39;)</dt><dd><p>The last name if one author/editor is given; the first character
+    <dt><b>authshort</b>(creator: (&#39;author&#39; | &#39;editor&#39; | &#39;translator&#39; | &#39;collaborator&#39; | &#39;*&#39;) = &#39;*&#39;, initials: boolean = false, sep: string = &#39;.&#39;)</dt><dd><p>The last name if one author/editor is given; the first character
 of up to three authors' last names if more than one author is
 given. A plus character is added, if there are more than three
 authors.</p></dd>
@@ -311,7 +311,7 @@ authors.</p></dd>
 <li><code>%(I)s</code>: given-name initials, upper-case</li>
 </ul></dd>
   
-    <dt><b>creators</b>(n: (number | [ number, number ]) = 0, type: (&quot;*&quot; | Creator | Creator[] | (Creator | &quot;*&quot;)[][]) = [[&#39;primary&#39;, &#39;editor&#39;, &#39;translator&#39;, &#39;*&#39;]], name: (&quot;&quot; | &#96;sprintf-style format template&#96;) = &#39;&#39;, etal: string = &#39;&#39;, sep: string = &#39; &#39;, min: number = 0, max: number = 0)</dt><dd><p>Author/editor information.</p>
+    <dt><b>creators</b>(n: (number | [ number, number ]) = 0, type: (&#39;*&#39; | Creator | Creator[] | (Creator | &#39;*&#39;)[][]) = [[&#39;primary&#39;, &#39;editor&#39;, &#39;translator&#39;, &#39;*&#39;]], name: (&#39;&#39; | &#96;sprintf-style format template&#96;) = &#39;&#39;, etal: string = &#39;&#39;, sep: string = &#39; &#39;, min: number = 0, max: number = 0)</dt><dd><p>Author/editor information.</p>
 <p>creator type can be one of <code>artist</code>, <code>attorneyAgent</code>, <code>author</code>, <code>bookAuthor</code>, <code>cartographer</code>, <code>castMember</code>, <code>commenter</code>, <code>composer</code>, <code>contributor</code>, <code>cosponsor</code>, <code>counsel</code>, <code>director</code>, <code>editor</code>, <code>guest</code>, <code>interviewee</code>, <code>interviewer</code>, <code>inventor</code>, <code>performer</code>, <code>podcaster</code>, <code>presenter</code>, <code>producer</code>, <code>programmer</code>, <code>recipient</code>, <code>reviewedAuthor</code>, <code>scriptwriter</code>, <code>seriesEditor</code>, <code>sponsor</code>, <code>translator</code>, <code>wordsBy</code></p>
 <p>in the creator template, you can use:</p>
 <ul>
@@ -355,9 +355,9 @@ even if there is no need for it when no duplicates exist. The default  format is
   
     <dt><b>inspireHep</b></dt><dd><p>Fetches the key from inspire-hep based on DOI or arXiv ID</p></dd>
   
-    <dt><b>item</b>(id: (&quot;key&quot; | &quot;id&quot;) = &#39;key&#39;)</dt><dd><p>returns the internal item ID/key</p></dd>
+    <dt><b>item</b>(id: (&#39;key&#39; | &#39;id&#39;) = &#39;key&#39;)</dt><dd><p>returns the internal item ID/key</p></dd>
   
-    <dt><b>journal</b>(abbrev: (&quot;off&quot; | &quot;abbrev&quot; | &quot;auto&quot; | &quot;abbrev+auto&quot; | &quot;full&quot;) = &#39;abbrev+auto&#39;)</dt><dd><p>returns the journal abbreviation, or, if not found, the journal title, If 'automatic journal abbreviation' is enabled in the BBT settings,
+    <dt><b>journal</b>(abbrev: (&#39;off&#39; | &#39;abbrev&#39; | &#39;auto&#39; | &#39;abbrev+auto&#39; | &#39;full&#39;) = &#39;abbrev+auto&#39;)</dt><dd><p>returns the journal abbreviation, or, if not found, the journal title, If 'automatic journal abbreviation' is enabled in the BBT settings,
 it will use the same abbreviation filter Zotero uses in the wordprocessor integration. You might want to use the <code>abbr</code> filter on this.
 Abbreviation behavior can be specified as <code>abbrev+auto</code> (the default) which uses the explicit journal abbreviation if present, and tries the automatic
 abbreviator if not (if auto-abbrev is enabled in the preferences), <code>auto</code> (skip explicit journal abbreviation even if present), <code>abbrev</code>
@@ -396,7 +396,7 @@ even if there is no need for it when no duplicates exist. The default  format is
   
     <dt><b>title</b></dt><dd><p>Capitalize all the significant words of the title, and concatenate them. For example, <code>An awesome paper on JabRef</code> will become <code>AnAwesomePaperJabref</code></p></dd>
   
-    <dt><b>transliterate</b>(mode: (&quot;minimal&quot; | &quot;de&quot; | &quot;german&quot; | &quot;ja&quot; | &quot;japanese&quot; | &quot;zh&quot; | &quot;chinese&quot; | &quot;chinese-traditional&quot; | &quot;tw&quot; | &quot;zh-hant&quot; | &quot;ar&quot; | &quot;arabic&quot; | &quot;uk&quot; | &quot;ukranian&quot; | &quot;mn&quot; | &quot;mongolian&quot; | &quot;ru&quot; | &quot;russian&quot;))</dt><dd><p>Set the default transliteration mode. If you don't specify a mode, the mode for an entry is derived from the item language field</p></dd>
+    <dt><b>transliterate</b>(mode: ((&#39;minimal&#39; | &#39;german&#39; | &#39;japanese&#39; | &#39;chinese&#39; | &#39;arabic&#39; | &#39;ukranian&#39; | &#39;mongolian&#39; | &#39;russian&#39;) | &#39;de&#39; | &#39;ja&#39; | &#39;chinese-traditional&#39; | &#39;zh-hant&#39; | &#39;zh&#39; | &#39;tw&#39; | &#39;ar&#39; | &#39;uk&#39; | &#39;mn&#39; | &#39;ru&#39;))</dt><dd><p>Set the default transliteration mode. If you don't specify a mode, the mode for an entry is derived from the item language field</p></dd>
   
     <dt><b>type</b>(...allowed: string[])</dt><dd><p>Without arguments, returns the item type.
 When arguments as passed, tests whether the item is of any of the given types, and skips to the next pattern if not, eg <code>type(book) + veryshorttitle | auth + year</code>.</p>
@@ -886,7 +886,7 @@ parameter, e.g <code>.condense('_')</code> will replace spaces with underscores.
   
   <dt><b>kuromoji</b></dt><dd><p>word segmentation for Japanese items. Uses substantial memory; must be enabled under Preferences -&gt; Better BibTeX -&gt; Advanced -&gt; Citekeys</p></dd>
   
-  <dt><b>len</b>(relation: (&quot;&lt;&quot; | &quot;&gt;&quot; | &quot;&lt;=&quot; | &quot;==&quot; | &quot;!=&quot; | &quot;&gt;=&quot;) = &#39;&gt;&#39;, length: number = 0)</dt><dd><p>If the length of the output does not match the given number, skip to the next pattern.</p></dd>
+  <dt><b>len</b>(relation: (&#39;&lt;&#39; | &#39;&gt;&#39; | &#39;&lt;=&#39; | &#39;==&#39; | &#39;!=&#39; | &#39;&gt;=&#39;) = &#39;&gt;&#39;, length: number = 0)</dt><dd><p>If the length of the output does not match the given number, skip to the next pattern.</p></dd>
   
   <dt><b>localTime</b></dt><dd><p>transforms date/time to local time. Mainly useful for dateAdded and dateModified as it requires an ISO-formatted input.</p></dd>
   
@@ -927,7 +927,7 @@ Note that this filter is always applied with <code>nopunct</code> on if you use 
   
   <dt><b>substring</b>(start: number = 1, n?: number)</dt><dd><p><code>substring(start,n)</code> selects <code>n</code> (default: all) characters starting at <code>start</code></p></dd>
   
-  <dt><b>transliterate</b>(mode?: (&quot;minimal&quot; | &quot;de&quot; | &quot;german&quot; | &quot;ja&quot; | &quot;japanese&quot; | &quot;zh&quot; | &quot;chinese&quot; | &quot;chinese-traditional&quot; | &quot;tw&quot; | &quot;zh-hant&quot; | &quot;ar&quot; | &quot;arabic&quot; | &quot;uk&quot; | &quot;ukranian&quot; | &quot;mn&quot; | &quot;mongolian&quot; | &quot;ru&quot; | &quot;russian&quot;))</dt><dd><p>transliterates the citation key. If you don't specify a mode, the mode is derived from the item language field</p></dd>
+  <dt><b>transliterate</b>(mode?: ((&#39;minimal&#39; | &#39;german&#39; | &#39;japanese&#39; | &#39;chinese&#39; | &#39;arabic&#39; | &#39;ukranian&#39; | &#39;mongolian&#39; | &#39;russian&#39;) | &#39;de&#39; | &#39;ja&#39; | &#39;chinese-traditional&#39; | &#39;zh-hant&#39; | &#39;zh&#39; | &#39;tw&#39; | &#39;ar&#39; | &#39;uk&#39; | &#39;mn&#39; | &#39;ru&#39;))</dt><dd><p>transliterates the citation key. If you don't specify a mode, the mode is derived from the item language field</p></dd>
   
   <dt><b>upper</b></dt><dd><p>Forces the text inserted by the field marker to be in uppercase. For example, <code>auth.upper</code> expands the last name of the first author in uppercase.</p></dd>
   

@@ -195,13 +195,13 @@ Scan an AUX file for citekeys and populate a Zotero collection from them. The ta
 <li>library: The libraryID to search in (optional). Pass <code>*</code> to search across your library and all groups.
 List attachments for an item with the given citekey</li>
 </ul>
-<p><strong>item.bibliography</strong>(citekeys: string[], format: { contentType: (&ldquo;text&rdquo; | &ldquo;html&rdquo;); id: string; locale: string; quickCopy: boolean } = {}, library?: (string | number)): string</p>
+<p><strong>item.bibliography</strong>(citekeys: string[], format: { contentType: (&rsquo;text&rsquo; | &lsquo;html&rsquo;); id: string; locale: string; quickCopy: boolean } = {}, library?: (string | number)): string</p>
 <ul>
 <li>citekeys: An array of citekeys</li>
 <li>format: A specification of how the bibliography should be formatted
 Generate a bibliography for the given citekeys</li>
 </ul>
-<p><strong>item.citationkey</strong>(item_keys: (string[] | &ldquo;selected&rdquo;)): Record&lt;string, string&gt;</p>
+<p><strong>item.citationkey</strong>(item_keys: (string[] | &lsquo;selected&rsquo;)): Record&lt;string, string&gt;</p>
 <ul>
 <li>item_keys: A list of [libraryID]:[itemKey] strings. If [libraryID] is omitted, assume &lsquo;My Library&rsquo;
 Fetch citationkeys given item keys</li>

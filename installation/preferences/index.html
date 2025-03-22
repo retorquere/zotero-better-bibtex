@@ -26,7 +26,7 @@ Making any change here will drop your entire export cache. This is usually not a
     <meta itemprop="description" content="The Better BibTeX Configuration can be found under the regular Zotero preferences pane, tab ‘Better BibTeX’.
 The configuration of Better BibTeX is a little baroque compared to the standard Zotero Bib(La)TeX exporters (which only have hidden preferences). The defaults should just work, but here’s an attempt to describe what they do.
 Making any change here will drop your entire export cache. This is usually not a problem unless you have a really large library, but you can read about what is involved here.">
-    <meta itemprop="wordCount" content="584">
+    <meta itemprop="wordCount" content="609">
     <meta itemprop="keywords" content="Configuration,Cache">
     <title>Citation keys :: Better BibTeX for Zotero</title>
     <link href="/zotero-better-bibtex/installation/preferences/index.xml" rel="alternate" type="application/rss+xml" title="Citation keys :: Better BibTeX for Zotero"><link rel="icon" href="/zotero-better-bibtex/better-bibtex.ico" type="image/x-icon">
@@ -147,6 +147,7 @@ Making any change here will drop your entire export cache. This is usually not a
       <ul>
         <li><a href="#apply-kuroshiro-romajization-in-japanese-namestitles-uses-a-lot-of-memory">Apply kuroshiro romajization in Japanese names/titles. Uses a lot of memory.</a></li>
         <li><a href="#enable-jiebapinyin-filters-in-citekey-patterns-uses-a-lot-of-memory">Enable &lsquo;jieba&rsquo;/&lsquo;pinyin&rsquo; filters in citekey patterns. Uses a lot of memory.</a></li>
+        <li><a href="#split-all-chinese-like-single-field-names-unless-the-items-language-is-set-to-japanese-and-japanese-support-is-enabled">Split all Chinese-like single-field names, unless the item&rsquo;s language is set to Japanese and Japanese support is enabled.</a></li>
       </ul>
     </li>
     <li><a href="#warn-me-when-changing-citation-keys-in-bulk">Warn me when changing citation keys in bulk</a></li>
@@ -244,6 +245,9 @@ the citation key changes which could be problematic for existing papers. If you 
 <h3 id="enable-jiebapinyin-filters-in-citekey-patterns-uses-a-lot-of-memory">Enable &lsquo;jieba&rsquo;/&lsquo;pinyin&rsquo; filters in citekey patterns. Uses a lot of memory.</h3>
 <p>default: <code>no</code></p>
 <p>When on, BBT will make Chinese word segmentation (jieba) and transliteration (pinyin) available for citation keys generation. This uses a lot of memory, easily 70MB, and adds several seconds to the startup time of BBT. If you don&rsquo;t have Chinese titles/names, keep this off.</p>
+<h3 id="split-all-chinese-like-single-field-names-unless-the-items-language-is-set-to-japanese-and-japanese-support-is-enabled">Split all Chinese-like single-field names, unless the item&rsquo;s language is set to Japanese and Japanese support is enabled.</h3>
+<p>default: <code>no</code></p>
+<p>Split all Chinese-like single-field names.</p>
 <h2 id="warn-me-when-changing-citation-keys-in-bulk">Warn me when changing citation keys in bulk</h2>
 <p>default: <code>10</code></p>
 <p>For those who are curious about what the <code>Clear/Generate BibTeX key</code> right-click options do, this will warn
