@@ -27,7 +27,7 @@ if (client.slug !== 'node') {
 }
 
 export const kuroshiro = new class {
-  public enabled = false
+  public enabled: typeof this = null
   private kuroshiro: any
   private kuromoji: any
 
@@ -46,10 +46,10 @@ export const kuroshiro = new class {
       const analyzer = new KuromojiAnalyzer(client.slug === 'node' ? undefined : 'chrome://zotero-better-bibtex/content/resource/kuromoji')
       await this.kuroshiro.init(analyzer)
       this.kuromoji = analyzer._analyzer // eslint-disable-line no-underscore-dangle
-      this.enabled = true
+      this.enabled = this
     }
     catch (err) {
-      this.enabled = false
+      this.enabled = null
       log.error(`kuroshiro: initializing failed ${ await err }`)
       throw await err
     }
