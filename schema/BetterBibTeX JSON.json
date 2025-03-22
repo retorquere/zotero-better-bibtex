@@ -204,9 +204,6 @@
             "chinese": {
               "type": "boolean"
             },
-            "chineseSplitName": {
-              "type": "boolean"
-            },
             "citeCommand": {
               "type": "string"
             },
@@ -432,6 +429,9 @@
             },
             "skipWords": {
               "type": "string"
+            },
+            "splitName": {
+              "type": "boolean"
             },
             "startupProgress": {
               "type": "string"
