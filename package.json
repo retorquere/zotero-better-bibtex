@@ -109,7 +109,7 @@
     "reserved-identifiers": "^1.0.0",
     "safe-stable-stringify": "^2.5.0",
     "shell-quote": "^1.8.2",
-    "spellnames": "^1.0.5",
+    "spellnames": "^1.0.3",
     "sprintf-js": "^1.1.3",
     "synchronous-promise": "^2.0.17",
     "text-title-case": "^1.0.2",
