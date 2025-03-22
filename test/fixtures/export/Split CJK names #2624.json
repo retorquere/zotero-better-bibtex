@@ -4,7 +4,8 @@
     "label": "BetterBibTeX JSON",
     "preferences": {
       "citekeyFormat": "creatornames('%(f)s', transliterate=true); // sets the default behavior\nauth.transliterate + '.' + (year > 0);\nauth.transliterate + '.' + title",
-      "jieba": true
+      "jieba": true,
+      "splitName": true
     }
   },
   "items": [
