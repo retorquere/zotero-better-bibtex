@@ -106,7 +106,7 @@
   langid = {chinese-traditional}
 }
 
-@book{xiaofamin.fayixuetiedaosunshangtupu,
+@book{Xiao.fayixuetiedaosunshangtupu,
   title = {法医学铁道损伤图谱},
   author = {{肖发民}},
   langid = {chinese-simplified}
@@ -170,4 +170,40 @@
   title = {Hant Author: Zhuge Liang},
   author = {{諸葛亮}},
   langid = {chinese-traditional}
+}
+
+@book{JohnSmith.RandomBook,
+  title = {A Random Book},
+  author = {{John Smith}},
+  langid = {chinese-simplified}
+}
+
+@book{Smith.RandomBook,
+  title = {A Random Book},
+  author = {Smith, John},
+  langid = {chinese-simplified}
+}
+
+@book{Lin.ZhSingleField,
+  title = {Zh Single Field},
+  author = {{林秀贞}},
+  langid = {chinese-simplified}
+}
+
+@book{Lin.ZhSplitField,
+  title = {Zh Split Field},
+  author = {林, 秀贞},
+  langid = {chinese-simplified}
+}
+
+@book{Hayashi.JaSplitField,
+  title = {Ja Split Field},
+  author = {林, 秀贞},
+  langid = {japanese}
+}
+
+@book{Alibaba.ZhNotName,
+  title = {Zh Not Name},
+  author = {{阿里巴巴}},
+  langid = {chinese-simplified}
 }

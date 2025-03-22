@@ -23,7 +23,8 @@
       "skipFields": "abstract, keywords",
       "verbatimFields": "url,doi,file,eprint,verba,verbb,verbc",
       "warnBulkModify": 0,
-      "chinese": true
+      "chinese": true,
+      "chineseSplitName": false
     }
   },
   "items": [
