@@ -116,6 +116,9 @@ better-bibtex_preferences_advanced_ideographs = Ideographs in citekeys
 better-bibtex_preferences_advanced_ideographs_jieba = 
   .label = Enable 'jieba'/'pinyin' filters in citekey patterns. Uses a lot of memory.
 
+better-bibtex_preferences_advanced_ideographs_splitName = 
+  .label = Split all Chinese-like single-field names.
+
 better-bibtex_preferences_advanced_ideographs_kuroshiro = 
   .label = Apply kuroshiro romajization in Japanese names/titles. Uses a lot of memory.
 
