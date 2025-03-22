@@ -11,7 +11,7 @@ import ETA from 'node-eta'
 
 import { alert, prompt } from './prompt'
 
-import { kuroshiro } from './key-manager/japanese'
+import { japanese } from './key-manager/japanese'
 import { chinese } from './key-manager/chinese'
 
 import { Scheduler } from './scheduler'
@@ -266,7 +266,7 @@ export const KeyManager = new class _KeyManager {
       description: 'keymanager',
       needs: [ 'worker', 'sqlite'],
       startup: async () => {
-        await kuroshiro.init()
+        await japanese.init()
         chinese.init()
 
         Formatter.update([Preference.citekeyFormat])

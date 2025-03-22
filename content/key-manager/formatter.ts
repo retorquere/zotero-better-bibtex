@@ -36,7 +36,7 @@ import { parseFragment } from 'parse5'
 import { sprintf } from 'sprintf-js'
 
 import { chinese } from './chinese'
-import { kuroshiro } from './japanese'
+import { japanese } from './japanese'
 import { transliterate as arabic } from './arabic'
 import { transliterate } from 'transliteration/dist/node/src/node/index'
 import { ukranian, mongolian, russian } from './cyrillic'
@@ -1361,8 +1361,8 @@ export class PatternFormatter {
 
   /** word segmentation for Japanese items. Uses substantial memory; must be enabled under Preferences -> Better BibTeX -> Advanced -> Citekeys */
   public _kuromoji(input: string): string {
-    if (!Preference.japanese || !kuroshiro.enabled) return input
-    return kuroshiro.tokenize(input || '').join(' ').trim()
+    if (!japanese.enabled) return input
+    return japanese.tokenize(input || '').join(' ').trim()
   }
 
   /** transliterates the citation key and removes unsafe characters */
@@ -1421,7 +1421,7 @@ export class PatternFormatter {
 
       case 'ja':
       case 'japanese':
-        if (Preference.japanese && kuroshiro.enabled) str = kuroshiro.convert(str, { to: 'romaji' })
+        if (japanese.enabled) str = japanese.convert(str, { to: 'romaji' })
         break
 
       case 'ar':
@@ -1495,9 +1495,9 @@ export class PatternFormatter {
       words = words.filter((word: string) => !this.skipWords.has(word.toLowerCase()))
     }
 
-    if (Preference.japanese && kuroshiro.enabled && options.skipWords && this.item.transliterateMode === 'japanese') {
+    if (japanese.enabled && options.skipWords && this.item.transliterateMode === 'japanese') {
       words = words
-        .flatMap((word: string) => kuroshiro.tokenize(word))
+        .flatMap((word: string) => japanese.tokenize(word))
         .filter((word: string) => !this.skipWords.has(word.toLowerCase()))
     }
 
@@ -1506,8 +1506,8 @@ export class PatternFormatter {
         if (this.item.transliterateMode) {
           return this.transliterate(word)
         }
-        else if (Preference.japanese && kuroshiro.enabled) {
-          return this.transliterate(kuroshiro.convert(word, { to: 'romaji' }), 'minimal')
+        else if (japanese.enabled) {
+          return this.transliterate(japanese.convert(word, { to: 'romaji' }), 'minimal')
         }
         else if (chinese.enabled) {
           return this.transliterate(chinese.pinyin(word), 'minimal')
