@@ -5,6 +5,7 @@
     "preferences": {
       "citekeyFormat": "creatornames('%(f)s', transliterate=true); // sets the default behavior\nauth + '.' + (year > 0);\nauth + '.' + title",
       "chinese": true,
+      "japanese": true,
       "splitName": true
     }
   },
@@ -397,6 +398,47 @@
       "itemID": 30,
       "itemType": "book",
       "language": "zh-Hans",
+      "title": "A Random Book"
+    },
+    {
+      "citationKey": "Smith.ARandomBook",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "John",
+          "lastName": "Smith"
+        }
+      ],
+      "itemID": 31,
+      "itemType": "book",
+      "language": "zh-Hans",
+      "title": "A Random Book"
+    },
+    {
+      "citationKey": "Lin.ARandomBook",
+      "creators": [
+        {
+          "creatorType": "author",
+          "name": "林秀贞"
+        }
+      ],
+      "itemID": 32,
+      "itemType": "book",
+      "language": "zh-Hans",
+      "title": "A Random Book"
+    },
+    {
+      "citationKey": "Ayashi.ARandomBook",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "秀贞",
+          "lastName": "林"
+        }
+      ],
+      "itemID": 33,
+      "itemType": "book",
+      "language": "ja",
       "title": "A Random Book"
     }
   ]

@@ -177,3 +177,21 @@
   author = {{John Smith}},
   langid = {chinese}
 }
+
+@book{Smith.ARandomBook,
+  title = {A Random Book},
+  author = {Smith, John},
+  langid = {chinese}
+}
+
+@book{Lin.ARandomBook,
+  title = {A Random Book},
+  author = {{林秀贞}},
+  langid = {chinese}
+}
+
+@book{Ayashi.ARandomBook,
+  title = {A Random Book},
+  author = {{林秀贞}},
+  langid = {chinese}
+}
