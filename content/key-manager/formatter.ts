@@ -1569,7 +1569,10 @@ export class PatternFormatter {
       i: this.initials(creator, false),
     }
     let isNameSplit = false
-    if (template.includes('_zh') && vars.g === '' && Preference.chinese && (!Preference.japanese || this.item.transliterateMode !== 'japanese')) {
+    if (template.includes('_zh') &&
+        vars.g === '' &&
+        chinese.loaded &&
+        (!(Preference.japanese && kuroshiro.enabled) || this.item.transliterateMode !== 'japanese')) {
       const zh = chinese.splitName(name)
       isNameSplit = zh.isName
       Object.assign(vars, {
