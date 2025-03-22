@@ -171,3 +171,9 @@
   author = {{諸葛亮}},
   langid = {chinese-traditional}
 }
+
+@book{JohnSmith.ARandomBook,
+  title = {A Random Book},
+  author = {{John Smith}},
+  langid = {chinese}
+}

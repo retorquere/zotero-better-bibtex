@@ -10,19 +10,6 @@
   },
   "items": [
     {
-      "citationKey": "xiaofamin.FayixueTiedaoSunshang",
-      "creators": [
-        {
-          "creatorType": "author",
-          "name": "\u8096\u53d1\u6c11"
-        }
-      ],
-      "itemID": 1,
-      "itemType": "book",
-      "language": "zh-Hans",
-      "title": "\u6cd5\u533b\u5b66\u94c1\u9053\u635f\u4f24\u56fe\u8c31"
-    },
-    {
       "citationKey": "changsunwuji",
       "creators": [
         {
@@ -385,6 +372,32 @@
       "itemType": "book",
       "language": "zh-CN",
       "title": "Hans Author: Zhuge Liang"
+    },
+    {
+      "citationKey": "xiaofamin.FayixueTiedaoSunshang",
+      "creators": [
+        {
+          "creatorType": "author",
+          "name": "\u8096\u53d1\u6c11"
+        }
+      ],
+      "itemID": 29,
+      "itemType": "book",
+      "language": "zh-Hans",
+      "title": "\u6cd5\u533b\u5b66\u94c1\u9053\u635f\u4f24\u56fe\u8c31"
+    },
+    {
+      "citationKey": "JohnSmith.ARandomBook",
+      "creators": [
+        {
+          "creatorType": "author",
+          "name": "John Smith"
+        }
+      ],
+      "itemID": 30,
+      "itemType": "book",
+      "language": "zh-Hans",
+      "title": "A Random Book"
     }
   ]
 }
