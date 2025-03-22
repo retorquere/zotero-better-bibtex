@@ -327,11 +327,6 @@ export class PatternFormatter {
   public citekey = ''
 
   public generate: () => string
-  public postfix = {
-    offset: 0,
-    template: '%(a)s',
-    marker: '\x1A',
-  }
 
   private re = {
     unsafechars_allow_spaces: /\s/g,
@@ -357,7 +352,21 @@ export class PatternFormatter {
 
   private skipWords: Set<string>
 
-  private creatorNames: { template: Template<'creator'>; transliterate: boolean } = { template: '%(f)s', transliterate: false }
+  private config = {
+    creatorNames: {
+      template: '%(f)s' as Template<'creator'>,
+      transliterate: false,
+    },
+    postfix: {
+      offset: 0,
+      template: '%(a)s',
+      marker: '\x1A',
+    },
+  }
+  private defaults = JSON.stringify(this.config)
+  public get postfix(): typeof this.config.postfix {
+    return this.config.postfix
+  }
 
   constructor() {
     Events.on('preference-changed', pref => {
@@ -423,7 +432,7 @@ export class PatternFormatter {
         return ''
     }
 
-    this.formula_reset() // should leave this to _reset inside the compiled formula
+    this.formula_reset()
     let citekey = this.generate()
     if (citekey && Preference.citekeyFold) citekey = this.transliterate(citekey)
     citekey = citekey.replace(this.re.unsafechars, '')
@@ -563,7 +572,7 @@ export class PatternFormatter {
     min = 0,
     max = 0
   ): string {
-    name = name || this.creatorNames.template
+    name = name || this.config.creatorNames.template
     const include: string[] = []
     const exclude: string[] = []
     const primary = itemCreators[client.slug][this.item.itemType][0]
@@ -622,8 +631,8 @@ export class PatternFormatter {
    * @param transliterate transliterate the returned name
    */
   public $creatornames(template?: Template<'creator'>, transliterate?: boolean): string { // eslint-disable-line @typescript-eslint/no-shadow
-    if (typeof template !== 'undefined') this.creatorNames.template = template
-    if (typeof transliterate !== 'undefined') this.creatorNames.transliterate = transliterate
+    if (typeof template !== 'undefined') this.config.creatorNames.template = template
+    if (typeof transliterate !== 'undefined') this.config.creatorNames.transliterate = transliterate
     return ''
   }
 
@@ -635,7 +644,7 @@ export class PatternFormatter {
    * @param sep       use this character between authors
    */
   public $authorsn(n = 0, creator: AuthorType = '*', initials = false, sep = ' '): string {
-    let author = this.creators(creator, initials ? `${this.creatorNames.template}%(I)s` : this.creatorNames.template)
+    let author = this.creators(creator, initials ? `${this.config.creatorNames.template}%(I)s` : this.config.creatorNames.template)
     if (n && n < author.length) author = author.slice(0, n).concat('EtAl')
     return author.join(sep)
   }
@@ -648,7 +657,7 @@ export class PatternFormatter {
    * @param initials  add author initials
    */
   public $auth(n = 0, m = 1, creator: AuthorType = '*', initials = false): string {
-    const family = n ? this.creatorNames.template.replace(/%\(([fg][_a-z]*)\)s/gi, `%($1).${n}s`) : this.creatorNames.template
+    const family = n ? this.config.creatorNames.template.replace(/%\(([fg][_a-z]*)\)s/gi, `%($1).${n}s`) : this.config.creatorNames.template
     const name = initials ? `${family}%(I)s` : family
     const author: string = this.creators(creator, name)[m - 1] || ''
     return author
@@ -679,7 +688,7 @@ export class PatternFormatter {
    * @param initials  add author initials
    */
   public $authorLast(creator: AuthorType = '*', initials = false): string {
-    const authors = this.creators(creator, initials ? `${this.creatorNames.template}%(I)s` : this.creatorNames.template)
+    const authors = this.creators(creator, initials ? `${this.config.creatorNames.template}%(I)s` : this.config.creatorNames.template)
     const author = authors[authors.length - 1] || ''
     return author
   }
@@ -692,7 +701,7 @@ export class PatternFormatter {
    * @param sep     use this character between authors
    */
   public $authorsAlpha(creator: AuthorType = '*', initials = false, sep = ' '): string {
-    const authors = this.creators(creator, initials ? `${this.creatorNames.template}%(I)s` : this.creatorNames.template)
+    const authors = this.creators(creator, initials ? `${this.config.creatorNames.template}%(I)s` : this.config.creatorNames.template)
     if (!authors.length) return ''
 
     switch (authors.length) {
@@ -716,7 +725,7 @@ export class PatternFormatter {
    * @param sep     use this character between authors
    */
   public $authIni(n = 0, creator: AuthorType = '*', initials = false, sep = '.'): string {
-    const authors = this.creators(creator, initials ? `${this.creatorNames.template}%(I)s` : this.creatorNames.template)
+    const authors = this.creators(creator, initials ? `${this.config.creatorNames.template}%(I)s` : this.config.creatorNames.template)
     if (!authors.length) return ''
     return authors.map(auth => auth.substring(0, n)).join(sep)
   }
@@ -728,7 +737,7 @@ export class PatternFormatter {
    * @param sep     use this character between authors
    */
   public $authorIni(creator: AuthorType = '*', initials = false, sep = '.'): string {
-    const authors = this.creators(creator, initials ? `${this.creatorNames.template}%(I)s` : this.creatorNames.template)
+    const authors = this.creators(creator, initials ? `${this.config.creatorNames.template}%(I)s` : this.config.creatorNames.template)
     if (!authors.length) return ''
     const firstAuthor = authors.shift()
 
@@ -742,7 +751,7 @@ export class PatternFormatter {
    * @param sep     use this character between authors
    */
   public $authAuthEa(creator: AuthorType = '*', initials = false, sep = '.'): string {
-    const authors = this.creators(creator, initials ? `${this.creatorNames.template}%(I)s` : this.creatorNames.template)
+    const authors = this.creators(creator, initials ? `${this.config.creatorNames.template}%(I)s` : this.config.creatorNames.template)
     if (!authors.length) return ''
 
     return authors.slice(0, 2).concat(authors.length > 2 ? ['ea'] : []).join(sep)
@@ -759,7 +768,7 @@ export class PatternFormatter {
    * @param sep     use this character between authors
    */
   public $authEtAl(creator: AuthorType = '*', initials = false, sep = ' '): string {
-    const authors = this.creators(creator, initials ? `${this.creatorNames.template}%(I)s` : this.creatorNames.template)
+    const authors = this.creators(creator, initials ? `${this.config.creatorNames.template}%(I)s` : this.config.creatorNames.template)
     if (!authors.length) return ''
 
     return authors.length === 2
@@ -774,7 +783,7 @@ export class PatternFormatter {
    * @param sep     use this character between authors
    */
   public $authEtal2(creator: AuthorType = '*', initials = false, sep = '.'): string {
-    const authors = this.creators(creator, initials ? `${this.creatorNames.template}%(I)s` : this.creatorNames.template)
+    const authors = this.creators(creator, initials ? `${this.config.creatorNames.template}%(I)s` : this.config.creatorNames.template)
     if (!authors.length) return ''
 
     return authors.length === 2
@@ -792,7 +801,7 @@ export class PatternFormatter {
    * @param sep     use this character between authors
    */
   public $authshort(creator: AuthorType = '*', initials = false, sep = '.'): string {
-    const authors = this.creators(creator, initials ? `${this.creatorNames.template}%(I)s` : this.creatorNames.template)
+    const authors = this.creators(creator, initials ? `${this.config.creatorNames.template}%(I)s` : this.config.creatorNames.template)
 
     switch (authors.length) {
       case 0:
@@ -1545,11 +1554,11 @@ export class PatternFormatter {
       const zh = chinese.splitName(creator.name)
       if (zh.isName) {
         isNameSplit = true
-        vars.f = zh.familyName[this.creatorNames.transliterate ? 'transliteration' : 'name'].toLowerCase()
-        vars.g = zh.givenName[this.creatorNames.transliterate ? 'transliteration' : 'name'].toLowerCase()
+        vars.f = zh.familyName[this.config.creatorNames.transliterate ? 'transliteration' : 'name'].toLowerCase()
+        vars.g = zh.givenName[this.config.creatorNames.transliterate ? 'transliteration' : 'name'].toLowerCase()
       }
     }
-    if (this.creatorNames.transliterate && !isNameSplit) {
+    if (this.config.creatorNames.transliterate && !isNameSplit) {
       vars.f = this.transliterate(vars.f)
       vars.g = this.transliterate(vars.g)
     }
@@ -1557,7 +1566,7 @@ export class PatternFormatter {
   }
 
   private creators(select: AuthorType, template?: Template<'creators'>): string[] {
-    template = template || this.creatorNames.template
+    template = template || this.config.creatorNames.template
     const types = itemCreators[client.slug][this.item.itemType] || []
     const primary = types[0]
 
@@ -1609,8 +1618,7 @@ export class PatternFormatter {
   }
 
   public formula_reset(): void {
-    this.$creatornames('%(f)s', false)
-    this.$postfix()
+    this.config = JSON.parse(this.defaults) as typeof this.config
   }
 
   public formula_log(k: string, v: string, e?: Error & { next?: boolean }): string {
