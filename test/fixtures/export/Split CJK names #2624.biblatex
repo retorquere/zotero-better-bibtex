@@ -184,14 +184,20 @@
   langid = {chinese}
 }
 
-@book{Lin.ARandomBook,
-  title = {A Random Book},
+@book{Lin.ZhSingleField,
+  title = {Zh Single Field},
   author = {{林秀贞}},
   langid = {chinese}
 }
 
-@book{Ayashi.ARandomBook,
-  title = {A Random Book},
-  author = {{林秀贞}},
+@book{Lin.ZhSplitField,
+  title = {Zh Split Field},
+  author = {林, 秀贞},
   langid = {chinese}
+}
+
+@book{Ayashi.JaSplitField,
+  title = {Ja Split Field},
+  author = {林, 秀贞},
+  langid = {japanese}
 }

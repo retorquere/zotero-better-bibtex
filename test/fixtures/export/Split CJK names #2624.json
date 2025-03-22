@@ -415,7 +415,7 @@
       "title": "A Random Book"
     },
     {
-      "citationKey": "Lin.ARandomBook",
+      "citationKey": "Lin.zhsingle",
       "creators": [
         {
           "creatorType": "author",
@@ -425,10 +425,10 @@
       "itemID": 32,
       "itemType": "book",
       "language": "zh-Hans",
-      "title": "A Random Book"
+      "title": "Zh Single Field"
     },
     {
-      "citationKey": "Ayashi.ARandomBook",
+      "citationKey": "Lin.zhsplitfield",
       "creators": [
         {
           "creatorType": "author",
@@ -438,8 +438,22 @@
       ],
       "itemID": 33,
       "itemType": "book",
+      "language": "zh-Hans",
+      "title": "Zh Split Field"
+    },
+    {
+      "citationKey": "Ayashi.jasplitfield",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "秀贞",
+          "lastName": "林"
+        }
+      ],
+      "itemID": 34,
+      "itemType": "book",
       "language": "ja",
-      "title": "A Random Book"
+      "title": "Ja Split Field"
     }
   ]
 }
