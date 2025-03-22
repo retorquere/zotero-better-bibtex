@@ -1355,7 +1355,7 @@ export class PatternFormatter {
     * @param mode for backwards compatibility, this param will be accepted, but it is a no-op since the switch to jieba-rs. It will be removed eventually.
     */
   public _jieba(input: string, mode?: string): string { // eslint-disable-line @typescript-eslint/no-unused-vars
-    if (!chinese.loaded) return input
+    if (!chinese.enabled) return input
     return chinese.jieba(input).join(' ').trim()
   }
 
@@ -1372,7 +1372,7 @@ export class PatternFormatter {
 
   /** transliterates the citation key to pinyin */
   public _pinyin(input: string): string {
-    return chinese.loaded?.pinyin(input) || input
+    return chinese.enabled?.pinyin(input) || input
   }
 
   /**
@@ -1416,7 +1416,7 @@ export class PatternFormatter {
       case 'zh':
       case 'chinese-traditional':
       case 'chinese':
-        str = chinese.loaded?.pinyin(str) || str
+        str = chinese.enabled?.pinyin(str) || str
         break
 
       case 'ja':
@@ -1489,7 +1489,7 @@ export class PatternFormatter {
       .filter(word => word && !(options.skipWords && ucs2decode(word).length === 1 && !word.match(/^\d+$/) && !word.match(CJK)))
 
     // apply jieba.cut and flatten.
-    if (chinese.loaded && options.skipWords && this.item.transliterateMode.startsWith('chinese')) {
+    if (chinese.enabled && options.skipWords && this.item.transliterateMode.startsWith('chinese')) {
       words = [].concat(...words.map((word: string) => chinese.jieba(word)))
       // remove CJK skipwords
       words = words.filter((word: string) => !this.skipWords.has(word.toLowerCase()))
@@ -1509,7 +1509,7 @@ export class PatternFormatter {
         else if (Preference.japanese && kuroshiro.enabled) {
           return this.transliterate(kuroshiro.convert(word, { to: 'romaji' }), 'minimal')
         }
-        else if (chinese.loaded) {
+        else if (chinese.enabled) {
           return this.transliterate(chinese.pinyin(word), 'minimal')
         }
         else {
