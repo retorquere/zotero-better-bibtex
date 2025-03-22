@@ -52,3 +52,4 @@ pandoc/docx
 pandoc/*.docx
 pandoc/*.odt
 pandoc/.snakemake
+mapping.gml
