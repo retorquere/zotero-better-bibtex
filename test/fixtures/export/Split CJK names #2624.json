@@ -5,7 +5,7 @@
     "preferences": {
       "citekeyFormat": "creatornames('%(f)s', transliterate=true); // sets the default behavior\nauth + '.' + (year > 0);\nauth + '.' + title",
       "chinese": true,
-      "splitName": true
+      "chineseSplitName": true
     }
   },
   "items": [
