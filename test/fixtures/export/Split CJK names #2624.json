@@ -3,25 +3,13 @@
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
     "preferences": {
-      "citekeyFormat": "creatornames('%(f)s', transliterate=true); // sets the default behavior\nauth + '.' + (year > 0);\nauth + '.' + title",
+      "citekeyFormat": "creatornames('%(f)s', transliterate=true);\nauth.capitalize + '.' + title",
       "chinese": true,
+      "japanese": true,
       "chineseSplitName": true
     }
   },
   "items": [
-    {
-      "citationKey": "xiaofamin.FayixueTiedaoSunshang",
-      "creators": [
-        {
-          "creatorType": "author",
-          "name": "\u8096\u53d1\u6c11"
-        }
-      ],
-      "itemID": 1,
-      "itemType": "book",
-      "language": "zh-Hans",
-      "title": "\u6cd5\u533b\u5b66\u94c1\u9053\u635f\u4f24\u56fe\u8c31"
-    },
     {
       "citationKey": "changsunwuji",
       "creators": [
@@ -385,6 +373,100 @@
       "itemType": "book",
       "language": "zh-CN",
       "title": "Hans Author: Zhuge Liang"
+    },
+    {
+      "citationKey": "xiaofamin.FayixueTiedaoSunshang",
+      "creators": [
+        {
+          "creatorType": "author",
+          "name": "\u8096\u53d1\u6c11"
+        }
+      ],
+      "itemID": 29,
+      "itemType": "book",
+      "language": "zh-Hans",
+      "title": "\u6cd5\u533b\u5b66\u94c1\u9053\u635f\u4f24\u56fe\u8c31"
+    },
+    {
+      "citationKey": "JohnSmith.ARandomBook",
+      "creators": [
+        {
+          "creatorType": "author",
+          "name": "John Smith"
+        }
+      ],
+      "itemID": 30,
+      "itemType": "book",
+      "language": "zh-Hans",
+      "title": "A Random Book"
+    },
+    {
+      "citationKey": "Smith.ARandomBook",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "John",
+          "lastName": "Smith"
+        }
+      ],
+      "itemID": 31,
+      "itemType": "book",
+      "language": "zh-Hans",
+      "title": "A Random Book"
+    },
+    {
+      "citationKey": "Lin.zhsingle",
+      "creators": [
+        {
+          "creatorType": "author",
+          "name": "林秀贞"
+        }
+      ],
+      "itemID": 32,
+      "itemType": "book",
+      "language": "zh-Hans",
+      "title": "Zh Single Field"
+    },
+    {
+      "citationKey": "Lin.zhsplitfield",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "秀贞",
+          "lastName": "林"
+        }
+      ],
+      "itemID": 33,
+      "itemType": "book",
+      "language": "zh-Hans",
+      "title": "Zh Split Field"
+    },
+    {
+      "citationKey": "Ayashi.jasplitfield",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "秀贞",
+          "lastName": "林"
+        }
+      ],
+      "itemID": 34,
+      "itemType": "book",
+      "language": "ja",
+      "title": "Ja Split Field"
+    },
+    {
+      "citationKey": "Alibaba.zhonotname",
+      "creators": [
+        {
+          "creatorType": "author",
+          "name": "阿里巴巴"
+        }
+      ],
+      "itemID": 35,
+      "itemType": "book",
+      "language": "zh-Hans",
+      "title": "Zh Not Name"
     }
   ]
 }
