@@ -106,7 +106,7 @@
   langid = {chinese-traditional}
 }
 
-@book{xiaofamin.fayixuetiedaosunshangtupu,
+@book{Xiao.fayixuetiedaosunshangtupu,
   title = {法医学铁道损伤图谱},
   author = {{肖发民}},
   langid = {chinese-simplified}
@@ -196,7 +196,7 @@
   langid = {chinese-simplified}
 }
 
-@book{Ayashi.JaSplitField,
+@book{Hayashi.JaSplitField,
   title = {Ja Split Field},
   author = {林, 秀贞},
   langid = {japanese}
