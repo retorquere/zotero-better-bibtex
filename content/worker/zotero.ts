@@ -1,19 +1,10 @@
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 
-// import registerPromiseWorker from '@kotorik/promise-worker/register'
 import { Server as WorkerServerBase } from './json-rpc'
 import { Exporter as ExporterInterface } from './interface'
 import type { Item } from '../../gen/typings/serialized-item'
 
-// import allSettled = require('promise.allsettled')
-// allSettled.shim()
-
 import { ExportedItem, ExportedItemMetadata, Cache, Context } from './cache'
-
-// import flatMap from 'array.prototype.flatmap'
-// flatMap.shim()
-// import matchAll from 'string.prototype.matchall'
-// matchAll.shim()
 
 declare const IOUtils: any
 
@@ -172,10 +163,17 @@ class Running {
   public context: number
   public hits = 0
   public misses = 0
+  public items: number
 
   private pending: ExportedItem[] = []
 
+  public get progress() {
+    if (!this.serialized.length || !this.items) return 100
+    return ((this.items - this.serialized.length) / this.items) * 100
+  }
+
   constructor(public job: Job) {
+    this.items = job.data.items.length
   }
 
   public async load(): Promise<void> {
@@ -291,7 +289,7 @@ const WorkerZoteroUtilities = {
 }
 
 async function makeDirs(path) {
-  if (!Path.isAbsolute(path)) throw new Error(`Will not create relative ${ path }`)
+  if (PathUtils.parent(path) && !PathUtils.isAbsolute(path)) throw new Error(`Will not create relative path ${path}`)
   await IOUtils.makeDirectory(path, { ignoreExisting: true, createAncestors: true })
 }
 
@@ -425,6 +423,7 @@ class WorkerZotero {
     Object.assign(job.preferences, { platform: client.platform, client: client.slug })
     this.running = new Running(job)
     await this.running.load()
+    this.BetterBibTeX.setProgress(0)
 
     this.output = ''
 
@@ -458,6 +457,7 @@ class WorkerZotero {
 
     await this.running.flush()
     const cacheRate = this.running.hits + this.running.misses ? this.running.hits / (this.running.hits + this.running.misses) : 0
+    this.BetterBibTeX.setProgress(100)
     this.running = null
     return { output: Zotero.output, cacheRate }
   }
@@ -493,6 +493,7 @@ class WorkerZotero {
   }
 
   public nextItem() {
+    this.BetterBibTeX.setProgress(this.running.progress)
     return this.running.serialized.shift()
   }
 

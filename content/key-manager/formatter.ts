@@ -36,7 +36,7 @@ import { parseFragment } from 'parse5'
 import { sprintf } from 'sprintf-js'
 
 import { chinese } from './chinese'
-import { kuroshiro } from './japanese'
+import { japanese } from './japanese'
 import { transliterate as arabic } from './arabic'
 import { transliterate } from 'transliteration/dist/node/src/node/index'
 import { ukranian, mongolian, russian } from './cyrillic'
@@ -49,6 +49,46 @@ type BabelLanguageTag = ValueOf<typeof BabelTag>
 type BabelLanguage = keyof typeof BabelTag
 
 class Template<K> extends String {} // eslint-disable-line @typescript-eslint/no-unused-vars
+
+export type TransliterateMode =
+    'minimal'
+  | 'german'
+  | 'japanese'
+  | 'chinese'
+  | 'arabic'
+  | 'ukranian'
+  | 'mongolian'
+  | 'russian'
+
+export type TransliterateModeAlias = TransliterateMode | 'de' | 'ja' | 'chinese-traditional' | 'zh-hant' | 'zh' | 'tw' | 'ar' | 'uk' | 'mn' | 'ru'
+
+const unaliasTransliterateMode: Record<TransliterateModeAlias, TransliterateMode> = {
+  minimal: 'minimal',
+
+  german: 'german',
+  de: 'german',
+
+  japanese: 'japanese',
+  ja: 'japanese',
+
+  chinese: 'chinese',
+  'chinese-traditional': 'chinese',
+  'zh-hant': 'chinese',
+  zh: 'chinese',
+  tw: 'chinese',
+
+  arabic: 'arabic',
+  ar: 'arabic',
+
+  ukranian: 'ukranian',
+  uk: 'ukranian',
+
+  mongolian: 'mongolian',
+  mn: 'mongolian',
+
+  russian: 'russian',
+  ru: 'russian',
+}
 
 function skip() {
   throw { next: true } // eslint-disable-line @typescript-eslint/only-throw-error
@@ -206,7 +246,7 @@ class Item {
   public key: string
   public id: number
   public libraryID: number
-  public transliterateMode: 'german' | 'japanese' | 'chinese' | 'chinese-traditional' | 'arabic' | 'ukranian' | 'mongolian' | 'russian' | ''
+  public transliterateMode: TransliterateMode | ''
   public getField: (name: string) => number | string
   public extra: string
   public extraFields: Extra.Fields
@@ -237,43 +277,8 @@ class Item {
     this.title = item.getField('title', false, true)
 
     this.language = babelLanguage((this.getField('language') as string) || '')
-    switch (this.babelTag()) {
-      case 'de':
-        this.transliterateMode = 'german'
-        break
-
-      case 'ja':
-        this.transliterateMode = 'japanese'
-        break
-
-      case 'zh':
-        this.transliterateMode = 'chinese'
-        break
-
-      case 'zh-hant':
-        this.transliterateMode = 'chinese-traditional'
-        break
-
-      case 'ar':
-        this.transliterateMode = 'arabic'
-        break
-
-      case 'uk':
-        this.transliterateMode = 'ukranian'
-        break
-
-      case 'mn':
-        this.transliterateMode = 'mongolian'
-        break
-
-      case 'ru':
-        this.transliterateMode = 'russian'
-        break
-
-      default:
-        this.transliterateMode = ''
-        break
-    }
+    const babelTag = this.babelTag() as TransliterateMode
+    this.transliterateMode = unaliasTransliterateMode[babelTag] || babelTag
 
     const extraFields = Extra.get(this.getField('extra') as string, 'zotero', { kv: true, tex: true })
     this.extra = extraFields.extra
@@ -322,11 +327,6 @@ export class PatternFormatter {
   public citekey = ''
 
   public generate: () => string
-  public postfix = {
-    offset: 0,
-    template: '%(a)s',
-    marker: '\x1A',
-  }
 
   private re = {
     unsafechars_allow_spaces: /\s/g,
@@ -351,6 +351,22 @@ export class PatternFormatter {
   private item: Item
 
   private skipWords: Set<string>
+
+  private config = {
+    creatorNames: {
+      template: '%(f)s' as Template<'creator'>,
+      transliterate: false,
+    },
+    postfix: {
+      offset: 0,
+      template: '%(a)s',
+      marker: '\x1A',
+    },
+  }
+  private defaults = JSON.stringify(this.config)
+  public get postfix(): typeof this.config.postfix {
+    return this.config.postfix
+  }
 
   constructor() {
     Events.on('preference-changed', pref => {
@@ -387,7 +403,6 @@ export class PatternFormatter {
       if (!formula) continue
 
       try {
-        this.$postfix()
         const formatter = compile(formula, { logging: Preference.testing })
         log.info('formula:', formula, '=>\n', formatter)
         this.generate = (new Function(formatter) as () => string)
@@ -417,7 +432,7 @@ export class PatternFormatter {
         return ''
     }
 
-    this.$postfix()
+    this.formula_reset()
     let citekey = this.generate()
     if (citekey && Preference.citekeyFold) citekey = this.transliterate(citekey)
     citekey = citekey.replace(this.re.unsafechars, '')
@@ -551,12 +566,13 @@ export class PatternFormatter {
   public $creators(
     n: number | [number, number] = 0,
     type: CreatorType | CreatorTypeArray | CreatorTypeCollection | '*' = [[ 'primary', 'editor', 'translator', '*' ]],
-    name: Template<'creator'> = '%(f)s',
+    name: Template<'creator'> | '' = '',
     etal = '',
     sep = ' ',
     min = 0,
     max = 0
   ): string {
+    name = name || this.config.creatorNames.template
     const include: string[] = []
     const exclude: string[] = []
     const primary = itemCreators[client.slug][this.item.itemType][0]
@@ -599,7 +615,7 @@ export class PatternFormatter {
   public $$creators(
     n: number | [number, number] = 0,
     type: CreatorType | CreatorTypeArray | CreatorTypeCollection | '*' = [[ 'primary', 'editor', 'translator', '*' ]],
-    name: Template<'creator'> = '%(f)s',
+    name: Template<'creator'> | '' = '',
     etal = '',
     sep = ' ',
     min = 0,
@@ -610,6 +626,17 @@ export class PatternFormatter {
   }
 
   /**
+   * Sets the sprintf-template default for representing creator names. Default is '%(f)s'.
+   * @param template template string
+   * @param transliterate transliterate the returned name
+   */
+  public $creatornames(template?: Template<'creator'>, transliterate?: boolean): string { // eslint-disable-line @typescript-eslint/no-shadow
+    if (typeof template !== 'undefined') this.config.creatorNames.template = template
+    if (typeof transliterate !== 'undefined') this.config.creatorNames.transliterate = transliterate
+    return ''
+  }
+
+  /**
    * The last names of the first `n` (default: all) authors.
    * @param n         the number of characters to take from the name, 0 = all
    * @param creator   kind of creator to select, `*` selects `author` first, and if not present, `editor`, `translator` or `collaborator`, in that order.
@@ -617,9 +644,7 @@ export class PatternFormatter {
    * @param sep       use this character between authors
    */
   public $authorsn(n = 0, creator: AuthorType = '*', initials = false, sep = ' '): string {
-    let name = '%(f)s'
-    if (initials) name += '%(I)s'
-    let author = this.creators(creator, name)
+    let author = this.creators(creator, initials ? `${this.config.creatorNames.template}%(I)s` : this.config.creatorNames.template)
     if (n && n < author.length) author = author.slice(0, n).concat('EtAl')
     return author.join(sep)
   }
@@ -632,8 +657,8 @@ export class PatternFormatter {
    * @param initials  add author initials
    */
   public $auth(n = 0, m = 1, creator: AuthorType = '*', initials = false): string {
-    const family = n ? `%(f).${ n }s` : '%(f)s'
-    const name = initials ? `${ family }%(I)s` : family
+    const family = n ? this.config.creatorNames.template.replace(/%\(([fg][_a-z]*)\)s/gi, `%($1).${n}s`) : this.config.creatorNames.template
+    const name = initials ? `${family}%(I)s` : family
     const author: string = this.creators(creator, name)[m - 1] || ''
     return author
   }
@@ -663,7 +688,7 @@ export class PatternFormatter {
    * @param initials  add author initials
    */
   public $authorLast(creator: AuthorType = '*', initials = false): string {
-    const authors = this.creators(creator, initials ? '%(f)s%(I)s' : '%(f)s')
+    const authors = this.creators(creator, initials ? `${this.config.creatorNames.template}%(I)s` : this.config.creatorNames.template)
     const author = authors[authors.length - 1] || ''
     return author
   }
@@ -676,7 +701,7 @@ export class PatternFormatter {
    * @param sep     use this character between authors
    */
   public $authorsAlpha(creator: AuthorType = '*', initials = false, sep = ' '): string {
-    const authors = this.creators(creator, initials ? '%(f)s%(I)s' : '%(f)s')
+    const authors = this.creators(creator, initials ? `${this.config.creatorNames.template}%(I)s` : this.config.creatorNames.template)
     if (!authors.length) return ''
 
     switch (authors.length) {
@@ -700,7 +725,7 @@ export class PatternFormatter {
    * @param sep     use this character between authors
    */
   public $authIni(n = 0, creator: AuthorType = '*', initials = false, sep = '.'): string {
-    const authors = this.creators(creator, initials ? '%(f)s%(I)s' : '%(f)s')
+    const authors = this.creators(creator, initials ? `${this.config.creatorNames.template}%(I)s` : this.config.creatorNames.template)
     if (!authors.length) return ''
     return authors.map(auth => auth.substring(0, n)).join(sep)
   }
@@ -712,7 +737,7 @@ export class PatternFormatter {
    * @param sep     use this character between authors
    */
   public $authorIni(creator: AuthorType = '*', initials = false, sep = '.'): string {
-    const authors = this.creators(creator, initials ? '%(f)s%(I)s' : '%(f)s')
+    const authors = this.creators(creator, initials ? `${this.config.creatorNames.template}%(I)s` : this.config.creatorNames.template)
     if (!authors.length) return ''
     const firstAuthor = authors.shift()
 
@@ -726,7 +751,7 @@ export class PatternFormatter {
    * @param sep     use this character between authors
    */
   public $authAuthEa(creator: AuthorType = '*', initials = false, sep = '.'): string {
-    const authors = this.creators(creator, initials ? '%(f)s%(I)s' : '%(f)s')
+    const authors = this.creators(creator, initials ? `${this.config.creatorNames.template}%(I)s` : this.config.creatorNames.template)
     if (!authors.length) return ''
 
     return authors.slice(0, 2).concat(authors.length > 2 ? ['ea'] : []).join(sep)
@@ -743,7 +768,7 @@ export class PatternFormatter {
    * @param sep     use this character between authors
    */
   public $authEtAl(creator: AuthorType = '*', initials = false, sep = ' '): string {
-    const authors = this.creators(creator, initials ? '%(f)s%(I)s' : '%(f)s')
+    const authors = this.creators(creator, initials ? `${this.config.creatorNames.template}%(I)s` : this.config.creatorNames.template)
     if (!authors.length) return ''
 
     return authors.length === 2
@@ -758,7 +783,7 @@ export class PatternFormatter {
    * @param sep     use this character between authors
    */
   public $authEtal2(creator: AuthorType = '*', initials = false, sep = '.'): string {
-    const authors = this.creators(creator, initials ? '%(f)s%(I)s' : '%(f)s')
+    const authors = this.creators(creator, initials ? `${this.config.creatorNames.template}%(I)s` : this.config.creatorNames.template)
     if (!authors.length) return ''
 
     return authors.length === 2
@@ -776,7 +801,7 @@ export class PatternFormatter {
    * @param sep     use this character between authors
    */
   public $authshort(creator: AuthorType = '*', initials = false, sep = '.'): string {
-    const authors = this.creators(creator, initials ? '%(f)s%(I)s' : '%(f)s')
+    const authors = this.creators(creator, initials ? `${this.config.creatorNames.template}%(I)s` : this.config.creatorNames.template)
 
     switch (authors.length) {
       case 0:
@@ -1320,19 +1345,17 @@ export class PatternFormatter {
 
   /**
     * word segmentation for Chinese items. Uses substantial memory, and adds about 7 seconds to BBTs startup time; must be enabled under Preferences -> Better BibTeX -> Advanced -> Citekeys
-    * @param mode segmentation mode
+    * @param mode for backwards compatibility, this param will be accepted, but it is a no-op since the switch to jieba-rs. It will be removed eventually.
     */
-  public _jieba(input: string, mode?: 'cn' | 'tw' | 'hant'): string {
-    if (!chinese.load(Preference.jieba)) return input
-    if (mode === 'hant') mode = 'tw'
-    mode = mode || (this.item.transliterateMode === 'chinese-traditional' ? 'tw' : 'cn')
-    return chinese.jieba(input, mode).join(' ').trim()
+  public _jieba(input: string, mode?: string): string { // eslint-disable-line @typescript-eslint/no-unused-vars
+    if (!chinese.enabled) return input
+    return chinese.jieba(input).join(' ').trim()
   }
 
   /** word segmentation for Japanese items. Uses substantial memory; must be enabled under Preferences -> Better BibTeX -> Advanced -> Citekeys */
   public _kuromoji(input: string): string {
-    if (!Preference.kuroshiro || !kuroshiro.enabled) return input
-    return kuroshiro.tokenize(input || '').join(' ').trim()
+    if (!japanese.enabled) return input
+    return japanese.tokenize(input || '').join(' ').trim()
   }
 
   /** transliterates the citation key and removes unsafe characters */
@@ -1342,26 +1365,30 @@ export class PatternFormatter {
 
   /** transliterates the citation key to pinyin */
   public _pinyin(input: string): string {
-    return chinese.load(Preference.jieba) ? chinese.pinyin(input) : input
+    return chinese.enabled?.pinyin(input) || input
   }
 
+  /**
+   * Set the default transliteration mode. If you don't specify a mode, the mode for an entry is derived from the item language field
+   * @param mode specialized translateration modes for german, japanese or chinese.
+   */
+  public $transliterate(mode: TransliterateModeAlias): string {
+    this.item.transliterateMode = (unaliasTransliterateMode[mode] || mode) as TransliterateMode
+    return ''
+  }
   /**
    * transliterates the citation key. If you don't specify a mode, the mode is derived from the item language field
    * @param mode specialized translateration modes for german, japanese or chinese.
    */
-  public _transliterate(input: string, mode?: 'minimal' | 'de' | 'german' | 'ja' | 'japanese' | 'zh' | 'chinese' | 'tw' | 'zh-hant' | 'ar' | 'arabic' | 'uk' | 'ukranian' | 'mn' | 'mongolian' | 'ru' | 'russian'): string {
-    return this.transliterate(input, mode)
+  public _transliterate(input: string, mode?: TransliterateModeAlias): string {
+    return this.transliterate(input, (unaliasTransliterateMode[mode] || mode) as TransliterateMode)
   }
 
-  private transliterate(str: string, mode?: 'minimal' | 'de' | 'german' | 'ja' | 'japanese' | 'zh' | 'chinese' | 'tw' | 'zh-hant' | 'chinese-traditional' | 'ar' | 'arabic' | 'uk' | 'ukranian' | 'mn' | 'mongolian' | 'ru' | 'russian'): string {
+  private transliterate(str: string, mode?: TransliterateMode): string {
     mode = mode || this.item.transliterateMode || 'minimal'
 
     let replace: Record<string, string> = {}
     switch (mode) {
-      case 'minimal':
-        break
-
-      case 'de':
       case 'german':
         replace = {
           ä: 'ae',
@@ -1373,41 +1400,33 @@ export class PatternFormatter {
         }
         break
 
-      case 'tw':
-      case 'zh-hant':
-      case 'zh':
-      case 'chinese-traditional':
       case 'chinese':
-        if (chinese.load(Preference.jieba)) str = chinese.pinyin(str)
+        str = chinese.enabled?.pinyin(str) || str
         break
 
-      case 'ja':
       case 'japanese':
-        if (Preference.kuroshiro && kuroshiro.enabled) str = kuroshiro.convert(str, { to: 'romaji' })
+        if (japanese.enabled) str = japanese.convert(str, { to: 'romaji' })
         break
 
-      case 'ar':
       case 'arabic':
         str = arabic(str)
         break
 
-      case 'uk':
       case 'ukranian':
         str = ukranian(str)
         break
 
-      case 'mn':
       case 'mongolian':
         str = mongolian(str)
         break
 
-      case 'ru':
       case 'russian':
         str = russian(str)
         break
 
+      case 'minimal':
       default:
-        throw new Error(`Unsupported fold mode "${ mode }"`)
+        break
     }
 
     str = transliterate(str || '', {
@@ -1451,16 +1470,15 @@ export class PatternFormatter {
       .filter(word => word && !(options.skipWords && ucs2decode(word).length === 1 && !word.match(/^\d+$/) && !word.match(CJK)))
 
     // apply jieba.cut and flatten.
-    if (chinese.load(Preference.jieba) && options.skipWords && this.item.transliterateMode.startsWith('chinese')) {
-      const mode = this.item.transliterateMode === 'chinese-traditional' ? 'tw' : 'cn'
-      words = words
-        .flatMap((word: string) => chinese.jieba(word, mode))
-        .filter((word: string) => !this.skipWords.has(word.toLowerCase())) // remove CJK skipwords
+    if (chinese.enabled && options.skipWords && this.item.transliterateMode === 'chinese') {
+      words = [].concat(...words.map((word: string) => chinese.jieba(word)))
+      // remove CJK skipwords
+      words = words.filter((word: string) => !this.skipWords.has(word.toLowerCase()))
     }
 
-    if (Preference.kuroshiro && kuroshiro.enabled && options.skipWords && this.item.transliterateMode === 'japanese') {
+    if (japanese.enabled && options.skipWords && this.item.transliterateMode === 'japanese') {
       words = words
-        .flatMap((word: string) => kuroshiro.tokenize(word))
+        .flatMap((word: string) => japanese.tokenize(word))
         .filter((word: string) => !this.skipWords.has(word.toLowerCase()))
     }
 
@@ -1469,10 +1487,10 @@ export class PatternFormatter {
         if (this.item.transliterateMode) {
           return this.transliterate(word)
         }
-        else if (Preference.kuroshiro && kuroshiro.enabled) {
-          return this.transliterate(kuroshiro.convert(word, { to: 'romaji' }), 'minimal')
+        else if (japanese.enabled) {
+          return this.transliterate(japanese.convert(word, { to: 'romaji' }), 'minimal')
         }
-        else if (chinese.load(Preference.jieba)) {
+        else if (chinese.enabled) {
           return this.transliterate(chinese.pinyin(word), 'minimal')
         }
         else {
@@ -1523,16 +1541,32 @@ export class PatternFormatter {
     return initials
   }
 
-  private name(creator: Creator, template: string): string {
-    return sprintf(template, {
-      f: this.stripQuotes(this.innerText(creator.lastName || creator.name)),
+  private name(creator: Creator, template: Template<'creators'>): string {
+    const name = creator.lastName || creator.name
+    const vars = {
+      f: this.stripQuotes(this.innerText(name)),
       g: this.stripQuotes(this.innerText(creator.firstName || '')),
       I: this.initials(creator),
       i: this.initials(creator, false),
-    }) as string
+    }
+    let isNameSplit = false
+    if (creator.name && Preference.chineseSplitName && chinese.enabled && !(japanese.enabled && this.item.transliterateMode === 'japanese')) {
+      const zh = chinese.splitName(creator.name)
+      if (zh.isName) {
+        isNameSplit = true
+        vars.f = zh.familyName[this.config.creatorNames.transliterate ? 'transliteration' : 'name'].toLowerCase()
+        vars.g = zh.givenName[this.config.creatorNames.transliterate ? 'transliteration' : 'name'].toLowerCase()
+      }
+    }
+    if (this.config.creatorNames.transliterate && !isNameSplit) {
+      vars.f = this.transliterate(vars.f)
+      vars.g = this.transliterate(vars.g)
+    }
+    return sprintf(template, vars) as string
   }
 
-  private creators(select: AuthorType, template: string): string[] {
+  private creators(select: AuthorType, template?: Template<'creators'>): string[] {
+    template = template || this.config.creatorNames.template
     const types = itemCreators[client.slug][this.item.itemType] || []
     const primary = types[0]
 
@@ -1583,6 +1617,10 @@ export class PatternFormatter {
     return []
   }
 
+  public formula_reset(): void {
+    this.config = JSON.parse(this.defaults) as typeof this.config
+  }
+
   public formula_log(k: string, v: string, e?: Error & { next?: boolean }): string {
     if (e && e.next) {
       log.info('formula: skip')
@@ -1591,7 +1629,8 @@ export class PatternFormatter {
       log.error('formula:', e)
     }
     else {
-      log.info('formula:', k, '=>', v)
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+      log.info('formula:', k.replace(/^([$_])/, (m, kind) => ({$: '', _: '  .'}[kind])), '=>', JSON.stringify(v))
     }
     return v
   }

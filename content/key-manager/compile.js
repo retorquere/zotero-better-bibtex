@@ -63,7 +63,15 @@ const parens = {
   },
 
   BinaryExpression(node, parent) {
-    if (node.operator !== '+') throw new Error(`${astring.generate(node)} not supported`)
+    if (node.operator === '+') {
+      // pass
+    }
+    else if (node.operator.match(/^[<>]=?|[!=]=$/) && node.right.type === 'Literal' && typeof node.right.value === 'number') {
+      // pass
+    }
+    else {
+      throw new Error(`${astring.generate(node)} not supported`)
+    }
   },
 
   MemberExpression(node, parent) {
@@ -125,7 +133,7 @@ const len = {
             name: '_len',
           },
         },
-        arguments: [node.left, node.right],
+        arguments: [node.left, { type: 'Literal', value: node.operator }, node.right],
       }
     }
   },
@@ -508,6 +516,43 @@ const protect = {
     return node
   },
 }
+const reset = {
+  leave(node, parent) {
+    switch (node.type) {
+      case 'Program': {
+        const body = []
+        for (const formula of node.body) {
+          body.push({
+            type: 'CallExpression',
+            callee: {
+              type: 'MemberExpression',
+              object: {
+                type: 'ThisExpression',
+              },
+              property: {
+                type: 'Identifier',
+                name: 'formula_reset',
+              },
+            },
+            arguments: [],
+          })
+          body.push(formula)
+        }
+        node.body = body
+        break
+      }
+    }
+  }
+}
+
+function trim(args) {
+  args = [...args]
+  let last
+  while (args.length && (last = args[args.length - 1]) && ((last.type === 'Literal' && !last.value) || (last.type === 'Identifier' && last.name === 'undefined'))) {
+    args.pop()
+  }
+  return args
+}
 
 const logging = {
   leave(node, parent) {
@@ -522,7 +567,17 @@ const logging = {
           object: { type: 'ThisExpression' },
           property: { type: 'Identifier', name: 'formula_log' },
         },
-        arguments: [ { type: 'Literal', value: node.callee.property.name }, node ],
+        arguments: [
+          {
+            type: 'Literal',
+            value: astring.generate({
+              ...node,
+              callee: node.callee.property,
+              arguments: trim(node.callee.property.name[0] === '$' ? node.arguments : node.arguments.slice(1)),
+            })
+          },
+          node,
+        ],
       }
     }
     else if (node.type === 'CatchClause') {
@@ -598,6 +653,8 @@ function compile(code, options) {
   estraverse.replace(ast, protect)
 
   if (options?.logging) estraverse.replace(ast, logging)
+
+  // estraverse.replace(ast, reset)
 
   const generatedCode = [
     'let citekey',

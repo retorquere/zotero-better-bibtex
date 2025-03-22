@@ -367,6 +367,7 @@ const queue = new class TaskQueue {
       ae.error = `${ err }`
     }
 
+    void Events.emit('export-progress', { pct: 100, message: `${ translator.label } export finished`, ae: path })
     AutoExport.status(path, 'done')
   }
 

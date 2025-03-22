@@ -7,7 +7,7 @@
     },
     "preferences": {
       "citekeyFormat": "auth.lower+year | type(forumPost, webpage)+auth.lower.capitalize+Date.formatDate(\"%Y-%m-%d.%H:%M:%S\").prefix(\".\")+PublicationTitle.lower.capitalize.prefix(\".\")+shorttitle(3,3).lower.capitalize.prefix(\".\")+Pages.prefix(\".p.\")+Volume.prefix(\".Vol.\")+NumberofVolumes.prefix(de) | auth.lower.capitalize+date(\"%oY\").prefix(\".\")+PublicationTitle.lower.capitalize.prefix(\".\")+shorttitle(3,3).lower.capitalize.prefix(\".\")+Pages.prefix(\".p.\")+Volume.prefix(\".Vol.\")+NumberofVolumes.prefix(de)",
-      "kuroshiro": true
+      "japanese": true
     }
   },
   "items": [

@@ -113,10 +113,13 @@ better-bibtex_preferences_advanced_extra_merge-tex =
 better-bibtex_preferences_advanced_ideographs = Ideographs in citekeys
   .label = { better-bibtex_preferences_advanced_ideographs }
 
-better-bibtex_preferences_advanced_ideographs_jieba = 
+better-bibtex_preferences_advanced_ideographs_chinese = 
   .label = Enable 'jieba'/'pinyin' filters in citekey patterns. Uses a lot of memory.
 
-better-bibtex_preferences_advanced_ideographs_kuroshiro = 
+better-bibtex_preferences_advanced_ideographs_splitName = 
+  .label = Split all Chinese-like single-field names, unless the item's language is set to Japanese and Japanese support is enabled.
+
+better-bibtex_preferences_advanced_ideographs_japanese = 
   .label = Apply kuroshiro romajization in Japanese names/titles. Uses a lot of memory.
 
 better-bibtex_preferences_advanced_import_case-protection = Insert case-protection for braces:
@@ -339,6 +342,8 @@ better-bibtex_preferences_export_quick-copy_latex = LaTeX citation
   .label = { better-bibtex_preferences_export_quick-copy_latex }
 better-bibtex_preferences_export_quick-copy_latex_command = LaTeX command
   .label = { better-bibtex_preferences_export_quick-copy_latex_command }
+better-bibtex_preferences_export_quick-copy_org-mode_cite = Org-mode citation link
+  .label = { better-bibtex_preferences_export_quick-copy_org-mode_cite }
 better-bibtex_preferences_export_quick-copy_org-mode = Org-mode select link
   .label = { better-bibtex_preferences_export_quick-copy_org-mode }
 better-bibtex_preferences_export_quick-copy_org-mode_citekey = using Better BibTeX citation key

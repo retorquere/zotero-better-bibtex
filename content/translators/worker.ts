@@ -14,7 +14,6 @@ export type Message =
 //  | { kind: 'done', output: string, cacheRate: number }
     { kind: 'debug'; message: string }
   | { kind: 'error'; message: string; stack?: string }
-  // | { kind: 'item'; item: number }
   | { kind: 'cache-delete' }
   | { kind: 'progress'; percent: number; translator: string; autoExport: string }
 

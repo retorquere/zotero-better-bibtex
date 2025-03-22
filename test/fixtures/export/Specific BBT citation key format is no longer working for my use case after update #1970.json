@@ -8,7 +8,7 @@
     },
     "preferences": {
       "DOIandURL": "doi",
-      "citekeyFormat": "postfix(\"%(a)s\", 1);\nauth(n=1,m=1,creator=\"*\",initials=false).fold + auth(n=1,m=2,creator=\"*\",initials=false).fold + auth(n=1,m=3,creator=\"*\",initials=false).fold + auth(n=1,m=4,creator=\"*\",initials=false).fold.len.discard + \"+\" + shortyear;\nauth(n=1,m=1,creator=\"*\",initials=false).fold + auth(n=1,m=2,creator=\"*\",initials=false).fold + auth(n=1,m=3,creator=\"*\",initials=false).fold.len.discard + auth(n=1,m=3,creator=\"*\",initials=false).fold + shortyear;\nauth(n=2,m=1,creator=\"*\",initials=false).fold + auth(n=1,m=2,creator=\"*\",initials=false).fold.len.discard + auth(n=2,m=2,creator=\"*\",initials=false).fold + shortyear;\nauth(n=4,m=1,creator=\"*\",initials=false).fold + shortyear;",
+      "citekeyFormat": "postfix('%(a)s', 1);\nauth(n=1,m=1,creator='*',initials=false).fold + auth(n=1,m=2,creator='*',initials=false).fold + auth(n=1,m=3,creator='*',initials=false).fold + auth(n=1,m=4,creator='*',initials=false).fold.len.discard + '+' + shortyear;\nauth(n=1,m=1,creator='*',initials=false).fold + auth(n=1,m=2,creator='*',initials=false).fold + auth(n=1,m=3,creator='*',initials=false).fold.len.discard + auth(n=1,m=3,creator='*',initials=false).fold + shortyear;\nauth(n=2,m=1,creator='*',initials=false).fold + auth(n=1,m=2,creator='*',initials=false).fold.len.discard + auth(n=2,m=2,creator='*',initials=false).fold + shortyear;\nauth(n=4,m=1,creator='*',initials=false).fold + shortyear;",
       "skipFields": "note,abstract,file,langid,keywords"
     }
   },

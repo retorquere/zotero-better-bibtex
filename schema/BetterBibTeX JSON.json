@@ -201,6 +201,12 @@
             "charmap": {
               "type": "string"
             },
+            "chinese": {
+              "type": "boolean"
+            },
+            "chineseSplitName": {
+              "type": "boolean"
+            },
             "citeCommand": {
               "type": "string"
             },
@@ -309,7 +315,7 @@
             "jabrefFormat": {
               "type": "number"
             },
-            "jieba": {
+            "japanese": {
               "type": "boolean"
             },
             "keyConflictPolicy": {
@@ -325,9 +331,6 @@
                 "library"
               ],
               "type": "string"
-            },
-            "kuroshiro": {
-              "type": "boolean"
             },
             "language": {
               "enum": [
@@ -378,6 +381,7 @@
                 "gitbook",
                 "orgRef",
                 "orgRef3",
+                "orgcite",
                 "orgmode",
                 "pandoc",
                 "roamCiteKey",

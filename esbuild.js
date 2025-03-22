@@ -162,12 +162,9 @@ async function bundle(config) {
     target = `${config.outdir} [${config.entryPoints.map(js).join(', ')}]`
   }
 
-  loader.patcher.current = null
-
   const exportGlobals = config.exportGlobals
   delete config.exportGlobals
   if (exportGlobals) {
-    loader.patcher.silent = true
     const esm = await esbuild.build({ ...config, logLevel: 'silent', format: 'esm', metafile: true, write: false })
     if (process.env.GML) {
       console.log('  generating dependency graph', target + '.gml')
@@ -180,10 +177,8 @@ async function bundle(config) {
         // make these var, not const, so they get hoisted and are available in the global scope.
       }
     }
-    loader.patcher.silent = false
   }
 
-  if (config.plugins.find(p => p === loader.patcher.plugin)) loader.patcher.current = target
   const metafile = config.metafile
   config.metafile = !!config.metafile
 
@@ -199,8 +194,6 @@ async function bundle(config) {
 }
 
 async function rebuild() {
-  loader.patcher.load('setup/patches')
-
   // bootstrap code
   await bundle({
     entryPoints: [ 'content/bootstrap.ts' ],
@@ -213,7 +206,6 @@ async function rebuild() {
     entryPoints: [ 'content/better-bibtex.ts' ],
     plugins: [
       loader.trace('plugin'),
-      loader.patcher.plugin,
       loader.text,
       loader.sql,
       loader.peggy,
@@ -240,8 +232,8 @@ async function rebuild() {
     entryPoints: [ 'content/key-manager/chinese-optional.ts' ],
     exportGlobals: true,
     plugins: [
-      loader.patcher.plugin,
       loader.__dirname,
+      loader.resettableBinary,
       // shims,
     ],
     // inject: ['./setup/loaders/globals.js'],
@@ -253,7 +245,6 @@ async function rebuild() {
     entryPoints: [ 'content/worker/zotero.ts' ],
     plugins: [
       loader.trace('worker'),
-      loader.patcher.plugin,
       loader.text,
       // loader.peggy,
       loader.__dirname,

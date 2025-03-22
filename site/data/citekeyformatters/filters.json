@@ -48,7 +48,7 @@
     "description": "<p>Treat ideaographs as individual words</p>"
   },
   {
-    "summary": "<b>jieba</b>(mode?: (&quot;cn&quot; | &quot;tw&quot; | &quot;hant&quot;))",
+    "summary": "<b>jieba</b>(mode?: string)",
     "description": "<p>word segmentation for Chinese items. Uses substantial memory, and adds about 7 seconds to BBTs startup time; must be enabled under Preferences -&gt; Better BibTeX -&gt; Advanced -&gt; Citekeys</p>"
   },
   {
@@ -56,7 +56,7 @@
     "description": "<p>word segmentation for Japanese items. Uses substantial memory; must be enabled under Preferences -&gt; Better BibTeX -&gt; Advanced -&gt; Citekeys</p>"
   },
   {
-    "summary": "<b>len</b>(relation: (&quot;&lt;&quot; | &quot;&gt;&quot; | &quot;&lt;=&quot; | &quot;==&quot; | &quot;!=&quot; | &quot;&gt;=&quot;) = &#39;&gt;&#39;, length: number = 0)",
+    "summary": "<b>len</b>(relation: (&#39;&lt;&#39; | &#39;&gt;&#39; | &#39;&lt;=&#39; | &#39;==&#39; | &#39;!=&#39; | &#39;&gt;=&#39;) = &#39;&gt;&#39;, length: number = 0)",
     "description": "<p>If the length of the output does not match the given number, skip to the next pattern.</p>"
   },
   {
@@ -112,7 +112,7 @@
     "description": "<p><code>substring(start,n)</code> selects <code>n</code> (default: all) characters starting at <code>start</code></p>"
   },
   {
-    "summary": "<b>transliterate</b>(mode?: (&quot;ar&quot; | &quot;de&quot; | &quot;minimal&quot; | &quot;tw&quot; | &quot;mn&quot; | &quot;arabic&quot; | &quot;chinese&quot; | &quot;german&quot; | &quot;japanese&quot; | &quot;mongolian&quot; | &quot;russian&quot; | &quot;ru&quot; | &quot;uk&quot; | &quot;ja&quot; | &quot;zh&quot; | &quot;zh-hant&quot; | &quot;ukranian&quot;))",
+    "summary": "<b>transliterate</b>(mode?: ((&#39;minimal&#39; | &#39;german&#39; | &#39;japanese&#39; | &#39;chinese&#39; | &#39;arabic&#39; | &#39;ukranian&#39; | &#39;mongolian&#39; | &#39;russian&#39;) | &#39;de&#39; | &#39;ja&#39; | &#39;chinese-traditional&#39; | &#39;zh-hant&#39; | &#39;zh&#39; | &#39;tw&#39; | &#39;ar&#39; | &#39;uk&#39; | &#39;mn&#39; | &#39;ru&#39;))",
     "description": "<p>transliterates the citation key. If you don't specify a mode, the mode is derived from the item language field</p>"
   },
   {
