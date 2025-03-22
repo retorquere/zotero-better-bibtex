@@ -51,10 +51,8 @@
       "importUnknownTexCommand": "ignore",
       "itemObserverDelay": 5,
       "jabrefFormat": 0,
-      "jieba": false,
       "keyConflictPolicy": "keep",
       "keyScope": "library",
-      "kuroshiro": false,
       "language": "langid",
       "mapMath": "",
       "mapText": "",
@@ -81,7 +79,9 @@
       "stringsOverride": "",
       "verbatimFields": "url,doi,file,pdf,ids,eprint,/^verb[a-z]$/,groups,/^citeulike-linkout-[0-9]+$/, /^bdsk-url-[0-9]+$/",
       "warnBulkModify": 10,
-      "warnTitleCased": false
+      "warnTitleCased": false,
+      "chinese": false,
+      "japanese": false
     },
     "options": {
       "exportNotes": true,
@@ -105,7 +105,7 @@
       "title": "One flew over the cuckoo's nest",
       "creators": [
         {
-          "firstName": "Miloš",
+          "firstName": "Milo\u0161",
           "lastName": "Forman",
           "creatorType": "director"
         }
@@ -138,7 +138,7 @@
       "title": "One flew over the cuckoo's nest",
       "creators": [
         {
-          "firstName": "Miloš",
+          "firstName": "Milo\u0161",
           "lastName": "Forman",
           "creatorType": "director"
         }
@@ -171,7 +171,7 @@
       "title": "One flew over the cuckoo's nest",
       "creators": [
         {
-          "firstName": "Miloš",
+          "firstName": "Milo\u0161",
           "lastName": "Forman",
           "creatorType": "director"
         }
@@ -204,7 +204,7 @@
       "title": "One flew over the cuckoo's nest",
       "creators": [
         {
-          "firstName": "Miloš",
+          "firstName": "Milo\u0161",
           "lastName": "Forman",
           "creatorType": "director"
         }
