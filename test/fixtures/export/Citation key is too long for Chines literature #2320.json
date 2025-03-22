@@ -6,13 +6,13 @@
       "exportNotes": true
     },
     "preferences": {
-      "jieba": true,
       "citekeyFormat": "auth+'_'+year+'_'+shorttitle",
       "exportBraceProtection": false,
       "extraMergeCSL": true,
       "extraMergeCitekeys": true,
       "extraMergeTeX": true,
-      "skipFields": "abstract,note,file,keywords"
+      "skipFields": "abstract,note,file,keywords",
+      "chinese": true
     }
   },
   "items": [

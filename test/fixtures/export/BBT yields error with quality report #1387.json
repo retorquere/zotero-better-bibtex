@@ -11,9 +11,9 @@
       "importCaseProtection": "off",
       "itemObserverDelay": 100,
       "keyConflictPolicy": "change",
-      "kuroshiro": true,
       "qualityReport": true,
-      "skipFields": "abstract, copyright, googlebooks"
+      "skipFields": "abstract, copyright, googlebooks",
+      "japanese": true
     }
   },
   "items": [

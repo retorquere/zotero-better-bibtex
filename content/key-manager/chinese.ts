@@ -19,26 +19,29 @@ export const chinese = new class {
     this.load()
   }
 
-  public get loaded(): this {
+  public get enabled(): this {
+    if (!Preference.chinese) return null
     this.load()
-    return this.jieba ? this : null
+    return this
   }
 
-  private load(): void {
-    if (!Preference.jieba || this.jieba) return
+  public get loaded(): this {
+    return this.enabled
+  }
 
-    // this.window = this.window || Zotero.getMainWindow()
-    // this.document = this.document || this.window.document
-    Services.scriptloader.loadSubScriptWithOptions('chrome://zotero-better-bibtex/content/key-manager/chinese-optional.js', {
-      target: this,
-      charset: 'utf-8',
-      // ignoreCache: true,
-    })
+  private load() {
+    if (!this.jieba) {
+      Services.scriptloader.loadSubScriptWithOptions('chrome://zotero-better-bibtex/content/key-manager/chinese-optional.js', {
+        target: this,
+        charset: 'utf-8',
+        // ignoreCache: true,
+      })
+    }
   }
 
   init() {
     Events.on('preference-changed', pref => {
-      if (pref === 'jieba') this.load()
+      if (pref === 'chinese') this.load()
     })
   }
 }

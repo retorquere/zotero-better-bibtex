@@ -36,7 +36,7 @@ import { parseFragment } from 'parse5'
 import { sprintf } from 'sprintf-js'
 
 import { chinese } from './chinese'
-import { kuroshiro } from './japanese'
+import { japanese } from './japanese'
 import { transliterate as arabic } from './arabic'
 import { transliterate } from 'transliteration/dist/node/src/node/index'
 import { ukranian, mongolian, russian } from './cyrillic'
@@ -52,23 +52,43 @@ class Template<K> extends String {} // eslint-disable-line @typescript-eslint/no
 
 export type TransliterateMode =
     'minimal'
-  | 'de'
   | 'german'
-  | 'ja'
   | 'japanese'
-  | 'zh'
   | 'chinese'
-  | 'chinese-traditional'
-  | 'tw'
-  | 'zh-hant'
-  | 'ar'
   | 'arabic'
-  | 'uk'
   | 'ukranian'
-  | 'mn'
   | 'mongolian'
-  | 'ru'
   | 'russian'
+
+export type TransliterateModeAlias = TransliterateMode | 'de' | 'ja' | 'chinese-traditional' | 'zh-hant' | 'zh' | 'tw' | 'ar' | 'uk' | 'mn' | 'ru'
+
+const unaliasTransliterateMode: Record<TransliterateModeAlias, TransliterateMode> = {
+  minimal: 'minimal',
+
+  german: 'german',
+  de: 'german',
+
+  japanese: 'japanese',
+  ja: 'japanese',
+
+  chinese: 'chinese',
+  'chinese-traditional': 'chinese',
+  'zh-hant': 'chinese',
+  zh: 'chinese',
+  tw: 'chinese',
+
+  arabic: 'arabic',
+  ar: 'arabic',
+
+  ukranian: 'ukranian',
+  uk: 'ukranian',
+
+  mongolian: 'mongolian',
+  mn: 'mongolian',
+
+  russian: 'russian',
+  ru: 'russian',
+}
 
 function skip() {
   throw { next: true } // eslint-disable-line @typescript-eslint/only-throw-error
@@ -226,7 +246,7 @@ class Item {
   public key: string
   public id: number
   public libraryID: number
-  public transliterateMode: 'german' | 'japanese' | 'chinese' | 'chinese-traditional' | 'arabic' | 'ukranian' | 'mongolian' | 'russian' | ''
+  public transliterateMode: TransliterateMode | ''
   public getField: (name: string) => number | string
   public extra: string
   public extraFields: Extra.Fields
@@ -257,43 +277,8 @@ class Item {
     this.title = item.getField('title', false, true)
 
     this.language = babelLanguage((this.getField('language') as string) || '')
-    switch (this.babelTag()) {
-      case 'de':
-        this.transliterateMode = 'german'
-        break
-
-      case 'ja':
-        this.transliterateMode = 'japanese'
-        break
-
-      case 'zh':
-        this.transliterateMode = 'chinese'
-        break
-
-      case 'zh-hant':
-        this.transliterateMode = 'chinese-traditional'
-        break
-
-      case 'ar':
-        this.transliterateMode = 'arabic'
-        break
-
-      case 'uk':
-        this.transliterateMode = 'ukranian'
-        break
-
-      case 'mn':
-        this.transliterateMode = 'mongolian'
-        break
-
-      case 'ru':
-        this.transliterateMode = 'russian'
-        break
-
-      default:
-        this.transliterateMode = ''
-        break
-    }
+    const babelTag = this.babelTag() as TransliterateMode
+    this.transliterateMode = unaliasTransliterateMode[babelTag] || babelTag
 
     const extraFields = Extra.get(this.getField('extra') as string, 'zotero', { kv: true, tex: true })
     this.extra = extraFields.extra
@@ -373,7 +358,6 @@ export class PatternFormatter {
   private skipWords: Set<string>
 
   private creatorNames: { template: Template<'creator'>; transliterate: boolean } = { template: '%(f)s', transliterate: false }
-  private transliterateMode: TransliterateMode | '' = ''
 
   constructor() {
     Events.on('preference-changed', pref => {
@@ -1355,14 +1339,14 @@ export class PatternFormatter {
     * @param mode for backwards compatibility, this param will be accepted, but it is a no-op since the switch to jieba-rs. It will be removed eventually.
     */
   public _jieba(input: string, mode?: string): string { // eslint-disable-line @typescript-eslint/no-unused-vars
-    if (!chinese.loaded) return input
+    if (!chinese.enabled) return input
     return chinese.jieba(input).join(' ').trim()
   }
 
   /** word segmentation for Japanese items. Uses substantial memory; must be enabled under Preferences -> Better BibTeX -> Advanced -> Citekeys */
   public _kuromoji(input: string): string {
-    if (!Preference.kuroshiro || !kuroshiro.enabled) return input
-    return kuroshiro.tokenize(input || '').join(' ').trim()
+    if (!japanese.enabled) return input
+    return japanese.tokenize(input || '').join(' ').trim()
   }
 
   /** transliterates the citation key and removes unsafe characters */
@@ -1372,34 +1356,33 @@ export class PatternFormatter {
 
   /** transliterates the citation key to pinyin */
   public _pinyin(input: string): string {
-    return chinese.loaded?.pinyin(input) || input
+    return chinese.enabled?.pinyin(input) || input
   }
 
   /**
    * Set the default transliteration mode. If you don't specify a mode, the mode for an entry is derived from the item language field
    * @param mode specialized translateration modes for german, japanese or chinese.
    */
-  public $transliterate(mode: TransliterateMode): string {
-    this.transliterateMode = mode
+  public $transliterate(mode: TransliterateModeAlias): string {
+    this.item.transliterateMode = (unaliasTransliterateMode[mode] || mode) as TransliterateMode
     return ''
   }
   /**
    * transliterates the citation key. If you don't specify a mode, the mode is derived from the item language field
    * @param mode specialized translateration modes for german, japanese or chinese.
    */
-  public _transliterate(input: string, mode?: TransliterateMode): string {
-    return this.transliterate(input, mode)
+  public _transliterate(input: string, mode?: TransliterateModeAlias): string {
+    return this.transliterate(input, (unaliasTransliterateMode[mode] || mode) as TransliterateMode)
   }
 
   private transliterate(str: string, mode?: TransliterateMode): string {
-    mode = mode || this.transliterateMode || this.item.transliterateMode || 'minimal'
+    mode = mode || this.item.transliterateMode || 'minimal'
 
     let replace: Record<string, string> = {}
     switch (mode) {
       case 'minimal':
         break
 
-      case 'de':
       case 'german':
         replace = {
           ä: 'ae',
@@ -1411,35 +1394,26 @@ export class PatternFormatter {
         }
         break
 
-      case 'tw':
-      case 'zh-hant':
-      case 'zh':
-      case 'chinese-traditional':
       case 'chinese':
-        str = chinese.loaded?.pinyin(str) || str
+        str = chinese.enabled?.pinyin(str) || str
         break
 
-      case 'ja':
       case 'japanese':
-        if (Preference.kuroshiro && kuroshiro.enabled) str = kuroshiro.convert(str, { to: 'romaji' })
+        if (japanese.enabled) str = japanese.convert(str, { to: 'romaji' })
         break
 
-      case 'ar':
       case 'arabic':
         str = arabic(str)
         break
 
-      case 'uk':
       case 'ukranian':
         str = ukranian(str)
         break
 
-      case 'mn':
       case 'mongolian':
         str = mongolian(str)
         break
 
-      case 'ru':
       case 'russian':
         str = russian(str)
         break
@@ -1489,15 +1463,15 @@ export class PatternFormatter {
       .filter(word => word && !(options.skipWords && ucs2decode(word).length === 1 && !word.match(/^\d+$/) && !word.match(CJK)))
 
     // apply jieba.cut and flatten.
-    if (chinese.loaded && options.skipWords && this.item.transliterateMode.startsWith('chinese')) {
+    if (chinese.enabled && options.skipWords && this.item.transliterateMode === 'chinese') {
       words = [].concat(...words.map((word: string) => chinese.jieba(word)))
       // remove CJK skipwords
       words = words.filter((word: string) => !this.skipWords.has(word.toLowerCase()))
     }
 
-    if (Preference.kuroshiro && kuroshiro.enabled && options.skipWords && this.item.transliterateMode === 'japanese') {
+    if (japanese.enabled && options.skipWords && this.item.transliterateMode === 'japanese') {
       words = words
-        .flatMap((word: string) => kuroshiro.tokenize(word))
+        .flatMap((word: string) => japanese.tokenize(word))
         .filter((word: string) => !this.skipWords.has(word.toLowerCase()))
     }
 
@@ -1506,10 +1480,10 @@ export class PatternFormatter {
         if (this.item.transliterateMode) {
           return this.transliterate(word)
         }
-        else if (Preference.kuroshiro && kuroshiro.enabled) {
-          return this.transliterate(kuroshiro.convert(word, { to: 'romaji' }), 'minimal')
+        else if (japanese.enabled) {
+          return this.transliterate(japanese.convert(word, { to: 'romaji' }), 'minimal')
         }
-        else if (chinese.loaded) {
+        else if (chinese.enabled) {
           return this.transliterate(chinese.pinyin(word), 'minimal')
         }
         else {
@@ -1568,14 +1542,16 @@ export class PatternFormatter {
       I: this.initials(creator),
       i: this.initials(creator, false),
     }
-    if (template.includes('_zh') && chinese.loaded) {
-      const zh = chinese.splitName(name)
-      Object.assign(vars, {
-        f_zh: zh.isName ? zh.familyName[this.creatorNames.transliterate ? 'transliteration' : 'name'] : vars.f,
-        g_zh: zh.isName ? zh.givenName[this.creatorNames.transliterate ? 'transliteration' : 'name'] : vars.g,
-      })
+    let isNameSplit = false
+    if (creator.name && Preference.chineseSplitName && chinese.enabled && !(japanese.enabled && this.item.transliterateMode === 'japanese')) {
+      const zh = chinese.splitName(creator.name)
+      if (zh.isName) {
+        isNameSplit = true
+        vars.f = zh.familyName[this.creatorNames.transliterate ? 'transliteration' : 'name']
+        vars.g = zh.givenName[this.creatorNames.transliterate ? 'transliteration' : 'name']
+      }
     }
-    else if (this.creatorNames.transliterate) {
+    if (this.creatorNames.transliterate && !isNameSplit) {
       vars.f = this.transliterate(vars.f)
       vars.g = this.transliterate(vars.g)
     }
