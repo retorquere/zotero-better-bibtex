@@ -1570,7 +1570,7 @@ export class PatternFormatter {
     }
     let isNameSplit = false
     if (chinese.enabled && vars.g === '' && Preference.splitName
-      && (!japanese.enabled || this.item.transliterateMode !== 'japanese')) {
+      && !(japanese.enabled && this.item.transliterateMode === 'japanese')) {
       const zh = chinese.splitName(name)
       if (zh.isName) {
         isNameSplit = true
