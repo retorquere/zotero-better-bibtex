@@ -1569,8 +1569,8 @@ export class PatternFormatter {
       i: this.initials(creator, false),
     }
     let isNameSplit = false
-    if (chinese.enabled && vars.g === '' && Preference.splitName && 
-      (!japanese.enabled || this.item.transliterateMode !== 'japanese')) {
+    if (chinese.enabled && vars.g === '' && Preference.splitName
+      && (!japanese.enabled || this.item.transliterateMode !== 'japanese')) {
       const zh = chinese.splitName(name)
       isNameSplit = zh.isName
       Object.assign(vars, {
