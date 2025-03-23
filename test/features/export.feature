@@ -732,7 +732,7 @@ Feature: Export
     And I set preference .citekeyFormat to "authorsn(n=3,creator=\"*\",initials=false,sep=\" \").fold + shortyear"
     And I set preference .itemObserverDelay to 100
     And I set preference .keyConflictPolicy to "change"
-    And I set preference .kuroshiro to true
+    And I set preference .japanese to true
     And I set preference .skipFields to "abstract, copyright, googlebooks, "
     # And I select the library named "CCNLab"
     And I set export option exportNotes to true
