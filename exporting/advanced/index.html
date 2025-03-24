@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="height=device-height, width=device-width, initial-scale=1.0, minimum-scale=1.0">
     <meta name="generator" content="Hugo 0.145.0">
-    <meta name="generator" content="Relearn 7.5.0+14ad8e5292e49a22804d346fa4923ca5e9f3aed8">
+    <meta name="generator" content="Relearn 7.5.0+4b844a8acc63f1cae8435a1be6a2ffb9c3886482">
     <meta name="description" content="You are a hardcore LaTeX user If you’d really just rather hand-code your LaTeX constructs, BBT makes that possible:
 You can add literal LaTeX anywhere in your item by surrounding it with &lt;script&gt;...&lt;/script&gt; (&lt;pre&gt;...&lt;/pre&gt; will also work for historical reasons) markers. BBT will convert to/from unicode and (un)escape where required but will pass whatever is enclosed in the pre tags unchanged. An entry tagged with #LaTeX (case-sensitive!) will have all fields exported as if they’re wrapped in &lt;script&gt;...&lt;/script&gt;, so you can include LaTeX markup in your items. Recognizing initials in names In names, you can force first names like Philippe to be exported to {\relax Ph}ilippe (which causes it to get initial Ph. rather than P. in styles that do initials) capitalizing the letters you want to have used as the initials, so PHilippe.">
     <meta name="author" content="">
@@ -51,12 +51,16 @@ You can add literal LaTeX anywhere in your item by surrounding it with &lt;scrip
       window.relearn.disableAnchorScrolling=false;
       window.relearn.disableInlineCopyToClipboard=true;
       window.relearn.enableBlockCodeWrap=true;
+      // legal
+      window.relearn.getItem = (s,n) => {return s.getItem(n)};
+      window.relearn.setItem = (s,n,v) => {return s.setItem(n,v)};
+      window.relearn.removeItem = (s,n) => {return s.removeItem(n)};
       // variant stuff
       window.relearn.themevariants = [ 'green' ];
       window.relearn.customvariantname = "my-custom-variant";
       window.relearn.changeVariant = function(variant) {
         var oldVariant = document.documentElement.dataset.rThemeVariant;
-        window.localStorage.setItem(window.relearn.absBaseUri + "/variant", variant);
+        window.relearn.setItem(window.localStorage, window.relearn.absBaseUri + "/variant", variant);
         document.documentElement.dataset.rThemeVariant = variant;
         if (oldVariant != variant) {
           document.dispatchEvent( new CustomEvent('themeVariantLoaded', { detail: { variant, oldVariant } }) );
@@ -64,15 +68,15 @@ You can add literal LaTeX anywhere in your item by surrounding it with &lt;scrip
         }
       }
       window.relearn.markVariant = function() {
-        var variant = window.localStorage.getItem(window.relearn.absBaseUri + "/variant");
+        var variant = window.relearn.getItem(window.localStorage, window.relearn.absBaseUri + "/variant");
         document.querySelectorAll(".R-variantswitcher select").forEach((select) => {select.value = variant;});
       }
       window.relearn.initVariant = function() {
-        var variant = window.localStorage.getItem(window.relearn.absBaseUri + "/variant") ?? "";
+        var variant = window.relearn.getItem(window.localStorage, window.relearn.absBaseUri + "/variant") ?? "";
         if( variant == window.relearn.customvariantname ){
         }else if( !variant || !window.relearn.themevariants.includes(variant) ){
           variant = window.relearn.themevariants[0];
-          window.localStorage.setItem(window.relearn.absBaseUri + "/variant", variant);
+          window.relearn.setItem(window.localStorage, window.relearn.absBaseUri + "/variant", variant);
         }
         document.documentElement.dataset.rThemeVariant = variant;
       }
