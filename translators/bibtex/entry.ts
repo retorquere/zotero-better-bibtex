@@ -1072,7 +1072,7 @@ export class Entry {
     if (!list.length) return null
     return list
       .map(elt => typeof elt === 'string' ? elt : `${ elt }`)
-      .map(elt => this.enc_literal({ ...f, value: elt.match(/(^| )and( |$)/) ? new String(elt) : elt }), options)
+      .map(elt => this.enc_literal({ ...f, value: elt.match(/(^| )and( |$)/) ? new String(elt) : elt }, options))
       .join(' and ')
   }
 

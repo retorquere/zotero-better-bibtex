@@ -13,6 +13,7 @@ Feature: Export
 
     Examples:
       | file                                                                                                                     | references |
+      | Wrong performance for exports Bibtex a becomes textbackslash a #3184                                                     | 1          |
       | Split CJK names #2624                                                                                                    | 35         |
       | Uncommented-out notes in the generated bib file #3176                                                                    | 1          |
       # | Unexpected output result with quotation marks in Title field #1573                                                       | 1          |
