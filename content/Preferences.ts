@@ -140,6 +140,8 @@ class AutoExportPane {
       selected = auto_exports.find(ae => ae.path === selected$path)
     }
 
+    if (!selected && !path) selected = auto_exports.sort((a, b) => b.updated - a.updated)[0]
+
     // list changed
     if (Array.from(menupopup.children).map(ae => (ae as unknown as XUL.MenuItem).value).join('\t') !== auto_exports.map(ae => ae.path).join('\t')) {
       menulist.querySelectorAll('menuitem').forEach(e => e.remove())
