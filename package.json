@@ -15,7 +15,7 @@
     "updateLink": "https://github.com/retorquere/zotero-better-bibtex/releases/download/v{version}/zotero-better-bibtex-{version}.xpi",
     "updateInfoURL": "https://github.com/retorquere/zotero-better-bibtex/releases/latest",
     "releaseURL": "https://github.com/retorquere/zotero-better-bibtex/releases/download/release/",
-    "minVersion": "7.*"
+    "minVersion": "7.0.15"
   },
   "scripts": {
     "mkp": "patch-package zotero-types",
