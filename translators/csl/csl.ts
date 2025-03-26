@@ -101,7 +101,7 @@ export abstract class CSLExporter {
 
       if (csl.type === 'broadcast' && csl.genre === 'television broadcast') delete csl.genre
 
-      const extraFields: ParsedExtraFields = JSON.parse(JSON.stringify(item.extraFields))
+      const extraFields: ParsedExtraFields = structuredClone(item.extraFields)
 
       // special case for #587... not pretty
       // checked separately because .type isn't actually a CSL var so wouldn't pass the ef.type test below
