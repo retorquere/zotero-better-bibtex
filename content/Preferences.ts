@@ -38,7 +38,7 @@ Events.on('preference-changed', (pref: string) => {
       Zotero.BetterBibTeX.PrefPane.checkPostscript()
       break
     case 'chinese':
-      $window?.document?.getElementById('chinese-splitname')?.setAttribute('disabled', Preference.chinese ? '' : 'true')
+      $window?.document?.getElementById('bbt-chinese-splitname')?.setAttribute('disabled', Preference.chinese ? '' : 'true')
       break
   }
 })
@@ -468,7 +468,7 @@ export class PrefPane {
         $window = null
       })
 
-      $window?.document?.getElementById('chinese-splitname')?.setAttribute('disabled', Preference.chinese ? '' : 'true')
+      $window?.document?.getElementById('bbt-chinese-splitname')?.setAttribute('disabled', Preference.chinese ? '' : 'true')
 
       await this.autoexport.load()
 
