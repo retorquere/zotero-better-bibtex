@@ -95,7 +95,7 @@ export class ErrorReport {
 
       wizard.advance();
 
-      (<HTMLInputElement> this.document.getElementById('better-bibtex-report-id')).value = `${ this.name() }/${running}`
+      (<HTMLInputElement> this.document.getElementById('better-bibtex-report-id')).value = `${this.name()}:${running}:${Zotero.version}`
       this.document.getElementById('better-bibtex-report-result').hidden = false
     }
     catch (err) {
