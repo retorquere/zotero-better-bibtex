@@ -699,7 +699,7 @@ export const AutoExport = new class $AutoExport {
 
   public status(path: string, status: 'running' | 'done') {
     const ae = blink.first(this.db, { where: { path }})
-    if (ae) blink.update(this.db, { ...ae, status })
+    if (ae) blink.update(this.db, { ...ae, status, updated: Date.now() })
   }
 
   public removeAll() {
