@@ -132,15 +132,29 @@ export class ErrorReport {
     if (index === 0) Zotero.Utilities.Internal.quit(true)
   }
 
-  private async latest(): Promise<string> {
+  private async latest(): Promise<{ bbt: string; zotero: string }> {
+    const latest = { bbt: '', zotero: '' }
+
     try {
-      const latest = JSON.parse((await Zotero.HTTP.request('GET', 'https://github.com/retorquere/zotero-better-bibtex/releases/download/release/updates.json', { noCache: true })).response)
-      return latest.addons['better-bibtex@iris-advies.com'].updates[0].version as string
+      latest.bbt = JSON.parse((await Zotero.HTTP.request('GET', 'https://github.com/retorquere/zotero-better-bibtex/releases/download/release/updates.json', { noCache: true })).response)
+        .addons['better-bibtex@iris-advies.com']
+        .updates[0]
+        .version as string
     }
     catch (err) {
-      log.error('errorreport.latest:', err)
-      return null
+      log.error('errorreport.latest.bbt:', err)
     }
+
+    try {
+      latest.zotero = JSON.parse((await Zotero.HTTP.request('GET', 'https://www.zotero.org/download/client/manifests/release/updates-linux-x86_64.json', { noCache: true })).response)
+        .map(v => v.version as string)
+        .sort((a, b) => Services.vc.compare(b, a))[0] as string
+    }
+    catch (err) {
+      log.error('errorreport.latest.zotero:', err)
+    }
+
+    return latest
   }
 
   public zip(): Uint8Array {
@@ -356,18 +370,25 @@ export class ErrorReport {
 
     await this.reload()
 
-    this.setValue('better-bibtex-report-current', l10n.localize('better-bibtex_error-report_better-bibtex_current', { version: running }))
-
     try {
       const latest = await this.latest()
 
-      const show_latest = <HTMLInputElement> this.document.getElementById('better-bibtex-report-latest')
-      if (running === latest) {
-        show_latest.hidden = true
+      if (running.split('.').length > 3 || running === latest.bbt) {
+        this.setValue('better-bibtex-report-current-bbt', '')
+        this.setValue('better-bibtex-report-latest-bbt', '')
       }
       else {
-        show_latest.value = l10n.localize('better-bibtex_error-report_better-bibtex_latest', { version: latest || '<could not be established>' })
-        show_latest.hidden = false
+        this.setValue('better-bibtex-report-current-bbt', l10n.localize('better-bibtex_error-report_better-bibtex_current', { version: running }))
+        this.setValue('better-bibtex-report-latest-bbt', l10n.localize('better-bibtex_error-report_better-bibtex_latest', { version: latest.bbt || '<could not be established>' }))
+      }
+
+      if (Zotero.version === latest.zotero) {
+        this.setValue('better-bibtex-report-current-zotero', '')
+        this.setValue('better-bibtex-report-latest-zotero', '')
+      }
+      else {
+        this.setValue('better-bibtex-report-current-zotero', l10n.localize('better-bibtex_error-report_better-bibtex_current_zotero', { version: Zotero.version }))
+        this.setValue('better-bibtex-report-latest-zotero', l10n.localize('better-bibtex_error-report_better-bibtex_latest_zotero', { version: latest.zotero || '<could not be established>' }))
       }
 
       // @ts-expect-error zotero-types does not export .any
