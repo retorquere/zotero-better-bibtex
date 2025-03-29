@@ -24,6 +24,14 @@ body:
 
         If you are sure your question does not relate to items in your library at all, just select any one item in your library.
   - type: input
+    id: zotero
+    attributes:
+      label: Zotero version
+      description: Please make sure you are on the latest Zotero version.
+      placeholder: 7.0.15
+    validations:
+      required: true
+  - type: input
     id: debug-log
     attributes:
       label: Debug log ID
