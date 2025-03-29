@@ -17,9 +17,9 @@ better-bibtex_error-report =
 
 better-bibtex_error-report_better-bibtex_cache = Cache size: { $entries } entries.
 better-bibtex_error-report_better-bibtex_current = You are running Better BibTeX version { $version }
-better-bibtex_error-report_better-bibtex_latest = The latest Better BibTeX version is { $version }
+better-bibtex_error-report_better-bibtex_latest = The latest Better BibTeX version is { $version } -- please upgrade.
 better-bibtex_error-report_better-bibtex_current_zotero = You are running Zotero version { $version }
-better-bibtex_error-report_better-bibtex_latest_zotero = The latest Zotero version is { $version }
+better-bibtex_error-report_better-bibtex_latest_zotero = The latest Zotero version is { $version } -- please upgrade.
 better-bibtex_error-report_context = 
   .label = Application context
 
