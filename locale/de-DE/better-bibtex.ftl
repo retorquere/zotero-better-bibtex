@@ -1,12 +1,12 @@
--citation-key = Citation key
+-citation-key = Zitierschlüssel
 better-bibtex_auto-export_delete = Auto-Export wird gelöscht
 better-bibtex_auto-export_delete_confirm = Möchtest du den Auto-Export wirklich löschen? Dies kann nicht rückgängig gemacht werden.
 better-bibtex_aux-scan_prompt = Name der Markierung
 better-bibtex_aux-scan_title_aux = Markiere zitierte Einträge aus AUX-Datei
 better-bibtex_aux-scan_title_md = Markiere zitierte Einträge aus Markdown-Datei
 better-bibtex_aux-scanner = BibTeX-AUX-/Markdown-Datei nach Verweisen durchsuchen...
-better-bibtex_bulk-keys-confirm_warning = You are changing more than { $treshold } items in one go. Are you sure?
-better-bibtex_bulk-keys-confirm_stop_asking = OK, and don't ask me again
+better-bibtex_bulk-keys-confirm_warning = Sie ändern mehr als {$treshold} Einträge auf einmal. Sind sie sicher?
+better-bibtex_bulk-keys-confirm_stop_asking = OK, und nicht mehr fragen
 better-bibtex_citekey_pin = BibTeX-Key anheften
 better-bibtex_citekey_set = BibTeX-Key ändern...
 better-bibtex_citekey_set_change = Ändere BibTeX-Key zu
@@ -15,7 +15,9 @@ better-bibtex_error-report =
     .title = Better BibTeX Debug-Log
 better-bibtex_error-report_better-bibtex_cache = Cache-Größe: { $entries } Einträge.
 better-bibtex_error-report_better-bibtex_current = Sie verwenden Better BibTeX in Version { $version }
-better-bibtex_error-report_better-bibtex_latest = Die neueste Better BibTeX-Version ist { $version }
+better-bibtex_error-report_better-bibtex_latest = The latest Better BibTeX version is { $version } -- please upgrade.
+better-bibtex_error-report_better-bibtex_current_zotero = Sie verwenden Zotero Version { $version }
+better-bibtex_error-report_better-bibtex_latest_zotero = The latest Zotero version is { $version } -- please upgrade.
 better-bibtex_error-report_context = 
     .label = Anwendungskontext
 better-bibtex_error-report_debug = 
@@ -24,13 +26,13 @@ better-bibtex_error-report_enable-debug = Das Zotero Debug-Logging ist derzeit d
 better-bibtex_error-report_errors = 
     .label = Fehler
 better-bibtex_error-report_include-errors = 
-    .label = Include error messages
+    .label = Fehlermeldungen einbeziehen
 better-bibtex_error-report_include-log = 
-    .label = Include debug log
+    .label = Debug-Log einbeziehen
 better-bibtex_error-report_include-items = 
     .label = Include item
 better-bibtex_error-report_include-notes = 
-    .label = notes
+    .label = Notizen
 better-bibtex_error-report_include-cache = 
     .label = cache
 better-bibtex_error-report_include-attachments = 
@@ -43,11 +45,11 @@ better-bibtex_error-report_report-id = Debug-Log-ID:
 better-bibtex_error-report_restart-with-logging-enabled = 
     .label = Mit aktiviertem Logging neustarten…
 better-bibtex_error-report_review =
-    The data below is about to submitted to Better BibTeX for debugging. You can preview the data here, or save a copy of the log to get the precise data about to be sent, to see whether there's sensitive information that you do not wish to send. Please think carefully about whether unchecking options below is necessary for your environment. We will generally need more communication (= time) if you remove parts of the log this way.
+    Die unten aufgeführten Daten werden zur Fehlersuche an Better BibTeX übermittelt. Sie können hier eine Vorschau der Daten speichern oder eine Kopie des Log speichern, um die genauen Daten zu erhalten, die gesendet werden sollen, zu sehen, ob es sensible Informationen gibt, die Sie nicht senden möchten. Bitte denken Sie sorgfältig darüber nach, ob das Abwählen von Optionen für Ihre Umgebung notwendig ist. Wir werden in der Regel mehr Kommunikation (= Zeit) benötigen, wenn Sie Teile des Logins auf diese Weise entfernen.
     
-    If you are OK with sending this data, please proceed to the next screen where you will be presented a red debug ID, and post this ID on the issue tracker at
+    Wenn Sie diese Daten senden möchten, gehen Sie bitte zum nächsten Bildschirm, auf dem Sie eine rote Debug-ID angezeigt werden, und posten Sie diese ID auf dem Issue-Tracker auf
     
-    https://github.com/retorquere/zotero-better-bibtex/issue
+    https://github. om/retorquere/zotero-better-bibtex/issue
 better-bibtex_error-report_save = 
     .label = Save copy of log for inspection
 better-bibtex_error-report_submission-in-progress = Bitte warten Sie, während der Debug-Log übermittelt wird.
