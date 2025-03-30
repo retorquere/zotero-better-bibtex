@@ -1,12 +1,5 @@
 /* eslint-disable prefer-rest-params */
 
-// import flatMap from 'array.prototype.flatmap'
-// flatMap.shim()
-// import matchAll from 'string.prototype.matchall'
-// matchAll.shim()
-// import allSettled = require('promise.allsettled')
-// allSettled.shim()
-
 import type Bluebird from 'bluebird'
 const Ready = Zotero.Promise.defer()
 
@@ -21,6 +14,7 @@ const Menu = new MenuManager
 import { DebugLog } from 'zotero-plugin/debug-log'
 DebugLog.register('Better BibTeX', ['extensions.zotero.translators.better-bibtex.'])
 
+import { isBeta } from './client'
 import { TeXstudio } from './tex-studio'
 import { icons } from './icons'
 import { prompt } from './prompt'
@@ -408,6 +402,11 @@ export class BetterBibTeX {
   public clientName = Zotero.clientName
   public clientVersion = Zotero.version
 
+  public latest = {
+    zotero: '',
+    bbt: '',
+  }
+
   public uninstalled = false
   public Orchestrator = orchestrator
   public Cache = {
@@ -536,11 +535,48 @@ export class BetterBibTeX {
     label.setAttribute('value', `better bibtex: ${ msg }`)
   }
 
+  private async getLatest(): Promise<void> {
+    const bbt = async () => {
+      try {
+        this.latest.bbt = JSON.parse((await Zotero.HTTP.request('GET', 'https://github.com/retorquere/zotero-better-bibtex/releases/download/release/updates.json', { noCache: true })).response)
+          .addons['better-bibtex@iris-advies.com']
+          .updates[0]
+          .version as string
+      }
+      catch (err) {
+        log.error('latest.bbt:', err)
+      }
+    }
+
+    const zotero = async () => {
+      try {
+        if (isBeta) {
+          const response = await Zotero.HTTP.request('HEAD', 'https://www.zotero.org/download/standalone/dl?platform=linux-x86_64&channel=beta', { followRedirects: false, noCache: true })
+          log.info('beta latest:', response)
+          if (response.status >= 300 && response.status < 400) {
+            this.latest.zotero = decodeURIComponent(response.getResponseHeader('Location').replace(/.*\/client\/beta\/([^/]+).*/, '$1'))
+          }
+        }
+        else {
+          this.latest.zotero = JSON.parse((await Zotero.HTTP.request('GET', 'https://www.zotero.org/download/client/manifests/release/updates-linux-x86_64.json', { noCache: true })).response)
+            .map(v => v.version as string)
+            .sort((a, b) => Services.vc.compare(b, a))[0] as string
+        }
+      }
+      catch (err) {
+        log.error('errorreport.latest.zotero:', err)
+      }
+    }
+    await Promise.all([bbt(), zotero()])
+  }
+
   public async startup(reason: Reason): Promise<void> {
     orchestrator.add({
       id: 'start',
       description: 'waiting for zotero',
       startup: async () => {
+        void this.getLatest()
+
         // https://groups.google.com/d/msg/zotero-dev/QYNGxqTSpaQ/uvGObVNlCgAJ
         // this is what really takes long
         await Zotero.initializationPromise
