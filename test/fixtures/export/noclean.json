@@ -8,7 +8,7 @@
     "preferences": {
       "citekeyFormat": "auth.lower+year",
       "citekeyFold": false,
-      "kuroshiro": true
+      "japanese": true
     }
   },
   "items": [

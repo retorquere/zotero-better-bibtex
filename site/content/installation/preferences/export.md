@@ -154,6 +154,7 @@ Options:
 * GitBook
 * org-ref citation
 * org-ref v3 citation
+* Org-mode citation link
 * Org-mode select link
 * Pandoc citation
 * Roam Cite Key

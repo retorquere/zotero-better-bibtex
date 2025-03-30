@@ -12,14 +12,14 @@
       "baseAttachmentPath": "/Users/daniel/Documents/Text Repository/ZotFile",
       "citekeyFold": false,
       "citekeyFormat": "authors(1,etal='.etal',sep='.').clean.lower.replace(find=\"-\",replace=\"\")+year+infix('-%(a)s')+ShortTitle.skipwords.capitalize.len('>', 1).select(1,2).clean.replace(find=\"-\",replace=\"\").replace(find=\".\",replace=\"\").condense('').substring(1,4).prefix(_)",
-      "kuroshiro": true,
       "postscript": "if (Translator.BetterTeX) {\n  let cache = true\n  // This adds bdsk-file-x fields for BibDesk\n  if (!Translator.options.exportFileData && item.attachments && item.attachments.length) {\n    item.attachments.forEach((att, i) => {\n      entry.add({ name: `bdsk-file-${i + 1}`, value: (att.saveFile ? att.defaultPath : '') || att.localPath, enc: 'verbatim' })\n    })\n    // This uses relative paths instead of absolute\n    for (const att of item.attachments) {\n      if (att.localPath) {\n        att.localPath = att.localPath.replace(RegExp(\"^\\/.*?\\/.*?\\/\"), \"~/\")\n      }\n    }\n    entry.add({ name: 'file', value: item.attachments, enc: 'attachments' })\n    cache = false\n  }\n  // No need to test for the value, BBT does nothing if the value is empty\n  entry.add({ name: 'chapter', value: extra.kv.session});\n  entry.add({ name: 'journalAbbreviation', value: extra.kv.journalAbbreviation});\n\n  // https://github.com/retorquere/zotero-better-bibtex/issues/2220#issuecomment-1192425830\n  function split(title) {\n    const m = (title || '').match(/(.+?)([?]\"|:\" |[?:;])(.*)/)\n    return m ? { title: m[1] + m[2].replace(/[:]/, \"\").trim(), sub: m[3].trim() } : null\n  }\n  let title\n\n  if (title = split(reference.has.booktitle && reference.has.booktitle.value)) {\n    reference.add({ name: 'booktitle', value: title.title })\n    reference.add({ name: 'booksubtitle', value: title.sub })\n  }\n\n  // Authors who use parentesis in their titles break all sorts of conventions. Don't even bother seriously parsing.\n  if ((title = split(reference.has.title && reference.has.title.value)) && !title.title.match(/\\((?!.*\\))/)) {\n    reference.add({ name: 'title', value: title.title })\n    reference.add({ name: 'subtitle', value: title.sub })\n  }\n  \n  return { cache }\n}",
       "quickCopyMode": "pandoc",
       "quickCopyOrgMode": "citationkey",
       "quickCopySelectLink": "citationkey",
       "skipFields": "abstract",
       "skipWords": "a,ab,aboard,about,above,across,after,against,al,along,amid,among,an,and,anti,around,as,at,before,behind,below,beneath,beside,besides,between,beyond,but,by,d,da,das,de,del,dell,dello,dei,degli,della,dell,delle,dem,den,der,des,despite,die,do,down,du,during,ein,eine,einem,einen,einer,eines,el,en,et,except,for,from,gli,i,il,in,inside,into,is,l,la,las,le,les,like,lo,los,near,nor,of,off,on,onto,or,over,past,per,plus,round,save,since,so,some,sur,than,the,through,to,toward,towards,un,una,unas,under,underneath,une,unlike,uno,unos,until,up,upon,versus,via,von,vs,when,while,with,within,without,yet,zu,zum",
-      "verbatimFields": "url,doi,file,eprint,verba,verbb,verbc,groups"
+      "verbatimFields": "url,doi,file,eprint,verba,verbb,verbc,groups",
+      "japanese": true
     }
   },
   "items": [

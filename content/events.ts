@@ -82,7 +82,6 @@ export const Events = new Emitter({
     logger: (type, debugName, eventName, eventData) => {
       try {
         if (typeof eventName === 'symbol') return
-        log.debug('emit:', debugName, type, eventName, eventData)
       }
       catch (err) {
         log.error(`emit: ${err}`)
@@ -169,6 +168,13 @@ abstract class ZoteroListener {
   }
 }
 
+/*
+function types(items) {
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+  return items.reduce((acc, item) => ({...acc, [item.id]: Zotero.ItemTypes.getName(item.itemTypeID) }), {})
+}
+*/
+
 class ItemListener extends ZoteroListener {
   constructor() {
     super('item')
@@ -195,37 +201,44 @@ class ItemListener extends ZoteroListener {
       // https://groups.google.com/forum/#!topic/zotero-dev/yGP4uJQCrMc
       await Zotero.Promise.delay(Events.itemObserverDelay)
 
-      const touched: Record<string, Set<number>> = { collections: new Set, libraries: new Set }
+      const touched = {
+        collections: new Set<number>,
+        libraries: new Set<number>,
+      }
+
       if (action === 'delete' && extraData) {
         for (const ed of Object.values(extraData)) {
           if (typeof ed.libraryID === 'number') touched.libraries.add(ed.libraryID)
         }
       }
+
       const touch = item => {
         touched.libraries.add(typeof item.libraryID === 'number' ? item.libraryID : Zotero.Libraries.userLibraryID)
 
         for (let collectionID of item.getCollections()) {
-          if (touched.collections.has(collectionID)) continue
-
-          while (collectionID) {
+          while (collectionID && !touched.collections.has(collectionID)) {
             touched.collections.add(collectionID)
             collectionID = Zotero.Collections.get(collectionID).parentID
           }
         }
       }
-      const parentIDs: number[] = []
+
+      const parentIDs: Set<number> = new Set
       // safe to use Zotero.Items.get(...) rather than Zotero.Items.getAsync here
       // https://groups.google.com/forum/#!topic/zotero-dev/99wkhAk-jm0
 
       const items = Zotero.Items.get(ids).filter(item => {
         if (item.deleted) touch(item) // because trashing an item *does not* trigger collection-item?!?!
+
         if (action === 'delete') return false
         // check .deleted for #2401/#2676 -- we're getting *modify* (?!) notifications for trashed items which reinstates them into the BBT DB
         if (action === 'modify' && item.deleted) return false
         if (item.isFeedItem) return false
 
+        touch(item)
+
         if (item.isAttachment() || item.isNote() || item.isAnnotation?.()) { // should I keep top-level notes/attachments for BBT-JSON?
-          if (typeof item.parentID === 'number' && !ids.includes(item.parentID)) parentIDs.push(item.parentID)
+          if (typeof item.parentID === 'number' && !ids.includes(item.parentID)) parentIDs.add(item.parentID)
           return false
         }
 
@@ -234,15 +247,12 @@ class ItemListener extends ZoteroListener {
 
       await Events.itemsChanged(action, ids)
       if (items.length) await Events.emit('items-changed', { items, action })
-
-      let parents: Zotero.Item[] = []
-      if (parentIDs.length) {
-        parents = Zotero.Items.get(parentIDs)
+      if (parentIDs.size) {
+        const parents = Zotero.Items.get([...parentIDs])
+        for (const item of parents) {
+          touch(item)
+        }
         void Events.emit('items-changed', { items: parents, action: 'modify', reason: `parent-${ action }` })
-      }
-
-      for (const item of items.concat(parents)) {
-        touch(item)
       }
 
       Zotero.Promise.delay(Events.itemObserverDelay).then(() => {

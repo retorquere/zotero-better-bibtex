@@ -23,8 +23,10 @@ wizard#better-bibtex-error-report(
     button(label='&better-bibtex_error-report_restart-with-logging-enabled.label;' oncommand='window.ErrorReport.restartWithDebugEnabled()')/
   wizardpage(pageid='page-review' label=' ')
     tooltip#better-bibtex-error-report-info &better-bibtex_error-report_review;
-    textbox#better-bibtex-report-current.plain(flex='1' readonly='true')
-    textbox#better-bibtex-report-latest.plain.textbox-emph(flex='1' readonly='true')
+    textbox#better-bibtex-report-current-bbt.plain(hidden=true flex='1' readonly='true')
+    textbox#better-bibtex-report-latest-bbt.plain.textbox-emph(hidden=true flex='1' readonly='true')
+    textbox#better-bibtex-report-current-zotero.plain(hidden=true flex='1' readonly='true')
+    textbox#better-bibtex-report-latest-zotero.plain.textbox-emph(hidden=true flex='1' readonly='true')
     textbox#better-bibtex-report-cache.plain(flex='1' readonly='true')
     checkbox.better-bibtex-error-report-facet#better-bibtex-error-report-include-errors(label='&better-bibtex_error-report_include-errors.label;')/
     checkbox.better-bibtex-error-report-facet#better-bibtex-error-report-include-log(label='&better-bibtex_error-report_include-log.label;')/

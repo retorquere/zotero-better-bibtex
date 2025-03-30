@@ -8,12 +8,12 @@
     },
     "preferences": {
       "citekeyFormat": "auth(n=0,m=1,creator=\"*\",initials=false) + \"_\" + year + \"_\" + Title.ideographs.select(1,3)",
-      "kuroshiro": true,
       "importBibTeXStrings": false,
       "importCaseProtection": "off",
       "itemObserverDelay": 100,
       "postscript": "if (Translator.BetterTeX) {\n  // the bib(la)tex fields are ordered according to this array.\n  // If a field is not in this list, it will show up at after the ordered fields.\n  // https://github.com/retorquere/zotero-better-bibtex/issues/512\n\n  const order = ['author', 'date', 'title', 'publisher']\n  for (const field of order.concat(Object.keys(reference.has).filter(other => !order.includes(other)))) {\n    const value = reference.has[field]\n    if (value) {\n      delete reference.has[field]\n      reference.has[field] = value\n    }\n  }\n}",
-      "skipFields": "file, note"
+      "skipFields": "file, note",
+      "japanese": true
     }
   },
   "items": [
@@ -22,14 +22,14 @@
       "creators": [
         {
           "creatorType": "author",
-          "name": "李文辉"
+          "name": "\u674e\u6587\u8f89"
         }
       ],
       "date": "2014",
       "itemID": 1,
       "itemType": "thesis",
-      "publisher": "西安: 西安电子科技大学",
-      "title": "航拍视频中运动目标的检测与跟踪算法研究",
+      "publisher": "\u897f\u5b89: \u897f\u5b89\u7535\u5b50\u79d1\u6280\u5927\u5b66",
+      "title": "\u822a\u62cd\u89c6\u9891\u4e2d\u8fd0\u52a8\u76ee\u6807\u7684\u68c0\u6d4b\u4e0e\u8ddf\u8e2a\u7b97\u6cd5\u7814\u7a76",
       "type": "PhD Thesis"
     }
   ]

@@ -18,21 +18,22 @@
       "extraMergeCitekeys": true,
       "extraMergeTeX": true,
       "importCaseProtection": "off",
-      "jieba": true,
       "qualityReport": true,
       "quickCopyMode": "orgRef",
       "skipFields": "abstract, keywords",
       "verbatimFields": "url,doi,file,eprint,verba,verbb,verbc",
-      "warnBulkModify": 0
+      "warnBulkModify": 0,
+      "chinese": true,
+      "chineseSplitName": false
     }
   },
   "items": [
     {
-      "citationKey": "傅斯年性命古1985",
+      "citationKey": "\u5085\u65af\u5e74\u6027\u547d\u53e41985",
       "creators": [
         {
           "creatorType": "author",
-          "name": "傅斯年"
+          "name": "\u5085\u65af\u5e74"
         }
       ],
       "date": "1985",
@@ -40,9 +41,9 @@
       "itemType": "book",
       "libraryCatalog": "tulips.ntu.edu.tw Library Catalog",
       "numPages": "270",
-      "place": "台北",
-      "publisher": "新文豐",
-      "title": "性命古訓辨證"
+      "place": "\u53f0\u5317",
+      "publisher": "\u65b0\u6587\u8c50",
+      "title": "\u6027\u547d\u53e4\u8a13\u8fa8\u8b49"
     }
   ]
 }

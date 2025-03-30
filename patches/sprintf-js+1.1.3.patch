@@ -1,5 +1,7 @@
---- node_modules/sprintf-js/src/sprintf.js	2023-08-13 21:21:55
-+++ node_modules/sprintf-js/src/sprintf.js	2023-08-22 23:38:12
+diff --git a/node_modules/sprintf-js/src/sprintf.js b/node_modules/sprintf-js/src/sprintf.js
+index 65d6324..cc46bd6 100644
+--- a/node_modules/sprintf-js/src/sprintf.js
++++ b/node_modules/sprintf-js/src/sprintf.js
 @@ -30,6 +30,10 @@
          return sprintf.apply(null, [fmt].concat(argv || []))
      }
@@ -24,8 +26,7 @@
 +                    arg = optional(argv[ph.param_no])
                  }
                  else { // positional argument (implicit)
--                    arg = argv[cursor++]
-+                    arg = optional(argv[cursor++])
+                     arg = argv[cursor++]
                  }
  
                  if (re.not_type.test(ph.type) && re.not_primitive.test(ph.type) && arg instanceof Function) {
@@ -34,15 +35,7 @@
                  }
  
                  if (re.numeric_arg.test(ph.type) && (typeof arg !== 'number' && isNaN(arg))) {
-@@ -120,6 +124,7 @@
-                 }
-                 if (re.json.test(ph.type)) {
-                     output += arg
-+                    console.log('json', arg)
-                 }
-                 else {
-                     if (re.number.test(ph.type) && (!is_positive || ph.sign)) {
-@@ -132,7 +137,7 @@
+@@ -132,7 +136,7 @@
                      pad_character = ph.pad_char ? ph.pad_char === '0' ? '0' : ph.pad_char.charAt(1) : ' '
                      pad_length = ph.width - (sign + arg).length
                      pad = ph.width ? (pad_length > 0 ? pad_character.repeat(pad_length) : '') : ''
@@ -51,7 +44,7 @@
                  }
              }
          }
-@@ -211,6 +216,7 @@
+@@ -211,6 +215,7 @@
       */
      /* eslint-disable quote-props */
      if (typeof exports !== 'undefined') {

@@ -16,12 +16,24 @@ type Collection = {
   key: string
   replace?: boolean
 }
+
+const markdown = '*.md; *.txt; *.markdown; *.qmd; *.Rmd'
+const aux = '*.aux'
+
 export const AUXScanner = new class {
   private pandoc: string
-
+  private filters: Record<'pandoc' | 'aux', [string, string][]> = {
+    pandoc: [
+      [ `AUX file (${aux})`, aux ],
+      [ `Markdown (${markdown})`, markdown ],
+    ],
+    aux: [
+      [ `AUX file (${aux})`, aux ],
+    ],
+  }
   public async pick(): Promise<string> {
     if (typeof this.pandoc !== 'string') this.pandoc = await findBinary('pandoc')
-    const filters: [string, string][] = this.pandoc ? [[ 'AUX/Markdown', '*.aux; *.md; *.txt; *.markdown' ]] : [[ 'AUX file', '*.aux' ]]
+    const filters = this.pandoc ? this.filters.pandoc : this.filters.aux
     return (await new FilePickerHelper(Zotero.getString('fileInterface.import'), 'open', filters).open()) || ''
   }
 
@@ -92,17 +104,13 @@ export const AUXScanner = new class {
 
   private async parse(path: string, citekeys: string[], bibfiles: Record<string, string>): Promise<Source> {
     try {
-      switch (path.toLowerCase().split('.').pop()) {
-        case 'aux':
-          await this.parseAUX(path, citekeys, bibfiles)
-          return 'BibTeX AUX'
-
-        case 'md':
-          if (this.pandoc) {
-            await this.parseMD(path, citekeys)
-            return 'MarkDown'
-          }
-          break
+      if (path.match(/[.]aux$/i)) {
+        await this.parseAUX(path, citekeys, bibfiles)
+        return 'BibTeX AUX'
+      }
+      else if (this.pandoc && path.match(/[.]([Rq]?md|txt|markdown)$/)) {
+        await this.parseMD(path, citekeys)
+        return 'MarkDown'
       }
       throw new Error(`Unsupported file type for ${ path }`)
     }

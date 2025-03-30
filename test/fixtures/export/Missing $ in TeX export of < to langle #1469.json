@@ -8,7 +8,7 @@
     },
     "preferences": {
       "citekeyFormat": "auth(n=0,m=1,creator=\"*\",initials=false).fold + shorttitle + year",
-      "kuroshiro": true
+      "japanese": true
     }
   },
   "items": [
@@ -57,7 +57,7 @@
       "journalAbbreviation": "Nano Lett.",
       "pages": "876-882",
       "publicationTitle": "Nano Letters",
-      "title": "Catalyst Orientation-Induced Growth of Defect-Free Zinc-Blende Structured ⟨001̅⟩ InAs Nanowires",
+      "title": "Catalyst Orientation-Induced Growth of Defect-Free Zinc-Blende Structured \u27e8001\u0305\u27e9 InAs Nanowires",
       "volume": "15"
     }
   ]

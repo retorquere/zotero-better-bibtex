@@ -1,0 +1,45 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "preferences": {
+      "asciiBibTeX": false,
+      "autoExport": "off",
+      "automaticTags": false,
+      "baseAttachmentPath": "D:\\Program Files (portable)\\ZoteroPortable\\ZoteroLinkDest",
+      "biblatexExtendedNameFormat": false,
+      "biblatexExtractEprint": false,
+      "citekeyFormat": "authorsn(n=3,creator=\"*\",initials=false,sep=\" \").fold + \"_\" + year",
+      "exportBraceProtection": false,
+      "exportTitleCase": false,
+      "importBibTeXStrings": false,
+      "importCaseProtection": "off",
+      "importCitationKey": false,
+      "importJabRefAbbreviations": false,
+      "importSentenceCase": "off",
+      "keyConflictPolicy": "change",
+      "keyScope": "global",
+      "rawImports": true,
+      "rawLaTag": "*",
+      "skipFields": "file, abstract",
+      "verbatimFields": "url,doi,file,pdf,ids,eprint,/^verb[a-z]$/,groups,/^citeulike-linkout-[0-9]+$/, /^bdsk-url-[0-9]+$/, keywords, publisher",
+      "warnBulkModify": 2
+    }
+  },
+  "items": [
+    {
+      "citationKey": "a_b",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "FirstName",
+          "lastName": "{\\\"a}"
+        }
+      ],
+      "itemID": 1,
+      "itemType": "book",
+      "publisher": "Publisher with the wrong part: \\\"a",
+      "title": "Title with {L}atex parts - {${\\mathbf{R}}^n$}"
+    }
+  ]
+}

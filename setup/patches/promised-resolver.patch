@@ -1,9 +1,0 @@
---- node_modules/@idxdb/promised/dist/src/shared/request-resolver.js	2024-12-03 12:55:57
-+++ node_modules/@idxdb/promised/dist/src/shared/request-resolver.js	2024-12-03 13:57:42
-@@ -1,4 +1,5 @@
--export const requestResolver = (request) => new Promise((resolve, reject) => {
-+import { SynchronousPromise } from 'synchronous-promise';
-+export const requestResolver = (request) => new SynchronousPromise((resolve, reject) => {
-     const onsuccess = (event) => {
-         request.removeEventListener('success', onsuccess);
-         request.removeEventListener('error', onerror);

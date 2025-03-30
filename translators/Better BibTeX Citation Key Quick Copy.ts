@@ -82,6 +82,12 @@ const Mode = {
     Zotero.write(`cite:&${ items.map(item => item.citationKey).join(';&') }`)
   },
 
+  orgcite(items) {
+    if (!items.length) return ''
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+    Zotero.write(`[cite:@${items.map(item => item.citationKey).join('; @')}]`)
+  },
+
   orgmode(items) {
     switch (Zotero.getHiddenPref('better-bibtex.quickCopyOrgMode')) {
       case 'zotero':

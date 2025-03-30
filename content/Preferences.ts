@@ -37,6 +37,9 @@ Events.on('preference-changed', (pref: string) => {
     case 'postscript':
       Zotero.BetterBibTeX.PrefPane.checkPostscript()
       break
+    case 'chinese':
+      $window?.document?.getElementById('bbt-chinese-splitname')?.setAttribute('disabled', Preference.chinese ? '' : 'true')
+      break
   }
 })
 
@@ -136,6 +139,8 @@ class AutoExportPane {
       const selected$path = menulist.selectedItem.value
       selected = auto_exports.find(ae => ae.path === selected$path)
     }
+
+    if (!selected && !path) selected = auto_exports.sort((a, b) => b.updated - a.updated)[0]
 
     // list changed
     if (Array.from(menupopup.children).map(ae => (ae as unknown as XUL.MenuItem).value).join('\t') !== auto_exports.map(ae => ae.path).join('\t')) {
@@ -462,6 +467,8 @@ export class PrefPane {
         Zotero.BetterBibTeX.PrefPane.unload()
         $window = null
       })
+
+      $window?.document?.getElementById('bbt-chinese-splitname')?.setAttribute('disabled', Preference.chinese ? '' : 'true')
 
       await this.autoexport.load()
 

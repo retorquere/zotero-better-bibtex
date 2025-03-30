@@ -52,3 +52,6 @@ pandoc/docx
 pandoc/*.docx
 pandoc/*.odt
 pandoc/.snakemake
+mapping.gml
+cpu_usage.csv
+cache.json

@@ -416,8 +416,21 @@ export class NSItem {
    *
    * @param item_keys  A list of [libraryID]:[itemKey] strings. If [libraryID] is omitted, assume 'My Library'
    */
-  public async citationkey(item_keys: string[]): Promise<Record<string, string>> {
+  public async citationkey(item_keys: string[] | 'selected'): Promise<Record<string, string>> {
     const keys = {}
+
+    if (item_keys === 'selected') {
+      for (const item of Zotero.getActiveZoteroPane().getSelectedItems()) {
+        if (item.isFeedItem) continue
+        if (item.isRegularItem()) {
+          keys[item.key] = Zotero.BetterBibTeX.KeyManager.first({ where: { libraryID: item.libraryID, itemKey: item.key }})?.citationKey || null
+        }
+        else if (item.isAttachment() && typeof item.parentID === 'number') {
+          keys[item.key] = Zotero.BetterBibTeX.KeyManager.first({ where: { libraryID: item.libraryID, itemID: item.parentID }})?.citationKey || null
+        }
+      }
+      return keys
+    }
 
     let libraryIDstr: string
     let libraryID: number

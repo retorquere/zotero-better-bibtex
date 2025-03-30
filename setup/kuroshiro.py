@@ -22,3 +22,7 @@ for dic in sorted(glob.glob(os.path.join(root, 'node_modules/kuromoji/dict/*.gz'
   os.makedirs(os.path.dirname(dat), exist_ok=True)
   with gzip.open(dic, 'rb') as f_in, open(dat, 'wb') as f_out:
     shutil.copyfileobj(f_in, f_out)
+
+jieba = os.path.join(root, 'build/content/resource/jieba')
+os.makedirs(jieba, exist_ok=True)
+shutil.copyfile('node_modules/wasmjieba-web/wasmjieba-web_bg.wasm', 'build/content/resource/jieba/wasmjieba-web_bg.wasm')

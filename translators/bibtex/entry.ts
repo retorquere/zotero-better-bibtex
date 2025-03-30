@@ -235,7 +235,7 @@ export class Entry {
       this.english = BabelTag[this.language] === 'en'
     }
 
-    this.extraFields = JSON.parse(JSON.stringify(item.extraFields))
+    this.extraFields = structuredClone(item.extraFields)
 
     // should be const entrytype: string | { type: string, subtype?: string }
     // https://github.com/Microsoft/TypeScript/issues/10422
@@ -519,7 +519,7 @@ export class Entry {
           v_old = v_old.toLowerCase()
           v_new = v_new.toLowerCase()
         }
-        if (v_old !== v_new) this.quality_report.push(`duplicate "${ field.name }" ("${ this.has[field.name].value }") ignored`)
+        if (v_old !== v_new) this.quality_report.push(`duplicate "${ field.name }" ("${ this.has[field.name].value }") ignored`.replace(/\n/g, ' '))
       }
 
       delete this.has[field.name]
@@ -1072,7 +1072,7 @@ export class Entry {
     if (!list.length) return null
     return list
       .map(elt => typeof elt === 'string' ? elt : `${ elt }`)
-      .map(elt => this.enc_literal({ ...f, value: elt.match(/(^| )and( |$)/) ? new String(elt) : elt }), options)
+      .map(elt => this.enc_literal({ ...f, value: elt.match(/(^| )and( |$)/) ? new String(elt) : elt }, options))
       .join(' and ')
   }
 

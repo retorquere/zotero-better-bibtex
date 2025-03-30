@@ -8,9 +8,9 @@
     "preferences": {
       "autoExportDelay": 2,
       "citekeyFold": true,
-      "jieba": true,
       "citekeyFormat": "auth.fold(chinese).lower + year",
-      "warnBulkModify": 0
+      "warnBulkModify": 0,
+      "chinese": true
     }
   },
   "items": [

@@ -70,10 +70,9 @@ export const Translators = new class {
       needs: [ 'worker', 'keymanager' ],
       startup: async () => {
         worker.addEventListener('message', (e: MessageEvent) => {
-          const data = (e.data || []) as Message | string[]
-          if (Array.isArray(data)) return
+          const data = e.data as Message
 
-          switch (data.kind) {
+          switch (data?.kind) {
             case 'debug':
               // this is pre-formatted
               Zotero.debug(e.data.message) // eslint-disable-line no-restricted-syntax
@@ -257,10 +256,21 @@ export const Translators = new class {
       })
     }
 
-    const { cacheRate, output } = await Exporter.start(config)
-    log.info(`json-rpc: export cache use ${cacheRate}%`)
-    if (job.autoExport) Cache.rate[job.autoExport] = cacheRate
-    return output
+    try {
+      const { cacheRate, output } = await Exporter.start(config)
+      log.info(`json-rpc: export cache use ${cacheRate}%`)
+      if (job.autoExport) Cache.rate[job.autoExport] = cacheRate
+
+      if (job.translate) {
+        job.translate.string = output // eslint-disable-line id-blacklist
+        job.translate.complete(output)
+      }
+      return output
+    }
+    catch (err) {
+      log.error('translation failed:', err)
+      if (job.translate) job.translate.complete(false, err)
+    }
   }
 
   public displayOptions(translatorID: string, displayOptions: any): any {

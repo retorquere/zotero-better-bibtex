@@ -10,8 +10,8 @@
       "asciiBibLaTeX": true,
       "baseAttachmentPath": "D:\\OneDrive - ZnqbuZ\\Documents",
       "citekeyFormat": "title.transliterate.capitalize",
-      "jieba": true,
-      "warnBulkModify": 0
+      "warnBulkModify": 0,
+      "chinese": true
     }
   },
   "items": [
