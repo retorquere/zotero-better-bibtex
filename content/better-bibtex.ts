@@ -10,7 +10,7 @@
 import type Bluebird from 'bluebird'
 const Ready = Zotero.Promise.defer()
 
-Components.utils.importGlobalProperties(['FormData', 'indexedDB'])
+Components.utils.importGlobalProperties(['FormData', 'structuredClone'])
 
 Components.utils.import('resource://gre/modules/FileUtils.jsm')
 declare const FileUtils: any

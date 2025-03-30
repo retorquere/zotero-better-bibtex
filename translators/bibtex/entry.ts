@@ -235,7 +235,7 @@ export class Entry {
       this.english = BabelTag[this.language] === 'en'
     }
 
-    this.extraFields = JSON.parse(JSON.stringify(item.extraFields))
+    this.extraFields = structuredClone(item.extraFields)
 
     // should be const entrytype: string | { type: string, subtype?: string }
     // https://github.com/Microsoft/TypeScript/issues/10422

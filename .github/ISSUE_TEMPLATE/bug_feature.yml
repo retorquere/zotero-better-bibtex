@@ -20,7 +20,7 @@ body:
 
         I am done explaining why this is needed. Just include one.
 
-        *If the regular debug log submission does not work, use "send to file.io" from the help menu.*
+        *If the regular debug log submission does not work, use "send to bashupload.com" from the help menu.*
 
         If you are sure your question does not relate to items in your library at all, just select any one item in your library.
   - type: input
@@ -28,7 +28,7 @@ body:
     attributes:
       label: Debug log ID
       description: Please fill in an actual debug log ID here. The ID must have `-euc` or `-apse` in it.
-      placeholder: ex. ABCD1234-ref-euc or nNwplUbkYrQu-ABCD1234 for file.io.
+      placeholder: ex. ABCD1234-ref-euc or nNwplUbkYrQu-buc-ABCD1234 for bashupload.com.
     validations:
       required: true
   - type: textarea

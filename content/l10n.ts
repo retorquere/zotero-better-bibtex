@@ -6,7 +6,7 @@ const strings = new Localization(['better-bibtex.ftl'])
 
 const localized: Record<string, string> = {}
 
-async function prelocalize(id_with_branch: string): Promise<void> {
+export async function localizeAsync(id_with_branch: string): Promise<string> {
   if (localized[id_with_branch]) return
 
   try {
@@ -20,7 +20,7 @@ async function prelocalize(id_with_branch: string): Promise<void> {
     }
   }
   catch (err) {
-    log.error('l10n.prelocalize error:', id_with_branch, err)
+    log.error('l10n.localizeAsync error:', id_with_branch, err)
     localized[id_with_branch] = `!! ${id_with_branch}`
   }
 }
@@ -32,52 +32,54 @@ export function localize(id_with_branch: string, params?: Record<string, string 
 
 export async function initialize(): Promise<void> {
   const load = [
-    prelocalize('better-bibtex_auto-export_delete_confirm'),
-    prelocalize('better-bibtex_aux-scan_prompt'),
-    prelocalize('better-bibtex_aux-scanner'),
-    prelocalize('better-bibtex_bulk-keys-confirm_stop_asking'),
-    prelocalize('better-bibtex_bulk-keys-confirm_warning'),
-    prelocalize('better-bibtex_citekey_pin'),
-    prelocalize('better-bibtex_citekey_set'),
-    prelocalize('better-bibtex_citekey_set_change'),
-    prelocalize('better-bibtex_citekey_set_toomany'),
-    prelocalize('better-bibtex_error-report_better-bibtex_cache'),
-    prelocalize('better-bibtex_error-report_better-bibtex_cache'),
-    prelocalize('better-bibtex_error-report_better-bibtex_current'),
-    prelocalize('better-bibtex_error-report_better-bibtex_latest'),
-    prelocalize('better-bibtex_export-options_biblatexAPA'),
-    prelocalize('better-bibtex_export-options_biblatexChicago'),
-    prelocalize('better-bibtex_export-options_keep-updated'),
-    prelocalize('better-bibtex_export-options_reminder'),
-    prelocalize('better-bibtex_export-options_reminder'),
-    prelocalize('better-bibtex_export-options_worker'),
-    prelocalize('better-bibtex_preferences_auto-export_git_message'),
-    prelocalize('better-bibtex_preferences_auto-export_status_preparing'),
-    prelocalize('better-bibtex_preferences_auto-export_status_preparing_delayed'),
-    prelocalize('better-bibtex_report-errors'),
-    prelocalize('better-bibtex_translate_error_target_no_parent'),
-    prelocalize('better-bibtex_translate_error_target_not_a_file'),
-    prelocalize('better-bibtex_zotero-pane_add-citation-links'),
-    prelocalize('better-bibtex_zotero-pane_biblatex_to_clipboard'),
-    prelocalize('better-bibtex_zotero-pane_bibtex_to_clipboard'),
-    prelocalize('better-bibtex_zotero-pane_citekey_pin_inspire-hep'),
-    prelocalize('better-bibtex_zotero-pane_citekey_refresh'),
-    prelocalize('better-bibtex_zotero-pane_column_citekey'),
-    prelocalize('better-bibtex_zotero-pane_patch-dates'),
-    prelocalize('better-bibtex_zotero-pane_sentence-case'),
-    prelocalize('better-bibtex_zotero-pane_show_collection-key'),
-    prelocalize('better-bibtex_zotero-pane_tag_duplicates'),
-    prelocalize('better-bibtex_zotero-pane_tex-studio'),
-    prelocalize('zotero-collectionmenu-bbt-autoexport'),
+    localizeAsync('better-bibtex_auto-export_delete_confirm'),
+    localizeAsync('better-bibtex_aux-scan_prompt'),
+    localizeAsync('better-bibtex_aux-scanner'),
+    localizeAsync('better-bibtex_bulk-keys-confirm_stop_asking'),
+    localizeAsync('better-bibtex_bulk-keys-confirm_warning'),
+    localizeAsync('better-bibtex_citekey_pin'),
+    localizeAsync('better-bibtex_citekey_set'),
+    localizeAsync('better-bibtex_citekey_set_change'),
+    localizeAsync('better-bibtex_citekey_set_toomany'),
+    localizeAsync('better-bibtex_error-report_better-bibtex_cache'),
+    localizeAsync('better-bibtex_error-report_better-bibtex_cache'),
+    localizeAsync('better-bibtex_error-report_better-bibtex_current'),
+    localizeAsync('better-bibtex_error-report_better-bibtex_latest'),
+    localizeAsync('better-bibtex_error-report_better-bibtex_current_zotero'),
+    localizeAsync('better-bibtex_error-report_better-bibtex_latest_zotero'),
+    localizeAsync('better-bibtex_export-options_biblatexAPA'),
+    localizeAsync('better-bibtex_export-options_biblatexChicago'),
+    localizeAsync('better-bibtex_export-options_keep-updated'),
+    localizeAsync('better-bibtex_export-options_reminder'),
+    localizeAsync('better-bibtex_export-options_reminder'),
+    localizeAsync('better-bibtex_export-options_worker'),
+    localizeAsync('better-bibtex_preferences_auto-export_git_message'),
+    localizeAsync('better-bibtex_preferences_auto-export_status_preparing'),
+    localizeAsync('better-bibtex_preferences_auto-export_status_preparing_delayed'),
+    localizeAsync('better-bibtex_report-errors'),
+    localizeAsync('better-bibtex_translate_error_target_no_parent'),
+    localizeAsync('better-bibtex_translate_error_target_not_a_file'),
+    localizeAsync('better-bibtex_zotero-pane_add-citation-links'),
+    localizeAsync('better-bibtex_zotero-pane_biblatex_to_clipboard'),
+    localizeAsync('better-bibtex_zotero-pane_bibtex_to_clipboard'),
+    localizeAsync('better-bibtex_zotero-pane_citekey_pin_inspire-hep'),
+    localizeAsync('better-bibtex_zotero-pane_citekey_refresh'),
+    localizeAsync('better-bibtex_zotero-pane_column_citekey'),
+    localizeAsync('better-bibtex_zotero-pane_patch-dates'),
+    localizeAsync('better-bibtex_zotero-pane_sentence-case'),
+    localizeAsync('better-bibtex_zotero-pane_show_collection-key'),
+    localizeAsync('better-bibtex_zotero-pane_tag_duplicates'),
+    localizeAsync('better-bibtex_zotero-pane_tex-studio'),
+    localizeAsync('zotero-collectionmenu-bbt-autoexport'),
   ]
   for (const ext of ['aux', 'md']) {
-    load.push(prelocalize(`better-bibtex_aux-scan_title_${ext}`))
+    load.push(localizeAsync(`better-bibtex_aux-scan_title_${ext}`))
   }
   for (const status of ['done', 'error', 'preparing', 'preparing_delayed', 'running', 'scheduled']) {
-    load.push(prelocalize(`better-bibtex_preferences_auto-export_status_${ status }`))
+    load.push(localizeAsync(`better-bibtex_preferences_auto-export_status_${ status }`))
   }
   for (const type of ['collection', 'library']) {
-    load.push(prelocalize(`better-bibtex_preferences_auto-export_type_${ type }`))
+    load.push(localizeAsync(`better-bibtex_preferences_auto-export_type_${ type }`))
   }
   await Promise.all(load)
 }

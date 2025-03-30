@@ -40,7 +40,7 @@ export class Serializer {
         break
     }
 
-    return <Item>JSON.parse(JSON.stringify(fix(serialized, item)))
+    return structuredClone(fix(serialized, item))
   }
 
   public async serialize(items: Zotero.Item[]): Promise<Item[]> {

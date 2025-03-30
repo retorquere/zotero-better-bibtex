@@ -43,7 +43,7 @@ function format(date, translation: Translation): string {
 }
 
 export function datefield(date: ParsedDate, field: Translators.BibTeX.Field, translation: Translation): Translators.BibTeX.Field {
-  field = JSON.parse(JSON.stringify({ ...field, value: '', enc: 'literal' }))
+  field = structuredClone({ ...field, value: '', enc: 'literal' })
 
   if (!date) return field
   if (date && !date.type && date.orig) return field
