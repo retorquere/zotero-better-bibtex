@@ -605,6 +605,7 @@ export class BetterBibTeX {
         Events.addIdleListener('cache-purge', Preference.autoExportIdleWait)
         Events.on('idle', async state => {
           if (state.topic === 'cache-purge' && Cache.ready) await Cache.Serialized.purge()
+          void this.getLatest()
         })
       },
     })
