@@ -134,7 +134,7 @@ export class ErrorReport {
 
   public zip(): Uint8Array {
     const files: Record<string, Uint8Array> = {}
-    const enc = (new TextEncoder)
+    const enc = new TextEncoder
     const name = this.name()
 
     files[`${ name }/debug.txt`] = enc.encode(this.report.log)
@@ -332,12 +332,19 @@ export class ErrorReport {
       log.error('cache: could not get cache dump', err)
       cache = ''
     }
+
+    const items = win.arguments[0].wrappedJSObject.items
+    if (items && Zotero.BetterBibTeX.lastExportOptions) {
+      items.config = items.config || {}
+      items.config.options = JSON.parse(Zotero.BetterBibTeX.lastExportOptions)
+    }
+
     this.input = {
       context: await this.context(),
       errors: this.errors(),
       // # 1896
       log: this.log(),
-      items: win.arguments[0].wrappedJSObject.items,
+      items,
       cache,
     }
     const acronyms = PathUtils.join(Zotero.BetterBibTeX.dir, 'acronyms.csv')

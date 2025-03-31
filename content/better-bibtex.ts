@@ -350,6 +350,8 @@ monkey.patch(Zotero.Translate.Export.prototype, 'translate', original => functio
     return original.apply(this, arguments)
   }
 
+  Zotero.BetterBibTeX.lastExportOptions = this._displayOptions ? JSON.stringify(this._displayOptions) : ''
+
   const displayOptions = this._displayOptions || {}
 
   if (this.location) {
@@ -401,6 +403,8 @@ monkey.patch(Zotero.Translate.Export.prototype, 'translate', original => functio
 export class BetterBibTeX {
   public clientName = Zotero.clientName
   public clientVersion = Zotero.version
+
+  public lastExportOptions = ''
 
   public latest = {
     zotero: '',
