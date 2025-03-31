@@ -28,6 +28,7 @@
   },
   "include": [
     "content/**/*",
+    "worker/**/*",
     "translators/**/*",
     "setup/**/*",
     "gen/**/*",

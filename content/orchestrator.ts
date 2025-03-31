@@ -1,6 +1,6 @@
 export type Actor = 'worker' | 'start' | 'done' | 'auto-export' | 'translators' | 'TeXstudio' | 'abbreviator' | 'keymanager' | 'cache' | 'sqlite' | 'git-push' | 'citekeysearch' | 'cayw' | 'json-rpc' | 'pull-export'
 export type PhaseID = 'startup' | 'shutdown'
-import type { Reason } from './bootstrap'
+import type { Reason } from '../bootstrap/bootstrap'
 import { log } from './logger'
 import { Preference } from './prefs'
 

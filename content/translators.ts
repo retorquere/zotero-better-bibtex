@@ -15,7 +15,7 @@ import { log } from './logger'
 import { Events } from './events'
 import { newQueue } from '@henrygd/queue'
 import { orchestrator } from './orchestrator'
-import type { Reason } from './bootstrap'
+import type { Reason } from '../bootstrap/bootstrap'
 import { headers as Headers, byLabel, byId, bySlug } from '../gen/translators'
 import { Job, worker, Exporter, Message } from './translators/worker'
 

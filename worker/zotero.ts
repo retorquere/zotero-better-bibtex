@@ -2,28 +2,28 @@
 
 import { Server as WorkerServerBase } from './json-rpc'
 import { Exporter as ExporterInterface } from './interface'
-import type { Item } from '../../gen/typings/serialized-item'
+import type { Item } from '../gen/typings/serialized-item'
 
 import { ExportedItem, ExportedItemMetadata, Cache, Context } from './cache'
 
 declare const IOUtils: any
 
-import * as client from '../client'
-import { Path, File } from '../file'
+import * as client from '../content/client'
+import { Path, File } from '../content/file'
 
 const ctx: DedicatedWorkerGlobalScope = self as any
 
 importScripts('resource://zotero/config.js') // import ZOTERO_CONFIG'
 
-import type { Message, Job } from '../translators/worker'
-import type { Translators } from '../../typings/translators'
-import { valid } from '../../gen/items/items'
-import { generateBibLaTeX } from '../../translators/bibtex/biblatex'
-import { generateBibTeX } from '../../translators/bibtex/bibtex'
-import { generateCSLJSON } from '../../translators/csl/json'
-import { generateCSLYAML } from '../../translators/csl/yaml'
-import { generateBBTJSON } from '../../translators/lib/bbtjson'
-import type { Collected } from '../../translators/lib/collect'
+import type { Message, Job } from '../content/translators/worker'
+import type { Translators } from '../typings/translators'
+import { valid } from '../gen/items/items'
+import { generateBibLaTeX } from '../translators/bibtex/biblatex'
+import { generateBibTeX } from '../translators/bibtex/bibtex'
+import { generateCSLJSON } from '../translators/csl/json'
+import { generateCSLYAML } from '../translators/csl/yaml'
+import { generateBBTJSON } from '../translators/lib/bbtjson'
+import type { Collected } from '../translators/lib/collect'
 import XRegExp from 'xregexp'
 
 import { DOMParser as XMLDOMParser } from '@xmldom/xmldom'
@@ -139,23 +139,21 @@ export class DOMParser extends XMLDOMParser {
   }
 }
 
-const ZU = require('../../submodules/zotero-utilities/utilities.js')
-const ZUI = require('../../submodules/zotero-utilities/utilities_item.js')
-const ZD = require('../../submodules/zotero-utilities/date.js')
+const ZU = require('../submodules/zotero-utilities/utilities.js')
+const ZUI = require('../submodules/zotero-utilities/utilities_item.js')
+const ZD = require('../submodules/zotero-utilities/date.js')
 
 declare const doExport: () => void
 
-import * as DateParser from '../../content/dateparser'
-// import * as Extra from '../../content/extra'
-import itemCreators from '../../gen/items/creators.json'
-import { log } from '../../content/logger'
-import { Collection } from '../../gen/typings/serialized-item'
-// import { CSL_MAPPINGS } from '../../gen/items/items'
+import * as DateParser from '../content/dateparser'
+import itemCreators from '../gen/items/creators.json'
+import { log } from '../content/logger'
+import { Collection } from '../gen/typings/serialized-item'
 
-import zotero_schema from '../../schema/zotero.json'
-import jurism_schema from '../../schema/jurism.json'
+import zotero_schema from '../schema/zotero.json'
+import jurism_schema from '../schema/jurism.json'
 const schema = client.slug === 'zotero' ? zotero_schema : jurism_schema
-import dateFormats from '../../schema/dateFormats.json'
+import dateFormats from '../schema/dateFormats.json'
 
 class Running {
   public serialized: Item[]

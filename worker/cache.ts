@@ -1,9 +1,14 @@
-// import { DatabaseFactory, Database, ObjectStoreInterface } from '@idxdb/promised'
+import stringify from 'safe-stable-stringify'
 import { DatabaseFactory, Database } from '@idxdb/promised'
 // import { SynchronousPromise } from 'synchronous-promise'
 
-import type { Item } from '../../gen/typings/serialized-item'
+import { pick, unpick } from '../content/object'
+import { log } from '../content/logger'
+import type { Item } from '../gen/typings/serialized-item'
 import { Cache as CacheInterface } from './interface'
+import { byLabel } from '../gen/translators'
+import { version } from '../gen/version.json'
+import type { Translators as Translator } from '../typings/translators'
 
 export type ExportContext = {
   context: string
@@ -28,17 +33,6 @@ export type CacheMetadata = {
   key: string
   value: string
 }
-
-import { log } from '../logger'
-import stringify from 'safe-stable-stringify'
-
-import { pick, unpick } from '../object'
-
-import { byLabel } from '../../gen/translators'
-import { version } from '../../gen/version.json'
-// import { main as probe } from './cache-test'
-
-import type { Translators as Translator } from '../../typings/translators'
 
 export const Context = new class {
   private defaults: Record<string, Partial<Translator.DisplayOptions & { translator: string }>> = {}

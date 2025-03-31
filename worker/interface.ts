@@ -1,5 +1,5 @@
-import type { Item } from '../../gen/typings/serialized-item'
-import type { Job } from '../translators/worker'
+import type { Item } from '../gen/typings/serialized-item'
+import type { Job } from '../content/translators/worker'
 
 export interface Cache {
   count(): Promise<number>

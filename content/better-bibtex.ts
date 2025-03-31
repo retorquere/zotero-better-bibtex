@@ -27,8 +27,8 @@ import { monkey } from './monkey-patch'
 import { clean_pane_persist } from './clean_pane_persist'
 import { flash } from './flash'
 import { orchestrator } from './orchestrator'
-import type { Reason } from './bootstrap'
-import type { ExportedItem, ExportedItemMetadata } from './worker/cache'
+import type { Reason } from '../bootstrap/bootstrap'
+import type { ExportedItem, ExportedItemMetadata } from '../worker/cache'
 import { Cache } from './translators/worker'
 
 import { Preference } from './prefs' // needs to be here early, initializes the prefs observer

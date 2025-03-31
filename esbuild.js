@@ -196,7 +196,7 @@ async function bundle(config) {
 async function rebuild() {
   // bootstrap code
   await bundle({
-    entryPoints: [ 'content/bootstrap.ts' ],
+    entryPoints: [ 'bootstrap/bootstrap.ts' ],
     outdir: 'build',
     exportGlobals: true,
   })
@@ -242,7 +242,7 @@ async function rebuild() {
 
   // worker code
   await bundle({
-    entryPoints: [ 'content/worker/zotero.ts' ],
+    entryPoints: [ 'worker/zotero.ts' ],
     plugins: [
       loader.trace('worker'),
       loader.text,
