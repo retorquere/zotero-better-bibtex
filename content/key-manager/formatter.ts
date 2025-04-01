@@ -262,7 +262,7 @@ class Item {
         case 'dateAdded':
         case 'dateModified':
           // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-          return (this.item)[name]
+          return this.item[name].replace(/ .*/, '')
         case 'title':
           // eslint-disable-next-line @typescript-eslint/no-unsafe-return
           return this.title

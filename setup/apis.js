@@ -64,8 +64,8 @@ const Babel = {
 Babel.languages = [...(new Set([...Object.keys(Babel.tags), ...Object.values(Babel.tags)]))].sort()
 ajv.addFormat('babel-language', new RegExp(`^(${Babel.languages.join('|')})$`, 'i'))
 
-Zotero.fields = new Set()
-Zotero.fieldLookup = {}
+Zotero.fields = new Set(['dateAdded', 'dateModified'])
+Zotero.fieldLookup = { dateadded: 'dateAdded', datemodified: 'dateModified' }
 for (const itemType of Zotero.schema.itemTypes) {
   for (const field of itemType.fields) {
     for (const name of ['field', 'baseField']) {
