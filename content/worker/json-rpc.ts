@@ -113,7 +113,7 @@ export class Server {
           error: {
             code: INTERNAL_ERROR,
             message: err.message,
-            stack: (new Error('').stack),
+            stack: err.stack,
           },
           id: req.id,
         })
