@@ -9,6 +9,7 @@ type JsonRpcMessage = {
   error?: {
     code?: number
     message: string
+    stack?: string
   }
 }
 
@@ -49,7 +50,11 @@ export class Client {
                 params: args,
               }
               target.#handlers[message.id] = response => {
-                if (response.error) return reject(new Error(response.error.message))
+                if (response.error) {
+                  const err = new Error(response.error.message)
+                  if (response.error.stack) err.stack = `${response.error.stack}\n${err.stack}`
+                  return reject(err)
+                }
                 resolve(response.result)
               }
 
@@ -85,7 +90,16 @@ export class Server {
         }
 
         if (typeof method !== 'function' || m.length) {
-          self.postMessage({ jsonrpc: '2.0', method: req.method, error: { code: METHOD_NOT_FOUND, message: `Method not found: ${ req.method }` }, id: req.id })
+          self.postMessage({
+            jsonrpc: '2.0',
+            method: req.method,
+            error: {
+              code: METHOD_NOT_FOUND,
+              message: `Method not found: ${ req.method }`,
+              stack: (new Error('').stack),
+            },
+            id: req.id,
+          })
           return
         }
 
@@ -93,7 +107,16 @@ export class Server {
         // log.debug(`json-rpc: worker sent ${req.method} success`)
       }
       catch (err) {
-        self.postMessage({ jsonrpc: '2.0', method: req.method, error: { code: INTERNAL_ERROR, message: err.message }, id: req.id })
+        self.postMessage({
+          jsonrpc: '2.0',
+          method: req.method,
+          error: {
+            code: INTERNAL_ERROR,
+            message: err.message,
+            stack: (new Error('').stack),
+          },
+          id: req.id,
+        })
         // log.debug(`json-rpc: worker sent ${req.method} error`)
         return
       }
