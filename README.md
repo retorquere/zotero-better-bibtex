@@ -92,4 +92,4 @@ Many, many thanks, also to the existing contributors -- thanks to you I've hit m
 
 ![My github stats](https://github-readme-stats.vercel.app/api?username=retorquere&show_icons=true&hide_border=true&theme=dark)
 
-I prefer communicating via github issues, but for private information you can reach me on [matrix](matrix.to/#/@retorquere:utwente.io)
+I prefer communicating via github issues, but for private information you can reach me on [matrix](https://matrix.to/#/@retorquere:utwente.io)
