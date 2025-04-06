@@ -306,7 +306,7 @@ export class ErrorReport {
   private async getLatest(): Promise<{ bbt: string; zotero: string }> {
     const latest = {
       bbt: '',
-      zotero: '',
+      zotero: Zotero.version,
     }
 
     const bbt = async () => {
@@ -322,23 +322,23 @@ export class ErrorReport {
     }
 
     const zotero = async () => {
-      try {
-        if (client.isBeta) {
-          const response = await Zotero.HTTP.request('HEAD', 'https://www.zotero.org/download/standalone/dl?platform=linux-x86_64&channel=beta', { followRedirects: false, noCache: true })
-          log.info('beta latest:', response)
-          if (response.status >= 300 && response.status < 400) {
-            latest.zotero = decodeURIComponent(response.getResponseHeader('Location').replace(/.*\/client\/beta\/([^/]+).*/, '$1'))
-          }
-        }
-        else {
-          latest.zotero = JSON.parse((await Zotero.HTTP.request('GET', 'https://www.zotero.org/download/client/manifests/release/updates-linux-x86_64.json', { noCache: true })).response)
-            .map(v => v.version as string)
-            .sort((a, b) => Services.vc.compare(b, a))[0] as string
-        }
-      }
-      catch (err) {
-        log.error('errorreport.latest.zotero:', err)
-      }
+      // try {
+      //   if (client.isBeta) {
+      //     const response = await Zotero.HTTP.request('HEAD', 'https://www.zotero.org/download/standalone/dl?platform=linux-x86_64&channel=beta', { followRedirects: false, noCache: true })
+      //     log.info('beta latest:', response)
+      //     if (response.status >= 300 && response.status < 400) {
+      //       latest.zotero = decodeURIComponent(response.getResponseHeader('Location').replace(/.*\/client\/beta\/([^/]+).*/, '$1'))
+      //     }
+      //   }
+      //   else {
+      //     latest.zotero = JSON.parse((await Zotero.HTTP.request('GET', 'https://www.zotero.org/download/client/manifests/release/updates-linux-x86_64.json', { noCache: true })).response)
+      //       .map(v => v.version as string)
+      //       .sort((a, b) => Services.vc.compare(b, a))[0] as string
+      //   }
+      // }
+      // catch (err) {
+      //   log.error('errorreport.latest.zotero:', err)
+      // }
     }
     await Promise.all([bbt(), zotero()])
     return latest
