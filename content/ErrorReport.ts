@@ -95,7 +95,7 @@ export class ErrorReport {
 
       wizard.advance();
 
-      (<HTMLInputElement> this.document.getElementById('better-bibtex-report-id')).value = `${this.name()}:${running}:${Zotero.version}`
+      (<HTMLInputElement> this.document.getElementById('better-bibtex-report-id')).value = `${this.name()}/${Zotero.version}/${running}`
       this.document.getElementById('better-bibtex-report-result').hidden = false
     }
     catch (err) {
@@ -306,41 +306,39 @@ export class ErrorReport {
   private async getLatest(): Promise<{ bbt: string; zotero: string }> {
     const latest = {
       bbt: '',
-      zotero: Zotero.version,
+      zotero: '',
     }
+
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+    const manifest = async updates => JSON.parse((await Zotero.HTTP.request('GET', updates, { noCache: true })).response)
 
     const bbt = async () => {
       try {
-        latest.bbt = JSON.parse((await Zotero.HTTP.request('GET', 'https://github.com/retorquere/zotero-better-bibtex/releases/download/release/updates.json', { noCache: true })).response)
+        latest.bbt = (await manifest('https://github.com/retorquere/zotero-better-bibtex/releases/download/release/updates.json'))
           .addons['better-bibtex@iris-advies.com']
           .updates[0]
           .version as string
       }
       catch (err) {
-        log.error('latest.bbt:', err)
+        log.error('errorreport.latest.bbt:', err)
       }
     }
 
     const zotero = async () => {
-      // try {
-      //   if (client.isBeta) {
-      //     const response = await Zotero.HTTP.request('HEAD', 'https://www.zotero.org/download/standalone/dl?platform=linux-x86_64&channel=beta', { followRedirects: false, noCache: true })
-      //     log.info('beta latest:', response)
-      //     if (response.status >= 300 && response.status < 400) {
-      //       latest.zotero = decodeURIComponent(response.getResponseHeader('Location').replace(/.*\/client\/beta\/([^/]+).*/, '$1'))
-      //     }
-      //   }
-      //   else {
-      //     latest.zotero = JSON.parse((await Zotero.HTTP.request('GET', 'https://www.zotero.org/download/client/manifests/release/updates-linux-x86_64.json', { noCache: true })).response)
-      //       .map(v => v.version as string)
-      //       .sort((a, b) => Services.vc.compare(b, a))[0] as string
-      //   }
-      // }
-      // catch (err) {
-      //   log.error('errorreport.latest.zotero:', err)
-      // }
+      try {
+        const release = client.isBeta ? 'beta' : 'release'
+        const platform = `${client.platform.replace(/lin/, 'linux')}${ { mac: '', win: '-x64', linux: '-x86_64' }[client.platform] || '' }`
+        latest.zotero = (await manifest(`https://www.zotero.org/download/client/manifests/${release}/updates-${platform}.json`))
+          .map(v => v.version as string)
+          .sort((a, b) => Services.vc.compare(b, a))[0] as string
+      }
+      catch (err) {
+        log.error('errorreport.latest.zotero:', err)
+      }
     }
-    await Promise.all([bbt(), zotero()])
+
+    await Promise.allSettled([bbt(), zotero()])
+    log.info('got latest', latest)
     return latest
   }
 
