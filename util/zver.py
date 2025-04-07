@@ -19,8 +19,8 @@ with open('.github/ISSUE_TEMPLATE/bug_feature.yml', 'r') as file:
 
 for step in template['body']:
   if step['type'] == 'input' and step['id'] == 'zotero':
-    step['description'] = f'MUST be {versions} or later'
-    step['placeholder'] = versions
+    step['attributes']['description'] = f'MUST be {versions} or later'
+    step['attributes']['placeholder'] = versions
 
 with open('.github/ISSUE_TEMPLATE/bug_feature.yml', 'w') as file:
   yaml.dump(template, file)
