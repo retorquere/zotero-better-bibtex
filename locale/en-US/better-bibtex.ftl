@@ -28,6 +28,9 @@ better-bibtex_error-report_debug =
 
 
 better-bibtex_error-report_enable-debug = Zotero debug logging is currently disabled. It will be easier to diagnose the problem if you enable it before submitting a debug log.
+
+better-bibtex_error-report_upgrade = Please upgrade before opening an issue
+
 better-bibtex_error-report_errors = 
   .label = Errors
 
@@ -46,6 +49,8 @@ better-bibtex_error-report_include-attachments =
 
 better-bibtex_error-report_items = 
   .label = Items
+
+better-bibtex-error-send-reminder = Pressing "{ $send }" will send the debug log to secure storage for the developer to review.
 
 better-bibtex_error-report_not-reviewed = Debug logs cannot be reviewed unless referred to in the GitHub issue tracker by their ID.
 

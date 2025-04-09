@@ -18,24 +18,32 @@ wizard#better-bibtex-error-report(
     xmlns:html="http://www.w3.org/1999/xhtml"
     title='&better-bibtex_error-report.title;' width='700' height='700'
   )
-  wizardpage(pageid='page-enable-debug' label=' ')
+  wizardpage(hidden=true pageid='page-enable-debug' label=' ')
     description.header(style='white-space: pre-wrap;') &better-bibtex_error-report_enable-debug;
-    button(label='&better-bibtex_error-report_restart-with-logging-enabled.label;' oncommand='window.ErrorReport.restartWithDebugEnabled()')/
+    vbox
+      button(label='&better-bibtex_error-report_restart-with-logging-enabled.label;' oncommand='window.ErrorReport.restartWithDebugEnabled()')/
+
+  wizardpage(hidden=true pageid='page-upgrade' label=' ')
+    description.header(style='white-space: pre-wrap;') &better-bibtex_error-report_upgrade;
+    vbox
+      description#better-bibtex-report-current-bbt(hidden=true flex='1' readonly='true')
+      description#better-bibtex-report-latest-bbt.emph(hidden=true flex='1' readonly='true')
+      description#better-bibtex-report-current-zotero(hidden=true flex='1' readonly='true')
+      description#better-bibtex-report-latest-zotero.emph(hidden=true flex='1' readonly='true')
+
   wizardpage(pageid='page-review' label=' ')
     tooltip#better-bibtex-error-report-info &better-bibtex_error-report_review;
-    textbox#better-bibtex-report-current-bbt.plain(hidden=true flex='1' readonly='true')
-    textbox#better-bibtex-report-latest-bbt.plain.textbox-emph(hidden=true flex='1' readonly='true')
-    textbox#better-bibtex-report-current-zotero.plain(hidden=true flex='1' readonly='true')
-    textbox#better-bibtex-report-latest-zotero.plain.textbox-emph(hidden=true flex='1' readonly='true')
-    textbox#better-bibtex-report-cache.plain(flex='1' readonly='true')
-    checkbox.better-bibtex-error-report-facet#better-bibtex-error-report-include-errors(label='&better-bibtex_error-report_include-errors.label;')/
-    checkbox.better-bibtex-error-report-facet#better-bibtex-error-report-include-log(label='&better-bibtex_error-report_include-log.label;')/
-    hbox
-      label &better-bibtex_error-report_include-items.label;
-      checkbox.better-bibtex-error-report-facet#better-bibtex-error-report-include-notes(label='&better-bibtex_error-report_include-notes.label;')/
-      checkbox.better-bibtex-error-report-facet#better-bibtex-error-report-include-attachments(label='&better-bibtex_error-report_include-attachments.label;')/
-      checkbox.better-bibtex-error-report-facet#better-bibtex-error-report-include-cache(label='&better-bibtex_error-report_include-cache.label;')/
-      hbox(flex='1')
+
+    label#better-bibtex-report-cache(flex='1' readonly='true')
+
+    checkbox.better-bibtex-error-report-facet#better-bibtex-error-report-include-errors(checked=true label='&better-bibtex_error-report_include-errors.label;')/
+    checkbox.better-bibtex-error-report-facet#better-bibtex-error-report-include-log(checked=true label='&better-bibtex_error-report_include-log.label;')/
+    groupbox(flex=1)
+      description(label='&better-bibtex_error-report_include-items.label;')
+      vbox
+        checkbox.better-bibtex-error-report-facet#better-bibtex-error-report-include-notes(checked=true label='&better-bibtex_error-report_include-notes.label;')/
+        checkbox.better-bibtex-error-report-facet#better-bibtex-error-report-include-attachments(checked=true label='&better-bibtex_error-report_include-attachments.label;')/
+        checkbox.better-bibtex-error-report-facet#better-bibtex-error-report-include-cache(checked=true label='&better-bibtex_error-report_include-cache.label;')/
     tabbox.debug-on(flex='10')
       tabs
         tab#better-bibtex-error-context-tab(label='&better-bibtex_error-report_context.label;')/
@@ -55,8 +63,11 @@ wizard#better-bibtex-error-report(
       button(label='&better-bibtex_error-report_save.label;' oncommand='window.ErrorReport.save()')/
       hbox(flex='1')/
     description#better-bibtex-error-memory-use(hidden='true' style='white-space: pre-wrap;')/
+    description#better-bibtex-error-send-reminder
+
   wizardpage(pageid='page-send' label=' ')
     description &better-bibtex_error-report_submission-in-progress;
+
   wizardpage(pageid='page-done' label=' ')
     description &better-bibtex_error-report_submitted;
     description#better-bibtex-report-result(hidden='true')
@@ -65,8 +76,9 @@ wizard#better-bibtex-error-report(
         textbox#better-bibtex-report-id.plain.textbox-emph(flex='1' size=40 readonly='true')
     description &better-bibtex_error-report_post-to-git-hub;
     description &better-bibtex_error-report_not-reviewed;
+
   script(src='chrome://zotero/content/include.js')
   script.
     window.addEventListener('load', function() {
-      Zotero.BetterBibTeX.ErrorReport.load(window).catch(err => Zotero.debug(`BBT.ErrorReport: error: ${err}`))
+      Zotero.BetterBibTeX.ErrorReport.load(window).catch(err => Zotero.debug(`BBT.ErrorReport: error: ${err}\n${err.stack}`))
     })

@@ -32,6 +32,11 @@ description {
 	margin-left: 0;
 }
 
+description.emph {
+	color: red;
+	font-weight: bold;
+}
+
 #zotero-error-steps-box description {
 	margin-bottom: .4em;
 }
@@ -49,4 +54,20 @@ textarea:read-only {
   border: 0;
   background-color: lightgrey;
   outline: none;
+}
+
+groupbox {
+  border: 2px solid lightgrey;
+  padding-top: 15px;
+  position: relative;
+  padding-left: 5px;
+}
+
+groupbox > caption {
+  background-color: white;
+  padding: 0 5px;
+  position: absolute;
+  top: 0;
+  left: 10px;
+  transform: translateY(-50%);
 }

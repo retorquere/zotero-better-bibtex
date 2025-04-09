@@ -71,6 +71,7 @@ export async function initialize(): Promise<void> {
     localizeAsync('better-bibtex_zotero-pane_tag_duplicates'),
     localizeAsync('better-bibtex_zotero-pane_tex-studio'),
     localizeAsync('zotero-collectionmenu-bbt-autoexport'),
+    localizeAsync('better-bibtex-error-send-reminder'),
   ]
   for (const ext of ['aux', 'md']) {
     load.push(localizeAsync(`better-bibtex_aux-scan_title_${ext}`))

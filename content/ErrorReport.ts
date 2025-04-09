@@ -37,6 +37,9 @@ type Wizard = HTMLElement & {
   pageIndex: number
   advance: () => void
   rewind: () => void
+  currentPage: {
+    hidden: boolean
+  }
 }
 
 import { version as running } from '../gen/version.json'
@@ -51,6 +54,73 @@ type Report = {
 }
 
 const $home = new RegExp(`${escapeRE(Path.home)}|${escapeRE(Path.home.replace(Zotero.isWin ? /\\/g : /\//g, '$1$1'))}|${escapeRE(PathUtils.toFileURI(Path.home))}`, 'g')
+
+class Upgrades {
+  public zotero = {
+    running: Zotero.version,
+    available: '',
+    message: {
+      running: '',
+      available: '',
+    },
+    upgrade: false,
+  }
+
+  public bbt = {
+    running,
+    available: '',
+    message: {
+      running: '',
+      available: '',
+    },
+    upgrade: false,
+  }
+
+  public async init() {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+    const manifest = async updates => JSON.parse((await Zotero.HTTP.request('GET', updates, { noCache: true })).response)
+
+    const bbt = async () => {
+      try {
+        this.bbt.available = (await manifest('https://github.com/retorquere/zotero-better-bibtex/releases/download/release/updates.json'))
+          .addons['better-bibtex@iris-advies.com']
+          .updates[0]
+          .version as string
+      }
+      catch (err) {
+        log.error('errorreport.latest.bbt:', err)
+      }
+    }
+
+    const zotero = async () => {
+      try {
+        const release = client.isBeta ? 'beta' : 'release'
+        const platform = `${client.platform.replace(/lin/, 'linux')}${ { mac: '', win: '-x64', linux: '-x86_64' }[client.platform] || '' }`
+        this.zotero.available = (await manifest(`https://www.zotero.org/download/client/manifests/${release}/updates-${platform}.json`))
+          .map(v => v.version as string)
+          .sort((a, b) => Services.vc.compare(b, a))[0] as string
+      }
+      catch (err) {
+        log.error('errorreport.latest.zotero:', err)
+      }
+    }
+
+    await Promise.allSettled([bbt(), zotero()])
+
+    if (this.bbt.running.split('.').length >= 3 && this.bbt.running !== this.bbt.available) {
+      this.bbt.upgrade = true
+      this.bbt.message.running = l10n.localize('better-bibtex_error-report_better-bibtex_current', { version: this.bbt.running })
+      this.bbt.message.available = l10n.localize('better-bibtex_error-report_better-bibtex_latest', { version: this.bbt.available || '<could not be established>' })
+    }
+
+    if (this.zotero.running !== this.zotero.available) {
+      this.zotero.upgrade = true
+      this.zotero.message.running = l10n.localize('better-bibtex_error-report_better-bibtex_current_zotero', { version: this.zotero.running })
+      this.zotero.message.available = l10n.localize('better-bibtex_error-report_better-bibtex_latest_zotero', { version: this.zotero.available || '<could not be established>' })
+    }
+  }
+}
+const upgrades = new Upgrades
 
 export class ErrorReport {
   private previewSize = 3
@@ -77,7 +147,6 @@ export class ErrorReport {
 
     wizard.getButton('next').disabled = true
     wizard.getButton('cancel').disabled = true
-    wizard.canRewind = false
 
     try {
       await Zotero.HTTP.request('PUT', `${ this.bucket }/${ this.zipfile() }`, {
@@ -108,10 +177,14 @@ export class ErrorReport {
   public show(): void {
     const wizard: Wizard = this.document.getElementById('better-bibtex-error-report') as Wizard
 
-    if (wizard.onLastPage) wizard.canRewind = false
-    else if (wizard.pageIndex === 0) wizard.canRewind = false
-    else if (wizard.pageIndex === 1 && Zotero.Debug.storing) wizard.canRewind = false
-    else wizard.canRewind = true
+    wizard.getPageById('page-enable-debug').hidden = !!Zotero.Debug.storing
+    wizard.getPageById('page-upgrade').hidden = !(upgrades.bbt.upgrade || upgrades.zotero.upgrade)
+
+    while (wizard.currentPage.hidden) {
+      wizard.pageIndex += 1
+    }
+
+    wizard.canRewind = wizard.currentPage !== wizard.getPageById('page-done')
   }
 
   public restartWithDebugEnabled(): void {
@@ -162,8 +235,14 @@ export class ErrorReport {
 
   private setValue(id: string, value: string) {
     const text = <HTMLInputElement> this.document.getElementById(id)
-    text.value = value
     text.hidden = !value
+
+    if (text.nodeName.toLowerCase() === 'description') {
+      text.textContent = value
+    }
+    else {
+      text.value = value
+    }
 
     const tab = <HTMLInputElement> this.document.getElementById(`${ id }-tab`)
     if (tab) tab.hidden = !value
@@ -303,45 +382,6 @@ export class ErrorReport {
     ].filter(chunk => chunk).join('\n\n')
   }
 
-  private async getLatest(): Promise<{ bbt: string; zotero: string }> {
-    const latest = {
-      bbt: '',
-      zotero: '',
-    }
-
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-    const manifest = async updates => JSON.parse((await Zotero.HTTP.request('GET', updates, { noCache: true })).response)
-
-    const bbt = async () => {
-      try {
-        latest.bbt = (await manifest('https://github.com/retorquere/zotero-better-bibtex/releases/download/release/updates.json'))
-          .addons['better-bibtex@iris-advies.com']
-          .updates[0]
-          .version as string
-      }
-      catch (err) {
-        log.error('errorreport.latest.bbt:', err)
-      }
-    }
-
-    const zotero = async () => {
-      try {
-        const release = client.isBeta ? 'beta' : 'release'
-        const platform = `${client.platform.replace(/lin/, 'linux')}${ { mac: '', win: '-x64', linux: '-x86_64' }[client.platform] || '' }`
-        latest.zotero = (await manifest(`https://www.zotero.org/download/client/manifests/${release}/updates-${platform}.json`))
-          .map(v => v.version as string)
-          .sort((a, b) => Services.vc.compare(b, a))[0] as string
-      }
-      catch (err) {
-        log.error('errorreport.latest.zotero:', err)
-      }
-    }
-
-    await Promise.allSettled([bbt(), zotero()])
-    log.info('got latest', latest)
-    return latest
-  }
-
   public async load(win: Window & { ErrorReport: ErrorReport; arguments: any[] }): Promise<void> {
     this.document = win.document
     win.ErrorReport = this
@@ -349,7 +389,16 @@ export class ErrorReport {
     this.timestamp = ((new Date)).toISOString().replace(/\..*/, '').replace(/:/g, '.')
 
     const wizard: Wizard = this.document.getElementById('better-bibtex-error-report') as Wizard
+
+    const continueButton = wizard.getButton('next')
+    continueButton.disabled = true
+    await upgrades.init()
+    this.show()
+
+    this.setValue('better-bibtex-error-send-reminder', l10n.localize('better-bibtex-error-send-reminder', { send: continueButton.getAttribute('label') }))
+
     wizard.getPageById('page-enable-debug').addEventListener('pageshow', this.show.bind(this))
+    wizard.getPageById('page-upgrade').addEventListener('pageshow', this.show.bind(this))
     wizard.getPageById('page-review').addEventListener('pageshow', this.show.bind(this))
     wizard.getPageById('page-send').addEventListener('pageshow', () => { this.send().catch(err => log.error('could not send debug log:', err)) })
     wizard.getPageById('page-done').addEventListener('pageshow', this.show.bind(this))
@@ -357,11 +406,6 @@ export class ErrorReport {
     for (const cb of Array.from(this.document.getElementsByClassName('better-bibtex-error-report-facet')) as HTMLInputElement[]) {
       cb.addEventListener('command', this.reload.bind(this))
     }
-
-    wizard.pageIndex = Zotero.Debug.storing ? 1 : 0
-
-    const continueButton = wizard.getButton('next')
-    continueButton.disabled = true
 
     let cache = ''
     try {
@@ -391,27 +435,12 @@ export class ErrorReport {
 
     await this.reload()
 
-    const latest = await this.getLatest()
+    this.setValue('better-bibtex-report-current-bbt', upgrades.bbt.message.running)
+    this.setValue('better-bibtex-report-latest-bbt', upgrades.bbt.message.available)
+    this.setValue('better-bibtex-report-current-zotero', upgrades.zotero.message.running)
+    this.setValue('better-bibtex-report-latest-zotero', upgrades.zotero.message.available)
 
     try {
-      if (running.split('.').length > 3 || running === latest.bbt) {
-        this.setValue('better-bibtex-report-current-bbt', '')
-        this.setValue('better-bibtex-report-latest-bbt', '')
-      }
-      else {
-        this.setValue('better-bibtex-report-current-bbt', l10n.localize('better-bibtex_error-report_better-bibtex_current', { version: running }))
-        this.setValue('better-bibtex-report-latest-bbt', l10n.localize('better-bibtex_error-report_better-bibtex_latest', { version: latest.bbt || '<could not be established>' }))
-      }
-
-      if (Zotero.version === latest.zotero) {
-        this.setValue('better-bibtex-report-current-zotero', '')
-        this.setValue('better-bibtex-report-latest-zotero', '')
-      }
-      else {
-        this.setValue('better-bibtex-report-current-zotero', l10n.localize('better-bibtex_error-report_better-bibtex_current_zotero', { version: Zotero.version }))
-        this.setValue('better-bibtex-report-latest-zotero', l10n.localize('better-bibtex_error-report_better-bibtex_latest_zotero', { version: latest.zotero || '<could not be established>' }))
-      }
-
       // @ts-expect-error zotero-types does not export .any
       this.region = await Zotero.Promise.any(Object.keys(s3.region).map(this.ping.bind(this)))
       this.bucket = `https://${ s3.bucket }-${ this.region.short }.s3-${ this.region.region }.amazonaws.com${ this.region.tld || '' }`
