@@ -162,10 +162,10 @@ export class ErrorReport {
         body: this.zip(),
       })
 
-      wizard.advance();
+      wizard.advance()
 
-      (<HTMLInputElement> this.document.getElementById('better-bibtex-report-id')).value = `${this.name()}/${Zotero.version}/${running}`
-      this.document.getElementById('better-bibtex-report-result').hidden = false
+      const id = `${this.name()}/${Zotero.version}/${running}`.replace(/\/7[.]0[.]/g, '/');
+      (<HTMLInputElement> this.document.getElementById('better-bibtex-report-id')).value = id
     }
     catch (err) {
       log.error('failed to submit', this.name(), err)
@@ -184,7 +184,7 @@ export class ErrorReport {
       wizard.pageIndex += 1
     }
 
-    wizard.canRewind = wizard.currentPage !== wizard.getPageById('page-done')
+    // wizard.canRewind = wizard.currentPage !== wizard.getPageById('page-done')
   }
 
   public restartWithDebugEnabled(): void {
@@ -235,7 +235,9 @@ export class ErrorReport {
 
   private setValue(id: string, value: string) {
     const text = <HTMLInputElement> this.document.getElementById(id)
-    text.hidden = !value
+
+    value = value || ''
+    // text.hidden = !value
 
     if (text.nodeName.toLowerCase() === 'description') {
       text.textContent = value

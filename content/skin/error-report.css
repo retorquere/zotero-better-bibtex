@@ -63,7 +63,7 @@ groupbox {
   padding-left: 5px;
 }
 
-groupbox > caption {
+groupbox > label.caption {
   background-color: white;
   padding: 0 5px;
   position: absolute;
