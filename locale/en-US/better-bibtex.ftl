@@ -49,9 +49,8 @@ better-bibtex_error-report_items =
 
 better-bibtex-error-send-reminder = Clicking "{ $send }" will send the debug log to secure storage for the developer to review.
 
-better-bibtex_error-report_not-reviewed = Debug logs cannot be reviewed unless referred to in the GitHub issue tracker by their ID.
+better-bibtex_error-report_post-to-github = Please post a message to the issue tracker with this debug log ID, a description of the problem, and any steps necessary to reproduce it. <strong>Debug logs cannot be reviewed unless referred to in the GitHub issue tracker by their ID.</strong><br>https://github.com/retorquere/zotero-better-bibtex/issues
 
-better-bibtex_error-report_post-to-git-hub = Please post a message to the issue tracker (https://github.com/retorquere/zotero-better-bibtex/issues) with this debug log ID, a description of the problem, and any steps necessary to reproduce it.
 better-bibtex_error-report_report-id = Debug log ID:
 better-bibtex_error-report_restart-with-logging-enabled = 
   .label = Restart with Logging Enabled…
