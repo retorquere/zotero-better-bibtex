@@ -15,7 +15,6 @@ import { AutoExport } from './auto-export'
 import { KeyManager } from './key-manager'
 
 import { FilePickerHelper } from 'zotero-plugin-toolkit'
-import * as l10n from './l10n'
 
 import * as UZip from 'uzip'
 
@@ -366,13 +365,17 @@ export class ErrorReport {
     this.setValue('better-bibtex-error-errors', this.report.errors || '')
     this.setValue('better-bibtex-error-log', this.preview(this.report.log || ''))
     this.setValue('better-bibtex-error-items', this.report.items ? this.preview(JSON.parse(this.report.items)) : '')
+
+    let entries: number
     try {
-      this.setValue('better-bibtex-report-cache', this.cacheState = l10n.localize('better-bibtex_error-report_better-bibtex_cache', { entries: await Cache.count() }))
+      entries = await Cache.count()
     }
     catch (err) {
       log.error('cache: failed getting cache count', err)
-      this.setValue('better-bibtex-report-cache', this.cacheState = l10n.localize('better-bibtex_error-report_better-bibtex_cache', { entries: -1 }))
+      entries = -1
     }
+    this.document.querySelector('#better-bibtex-report-cache').setAttribute('data-l10n-args', JSON.stringify({ entries }))
+    this.cacheState = `cache: ${entries}`
 
     this.report.log = [
       this.report.context,

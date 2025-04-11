@@ -17,7 +17,8 @@ better-bibtex_error-report =
 
 better-bibtex_error-report_upgrade = The latest { $program } version is <strong>{ $upgrade }</strong>, you are running <strong>{ $running }</strong>; please upgrade first.
 
-better-bibtex_error-report_better-bibtex_cache = Cache size: { $entries } entries.
+better-bibtex_error-report_better-bibtex_cache =
+  .value = Cache size: { $entries } entries.
 
 better-bibtex_error-report_context = 
   .label = Application context
