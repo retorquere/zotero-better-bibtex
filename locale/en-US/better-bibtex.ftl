@@ -15,21 +15,17 @@ better-bibtex_citekey_set_toomany = Can only change one key at a time
 better-bibtex_error-report = 
   .title = Better BibTeX debug log
 
+better-bibtex_error-report_upgrade = The latest { $program } version is <strong>{ $upgrade }</strong>, you are running <strong>{ $running }</strong>; please upgrade first.
+
 better-bibtex_error-report_better-bibtex_cache = Cache size: { $entries } entries.
-better-bibtex_error-report_better-bibtex_current = You are running Better BibTeX version { $version }
-better-bibtex_error-report_better-bibtex_latest = The latest Better BibTeX version is { $version } -- please upgrade first.
-better-bibtex_error-report_better-bibtex_current_zotero = You are running Zotero version { $version }
-better-bibtex_error-report_better-bibtex_latest_zotero = The latest Zotero version is { $version } -- please upgrade first.
+
 better-bibtex_error-report_context = 
   .label = Application context
 
 better-bibtex_error-report_debug = 
   .label = Debug log
 
-
 better-bibtex_error-report_enable-debug = Zotero debug logging is currently disabled. It will be easier to diagnose the problem if you enable it before submitting a debug log.
-
-better-bibtex_error-report_upgrade = Please upgrade before opening an issue
 
 better-bibtex_error-report_errors = 
   .label = Errors
@@ -50,7 +46,7 @@ better-bibtex_error-report_include-attachments =
 better-bibtex_error-report_items = 
   .label = Items
 
-better-bibtex-error-send-reminder = Pressing "{ $send }" will send the debug log to secure storage for the developer to review.
+better-bibtex-error-send-reminder = Clicking "{ $send }" will send the debug log to secure storage for the developer to review.
 
 better-bibtex_error-report_not-reviewed = Debug logs cannot be reviewed unless referred to in the GitHub issue tracker by their ID.
 
