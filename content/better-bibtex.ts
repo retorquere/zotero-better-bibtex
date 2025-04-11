@@ -1,12 +1,5 @@
 /* eslint-disable prefer-rest-params */
 
-// import flatMap from 'array.prototype.flatmap'
-// flatMap.shim()
-// import matchAll from 'string.prototype.matchall'
-// matchAll.shim()
-// import allSettled = require('promise.allsettled')
-// allSettled.shim()
-
 import type Bluebird from 'bluebird'
 const Ready = Zotero.Promise.defer()
 
@@ -356,6 +349,8 @@ monkey.patch(Zotero.Translate.Export.prototype, 'translate', original => functio
     return original.apply(this, arguments)
   }
 
+  Zotero.BetterBibTeX.lastExportOptions = this._displayOptions ? JSON.stringify(this._displayOptions) : ''
+
   const displayOptions = this._displayOptions || {}
 
   if (this.location) {
@@ -407,6 +402,8 @@ monkey.patch(Zotero.Translate.Export.prototype, 'translate', original => functio
 export class BetterBibTeX {
   public clientName = Zotero.clientName
   public clientVersion = Zotero.version
+
+  public lastExportOptions = ''
 
   public uninstalled = false
   public Orchestrator = orchestrator

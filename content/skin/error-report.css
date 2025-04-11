@@ -32,13 +32,16 @@ description {
 	margin-left: 0;
 }
 
+description.emph {
+	color: red;
+}
+
 #zotero-error-steps-box description {
 	margin-bottom: .4em;
 }
 
 .textbox-emph {
 	color: red;
-	/* font-weight: bold; */
 }
 input[type='text']:read-only {
   border: 0;
