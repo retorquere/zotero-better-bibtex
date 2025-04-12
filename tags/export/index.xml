@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Export :: Tag :: Better BibTeX for Zotero</title>
+    <link>/zotero-better-bibtex/tags/export/index.html</link>
+    <description></description>
+    <generator>Hugo</generator>
+    <language>en</language>
+    <atom:link href="/zotero-better-bibtex/tags/export/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Exporting items</title>
+      <link>/zotero-better-bibtex/exporting/index.html</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>/zotero-better-bibtex/exporting/index.html</guid>
+      <description>Better BibTex adds a couple of export formats to Zotero’s export dialog and several ways to improve export for plaintext-based authoring. The Better BibTeX configuration pane can be found under the regular Zotero preferences pane, tab ‘Better BibTeX’ where you can tweak the exports, such as&#xA;Omitting fields from exports to slim down your bib files. Configuring how citation keys are generated. And really a ton more. Additionally you can automate exporting (parts of) your library either using auto-export or pull export.</description>
+    </item>
+    <item>
+      <title>Automatic export</title>
+      <link>/zotero-better-bibtex/exporting/auto/index.html</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>/zotero-better-bibtex/exporting/auto/index.html</guid>
+      <description>To export a library, group or collection, right-click on it in the left Zotero pane and choose “Export Library…” or “Export Collection…”. With BBT’s export translators (e.g., “Better BibTeX”), checking the Keep updated option will register the export for automation. After you’ve completed the current export, any changes to the collection or library will trigger an automatic re-export to update the file. You can review/remove exports from the BBT preferences. While I’ve gone to some lengths to make sure performance is OK, don’t go overboard with the number of auto-exports you have going. Also, exporting only targeted selections over your whole library will get you better performance. You can set up separate exports for separate papers for example if you have set up a collection for each.</description>
+    </item>
+    <item>
+      <title>Frequently Asked Questions</title>
+      <link>/zotero-better-bibtex/support/faq/index.html</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>/zotero-better-bibtex/support/faq/index.html</guid>
+      <description>Add-on could not be installed because it appears to be corrupt. You have downloaded the Better BibTeX plugin by clicking on the download link using Firefox. As Zotero and Firefox use the same plugin technology, Firefox think the BetterBibTeX plugin is intended for itself, tries to install it, and then finds out it won’t work. You need to download the plugin without installinging it into Firefox by right-clicking the download link, choose save-as, and then install it into Zotero using installation instructions to get started with BBT.</description>
+    </item>
+    <item>
+      <title>Pull export</title>
+      <link>/zotero-better-bibtex/exporting/pull/index.html</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>/zotero-better-bibtex/exporting/pull/index.html</guid>
+      <description>You can fetch your bibliography on the url http://127.0.0.1:23119/better-bibtex/collection?[collectionID].[format] 1. You can get this URL for a group, library or collection by right-clicking it and selecting Download Better BibTeX export...&#xA;You can add options to the export as URL parameters:&#xA;&amp;exportNotes=[true|false] &amp;useJournalAbbreviation=[true|false] You can fetch your library as part of your build, using something like curl from your Makefile, or with a BibLaTeX remote statement like&#xA;\addbibresource[location=remote]{http://127.0.0.1:23119/better-bibtex/collection?/0/8CV58ZVD.biblatex} format can be:</description>
+    </item>
+    <item>
+      <title>Performance</title>
+      <link>/zotero-better-bibtex/support/performance/index.html</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>/zotero-better-bibtex/support/performance/index.html</guid>
+      <description>The Better BibTeX exporters are a lot slower than the standard Zotero Bib(La)TeX exporters. If you have a small library, you will not likely notice this, but if you have several thousand items, and you are in the habit of exporting substantial parts of your library, this gets annoying really fast.&#xA;To deal with this problem, Better BibTeX implements an extensive caching system. With a filled cache, Better BibTeX is substantially faster than the default Zotero exporters. Specifically for automatic background exports, a filled cache is a good thing to have.</description>
+    </item>
+    <item>
+      <title>Export</title>
+      <link>/zotero-better-bibtex/installation/preferences/export/index.html</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>/zotero-better-bibtex/installation/preferences/export/index.html</guid>
+      <description>The Better BibTeX Configuration can be found under the regular Zotero preferences pane, tab ‘Better BibTeX’.&#xA;The configuration of Better BibTeX is a little baroque compared to the standard Zotero Bib(La)TeX exporters (which only have hidden preferences). The defaults should just work, but here’s an attempt to describe what they do.&#xA;Making any change here will drop your entire export cache. This is usually not a problem unless you have a really large library, but you can read about what is involved here.</description>
+    </item>
+    <item>
+      <title>Bundled translators</title>
+      <link>/zotero-better-bibtex/installation/bundled-translators/index.html</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>/zotero-better-bibtex/installation/bundled-translators/index.html</guid>
+      <description>Zotero import/export translators bundled with BBT</description>
+    </item>
+  </channel>
+</rss>

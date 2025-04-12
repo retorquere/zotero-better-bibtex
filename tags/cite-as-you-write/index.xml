@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Cite as You Write :: Tag :: Better BibTeX for Zotero</title>
+    <link>/zotero-better-bibtex/tags/cite-as-you-write/index.html</link>
+    <description></description>
+    <generator>Hugo</generator>
+    <language>en</language>
+    <atom:link href="/zotero-better-bibtex/tags/cite-as-you-write/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Cite as you Write</title>
+      <link>/zotero-better-bibtex/citing/cayw/index.html</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>/zotero-better-bibtex/citing/cayw/index.html</guid>
+      <description>PSA: as of Zotero 5.0.71, access to the CAYW URL will no longer work from the browser for security reasons; curl and other programmatic access such as from editors access will work.&#xA;Good news for TeXnicians and those down with Mark (aka Markdown, RST, whatnot): this is the time to go pester the author of your favorite editor for Zotero integration!&#xA;Editor integration vim Graciously supplied by David Lukes:&#xA;paste it in your .vimrc (and modify to your liking):</description>
+    </item>
+  </channel>
+</rss>

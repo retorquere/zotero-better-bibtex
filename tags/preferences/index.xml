@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Preferences :: Tag :: Better BibTeX for Zotero</title>
+    <link>/zotero-better-bibtex/tags/preferences/index.html</link>
+    <description></description>
+    <generator>Hugo</generator>
+    <language>en</language>
+    <atom:link href="/zotero-better-bibtex/tags/preferences/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Export</title>
+      <link>/zotero-better-bibtex/installation/preferences/export/index.html</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>/zotero-better-bibtex/installation/preferences/export/index.html</guid>
+      <description>The Better BibTeX Configuration can be found under the regular Zotero preferences pane, tab ‘Better BibTeX’.&#xA;The configuration of Better BibTeX is a little baroque compared to the standard Zotero Bib(La)TeX exporters (which only have hidden preferences). The defaults should just work, but here’s an attempt to describe what they do.&#xA;Making any change here will drop your entire export cache. This is usually not a problem unless you have a really large library, but you can read about what is involved here.</description>
+    </item>
+    <item>
+      <title>Automatic export</title>
+      <link>/zotero-better-bibtex/installation/preferences/automatic-export/index.html</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>/zotero-better-bibtex/installation/preferences/automatic-export/index.html</guid>
+      <description>The Better BibTeX Configuration can be found under the regular Zotero preferences pane, tab ‘Better BibTeX’.&#xA;The configuration of Better BibTeX is a little baroque compared to the standard Zotero Bib(La)TeX exporters (which only have hidden preferences). The defaults should just work, but here’s an attempt to describe what they do.&#xA;Making any change here will drop your entire export cache. This is usually not a problem unless you have a really large library, but you can read about what is involved here.</description>
+    </item>
+    <item>
+      <title>Import</title>
+      <link>/zotero-better-bibtex/installation/preferences/import/index.html</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>/zotero-better-bibtex/installation/preferences/import/index.html</guid>
+      <description>The Better BibTeX Configuration can be found under the regular Zotero preferences pane, tab ‘Better BibTeX’.&#xA;The configuration of Better BibTeX is a little baroque compared to the standard Zotero Bib(La)TeX exporters (which only have hidden preferences). The defaults should just work, but here’s an attempt to describe what they do.&#xA;Making any change here will drop your entire export cache. This is usually not a problem unless you have a really large library, but you can read about what is involved here.</description>
+    </item>
+    <item>
+      <title>Miscellaneous</title>
+      <link>/zotero-better-bibtex/installation/preferences/miscellaneous/index.html</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>/zotero-better-bibtex/installation/preferences/miscellaneous/index.html</guid>
+      <description>The Better BibTeX Configuration can be found under the regular Zotero preferences pane, tab ‘Better BibTeX’.&#xA;The configuration of Better BibTeX is a little baroque compared to the standard Zotero Bib(La)TeX exporters (which only have hidden preferences). The defaults should just work, but here’s an attempt to describe what they do.&#xA;Making any change here will drop your entire export cache. This is usually not a problem unless you have a really large library, but you can read about what is involved here.</description>
+    </item>
+    <item>
+      <title>Hidden preferences</title>
+      <link>/zotero-better-bibtex/installation/preferences/hidden-preferences/index.html</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>/zotero-better-bibtex/installation/preferences/hidden-preferences/index.html</guid>
+      <description>The Better BibTeX Configuration can be found under the regular Zotero preferences pane, tab ‘Better BibTeX’.&#xA;The configuration of Better BibTeX is a little baroque compared to the standard Zotero Bib(La)TeX exporters (which only have hidden preferences). The defaults should just work, but here’s an attempt to describe what they do.&#xA;Making any change here will drop your entire export cache. This is usually not a problem unless you have a really large library, but you can read about what is involved here.</description>
+    </item>
+  </channel>
+</rss>

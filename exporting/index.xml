@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Exporting items :: Better BibTeX for Zotero</title>
+    <link>/zotero-better-bibtex/exporting/index.html</link>
+    <description>Better BibTex adds a couple of export formats to Zotero’s export dialog and several ways to improve export for plaintext-based authoring. The Better BibTeX configuration pane can be found under the regular Zotero preferences pane, tab ‘Better BibTeX’ where you can tweak the exports, such as&#xA;Omitting fields from exports to slim down your bib files. Configuring how citation keys are generated. And really a ton more. Additionally you can automate exporting (parts of) your library either using auto-export or pull export.</description>
+    <generator>Hugo</generator>
+    <language>en</language>
+    <atom:link href="/zotero-better-bibtex/exporting/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Automatic export</title>
+      <link>/zotero-better-bibtex/exporting/auto/index.html</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>/zotero-better-bibtex/exporting/auto/index.html</guid>
+      <description>To export a library, group or collection, right-click on it in the left Zotero pane and choose “Export Library…” or “Export Collection…”. With BBT’s export translators (e.g., “Better BibTeX”), checking the Keep updated option will register the export for automation. After you’ve completed the current export, any changes to the collection or library will trigger an automatic re-export to update the file. You can review/remove exports from the BBT preferences. While I’ve gone to some lengths to make sure performance is OK, don’t go overboard with the number of auto-exports you have going. Also, exporting only targeted selections over your whole library will get you better performance. You can set up separate exports for separate papers for example if you have set up a collection for each.</description>
+    </item>
+    <item>
+      <title>Markdown/Pandoc</title>
+      <link>/zotero-better-bibtex/exporting/pandoc/index.html</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>/zotero-better-bibtex/exporting/pandoc/index.html</guid>
+      <description>In addition to LaTeX, BBT plays very well with pandoc:&#xA;you can drag and drop citations from Zotero into your markdown documents. you can cite as you write in your favorite editor with varying levels of comfort, mostly depending on how easy (VSCode, Sublime) or hard (looking at you Scrivener) it is to extend your editor. you can even convert your markdown document into a LibreOffice/Word document with actual live Zotero items as if you had entered them into Zotero all along (see below) Use CSL, not bibtex with pandoc Many tutorials on the use of pandoc to generate documents with citations seem to use bibtex as a bibliography format. I would encourage the use of CSL instead. Internally, both Zotero and pandoc-citeproc use CSL citation engines; the two options you have are:</description>
+    </item>
+    <item>
+      <title>Pull export</title>
+      <link>/zotero-better-bibtex/exporting/pull/index.html</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>/zotero-better-bibtex/exporting/pull/index.html</guid>
+      <description>You can fetch your bibliography on the url http://127.0.0.1:23119/better-bibtex/collection?[collectionID].[format] 1. You can get this URL for a group, library or collection by right-clicking it and selecting Download Better BibTeX export...&#xA;You can add options to the export as URL parameters:&#xA;&amp;exportNotes=[true|false] &amp;useJournalAbbreviation=[true|false] You can fetch your library as part of your build, using something like curl from your Makefile, or with a BibLaTeX remote statement like&#xA;\addbibresource[location=remote]{http://127.0.0.1:23119/better-bibtex/collection?/0/8CV58ZVD.biblatex} format can be:</description>
+    </item>
+    <item>
+      <title>Scripting</title>
+      <link>/zotero-better-bibtex/exporting/scripting/index.html</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>/zotero-better-bibtex/exporting/scripting/index.html</guid>
+      <description>You wanted customized… You got customized. If you go into the Export tab of the Better BibTeX preferences, subtab postscript, you will find a text box (empty by default) where you can edit a javascript snippet which will be executed for each entry generated in the Bib(La)TeX exporter. In this code, you have access to the entry just before it will be written out and cached. There is an API to do this, and it’s fairly stable, but usually you can just open a new issue and ask me to write it, and I’ll add it here (it’s how the examples got here). Postscripts are available in 4 of the translators:</description>
+    </item>
+    <item>
+      <title>Extra fields</title>
+      <link>/zotero-better-bibtex/exporting/extra-fields/index.html</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>/zotero-better-bibtex/exporting/extra-fields/index.html</guid>
+      <description>In some cases the Zotero fields do not offer a place to enter the data you need to get your exported entries just right. For this Zotero has a so-called “cheater syntax” which allows you to add extra “fields” as separate lines in the extra field all items in Zotero have. These fields are supported by the citation processor inside Zotero, and BBT understands them too, and adds one “cheater syntax of its own.</description>
+    </item>
+    <item>
+      <title>Unicode</title>
+      <link>/zotero-better-bibtex/exporting/unicode/index.html</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>/zotero-better-bibtex/exporting/unicode/index.html</guid>
+      <description>LaTeX en unicode If you’re lucky and you live in the 21st century or later, you can just use unicode in BibLaTeX and you don’t have to bother about anything that follows except if you’re the curious kind.&#xA;Some of us though are bound to outlets that still demand BibTeX, and there’s geezers like me who just prefer the aesthetic of TeX commands over fancy-schmancy unicode, or you find TeX commands easier to search for in your doc than having to memorize how to enter Ψ. BBT has an extensive map of unicode characters, but translating unicode to TeX comes with a massive downside – support for non-ascii characters is scattered across a myriad of packages that you will have to usepackage into your document. The default set are supported by your latex distribution, and require nothing extra in your preamble, but to achieve that I’ve had to make some compromises. You can amend those choices by telling BBT you have extra packages available. BBT can export commands from the following packages:</description>
+    </item>
+    <item>
+      <title>Advanced</title>
+      <link>/zotero-better-bibtex/exporting/advanced/index.html</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>/zotero-better-bibtex/exporting/advanced/index.html</guid>
+      <description>You are a hardcore LaTeX user If you’d really just rather hand-code your LaTeX constructs, BBT makes that possible:&#xA;You can add literal LaTeX anywhere in your item by surrounding it with &lt;script&gt;...&lt;/script&gt; (&lt;pre&gt;...&lt;/pre&gt; will also work for historical reasons) markers. BBT will convert to/from unicode and (un)escape where required but will pass whatever is enclosed in the pre tags unchanged. An entry tagged with #LaTeX (case-sensitive!) will have all fields exported as if they’re wrapped in &lt;script&gt;...&lt;/script&gt;, so you can include LaTeX markup in your items. Recognizing initials in names In names, you can force first names like Philippe to be exported to {\relax Ph}ilippe (which causes it to get initial Ph. rather than P. in styles that do initials) capitalizing the letters you want to have used as the initials, so PHilippe.</description>
+    </item>
+    <item>
+      <title>JSON-RPC</title>
+      <link>/zotero-better-bibtex/exporting/json-rpc/index.html</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>/zotero-better-bibtex/exporting/json-rpc/index.html</guid>
+      <description>You can call into BBT using JSON-RPC on the URL http://localhost:23119/better-bibtex/json-rpc . An example could look like:&#xA;curl http://localhost:23119/better-bibtex/json-rpc -X POST -H &#34;Content-Type: application/json&#34; -H &#34;Accept: application/json&#34; --data-binary &#39;{&#34;jsonrpc&#34;: &#34;2.0&#34;, &#34;method&#34;: &#34;collection.scanAUX&#34;, &#34;params&#34;: [&#34;/My Library/thesis/article1&#34;, &#34;/Users/phantom/Downloads/output.aux&#34;] }&#39; The available methods are:&#xA;api.ready(): { betterbibtex: string; zotero: string }&#xA;Returns the Zotero and BetterBibTeX version to show the JSON-RPC API is ready.&#xA;autoexport.add(collection: string, translator: string, path: string, displayOptions: Record&lt;string, boolean&gt; = {}, replace: boolean = false): { id: number; key: string; libraryID: number }</description>
+    </item>
+  </channel>
+</rss>

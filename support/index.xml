@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Support :: Better BibTeX for Zotero</title>
+    <link>/zotero-better-bibtex/support/index.html</link>
+    <description>Before all else, thank you for taking the time for submitting an issue, and I’m sorry that I’ve probably interrupted your flow.&#xA;Your report matters to me. I love hearing my software helps you, and it pains me to know that things aren’t working for you.&#xA;If you have any questions on the use of the plugin, please do not hesitate to file a GitHub issue to ask for help.</description>
+    <generator>Hugo</generator>
+    <language>en</language>
+    <atom:link href="/zotero-better-bibtex/support/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Frequently Asked Questions</title>
+      <link>/zotero-better-bibtex/support/faq/index.html</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>/zotero-better-bibtex/support/faq/index.html</guid>
+      <description>Add-on could not be installed because it appears to be corrupt. You have downloaded the Better BibTeX plugin by clicking on the download link using Firefox. As Zotero and Firefox use the same plugin technology, Firefox think the BetterBibTeX plugin is intended for itself, tries to install it, and then finds out it won’t work. You need to download the plugin without installinging it into Firefox by right-clicking the download link, choose save-as, and then install it into Zotero using installation instructions to get started with BBT.</description>
+    </item>
+    <item>
+      <title>Performance</title>
+      <link>/zotero-better-bibtex/support/performance/index.html</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>/zotero-better-bibtex/support/performance/index.html</guid>
+      <description>The Better BibTeX exporters are a lot slower than the standard Zotero Bib(La)TeX exporters. If you have a small library, you will not likely notice this, but if you have several thousand items, and you are in the habit of exporting substantial parts of your library, this gets annoying really fast.&#xA;To deal with this problem, Better BibTeX implements an extensive caching system. With a filled cache, Better BibTeX is substantially faster than the default Zotero exporters. Specifically for automatic background exports, a filled cache is a good thing to have.</description>
+    </item>
+    <item>
+      <title>Translations</title>
+      <link>/zotero-better-bibtex/support/translations/index.html</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>/zotero-better-bibtex/support/translations/index.html</guid>
+      <description>BBT is currently available in English, German, French and Brazilian Portuguese. You can help out by adding new translations or fixing existing ones on Crowdin.</description>
+    </item>
+    <item>
+      <title>Running the BBT test suite</title>
+      <link>/zotero-better-bibtex/support/tests/index.html</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>/zotero-better-bibtex/support/tests/index.html</guid>
+      <description>Please DO NOT DO THIS without an open issue on the github tracker. I’ve been running tests this way for years, but I’d still prefer to guide you through this to prevent any risks to your citation library. The test suite has only been tested on MacOS and Linux. I doubt it’ll run on Windows, and I don’t know what will go wrong when you test. If you’re on Windows, DO NOT run this on the same account that holds your actual Zotero library.</description>
+    </item>
+  </channel>
+</rss>

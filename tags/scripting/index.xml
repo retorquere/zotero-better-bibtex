@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Scripting :: Tag :: Better BibTeX for Zotero</title>
+    <link>/zotero-better-bibtex/tags/scripting/index.html</link>
+    <description></description>
+    <generator>Hugo</generator>
+    <language>en</language>
+    <atom:link href="/zotero-better-bibtex/tags/scripting/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Exporting items</title>
+      <link>/zotero-better-bibtex/exporting/index.html</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>/zotero-better-bibtex/exporting/index.html</guid>
+      <description>Better BibTex adds a couple of export formats to Zotero’s export dialog and several ways to improve export for plaintext-based authoring. The Better BibTeX configuration pane can be found under the regular Zotero preferences pane, tab ‘Better BibTeX’ where you can tweak the exports, such as&#xA;Omitting fields from exports to slim down your bib files. Configuring how citation keys are generated. And really a ton more. Additionally you can automate exporting (parts of) your library either using auto-export or pull export.</description>
+    </item>
+    <item>
+      <title>Scripting</title>
+      <link>/zotero-better-bibtex/exporting/scripting/index.html</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>/zotero-better-bibtex/exporting/scripting/index.html</guid>
+      <description>You wanted customized… You got customized. If you go into the Export tab of the Better BibTeX preferences, subtab postscript, you will find a text box (empty by default) where you can edit a javascript snippet which will be executed for each entry generated in the Bib(La)TeX exporter. In this code, you have access to the entry just before it will be written out and cached. There is an API to do this, and it’s fairly stable, but usually you can just open a new issue and ask me to write it, and I’ll add it here (it’s how the examples got here). Postscripts are available in 4 of the translators:</description>
+    </item>
+  </channel>
+</rss>

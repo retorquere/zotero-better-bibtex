@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Cache :: Tag :: Better BibTeX for Zotero</title>
+    <link>/zotero-better-bibtex/tags/cache/index.html</link>
+    <description></description>
+    <generator>Hugo</generator>
+    <language>en</language>
+    <atom:link href="/zotero-better-bibtex/tags/cache/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Performance</title>
+      <link>/zotero-better-bibtex/support/performance/index.html</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>/zotero-better-bibtex/support/performance/index.html</guid>
+      <description>The Better BibTeX exporters are a lot slower than the standard Zotero Bib(La)TeX exporters. If you have a small library, you will not likely notice this, but if you have several thousand items, and you are in the habit of exporting substantial parts of your library, this gets annoying really fast.&#xA;To deal with this problem, Better BibTeX implements an extensive caching system. With a filled cache, Better BibTeX is substantially faster than the default Zotero exporters. Specifically for automatic background exports, a filled cache is a good thing to have.</description>
+    </item>
+    <item>
+      <title>Citation keys</title>
+      <link>/zotero-better-bibtex/installation/preferences/index.html</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>/zotero-better-bibtex/installation/preferences/index.html</guid>
+      <description>The Better BibTeX Configuration can be found under the regular Zotero preferences pane, tab ‘Better BibTeX’.&#xA;The configuration of Better BibTeX is a little baroque compared to the standard Zotero Bib(La)TeX exporters (which only have hidden preferences). The defaults should just work, but here’s an attempt to describe what they do.&#xA;Making any change here will drop your entire export cache. This is usually not a problem unless you have a really large library, but you can read about what is involved here.</description>
+    </item>
+  </channel>
+</rss>
