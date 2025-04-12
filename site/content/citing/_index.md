@@ -2,7 +2,6 @@
 title: Citation Keys
 weight: 3
 aliases:
-  - /Citation-Keys
   - /citation-keys
 tags:
   - citation keys

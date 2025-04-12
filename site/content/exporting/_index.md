@@ -7,7 +7,6 @@ tags:
   - scripting
 aliases:
   - /customized-exports
-  - /Customized-Exports
   - /export
 ---
 

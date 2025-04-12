@@ -1,6 +1,5 @@
 ---
 aliases:
-  - /Configuration
   - /configuration
 tags:
   - configuration

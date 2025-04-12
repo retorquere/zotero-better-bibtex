@@ -3,11 +3,10 @@ title: Frequently Asked Questions
 weight: 5
 linktitle: FAQ
 aliases:
-  - /Unnecessarily-complicated-BibTeX-output
-  - /Unicode-and-Markup
+  - /unnecessarily-complicated-bibtex-output
+  - /unicode-and-markup
   - /unicode
-  - /From-Unicode-to-LaTeX-and-Back-Again
-  - /Unnecessarily-complicated-BibTeX-output
+  - /from-unicode-to-latex-and-back-again
   - /all-them-braces
 tags:
   - export
