@@ -45,3 +45,5 @@ selenium
 snakemake>=7.16
 toml
 xvfbwrapper
+mkdocs
+mkdocs-awesome-nav

@@ -32,14 +32,6 @@ body:
     placeholder: ex. ABCD1234-ref-euc or nNwplUbkYrQu-buc-ABCD1234 for bashupload.com.
   validations:
     required: true
-- type: input
-  id: zotero
-  attributes:
-    label: Zotero version
-    description: MUST be 7.0.15 / 7.1-beta.25+3d538d71c or later
-    placeholder: 7.0.15 / 7.1-beta.25+3d538d71c
-  validations:
-    required: true
 - type: textarea
   id: request
   attributes:
