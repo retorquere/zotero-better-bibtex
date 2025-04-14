@@ -100,10 +100,10 @@ jobs:
     - *install_python_packages
     - *install_node
     - *install_node_packages
-    - name: build site and install hugo
+    - name: install hugo 0.143.0 and build site
       uses: peaceiris/actions-hugo@v3
       with:
-        hugo-version: latest
+        hugo-version: 0.143.
         extended: true
     - name: prepare docs for deploy
       run: npm run docs:deploy
