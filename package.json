@@ -69,7 +69,7 @@
   },
   "dependencies": {
     "@artsy/to-title-case": "^1.1.0",
-    "@ast-grep/napi": "^0.36.2",
+    "@ast-grep/napi": "^0.36.3",
     "@caeser1996/titlecase": "^3.0.2",
     "@henrygd/queue": "^1.0.7",
     "@idxdb/promised": "^4.1.0",
