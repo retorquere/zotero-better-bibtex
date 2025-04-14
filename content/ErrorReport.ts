@@ -170,7 +170,7 @@ export class ErrorReport {
 
       wizard.advance()
 
-      const id = `${this.name()}/${upgrades.zotero.upgrade}/${upgrades.bbt.upgrade}`;
+      const id = `${this.name()}/${upgrades.zotero.upgrade || '\u2713'}/${upgrades.bbt.upgrade || '\u2713'}`;
       (<HTMLInputElement> this.document.getElementById('better-bibtex-report-id')).value = id
     }
     catch (err) {
@@ -386,6 +386,8 @@ export class ErrorReport {
   }
 
   public async load(win: Window & { ErrorReport: ErrorReport; arguments: any[] }): Promise<void> {
+    const items = win.arguments[0].wrappedJSObject.items
+
     this.document = win.document
     win.ErrorReport = this
 
@@ -396,6 +398,8 @@ export class ErrorReport {
     continueButton.disabled = true
 
     wizard.getPageById('page-enable-debug').hidden = !!Zotero.Debug.storing
+    wizard.getPageById('page-items').hidden = !!items
+    wizard.getPageById('page-upgrade').hidden = true
     await upgrades.init(this.document)
     wizard.getPageById('page-upgrade').hidden = !(upgrades.bbt.upgrade || upgrades.zotero.upgrade)
 
@@ -422,7 +426,6 @@ export class ErrorReport {
       cache = ''
     }
 
-    const items = win.arguments[0].wrappedJSObject.items
     if (items && Zotero.BetterBibTeX.lastExportOptions) {
       items.config = items.config || {}
       items.config.options = JSON.parse(Zotero.BetterBibTeX.lastExportOptions)

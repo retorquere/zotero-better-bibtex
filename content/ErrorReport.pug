@@ -15,7 +15,7 @@
 | ]>
 wizard#better-bibtex-error-report(
     xmlns='http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul'
-    xmlns:html="http://www.w3.org/1999/xhtml"
+    xmlns:html='http://www.w3.org/1999/xhtml'
     title='&better-bibtex_error-report.title;' _width='700' _height='700'
   )
   wizardpage(hidden=true pageid='page-enable-debug' label=' ')
@@ -25,13 +25,23 @@ wizard#better-bibtex-error-report(
 
   wizardpage(hidden=true pageid='page-upgrade' label=' ')
     html:div
-      html:p#better-bibtex-report-upgrade-bbt('data-l10n-id'='better-bibtex_error-report_upgrade')
-      html:p#better-bibtex-report-upgrade-zotero('data-l10n-id'='better-bibtex_error-report_upgrade')
+      html:p#better-bibtex-report-upgrade-bbt(data-l10n-id='better-bibtex_error-report_upgrade')
+      html:p#better-bibtex-report-upgrade-zotero(data-l10n-id='better-bibtex_error-report_upgrade')
+
+  wizardpage(hidden=true pageid='page-items' label=' ')
+    html:div
+      html:p#better-bibtex-report-no-items(data-l10n-id='better-bibtex_error-report_no_items')
+      html:ul
+        html:li(data-l10n-id='better-bibtex_error-report_no_items_cancel')
+        html:li(data-l10n-id='better-bibtex_error-report_no_items_reproduce')
+        html:li(data-l10n-id='better-bibtex_error-report_no_items_select')
+        html:li(data-l10n-id='better-bibtex_error-report_no_items_popup')
+        html:li(data-l10n-id='better-bibtex_error-report_no_items_report')
 
   wizardpage(pageid='page-review' label=' ')
     tooltip#better-bibtex-error-report-info &better-bibtex_error-report_review;
 
-    label#better-bibtex-report-cache('data-l10n-id'='better-bibtex_error-report_better-bibtex_cache' flex='1' readonly='true')
+    label#better-bibtex-report-cache(data-l10n-id='better-bibtex_error-report_better-bibtex_cache' flex='1' readonly='true')
 
     checkbox.better-bibtex-error-report-facet#better-bibtex-error-report-include-errors(checked=true label='&better-bibtex_error-report_include-errors.label;')/
     checkbox.better-bibtex-error-report-facet#better-bibtex-error-report-include-log(checked=true label='&better-bibtex_error-report_include-log.label;')/
@@ -60,7 +70,7 @@ wizard#better-bibtex-error-report(
     hbox
       button(label='&better-bibtex_error-report_save.label;' oncommand='window.ErrorReport.save()')/
       hbox(flex='1')/
-    html:div#better-bibtex-error-send-reminder('data-l10n-id'='better-bibtex-error-send-reminder')
+    html:div#better-bibtex-error-send-reminder(data-l10n-id='better-bibtex-error-send-reminder')
 
   wizardpage(pageid='page-send' label=' ')
     description &better-bibtex_error-report_submission-in-progress;
@@ -71,7 +81,11 @@ wizard#better-bibtex-error-report(
       description
         | &better-bibtex_error-report_report-id; 
         textbox#better-bibtex-report-id.plain.textbox-emph(flex='1' size=40 readonly='true')
-    html:div('data-l10n-id'='better-bibtex_error-report_post-to-github')
+    html:div(data-l10n-id='better-bibtex_error-report_post-to-github')
+    html:a(
+      href='https://github.com/retorquere/zotero-better-bibtex/issues'
+      onclick='Zotero.launchURL("https://github.com/retorquere/zotero-better-bibtex/issues/new/choose")'
+      ) https://github.com/retorquere/zotero-better-bibtex/issues
 
   script(src='chrome://zotero/content/include.js')
   script.
