@@ -396,7 +396,6 @@ function KeyManager() {
 
     let parameters = []
     let summary = (signature.parameters || []).map(p => {
-      parameters.push({ name: '`' + p.name + '`', doc: p.comment.summary.map(c => c.text).join('') })
       let schema = typescriptType[method.name]?.[p.name] || p.type
       schema = builder.make(schema)
       if (p.flags.isRest) {
@@ -410,6 +409,13 @@ function KeyManager() {
       const name = (p.flags.isRest ? `...${p.name}` : p.name) + (p.flags.isOptional ? '?' : '')
       const type = typePrinter.print(p.type)
       const dflt = typeof p.defaultValue === 'undefined' ? '' : ` = ${p.defaultValue}`
+
+      parameters.push({
+        name: `<code>${showdown.makeHtml(p.name)}</code>`,
+        type: showdown.makeHtml(type),
+        doc: showdown.makeHtml(p.comment.summary.map(c => c.text).join('')),
+      })
+
       return `${name}: ${type}${dflt}`
     }).join(', ')
     summary = summary ? `(${summary})` : ''
@@ -422,7 +428,7 @@ function KeyManager() {
     description = showdown.makeHtml(description || '')
 
     parameters = parameters.length
-      ? `<table><th><td><b>parameter</b></td><td/></th>${parameters.map(p => `<tr><td>${showdown.makeHtml(p.name)}</td><td>${showdown.makeHtml(p.doc)}</td></tr>`).join('')}</table>`
+      ? `<table><tr><th><b>parameter</b></th><th>type</th><th/></tr>${parameters.map(p => `<tr><td>${p.name}</td><td>${p.type}</td><td>${p.doc}</td></tr>`).join('')}</table>`
       : ''
 
     const kind = method.name[0]
