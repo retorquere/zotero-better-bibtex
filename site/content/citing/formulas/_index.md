@@ -13,7 +13,7 @@ tags:
 
 **Note**: The functions above used to have the `clean` function automatically applied to them, **this is no longer the case**, so if you have CJK authors/titles and you want to manipulate them (using eg. `capitalize`), you could have to use `transliterate` on them first, eg. `authEtal2.transliterate.capitalize + year + shorttitle(3, 3)`.
 
-## Direct access to unprocessed fields
+## Direct access to unprocessed fields ("Field functions")
 
 The above functions all retrieve information stored in the item's fields and process it in some way. If you don't want this, you can instead call field contents without any processing. To access Zotero fields, refer to them as given in the table below:
 
