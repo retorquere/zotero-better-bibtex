@@ -11,6 +11,10 @@ const root = findRoot(__dirname)
 const ast = require('./api/type-doc').parse
 const crypto = require('crypto')
 
+function render(md) {
+  return showdown.makeHtml(md).replace(/^<p>/, '').replace(/<\/p>$/, '')
+}
+
 if (!fs.existsSync('gen/api')) fs.mkdirSync('gen/api', { recursive: true })
 fs.writeFileSync('gen/api/key-formatter.js', '')
 fs.writeFileSync('gen/api/json-rpc.js', '')
@@ -411,9 +415,9 @@ function KeyManager() {
       const dflt = typeof p.defaultValue === 'undefined' ? '' : ` = ${p.defaultValue}`
 
       parameters.push({
-        name: `<code>${showdown.makeHtml(p.name)}</code>`,
-        type: showdown.makeHtml(type),
-        doc: showdown.makeHtml(p.comment.summary.map(c => c.text).join('')),
+        name: `<code>${render(p.name)}</code>`,
+        type: render(type),
+        doc: render(p.comment.summary.map(c => c.text).join('')),
       })
 
       return `${name}: ${type}${dflt}`
@@ -425,7 +429,7 @@ function KeyManager() {
       if (!s.kind.match(/^(code|text)$/)) throw s
       return s.text
     }).join('') + '\n' + builder.description
-    description = showdown.makeHtml(description || '')
+    description = render(description || '')
 
     parameters = parameters.length
       ? `<table><tr><th><b>parameter</b></th><th>type</th><th/></tr>${parameters.map(p => `<tr><td>${p.name}</td><td>${p.type}</td><td>${p.doc}</td></tr>`).join('')}</table>`
