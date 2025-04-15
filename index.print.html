@@ -11716,10 +11716,14 @@ bibliography, this is a piece of data you want to have control over. BBT offers 
 <p>You can drag and drop citations into your LaTeX/Markdown/Orgmode editor, and it will add a proper <code>\cite{citekey}</code>/<code>[@citekey]</code>/<code>[[zotero://select...][@citekey]</code>. The <code>cite</code> command is
 configurable for LaTeX by setting the config option in the <a href="/zotero-better-bibtex/installation/preferences/">preferences</a>. Do not include the leading backslash.</p>
 <p>This feature requires a one-time setup: choose the Quick Copy format under the <code>Citation keys</code> preferences for BBT, and go to Zotero preferences, tab Export, under Default Output Format, select &ldquo;Better BibTeX Quick Copy: [format you just selected]&rdquo;.</p>
-<h2 id="find-duplicate-keys-through-integration-with-report-customizerhttpsgithubcomretorquerezotero-report-customizer">Find duplicate keys through integration with <a href="https://github.com/retorquere/zotero-report-customizer" rel="external" target="_blank">Report Customizer</a></h2>
-<p>The plugin will generate BibTeX comments to show whether a key conflicts and with which entry. BBT integrates with
-<a href="https://github.com/retorquere/zotero-report-customizer" rel="external" target="_blank">Zotero: Report Customizer</a> to display the BibTeX key plus any
-conflicts between them in the zotero report.</p>
+<!--
+## Find duplicate keys through integration with [Report Customizer](https://github.com/retorquere/zotero-report-customizer)
+
+The plugin will generate BibTeX comments to show whether a key conflicts and with which entry. BBT integrates with
+[Zotero: Report Customizer](https://github.com/retorquere/zotero-report-customizer) to display the BibTeX key plus any
+conflicts between them in the zotero report.
+
+-->
 <h2 id="configurable-citekey-generator">Configurable citekey generator</h2>
 <p>BBT also implements a citekey generator for those entries that don&rsquo;t have a citekey set explicitly; the formatter pattern language used to follow
 the <a href="https://help.jabref.org/en/BibtexKeyPatterns" rel="external" target="_blank">JabRef key formatting syntax</a>, but now uses a javascript-ish format. You can set your generator pattern in the Better BibTeX
@@ -11773,10 +11777,27 @@ that yields a non-empty string. If all return a empty string, a random key will 
 <p>to jump to the next formula if <code>auth</code> and <code>title</code> were both empty is now</p>
 <div class="highlight wrap-code" dir="auto"><pre tabindex="0"><code>(auth + title).len + year</code></pre></div>
 <h3 id="generating-citekeys">Generating citekeys</h3>
-<p>To generate your citekeys, you use a formula composed of functions and filters. Broadly, functions grab text from your item, and filters transform that text. <strong>Note that the formula syntax has changed from a bracketed format to a javascript-ish format</strong>. The old syntax was getting harder to maintain and its inflexibility prevented new extensions to the functions being implemented cleanly. <strong>The old syntax still works</strong> but will be translated to the new format automatically.</p>
+<p>To generate your citekeys, you use a formula composed of <a href="/zotero-better-bibtex/citing/formulas/index.html">functions and filters</a>. Broadly, functions grab text from your item, and filters transform that text. <strong>Note that the formula syntax has changed from a bracketed format to a javascript-ish format</strong>. The old syntax was getting harder to maintain and its inflexibility prevented new extensions to the functions being implemented cleanly. <strong>The old syntax still works</strong> but will be translated to the new format automatically.</p>
 <p>Below you will find a full list of functions and filters you can use, in the new format only, sorry. You can still use these in the old syntax, but they support only positional parameters, where I would recommend generally to use the new syntax with named parameters.</p>
 <p>Note: a number of functions below talk about the author&rsquo;s lastname; you can read that as &ldquo;when available&rdquo;. If you have the name as a single-field name (for entities like <code>International Business Machines</code> or <code>Aristoteles</code>), Zotero doesn&rsquo;t have a last name, and the full single-field name is taken instead.</p>
-<h4 id="functions">Functions</h4>
+
+  <footer class="footline">
+  </footer>
+</article>
+          <section>
+            <h1 class="a11y-only">Subsections of Citation Keys</h1>
+<article class="default">
+  <header class="headline">
+<div class="R-taxonomy taxonomy-tags cstyle tags" title="Tags" style="--VARIABLE-TAGS-BG-color: var(--INTERNAL-TAG-BG-color);">
+  <ul>
+    <li><a class="term-link" href="/zotero-better-bibtex/tags/citation-keys/index.html">Citation Keys</a></li>
+  </ul>
+</div>
+  </header>
+
+<h1 id="citation-keys">Citation Keys</h1>
+
+<h2 id="functions">Functions</h2>
 <dl>
   
     <h3><b>auth</b>(n: number = 0, m: number = 1, creator: (&#39;author&#39; | &#39;editor&#39; | &#39;translator&#39; | &#39;collaborator&#39; | &#39;*&#39;) = &#39;*&#39;, initials: boolean = false)</h3><p><p>The first <code>n</code> (default: all) characters of the <code>m</code>th (default: first) author's last name.</p></p><table><tr><th><b>parameter</b></th><th>type</th><th/></tr><tr><td><code><p>n</p></code></td><td><p>number</p></td><td><p>the number of characters to take from the name, 0 = all</p></td></tr><tr><td><code><p>m</p></code></td><td><p>number</p></td><td><p>select the <code>m</code>th author</p></td></tr><tr><td><code><p>creator</p></code></td><td><p>('author' | 'editor' | 'translator' | 'collaborator' | '*')</p></td><td><p>kind of creator to select, <code>*</code> selects <code>author</code> first, and if not present, <code>editor</code>, <code>translator</code> or <code>collaborator</code>, in that order.</p></td></tr><tr><td><code><p>initials</p></code></td><td><p>boolean</p></td><td><p>add author initials</p></td></tr></table>
@@ -11926,7 +11947,7 @@ use this if you have existing papers that rely on this behavior.</p></p>
 
 <p><strong>Note</strong>: All <code>auth...</code> functions will fall back to editors if no authors are present on the item.</p>
 <p><strong>Note</strong>: The functions above used to have the <code>clean</code> function automatically applied to them, <strong>this is no longer the case</strong>, so if you have CJK authors/titles and you want to manipulate them (using eg. <code>capitalize</code>), you could have to use <code>transliterate</code> on them first, eg. <code>authEtal2.transliterate.capitalize + year + shorttitle(3, 3)</code>.</p>
-<h3 id="direct-access-to-unprocessed-fields">Direct access to unprocessed fields</h3>
+<h2 id="direct-access-to-unprocessed-fields">Direct access to unprocessed fields</h2>
 <p>The above functions all retrieve information stored in the item&rsquo;s fields and process it in some way. If you don&rsquo;t want this, you can instead call field contents without any processing. To access Zotero fields, refer to them as given in the table below:</p>
 <table>
   
@@ -12365,7 +12386,7 @@ use this if you have existing papers that rely on this behavior.</p></p>
 </table>
 
 <p>(fields marked <sup>Z</sup> are only available in Zotero, fields marked with <sup>JM</sup> are only available in Juris-M).</p>
-<h4 id="filters">Filters</h4>
+<h2 id="filters">Filters</h2>
 <dl>
   
     <h3><b>abbr</b>(chars: number = 1)</h3><p><p>Abbreviates the text. Only the first character and subsequent characters following white space will be included.</p></p><table><tr><th><b>parameter</b></th><th>type</th><th/></tr><tr><td><code><p>chars</p></code></td><td><p>number</p></td><td><p>number of characters to return per word</p></td></tr></table>
@@ -12451,8 +12472,6 @@ table above, which give you the values from Zotero without any changes. The fiel
   <footer class="footline">
   </footer>
 </article>
-          <section>
-            <h1 class="a11y-only">Subsections of Citation Keys</h1>
 <article class="default">
   <header class="headline">
 <div class="R-taxonomy taxonomy-tags cstyle tags" title="Tags" style="--VARIABLE-TAGS-BG-color: var(--INTERNAL-TAG-BG-color);">
@@ -13275,10 +13294,10 @@ means a lot) so I can save up for a replacement a year or so down
 the line, head on over to <a href="https://www.patreon.com/retorquere" rel="external" target="_blank">Patreon</a>,
 but mind that Patreon takes a fairly large cut of what you give.</p>
 <p>Many, many thanks, also to the existing contributors &ndash; thanks to you I&rsquo;ve hit my first target and have been able to replace my trusty macbook air with a newer macbook pro which has much more breathing room.</p>
-<p><a href="#R-image-5fd5c31994a88bbaa620e1fdd779b51d" class="lightbox-link"><img alt="My github stats" class="lazy lightbox figure-image" loading="lazy" src="https://github-readme-stats.vercel.app/api?username=retorquere&show_icons=true&hide_border=true&theme=dark" style=" height: auto; width: auto;"></a>
-<a href="javascript:history.back();" class="lightbox-back" id="R-image-5fd5c31994a88bbaa620e1fdd779b51d"><img alt="My github stats" class="lazy lightbox lightbox-image" loading="lazy" src="https://github-readme-stats.vercel.app/api?username=retorquere&show_icons=true&hide_border=true&theme=dark"></a></p>
-<p><a href="#R-image-0df53f216a215aac5c9d403e5b79bd53" class="lightbox-link"><img alt="Metrics" class="lazy lightbox figure-image" loading="lazy" src="https://metrics.lecoq.io/retorquere?template=classic&config.timezone=Europe%2FOslo" style=" height: auto; width: auto;"></a>
-<a href="javascript:history.back();" class="lightbox-back" id="R-image-0df53f216a215aac5c9d403e5b79bd53"><img alt="Metrics" class="lazy lightbox lightbox-image" loading="lazy" src="https://metrics.lecoq.io/retorquere?template=classic&config.timezone=Europe%2FOslo"></a></p>
+<p><a href="#R-image-087328a806259707fe5036cf8a5429e0" class="lightbox-link"><img alt="My github stats" class="lazy lightbox figure-image" loading="lazy" src="https://github-readme-stats.vercel.app/api?username=retorquere&show_icons=true&hide_border=true&theme=dark" style=" height: auto; width: auto;"></a>
+<a href="javascript:history.back();" class="lightbox-back" id="R-image-087328a806259707fe5036cf8a5429e0"><img alt="My github stats" class="lazy lightbox lightbox-image" loading="lazy" src="https://github-readme-stats.vercel.app/api?username=retorquere&show_icons=true&hide_border=true&theme=dark"></a></p>
+<p><a href="#R-image-b9e1541d6c30ef0ac5e7e36f23900170" class="lightbox-link"><img alt="Metrics" class="lazy lightbox figure-image" loading="lazy" src="https://metrics.lecoq.io/retorquere?template=classic&config.timezone=Europe%2FOslo" style=" height: auto; width: auto;"></a>
+<a href="javascript:history.back();" class="lightbox-back" id="R-image-b9e1541d6c30ef0ac5e7e36f23900170"><img alt="Metrics" class="lazy lightbox lightbox-image" loading="lazy" src="https://metrics.lecoq.io/retorquere?template=classic&config.timezone=Europe%2FOslo"></a></p>
 
   <footer class="footline">
   </footer>

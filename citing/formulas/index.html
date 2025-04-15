@@ -5,17 +5,59 @@
     <meta name="viewport" content="height=device-height, width=device-width, initial-scale=1.0, minimum-scale=1.0">
     <meta name="generator" content="Hugo 0.143.1">
     <meta name="generator" content="Relearn 7.6.1+b0c6bb558d7728ac4535a2ac677c5f47297203cc">
-    <meta name="description" content="">
+    <meta name="description" content="Functions auth(n: number = 0, m: number = 1, creator: (&#39;author&#39; | &#39;editor&#39; | &#39;translator&#39; | &#39;collaborator&#39; | &#39;*&#39;) = &#39;*&#39;, initials: boolean = false)The first n (default: all) characters of the mth (default: first) author&#39;s last name.
+parametertypen
+number
+the number of characters to take from the name, 0 = all
+m
+number
+select the mth author
+creator
+(&#39;author&#39; | &#39;editor&#39; | &#39;translator&#39; | &#39;collaborator&#39; | &#39;*&#39;)
+kind of creator to select, * selects author first, and if not present, editor, translator or collaborator, in that order.">
     <meta name="author" content="">
     <meta name="twitter:card" content="summary">
-    <meta name="twitter:title" content="Search :: Better BibTeX for Zotero">
-    <meta property="og:url" content="/zotero-better-bibtex/search/index.html">
+    <meta name="twitter:title" content="Citation Keys :: Better BibTeX for Zotero">
+    <meta name="twitter:description" content="Functions auth(n: number = 0, m: number = 1, creator: (&#39;author&#39; | &#39;editor&#39; | &#39;translator&#39; | &#39;collaborator&#39; | &#39;*&#39;) = &#39;*&#39;, initials: boolean = false)The first n (default: all) characters of the mth (default: first) author&#39;s last name.
+parametertypen
+number
+the number of characters to take from the name, 0 = all
+m
+number
+select the mth author
+creator
+(&#39;author&#39; | &#39;editor&#39; | &#39;translator&#39; | &#39;collaborator&#39; | &#39;*&#39;)
+kind of creator to select, * selects author first, and if not present, editor, translator or collaborator, in that order.">
+    <meta property="og:url" content="/zotero-better-bibtex/citing/formulas/index.html">
     <meta property="og:site_name" content="Better BibTeX for Zotero">
-    <meta property="og:title" content="Search :: Better BibTeX for Zotero">
+    <meta property="og:title" content="Citation Keys :: Better BibTeX for Zotero">
+    <meta property="og:description" content="Functions auth(n: number = 0, m: number = 1, creator: (&#39;author&#39; | &#39;editor&#39; | &#39;translator&#39; | &#39;collaborator&#39; | &#39;*&#39;) = &#39;*&#39;, initials: boolean = false)The first n (default: all) characters of the mth (default: first) author&#39;s last name.
+parametertypen
+number
+the number of characters to take from the name, 0 = all
+m
+number
+select the mth author
+creator
+(&#39;author&#39; | &#39;editor&#39; | &#39;translator&#39; | &#39;collaborator&#39; | &#39;*&#39;)
+kind of creator to select, * selects author first, and if not present, editor, translator or collaborator, in that order.">
     <meta property="og:locale" content="en">
     <meta property="og:type" content="website">
-    <meta itemprop="name" content="Search :: Better BibTeX for Zotero">
-    <title>Search :: Better BibTeX for Zotero</title><link rel="icon" href="/zotero-better-bibtex/better-bibtex.ico" type="image/x-icon">
+    <meta itemprop="name" content="Citation Keys :: Better BibTeX for Zotero">
+    <meta itemprop="description" content="Functions auth(n: number = 0, m: number = 1, creator: (&#39;author&#39; | &#39;editor&#39; | &#39;translator&#39; | &#39;collaborator&#39; | &#39;*&#39;) = &#39;*&#39;, initials: boolean = false)The first n (default: all) characters of the mth (default: first) author&#39;s last name.
+parametertypen
+number
+the number of characters to take from the name, 0 = all
+m
+number
+select the mth author
+creator
+(&#39;author&#39; | &#39;editor&#39; | &#39;translator&#39; | &#39;collaborator&#39; | &#39;*&#39;)
+kind of creator to select, * selects author first, and if not present, editor, translator or collaborator, in that order.">
+    <meta itemprop="wordCount" content="3921">
+    <meta itemprop="keywords" content="Citation Keys">
+    <title>Citation Keys :: Better BibTeX for Zotero</title>
+    <link href="/zotero-better-bibtex/citing/formulas/index.xml" rel="alternate" type="application/rss+xml" title="Citation Keys :: Better BibTeX for Zotero"><link rel="icon" href="/zotero-better-bibtex/better-bibtex.ico" type="image/x-icon">
 
     <link href="/zotero-better-bibtex/fonts/fontawesome/css/fontawesome-all.min.css" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/zotero-better-bibtex/fonts/fontawesome/css/fontawesome-all.min.css" rel="stylesheet"></noscript>
     <link href="/zotero-better-bibtex/css/perfect-scrollbar/perfect-scrollbar.min.css" rel="stylesheet">
@@ -32,9 +74,9 @@
       window.relearn = window.relearn || {};
       // configuration
       window.relearn.min = `.min`;
-      window.relearn.path='\/search\/index.html';
-      window.relearn.relBasePath='..';
-      window.relearn.relBaseUri='..\/..';
+      window.relearn.path='\/citing\/formulas\/index.html';
+      window.relearn.relBasePath='..\/..';
+      window.relearn.relBaseUri='..\/..\/..';
       window.relearn.absBaseUri='\/zotero-better-bibtex';
       window.relearn.contentLangs=['en'];
       window.relearn.index_js_url="/zotero-better-bibtex/searchindex.en.js";
@@ -83,7 +125,7 @@
       window.T_No_results_found = `No results found for "{0}"`;
       window.T_N_results_found = `{1} results found for "{0}"`;
     </script>
-<!-- WARNING: this page is generated by https://gohugo.io/ from site/content/_relearn/searchpage/_content.gotmpl. DO NOT EDIT BY HAND -->
+<!-- WARNING: this page is generated by https://gohugo.io/ from site/content/citing/formulas/_index.md. DO NOT EDIT BY HAND -->
 <script type="text/javascript">
   if (location.protocol === 'http:' && (location.port === 80 || !location.port)) {
     location.replace(`https:${location.href.substring(location.protocol.length)}`);
@@ -104,7 +146,7 @@
 
 
   </head>
-  <body class="mobile-support html" data-url="/zotero-better-bibtex/search/index.html">
+  <body class="mobile-support html" data-url="/zotero-better-bibtex/citing/formulas/index.html">
     <div id="R-body" class="default-animation">
       <div id="R-body-overlay"></div>
       <nav id="R-topbar">
@@ -115,17 +157,29 @@
             </div>
             <div class="topbar-button topbar-button-toc" data-content-empty="hide" data-width-s="show" data-width-m="show" data-width-l="show"><button class="topbar-control" onclick="toggleTopbarFlyout(this)" type="button" title="Table of Contents (CTRL&#43;ALT&#43;t)"><i class="fa-fw fas fa-list-alt"></i></button>
               <div class="topbar-content">
-                <div class="topbar-content-wrapper"> 
+                <div class="topbar-content-wrapper">
+<nav class="TableOfContents">
+  <ul>
+    <li><a href="#functions">Functions</a></li>
+    <li><a href="#direct-access-to-unprocessed-fields">Direct access to unprocessed fields</a></li>
+    <li><a href="#filters">Filters</a></li>
+  </ul>
+</nav>
                 </div>
               </div>
             </div>
           </div>
           <ol class="topbar-breadcrumbs breadcrumbs highlightable" itemscope itemtype="http://schema.org/BreadcrumbList">
+            <li itemscope itemtype="https://schema.org/ListItem" itemprop="itemListElement" class=""><a itemprop="item" href="/zotero-better-bibtex/index.html"><span itemprop="name">Better BibTeX for Zotero</span></a><meta itemprop="position" content="1">&nbsp;>&nbsp;</li>
+            <li itemscope itemtype="https://schema.org/ListItem" itemprop="itemListElement" class=""><a itemprop="item" href="/zotero-better-bibtex/citing/index.html"><span itemprop="name">Citation Keys</span></a><meta itemprop="position" content="2">&nbsp;>&nbsp;</li>
+            <li itemscope itemtype="https://schema.org/ListItem" itemprop="itemListElement" class=""><span itemprop="name">Citation Keys</span><meta itemprop="position" content="3"></li>
           </ol>
           <div class="topbar-area topbar-area-end" data-area="end">
-            <div class="topbar-button topbar-button-prev" data-content-empty="disable" data-width-s="show" data-width-m="show" data-width-l="show"><a class="topbar-control" href="/zotero-better-bibtex/index.html" title="Better BibTeX for Zotero (🡐)"><i class="fa-fw fas fa-chevron-left"></i></a>
+            <div class="topbar-button topbar-button-edit" data-content-empty="disable" data-width-s="area-more" data-width-m="show" data-width-l="show"><a class="topbar-control" href="https://github.com/retorquere/zotero-better-bibtex/edit/master/site/content/citing/formulas/_index.md" rel="external" target="_blank" title="Edit (CTRL+ALT+w)"><i class="fa-fw fas fa-pen"></i></a>
             </div>
-            <div class="topbar-button topbar-button-next" data-content-empty="disable" data-width-s="show" data-width-m="show" data-width-l="show"><span class="topbar-control"><i class="fa-fw fas fa-chevron-right"></i></span>
+            <div class="topbar-button topbar-button-prev" data-content-empty="disable" data-width-s="show" data-width-m="show" data-width-l="show"><a class="topbar-control" href="/zotero-better-bibtex/citing/index.html" title="Citation Keys (🡐)"><i class="fa-fw fas fa-chevron-left"></i></a>
+            </div>
+            <div class="topbar-button topbar-button-next" data-content-empty="disable" data-width-s="show" data-width-m="show" data-width-l="show"><a class="topbar-control" href="/zotero-better-bibtex/citing/cayw/index.html" title="Cite as you Write (🡒)"><i class="fa-fw fas fa-chevron-right"></i></a>
             </div>
             <div class="topbar-button topbar-button-more" data-content-empty="hide" data-width-s="show" data-width-m="show" data-width-l="show"><button class="topbar-control" onclick="toggleTopbarFlyout(this)" type="button" title="More"><i class="fa-fw fas fa-ellipsis-v"></i></button>
               <div class="topbar-content">
@@ -139,27 +193,691 @@
         </div>
       </nav>
       <div id="R-main-overlay"></div>
-      <main id="R-body-inner" class="highlightable _relearn_searchform" tabindex="-1">
+      <main id="R-body-inner" class="highlightable citing" tabindex="-1">
         <div class="flex-block-wrapper">
 <article class="default">
   <header class="headline">
+<div class="R-taxonomy taxonomy-tags cstyle tags" title="Tags" style="--VARIABLE-TAGS-BG-color: var(--INTERNAL-TAG-BG-color);">
+  <ul>
+    <li><a class="term-link" href="/zotero-better-bibtex/tags/citation-keys/index.html">Citation Keys</a></li>
+  </ul>
+</div>
   </header>
 
-<h1 id="search">Search</h1>
+<h1 id="citation-keys">Citation Keys</h1>
 
-<search>
-  <form action="javascript:triggerSearch()">
-    <div class="searchform">
-      <label class="a11y-only" for="R-search-by-detail">Search</label>
-      <input data-search-input id="R-search-by-detail" class="search-by" name="search-by" type="search" placeholder="Search..."><span class="btn interactive  cstyle secondary"><button onclick="" type="submit"><i class="fa-fw fas fa-search"></i> <span class="title">Search</span></button></span>
-    </div>
-  </form>
-</search>
-<div class="searchhint">
-</div>
-<hr>
-<div id="R-searchresults">
-</div>
+<h2 id="functions">Functions</h2>
+<dl>
+  
+    <h3><b>auth</b>(n: number = 0, m: number = 1, creator: (&#39;author&#39; | &#39;editor&#39; | &#39;translator&#39; | &#39;collaborator&#39; | &#39;*&#39;) = &#39;*&#39;, initials: boolean = false)</h3><p><p>The first <code>n</code> (default: all) characters of the <code>m</code>th (default: first) author's last name.</p></p><table><tr><th><b>parameter</b></th><th>type</th><th/></tr><tr><td><code><p>n</p></code></td><td><p>number</p></td><td><p>the number of characters to take from the name, 0 = all</p></td></tr><tr><td><code><p>m</p></code></td><td><p>number</p></td><td><p>select the <code>m</code>th author</p></td></tr><tr><td><code><p>creator</p></code></td><td><p>('author' | 'editor' | 'translator' | 'collaborator' | '*')</p></td><td><p>kind of creator to select, <code>*</code> selects <code>author</code> first, and if not present, <code>editor</code>, <code>translator</code> or <code>collaborator</code>, in that order.</p></td></tr><tr><td><code><p>initials</p></code></td><td><p>boolean</p></td><td><p>add author initials</p></td></tr></table>
+  
+    <h3><b>authAuthEa</b>(creator: (&#39;author&#39; | &#39;editor&#39; | &#39;translator&#39; | &#39;collaborator&#39; | &#39;*&#39;) = &#39;*&#39;, initials: boolean = false, sep: string = &#39;.&#39;)</h3><p><p>The last name of the first two authors, and ".ea" if there are more than two.</p></p><table><tr><th><b>parameter</b></th><th>type</th><th/></tr><tr><td><code><p>creator</p></code></td><td><p>('author' | 'editor' | 'translator' | 'collaborator' | '*')</p></td><td><p>kind of creator to select, <code>*</code> selects <code>author</code> first, and if not present, <code>editor</code>, <code>translator</code> or <code>collaborator</code>, in that order.</p></td></tr><tr><td><code><p>initials</p></code></td><td><p>boolean</p></td><td><p>add author initials</p></td></tr><tr><td><code><p>sep</p></code></td><td><p>string</p></td><td><p>use this character between authors</p></td></tr></table>
+  
+    <h3><b>authEtAl</b>(creator: (&#39;author&#39; | &#39;editor&#39; | &#39;translator&#39; | &#39;collaborator&#39; | &#39;*&#39;) = &#39;*&#39;, initials: boolean = false, sep: string = &#39; &#39;)</h3><p><p>The last name of the first author, and the last name of the
+second author if there are two authors or "EtAl" if there are
+more than two. This is similar to <code>auth.etal</code>. The difference
+is that the authors are not separated by "." and in case of
+more than 2 authors "EtAl" instead of ".etal" is appended.</p></p><table><tr><th><b>parameter</b></th><th>type</th><th/></tr><tr><td><code><p>creator</p></code></td><td><p>('author' | 'editor' | 'translator' | 'collaborator' | '*')</p></td><td><p>kind of creator to select, <code>*</code> selects <code>author</code> first, and if not present, <code>editor</code>, <code>translator</code> or <code>collaborator</code>, in that order.</p></td></tr><tr><td><code><p>initials</p></code></td><td><p>boolean</p></td><td><p>add author initials</p></td></tr><tr><td><code><p>sep</p></code></td><td><p>string</p></td><td><p>use this character between authors</p></td></tr></table>
+  
+    <h3><b>authEtal2</b>(creator: (&#39;author&#39; | &#39;editor&#39; | &#39;translator&#39; | &#39;collaborator&#39; | &#39;*&#39;) = &#39;*&#39;, initials: boolean = false, sep: string = &#39;.&#39;)</h3><p><p>The last name of the first author, and the last name of the second author if there are two authors or ".etal" if there are more than two.</p></p><table><tr><th><b>parameter</b></th><th>type</th><th/></tr><tr><td><code><p>creator</p></code></td><td><p>('author' | 'editor' | 'translator' | 'collaborator' | '*')</p></td><td><p>kind of creator to select, <code>*</code> selects <code>author</code> first, and if not present, <code>editor</code>, <code>translator</code> or <code>collaborator</code>, in that order.</p></td></tr><tr><td><code><p>initials</p></code></td><td><p>boolean</p></td><td><p>add author initials</p></td></tr><tr><td><code><p>sep</p></code></td><td><p>string</p></td><td><p>use this character between authors</p></td></tr></table>
+  
+    <h3><b>authForeIni</b>(creator: (&#39;author&#39; | &#39;editor&#39; | &#39;translator&#39; | &#39;collaborator&#39; | &#39;*&#39;) = &#39;*&#39;)</h3><p><p>The given-name initial of the first author.</p></p><table><tr><th><b>parameter</b></th><th>type</th><th/></tr><tr><td><code><p>creator</p></code></td><td><p>('author' | 'editor' | 'translator' | 'collaborator' | '*')</p></td><td><p>kind of creator to select, <code>*</code> selects <code>author</code> first, and if not present, <code>editor</code>, <code>translator</code> or <code>collaborator</code>, in that order.</p></td></tr></table>
+  
+    <h3><b>authIni</b>(n: number = 0, creator: (&#39;author&#39; | &#39;editor&#39; | &#39;translator&#39; | &#39;collaborator&#39; | &#39;*&#39;) = &#39;*&#39;, initials: boolean = false, sep: string = &#39;.&#39;)</h3><p><p>The beginning of each author's last name, using no more than <code>n</code> characters (0 = all).</p></p><table><tr><th><b>parameter</b></th><th>type</th><th/></tr><tr><td><code><p>n</p></code></td><td><p>number</p></td><td><p>the number of characters to take from the name, 0 = all</p></td></tr><tr><td><code><p>creator</p></code></td><td><p>('author' | 'editor' | 'translator' | 'collaborator' | '*')</p></td><td><p>kind of creator to select, <code>*</code> selects <code>author</code> first, and if not present, <code>editor</code>, <code>translator</code> or <code>collaborator</code>, in that order.</p></td></tr><tr><td><code><p>initials</p></code></td><td><p>boolean</p></td><td><p>add author initials</p></td></tr><tr><td><code><p>sep</p></code></td><td><p>string</p></td><td><p>use this character between authors</p></td></tr></table>
+  
+    <h3><b>authorIni</b>(creator: (&#39;author&#39; | &#39;editor&#39; | &#39;translator&#39; | &#39;collaborator&#39; | &#39;*&#39;) = &#39;*&#39;, initials: boolean = false, sep: string = &#39;.&#39;)</h3><p><p>The first 5 characters of the first author's last name, and the last name initials of the remaining authors.</p></p><table><tr><th><b>parameter</b></th><th>type</th><th/></tr><tr><td><code><p>creator</p></code></td><td><p>('author' | 'editor' | 'translator' | 'collaborator' | '*')</p></td><td><p>kind of creator to select, <code>*</code> selects <code>author</code> first, and if not present, <code>editor</code>, <code>translator</code> or <code>collaborator</code>, in that order.</p></td></tr><tr><td><code><p>initials</p></code></td><td><p>boolean</p></td><td><p>add author initials</p></td></tr><tr><td><code><p>sep</p></code></td><td><p>string</p></td><td><p>use this character between authors</p></td></tr></table>
+  
+    <h3><b>authorLast</b>(creator: (&#39;author&#39; | &#39;editor&#39; | &#39;translator&#39; | &#39;collaborator&#39; | &#39;*&#39;) = &#39;*&#39;, initials: boolean = false)</h3><p><p>The last name of the last author</p></p><table><tr><th><b>parameter</b></th><th>type</th><th/></tr><tr><td><code><p>creator</p></code></td><td><p>('author' | 'editor' | 'translator' | 'collaborator' | '*')</p></td><td><p>kind of creator to select, <code>*</code> selects <code>author</code> first, and if not present, <code>editor</code>, <code>translator</code> or <code>collaborator</code>, in that order.</p></td></tr><tr><td><code><p>initials</p></code></td><td><p>boolean</p></td><td><p>add author initials</p></td></tr></table>
+  
+    <h3><b>authorLastForeIni</b>(creator: (&#39;author&#39; | &#39;editor&#39; | &#39;translator&#39; | &#39;collaborator&#39; | &#39;*&#39;) = &#39;*&#39;)</h3><p><p>The given-name initial of the last author.</p></p><table><tr><th><b>parameter</b></th><th>type</th><th/></tr><tr><td><code><p>creator</p></code></td><td><p>('author' | 'editor' | 'translator' | 'collaborator' | '*')</p></td><td><p>kind of creator to select, <code>*</code> selects <code>author</code> first, and if not present, <code>editor</code>, <code>translator</code> or <code>collaborator</code>, in that order.</p></td></tr></table>
+  
+    <h3><b>authorsAlpha</b>(creator: (&#39;author&#39; | &#39;editor&#39; | &#39;translator&#39; | &#39;collaborator&#39; | &#39;*&#39;) = &#39;*&#39;, initials: boolean = false, sep: string = &#39; &#39;)</h3><p><p>Corresponds to the BibTeX style "alpha". One author: First three letters of the last name. Two to four authors: First letters of last names concatenated.
+More than four authors: First letters of last names of first three authors concatenated. "+" at the end.</p></p><table><tr><th><b>parameter</b></th><th>type</th><th/></tr><tr><td><code><p>creator</p></code></td><td><p>('author' | 'editor' | 'translator' | 'collaborator' | '*')</p></td><td><p>kind of creator to select, <code>*</code> selects <code>author</code> first, and if not present, <code>editor</code>, <code>translator</code> or <code>collaborator</code>, in that order.</p></td></tr><tr><td><code><p>initials</p></code></td><td><p>boolean</p></td><td><p>add author initials</p></td></tr><tr><td><code><p>sep</p></code></td><td><p>string</p></td><td><p>use this character between authors</p></td></tr></table>
+  
+    <h3><b>authorsn</b>(n: number = 0, creator: (&#39;author&#39; | &#39;editor&#39; | &#39;translator&#39; | &#39;collaborator&#39; | &#39;*&#39;) = &#39;*&#39;, initials: boolean = false, sep: string = &#39; &#39;)</h3><p><p>The last names of the first <code>n</code> (default: all) authors.</p></p><table><tr><th><b>parameter</b></th><th>type</th><th/></tr><tr><td><code><p>n</p></code></td><td><p>number</p></td><td><p>the number of characters to take from the name, 0 = all</p></td></tr><tr><td><code><p>creator</p></code></td><td><p>('author' | 'editor' | 'translator' | 'collaborator' | '*')</p></td><td><p>kind of creator to select, <code>*</code> selects <code>author</code> first, and if not present, <code>editor</code>, <code>translator</code> or <code>collaborator</code>, in that order.</p></td></tr><tr><td><code><p>initials</p></code></td><td><p>boolean</p></td><td><p>add author initials</p></td></tr><tr><td><code><p>sep</p></code></td><td><p>string</p></td><td><p>use this character between authors</p></td></tr></table>
+  
+    <h3><b>authshort</b>(creator: (&#39;author&#39; | &#39;editor&#39; | &#39;translator&#39; | &#39;collaborator&#39; | &#39;*&#39;) = &#39;*&#39;, initials: boolean = false, sep: string = &#39;.&#39;)</h3><p><p>The last name if one author/editor is given; the first character
+of up to three authors' last names if more than one author is
+given. A plus character is added, if there are more than three
+authors.</p></p><table><tr><th><b>parameter</b></th><th>type</th><th/></tr><tr><td><code><p>creator</p></code></td><td><p>('author' | 'editor' | 'translator' | 'collaborator' | '*')</p></td><td><p>kind of creator to select, <code>*</code> selects <code>author</code> first, and if not present, <code>editor</code>, <code>translator</code> or <code>collaborator</code>, in that order.</p></td></tr><tr><td><code><p>initials</p></code></td><td><p>boolean</p></td><td><p>add author initials</p></td></tr><tr><td><code><p>sep</p></code></td><td><p>string</p></td><td><p>use this character between authors</p></td></tr></table>
+  
+    <h3><b>creatornames</b>(template?: &#96;sprintf-style format template&#96;, transliterate?: boolean)</h3><p><p>Sets the sprintf-template default for representing creator names. Default is '%(f)s'.</p>
+<p>in the creator template, you can use:</p>
+<ul>
+<li><code>%(f)s</code>: family ("last") name</li>
+<li><code>%(f_zh)s</code>: family ("last") name extracted from chinese compound names. Need <code>jieba</code> to be enabled</li>
+<li><code>%(g)s</code>: given ("first") name</li>
+<li><code>%(g_zh)s</code>: given ("first") name extracted from chinese compound names. Need <code>jieba</code> to be enabled</li>
+<li><code>%(i)s</code>: given-name initials</li>
+<li><code>%(I)s</code>: given-name initials, upper-case</li>
+</ul></p><table><tr><th><b>parameter</b></th><th>type</th><th/></tr><tr><td><code><p>template</p></code></td><td><p><code>sprintf-style format template</code></p></td><td><p>template string</p></td></tr><tr><td><code><p>transliterate</p></code></td><td><p>boolean</p></td><td><p>transliterate the returned name</p></td></tr></table>
+  
+    <h3><b>creators</b>(n: (number | [ number, number ]) = 0, type: (&#39;*&#39; | Creator | Creator[] | (Creator | &#39;*&#39;)[][]) = [[&#39;primary&#39;, &#39;editor&#39;, &#39;translator&#39;, &#39;*&#39;]], name: (&#39;&#39; | &#96;sprintf-style format template&#96;) = &#39;&#39;, etal: string = &#39;&#39;, sep: string = &#39; &#39;, min: number = 0, max: number = 0)</h3><p><p>Author/editor information.</p>
+<p>creator type can be one of <code>artist</code>, <code>attorneyAgent</code>, <code>author</code>, <code>bookAuthor</code>, <code>cartographer</code>, <code>castMember</code>, <code>commenter</code>, <code>composer</code>, <code>contributor</code>, <code>cosponsor</code>, <code>counsel</code>, <code>director</code>, <code>editor</code>, <code>guest</code>, <code>interviewee</code>, <code>interviewer</code>, <code>inventor</code>, <code>performer</code>, <code>podcaster</code>, <code>presenter</code>, <code>producer</code>, <code>programmer</code>, <code>recipient</code>, <code>reviewedAuthor</code>, <code>scriptwriter</code>, <code>seriesEditor</code>, <code>sponsor</code>, <code>translator</code>, <code>wordsBy</code></p>
+<p>in the creator template, you can use:</p>
+<ul>
+<li><code>%(f)s</code>: family ("last") name</li>
+<li><code>%(f_zh)s</code>: family ("last") name extracted from chinese compound names. Need <code>jieba</code> to be enabled</li>
+<li><code>%(g)s</code>: given ("first") name</li>
+<li><code>%(g_zh)s</code>: given ("first") name extracted from chinese compound names. Need <code>jieba</code> to be enabled</li>
+<li><code>%(i)s</code>: given-name initials</li>
+<li><code>%(I)s</code>: given-name initials, upper-case</li>
+</ul></p><table><tr><th><b>parameter</b></th><th>type</th><th/></tr><tr><td><code><p>n</p></code></td><td><p>(number | [ number, number ])</p></td><td><p>select the first <code>n</code> creators (when passing a number) or the authors in this range (inclusive, when passing two values); negative numbers mean "from the end", default = 0 = all</p></td></tr><tr><td><code><p>type</p></code></td><td><p>('<em>' | Creator | Creator[] | (Creator | '</em>')[][])</p></td><td><p>select only creators of given type(s). Default: all</p></td></tr><tr><td><code><p>name</p></code></td><td><p>('' | <code>sprintf-style format template</code>)</p></td><td><p>sprintf-js template. Available named parameters are: <code>f</code> (family name), <code>g</code> (given name), <code>i</code> (initials)</p></td></tr><tr><td><code><p>etal</p></code></td><td><p>string</p></td><td><p>use this term to replace authors after <code>n</code> authors have been named</p></td></tr><tr><td><code><p>sep</p></code></td><td><p>string</p></td><td><p>use this character between authors</p></td></tr><tr><td><code><p>min</p></code></td><td><p>number</p></td><td><p>skip to the next pattern if there are less than <code>min</code> creators, 0 = ignore</p></td></tr><tr><td><code><p>max</p></code></td><td><p>number</p></td><td><p>skip to the next pattern if there are more than <code>max</code> creators, 0 = ignore</p></td></tr></table>
+  
+    <h3><b>creatortypes</b>(match?: RegExp)</h3><p><p>This will return a comma-separated list of creator type information for all creators on the item
+in the form <code>&lt;1 or 2&gt;&lt;creator-type&gt;</code>, where <code>1</code> or <code>2</code> denotes a 1-part or 2-part creator, and <code>creator-type</code> is one of {{% citekey-formatters/creatortypes %}}, or <code>primary</code> for
+the primary creator-type of the Zotero item under consideration. The list is prefixed by the item type, so might look like <code>audioRecording:2performer,2performer,1composer</code>.</p></p><table><tr><th><b>parameter</b></th><th>type</th><th/></tr><tr><td><code><p>match</p></code></td><td><p>RegExp</p></td><td><p>Regex to test the creator-type list. When passed, and the creator-type list does not match the regex, jump to the next formule. When it matches, return nothing but stay in the current formule. When no regex is passed, output the creator-type list for the item (mainly useful for debugging).</p></td></tr></table>
+  
+    <h3><b>date</b>(format: string = &#39;%Y-%m-%d&#39;)</h3><p><p>The date of the publication</p></p><table><tr><th><b>parameter</b></th><th>type</th><th/></tr><tr><td><code><p>format</p></code></td><td><p>string</p></td><td><p>sprintf-style format template</p></td></tr></table>
+  
+    <h3><b>extra</b>(variable: string)</h3><p><p>A pseudo-field from the extra field. eg if you have <code>Original date: 1970</code> in your <code>extra</code> field, you can get it as
+<code>extra(originalDate)</code>, or <code>tex.shortauthor: APA</code> which you could
+get with <code>extra('tex.shortauthor')</code>. Any <code>tex.</code> field will be
+picked up, the other fields can be selected from <a href="https://retorque.re/zotero-better-bibtex/exporting/extra-fields/">this list</a>
+of key names.</p></p><table><tr><th><b>parameter</b></th><th>type</th><th/></tr><tr><td><code><p>variable</p></code></td><td><p>string</p></td><td><p>extra-field line identifier</p></td></tr></table>
+  
+    <h3><b>firstpage</b></h3><p><p>The number of the first page of the publication (Caution: this
+will return the lowest number found in the pages field, since
+BibTeX allows <code>7,41,73--97</code> or <code>43+</code>.)</p></p>
+  
+    <h3><b>group</b>(name: string)</h3><p><p>Tests whether the item is in the given group library</p></p><table><tr><th><b>parameter</b></th><th>type</th><th/></tr><tr><td><code><p>name</p></code></td><td><p>string</p></td><td><p>group name</p></td></tr></table>
+  
+    <h3><b>infix</b>(format: &#96;sprintf-style format template&#96; = &#39;%(a)s&#39;, start: (string | number) = 0)</h3><p><p>a pseudo-function that sets the citekey disambiguation infix using an <a href="https://www.npmjs.com/package/sprintf-js">sprintf-js</a> format spec
+for when a key is generated that already exists. The infix charachter appears at the place of this function of the formula instead of at the and (as postfix does).
+You <em>must</em> include <em>exactly one</em> of the placeholders <code>%(n)s</code> (number), <code>%(a)s</code> (alpha, lowercase) or <code>%(A)s</code> (alpha, uppercase).
+For the rest of the disambiguator you can use things like padding and extra text as sprintf-js allows. With start set to <code>1</code> the disambiguator is always included,
+even if there is no need for it when no duplicates exist. The default  format is <code>%(a)s</code>.</p>
+<p>in the template, you can use:</p>
+<ul>
+<li><code>%(a)s</code>: lower-case alphabetic disambiguator</li>
+<li><code>%(A)s</code>: upper-case alphabetic disambiguator</li>
+<li><code>%(n)s</code>: numeric disambiguator</li>
+</ul></p><table><tr><th><b>parameter</b></th><th>type</th><th/></tr><tr><td><code><p>format</p></code></td><td><p><code>sprintf-style format template</code></p></td><td><p>sprintf-style format template</p></td></tr><tr><td><code><p>start</p></code></td><td><p>(string | number)</p></td><td><p>start value for postfix</p></td></tr></table>
+  
+    <h3><b>inspireHep</b></h3><p><p>Fetches the key from inspire-hep based on DOI or arXiv ID</p></p>
+  
+    <h3><b>item</b>(id: (&#39;key&#39; | &#39;id&#39;) = &#39;key&#39;)</h3><p><p>returns the internal item ID/key</p></p><table><tr><th><b>parameter</b></th><th>type</th><th/></tr><tr><td><code><p>id</p></code></td><td><p>('key' | 'id')</p></td><td><p>'id': return itemID; 'key': return the item key</p></td></tr></table>
+  
+    <h3><b>journal</b>(abbrev: (&#39;off&#39; | &#39;abbrev&#39; | &#39;auto&#39; | &#39;abbrev+auto&#39; | &#39;full&#39;) = &#39;abbrev+auto&#39;)</h3><p><p>returns the journal abbreviation, or, if not found, the journal title, If 'automatic journal abbreviation' is enabled in the BBT settings,
+it will use the same abbreviation filter Zotero uses in the wordprocessor integration. You might want to use the <code>abbr</code> filter on this.
+Abbreviation behavior can be specified as <code>abbrev+auto</code> (the default) which uses the explicit journal abbreviation if present, and tries the automatic
+abbreviator if not (if auto-abbrev is enabled in the preferences), <code>auto</code> (skip explicit journal abbreviation even if present), <code>abbrev</code>
+(no auto-abbrev even if it is enabled in the preferences) or <code>full</code>/<code>off</code> (no abbrevation).</p></p><table><tr><th><b>parameter</b></th><th>type</th><th/></tr><tr><td><code><p>abbrev</p></code></td><td><p>('off' | 'abbrev' | 'auto' | 'abbrev+auto' | 'full')</p></td><td><p>abbreviation mode</p></td></tr></table>
+  
+    <h3><b>keyword</b>(n: number)</h3><p><p>Tag number <code>n</code>. Mostly for legacy compatibility</p></p><table><tr><th><b>parameter</b></th><th>type</th><th/></tr><tr><td><code><p>n</p></code></td><td><p>number</p></td><td><p>position of tag to get</p></td></tr></table>
+  
+    <h3><b>language</b>(...name: string[])</h3><p><p>Tests whether the item has the given language set, and skips to the next pattern if not</p>
+<p>language can be one of <code>ame</code>, <code>american</code>, <code>american english</code>, <code>americanenglish</code>, <code>ar</code>, <code>ar-ar</code>, <code>ar-dz</code>, <code>ar-eg</code>, <code>ar-iq</code>, <code>ar-jo</code>, <code>ar-lb</code>, <code>ar-ma</code>, <code>ar-ps</code>, <code>ar-sa</code>, <code>ar-sy</code>, <code>ar-tn</code>, <code>ara</code>, <code>arabic</code>, <code>arabic-algeria</code>, <code>arabic-dz</code>, <code>arabic-eg</code>, <code>arabic-egypt</code>, <code>arabic-iq</code>, <code>arabic-iraq</code>, <code>arabic-jo</code>, <code>arabic-jordan</code>, <code>arabic-lb</code>, <code>arabic-lebanon</code>, <code>arabic-ma</code>, <code>arabic-morocco</code>, <code>arabic-palestinianterritories</code>, <code>arabic-ps</code>, <code>arabic-sa</code>, <code>arabic-saudiarabia</code>, <code>arabic-sy</code>, <code>arabic-syria</code>, <code>arabic-tn</code>, <code>arabic-tunisia</code>, <code>australian</code>, <code>australian english</code>, <code>australianenglish</code>, <code>austrian</code>, <code>austrian german</code>, <code>austrian-traditional</code>, <code>austriangerman</code>, <code>austriangerman-traditional</code>, <code>bri</code>, <code>british</code>, <code>british english</code>, <code>britishenglish</code>, <code>canadian</code>, <code>canadian english</code>, <code>canadianenglish</code>, <code>chinese</code>, <code>chinese-hans</code>, <code>chinese-hans-hk</code>, <code>chinese-hans-mo</code>, <code>chinese-hans-sg</code>, <code>chinese-hant</code>, <code>chinese-hant-hk</code>, <code>chinese-hant-mo</code>, <code>chinese-simplified</code>, <code>chinese-simplified-hongkongsarchina</code>, <code>chinese-simplified-macausarchina</code>, <code>chinese-simplified-singapore</code>, <code>chinese-traditional</code>, <code>chinese-traditional-hongkongsarchina</code>, <code>chinese-traditional-macausarchina</code>, <code>de</code>, <code>de-1901</code>, <code>de-1996</code>, <code>de-at</code>, <code>de-at-1901</code>, <code>de-at-1996</code>, <code>de-ch</code>, <code>de-ch-1901</code>, <code>de-ch-1996</code>, <code>de-de</code>, <code>deutsch</code>, <code>en</code>, <code>en-au</code>, <code>en-ca</code>, <code>en-en</code>, <code>en-gb</code>, <code>en-nz</code>, <code>en-us</code>, <code>eng</code>, <code>english</code>, <code>english-au</code>, <code>english-australia</code>, <code>english-ca</code>, <code>english-canada</code>, <code>english-gb</code>, <code>english-newzealand</code>, <code>english-nz</code>, <code>english-unitedkingdom</code>, <code>english-unitedstates</code>, <code>english-us</code>, <code>ger</code>, <code>german</code>, <code>german-at</code>, <code>german-at-traditional</code>, <code>german-austria</code>, <code>german-austria-traditional</code>, <code>german-ch</code>, <code>german-ch-traditional</code>, <code>german-switzerland</code>, <code>german-switzerland-traditional</code>, <code>german-traditional</code>, <code>ja</code>, <code>ja-ja</code>, <code>jap</code>, <code>japanese</code>, <code>nau</code>, <code>naustrian</code>, <code>newzealand</code>, <code>nge</code>, <code>ngerman</code>, <code>nsw</code>, <code>nswissgerman</code>, <code>schweizer hochdeutsch</code>, <code>simplified chinese</code>, <code>swiss high german</code>, <code>swisshighgerman</code>, <code>swisshighgerman-traditional</code>, <code>traditional chinese</code>, <code>tw</code>, <code>ukenglish</code>, <code>usenglish</code>, <code>zh</code>, <code>zh-hans</code>, <code>zh-hans-hk</code>, <code>zh-hans-mo</code>, <code>zh-hans-sg</code>, <code>zh-hant</code>, <code>zh-hant-hk</code>, <code>zh-hant-mo</code>, <code>zh-tw</code>, <code>zh-zh</code>, <code>österreichisches deutsch</code>, <code>العربية</code>, <code>中文</code>, <code>中文-中文</code>, <code>日本語</code>, <code>简体中文</code>, <code>繁體中文</code></p></p><table><tr><th><b>parameter</b></th><th>type</th><th/></tr><tr><td><code><p>name</p></code></td><td><p>string[]</p></td><td><p>one or more language codes</p></td></tr></table>
+  
+    <h3><b>lastpage</b></h3><p><p>The number of the last page of the publication (See the remark on <code>firstpage</code>)</p></p>
+  
+    <h3><b>library</b></h3><p><p>Tests whether the item is in the user library</p></p>
+  
+    <h3><b>month</b></h3><p><p>the month of the publication</p></p>
+  
+    <h3><b>origdate</b></h3><p><p>the original date of the publication</p></p>
+  
+    <h3><b>origyear</b></h3><p><p>the original year of the publication</p></p>
+  
+    <h3><b>postfix</b>(format: &#96;sprintf-style format template&#96; = &#39;%(a)s&#39;, start: (string | number) = 0)</h3><p><p>a pseudo-function that sets the citekey disambiguation postfix using an <a href="https://www.npmjs.com/package/sprintf-js">sprintf-js</a> format spec
+for when a key is generated that already exists. Does not add any text to the citekey otherwise.
+You <em>must</em> include <em>exactly one</em> of the placeholders <code>%(n)s</code> (number), <code>%(a)s</code> (alpha, lowercase) or <code>%(A)s</code> (alpha, uppercase).
+For the rest of the disambiguator you can use things like padding and extra text as sprintf-js allows. With start set to <code>1</code> the disambiguator is always included,
+even if there is no need for it when no duplicates exist. The default  format is <code>%(a)s</code>.</p>
+<p>in the template, you can use:</p>
+<ul>
+<li><code>%(a)s</code>: lower-case alphabetic disambiguator</li>
+<li><code>%(A)s</code>: upper-case alphabetic disambiguator</li>
+<li><code>%(n)s</code>: numeric disambiguator</li>
+</ul></p><table><tr><th><b>parameter</b></th><th>type</th><th/></tr><tr><td><code><p>format</p></code></td><td><p><code>sprintf-style format template</code></p></td><td><p>sprintf-style format template</p></td></tr><tr><td><code><p>start</p></code></td><td><p>(string | number)</p></td><td><p>start value for postfix</p></td></tr></table>
+  
+    <h3><b>shorttitle</b>(n: number = 3, m: number = 0)</h3><p><p>The first <code>n</code> (default: 3) words of the title, apply capitalization to first <code>m</code> (default: 0) of those.</p></p><table><tr><th><b>parameter</b></th><th>type</th><th/></tr><tr><td><code><p>n</p></code></td><td><p>number</p></td><td><p>number of words to select</p></td></tr><tr><td><code><p>m</p></code></td><td><p>number</p></td><td><p>number of words to capitalize. <code>0</code> means no words will be capitalized. Mind that existing capitals are not removed. If you enable capitalization, you also get transliteration; for CJK, capitalization is not meaningful, so if you want capitalization, BBT romanizes first.</p></td></tr></table>
+  
+    <h3><b>shortyear</b></h3><p><p>The last 2 digits of the publication year</p></p>
+  
+    <h3><b>title</b></h3><p><p>Capitalize all the significant words of the title, and concatenate them. For example, <code>An awesome paper on JabRef</code> will become <code>AnAwesomePaperJabref</code></p></p>
+  
+    <h3><b>transliterate</b>(mode: ((&#39;minimal&#39; | &#39;german&#39; | &#39;japanese&#39; | &#39;chinese&#39; | &#39;arabic&#39; | &#39;ukranian&#39; | &#39;mongolian&#39; | &#39;russian&#39;) | &#39;de&#39; | &#39;ja&#39; | &#39;chinese-traditional&#39; | &#39;zh-hant&#39; | &#39;zh&#39; | &#39;tw&#39; | &#39;ar&#39; | &#39;uk&#39; | &#39;mn&#39; | &#39;ru&#39;))</h3><p><p>Set the default transliteration mode. If you don't specify a mode, the mode for an entry is derived from the item language field</p></p><table><tr><th><b>parameter</b></th><th>type</th><th/></tr><tr><td><code><p>mode</p></code></td><td><p>(('minimal' | 'german' | 'japanese' | 'chinese' | 'arabic' | 'ukranian' | 'mongolian' | 'russian') | 'de' | 'ja' | 'chinese-traditional' | 'zh-hant' | 'zh' | 'tw' | 'ar' | 'uk' | 'mn' | 'ru')</p></td><td><p>specialized translateration modes for german, japanese or chinese.</p></td></tr></table>
+  
+    <h3><b>type</b>(...allowed: string[])</h3><p><p>Without arguments, returns the item type.
+When arguments as passed, tests whether the item is of any of the given types, and skips to the next pattern if not, eg <code>type(book) + veryshorttitle | auth + year</code>.</p>
+<p>creator type can be one of <code>annotation</code>, <code>artwork</code>, <code>attachment</code>, <code>audioRecording</code>, <code>bill</code>, <code>blogPost</code>, <code>book</code>, <code>bookSection</code>, <code>case</code>, <code>computerProgram</code>, <code>conferencePaper</code>, <code>dataset</code>, <code>dictionaryEntry</code>, <code>document</code>, <code>email</code>, <code>encyclopediaArticle</code>, <code>film</code>, <code>forumPost</code>, <code>hearing</code>, <code>instantMessage</code>, <code>interview</code>, <code>journalArticle</code>, <code>letter</code>, <code>magazineArticle</code>, <code>manuscript</code>, <code>map</code>, <code>newspaperArticle</code>, <code>note</code>, <code>patent</code>, <code>podcast</code>, <code>preprint</code>, <code>presentation</code>, <code>radioBroadcast</code>, <code>report</code>, <code>standard</code>, <code>statute</code>, <code>thesis</code>, <code>tvBroadcast</code>, <code>videoRecording</code>, <code>webpage</code></p></p><table><tr><th><b>parameter</b></th><th>type</th><th/></tr><tr><td><code><p>allowed</p></code></td><td><p>string[]</p></td><td><p>one or more item type names</p></td></tr></table>
+  
+    <h3><b>veryshorttitle</b>(n: number = 1, m: number = 0)</h3><p><p>The first <code>n</code> words of the title, apply capitalization to first <code>m</code> of those</p></p><table><tr><th><b>parameter</b></th><th>type</th><th/></tr><tr><td><code><p>n</p></code></td><td><p>number</p></td><td><p>number of words to select</p></td></tr><tr><td><code><p>m</p></code></td><td><p>number</p></td><td><p>number of words to capitalize. <code>0</code> means no words will be capitalized. Mind that existing capitals are not removed.</p></td></tr></table>
+  
+    <h3><b>year</b></h3><p><p>The year of the publication</p></p>
+  
+    <h3><b>zotero</b></h3><p><p>Generates citation keys as the stock Zotero Bib(La)TeX export
+does. Note that this pattern inherits all the problems of the
+original Zotero citekey generation -- you should really only
+use this if you have existing papers that rely on this behavior.</p></p>
+  
+</dl>
+
+<p><strong>Note</strong>: All <code>auth...</code> functions will fall back to editors if no authors are present on the item.</p>
+<p><strong>Note</strong>: The functions above used to have the <code>clean</code> function automatically applied to them, <strong>this is no longer the case</strong>, so if you have CJK authors/titles and you want to manipulate them (using eg. <code>capitalize</code>), you could have to use <code>transliterate</code> on them first, eg. <code>authEtal2.transliterate.capitalize + year + shorttitle(3, 3)</code>.</p>
+<h2 id="direct-access-to-unprocessed-fields">Direct access to unprocessed fields</h2>
+<p>The above functions all retrieve information stored in the item&rsquo;s fields and process it in some way. If you don&rsquo;t want this, you can instead call field contents without any processing. To access Zotero fields, refer to them as given in the table below:</p>
+<table>
+  
+    <tr>
+      
+        <td>AbstractNote</td>
+      
+        <td>AccessDate</td>
+      
+        <td>AdminFlag<sup>JM</sup></td>
+      
+        <td>AdoptionDate<sup>JM</sup></td>
+      
+    </tr>
+  
+    <tr>
+      
+        <td>Album<sup>JM</sup></td>
+      
+        <td>ApplicationNumber</td>
+      
+        <td>Archive</td>
+      
+        <td>ArchiveCollection<sup>JM</sup></td>
+      
+    </tr>
+  
+    <tr>
+      
+        <td>ArchiveID<sup>Z</sup></td>
+      
+        <td>ArchiveLocation</td>
+      
+        <td>ArtworkMedium</td>
+      
+        <td>ArtworkSize</td>
+      
+    </tr>
+  
+    <tr>
+      
+        <td>AssemblyNumber<sup>JM</sup></td>
+      
+        <td>Assignee</td>
+      
+        <td>AudioFileType</td>
+      
+        <td>AudioRecordingFormat</td>
+      
+    </tr>
+  
+    <tr>
+      
+        <td>Authority<sup>Z</sup></td>
+      
+        <td>BillNumber</td>
+      
+        <td>BlogTitle</td>
+      
+        <td>BookAbbreviation<sup>JM</sup></td>
+      
+    </tr>
+  
+    <tr>
+      
+        <td>BookTitle</td>
+      
+        <td>CallNumber</td>
+      
+        <td>CaseName</td>
+      
+        <td>Code</td>
+      
+    </tr>
+  
+    <tr>
+      
+        <td>CodeNumber</td>
+      
+        <td>CodePages</td>
+      
+        <td>CodeVolume</td>
+      
+        <td>Committee</td>
+      
+    </tr>
+  
+    <tr>
+      
+        <td>Company</td>
+      
+        <td>ConferenceDate<sup>JM</sup></td>
+      
+        <td>ConferenceName</td>
+      
+        <td>Country</td>
+      
+    </tr>
+  
+    <tr>
+      
+        <td>Court</td>
+      
+        <td>DOI</td>
+      
+        <td>Date</td>
+      
+        <td>DateAmended<sup>JM</sup></td>
+      
+    </tr>
+  
+    <tr>
+      
+        <td>DateDecided</td>
+      
+        <td>DateEnacted</td>
+      
+        <td>DictionaryTitle</td>
+      
+        <td>Distributor</td>
+      
+    </tr>
+  
+    <tr>
+      
+        <td>Division<sup>JM</sup></td>
+      
+        <td>DocketNumber</td>
+      
+        <td>DocumentName<sup>JM</sup></td>
+      
+        <td>DocumentNumber</td>
+      
+    </tr>
+  
+    <tr>
+      
+        <td>Edition</td>
+      
+        <td>EncyclopediaTitle</td>
+      
+        <td>EpisodeNumber</td>
+      
+        <td>FilingDate</td>
+      
+    </tr>
+  
+    <tr>
+      
+        <td>FirstPage</td>
+      
+        <td>Format<sup>Z</sup></td>
+      
+        <td>ForumTitle</td>
+      
+        <td>GazetteFlag<sup>JM</sup></td>
+      
+    </tr>
+  
+    <tr>
+      
+        <td>Genre</td>
+      
+        <td>History</td>
+      
+        <td>ISBN</td>
+      
+        <td>ISSN</td>
+      
+    </tr>
+  
+    <tr>
+      
+        <td>Identifier<sup>Z</sup></td>
+      
+        <td>Institution</td>
+      
+        <td>InterviewMedium</td>
+      
+        <td>Issue</td>
+      
+    </tr>
+  
+    <tr>
+      
+        <td>IssueDate</td>
+      
+        <td>IssuingAuthority</td>
+      
+        <td>JournalAbbreviation</td>
+      
+        <td>Jurisdiction<sup>JM</sup></td>
+      
+    </tr>
+  
+    <tr>
+      
+        <td>Label</td>
+      
+        <td>Language</td>
+      
+        <td>LegalStatus</td>
+      
+        <td>LegislativeBody</td>
+      
+    </tr>
+  
+    <tr>
+      
+        <td>LetterType</td>
+      
+        <td>LibraryCatalog</td>
+      
+        <td>ManuscriptType</td>
+      
+        <td>MapType</td>
+      
+    </tr>
+  
+    <tr>
+      
+        <td>Medium</td>
+      
+        <td>MeetingName</td>
+      
+        <td>MeetingNumber<sup>JM</sup></td>
+      
+        <td>NameOfAct</td>
+      
+    </tr>
+  
+    <tr>
+      
+        <td>Network</td>
+      
+        <td>NewsCaseDate<sup>JM</sup></td>
+      
+        <td>NumPages</td>
+      
+        <td>Number</td>
+      
+    </tr>
+  
+    <tr>
+      
+        <td>NumberOfVolumes</td>
+      
+        <td>OpeningDate<sup>JM</sup></td>
+      
+        <td>Opus<sup>JM</sup></td>
+      
+        <td>Organization<sup>Z</sup></td>
+      
+    </tr>
+  
+    <tr>
+      
+        <td>OriginalDate<sup>JM</sup></td>
+      
+        <td>Pages</td>
+      
+        <td>ParentTreaty<sup>JM</sup></td>
+      
+        <td>PatentNumber</td>
+      
+    </tr>
+  
+    <tr>
+      
+        <td>Place</td>
+      
+        <td>PostType</td>
+      
+        <td>PresentationType</td>
+      
+        <td>PriorityDate<sup>JM</sup></td>
+      
+    </tr>
+  
+    <tr>
+      
+        <td>PriorityNumbers</td>
+      
+        <td>ProceedingsTitle</td>
+      
+        <td>ProgramTitle</td>
+      
+        <td>ProgrammingLanguage</td>
+      
+    </tr>
+  
+    <tr>
+      
+        <td>PublicLawNumber</td>
+      
+        <td>PublicationDate<sup>JM</sup></td>
+      
+        <td>PublicationNumber<sup>JM</sup></td>
+      
+        <td>PublicationTitle</td>
+      
+    </tr>
+  
+    <tr>
+      
+        <td>Publisher</td>
+      
+        <td>References</td>
+      
+        <td>RegnalYear<sup>JM</sup></td>
+      
+        <td>RegulationType<sup>JM</sup></td>
+      
+    </tr>
+  
+    <tr>
+      
+        <td>RegulatoryBody<sup>JM</sup></td>
+      
+        <td>Reign<sup>JM</sup></td>
+      
+        <td>Release<sup>JM</sup></td>
+      
+        <td>ReportNumber</td>
+      
+    </tr>
+  
+    <tr>
+      
+        <td>ReportType</td>
+      
+        <td>Reporter</td>
+      
+        <td>ReporterVolume</td>
+      
+        <td>Repository<sup>Z</sup></td>
+      
+    </tr>
+  
+    <tr>
+      
+        <td>RepositoryLocation<sup>Z</sup></td>
+      
+        <td>ResolutionLabel<sup>JM</sup></td>
+      
+        <td>Rights</td>
+      
+        <td>RunningTime</td>
+      
+    </tr>
+  
+    <tr>
+      
+        <td>Scale</td>
+      
+        <td>Section</td>
+      
+        <td>Series</td>
+      
+        <td>SeriesNumber</td>
+      
+    </tr>
+  
+    <tr>
+      
+        <td>SeriesText</td>
+      
+        <td>SeriesTitle</td>
+      
+        <td>Session</td>
+      
+        <td>SessionType<sup>JM</sup></td>
+      
+    </tr>
+  
+    <tr>
+      
+        <td>ShortTitle</td>
+      
+        <td>SigningDate<sup>JM</sup></td>
+      
+        <td>Status</td>
+      
+        <td>Studio</td>
+      
+    </tr>
+  
+    <tr>
+      
+        <td>Subject</td>
+      
+        <td>SupplementName<sup>JM</sup></td>
+      
+        <td>System</td>
+      
+        <td>ThesisType</td>
+      
+    </tr>
+  
+    <tr>
+      
+        <td>Title</td>
+      
+        <td>TreatyNumber<sup>JM</sup></td>
+      
+        <td>Type</td>
+      
+        <td>University</td>
+      
+    </tr>
+  
+    <tr>
+      
+        <td>Url</td>
+      
+        <td>VersionNumber</td>
+      
+        <td>VideoRecordingFormat</td>
+      
+        <td>Volume</td>
+      
+    </tr>
+  
+    <tr>
+      
+        <td>VolumeTitle<sup>JM</sup></td>
+      
+        <td>WebsiteTitle</td>
+      
+        <td>WebsiteType</td>
+      
+        <td>YearAsVolume<sup>JM</sup></td>
+      
+    </tr>
+  
+</table>
+
+<p>(fields marked <sup>Z</sup> are only available in Zotero, fields marked with <sup>JM</sup> are only available in Juris-M).</p>
+<h2 id="filters">Filters</h2>
+<dl>
+  
+    <h3><b>abbr</b>(chars: number = 1)</h3><p><p>Abbreviates the text. Only the first character and subsequent characters following white space will be included.</p></p><table><tr><th><b>parameter</b></th><th>type</th><th/></tr><tr><td><code><p>chars</p></code></td><td><p>number</p></td><td><p>number of characters to return per word</p></td></tr></table>
+  
+    <h3><b>acronym</b>(list: string = &#39;acronyms&#39;, reload: boolean = false, passthrough: boolean = false)</h3><p><p>Does an acronym lookup for the text.</p></p><table><tr><th><b>parameter</b></th><th>type</th><th/></tr><tr><td><code><p>list</p></code></td><td><p>string</p></td><td><p>lookup list. The list must be a CSV file and live in the <code>Zotero/better-bibtex</code> directory in your Zotero profile, and must use commas as the delimiter.</p></td></tr><tr><td><code><p>reload</p></code></td><td><p>boolean</p></td><td><p>reload the list for every call. When off, the list will only be read at startup of Better BibTeX. You can set this to true temporarily to live-reload a list.</p></td></tr><tr><td><code><p>passthrough</p></code></td><td><p>boolean</p></td><td><p>if no match is found, pass through input.</p></td></tr></table>
+  
+    <h3><b>alphanum</b></h3><p><p>clears out everything but unicode alphanumeric characters (unicode character classes <code>L</code> and <code>N</code>)</p></p>
+  
+    <h3><b>ascii</b></h3><p><p>removes all non-ascii characters</p></p>
+  
+    <h3><b>capitalize</b></h3><p><p>uppercases the first letter of each word</p></p>
+  
+    <h3><b>clean</b></h3><p><p>transliterates the citation key and removes unsafe characters</p></p>
+  
+    <h3><b>condense</b>(sep: string = &#39;&#39;)</h3><p><p>replaces spaces in the value passed in. You can specify what to replace it with by adding it as a
+parameter, e.g <code>.condense('_')</code> will replace spaces with underscores. Equivalent to <code>.replace(/\s+/g, sep)</code>.</p></p><table><tr><th><b>parameter</b></th><th>type</th><th/></tr><tr><td><code><p>sep</p></code></td><td><p>string</p></td><td><p>replacement character</p></td></tr></table>
+  
+    <h3><b>default</b>(text: string)</h3><p><p>Returns the given text if no output was generated</p></p><table><tr><th><b>parameter</b></th><th>type</th><th/></tr><tr><td><code><p>text</p></code></td><td><p>string</p></td><td><p>literal text to return</p></td></tr></table>
+  
+    <h3><b>discard</b></h3><p><p>discards the input</p></p>
+  
+    <h3><b>find</b>(match: (string | RegExp), passthrough: boolean = false)</h3><p><p>Finds a text in the string and returns it.</p></p><table><tr><th><b>parameter</b></th><th>type</th><th/></tr><tr><td><code><p>match</p></code></td><td><p>(string | RegExp)</p></td><td><p>regex or string to match. String matches are case-insensitive</p></td></tr><tr><td><code><p>passthrough</p></code></td><td><p>boolean</p></td><td><p>if no match is found, pass through input.</p></td></tr></table>
+  
+    <h3><b>formatDate</b>(format: string = &#39;%Y-%m-%d&#39;)</h3><p><p>formats date as by replacing y, m and d in the format</p></p><table><tr><th><b>parameter</b></th><th>type</th><th/></tr><tr><td><code><p>format</p></code></td><td><p>string</p></td><td><p>sprintf-style format template</p></td></tr></table>
+  
+    <h3><b>ideographs</b></h3><p><p>Treat ideaographs as individual words</p></p>
+  
+    <h3><b>jieba</b>(mode?: string)</h3><p><p>word segmentation for Chinese items. Uses substantial memory, and adds about 7 seconds to BBTs startup time; must be enabled under Preferences -&gt; Better BibTeX -&gt; Advanced -&gt; Citekeys</p></p><table><tr><th><b>parameter</b></th><th>type</th><th/></tr><tr><td><code><p>mode</p></code></td><td><p>string</p></td><td><p>for backwards compatibility, this param will be accepted, but it is a no-op since the switch to jieba-rs. It will be removed eventually.</p></td></tr></table>
+  
+    <h3><b>kuromoji</b></h3><p><p>word segmentation for Japanese items. Uses substantial memory; must be enabled under Preferences -&gt; Better BibTeX -&gt; Advanced -&gt; Citekeys</p></p>
+  
+    <h3><b>len</b>(relation: (&#39;&lt;&#39; | &#39;&gt;&#39; | &#39;&lt;=&#39; | &#39;==&#39; | &#39;!=&#39; | &#39;&gt;=&#39;) = &#39;&gt;&#39;, length: number = 0)</h3><p><p>If the length of the output does not match the given number, skip to the next pattern.</p></p><table><tr><th><b>parameter</b></th><th>type</th><th/></tr><tr><td><code><p>relation</p></code></td><td><p>('<' | '>' | '<=' | '==' | '!=' | '>=')</p></td><td><p>comparison operator</p></td></tr><tr><td><code><p>length</p></code></td><td><p>number</p></td><td><p>value to compare length with</p></td></tr></table>
+  
+    <h3><b>localTime</b></h3><p><p>transforms date/time to local time. Mainly useful for dateAdded and dateModified as it requires an ISO-formatted input.</p></p>
+  
+    <h3><b>lower</b></h3><p><p>Forces the text inserted by the field marker to be in lowercase. For example, <code>auth.lower</code> expands to the last name of the first author in lowercase.</p></p>
+  
+    <h3><b>match</b>(match: (string | RegExp), clean: boolean = false)</h3><p><p>If the output does not match the given string/regex, skip to the next pattern.</p></p><table><tr><th><b>parameter</b></th><th>type</th><th/></tr><tr><td><code><p>match</p></code></td><td><p>(string | RegExp)</p></td><td><p>regex or string to match. String matches are case-insensitive</p></td></tr><tr><td><code><p>clean</p></code></td><td><p>boolean</p></td><td><p>transliterates the current output and removes unsafe characters during matching</p></td></tr></table>
+  
+    <h3><b>nopunct</b>(dash: string = &#39;-&#39;)</h3><p><p>Removes punctuation</p></p><table><tr><th><b>parameter</b></th><th>type</th><th/></tr><tr><td><code><p>dash</p></code></td><td><p>string</p></td><td><p>replace dashes with given character</p></td></tr></table>
+  
+    <h3><b>nopunctordash</b></h3><p><p>Removes punctuation and word-connecting dashes. alias for <code>nopunct(dash='')</code></p></p>
+  
+    <h3><b>numeric</b></h3><p><p>returns the value if it's an integer</p></p>
+  
+    <h3><b>pinyin</b></h3><p><p>transliterates the citation key to pinyin</p></p>
+  
+    <h3><b>postfix</b>(postfix: string)</h3><p><p>postfixes with its parameter, so <code>postfix('_')</code> will add an underscore to the end if, and only if, the value
+it is supposed to postfix isn't empty</p></p><table><tr><th><b>parameter</b></th><th>type</th><th/></tr><tr><td><code><p>postfix</p></code></td><td><p>string</p></td><td><p>postfix string</p></td></tr></table>
+  
+    <h3><b>prefix</b>(prefix: string)</h3><p><p>prefixes with its parameter, so <code>.prefix('_')</code> will add an underscore to the front if, and only if, the value
+it is supposed to prefix isn't empty.</p></p><table><tr><th><b>parameter</b></th><th>type</th><th/></tr><tr><td><code><p>prefix</p></code></td><td><p>string</p></td><td><p>prefix string</p></td></tr></table>
+  
+    <h3><b>replace</b>(find: (string | RegExp), replace: string)</h3><p><p>replaces text, for the text to match you can pass either:</p>
+<ul>
+<li>a string: <code>.replace('.etal','&amp;etal')</code> which will match case-insensitive, so will replace <code>.EtAl</code> with <code>&amp;etal</code>.</li>
+<li><a href="https://www.simplilearn.com/tutorials/javascript-tutorial/javascript-regex">javascript regular expression</a>: <code>.replace(/[.]etal/ig, '&amp;etal')</code></li>
+</ul></p><table><tr><th><b>parameter</b></th><th>type</th><th/></tr><tr><td><code><p>find</p></code></td><td><p>(string | RegExp)</p></td><td><p>string or regex to match. String matches are case-insensitive</p></td></tr><tr><td><code><p>replace</p></code></td><td><p>string</p></td><td><p>literal text to replace the match with</p></td></tr></table>
+  
+    <h3><b>select</b>(start: number = 1, n?: number)</h3><p><p>selects words from the value passed in. The format is <code>select(start,number)</code> (1-based), so <code>select(1,4)</code> or <code>select(n=4)</code>
+would select the first four words. If <code>n</code> is not given, all words from <code>start</code> to the end are
+selected.</p></p><table><tr><th><b>parameter</b></th><th>type</th><th/></tr><tr><td><code><p>start</p></code></td><td><p>number</p></td><td><p>first word to select (1-based)</p></td></tr><tr><td><code><p>n</p></code></td><td><p>number</p></td><td><p>number of words to select. Default is all.</p></td></tr></table>
+  
+    <h3><b>skipwords</b>(nopunct: boolean = false)</h3><p><p>filters out common words like 'of', 'the', … the list of words can be seen and changed by going into
+<code>about:config</code> under the key <code>extensions.zotero.translators.better-bibtex.skipWords</code> as a comma-separated,
+case-insensitive list of words.</p>
+<p>If you want to strip words like 'Jr.' from names, you could use something like <code>Auth.nopunct.skipwords.fold</code>
+after adding <code>jr</code> to the skipWords list.
+Note that this filter is always applied with <code>nopunct</code> on if you use <code>title</code> (which is different from <code>Title</code>) or <code>shorttitle</code>.</p></p><table><tr><th><b>parameter</b></th><th>type</th><th/></tr><tr><td><code><p>nopunct</p></code></td><td><p>boolean</p></td><td><p>remove punctuation from words</p></td></tr></table>
+  
+    <h3><b>substring</b>(start: number = 1, n?: number)</h3><p><p><code>substring(start,n)</code> selects <code>n</code> (default: all) characters starting at <code>start</code></p></p><table><tr><th><b>parameter</b></th><th>type</th><th/></tr><tr><td><code><p>start</p></code></td><td><p>number</p></td><td><p>starting character (1-based)</p></td></tr><tr><td><code><p>n</p></code></td><td><p>number</p></td><td><p>number of characters to select (default: remainder from <code>start</code>)</p></td></tr></table>
+  
+    <h3><b>transliterate</b>(mode?: ((&#39;minimal&#39; | &#39;german&#39; | &#39;japanese&#39; | &#39;chinese&#39; | &#39;arabic&#39; | &#39;ukranian&#39; | &#39;mongolian&#39; | &#39;russian&#39;) | &#39;de&#39; | &#39;ja&#39; | &#39;chinese-traditional&#39; | &#39;zh-hant&#39; | &#39;zh&#39; | &#39;tw&#39; | &#39;ar&#39; | &#39;uk&#39; | &#39;mn&#39; | &#39;ru&#39;))</h3><p><p>transliterates the citation key. If you don't specify a mode, the mode is derived from the item language field</p></p><table><tr><th><b>parameter</b></th><th>type</th><th/></tr><tr><td><code><p>mode</p></code></td><td><p>(('minimal' | 'german' | 'japanese' | 'chinese' | 'arabic' | 'ukranian' | 'mongolian' | 'russian') | 'de' | 'ja' | 'chinese-traditional' | 'zh-hant' | 'zh' | 'tw' | 'ar' | 'uk' | 'mn' | 'ru')</p></td><td><p>specialized translateration modes for german, japanese or chinese.</p></td></tr></table>
+  
+    <h3><b>upper</b></h3><p><p>Forces the text inserted by the field marker to be in uppercase. For example, <code>auth.upper</code> expands the last name of the first author in uppercase.</p></p>
+  
+</dl>
+
+<p><em>Usage note</em>: the functions <code>condense</code>, <code>skipwords</code>, <code>capitalize</code> and <code>select</code> rely on whitespaces for word handling. Most functions strip
+whitespace and thereby make these filter functions sort of useless. You will in general want to use the fields from the
+table above, which give you the values from Zotero without any changes. The fields with <code>**</code> are only available in Juris-M.</p>
+
   <footer class="footline">
   </footer>
 </article>
@@ -815,7 +1533,11 @@ Better BibTeX for Zotero
           <ul class="enlarge morespace collapsible-menu">
             <li class="" data-nav-id="/zotero-better-bibtex/installation/index.html"><a class="padding" href="/zotero-better-bibtex/installation/index.html">Installation</a><ul id="R-subsections-ff749ccaab053548f690f97bcd6daed0" class="collapsible-menu"></ul></li>
             <li class="" data-nav-id="/zotero-better-bibtex/exporting/index.html"><a class="padding" href="/zotero-better-bibtex/exporting/index.html">Exporting</a><ul id="R-subsections-1d584ca98d27013df6242b6c17171d5e" class="collapsible-menu"></ul></li>
-            <li class="" data-nav-id="/zotero-better-bibtex/citing/index.html"><a class="padding" href="/zotero-better-bibtex/citing/index.html">Citation Keys</a><ul id="R-subsections-21d11d1b73fd6487fde6cbf6c72fa642" class="collapsible-menu"></ul></li>
+            <li class="parent " data-nav-id="/zotero-better-bibtex/citing/index.html"><a class="padding" href="/zotero-better-bibtex/citing/index.html">Citation Keys</a><ul id="R-subsections-21d11d1b73fd6487fde6cbf6c72fa642" class="collapsible-menu">
+            <li class="active " data-nav-id="/zotero-better-bibtex/citing/formulas/index.html"><a class="padding" href="/zotero-better-bibtex/citing/formulas/index.html">Citation Keys</a></li>
+            <li class="" data-nav-id="/zotero-better-bibtex/citing/cayw/index.html"><a class="padding" href="/zotero-better-bibtex/citing/cayw/index.html">Cite as you Write</a></li>
+            <li class="" data-nav-id="/zotero-better-bibtex/citing/migrating/index.html"><a class="padding" href="/zotero-better-bibtex/citing/migrating/index.html">Migrating from Word/Libreoffice</a></li>
+            <li class="" data-nav-id="/zotero-better-bibtex/citing/aux-scanner/index.html"><a class="padding" href="/zotero-better-bibtex/citing/aux-scanner/index.html">AUX Scanner</a></li></ul></li>
             <li class="" data-nav-id="/zotero-better-bibtex/support/index.html"><a class="padding" href="/zotero-better-bibtex/support/index.html">Support</a><ul id="R-subsections-caa68563dfb61577c2c4699e1aa63010" class="collapsible-menu"></ul></li>
             <li class="" data-nav-id="/zotero-better-bibtex/sponsoring/index.html"><a class="padding" href="/zotero-better-bibtex/sponsoring/index.html">Sponsoring BBT</a></li>
           </ul>
