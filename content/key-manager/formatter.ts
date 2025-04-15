@@ -1651,6 +1651,38 @@ export class PatternFormatter {
     return final()
   }
 
+  public formula_and(...e: (() => string)[]): string {
+    const final = e.pop()
+    for (const attempt of e) {
+      try {
+        if (!attempt()) return ''
+      }
+      catch (err) {
+        if (err.next) return ''
+        log.error('formula: or expression element', err)
+        throw err
+      }
+    }
+    return final()
+  }
+
+  public formula_or(...e: (() => string)[]): string {
+    const final = e.pop()
+    let res: string
+    for (const attempt of e) {
+      try {
+        if (res = attempt()) return res
+      }
+      catch (err) {
+        if (!err.next) {
+          log.error('formula: or expression element', err)
+          throw err
+        }
+      }
+    }
+    return final()
+  }
+
   public formula_test(f: () => string): string {
     try {
       return f()

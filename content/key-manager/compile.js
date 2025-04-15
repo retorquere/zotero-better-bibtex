@@ -501,7 +501,26 @@ const protect = {
             object: { type: 'ThisExpression' },
             property: { type: 'Identifier', name: 'formula_sequence' },
           },
-          arguments: node.expressions.map(e => ({
+          arguments: node.expressions.map(expr => ({
+            type: 'ArrowFunctionExpression',
+            expression: true,
+            generator: false,
+            async: false,
+            params: [],
+            body: expr,
+          })),
+        }
+      }
+
+      case 'LogicalExpression': {
+        return {
+          type: 'CallExpression',
+          callee: {
+            type: 'MemberExpression',
+            object: { type: 'ThisExpression' },
+            property: { type: 'Identifier', name: { '||': 'formula_or', '&&': 'formula_and' }[node.operator] },
+          },
+          arguments: [node.left, node.right].map(e => ({
             type: 'ArrowFunctionExpression',
             expression: true,
             generator: false,
@@ -516,6 +535,7 @@ const protect = {
     return node
   },
 }
+
 const reset = {
   leave(node, parent) {
     switch (node.type) {
