@@ -10,9 +10,6 @@
     <loc>/zotero-better-bibtex/citing/index.html</loc>
   </url>
   <url>
-    <loc>/zotero-better-bibtex/citing/formulas/index.html</loc>
-  </url>
-  <url>
     <loc>/zotero-better-bibtex/exporting/auto/index.html</loc>
   </url>
   <url>
@@ -104,6 +101,9 @@
   </url>
   <url>
     <loc>/zotero-better-bibtex/tags/export/index.html</loc>
+  </url>
+  <url>
+    <loc>/zotero-better-bibtex/citing/formulas/index.html</loc>
   </url>
   <url>
     <loc>/zotero-better-bibtex/tags/git/index.html</loc>

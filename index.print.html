@@ -11792,11 +11792,392 @@ that yields a non-empty string. If all return a empty string, a random key will 
 <div class="R-taxonomy taxonomy-tags cstyle tags" title="Tags" style="--VARIABLE-TAGS-BG-color: var(--INTERNAL-TAG-BG-color);">
   <ul>
     <li><a class="term-link" href="/zotero-better-bibtex/tags/citation-keys/index.html">Citation Keys</a></li>
+    <li><a class="term-link" href="/zotero-better-bibtex/tags/cite-as-you-write/index.html">Cite as You Write</a></li>
+    <li><a class="term-link" href="/zotero-better-bibtex/tags/overleaf/index.html">Overleaf</a></li>
   </ul>
 </div>
   </header>
 
-<h1 id="citation-keys">Citation Keys</h1>
+<h1 id="cite-as-you-write">Cite as you Write</h1>
+
+<p><strong>PSA: as of Zotero 5.0.71, access to the CAYW URL will no longer work from the browser for security reasons; <code>curl</code> and other programmatic access such as from editors access will work.</strong></p>
+<p>Good news for TeXnicians and those down with Mark (aka Markdown, RST, whatnot): this is the time to go pester the author of your favorite editor for Zotero integration!</p>
+<h2 id="editor-integration">Editor integration</h2>
+<h3 id="vim">vim</h3>
+<p>Graciously supplied by David Lukes:</p>
+<p>paste it in your .vimrc (and modify to your liking):</p>
+<div class="highlight wrap-code" dir="auto"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-vim" data-lang="vim"><span style="display:flex;"><span><span style="color:#66d9ef">function</span>! <span style="color:#a6e22e">ZoteroCite</span>()
+</span></span><span style="display:flex;"><span><span style="color:#75715e">  &#34; pick a format based on the filetype (customize at will)</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">format</span> = &amp;<span style="color:#66d9ef">filetype</span> =~ <span style="color:#e6db74">&#39;.*tex&#39;</span> ? <span style="color:#e6db74">&#39;citep&#39;</span> : <span style="color:#e6db74">&#39;pandoc&#39;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">api_call</span> = <span style="color:#e6db74">&#39;http://127.0.0.1:23119/better-bibtex/cayw?format=&#39;</span>.<span style="color:#a6e22e">format</span>.<span style="color:#e6db74">&#39;&amp;brackets=1&#39;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">ref</span> = <span style="color:#a6e22e">system</span>(<span style="color:#e6db74">&#39;curl -s &#39;</span>.<span style="color:#a6e22e">shellescape</span>(<span style="color:#a6e22e">api_call</span>))
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">return</span> <span style="color:#a6e22e">ref</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">endfunction</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">noremap</span> &lt;<span style="color:#a6e22e">leader</span>&gt;<span style="color:#a6e22e">z</span> &#34;=<span style="color:#a6e22e">ZoteroCite</span>()&lt;<span style="color:#a6e22e">CR</span>&gt;<span style="color:#a6e22e">p</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">inoremap</span> &lt;<span style="color:#a6e22e">C</span>-<span style="color:#a6e22e">z</span>&gt; &lt;<span style="color:#a6e22e">C</span>-<span style="color:#a6e22e">r</span>&gt;=<span style="color:#a6e22e">ZoteroCite</span>()&lt;<span style="color:#a6e22e">CR</span>&gt;</span></span></code></pre></div>
+<p>This inserts the citation at the cursor using the shortcut ctrl-z (in insert mode) or <code>&lt;leader&gt;</code>z (in normal, visual etc. modes, <code>&lt;leader&gt;</code> being backslash by default).</p>
+<p>Alternatively, if you use a recent version of Vim (not Neovim) and have written your config file in <code>vim9script</code>, you may be interested in a <code>vim9script</code> version of the above solution to take advantage of JIT compilation:</p>
+<div class="highlight wrap-code" dir="auto"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-vim" data-lang="vim"><span style="display:flex;"><span><span style="color:#a6e22e">def</span> <span style="color:#a6e22e">g</span>:<span style="color:#a6e22e">ZoteroCite</span>(): <span style="color:#a6e22e">string</span>
+</span></span><span style="display:flex;"><span>    # <span style="color:#a6e22e">Pick</span> <span style="color:#a6e22e">a</span> <span style="color:#a6e22e">citation</span> <span style="color:#a6e22e">format</span> <span style="color:#a6e22e">based</span> <span style="color:#a6e22e">on</span> <span style="color:#a6e22e">the</span> <span style="color:#66d9ef">filetype</span> (<span style="color:#a6e22e">feel</span> <span style="color:#a6e22e">free</span> <span style="color:#a6e22e">to</span> <span style="color:#a6e22e">customize</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">var</span> <span style="color:#a6e22e">format</span>: <span style="color:#a6e22e">string</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> &amp;<span style="color:#66d9ef">filetype</span> =~ <span style="color:#e6db74">&#39;.*tex&#39;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">format</span> = <span style="color:#e6db74">&#39;cite&#39;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">else</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">format</span> = <span style="color:#e6db74">&#39;pandoc&#39;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">endif</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    # <span style="color:#a6e22e">Make</span> <span style="color:#a6e22e">the</span> <span style="color:#a6e22e">BetterBibTeX</span> <span style="color:#a6e22e">API</span> <span style="color:#a6e22e">call</span> <span style="color:#a6e22e">and</span> <span style="color:#a6e22e">return</span> <span style="color:#a6e22e">the</span> <span style="color:#a6e22e">result</span>.
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">var</span> <span style="color:#a6e22e">api_call</span> = <span style="color:#e6db74">&#39;http://127.0.0.1:23119/better-bibtex/cayw?format=&#39;</span> .. <span style="color:#a6e22e">format</span> .. <span style="color:#e6db74">&#39;&amp;brackets=1&#39;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">var</span> <span style="color:#a6e22e">citation</span> = <span style="color:#a6e22e">system</span>(<span style="color:#e6db74">&#39;curl -s &#39;</span> .. <span style="color:#a6e22e">shellescape</span>(<span style="color:#a6e22e">api_call</span>))
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">return</span> <span style="color:#a6e22e">citation</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">enddef</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">inoremap</span> &lt;<span style="color:#a6e22e">C</span>-<span style="color:#a6e22e">x</span>&gt;&lt;<span style="color:#a6e22e">C</span>-<span style="color:#a6e22e">z</span>&gt; &lt;<span style="color:#a6e22e">C</span>-<span style="color:#a6e22e">r</span>&gt;=<span style="color:#a6e22e">g</span>:<span style="color:#a6e22e">ZoteroCite</span>()&lt;<span style="color:#a6e22e">cr</span>&gt;</span></span></code></pre></div>
+<p>In this case, the keybinding Ctrl-X Ctrl-Z in insert mode inserts a Zotero citation. You can add a normal-mode keybinding in the same way as for the legacy VimScript version provided above.</p>
+<h3 id="emacs">emacs</h3>
+<p>@newhallroad wrote a function in elisp, which brings up the CAYW input, adds the chosen items as pandoc citations to the buffer, and moves the point to after the citations. This is for markdown-mode. Emacs users who use org-mode may (or may not) need something different.</p>
+<div class="highlight wrap-code" dir="auto"><pre tabindex="0"><code>(defun alk/bbt-zotero-insert-key ()
+  &#34;Run shell command to bring up better bibtex cayw input and insert pandoc citation at point&#34;
+  (interactive)
+  (shell-command &#34;curl -s http://127.0.0.1:23119/better-bibtex/cayw?format=pandoc^&amp;brackets=true&#34; t nil) ; caret escapes ampersand 
+  (search-forward &#34;]&#34;) ; place cursor after inserted citation
+  )</code></pre></div>
+<h3 id="zotero-citations-for-atom">Zotero Citations for Atom</h3>
+<p>A sample implementation of real integration (rather than the working-but-clunky workarounds using paste) can be found in the <a href="https://atom.io/packages/zotero-citations" rel="external" target="_blank">Zotero Citations</a> package for the <a href="http://atom.io" rel="external" target="_blank">Atom</a> editor.</p>
+<h3 id="vs-code-citation-picker-for-zotero">VS Code Citation Picker for Zotero</h3>
+<p>If you don&rsquo;t feel like typing citations out (and let&rsquo;s be honest, you don&rsquo;t), executing <a href="https://marketplace.visualstudio.com/items?itemName=mblode.zotero" rel="external" target="_blank">VS Code Citation Picker for Zotero</a> extension for the <a href="https://code.visualstudio.com/" rel="external" target="_blank">VS Code</a> editor will call up a graphical picker which will insert these for you, formatted and all.</p>
+<h3 id="scrivener-20marked-2-for-mac">Scrivener 2.0/Marked 2 for Mac</h3>
+<p>Dave Smith has gracefully written <a href="http://davepwsmith.github.io/academic-scrivener-howto/" rel="external" target="_blank">instructions</a> on how to set up Scrivener 2.0 and Marked 2 for OSX to use the CAYW picker, including ready-to-run apps</p>
+<h3 id="scrivener-10-for-windows">Scrivener 1.0 for Windows</h3>
+<p>Emilie has writen <a href="https://github.com/AmomentOfMusic/Zotero_scrivener_picker_windows" rel="external" target="_blank">instructions</a> for using the CAYW picker for Scrivener 1.0 in Windows 10, with the necessary files</p>
+<h3 id="linux">Linux</h3>
+<ul>
+<li>Emma Reisz has gracefully written <a href="https://emmareisz.github.io/zotpicknix/" rel="external" target="_blank">instructions and scripts</a> for setting up CAYW on Linux.</li>
+<li>ConorIA has more versatile solution called <a href="https://gitlab.com/ConorIA/shell-scripts/tree/master/zotero4overleaf" rel="external" target="_blank">zotero4overleaf</a>, which was inspired by Emma&rsquo;s scripts. This should allow use with Overleaf, which is pretty insane that it&rsquo;s possible if you think about it.</li>
+</ul>
+<h3 id="overleaf">Overleaf</h3>
+<p>David Lukes takes Overleaf integration one step further with a GreaseMonkey/TamperMonkey <a href="https://github.com/dlukes/zotero-sharelatex-cayw" rel="external" target="_blank">userscript</a> which not only allows popping up the CAYW picker straight from your browser, no other tools required, but adds a hotkey to refresh your bib file on Overleaf. This should work with the free subscription, no fiddling with git or dropbox required.</p>
+<h2 id="diy">DIY</h2>
+<p>BBT exposes an URL at http://127.0.0.1:23119/better-bibtex/cayw <sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>. The url accepts
+the following URL parameters:</p>
+<table>
+  <thead>
+      <tr>
+          <th>parameter</th>
+          <th></th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><code>probe</code></td>
+          <td>If set to any non-empty value, returns <code>ready</code>. You can use this to test whether BBT CAYW picking is live; it will not pop up the picker</td>
+      </tr>
+      <tr>
+          <td><code>format</code></td>
+          <td>Set the output format</td>
+      </tr>
+      <tr>
+          <td><code>clipboard</code></td>
+          <td>Any non-empty value will copy the results to the clipboard</td>
+      </tr>
+      <tr>
+          <td><code>minimize</code></td>
+          <td>Any non-empty value will minimize Zotero windows after a pick</td>
+      </tr>
+      <tr>
+          <td><code>texstudio</code></td>
+          <td>Any non-empty value will try to push the pick to TeXstudio</td>
+      </tr>
+      <tr>
+          <td><code>selected</code></td>
+          <td>Any non-empty value will use the current selection in Zotero rather than popping up the pick window</td>
+      </tr>
+      <tr>
+          <td><code>select</code></td>
+          <td>More of a gimmick than anything else, but if you add select=true, BBT will select the picked items in Zotero.</td>
+      </tr>
+  </tbody>
+</table>
+<p>The following formats are available:</p>
+<ul>
+<li><code>natbib</code>. Generates <a href="https://ctan.org/pkg/natbib" rel="external" target="_blank">natbib</a> citation commands. Extra URL parameters allowed:
+<ul>
+<li><code>command</code>: the citation command to use (if unspecified, defaults to <code>cite</code>)</li>
+</ul>
+</li>
+<li><code>latex</code> and <code>cite</code> are aliases for <code>natbib</code> with the assumption you want the cite command to be <code>cite</code></li>
+<li><code>citep</code> and <code>citet</code> are aliases for <code>natbib</code> with the assumption you want the cite command to be <code>citep</code> or <code>citet</code>, respectively.</li>
+<li><code>biblatex</code>. Generates <a href="https://ctan.org/pkg/biblatex" rel="external" target="_blank">biblatex</a> citation commands. Extra URL parameters allowed:
+<ul>
+<li><code>command</code>: the citation command to use (if unspecified, defaults to <code>autocite</code>)</li>
+</ul>
+</li>
+<li><code>mmd</code>: MultiMarkdown</li>
+<li><code>pandoc</code>. Accepts additional URL parameter <code>brackets</code>; any non-empty value surrounds the citation with brackets</li>
+<li><code>asciidoctor-bibtex</code></li>
+<li><code>typst</code> Generates <a href="https://typst.app/docs/reference/model/cite/" rel="external" target="_blank">typst</a> citation commands</li>
+<li><code>jupyter</code></li>
+<li><code>scannable-cite</code> for the <a href="https://zotero-odf-scan.github.io/zotero-odf-scan/" rel="external" target="_blank">ODF scanner</a></li>
+<li><code>formatted-citation</code>: output formatted citation as per the current Zotero quick-export setting, if it is set to a citation style, and not an export format</li>
+<li><code>formatted-bibliography</code>: output formatted bibliography as per the current Zotero quick-export setting, if it is set to a citation style, and not an export format</li>
+<li><code>translate</code> invokes a Zotero export translator. Extra URL parameters allowed:
+<ul>
+<li><code>translator</code>: stripped name of one of the BBT translators (lowercased, remove &lsquo;better&rsquo;, and only the letters, e.g.  <code>biblatex</code> or <code>csljson</code>), or a translator ID. Defaults to <code>biblatex</code>.</li>
+<li><code>exportNotes</code>: set to <code>true</code> to export notes</li>
+<li><code>useJournalAbbreviation</code>: set to <code>true</code> to use journal abbreviations</li>
+</ul>
+</li>
+<li><code>json</code>: the full pick information Zotero provides.</li>
+<li><code>eta</code>: formats the pick using <a href="https://eta.js.org/" rel="external" target="_blank">Eta</a>, with the picks exposed as <code>it.items</code>. To see what the items look like, use the <code>json</code> formatter. URL parameter required:
+<ul>
+<li><code>template</code>: the Eta template to render</li>
+</ul>
+</li>
+</ul>
+<p>The <code>eta</code> formatter is great for experimentation, but if you need a format for a common target application, feel free to request a change to have that added to this list.</p>
+<p>The picker passes the following data along with your picked items if you filled them out:</p>
+<table>
+  <thead>
+      <tr>
+          <th>field</th>
+          <th></th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><code>locator</code></td>
+          <td>the place within the work (e.g. page number)</td>
+      </tr>
+      <tr>
+          <td><code>prefix</code></td>
+          <td>for stuff like &ldquo;see &hellip;&rdquo;</td>
+      </tr>
+      <tr>
+          <td><code>suffix</code></td>
+          <td>for stuff after the citations</td>
+      </tr>
+      <tr>
+          <td><code>suppress author</code></td>
+          <td>if you only want the year</td>
+      </tr>
+  </tbody>
+</table>
+<p>However not all output formats support these. Pandoc and scannable cite are the richest ones, supporting all 4. MultiMarkdown supports
+none. The <code>formatted-</code> formats will ignore these. LaTeX supports all 4, in a way:</p>
+<ul>
+<li>in the <code>latex</code> (<a href="https://ctan.org/pkg/natbib" rel="external" target="_blank"><code>natbib</code></a>) format: if you choose <code>suppress author</code> for none or all of your items in a pick, you
+will get the citation as you would normally enter it, such as <code>\cite{author1,author2}</code>, or
+<code>\citeyear{author1,author2}</code>. If you use <code>locator</code>, <code>prefix</code>, <code>suffix</code> in any one of them, or you use <code>suppress author</code>
+for some but not for others, the picker will write them out all separate, like <code>\cite[p. 1]{author1}\citeyear{author2}</code>,
+as natbib doesn&rsquo;t seem to have a good mechanism for combined citations that mix different prefixes/suffixes/locators.</li>
+<li>in the <a href="https://ctan.org/pkg/biblatex" rel="external" target="_blank"><code>biblatex</code></a> format: <code>suppress author</code> is ignored unless the command is one of <code>\cite</code>, <code>\autocite</code>
+or <code>\parencite</code> <strong>and</strong> there is one items only, in which case the starred variant of the command is returned, which
+hides the author; for multiple items with <code>locator</code>s, <code>prefix</code>es or <code>suffix</code>es, the <code>s</code>-affixed variant of the
+command is generated</li>
+</ul>
+<p>Some of the formatters use abbreviated labels for the results if you include a locator. The defaults are:</p>
+<table>
+  <thead>
+      <tr>
+          <th>locator label</th>
+          <th>abbreviation</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>article</td>
+          <td>art.</td>
+      </tr>
+      <tr>
+          <td>chapter</td>
+          <td>ch.</td>
+      </tr>
+      <tr>
+          <td>subchapter</td>
+          <td>subch.</td>
+      </tr>
+      <tr>
+          <td>column</td>
+          <td>col.</td>
+      </tr>
+      <tr>
+          <td>figure</td>
+          <td>fig.</td>
+      </tr>
+      <tr>
+          <td>line</td>
+          <td>l.</td>
+      </tr>
+      <tr>
+          <td>note</td>
+          <td>n.</td>
+      </tr>
+      <tr>
+          <td>issue</td>
+          <td>no.</td>
+      </tr>
+      <tr>
+          <td>opus</td>
+          <td>op.</td>
+      </tr>
+      <tr>
+          <td>page</td>
+          <td>p.</td>
+      </tr>
+      <tr>
+          <td>paragraph</td>
+          <td>para.</td>
+      </tr>
+      <tr>
+          <td>subparagraph</td>
+          <td>subpara.</td>
+      </tr>
+      <tr>
+          <td>part</td>
+          <td>pt.</td>
+      </tr>
+      <tr>
+          <td>rule</td>
+          <td>r.</td>
+      </tr>
+      <tr>
+          <td>section</td>
+          <td>sec.</td>
+      </tr>
+      <tr>
+          <td>subsection</td>
+          <td>subsec.</td>
+      </tr>
+      <tr>
+          <td>Section</td>
+          <td>Sec.</td>
+      </tr>
+      <tr>
+          <td>sub verbo</td>
+          <td>sv.</td>
+      </tr>
+      <tr>
+          <td>schedule</td>
+          <td>sch.</td>
+      </tr>
+      <tr>
+          <td>title</td>
+          <td>tit.</td>
+      </tr>
+      <tr>
+          <td>verse</td>
+          <td>vrs.</td>
+      </tr>
+      <tr>
+          <td>volume</td>
+          <td>vol.</td>
+      </tr>
+  </tbody>
+</table>
+<p>In your call to the CAYW URL, you can override the abbreviations by adding them to the query, e.g. http://127.0.0.1:23119/better-bibtex/cayw?format=mmd&amp;page=&amp;Section=sec., page-picks will have no label, and Section-picks will get <code>sec.</code> rather than <code>Sec.</code>.</p>
+<p>The <code>clipboard</code> option can be used as a workaround for editors that haven&rsquo;t gotten around to integrating this yet. If
+you use this option you will probably want to bind to a hotkey, either system-wide (which is going to be platform-dependent, I know
+<a href="http://www.autohotkey.com" rel="external" target="_blank">AutoHotKey</a> works for windows, for OSX <a href="https://pqrs.org/osx/karabiner/" rel="external" target="_blank">Karabiner</a> ought to
+do the job, and for Linux <a href="https://unix.stackexchange.com/questions/44672/assign-shortcut-key-to-run-a-script" rel="external" target="_blank">xbindkeys</a> could do the job.</p>
+<p>For example, if you call up http://127.0.0.1:23119/better-bibtex/cayw?format=mmd&amp;clipboard=yes, the Zotero citation picker will pop up. If you then select two items that happen to have cite keys <code>adams2001</code> and <code>brigge2002</code>, then</p>
+<ul>
+<li>the response body will be <code>[#adams2001][][#brigge2002][]</code>, and</li>
+<li><code>[#adams2001][][#brigge2002][]</code> will be left on the clipboard</li>
+</ul>
+<div class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1">
+<p>For Juris-M, the port number <code>23119</code> must be replaced with <code>24119</code>.&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</div>
+
+  <footer class="footline">
+  </footer>
+</article>
+<article class="default">
+  <header class="headline">
+<div class="R-taxonomy taxonomy-tags cstyle tags" title="Tags" style="--VARIABLE-TAGS-BG-color: var(--INTERNAL-TAG-BG-color);">
+  <ul>
+    <li><a class="term-link" href="/zotero-better-bibtex/tags/citation-keys/index.html">Citation Keys</a></li>
+    <li><a class="term-link" href="/zotero-better-bibtex/tags/libreoffice/index.html">Libreoffice</a></li>
+    <li><a class="term-link" href="/zotero-better-bibtex/tags/word/index.html">Word</a></li>
+  </ul>
+</div>
+  </header>
+
+<h1 id="migrating-from-wordlibreoffice">Migrating from Word/Libreoffice</h1>
+
+<p>So you have decided that enough is enough, and you want to migrate
+your existing Word/Libreoffice document to LaTeX/Markdown. Plenty
+(well&hellip;) tools exist to help with the migration of your document
+content, pandoc being the most prominent one, but one thing none
+of them will do is keep your citations intact. This will not do.</p>
+<p>If you install <a href="/zotero-better-bibtex/citing/migrating/better-bibtex-citekeys.csl">this</a> CSL style in
+Zotero (or modify it further and use that), Zotero will render the
+in-text citations as <code>[@citekey]</code> when you ask Zotero to render the bibliography. If you want LaTeX, modify the
+style accordingly. You can then put your document through pandoc or whatnot to get LaTeX/Markdown.</p>
+<p>For the curious, BBT does this by patching in the <code>citation-key</code>
+variable in the CSL processing so it can be rendered using a CSL
+style. If you previously used the <code>citeprocNoteCitekey</code> preference,
+that is now gone, so you&rsquo;ll have to update the style you used.</p>
+<p>Update: pandoc now supports docx+citations as input format and will export your word documents into pandoc-compatible markdown with citations! That should be a much smoother experience:</p>
+<div class="highlight wrap-code" dir="auto"><pre tabindex="0"><code>pandoc -f docx+citations -t markdown -i Aristotle.docx -o Aristotle.md</code></pre></div>
+<p>should do the trick!</p>
+
+  <footer class="footline">
+  </footer>
+</article>
+<article class="default">
+  <header class="headline">
+<div class="R-taxonomy taxonomy-tags cstyle tags" title="Tags" style="--VARIABLE-TAGS-BG-color: var(--INTERNAL-TAG-BG-color);">
+  <ul>
+    <li><a class="term-link" href="/zotero-better-bibtex/tags/citation-keys/index.html">Citation Keys</a></li>
+  </ul>
+</div>
+  </header>
+
+<h1 id="aux-scanner">AUX Scanner</h1>
+
+<p>You can populate a collection, or tag items in your
+library, from an existing paper by scanning the <code>aux</code> file generated
+by bibtex, or a pandoc-markdown file, for referenced used. Scanning can be triggered from the <code>Tools</code> menu (for
+tagging the cited items) or by right-clicking a collection (for
+adding them to a collection). The scanner will read your AUX files
+and will put entries you cited in the associated LaTeX document
+into the current collection.</p>
+<p>By default, BBT will add a note for entries cited in the LaTeX
+document but which do not exist in your Zotero library, but citation
+keys must be present in your library before the scan is started &ndash;
+BBT will by default <em>not</em> create new items for citekeys it
+doesn&rsquo;t already know about. You can enable &lsquo;AUX Import&rsquo; in the
+preferences, and when that is on, if the scan finds citekeys not
+already in your Zotero library, it will attempt to read those (but
+<em>only</em> those) items from the bibtex file named in the <code>aux</code> file.</p>
+<p>For BBT users who don&rsquo;t use LaTeX directly, you can create a
+custom <code>aux</code> file to use with the AUX scanner by hand. It is a
+text file formatted like this:</p>
+<div class="highlight wrap-code" dir="auto"><pre tabindex="0"><code>\citation{CITEKEY1}
+\citation{CITEKEY2}</code></pre></div>
+<p>Where <code>CITEKEY1</code>, <code>CITEKEY2</code> etc are the <a href="/zotero-better-bibtex/">citation keys</a>
+that you want to include in the collection.</p>
+<p>For pandoc-markdown scanning, BBT needs to actually run pandoc, and for that pandoc must be in your <code>$PATH</code>. On MacOS, if you installed pandoc using homebrew, it will likely not be in the <code>PATH</code> that Zotero can see. You can enter the path manually by going into the Zotero preferences, Advanced tab, open the config editor, and create a text entry named <code>extensions.zotero.translators.better-bibtex.path.pandoc</code> and setting it to the full path of the pandoc binary.</p>
+
+  <footer class="footline">
+  </footer>
+</article>
+<article class="default">
+  <header class="headline">
+<div class="R-taxonomy taxonomy-tags cstyle tags" title="Tags" style="--VARIABLE-TAGS-BG-color: var(--INTERNAL-TAG-BG-color);">
+  <ul>
+    <li><a class="term-link" href="/zotero-better-bibtex/tags/citation-keys/index.html">Citation Keys</a></li>
+  </ul>
+</div>
+  </header>
+
+<h1 id="formulas">Formulas</h1>
 
 <h2 id="functions">Functions</h2>
 
@@ -12469,387 +12850,6 @@ table above, which give you the values from Zotero without any changes. The fiel
   <footer class="footline">
   </footer>
 </article>
-<article class="default">
-  <header class="headline">
-<div class="R-taxonomy taxonomy-tags cstyle tags" title="Tags" style="--VARIABLE-TAGS-BG-color: var(--INTERNAL-TAG-BG-color);">
-  <ul>
-    <li><a class="term-link" href="/zotero-better-bibtex/tags/citation-keys/index.html">Citation Keys</a></li>
-    <li><a class="term-link" href="/zotero-better-bibtex/tags/cite-as-you-write/index.html">Cite as You Write</a></li>
-    <li><a class="term-link" href="/zotero-better-bibtex/tags/overleaf/index.html">Overleaf</a></li>
-  </ul>
-</div>
-  </header>
-
-<h1 id="cite-as-you-write">Cite as you Write</h1>
-
-<p><strong>PSA: as of Zotero 5.0.71, access to the CAYW URL will no longer work from the browser for security reasons; <code>curl</code> and other programmatic access such as from editors access will work.</strong></p>
-<p>Good news for TeXnicians and those down with Mark (aka Markdown, RST, whatnot): this is the time to go pester the author of your favorite editor for Zotero integration!</p>
-<h2 id="editor-integration">Editor integration</h2>
-<h3 id="vim">vim</h3>
-<p>Graciously supplied by David Lukes:</p>
-<p>paste it in your .vimrc (and modify to your liking):</p>
-<div class="highlight wrap-code" dir="auto"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-vim" data-lang="vim"><span style="display:flex;"><span><span style="color:#66d9ef">function</span>! <span style="color:#a6e22e">ZoteroCite</span>()
-</span></span><span style="display:flex;"><span><span style="color:#75715e">  &#34; pick a format based on the filetype (customize at will)</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">format</span> = &amp;<span style="color:#66d9ef">filetype</span> =~ <span style="color:#e6db74">&#39;.*tex&#39;</span> ? <span style="color:#e6db74">&#39;citep&#39;</span> : <span style="color:#e6db74">&#39;pandoc&#39;</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">api_call</span> = <span style="color:#e6db74">&#39;http://127.0.0.1:23119/better-bibtex/cayw?format=&#39;</span>.<span style="color:#a6e22e">format</span>.<span style="color:#e6db74">&#39;&amp;brackets=1&#39;</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">ref</span> = <span style="color:#a6e22e">system</span>(<span style="color:#e6db74">&#39;curl -s &#39;</span>.<span style="color:#a6e22e">shellescape</span>(<span style="color:#a6e22e">api_call</span>))
-</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">return</span> <span style="color:#a6e22e">ref</span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">endfunction</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#a6e22e">noremap</span> &lt;<span style="color:#a6e22e">leader</span>&gt;<span style="color:#a6e22e">z</span> &#34;=<span style="color:#a6e22e">ZoteroCite</span>()&lt;<span style="color:#a6e22e">CR</span>&gt;<span style="color:#a6e22e">p</span>
-</span></span><span style="display:flex;"><span><span style="color:#a6e22e">inoremap</span> &lt;<span style="color:#a6e22e">C</span>-<span style="color:#a6e22e">z</span>&gt; &lt;<span style="color:#a6e22e">C</span>-<span style="color:#a6e22e">r</span>&gt;=<span style="color:#a6e22e">ZoteroCite</span>()&lt;<span style="color:#a6e22e">CR</span>&gt;</span></span></code></pre></div>
-<p>This inserts the citation at the cursor using the shortcut ctrl-z (in insert mode) or <code>&lt;leader&gt;</code>z (in normal, visual etc. modes, <code>&lt;leader&gt;</code> being backslash by default).</p>
-<p>Alternatively, if you use a recent version of Vim (not Neovim) and have written your config file in <code>vim9script</code>, you may be interested in a <code>vim9script</code> version of the above solution to take advantage of JIT compilation:</p>
-<div class="highlight wrap-code" dir="auto"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-vim" data-lang="vim"><span style="display:flex;"><span><span style="color:#a6e22e">def</span> <span style="color:#a6e22e">g</span>:<span style="color:#a6e22e">ZoteroCite</span>(): <span style="color:#a6e22e">string</span>
-</span></span><span style="display:flex;"><span>    # <span style="color:#a6e22e">Pick</span> <span style="color:#a6e22e">a</span> <span style="color:#a6e22e">citation</span> <span style="color:#a6e22e">format</span> <span style="color:#a6e22e">based</span> <span style="color:#a6e22e">on</span> <span style="color:#a6e22e">the</span> <span style="color:#66d9ef">filetype</span> (<span style="color:#a6e22e">feel</span> <span style="color:#a6e22e">free</span> <span style="color:#a6e22e">to</span> <span style="color:#a6e22e">customize</span>)
-</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">var</span> <span style="color:#a6e22e">format</span>: <span style="color:#a6e22e">string</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> &amp;<span style="color:#66d9ef">filetype</span> =~ <span style="color:#e6db74">&#39;.*tex&#39;</span>
-</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">format</span> = <span style="color:#e6db74">&#39;cite&#39;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">else</span>
-</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">format</span> = <span style="color:#e6db74">&#39;pandoc&#39;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">endif</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    # <span style="color:#a6e22e">Make</span> <span style="color:#a6e22e">the</span> <span style="color:#a6e22e">BetterBibTeX</span> <span style="color:#a6e22e">API</span> <span style="color:#a6e22e">call</span> <span style="color:#a6e22e">and</span> <span style="color:#a6e22e">return</span> <span style="color:#a6e22e">the</span> <span style="color:#a6e22e">result</span>.
-</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">var</span> <span style="color:#a6e22e">api_call</span> = <span style="color:#e6db74">&#39;http://127.0.0.1:23119/better-bibtex/cayw?format=&#39;</span> .. <span style="color:#a6e22e">format</span> .. <span style="color:#e6db74">&#39;&amp;brackets=1&#39;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">var</span> <span style="color:#a6e22e">citation</span> = <span style="color:#a6e22e">system</span>(<span style="color:#e6db74">&#39;curl -s &#39;</span> .. <span style="color:#a6e22e">shellescape</span>(<span style="color:#a6e22e">api_call</span>))
-</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">return</span> <span style="color:#a6e22e">citation</span>
-</span></span><span style="display:flex;"><span><span style="color:#a6e22e">enddef</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#a6e22e">inoremap</span> &lt;<span style="color:#a6e22e">C</span>-<span style="color:#a6e22e">x</span>&gt;&lt;<span style="color:#a6e22e">C</span>-<span style="color:#a6e22e">z</span>&gt; &lt;<span style="color:#a6e22e">C</span>-<span style="color:#a6e22e">r</span>&gt;=<span style="color:#a6e22e">g</span>:<span style="color:#a6e22e">ZoteroCite</span>()&lt;<span style="color:#a6e22e">cr</span>&gt;</span></span></code></pre></div>
-<p>In this case, the keybinding Ctrl-X Ctrl-Z in insert mode inserts a Zotero citation. You can add a normal-mode keybinding in the same way as for the legacy VimScript version provided above.</p>
-<h3 id="emacs">emacs</h3>
-<p>@newhallroad wrote a function in elisp, which brings up the CAYW input, adds the chosen items as pandoc citations to the buffer, and moves the point to after the citations. This is for markdown-mode. Emacs users who use org-mode may (or may not) need something different.</p>
-<div class="highlight wrap-code" dir="auto"><pre tabindex="0"><code>(defun alk/bbt-zotero-insert-key ()
-  &#34;Run shell command to bring up better bibtex cayw input and insert pandoc citation at point&#34;
-  (interactive)
-  (shell-command &#34;curl -s http://127.0.0.1:23119/better-bibtex/cayw?format=pandoc^&amp;brackets=true&#34; t nil) ; caret escapes ampersand 
-  (search-forward &#34;]&#34;) ; place cursor after inserted citation
-  )</code></pre></div>
-<h3 id="zotero-citations-for-atom">Zotero Citations for Atom</h3>
-<p>A sample implementation of real integration (rather than the working-but-clunky workarounds using paste) can be found in the <a href="https://atom.io/packages/zotero-citations" rel="external" target="_blank">Zotero Citations</a> package for the <a href="http://atom.io" rel="external" target="_blank">Atom</a> editor.</p>
-<h3 id="vs-code-citation-picker-for-zotero">VS Code Citation Picker for Zotero</h3>
-<p>If you don&rsquo;t feel like typing citations out (and let&rsquo;s be honest, you don&rsquo;t), executing <a href="https://marketplace.visualstudio.com/items?itemName=mblode.zotero" rel="external" target="_blank">VS Code Citation Picker for Zotero</a> extension for the <a href="https://code.visualstudio.com/" rel="external" target="_blank">VS Code</a> editor will call up a graphical picker which will insert these for you, formatted and all.</p>
-<h3 id="scrivener-20marked-2-for-mac">Scrivener 2.0/Marked 2 for Mac</h3>
-<p>Dave Smith has gracefully written <a href="http://davepwsmith.github.io/academic-scrivener-howto/" rel="external" target="_blank">instructions</a> on how to set up Scrivener 2.0 and Marked 2 for OSX to use the CAYW picker, including ready-to-run apps</p>
-<h3 id="scrivener-10-for-windows">Scrivener 1.0 for Windows</h3>
-<p>Emilie has writen <a href="https://github.com/AmomentOfMusic/Zotero_scrivener_picker_windows" rel="external" target="_blank">instructions</a> for using the CAYW picker for Scrivener 1.0 in Windows 10, with the necessary files</p>
-<h3 id="linux">Linux</h3>
-<ul>
-<li>Emma Reisz has gracefully written <a href="https://emmareisz.github.io/zotpicknix/" rel="external" target="_blank">instructions and scripts</a> for setting up CAYW on Linux.</li>
-<li>ConorIA has more versatile solution called <a href="https://gitlab.com/ConorIA/shell-scripts/tree/master/zotero4overleaf" rel="external" target="_blank">zotero4overleaf</a>, which was inspired by Emma&rsquo;s scripts. This should allow use with Overleaf, which is pretty insane that it&rsquo;s possible if you think about it.</li>
-</ul>
-<h3 id="overleaf">Overleaf</h3>
-<p>David Lukes takes Overleaf integration one step further with a GreaseMonkey/TamperMonkey <a href="https://github.com/dlukes/zotero-sharelatex-cayw" rel="external" target="_blank">userscript</a> which not only allows popping up the CAYW picker straight from your browser, no other tools required, but adds a hotkey to refresh your bib file on Overleaf. This should work with the free subscription, no fiddling with git or dropbox required.</p>
-<h2 id="diy">DIY</h2>
-<p>BBT exposes an URL at http://127.0.0.1:23119/better-bibtex/cayw <sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>. The url accepts
-the following URL parameters:</p>
-<table>
-  <thead>
-      <tr>
-          <th>parameter</th>
-          <th></th>
-      </tr>
-  </thead>
-  <tbody>
-      <tr>
-          <td><code>probe</code></td>
-          <td>If set to any non-empty value, returns <code>ready</code>. You can use this to test whether BBT CAYW picking is live; it will not pop up the picker</td>
-      </tr>
-      <tr>
-          <td><code>format</code></td>
-          <td>Set the output format</td>
-      </tr>
-      <tr>
-          <td><code>clipboard</code></td>
-          <td>Any non-empty value will copy the results to the clipboard</td>
-      </tr>
-      <tr>
-          <td><code>minimize</code></td>
-          <td>Any non-empty value will minimize Zotero windows after a pick</td>
-      </tr>
-      <tr>
-          <td><code>texstudio</code></td>
-          <td>Any non-empty value will try to push the pick to TeXstudio</td>
-      </tr>
-      <tr>
-          <td><code>selected</code></td>
-          <td>Any non-empty value will use the current selection in Zotero rather than popping up the pick window</td>
-      </tr>
-      <tr>
-          <td><code>select</code></td>
-          <td>More of a gimmick than anything else, but if you add select=true, BBT will select the picked items in Zotero.</td>
-      </tr>
-  </tbody>
-</table>
-<p>The following formats are available:</p>
-<ul>
-<li><code>natbib</code>. Generates <a href="https://ctan.org/pkg/natbib" rel="external" target="_blank">natbib</a> citation commands. Extra URL parameters allowed:
-<ul>
-<li><code>command</code>: the citation command to use (if unspecified, defaults to <code>cite</code>)</li>
-</ul>
-</li>
-<li><code>latex</code> and <code>cite</code> are aliases for <code>natbib</code> with the assumption you want the cite command to be <code>cite</code></li>
-<li><code>citep</code> and <code>citet</code> are aliases for <code>natbib</code> with the assumption you want the cite command to be <code>citep</code> or <code>citet</code>, respectively.</li>
-<li><code>biblatex</code>. Generates <a href="https://ctan.org/pkg/biblatex" rel="external" target="_blank">biblatex</a> citation commands. Extra URL parameters allowed:
-<ul>
-<li><code>command</code>: the citation command to use (if unspecified, defaults to <code>autocite</code>)</li>
-</ul>
-</li>
-<li><code>mmd</code>: MultiMarkdown</li>
-<li><code>pandoc</code>. Accepts additional URL parameter <code>brackets</code>; any non-empty value surrounds the citation with brackets</li>
-<li><code>asciidoctor-bibtex</code></li>
-<li><code>typst</code> Generates <a href="https://typst.app/docs/reference/model/cite/" rel="external" target="_blank">typst</a> citation commands</li>
-<li><code>jupyter</code></li>
-<li><code>scannable-cite</code> for the <a href="https://zotero-odf-scan.github.io/zotero-odf-scan/" rel="external" target="_blank">ODF scanner</a></li>
-<li><code>formatted-citation</code>: output formatted citation as per the current Zotero quick-export setting, if it is set to a citation style, and not an export format</li>
-<li><code>formatted-bibliography</code>: output formatted bibliography as per the current Zotero quick-export setting, if it is set to a citation style, and not an export format</li>
-<li><code>translate</code> invokes a Zotero export translator. Extra URL parameters allowed:
-<ul>
-<li><code>translator</code>: stripped name of one of the BBT translators (lowercased, remove &lsquo;better&rsquo;, and only the letters, e.g.  <code>biblatex</code> or <code>csljson</code>), or a translator ID. Defaults to <code>biblatex</code>.</li>
-<li><code>exportNotes</code>: set to <code>true</code> to export notes</li>
-<li><code>useJournalAbbreviation</code>: set to <code>true</code> to use journal abbreviations</li>
-</ul>
-</li>
-<li><code>json</code>: the full pick information Zotero provides.</li>
-<li><code>eta</code>: formats the pick using <a href="https://eta.js.org/" rel="external" target="_blank">Eta</a>, with the picks exposed as <code>it.items</code>. To see what the items look like, use the <code>json</code> formatter. URL parameter required:
-<ul>
-<li><code>template</code>: the Eta template to render</li>
-</ul>
-</li>
-</ul>
-<p>The <code>eta</code> formatter is great for experimentation, but if you need a format for a common target application, feel free to request a change to have that added to this list.</p>
-<p>The picker passes the following data along with your picked items if you filled them out:</p>
-<table>
-  <thead>
-      <tr>
-          <th>field</th>
-          <th></th>
-      </tr>
-  </thead>
-  <tbody>
-      <tr>
-          <td><code>locator</code></td>
-          <td>the place within the work (e.g. page number)</td>
-      </tr>
-      <tr>
-          <td><code>prefix</code></td>
-          <td>for stuff like &ldquo;see &hellip;&rdquo;</td>
-      </tr>
-      <tr>
-          <td><code>suffix</code></td>
-          <td>for stuff after the citations</td>
-      </tr>
-      <tr>
-          <td><code>suppress author</code></td>
-          <td>if you only want the year</td>
-      </tr>
-  </tbody>
-</table>
-<p>However not all output formats support these. Pandoc and scannable cite are the richest ones, supporting all 4. MultiMarkdown supports
-none. The <code>formatted-</code> formats will ignore these. LaTeX supports all 4, in a way:</p>
-<ul>
-<li>in the <code>latex</code> (<a href="https://ctan.org/pkg/natbib" rel="external" target="_blank"><code>natbib</code></a>) format: if you choose <code>suppress author</code> for none or all of your items in a pick, you
-will get the citation as you would normally enter it, such as <code>\cite{author1,author2}</code>, or
-<code>\citeyear{author1,author2}</code>. If you use <code>locator</code>, <code>prefix</code>, <code>suffix</code> in any one of them, or you use <code>suppress author</code>
-for some but not for others, the picker will write them out all separate, like <code>\cite[p. 1]{author1}\citeyear{author2}</code>,
-as natbib doesn&rsquo;t seem to have a good mechanism for combined citations that mix different prefixes/suffixes/locators.</li>
-<li>in the <a href="https://ctan.org/pkg/biblatex" rel="external" target="_blank"><code>biblatex</code></a> format: <code>suppress author</code> is ignored unless the command is one of <code>\cite</code>, <code>\autocite</code>
-or <code>\parencite</code> <strong>and</strong> there is one items only, in which case the starred variant of the command is returned, which
-hides the author; for multiple items with <code>locator</code>s, <code>prefix</code>es or <code>suffix</code>es, the <code>s</code>-affixed variant of the
-command is generated</li>
-</ul>
-<p>Some of the formatters use abbreviated labels for the results if you include a locator. The defaults are:</p>
-<table>
-  <thead>
-      <tr>
-          <th>locator label</th>
-          <th>abbreviation</th>
-      </tr>
-  </thead>
-  <tbody>
-      <tr>
-          <td>article</td>
-          <td>art.</td>
-      </tr>
-      <tr>
-          <td>chapter</td>
-          <td>ch.</td>
-      </tr>
-      <tr>
-          <td>subchapter</td>
-          <td>subch.</td>
-      </tr>
-      <tr>
-          <td>column</td>
-          <td>col.</td>
-      </tr>
-      <tr>
-          <td>figure</td>
-          <td>fig.</td>
-      </tr>
-      <tr>
-          <td>line</td>
-          <td>l.</td>
-      </tr>
-      <tr>
-          <td>note</td>
-          <td>n.</td>
-      </tr>
-      <tr>
-          <td>issue</td>
-          <td>no.</td>
-      </tr>
-      <tr>
-          <td>opus</td>
-          <td>op.</td>
-      </tr>
-      <tr>
-          <td>page</td>
-          <td>p.</td>
-      </tr>
-      <tr>
-          <td>paragraph</td>
-          <td>para.</td>
-      </tr>
-      <tr>
-          <td>subparagraph</td>
-          <td>subpara.</td>
-      </tr>
-      <tr>
-          <td>part</td>
-          <td>pt.</td>
-      </tr>
-      <tr>
-          <td>rule</td>
-          <td>r.</td>
-      </tr>
-      <tr>
-          <td>section</td>
-          <td>sec.</td>
-      </tr>
-      <tr>
-          <td>subsection</td>
-          <td>subsec.</td>
-      </tr>
-      <tr>
-          <td>Section</td>
-          <td>Sec.</td>
-      </tr>
-      <tr>
-          <td>sub verbo</td>
-          <td>sv.</td>
-      </tr>
-      <tr>
-          <td>schedule</td>
-          <td>sch.</td>
-      </tr>
-      <tr>
-          <td>title</td>
-          <td>tit.</td>
-      </tr>
-      <tr>
-          <td>verse</td>
-          <td>vrs.</td>
-      </tr>
-      <tr>
-          <td>volume</td>
-          <td>vol.</td>
-      </tr>
-  </tbody>
-</table>
-<p>In your call to the CAYW URL, you can override the abbreviations by adding them to the query, e.g. http://127.0.0.1:23119/better-bibtex/cayw?format=mmd&amp;page=&amp;Section=sec., page-picks will have no label, and Section-picks will get <code>sec.</code> rather than <code>Sec.</code>.</p>
-<p>The <code>clipboard</code> option can be used as a workaround for editors that haven&rsquo;t gotten around to integrating this yet. If
-you use this option you will probably want to bind to a hotkey, either system-wide (which is going to be platform-dependent, I know
-<a href="http://www.autohotkey.com" rel="external" target="_blank">AutoHotKey</a> works for windows, for OSX <a href="https://pqrs.org/osx/karabiner/" rel="external" target="_blank">Karabiner</a> ought to
-do the job, and for Linux <a href="https://unix.stackexchange.com/questions/44672/assign-shortcut-key-to-run-a-script" rel="external" target="_blank">xbindkeys</a> could do the job.</p>
-<p>For example, if you call up http://127.0.0.1:23119/better-bibtex/cayw?format=mmd&amp;clipboard=yes, the Zotero citation picker will pop up. If you then select two items that happen to have cite keys <code>adams2001</code> and <code>brigge2002</code>, then</p>
-<ul>
-<li>the response body will be <code>[#adams2001][][#brigge2002][]</code>, and</li>
-<li><code>[#adams2001][][#brigge2002][]</code> will be left on the clipboard</li>
-</ul>
-<div class="footnotes" role="doc-endnotes">
-<hr>
-<ol>
-<li id="fn:1">
-<p>For Juris-M, the port number <code>23119</code> must be replaced with <code>24119</code>.&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
-</li>
-</ol>
-</div>
-
-  <footer class="footline">
-  </footer>
-</article>
-<article class="default">
-  <header class="headline">
-<div class="R-taxonomy taxonomy-tags cstyle tags" title="Tags" style="--VARIABLE-TAGS-BG-color: var(--INTERNAL-TAG-BG-color);">
-  <ul>
-    <li><a class="term-link" href="/zotero-better-bibtex/tags/citation-keys/index.html">Citation Keys</a></li>
-    <li><a class="term-link" href="/zotero-better-bibtex/tags/libreoffice/index.html">Libreoffice</a></li>
-    <li><a class="term-link" href="/zotero-better-bibtex/tags/word/index.html">Word</a></li>
-  </ul>
-</div>
-  </header>
-
-<h1 id="migrating-from-wordlibreoffice">Migrating from Word/Libreoffice</h1>
-
-<p>So you have decided that enough is enough, and you want to migrate
-your existing Word/Libreoffice document to LaTeX/Markdown. Plenty
-(well&hellip;) tools exist to help with the migration of your document
-content, pandoc being the most prominent one, but one thing none
-of them will do is keep your citations intact. This will not do.</p>
-<p>If you install <a href="/zotero-better-bibtex/citing/migrating/better-bibtex-citekeys.csl">this</a> CSL style in
-Zotero (or modify it further and use that), Zotero will render the
-in-text citations as <code>[@citekey]</code> when you ask Zotero to render the bibliography. If you want LaTeX, modify the
-style accordingly. You can then put your document through pandoc or whatnot to get LaTeX/Markdown.</p>
-<p>For the curious, BBT does this by patching in the <code>citation-key</code>
-variable in the CSL processing so it can be rendered using a CSL
-style. If you previously used the <code>citeprocNoteCitekey</code> preference,
-that is now gone, so you&rsquo;ll have to update the style you used.</p>
-<p>Update: pandoc now supports docx+citations as input format and will export your word documents into pandoc-compatible markdown with citations! That should be a much smoother experience:</p>
-<div class="highlight wrap-code" dir="auto"><pre tabindex="0"><code>pandoc -f docx+citations -t markdown -i Aristotle.docx -o Aristotle.md</code></pre></div>
-<p>should do the trick!</p>
-
-  <footer class="footline">
-  </footer>
-</article>
-<article class="default">
-  <header class="headline">
-<div class="R-taxonomy taxonomy-tags cstyle tags" title="Tags" style="--VARIABLE-TAGS-BG-color: var(--INTERNAL-TAG-BG-color);">
-  <ul>
-    <li><a class="term-link" href="/zotero-better-bibtex/tags/citation-keys/index.html">Citation Keys</a></li>
-  </ul>
-</div>
-  </header>
-
-<h1 id="aux-scanner">AUX Scanner</h1>
-
-<p>You can populate a collection, or tag items in your
-library, from an existing paper by scanning the <code>aux</code> file generated
-by bibtex, or a pandoc-markdown file, for referenced used. Scanning can be triggered from the <code>Tools</code> menu (for
-tagging the cited items) or by right-clicking a collection (for
-adding them to a collection). The scanner will read your AUX files
-and will put entries you cited in the associated LaTeX document
-into the current collection.</p>
-<p>By default, BBT will add a note for entries cited in the LaTeX
-document but which do not exist in your Zotero library, but citation
-keys must be present in your library before the scan is started &ndash;
-BBT will by default <em>not</em> create new items for citekeys it
-doesn&rsquo;t already know about. You can enable &lsquo;AUX Import&rsquo; in the
-preferences, and when that is on, if the scan finds citekeys not
-already in your Zotero library, it will attempt to read those (but
-<em>only</em> those) items from the bibtex file named in the <code>aux</code> file.</p>
-<p>For BBT users who don&rsquo;t use LaTeX directly, you can create a
-custom <code>aux</code> file to use with the AUX scanner by hand. It is a
-text file formatted like this:</p>
-<div class="highlight wrap-code" dir="auto"><pre tabindex="0"><code>\citation{CITEKEY1}
-\citation{CITEKEY2}</code></pre></div>
-<p>Where <code>CITEKEY1</code>, <code>CITEKEY2</code> etc are the <a href="/zotero-better-bibtex/">citation keys</a>
-that you want to include in the collection.</p>
-<p>For pandoc-markdown scanning, BBT needs to actually run pandoc, and for that pandoc must be in your <code>$PATH</code>. On MacOS, if you installed pandoc using homebrew, it will likely not be in the <code>PATH</code> that Zotero can see. You can enter the path manually by going into the Zotero preferences, Advanced tab, open the config editor, and create a text entry named <code>extensions.zotero.translators.better-bibtex.path.pandoc</code> and setting it to the full path of the pandoc binary.</p>
-
-  <footer class="footline">
-  </footer>
-</article>
           </section>
 <article class="default">
   <header class="headline">
@@ -13291,10 +13291,10 @@ means a lot) so I can save up for a replacement a year or so down
 the line, head on over to <a href="https://www.patreon.com/retorquere" rel="external" target="_blank">Patreon</a>,
 but mind that Patreon takes a fairly large cut of what you give.</p>
 <p>Many, many thanks, also to the existing contributors &ndash; thanks to you I&rsquo;ve hit my first target and have been able to replace my trusty macbook air with a newer macbook pro which has much more breathing room.</p>
-<p><a href="#R-image-8d0559999e6d2308b71e25e56e0fe237" class="lightbox-link"><img alt="My github stats" class="lazy lightbox figure-image" loading="lazy" src="https://github-readme-stats.vercel.app/api?username=retorquere&show_icons=true&hide_border=true&theme=dark" style=" height: auto; width: auto;"></a>
-<a href="javascript:history.back();" class="lightbox-back" id="R-image-8d0559999e6d2308b71e25e56e0fe237"><img alt="My github stats" class="lazy lightbox lightbox-image" loading="lazy" src="https://github-readme-stats.vercel.app/api?username=retorquere&show_icons=true&hide_border=true&theme=dark"></a></p>
-<p><a href="#R-image-dc0bcc6814afc2f5aa00f1415e9f80ae" class="lightbox-link"><img alt="Metrics" class="lazy lightbox figure-image" loading="lazy" src="https://metrics.lecoq.io/retorquere?template=classic&config.timezone=Europe%2FOslo" style=" height: auto; width: auto;"></a>
-<a href="javascript:history.back();" class="lightbox-back" id="R-image-dc0bcc6814afc2f5aa00f1415e9f80ae"><img alt="Metrics" class="lazy lightbox lightbox-image" loading="lazy" src="https://metrics.lecoq.io/retorquere?template=classic&config.timezone=Europe%2FOslo"></a></p>
+<p><a href="#R-image-c3d8acc04ccc32ebc8066fa8d67b8478" class="lightbox-link"><img alt="My github stats" class="lazy lightbox figure-image" loading="lazy" src="https://github-readme-stats.vercel.app/api?username=retorquere&show_icons=true&hide_border=true&theme=dark" style=" height: auto; width: auto;"></a>
+<a href="javascript:history.back();" class="lightbox-back" id="R-image-c3d8acc04ccc32ebc8066fa8d67b8478"><img alt="My github stats" class="lazy lightbox lightbox-image" loading="lazy" src="https://github-readme-stats.vercel.app/api?username=retorquere&show_icons=true&hide_border=true&theme=dark"></a></p>
+<p><a href="#R-image-28e69d2f450de353a004f6d22344fee0" class="lightbox-link"><img alt="Metrics" class="lazy lightbox figure-image" loading="lazy" src="https://metrics.lecoq.io/retorquere?template=classic&config.timezone=Europe%2FOslo" style=" height: auto; width: auto;"></a>
+<a href="javascript:history.back();" class="lightbox-back" id="R-image-28e69d2f450de353a004f6d22344fee0"><img alt="Metrics" class="lazy lightbox lightbox-image" loading="lazy" src="https://metrics.lecoq.io/retorquere?template=classic&config.timezone=Europe%2FOslo"></a></p>
 
   <footer class="footline">
   </footer>
