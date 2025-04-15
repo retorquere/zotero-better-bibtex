@@ -394,7 +394,9 @@ function KeyManager() {
       validate: {},
     }
 
-    let parameters = (signature.parameters || []).map(p => {
+    let parameters = []
+    let summary = (signature.parameters || []).map(p => {
+      parameters.push({ name: '`' + p.name + '`', doc: p.comment.summary.map(c => c.text).join('') })
       let schema = typescriptType[method.name]?.[p.name] || p.type
       schema = builder.make(schema)
       if (p.flags.isRest) {
@@ -410,17 +412,21 @@ function KeyManager() {
       const dflt = typeof p.defaultValue === 'undefined' ? '' : ` = ${p.defaultValue}`
       return `${name}: ${type}${dflt}`
     }).join(', ')
-    parameters = parameters ? `(${parameters})` : ''
+    summary = summary ? `(${summary})` : ''
+    summary = `<b>${escapeHTML(method.name.substring(1))}</b>${escapeHTML(summary)}`
 
     let description = signature.comment.summary.map(s => {
       if (!s.kind.match(/^(code|text)$/)) throw s
       return s.text
     }).join('') + '\n' + builder.description
+    description = showdown.makeHtml(description || '')
+
+    parameters = parameters.length
+      ? `<table><th><td><b>parameter</b></td><td/></th>${parameters.map(p => `<tr><td>${showdown.makeHtml(p.name)}</td><td>${showdown.makeHtml(p.doc)}</td></tr>`).join('')}</table>`
+      : ''
 
     const kind = method.name[0]
-    const func = `<b>${escapeHTML(method.name.substring(1))}</b>${escapeHTML(parameters)}`
-
-    section[kind].push({ summary: func, description: showdown.makeHtml(description || '') })
+    section[kind].push({ summary, parameters, description })
 
     const testname = `${kind}${method.name}`
     const test = methods.find(m => m.name === testname)
