@@ -60,7 +60,7 @@ const l10n = new class {
     if (errors.length) console.log(errors)
   }
 
-  private find(id: string): string {
+  public find(id: string): string {
     if (id.startsWith('zotero.general.')) return `&${ id };`
     if (id.startsWith('zotero.errorReport.')) return `&${ id };`
     if (id.includes('.')) {
@@ -88,10 +88,18 @@ class ASTWalker extends BaseASTWalker {
   text(node) {
     switch (node.type) {
       case 'Text': return l10n.tr(node.val)
-      case 'Tag': return this.attr(node, 'label') || this.text(node.block)
+      case 'Tag': return this.l10n(node) || this.attr(node, 'label') || this.text(node.block)
       case 'Block': return node.nodes.map(n => this.text(n)).join('')
       default: return ''
     }
+  }
+
+  l10n(node) {
+    const id = super.attr(node, 'data-l10n-id')
+    if (!id) return ''
+    const tr = l10n.find(id)
+    if (tr) return tr
+    return l10n.find(`${id}.label`)
   }
 
   attr(node, name: string, required = false): string {
