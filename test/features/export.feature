@@ -13,6 +13,7 @@ Feature: Export
 
     Examples:
       | file                                                                                                                     | references |
+      | Embedding multiple formulas in a ternary expression doesnt work #3224                                                    | 1          |
       | Wrong performance for exports Bibtex a becomes textbackslash a #3184                                                     | 1          |
       | Split CJK names #2624                                                                                                    | 35         |
       | Uncommented-out notes in the generated bib file #3176                                                                    | 1          |

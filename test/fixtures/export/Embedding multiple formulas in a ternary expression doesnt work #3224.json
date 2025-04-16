@@ -1,0 +1,63 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "preferences": {
+      "DOIandURL": "doi",
+      "asciiBibLaTeX": true,
+      "autoExport": "off",
+      "automaticTags": false,
+      "baseAttachmentPath": "D:\\Zotero",
+      "citekeyFold": false,
+      "citekeyFormat": "language(zh) ? (creators(1, min=3, etal=etal) || creators(1)) + '_' + date('%y%m') : authAuthEa.capitalize + '_' + date('%y%m')",
+      "language": "language",
+      "quickCopyMode": "citekeys",
+      "skipFields": "abstract,note,file",
+      "warnBulkModify": 0
+    }
+  },
+  "items": [
+    {
+      "abstractNote": "随着我国汽车工业的快速发展和节能意识的提高，高效、节能、轻量化的微通道换热器已经成为了汽车空调换热器的发展方向。本文采用一维编程计算、三维仿真分析、耦合优化和实验验证的多种方法，从不同角度对车用微通道冷凝器的整体性能、空气侧结构和扁管、集管结构等进行分析和优化。本文给出了一种快捷优化设计方法，并对该车用微通道冷凝器给出了优化结构和建议。在对空气侧的翅片单元进行分析时，采用参数化建模，耦合CFD软件与优化软件，利用响应面分析方法进行自动优化计算。该优化设计中以翅片间距和百叶窗开角为输入变量，以最小阻力、最大换热能力为优化目标变量。本文选用sobol采样方法和NSGA-∏优化算法，搭建优化流程并耦合CCM+软件实际计算15个数据点，并利用径向基函数构建响应面耦合优化算法自动选择101个虚拟数据点，基于这116组数据完成了优化分析。优选区域结果认为翅片间距取1.1mm-1.2mm，百叶窗开角取24°-28°之间时具有最佳综合性能。本文编程创建冷凝器的一维模型。采用有限体积法将扁管分成微元段，每个单元中采用效能——传热单元数法编程计算每个单元中的流动和换热情况。气相、两相、液相分别选取合适的关联式，计算分析制冷剂温度、压力、焓值、干度等物理量在流动方向上的变化。论文还分析了通道个数、通道直径、流程分布对冷凝器整体的性能影响，发现将过冷流程的通道直径从0.5mm调整到0.7mm将大幅降低冷凝器内阻，而对换热影响不大。结合空气侧结构的优化结果，选取了一套合适的方案，能将冷凝器整体的换热性能提高152W，内阻降低至52.51kPa，减少了近30%，很好的解决了因为微小通道而引起的冷凝器内阻过大的问题。三维整体仿真分析中采用商用CFD软件，分析一些一维模型中忽略的部分，如分析冷凝器入口位置和扁管插入深度对流量分配和入口端阻力的影响。分析发现将入口移至中间位置，可大幅提高各个扁管流量的均匀性，减小入口端3.6kPa的阻力，并且发现当扁管插入深度为2.7mm时，流量分配的均匀性最好。加入相变模型以及采用拉伸层网格，对冷凝器整体进行三维相变的整体分析。对比了改进前后的相变情况，直观的看到了入口位置、插入深度等结构参数对冷凝器整体流动和换热的影响。总体的计算结果表明冷凝器的结构改进能将整体的换热能力提高近10%，阻力减少了21kPa。文本最后利用汽车空调换热器性能测试实验台，用空气焓差法对本文所研...",
+      "accessDate": "2025-03-29T13:18:46Z",
+      "citationKey": "黄劲_13",
+      "creators": [
+        {
+          "creatorType": "author",
+          "name": "黄劲"
+        },
+        {
+          "creatorType": "contributor",
+          "name": "李明"
+        }
+      ],
+      "date": "2013",
+      "extra": [
+        "major: 热能工程",
+        "foundation: 国家自然科学;；",
+        "download: 1151",
+        "album: 工程科技Ⅱ辑",
+        "CLC: U463.851",
+        "dbcode: CMFD",
+        "dbname: CMFD201302",
+        "filename: 1013194546.nh"
+      ],
+      "itemID": 1,
+      "itemType": "thesis",
+      "language": "zh",
+      "libraryCatalog": "CNKI",
+      "numPages": "101",
+      "place": "长春",
+      "publisher": "吉林大学",
+      "tags": [
+        {
+          "tag": "/unread",
+          "type": 1
+        }
+      ],
+      "title": "车用微通道冷凝器流动及换热特性的研究",
+      "type": "硕士学位论文",
+      "url": "https://kns.cnki.net/KCMS/detail/detail.aspx?dbcode=CMFD&dbname=CMFD201302&filename=1013194546.nh"
+    }
+  ]
+}
