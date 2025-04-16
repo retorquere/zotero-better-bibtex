@@ -4,6 +4,8 @@ tags:
   - citation keys
 ---
 
+Note: a number of functions below talk about the author's lastname; you can read that as "when available". If you have the name as a single-field name (for entities like `International Business Machines` or `Aristoteles`), Zotero doesn't have a last name, and the full single-field name is taken instead.
+
 ## Functions
 
 {{< citekey-formatters/functions >}}

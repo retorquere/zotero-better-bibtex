@@ -68,9 +68,9 @@ Better BibTeX knows four kinds of "things" to build the citekey from:
 There are 5 ways you can build subformulae:
 
 1. composition: `(auth + title)`
-2. alternates: `(auth || title)` (use the first thing that returns any text, so `auth` if that returns text, otherwise `title`). Note the test-filters like `.len` *will skip to the next formula if it fails; see also *sequence* below
+2. alternates: `(auth || title)` (use the first thing that returns any text, so `auth` if that returns text, otherwise `title`)
+2. conditions: `(auth && title)` (ascertain that the first returns any text before using the last, so use `title` only if `auth` would have returned something)
 3. ternaries: `(auth ? year : title)` (if `auth` returns any text, use `year`, otherwise use `title`). Ternary operators have the format `condition ? output_if_true : output_if_false`, and you can use it like an if-or statement.
-4. sequences: `(auth, shorttitle.len, '', title, 'hi')`. The first element of the sequence that returns a non-empty output is used. Tests like `.len` that would usually skip to the next formula don't do so in a sequence, they just return empty output if they fail, *except* the last element in the sequence. If that is a test, and it fails, the current formula is skipped and the next started. You would usually want a non-test here, or a fixed value.
 5. `(auth + title) > 0` or `auth > 0` are shorthand for `(auth + title).len` / `auth.len`.
 
 these can be combined, eg `(auth || shorttitle || year) ? (auth + title) : (year || title)`, but subformulae cannot appear in parameters, so `title.select(auth ? 3 : 4)` is not valid. Filters (explained below) can be applied to subformulae, so `(title || auth).lower` checks whether the `title` function produces output (i.e. not empty). If it does, the `title` function is used; otherwise, the formula will use the `auth` function. It then converts the output of `(title || auth)` to lowercase.
@@ -153,10 +153,6 @@ to jump to the next formula if `auth` and `title` were both empty is now
 
 ### Generating citekeys
 
-To generate your citekeys, you use a formula composed of [functions and filters](formulas). Broadly, functions grab text from your item, and filters transform that text. **Note that the formula syntax has changed from a bracketed format to a javascript-ish format**. The old syntax was getting harder to maintain and its inflexibility prevented new extensions to the functions being implemented cleanly. **The old syntax still works** but will be translated to the new format automatically.
-
-Below you will find a full list of functions and filters you can use, in the new format only, sorry. You can still use these in the old syntax, but they support only positional parameters, where I would recommend generally to use the new syntax with named parameters.
-
-Note: a number of functions below talk about the author's lastname; you can read that as "when available". If you have the name as a single-field name (for entities like `International Business Machines` or `Aristoteles`), Zotero doesn't have a last name, and the full single-field name is taken instead.
+To generate your citekeys, you use a formula composed of [functions and filters](formulas). Broadly, functions grab text from your item, and filters transform that text. **Note that the formula syntax has changed from a bracketed format to a javascript-ish format**. The old syntax was getting harder to maintain and its inflexibility prevented new extensions to the functions being implemented cleanly.
 
 For more details, head over to the [functions and filters](formulas) list.
