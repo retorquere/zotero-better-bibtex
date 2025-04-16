@@ -9,7 +9,7 @@
       "automaticTags": false,
       "baseAttachmentPath": "D:\\Zotero",
       "citekeyFold": false,
-      "citekeyFormat": "language(zh) ? (creators(1, min=3, etal=etal) || creators(1)) + '_' + date('%y%m') : authAuthEa.capitalize + '_' + date('%y%m')",
+      "citekeyFormat": "language(zh) + (creators(1, min=3, etal=etal) || creators(1)) + '_' + date('%y%m'); authAuthEa.capitalize + '_' + date('%y%m')",
       "language": "language",
       "quickCopyMode": "citekeys",
       "skipFields": "abstract,note,file",
