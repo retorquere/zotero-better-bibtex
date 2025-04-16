@@ -11738,9 +11738,9 @@ preferences (you can get there via the Zotero preferences, or by clicking the Be
 <p>There are 5 ways you can build subformulae:</p>
 <ol>
 <li>composition: <code>(auth + title)</code></li>
-<li>alternates: <code>(auth || title)</code> (use the first thing that returns any text, so <code>auth</code> if that returns text, otherwise <code>title</code>). Note the test-filters like <code>.len</code> *will skip to the next formula if it fails; see also <em>sequence</em> below</li>
+<li>alternates: <code>(auth || title)</code> (use the first thing that returns any text, so <code>auth</code> if that returns text, otherwise <code>title</code>)</li>
+<li>conditions: <code>(auth &amp;&amp; title)</code> (ascertain that the first returns any text before using the last, so use <code>title</code> only if <code>auth</code> would have returned something)</li>
 <li>ternaries: <code>(auth ? year : title)</code> (if <code>auth</code> returns any text, use <code>year</code>, otherwise use <code>title</code>). Ternary operators have the format <code>condition ? output_if_true : output_if_false</code>, and you can use it like an if-or statement.</li>
-<li>sequences: <code>(auth, shorttitle.len, '', title, 'hi')</code>. The first element of the sequence that returns a non-empty output is used. Tests like <code>.len</code> that would usually skip to the next formula don&rsquo;t do so in a sequence, they just return empty output if they fail, <em>except</em> the last element in the sequence. If that is a test, and it fails, the current formula is skipped and the next started. You would usually want a non-test here, or a fixed value.</li>
 <li><code>(auth + title) &gt; 0</code> or <code>auth &gt; 0</code> are shorthand for <code>(auth + title).len</code> / <code>auth.len</code>.</li>
 </ol>
 <p>these can be combined, eg <code>(auth || shorttitle || year) ? (auth + title) : (year || title)</code>, but subformulae cannot appear in parameters, so <code>title.select(auth ? 3 : 4)</code> is not valid. Filters (explained below) can be applied to subformulae, so <code>(title || auth).lower</code> checks whether the <code>title</code> function produces output (i.e. not empty). If it does, the <code>title</code> function is used; otherwise, the formula will use the <code>auth</code> function. It then converts the output of <code>(title || auth)</code> to lowercase.</p>
@@ -11777,9 +11777,7 @@ that yields a non-empty string. If all return a empty string, a random key will 
 <p>to jump to the next formula if <code>auth</code> and <code>title</code> were both empty is now</p>
 <div class="highlight wrap-code" dir="auto"><pre tabindex="0"><code>(auth + title).len + year</code></pre></div>
 <h3 id="generating-citekeys">Generating citekeys</h3>
-<p>To generate your citekeys, you use a formula composed of <a href="/zotero-better-bibtex/citing/formulas/index.html">functions and filters</a>. Broadly, functions grab text from your item, and filters transform that text. <strong>Note that the formula syntax has changed from a bracketed format to a javascript-ish format</strong>. The old syntax was getting harder to maintain and its inflexibility prevented new extensions to the functions being implemented cleanly. <strong>The old syntax still works</strong> but will be translated to the new format automatically.</p>
-<p>Below you will find a full list of functions and filters you can use, in the new format only, sorry. You can still use these in the old syntax, but they support only positional parameters, where I would recommend generally to use the new syntax with named parameters.</p>
-<p>Note: a number of functions below talk about the author&rsquo;s lastname; you can read that as &ldquo;when available&rdquo;. If you have the name as a single-field name (for entities like <code>International Business Machines</code> or <code>Aristoteles</code>), Zotero doesn&rsquo;t have a last name, and the full single-field name is taken instead.</p>
+<p>To generate your citekeys, you use a formula composed of <a href="/zotero-better-bibtex/citing/formulas/index.html">functions and filters</a>. Broadly, functions grab text from your item, and filters transform that text. <strong>Note that the formula syntax has changed from a bracketed format to a javascript-ish format</strong>. The old syntax was getting harder to maintain and its inflexibility prevented new extensions to the functions being implemented cleanly.</p>
 <p>For more details, head over to the <a href="/zotero-better-bibtex/citing/formulas/index.html">functions and filters</a> list.</p>
 
   <footer class="footline">
@@ -12179,6 +12177,7 @@ that you want to include in the collection.</p>
 
 <h1 id="formulas">Formulas</h1>
 
+<p>Note: a number of functions below talk about the author&rsquo;s lastname; you can read that as &ldquo;when available&rdquo;. If you have the name as a single-field name (for entities like <code>International Business Machines</code> or <code>Aristoteles</code>), Zotero doesn&rsquo;t have a last name, and the full single-field name is taken instead.</p>
 <h2 id="functions">Functions</h2>
 
   <h3><b>auth</b>(n: number = 0, m: number = 1, creator: (&#39;author&#39; | &#39;editor&#39; | &#39;translator&#39; | &#39;collaborator&#39; | &#39;*&#39;) = &#39;*&#39;, initials: boolean = false)</h3><p>The first <code>n</code> (default: all) characters of the <code>m</code>th (default: first) author's last name.</p><table><tr><th><b>parameter</b></th><th>type</th><th/></tr><tr><td><code>n</code></td><td>number</td><td>the number of characters to take from the name, 0 = all</td></tr><tr><td><code>m</code></td><td>number</td><td>select the <code>m</code>th author</td></tr><tr><td><code>creator</code></td><td>('author' | 'editor' | 'translator' | 'collaborator' | '*')</td><td>kind of creator to select, <code>*</code> selects <code>author</code> first, and if not present, <code>editor</code>, <code>translator</code> or <code>collaborator</code>, in that order.</td></tr><tr><td><code>initials</code></td><td>boolean</td><td>add author initials</td></tr></table>
@@ -13291,10 +13290,10 @@ means a lot) so I can save up for a replacement a year or so down
 the line, head on over to <a href="https://www.patreon.com/retorquere" rel="external" target="_blank">Patreon</a>,
 but mind that Patreon takes a fairly large cut of what you give.</p>
 <p>Many, many thanks, also to the existing contributors &ndash; thanks to you I&rsquo;ve hit my first target and have been able to replace my trusty macbook air with a newer macbook pro which has much more breathing room.</p>
-<p><a href="#R-image-5a79c6f0c01ae5f1871184986fa37207" class="lightbox-link"><img alt="My github stats" class="lazy lightbox figure-image" loading="lazy" src="https://github-readme-stats.vercel.app/api?username=retorquere&show_icons=true&hide_border=true&theme=dark" style=" height: auto; width: auto;"></a>
-<a href="javascript:history.back();" class="lightbox-back" id="R-image-5a79c6f0c01ae5f1871184986fa37207"><img alt="My github stats" class="lazy lightbox lightbox-image" loading="lazy" src="https://github-readme-stats.vercel.app/api?username=retorquere&show_icons=true&hide_border=true&theme=dark"></a></p>
-<p><a href="#R-image-f1d94edd571a906df7e023d2955bb67a" class="lightbox-link"><img alt="Metrics" class="lazy lightbox figure-image" loading="lazy" src="https://metrics.lecoq.io/retorquere?template=classic&config.timezone=Europe%2FOslo" style=" height: auto; width: auto;"></a>
-<a href="javascript:history.back();" class="lightbox-back" id="R-image-f1d94edd571a906df7e023d2955bb67a"><img alt="Metrics" class="lazy lightbox lightbox-image" loading="lazy" src="https://metrics.lecoq.io/retorquere?template=classic&config.timezone=Europe%2FOslo"></a></p>
+<p><a href="#R-image-c6014e3591866ea9138375ecbd8d1ced" class="lightbox-link"><img alt="My github stats" class="lazy lightbox figure-image" loading="lazy" src="https://github-readme-stats.vercel.app/api?username=retorquere&show_icons=true&hide_border=true&theme=dark" style=" height: auto; width: auto;"></a>
+<a href="javascript:history.back();" class="lightbox-back" id="R-image-c6014e3591866ea9138375ecbd8d1ced"><img alt="My github stats" class="lazy lightbox lightbox-image" loading="lazy" src="https://github-readme-stats.vercel.app/api?username=retorquere&show_icons=true&hide_border=true&theme=dark"></a></p>
+<p><a href="#R-image-2bb316a858373d0fb6301ba0cb9aa679" class="lightbox-link"><img alt="Metrics" class="lazy lightbox figure-image" loading="lazy" src="https://metrics.lecoq.io/retorquere?template=classic&config.timezone=Europe%2FOslo" style=" height: auto; width: auto;"></a>
+<a href="javascript:history.back();" class="lightbox-back" id="R-image-2bb316a858373d0fb6301ba0cb9aa679"><img alt="Metrics" class="lazy lightbox lightbox-image" loading="lazy" src="https://metrics.lecoq.io/retorquere?template=classic&config.timezone=Europe%2FOslo"></a></p>
 
   <footer class="footline">
   </footer>
