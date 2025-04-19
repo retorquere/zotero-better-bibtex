@@ -88,14 +88,6 @@ export class ASTWalker {
   }
 }
 
-export class SelfClosing extends ASTWalker {
-  Tag(tag) {
-    this.walk(tag.block)
-    if (!tag.block.nodes.length) tag.selfClosing = true
-    return tag
-  }
-}
-
 export class Lint extends ASTWalker {
   private ids: string[] = []
 

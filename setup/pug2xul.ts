@@ -5,7 +5,7 @@
 console.log('converting pug to XUL/XHTML')
 import * as pug from 'pug'
 import * as fs from 'fs'
-import { walk, Lint, SelfClosing, ASTWalker } from './pug-ast-walker'
+import { walk, Lint, ASTWalker } from './pug-ast-walker'
 
 class XHTML extends ASTWalker {
   public modified = false
@@ -86,7 +86,6 @@ for (const src of pugs) {
     pretty: true,
     plugins: [{
       preCodeGen(ast) {
-        walk(SelfClosing, ast)
         lint.walk(ast)
         return ast
       },
@@ -100,7 +99,6 @@ for (const src of pugs) {
     plugins: [{
       preCodeGen(ast) {
         xhtml.walk(ast, [])
-        walk(SelfClosing, ast)
         walk(Lint, ast)
         return ast
       },

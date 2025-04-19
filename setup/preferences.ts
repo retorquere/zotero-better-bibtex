@@ -10,7 +10,7 @@ import * as path from 'path'
 import * as glob from 'glob-promise'
 import * as matter from 'gray-matter'
 import * as _ from 'lodash'
-import { walk, Lint, SelfClosing, ASTWalker as BaseASTWalker } from './pug-ast-walker'
+import { walk, Lint, ASTWalker as BaseASTWalker } from './pug-ast-walker'
 import { FluentBundle, FluentResource } from '@fluent/bundle'
 
 import { Eta } from 'eta'
@@ -758,7 +758,6 @@ render('content/Preferences/xul.pug', 'build/content/preferences.xul', {
 
       walk(StripConfig, ast)
       walk(Flex, ast)
-      walk(SelfClosing, ast)
       walk(Lint, ast)
 
       return ast
@@ -773,7 +772,6 @@ render('content/Preferences/xhtml.pug', 'build/content/preferences.xhtml', {
     preCodeGen(ast, _options) { // eslint-disable-line prefer-arrow/prefer-arrow-functions
       walk(StripConfig, ast)
       walk(XHTML, ast)
-      walk(SelfClosing, ast)
       walk(Lint, ast)
 
       if (ast.type !== 'Block' || ast.nodes.length !== 1 || ast.nodes[0].type !== 'Tag' || ast.nodes[0].name !== 'vbox') throw new Error(`unexpected root`)
