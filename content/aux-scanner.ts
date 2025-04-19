@@ -57,7 +57,6 @@ export const AUXScanner = new class {
     const parsed = await this.parse(path)
 
     if (!parsed || !parsed.citationKeys.length) return
-    if (!Preference.auxImport) parsed.bib = ''
 
     let collection, libraryID
     if (typeof options.libraryID === 'number') {
@@ -191,10 +190,12 @@ export const AUXScanner = new class {
             break
 
           case '\\bibdata':
-            for (const bib of [ arg, `${arg}.bib` ]) {
-              if (!bibs[bib] && await File.exists(bib)) {
-                bibs[bib] = await this.read(bib)
-                break
+            if (Preference.auxImport) {
+              for (const bib of [ arg, `${arg}.bib` ]) {
+                if (!bibs[bib] && await File.exists(bib)) {
+                  bibs[bib] = await this.read(bib)
+                  break
+                }
               }
             }
             break
