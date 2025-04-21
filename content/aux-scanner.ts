@@ -55,6 +55,7 @@ export const AUXScanner = new class {
     }
 
     const parsed = await this.parse(path)
+    log.debug('3225: parsed', path, 'to', parsed)
 
     if (!parsed || !parsed.citationKeys.length) return
 
@@ -80,6 +81,7 @@ export const AUXScanner = new class {
       citationKeys.push(found.citationKey)
     }
     let missing = parsed.citationKeys.filter(key => !citationKeys.includes(key))
+    log.debug('3225:', { itemIDs, missing })
 
     if (missing && parsed.bib) {
       if (missing.length) {
@@ -175,7 +177,12 @@ export const AUXScanner = new class {
     const bibs: Record<string, string> = {}
 
     while (aux = Object.keys(parsed).find(path => !parsed[path])) {
+      log.debug('3225: parsing', aux)
       parsed[aux] = true
+      if (!await File.exists(aux)) {
+        log.debug('3225:', aux, 'does not exist')
+        continue
+      }
 
       const contents = await this.read(aux)
       const parent = PathUtils.parent(aux)
@@ -186,15 +193,23 @@ export const AUXScanner = new class {
 
         switch (command) {
           case '\\@input':
+            log.debug('3225: adding', PathUtils.join(parent, arg))
             parsed[PathUtils.join(parent, arg)] ||= false
             break
 
           case '\\bibdata':
             if (Preference.auxImport) {
-              for (const bib of [ arg, `${arg}.bib` ]) {
-                if (!bibs[bib] && await File.exists(bib)) {
+              for (const bib of [ `${arg}.bib`, arg ]) {
+                if (typeof bibs[bib] === 'string') continue
+
+                if (await File.exists(bib)) {
+                  log.debug('3225: loading', bib)
                   bibs[bib] = await this.read(bib)
                   break
+                }
+                else {
+                  log.debug('3225:', bib, 'does not exist')
+                  bibs[bib] = ''
                 }
               }
             }
