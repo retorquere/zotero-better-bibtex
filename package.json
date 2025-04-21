@@ -122,7 +122,7 @@
     "wasmjieba-web": "^1.0.14",
     "words-to-numbers": "^1.5.1",
     "xregexp": "^5.1.2",
-    "zotero-plugin": "^5.0.16",
+    "zotero-plugin": "^5.0.17",
     "zotero-plugin-toolkit": "^4.1.2",
     "zotero-types": "^3.1.9"
   },
