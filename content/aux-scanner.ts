@@ -187,7 +187,8 @@ export const AUXScanner = new class {
       const contents = await this.read(aux)
       const parent = PathUtils.parent(aux)
 
-      for (let [, command, arg ] of contents.matchAll(/(\\citation|\\abx@aux@cite|@cite|\\bibdata|\\@input)\s*\{(.*?)\}/g)) {
+      for (let [m, command, arg ] of contents.matchAll(/(\\citation|\\abx@aux@cite|@cite|\\bibdata|\\@input)\s*\{(.*?)\}/g)) {
+        log.debug('3225:', m, command, arg)
         arg = arg.trim()
         if (!arg) continue
 
