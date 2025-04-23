@@ -55,7 +55,6 @@ export const AUXScanner = new class {
     }
 
     const parsed = await this.parse(path)
-    log.debug('3225: parsed', path, 'to', parsed)
 
     if (!parsed || !parsed.citationKeys.length) return
 
@@ -81,7 +80,6 @@ export const AUXScanner = new class {
       citationKeys.push(found.citationKey)
     }
     let missing = parsed.citationKeys.filter(key => !citationKeys.includes(key))
-    log.debug('3225:', { itemIDs, missing })
 
     if (missing && parsed.bib) {
       if (missing.length) {
@@ -177,26 +175,22 @@ export const AUXScanner = new class {
     const bibs: Record<string, string> = {}
 
     while (aux = Object.keys(parsed).find(path => !parsed[path])) {
-      log.debug('3225: parsing', aux)
       parsed[aux] = true
       if (!await File.exists(aux)) {
-        log.debug('3225:', aux, 'does not exist')
+        log.info('aux scanner:', aux, 'does not exist')
         continue
       }
 
       const contents = await this.read(aux)
       const parent = PathUtils.parent(aux)
 
-      for (let [m, command, arg, arg2 ] of contents.matchAll(/(\\citation|\\abx@aux@cite|@cite|\\bibdata|\\@input)\s*\{(.*?)\}(?:\{(.*?)\})?/g)) {
+      for (let [ , command, arg, arg2 ] of contents.matchAll(/(\\citation|\\abx@aux@cite|@cite|\\bibdata|\\@input)\s*\{(.*?)\}(?:\{(.*?)\})?/g)) {
         if (command === '\\abx@aux@cite' && arg.match(/^\d+$/) && arg2) arg = arg2
-
-        log.debug('3225:', { m, command, arg })
         arg = arg.trim()
         if (!arg) continue
 
         switch (command) {
           case '\\@input':
-            log.debug('3225: adding', PathUtils.join(parent, arg))
             parsed[PathUtils.join(parent, arg)] ||= false
             break
 
@@ -206,12 +200,11 @@ export const AUXScanner = new class {
                 if (typeof bibs[bib] === 'string') continue
 
                 if (await File.exists(bib)) {
-                  log.debug('3225: loading', bib)
                   bibs[bib] = await this.read(bib)
                   break
                 }
                 else {
-                  log.debug('3225:', bib, 'does not exist')
+                  log.info('aux scanner:', bib, 'does not exist')
                   bibs[bib] = ''
                 }
               }
