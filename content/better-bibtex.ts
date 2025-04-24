@@ -683,6 +683,7 @@ export class BetterBibTeX {
           */
         })
 
+        /*
         let $done: () => void
         Zotero.ItemPaneManager.registerSection({
           paneID: 'betterbibtex-section-citationkey',
@@ -737,6 +738,7 @@ export class BetterBibTeX {
             $done = undefined
           },
         })
+        */
 
         Events.on('items-changed', () => {
           if (rowID) Zotero.ItemPaneManager.refreshInfoRow(rowID)
