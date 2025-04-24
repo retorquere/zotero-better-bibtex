@@ -11,7 +11,7 @@ async function prefetch(id_with_branch: string): Promise<void> {
     if (id_with_branch.includes('.')) {
       const [ id, branch ] = id_with_branch.split('.')
       const messages = strings.formatMessages([{ id }])
-      localized[id_with_branch] = messages[0].attributes[0][branch] as string || `!! ${id_with_branch}`
+      localized[id_with_branch] = messages[0]?.attributes[0][branch] as string || `!! ${id_with_branch}`
     }
     else {
       localized[id_with_branch] = await strings.formatValue(id_with_branch, {}) as string || `!! ${id_with_branch}`
