@@ -11,7 +11,20 @@ jobs:
   nag:
     runs-on: ubuntu-latest
     steps:
+      - name: Prod people to upgrade
+        if: contains(github.event.issue.body, 'Zotero.ItemTreeManager.registerColumn is not a function')
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_REPO: ${{ github.repository }}
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+        run: |
+          set -e
+          gh issue comment "$ISSUE_NUMBER" --body-file .github/workflows/outdated.md
+          gh issue close "$ISSUE_NUMBER"
+          gh issue edit "$ISSUE_NUMBER" --add-label "upgrade-zotero"
+
       - uses: retorquere/label-gun@main
+        if: "!contains(github.event.issue.body, 'Zotero.ItemTreeManager.registerColumn is not a function')"
         id: labelgun
         with:
           token: ${{ github.token }}
@@ -48,19 +61,6 @@ jobs:
           verbose: true
           assign: true
 
-      - name: slash commands
-        id: command
-        continue-on-error: true
-        uses: xt0rted/slash-command-action@v2
-        with:
-          repo-token: ${{ github.token }}
-          command: debuglog
-          reaction: "false"
-          allow-edits: "true"
-          permission-level: admin
-      - name: ask for log
-        if: steps.command.outputs.command-name == 'debuglog'
-        run: "gh issue comment ${{ github.event.issue.number }} --body-file $GITHUB_WORKSPACE/.github/workflows/debug-log.md --edit-last"
       - run: echo Status = ${{ steps.labelgun.outputs.status != '' }}
 
       - uses: actions/add-to-project@v1.0.2
