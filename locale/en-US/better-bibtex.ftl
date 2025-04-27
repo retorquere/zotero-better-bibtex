@@ -17,6 +17,9 @@ better-bibtex_error-report =
 
 better-bibtex_error-report_upgrade = The latest { $program } version is <strong>{ $upgrade }</strong>, you are running <strong>{ $running }</strong>; please upgrade first.
 
+better-bibtex_error-report_upgrade_auto = { $program } will update from the { $channel } channel every { $interval }, last update at { $last }.
+better-bibtex_error-report_upgrade_manual = { $program } updates are disabled
+
 better-bibtex_error-report_no_items = This log will not include sample items. <b>These are not mandatory</b>, but are usually necessary to create test cases for the change/fix you will be requesting. To generate a log with sample items:
 better-bibtex_error-report_no_items_cancel = cancel this wizard
 better-bibtex_error-report_no_items_reproduce = reproduce the problem

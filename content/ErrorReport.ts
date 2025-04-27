@@ -55,16 +55,32 @@ type Report = {
 const $home = new RegExp(`${escapeRE(Path.home)}|${escapeRE(Path.home.replace(Zotero.isWin ? /\\/g : /\//g, '$1$1'))}|${escapeRE(PathUtils.toFileURI(Path.home))}`, 'g')
 
 type Upgrade = {
+  id: 'zotero' | 'bbt'
+  program: string
   running: string
   upgrade: string
+
+  auto?: boolean
+  interval?: string
+  channel?: string
+  lastUpdate?: string
 }
 class Upgrades {
   public zotero: Upgrade = {
+    id: 'zotero',
+    program: Zotero.clientName,
     running: Zotero.version,
     upgrade: '',
+
+    auto: Zotero.Prefs.get('app.update.auto', true) as boolean,
+    interval: (new Date(Zotero.Prefs.get('app.update.interval', true) as number * 1000)).toISOString().replace(/.*T/, '').replace(/Z$/, ''),
+    channel: Zotero.Prefs.get('app.update.channel', true) as string,
+    lastUpdate: (new Date(Zotero.Prefs.get('app.update.lastUpdateTime.background-update-timer', true) as number * 1000)).toString(),
   }
 
   public bbt: Upgrade = {
+    id: 'bbt',
+    program: 'BetterBibTeX',
     running,
     upgrade: '',
   }
@@ -75,33 +91,45 @@ class Upgrades {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     const manifest = async updates => JSON.parse((await Zotero.HTTP.request('GET', updates, { noCache: true })).response)
 
-    const show = (id: string, upgrade: Upgrade = { running: '', upgrade: '' }) => {
+    const show = (upgrade: Partial<Upgrade>) => {
       // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
-      const text = <HTMLInputElement> document.querySelector(`#better-bibtex-report-upgrade-${id}`)
-      log.info(id, 'upgrade', upgrade.running !== upgrade.upgrade ? 'show:' : 'hide:', upgrade)
+      const text = <HTMLInputElement> document.querySelector(`#better-bibtex-report-upgrade-${upgrade.id}`)
+      // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
+      const auto = <HTMLInputElement> document.querySelector(`#better-bibtex-report-upgrade-${upgrade.id}_auto`)
+      // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
+      const manual = <HTMLInputElement> document.querySelector(`#better-bibtex-report-upgrade-${upgrade.id}_manual`)
 
-      if (upgrade.running !== upgrade.upgrade) {
-        const program = id === 'bbt' ? 'Better BibTeX' : 'Zotero'
+      log.info(upgrade.id, 'upgrade', upgrade.running && upgrade.running !== upgrade.upgrade ? 'show:' : 'hide:', upgrade)
+
+      if (upgrade.running && upgrade.running !== upgrade.upgrade) {
+        const program = upgrade.id === 'bbt' ? 'Better BibTeX' : 'Zotero'
         text.setAttribute('data-l10n-args', JSON.stringify({ program, ...upgrade }))
         text.hidden = false
+        if (auto) {
+          auto.hidden = !upgrade.auto
+          auto.setAttribute('data-l10n-args', JSON.stringify({ upgrade }))
+        }
+        if (manual) manual.hidden = !upgrade.auto
       }
       else {
         text.hidden = true
+        if (auto) auto.hidden = true
+        if (manual) manual.hidden = true
         upgrade.upgrade = ''
       }
 
-      log.info('   ', id, 'upgrade', upgrade.upgrade ? 'upgrade:' : 'ok:', upgrade)
+      log.info('   ', upgrade.id, 'upgrade', upgrade.upgrade ? 'upgrade:' : 'ok:', upgrade)
     }
 
     const bbt = async () => {
-      show('bbt')
+      show({ id: 'bbt' })
       try {
         this.bbt.upgrade = (await manifest('https://github.com/retorquere/zotero-better-bibtex/releases/download/release/updates.json'))
           .addons['better-bibtex@iris-advies.com']
           .updates[0]
           .version as string
         if (this.bbt.running.split('.').length > 3) this.bbt.upgrade = this.bbt.running
-        show('bbt', this.bbt)
+        show(this.bbt)
       }
       catch (err) {
         log.error('errorreport.latest.bbt:', err)
@@ -109,14 +137,14 @@ class Upgrades {
     }
 
     const zotero = async () => {
-      show('zotero')
+      show({ id: 'zotero' })
       try {
         const release = client.isBeta ? 'beta' : 'release'
         const platform = `${client.platform.replace(/lin/, 'linux')}${ { mac: '', win: '-x64', linux: '-x86_64' }[client.platform] || '' }`
         this.zotero.upgrade = (await manifest(`https://www.zotero.org/download/client/manifests/${release}/updates-${platform}.json`))
           .map(v => v.version as string)
           .sort((a, b) => Services.vc.compare(b, a))[0] as string
-        show('zotero', this.zotero)
+        show(this.zotero)
       }
       catch (err) {
         log.error('errorreport.latest.zotero:', err)
@@ -487,6 +515,13 @@ export class ErrorReport {
     const appInfo = Components.classes['@mozilla.org/xre/app-info;1'].getService(Components.interfaces.nsIXULAppInfo)
     context += `Application: ${ appInfo.name } (${ Zotero.clientName }) ${ appInfo.version } ${ Zotero.locale }\n`
     context += `Platform: ${ client.platform }${(ENV.get('SNAP') && ' snap') || (ENV.get('FLATPAK_SANDBOX_DIR') && ' flatpak') || ''}\n`
+
+    if (upgrades.zotero.auto) {
+      context += `${upgrades.zotero.program} will update from the ${upgrades.zotero.channel} channel every ${upgrades.zotero.interval}, last update at ${upgrades.zotero.lastUpdate}\n`
+    }
+    else {
+      context += `${Zotero.clientName} updates are disabled\n`
+    }
 
     const addons = await Zotero.getInstalledExtensions()
     if (addons.length) {
