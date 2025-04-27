@@ -683,7 +683,6 @@ export class BetterBibTeX {
           */
         })
 
-        /*
         let $done: () => void
         Zotero.ItemPaneManager.registerSection({
           paneID: 'betterbibtex-section-citationkey',
@@ -697,6 +696,7 @@ export class BetterBibTeX {
             icon: `${ rootURI }content/skin/item-section/sidenav.svg`,
           },
           bodyXHTML: 'Citation Key <html:input type="text" data-itemid="" id="better-bibtex-citation-key" readonly="true" style="flex: 1" xmlns:html="http://www.w3.org/1999/xhtml"/><html:span id="better-bibtex-citation-key-pinned"/>',
+          /*
           // onRender: ({ body, item, editable, tabType }) => {
           onRender: ({ body, item, setSectionSummary }) => {
             const citekey = Zotero.BetterBibTeX.KeyManager.get(item.id) || { citationKey: '', pinned: false }
@@ -733,12 +733,12 @@ export class BetterBibTeX {
               setEnabled(false)
             }
           },
+          */
           onDestroy: () => {
             $done?.()
             $done = undefined
           },
         })
-        */
 
         Events.on('items-changed', () => {
           if (rowID) Zotero.ItemPaneManager.refreshInfoRow(rowID)
