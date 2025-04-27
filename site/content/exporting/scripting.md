@@ -102,11 +102,11 @@ There isn't really an API. You can use regular javascript to manipulate the `csl
 
 In a postscript `zotero.itemType` will have one of these values:
 
-{{% postscript/itemtypes %}}
+{{< postscript/itemtypes >}}
 
 Other fields on the `zotero` object are:
 
-{{% postscript/fields %}}
+{{< postscript/fields >}}
 
 (types/fields marked <sup>Z</sup> are only available in Zotero, fields marked with <sup>JM</sup> are only available in Juris-M).
 
