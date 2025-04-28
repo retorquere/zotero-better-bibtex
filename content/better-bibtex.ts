@@ -696,6 +696,14 @@ export class BetterBibTeX {
             icon: `${ rootURI }content/skin/item-section/sidenav.svg`,
           },
           bodyXHTML: 'Citation Key <html:input type="text" data-itemid="" id="better-bibtex-citation-key" readonly="true" style="flex: 1" xmlns:html="http://www.w3.org/1999/xhtml"/><html:span id="better-bibtex-citation-key-pinned"/>',
+          onInit: ({ body, refresh }) => { // eslint-disable-line @typescript-eslint/unbound-method
+            $done = Events.on('items-changed', ({ items }) => {
+              const textbox: HTMLElement = body.querySelector('#better-bibtex-citation-key')
+              const itemID = textbox.dataset.itemid ? parseInt(textbox.dataset.itemid) : undefined
+              const displayed = textbox.dataset.itemid ? items.find(item => item.id === itemID) : undefined
+              if (displayed) void refresh()
+            })
+          },
           /*
           // onRender: ({ body, item, editable, tabType }) => {
           onRender: ({ body, item, setSectionSummary }) => {
@@ -710,14 +718,6 @@ export class BetterBibTeX {
             pinned.textContent = citekey.pinned ? icons.pin : ''
 
             setSectionSummary(citekey.citationKey || '')
-          },
-          onInit: ({ body, refresh }) => { // eslint-disable-line @typescript-eslint/unbound-method
-            $done = Events.on('items-changed', ({ items }) => {
-              const textbox: HTMLElement = body.querySelector('#better-bibtex-citation-key')
-              const itemID = textbox.dataset.itemid ? parseInt(textbox.dataset.itemid) : undefined
-              const displayed = textbox.dataset.itemid ? items.find(item => item.id === itemID) : undefined
-              if (displayed) void refresh()
-            })
           },
           onItemChange: ({ setEnabled, body, item }) => {
             const textbox: HTMLElement = body.querySelector('#better-bibtex-citation-key')
