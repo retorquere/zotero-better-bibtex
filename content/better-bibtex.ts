@@ -14,6 +14,7 @@ const Menu = new MenuManager
 import { DebugLog } from 'zotero-plugin/debug-log'
 DebugLog.register('Better BibTeX', ['extensions.zotero.translators.better-bibtex.'])
 
+import { Scheduler } from './scheduler'
 import { TeXstudio } from './tex-studio'
 import { icons } from './icons'
 import { prompt } from './prompt'
@@ -399,6 +400,8 @@ monkey.patch(Zotero.Translate.Export.prototype, 'translate', original => functio
   }
 })
 
+const scheduler = new Scheduler<'column-refresh'>(500)
+
 export class BetterBibTeX {
   public clientName = Zotero.clientName
   public clientVersion = Zotero.version
@@ -740,18 +743,22 @@ export class BetterBibTeX {
           },
         })
 
-        Events.on('items-changed', () => {
+        Events.on('items-changed', ev => {
+          if (ev.reason !== 'key-refresh') return
+
           if (rowID) Zotero.ItemPaneManager.refreshInfoRow(rowID)
-          if (!columnDataKey) return
-          const azp = Zotero.getActiveZoteroPane()
-          if (!azp || !azp.itemPane) return
-          // eslint-disable-next-line no-underscore-dangle
-          if (!azp.itemPane.itemsView._columnPrefs[columnDataKey].hidden) log.info('Zotero.ItemTreeManager.refreshColumns()')
+
+          if (columnDataKey) {
+            const azp = Zotero.getActiveZoteroPane()
+            // eslint-disable-next-line no-underscore-dangle
+            if (azp?.itemPane && !azp.itemPane.itemsView._columnPrefs[columnDataKey].hidden) scheduler.schedule('column-refresh', () => { Zotero.ItemTreeManager.refreshColumns() })
+          }
         })
 
         monkey.enable()
       },
       shutdown: async () => { // eslint-disable-line @typescript-eslint/require-await
+        scheduler.clear()
         ExportOptions.disable()
         Events.shutdown()
         Elements.removeAll()

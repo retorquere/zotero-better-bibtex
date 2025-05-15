@@ -36,7 +36,7 @@ better-bibtex_error-report_context =
 better-bibtex_error-report_debug = 
   .label = Debug log
 
-better-bibtex_error-report_enable-debug = Zotero debug logging is currently disabled. It will be easier to diagnose the problem if you enable it before submitting a debug log.
+better-bibtex_error-report_enable-debug = Zotero debug logging is currently disabled. It will be easier to diagnose the problem if you enable it and reproduce the problem before submitting a debug log.
 
 better-bibtex_error-report_errors = 
   .label = Errors

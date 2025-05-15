@@ -256,8 +256,10 @@ export const KeyManager = new class _KeyManager {
       await Zotero.Promise.delay(10)
     }
 
+    /* this already happens in the trigger on the key store
     const updates: Zotero.Item[] = items.filter(item => !save.has(item.id))
-    if (updates.length) void Events.emit('items-changed', { items: updates, action: 'modify', reason: 'refresh' })
+    if (updates.length) void Events.emit('items-changed', { items: updates, action: 'modify', reason: 'key-refresh' })
+    */
   }
 
   constructor() {
@@ -542,7 +544,7 @@ export const KeyManager = new class _KeyManager {
         log.error('Cache touch failed for', ids, err)
       }
       finally {
-        void Events.emit('items-changed', { items: Zotero.Items.get(ids), action: 'modify' })
+        void Events.emit('items-changed', { items: Zotero.Items.get(ids), action: 'modify', reason: 'key-refresh' })
       }
       // messes with focus-on-tab
       // if (action === 'modify' || action === 'add') Zotero.Notifier.trigger('refresh', 'item', itemIDs)

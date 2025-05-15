@@ -21,11 +21,13 @@ type IdleTopic = 'auto-export' | 'cache-purge'
 
 const idleService: IdleService = Components.classes['@mozilla.org/widget/useridleservice;1'].getService(Components.interfaces.nsIUserIdleService)
 
+type Reason = 'key-refresh' | 'parent-modify' | 'parent-delete' | 'parent-add' | 'tagged'
+
 class Emitter extends Emittery<{
   'collections-changed': number[]
   'collections-removed': number[]
   'export-progress': { pct: number; message: string; ae?: string }
-  'items-changed': { items: Zotero.Item[]; action: Action; reason?: string }
+  'items-changed': { items: Zotero.Item[]; action: Action; reason?: Reason }
   'libraries-changed': number[]
   'libraries-removed': number[]
   'preference-changed': string
