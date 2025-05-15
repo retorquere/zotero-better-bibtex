@@ -686,6 +686,7 @@ export class BetterBibTeX {
           */
         })
 
+        /*
         let $done: () => void
         Zotero.ItemPaneManager.registerSection({
           paneID: 'betterbibtex-section-citationkey',
@@ -707,7 +708,6 @@ export class BetterBibTeX {
               if (displayed) void refresh()
             })
           },
-          /*
           // onRender: ({ body, item, editable, tabType }) => {
           onRender: ({ body, item, setSectionSummary }) => {
             const citekey = Zotero.BetterBibTeX.KeyManager.get(item.id) || { citationKey: '', pinned: false }
@@ -736,12 +736,12 @@ export class BetterBibTeX {
               setEnabled(false)
             }
           },
-          */
           onDestroy: () => {
             $done?.()
             $done = undefined
           },
         })
+        */
 
         Events.on('items-changed', ev => {
           if (ev.reason !== 'key-refresh') return
