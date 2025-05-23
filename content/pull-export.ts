@@ -7,7 +7,7 @@ const BAD_REQUEST = 400
 
 import { Translators } from './translators'
 import { get as getCollection } from './collection'
-import { get as getLibrary } from './library'
+import { Library, get as getLibrary } from './library'
 import { getItemsAsync } from './get-items-async'
 import { fromPairs } from './object'
 import { orchestrator } from './orchestrator'
@@ -75,18 +75,18 @@ class LibraryHandler {
     const urlpath: string = Server.queryParams(request)['']
     if (!urlpath) return [ NOT_FOUND, 'text/plain', 'Could not export library: no path' ]
 
-    try {
-      const [ , lib, translator ] = urlpath.match(/\/?(?:([0-9]+)\/)?library\.([-0-9a-z]+)$/i)
-      const libID = parseInt(lib || '0') || Zotero.Libraries.userLibraryID
+    log.debug('3243:', Zotero.Libraries.getAll().map(l => l.id))
 
-      if (!Zotero.Libraries.exists(libID)) {
-        return [ NOT_FOUND, 'text/plain', `Could not export bibliography: library '${ urlpath }' does not exist` ]
-      }
+    try {
+      const [ , libID, translator ] = urlpath.match(/\/?(?:([0-9]+)\/)?library\.([-0-9a-z]+)$/i)
+      const library = getLibrary(libID)
+
+      if (!library) return [ NOT_FOUND, 'text/plain', `Could not export bibliography: library '${ urlpath }' does not exist` ]
 
       return [ OK, 'text/plain', await Translators.exportItems({
         translatorID: Translators.getTranslatorId(translator),
         displayOptions: displayOptions(request),
-        scope: { type: 'library', id: libID },
+        scope: { type: 'library', id: library.libraryID },
       }) ]
     }
     catch (err) {
@@ -125,10 +125,6 @@ class SelectedHandler {
   }
 }
 
-function isSet(v) {
-  return v ? 1 : 0
-}
-
 class ItemHandler {
   public supportedMethods = ['GET']
 
@@ -136,43 +132,45 @@ class ItemHandler {
     await Zotero.BetterBibTeX.ready
 
     try {
-      let translator: string, citationKeys: string | string[], groupID: string | number, libraryID: string | number, library: string, group: string, pandocFilterData: string
-      ({ translator, citationKeys, groupID, libraryID, library, group, pandocFilterData } = Server.queryParams(request))
-      if ((isSet(libraryID) + isSet(library) + isSet(groupID) + isSet(group)) > 1) {
-        return [ BAD_REQUEST, 'text/plain', 'specify at most one of library(/ID) or group(/ID)' ]
-      }
-      else if (libraryID) {
-        if (!libraryID.match(/^[0-9]+$/)) return [ BAD_REQUEST, 'text/plain', `${ libraryID } is not a number` ]
-        libraryID = parseInt(libraryID)
-      }
-      else if (groupID) {
-        if (!groupID.match(/^[0-9]+$/)) return [ BAD_REQUEST, 'text/plain', `${ libraryID } is not a number` ]
-        try {
-          groupID = parseInt(groupID)
-          libraryID = Zotero.Groups.getAll().find(g => g.groupID === groupID).libraryID
-        }
-        catch {
-          libraryID = null
-        }
-      }
-      else if (library || group) {
-        libraryID = getLibrary(library || group).libraryID
-      }
-      else {
-        libraryID = Zotero.Libraries.userLibraryID
+      const params = Server.queryParams(request)
+      const candidates = [ 'libraryID', 'library', 'groupID', 'group' ].filter(key => typeof params[key] !== 'undefined')
+
+      let lib: Library
+      let param: string
+
+      switch (candidates.length) {
+        case 0:
+          lib = getLibrary(Zotero.Libraries.userLibraryID)
+          param = 'user library'
+          break
+
+        case 1:
+          param = candidates[0]
+          lib = getLibrary(params[param], param.startsWith('group'))
+          break
+
+        default:
+          return [ BAD_REQUEST, 'text/plain', 'specify at most one of library(/ID) or group(/ID)' ]
       }
 
-      citationKeys = Array.from(new Set(citationKeys.split(',').filter(k => k)))
+      if (!lib) return [ BAD_REQUEST, 'text/plain', `no ${param} ${JSON.stringify(params[param])}` ]
+
+      const citationKeys: string[] = Array.from(new Set(params.citationKeys.split(',').filter(k => k)))
       if (!citationKeys.length) return [ SERVER_ERROR, 'text/plain', 'no citation keys provided' ]
 
-      const translatorID = Translators.getTranslatorId(translator)
-      if (!translator || !translatorID) return [ SERVER_ERROR, 'text/plain', 'no translator selected' ]
+      if (!params.translator) return [ SERVER_ERROR, 'text/plain', 'no translator selected' ]
+      const translatorID = Translators.getTranslatorId(params.translator)
+      if (!translatorID) return [ SERVER_ERROR, 'text/plain', `translator ${params.translator} not found` ]
 
-      const response: { items: Record<string, any>; zotero: Record<string, { itemID: number; uri: string }>; errors: Record<string, string> } = { items: {}, zotero: {}, errors: {}}
+      const response: {
+        items: Record<string, any>
+        zotero: Record<string, { itemID: number; uri: string }>
+        errors: Record<string, string>
+      } = { items: {}, zotero: {}, errors: {}}
 
       const itemIDs: Record<string, number> = {}
       for (const citationKey of citationKeys) {
-        const key = Zotero.BetterBibTeX.KeyManager.find({ where: { libraryID: <number>libraryID, citationKey }})
+        const key = Zotero.BetterBibTeX.KeyManager.find({ where: { libraryID: lib.libraryID, citationKey }})
 
         switch (key.length) {
           case 0:
@@ -188,11 +186,16 @@ class ItemHandler {
       }
 
       if (!Object.keys(itemIDs).length) return [ SERVER_ERROR, 'text/plain', 'no items found' ]
+
       // itemID => zotero item
       const items = fromPairs((await getItemsAsync(Object.values(itemIDs))).map(item => [ item.itemID, item ]))
-      let contents = await Translators.exportItems({ translatorID, displayOptions: displayOptions(request), scope: { type: 'items', items: Object.values(items) }})
+      let contents = await Translators.exportItems({
+        translatorID,
+        displayOptions: displayOptions(request),
+        scope: { type: 'items', items: Object.values(items) },
+      })
 
-      if (pandocFilterData) {
+      if (params.pandocFilterData) {
         let filtered_items
         switch (Translators.byId[translatorID]?.label) {
           case 'Better CSL JSON':
@@ -202,7 +205,7 @@ class ItemHandler {
             filtered_items = JSON.parse(contents).items
             break
           default:
-            throw new Error(`Unexpected translator ${ translatorID } from ${ translator }`)
+            throw new Error(`Unexpected translator ${ translatorID } from ${ params.translator }`)
         }
 
         for (const item of filtered_items) {
