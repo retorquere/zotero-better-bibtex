@@ -140,7 +140,7 @@ class Upgrades {
       show({ id: 'zotero' })
       try {
         const release = client.isBeta ? 'beta' : 'release'
-        const platform = `${client.platform.replace(/lin/, 'linux')}${ { mac: '', win: '-x64', linux: '-x86_64' }[client.platform] || '' }`
+        const platform = `${client.platform.replace(/lin/, 'linux')}${ { mac: '', win: '-x64', lin: '-x86_64' }[client.platform] || '' }`
         this.zotero.upgrade = (await manifest(`https://www.zotero.org/download/client/manifests/${release}/updates-${platform}.json`))
           .map(v => v.version as string)
           .sort((a, b) => Services.vc.compare(b, a))[0] as string
