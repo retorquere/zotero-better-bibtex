@@ -75,8 +75,6 @@ class LibraryHandler {
     const urlpath: string = Server.queryParams(request)['']
     if (!urlpath) return [ NOT_FOUND, 'text/plain', 'Could not export library: no path' ]
 
-    log.debug('3243:', Zotero.Libraries.getAll().map(l => l.id))
-
     try {
       const [ , libID, translator ] = urlpath.match(/\/?(?:([0-9]+)\/)?library\.([-0-9a-z]+)$/i)
       const library = getLibrary(libID)
