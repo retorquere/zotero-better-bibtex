@@ -454,6 +454,7 @@ export class ErrorReport {
       cache = ''
     }
 
+    log.debug('3244: items =', typeof items, items)
     if (items && Zotero.BetterBibTeX.lastExportOptions) {
       items.config = items.config || {}
       items.config.options = JSON.parse(Zotero.BetterBibTeX.lastExportOptions)
