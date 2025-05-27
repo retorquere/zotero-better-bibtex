@@ -9,7 +9,7 @@ import { Preference } from './prefs'
 import { defaults } from '../gen/preferences/meta'
 const supported: string[] = Object.keys(defaults).filter(name => ![ 'client', 'testing', 'platform', 'newTranslatorsAskRestart' ].includes(name))
 
-import { byId } from '../gen/translators'
+import { byId, DisplayOptions } from '../gen/translators'
 import { log } from './logger'
 import { AutoExport } from './auto-export'
 import { KeyManager } from './key-manager'
@@ -166,6 +166,8 @@ export class ErrorReport {
     short: string
     tld: string
   }
+
+  public displayOptions: DisplayOptions = {}
 
   private timestamp: string
 
@@ -375,8 +377,6 @@ export class ErrorReport {
 
       if (lib.items) lib.items = lib.items.filter(item => this.cleanItem(item))
 
-      delete lib.config.options
-
       if (lib.config.preferences) {
         for (const [ pref, value ] of Object.entries(lib.config.preferences)) {
           if (!supported.includes(pref) || value === defaults[pref]) delete lib.config.preferences[pref]
@@ -414,7 +414,7 @@ export class ErrorReport {
   }
 
   public async load(win: Window & { ErrorReport: ErrorReport; arguments: any[] }): Promise<void> {
-    const items = win.arguments[0].wrappedJSObject.items
+    const items: string = win.arguments[0].wrappedJSObject.items
 
     this.document = win.document
     win.ErrorReport = this
@@ -452,12 +452,6 @@ export class ErrorReport {
     catch (err) {
       log.error('cache: could not get cache dump', err)
       cache = ''
-    }
-
-    log.debug('3244: items =', typeof items, items)
-    if (items && Zotero.BetterBibTeX.lastExportOptions) {
-      items.config = items.config || {}
-      items.config.options = JSON.parse(Zotero.BetterBibTeX.lastExportOptions)
     }
 
     this.input = {
@@ -581,48 +575,54 @@ export class ErrorReport {
   }
 
   public async open(items?: string): Promise<void> {
-    const selection = async () => {
-      let scope = null
-      const zp = Zotero.getActiveZoteroPane()
-      switch (items) {
-        case 'collection':
-        case 'library':
-          scope = { type: 'collection', collection: zp.getSelectedCollection() }
-          if (!scope.collection) scope = { type: 'library', id: zp.getSelectedLibraryID() }
-          break
+    let scope = null
+    const zp = Zotero.getActiveZoteroPane()
+    switch (items) {
+      case 'collection':
+      case 'library':
+        scope = { type: 'collection', collection: zp.getSelectedCollection() }
+        if (!scope.collection) scope = { type: 'library', id: zp.getSelectedLibraryID() }
+        break
 
-        case 'items':
-          try {
-            scope = { type: 'items', items: zp.getSelectedItems() }
-          }
-          catch (err) { // ZoteroPane.getSelectedItems() doesn't test whether there's a selection and errors out if not
-            log.error('Could not get selected items:', err)
-          }
-      }
+      case 'items':
+        try {
+          scope = { type: 'items', items: zp.getSelectedItems() }
+        }
+        catch (err) { // ZoteroPane.getSelectedItems() doesn't test whether there's a selection and errors out if not
+          log.error('Could not get selected items:', err)
+          scope = null
+          items = ''
+        }
+        break
 
-      if (!scope) return ''
+      default:
+        items = ''
+        break
+    }
 
+    if (scope) {
       try {
-        return await Zotero.BetterBibTeX.Translators.queueJob({
+        items = await Zotero.BetterBibTeX.Translators.queueJob({
           translatorID: Zotero.BetterBibTeX.Translators.bySlug.BetterBibTeXJSON.translatorID,
           displayOptions: { worker: true, exportNotes: true, dropAttachments: true, Normalize: true },
           scope,
           timeout: 40,
         })
+        const merge = JSON.parse(items)
+        merge.config.options = this.displayOptions
+        items = JSON.stringify(merge, null, 2)
       }
       catch (err) {
         if (err.timeout) {
           log.error('errorreport: items timed out after', err.timeout, 'seconds')
-          return 'Timeout retrieving items'
+          items = 'Timeout retrieving items'
         }
         else {
           log.error('errorreport: could not get items', err)
-          return `Error retrieving items: ${ err }`
+          items = `Error retrieving items: ${ err }`
         }
       }
     }
-
-    items = items ? await selection() : ''
 
     Zotero.getMainWindow().openDialog(
       'chrome://zotero-better-bibtex/content/ErrorReport.xhtml',

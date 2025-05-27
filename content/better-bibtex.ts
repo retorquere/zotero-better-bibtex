@@ -350,9 +350,7 @@ monkey.patch(Zotero.Translate.Export.prototype, 'translate', original => functio
     return original.apply(this, arguments)
   }
 
-  Zotero.BetterBibTeX.lastExportOptions = this._displayOptions ? JSON.stringify(this._displayOptions) : ''
-
-  const displayOptions = this._displayOptions || {}
+  const displayOptions = Zotero.BetterBibTeX.ErrorReport.displayOptions = this._displayOptions = this._displayOptions || {}
 
   if (this.location) {
     if (displayOptions.exportFileData) { // when exporting file data, the user was asked to pick a directory rather than a file
@@ -405,8 +403,6 @@ const scheduler = new Scheduler<'column-refresh'>(500)
 export class BetterBibTeX {
   public clientName = Zotero.clientName
   public clientVersion = Zotero.version
-
-  public lastExportOptions = ''
 
   public uninstalled = false
   public Orchestrator = orchestrator
