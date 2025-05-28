@@ -80,7 +80,7 @@ g = Github(os.environ['GITHUB_TOKEN'])
 repo = g.get_repo('retorquere/zotero-better-bibtex')
 issue = repo.get_issue(int(args.issue))
 args.title = re.sub(r'^\[[^\]]+\]\s*:', '', issue.title).strip()
-args.title = re.sub(r'^(Bug|Feature|Feature Request)\s*:', '', args.title, re.IGNORECASE).strip()
+args.title = re.sub(r'^(Bug|Feature|Feature Request)\s*:', '', args.title, flags=re.IGNORECASE).strip()
 args.title = re.sub(r'[^-A-Za-z0-9\s]', '', args.title).strip()
 args.title = sanitize_filename(f'{args.title} #{issue.number}'.strip()).replace('`', '').replace('?', '')
 
