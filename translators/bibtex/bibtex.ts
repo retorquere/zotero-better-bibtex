@@ -7,7 +7,7 @@ import { parse as arXiv } from '../../content/arXiv'
 import { valid, label } from '../../gen/items/items'
 import { wordsToNumbers } from 'words-to-numbers'
 
-import { parse as parseDate, strToISO as strToISODate, dateToISO } from '../../content/dateparser'
+import { parse as parseDate, strToISO as strToISODate } from '../../content/dateparser'
 
 import { parseBuffer as parsePList } from 'bplist-parser'
 
@@ -484,7 +484,7 @@ export function generateBibTeX(collected: Collected): Translation {
         break
 
       case 'interval':
-        ref.add({ name: 'year', value: dateToISO(ref.date) })
+        if (ref.date.from.type !== 'open' || ref.date.to.type !== 'open') ref.add({ name: 'year', value: item.date })
         break
 
       case 'date':
