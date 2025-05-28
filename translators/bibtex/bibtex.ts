@@ -7,7 +7,7 @@ import { parse as arXiv } from '../../content/arXiv'
 import { valid, label } from '../../gen/items/items'
 import { wordsToNumbers } from 'words-to-numbers'
 
-import { parse as parseDate, strToISO as strToISODate } from '../../content/dateparser'
+import { ParsedDate, parse as parseDate, strToISO as strToISODate } from '../../content/dateparser'
 
 import { parseBuffer as parsePList } from 'bplist-parser'
 
@@ -347,6 +347,49 @@ export async function importBibTeX(collected: Collected): Promise<void> {
   await importer.import()
 }
 
+function addDate(ref: Entry, date: ParsedDate | { type: 'none' }, verbatim: string) {
+  switch (date.type) {
+    case 'open':
+    case 'none':
+      return
+
+    case 'verbatim':
+      ref.add({ name: 'year', value: date.verbatim })
+      return
+
+    case 'interval': {
+      const { from, to } = date
+      if (typeof from.year === 'number' && typeof to.year === 'number' && from.year === to.year) {
+        addDate(ref, {
+          ...from,
+          month: typeof from.month === 'number' && typeof to.month === 'number' && from.month === to.month ? from.month : undefined,
+        }, verbatim)
+      }
+      else {
+        ref.add({ name: 'year', value: verbatim })
+      }
+      return
+    }
+
+    case 'date':
+      if (date.month) ref.add({ name: 'month', value: months[date.month - 1], bare: true })
+      if (date.orig?.type === 'date') {
+        ref.add({ name: 'year', value: `[${ date.orig.year }] ${ date.year }` })
+      }
+      else {
+        ref.add({ name: 'year', value: `${ date.year }` })
+      }
+      return
+
+    case 'season':
+      ref.add({ name: 'year', value: date.year })
+      break
+
+    default:
+      log.error(`Unexpected date type ${ JSON.stringify({ date: verbatim, parsed: date }) }`)
+  }
+}
+
 export function generateBibTeX(collected: Collected): Translation {
   const translation = Translation.Export(collected)
   translation.bibtex = new BibTeXExporter(translation)
@@ -475,35 +518,7 @@ export function generateBibTeX(collected: Collected): Translation {
     // #1541
     if (ref.entrytype === 'inbook' && ref.has.author && ref.has.editor) delete ref.has.editor
 
-    switch (ref.date.type) {
-      case 'none':
-        break
-
-      case 'verbatim':
-        ref.add({ name: 'year', value: ref.date.verbatim })
-        break
-
-      case 'interval':
-        if (ref.date.from.type !== 'open' || ref.date.to.type !== 'open') ref.add({ name: 'year', value: item.date })
-        break
-
-      case 'date':
-        if (ref.date.month) ref.add({ name: 'month', value: months[ref.date.month - 1], bare: true })
-        if (ref.date.orig?.type === 'date') {
-          ref.add({ name: 'year', value: `[${ ref.date.orig.year }] ${ ref.date.year }` })
-        }
-        else {
-          ref.add({ name: 'year', value: `${ ref.date.year }` })
-        }
-        break
-
-      case 'season':
-        ref.add({ name: 'year', value: ref.date.year })
-        break
-
-      default:
-        log.error(`Unexpected date type ${ JSON.stringify({ date: item.date, parsed: ref.date }) }`)
-    }
+    addDate(ref, ref.date, item.date)
 
     ref.add({ name: 'keywords', value: item.tags, enc: 'tags' })
 
