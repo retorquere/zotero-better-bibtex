@@ -484,7 +484,7 @@ export function generateBibTeX(collected: Collected): Translation {
         break
 
       case 'interval':
-        ref.add({ name: 'year', value: item.date })
+        if (ref.date.from.type !== 'open' || ref.date.to.type !== 'open') ref.add({ name: 'year', value: item.date })
         break
 
       case 'date':
