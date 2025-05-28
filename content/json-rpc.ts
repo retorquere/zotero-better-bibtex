@@ -107,6 +107,10 @@ export class NSUser {
   }
 }
 
+function getLibrary(term: string | number): number {
+  return Library.get({ libraryID: term, group: term }, true).libraryID
+}
+
 export class NSItem {
   /**
    * Search for items in Zotero.
@@ -168,7 +172,7 @@ export class NSItem {
 
       if (typeof library !== 'undefined' && library !== '*') {
         try {
-          search.addCondition('libraryID', 'is', Library.get(library).libraryID, true)
+          search.addCondition('libraryID', 'is', getLibrary(library), true)
         }
         catch {
           throw new Error(`library ${ JSON.stringify(library) } not found`)
@@ -191,7 +195,7 @@ export class NSItem {
         // libraryId can be provided as Library Name
         else if ((term.length >= 3) && (term[0] === 'libraryID')) {
           try {
-            term[2] = Library.get(term[2]).libraryID
+            term[2] = getLibrary(term[2])
           }
           catch {
             throw new Error(`library ${ JSON.stringify(term[2]) } not found`)
@@ -229,7 +233,7 @@ export class NSItem {
    */
   public async attachments(citekey: string, library?: string | number): Promise<any> {
     const where: Query = { citationKey: citekey.replace(/^@/, '') }
-    if (library !== '*') where.libraryID = Library.get(library).libraryID
+    if (library !== '*') where.libraryID = getLibrary(library)
     const key = Zotero.BetterBibTeX.KeyManager.first({ where })
     if (!key) throw { code: INVALID_PARAMETERS, message: `${ citekey } not found` }
     const item = await getItemsAsync(key.itemID)
@@ -396,7 +400,7 @@ export class NSItem {
     if (((format as any).mode || 'bibliography') !== 'bibliography') throw new Error(`mode must be bibliograpy, not ${ (format as any).mode }`)
 
     const where: Query = {}
-    if (library !== '*') where.libraryID = Library.get(library).libraryID
+    if (library !== '*') where.libraryID = getLibrary(library)
     citekeys = citekeys.map(citekey => citekey.replace('@', ''))
     if (Preference.citekeyCaseInsensitive) {
       where.lcCitationKey = { in: citekeys.map(citekey => citekey.toLowerCase()) }
@@ -462,7 +466,7 @@ export class NSItem {
    */
   public async export(citekeys: string[], translator: string, libraryID?: string | number): Promise<string> {
     const where: Query = {
-      libraryID: Library.get(libraryID).libraryID,
+      libraryID: getLibrary(libraryID),
     }
     citekeys = citekeys.map(citekey => citekey.replace('@', ''))
     if (Preference.citekeyCaseInsensitive) {
@@ -524,8 +528,8 @@ export class NSItem {
 
     const where: Query = {
       libraryID: Array.isArray(libraryID)
-        ? { in: libraryID.map(name => Library.get(name).libraryID).filter(_ => typeof _ === 'number') }
-        : Library.get(libraryID).libraryID,
+        ? { in: libraryID.map(name => getLibrary(name)) }
+        : getLibrary(libraryID),
     }
     const itemIDs: number[] = []
     for (const citationKey of citekeys.map(citekey => citekey.replace('@', ''))) {

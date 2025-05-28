@@ -1,4 +1,4 @@
-import { get as getLibrary } from './library'
+import * as Library from './library'
 
 class CollectionError extends Error {
   kind: 'duplicate' | 'notfound'
@@ -52,8 +52,9 @@ export async function get(path: string, create = false): Promise<any> {
   const root = names.shift()
   if (names.length === 0) throw new CollectionError('path is too short', 'notfound')
 
-  let collection = root.match(/^\d+$/) ? Zotero.Libraries.get(parseInt(root)) : getLibrary(root)
+  let collection: Zotero.Library | Zotero.Collection = Library.get({ libraryID: root, groupID: root, group: root })
   if (!collection) throw new CollectionError(`Library ${ root } not found`, 'notfound')
+
   let tmp_path = `/${ root }`
 
   for (const name of names) {

@@ -2,12 +2,12 @@
 const OK = 200
 const SERVER_ERROR = 500
 const NOT_FOUND = 404
-const CONFLICT = 409
+// const CONFLICT = 409
 const BAD_REQUEST = 400
 
 import { Translators } from './translators'
 import { get as getCollection } from './collection'
-import { Library, get as getLibrary } from './library'
+import * as Library from './library'
 import { getItemsAsync } from './get-items-async'
 import { fromPairs } from './object'
 import { orchestrator } from './orchestrator'
@@ -33,38 +33,35 @@ class CollectionHandler {
     const urlpath: string = Server.queryParams(request)['']
     if (!urlpath) return [ NOT_FOUND, 'text/plain', 'Could not export bibliography: no path' ]
 
-    try {
-      const [ , lib, path, translator ] = urlpath.match(/^\/(?:([0-9]+)\/)?(.*)\.([-0-9a-z]+)$/i)
+    const [ , lib, path, translator ] = urlpath.match(/^\/(?:([0-9]+)\/)?(.*)\.([-0-9a-z]+)$/i)
 
-      const libID = parseInt(lib || '0') || Zotero.Libraries.userLibraryID
+    const libraryID = Library.get({ libraryID: lib, group: lib })?.libraryID
+    let collection
 
-      let collection
+    if (typeof libraryID === 'number') {
       try {
-        collection = Zotero.Collections.getByLibraryAndKey(libID, path)
+        collection = Zotero.Collections.getByLibraryAndKey(libraryID, path)
       }
       catch (err) {
         log.error('pull-export: resolve by key error:', err)
       }
       if (!collection) {
         try {
-          collection = await getCollection(`/${ libID }/${ path }`)
+          collection = await getCollection(`/${ libraryID }/${ path }`)
         }
         catch (err) {
           log.error('pull-export: resolve by path error:', err)
         }
       }
-
-      if (!collection) return [ NOT_FOUND, 'text/plain', `Could not export bibliography: path '${ path }' not found` ]
-
-      return [ OK, 'text/plain', await Translators.exportItems({
-        translatorID: Translators.getTranslatorId(translator),
-        displayOptions: displayOptions(request),
-        scope: { type: 'collection', collection },
-      }) ]
     }
-    catch (err) {
-      return [ { notfound: NOT_FOUND, duplicate: CONFLICT, error: SERVER_ERROR }[err.kind || 'error'], 'text/plain', `${ err }` ]
-    }
+
+    if (!collection) return [ NOT_FOUND, 'text/plain', `Could not export bibliography: path '${ path }' not found` ]
+
+    return [ OK, 'text/plain', await Translators.exportItems({
+      translatorID: Translators.getTranslatorId(translator),
+      displayOptions: displayOptions(request),
+      scope: { type: 'collection', collection },
+    }) ]
   }
 }
 
@@ -76,15 +73,15 @@ class LibraryHandler {
     if (!urlpath) return [ NOT_FOUND, 'text/plain', 'Could not export library: no path' ]
 
     try {
-      const [ , libID, translator ] = urlpath.match(/\/?(?:([0-9]+)\/)?library\.([-0-9a-z]+)$/i)
-      const library = getLibrary(libID)
+      const [ , libraryID, translator ] = urlpath.match(/\/?(?:([0-9]+)\/)?library\.([-0-9a-z]+)$/i)
 
+      const library = Library.get({ libraryID })
       if (!library) return [ NOT_FOUND, 'text/plain', `Could not export bibliography: library '${ urlpath }' does not exist` ]
 
       return [ OK, 'text/plain', await Translators.exportItems({
         translatorID: Translators.getTranslatorId(translator),
         displayOptions: displayOptions(request),
-        scope: { type: 'library', id: library.libraryID },
+        scope: { type: 'library', id: library.id },
       }) ]
     }
     catch (err) {
@@ -131,34 +128,17 @@ class ItemHandler {
 
     try {
       const params = Server.queryParams(request)
-      const candidates = [ 'libraryID', 'library', 'groupID', 'group' ].filter(key => typeof params[key] !== 'undefined')
+      const { libraryID, library, groupID, group, translator } = params as unknown as { libraryID?: number; library?: string; groupID?: number; group: string; translator: string }
+      const $libraryID = Library.get({ libraryID, library, groupID, group })?.libraryID
 
-      let lib: Library
-      let param: string
-
-      switch (candidates.length) {
-        case 0:
-          lib = getLibrary(Zotero.Libraries.userLibraryID)
-          param = 'user library'
-          break
-
-        case 1:
-          param = candidates[0]
-          lib = getLibrary(params[param], param.startsWith('group'))
-          break
-
-        default:
-          return [ BAD_REQUEST, 'text/plain', 'specify at most one of library(/ID) or group(/ID)' ]
-      }
-
-      if (!lib) return [ BAD_REQUEST, 'text/plain', `no ${param} ${JSON.stringify(params[param])}` ]
+      if (typeof $libraryID !== 'number') return [ BAD_REQUEST, 'text/plain', `${JSON.stringify({ libraryID, library, groupID, group })} not found` ]
 
       const citationKeys: string[] = Array.from(new Set(params.citationKeys.split(',').filter(k => k)))
       if (!citationKeys.length) return [ SERVER_ERROR, 'text/plain', 'no citation keys provided' ]
 
-      if (!params.translator) return [ SERVER_ERROR, 'text/plain', 'no translator selected' ]
-      const translatorID = Translators.getTranslatorId(params.translator)
-      if (!translatorID) return [ SERVER_ERROR, 'text/plain', `translator ${params.translator} not found` ]
+      if (!translator) return [ SERVER_ERROR, 'text/plain', 'no translator selected' ]
+      const translatorID = Translators.getTranslatorId(translator)
+      if (!translatorID) return [ SERVER_ERROR, 'text/plain', `translator ${translator} not found` ]
 
       const response: {
         items: Record<string, any>
@@ -168,7 +148,7 @@ class ItemHandler {
 
       const itemIDs: Record<string, number> = {}
       for (const citationKey of citationKeys) {
-        const key = Zotero.BetterBibTeX.KeyManager.find({ where: { libraryID: lib.libraryID, citationKey }})
+        const key = Zotero.BetterBibTeX.KeyManager.find({ where: { libraryID: $libraryID, citationKey }})
 
         switch (key.length) {
           case 0:
@@ -203,7 +183,7 @@ class ItemHandler {
             filtered_items = JSON.parse(contents).items
             break
           default:
-            throw new Error(`Unexpected translator ${ translatorID } from ${ params.translator }`)
+            throw new Error(`Unexpected translator ${ translatorID } from ${ translator }`)
         }
 
         for (const item of filtered_items) {
