@@ -360,12 +360,9 @@ function addDate(ref: Entry, date: ParsedDate | { type: 'none' }, verbatim: stri
     case 'interval': {
       const { from, to } = date
       if (typeof from.year === 'number' && typeof to.year === 'number' && from.year === to.year) {
-        addDate(ref, {
-          ...from,
-          month: typeof from.month === 'number' && typeof to.month === 'number' && from.month === to.month ? from.month : undefined,
-        }, verbatim)
+        addDate(ref, from, verbatim)
       }
-      else {
+      else if (from.type !== 'open' || to.type !== 'open') {
         ref.add({ name: 'year', value: verbatim })
       }
       return
