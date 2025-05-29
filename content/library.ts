@@ -23,12 +23,12 @@ export function get(query: Record<string, string | number>, throws = false): Zot
         break
 
       case 'groupID':
-        library.filter(l => l.groupID === value || l.groupID === parseInt(value as string)).forEach(l => found.groupID.add(l.libraryID))
+        (libraries as unknown as Zotero.Group[]).filter(l => l.groupID === value || l.groupID === parseInt(value as string)).forEach(l => found.groupID.add(l.libraryID))
         break
 
       case 'group':
       case 'library': // legacy compat, they are the same
-        library.filter(l => l.name === `${value}`).forEach(l => found.group.add(l.libraryID))
+        libraries.filter(l => l.name === `${value}`).forEach(l => found.group.add(l.libraryID))
         break
 
       default:
