@@ -6,7 +6,6 @@ export function get(query: Record<string, string | number>, throws = false): Zot
     if (throws) throw new Error(err)
   }
 
-  const groups = Zotero.Groups.getAll()
   const libraries = Zotero.Libraries.getAll()
 
   const found: Record<'libraryID' | 'groupID' | 'group', Set<number>> = {
@@ -20,16 +19,16 @@ export function get(query: Record<string, string | number>, throws = false): Zot
     searched = true
     switch (search) {
       case 'libraryID':
-        libraries.filter(l => l.id === value || l.id === parseInt(value as string)).forEach(l => found.libraryID.add(l.id))
+        libraries.filter(l => l.libraryID === value || l.libraryID === parseInt(value as string)).forEach(l => found.libraryID.add(l.libraryID))
         break
 
       case 'groupID':
-        groups.filter(g => g.id === value || g.id === parseInt(value as string)).forEach(g => found.groupID.add(g.libraryID))
+        library.filter(l => l.groupID === value || l.groupID === parseInt(value as string)).forEach(l => found.groupID.add(l.libraryID))
         break
 
       case 'group':
-      case 'library': // legacy compat, libraries don't have names
-        groups.filter(g => g.name === `${value}`).forEach(g => found.group.add(g.libraryID))
+      case 'library': // legacy compat, they are the same
+        library.filter(l => l.name === `${value}`).forEach(l => found.group.add(l.libraryID))
         break
 
       default:
