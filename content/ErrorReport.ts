@@ -568,6 +568,11 @@ export class ErrorReport {
       }
     }
 
+    context += 'Libraries:\n'
+    for (const l of Zotero.Libraries.getAll()) {
+      context += `  ${l.name} (library: ${l.libraryID}, group: ${(l as unknown as Zotero.Group).groupID ?? false})\n`
+    }
+
     context += `Zotero.Debug.storing: ${ Zotero.Debug.storing }\n`
     context += `Zotero.Debug.storing at start: ${ Zotero.BetterBibTeX.debugEnabledAtStart }\n`
 
