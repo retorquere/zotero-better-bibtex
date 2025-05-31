@@ -8,7 +8,6 @@ import 'zotero-plugin/copy-assets'
 import 'zotero-plugin/rdf'
 import 'zotero-plugin/version'
 import './bibertool'
-import './blinkdb'
 import './apis'
 
 fs.copyFileSync(require.resolve('@retorquere/bibtex-parser/unabbrev.json'), 'build/content/resource/bibtex/unabbrev.json')
