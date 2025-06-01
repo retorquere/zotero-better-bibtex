@@ -19,8 +19,7 @@ import { Scheduler } from './scheduler'
 import { flash } from './flash'
 import * as l10n from './l10n'
 import { orchestrator } from './orchestrator'
-import { createDB, createTable, BlinkKey } from 'blinkdb'
-import * as blink from '../gen/blinkdb'
+import * as blink from 'blinkdb'
 import { pick } from './object'
 
 const cmdMeta = /(["^&|<>()%!])/
@@ -407,7 +406,7 @@ export type JobSetting = keyof Job
 export const AutoExport = new class $AutoExport {
   public progress: Map<string, number> = new Map
 
-  public db = createTable<Job>(createDB({ clone: true }), 'autoExports')({
+  public db = blink.createTable<Job>(blink.createDB({ clone: true }), 'autoExports')({
     primary: 'path',
     indexes: [ 'translatorID', 'type', 'id' ],
   })
@@ -427,23 +426,23 @@ export const AutoExport = new class $AutoExport {
     })
 
     this.unwatch = [
-      this.db[BlinkKey].events.onInsert.register(changes => {
+      this.db[blink.BlinkKey].events.onInsert.register(changes => {
         for (const change of changes) {
           Zotero.Prefs.set(`translators.better-bibtex.autoExport.${this.key(change.entity.path)}`, JSON.stringify(change.entity))
         }
       }),
-      this.db[BlinkKey].events.onUpdate.register(changes => {
+      this.db[blink.BlinkKey].events.onUpdate.register(changes => {
         for (const change of changes) {
           Zotero.Prefs.clear(`translators.better-bibtex.autoExport.${this.key(change.oldEntity.path)}`)
           Zotero.Prefs.set(`translators.better-bibtex.autoExport.${this.key(change.newEntity.path)}`, JSON.stringify(change.newEntity))
         }
       }),
-      this.db[BlinkKey].events.onRemove.register(changes => {
+      this.db[blink.BlinkKey].events.onRemove.register(changes => {
         for (const change of changes) {
           Zotero.Prefs.clear(`translators.better-bibtex.autoExport.${this.key(change.entity.path)}`)
         }
       }),
-      this.db[BlinkKey].events.onClear.register(() => {
+      this.db[blink.BlinkKey].events.onClear.register(() => {
         for (const key of Services.prefs.getBranch('extensions.zotero.translators.better-bibtex.autoExport.').getChildList('', {})) {
           Zotero.Prefs.clear(`translators.better-bibtex.autoExport.${key}`)
         }

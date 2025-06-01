@@ -205,7 +205,6 @@ async function rebuild() {
   await bundle({
     entryPoints: [ 'content/better-bibtex.ts' ],
     plugins: [
-      loader.trace('plugin'),
       loader.text,
       loader.sql,
       loader.peggy,
@@ -244,7 +243,6 @@ async function rebuild() {
   await bundle({
     entryPoints: [ 'content/worker/zotero.ts' ],
     plugins: [
-      loader.trace('worker'),
       loader.text,
       // loader.peggy,
       loader.__dirname,
@@ -287,7 +285,6 @@ async function rebuild() {
     await bundle({
       entryPoints: [path.join(translator.dir, translator.name + '.ts')],
       plugins: [
-        loader.trace('translators'),
         // loader.peggy,
         loader.__dirname,
         shims
