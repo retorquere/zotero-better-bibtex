@@ -30,6 +30,61 @@ index f729b1b..cc2cc25 100644
 -    return Promise.resolve();
  }
  exports.internalClear = internalClear;
+diff --git a/node_modules/blinkdb/dist/core/count.d.ts b/node_modules/blinkdb/dist/core/count.d.ts
+index 435fe97..fc0158c 100644
+--- a/node_modules/blinkdb/dist/core/count.d.ts
++++ b/node_modules/blinkdb/dist/core/count.d.ts
+@@ -10,7 +10,7 @@ import { Table } from "./createTable";
+  * // Count how many entities exist in userTable
+  * const count = await count(userTable);
+  */
+-export declare function count<T extends Entity<T>, P extends PrimaryKeyOf<T>>(table: Table<T, P>): Promise<number>;
++export declare function count<T extends Entity<T>, P extends PrimaryKeyOf<T>>(table: Table<T, P>): number;
+ /**
+  * Returns the total number of items which match the `filter`.
+  *
+@@ -30,7 +30,7 @@ export declare function count<T extends Entity<T>, P extends PrimaryKeyOf<T>>(ta
+  */
+ export declare function count<T extends Entity<T>, P extends PrimaryKeyOf<T>>(table: Table<T, P>, filter: Filter<T>, options?: {
+     exact: boolean;
+-}): Promise<number>;
++}): number;
+ export declare function internalCount<T extends Entity<T>, P extends PrimaryKeyOf<T>>(table: Table<T, P>, filter?: Filter<T>, options?: {
+     exact: boolean;
+-}): Promise<number>;
++}): number;
+diff --git a/node_modules/blinkdb/dist/core/count.js b/node_modules/blinkdb/dist/core/count.js
+index b59775a..13e0843 100644
+--- a/node_modules/blinkdb/dist/core/count.js
++++ b/node_modules/blinkdb/dist/core/count.js
+@@ -6,22 +6,22 @@ const query_1 = require("../query");
+ const analyze_1 = require("../query/analyze");
+ const createDB_1 = require("./createDB");
+ function count(table, filter, options = { exact: true }) {
+-    return Promise.resolve((0, Middleware_1.middleware)(table, {
++    return (0, Middleware_1.middleware)(table, {
+         action: "count",
+         params: [table, filter, options],
+-    }, (table, filter, options) => internalCount(table, filter, options)));
++    }, (table, filter, options) => internalCount(table, filter, options));
+ }
+ exports.count = count;
+ function internalCount(table, filter, options = { exact: true }) {
+     const totalSize = table[createDB_1.BlinkKey].storage.primary.size;
+     if (!filter || !filter.where) {
+-        return Promise.resolve(totalSize);
++        return totalSize;
+     }
+     if (options.exact) {
+-        return Promise.resolve((0, query_1.get)(table, filter).length);
++        return (0, query_1.get)(table, filter).length;
+     }
+     else {
+-        return Promise.resolve(Math.min((0, analyze_1.analyze)(table, filter.where), totalSize));
++        return Math.min((0, analyze_1.analyze)(table, filter.where), totalSize);
+     }
+ }
+ exports.internalCount = internalCount;
 diff --git a/node_modules/blinkdb/dist/core/first.d.ts b/node_modules/blinkdb/dist/core/first.d.ts
 index 03ec83a..3703ecb 100644
 --- a/node_modules/blinkdb/dist/core/first.d.ts
@@ -165,6 +220,25 @@ index 5ac3006..2d23c01 100644
 +    return primaryKeys;
  }
  exports.internalInsertMany = internalInsertMany;
+diff --git a/node_modules/blinkdb/dist/core/key.d.ts b/node_modules/blinkdb/dist/core/key.d.ts
+index a491267..5fa2636 100644
+--- a/node_modules/blinkdb/dist/core/key.d.ts
++++ b/node_modules/blinkdb/dist/core/key.d.ts
+@@ -40,7 +40,7 @@ export declare function key<T extends Entity<T>, P extends PrimaryKeyOf<T>>(tabl
+  *   }
+  * }));
+  */
+-export declare function key<T extends Entity<T>, P extends PrimaryKeyOf<T>>(table: Table<T, P>, item: Promise<Diff<T, P>>): Promise<T[P]>;
++export declare function key<T extends Entity<T>, P extends PrimaryKeyOf<T>>(table: Table<T, P>, item: Diff<T, P>): T[P];
+ /**
+  * Returns the primary key of an entity.
+  *
+@@ -53,4 +53,4 @@ export declare function key<T extends Entity<T>, P extends PrimaryKeyOf<T>>(tabl
+  *   }
+  * }));
+  */
+-export declare function key<T extends Entity<T>, P extends PrimaryKeyOf<T>>(table: Table<T, P>, item: Promise<Diff<T, P>[]>): Promise<T[P][]>;
++export declare function key<T extends Entity<T>, P extends PrimaryKeyOf<T>>(table: Table<T, P>, item: Diff<T, P>[]): T[P][];
 diff --git a/node_modules/blinkdb/dist/core/many.d.ts b/node_modules/blinkdb/dist/core/many.d.ts
 index 8280f27..5f4486d 100644
 --- a/node_modules/blinkdb/dist/core/many.d.ts
@@ -331,6 +405,31 @@ index fcc9238..80c5018 100644
 +    return numEntitiesRemoved;
  }
  exports.internalRemoveMany = internalRemoveMany;
+diff --git a/node_modules/blinkdb/dist/core/removeWhere.d.ts b/node_modules/blinkdb/dist/core/removeWhere.d.ts
+index 8765090..524380c 100644
+--- a/node_modules/blinkdb/dist/core/removeWhere.d.ts
++++ b/node_modules/blinkdb/dist/core/removeWhere.d.ts
+@@ -15,5 +15,5 @@ import { Table } from "./createTable";
+  *   }
+  * });
+  */
+-export declare function removeWhere<T extends Entity<T>, P extends PrimaryKeyOf<T>>(table: Table<T, P>, filter: Filter<T>): Promise<void>;
+-export declare function internalRemoveWhere<T extends Entity<T>, P extends PrimaryKeyOf<T>>(table: Table<T, P>, filter: Filter<T>): Promise<void>;
++export declare function removeWhere<T extends Entity<T>, P extends PrimaryKeyOf<T>>(table: Table<T, P>, filter: Filter<T>): void;
++export declare function internalRemoveWhere<T extends Entity<T>, P extends PrimaryKeyOf<T>>(table: Table<T, P>, filter: Filter<T>): void;
+diff --git a/node_modules/blinkdb/dist/core/removeWhere.js b/node_modules/blinkdb/dist/core/removeWhere.js
+index 983f07d..48d74ff 100644
+--- a/node_modules/blinkdb/dist/core/removeWhere.js
++++ b/node_modules/blinkdb/dist/core/removeWhere.js
+@@ -19,7 +19,7 @@ const removeMany_1 = require("./removeMany");
+  * });
+  */
+ function removeWhere(table, filter) {
+-    return Promise.resolve((0, Middleware_1.middleware)(table, { action: "removeWhere", params: [table, filter] }, (table, filter) => internalRemoveWhere(table, filter)));
++    return (0, Middleware_1.middleware)(table, { action: "removeWhere", params: [table, filter] }, (table, filter) => internalRemoveWhere(table, filter));
+ }
+ exports.removeWhere = removeWhere;
+ function internalRemoveWhere(table, filter) {
 diff --git a/node_modules/blinkdb/dist/core/update.d.ts b/node_modules/blinkdb/dist/core/update.d.ts
 index 44e5081..6b8f3ea 100644
 --- a/node_modules/blinkdb/dist/core/update.d.ts
@@ -410,6 +509,49 @@ index 24b81f0..508726a 100644
 +    return primaryKeys;
  }
  exports.internalUpdateMany = internalUpdateMany;
+diff --git a/node_modules/blinkdb/dist/core/updateWhere.d.ts b/node_modules/blinkdb/dist/core/updateWhere.d.ts
+index 288eb7d..b4da3d6 100644
+--- a/node_modules/blinkdb/dist/core/updateWhere.d.ts
++++ b/node_modules/blinkdb/dist/core/updateWhere.d.ts
+@@ -16,5 +16,5 @@ import { Diff } from "./update";
+  *   return { ...user, age: user.age + 1 };
+  * });
+  */
+-export declare function updateWhere<T extends Entity<T>, P extends PrimaryKeyOf<T>>(table: Table<T, P>, filter: Filter<T>, callback: (item: T) => Diff<T, P> | Promise<Diff<T, P>>): Promise<void>;
+-export declare function internalUpdateWhere<T extends Entity<T>, P extends PrimaryKeyOf<T>>(table: Table<T, P>, filter: Filter<T>, callback: (item: T) => Diff<T, P> | Promise<Diff<T, P>>): Promise<void>;
++export declare function updateWhere<T extends Entity<T>, P extends PrimaryKeyOf<T>>(table: Table<T, P>, filter: Filter<T>, callback: (item: T) => Diff<T, P>): void;
++export declare function internalUpdateWhere<T extends Entity<T>, P extends PrimaryKeyOf<T>>(table: Table<T, P>, filter: Filter<T>, callback: (item: T) => Diff<T, P>): void;
+diff --git a/node_modules/blinkdb/dist/core/updateWhere.js b/node_modules/blinkdb/dist/core/updateWhere.js
+index 0475a9f..f283581 100644
+--- a/node_modules/blinkdb/dist/core/updateWhere.js
++++ b/node_modules/blinkdb/dist/core/updateWhere.js
+@@ -31,21 +31,20 @@ const updateMany_1 = require("./updateMany");
+  * });
+  */
+ function updateWhere(table, filter, callback) {
+-    return Promise.resolve((0, Middleware_1.middleware)(table, { action: "updateWhere", params: [table, filter, callback] }, (table, filter, callback) => internalUpdateWhere(table, filter, callback)));
++    return (0, Middleware_1.middleware)(table, { action: "updateWhere", params: [table, filter, callback] }, (table, filter, callback) => internalUpdateWhere(table, filter, callback));
+ }
+ exports.updateWhere = updateWhere;
+ function internalUpdateWhere(table, filter, callback) {
+     const primaryKeyProperty = table[createDB_1.BlinkKey].options.primary;
+     let items = (0, query_1.get)(table, filter);
+     items = table_utils_1.TableUtils.cloneIfNecessary(table, items);
+-    return Promise.all(items.map((item) => __awaiter(this, void 0, void 0, function* () {
+-        const newItem = yield callback(item);
++    const modifiedItems = items.map((item) => {
++        const newItem = callback(item);
+         if (newItem[primaryKeyProperty] !== item[primaryKeyProperty]) {
+             throw new errors_1.PrimaryKeyCannotBeModifiedError(item[primaryKeyProperty]);
+         }
+         return newItem;
+-    })))
+-        .then((modifiedItems) => (0, updateMany_1.internalUpdateMany)(table, modifiedItems))
+-        .then((_) => { });
++    })
++    (0, updateMany_1.internalUpdateMany)(table, modifiedItems)
+ }
+ exports.internalUpdateWhere = internalUpdateWhere;
 diff --git a/node_modules/blinkdb/dist/core/upsert.d.ts b/node_modules/blinkdb/dist/core/upsert.d.ts
 index 56cfeb0..fde6715 100644
 --- a/node_modules/blinkdb/dist/core/upsert.d.ts
@@ -452,7 +594,7 @@ index 71310d2..43ed23f 100644
 +export declare function upsertMany<T extends Entity<T>, P extends PrimaryKeyOf<T>>(table: Table<T, P>, entities: T[]): T[P][];
 +export declare function internalUpsertMany<T extends Entity<T>, P extends PrimaryKeyOf<T>>(table: Table<T, P>, entities: T[]): T[P][];
 diff --git a/node_modules/blinkdb/dist/core/upsertMany.js b/node_modules/blinkdb/dist/core/upsertMany.js
-index aca0627..9e220fc 100644
+index aca0627..11d7d67 100644
 --- a/node_modules/blinkdb/dist/core/upsertMany.js
 +++ b/node_modules/blinkdb/dist/core/upsertMany.js
 @@ -32,11 +32,10 @@ const updateMany_1 = require("./updateMany");
@@ -468,6 +610,17 @@ index aca0627..9e220fc 100644
          // Split entities into items to create & items to update
          // reduces the number of outgoing events to 2
          const items = [];
+@@ -49,8 +48,8 @@ function internalUpsertMany(table, entities) {
+         // Insert all items that need to be inserted, update all that need to be updated
+         const itemsToInsert = items.filter((i) => i.method === "insert");
+         const itemsToUpdate = items.filter((i) => i.method === "update");
+-        const insertIds = yield (0, insertMany_1.internalInsertMany)(table, itemsToInsert.map((i) => i.entity));
+-        const updateIds = yield (0, updateMany_1.internalUpdateMany)(table, itemsToUpdate.map((i) => i.entity));
++        const insertIds = (0, insertMany_1.internalInsertMany)(table, itemsToInsert.map((i) => i.entity));
++        const updateIds = (0, updateMany_1.internalUpdateMany)(table, itemsToUpdate.map((i) => i.entity));
+         // Return the indexes in the correct order
+         const ids = [];
+         let insertIdsIndex = 0;
 @@ -67,6 +66,5 @@ function internalUpsertMany(table, entities) {
              }
          }
@@ -475,3 +628,22 @@ index aca0627..9e220fc 100644
 -    });
  }
  exports.internalUpsertMany = internalUpsertMany;
+diff --git a/node_modules/blinkdb/dist/core/watch.d.ts b/node_modules/blinkdb/dist/core/watch.d.ts
+index 9b858c7..1fadcaf 100644
+--- a/node_modules/blinkdb/dist/core/watch.d.ts
++++ b/node_modules/blinkdb/dist/core/watch.d.ts
+@@ -22,7 +22,7 @@ import { Table } from "./createTable";
+  * // This will output 'List of all users: []'
+  * await remove(userTable, { id: userId });
+  */
+-export declare function watch<T extends Entity<T>, P extends PrimaryKeyOf<T>>(table: Table<T, P>, callback: (entities: T[]) => Promise<void> | void): Promise<() => void>;
++export declare function watch<T extends Entity<T>, P extends PrimaryKeyOf<T>>(table: Table<T, P>, callback: (entities: T[]) => void): () => void;
+ /**
+  * Watches all changes in `table` and calls `callback` whenever entities
+  * that match the given `filter` are inserted, updated, or removed.
+@@ -46,4 +46,4 @@ export declare function watch<T extends Entity<T>, P extends PrimaryKeyOf<T>>(ta
+  * // This won't output anything
+  * await remove(userTable, { id: userId });
+  */
+-export declare function watch<T extends Entity<T>, P extends PrimaryKeyOf<T>>(table: Table<T, P>, query: Query<T, P>, callback: (entities: T[]) => Promise<void> | void): Promise<() => void>;
++export declare function watch<T extends Entity<T>, P extends PrimaryKeyOf<T>>(table: Table<T, P>, query: Query<T, P>, callback: (entities: T[]) => void): () => void;
