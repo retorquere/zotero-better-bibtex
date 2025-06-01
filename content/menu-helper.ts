@@ -6,7 +6,7 @@ import * as DateParser from './dateparser'
 import { log } from './logger'
 import * as CAYW from './cayw'
 import { TeXstudio } from './tex-studio'
-import * as blink from '../gen/blinkdb'
+import * as blink from 'blinkdb'
 import { AutoExport } from './auto-export'
 import { Translators } from './translators'
 

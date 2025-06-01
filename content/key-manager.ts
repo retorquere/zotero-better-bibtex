@@ -30,7 +30,7 @@ import { Preference } from './prefs'
 import { Formatter } from './key-manager/formatter'
 
 import { createDB, createTable, Query, BlinkKey } from 'blinkdb'
-import * as blink from '../gen/blinkdb'
+import * as blink from 'blinkdb'
 import { Cache } from './translators/worker'
 
 import { monkey } from './monkey-patch'
