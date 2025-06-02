@@ -387,12 +387,12 @@ export class Entry {
       this.add({ name: 'eprinttype', value: 'pubmed' })
       this.add({ name: 'eprint', value: m[1] })
     }
-    else if (m = this.item.url.match(/^https?:[/][/]hdl[.]handle[.]net[/]([^/]+[/][^/]+)[/]?$/i)) {
+    else if (m = this.item.url.match(/^https?:[/][/]hdl[.]handle[.]net[/]([^/]+[/].+)$/i)) {
       this.add({ name: 'eprinttype', value: 'hdl' })
       this.add({ name: 'eprint', value: m[1] })
     }
     /*
-    else if (m = this.item.url.match(/[/]handle[/]([^/]+[/][^/]+)$[/]?$/)) {
+    else if (m = this.item.url.match(/[/]handle[/]([^/]+[/].+)$/)) {
       this.add({ name: 'eprinttype', value: 'hdl' })
       this.add({ name: 'eprint', value: m[1] })
     }
