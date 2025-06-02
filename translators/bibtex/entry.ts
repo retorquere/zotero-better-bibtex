@@ -389,7 +389,7 @@ export class Entry {
     }
     else if (m = this.item.url.match(/^https:[/][/]hdl[.]handle[.]net[/]([^/]+[/][^/]+)$/i)) {
       this.add({ name: 'eprinttype', value: 'hdl' })
-      this.add({ name: 'eprint', value: m[1] })
+      this.add({ name: 'eprint', value: decodeURI(m[1]) })
     }
     /*
     else if (m = this.item.url.match(/[/]handle[/]([^/]+[/][^/]+)$/)) {
