@@ -33,6 +33,8 @@
   date = {1993},
   journaltitle = {Rendiconti dell’Istituto di Matematica dell’Università di Trieste},
   volume = {25},
+  eprint = {10077/4715},
+  eprinttype = {hdl},
   pages = {391--411},
   url = {http://hdl.handle.net/10077/4715}
 }
