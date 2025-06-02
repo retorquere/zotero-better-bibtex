@@ -19,8 +19,6 @@
   shorttitle = {Anyons in Infinite Quantum Systems},
   author = {Naaijkens, Pieter},
   date = {2012},
-  eprint = {2066/92737},
-  eprinttype = {hdl},
   institution = {Radboud University},
   url = {http://repository.ubn.ru.nl/handle/2066/92737},
   annotation = {Dissertation}
@@ -48,8 +46,6 @@
   title = {Thompson {{Field Theory}}},
   author = {Stiegemann, Deniz Ekrem},
   date = {2019},
-  eprint = {123456789/5172},
-  eprinttype = {hdl},
   doi = {10.15488/5127},
   url = {https://www.repo.uni-hannover.de/handle/123456789/5172}
 }
