@@ -13,6 +13,7 @@ Feature: Export
 
     Examples:
       | file                                                                                                                     | references |
+      | Handle HDL not included as eprint for biblatex #3250                                                                     | 4          |
       | Embedding multiple formulas in a ternary expression doesnt work #3224                                                    | 1          |
       | Wrong performance for exports Bibtex a becomes textbackslash a #3184                                                     | 1          |
       | Split CJK names #2624                                                                                                    | 35         |
