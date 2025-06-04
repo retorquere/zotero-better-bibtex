@@ -1,3 +1,4 @@
+import { log } from './logger'
 import { toSentenceCase } from '@retorquere/bibtex-parser'
 
 import type { MarkupNode } from '../typings/markup'
@@ -183,16 +184,16 @@ export const HTMLParser = new class {
         .replace(CSQuotes.close(this.options.csquotes), '</span>')
     }
 
+    // I should have used script from the start
+    // I think pre follows different rules where it still interprets what's inside; script just gives whatever is in there as-is
+    this.html = this.html.replace(/<(\/?)pre([^<>]*)>/ig, (match, close, rest) => `<${ close || '' }script${rest}>`)
+
     if (!this.options.html) {
       this.html = this.html.replace(/&/g, '&amp;')
 
       // this pseudo-html is a PITA to parse
       this.html = this.html.replace(/<(\/?)([^<>]*)>/g, (match, close, body) => {
         if (body.match(/^(emphasis|span|nc|sc|i|b|sup|sub|script)($|\n|\s)/i)) return match
-
-        // I should have used script from the start
-        // I think pre follows different rules where it still interprets what's inside; script just gives whatever is in there as-is
-        if (body.match(/^pre$/i)) return `<${ close || '' }script>`
 
         return match.replace(/</g, '&lt;').replace(/>/g, '&gt;')
       })

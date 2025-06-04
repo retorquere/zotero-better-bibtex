@@ -1,0 +1,44 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "options": {
+      "exportNotes": true
+    },
+    "preferences": {
+      "autoExport": "idle",
+      "biblatexExtendedNameFormat": false,
+      "bibtexURL": "note",
+      "citekeyFormat": "auth.lower + year",
+      "japanese": true,
+      "parseParticles": false,
+      "skipFields": "abstract"
+    }
+  },
+  "items": [
+    {
+      "abstractNote": "Esta dissertação tem como tema central o estudo da arquitectura do espaço funerário na área mediterrânica de influência católica, particularmente orientado para as relações que estabelece com a urbanidade. O arco temporal abrangido pelo estudo decorre entre o período da idealização da necropole, na segunda metade do século XVIII, e a contemporaneidade. A exposição aborda também outras culturas e outros segmentos cronológicos, em momentos onde essas incursões contribuem para a explicitação e fundamentação da matéria tratada. O ritmo da mudança nos regimes de percepção da morte e procedimento tanatológico, assim como das alterações na sua regulação espacial, mostra-se intimamente articulado com as grandes transformações sócio-políticas e culturais da civilização ocidental. Neste percurso o espaço cemiterial foi-se desvinculando da tutela religiosa e afirmou-se como recinto laico, especializado e de memória cívica. Espelhando uma realidade em transformação, a higienista necropole moderna (autónoma, extramuros e de uso obrigatório para a generalidade da população) inicialmente suportou e serviu a construção identitária da burguesia ascendente, evidenciando uma forte capacidade retórica sócio-ideológica. Mas ao longo do século XX a par da civilização pós-industrial instalou-se o tabu da morte, e o cemitério - sujeito a expansões que descuraram a arquitectura inicial, amputando muito do seu sentido metafórico - perdeu eloquência e importância.\nO Movimento Moderno não reconheceu o território funerário como um tema significante (atitude confirmada pelo reduzido número de projectos considerados como exemplares notáveis de arquitectura) e, ao retirar-lhe valor emblemático, impediu-o de se constituir como referência na construção da cidade. A solução para as novas necrópoles e edifícios conexos - executados com projectos muitas vezes elementares - foi encontrada com base em critérios urbanísticos relevando sobretudo preocupações pragmáticas que, não celebrando os seus aspectos simbólico e urbano, as remeteram para localizações assumidamente afastadas e desligadas do contexto citadino sedimentado. E, apesar de alguma atenção disciplinar recente ser visível, ao sentido sublime que deve impregnar um edifício deste tipo sobrepõe-se ainda, demasiado frequentemente, uma visão meramente utilitária, quer do ponto de vista da sua concepção arquitectónica, quer sob o aspecto urbanístico da sua articulação com a cidade.\nTipologia inventada pelos arquitectos iluministas, a necropole, avatar do Paraíso, concretizou-se na tensão entre as suas duas imagens mais fortes: a da Jerusalém Celeste, espaço encerrado, pétreo e organizado arquitectonicamente, e a do Éden, paisagem arcádica e potencialmente aberta. Constituindo-se como um diagrama da cidade dos vivos, a necrópole fixou-se na versão (densamente) mineralizada e geometrizada nas áreas da Contra-Reforma e numa proposta mais vegetalizada e informal nas zonas da iconoclastia protestante. Dualidade que se manteve até muito recentemente, quando os cemitérios do universo católico mediterrânico, até então expressão da cidade análoga, começaram a aceitar um desenho mais topográfico e paisagista - uma abertura que surge como resultado de alterações culturais (em que a humanização intensiva da natureza valoriza cada vez mais os seus simulacros), mas também fruto da secularização progressiva da sociedade, que deixou de aliar a ideia de paganismo à visão edénica da necrópole.\nEm Portugal, apesar de nunca se ter verificado uma discussão alargada, pública ou disciplinar sobre esta matéria, o trajecto tem sido, de uma forma geral semelhante, embora mais débil, ao dos países seus congéneres. Neste momento, vários indícios levam a crer como iminente o aparecimento de novo \"equipamento\" tanatológico e até talvez a alteração do regime de propriedade pública vigente, mudanças que terão com certeza consequências óbvias nas modalidades espaciais que conhecemos.\nContrariando a tendência de denegação da morte verificada ao longo do último século, o território da morte nas suas mais variadas expressões poderá, acredita-se, vir a ser recuperado como significante na sociedade e na cidade, e ver valorizado o seu carácter de local de culto, de memória e de sacralidade laica ou religiosa -assegurando, nomeadamente, a expressão da alteridade às intensas diásporas contemporâneas.\nAssume-se, como propósito central, que os espaços funerários não só deverão ser incluídos na urbanidade, como buscar a máxima intensificação cerimonial. Este intento exige, naturalmente, a sua consideração como equipamento nobre, dignificado  localizado de acordo com as circunstâncias e contextos, eles próprios muito diversificados. Reconhecendo a inadequação de sistemas normativos generalizáveis, pareceu essencial traçar orientações programáticas que assegurem a fundação de relações simbólicas e materiais do sistema tanatológico com os múltiplos tecidos urbanos da contemporaneidade.\nNa época da terceira modernização, da migração, da desterritorialização e da globalização, são necessárias soluções ainda por inventar para a topografia da celebração funerária. Ao discurso disciplinar arquitectónico e urbanístico incumbe, pois, profundas responsabilidades na busca conducente à reinserção de Thanatos na polis.",
+      "accessDate": "2015-03-24T20:03:34Z",
+      "citationKey": "oliveira2007",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Maria Manuel Lobo Pinto de",
+          "lastName": "Oliveira"
+        }
+      ],
+      "date": "2007",
+      "itemID": 1,
+      "itemType": "thesis",
+      "libraryCatalog": "repositorium.sdum.uminho.pt",
+      "notes": [
+        "<div data-schema-version=\"9\"><p>ik wil </p>\n<pre class=\"math\">$$\\LaTeX$$</pre>\n<p> in de note</p>\n</div>"
+      ],
+      "place": "Guimarães, Portugal",
+      "publisher": "Universidade do Minho",
+      "title": "In memoriam, na cidade",
+      "type": "Tese de Doutoramento em Arquitectura",
+      "url": "http://repositorium.sdum.uminho.pt/handle/1822/6877"
+    }
+  ]
+}
