@@ -8,6 +8,8 @@ export function get(query: Record<string, string | number>, throws = false): Zot
 
   const libraries = Zotero.Libraries.getAll()
 
+  log.debug('3256:', query)
+
   const found: Record<'libraryID' | 'groupID' | 'group', Set<number>> = {
     libraryID: new Set,
     groupID: new Set,
