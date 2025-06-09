@@ -122,7 +122,7 @@ export const Preference = new class PreferenceManager extends PreferenceManagerB
 
     // clear out old keys
     const oops = 'extensions.translators.better-bibtex.'
-    for (key of Services.prefs.getBranch(oops).getChildList('', {})) {
+    for (key of Services.prefs.getBranch(oops).getChildList('')) {
       Zotero.Prefs.clear(oops + key, true)
     }
 

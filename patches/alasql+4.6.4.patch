@@ -1,0 +1,31 @@
+diff --git a/node_modules/alasql/types/alasql.d.ts b/node_modules/alasql/types/alasql.d.ts
+index 2183b32..4ed14d3 100644
+--- a/node_modules/alasql/types/alasql.d.ts
++++ b/node_modules/alasql/types/alasql.d.ts
+@@ -1,7 +1,7 @@
+ // Project: https://github.com/alasql/alasql
+ 
+ declare module 'alasql' {
+-	import * as xlsx from 'xlsx';
++	// import * as xlsx from 'xlsx';
+ 
+ 	// Callback with error-first convention and optional data
+ 	interface AlaSQLCallback<T = unknown> {
+@@ -31,7 +31,7 @@ declare module 'alasql' {
+ 		oracle: boolean;
+ 		sqlite: boolean;
+ 		orientdb: boolean;
+-		excel?: xlsx.WorkBook; // now typed
++		// excel?: xlsx.WorkBook; // now typed
+ 	}
+ 
+ 	// compiled Statement
+@@ -161,7 +161,7 @@ declare module 'alasql' {
+ 		aggr: userAggregatorLookUp;
+ 		autoval(tablename: string, colname: string, getNext?: boolean): number;
+ 		yy: {};
+-		setXLSX(xlsxlib: typeof xlsx): void;
++		// setXLSX(xlsxlib: typeof xlsx): void;
+ 		Database: {
+ 			new (databaseid?: string): Database;
+ 		};
