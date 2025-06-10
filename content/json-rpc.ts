@@ -108,6 +108,7 @@ export class NSUser {
 }
 
 function getLibrary(term: string | number): number {
+  log.debug('3257: getLibrary', { term, libraryID: Library.get({ libraryID: term, group: term }, true).libraryID })
   return Library.get({ libraryID: term, group: term }, true).libraryID
 }
 
