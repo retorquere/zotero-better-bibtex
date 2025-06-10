@@ -16,5 +16,5 @@ in de note}
 
 @misc{test,
   title = {Test},
-  note = {\testcommand}
+  note = {\testcommand[optarg]{arg}}
 }

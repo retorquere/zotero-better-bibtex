@@ -13,7 +13,7 @@
       "japanese": true,
       "parseParticles": false,
       "skipFields": "abstract",
-      "postscript": "if (Translator.BetterTeX) {\n  function marklatex(note) {\n    return note\n      .replace(/<pre class=\"math\">.*?<\\/pre>/ig, pre => pre.replace(/\\\\/g, '\\x1a')) // save display math or it would get marked twice\n      .replace(/(\\\\[a-z]+)/ig, '<script>$1</script>') // find latex commands and mark them as literal output\n      .replace(/\\x1a/g, '\\\\') // restore display math\n  }\n  tex.add({ name: 'note', value: zotero.notes?.map(note => marklatex(note.note)).join('</p><p>'), html: true })\n}\n"
+      "postscript": "if (Translator.BetterTeX) {\n  function marklatex(note) {\n    return note\n      .replace(/<pre class=\"math\">.*?<\\/pre>/ig, pre => pre.replace(/\\\\/g, '\\x1a')) // save display math or it would get marked twice\n      .replace(/(\\\\(?:[a-z]+|[^a-z])(?:\\[[^\\]]*\\])*(?:\\{[^\\}]*\\})*)/ig, '<script>$1</script>') // find latex commands and mark them as literal output\n      .replace(/\\x1a/g, '\\\\') // restore display math\n  }\n  tex.add({ name: 'note', value: zotero.notes?.map(note => marklatex(note.note)).join('</p><p>'), html: true })\n}\n\n"
     }
   },
   "items": [
@@ -57,7 +57,7 @@
           "dateModified": "2025-06-09T12:53:54Z",
           "itemType": "note",
           "key": "9HZ5RMX2",
-          "note": "<div data-schema-version=\"9\"><p>\\testcommand</p>\n</div>",
+          "note": "<div data-schema-version=\"9\"><p>\\testcommand[optarg]{arg}</p>\n</div>",
           "parentItem": "A7JA5PNY",
           "tags": [],
           "version": 6591
