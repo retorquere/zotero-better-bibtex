@@ -9,7 +9,7 @@ import { Preference } from './prefs'
 import { defaults } from '../gen/preferences/meta'
 const supported: string[] = Object.keys(defaults).filter(name => ![ 'client', 'testing', 'platform', 'newTranslatorsAskRestart' ].includes(name))
 
-import { byId, DisplayOptions } from '../gen/translators'
+import { byId } from '../gen/translators'
 import { log } from './logger'
 import { AutoExport } from './auto-export'
 import { KeyManager } from './key-manager'
@@ -166,8 +166,6 @@ export class ErrorReport {
     short: string
     tld: string
   }
-
-  public displayOptions: DisplayOptions = {}
 
   private timestamp: string
 
@@ -614,7 +612,7 @@ export class ErrorReport {
           timeout: 40,
         })
         const merge = JSON.parse(items)
-        merge.config.options = this.displayOptions
+        merge.config.options = Zotero.BetterBibTeX.lastExport.displayOptions
         items = JSON.stringify(merge, null, 2)
       }
       catch (err) {

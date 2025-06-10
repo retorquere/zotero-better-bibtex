@@ -281,6 +281,8 @@ export const Translators = new class {
   public async exportItems(job: ExportJob): Promise<string> {
     await Zotero.BetterBibTeX.ready
 
+    log.info('3522: exporting', job)
+
     const translator = this.byId[job.translatorID]
     const displayOptions = this.displayOptions(job.translatorID, job.displayOptions)
     if (translator && displayOptions.worker) return await this.exportItemsByWorker(job)
