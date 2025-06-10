@@ -358,7 +358,11 @@ export const HTMLParser = new class {
 
       case 'pre':
         if (!this.options.html || normalized_node.class.math) {
-          return { ...normalized_node, value: serialize(node), childNodes: [] }
+          return { ...normalized_node, nodeName: 'script', value: serialize(node), childNodes: [] }
+        }
+        else {
+          normalized_node.nodeName = 'span'
+          normalized_node.tt = true
         }
         break
 
@@ -383,20 +387,7 @@ export const HTMLParser = new class {
     if (!normalized_node.attr.smallcaps && (normalized_node.attr.style || '').match(/small-caps/i)) normalized_node.attr.smallcaps = 'smallcaps'
     if (normalized_node.class.smallcaps || normalized_node.attr.smallcaps) normalized_node.smallcaps = true
 
-    if (normalized_node.nodeName === 'script') {
-      if (!node.childNodes || node.childNodes.length === 0) {
-        normalized_node.value = ''
-        normalized_node.childNodes = []
-      }
-      else if (node.childNodes.length === 1 && node.childNodes[0].nodeName === '#text') {
-        normalized_node.value = node.childNodes[0].value
-        normalized_node.childNodes = []
-      }
-      else {
-        throw new Error(`Unexpected script body ${ JSON.stringify(node) }`)
-      }
-    }
-    else if (node.childNodes) {
+    if (node.childNodes) {
       let m
       for (const child of node.childNodes) {
         if (child.nodeName !== '#text') {
