@@ -417,6 +417,7 @@ function KeyManager() {
       parameters.push({
         name: `<code>${render(p.name)}</code>`,
         type: render(type),
+        default: typeof p.defaultValue === 'undefined' ? '' : `<code>${p.defaultValue}</code>`,
         doc: render(p.comment.summary.map(c => c.text).join('')),
       })
 
@@ -432,7 +433,7 @@ function KeyManager() {
     description = render(description || '')
 
     parameters = parameters.length
-      ? `<table><tr><th><b>parameter</b></th><th>type</th><th/></tr>${parameters.map(p => `<tr><td>${p.name}</td><td>${p.type}</td><td>${p.doc}</td></tr>`).join('')}</table>`
+      ? `<table><tr><th><b>parameter</b></th><th>type</th><th>default</th><th/></tr>${parameters.map(p => `<tr><td>${p.name}</td><td>${p.type}</td><td>${p.default}</td><td>${p.doc}</td></tr>`).join('')}</table>`
       : ''
 
     const kind = method.name[0]

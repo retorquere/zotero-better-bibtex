@@ -1,0 +1,12 @@
+diff --git a/node_modules/zotero-types/types/gecko/generated/lib.gecko.xpcom.d.ts b/node_modules/zotero-types/types/gecko/generated/lib.gecko.xpcom.d.ts
+index 0c81f9d..9b35018 100644
+--- a/node_modules/zotero-types/types/gecko/generated/lib.gecko.xpcom.d.ts
++++ b/node_modules/zotero-types/types/gecko/generated/lib.gecko.xpcom.d.ts
+@@ -15013,6 +15013,7 @@ interface nsIXPCComponents_Utils extends nsISupports {
+   setSandboxMetadata(sandbox: any, metadata: any): void;
+   isESModuleLoaded(aResourceURI: string): boolean;
+   importGlobalProperties(aPropertyList: any): void;
++  import(path: string): void;
+   getWeakReference(obj: any): xpcIJSWeakReference;
+   forceGC(): void;
+   forceCC(aListener?: nsICycleCollectorListener): void;

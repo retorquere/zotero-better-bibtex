@@ -569,8 +569,8 @@ export class ErrorReport {
     }
 
     context += 'Libraries:\n'
-    for (const l of Zotero.Libraries.getAll()) {
-      context += `  ${l.name} (library: ${l.libraryID}, group: ${(l as unknown as Zotero.Group).groupID ?? false})\n`
+    for (const lib of Zotero.Libraries.getAll()) {
+      context += `  ${JSON.stringify(lib.name)}, libraryID = ${lib.libraryID}, groupID = ${(lib as unknown as Zotero.Group).groupID ?? false}\n`
     }
 
     context += `Zotero.Debug.storing: ${ Zotero.Debug.storing }\n`

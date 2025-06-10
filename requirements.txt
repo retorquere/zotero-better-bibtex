@@ -1,3 +1,4 @@
+python-editor
 Cython
 Mako
 PyGithub
