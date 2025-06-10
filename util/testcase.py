@@ -45,6 +45,7 @@ parser.add_argument('--translator', '-t', dest='translator', default='biblatex')
 parser.add_argument('--data',       '-d', dest='data', required=True)
 parser.add_argument('--feature',    '-f', dest='feature')
 parser.add_argument('--issue',      '-i', dest='issue', default=issue and str(issue))
+parser.add_argument('--title',            dest='title')
 parser.add_argument('--export',     '-e', dest='mode', action='store_const', const='export')
 parser.add_argument('--import'          , dest='mode', action='store_const', const='import')
 parser.add_argument('--citekey'         , dest='mode', action='store_const', const='citekey')
@@ -78,11 +79,13 @@ assert os.path.exists(args.data),  f'{args.data} does not exist'
 
 g = Github(os.environ['GITHUB_TOKEN'])
 repo = g.get_repo('retorquere/zotero-better-bibtex')
-issue = repo.get_issue(int(args.issue))
-args.title = re.sub(r'^\[[^\]]+\]\s*:', '', issue.title).strip()
-args.title = re.sub(r'^(Bug|Feature|Feature Request)\s*:', '', args.title, flags=re.IGNORECASE).strip()
-args.title = re.sub(r'[^-A-Za-z0-9\s]', '', args.title).strip()
-args.title = sanitize_filename(f'{args.title} #{issue.number}'.strip()).replace('`', '').replace('?', '')
+if type(args.issue) == str: args.issue = int(args.issue)
+if not args.title:
+  issue = repo.get_issue(args.issue)
+  args.title = re.sub(r'^\[[^\]]+\]\s*:', '', issue.title).strip()
+  args.title = re.sub(r'^(Bug|Feature|Feature Request)\s*:', '', args.title, flags=re.IGNORECASE).strip()
+  args.title = re.sub(r'[^-A-Za-z0-9\s]', '', args.title).strip()
+args.title = sanitize_filename(f'{args.title} #{args.issue}'.strip()).replace('`', '').replace('?', '')
 
 if args.attach:
   candidates = { os.path.splitext(att)[1]: att for att in glob('attachments/*.*', root_dir = 'test/fixtures/export') }

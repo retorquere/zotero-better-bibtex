@@ -193,6 +193,7 @@ export class HTMLConverter {
 
     if (latex !== '\x1D') latex = this.embrace(latex, /^\\[a-z]+{\x1D}$/.test(latex)) // eslint-disable-line no-control-regex
     if (tag.smallcaps) latex = this.embrace(`\\textsc{${ latex }}`, true)
+    if (tag.tt) latex = this.embrace(`\\texttt{${ latex }}`, true)
     if (tag.nocase) latex = `{{${ latex }}}`
     if (tag.relax) latex = `{\\relax ${ latex }}`
     if (tag.enquote) {
