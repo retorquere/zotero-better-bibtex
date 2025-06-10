@@ -1,10 +1,9 @@
-import { log } from './logger'
 import { toSentenceCase } from '@retorquere/bibtex-parser'
 
 import type { MarkupNode } from '../typings/markup'
 import { titleCased } from './csl-titlecase'
 
-import { parseFragment } from 'parse5'
+import { serialize, parseFragment } from 'parse5'
 
 import Language from '../gen/babel/langmap.json'
 // import Tag from '../gen/babel/tag.json'
@@ -184,16 +183,12 @@ export const HTMLParser = new class {
         .replace(CSQuotes.close(this.options.csquotes), '</span>')
     }
 
-    // I should have used script from the start
-    // I think pre follows different rules where it still interprets what's inside; script just gives whatever is in there as-is
-    this.html = this.html.replace(/<(\/?)pre([^<>]*)>/ig, (match, close, rest) => `<${ close || '' }script${rest}>`)
-
     if (!this.options.html) {
       this.html = this.html.replace(/&/g, '&amp;')
 
       // this pseudo-html is a PITA to parse
       this.html = this.html.replace(/<(\/?)([^<>]*)>/g, (match, close, body) => {
-        if (body.match(/^(emphasis|span|nc|sc|i|b|sup|sub|script)($|\n|\s)/i)) return match
+        if (body.match(/^(pre|emphasis|span|nc|sc|i|b|sup|sub|script)($|\n|\s)/i)) return match
 
         return match.replace(/</g, '&lt;').replace(/>/g, '&gt;')
       })
@@ -338,7 +333,6 @@ export const HTMLParser = new class {
   }
 
   private walk(node, isNocased = false) {
-    // debug('walk:', node.nodeName)
     const normalized_node: MarkupNode = { nodeName: node.nodeName, childNodes: [], attr: {}, class: {}}
     for (const { name, value } of (node.attrs || [])) {
       normalized_node.attr[name] = value
@@ -356,8 +350,16 @@ export const HTMLParser = new class {
     switch (node.nodeName) {
       case '#document':
       case '#document-fragment':
-      case 'pre':
         normalized_node.nodeName = 'span'
+        break
+
+      case 'script':
+        return { ...normalized_node, value: serialize(node), childNodes: [] }
+
+      case 'pre':
+        if (!this.options.html || normalized_node.class.math) {
+          return { ...normalized_node, value: serialize(node), childNodes: [] }
+        }
         break
 
       case 'nc':
