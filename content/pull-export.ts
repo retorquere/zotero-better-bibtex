@@ -35,7 +35,7 @@ class CollectionHandler {
 
     const [ , lib, path, translator ] = urlpath.match(/^\/(?:([0-9]+)\/)?(.*)\.([-0-9a-z]+)$/i)
 
-    const libraryID = Library.get({ libraryID: lib, group: lib })?.libraryID
+    const libraryID = Library.get({ libraryID: lib, groupID: lib })?.libraryID
     let collection
 
     if (typeof libraryID === 'number') {
@@ -75,13 +75,13 @@ class LibraryHandler {
     try {
       const [ , libraryID, translator ] = urlpath.match(/\/?(?:([0-9]+)\/)?library\.([-0-9a-z]+)$/i)
 
-      const library = Library.get({ libraryID })
+      const library = Library.get({ libraryID, groupID: libraryID })
       if (!library) return [ NOT_FOUND, 'text/plain', `Could not export bibliography: library '${ urlpath }' does not exist` ]
 
       return [ OK, 'text/plain', await Translators.exportItems({
         translatorID: Translators.getTranslatorId(translator),
         displayOptions: displayOptions(request),
-        scope: { type: 'library', id: library.id },
+        scope: { type: 'library', id: library.libraryID },
       }) ]
     }
     catch (err) {

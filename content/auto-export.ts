@@ -443,7 +443,7 @@ export const AutoExport = new class $AutoExport {
         }
       }),
       this.db[blink.BlinkKey].events.onClear.register(() => {
-        for (const key of Services.prefs.getBranch('extensions.zotero.translators.better-bibtex.autoExport.').getChildList('', {})) {
+        for (const key of Services.prefs.getBranch('extensions.zotero.translators.better-bibtex.autoExport.').getChildList('')) {
           Zotero.Prefs.clear(`translators.better-bibtex.autoExport.${key}`)
         }
       }),
@@ -510,7 +510,7 @@ export const AutoExport = new class $AutoExport {
           log.error('auto-export migration failed', err)
         }
 
-        for (const key of Services.prefs.getBranch('extensions.zotero.translators.better-bibtex.autoExport.').getChildList('', {})) {
+        for (const key of Services.prefs.getBranch('extensions.zotero.translators.better-bibtex.autoExport.').getChildList('')) {
           try {
             const ae = JSON.parse(Zotero.Prefs.get(`translators.better-bibtex.autoExport.${key}`) as string)
             blink.insert(this.db, ae)
