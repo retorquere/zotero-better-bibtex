@@ -124,7 +124,7 @@
     "xregexp": "^5.1.2",
     "zotero-plugin": "^5.0.18",
     "zotero-plugin-toolkit": "^5.0.0",
-    "zotero-types": "^4.0.3"
+    "zotero-types": "^4.0.4"
   },
   "devDependencies": {
     "@eslint/compat": "^1.2.9",
