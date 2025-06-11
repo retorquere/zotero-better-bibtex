@@ -705,6 +705,7 @@ export class BetterBibTeX {
           bodyXHTML: 'Citation Key <html:input type="text" data-itemid="" id="better-bibtex-citation-key" readonly="true" style="flex: 1" xmlns:html="http://www.w3.org/1999/xhtml"/><html:span id="better-bibtex-citation-key-pinned"/>',
           onInit: ({ body, refresh }) => { // eslint-disable-line @typescript-eslint/unbound-method
             $done = Events.on('items-changed', ({ reason, items }) => {
+              log.debug('3248: items-changed, { reason, items })
               if (reason === 'key-refresh') {
                 const textbox: HTMLElement = body.querySelector('#better-bibtex-citation-key')
                 const itemID = textbox.dataset.itemid ? parseInt(textbox.dataset.itemid) : undefined
