@@ -720,6 +720,7 @@ class Handler {
     try {
       if (request.method === 'GET') request.data = JSON.parse(query[''])
 
+      log.debug('3257: json-rpc request', request.data)
       const response = await (Array.isArray(request.data) ? Promise.all(request.data.map(req => api.handle(req))) : api.handle(request.data))
       return [ OK, 'application/json', JSON.stringify(response) ]
     }
