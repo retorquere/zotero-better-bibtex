@@ -130,10 +130,9 @@ export async function toTeXstudio(): Promise<void> {
 }
 
 export function AEisHidden(elem: any, _ev: Event): boolean { // eslint-disable-line @typescript-eslint/explicit-module-boundary-types
-  const lib = selectedLibrary()
-  const coll = selectedCollection()
+  const { library, collection } = selected()
 
-  if (!lib && !coll) return true
+  if (!library && !collection) return true
 
   let n: number
   const m = elem.getAttribute('id')?.match(/^better-bibtex-collection-menu-ae-(\d+)$/)
@@ -145,7 +144,7 @@ export function AEisHidden(elem: any, _ev: Event): boolean { // eslint-disable-l
   }
 
   const aes = blink.many(AutoExport.db, {
-    where: { type: lib ? 'library' : 'collection', id: lib ? lib.id : coll.id },
+    where: { type: library ? 'library' : 'collection', id: library ? library.id : collection.id },
     sort: { key: 'path', order: 'asc' },
   })
   const ae = aes[n]
@@ -155,47 +154,52 @@ export function AEisHidden(elem: any, _ev: Event): boolean { // eslint-disable-l
   return false
 }
 
-export function selectedCollection(): Zotero.Collection {
+export function selected(): { library?: Zotero.Group; collection?: Zotero.Collection } {
   const zp = Zotero.getActiveZoteroPane()
   const cv = zp?.collectionsView
-  if (!cv) return null
-  return cv.selection?.count && cv.selectedTreeRow?.isCollection() ? zp.getSelectedCollection() : null
-}
+  if (!cv) return {}
 
-export function selectedLibrary(): Zotero.Library {
-  const zp = Zotero.getActiveZoteroPane()
-  const cv = zp?.collectionsView
-  if (!cv) return null
-  return cv.selectedTreeRow?.isLibrary(true) ? Zotero.Libraries.get(zp.getSelectedLibraryID()) || null : null
+  return {
+    library: cv.selectedTreeRow?.isLibrary(true) ? (Zotero.Libraries.get(zp.getSelectedLibraryID()) as unknown as Zotero.Group) || null : null,
+    collection: cv.selection?.count && cv.selectedTreeRow?.isCollection() ? zp.getSelectedCollection() : null,
+  }
 }
 
 export function pullExport(): void {
-  const lib = selectedLibrary()
-  let coll = selectedCollection()
+  let { library, collection } = selected()
 
-  const root = `http://127.0.0.1:${Zotero.Prefs.get('httpServer.port')}/better-bibtex/export`
+  if (!library && !collection) return
+  if (!library) library = Zotero.Libraries.get(collection.libraryID) as unknown as Zotero.Group
+
+  const root = `http://127.0.0.1:${Zotero.Prefs.get('httpServer.port')}/better-bibtex/export?`
   const params = {
     url: {
-      long: '',
-      short: '',
+      long: root,
+      short: root,
     },
   }
 
-  if (coll) {
-    params.url.short = `${root}/collection?/${coll.libraryID || 0}/${coll.key}`
-
-    let path = `/${encodeURIComponent(coll.name)}`
-    while (typeof coll.parentID === 'number') {
-      coll = Zotero.Collections.get(coll.parentID)
-      path = `/${encodeURIComponent(coll.name)}${path}`
-    }
-    params.url.long = `${root}/collection?/${coll.libraryID || 0}${path}`
-  }
-  else if (lib) {
-    params.url.short = `${root}/library?${lib.id ? `/${lib.id}/library` : 'library'}`
+  if (library.groupID) {
+    params.url.short += `/group;id:${library.groupID}`
+    params.url.long += `/group;name:${encodeURIComponent(library.name)}`
   }
   else {
-    return
+    params.url.short += `/library;id:${library.libraryID}`
+    params.url.long += `/library;name:${encodeURIComponent(library.name)}`
+  }
+
+  if (collection) {
+    params.url.short += `/collection;key:${collection.key}`
+    let path = `/${encodeURIComponent(collection.name)}`
+    while (typeof collection.parentID === 'number') {
+      collection = Zotero.Collections.get(collection.parentID)
+      path = `/${encodeURIComponent(collection.name)}${path}`
+    }
+    params.url.long += `/collection${path}`
+  }
+  else {
+    params.url.short += `/${encodeURIComponent(library.name) || 'library'}`
+    params.url.long += `/${encodeURIComponent(library.name) || 'library'}`
   }
 
   Zotero.getMainWindow().openDialog('chrome://zotero-better-bibtex/content/ServerURL.xhtml', '', 'chrome,dialog,centerscreen,modal', params)

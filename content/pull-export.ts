@@ -6,7 +6,7 @@ const NOT_FOUND = 404
 const BAD_REQUEST = 400
 
 import { Translators } from './translators'
-import { get as getCollection } from './collection'
+import * as Collection from './collection'
 import * as Library from './library'
 import { getItemsAsync } from './get-items-async'
 import { fromPairs } from './object'
@@ -31,6 +31,96 @@ function exportPreferences(request): Partial<Preferences> {
   return request.data?.config?.preferences || {}
 }
 
+class Handler {
+  public supportedMethods = ['GET', 'POST']
+  public supportedDataTypes = ['application/json']
+
+  public async init(request) {
+    log.debug('3257:', Server.queryParams(request))
+
+    let urlpath: string = Server.queryParams(request)['']
+    if (urlpath[0] === '/') urlpath = urlpath.substring(1)
+    if (!urlpath) return [ NOT_FOUND, 'text/plain', 'Could not export bibliography: no path' ]
+
+    let m = urlpath.match(/[.]([^.]+)$/)
+    if (!m) return [ NOT_FOUND, 'text/plain', 'Could not export bibliography: no type' ]
+    const ext = m[1]
+    const translatorID = Translators.getTranslatorId(ext)
+    urlpath = urlpath.slice(0, -1 * m[0].length)
+
+    let library = Zotero.Libraries.get(Zotero.Libraries.userLibraryID)
+    if (m = urlpath.match(/^(group|library);(id|name):([^/]+)[/]/)) {
+      log.debug('3257: library', m)
+      urlpath = urlpath.substring(m[0].length)
+
+      if (m[2] === 'id' && !m[3].match(/^\d+$/)) return [ NOT_FOUND, 'text/plain', `${m[1]} ID is not a number` ]
+
+      switch (`${m[1]}.${m[2]}`) {
+        case 'library.id':
+          library = Library.get({ libraryID: parseInt(m[3]) })
+          break
+        case 'library.name':
+          library = Library.get({ library: m[3] })
+          break
+        case 'group.id':
+          library = Library.get({ groupID: parseInt(m[3]) })
+          break
+        case 'group.name':
+          library = Library.get({ group: m[3] })
+          break
+      }
+    }
+    if (!library) return [ NOT_FOUND, 'text/plain', `Could not export bibliography: library ${m?.[3]} does not exist` ]
+
+    if (m = urlpath.match(/^collection(;(id|key):(.+?)[/])?/)) {
+      log.debug('3257: collection', m)
+      urlpath = urlpath.substring(m[0].length)
+      let collection: Zotero.Collection
+      switch (m[1]) {
+        case 'id':
+          if (!m[2].match(/^\d+$/)) return [ NOT_FOUND, 'text/plain', `${m[2]} ID is not a number` ]
+          collection = Zotero.Collections.get(parseInt(m[2]))
+          break
+        case 'key':
+          collection = Zotero.Collections.getByLibraryAndKey(library.libraryID, m[2]) || undefined
+          break
+        default:
+          collection = await Collection.resolve(library, urlpath)
+          break
+      }
+      if (!collection) return [ NOT_FOUND, 'text/plain', `Could not export bibliography: path '${ urlpath }' not found` ]
+
+      return [
+        OK,
+        {
+          'Content-Disposition': `attachment; filename=${JSON.stringify(collection.name + '.' + ext)}`,
+          'Content-Type': 'text/plain',
+        },
+        await Translators.exportItems({
+          translatorID,
+          displayOptions: displayOptions(request),
+          preferences: exportPreferences(request),
+          scope: { type: 'collection', collection },
+        }),
+      ]
+    }
+
+    return [
+      OK,
+      {
+        'Content-Disposition': `attachment; filename=${JSON.stringify(library.name + '.' + ext)}`,
+        'Content-Type': 'text/plain',
+      },
+      await Translators.exportItems({
+        translatorID,
+        displayOptions: displayOptions(request),
+        preferences: exportPreferences(request),
+        scope: { type: 'library', id: library.libraryID },
+      }),
+    ]
+  }
+}
+
 class CollectionHandler {
   public supportedMethods = ['GET', 'POST']
   public supportedDataTypes = ['application/json']
@@ -53,7 +143,7 @@ class CollectionHandler {
       }
       if (!collection) {
         try {
-          collection = await getCollection(`/${ libraryID }/${ path }`)
+          collection = await Collection.get(`/${ libraryID }/${ path }`)
         }
         catch (err) {
           log.error('pull-export: resolve by path error:', err)
@@ -230,6 +320,7 @@ orchestrator.add({
     Server.register([ '/better-bibtex/export/library', '/better-bibtex/library' ], LibraryHandler)
     Server.register([ '/better-bibtex/export/selected', '/better-bibtex/select' ], SelectedHandler)
     Server.register('/better-bibtex/export/item', ItemHandler)
+    Server.register('/better-bibtex/export', Handler)
     Server.startup()
   },
 
