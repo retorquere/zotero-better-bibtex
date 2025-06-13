@@ -36,8 +36,6 @@ class Handler {
   public supportedDataTypes = ['application/json']
 
   public async init(request) {
-    log.debug('3257:', Server.queryParams(request))
-
     let urlpath: string = Server.queryParams(request)['']
     if (urlpath[0] === '/') urlpath = urlpath.substring(1)
     if (!urlpath) return [ NOT_FOUND, 'text/plain', 'Could not export bibliography: no path' ]
@@ -50,7 +48,6 @@ class Handler {
 
     let library = Zotero.Libraries.get(Zotero.Libraries.userLibraryID)
     if (m = urlpath.match(/^(group|library);(id|name):([^/]+)[/]/)) {
-      log.debug('3257: library', m)
       urlpath = urlpath.substring(m[0].length)
 
       if (m[2] === 'id' && !m[3].match(/^\d+$/)) return [ NOT_FOUND, 'text/plain', `${m[1]} ID is not a number` ]
@@ -73,7 +70,6 @@ class Handler {
     if (!library) return [ NOT_FOUND, 'text/plain', `Could not export bibliography: library ${m?.[3]} does not exist` ]
 
     if (m = urlpath.match(/^collection(;(id|key):(.+?)[/])?/)) {
-      log.debug('3257: collection', m)
       urlpath = urlpath.substring(m[0].length)
       let collection: Zotero.Collection
       switch (m[1]) {
