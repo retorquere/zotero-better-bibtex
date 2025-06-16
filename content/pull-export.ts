@@ -325,10 +325,10 @@ orchestrator.add({
 
   startup: async () => { // eslint-disable-line @typescript-eslint/require-await
     Server.register('/better-bibtex/export', Handler)
-    Server.register('/better-bibtex/export/collection', CollectionHandler)
-    Server.register('/better-bibtex/export/library', LibraryHandler)
-    Server.register('/better-bibtex/export/selected', SelectedHandler)
     Server.register('/better-bibtex/export/item', ItemHandler)
+    Server.register([ '/better-bibtex/export/collection', '/better-bibtex/collection' ], CollectionHandler)
+    Server.register([ '/better-bibtex/export/library', '/better-bibtex/library' ], LibraryHandler)
+    Server.register([ '/better-bibtex/export/selected', '/better-bibtex/select' ], SelectedHandler)
     Server.startup()
   },
 
