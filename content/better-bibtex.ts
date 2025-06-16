@@ -30,6 +30,7 @@ import { orchestrator } from './orchestrator'
 import type { Reason } from './bootstrap'
 import type { ExportedItem, ExportedItemMetadata } from './worker/cache'
 import { Cache } from './translators/worker'
+import { DisplayOptions } from '../gen/translators'
 
 import { Preference } from './prefs' // needs to be here early, initializes the prefs observer
 require('./pull-export') // just require, initializes the pull-export end points
@@ -350,7 +351,11 @@ monkey.patch(Zotero.Translate.Export.prototype, 'translate', original => functio
     return original.apply(this, arguments)
   }
 
-  const displayOptions = Zotero.BetterBibTeX.ErrorReport.displayOptions = this._displayOptions = this._displayOptions || {}
+  const displayOptions = this._displayOptions = this._displayOptions || {}
+  Zotero.BetterBibTeX.lastExport = {
+    translatorID,
+    displayOptions,
+  }
 
   if (this.location) {
     if (displayOptions.exportFileData) { // when exporting file data, the user was asked to pick a directory rather than a file
@@ -414,6 +419,8 @@ export class BetterBibTeX {
       return
     },
   }
+
+  public lastExport: { translatorID: string; displayOptions: DisplayOptions } = { translatorID: '', displayOptions: {} }
 
   // eslint-disable-next-line @typescript-eslint/no-unsafe-return, @typescript-eslint/explicit-module-boundary-types
   public CSL() { return CSL }

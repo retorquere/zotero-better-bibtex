@@ -62,7 +62,7 @@ function replacer() {
   }
 }
 
-export function stringify(obj: any, indent?: number | string): string {
+export function stringify(obj: any, indent: number | string = 2): string {
   return JSON.stringify(obj, replacer(), indent)
 }
 

@@ -3,7 +3,7 @@ import { toSentenceCase } from '@retorquere/bibtex-parser'
 import type { MarkupNode } from '../typings/markup'
 import { titleCased } from './csl-titlecase'
 
-import { parseFragment } from 'parse5'
+import { serialize, parseFragment } from 'parse5'
 
 import Language from '../gen/babel/langmap.json'
 // import Tag from '../gen/babel/tag.json'
@@ -188,11 +188,7 @@ export const HTMLParser = new class {
 
       // this pseudo-html is a PITA to parse
       this.html = this.html.replace(/<(\/?)([^<>]*)>/g, (match, close, body) => {
-        if (body.match(/^(emphasis|span|nc|sc|i|b|sup|sub|script)($|\n|\s)/i)) return match
-
-        // I should have used script from the start
-        // I think pre follows different rules where it still interprets what's inside; script just gives whatever is in there as-is
-        if (body.match(/^pre$/i)) return `<${ close || '' }script>`
+        if (body.match(/^(pre|emphasis|span|nc|sc|i|b|sup|sub|script)($|\n|\s)/i)) return match
 
         return match.replace(/</g, '&lt;').replace(/>/g, '&gt;')
       })
@@ -337,7 +333,6 @@ export const HTMLParser = new class {
   }
 
   private walk(node, isNocased = false) {
-    // debug('walk:', node.nodeName)
     const normalized_node: MarkupNode = { nodeName: node.nodeName, childNodes: [], attr: {}, class: {}}
     for (const { name, value } of (node.attrs || [])) {
       normalized_node.attr[name] = value
@@ -355,8 +350,20 @@ export const HTMLParser = new class {
     switch (node.nodeName) {
       case '#document':
       case '#document-fragment':
-      case 'pre':
         normalized_node.nodeName = 'span'
+        break
+
+      case 'script':
+        return { ...normalized_node, value: serialize(node), childNodes: [] }
+
+      case 'pre':
+        if (!this.options.html || normalized_node.class.math) {
+          return { ...normalized_node, nodeName: 'script', value: serialize(node), childNodes: [] }
+        }
+        else {
+          normalized_node.nodeName = 'span'
+          normalized_node.tt = true
+        }
         break
 
       case 'nc':
@@ -380,20 +387,7 @@ export const HTMLParser = new class {
     if (!normalized_node.attr.smallcaps && (normalized_node.attr.style || '').match(/small-caps/i)) normalized_node.attr.smallcaps = 'smallcaps'
     if (normalized_node.class.smallcaps || normalized_node.attr.smallcaps) normalized_node.smallcaps = true
 
-    if (normalized_node.nodeName === 'script') {
-      if (!node.childNodes || node.childNodes.length === 0) {
-        normalized_node.value = ''
-        normalized_node.childNodes = []
-      }
-      else if (node.childNodes.length === 1 && node.childNodes[0].nodeName === '#text') {
-        normalized_node.value = node.childNodes[0].value
-        normalized_node.childNodes = []
-      }
-      else {
-        throw new Error(`Unexpected script body ${ JSON.stringify(node) }`)
-      }
-    }
-    else if (node.childNodes) {
+    if (node.childNodes) {
       let m
       for (const child of node.childNodes) {
         if (child.nodeName !== '#text') {

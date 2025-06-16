@@ -345,7 +345,20 @@ export class PrefPane {
     let file = await new FilePickerHelper(Zotero.getString('fileInterface.export'), 'save', [[ 'BBT JSON file', '*.json' ]]).open()
     if (!file) return
     if (!file.match(/.json$/)) file = `${file}.json`
-    Zotero.File.putContents(Zotero.File.pathToFile(file), JSON.stringify({ config: { preferences: Preference.all }}, null, 2))
+
+    const options = structuredClone(Zotero.BetterBibTeX.lastExport.displayOptions)
+    delete options.cache
+    delete options.exportDir
+    delete options.exportPath
+    delete options.keepUpdated
+    delete options.worker
+
+    Zotero.File.putContents(Zotero.File.pathToFile(file), JSON.stringify({
+      config: {
+        options,
+        preferences: Preference.all,
+      },
+    }, null, 2))
   }
 
   public async importPrefs(): Promise<void> {
