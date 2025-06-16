@@ -121,7 +121,7 @@
     "wasmjieba-web": "^1.0.14",
     "words-to-numbers": "^1.5.1",
     "xregexp": "^5.1.2",
-    "zotero-plugin": "^5.0.19",
+    "zotero-plugin": "^5.0.20",
     "zotero-plugin-toolkit": "^5.0.1",
     "zotero-types": "^4.0.4"
   },
@@ -132,7 +132,7 @@
     "@retorquere/zotero-sync": "^1.1.1",
     "@stylistic/eslint-plugin": "^4.4.1",
     "@types/bluebird": "^3.5.42",
-    "@types/node": "^24.0.1",
+    "@types/node": "^24.0.2",
     "@typescript-eslint/eslint-plugin": "^8.34.0",
     "@xmldom/xmldom": "^0.9.8",
     "ajv-keywords": "^5.1.0",
