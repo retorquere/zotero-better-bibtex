@@ -69,7 +69,7 @@ class Handler {
     }
     if (!library) return [ NOT_FOUND, 'text/plain', `Could not export bibliography: library ${m?.[3]} does not exist` ]
 
-    if (m = urlpath.match(/^collection(;(id|key):(.+?)[/])?/)) {
+    if (m = urlpath.match(/^collection(?:;(id|key):(.+?)[/])?/)) {
       urlpath = urlpath.substring(m[0].length)
       let collection: Zotero.Collection
       switch (m[1]) {
@@ -81,7 +81,13 @@ class Handler {
           collection = Zotero.Collections.getByLibraryAndKey(library.libraryID, m[2]) || undefined
           break
         default:
-          collection = await Collection.resolve(library, urlpath)
+          try {
+            collection = await Collection.resolve(library, urlpath)
+          }
+          catch (err) {
+            if (err.code) return [ err.code, 'text/plain', err.message ]
+            throw err
+          }
           break
       }
       if (!collection) return [ NOT_FOUND, 'text/plain', `Could not export bibliography: path '${ urlpath }' not found` ]
@@ -130,21 +136,27 @@ class CollectionHandler {
     const libraryID = Library.get({ libraryID: lib, groupID: lib })?.libraryID
     let collection
 
-    if (typeof libraryID === 'number') {
-      try {
-        collection = Zotero.Collections.getByLibraryAndKey(libraryID, path)
-      }
-      catch (err) {
-        log.error('pull-export: resolve by key error:', err)
-      }
-      if (!collection) {
+    try {
+      if (typeof libraryID === 'number') {
         try {
-          collection = await Collection.get(`/${ libraryID }/${ path }`)
+          collection = Zotero.Collections.getByLibraryAndKey(libraryID, path)
         }
         catch (err) {
-          log.error('pull-export: resolve by path error:', err)
+          log.error('pull-export: resolve by key error:', err)
+        }
+        if (!collection) {
+          try {
+            collection = await Collection.get(`/${ libraryID }/${ path }`)
+          }
+          catch (err) {
+            log.error('pull-export: resolve by path error:', err)
+          }
         }
       }
+    }
+    catch (err) {
+      if (err.code) return [ err.code, 'text/plain', err.message ]
+      throw err
     }
 
     if (!collection) return [ NOT_FOUND, 'text/plain', `Could not export bibliography: path '${ path }' not found` ]
@@ -312,11 +324,11 @@ orchestrator.add({
   needs: ['translators'],
 
   startup: async () => { // eslint-disable-line @typescript-eslint/require-await
-    Server.register([ '/better-bibtex/export/collection', '/better-bibtex/collection' ], CollectionHandler)
-    Server.register([ '/better-bibtex/export/library', '/better-bibtex/library' ], LibraryHandler)
-    Server.register([ '/better-bibtex/export/selected', '/better-bibtex/select' ], SelectedHandler)
-    Server.register('/better-bibtex/export/item', ItemHandler)
     Server.register('/better-bibtex/export', Handler)
+    Server.register('/better-bibtex/export/collection', CollectionHandler)
+    Server.register('/better-bibtex/export/library', LibraryHandler)
+    Server.register('/better-bibtex/export/selected', SelectedHandler)
+    Server.register('/better-bibtex/export/item', ItemHandler)
     Server.startup()
   },
 

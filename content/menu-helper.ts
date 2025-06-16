@@ -189,7 +189,8 @@ export function pullExport(): void {
   }
 
   if (collection) {
-    params.url.short += `/collection;key:${collection.key}`
+    params.url.short += `/collection;key:${collection.key}/${collection.name}`
+
     let path = `/${encodeURIComponent(collection.name)}`
     while (typeof collection.parentID === 'number') {
       collection = Zotero.Collections.get(collection.parentID)

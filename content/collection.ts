@@ -2,6 +2,7 @@ import * as Library from './library'
 
 class CollectionError extends Error {
   kind: 'duplicate' | 'notfound'
+  code: number
 
   constructor(message: string, kind: 'duplicate' | 'notfound') {
     // 'Error' breaks prototype chain here
@@ -11,12 +12,13 @@ class CollectionError extends Error {
     Object.setPrototypeOf(this, new.target.prototype)
 
     this.kind = kind
+    this.code = (this.kind === 'notfound' ? 404 : 409)
   }
 }
 
 export async function resolve(library: Zotero.Library, path: string, create = false): Promise<Zotero.Collection> {
   let names = (path || '').split('/')
-  if (names.shift() !== '') throw new CollectionError('path must be absolute', 'notfound')
+  if (names.shift() !== '') throw new CollectionError(`collection path ${JSON.stringify(path)} is not an absolute path`, 'notfound')
   names = names.filter(_ => _)
   if (names.length === 0) throw new CollectionError('path is too short', 'notfound')
 
@@ -59,7 +61,7 @@ export async function resolve(library: Zotero.Library, path: string, create = fa
 }
 
 export async function get(path: string, create = false): Promise<any> {
-  if (path[0] !== '/') throw new CollectionError('path must be absolute', 'notfound')
+  if (path[0] !== '/') throw new CollectionError(`collection path ${JSON.stringify(path)} is not an absolute path`, 'notfound')
   const m = path.match(/[/](^.*?)[/](.+)/)
   if (!m) throw new CollectionError('path is too short', 'notfound')
 
