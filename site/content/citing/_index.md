@@ -2,7 +2,6 @@
 title: Citation Keys
 weight: 3
 aliases:
-  - /Citation-Keys
   - /citation-keys
 tags:
   - citation keys
@@ -44,11 +43,14 @@ configurable for LaTeX by setting the config option in the [preferences]({{% ref
 
 This feature requires a one-time setup: choose the Quick Copy format under the `Citation keys` preferences for BBT, and go to Zotero preferences, tab Export, under Default Output Format, select "Better BibTeX Quick Copy: [format you just selected]".
 
+<!--
 ## Find duplicate keys through integration with [Report Customizer](https://github.com/retorquere/zotero-report-customizer)
 
 The plugin will generate BibTeX comments to show whether a key conflicts and with which entry. BBT integrates with
 [Zotero: Report Customizer](https://github.com/retorquere/zotero-report-customizer) to display the BibTeX key plus any
 conflicts between them in the zotero report.
+
+-->
 
 ## Configurable citekey generator
 
@@ -66,9 +68,9 @@ Better BibTeX knows four kinds of "things" to build the citekey from:
 There are 5 ways you can build subformulae:
 
 1. composition: `(auth + title)`
-2. alternates: `(auth || title)` (use the first thing that returns any text, so `auth` if that returns text, otherwise `title`). Note the test-filters like `.len` *will skip to the next formula if it fails; see also *sequence* below
+2. alternates: `(auth || title)` (use the first thing that returns any text, so `auth` if that returns text, otherwise `title`)
+2. conditions: `(auth && title)` (ascertain that the first returns any text before using the last, so use `title` only if `auth` would have returned something)
 3. ternaries: `(auth ? year : title)` (if `auth` returns any text, use `year`, otherwise use `title`). Ternary operators have the format `condition ? output_if_true : output_if_false`, and you can use it like an if-or statement.
-4. sequences: `(auth, shorttitle.len, '', title, 'hi')`. The first element of the sequence that returns a non-empty output is used. Tests like `.len` that would usually skip to the next formula don't do so in a sequence, they just return empty output if they fail, *except* the last element in the sequence. If that is a test, and it fails, the current formula is skipped and the next started. You would usually want a non-test here, or a fixed value.
 5. `(auth + title) > 0` or `auth > 0` are shorthand for `(auth + title).len` / `auth.len`.
 
 these can be combined, eg `(auth || shorttitle || year) ? (auth + title) : (year || title)`, but subformulae cannot appear in parameters, so `title.select(auth ? 3 : 4)` is not valid. Filters (explained below) can be applied to subformulae, so `(title || auth).lower` checks whether the `title` function produces output (i.e. not empty). If it does, the `title` function is used; otherwise, the formula will use the `auth` function. It then converts the output of `(title || auth)` to lowercase.
@@ -151,32 +153,6 @@ to jump to the next formula if `auth` and `title` were both empty is now
 
 ### Generating citekeys
 
-To generate your citekeys, you use a formula composed of functions and filters. Broadly, functions grab text from your item, and filters transform that text. **Note that the formula syntax has changed from a bracketed format to a javascript-ish format**. The old syntax was getting harder to maintain and its inflexibility prevented new extensions to the functions being implemented cleanly. **The old syntax still works** but will be translated to the new format automatically.
+To generate your citekeys, you use a formula composed of [functions and filters](formulas). Broadly, functions grab text from your item, and filters transform that text. **Note that the formula syntax has changed from a bracketed format to a javascript-ish format**. The old syntax was getting harder to maintain and its inflexibility prevented new extensions to the functions being implemented cleanly.
 
-Below you will find a full list of functions and filters you can use, in the new format only, sorry. You can still use these in the old syntax, but they support only positional parameters, where I would recommend generally to use the new syntax with named parameters.
-
-Note: a number of functions below talk about the author's lastname; you can read that as "when available". If you have the name as a single-field name (for entities like `International Business Machines` or `Aristoteles`), Zotero doesn't have a last name, and the full single-field name is taken instead.
-
-#### Functions
-
-{{< citekey-formatters/functions >}}
-
-**Note**: All `auth...` functions will fall back to editors if no authors are present on the item.
-
-**Note**: The functions above used to have the `clean` function automatically applied to them, **this is no longer the case**, so if you have CJK authors/titles and you want to manipulate them (using eg. `capitalize`), you could have to use `transliterate` on them first, eg. `authEtal2.transliterate.capitalize + year + shorttitle(3, 3)`.
-
-### Direct access to unprocessed fields
-
-The above functions all retrieve information stored in the item's fields and process it in some way. If you don't want this, you can instead call field contents without any processing. To access Zotero fields, refer to them as given in the table below:
-
-{{< citekey-formatters/fields >}}
-
-(fields marked <sup>Z</sup> are only available in Zotero, fields marked with <sup>JM</sup> are only available in Juris-M).
-
-#### Filters
-
-{{< citekey-formatters/filters >}}
-
-*Usage note*: the functions `condense`, `skipwords`, `capitalize` and `select` rely on whitespaces for word handling. Most functions strip
-whitespace and thereby make these filter functions sort of useless. You will in general want to use the fields from the
-table above, which give you the values from Zotero without any changes. The fields with `**` are only available in Juris-M.
+For more details, head over to the [functions and filters](formulas) list.

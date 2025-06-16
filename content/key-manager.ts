@@ -11,13 +11,13 @@ import ETA from 'node-eta'
 
 import { alert, prompt } from './prompt'
 
-import { kuroshiro } from './key-manager/japanese'
+import { japanese } from './key-manager/japanese'
 import { chinese } from './key-manager/chinese'
 
 import { Scheduler } from './scheduler'
 import { log } from './logger'
 import { flash } from './flash'
-import { Events, Action } from './events'
+import { Events } from './events'
 import { fetchAsync as fetchInspireHEP } from './inspire-hep'
 import * as Extra from './extra'
 import { excelColumn, sentenceCase } from './text'
@@ -30,8 +30,8 @@ import { Preference } from './prefs'
 import { Formatter } from './key-manager/formatter'
 
 import { createDB, createTable, Query, BlinkKey } from 'blinkdb'
-import * as blink from '../gen/blinkdb'
-import { Cache } from './db/cache'
+import * as blink from 'blinkdb'
+import { Cache } from './translators/worker'
 
 import { monkey } from './monkey-patch'
 
@@ -182,6 +182,7 @@ export const KeyManager = new class _KeyManager {
         pinned: { in: [ 0, false ]},
       },
     }).length
+
     if (warnAt > 0 && affected > warnAt) {
       const ignore = { value: false }
       const index = Services.prompt.confirmEx(
@@ -203,30 +204,38 @@ export const KeyManager = new class _KeyManager {
       }
     }
 
-    // clear before refresh so they can update without hitting "claimed keys" in the deleted set
-    this.clear(ids)
+    const save: Set<number> = new Set
+    const items = (await getItemsAsync(ids)).filter(item => {
+      // these get no key
+      if (item.isFeedItem || !item.isRegularItem()) return false
 
-    const updates: Zotero.Item[] = []
-    const progress: Progress = ids.length > 10 ? new Progress(ids.length, 'Refreshing citation keys') : null
-    for (const item of await getItemsAsync(ids)) {
-      if (item.isFeedItem || !item.isRegularItem()) continue
-
-      const extra = item.getField('extra')
-
-      const citationKey = {
-        old: Extra.get(extra, 'zotero', { citationKey: true }).extraFields.citationKey,
-        new: '',
+      const pinned = Extra.get(item.getField('extra'), 'zotero', { citationKey: true })
+      if (pinned.extraFields.citationKey) {
+        if (manual) {
+          item.setField('extra', pinned.extra)
+          save.add(item.id)
+        }
+        else {
+          return false
+        }
       }
-      if (citationKey.old) continue // pinned, leave it alone
 
-      citationKey.old = this.get(item.id).citationKey
-      citationKey.new = this.update(item)
-      if (citationKey.old === citationKey.new) continue
+      return true
+    })
+
+    if (!items.length) return
+
+    // clear before refresh so they can update without hitting "claimed keys" in the deleted set
+    this.clear(items.map(item => item.id as number))
+
+    const progress: Progress = items.length > 10 ? new Progress(items.length, 'Refreshing citation keys') : null
+    for (const item of items) {
+      const citationKey = this.update(item)
 
       // remove the new citekey from the aliases if present
-      const aliases = Extra.get(extra, 'zotero', { aliases: true })
-      if (aliases.extraFields.aliases.includes(citationKey.new)) {
-        aliases.extraFields.aliases = aliases.extraFields.aliases.filter(alias => alias !== citationKey.new)
+      const aliases = Extra.get(item.getField('extra'), 'zotero', { aliases: true })
+      if (aliases.extraFields.aliases.includes(citationKey)) {
+        aliases.extraFields.aliases = aliases.extraFields.aliases.filter(alias => alias !== citationKey)
 
         if (aliases.extraFields.aliases.length) {
           item.setField('extra', Extra.set(aliases.extra, { aliases: aliases.extraFields.aliases }))
@@ -234,27 +243,32 @@ export const KeyManager = new class _KeyManager {
         else {
           item.setField('extra', aliases.extra)
         }
-        await item.saveTx()
-        await Zotero.Promise.delay(10)
-      }
-      else {
-        updates.push(item)
+        save.add(item.id)
       }
 
       progress?.next()
     }
     progress?.done()
 
-    if (updates.length) void Events.emit('items-changed', { items: updates, action: 'modify', reason: 'refresh' })
+    for (const item of items) {
+      if (!save.has(item.id)) continue
+      await item.saveTx()
+      await Zotero.Promise.delay(10)
+    }
+
+    /* this already happens in the trigger on the key store
+    const updates: Zotero.Item[] = items.filter(item => !save.has(item.id))
+    if (updates.length) void Events.emit('items-changed', { items: updates, action: 'modify', reason: 'key-refresh' })
+    */
   }
 
   constructor() {
     orchestrator.add({
       id: 'keymanager',
       description: 'keymanager',
-      needs: ['sqlite'],
+      needs: [ 'worker', 'sqlite'],
       startup: async () => {
-        await kuroshiro.init()
+        await japanese.init()
         chinese.init()
 
         Formatter.update([Preference.citekeyFormat])
@@ -517,17 +531,20 @@ export const KeyManager = new class _KeyManager {
       missing = await ZoteroDB.columnQueryAsync(`${ $items } SELECT itemID FROM _items WHERE itemID NOT IN (SELECT itemID from betterbibtex.citationkey)`)
     })
 
-    const notify = async (ids: number[], action: Action) => {
-      if (!Cache.ZoteroSerialized) return
+    const notify = async (ids: number[]) => {
+      if (!Cache.ready) {
+        log.error('Cache touch failed for', ids, 'cache not ready')
+        return
+      }
 
       try {
         await Cache.touch(ids)
       }
       catch (err) {
-        log.error('Cache touch failed:', Object.keys(err))
+        log.error('Cache touch failed for', ids, err)
       }
       finally {
-        void Events.emit('items-changed', { items: Zotero.Items.get(ids), action })
+        void Events.emit('items-changed', { items: Zotero.Items.get(ids), action: 'modify', reason: 'key-refresh' })
       }
       // messes with focus-on-tab
       // if (action === 'modify' || action === 'add') Zotero.Notifier.trigger('refresh', 'item', itemIDs)
@@ -538,19 +555,19 @@ export const KeyManager = new class _KeyManager {
         for (const change of changes) {
           void this.store(change.entity).catch(err => log.error('keymanager.insert', err))
         }
-        void notify(changes.map(change => change.entity.itemID), 'add')
+        void notify(changes.map(change => change.entity.itemID))
       }),
       this.keys[BlinkKey].events.onUpdate.register(changes => {
         for (const change of changes) {
           void this.store(change.newEntity).catch(err => log.error('keymanager.update', err))
         }
-        void notify(changes.map(change => change.newEntity.itemID), 'modify')
+        void notify(changes.map(change => change.newEntity.itemID))
       }),
       this.keys[BlinkKey].events.onRemove.register(changes => {
         for (const change of changes) {
           void this.remove(change.entity).catch(err => log.error('keymanager.remove', err))
         }
-        void notify(changes.map(change => change.entity.itemID), 'delete')
+        void notify(changes.map(change => change.entity.itemID))
       }),
       this.keys[BlinkKey].events.onClear.register(_changes => {
         log.error('error: do not clear the keys database!')
@@ -710,7 +727,6 @@ export const KeyManager = new class _KeyManager {
 
     if (ids === 'selected') {
       try {
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-return
         return Zotero.getActiveZoteroPane().getSelectedItems(true)
       }
       catch (err) { // zoteroPane.getSelectedItems() doesn't test whether there's a selection and errors out if not

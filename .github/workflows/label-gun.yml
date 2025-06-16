@@ -11,11 +11,24 @@ jobs:
   nag:
     runs-on: ubuntu-latest
     steps:
+      - name: Prod people to upgrade
+        if: contains(github.event.issue.body, 'Zotero.ItemTreeManager.registerColumn is not a function')
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_REPO: ${{ github.repository }}
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+        run: |
+          set -e
+          gh issue comment "$ISSUE_NUMBER" --body-file .github/workflows/outdated.md
+          gh issue close "$ISSUE_NUMBER"
+          gh issue edit "$ISSUE_NUMBER" --add-label "upgrade-zotero"
+
       - uses: retorquere/label-gun@main
+        if: "!contains(github.event.issue.body, 'Zotero.ItemTreeManager.registerColumn is not a function')"
         id: labelgun
         with:
           token: ${{ github.token }}
-          label.exempt: question
+          label.canclose: question
           label.awaiting: awaiting-user-feedback
           label.reopened: reopened
           log.regex: "([A-Z0-9]{8}(-refs)?-(apse|euc))|([A-Z0-9]{8}-[^-]+)"
@@ -48,15 +61,37 @@ jobs:
           verbose: true
           assign: true
 
-      - name: slash commands
-        id: command
-        uses: xt0rted/slash-command-action@v1
+      - run: echo Status = ${{ steps.labelgun.outputs.status != '' }}
+
+      - uses: actions/add-to-project@v1.0.2
+        if: ${{ steps.labelgun.outputs.status != '' }}
         with:
-          repo-token: ${{ github.token }}
-          command: debuglog
-          reaction: "false"
-          allow-edits: "true"
-          permission-level: admin
-      - name: ask for log
-        if: steps.command.outputs.command-name == 'debuglog'
-        run: "gh issue comment ${{ github.event.issue.number }} --body-file $GITHUB_WORKSPACE/.github/workflows/debug-log.md --edit-last"
+          project-url: https://github.com/users/retorquere/projects/5
+          github-token: ${{ secrets.PROJECT_TOKEN }}
+
+      - name: Set status
+        if: ${{ steps.labelgun.outputs.status != '' }}
+        uses: nipe0324/update-project-v2-item-field@v2.0.2
+        with:
+          project-url: https://github.com/users/retorquere/projects/5
+          github-token: ${{ secrets.PROJECT_TOKEN }}
+          field-name: "Status"
+          field-value: "${{ steps.labelgun.outputs.status }}"
+
+      - name: Set end date
+        if: ${{ steps.labelgun.outputs.status != '' && steps.labelgun.outputs.lastactive != '' }}
+        uses: nipe0324/update-project-v2-item-field@v2.0.2
+        with:
+          project-url: https://github.com/users/retorquere/projects/5
+          github-token: ${{ secrets.PROJECT_TOKEN }}
+          field-name: "End date"
+          field-value: "${{ steps.labelgun.outputs.lastactive }}"
+
+      - name: Set users
+        if: ${{ steps.labelgun.outputs.status != '' && steps.actor.outputs.users != '' }}
+        uses: nipe0324/update-project-v2-item-field@v2.0.2
+        with:
+          project-url: https://github.com/users/retorquere/projects/5
+          github-token: ${{ secrets.PROJECT_TOKEN }}
+          field-name: "Users"
+          field-value: "${{ steps.actor.outputs.users }}"

@@ -15,17 +15,29 @@ better-bibtex_citekey_set_toomany = Can only change one key at a time
 better-bibtex_error-report = 
   .title = Better BibTeX debug log
 
-better-bibtex_error-report_better-bibtex_cache = Cache size: { $entries } entries.
-better-bibtex_error-report_better-bibtex_current = You are running Better BibTeX version { $version }
-better-bibtex_error-report_better-bibtex_latest = The latest Better BibTeX version is { $version }
+better-bibtex_error-report_upgrade = The latest { $program } version is <strong>{ $upgrade }</strong>, you are running <strong>{ $running }</strong>; please upgrade first.
+
+better-bibtex_error-report_upgrade_auto = { $program } will update from the { $channel } channel every { $interval }, last update at { $last }.
+better-bibtex_error-report_upgrade_manual = { $program } updates are disabled
+
+better-bibtex_error-report_no_items = This log will not include sample items. <b>These are not mandatory</b>, but are usually necessary to create test cases for the change/fix you will be requesting. To generate a log with sample items:
+better-bibtex_error-report_no_items_cancel = cancel this wizard
+better-bibtex_error-report_no_items_reproduce = reproduce the problem
+better-bibtex_error-report_no_items_select = select the reference(s) that exhibit the problem and right-click them
+better-bibtex_error-report_no_items_popup = choose <i>Better BibTeX</i> from the popup menu
+better-bibtex_error-report_no_items_report = choose <i>{ better-bibtex_report-errors }</i>
+
+better-bibtex_error-report_better-bibtex_cache =
+  .value = Cache size: { $entries } entries.
+
 better-bibtex_error-report_context = 
   .label = Application context
 
 better-bibtex_error-report_debug = 
   .label = Debug log
 
+better-bibtex_error-report_enable-debug = Zotero debug logging is currently disabled. It will be easier to diagnose the problem if you enable it and reproduce the problem before submitting a debug log.
 
-better-bibtex_error-report_enable-debug = Zotero debug logging is currently disabled. It will be easier to diagnose the problem if you enable it before submitting a debug log.
 better-bibtex_error-report_errors = 
   .label = Errors
 
@@ -45,9 +57,10 @@ better-bibtex_error-report_include-attachments =
 better-bibtex_error-report_items = 
   .label = Items
 
-better-bibtex_error-report_not-reviewed = Debug logs cannot be reviewed unless referred to in the GitHub issue tracker by their ID.
+better-bibtex-error-send-reminder = Clicking "{ $send }" will send the debug log to secure storage for the developer to review.
 
-better-bibtex_error-report_post-to-git-hub = Please post a message to the issue tracker (https://github.com/retorquere/zotero-better-bibtex/issues) with this debug log ID, a description of the problem, and any steps necessary to reproduce it.
+better-bibtex_error-report_post-to-github = Please post a message to the issue tracker with this debug log ID, a description of the problem, and any steps necessary to reproduce it. <strong>Debug logs cannot be reviewed unless referred to in the GitHub issue tracker by their ID.</strong>
+
 better-bibtex_error-report_report-id = Debug log ID:
 better-bibtex_error-report_restart-with-logging-enabled = 
   .label = Restart with Logging Enabled…
@@ -113,10 +126,13 @@ better-bibtex_preferences_advanced_extra_merge-tex =
 better-bibtex_preferences_advanced_ideographs = Ideographs in citekeys
   .label = { better-bibtex_preferences_advanced_ideographs }
 
-better-bibtex_preferences_advanced_ideographs_jieba = 
+better-bibtex_preferences_advanced_ideographs_chinese = 
   .label = Enable 'jieba'/'pinyin' filters in citekey patterns. Uses a lot of memory.
 
-better-bibtex_preferences_advanced_ideographs_kuroshiro = 
+better-bibtex_preferences_advanced_ideographs_splitName = 
+  .label = Split all Chinese-like single-field names, unless the item's language is set to Japanese and Japanese support is enabled.
+
+better-bibtex_preferences_advanced_ideographs_japanese = 
   .label = Apply kuroshiro romajization in Japanese names/titles. Uses a lot of memory.
 
 better-bibtex_preferences_advanced_import_case-protection = Insert case-protection for braces:
@@ -339,6 +355,8 @@ better-bibtex_preferences_export_quick-copy_latex = LaTeX citation
   .label = { better-bibtex_preferences_export_quick-copy_latex }
 better-bibtex_preferences_export_quick-copy_latex_command = LaTeX command
   .label = { better-bibtex_preferences_export_quick-copy_latex_command }
+better-bibtex_preferences_export_quick-copy_org-mode_cite = Org-mode citation link
+  .label = { better-bibtex_preferences_export_quick-copy_org-mode_cite }
 better-bibtex_preferences_export_quick-copy_org-mode = Org-mode select link
   .label = { better-bibtex_preferences_export_quick-copy_org-mode }
 better-bibtex_preferences_export_quick-copy_org-mode_citekey = using Better BibTeX citation key

@@ -14,6 +14,12 @@ Feature: Export
     Examples:
       | file                                                                                                                     | references |
       | Duplicate note is not correctly commented out in biblatex output #3040                                                   | 1          |
+      | Latex command in Note field #3255                                                                                        | 2          |
+      | Embedding multiple formulas in a ternary expression doesnt work #3224                                                    | 1          |
+      | Wrong performance for exports Bibtex a becomes textbackslash a #3184                                                     | 1          |
+      | Split CJK names #2624                                                                                                    | 35         |
+      | Uncommented-out notes in the generated bib file #3176                                                                    | 1          |
+      # | Unexpected output result with quotation marks in Title field #1573                                                       | 1          |
       | pmid versus pubmed #3146                                                                                                 | 1          |
       | Ensure en-dash is used for volumeissue ranges in exported BibTeXBiBibTeX #3118                                           | 1          |
       | Add option to translate ii to mkbibemph instead of emph #3096                                                            | 1          |
@@ -225,6 +231,7 @@ Feature: Export
 
     Examples:
       | file                                                                                                               | references |
+      | Wrong year field in Better BibTeX export #3244                                                                     | 1          |
       | Export field zoteroautoJournalAbbreviation only available when zoterojournalAbbreviation is empty #3046            | 2          |
       | export langid as language #2909                                                                                    | 1          |
       | Better BibTeX export from Zotero missing Extra fields eg issued #2816                                              | 1          |
@@ -730,7 +737,7 @@ Feature: Export
     And I set preference .citekeyFormat to "authorsn(n=3,creator=\"*\",initials=false,sep=\" \").fold + shortyear"
     And I set preference .itemObserverDelay to 100
     And I set preference .keyConflictPolicy to "change"
-    And I set preference .kuroshiro to true
+    And I set preference .japanese to true
     And I set preference .skipFields to "abstract, copyright, googlebooks, "
     # And I select the library named "CCNLab"
     And I set export option exportNotes to true
@@ -833,15 +840,18 @@ Feature: Export
   Scenario: OR pattern condenses input #2957
     Given I import 1 reference from "export/*.json"
     When I select the item with a field that contains "Valuations"
-
     When I set preference .citekeyFormat to "(ShortTitle.condense(_) || Title.condense(_))"
     And I refresh the citation key
     Then the citation key should be "The_Theory_of_Classical_Valuations"
-
     When I set preference .citekeyFormat to "(ShortTitle || Title).condense(_)"
     And I refresh the citation key
     Then the citation key should be "The_Theory_of_Classical_Valuations"
-
     When I set preference .citekeyFormat to "(ShortTitle ? ShortTitle : Title).condense(_)"
     And I refresh the citation key
     Then the citation key should be "The_Theory_of_Classical_Valuations"
+
+  Scenario: refresh fails for pinned keys #3173
+    Given I import 1 reference from "export/*.json"
+    When I select the item with a field that contains "Quantum"
+    And I refresh the citation key
+    Then the citation key should be "DBLP:books/daglib/0032853"

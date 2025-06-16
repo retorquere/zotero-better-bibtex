@@ -348,7 +348,8 @@ class Zotero:
 
     headers = {
       'Authorization': f'Bearer {self.token}',
-      'Content-Type': 'application/javascript'
+      # 'Content-Type': 'application/javascript'
+      'Content-Type': 'text/plain',
     }
 
     with Pinger(20):

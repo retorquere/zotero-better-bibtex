@@ -1,0 +1,71 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "options": {
+      "exportNotes": true
+    },
+    "preferences": {
+      "autoExport": "idle",
+      "biblatexExtendedNameFormat": false,
+      "bibtexURL": "note",
+      "citekeyFormat": "auth.lower + year",
+      "japanese": true,
+      "parseParticles": false,
+      "skipFields": "abstract",
+      "postscript": "if (Translator.BetterTeX) {\n  function marklatex(note) {\n    return note\n      .replace(/<pre class=\"math\">.*?<\\/pre>/ig, pre => pre.replace(/\\\\/g, '\\x1a')) // save display math or it would get marked twice\n      .replace(/(\\\\(?:[a-z]+|[^a-z])(?:\\[[^\\]]*\\])*(?:\\{[^\\}]*\\})*)/ig, '<script>$1</script>') // find latex commands and mark them as literal output\n      .replace(/\\x1a/g, '\\\\') // restore display math\n  }\n  tex.add({ name: 'note', value: zotero.notes?.map(note => marklatex(note.note)).join('</p><p>'), html: true })\n}\n\n"
+    }
+  },
+  "items": [
+    {
+      "abstractNote": "Esta disserta\u00e7\u00e3o tem como tema central o estudo da arquitectura do espa\u00e7o funer\u00e1rio na \u00e1rea mediterr\u00e2nica de influ\u00eancia cat\u00f3lica, particularmente orientado para as rela\u00e7\u00f5es que estabelece com a urbanidade. O arco temporal abrangido pelo estudo decorre entre o per\u00edodo da idealiza\u00e7\u00e3o da necropole, na segunda metade do s\u00e9culo XVIII, e a contemporaneidade. A exposi\u00e7\u00e3o aborda tamb\u00e9m outras culturas e outros segmentos cronol\u00f3gicos, em momentos onde essas incurs\u00f5es contribuem para a explicita\u00e7\u00e3o e fundamenta\u00e7\u00e3o da mat\u00e9ria tratada. O ritmo da mudan\u00e7a nos regimes de percep\u00e7\u00e3o da morte e procedimento tanatol\u00f3gico, assim como das altera\u00e7\u00f5es na sua regula\u00e7\u00e3o espacial, mostra-se intimamente articulado com as grandes transforma\u00e7\u00f5es s\u00f3cio-pol\u00edticas e culturais da civiliza\u00e7\u00e3o ocidental. Neste percurso o espa\u00e7o cemiterial foi-se desvinculando da tutela religiosa e afirmou-se como recinto laico, especializado e de mem\u00f3ria c\u00edvica. Espelhando uma realidade em transforma\u00e7\u00e3o, a higienista necropole moderna (aut\u00f3noma, extramuros e de uso obrigat\u00f3rio para a generalidade da popula\u00e7\u00e3o) inicialmente suportou e serviu a constru\u00e7\u00e3o identit\u00e1ria da burguesia ascendente, evidenciando uma forte capacidade ret\u00f3rica s\u00f3cio-ideol\u00f3gica. Mas ao longo do s\u00e9culo XX a par da civiliza\u00e7\u00e3o p\u00f3s-industrial instalou-se o tabu da morte, e o cemit\u00e9rio - sujeito a expans\u00f5es que descuraram a arquitectura inicial, amputando muito do seu sentido metaf\u00f3rico - perdeu eloqu\u00eancia e import\u00e2ncia.\nO Movimento Moderno n\u00e3o reconheceu o territ\u00f3rio funer\u00e1rio como um tema significante (atitude confirmada pelo reduzido n\u00famero de projectos considerados como exemplares not\u00e1veis de arquitectura) e, ao retirar-lhe valor emblem\u00e1tico, impediu-o de se constituir como refer\u00eancia na constru\u00e7\u00e3o da cidade. A solu\u00e7\u00e3o para as novas necr\u00f3poles e edif\u00edcios conexos - executados com projectos muitas vezes elementares - foi encontrada com base em crit\u00e9rios urban\u00edsticos relevando sobretudo preocupa\u00e7\u00f5es pragm\u00e1ticas que, n\u00e3o celebrando os seus aspectos simb\u00f3lico e urbano, as remeteram para localiza\u00e7\u00f5es assumidamente afastadas e desligadas do contexto citadino sedimentado. E, apesar de alguma aten\u00e7\u00e3o disciplinar recente ser vis\u00edvel, ao sentido sublime que deve impregnar um edif\u00edcio deste tipo sobrep\u00f5e-se ainda, demasiado frequentemente, uma vis\u00e3o meramente utilit\u00e1ria, quer do ponto de vista da sua concep\u00e7\u00e3o arquitect\u00f3nica, quer sob o aspecto urban\u00edstico da sua articula\u00e7\u00e3o com a cidade.\nTipologia inventada pelos arquitectos iluministas, a necropole, avatar do Para\u00edso, concretizou-se na tens\u00e3o entre as suas duas imagens mais fortes: a da Jerusal\u00e9m Celeste, espa\u00e7o encerrado, p\u00e9treo e organizado arquitectonicamente, e a do \u00c9den, paisagem arc\u00e1dica e potencialmente aberta. Constituindo-se como um diagrama da cidade dos vivos, a necr\u00f3pole fixou-se na vers\u00e3o (densamente) mineralizada e geometrizada nas \u00e1reas da Contra-Reforma e numa proposta mais vegetalizada e informal nas zonas da iconoclastia protestante. Dualidade que se manteve at\u00e9 muito recentemente, quando os cemit\u00e9rios do universo cat\u00f3lico mediterr\u00e2nico, at\u00e9 ent\u00e3o express\u00e3o da cidade an\u00e1loga, come\u00e7aram a aceitar um desenho mais topogr\u00e1fico e paisagista - uma abertura que surge como resultado de altera\u00e7\u00f5es culturais (em que a humaniza\u00e7\u00e3o intensiva da natureza valoriza cada vez mais os seus simulacros), mas tamb\u00e9m fruto da seculariza\u00e7\u00e3o progressiva da sociedade, que deixou de aliar a ideia de paganismo \u00e0 vis\u00e3o ed\u00e9nica da necr\u00f3pole.\nEm Portugal, apesar de nunca se ter verificado uma discuss\u00e3o alargada, p\u00fablica ou disciplinar sobre esta mat\u00e9ria, o trajecto tem sido, de uma forma geral semelhante, embora mais d\u00e9bil, ao dos pa\u00edses seus cong\u00e9neres. Neste momento, v\u00e1rios ind\u00edcios levam a crer como iminente o aparecimento de novo \"equipamento\" tanatol\u00f3gico e at\u00e9 talvez a altera\u00e7\u00e3o do regime de propriedade p\u00fablica vigente, mudan\u00e7as que ter\u00e3o com certeza consequ\u00eancias \u00f3bvias nas modalidades espaciais que conhecemos.\nContrariando a tend\u00eancia de denega\u00e7\u00e3o da morte verificada ao longo do \u00faltimo s\u00e9culo, o territ\u00f3rio da morte nas suas mais variadas express\u00f5es poder\u00e1, acredita-se, vir a ser recuperado como significante na sociedade e na cidade, e ver valorizado o seu car\u00e1cter de local de culto, de mem\u00f3ria e de sacralidade laica ou religiosa -assegurando, nomeadamente, a express\u00e3o da alteridade \u00e0s intensas di\u00e1sporas contempor\u00e2neas.\nAssume-se, como prop\u00f3sito central, que os espa\u00e7os funer\u00e1rios n\u00e3o s\u00f3 dever\u00e3o ser inclu\u00eddos na urbanidade, como buscar a m\u00e1xima intensifica\u00e7\u00e3o cerimonial. Este intento exige, naturalmente, a sua considera\u00e7\u00e3o como equipamento nobre, dignificado  localizado de acordo com as circunst\u00e2ncias e contextos, eles pr\u00f3prios muito diversificados. Reconhecendo a inadequa\u00e7\u00e3o de sistemas normativos generaliz\u00e1veis, pareceu essencial tra\u00e7ar orienta\u00e7\u00f5es program\u00e1ticas que assegurem a funda\u00e7\u00e3o de rela\u00e7\u00f5es simb\u00f3licas e materiais do sistema tanatol\u00f3gico com os m\u00faltiplos tecidos urbanos da contemporaneidade.\nNa \u00e9poca da terceira moderniza\u00e7\u00e3o, da migra\u00e7\u00e3o, da desterritorializa\u00e7\u00e3o e da globaliza\u00e7\u00e3o, s\u00e3o necess\u00e1rias solu\u00e7\u00f5es ainda por inventar para a topografia da celebra\u00e7\u00e3o funer\u00e1ria. Ao discurso disciplinar arquitect\u00f3nico e urban\u00edstico incumbe, pois, profundas responsabilidades na busca conducente \u00e0 reinser\u00e7\u00e3o de Thanatos na polis.",
+      "accessDate": "2015-03-24T20:03:34Z",
+      "citationKey": "oliveira2007",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Maria Manuel Lobo Pinto de",
+          "lastName": "Oliveira"
+        }
+      ],
+      "date": "2007",
+      "itemID": 1,
+      "itemType": "thesis",
+      "libraryCatalog": "repositorium.sdum.uminho.pt",
+      "notes": [
+        "<div data-schema-version=\"9\"><p>ik wil </p>\n<pre class=\"math\">$$\\LaTeX$$</pre>\n<p> in de note</p>\n</div>"
+      ],
+      "place": "Guimar\u00e3es, Portugal",
+      "publisher": "Universidade do Minho",
+      "title": "In memoriam, na cidade",
+      "type": "Tese de Doutoramento em Arquitectura",
+      "url": "http://repositorium.sdum.uminho.pt/handle/1822/6877"
+    },
+    {
+      "attachments": [],
+      "citationKey": "test",
+      "creators": [],
+      "dateAdded": "2025-06-08T10:32:06Z",
+      "dateModified": "2025-06-08T10:32:06Z",
+      "extra": "Citation Key: test",
+      "itemID": 4414,
+      "itemType": "document",
+      "key": "A7JA5PNY",
+      "notes": [
+        {
+          "dateAdded": "2025-06-09T12:53:32Z",
+          "dateModified": "2025-06-09T12:53:54Z",
+          "itemType": "note",
+          "key": "9HZ5RMX2",
+          "note": "<div data-schema-version=\"9\"><p>\\testcommand[optarg]{arg}</p>\n</div>",
+          "parentItem": "A7JA5PNY",
+          "tags": [],
+          "version": 6591
+        }
+      ],
+      "tags": [],
+      "title": "test",
+      "version": 6587
+    }
+  ]
+}

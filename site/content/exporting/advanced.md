@@ -3,7 +3,7 @@ title: Advanced
 weight: 9
 aliases:
   - /hardcore
-  - /Going-hardcore
+  - /going-hardcore
 ---
 ## You are a hardcore LaTeX user
 

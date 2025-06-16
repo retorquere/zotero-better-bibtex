@@ -1,8 +1,6 @@
 ---
 title: Support
 weight: 4
-aliases:
-  - /Support
 ---
 
 Before all else, ***thank you for taking the time for submitting an issue***, and I'm sorry that I've probably

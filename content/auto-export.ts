@@ -6,7 +6,6 @@ import { Path, File } from './file'
 
 import * as client from './client'
 
-import { Cache } from './db/cache'
 import { Events } from './events'
 import { Translators, ExportJob } from './translators'
 import { Preference } from './prefs'
@@ -20,8 +19,7 @@ import { Scheduler } from './scheduler'
 import { flash } from './flash'
 import * as l10n from './l10n'
 import { orchestrator } from './orchestrator'
-import { createDB, createTable, BlinkKey } from 'blinkdb'
-import * as blink from '../gen/blinkdb'
+import * as blink from 'blinkdb'
 import { pick } from './object'
 
 const cmdMeta = /(["^&|<>()%!])/
@@ -193,7 +191,7 @@ class Git {
     }
   }
 
-  private async exec(exe: string, args?: string[]): Promise<void> { // eslint-disable-line @typescript-eslint/require-await
+  private async exec(exe: string, args?: string[]): Promise<void> {
     // args = ['/K', exe].concat(args || [])
     // exe = await findBinary('CMD')
 
@@ -368,6 +366,7 @@ const queue = new class TaskQueue {
       ae.error = `${ err }`
     }
 
+    void Events.emit('export-progress', { pct: 100, message: `${ translator.label } export finished`, ae: path })
     AutoExport.status(path, 'done')
   }
 
@@ -404,10 +403,10 @@ type Job = {
 export type JobSetting = keyof Job
 
 // export singleton: https://k94n.com/es6-modules-single-instance-pattern
-export const AutoExport = new class $AutoExport { // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
+export const AutoExport = new class $AutoExport {
   public progress: Map<string, number> = new Map
 
-  public db = createTable<Job>(createDB({ clone: true }), 'autoExports')({
+  public db = blink.createTable<Job>(blink.createDB({ clone: true }), 'autoExports')({
     primary: 'path',
     indexes: [ 'translatorID', 'type', 'id' ],
   })
@@ -427,25 +426,24 @@ export const AutoExport = new class $AutoExport { // eslint-disable-line @typesc
     })
 
     this.unwatch = [
-      this.db[BlinkKey].events.onInsert.register(changes => {
+      this.db[blink.BlinkKey].events.onInsert.register(changes => {
         for (const change of changes) {
           Zotero.Prefs.set(`translators.better-bibtex.autoExport.${this.key(change.entity.path)}`, JSON.stringify(change.entity))
         }
       }),
-      this.db[BlinkKey].events.onUpdate.register(changes => {
+      this.db[blink.BlinkKey].events.onUpdate.register(changes => {
         for (const change of changes) {
           Zotero.Prefs.clear(`translators.better-bibtex.autoExport.${this.key(change.oldEntity.path)}`)
           Zotero.Prefs.set(`translators.better-bibtex.autoExport.${this.key(change.newEntity.path)}`, JSON.stringify(change.newEntity))
         }
       }),
-      this.db[BlinkKey].events.onRemove.register(changes => {
+      this.db[blink.BlinkKey].events.onRemove.register(changes => {
         for (const change of changes) {
           Zotero.Prefs.clear(`translators.better-bibtex.autoExport.${this.key(change.entity.path)}`)
         }
       }),
-      this.db[BlinkKey].events.onClear.register(() => {
-        // @ts-expect-error unsure about getChildList
-        for (const key of Services.prefs.getBranch('extensions.zotero.translators.better-bibtex.autoExport.').getChildList('', {})) {
+      this.db[blink.BlinkKey].events.onClear.register(() => {
+        for (const key of Services.prefs.getBranch('extensions.zotero.translators.better-bibtex.autoExport.').getChildList('')) {
           Zotero.Prefs.clear(`translators.better-bibtex.autoExport.${key}`)
         }
       }),
@@ -512,8 +510,7 @@ export const AutoExport = new class $AutoExport { // eslint-disable-line @typesc
           log.error('auto-export migration failed', err)
         }
 
-        // @ts-expect-error unsure about getChildList
-        for (const key of Services.prefs.getBranch('extensions.zotero.translators.better-bibtex.autoExport.').getChildList('', {})) {
+        for (const key of Services.prefs.getBranch('extensions.zotero.translators.better-bibtex.autoExport.').getChildList('')) {
           try {
             const ae = JSON.parse(Zotero.Prefs.get(`translators.better-bibtex.autoExport.${key}`) as string)
             blink.insert(this.db, ae)
@@ -701,7 +698,7 @@ export const AutoExport = new class $AutoExport { // eslint-disable-line @typesc
 
   public status(path: string, status: 'running' | 'done') {
     const ae = blink.first(this.db, { where: { path }})
-    if (ae) blink.update(this.db, { ...ae, status })
+    if (ae) blink.update(this.db, { ...ae, status, updated: Date.now() })
   }
 
   public removeAll() {
@@ -712,51 +709,6 @@ export const AutoExport = new class $AutoExport { // eslint-disable-line @typesc
 
   public run(path: string) {
     queue.run(path)
-  }
-
-  public async cached(path: string) {
-    if (!Preference.cache) return 0
-
-    const ae = this.get(path)
-    if (!ae) {
-      log.error(`no auto-export found for ${path}`)
-      return 0
-    }
-
-    const itemTypeIDs: number[] = [ 'attachment', 'note', 'annotation' ].map(type => {
-      try {
-        return Zotero.ItemTypes.getID(type) as number
-      }
-      catch {
-        return undefined
-      }
-    })
-
-    const translator = Translators.byId[ae.translatorID]
-    const itemIDset: Set<number> = new Set
-    await this.itemIDs(ae, ae.id, itemTypeIDs, itemIDset)
-    if (itemIDset.size === 0) return 100
-
-    const cached = await Cache.cache(translator.label).count(path)
-    return Math.min(100 * (cached / itemIDset.size), 100)
-  }
-
-  private async itemIDs(ae: Job, id: number, itemTypeIDs: number[], itemIDs: Set<number>) {
-    let items
-    if (ae.type === 'collection') {
-      const coll = await Zotero.Collections.getAsync(id)
-      if (ae.recursive) {
-        for (const collID of coll.getChildCollections(true)) {
-          await this.itemIDs(ae, collID, itemTypeIDs, itemIDs)
-        }
-      }
-      items = coll.getChildItems()
-    }
-    else if (ae.type === 'library') {
-      items = await Zotero.Items.getAll(id)
-    }
-
-    items.filter(item => !itemTypeIDs.includes(item.itemTypeID)).forEach(item => itemIDs.add(item.id))
   }
 
   forCollection(collectionID: number) {

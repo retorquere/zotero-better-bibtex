@@ -7,7 +7,7 @@ import { parse as arXiv } from '../../content/arXiv'
 import { valid, label } from '../../gen/items/items'
 import { wordsToNumbers } from 'words-to-numbers'
 
-import { parse as parseDate, strToISO as strToISODate, dateToISO } from '../../content/dateparser'
+import { ParsedDate, parse as parseDate, strToISO as strToISODate } from '../../content/dateparser'
 
 import { parseBuffer as parsePList } from 'bplist-parser'
 
@@ -269,7 +269,6 @@ class Importer {
     const collection = this.translation.collected.collection()
     collection.type = 'collection'
     collection.name = group.name
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     collection.children = group.entries.filter(citekey => this.itemIDs[citekey]).map(citekey => ({ type: 'item', id: this.itemIDs[citekey] }))
 
     for (const subgroup of group.groups || []) {
@@ -346,6 +345,46 @@ class Importer {
 export async function importBibTeX(collected: Collected): Promise<void> {
   const importer = new Importer(collected)
   await importer.import()
+}
+
+function addDate(ref: Entry, date: ParsedDate | { type: 'none' }, verbatim: string) {
+  switch (date.type) {
+    case 'open':
+    case 'none':
+      return
+
+    case 'verbatim':
+      ref.add({ name: 'year', value: date.verbatim })
+      return
+
+    case 'interval': {
+      const { from, to } = date
+      if (typeof from.year === 'number' && typeof to.year === 'number' && from.year === to.year) {
+        addDate(ref, from, verbatim)
+      }
+      else if (from.type !== 'open' || to.type !== 'open') {
+        ref.add({ name: 'year', value: verbatim })
+      }
+      return
+    }
+
+    case 'date':
+      if (date.month) ref.add({ name: 'month', value: months[date.month - 1], bare: true })
+      if (date.orig?.type === 'date') {
+        ref.add({ name: 'year', value: `[${ date.orig.year }] ${ date.year }` })
+      }
+      else {
+        ref.add({ name: 'year', value: `${ date.year }` })
+      }
+      return
+
+    case 'season':
+      ref.add({ name: 'year', value: date.year })
+      break
+
+    default:
+      log.error(`Unexpected date type ${ JSON.stringify({ date: verbatim, parsed: date }) }`)
+  }
 }
 
 export function generateBibTeX(collected: Collected): Translation {
@@ -476,35 +515,7 @@ export function generateBibTeX(collected: Collected): Translation {
     // #1541
     if (ref.entrytype === 'inbook' && ref.has.author && ref.has.editor) delete ref.has.editor
 
-    switch (ref.date.type) {
-      case 'none':
-        break
-
-      case 'verbatim':
-        ref.add({ name: 'year', value: ref.date.verbatim })
-        break
-
-      case 'interval':
-        ref.add({ name: 'year', value: dateToISO(ref.date) })
-        break
-
-      case 'date':
-        if (ref.date.month) ref.add({ name: 'month', value: months[ref.date.month - 1], bare: true })
-        if (ref.date.orig?.type === 'date') {
-          ref.add({ name: 'year', value: `[${ ref.date.orig.year }] ${ ref.date.year }` })
-        }
-        else {
-          ref.add({ name: 'year', value: `${ ref.date.year }` })
-        }
-        break
-
-      case 'season':
-        ref.add({ name: 'year', value: ref.date.year })
-        break
-
-      default:
-        log.error(`Unexpected date type ${ JSON.stringify({ date: item.date, parsed: ref.date }) }`)
-    }
+    addDate(ref, ref.date, item.date)
 
     ref.add({ name: 'keywords', value: item.tags, enc: 'tags' })
 
@@ -642,7 +653,6 @@ class ZoteroItem {
   private validFields: Record<string, boolean>
   private patentNumberPrefix = ''
 
-  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   constructor(private translation: Translation, private item: any, private bibtex: BibTeXEntry, private jabref: JabRefMetadata) {
     // hard for users to debug, replace with regular spaces
     this.bibtex = JSON.parse(JSON.stringify(this.bibtex, (k, v) => (typeof v === 'string' ? v.replace(/\u00A0/g, ' ').trim() : v) as string))
@@ -1234,7 +1244,7 @@ class ZoteroItem {
     throw new Error(err)
   }
 
-  public import(errors: ParseError[]): boolean { // eslint-disable-line @typescript-eslint/explicit-module-boundary-types
+  public import(errors: ParseError[]): boolean {
     if (!Object.keys(this.bibtex.fields).length) {
       errors.push({ error: `No fields in ${ this.bibtex.key ? `@${ this.bibtex.key }` : 'unnamed item' }`, input: this.bibtex.input })
       return false

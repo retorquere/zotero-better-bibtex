@@ -5,66 +5,9 @@ const peggy = require('peggy')
 const shell = require('shelljs')
 const { filePathFilter } = require('file-path-filter')
 const esbuild = require('esbuild')
-const putout = require('putout')
 const child_process = require('child_process')
 const jsesc = require('jsesc')
 const pug = require('pug')
-
-const patcher = module.exports.patcher = new class {
-  constructor() {
-    this.current = null
-    this.silent = false
-    this.patched = {}
-    this.used = new Set
-  }
-
-  load(dir) {
-    let filter = []
-    for (let patchfile of fs.readdirSync(dir)) {
-      patchfile = path.join(dir, patchfile)
-      const patches = diff.parsePatch(fs.readFileSync(patchfile, 'utf-8'))
-      if (patches.length !== 1) throw new Error(`${patchfile} has ${patches.length} patches, expected 1`)
-      for (const patch of patches) {
-        if (!patch.oldFileName.endsWith('.js')) throw new Error(`${patchfile} patches non-js file ${patch.oldFileName}`)
-        if (patch.newFileName != patch.oldFileName) {
-          throw new Error(`${patchfile} renames ${JSON.stringify(patch.oldFileName)} to ${JSON.stringify(patch.newFileName)}`)
-        }
-        if (!patch.oldFileName.match(/^(node_modules|submodules|gen)/)) {
-          throw new Error(`${patchfile} patches ${JSON.stringify(patch.oldFileName)} outside node_modules/submodules`)
-        }
-        filter.push(patch.oldFileName)
-
-        const patched = path.join(process.cwd(), patch.oldFileName)
-
-        if (this.patched[patched]) throw new Error(`${patchfile} re-patches ${JSON.stringify(patch.oldFileName)}`)
-        if (!fs.existsSync(patched)) throw new Error(`${patchfile} patches non-existent ${JSON.stringify(patch.oldFileName)}`)
-
-        const cmd = `patch --quiet -o - ${JSON.stringify(patched)} ${JSON.stringify(patchfile)}`
-        this.patched[patched] = child_process.execSync(cmd).toString()
-        if (!this.patched[patched]) throw new Error(`${cmd} failed:\n${stderr || ''}`)
-      }
-    }
-    
-    filter = filter
-      .map(p => p.replace(/[.*+?^${}()\|\[\]\\\/]/g, c => c === '[' || c === ']' ? `\\${c}` : `[${c}]`))
-      .map(p => `([/]${p}$)`)
-      .join('|')
-
-    this.plugin = {
-      name: 'patcher',
-      setup(build) {
-        build.onLoad({ filter: new RegExp(filter) }, (args) => {
-          const contents = patcher.patched[args.path]
-          if (!contents) throw new Error(`${args.path} should have been patched, but no patch was found among ${JSON.stringify(Object.keys(patcher.patched))}`)
-          patcher.used.add(args.path)
-          if (!patcher.silent) console.log('  loading patched', path.relative(process.cwd(), args.path))
-          // , Object.keys(patcher.patched).filter(p => !patcher.used.has(p)).length, 'unused')
-          return { contents, loader: 'js' }
-        })
-      }
-    }
-  }
-}
 
 module.exports.text = {
   name: 'text',
@@ -74,6 +17,36 @@ module.exports.text = {
       return {
         contents: text,
         loader: 'text'
+      }
+    })
+  }
+}
+
+module.exports.resettableBinary = {
+  name: 'resettable-binary',
+  setup(build) {
+    build.onLoad({ filter: /[.]wasm$/i }, async (args) => {
+      const contents = `
+        var table = new Uint8Array(128);
+        for (var i = 0; i < 64; i++) table[i < 26 ? i + 65 : i < 52 ? i + 71 : i < 62 ? i - 4 : i * 4 - 205] = i;
+        function decode(base64) {
+          var n = base64.length, bytes = new Uint8Array((n - (base64[n - 1] == "=") - (base64[n - 2] == "=")) * 3 / 4 | 0);
+          for (var i2 = 0, j = 0; i2 < n; ) {
+            var c0 = table[base64.charCodeAt(i2++)], c1 = table[base64.charCodeAt(i2++)];
+            var c2 = table[base64.charCodeAt(i2++)], c3 = table[base64.charCodeAt(i2++)];
+            bytes[j++] = c0 << 2 | c1 >> 4;
+            bytes[j++] = c1 << 4 | c2 >> 2;
+            bytes[j++] = c2 << 6 | c3;
+          }
+          return bytes;
+        }
+
+        var wasm = { bytes: decode(${JSON.stringify(fs.readFileSync(args.path).toString('base64'))}) }
+        export default wasm
+      `
+      return {
+        contents,
+        loader: 'js'
       }
     })
   }
@@ -145,68 +118,6 @@ module.exports.__dirname = {
         loader: 'js'
       }
     })
-  }
-}
-
-let trace
-if (fs.existsSync(path.join(__dirname, '../../.trace.json'))) {
-  const branch = (process.env.GITHUB_REF && process.env.GITHUB_REF.startsWith('refs/heads/')) ? process.env.GITHUB_REF.replace('refs/heads/', '') : shell.exec('git rev-parse --abbrev-ref HEAD', { silent: true }).stdout.trim()
-  console.log('building on', branch)
-  if (branch !== 'master' && branch !== 'main') {
-    trace = require('../../.trace.json')
-    trace = trace[branch]
-    console.log(`instrumenting ${branch}: ${!!trace}`)
-  }
-}
-
-const prefix = fs.readFileSync(path.join(__dirname, 'trace.js'), 'utf-8')
-module.exports.trace = function(section) {
-  const selected = trace && trace[section] ? filePathFilter(trace[section]) : null
-
-  return {
-    name: 'trace',
-    setup(build) {
-      build.onLoad({ filter: selected ? /\.ts$/ : /^$/ }, async (args) => {
-        const source = await esbuild.transform(await fs.promises.readFile(args.path, 'utf-8'), { loader: 'ts' })
-        for (const warning of source.warnings) {
-          console.log('!!', warning)
-        }
-
-        const localpath = path.relative(process.cwd(), args.path)
-
-        // inject __estrace so sources can tell an instrumented build is active even if not on the current source
-        if (!selected(localpath)) {
-          const contents = `const __estrace = true;\n${source.code}`
-          return {
-            contents,
-            loader: 'js',
-          }
-        }
-
-        console.log(`!!!!!!!!!!!!!! Instrumenting ${localpath} for trace logging !!!!!!!!!!!!!`)
-
-        try {
-          const { estracePlugin: estrace } = await import('estrace/plugin')
-          const { code } = putout(source.code, {
-            fixCount: 1,
-            rules: {
-              // 'estrace/trace': ['on', { url: localpath, exclude: [ 'FunctionExpression', 'ArrowFunctionExpression' ] }],
-              'estrace/trace': ['on', { url: localpath }],
-            },
-            plugins: [ estrace ],
-          })
-
-          return {
-            contents: `${prefix};${code}`,
-            loader: 'js',
-          }
-        }
-        catch (err) {
-          await fs.promises.writeFile('/tmp/tt', `/* ${localpath.replace(/\.ts$/, '')}\n${err.stack}\n*/\n/${source.code}`)
-          throw err
-        }
-      })
-    }
   }
 }
 

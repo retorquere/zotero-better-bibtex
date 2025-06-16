@@ -13,10 +13,10 @@ import { Events } from './events'
 import { FilePickerHelper } from 'zotero-plugin-toolkit'
 import { flash } from './flash'
 import { icons } from './icons'
-import { Cache } from './db/cache'
+import { Cache } from './translators/worker'
 
 // safe to keep "global" since only one pref pane will be loaded at any one time
-let $window: Window & { sizeToContent(): void } // eslint-disable-line no-var
+let $window: Window & { sizeToContent(): void }
 Events.on('window-loaded', ({ win, href }: { win: Window; href: string }) => {
   switch (href) {
     case 'chrome://zotero/content/preferences/preferences.xul': // Zotero's own preferences on Z6
@@ -36,6 +36,9 @@ Events.on('preference-changed', (pref: string) => {
       break
     case 'postscript':
       Zotero.BetterBibTeX.PrefPane.checkPostscript()
+      break
+    case 'chinese':
+      $window?.document?.getElementById('bbt-chinese-splitname')?.setAttribute('disabled', Preference.chinese ? '' : 'true')
       break
   }
 })
@@ -83,7 +86,6 @@ class ZoteroPreferences {
       if (this.observed?.id === 'zotero-prefpane-export' && (node = [...mutation.addedNodes].find((added: XUL.Element) => added.id === 'zotero-prefpane-export-groupbox'))) {
         observer.disconnect()
         this.observer = new MutationObserver(this.mutated.bind(this))
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-return
         this.observed = [...node.getElementsByTagNameNS('http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul', 'menulist')].find(added => added.id === 'zotero-quickCopy-menu')
         this.observer.observe(this.observed, { childList: true, subtree: true })
       }
@@ -97,7 +99,6 @@ class ZoteroPreferences {
 
 class AutoExportPane {
   private status: Record<string, string>
-  private cacherate: Record<number, number> = {}
 
   public async load() {
     if (!this.status) {
@@ -110,10 +111,7 @@ class AutoExportPane {
     await this.refresh()
 
     Events.on('export-progress', async ({ pct, ae }) => {
-      if (ae) {
-        this.cacherate[ae] = await AutoExport.cached(ae)
-        if (pct >= 100) await this.refresh(ae)
-      }
+      if (ae) if (pct >= 100) await this.refresh(ae)
     })
   }
 
@@ -141,6 +139,8 @@ class AutoExportPane {
       const selected$path = menulist.selectedItem.value
       selected = auto_exports.find(ae => ae.path === selected$path)
     }
+
+    if (!selected && !path) selected = auto_exports.sort((a, b) => b.updated - a.updated)[0]
 
     // list changed
     if (Array.from(menupopup.children).map(ae => (ae as unknown as XUL.MenuItem).value).join('\t') !== auto_exports.map(ae => ae.path).join('\t')) {
@@ -218,8 +218,8 @@ class AutoExportPane {
       }
     }
 
-    const status = details.querySelector('*[data-ae-field=\'status\']') as unknown as XUL.Textbox
-    const progress = AutoExport.progress.get(selected.$loki)
+    const status = details.querySelector("*[data-ae-field='status']") as unknown as XUL.Textbox
+    const progress = AutoExport.progress.get(selected.path)
     if (selected.status === 'running' && typeof progress === 'number') {
       status.value = progress < 0 ? `${ icons.running } ${ this.status?.preparing || 'preparing' } ${ -progress }%` : `${ icons.running } ${ progress }%`
     }
@@ -235,9 +235,8 @@ class AutoExportPane {
       status.value = `${ icon } ${ selected.error || '' }`.trim()
     }
 
-    if (typeof this.cacherate[selected.$loki] === 'undefined') this.cacherate[selected.$loki] = 0
-    const cacherate = details.querySelector('*[data-ae-field=\'cacherate\']') as unknown as XUL.Textbox
-    cacherate.value = `${ this.cacherate[selected.$loki] }%`
+    const cacherate = details.querySelector("*[data-ae-field='cacherate']") as unknown as XUL.Textbox
+    cacherate.value = `${ Cache.rate[selected.path] || 0 }%`
   }
 
   public async remove() {
@@ -247,8 +246,7 @@ class AutoExportPane {
     if (!Services.prompt.confirm(null, l10n.localize('better-bibtex_auto-export_delete'), l10n.localize('better-bibtex_auto-export_delete_confirm'))) return
 
     const path = menulist.selectedItem.getAttribute('value')
-    const ae = AutoExport.get(path)
-    await Cache.remove(Translators.byId[ae.translatorID].label, path)
+    await Cache.Exports.dropAutoExport(path, true)
     AutoExport.remove(path)
     await this.refresh()
   }
@@ -267,15 +265,13 @@ class AutoExportPane {
       const menulist: XUL.MenuList = $window.document.querySelector('#bbt-prefs-auto-export-select') as unknown as XUL.MenuList
       path = menulist.selectedItem.getAttribute('value')
     }
-    const ae = AutoExport.get(path)
 
-    const field = node.getAttribute('data-ae-field')
-
-    await Cache.cache(Translators.byId[ae.translatorID].label)?.clear(path)
+    await Cache.Exports.dropAutoExport(path, false)
 
     let value: number | boolean | string
     let disable: 'biblatexChicago' | 'biblatexAPA' = null
 
+    const field = node.getAttribute('data-ae-field')
     switch (field) {
       case 'exportNotes':
       case 'useJournalAbbreviation':
@@ -349,7 +345,20 @@ export class PrefPane {
     let file = await new FilePickerHelper(Zotero.getString('fileInterface.export'), 'save', [[ 'BBT JSON file', '*.json' ]]).open()
     if (!file) return
     if (!file.match(/.json$/)) file = `${file}.json`
-    Zotero.File.putContents(Zotero.File.pathToFile(file), JSON.stringify({ config: { preferences: Preference.all }}, null, 2))
+
+    const options = structuredClone(Zotero.BetterBibTeX.lastExport.displayOptions)
+    delete options.cache
+    delete options.exportDir
+    delete options.exportPath
+    delete options.keepUpdated
+    delete options.worker
+
+    Zotero.File.putContents(Zotero.File.pathToFile(file), JSON.stringify({
+      config: {
+        options,
+        preferences: Preference.all,
+      },
+    }, null, 2))
   }
 
   public async importPrefs(): Promise<void> {
@@ -439,7 +448,7 @@ export class PrefPane {
     let error = ''
     try {
       // don't care about the return value, just if it throws an error
-      new Function(Preference.postscript) // eslint-disable-line @typescript-eslint/no-unused-expressions
+      new Function(Preference.postscript)
     }
     catch (err) {
       log.error('PrefPane.checkPostscript: error compiling postscript:', err)
@@ -455,7 +464,7 @@ export class PrefPane {
 
   public async cacheReset(): Promise<void> {
     Preference.cacheDelete = true
-    await Cache.clear('*')
+    await Cache.drop()
   }
 
   public async load(win: Window): Promise<void> {
@@ -471,6 +480,8 @@ export class PrefPane {
         Zotero.BetterBibTeX.PrefPane.unload()
         $window = null
       })
+
+      $window?.document?.getElementById('bbt-chinese-splitname')?.setAttribute('disabled', Preference.chinese ? '' : 'true')
 
       await this.autoexport.load()
 
@@ -512,7 +523,6 @@ export class PrefPane {
       return
     }
 
-    // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
     for (const node of (Array.from($window.document.getElementsByClassName('bbt-jurism')) as unknown[] as XUL.Element[])) {
       node.hidden = client.slug !== 'jurism'
     }

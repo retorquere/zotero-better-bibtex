@@ -7,7 +7,7 @@ tags:
   - overleaf
   - git
 aliases:
-  - /Push-and-Pull-Export
+  - /push-and-pull-export
   - /push-and-pull
 ---
 

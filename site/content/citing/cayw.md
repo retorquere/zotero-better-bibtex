@@ -2,7 +2,7 @@
 title: Cite as you Write
 weight: 4
 aliases:
-  - /Cite-as-you-Write
+  - /cite-as-you-write
   - /cayw
 tags:
   - citation keys

@@ -31,7 +31,7 @@ List attachments for an item with the given citekey
 
 
 
-**item.bibliography**(citekeys: string[], format: { contentType: ("text" | "html"); id: string; locale: string; quickCopy: boolean } = {}, library?: (string | number)): string
+**item.bibliography**(citekeys: string[], format: { contentType: ('text' | 'html'); id: string; locale: string; quickCopy: boolean } = {}, library?: (string | number)): string
 
 * citekeys: An array of citekeys
 * format: A specification of how the bibliography should be formatted
@@ -39,7 +39,7 @@ Generate a bibliography for the given citekeys
 
 
 
-**item.citationkey**(item_keys: string[]): Record<string, string>
+**item.citationkey**(item_keys: (string[] | 'selected')): Record<string, string>
 
 * item_keys: A list of [libraryID]:[itemKey] strings. If [libraryID] is omitted, assume 'My Library'
 Fetch citationkeys given item keys
@@ -79,7 +79,7 @@ Generate an export for a list of citekeys, tailored for the pandoc zotero filter
 
 
 
-**item.search**(terms: (string | ([ string ] | [ string, string ] | [ string, string, (string | number) ] | [ string, string, (string | number), boolean ])[]), library?: (string | number)): any
+**item.search**(terms: (string | ([ string, string ] | [ string ] | [ string, string, (string | number) ] | [ string, string, (string | number), boolean ])[]), library?: (string | number)): any
 
 * terms: Single string as typed into the search box in Zotero (search for Title Creator Year)
               Array of tuples similar as typed into the advanced search box in Zotero

@@ -9,7 +9,7 @@ import * as Extra from './extra'
 import { defaults } from '../gen/preferences/meta'
 import { Preference } from './prefs'
 import * as memory from './memory'
-import { Cache } from './db/cache'
+import { Cache } from './translators/worker'
 
 // import { Bench } from 'tinybench'
 
@@ -159,7 +159,7 @@ export class TestSupport {
 
     const sortedIDs = JSON.stringify(ids.slice().sort())
     for (let attempt = 1; attempt <= 10; attempt++) {
-      await zoteroPane.selectItems(ids, true) // eslint-disable-line @typescript-eslint/await-thenable
+      await zoteroPane.selectItems(ids, true)
 
       let selected
       try {
@@ -256,7 +256,7 @@ export class TestSupport {
   }
 
   public async resetCache(): Promise<void> {
-    await Cache.clear('*')
+    await Cache.drop()
   }
 
   public async merge(ids: number[]): Promise<void> {

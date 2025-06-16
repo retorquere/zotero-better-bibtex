@@ -5,7 +5,7 @@
 declare const Zotero: any
 
 import { RegularItem as Item } from '../../gen/typings/serialized-item'
-import type { ExportedItemMetadata } from '../../content/db/cache'
+import type { ExportedItemMetadata } from '../../content/worker/cache'
 import type { Translators } from '../../typings/translators'
 import * as DateParser from '../../content/dateparser'
 import fold2ascii from 'fold-to-ascii'
@@ -235,7 +235,7 @@ export class Entry {
       this.english = BabelTag[this.language] === 'en'
     }
 
-    this.extraFields = JSON.parse(JSON.stringify(item.extraFields))
+    this.extraFields = structuredClone(item.extraFields)
 
     // should be const entrytype: string | { type: string, subtype?: string }
     // https://github.com/Microsoft/TypeScript/issues/10422
@@ -1075,7 +1075,7 @@ export class Entry {
     if (!list.length) return null
     return list
       .map(elt => typeof elt === 'string' ? elt : `${ elt }`)
-      .map(elt => this.enc_literal({ ...f, value: elt.match(/(^| )and( |$)/) ? new String(elt) : elt }), options)
+      .map(elt => this.enc_literal({ ...f, value: elt.match(/(^| )and( |$)/) ? new String(elt) : elt }, options))
       .join(' and ')
   }
 
@@ -1160,7 +1160,6 @@ export class Entry {
       from.shift()
       to.shift()
     }
-    // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
     return `..${ this.translation.paths.sep }`.repeat(from.length) + to.join(this.translation.paths.sep)
   }
 
@@ -1402,7 +1401,6 @@ export class Entry {
       in the label, use {\relax van} Gogh or something like this.
     */
 
-    // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
     if (name['non-dropping-particle']) family = new String(this._enc_creators_pad_particle(name['non-dropping-particle']) + family)
     if (Zotero.Utilities.XRegExp.test(family, this.re.startsWithLowercase) || Zotero.Utilities.XRegExp.test(family, this.re.hasLowercaseWord)) family = new String(family)
 
@@ -1495,7 +1493,7 @@ export class Entry {
 
     report = report.concat(this.quality_report)
 
-    let used_values: Array<string | number> = Object.values(this.has) // eslint-disable-line @typescript-eslint/array-type
+    let used_values: Array<string | number> = Object.values(this.has)
       .filter(field => typeof field.value === 'string' || typeof field.value === 'number')
       .map(field => `${ field.value }`)
       .filter(value => value)

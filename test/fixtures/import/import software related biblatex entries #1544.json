@@ -54,10 +54,8 @@
       "importUnknownTexCommand": "ignore",
       "itemObserverDelay": 5,
       "jabrefFormat": 0,
-      "jieba": false,
       "keyConflictPolicy": "keep",
       "keyScope": "library",
-      "kuroshiro": false,
       "language": "langid",
       "mapMath": "",
       "mapText": "",
@@ -85,7 +83,9 @@
       "stringsOverride": "",
       "verbatimFields": "url,doi,file,pdf,ids,eprint,/^verb[a-z]$/,groups,/^citeulike-linkout-[0-9]+$/, /^bdsk-url-[0-9]+$/",
       "warnBulkModify": 10,
-      "warnTitleCased": false
+      "warnTitleCased": false,
+      "chinese": false,
+      "japanese": false
     },
     "options": {
       "exportNotes": true,
@@ -113,7 +113,7 @@
       "title": "Scilab",
       "creators": [
         {
-          "firstName": "François",
+          "firstName": "Fran\u00e7ois",
           "lastName": "Delebecque",
           "creatorType": "programmer"
         },

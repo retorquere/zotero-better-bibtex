@@ -2,75 +2,181 @@
 const OK = 200
 const SERVER_ERROR = 500
 const NOT_FOUND = 404
-const CONFLICT = 409
+// const CONFLICT = 409
 const BAD_REQUEST = 400
 
 import { Translators } from './translators'
-import { get as getCollection } from './collection'
-import { get as getLibrary } from './library'
+import * as Collection from './collection'
+import * as Library from './library'
 import { getItemsAsync } from './get-items-async'
 import { fromPairs } from './object'
 import { orchestrator } from './orchestrator'
 import { Server } from './server'
+import { log } from './logger'
+import { Preferences } from '../gen/preferences/meta'
 
-const isTrue = new Set([ 'y', 'yes', 'true' ])
 function displayOptions(request) {
   const query = Server.queryParams(request)
+  if (!query.worker) query.worker = 'y'
 
-  return {
-    // exportCharset: query.exportCharset || 'utf8',
-    exportNotes: isTrue.has(query.exportNotes),
-    useJournalAbbreviation: isTrue.has(query.useJournalAbbreviation),
-    worker: !query.worker || isTrue.has(query.worker),
+  const options = structuredClone(request.data || {})
+  for (const option of ['exportNotes', 'useJournalAbbreviation', 'worker']) {
+    if (query[option]) options[option] = !!query[option].match(/^(y(es)?|true)$/)
+  }
+
+  return options
+}
+
+function exportPreferences(request): Partial<Preferences> {
+  return request.data?.config?.preferences || {}
+}
+
+class Handler {
+  public supportedMethods = ['GET', 'POST']
+  public supportedDataTypes = ['application/json']
+
+  public async init(request) {
+    let urlpath: string = Server.queryParams(request)['']
+    if (urlpath[0] === '/') urlpath = urlpath.substring(1)
+    if (!urlpath) return [ NOT_FOUND, 'text/plain', 'Could not export bibliography: no path' ]
+
+    let m = urlpath.match(/[.]([^.]+)$/)
+    if (!m) return [ NOT_FOUND, 'text/plain', 'Could not export bibliography: no type' ]
+    const ext = m[1]
+    const translatorID = Translators.getTranslatorId(ext)
+    urlpath = urlpath.slice(0, -1 * m[0].length)
+
+    let library = Zotero.Libraries.get(Zotero.Libraries.userLibraryID)
+    if (m = urlpath.match(/^(group|library);(id|name):([^/]+)[/]/)) {
+      urlpath = urlpath.substring(m[0].length)
+
+      if (m[2] === 'id' && !m[3].match(/^\d+$/)) return [ NOT_FOUND, 'text/plain', `${m[1]} ID is not a number` ]
+
+      switch (`${m[1]}.${m[2]}`) {
+        case 'library.id':
+          library = Library.get({ libraryID: parseInt(m[3]) })
+          break
+        case 'library.name':
+          library = Library.get({ library: m[3] })
+          break
+        case 'group.id':
+          library = Library.get({ groupID: parseInt(m[3]) })
+          break
+        case 'group.name':
+          library = Library.get({ group: m[3] })
+          break
+      }
+    }
+    if (!library) return [ NOT_FOUND, 'text/plain', `Could not export bibliography: library ${m?.[3]} does not exist` ]
+
+    if (m = urlpath.match(/^collection(;(id|key):(.+?)[/])?/)) {
+      urlpath = urlpath.substring(m[0].length)
+      let collection: Zotero.Collection
+      switch (m[1]) {
+        case 'id':
+          if (!m[2].match(/^\d+$/)) return [ NOT_FOUND, 'text/plain', `${m[2]} ID is not a number` ]
+          collection = Zotero.Collections.get(parseInt(m[2]))
+          break
+        case 'key':
+          collection = Zotero.Collections.getByLibraryAndKey(library.libraryID, m[2]) || undefined
+          break
+        default:
+          collection = await Collection.resolve(library, urlpath)
+          break
+      }
+      if (!collection) return [ NOT_FOUND, 'text/plain', `Could not export bibliography: path '${ urlpath }' not found` ]
+
+      return [
+        OK,
+        {
+          'Content-Disposition': `attachment; filename=${JSON.stringify(collection.name + '.' + ext)}`,
+          'Content-Type': 'text/plain',
+        },
+        await Translators.exportItems({
+          translatorID,
+          displayOptions: displayOptions(request),
+          preferences: exportPreferences(request),
+          scope: { type: 'collection', collection },
+        }),
+      ]
+    }
+
+    return [
+      OK,
+      {
+        'Content-Disposition': `attachment; filename=${JSON.stringify(library.name + '.' + ext)}`,
+        'Content-Type': 'text/plain',
+      },
+      await Translators.exportItems({
+        translatorID,
+        displayOptions: displayOptions(request),
+        preferences: exportPreferences(request),
+        scope: { type: 'library', id: library.libraryID },
+      }),
+    ]
   }
 }
 
 class CollectionHandler {
-  public supportedMethods = ['GET']
+  public supportedMethods = ['GET', 'POST']
+  public supportedDataTypes = ['application/json']
 
   public async init(request) {
     const urlpath: string = Server.queryParams(request)['']
     if (!urlpath) return [ NOT_FOUND, 'text/plain', 'Could not export bibliography: no path' ]
 
-    try {
-      const [ , lib, path, translator ] = urlpath.match(/^\/(?:([0-9]+)\/)?(.*)\.([-0-9a-z]+)$/i)
+    const [ , lib, path, translator ] = urlpath.match(/^\/(?:([0-9]+)\/)?(.*)\.([-0-9a-z]+)$/i)
 
-      const libID = parseInt(lib || '0') || Zotero.Libraries.userLibraryID
+    const libraryID = Library.get({ libraryID: lib, groupID: lib })?.libraryID
+    let collection
 
-      const collection = Zotero.Collections.getByLibraryAndKey(libID, path) || (await getCollection(`/${ libID }/${ path }`))
-      if (!collection) return [ NOT_FOUND, 'text/plain', `Could not export bibliography: path '${ path }' not found` ]
-
-      return [ OK, 'text/plain', await Translators.queueJob({
-        translatorID: Translators.getTranslatorId(translator),
-        displayOptions: displayOptions(request),
-        scope: { type: 'collection', collection },
-      }) ]
+    if (typeof libraryID === 'number') {
+      try {
+        collection = Zotero.Collections.getByLibraryAndKey(libraryID, path)
+      }
+      catch (err) {
+        log.error('pull-export: resolve by key error:', err)
+      }
+      if (!collection) {
+        try {
+          collection = await Collection.get(`/${ libraryID }/${ path }`)
+        }
+        catch (err) {
+          log.error('pull-export: resolve by path error:', err)
+        }
+      }
     }
-    catch (err) {
-      return [ { notfound: NOT_FOUND, duplicate: CONFLICT, error: SERVER_ERROR }[err.kind || 'error'], 'text/plain', `${ err }` ]
-    }
+
+    if (!collection) return [ NOT_FOUND, 'text/plain', `Could not export bibliography: path '${ path }' not found` ]
+
+    return [ OK, 'text/plain', await Translators.exportItems({
+      translatorID: Translators.getTranslatorId(translator),
+      displayOptions: displayOptions(request),
+      preferences: exportPreferences(request),
+      scope: { type: 'collection', collection },
+    }) ]
   }
 }
 
 class LibraryHandler {
-  public supportedMethods = ['GET']
+  public supportedMethods = ['GET', 'POST']
+  public supportedDataTypes = ['application/json']
 
   public async init(request) {
     const urlpath: string = Server.queryParams(request)['']
     if (!urlpath) return [ NOT_FOUND, 'text/plain', 'Could not export library: no path' ]
 
     try {
-      const [ , lib, translator ] = urlpath.match(/\/?(?:([0-9]+)\/)?library\.([-0-9a-z]+)$/i)
-      const libID = parseInt(lib || '0') || Zotero.Libraries.userLibraryID
+      const [ , libraryID, translator ] = urlpath.match(/\/?(?:([0-9]+)\/)?library\.([-0-9a-z]+)$/i)
 
-      if (!Zotero.Libraries.exists(libID)) {
-        return [ NOT_FOUND, 'text/plain', `Could not export bibliography: library '${ urlpath }' does not exist` ]
-      }
+      const library = Library.get({ libraryID, groupID: libraryID })
+      if (!library) return [ NOT_FOUND, 'text/plain', `Could not export bibliography: library '${ urlpath }' does not exist` ]
 
-      return [ OK, 'text/plain', await Translators.queueJob({
+      return [ OK, 'text/plain', await Translators.exportItems({
         translatorID: Translators.getTranslatorId(translator),
         displayOptions: displayOptions(request),
-        scope: { type: 'library', id: libID },
+        preferences: exportPreferences(request),
+        scope: { type: 'library', id: library.libraryID },
       }) ]
     }
     catch (err) {
@@ -80,7 +186,8 @@ class LibraryHandler {
 }
 
 class SelectedHandler {
-  public supportedMethods = ['GET']
+  public supportedMethods = ['GET', 'POST']
+  public supportedDataTypes = ['application/json']
 
   public async init(request) {
     const translator: string = Server.queryParams(request)['']
@@ -97,9 +204,10 @@ class SelectedHandler {
         return [ OK, 'text/plain', Zotero.QuickCopy.getContentFromItems(items, format, null, true).text ]
       }
 
-      return [ OK, 'text/plain', await Translators.queueJob({
+      return [ OK, 'text/plain', await Translators.exportItems({
         translatorID: Translators.getTranslatorId(translator),
         displayOptions: displayOptions(request),
+        preferences: exportPreferences(request),
         scope: { type: 'items', items },
       }) ]
     }
@@ -109,54 +217,36 @@ class SelectedHandler {
   }
 }
 
-function isSet(v) {
-  return v ? 1 : 0
-}
-
 class ItemHandler {
-  public supportedMethods = ['GET']
+  public supportedMethods = ['GET', 'POST']
+  public supportedDataTypes = ['application/json']
 
   public async init(request) {
     await Zotero.BetterBibTeX.ready
 
     try {
-      let translator: string, citationKeys: string | string[], groupID: string | number, libraryID: string | number, library: string, group: string, pandocFilterData: string
-      ({ translator, citationKeys, groupID, libraryID, library, group, pandocFilterData } = Server.queryParams(request))
-      if ((isSet(libraryID) + isSet(library) + isSet(groupID) + isSet(group)) > 1) {
-        return [ BAD_REQUEST, 'text/plain', 'specify at most one of library(/ID) or group(/ID)' ]
-      }
-      else if (libraryID) {
-        if (!libraryID.match(/^[0-9]+$/)) return [ BAD_REQUEST, 'text/plain', `${ libraryID } is not a number` ]
-        libraryID = parseInt(libraryID)
-      }
-      else if (groupID) {
-        if (!groupID.match(/^[0-9]+$/)) return [ BAD_REQUEST, 'text/plain', `${ libraryID } is not a number` ]
-        try {
-          groupID = parseInt(groupID)
-          libraryID = Zotero.Groups.getAll().find(g => g.groupID === groupID).libraryID
-        }
-        catch {
-          libraryID = null
-        }
-      }
-      else if (library || group) {
-        libraryID = getLibrary(library || group).libraryID
-      }
-      else {
-        libraryID = Zotero.Libraries.userLibraryID
-      }
+      const params = Server.queryParams(request)
+      const { libraryID, library, groupID, group, translator } = params as unknown as { libraryID?: number; library?: string; groupID?: number; group: string; translator: string }
+      const $libraryID = Library.get({ libraryID, library, groupID, group })?.libraryID
 
-      citationKeys = Array.from(new Set(citationKeys.split(',').filter(k => k)))
+      if (typeof $libraryID !== 'number') return [ BAD_REQUEST, 'text/plain', `${JSON.stringify({ libraryID, library, groupID, group })} not found` ]
+
+      const citationKeys: string[] = Array.from(new Set(params.citationKeys.split(',').filter(k => k)))
       if (!citationKeys.length) return [ SERVER_ERROR, 'text/plain', 'no citation keys provided' ]
 
+      if (!translator) return [ SERVER_ERROR, 'text/plain', 'no translator selected' ]
       const translatorID = Translators.getTranslatorId(translator)
-      if (!translator || !translatorID) return [ SERVER_ERROR, 'text/plain', 'no translator selected' ]
+      if (!translatorID) return [ SERVER_ERROR, 'text/plain', `translator ${translator} not found` ]
 
-      const response: { items: Record<string, any>; zotero: Record<string, { itemID: number; uri: string }>; errors: Record<string, string> } = { items: {}, zotero: {}, errors: {}}
+      const response: {
+        items: Record<string, any>
+        zotero: Record<string, { itemID: number; uri: string }>
+        errors: Record<string, string>
+      } = { items: {}, zotero: {}, errors: {}}
 
       const itemIDs: Record<string, number> = {}
       for (const citationKey of citationKeys) {
-        const key = Zotero.BetterBibTeX.KeyManager.find({ where: { libraryID: <number>libraryID, citationKey }})
+        const key = Zotero.BetterBibTeX.KeyManager.find({ where: { libraryID: $libraryID, citationKey }})
 
         switch (key.length) {
           case 0:
@@ -172,11 +262,17 @@ class ItemHandler {
       }
 
       if (!Object.keys(itemIDs).length) return [ SERVER_ERROR, 'text/plain', 'no items found' ]
+
       // itemID => zotero item
       const items = fromPairs((await getItemsAsync(Object.values(itemIDs))).map(item => [ item.itemID, item ]))
-      let contents = await Translators.queueJob({ translatorID, displayOptions: displayOptions(request), scope: { type: 'items', items: Object.values(items) }})
+      let contents = await Translators.exportItems({
+        translatorID,
+        displayOptions: displayOptions(request),
+        preferences: exportPreferences(request),
+        scope: { type: 'items', items: Object.values(items) },
+      })
 
-      if (pandocFilterData) {
+      if (params.pandocFilterData) {
         let filtered_items
         switch (Translators.byId[translatorID]?.label) {
           case 'Better CSL JSON':
@@ -220,6 +316,7 @@ orchestrator.add({
     Server.register([ '/better-bibtex/export/library', '/better-bibtex/library' ], LibraryHandler)
     Server.register([ '/better-bibtex/export/selected', '/better-bibtex/select' ], SelectedHandler)
     Server.register('/better-bibtex/export/item', ItemHandler)
+    Server.register('/better-bibtex/export', Handler)
     Server.startup()
   },
 

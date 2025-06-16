@@ -8,10 +8,10 @@ import * as pug from 'pug'
 import * as fs from 'fs'
 import * as path from 'path'
 import * as glob from 'glob-promise'
-import * as peggy from 'peggy'
 import * as matter from 'gray-matter'
 import * as _ from 'lodash'
 import { walk, Lint, SelfClosing, ASTWalker as BaseASTWalker } from './pug-ast-walker'
+import { FluentBundle, FluentResource } from '@fluent/bundle'
 
 import { Eta } from 'eta'
 const eta = new Eta
@@ -36,15 +36,45 @@ const translators = glob.sync('translators/*.json')
   })
 
 const l10n = new class {
-  private strings = peggy
-    .generate(fs.readFileSync('content/dtd-file.peggy', 'utf-8'))
-    .parse(fs.readFileSync('build/locale/en-US/zotero-better-bibtex.dtd', 'utf-8')) as Record<string, string>
+  private params = {
+    entries: '{entries}',
+    error: '{error}',
+    limit: '{limit}',
+    n: '{n}',
+    path: '{path}',
+    preference: '{preference}',
+    running: '{running}',
+    seconds: '{seconds}',
+    total: '{total}',
+    translator: '{translator}',
+    treshold: '{treshold}',
+    type: '{type}',
+    version: '{version}',
+  }
 
-  private find(id: string): string {
+  private bundle: FluentBundle
+  constructor() {
+    const resource = new FluentResource(fs.readFileSync('locale/en-US/better-bibtex.ftl', 'utf-8'))
+    this.bundle = new FluentBundle("en-US")
+    const errors = this.bundle.addResource(resource)
+    if (errors.length) console.log(errors)
+  }
+
+  public find(id: string): string {
     if (id.startsWith('zotero.general.')) return `&${ id };`
     if (id.startsWith('zotero.errorReport.')) return `&${ id };`
-    if (this.strings[id]) return this.strings[id]
-    error(id, 'not in dtd')
+    if (id.includes('.')) {
+      const msg = this.bundle.getMessage(id.replace(/[.].*/, ''))
+      if (msg.attributes) {
+        const attr = msg.attributes[id.replace(/.*?[.]/, '')]
+        if (attr) return this.bundle.formatPattern(attr, this.params).replace(/[\u2068\u2069]/g, '')
+      }
+    }
+    else {
+      const msg = this.bundle.getMessage(id)
+      if (msg?.value) return this.bundle.formatPattern(msg.value, this.params).replace(/[\u2068\u2069]/g, '')
+    }
+    error(id, 'not in localization')
     return ''
   }
 
@@ -58,10 +88,18 @@ class ASTWalker extends BaseASTWalker {
   text(node) {
     switch (node.type) {
       case 'Text': return l10n.tr(node.val)
-      case 'Tag': return this.attr(node, 'label') || this.text(node.block)
+      case 'Tag': return this.l10n(node) || this.attr(node, 'label') || this.text(node.block)
       case 'Block': return node.nodes.map(n => this.text(n)).join('')
       default: return ''
     }
+  }
+
+  l10n(node) {
+    const id = super.attr(node, 'data-l10n-id')
+    if (!id) return ''
+    const tr = l10n.find(id)
+    if (tr) return tr
+    return l10n.find(`${id}.label`)
   }
 
   attr(node, name: string, required = false): string {

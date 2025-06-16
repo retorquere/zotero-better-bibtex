@@ -1,12 +1,10 @@
-/* eslint-disable @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-assignment */
-
 declare const Zotero: any
 
 import { Translation } from '../lib/translator'
 
 import { simplifyForExport } from '../../gen/items/simplify'
 import { Fields as ParsedExtraFields, get as getExtra, cslCreator } from '../../content/extra'
-import type { ExportedItem } from '../../content/db/cache'
+import type { ExportedItem } from '../../content/worker/cache'
 import * as ExtraFields from '../../gen/items/extra-fields.json'
 import { log } from '../../content/logger'
 import { RegularItem } from '../../gen/typings/serialized-item'
@@ -103,7 +101,7 @@ export abstract class CSLExporter {
 
       if (csl.type === 'broadcast' && csl.genre === 'television broadcast') delete csl.genre
 
-      const extraFields: ParsedExtraFields = JSON.parse(JSON.stringify(item.extraFields))
+      const extraFields: ParsedExtraFields = structuredClone(item.extraFields)
 
       // special case for #587... not pretty
       // checked separately because .type isn't actually a CSL var so wouldn't pass the ef.type test below
@@ -169,7 +167,6 @@ export abstract class CSLExporter {
 
       let allow: postscript.Allow = { cache: true, write: true }
       try {
-        // eslint-disable-next-line @typescript-eslint/unbound-method
         allow = this.postscript(csl, item, this.translation, Zotero, extraFields)
       }
       catch (err) {
@@ -205,7 +202,7 @@ export abstract class CSLExporter {
     return a.localeCompare(b, undefined, { sensitivity: 'base' })
   }
 
-  private sortObject(obj) {
+  private sortObject(obj: any): any {
     if (obj && !Array.isArray(obj) && typeof obj === 'object') {
       // eslint-disable-next-line @typescript-eslint/unbound-method
       for (const field of Object.keys(obj).sort(this.keySort)) {

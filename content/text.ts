@@ -3,7 +3,7 @@ import { toSentenceCase } from '@retorquere/bibtex-parser'
 import type { MarkupNode } from '../typings/markup'
 import { titleCased } from './csl-titlecase'
 
-import { parseFragment } from 'parse5'
+import { serialize, parseFragment } from 'parse5'
 
 import Language from '../gen/babel/langmap.json'
 // import Tag from '../gen/babel/tag.json'
@@ -12,7 +12,7 @@ const LanguagePrefixes = Object.keys(Language).sort().reverse().filter(prefix =>
 import charCategories = require('xregexp/tools/output/categories')
 import scripts = require('xregexp/tools/output/scripts')
 
-const re = {
+const RE = {
   Nl: charCategories.find(cat => cat.alias === 'Letter_Number').bmp,
   Nd: charCategories.find(cat => cat.alias === 'Decimal_Number').bmp,
   Mn: charCategories.find(cat => cat.alias === 'Nonspacing_Mark').bmp,
@@ -43,23 +43,20 @@ const re = {
   sentenceEnd: /^[:?]/,
 }
 
-// eslint-disable-next-line @typescript-eslint/restrict-plus-operands
-re.lcChar = re.Ll + re.Lt + re.Lm + re.Lo + re.Mn + re.Mc + re.Nd + re.Nl
-// eslint-disable-next-line @typescript-eslint/restrict-plus-operands
-re.char = re.Lu + re.lcChar
-re.L = `${ re.Lu }${ re.Ll }${ re.Lt }${ re.Lm }${ re.Lo }`
-re.protectedWord = `[${ re.lcChar }]*[${ re.Lu }][-${ re.char }]*`
+RE.lcChar = RE.Ll + RE.Lt + RE.Lm + RE.Lo + RE.Mn + RE.Mc + RE.Nd + RE.Nl
+RE.char = RE.Lu + RE.lcChar
+RE.L = `${ RE.Lu }${ RE.Ll }${ RE.Lt }${ RE.Lm }${ RE.Lo }`
+RE.protectedWord = `[${ RE.lcChar }]*[${ RE.Lu }][-${ RE.char }]*`
 
 // actual regexps
 
 // TODO: add punctuation
-re.leadingUnprotectedWord = new RegExp(`^([${ re.Lu }][${ re.lcChar }]*)[${ re.Whitespace }${ re.P }]`)
-re.protectedWords = new RegExp(`^(${ re.protectedWord })(([${ re.Whitespace }])(${ re.protectedWord }))*`)
-re.unprotectedWord = new RegExp(`^[${ re.char }]+`)
-re.url = /^(https?|mailto):\/\/[^\s]+/
-re.whitespace = new RegExp(`^[${ re.Whitespace }]+`)
+RE.leadingUnprotectedWord = new RegExp(`^([${ RE.Lu }][${ RE.lcChar }]*)[${ RE.Whitespace }${ RE.P }]`)
+RE.protectedWords = new RegExp(`^(${ RE.protectedWord })(([${ RE.Whitespace }])(${ RE.protectedWord }))*`)
+RE.unprotectedWord = new RegExp(`^[${ RE.char }]+`)
+RE.url = /^(https?|mailto):\/\/[^\s]+/
+RE.whitespace = new RegExp(`^[${ RE.Whitespace }]+`)
 
-/* eslint-disable quote-props */
 const ligatures = {
   // '\u01F1': 'DZ',
   // '\u01F2': 'Dz',
@@ -83,10 +80,9 @@ const ligatures = {
   // '\u01CB': 'Nj',
   ǌ: 'nj',
 }
-/* eslint-enable */
 
-const titleCaseKeep = new RegExp(`(?:(?:[>:?]?[${ re.Whitespace }]+)[${ re.L }][${ re.P }]?(?:[${ re.Whitespace }]|$))|(?:(?:<span class="nocase">.*?</span>)|(?:<nc>.*?</nc>))`, 'gi')
-const singleLetter = new RegExp(`^([>:?])?[${ re.Whitespace }]+(.)`)
+const titleCaseKeep = new RegExp(`(?:(?:[>:?]?[${ RE.Whitespace }]+)[${ RE.L }][${ RE.P }]?(?:[${ RE.Whitespace }]|$))|(?:(?:<span class="nocase">.*?</span>)|(?:<nc>.*?</nc>))`, 'gi')
+const singleLetter = new RegExp(`^([>:?])?[${ RE.Whitespace }]+(.)`)
 
 export function titleCase(text: string): string {
   let titlecased: string = titleCased(text)
@@ -126,7 +122,45 @@ export type HTMLParserOptions = {
   exportTitleCase?: boolean
 }
 
-export const HTMLParser = new class { // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
+const CSQuotes = new class {
+  #cache: Record<string, { open: RegExp; close: RegExp }> = {}
+
+  public open(quotes: string): RegExp {
+    this.ensure(quotes)
+    return this.#cache[quotes].open
+  }
+
+  public close(quotes: string): RegExp {
+    this.ensure(quotes)
+    return this.#cache[quotes].close
+  }
+
+  private ensure(quotes) {
+    if (!this.#cache[quotes]) {
+      this.#cache[quotes] = {
+        open: this.regex(quotes, 0),
+        close: this.regex(quotes, 1),
+      }
+    }
+  }
+
+  private escape(text: string) {
+    return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&')
+  }
+
+  private regex(str: string, close: 0 | 1): RegExp {
+    let re = this.escape(Array.from(str).filter((_, i) => i % 2 === close).join(''))
+    if (close) {
+      re = `\\s*[${re}]`
+    }
+    else {
+      re = `[${re}]\\s*`
+    }
+    return new RegExp(re, 'g')
+  }
+}
+
+export const HTMLParser = new class {
   private options: HTMLParserOptions
   private sentenceStart: boolean
   private spuriousNode = new Set([ '#document-fragment', '#document', 'div', 'span' ])
@@ -134,7 +168,7 @@ export const HTMLParser = new class { // eslint-disable-line @typescript-eslint/
   private html: string
   private ligatures = new RegExp(`[${ Object.keys(ligatures).join('') }]`, 'g')
 
-  public parse(html, options: HTMLParserOptions): MarkupNode {
+  public parse(html: string, options: HTMLParserOptions): MarkupNode {
     this.html = html
 
     let doc: MarkupNode
@@ -143,13 +177,10 @@ export const HTMLParser = new class { // eslint-disable-line @typescript-eslint/
     this.sentenceStart = true
 
     // add enquote tags.
-    const csquotes = this.options.csquotes
-    if (csquotes) {
-      const space = '\\s*'
-      for (const close of [ 0, 1 ]) {
-        const chars = csquotes.replace(/./g, (c: string, i: number) => [ c, '' ][(i + close) & 1]).replace(/[-[\]/{}()*+?.\\^$|]\s*/g, '\\$&') // eslint-disable-line no-bitwise
-        this.html = this.html.replace(new RegExp(`${ close ? space : '' }[${ chars }]${ close ? '' : space }`, 'g'), close ? '</span>' : '<span class="enquote">')
-      }
+    if (this.options.csquotes) {
+      this.html = this.html
+        .replace(CSQuotes.open(this.options.csquotes), '<span class="enquote">')
+        .replace(CSQuotes.close(this.options.csquotes), '</span>')
     }
 
     if (!this.options.html) {
@@ -157,11 +188,7 @@ export const HTMLParser = new class { // eslint-disable-line @typescript-eslint/
 
       // this pseudo-html is a PITA to parse
       this.html = this.html.replace(/<(\/?)([^<>]*)>/g, (match, close, body) => {
-        if (body.match(/^(emphasis|span|nc|sc|i|b|sup|sub|script)($|\n|\s)/i)) return match
-
-        // I should have used script from the start
-        // I think pre follows different rules where it still interprets what's inside; script just gives whatever is in there as-is
-        if (body.match(/^pre$/i)) return `<${ close || '' }script>`
+        if (body.match(/^(pre|emphasis|span|nc|sc|i|b|sup|sub|script)($|\n|\s)/i)) return match
 
         return match.replace(/</g, '&lt;').replace(/>/g, '&gt;')
       })
@@ -306,7 +333,6 @@ export const HTMLParser = new class { // eslint-disable-line @typescript-eslint/
   }
 
   private walk(node, isNocased = false) {
-    // debug('walk:', node.nodeName)
     const normalized_node: MarkupNode = { nodeName: node.nodeName, childNodes: [], attr: {}, class: {}}
     for (const { name, value } of (node.attrs || [])) {
       normalized_node.attr[name] = value
@@ -324,8 +350,20 @@ export const HTMLParser = new class { // eslint-disable-line @typescript-eslint/
     switch (node.nodeName) {
       case '#document':
       case '#document-fragment':
-      case 'pre':
         normalized_node.nodeName = 'span'
+        break
+
+      case 'script':
+        return { ...normalized_node, value: serialize(node), childNodes: [] }
+
+      case 'pre':
+        if (!this.options.html || normalized_node.class.math) {
+          return { ...normalized_node, nodeName: 'script', value: serialize(node), childNodes: [] }
+        }
+        else {
+          normalized_node.nodeName = 'span'
+          normalized_node.tt = true
+        }
         break
 
       case 'nc':
@@ -349,20 +387,7 @@ export const HTMLParser = new class { // eslint-disable-line @typescript-eslint/
     if (!normalized_node.attr.smallcaps && (normalized_node.attr.style || '').match(/small-caps/i)) normalized_node.attr.smallcaps = 'smallcaps'
     if (normalized_node.class.smallcaps || normalized_node.attr.smallcaps) normalized_node.smallcaps = true
 
-    if (normalized_node.nodeName === 'script') {
-      if (!node.childNodes || node.childNodes.length === 0) {
-        normalized_node.value = ''
-        normalized_node.childNodes = []
-      }
-      else if (node.childNodes.length === 1 && node.childNodes[0].nodeName === '#text') {
-        normalized_node.value = node.childNodes[0].value
-        normalized_node.childNodes = []
-      }
-      else {
-        throw new Error(`Unexpected script body ${ JSON.stringify(node) }`)
-      }
-    }
-    else if (node.childNodes) {
+    if (node.childNodes) {
       let m
       for (const child of node.childNodes) {
         if (child.nodeName !== '#text') {
@@ -378,24 +403,21 @@ export const HTMLParser = new class { // eslint-disable-line @typescript-eslint/
         let text = child.value
         const length = text.length
         while (text) {
-          if (m = re.whitespace.exec(text)) {
-            // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
+          if (m = RE.whitespace.exec(text)) {
             this.plaintext(normalized_node.childNodes, m[0], child.sourceCodeLocation.startOffset + (length - text.length))
             text = text.substring(m[0].length)
             continue
           }
 
-          if (m = re.sentenceEnd.exec(text)) {
-            // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
+          if (m = RE.sentenceEnd.exec(text)) {
             this.plaintext(normalized_node.childNodes, m[0], child.sourceCodeLocation.startOffset + (length - text.length))
             text = text.substring(m[0].length)
             // this.sentenceStart = true
             continue
           }
 
-          if (this.sentenceStart && (m = re.leadingUnprotectedWord.exec(`${ text } `))) {
+          if (this.sentenceStart && (m = RE.leadingUnprotectedWord.exec(`${ text } `))) {
             this.sentenceStart = false
-            // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
             this.plaintext(normalized_node.childNodes, m[1], child.sourceCodeLocation.startOffset + (length - text.length))
             text = text.substring(m[1].length)
             continue
@@ -403,23 +425,19 @@ export const HTMLParser = new class { // eslint-disable-line @typescript-eslint/
 
           this.sentenceStart = false
 
-          if (!isNocased && this.options.exportBraceProtection && (m = re.protectedWords.exec(text))) {
-            // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
+          if (!isNocased && this.options.exportBraceProtection && (m = RE.protectedWords.exec(text))) {
             this.nocase(normalized_node.childNodes, m[0], child.sourceCodeLocation.startOffset + (length - text.length))
             text = text.substring(m[0].length)
           }
-          else if (m = re.url.exec(text)) {
-            // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
+          else if (m = RE.url.exec(text)) {
             this.nocase(normalized_node.childNodes, m[0], child.sourceCodeLocation.startOffset + (length - text.length))
             text = text.substring(m[0].length)
           }
-          else if (m = re.unprotectedWord.exec(text)) {
-            // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
+          else if (m = RE.unprotectedWord.exec(text)) {
             this.plaintext(normalized_node.childNodes, m[0], child.sourceCodeLocation.startOffset + (length - text.length))
             text = text.substring(m[0].length)
           }
           else {
-            // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
             this.plaintext(normalized_node.childNodes, text[0], child.sourceCodeLocation.startOffset + (length - text.length))
             text = text.substring(1)
           }
@@ -431,7 +449,7 @@ export const HTMLParser = new class { // eslint-disable-line @typescript-eslint/
   }
 }
 
-const notAlphaNum = new RegExp(`[^${ re.L }${ re.Nd }${ re.Nl }]`)
+const notAlphaNum = new RegExp(`[^${ RE.L }${ RE.Nd }${ RE.Nl }]`)
 export function babelLanguage(language: string): string {
   if (!language) return ''
   const lc = language.toLowerCase()

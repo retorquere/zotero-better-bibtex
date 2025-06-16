@@ -156,7 +156,7 @@ async function startup({ resourceURI, rootURI = resourceURI.spec }, reason) {
   Zotero.Server.Endpoints['/debug-bridge/execute'] = class {
     constructor() {
       this.supportedMethods = ['POST']
-      this.supportedDataTypes = 'application/javascript'
+      this.supportedDataTypes = ['application/javascript', 'text/plain']
       this.permitBookmarklet = false
     }
 

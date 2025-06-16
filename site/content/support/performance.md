@@ -1,8 +1,6 @@
 ---
 title: Performance
 weight: 6
-aliases:
-  - /Performance
 tags:
   - export
   - cache

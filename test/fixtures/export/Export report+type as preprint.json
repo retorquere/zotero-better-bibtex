@@ -16,8 +16,8 @@
       "extraMergeCitekeys": true,
       "extraMergeTeX": true,
       "keyConflictPolicy": "change",
-      "kuroshiro": true,
-      "verbatimFields": "url,doi,file,eprint,verba,verbb,verbc"
+      "verbatimFields": "url,doi,file,eprint,verba,verbb,verbc",
+      "japanese": true
     }
   },
   "items": [

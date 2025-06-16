@@ -3,8 +3,6 @@ archetype: home
 title: Better BibTeX for Zotero
 description: "Make Zotero more useful for us LaTeX holdouts"
 weight: 5
-aliases:
-  - /Home
 ---
 <!-- WARNING: GENERATED FROM https://github.com/retorquere/zotero-better-bibtex/blob/master/README.md. EDITS WILL BE OVERWRITTEN -->
 

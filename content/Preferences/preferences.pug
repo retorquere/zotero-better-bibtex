@@ -61,8 +61,8 @@ preferences
   preference(name="extensions.zotero.translators.better-bibtex.quickCopySelectLink" bbt:affects="" type="string" default="zotero")
   bbt:doc Hyperlink to select items in your library
 
-  // the zero-width-space is a marker to re-save the current default so it doesn't get replaced when the default changes later, which would change new keys suddenly
-  preference(name="extensions.zotero.translators.better-bibtex.citekeyFormat" bbt:affects="" type="string" default="auth.lower + shorttitle(3,3) + year")
+  // the leading space is a marker to re-save the current default so it doesn't get replaced when the default changes later, which would change new keys suddenly
+  preference(name="extensions.zotero.translators.better-bibtex.citekeyFormat" bbt:affects="" type="string" default=" auth.lower + shorttitle(3,3) + year")
   bbt:doc Set the pattern used to generate citation keys. The format of the keys is documented [here]({{ ref . "citing" }}).
 
   preference(name="extensions.zotero.translators.better-bibtex.citekeyFormatEditing" bbt:affects="" type="string" default="")
@@ -280,11 +280,14 @@ preferences
 
     A strings override will disable caching for that export.
 
-  preference(name="extensions.zotero.translators.better-bibtex.kuroshiro" bbt:affects="" type="bool" default="false")
+  preference(name="extensions.zotero.translators.better-bibtex.japanese" bbt:affects="" type="bool" default="false")
   bbt:doc When on, BBT will load kuroshiro for romajization in citation keys. This uses a lot of memory, easily 100MB. If you don't have Japanese titles/names, keep this off.
 
-  preference(name="extensions.zotero.translators.better-bibtex.jieba" bbt:affects="" type="bool" default="false")
+  preference(name="extensions.zotero.translators.better-bibtex.chinese" bbt:affects="" type="bool" default="false")
   bbt:doc When on, BBT will make Chinese word segmentation (jieba) and transliteration (pinyin) available for citation keys generation. This uses a lot of memory, easily 70MB, and adds several seconds to the startup time of BBT. If you don't have Chinese titles/names, keep this off.
+
+  preference(name="extensions.zotero.translators.better-bibtex.chineseSplitName" bbt:affects="" type="bool" default="true")
+  bbt:doc Split all Chinese-like single-field names.
 
   preference(name="extensions.zotero.translators.better-bibtex.relativeFilePaths" bbt:affects="tex" type="bool" default="false")
   bbt:doc.

@@ -63,7 +63,6 @@ class Override {
             log.error(`better-bibtex: preference override for ${ pref }: expected ${ typeof Prefs.defaults[pref] }, got ${ typeof value }`)
           }
           else if (Prefs.options[pref] && !Prefs.options[pref][value]) {
-            // eslint-disable-next-line @typescript-eslint/no-base-to-string
             log.error(`better-bibtex: preference override for ${ pref }: expected ${ Object.keys(Prefs.options[pref]).join(' / ') }, got ${ value }`)
           }
           else {
@@ -82,7 +81,7 @@ class Override {
   }
 }
 
-export class Translation { // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
+export class Translation {
   public importToExtra: Record<string, 'plain' | 'force'>
   public skipFields: string[]
   public skipField: RegExp
@@ -95,7 +94,6 @@ export class Translation { // eslint-disable-line @typescript-eslint/naming-conv
 
   public charmap: CharMap
 
-  /* eslint-disable @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match */
   public BetterBibLaTeX?: boolean
   public BetterBibTeX?: boolean
   public BetterTeX: boolean
@@ -106,7 +104,6 @@ export class Translation { // eslint-disable-line @typescript-eslint/naming-conv
   public BetterBibTeXJSON?: boolean
   public Citationgraph?: boolean
   public Collectednotes?: boolean
-  /* eslint-enable */
   // public TeX: boolean
   // public CSL: boolean
 
@@ -219,9 +216,9 @@ export class Translation { // eslint-disable-line @typescript-eslint/naming-conv
         },
         get: (object, property: Prefs.PreferenceName) => {
           // JSON.stringify will attempt to get this
-          if (property as unknown as string === 'toJSON') return object[property] // eslint-disable-line @typescript-eslint/no-unsafe-return
+          if (property as unknown as string === 'toJSON') return object[property]
           if (!(property in allowedPreferences)) new TypeError(`Preference ${ property } claims not to affect ${ collected.translator.label }`)
-          return object[property] // eslint-disable-line @typescript-eslint/no-unsafe-return
+          return object[property]
         },
       })
     }
