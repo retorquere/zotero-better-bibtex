@@ -11,4 +11,4 @@
   note = {[The programs are available from, and updates to them are documented in, \url{https://www.whoi.edu/cms/files/Fortran_30425.htm} (2007).]}
 }
 % == BibLateX quality report for BrinkKH.ChapmanDC:1987:
-% duplicate "note" ("<div data-schema-version="9"><p>Its 1st edition is https://<span style="color: rgb(33, 37, 41)"><span style="background-color: rgb(255, 255, 255)">10.1575/1912/5363</span></span> . WHOI 85-17. &nbsp;The circumstances of the publication of the 2nd ed is documented in the foreword of the 2nd ed.</p> </div>") ignored
+% duplicate "note" ("<div data-schema-version="9"><p>its 1st edition is https://<span style="color: rgb(33, 37, 41)"><span style="background-color: rgb(255, 255, 255)">10.1575/1912/5363</span></span> . whoi 85-17. &nbsp;the circumstances of the publication of the 2nd ed is documented in the foreword of the 2nd ed.</p> </div>") ignored
