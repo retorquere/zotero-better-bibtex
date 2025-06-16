@@ -27,6 +27,7 @@ export async function resolve(library: Zotero.Library, path: string, create = fa
   path = ''
   for (const name of names) {
     path += `/${name}`
+
     let found: Zotero.Collection[]
     for (const tx of [ (n: string) => n, (n: string) => n.toLowerCase() ]) {
       found = children.filter(coll => tx(coll.name) === tx(name))
@@ -54,7 +55,7 @@ export async function resolve(library: Zotero.Library, path: string, create = fa
       })
       await collection.saveTx()
     }
-    children = Zotero.Collections.getByParent(parent.id)
+    children = Zotero.Collections.getByParent(collection.id)
   }
 
   return collection
