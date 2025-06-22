@@ -183,7 +183,7 @@ Functions auth(n: number = 0, m: number = 1, creator: (&#39;author&#39; | &#39;e
 
   <h3><b>authEtAl</b>(creator: (&#39;author&#39; | &#39;editor&#39; | &#39;translator&#39; | &#39;collaborator&#39; | &#39;*&#39;) = &#39;*&#39;, initials: boolean = false, sep: string = &#39; &#39;)</h3><p>The last name of the first author, and the last name of the
 second author if there are two authors or "EtAl" if there are
-more than two. This is similar to <code>auth.etal</code>. The difference
+more than two. This is similar to <code>authEtal2</code>. The difference
 is that the authors are not separated by "." and in case of
 more than 2 authors "EtAl" instead of ".etal" is appended.</p><table><tr><th><b>parameter</b></th><th>type</th><th>default</th><th/></tr><tr><td><code>creator</code></td><td>('author' | 'editor' | 'translator' | 'collaborator' | '*')</td><td><code>'*'</code></td><td>kind of creator to select, <code>*</code> selects <code>author</code> first, and if not present, <code>editor</code>, <code>translator</code> or <code>collaborator</code>, in that order.</td></tr><tr><td><code>initials</code></td><td>boolean</td><td><code>false</code></td><td>add author initials</td></tr><tr><td><code>sep</code></td><td>string</td><td><code>' '</code></td><td>use this character between authors</td></tr></table>
 
