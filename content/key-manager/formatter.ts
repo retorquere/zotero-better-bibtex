@@ -760,7 +760,7 @@ export class PatternFormatter {
   /**
    * The last name of the first author, and the last name of the
    * second author if there are two authors or "EtAl" if there are
-   * more than two. This is similar to `auth.etal`. The difference
+   * more than two. This is similar to `authEtal2`. The difference
    * is that the authors are not separated by "." and in case of
    * more than 2 authors "EtAl" instead of ".etal" is appended.
    * @param creator   kind of creator to select, `*` selects `author` first, and if not present, `editor`, `translator` or `collaborator`, in that order.
