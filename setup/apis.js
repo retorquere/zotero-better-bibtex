@@ -424,7 +424,8 @@ function KeyManager() {
       return `${name}: ${type}${dflt}`
     }).join(', ')
     summary = summary ? `(${summary})` : ''
-    summary = `<b>${escapeHTML(method.name.substring(1))}</b>${escapeHTML(summary)}`
+    // summary = `<b>${escapeHTML(method.name.substring(1))}</b>${escapeHTML(summary)}`
+    summary = `<b>${escapeHTML(method.name.substring(1))}</b>}`
 
     let description = signature.comment.summary.map(s => {
       if (!s.kind.match(/^(code|text)$/)) throw s
@@ -433,7 +434,21 @@ function KeyManager() {
     description = render(description || '')
 
     parameters = parameters.length
-      ? `<table><tr><th><b>parameter</b></th><th>type</th><th>default</th><th/></tr>${parameters.map(p => `<tr><td>${p.name}</td><td>${p.type}</td><td>${p.default}</td><td>${p.doc}</td></tr>`).join('')}</table>`
+      ? `<table>
+          <tr>
+            <th><b>parameter</b></th>
+            <th/>
+            <th>default</th>
+            <th>allowed values</th>
+          </tr>
+          ${parameters.map(p => `
+            <tr>
+              <td>${p.name}</td>
+              <td>${p.doc}</td>
+              <td>${p.default}</td>
+              <td>${p.type}</td>
+            </tr>`).join('')}
+          </table>`
       : ''
 
     const kind = method.name[0]
