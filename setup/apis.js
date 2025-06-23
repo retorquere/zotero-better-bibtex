@@ -412,7 +412,10 @@ function KeyManager() {
 
       const name = (p.flags.isRest ? `...${p.name}` : p.name) + (p.flags.isOptional ? '?' : '')
       const type = typePrinter.print(p.type)
-      const dflt = typeof p.defaultValue === 'undefined' ? '' : ` = ${p.defaultValue}`
+      // const dflt = typeof p.defaultValue === 'undefined' ? '' : ` = ${p.defaultValue}`
+      const dflt = !p.flags.isOptional && !p.defaultValue
+        ? '[must be provided]'
+        : typeof p.defaultValue === 'undefined' ? 'undefined' : p.defaultValue
 
       parameters.push({
         name: `<code>${render(p.name)}</code>`,
@@ -421,11 +424,11 @@ function KeyManager() {
         doc: render(p.comment.summary.map(c => c.text).join('')),
       })
 
-      return `${name}: ${type}${dflt}`
+      // return `${name}: ${type}${dflt}`
+      return `${name}=${dflt}`
     }).join(', ')
     summary = summary ? `(${summary})` : ''
-    // summary = `<b>${escapeHTML(method.name.substring(1))}</b>${escapeHTML(summary)}`
-    summary = `<b>${escapeHTML(method.name.substring(1))}</b>`
+    summary = `<b>${escapeHTML(method.name.substring(1))}</b>${escapeHTML(summary)}`
 
     let description = signature.comment.summary.map(s => {
       if (!s.kind.match(/^(code|text)$/)) throw s
