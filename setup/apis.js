@@ -203,6 +203,11 @@ class SchemaBuilder {
     this.#source = source
   }
 
+  oneOf(values) {
+    const quoted = s => s.match(/^[a-z]+$/i) ? s : "'" + s + "'"
+    return `one or more of ${values.map(s => '`' + quoted(s) + '`').join(', ')}`
+  }
+
   make(type) {
     type = flattenUnion(patch(type))
 
@@ -271,19 +276,19 @@ class SchemaBuilder {
         return { enum: ['author', 'editor', 'translator', 'collaborator', '*'] }
 
       case 'reference.zotero-better-bibtex.CreatorType':
-        this.#description.creatorType = `\ncreator type can be one of ${Zotero.creatorTypes.map(t => '`' + t + '`').join(', ')}\n`
+        this.#description.creatorType = `\ncreator type can be ${this.oneOf(Zotero.creatorTypes)}\n`
         return { type: 'string', format: 'creator-type' }
 
       case 'reference.zotero-better-bibtex.ItemType':
-        this.#description.itemType = `\ncreator type can be one of ${Zotero.itemTypes.map(t => '`' + t + '`').join(', ')}\n`
+        this.#description.itemType = `\ncreator type can be ${this.oneOf(Zotero.itemTypes)}\n`
         return { type: 'string', format: 'item-type' }
 
       case 'reference.zotero-better-bibtex.ItemField':
-        this.#description.itemField = `\nfield can be one of ${Zotero.fields.map(t => '`' + t + '`').join(', ')}\n`
+        this.#description.itemField = `\nfield can be ${this.oneOf(Zotero.fields)}\n`
         return { type: 'string', format: 'item-field' }
 
       case 'reference.zotero-better-bibtex.BabelLanguage':
-        this.#description.babelLanguage = `\nlanguage can be one of ${Babel.languages.map(t => '`' + t + '`').join(', ')}\n`
+        this.#description.babelLanguage = `\nlanguage can be ${this.oneOf(Babel.languages)}\n`
         return { type: 'string', format: 'babel-language' }
 
       case 'reference.zotero-better-bibtex.TransliterateMode':
@@ -345,6 +350,10 @@ function escapeHTML(str) {
 const Formatter = ast(path.join(root, 'content/key-manager/formatter.ts'))
 const formatter = Formatter.children.find(child => child.name === 'PatternFormatter')
 const methods = formatter.children.filter(child => child.variant === 'declaration' && child.name.match(/^[$_]/))
+
+function parameter(p) {
+  return `${p.name}=${p.flags.isRest ? '...' : (p.defaultValue || '?')}`
+}
 
 function KeyManager() {
   const section = {
@@ -410,22 +419,19 @@ function KeyManager() {
 
       if (!p.flags.isOptional && !p.defaultValue) apispec[_name].required.push(p.name)
 
-      const name = (p.flags.isRest ? `...${p.name}` : p.name) + (p.flags.isOptional ? '?' : '')
-      const type = typePrinter.print(p.type)
+      // const name = (p.flags.isRest ? `...${p.name}` : p.name) + (p.flags.isOptional ? '?' : '')
+      // const type = typePrinter.print(p.type)
       // const dflt = typeof p.defaultValue === 'undefined' ? '' : ` = ${p.defaultValue}`
-      const dflt = !p.flags.isOptional && !p.defaultValue
-        ? '[must be provided]'
-        : typeof p.defaultValue === 'undefined' ? 'undefined' : p.defaultValue
 
       parameters.push({
         name: `<code>${render(p.name)}</code>`,
-        type: render(type),
+        type: render(typePrinter.print(p.type)),
         default: typeof p.defaultValue === 'undefined' ? '' : `<code>${p.defaultValue}</code>`,
         doc: render(p.comment.summary.map(c => c.text).join('')),
+        mandatory: !p.flags.isOptional && !p.defaultValue ? 'none; must be provided' : ''
       })
 
-      // return `${name}: ${type}${dflt}`
-      return `${name}=${dflt}`
+      return parameter(p)
     }).join(', ')
     summary = summary ? `(${summary})` : ''
     summary = `<b>${escapeHTML(method.name.substring(1))}</b>${escapeHTML(summary)}`
@@ -441,17 +447,15 @@ function KeyManager() {
           <tr>
             <th><b>parameter</b></th>
             <th/>
-            <th>when not specified</th>
-            <th>allowed values</th>
-          </tr>
-          ${parameters.map(p => `
-            <tr>
-              <td>${p.name}</td>
-              <td>${p.doc}</td>
-              <td>${p.default}</td>
-              <td>${p.type}</td>
-            </tr>`).join('')}
-          </table>`
+            <th>value assumed when not provided</th>
+            <th>valid values</th>
+          </tr>${parameters.map(p => `
+          <tr>
+            <td>${p.name}</td>
+            <td>${p.doc}</td>
+            <td>${p.mandatory || p.default}</td>
+            <td>${p.type}</td>
+          </tr>`).join('')}</table>`
       : ''
 
     const kind = method.name[0]
@@ -515,10 +519,10 @@ function JSONRPC() {
         if (!p.flags.isOptional) apispec[methodname].required.push(p.name)
         apispec[methodname].validate[p.name] = makeValidator(builder.make(p.type))
 
-        const name = (p.flags.isRest ? `...${p.name}` : p.name) + (p.flags.isOptional ? '?' : '')
-        const type = typePrinter.print(p.type)
-        const dflt = typeof p.defaultValue === 'undefined' ? '' : ` = ${p.defaultValue}`
-        return `${name}: ${type}${dflt}`
+        // const name = (p.flags.isRest ? `...${p.name}` : p.name) + (p.flags.isOptional ? '?' : '')
+        // const type = typePrinter.print(p.type)
+        // const dflt = typeof p.defaultValue === 'undefined' ? '' : ` = ${p.defaultValue}`
+        return parameter(p)
       }).join(', ')
       const returnType = `: ${typePrinter.print(signature.type.typeArguments[0])}`.replace(': void', '')
 
