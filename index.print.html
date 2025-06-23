@@ -12184,7 +12184,7 @@ that you want to include in the collection.</p>
 <p>Note: a number of functions below talk about the author&rsquo;s lastname; you can read that as &ldquo;when available&rdquo;. If you have the name as a single-field name (for entities like <code>International Business Machines</code> or <code>Aristoteles</code>), Zotero doesn&rsquo;t have a last name, and the full single-field name is taken instead.</p>
 <h2 id="functions">Functions</h2>
 
-  <h3><b>auth</b></h3><p>The first <code>n</code> (default: all) characters of the <code>m</code>th (default: first) author's last name.</p><table>
+  <h3><b>auth</b>(n=0, m=1, creator=&#39;*&#39;, initials=false)</h3><p>The first <code>n</code> (default: all) characters of the <code>m</code>th (default: first) author's last name.</p><table>
           <tr>
             <th><b>parameter</b></th>
             <th/>
@@ -12218,7 +12218,7 @@ that you want to include in the collection.</p>
             </tr>
           </table>
 
-  <h3><b>authAuthEa</b></h3><p>The last name of the first two authors, and ".ea" if there are more than two.</p><table>
+  <h3><b>authAuthEa</b>(creator=&#39;*&#39;, initials=false, sep=&#39;.&#39;)</h3><p>The last name of the first two authors, and ".ea" if there are more than two.</p><table>
           <tr>
             <th><b>parameter</b></th>
             <th/>
@@ -12246,7 +12246,7 @@ that you want to include in the collection.</p>
             </tr>
           </table>
 
-  <h3><b>authEtAl</b></h3><p>The last name of the first author, and the last name of the
+  <h3><b>authEtAl</b>(creator=&#39;*&#39;, initials=false, sep=&#39; &#39;)</h3><p>The last name of the first author, and the last name of the
 second author if there are two authors or "EtAl" if there are
 more than two. This is similar to <code>authEtal2</code>. The difference
 is that the authors are not separated by "." and in case of
@@ -12278,7 +12278,7 @@ more than 2 authors "EtAl" instead of ".etal" is appended.</p><table>
             </tr>
           </table>
 
-  <h3><b>authEtal2</b></h3><p>The last name of the first author, and the last name of the second author if there are two authors or ".etal" if there are more than two.</p><table>
+  <h3><b>authEtal2</b>(creator=&#39;*&#39;, initials=false, sep=&#39;.&#39;)</h3><p>The last name of the first author, and the last name of the second author if there are two authors or ".etal" if there are more than two.</p><table>
           <tr>
             <th><b>parameter</b></th>
             <th/>
@@ -12306,7 +12306,7 @@ more than 2 authors "EtAl" instead of ".etal" is appended.</p><table>
             </tr>
           </table>
 
-  <h3><b>authForeIni</b></h3><p>The given-name initial of the first author.</p><table>
+  <h3><b>authForeIni</b>(creator=&#39;*&#39;)</h3><p>The given-name initial of the first author.</p><table>
           <tr>
             <th><b>parameter</b></th>
             <th/>
@@ -12322,7 +12322,7 @@ more than 2 authors "EtAl" instead of ".etal" is appended.</p><table>
             </tr>
           </table>
 
-  <h3><b>authIni</b></h3><p>The beginning of each author's last name, using no more than <code>n</code> characters (0 = all).</p><table>
+  <h3><b>authIni</b>(n=0, creator=&#39;*&#39;, initials=false, sep=&#39;.&#39;)</h3><p>The beginning of each author's last name, using no more than <code>n</code> characters (0 = all).</p><table>
           <tr>
             <th><b>parameter</b></th>
             <th/>
@@ -12356,7 +12356,7 @@ more than 2 authors "EtAl" instead of ".etal" is appended.</p><table>
             </tr>
           </table>
 
-  <h3><b>authorIni</b></h3><p>The first 5 characters of the first author's last name, and the last name initials of the remaining authors.</p><table>
+  <h3><b>authorIni</b>(creator=&#39;*&#39;, initials=false, sep=&#39;.&#39;)</h3><p>The first 5 characters of the first author's last name, and the last name initials of the remaining authors.</p><table>
           <tr>
             <th><b>parameter</b></th>
             <th/>
@@ -12384,7 +12384,7 @@ more than 2 authors "EtAl" instead of ".etal" is appended.</p><table>
             </tr>
           </table>
 
-  <h3><b>authorLast</b></h3><p>The last name of the last author</p><table>
+  <h3><b>authorLast</b>(creator=&#39;*&#39;, initials=false)</h3><p>The last name of the last author</p><table>
           <tr>
             <th><b>parameter</b></th>
             <th/>
@@ -12406,7 +12406,7 @@ more than 2 authors "EtAl" instead of ".etal" is appended.</p><table>
             </tr>
           </table>
 
-  <h3><b>authorLastForeIni</b></h3><p>The given-name initial of the last author.</p><table>
+  <h3><b>authorLastForeIni</b>(creator=&#39;*&#39;)</h3><p>The given-name initial of the last author.</p><table>
           <tr>
             <th><b>parameter</b></th>
             <th/>
@@ -12422,7 +12422,7 @@ more than 2 authors "EtAl" instead of ".etal" is appended.</p><table>
             </tr>
           </table>
 
-  <h3><b>authorsAlpha</b></h3><p>Corresponds to the BibTeX style "alpha". One author: First three letters of the last name. Two to four authors: First letters of last names concatenated.
+  <h3><b>authorsAlpha</b>(creator=&#39;*&#39;, initials=false, sep=&#39; &#39;)</h3><p>Corresponds to the BibTeX style "alpha". One author: First three letters of the last name. Two to four authors: First letters of last names concatenated.
 More than four authors: First letters of last names of first three authors concatenated. "+" at the end.</p><table>
           <tr>
             <th><b>parameter</b></th>
@@ -12451,7 +12451,7 @@ More than four authors: First letters of last names of first three authors conca
             </tr>
           </table>
 
-  <h3><b>authorsn</b></h3><p>The last names of the first <code>n</code> (default: all) authors.</p><table>
+  <h3><b>authorsn</b>(n=0, creator=&#39;*&#39;, initials=false, sep=&#39; &#39;)</h3><p>The last names of the first <code>n</code> (default: all) authors.</p><table>
           <tr>
             <th><b>parameter</b></th>
             <th/>
@@ -12485,7 +12485,7 @@ More than four authors: First letters of last names of first three authors conca
             </tr>
           </table>
 
-  <h3><b>authshort</b></h3><p>The last name if one author/editor is given; the first character
+  <h3><b>authshort</b>(creator=&#39;*&#39;, initials=false, sep=&#39;.&#39;)</h3><p>The last name if one author/editor is given; the first character
 of up to three authors' last names if more than one author is
 given. A plus character is added, if there are more than three
 authors.</p><table>
@@ -12516,7 +12516,7 @@ authors.</p><table>
             </tr>
           </table>
 
-  <h3><b>creatornames</b></h3><p>Sets the sprintf-template default for representing creator names. Default is '%(f)s'.</p>
+  <h3><b>creatornames</b>(template?=undefined, transliterate?=undefined)</h3><p>Sets the sprintf-template default for representing creator names. Default is '%(f)s'.</p>
 <p>in the creator template, you can use:</p>
 <ul>
 <li><code>%(f)s</code>: family ("last") name</li>
@@ -12547,7 +12547,7 @@ authors.</p><table>
             </tr>
           </table>
 
-  <h3><b>creators</b></h3><p>Author/editor information.</p>
+  <h3><b>creators</b>(n=0, type=[[&#39;primary&#39;, &#39;editor&#39;, &#39;translator&#39;, &#39;*&#39;]], name=&#39;&#39;, etal=&#39;&#39;, sep=&#39; &#39;, min=0, max=0)</h3><p>Author/editor information.</p>
 <p>creator type can be one of <code>artist</code>, <code>attorneyAgent</code>, <code>author</code>, <code>bookAuthor</code>, <code>cartographer</code>, <code>castMember</code>, <code>commenter</code>, <code>composer</code>, <code>contributor</code>, <code>cosponsor</code>, <code>counsel</code>, <code>director</code>, <code>editor</code>, <code>guest</code>, <code>interviewee</code>, <code>interviewer</code>, <code>inventor</code>, <code>performer</code>, <code>podcaster</code>, <code>presenter</code>, <code>producer</code>, <code>programmer</code>, <code>recipient</code>, <code>reviewedAuthor</code>, <code>scriptwriter</code>, <code>seriesEditor</code>, <code>sponsor</code>, <code>translator</code>, <code>wordsBy</code></p>
 <p>in the creator template, you can use:</p>
 <ul>
@@ -12609,7 +12609,7 @@ authors.</p><table>
             </tr>
           </table>
 
-  <h3><b>creatortypes</b></h3><p>This will return a comma-separated list of creator type information for all creators on the item
+  <h3><b>creatortypes</b>(match?=undefined)</h3><p>This will return a comma-separated list of creator type information for all creators on the item
 in the form <code>&lt;1 or 2&gt;&lt;creator-type&gt;</code>, where <code>1</code> or <code>2</code> denotes a 1-part or 2-part creator, and <code>creator-type</code> is one of {{% citekey-formatters/creatortypes %}}, or <code>primary</code> for
 the primary creator-type of the Zotero item under consideration. The list is prefixed by the item type, so might look like <code>audioRecording:2performer,2performer,1composer</code>.</p><table>
           <tr>
@@ -12627,7 +12627,7 @@ the primary creator-type of the Zotero item under consideration. The list is pre
             </tr>
           </table>
 
-  <h3><b>date</b></h3><p>The date of the publication</p><table>
+  <h3><b>date</b>(format=&#39;%Y-%m-%d&#39;)</h3><p>The date of the publication</p><table>
           <tr>
             <th><b>parameter</b></th>
             <th/>
@@ -12643,7 +12643,7 @@ the primary creator-type of the Zotero item under consideration. The list is pre
             </tr>
           </table>
 
-  <h3><b>extra</b></h3><p>A pseudo-field from the extra field. eg if you have <code>Original date: 1970</code> in your <code>extra</code> field, you can get it as
+  <h3><b>extra</b>(variable=[must be provided])</h3><p>A pseudo-field from the extra field. eg if you have <code>Original date: 1970</code> in your <code>extra</code> field, you can get it as
 <code>extra(originalDate)</code>, or <code>tex.shortauthor: APA</code> which you could
 get with <code>extra('tex.shortauthor')</code>. Any <code>tex.</code> field will be
 picked up, the other fields can be selected from <a href="https://retorque.re/zotero-better-bibtex/exporting/extra-fields/">this list</a>
@@ -12667,7 +12667,7 @@ of key names.</p><table>
 will return the lowest number found in the pages field, since
 BibTeX allows <code>7,41,73--97</code> or <code>43+</code>.)</p>
 
-  <h3><b>group</b></h3><p>Tests whether the item is in the given group library</p><table>
+  <h3><b>group</b>(name=[must be provided])</h3><p>Tests whether the item is in the given group library</p><table>
           <tr>
             <th><b>parameter</b></th>
             <th/>
@@ -12683,7 +12683,7 @@ BibTeX allows <code>7,41,73--97</code> or <code>43+</code>.)</p>
             </tr>
           </table>
 
-  <h3><b>infix</b></h3><p>a pseudo-function that sets the citekey disambiguation infix using an <a href="https://www.npmjs.com/package/sprintf-js">sprintf-js</a> format spec
+  <h3><b>infix</b>(format=&#39;%(a)s&#39;, start=0)</h3><p>a pseudo-function that sets the citekey disambiguation infix using an <a href="https://www.npmjs.com/package/sprintf-js">sprintf-js</a> format spec
 for when a key is generated that already exists. The infix charachter appears at the place of this function of the formula instead of at the and (as postfix does).
 You <em>must</em> include <em>exactly one</em> of the placeholders <code>%(n)s</code> (number), <code>%(a)s</code> (alpha, lowercase) or <code>%(A)s</code> (alpha, uppercase).
 For the rest of the disambiguator you can use things like padding and extra text as sprintf-js allows. With start set to <code>1</code> the disambiguator is always included,
@@ -12717,7 +12717,7 @@ even if there is no need for it when no duplicates exist. The default  format is
 
   <h3><b>inspireHep</b></h3><p>Fetches the key from inspire-hep based on DOI or arXiv ID</p>
 
-  <h3><b>item</b></h3><p>returns the internal item ID/key</p><table>
+  <h3><b>item</b>(id=&#39;key&#39;)</h3><p>returns the internal item ID/key</p><table>
           <tr>
             <th><b>parameter</b></th>
             <th/>
@@ -12733,7 +12733,7 @@ even if there is no need for it when no duplicates exist. The default  format is
             </tr>
           </table>
 
-  <h3><b>journal</b></h3><p>returns the journal abbreviation, or, if not found, the journal title, If 'automatic journal abbreviation' is enabled in the BBT settings,
+  <h3><b>journal</b>(abbrev=&#39;abbrev+auto&#39;)</h3><p>returns the journal abbreviation, or, if not found, the journal title, If 'automatic journal abbreviation' is enabled in the BBT settings,
 it will use the same abbreviation filter Zotero uses in the wordprocessor integration. You might want to use the <code>abbr</code> filter on this.
 Abbreviation behavior can be specified as <code>abbrev+auto</code> (the default) which uses the explicit journal abbreviation if present, and tries the automatic
 abbreviator if not (if auto-abbrev is enabled in the preferences), <code>auto</code> (skip explicit journal abbreviation even if present), <code>abbrev</code>
@@ -12753,7 +12753,7 @@ abbreviator if not (if auto-abbrev is enabled in the preferences), <code>auto</c
             </tr>
           </table>
 
-  <h3><b>keyword</b></h3><p>Tag number <code>n</code>. Mostly for legacy compatibility</p><table>
+  <h3><b>keyword</b>(n=[must be provided])</h3><p>Tag number <code>n</code>. Mostly for legacy compatibility</p><table>
           <tr>
             <th><b>parameter</b></th>
             <th/>
@@ -12769,7 +12769,7 @@ abbreviator if not (if auto-abbrev is enabled in the preferences), <code>auto</c
             </tr>
           </table>
 
-  <h3><b>language</b></h3><p>Tests whether the item has the given language set, and skips to the next pattern if not</p>
+  <h3><b>language</b>(...name=[must be provided])</h3><p>Tests whether the item has the given language set, and skips to the next pattern if not</p>
 <p>language can be one of <code>ame</code>, <code>american</code>, <code>american english</code>, <code>americanenglish</code>, <code>ar</code>, <code>ar-ar</code>, <code>ar-dz</code>, <code>ar-eg</code>, <code>ar-iq</code>, <code>ar-jo</code>, <code>ar-lb</code>, <code>ar-ma</code>, <code>ar-ps</code>, <code>ar-sa</code>, <code>ar-sy</code>, <code>ar-tn</code>, <code>ara</code>, <code>arabic</code>, <code>arabic-algeria</code>, <code>arabic-dz</code>, <code>arabic-eg</code>, <code>arabic-egypt</code>, <code>arabic-iq</code>, <code>arabic-iraq</code>, <code>arabic-jo</code>, <code>arabic-jordan</code>, <code>arabic-lb</code>, <code>arabic-lebanon</code>, <code>arabic-ma</code>, <code>arabic-morocco</code>, <code>arabic-palestinianterritories</code>, <code>arabic-ps</code>, <code>arabic-sa</code>, <code>arabic-saudiarabia</code>, <code>arabic-sy</code>, <code>arabic-syria</code>, <code>arabic-tn</code>, <code>arabic-tunisia</code>, <code>australian</code>, <code>australian english</code>, <code>australianenglish</code>, <code>austrian</code>, <code>austrian german</code>, <code>austrian-traditional</code>, <code>austriangerman</code>, <code>austriangerman-traditional</code>, <code>bri</code>, <code>british</code>, <code>british english</code>, <code>britishenglish</code>, <code>canadian</code>, <code>canadian english</code>, <code>canadianenglish</code>, <code>chinese</code>, <code>chinese-hans</code>, <code>chinese-hans-hk</code>, <code>chinese-hans-mo</code>, <code>chinese-hans-sg</code>, <code>chinese-hant</code>, <code>chinese-hant-hk</code>, <code>chinese-hant-mo</code>, <code>chinese-simplified</code>, <code>chinese-simplified-hongkongsarchina</code>, <code>chinese-simplified-macausarchina</code>, <code>chinese-simplified-singapore</code>, <code>chinese-traditional</code>, <code>chinese-traditional-hongkongsarchina</code>, <code>chinese-traditional-macausarchina</code>, <code>de</code>, <code>de-1901</code>, <code>de-1996</code>, <code>de-at</code>, <code>de-at-1901</code>, <code>de-at-1996</code>, <code>de-ch</code>, <code>de-ch-1901</code>, <code>de-ch-1996</code>, <code>de-de</code>, <code>deutsch</code>, <code>en</code>, <code>en-au</code>, <code>en-ca</code>, <code>en-en</code>, <code>en-gb</code>, <code>en-nz</code>, <code>en-us</code>, <code>eng</code>, <code>english</code>, <code>english-au</code>, <code>english-australia</code>, <code>english-ca</code>, <code>english-canada</code>, <code>english-gb</code>, <code>english-newzealand</code>, <code>english-nz</code>, <code>english-unitedkingdom</code>, <code>english-unitedstates</code>, <code>english-us</code>, <code>ger</code>, <code>german</code>, <code>german-at</code>, <code>german-at-traditional</code>, <code>german-austria</code>, <code>german-austria-traditional</code>, <code>german-ch</code>, <code>german-ch-traditional</code>, <code>german-switzerland</code>, <code>german-switzerland-traditional</code>, <code>german-traditional</code>, <code>ja</code>, <code>ja-ja</code>, <code>jap</code>, <code>japanese</code>, <code>nau</code>, <code>naustrian</code>, <code>newzealand</code>, <code>nge</code>, <code>ngerman</code>, <code>nsw</code>, <code>nswissgerman</code>, <code>schweizer hochdeutsch</code>, <code>simplified chinese</code>, <code>swiss high german</code>, <code>swisshighgerman</code>, <code>swisshighgerman-traditional</code>, <code>traditional chinese</code>, <code>tw</code>, <code>ukenglish</code>, <code>usenglish</code>, <code>zh</code>, <code>zh-hans</code>, <code>zh-hans-hk</code>, <code>zh-hans-mo</code>, <code>zh-hans-sg</code>, <code>zh-hant</code>, <code>zh-hant-hk</code>, <code>zh-hant-mo</code>, <code>zh-tw</code>, <code>zh-zh</code>, <code>österreichisches deutsch</code>, <code>العربية</code>, <code>中文</code>, <code>中文-中文</code>, <code>日本語</code>, <code>简体中文</code>, <code>繁體中文</code></p><table>
           <tr>
             <th><b>parameter</b></th>
@@ -12796,7 +12796,7 @@ abbreviator if not (if auto-abbrev is enabled in the preferences), <code>auto</c
 
   <h3><b>origyear</b></h3><p>the original year of the publication</p>
 
-  <h3><b>postfix</b></h3><p>a pseudo-function that sets the citekey disambiguation postfix using an <a href="https://www.npmjs.com/package/sprintf-js">sprintf-js</a> format spec
+  <h3><b>postfix</b>(format=&#39;%(a)s&#39;, start=0)</h3><p>a pseudo-function that sets the citekey disambiguation postfix using an <a href="https://www.npmjs.com/package/sprintf-js">sprintf-js</a> format spec
 for when a key is generated that already exists. Does not add any text to the citekey otherwise.
 You <em>must</em> include <em>exactly one</em> of the placeholders <code>%(n)s</code> (number), <code>%(a)s</code> (alpha, lowercase) or <code>%(A)s</code> (alpha, uppercase).
 For the rest of the disambiguator you can use things like padding and extra text as sprintf-js allows. With start set to <code>1</code> the disambiguator is always included,
@@ -12828,7 +12828,7 @@ even if there is no need for it when no duplicates exist. The default  format is
             </tr>
           </table>
 
-  <h3><b>shorttitle</b></h3><p>The first <code>n</code> (default: 3) words of the title, apply capitalization to first <code>m</code> (default: 0) of those.</p><table>
+  <h3><b>shorttitle</b>(n=3, m=0)</h3><p>The first <code>n</code> (default: 3) words of the title, apply capitalization to first <code>m</code> (default: 0) of those.</p><table>
           <tr>
             <th><b>parameter</b></th>
             <th/>
@@ -12854,7 +12854,7 @@ even if there is no need for it when no duplicates exist. The default  format is
 
   <h3><b>title</b></h3><p>Capitalize all the significant words of the title, and concatenate them. For example, <code>An awesome paper on JabRef</code> will become <code>AnAwesomePaperJabref</code></p>
 
-  <h3><b>transliterate</b></h3><p>Set the default transliteration mode. If you don't specify a mode, the mode for an entry is derived from the item language field</p><table>
+  <h3><b>transliterate</b>(mode=[must be provided])</h3><p>Set the default transliteration mode. If you don't specify a mode, the mode for an entry is derived from the item language field</p><table>
           <tr>
             <th><b>parameter</b></th>
             <th/>
@@ -12870,7 +12870,7 @@ even if there is no need for it when no duplicates exist. The default  format is
             </tr>
           </table>
 
-  <h3><b>type</b></h3><p>Without arguments, returns the item type.
+  <h3><b>type</b>(...allowed=[must be provided])</h3><p>Without arguments, returns the item type.
 When arguments as passed, tests whether the item is of any of the given types, and skips to the next pattern if not, eg <code>type(book) + veryshorttitle | auth + year</code>.</p>
 <p>creator type can be one of <code>annotation</code>, <code>artwork</code>, <code>attachment</code>, <code>audioRecording</code>, <code>bill</code>, <code>blogPost</code>, <code>book</code>, <code>bookSection</code>, <code>case</code>, <code>computerProgram</code>, <code>conferencePaper</code>, <code>dataset</code>, <code>dictionaryEntry</code>, <code>document</code>, <code>email</code>, <code>encyclopediaArticle</code>, <code>film</code>, <code>forumPost</code>, <code>hearing</code>, <code>instantMessage</code>, <code>interview</code>, <code>journalArticle</code>, <code>letter</code>, <code>magazineArticle</code>, <code>manuscript</code>, <code>map</code>, <code>newspaperArticle</code>, <code>note</code>, <code>patent</code>, <code>podcast</code>, <code>preprint</code>, <code>presentation</code>, <code>radioBroadcast</code>, <code>report</code>, <code>standard</code>, <code>statute</code>, <code>thesis</code>, <code>tvBroadcast</code>, <code>videoRecording</code>, <code>webpage</code></p><table>
           <tr>
@@ -12888,7 +12888,7 @@ When arguments as passed, tests whether the item is of any of the given types, a
             </tr>
           </table>
 
-  <h3><b>veryshorttitle</b></h3><p>The first <code>n</code> words of the title, apply capitalization to first <code>m</code> of those</p><table>
+  <h3><b>veryshorttitle</b>(n=1, m=0)</h3><p>The first <code>n</code> words of the title, apply capitalization to first <code>m</code> of those</p><table>
           <tr>
             <th><b>parameter</b></th>
             <th/>
@@ -13361,7 +13361,7 @@ use this if you have existing papers that rely on this behavior.</p>
 <p>(fields marked <sup>Z</sup> are only available in Zotero, fields marked with <sup>JM</sup> are only available in Juris-M).</p>
 <h2 id="filters">Filters</h2>
 
-  <h3><b>abbr</b></h3><p>Abbreviates the text. Only the first character and subsequent characters following white space will be included.</p><table>
+  <h3><b>abbr</b>(chars=1)</h3><p>Abbreviates the text. Only the first character and subsequent characters following white space will be included.</p><table>
           <tr>
             <th><b>parameter</b></th>
             <th/>
@@ -13377,7 +13377,7 @@ use this if you have existing papers that rely on this behavior.</p>
             </tr>
           </table>
 
-  <h3><b>acronym</b></h3><p>Does an acronym lookup for the text.</p><table>
+  <h3><b>acronym</b>(list=&#39;acronyms&#39;, reload=false, passthrough=false)</h3><p>Does an acronym lookup for the text.</p><table>
           <tr>
             <th><b>parameter</b></th>
             <th/>
@@ -13413,7 +13413,7 @@ use this if you have existing papers that rely on this behavior.</p>
 
   <h3><b>clean</b></h3><p>transliterates the citation key and removes unsafe characters</p>
 
-  <h3><b>condense</b></h3><p>replaces spaces in the value passed in. You can specify what to replace it with by adding it as a
+  <h3><b>condense</b>(sep=&#39;&#39;)</h3><p>replaces spaces in the value passed in. You can specify what to replace it with by adding it as a
 parameter, e.g <code>.condense('_')</code> will replace spaces with underscores. Equivalent to <code>.replace(/\s+/g, sep)</code>.</p><table>
           <tr>
             <th><b>parameter</b></th>
@@ -13430,7 +13430,7 @@ parameter, e.g <code>.condense('_')</code> will replace spaces with underscores.
             </tr>
           </table>
 
-  <h3><b>default</b></h3><p>Returns the given text if no output was generated</p><table>
+  <h3><b>default</b>(text=[must be provided])</h3><p>Returns the given text if no output was generated</p><table>
           <tr>
             <th><b>parameter</b></th>
             <th/>
@@ -13448,7 +13448,7 @@ parameter, e.g <code>.condense('_')</code> will replace spaces with underscores.
 
   <h3><b>discard</b></h3><p>discards the input</p>
 
-  <h3><b>find</b></h3><p>Finds a text in the string and returns it.</p><table>
+  <h3><b>find</b>(match=[must be provided], passthrough=false)</h3><p>Finds a text in the string and returns it.</p><table>
           <tr>
             <th><b>parameter</b></th>
             <th/>
@@ -13470,7 +13470,7 @@ parameter, e.g <code>.condense('_')</code> will replace spaces with underscores.
             </tr>
           </table>
 
-  <h3><b>formatDate</b></h3><p>formats date as by replacing y, m and d in the format</p><table>
+  <h3><b>formatDate</b>(format=&#39;%Y-%m-%d&#39;)</h3><p>formats date as by replacing y, m and d in the format</p><table>
           <tr>
             <th><b>parameter</b></th>
             <th/>
@@ -13488,7 +13488,7 @@ parameter, e.g <code>.condense('_')</code> will replace spaces with underscores.
 
   <h3><b>ideographs</b></h3><p>Treat ideaographs as individual words</p>
 
-  <h3><b>jieba</b></h3><p>word segmentation for Chinese items. Uses substantial memory, and adds about 7 seconds to BBTs startup time; must be enabled under Preferences -&gt; Better BibTeX -&gt; Advanced -&gt; Citekeys</p><table>
+  <h3><b>jieba</b>(mode?=undefined)</h3><p>word segmentation for Chinese items. Uses substantial memory, and adds about 7 seconds to BBTs startup time; must be enabled under Preferences -&gt; Better BibTeX -&gt; Advanced -&gt; Citekeys</p><table>
           <tr>
             <th><b>parameter</b></th>
             <th/>
@@ -13506,7 +13506,7 @@ parameter, e.g <code>.condense('_')</code> will replace spaces with underscores.
 
   <h3><b>kuromoji</b></h3><p>word segmentation for Japanese items. Uses substantial memory; must be enabled under Preferences -&gt; Better BibTeX -&gt; Advanced -&gt; Citekeys</p>
 
-  <h3><b>len</b></h3><p>If the length of the output does not match the given number, skip to the next pattern.</p><table>
+  <h3><b>len</b>(relation=&#39;&gt;&#39;, length=0)</h3><p>If the length of the output does not match the given number, skip to the next pattern.</p><table>
           <tr>
             <th><b>parameter</b></th>
             <th/>
@@ -13532,7 +13532,7 @@ parameter, e.g <code>.condense('_')</code> will replace spaces with underscores.
 
   <h3><b>lower</b></h3><p>Forces the text inserted by the field marker to be in lowercase. For example, <code>auth.lower</code> expands to the last name of the first author in lowercase.</p>
 
-  <h3><b>match</b></h3><p>If the output does not match the given string/regex, skip to the next pattern.</p><table>
+  <h3><b>match</b>(match=[must be provided], clean=false)</h3><p>If the output does not match the given string/regex, skip to the next pattern.</p><table>
           <tr>
             <th><b>parameter</b></th>
             <th/>
@@ -13554,7 +13554,7 @@ parameter, e.g <code>.condense('_')</code> will replace spaces with underscores.
             </tr>
           </table>
 
-  <h3><b>nopunct</b></h3><p>Removes punctuation</p><table>
+  <h3><b>nopunct</b>(dash=&#39;-&#39;)</h3><p>Removes punctuation</p><table>
           <tr>
             <th><b>parameter</b></th>
             <th/>
@@ -13576,7 +13576,7 @@ parameter, e.g <code>.condense('_')</code> will replace spaces with underscores.
 
   <h3><b>pinyin</b></h3><p>transliterates the citation key to pinyin</p>
 
-  <h3><b>postfix</b></h3><p>postfixes with its parameter, so <code>postfix('_')</code> will add an underscore to the end if, and only if, the value
+  <h3><b>postfix</b>(postfix=[must be provided])</h3><p>postfixes with its parameter, so <code>postfix('_')</code> will add an underscore to the end if, and only if, the value
 it is supposed to postfix isn't empty</p><table>
           <tr>
             <th><b>parameter</b></th>
@@ -13593,7 +13593,7 @@ it is supposed to postfix isn't empty</p><table>
             </tr>
           </table>
 
-  <h3><b>prefix</b></h3><p>prefixes with its parameter, so <code>.prefix('_')</code> will add an underscore to the front if, and only if, the value
+  <h3><b>prefix</b>(prefix=[must be provided])</h3><p>prefixes with its parameter, so <code>.prefix('_')</code> will add an underscore to the front if, and only if, the value
 it is supposed to prefix isn't empty.</p><table>
           <tr>
             <th><b>parameter</b></th>
@@ -13610,7 +13610,7 @@ it is supposed to prefix isn't empty.</p><table>
             </tr>
           </table>
 
-  <h3><b>replace</b></h3><p>replaces text, for the text to match you can pass either:</p>
+  <h3><b>replace</b>(find=[must be provided], replace=[must be provided])</h3><p>replaces text, for the text to match you can pass either:</p>
 <ul>
 <li>a string: <code>.replace('.etal','&amp;etal')</code> which will match case-insensitive, so will replace <code>.EtAl</code> with <code>&amp;etal</code>.</li>
 <li><a href="https://www.simplilearn.com/tutorials/javascript-tutorial/javascript-regex">javascript regular expression</a>: <code>.replace(/[.]etal/ig, '&amp;etal')</code></li>
@@ -13636,7 +13636,7 @@ it is supposed to prefix isn't empty.</p><table>
             </tr>
           </table>
 
-  <h3><b>select</b></h3><p>selects words from the value passed in. The format is <code>select(start,number)</code> (1-based), so <code>select(1,4)</code> or <code>select(n=4)</code>
+  <h3><b>select</b>(start=1, n?=undefined)</h3><p>selects words from the value passed in. The format is <code>select(start,number)</code> (1-based), so <code>select(1,4)</code> or <code>select(n=4)</code>
 would select the first four words. If <code>n</code> is not given, all words from <code>start</code> to the end are
 selected.</p><table>
           <tr>
@@ -13660,7 +13660,7 @@ selected.</p><table>
             </tr>
           </table>
 
-  <h3><b>skipwords</b></h3><p>filters out common words like 'of', 'the', … the list of words can be seen and changed by going into
+  <h3><b>skipwords</b>(nopunct=false)</h3><p>filters out common words like 'of', 'the', … the list of words can be seen and changed by going into
 <code>about:config</code> under the key <code>extensions.zotero.translators.better-bibtex.skipWords</code> as a comma-separated,
 case-insensitive list of words.</p>
 <p>If you want to strip words like 'Jr.' from names, you could use something like <code>Auth.nopunct.skipwords.fold</code>
@@ -13681,7 +13681,7 @@ Note that this filter is always applied with <code>nopunct</code> on if you use 
             </tr>
           </table>
 
-  <h3><b>substring</b></h3><p><code>substring(start,n)</code> selects <code>n</code> (default: all) characters starting at <code>start</code></p><table>
+  <h3><b>substring</b>(start=1, n?=undefined)</h3><p><code>substring(start,n)</code> selects <code>n</code> (default: all) characters starting at <code>start</code></p><table>
           <tr>
             <th><b>parameter</b></th>
             <th/>
@@ -13703,7 +13703,7 @@ Note that this filter is always applied with <code>nopunct</code> on if you use 
             </tr>
           </table>
 
-  <h3><b>transliterate</b></h3><p>transliterates the citation key. If you don't specify a mode, the mode is derived from the item language field</p><table>
+  <h3><b>transliterate</b>(mode?=undefined)</h3><p>transliterates the citation key. If you don't specify a mode, the mode is derived from the item language field</p><table>
           <tr>
             <th><b>parameter</b></th>
             <th/>
@@ -14170,10 +14170,10 @@ means a lot) so I can save up for a replacement a year or so down
 the line, head on over to <a href="https://www.patreon.com/retorquere" rel="external" target="_blank">Patreon</a>,
 but mind that Patreon takes a fairly large cut of what you give.</p>
 <p>Many, many thanks, also to the existing contributors &ndash; thanks to you I&rsquo;ve hit my first target and have been able to replace my trusty macbook air with a newer macbook pro which has much more breathing room.</p>
-<p><a href="#R-image-8396405b01ed6684bb862a9ecb516b6b" class="lightbox-link"><img alt="My github stats" class="lazy lightbox figure-image" loading="lazy" src="https://github-readme-stats.vercel.app/api?username=retorquere&show_icons=true&hide_border=true&theme=dark" style=" height: auto; width: auto;"></a>
-<a href="javascript:history.back();" class="lightbox-back" id="R-image-8396405b01ed6684bb862a9ecb516b6b"><img alt="My github stats" class="lazy lightbox lightbox-image" loading="lazy" src="https://github-readme-stats.vercel.app/api?username=retorquere&show_icons=true&hide_border=true&theme=dark"></a></p>
-<p><a href="#R-image-08d8c0574a53ac9da6f77c7846ff4237" class="lightbox-link"><img alt="Metrics" class="lazy lightbox figure-image" loading="lazy" src="https://metrics.lecoq.io/retorquere?template=classic&config.timezone=Europe%2FOslo" style=" height: auto; width: auto;"></a>
-<a href="javascript:history.back();" class="lightbox-back" id="R-image-08d8c0574a53ac9da6f77c7846ff4237"><img alt="Metrics" class="lazy lightbox lightbox-image" loading="lazy" src="https://metrics.lecoq.io/retorquere?template=classic&config.timezone=Europe%2FOslo"></a></p>
+<p><a href="#R-image-2cab1ea86a44ec41dbff3c7686fe0602" class="lightbox-link"><img alt="My github stats" class="lazy lightbox figure-image" loading="lazy" src="https://github-readme-stats.vercel.app/api?username=retorquere&show_icons=true&hide_border=true&theme=dark" style=" height: auto; width: auto;"></a>
+<a href="javascript:history.back();" class="lightbox-back" id="R-image-2cab1ea86a44ec41dbff3c7686fe0602"><img alt="My github stats" class="lazy lightbox lightbox-image" loading="lazy" src="https://github-readme-stats.vercel.app/api?username=retorquere&show_icons=true&hide_border=true&theme=dark"></a></p>
+<p><a href="#R-image-fca0601f141fb4e127b85dcac7535586" class="lightbox-link"><img alt="Metrics" class="lazy lightbox figure-image" loading="lazy" src="https://metrics.lecoq.io/retorquere?template=classic&config.timezone=Europe%2FOslo" style=" height: auto; width: auto;"></a>
+<a href="javascript:history.back();" class="lightbox-back" id="R-image-fca0601f141fb4e127b85dcac7535586"><img alt="Metrics" class="lazy lightbox lightbox-image" loading="lazy" src="https://metrics.lecoq.io/retorquere?template=classic&config.timezone=Europe%2FOslo"></a></p>
 
   <footer class="footline">
   </footer>
