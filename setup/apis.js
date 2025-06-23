@@ -438,7 +438,7 @@ function KeyManager() {
           <tr>
             <th><b>parameter</b></th>
             <th/>
-            <th>default</th>
+            <th>when not specified</th>
             <th>allowed values</th>
           </tr>
           ${parameters.map(p => `
