@@ -425,7 +425,7 @@ function KeyManager() {
     }).join(', ')
     summary = summary ? `(${summary})` : ''
     // summary = `<b>${escapeHTML(method.name.substring(1))}</b>${escapeHTML(summary)}`
-    summary = `<b>${escapeHTML(method.name.substring(1))}</b>}`
+    summary = `<b>${escapeHTML(method.name.substring(1))}</b>`
 
     let description = signature.comment.summary.map(s => {
       if (!s.kind.match(/^(code|text)$/)) throw s
