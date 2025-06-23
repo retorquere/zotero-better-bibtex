@@ -6,13 +6,13 @@ import { orchestrator } from '../orchestrator'
 import type { Collection } from '../../gen/typings/serialized-item'
 import { log } from '../logger'
 
-export type Message =
+export type Message
 //    { kind: 'initialize', CSL_MAPPINGS: any, dateFormatsJSON: any }
 //  | { kind: 'terminate' }
 //  | { kind: 'configure', environment: Environment }
 //  | { kind: 'start', config: Job }
 //  | { kind: 'done', output: string, cacheRate: number }
-    { kind: 'debug'; message: string }
+  = { kind: 'debug'; message: string }
   | { kind: 'error'; message: string; stack?: string }
   | { kind: 'cache-delete' }
   | { kind: 'progress'; percent: number; translator: string; autoExport: string }

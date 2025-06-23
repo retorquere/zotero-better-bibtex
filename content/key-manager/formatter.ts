@@ -50,8 +50,8 @@ type BabelLanguage = keyof typeof BabelTag
 
 class Template<K> extends String {} // eslint-disable-line @typescript-eslint/no-unused-vars
 
-export type TransliterateMode =
-    'minimal'
+export type TransliterateMode
+  = 'minimal'
   | 'german'
   | 'japanese'
   | 'chinese'
@@ -194,8 +194,8 @@ type PartialDate = {
 }
 
 export type AuthorType = 'author' | 'editor' | 'translator' | 'collaborator' | '*'
-export type CreatorType =
-  'primary'
+export type CreatorType
+  = 'primary'
   | 'artist' | '-artist'
   | 'attorneyAgent' | '-attorneyAgent'
   | 'author' | '-author'
