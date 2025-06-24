@@ -752,9 +752,13 @@ export class BetterBibTeX {
           if (rowID) Zotero.ItemPaneManager.refreshInfoRow(rowID)
 
           if (columnDataKey) {
-            const azp = Zotero.getActiveZoteroPane()
+            const itemPane = Zotero.getActiveZoteroPane().itemPane
             // eslint-disable-next-line no-underscore-dangle
-            if (azp?.itemPane && !azp.itemPane.itemsView._columnPrefs[columnDataKey].hidden) scheduler.schedule('column-refresh', () => { Zotero.ItemTreeManager.refreshColumns() })
+            const columnPrefs = itemPane ? itemPane.itemsView._columnPrefs : {}
+            if (columnPrefs[columnDataKey]?.hidden) {
+              log.debug('3267: column refresh')
+              // scheduler.schedule('column-refresh', () => { Zotero.ItemTreeManager.refreshColumns() })
+            }
           }
         })
 
