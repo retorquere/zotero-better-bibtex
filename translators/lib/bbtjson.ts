@@ -15,6 +15,21 @@ function addSelect(item: any, translation: Translation) {
   item.select = (kind === 'users') ? `zotero://select/library/items/${ key }` : `zotero://select/groups/${ lib }/items/${ key }`
 }
 
+const validAttachmentFields = new Set([
+  'dateAdded',
+  'dateModified',
+  'itemType',
+  'linkMode',
+  'mimeType',
+  'path',
+  'relations',
+  'seeAlso',
+  'tags',
+  'title',
+  'uri',
+  'url',
+])
+
 export function generateBBTJSON(collected: Collected): Translation {
   const translation = Translation.Export(collected)
 
@@ -41,7 +56,6 @@ export function generateBBTJSON(collected: Collected): Translation {
   }
 
   if (translation.collected.displayOptions.Items) {
-    const validAttachmentFields = new Set([ 'relations', 'uri', 'itemType', 'title', 'path', 'tags', 'dateAdded', 'dateModified', 'seeAlso', 'mimeType' ])
     function handle(att) {
       if (translation.collected.displayOptions.exportFileData && att.saveFile && att.defaultPath) {
         att.saveFile(att.defaultPath, true)
