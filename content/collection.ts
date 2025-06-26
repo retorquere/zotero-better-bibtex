@@ -16,7 +16,7 @@ class CollectionError extends Error {
   }
 }
 
-export async function resolve(library: Zotero.Library, path: string, create = false): Promise<Zotero.Collection> {
+export async function resolve(library: _ZoteroTypes.Library.LibraryLike, path: string, create = false): Promise<Zotero.Collection> {
   let names = (path || '').split('/')
   if (names.shift() !== '') throw new CollectionError(`collection path ${JSON.stringify(path)} is not an absolute path`, 'notfound')
   names = names.filter(_ => _)
