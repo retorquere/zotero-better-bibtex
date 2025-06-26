@@ -19,7 +19,6 @@ const validAttachmentFields = new Set([
   'dateAdded',
   'dateModified',
   'itemType',
-  'linkMode',
   'mimeType',
   'path',
   'relations',
