@@ -59,6 +59,7 @@ function clean(item) {
   delete item.contentType
   delete item.filename
   delete item.defaultPath
+  delete item.linkMode
 }
 
 for (const lib of argv._) {
