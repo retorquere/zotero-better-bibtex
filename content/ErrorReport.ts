@@ -319,9 +319,12 @@ export class ErrorReport {
     delete item.filename
     delete item.defaultPath
 
+    delete item.dateAdded
+    delete item.dateModified
+
     delete item.multi
 
-    if (item.path) item.path = item.path.replace(/.*\/zotero\/storage\/[^/]+/, 'ATTACHMENT_KEY')
+    if (item.path) item.path = item.path.replace(/.*\/zotero\/storage\//, 'STORAGE:')
 
     for (const creator of (item.creators || [])) {
       delete creator.multi
@@ -607,7 +610,7 @@ export class ErrorReport {
       try {
         items = await Zotero.BetterBibTeX.Translators.queueJob({
           translatorID: Zotero.BetterBibTeX.Translators.bySlug.BetterBibTeXJSON.translatorID,
-          displayOptions: { worker: true, exportNotes: true, dropAttachments: true, Normalize: true },
+          displayOptions: { worker: true, exportNotes: true, Normalize: true },
           scope,
           timeout: 40,
         })

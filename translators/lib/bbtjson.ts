@@ -48,9 +48,6 @@ export function generateBBTJSON(collected: Collected): Translation {
 
       switch (item.itemType) {
         case 'attachment':
-          if (translation.collected.displayOptions.dropAttachments) continue
-          break
-
         case 'note':
         case 'annotation':
           break
@@ -58,7 +55,7 @@ export function generateBBTJSON(collected: Collected): Translation {
         default:
           delete item.collections
 
-          if (translation.collected.displayOptions.Normalize) simplifyForExport(item, { dropAttachments: translation.collected.displayOptions.dropAttachments })
+          if (translation.collected.displayOptions.Normalize) simplifyForExport(item, {})
 
           for (const att of item.attachments || []) {
             if (translation.collected.displayOptions.exportFileData && att.saveFile && att.defaultPath) {

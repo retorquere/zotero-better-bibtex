@@ -136,7 +136,7 @@
   },
   {
     "summary": "<b>substring</b>(start=1, n=?)",
-    "parameters": "<table>\n          <tr>\n            <th><b>parameter</b></th>\n            <th/>\n            <th>value assumed when not provided</th>\n            <th>valid values</th>\n          </tr>\n          <tr>\n            <td><code>start</code></td>\n            <td>starting character (1-based)</td>\n            <td><code>1</code></td>\n            <td>number</td>\n          </tr>\n          <tr>\n            <td><code>n</code></td>\n            <td>number of characters to select (default: remainder from <code>start</code>)</td>\n            <td></td>\n            <td>number</td>\n          </tr></table>",
+    "parameters": "<table>\n          <tr>\n            <th><b>parameter</b></th>\n            <th/>\n            <th>value assumed when not provided</th>\n            <th>valid values</th>\n          </tr>\n          <tr>\n            <td><code>start</code></td>\n            <td>starting character (counting from 1)</td>\n            <td><code>1</code></td>\n            <td>number</td>\n          </tr>\n          <tr>\n            <td><code>n</code></td>\n            <td>number of characters to select (default: remainder from <code>start</code>)</td>\n            <td></td>\n            <td>number</td>\n          </tr></table>",
     "description": "<code>substring(start,n)</code> selects <code>n</code> (default: all) characters starting at <code>start</code>"
   },
   {
