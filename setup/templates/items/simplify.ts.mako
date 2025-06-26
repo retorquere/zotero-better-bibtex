@@ -33,7 +33,7 @@ function unalias(item: any, { scrub = true }: { scrub?: boolean } = {}): void {
 }
 
 // import & export translators expect different creator formats... nice
-export function simplifyForExport(item: any, { creators=true, scrub=true }: { creators?: boolean; scrub?: boolean } = {}): Item {
+export function simplifyForExport(item: any, { creators=true, dropAttachments=false, scrub=true }: { creators?: boolean, dropAttachments?: boolean, scrub?: boolean } = {}): Item {
   unalias(item, { scrub })
 
   if (item.filingDate) item.filingDate = item.filingDate.replace(/^0000-00-00 /, '')
@@ -54,7 +54,7 @@ export function simplifyForExport(item: any, { creators=true, scrub=true }: { cr
     delete item.notes
   }
   else {
-    item.attachments = item.attachments || []
+    item.attachments = (!dropAttachments && item.attachments) || []
   }
 
   return (item as Item)
