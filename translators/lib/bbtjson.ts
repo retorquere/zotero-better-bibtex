@@ -9,7 +9,8 @@ import { version } from '../../gen/version.json'
 // import { validItem } from '../content/ajv'
 // import { stringify } from '../content/stringify'
 
-function addSelect(item: any) {
+function addSelect(item: any, translation: Translation) {
+  if (translation.collected.preferences.testing) return
   const [ , kind, lib, key ] = item.uri.match(/^https?:\/\/zotero\.org\/(users|groups)\/((?:local\/)?[^/]+)\/items\/(.+)/)
   item.select = (kind === 'users') ? `zotero://select/library/items/${ key }` : `zotero://select/groups/${ lib }/items/${ key }`
 }
@@ -41,14 +42,30 @@ export function generateBBTJSON(collected: Collected): Translation {
 
   if (translation.collected.displayOptions.Items) {
     const validAttachmentFields = new Set([ 'relations', 'uri', 'itemType', 'title', 'path', 'tags', 'dateAdded', 'dateModified', 'seeAlso', 'mimeType' ])
+    function handle(att) {
+      if (translation.collected.displayOptions.exportFileData && att.saveFile && att.defaultPath) {
+        att.saveFile(att.defaultPath, true)
+        att.path = att.defaultPath
+      }
+      else if (att.localPath) {
+        att.path = att.localPath
+      }
+
+      for (const field of Object.keys(att)) {
+        if (!validAttachmentFields.has(field)) {
+          delete att[field]
+        }
+      }
+      addSelect(att, translation)
+    }
 
     for (const item of translation.collected.items) {
       delete item.$cacheable
-      if (!translation.collected.preferences.testing) addSelect(item)
+      addSelect(item, translation)
 
       switch (item.itemType) {
         case 'attachment':
-          if (translation.collected.displayOptions.dropAttachments) continue
+          handle(item)
           break
 
         case 'note':
@@ -58,25 +75,10 @@ export function generateBBTJSON(collected: Collected): Translation {
         default:
           delete item.collections
 
-          if (translation.collected.displayOptions.Normalize) simplifyForExport(item, { dropAttachments: translation.collected.displayOptions.dropAttachments })
+          if (translation.collected.displayOptions.Normalize) simplifyForExport(item, {})
 
           for (const att of item.attachments || []) {
-            if (translation.collected.displayOptions.exportFileData && att.saveFile && att.defaultPath) {
-              att.saveFile(att.defaultPath, true)
-              att.path = att.defaultPath
-            }
-            else if (att.localPath) {
-              att.path = att.localPath
-            }
-
-            if (!att.path) continue // amazon/googlebooks etc links show up as atachments without a path
-
-            for (const field of Object.keys(att)) {
-              if (!validAttachmentFields.has(field)) {
-                delete att[field]
-              }
-            }
-            if (!translation.collected.preferences.testing) addSelect(att)
+            handle(att)
           }
           break
       }

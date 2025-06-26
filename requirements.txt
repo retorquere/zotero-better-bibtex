@@ -1,3 +1,4 @@
+dotwiz
 python-editor
 Cython
 Mako

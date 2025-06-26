@@ -7,8 +7,8 @@ import sys
 import os
 import json
 from munch import Munch
-from types import SimpleNamespace
 from glob import glob
+from dotwiz import DotWiz
 
 from compact_json import Formatter, EolStyle
 formatter = Formatter()
@@ -23,7 +23,7 @@ import argparse
 from github import Github
 #import os
 import re
-#from pathlib import Path
+from pathlib import Path
 import shutil
 import subprocess
 #import string
@@ -90,12 +90,12 @@ args.title = sanitize_filename(f'{args.title} #{args.issue}'.strip()).replace('`
 if args.attach:
   candidates = { os.path.splitext(att)[1]: att for att in glob('attachments/*.*', root_dir = 'test/fixtures/export') }
   with open(args.data) as f:
-    data = json.load(f)
+    data = DotWiz(json.load(f))
     for item in data['items']:
       if 'attachments' in item:
-        for att in item['attachments']:
+        for att in item.attachments:
           if 'path' in att:
-            att['path'] = candidates[os.path.splitext(att['path'])[1]]
+            att.path = candidates[os.path.splitext(att.path)[1]]
   with open(args.data, 'w') as f:
     print(formatter.serialize(data), file=f)
 
@@ -105,13 +105,13 @@ if args.prefs: cleanlib.append('--prefs')
 if args.attachments: cleanlib.append('--attachments')
 assert call(cleanlib, cwd=root) == 0, 'clean failed'
 with open(args.data) as f:
-  data = json.load(f)
+  data = DotWiz(json.load(f))
   args.n = len(data['items'])
   for item in data['items']:
     if 'attachments' in item:
-      for att in item['attachments']:
+      for att in item.attachments:
         if 'path' in att:
-          if not os.path.exists(os.path.join('test/fixtures/export', att['path'])):
+          if not os.path.exists(os.path.join('test/fixtures/export', Path(att.path).stem, att.path.replace('STORAGE:', ''))):
             print('*** WARNING ***:', args.data, 'has non-existing attachment', att['path'])
 
 # insert example

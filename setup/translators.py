@@ -11,7 +11,6 @@ pseudoOptions = {
   'exportDir': '',
   'exportPath': '',
   'custom': False,
-  'dropAttachments': False,
   'cache': True,
   # 'displayOptions': '',
 }

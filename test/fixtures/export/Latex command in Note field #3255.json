@@ -13,7 +13,7 @@
       "japanese": true,
       "parseParticles": false,
       "skipFields": "abstract",
-      "postscript": "if (Translator.BetterTeX) {\n  function marklatex(note) {\n    return note\n      .replace(/<pre class=\"math\">.*?<\\/pre>/ig, pre => pre.replace(/\\\\/g, '\\x1a')) // save display math or it would get marked twice\n      .replace(/(\\\\(?:[a-z]+|[^a-z])(?:\\[[^\\]]*\\])*(?:\\{[^\\}]*\\})*)/ig, '<script>$1</script>') // find latex commands and mark them as literal output\n      .replace(/\\x1a/g, '\\\\') // restore display math\n  }\n  tex.add({ name: 'note', value: zotero.notes?.map(note => marklatex(note.note)).join('</p><p>'), html: true })\n}\n\n"
+      "postscript": "if (Translator.BetterTeX) {\n  const links = zotero.attachments\n    ?.map(att => att.localPath?.replace(/.*[\\\\/]zotero[\\\\/]storage[\\\\/](.*)/, '<script>\\\\zoterolink{$1}</script>'))\n    .filter(att => att)\n    .join('<br>')\n\n  tex.add({ name: 'note', value: links, html: true })\n}\n"
     }
   },
   "items": [
