@@ -27,9 +27,10 @@ body:
   id: debug-log
   attributes:
     label: Debug log ID
-    description: Please fill in an actual debug log ID here. The ID must have `-euc`
-      or `-apse` in it.
-    placeholder: ex. ABCD1234-ref-euc or nNwplUbkYrQu-buc-ABCD1234 for bashupload.com.
+    description: Please fill in an actual debug log ID here. The ID must have 
+      `-euc` or `-apse` in it.
+    placeholder: ex. ABCD1234-ref-euc or nNwplUbkYrQu-buc-ABCD1234 for 
+      bashupload.com.
   validations:
     required: true
 - type: textarea
