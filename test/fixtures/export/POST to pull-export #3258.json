@@ -1,0 +1,2437 @@
+{
+  "collections": {
+    "coll:00000": {
+      "collections": [
+        "coll:00001",
+        "coll:00003",
+        "coll:00005",
+        "coll:00006",
+        "coll:00007",
+        "coll:00010"
+      ],
+      "items": [],
+      "key": "coll:00000",
+      "name": "Modelling methods"
+    },
+    "coll:00001": {
+      "collections": [],
+      "items": [],
+      "key": "coll:00001",
+      "name": "Applicability Domain",
+      "parent": "coll:00000"
+    },
+    "coll:00002": {
+      "collections": [],
+      "items": [
+        1,
+        16,
+        23,
+        25,
+        28,
+        3,
+        31,
+        36,
+        4,
+        44,
+        45,
+        51
+      ],
+      "key": "coll:00002",
+      "name": "Modelli"
+    },
+    "coll:00003": {
+      "collections": [],
+      "items": [
+        10,
+        13,
+        15,
+        21,
+        29,
+        30,
+        37,
+        48
+      ],
+      "key": "coll:00003",
+      "name": "Consensus",
+      "parent": "coll:00000"
+    },
+    "coll:00004": {
+      "collections": [],
+      "items": [
+        11,
+        17,
+        38,
+        39,
+        41
+      ],
+      "key": "coll:00004",
+      "name": "Fingerprints"
+    },
+    "coll:00005": {
+      "collections": [],
+      "items": [
+        12,
+        14,
+        19,
+        22,
+        43,
+        46,
+        5
+      ],
+      "key": "coll:00005",
+      "name": "Variable Reduction",
+      "parent": "coll:00000"
+    },
+    "coll:00006": {
+      "collections": [],
+      "items": [
+        18,
+        2,
+        32,
+        35,
+        50
+      ],
+      "key": "coll:00006",
+      "name": "Classification",
+      "parent": "coll:00000"
+    },
+    "coll:00007": {
+      "collections": [],
+      "items": [
+        20,
+        24,
+        27,
+        40,
+        42,
+        7
+      ],
+      "key": "coll:00007",
+      "name": "Distance",
+      "parent": "coll:00000"
+    },
+    "coll:00008": {
+      "collections": [],
+      "items": [
+        26
+      ],
+      "key": "coll:00008",
+      "name": "Virtual Screening"
+    },
+    "coll:00009": {
+      "collections": [],
+      "items": [
+        33,
+        34,
+        47,
+        6,
+        8
+      ],
+      "key": "coll:00009",
+      "name": "PGP"
+    },
+    "coll:00010": {
+      "collections": [],
+      "items": [
+        49
+      ],
+      "key": "coll:00010",
+      "name": "Random Forest",
+      "parent": "coll:00000"
+    }
+  },
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "localeDateOrder": "mdy",
+    "options": {
+      "exportNotes": true
+    },
+    "preferences": {
+      "citekeyFormat": "auth(n=0,m=1,creator=\"*\",initials=false).fold.lower + shortyear",
+      "keyScope": "global"
+    }
+  },
+  "items": [
+    {
+      "ISBN": "978-1-4419-9325-0 978-1-4419-9326-7",
+      "accessDate": "2021-03-05T10:43:35Z",
+      "attachments": [],
+      "citationKey": "zhang12",
+      "creators": [
+        {
+          "creatorType": "editor",
+          "firstName": "Cha",
+          "lastName": "Zhang"
+        },
+        {
+          "creatorType": "editor",
+          "firstName": "Yunqian",
+          "lastName": "Ma"
+        }
+      ],
+      "date": "2012",
+      "extra": [
+        "DOI: 10.1007/978-1-4419-9326-7"
+      ],
+      "itemID": 49,
+      "itemType": "book",
+      "language": "en",
+      "libraryCatalog": "DOI.org (Crossref)",
+      "notes": [
+        "<p>Generale, spiega le varie applicazioni in vari ambiti ed i vantaggi rispetto ad altri metodi</p>\n<p>Gini Importance is used to create the nodes</p>\n<p>SKIMMED</p>"
+      ],
+      "place": "Boston, MA",
+      "publisher": "Springer US",
+      "title": "Ensemble Machine Learning",
+      "url": "http://link.springer.com/10.1007/978-1-4419-9326-7"
+    },
+    {
+      "ISBN": "978-3-319-02299-4 978-3-319-02300-7",
+      "accessDate": "2021-03-12T09:58:49Z",
+      "attachments": [],
+      "citationKey": "ma14",
+      "creators": [
+        {
+          "creatorType": "editor",
+          "firstName": "Yunqian",
+          "lastName": "Ma"
+        },
+        {
+          "creatorType": "editor",
+          "firstName": "Guodong",
+          "lastName": "Guo"
+        }
+      ],
+      "date": "2014",
+      "extra": [
+        "DOI: 10.1007/978-3-319-02300-7"
+      ],
+      "itemID": 50,
+      "itemType": "book",
+      "language": "en",
+      "libraryCatalog": "DOI.org (Crossref)",
+      "place": "Cham",
+      "publisher": "Springer International Publishing",
+      "tags": [
+        {
+          "tag": "Nuovo"
+        }
+      ],
+      "title": "Support Vector Machines Applications",
+      "url": "http://link.springer.com/10.1007/978-3-319-02300-7"
+    },
+    {
+      "ISBN": "978-0-444-63984-4",
+      "accessDate": "2021-03-09T07:29:38Z",
+      "attachments": [],
+      "citationKey": "ballabio19",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "D.",
+          "lastName": "Ballabio"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "R.",
+          "lastName": "Todeschini"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "V.",
+          "lastName": "Consonni"
+        }
+      ],
+      "date": "2019",
+      "extra": [
+        "DOI: 10.1016/B978-0-444-63984-4.00005-3"
+      ],
+      "itemID": 48,
+      "itemType": "bookSection",
+      "language": "en",
+      "libraryCatalog": "DOI.org (Crossref)",
+      "notes": [
+        "<p>3 Levels of data fusion</p>"
+      ],
+      "pages": "129-155",
+      "publicationTitle": "Data Handling in Science and Technology",
+      "publisher": "Elsevier",
+      "title": "Recent Advances in High-Level Fusion Methods to Classify Multiple Analytical Chemical Data",
+      "url": "https://linkinghub.elsevier.com/retrieve/pii/B9780444639844000053",
+      "volume": "31"
+    },
+    {
+      "ISBN": "978-3-527-30438-7 978-3-527-60147-9",
+      "accessDate": "2021-03-04T09:36:20Z",
+      "attachments": [],
+      "citationKey": "seelig03",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Anna",
+          "lastName": "Seelig"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Ewa",
+          "lastName": "Landwojtowicz"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Holger",
+          "lastName": "Fischer"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Xiaochun",
+          "lastName": "Li Blatter"
+        },
+        {
+          "creatorType": "editor",
+          "firstName": "Han",
+          "lastName": "van de Waterbeemd"
+        },
+        {
+          "creatorType": "editor",
+          "firstName": "Hans",
+          "lastName": "Lennernäs"
+        },
+        {
+          "creatorType": "editor",
+          "firstName": "Per",
+          "lastName": "Artursson"
+        }
+      ],
+      "date": "2003-05-27",
+      "edition": "1",
+      "extra": [
+        "DOI: 10.1002/3527601473.ch20"
+      ],
+      "itemID": 51,
+      "itemType": "bookSection",
+      "language": "en",
+      "libraryCatalog": "DOI.org (Crossref)",
+      "pages": "461-492",
+      "publicationTitle": "Methods and Principles in Medicinal Chemistry",
+      "publisher": "Wiley",
+      "title": "Towards P‐Glycoprotein Structure–Activity Relationships",
+      "url": "https://onlinelibrary.wiley.com/doi/abs/10.1002/3527601473.ch20"
+    },
+    {
+      "DOI": "10.1145/2939672.2939785",
+      "ISBN": "978-1-4503-4232-2",
+      "abstractNote": "Tree boosting is a highly eﬀective and widely used machine learning method. In this paper, we describe a scalable endto-end tree boosting system called XGBoost, which is used widely by data scientists to achieve state-of-the-art results on many machine learning challenges. We propose a novel sparsity-aware algorithm for sparse data and weighted quantile sketch for approximate tree learning. More importantly, we provide insights on cache access patterns, data compression and sharding to build a scalable tree boosting system. By combining these insights, XGBoost scales beyond billions of examples using far fewer resources than existing systems.",
+      "accessDate": "2021-03-09T07:29:40Z",
+      "attachments": [],
+      "citationKey": "chen16",
+      "conferenceName": "KDD '16: The 22nd ACM SIGKDD International Conference on Knowledge Discovery and Data Mining",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Tianqi",
+          "lastName": "Chen"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Carlos",
+          "lastName": "Guestrin"
+        }
+      ],
+      "date": "2016-08-13",
+      "itemID": 37,
+      "itemType": "conferencePaper",
+      "language": "en",
+      "libraryCatalog": "DOI.org (Crossref)",
+      "pages": "785-794",
+      "place": "San Francisco California USA",
+      "publicationTitle": "Proceedings of the 22nd ACM SIGKDD International Conference on Knowledge Discovery and Data Mining",
+      "publisher": "ACM",
+      "shortTitle": "XGBoost",
+      "tags": [
+        {
+          "tag": "Nuovo"
+        }
+      ],
+      "title": "XGBoost: A Scalable Tree Boosting System",
+      "url": "https://dl.acm.org/doi/10.1145/2939672.2939785"
+    },
+    {
+      "abstractNote": "Downloaded via NATL INST OF CHEMISTRY on March 4, 2021 at 09:27:38 (UTC). See https://pubs.acs.org/sharingguidelines for options on how to legitimately share published articles.",
+      "attachments": [],
+      "citationKey": "chen11",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Lei",
+          "lastName": "Chen"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Youyong",
+          "lastName": "Li"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Qing",
+          "lastName": "Zhao"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Hui",
+          "lastName": "Peng"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Tingjun",
+          "lastName": "Hou"
+        }
+      ],
+      "date": "2011",
+      "itemID": 1,
+      "itemType": "journalArticle",
+      "language": "en",
+      "libraryCatalog": "Zotero",
+      "notes": [
+        "<p><strong>Annotazioni Estratte (4/3/2021, 11:55:59)</strong></p>\n<p>\"The transport activity assessment of MDR reversal (MDRR) agents (i.e., P-gp inhibitors) or P-gp substrates can be achieved experimentally through in vitro or in vivo assays\" (<a href=\"zotero://open-pdf/library/items/YBGGIDA3?page=2\">Chen et al 2011:13</a>)</p>\n<p>\"experimental assays are expensive, laborious, and time-consuming.\" (<a href=\"zotero://open-pdf/library/items/YBGGIDA3?page=2\">Chen et al 2011:13</a>)</p>\n<p>\"in 2002, Ekins and coworkers built a series of phamacophore models\" (<a href=\"zotero://open-pdf/library/items/YBGGIDA3?page=2\">Chen et al 2011:13</a>)</p>\n<p>\"2005, Wang and co-workers applied an unsupervised machine learning approach based on the Kohonen self-organizing maps (SOM)\" (<a href=\"zotero://open-pdf/library/items/YBGGIDA3?page=2\">Chen et al 2011:13</a>)</p>\n<p>\"n 2005, Sun developed a naive Bayesian classifier to categorize MDRR agents into active and inactive classes\" (<a href=\"zotero://open-pdf/library/items/YBGGIDA3?page=2\">Chen et al 2011:13</a>)</p>\n<p>\"In 2006, Chang and co-workers generated a pharmacophore model of P-gp inhibitors\" (<a href=\"zotero://open-pdf/library/items/YBGGIDA3?page=2\">Chen et al 2011:13</a>)</p>\n<p>\"A disadvantage of QSAR and SAR models for P-gp inhibitors is the use of congeneric series of compounds in the data set. The broad multispecificity of P-gp and the lack of an extensive database of P-gp inhibitors have proved two almost insurmountable obstacles to establish accurate prediction models\" (<a href=\"zotero://open-pdf/library/items/YBGGIDA3?page=2\">Chen et al 2011:13</a>)</p>\n<p>\"ecursive partitioning technique to create decision trees to classify P-gp inhibitors and noninhibitors.\" (<a href=\"zotero://open-pdf/library/items/YBGGIDA3?page=2\">Chen et al 2011:13</a>)</p>\n<p>\"1273 structurally diverse molecules, among which 797 molecules are P-gp inhibitors and 476 molecules are P-gp noninhibitors.\" (<a href=\"zotero://open-pdf/library/items/YBGGIDA3?page=2\">Chen et al 2011:13</a>)</p>\n<p>\"The experimental MDRR ratio was used as the criterion to determine whether a compound is an inhibitor or not: If MDRR ratio is less than 4.0, the compound was categorized into the noninhibitor class; if MDRR ratio is larger than 5.0, the compound was categorized into the inhibitor class; if MDRR ratio isg4 and e5.0, this compound was considered as moderately active and not included in the data set for classification.\" (<a href=\"zotero://open-pdf/library/items/YBGGIDA3?page=2\">Chen et al 2011:13</a>)</p>\n<p>\"thirteen molecular descriptors widely adopted in ADME predictions were used in our analysis.\" (<a href=\"zotero://open-pdf/library/items/YBGGIDA3?page=2\">Chen et al 2011:13</a>)</p>\n<p>\"5-fold cross-validation was used to determine the degree of pruning required for the best predictive performance\" (<a href=\"zotero://open-pdf/library/items/YBGGIDA3?page=3\">Chen et al 2011:14</a>)</p>\n<p>\"The whole data set was randomly split into a training set of 973 compounds and a test set of 300 compounds, respectively.\" (<a href=\"zotero://open-pdf/library/items/YBGGIDA3?page=3\">Chen et al 2011:14</a>)</p>\n<p>\"P-gp prefers to transport hydrophobic molecules\" (<a href=\"zotero://open-pdf/library/items/YBGGIDA3?page=4\">Chen et al 2011:15</a>)</p>\n<p>\"all models based on molecular properties and fingerprints perform better than the model solely based on molecular properties.\" (<a href=\"zotero://open-pdf/library/items/YBGGIDA3?page=7\">Chen et al 2011:18</a>)</p>\n<p>\"the training set were obtained using the leave-one-out (LOO) cross-validation process.\" (<a href=\"zotero://open-pdf/library/items/YBGGIDA3?page=8\">Chen et al 2011:19</a>)</p>\n<p>\"fingerprint set has a sensitivity of 84.7, a specificity of 82.1, a prediction accuracy of inhibitors of 88.9%, and a prediction accuracy of noninhibitors of 76.1 for the training set.\" (<a href=\"zotero://open-pdf/library/items/YBGGIDA3?page=8\">Chen et al 2011:19</a>)</p>\n<p>\"MDR-reversal ratio is an important indicator but not a direct measure of P-gp inhibition.\" (<a href=\"zotero://open-pdf/library/items/YBGGIDA3?page=9\">Chen et al 2011:20</a>)</p>\n<p>\"The fingerprints can characterize the important structural fragments favorable or unfavorable for P-gp inhibition, but they cannot characterize the spatial arrangement of these important fingerprints if multiple important fingerprints are found simultaneously in one molecule.\" (<a href=\"zotero://open-pdf/library/items/YBGGIDA3?page=9\">Chen et al 2011:20</a>)</p>\n<p>\"naive Bayesian categorization modeling outperforms RP\" (<a href=\"zotero://open-pdf/library/items/YBGGIDA3?page=10\">Chen et al 2011:21</a>)</p>",
+        "<p>CART 13 descriptors, 3D structure, Fingerprints</p>\n<p>1300 molecules</p>\n<p>Based on MDRR ?? arbitrary cutoff value</p>\n<p>Optimized and pruned the decision tree</p>\n<p>No external validation</p>\n<p>Fingerprints perform better</p>\n<p>MDRR is not always an indicator of an inhibitor</p>\n<p>Naive Bayesian is better than CART</p>"
+      ],
+      "pages": "12",
+      "publicationTitle": "Molecular Pharmaceutics",
+      "title": "ADME Evaluation in Drug Discovery. 10. Predictions of P-Glycoprotein Inhibitors Using Recursive Partitioning and Naive Bayesian Classification Techniques"
+    },
+    {
+      "DOI": "10.1002/minf.201200170",
+      "ISSN": "18681743",
+      "accessDate": "2021-03-08T09:45:02Z",
+      "attachments": [],
+      "citationKey": "lei13",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Beilei",
+          "lastName": "Lei"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Jiazhong",
+          "lastName": "Li"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Xiaojun",
+          "lastName": "Yao"
+        }
+      ],
+      "date": "07/2013",
+      "extra": [
+        "Number: 7"
+      ],
+      "issue": "7",
+      "itemID": 10,
+      "itemType": "journalArticle",
+      "journalAbbreviation": "Mol. Inf.",
+      "language": "en",
+      "libraryCatalog": "DOI.org (Crossref)",
+      "notes": [
+        "<p>Consensus model formed of many local models</p>\n<p>The structure of the molecule is used to select the best model to use</p>"
+      ],
+      "pages": "599-608",
+      "publicationTitle": "Molecular Informatics",
+      "title": "A Novel Strategy of Structural Similarity Based Consensus Modeling",
+      "url": "http://doi.wiley.com/10.1002/minf.201200170",
+      "volume": "32"
+    },
+    {
+      "DOI": "10.1002/qsar.200810084",
+      "ISSN": "1611020X, 16110218",
+      "abstractNote": "Quantitative structure – activity relationships (QSARs) are used to predict many different endpoints, utilize hundreds, and even thousands of different parameters (or descriptors), and are created using a variety of approaches. The one thing they all have in common is the assumption that the chemical structures used are correct. This research investigates this assumption by examining six public and private databases that contain structural information for chemicals. Molecular fingerprinting techniques are used to determine the error rates for structures in each of the databases. It was observed that the databases had error rates ranging from 0.1 to 3.4%. A case study to predict the n-octanol/water partition coefficient was also investigated to highlight the effects of these errors in the predictions of QSARs. In this case study, QSARs were developed using both (i) all correct structures and (ii) structures from a database with an error rate of 3.4%. This case study showed how slight errors in chemical structures, such as misplacing a Cl atom or swapping hydroxy and methoxy functional groups on a multiple ring structure, can result in significant differences in the accuracy of the prediction for those chemicals.",
+      "accessDate": "2021-03-18T11:01:16Z",
+      "attachments": [],
+      "citationKey": "young08",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Douglas",
+          "lastName": "Young"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Todd",
+          "lastName": "Martin"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Raghuraman",
+          "lastName": "Venkatapathy"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Paul",
+          "lastName": "Harten"
+        }
+      ],
+      "date": "12/2008",
+      "issue": "11-12",
+      "itemID": 11,
+      "itemType": "journalArticle",
+      "journalAbbreviation": "QSAR Comb. Sci.",
+      "language": "en",
+      "libraryCatalog": "DOI.org (Crossref)",
+      "pages": "1337-1345",
+      "publicationTitle": "QSAR & Combinatorial Science",
+      "tags": [
+        {
+          "tag": "Nuovo"
+        }
+      ],
+      "title": "Are the Chemical Structures in Your QSAR Correct?",
+      "url": "http://doi.wiley.com/10.1002/qsar.200810084",
+      "volume": "27"
+    },
+    {
+      "DOI": "10.1016/j.aca.2009.06.032",
+      "ISSN": "00032670",
+      "abstractNote": "So far, similarity/diversity of objects has been widely studied in different research ﬁelds and a number of distance measures to estimate diversity between objects have been proposed. However, not much interest has been addressed to analysis of how diverse are conﬁgurations of objects in two different multivariate spaces. Since computerisation and automation nowadays lead to a large availability of information, it is apparent that a system could be described in different ways and, consequently, methods for comparison of the different viewpoints are required. These methods, for instance, may be usefully applied to Quantitative Structure–Activity Relationship (QSAR) studies. In this ﬁeld, several thousands of molecular descriptors have been proposed in the literature and different selections of descriptors deﬁne different chemical spaces that need to be compared.",
+      "accessDate": "2021-03-17T08:58:24Z",
+      "attachments": [],
+      "citationKey": "todeschini09",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "R.",
+          "lastName": "Todeschini"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "D.",
+          "lastName": "Ballabio"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "V.",
+          "lastName": "Consonni"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "A.",
+          "lastName": "Manganaro"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "A.",
+          "lastName": "Mauri"
+        }
+      ],
+      "date": "08/2009",
+      "issue": "1",
+      "itemID": 12,
+      "itemType": "journalArticle",
+      "journalAbbreviation": "Analytica Chimica Acta",
+      "language": "en",
+      "libraryCatalog": "DOI.org (Crossref)",
+      "notes": [
+        "<p>Canonical Measure of Distance, una misura di distanza tra modelli che migliora la Model Distance. Prende in considerazione tutte le variabili, non é necessaria una selezione preliminare.</p>\n<p>Introdotto un indice che misura la correlazione tra le variabili selezionate nei due modelli, utile per capire se due modelli sono in realtá lo stesso.</p>"
+      ],
+      "pages": "45-51",
+      "publicationTitle": "Analytica Chimica Acta",
+      "title": "Canonical Measure of Correlation (CMC) and Canonical Measure of Distance (CMD) between sets of data. Part 1. Theory and simple chemometric applications",
+      "url": "https://linkinghub.elsevier.com/retrieve/pii/S0003267009008253",
+      "volume": "648"
+    },
+    {
+      "DOI": "10.1016/j.chemolab.2003.10.003",
+      "ISSN": "01697439",
+      "abstractNote": "In many research fields, there is, nowadays, a lot of readily available information, however, it needs processing. This is the case of the field of Quantitative Structure – Activity Relationships (QSAR), which exploits several thousand molecular descriptors, and quality control and multivariate calibration where hundreds of spectroscopic signals are easily obtained from spectroscopic methods. Genetic Algorithms, Simulated Annealing, and Tabu Search are some of the methods that are widely used to process available information to find sets of optimal models. In this case, the problem that arises is how to compare the selected models. This work proposes a new measure of the distance between two models, and we will demonstrate that this model distance allows clusters of similar models to be found and the most diverse models to be caught in such a way as to preserve maximum information and diversity.",
+      "accessDate": "2021-03-08T09:24:54Z",
+      "attachments": [],
+      "citationKey": "todeschini04",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Roberto",
+          "lastName": "Todeschini"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Viviana",
+          "lastName": "Consonni"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Manuela",
+          "lastName": "Pavan"
+        }
+      ],
+      "date": "1/2004",
+      "extra": [
+        "Number: 1"
+      ],
+      "issue": "1",
+      "itemID": 13,
+      "itemType": "journalArticle",
+      "journalAbbreviation": "Chemometrics and Intelligent Laboratory Systems",
+      "language": "en",
+      "libraryCatalog": "DOI.org (Crossref)",
+      "notes": [
+        "<p>Misura della differenza tra le variabili di due modelli basata sulla distanza di Hammond</p>\n<p>Buono per comparare la differenza tra modelli e per non avere tanti modelli simili.</p>"
+      ],
+      "pages": "55-61",
+      "publicationTitle": "Chemometrics and Intelligent Laboratory Systems",
+      "shortTitle": "A distance measure between models",
+      "title": "A distance measure between models: a tool for similarity/diversity analysis of model populations",
+      "url": "https://linkinghub.elsevier.com/retrieve/pii/S0169743903001837",
+      "volume": "70"
+    },
+    {
+      "DOI": "10.1016/j.chemolab.2014.01.011",
+      "ISSN": "01697439",
+      "abstractNote": "A modiﬁed version of the Sequential Replacement (SR) algorithm for variable selection is proposed, featuring modern functionalities aimed to: 1) reduce the computational time; 2) estimate the real predictivity of the model; 3) identify models suffering from pathologies. This redesigned version was called Reshaped Sequential Replacement (RSR) algorithm.",
+      "accessDate": "2021-03-17T07:45:26Z",
+      "attachments": [],
+      "citationKey": "cassotti14",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Matteo",
+          "lastName": "Cassotti"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Francesca",
+          "lastName": "Grisoni"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Roberto",
+          "lastName": "Todeschini"
+        }
+      ],
+      "date": "04/2014",
+      "itemID": 14,
+      "itemType": "journalArticle",
+      "journalAbbreviation": "Chemometrics and Intelligent Laboratory Systems",
+      "language": "en",
+      "libraryCatalog": "DOI.org (Crossref)",
+      "notes": [
+        "<p>New method of variable selection based on Sequential Replacement.</p>\n<p>Roulette Wheel to favor most correlated variables and QUIK rule to discard correlated models without carrying out the calculation.</p>\n<p>A Tabu list is implemented based off of low Q2 or CMC values of the single variables; these variable are discarded.</p>\n<p>Several validation methods are implemented to avoid chance correlation in the final models.</p>\n<p>Tested on a generated dataset with correlated variables and on QSAR datasets, using the original model as benchmark.</p>\n<p>Calcolo veloce, basato sulla predittivitá, identifica variabili collineari e rumorose.</p>"
+      ],
+      "pages": "136-148",
+      "publicationTitle": "Chemometrics and Intelligent Laboratory Systems",
+      "shortTitle": "Reshaped Sequential Replacement algorithm",
+      "title": "Reshaped Sequential Replacement algorithm: An efficient approach to variable selection",
+      "url": "https://linkinghub.elsevier.com/retrieve/pii/S0169743914000197",
+      "volume": "133"
+    },
+    {
+      "DOI": "10.1016/j.envint.2012.03.004",
+      "ISSN": "01604120",
+      "abstractNote": "A quantitative consensus model based on bioconcentration factor (BCF) predictions obtained from ﬁve quantitative structure–activity relationship models was developed for bioaccumulation assessment as an integrated testing approach for waiving. Three categories were considered: non-bioaccumulative, bioaccumulative and very bioaccumulative. Five in silico BCF models were selected and included into a quantitative consensus model by means of the continuous formulation of Bayes' theorem. The discrete likelihoods commonly used in the qualitative Bayesian model were substituted by probability density functions to reduce the loss of information that occurred when continuous BCF values were distributed across the three bioaccumulation categories. Results showed that the continuous Bayesian model yielded the best classiﬁcation predictions compared not only to the discrete Bayesian model, but also to the individual BCF models. The proposed quantitative consensus model proved to be a suitable approach for integrated testing strategies for continuous endpoints of environmental interest.",
+      "accessDate": "2021-03-08T12:34:56Z",
+      "attachments": [],
+      "citationKey": "fernandez12",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Alberto",
+          "lastName": "Fernández"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Anna",
+          "lastName": "Lombardo"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Robert",
+          "lastName": "Rallo"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Alessandra",
+          "lastName": "Roncaglioni"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Francesc",
+          "lastName": "Giralt"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Emilio",
+          "lastName": "Benfenati"
+        }
+      ],
+      "date": "9/2012",
+      "itemID": 15,
+      "itemType": "journalArticle",
+      "journalAbbreviation": "Environment International",
+      "language": "en",
+      "libraryCatalog": "DOI.org (Crossref)",
+      "notes": [
+        "<p>Cluster the data and build many local models on the clusters only, then use the appropriate model to predict compounds in its AD</p>\n<p>r2 RSE RMS</p>\n<p>Good if many molecules are similar</p>"
+      ],
+      "pages": "51-58",
+      "publicationTitle": "Environment International",
+      "title": "Quantitative consensus of bioaccumulation models for integrated testing strategies",
+      "url": "https://linkinghub.elsevier.com/retrieve/pii/S0160412012000554",
+      "volume": "45"
+    },
+    {
+      "DOI": "10.1016/j.jacc.2013.02.058",
+      "ISSN": "07351097",
+      "accessDate": "2021-03-04T09:36:37Z",
+      "attachments": [],
+      "citationKey": "wessler13",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Jeffrey D.",
+          "lastName": "Wessler"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Laura T.",
+          "lastName": "Grip"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Jeanne",
+          "lastName": "Mendell"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Robert P.",
+          "lastName": "Giugliano"
+        }
+      ],
+      "date": "06/2013",
+      "extra": [
+        "Number: 25"
+      ],
+      "issue": "25",
+      "itemID": 16,
+      "itemType": "journalArticle",
+      "journalAbbreviation": "Journal of the American College of Cardiology",
+      "language": "en",
+      "libraryCatalog": "DOI.org (Crossref)",
+      "notes": [
+        "<p><b>Annotazioni Estratte (5/3/2021, 11:37:50)</b><p><p>\"The mechanism of P-gp inhibition is thought to involve modulation of the membrane transporter by 1 of 4 pathways: direct inhibition of binding sites that block the transport of substrates, ATP binding inhibition, ATP hydrolysis, or coupling of ATP hydrolysis to the translocation of the substrate.\" (<a href=\"zotero://open-pdf/library/items/3JY8KAFD?page=2\">Wessler et al 2013:2496</a>)</p><p>\"The route of drug administration may also be relevant; different routes of administration (intravenous vs. oral) lead to different interactions because the amount of drug that reaches intestinal, renal, and hepatic P-gp receptors differs.\" (<a href=\"zotero://open-pdf/library/items/3JY8KAFD?page=2\">Wessler et al 2013:2496</a>)</p><p>\"if the ratio of measured efflux to uptake (netflux) of a drug is2, it is possible that the drug is a P-gp substrate.\" (<a href=\"zotero://open-pdf/library/items/3JY8KAFD?page=7\">Wessler et al 2013:2501</a>)</p>",
+        "<p>Good mechanism explaination</p>\n<p>Mechanisms of inhibition</p>\n<p>Meccanismi medici e vie di somministrazione</p>\n<p>Analisi dell'azione dei singoli farmaci</p>"
+      ],
+      "pages": "2495-2502",
+      "publicationTitle": "Journal of the American College of Cardiology",
+      "title": "The P-Glycoprotein Transport System and Cardiovascular Drugs",
+      "url": "https://linkinghub.elsevier.com/retrieve/pii/S0735109713012916",
+      "volume": "61"
+    },
+    {
+      "DOI": "10.1016/j.ymeth.2014.08.005",
+      "ISSN": "10462023",
+      "abstractNote": "Molecular ﬁngerprints have been used for a long time now in drug discovery and virtual screening. Their ease of use (requiring little to no conﬁguration) and the speed at which substructure and similarity searches can be performed with them – paired with a virtual screening performance similar to other more complex methods – is the reason for their popularity. However, there are many types of ﬁngerprints, each representing a different aspect of the molecule, which can greatly affect search performance. This review focuses on commonly used ﬁngerprint algorithms, their usage in virtual screening, and the software packages and online tools that provide these algorithms.",
+      "accessDate": "2021-03-16T07:52:24Z",
+      "attachments": [],
+      "citationKey": "cereto-massague15",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Adrià",
+          "lastName": "Cereto-Massagué"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "María José",
+          "lastName": "Ojeda"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Cristina",
+          "lastName": "Valls"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Miquel",
+          "lastName": "Mulero"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Santiago",
+          "lastName": "Garcia-Vallvé"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Gerard",
+          "lastName": "Pujadas"
+        }
+      ],
+      "date": "01/2015",
+      "itemID": 17,
+      "itemType": "journalArticle",
+      "journalAbbreviation": "Methods",
+      "language": "en",
+      "libraryCatalog": "DOI.org (Crossref)",
+      "notes": [
+        "<p>List of all fingerprints and explaination</p>\n<p>Why to use them and what to be careful about</p>"
+      ],
+      "pages": "58-63",
+      "publicationTitle": "Methods",
+      "title": "Molecular fingerprint similarity search in virtual screening",
+      "url": "https://linkinghub.elsevier.com/retrieve/pii/S1046202314002631",
+      "volume": "71"
+    },
+    {
+      "DOI": "10.1016/S0167-9236(02)00110-0",
+      "ISSN": "01679236",
+      "abstractNote": "Classification systems play an important role in business decision-making tasks by classifying the available information based on some criteria. The objective of this research is to assess the relative performance of some well-known classification methods. We consider classification techniques that are based on statistical and AI techniques. We use synthetic data to perform a controlled experiment in which the data characteristics are systematically altered to introduce imperfections such as nonlinearity, multicollinearity, unequal covariance, etc. Our experiments suggest that data characteristics considerably impact the classification performance of the methods. The results of the study can aid in the design of classification systems in which several classification methods can be employed to increase the reliability and consistency of the classification.",
+      "accessDate": "2021-03-10T09:38:43Z",
+      "attachments": [],
+      "citationKey": "kiang03",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Melody Y.",
+          "lastName": "Kiang"
+        }
+      ],
+      "date": "7/2003",
+      "issue": "4",
+      "itemID": 18,
+      "itemType": "journalArticle",
+      "journalAbbreviation": "Decision Support Systems",
+      "language": "en",
+      "libraryCatalog": "DOI.org (Crossref)",
+      "pages": "441-454",
+      "publicationTitle": "Decision Support Systems",
+      "tags": [
+        {
+          "tag": "Nuovo"
+        }
+      ],
+      "title": "A comparative assessment of classification methods",
+      "url": "https://linkinghub.elsevier.com/retrieve/pii/S0167923602001100",
+      "volume": "35"
+    },
+    {
+      "DOI": "10.1016/S0169-7439(98)00124-5",
+      "ISSN": "01697439",
+      "abstractNote": "A previous paper introduced a new correlation index, K, and tested it to evaluate the correlation content of a set of multivariate data. This paper presents an extension of the K index theory together with some applications in several fields where chemometrics is commonly encountered. Starting from a correlation measurement, evaluated by the K index theory, it becomes possible Ža. to calculate the information content within a set of multivariate data, Žb. to give an estimate of data set entropy, Žc. to allow variable reduction, preserving the correlation structure in the original data. Moreover, Žd. the effect of common scaling procedures on the structure of the original data can be measured, Že. and an estimate made of the minimum number of cross-validation groups, without loosing relevant but not predictable information; finally Žf. a search can be made for the best subset models in regression analysis excluding models without predictive power. q 1999 Elsevier Science B.V. All rights reserved.",
+      "accessDate": "2021-03-17T08:58:38Z",
+      "attachments": [],
+      "citationKey": "todeschini99",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "R.",
+          "lastName": "Todeschini"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "V.",
+          "lastName": "Consonni"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "A.",
+          "lastName": "Maiocchi"
+        }
+      ],
+      "date": "2/1999",
+      "issue": "1",
+      "itemID": 19,
+      "itemType": "journalArticle",
+      "journalAbbreviation": "Chemometrics and Intelligent Laboratory Systems",
+      "language": "en",
+      "libraryCatalog": "DOI.org (Crossref)",
+      "pages": "13-29",
+      "publicationTitle": "Chemometrics and Intelligent Laboratory Systems",
+      "shortTitle": "The K correlation index",
+      "tags": [
+        {
+          "tag": "Nuovo"
+        }
+      ],
+      "title": "The K correlation index: theory development and its application in chemometrics",
+      "url": "https://linkinghub.elsevier.com/retrieve/pii/S0169743998001245",
+      "volume": "46"
+    },
+    {
+      "abstractNote": "Machine learning approaches are valuable methods in hyperspectral remote sensing, especially for the classiﬁcation of land cover or for the regression of physical parameters. While the recording of hyperspectral data has become affordable with innovative technologies, the acquisition of reference data (ground truth) has remained expensive and time-consuming. There is a need for methodological approaches that can handle datasets with signiﬁcantly more hyperspectral input data than reference data. We introduce the Supervised Self-organizing Maps (SuSi) framework, which can perform unsupervised, supervised and semi-supervised classiﬁcation as well as regression on high-dimensional data. The methodology of the SuSi framework is presented and compared to other frameworks. Its different parts are evaluated on two hyperspectral datasets. The results of the evaluations can be summarized in four major ﬁndings: (1) The supervised and semi-Supervised Self-organizing Maps (SOM) outperform random forest in the regression of soil moisture. (2) In the classiﬁcation of land cover, the supervised and semi-supervised SOM reveal great potential. (3) The unsupervised SOM is a valuable tool to understand the data. (4) The SuSi framework is versatile, ﬂexible, and easy to use. The SuSi framework is provided as an open-source Python package on GitHub.",
+      "accessDate": "2021-03-15T12:02:15Z",
+      "attachments": [],
+      "citationKey": "riese20",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Felix M.",
+          "lastName": "Riese"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Sina",
+          "lastName": "Keller"
+        }
+      ],
+      "date": "2020-01-08",
+      "extra": [
+        "arXiv: 1903.11114"
+      ],
+      "itemID": 2,
+      "itemType": "journalArticle",
+      "language": "en",
+      "libraryCatalog": "arXiv.org",
+      "notes": [
+        "<p>Comment: An extended and peer-reviewed version exists at doi:10.3390/rs12010007</p>"
+      ],
+      "publicationTitle": "arXiv:1903.11114 [cs, stat]",
+      "shortTitle": "SuSi",
+      "tags": [
+        {
+          "tag": "Computer Science - Computer Vision and Pattern Recognition",
+          "type": 1
+        },
+        {
+          "tag": "Computer Science - Machine Learning",
+          "type": 1
+        },
+        {
+          "tag": "Nuovo"
+        },
+        {
+          "tag": "Statistics - Machine Learning",
+          "type": 1
+        }
+      ],
+      "title": "SuSi: Supervised Self-Organizing Maps for Regression and Classification in Python",
+      "url": "http://arxiv.org/abs/1903.11114"
+    },
+    {
+      "DOI": "10.1016/S1093-3263(02)00188-2",
+      "ISSN": "10933263",
+      "abstractNote": "This paper compares several published methods for clustering chemical structures, using both graph- and ﬁngerprint-based similarity measures. The clusterings from each method were compared to determine the degree of cluster overlap. Each method was also evaluated on how well it grouped structures into clusters possessing a non-trivial substructural commonality. The methods which employ adjustable parameters were tested to determine the stability of each parameter for datasets of varying size and composition. Our experiments suggest that both graph- and ﬁngerprint-based similarity measures can be used effectively for generating chemical clusterings; it is also suggested that the CAST and Yin–Chen methods, suggested recently for the clustering of gene expression patterns, may also prove effective for the clustering of 2D chemical structures.",
+      "accessDate": "2021-03-10T12:36:43Z",
+      "attachments": [],
+      "citationKey": "raymond03",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "John W",
+          "lastName": "Raymond"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "C.John",
+          "lastName": "Blankley"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Peter",
+          "lastName": "Willett"
+        }
+      ],
+      "date": "3/2003",
+      "issue": "5",
+      "itemID": 20,
+      "itemType": "journalArticle",
+      "journalAbbreviation": "Journal of Molecular Graphics and Modelling",
+      "language": "en",
+      "libraryCatalog": "DOI.org (Crossref)",
+      "pages": "421-433",
+      "publicationTitle": "Journal of Molecular Graphics and Modelling",
+      "title": "Comparison of chemical clustering methods using graph- and fingerprint-based similarity measures",
+      "url": "https://linkinghub.elsevier.com/retrieve/pii/S1093326302001882",
+      "volume": "21"
+    },
+    {
+      "DOI": "10.1021/acs.jcim.9b01057",
+      "ISSN": "1549-9596, 1549-960X",
+      "abstractNote": "Consensus strategies have been widely applied in many diﬀerent scientiﬁc ﬁelds, based on the assumption that the fusion of several sources of information increases the outcome reliability. Despite the widespread application of consensus approaches, their advantages in quantitative structure−activity relationship (QSAR) modeling have not been thoroughly evaluated, mainly due to the lack of appropriate largescale data sets. In this study, we evaluated the advantages and drawbacks of consensus approaches compared to single classiﬁcation QSAR models. To this end, we used a data set of three properties (androgen receptor binding, agonism, and antagonism) for approximately 4000 molecules with predictions performed by more than 20 QSAR models, made available in a large-scale collaborative project. The individual QSAR models were compared with two consensus approaches, majority voting and the Bayes consensus with discrete probability distributions, in both protective and nonprotective forms. Consensus strategies proved to be more accurate and to better cover the analyzed chemical space than individual QSARs on average, thus motivating their widespread application for property prediction. Scripts and data to reproduce the results of this study are available for download.",
+      "accessDate": "2021-03-06T15:34:50Z",
+      "attachments": [],
+      "citationKey": "valsecchi20",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Cecile",
+          "lastName": "Valsecchi"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Francesca",
+          "lastName": "Grisoni"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Viviana",
+          "lastName": "Consonni"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Davide",
+          "lastName": "Ballabio"
+        }
+      ],
+      "date": "2020-03-23",
+      "extra": [
+        "Number: 3"
+      ],
+      "issue": "3",
+      "itemID": 21,
+      "itemType": "journalArticle",
+      "journalAbbreviation": "J. Chem. Inf. Model.",
+      "language": "en",
+      "libraryCatalog": "DOI.org (Crossref)",
+      "notes": [
+        "<p>Majority voting is very simple</p>\n<p>Bayes consensus</p>\n<p>Consensus is good to have a larger AD and therefore you have a more useful model.</p>"
+      ],
+      "pages": "1215-1223",
+      "publicationTitle": "Journal of Chemical Information and Modeling",
+      "shortTitle": "Consensus versus Individual QSARs in Classification",
+      "title": "Consensus versus Individual QSARs in Classification: Comparison on a Large-Scale Case Study",
+      "url": "https://pubs.acs.org/doi/10.1021/acs.jcim.9b01057",
+      "volume": "60"
+    },
+    {
+      "DOI": "10.1021/ci010247v",
+      "ISSN": "0095-2338",
+      "accessDate": "2021-03-09T15:16:59Z",
+      "attachments": [],
+      "citationKey": "cho02",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Sung Jin",
+          "lastName": "Cho"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Mark A.",
+          "lastName": "Hermsmeier"
+        }
+      ],
+      "date": "07/2002",
+      "extra": [
+        "Number: 4"
+      ],
+      "issue": "4",
+      "itemID": 22,
+      "itemType": "journalArticle",
+      "journalAbbreviation": "J. Chem. Inf. Comput. Sci.",
+      "language": "en",
+      "libraryCatalog": "DOI.org (Crossref)",
+      "pages": "927-936",
+      "publicationTitle": "Journal of Chemical Information and Computer Sciences",
+      "shortTitle": "Genetic Algorithm Guided Selection",
+      "tags": [
+        {
+          "tag": "Nuovo"
+        }
+      ],
+      "title": "Genetic Algorithm Guided Selection: Variable Selection and Subset Selection",
+      "url": "https://pubs.acs.org/doi/10.1021/ci010247v",
+      "volume": "42"
+    },
+    {
+      "DOI": "10.1021/ci049971e",
+      "ISSN": "0095-2338",
+      "accessDate": "2021-03-03T10:08:47Z",
+      "attachments": [],
+      "citationKey": "xue04",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Y.",
+          "lastName": "Xue"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "C. W.",
+          "lastName": "Yap"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "L. Z.",
+          "lastName": "Sun"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Z. W.",
+          "lastName": "Cao"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "J. F.",
+          "lastName": "Wang"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Y. Z.",
+          "lastName": "Chen"
+        }
+      ],
+      "date": "07/2004",
+      "extra": [
+        "Number: 4"
+      ],
+      "issue": "4",
+      "itemID": 23,
+      "itemType": "journalArticle",
+      "journalAbbreviation": "J. Chem. Inf. Comput. Sci.",
+      "language": "en",
+      "libraryCatalog": "DOI.org (Crossref)",
+      "notes": [
+        "<p>200 Molecole, 84% accuracy</p>\n<p>SVM, anche KNN, Neural 1Networks e Decision Trees</p>\n<p>Descrittori 3D e QM</p>\n<p>Sensitivity and specificity1</p>"
+      ],
+      "pages": "1497-1505",
+      "publicationTitle": "Journal of Chemical Information and Computer Sciences",
+      "title": "Prediction of P-Glycoprotein Substrates by a Support Vector Machine Approach",
+      "url": "https://pubs.acs.org/doi/10.1021/ci049971e",
+      "volume": "44"
+    },
+    {
+      "DOI": "10.1021/ci1004042",
+      "ISSN": "1549-9596, 1549-960X",
+      "abstractNote": "A visualization plot of a data set of molecular data is a useful tool for gaining insight into a set of molecules. In chemoinformatics, most visualization plots are of molecular descriptors, and the statistical model most often used to produce a visualization is principal component analysis (PCA). This paper takes PCA, together with four other statistical models (NeuroScale, GTM, LTM, and LTM-LIN), and evaluates their ability to produce clustering in visualizations not of molecular descriptors but of molecular ﬁngerprints. Two diﬀerent tasks are addressed: understanding structural information (particularly combinatorial libraries) and relating structure to activity. The quality of the visualizations is compared both subjectively (by visual inspection) and objectively (with global distance comparisons and local k-nearest-neighbor predictors). On the data sets used to evaluate clustering by structure, LTM is found to perform signiﬁcantly better than the other models. In particular, the clusters in LTM visualization space are consistent with the relationships between the core scaﬀolds that deﬁne the combinatorial sublibraries. On the data sets used to evaluate clustering by activity, LTM again gives the best performance but by a smaller margin. The results of this paper demonstrate the value of using both a nonlinear projection map and a Bernoulli noise model for modeling binary data. Downloaded via UNIV DEGLI STUDI MILANO-BICOCCA on March 10, 2021 at 10:38:35 (UTC).",
+      "accessDate": "2021-03-10T10:39:16Z",
+      "attachments": [],
+      "citationKey": "owen11",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "John R.",
+          "lastName": "Owen"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Ian T.",
+          "lastName": "Nabney"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "José L.",
+          "lastName": "Medina-Franco"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Fabian",
+          "lastName": "López-Vallejo"
+        }
+      ],
+      "date": "2011-07-25",
+      "issue": "7",
+      "itemID": 24,
+      "itemType": "journalArticle",
+      "journalAbbreviation": "J. Chem. Inf. Model.",
+      "language": "en",
+      "libraryCatalog": "DOI.org (Crossref)",
+      "pages": "1552-1563",
+      "publicationTitle": "Journal of Chemical Information and Modeling",
+      "title": "Visualization of Molecular Fingerprints",
+      "url": "https://pubs.acs.org/doi/10.1021/ci1004042",
+      "volume": "51"
+    },
+    {
+      "DOI": "10.1021/ci2001583",
+      "ISSN": "1549-9596, 1549-960X",
+      "abstractNote": "P-glycoprotein (P-gp) is one of the major ABC transporters and involved in many essential processes such as lipid and steroid transport across cell membranes but also in the uptake of drugs such as HIV protease and reverse transcriptase inhibitors. Despite its importance, reliable models predicting substrates of P-gp are scarce. In this study, we have built several computational models to predict whether or not a compound is a P-gp substrate, based on the largest data set yet published, employing 332 distinct structures. Each molecule is represented by ADRIANA.Code, MOE, and ECFP_4 ﬁngerprint descriptors. The models are computed using a support vector machine based on a training set which includes 131 substrates and 81 nonsubstrates that were evaluated by 5-, 10-fold, and leave-one-out (LOO) cross-validation. The best model gives a Matthews Correlation Coeﬃcient of 0.73 and a prediction accuracy of 0.88 on the test set. Examination of the model based on ECFP_4 ﬁngerprints revealed several substructures which could have signiﬁcance in separating substrates and nonsubstrates of P-gp, such as the nitrile and sulfoxide functional groups which have a higher frequency in nonsubstrates than in substrates. In addition structural isomerism in sugars was found to result in remarkable diﬀerences regarding the likelihood of a compound to be a substrate for P-gp.",
+      "accessDate": "2021-03-04T09:35:58Z",
+      "attachments": [],
+      "citationKey": "wang11",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Zhi",
+          "lastName": "Wang"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Yuanying",
+          "lastName": "Chen"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Hu",
+          "lastName": "Liang"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Andreas",
+          "lastName": "Bender"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Robert C.",
+          "lastName": "Glen"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Aixia",
+          "lastName": "Yan"
+        }
+      ],
+      "date": "2011-06-27",
+      "extra": [
+        "Number: 6"
+      ],
+      "issue": "6",
+      "itemID": 25,
+      "itemType": "journalArticle",
+      "journalAbbreviation": "J. Chem. Inf. Model.",
+      "language": "en",
+      "libraryCatalog": "DOI.org (Crossref)",
+      "notes": [
+        "<p><strong>Annotazioni Estratte (5/3/2021, 09:54:11)</strong></p>\n<p>\"Ford and Hait observed that P-gp substrates appear to be hydrophobic, with a molecular mass of 3002000 Da\" (<a href=\"zotero://open-pdf/library/items/DV3NZWR4?page=2\">Wang et al 2011:1448</a>)</p>\n<p>\"\"rule of four\" was derived by Didziapetris and co-workers which can roughly estimate whether a compound is P-gp substrate or not. This rule states that if a compound has a total of at least eight nitrogen and oxygen atoms, a molecular weight of more than 400 and an acid with pK a of greater than four ((NþO)g 8, MW &gt; 400, and acid pK a &gt; 4), it is more likely to be a P-gp substrate.\" (<a href=\"zotero://open-pdf/library/items/DV3NZWR4?page=2\">Wang et al 2011:1448</a>)</p>\n<p>\"For model validation 5-fold, 10-fold, and leave-one-out (LOO) cross-validation was performed\" (<a href=\"zotero://open-pdf/library/items/DV3NZWR4?page=2\">Wang et al 2011:1448</a>)</p>\n<p>\"model evaluation on an external test set.\" (<a href=\"zotero://open-pdf/library/items/DV3NZWR4?page=2\">Wang et al 2011:1448</a>)</p>\n<p>\"data set of 332 compounds, including 206 P-gp substrates and 126 nonsubstrates\" (<a href=\"zotero://open-pdf/library/items/DV3NZWR4?page=2\">Wang et al 2011:1448</a>)</p>\n<p>\"For these compounds, we use the definition that P-gp substrates are molecules which are actively transported and therefore have a higher concentration outside the cell relative to the concentration in the cytosol.\" (<a href=\"zotero://open-pdf/library/items/DV3NZWR4?page=2\">Wang et al 2011:1448</a>)</p>\n<p>\"A Kohonen neural network 39,40 was used to split the data set into a training set and test set.\" (<a href=\"zotero://open-pdf/library/items/DV3NZWR4?page=2\">Wang et al 2011:1448</a>)</p>\n<p>\"Three methods were employed for descriptor selection, namely correlation analysis, Random Forest-based feature selection, and the F-score as a measure of feature relevance\" (<a href=\"zotero://open-pdf/library/items/DV3NZWR4?page=3\">Wang et al 2011:1449</a>)</p>\n<p>\"the best model was subject to further validation by Y-scrambling in order to rule out chance correlations.\" (<a href=\"zotero://open-pdf/library/items/DV3NZWR4?page=4\">Wang et al 2011:1450</a>)</p>\n<p>\"descriptor a_hyd, which presents the hydrophobic pharmacophore feature of a molecule, shows a relatively high F-score, as does the descriptor rings, which counts the total number of rings\" (<a href=\"zotero://open-pdf/library/items/DV3NZWR4?page=6\">Wang et al 2011:1452</a>)</p>",
+        "<p>Substrate 200 molecules SVM</p>\n<p>Very good statistical analysis and validation</p>\n<p>Advanced variable reduction</p>"
+      ],
+      "pages": "1447-1456",
+      "publicationTitle": "Journal of Chemical Information and Modeling",
+      "title": "P-glycoprotein Substrate Models Using Support Vector Machines Based on a Comprehensive Data set",
+      "url": "https://pubs.acs.org/doi/10.1021/ci2001583",
+      "volume": "51"
+    },
+    {
+      "DOI": "10.1021/ci200528d",
+      "ISSN": "1549-9596, 1549-960X",
+      "abstractNote": "The aim of virtual screening (VS) is to identify bioactive compounds through computational means, by employing knowledge about the protein target (structure-based VS) or known bioactive ligands (ligand-based VS). In VS, a large number of molecules are ranked according to their likelihood to be bioactive compounds, with the aim to enrich the top fraction of the resulting list (which can be tested in bioassays afterward). At its core, VS attempts to improve the odds of identifying bioactive molecules by maximizing the true positive rate, that is, by ranking the truly active molecules as high as possible (and, correspondingly, the truly inactive ones as low as possible). In choosing the right approach, the researcher is faced with many questions: where does the optimal balance between efficiency and accuracy lie when evaluating a particular algorithm; do some methods perform better than others and in what particular situations; and what do retrospective results tell us about the prospective utility of a particular method? Given the multitude of settings, parameters, and data sets the practitioner can choose from, there are many pitfalls that lurk along the way which might render VS less efficient or downright useless. This review attempts to catalogue published and unpublished problems, shortcomings, failures, and technical traps of VS methods with the aim to avoid pitfalls by making the user aware of them in the first place.",
+      "accessDate": "2021-03-16T08:21:39Z",
+      "attachments": [],
+      "citationKey": "scior12",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Thomas",
+          "lastName": "Scior"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Andreas",
+          "lastName": "Bender"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Gary",
+          "lastName": "Tresadern"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "José L.",
+          "lastName": "Medina-Franco"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Karina",
+          "lastName": "Martínez-Mayorga"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Thierry",
+          "lastName": "Langer"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Karina",
+          "lastName": "Cuanalo-Contreras"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Dimitris K.",
+          "lastName": "Agrafiotis"
+        }
+      ],
+      "date": "2012-04-23",
+      "issue": "4",
+      "itemID": 26,
+      "itemType": "journalArticle",
+      "journalAbbreviation": "J. Chem. Inf. Model.",
+      "language": "en",
+      "libraryCatalog": "DOI.org (Crossref)",
+      "pages": "867-881",
+      "publicationTitle": "Journal of Chemical Information and Modeling",
+      "shortTitle": "Recognizing Pitfalls in Virtual Screening",
+      "tags": [
+        {
+          "tag": "Nuovo"
+        }
+      ],
+      "title": "Recognizing Pitfalls in Virtual Screening: A Critical Review",
+      "url": "https://pubs.acs.org/doi/10.1021/ci200528d",
+      "volume": "52"
+    },
+    {
+      "DOI": "10.1021/ci300261r",
+      "ISSN": "1549-9596, 1549-960X",
+      "abstractNote": "This paper reports an analysis and comparison of the use of 51 diﬀerent similarity coeﬃcients for computing the similarities between binary ﬁngerprints for both simulated and real chemical data sets. Five pairs and a triplet of coeﬃcients were found to yield identical similarity values, leading to the elimination of seven of the coeﬃcients. The remaining 44 coeﬃcients were then compared in two ways: by their theoretical characteristics using simple descriptive statistics, correlation analysis, multidimensional scaling, Hasse diagrams, and the recently described atemporal target diﬀusion model; and by their eﬀectiveness for similarity-based virtual screening using MDDR, WOMBAT, and MUV data. The comparisons demonstrate the general utility of the well-known Tanimoto method but also suggest other coeﬃcients that may be worthy of further attention.",
+      "accessDate": "2021-03-16T13:56:12Z",
+      "attachments": [],
+      "citationKey": "todeschini12",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Roberto",
+          "lastName": "Todeschini"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Viviana",
+          "lastName": "Consonni"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Hua",
+          "lastName": "Xiang"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "John",
+          "lastName": "Holliday"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Massimo",
+          "lastName": "Buscema"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Peter",
+          "lastName": "Willett"
+        }
+      ],
+      "date": "2012-11-26",
+      "issue": "11",
+      "itemID": 27,
+      "itemType": "journalArticle",
+      "journalAbbreviation": "J. Chem. Inf. Model.",
+      "language": "en",
+      "libraryCatalog": "DOI.org (Crossref)",
+      "notes": [
+        "<p>Compara 51 differenti indici di similarita' al fine di trovare le migliori per la distanza delle fingerprint.</p>\n<p>6 coefficienti vengono selezionati come i piu' adatti alla cheminformatica, 4 sono Tanimoto e suoi equivalenti, Harrys-Lahey e Consonni-Todeschini4</p>\n<p>Per determinare quali siano i migliori indici, questi vengono comparati su 100 000 dati generati con una distribuzione normale e due database di molecole con risposta quantitativa e qualitativa.</p>\n<p>MDS sulla correlazione di Pearson tra i vari indici, risultano raggruppati in base alla simmetria dell'indice.</p>\n<p>Viene costruito un diagramma di Hasse, in cui domina l'indice che ha similaritá superiore per tutti i campioni considerati.</p>\n<p>ADTM non ho capito a cosa serve...</p>\n<p>7 Misure sono ridondanti in quanto perfettamente correlate ad altre.</p>\n<p>I migliori indici sono stati selezionati in base al comportamento nel test su dati di molecole reali. Vengono contate quante molecole attive vengono trovate in media tra l'1% delle molecole piú vicine.</p>"
+      ],
+      "pages": "2884-2901",
+      "publicationTitle": "Journal of Chemical Information and Modeling",
+      "shortTitle": "Similarity Coefficients for Binary Chemoinformatics Data",
+      "title": "Similarity Coefficients for Binary Chemoinformatics Data: Overview and Extended Comparison Using Simulated and Real Data Sets",
+      "url": "https://pubs.acs.org/doi/10.1021/ci300261r",
+      "volume": "52"
+    },
+    {
+      "DOI": "10.1021/ci400195v",
+      "ISSN": "1549-9596, 1549-960X",
+      "abstractNote": "P-Glycoprotein (Pgp) is one of the best characterized ABC transporters, often involved in the multidrug-resistance phenotype overexpressed by several cancer cell lines. Experimental studies contributed to important knowledge concerning substrate polyspeciﬁcity, eﬄux mechanism, and drugbinding sites. This information is, however, scattered through diﬀerent perspectives, not existing a unifying model for the knowledge available for this transporter. Using a previously reﬁned structure of murine Pgp, three putative drug-binding sites were hereby characterized by means of molecular docking. The modulator site (M-site) is characterized by cross interactions between both Pgp halves herein deﬁned for the ﬁrst time, having an important role in impairing conformational changes leading to substrate eﬄux. Two other binding sites, located next to the inner leaﬂet of the lipid bilayer, were identiﬁed as the substratebinding H and R sites by matching docking and experimental results. A new classiﬁcation model with the ability to discriminate substrates from modulators is also proposed, integrating a vast number of theoretical and experimental data.",
+      "accessDate": "2021-03-04T09:35:20Z",
+      "attachments": [],
+      "citationKey": "ferreira13",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Ricardo J.",
+          "lastName": "Ferreira"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Maria-José U.",
+          "lastName": "Ferreira"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Daniel J. V. A.",
+          "lastName": "dos Santos"
+        }
+      ],
+      "date": "2013-07-22",
+      "extra": [
+        "Number: 7"
+      ],
+      "issue": "7",
+      "itemID": 28,
+      "itemType": "journalArticle",
+      "journalAbbreviation": "J. Chem. Inf. Model.",
+      "language": "en",
+      "libraryCatalog": "DOI.org (Crossref)",
+      "notes": [
+        "<p><b>Annotazioni Estratte (4/3/2021, 15:22:02)</b><p><p>\"three distinct drug-binding sites, located in the outer leaflet of the lipid bilayer, were proposed based on the residues chemical characteristics and docked\" (<a href=\"zotero://open-pdf/library/items/JMN7JFXI?page=2\">Ferreira et al 2013:1748</a>)</p><p>\"Modulators, molecules with lowerΔG and increased preference for the M-site, also able to establish a strong cross interaction effect;\" (<a href=\"zotero://open-pdf/library/items/JMN7JFXI?page=7\">Ferreira et al 2013:1753</a>)</p><p>\"The above data strongly suggest that Pgp efflux modulation can be achieved through direct competition with molecules at SBSs, by conformational impairment at the M-site or both\" (<a href=\"zotero://open-pdf/library/items/JMN7JFXI?page=9\">Ferreira et al 2013:1755</a>)</p><p>\"we can only speculate if the R-site/H-site assignment is maintained during the full efflux cycle.\" (<a href=\"zotero://open-pdf/library/items/JMN7JFXI?page=10\">Ferreira et al 2013:1756</a>)</p>"
+      ],
+      "pages": "1747-1760",
+      "publicationTitle": "Journal of Chemical Information and Modeling",
+      "title": "Molecular Docking Characterizes Substrate-Binding Sites and Efflux Modulation Mechanisms within P-Glycoprotein.",
+      "url": "https://pubs.acs.org/doi/10.1021/ci400195v",
+      "volume": "53"
+    },
+    {
+      "DOI": "10.1021/ci600299j",
+      "ISSN": "1549-9596, 1549-960X",
+      "accessDate": "2021-03-08T10:01:10Z",
+      "attachments": [],
+      "citationKey": "yuan07",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Hua",
+          "lastName": "Yuan"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Yongyan",
+          "lastName": "Wang"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Yiyu",
+          "lastName": "Cheng"
+        }
+      ],
+      "date": "01/2007",
+      "extra": [
+        "Number: 1"
+      ],
+      "issue": "1",
+      "itemID": 29,
+      "itemType": "journalArticle",
+      "journalAbbreviation": "J. Chem. Inf. Model.",
+      "language": "en",
+      "libraryCatalog": "DOI.org (Crossref)",
+      "pages": "159-169",
+      "publicationTitle": "Journal of Chemical Information and Modeling",
+      "title": "Local and Global Quantitative Structure−Activity Relationship Modeling and Prediction for the Baseline Toxicity",
+      "url": "https://pubs.acs.org/doi/10.1021/ci600299j",
+      "volume": "47"
+    },
+    {
+      "abstractNote": "P-glycoprotein (P-gp) actively transports a wide variety of chemically diverse compounds out of cells. It is highly associated with the ADMET properties of drugs and drug candidates and, moreover, plays a major role in the multidrug resistance (MDR) phenomenon, which leads to the failure of chemotherapy in cancer treatments. Therefore, the recognition of potential P-gp substrates at the early stages of the drug discovery process is quite important. Here, we compiled an extensive data set containing 423 P-gp substrates and 399 nonsubstrates, which is the largest P-gp substrate/nonsubstrate data set yet published. Comparison of the distributions of eight important physicochemical properties for the substrates and nonsubstrates reveals that molecular weight and molecular solubility are the informative attributes diﬀerentiating P-gp substrates from nonsubstrates. Examination of the distributions of eight physicochemical properties for 735 P-gp inhibitors and 423 substrates gives the fact that inhibitors are signiﬁcantly more hydrophobic than substrates while substrates tend to have more H-bond donors than inhibitors. Then, the classiﬁcation models based on simple molecular properties, topological descriptors, and molecular ﬁngerprints were developed using the naive Bayesian classiﬁcation technique. The best naive Bayesian classiﬁer yields a Matthews correlation coeﬃcient of 0.824 and a prediction accuracy of 91.2% for the training set from a 5-fold cross-validation procedure, and a Matthews correlation coeﬃcient of 0.667 and a prediction accuracy of 83.5% for the test set containing 200 molecules. Analysis of the important structural fragments given by the Bayesian classiﬁer shows that the essential H-bond acceptors arranged in distinct spatial patterns and ﬂexibility are quite essential for P-gp substrate-likeness, which aﬀords a deeper understanding on the molecular basis of substrate/P-gp interaction. Finally, the reasons for mispredictions were discussed. It turns out that the presented classiﬁer could be used as a reliable virtual screening tool for identifying potential substrates of P-gp.",
+      "attachments": [],
+      "citationKey": "li14",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Dan",
+          "lastName": "Li"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Lei",
+          "lastName": "Chen"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Youyong",
+          "lastName": "Li"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Sheng",
+          "lastName": "Tian"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Huiyong",
+          "lastName": "Sun"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Tingjun",
+          "lastName": "Hou"
+        }
+      ],
+      "date": "2014",
+      "itemID": 3,
+      "itemType": "journalArticle",
+      "language": "en",
+      "libraryCatalog": "Zotero",
+      "notes": [
+        "<p><b>Annotazioni Estratte (4/3/2021, 14:48:58)</b><p><p>\"a variety of statistical techniques and machine learning approaches, including multiple linear regression (MLR), 17 partial least-squares discriminant analysis (PLSD), 18 linear discriminant analysis (LDA), 19,20 random forest (RF), 21 support vector machine (SVM), 22−24 and Kohonen selforganizing map (SOM), 25 have been furthermore employed to develop computational models. 9\" (<a href=\"zotero://open-pdf/library/items/AHANRBVW?page=2\">Li et al 2014:12</a>)</p><p>\"13 simple physicochemical properties widely adopted in ADME predictions 40−42 and 43 topological descriptors\" (<a href=\"zotero://open-pdf/library/items/AHANRBVW?page=3\">Li et al 2014:13</a>)</p><p>\"a variety of molecularfingerprint sets\" (<a href=\"zotero://open-pdf/library/items/AHANRBVW?page=3\">Li et al 2014:13</a>)</p><p>\"In other words, more hydrophobic molecules have more chance to be P-gp substrates\" (<a href=\"zotero://open-pdf/library/items/AHANRBVW?page=6\">Li et al 2014:16</a>)</p><p>\"The mean values of logS for the substrates and nonsubstrates are−6.49 and−4.97 individually, implying that the nonsubstrates of P-gp tend to be more soluble.\" (<a href=\"zotero://open-pdf/library/items/AHANRBVW?page=6\">Li et al 2014:16</a>)</p><p>\"Indubitably, logS is a more informative attribute than AlogP or logD for the differentiation between substrates and nonsubstrates,\" (<a href=\"zotero://open-pdf/library/items/AHANRBVW?page=6\">Li et al 2014:16</a>)</p><p>\"The molecules that can interact with P-gp are roughly classified into three classes: substrates, inhibitors, and modulators. 9\" (<a href=\"zotero://open-pdf/library/items/AHANRBVW?page=6\">Li et al 2014:16</a>)</p><p>\"P-gp inhibitors have been typically assumed to competitively inhibit substrate transport, suggesting that the molecular characteristics of the inhibitors and substrates of P-gp may share similarities in structures or binding patterns.\" (<a href=\"zotero://open-pdf/library/items/AHANRBVW?page=6\">Li et al 2014:16</a>)</p><p>\"the descriptor n HBD shows much better capability to discriminate the P-gp inhibitors from substrates than PSA and n HBA\" (<a href=\"zotero://open-pdf/library/items/AHANRBVW?page=7\">Li et al 2014:17</a>)</p><p>\"It is believed that the electrostatic repulsion between the negatively charged group and the negatively charge residues in P-gp may be unfavorable for substrate binding to Pgp.\" (<a href=\"zotero://open-pdf/library/items/AHANRBVW?page=9\">Li et al 2014:19</a>)</p><p>\"most unfavorable fragments carry carbon− carbon double bonds and carbon−carbon triple bonds, and besides, four fragments contain complicated ring systems.\" (<a href=\"zotero://open-pdf/library/items/AHANRBVW?page=9\">Li et al 2014:19</a>)</p>",
+        "<p>Inhibitors may be very similar to substrate</p>\n<p>Bayesian fingerprint over 67 descriptors</p>"
+      ],
+      "pages": "11",
+      "publicationTitle": "Mol. Pharmaceutics",
+      "title": "ADMET Evaluation in Drug Discovery. 13. Development of in Silico Prediction Models for P‑Glycoprotein Substrates"
+    },
+    {
+      "DOI": "10.1021/ci700016d",
+      "ISSN": "1549-9596, 1549-960X",
+      "accessDate": "2021-03-08T09:04:45Z",
+      "attachments": [],
+      "citationKey": "hewitt07",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Mark",
+          "lastName": "Hewitt"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Mark T. D.",
+          "lastName": "Cronin"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Judith C.",
+          "lastName": "Madden"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Philip H.",
+          "lastName": "Rowe"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Clara",
+          "lastName": "Johnson"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Anrdrea",
+          "lastName": "Obi"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Steven J.",
+          "lastName": "Enoch"
+        }
+      ],
+      "date": "07/2007",
+      "extra": [
+        "Number: 4"
+      ],
+      "issue": "4",
+      "itemID": 30,
+      "itemType": "journalArticle",
+      "journalAbbreviation": "J. Chem. Inf. Model.",
+      "language": "en",
+      "libraryCatalog": "DOI.org (Crossref)",
+      "notes": [
+        "<p>Consensus did not perform better than single models</p>\n<p>Capire perché a loro non funziona ed invece a Cecile si</p>"
+      ],
+      "pages": "1460-1468",
+      "publicationTitle": "Journal of Chemical Information and Modeling",
+      "shortTitle": "Consensus QSAR Models",
+      "title": "Consensus QSAR Models: Do the Benefits Outweigh the Complexity?",
+      "url": "https://pubs.acs.org/doi/10.1021/ci700016d",
+      "volume": "47"
+    },
+    {
+      "DOI": "10.1021/jm101421d",
+      "ISSN": "0022-2623, 1520-4804",
+      "abstractNote": "P-glycoprotein (Pgp or ABCB1) is an ABC transporter protein involved in intestinal absorption, drug metabolism, and brain penetration, and its inhibition can seriously alter a drug's bioavailability and safety. In addition, inhibitors of Pgp can be used to overcome multidrug resistance. Given this dual purpose, reliable in silico procedures to predict Pgp inhibition are of great interest. A large and accurate literature collection yielded more than 1200 structures; a model was then constructed using various molecular interaction ﬁeld-based technologies, considering pharmacophoric features and those physicochemical properties related to membrane partitioning. High accuracy was demonstrated internally with two diﬀerent validation sets and, moreover, using a number of molecules, for which Pgp inhibition was not experimentally available but was evaluated in-house. All of the validations conﬁrmed the robustness of the model and its suitability to help medicinal chemists in drug discovery. The information derived from the model was rationalized as a pharmacophore for competitive Pgp inhibition.",
+      "accessDate": "2021-03-04T09:26:45Z",
+      "attachments": [],
+      "citationKey": "broccatelli11",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Fabio",
+          "lastName": "Broccatelli"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Emanuele",
+          "lastName": "Carosati"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Annalisa",
+          "lastName": "Neri"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Maria",
+          "lastName": "Frosini"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Laura",
+          "lastName": "Goracci"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Tudor I.",
+          "lastName": "Oprea"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Gabriele",
+          "lastName": "Cruciani"
+        }
+      ],
+      "date": "2011-03-24",
+      "extra": [
+        "Number: 6"
+      ],
+      "issue": "6",
+      "itemID": 31,
+      "itemType": "journalArticle",
+      "journalAbbreviation": "J. Med. Chem.",
+      "language": "en",
+      "libraryCatalog": "DOI.org (Crossref)",
+      "notes": [
+        "<p>FLAP??</p>\n<p>Farmacoforo</p>\n<p>Da rileggere bene</p>"
+      ],
+      "pages": "1740-1751",
+      "publicationTitle": "Journal of Medicinal Chemistry",
+      "title": "A Novel Approach for Predicting P-Glycoprotein (ABCB1) Inhibition Using Molecular Interaction Fields",
+      "url": "https://pubs.acs.org/doi/10.1021/jm101421d",
+      "volume": "54"
+    },
+    {
+      "DOI": "10.1038/nbt1206-1565",
+      "ISSN": "1087-0156, 1546-1696",
+      "accessDate": "2021-03-12T09:43:30Z",
+      "attachments": [],
+      "citationKey": "noble06",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "William S",
+          "lastName": "Noble"
+        }
+      ],
+      "date": "12/2006",
+      "issue": "12",
+      "itemID": 32,
+      "itemType": "journalArticle",
+      "journalAbbreviation": "Nat Biotechnol",
+      "language": "en",
+      "libraryCatalog": "DOI.org (Crossref)",
+      "notes": [
+        "<p>SVM only works with one single class, it must be generalized for multiclass problems</p>"
+      ],
+      "pages": "1565-1567",
+      "publicationTitle": "Nature Biotechnology",
+      "title": "What is a support vector machine?",
+      "url": "http://www.nature.com/articles/nbt1206-1565",
+      "volume": "24"
+    },
+    {
+      "DOI": "10.1038/s41568-018-0005-8",
+      "ISSN": "1474-175X, 1474-1768",
+      "abstractNote": "Most patients who die of cancer have disseminated disease that has become resistant to multiple therapeutic modalities. Ample evidence suggests that the expression of ATP-b inding cassette (ABC) transporters, especially the multidrug resistance protein 1 (MDR1, also known as P-glycoprotein or P-gp), which is encoded by ABC subfamily B member 1 (ABCB1), can confer resistance to cytotoxic and targeted chemotherapy. However, the development of MDR1 as a therapeutic target has been unsuccessful. At the time of its discovery , appropriate tools for the characterization and clinical development of MDR1 as a therapeutic target were lacking. Thirty years after the initial cloning and characterization of MDR1 and the implication of two additional ABC transporters, the multidrug resistanceassociated protein 1 (MRP1; encoded by ABCC1)), and ABCG2, in multidrug resistance, interest in investigating these transporters as therapeutic targets has waned. However, with the emergence of new data and advanced techniques, we propose to re-e valuate whether these transporters play a clinical role in multidrug resistance. With this Opinion article, we present recent evidence indicating that it is time to revisit the investigation into the role of ABC transporters in efficient drug delivery in various cancer types and at the blood–brain barrier.",
+      "accessDate": "2021-03-04T08:48:38Z",
+      "attachments": [],
+      "citationKey": "robey18",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Robert W.",
+          "lastName": "Robey"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Kristen M.",
+          "lastName": "Pluchino"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Matthew D.",
+          "lastName": "Hall"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Antonio T.",
+          "lastName": "Fojo"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Susan E.",
+          "lastName": "Bates"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Michael M.",
+          "lastName": "Gottesman"
+        }
+      ],
+      "date": "7/2018",
+      "extra": [
+        "Number: 7"
+      ],
+      "issue": "7",
+      "itemID": 33,
+      "itemType": "journalArticle",
+      "journalAbbreviation": "Nat Rev Cancer",
+      "language": "en",
+      "libraryCatalog": "DOI.org (Crossref)",
+      "notes": [
+        "<p>Meccanismo di efflusso con 2 ATP</p>\n<p>I tumori diventano resistenti alla terapia</p>"
+      ],
+      "pages": "452-464",
+      "publicationTitle": "Nature Reviews Cancer",
+      "title": "Revisiting the role of ABC transporters in multidrug-resistant cancer",
+      "url": "http://www.nature.com/articles/s41568-018-0005-8",
+      "volume": "18"
+    },
+    {
+      "DOI": "10.1038/s41579-018-0048-6",
+      "ISSN": "1740-1526, 1740-1534",
+      "abstractNote": "Infections arising from multidrug-r esistant pathogenic bacteria are spreading rapidly throughout the world and threaten to become untreatable. The origins of resistance are numerous and complex, but one underlying factor is the capacity of bacteria to rapidly export drugs through the intrinsic activity of efflux pumps. In this Review , we describe recent advances that have increased our understanding of the structures and molecular mechanisms of multidrug efflux pumps in bacteria. Clinical and laboratory data indicate that efflux pumps function not only in the drug extrusion process but also in virulence and the adaptive responses that contribute to antimicrobial resistance during infection. The emerging picture of the structure, function and regulation of efflux pumps suggests opportunities for countering their activities.",
+      "accessDate": "2021-03-04T08:48:29Z",
+      "attachments": [],
+      "citationKey": "du18",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Dijun",
+          "lastName": "Du"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Xuan",
+          "lastName": "Wang-Kan"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Arthur",
+          "lastName": "Neuberger"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Hendrik W.",
+          "lastName": "van Veen"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Klaas M.",
+          "lastName": "Pos"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Laura J. V.",
+          "lastName": "Piddock"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Ben F.",
+          "lastName": "Luisi"
+        }
+      ],
+      "date": "9/2018",
+      "extra": [
+        "Number: 9"
+      ],
+      "issue": "9",
+      "itemID": 34,
+      "itemType": "journalArticle",
+      "journalAbbreviation": "Nat Rev Microbiol",
+      "language": "en",
+      "libraryCatalog": "DOI.org (Crossref)",
+      "notes": [
+        "<p>ATP binds and substrate enters</p>\n<p>Efflux regulation</p>"
+      ],
+      "pages": "523-539",
+      "publicationTitle": "Nature Reviews Microbiology",
+      "shortTitle": "Multidrug efflux pumps",
+      "title": "Multidrug efflux pumps: structure, function and regulation",
+      "url": "http://www.nature.com/articles/s41579-018-0048-6",
+      "volume": "16"
+    },
+    {
+      "DOI": "10.1039/C8AN00599K",
+      "ISSN": "0003-2654, 1364-5528",
+      "abstractNote": "This review highlights and discusses critically various knowledge gaps in classification modelling using PLS-DA for high dimensional data.\n          , \n            \n              Partial least squares-discriminant analysis (PLS-DA) is a versatile algorithm that can be used for predictive and descriptive modelling as well as for discriminative variable selection. However, versatility is both a blessing and a curse and the user needs to optimize a wealth of parameters before reaching reliable and valid outcomes. Over the past two decades, PLS-DA has demonstrated great success in modelling high-dimensional datasets for diverse purposes,\n              e.g.\n              product authentication in food analysis, diseases classification in medical diagnosis, and evidence analysis in forensic science. Despite that, in practice, many users have yet to grasp the essence of constructing a valid and reliable PLS-DA model. As the technology progresses, across every discipline, datasets are evolving into a more complex form,\n              i.e.\n              multi-class, imbalanced and colossal. Indeed, the community is welcoming a new era called big data. In this context, the aim of the article is two-fold: (a) to review, outline and describe the contemporary PLS-DA modelling practice strategies, and (b) to critically discuss the respective knowledge gaps that have emerged in response to the present big data era. This work could complement other available reviews or tutorials on PLS-DA, to provide a timely and user-friendly guide to researchers, especially those working in applied research.",
+      "accessDate": "2021-03-12T12:56:46Z",
+      "attachments": [],
+      "citationKey": "lee18",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Loong Chuen",
+          "lastName": "Lee"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Choong-Yeun",
+          "lastName": "Liong"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Abdul Aziz",
+          "lastName": "Jemain"
+        }
+      ],
+      "date": "2018",
+      "issue": "15",
+      "itemID": 35,
+      "itemType": "journalArticle",
+      "journalAbbreviation": "Analyst",
+      "language": "en",
+      "libraryCatalog": "DOI.org (Crossref)",
+      "pages": "3526-3539",
+      "publicationTitle": "The Analyst",
+      "shortTitle": "Partial least squares-discriminant analysis (PLS-DA) for classification of high-dimensional (HD) data",
+      "tags": [
+        {
+          "tag": "Nuovo"
+        }
+      ],
+      "title": "Partial least squares-discriminant analysis (PLS-DA) for classification of high-dimensional (HD) data: a review of contemporary practice strategies and knowledge gaps",
+      "url": "http://xlink.rsc.org/?DOI=C8AN00599K",
+      "volume": "143"
+    },
+    {
+      "DOI": "10.1111/j.1747-0285.2011.01089.x",
+      "ISSN": "17470277",
+      "abstractNote": "P-glycoprotein (P-gp) is one of the best characterized transporters responsible for the multidrug resistance phenotype exhibited by cancer cells. Therefore, there is widespread interest in elucidating whether existing drugs are candidate P-gp substrates or inhibitors. With this aim, a pharmacophore model was created based on known P-gp inhibitors and it was used to screen a database of existing drugs. The P-gp modulatory activity of the best hits was evaluated by several methods such as the rhodamine-123 accumulation assay using K562Dox cell line, and a P-gp ATPase activity assay. The ability of these compounds to enhance the cytotoxicity of doxorubicin was assessed with the sulphorhodamine-B assay. Of the 21 hit compounds selected in silico, 12 were found to signiﬁcantly increase the intracellular accumulation of Rhodamine-123, a P-gp substrate. In addition, amoxapine and loxapine, two tetracyclic antidepressant drugs, were discovered to be potent non-competitive inhibitors of P-gp, causing a 3.5-fold decrease in the doxorubicin GI50 in K562Dox cell line. The overall results provide important clues for the non-label use of known drugs as inhibitors of P-gp. Potent inhibitors with a dibenzoxazepine scaffold emerged from this study and they will be further investigated in order to develop new P-gp inhibitors.",
+      "accessDate": "2021-03-04T09:36:10Z",
+      "attachments": [],
+      "citationKey": "palmeira11",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Andreia",
+          "lastName": "Palmeira"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Freddy",
+          "lastName": "Rodrigues"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Emília",
+          "lastName": "Sousa"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Madalena",
+          "lastName": "Pinto"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "M. Helena",
+          "lastName": "Vasconcelos"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Miguel X.",
+          "lastName": "Fernandes"
+        }
+      ],
+      "date": "07/2011",
+      "extra": [
+        "Number: 1"
+      ],
+      "issue": "1",
+      "itemID": 36,
+      "itemType": "journalArticle",
+      "language": "en",
+      "libraryCatalog": "DOI.org (Crossref)",
+      "notes": [
+        "<p><strong>Annotazioni Estratte (5/3/2021, 09:10:40)</strong></p>\n<p>\"Multidrug resistance (MDR) can be broadly defined as a phenomenon by which tumor cells in vivo and cultured cells in vitro show simultaneous resistance to a variety of structurally and functionally dissimilar cytotoxic and xenobiotic compounds\" (<a href=\"zotero://open-pdf/library/items/WHXJGDKS?page=1\">Palmeira et al 2011:57</a>)</p>\n<p>\"at least 50% of human cancers express the MDR phenotype\" (<a href=\"zotero://open-pdf/library/items/WHXJGDKS?page=1\">Palmeira et al 2011:57</a>)</p>\n<p>\"side-effects are a complex phenomenon that occur in a variety of molecular scenarios, the most important of which being the direct interaction with other protein targets such as, for instance, P-gp\" (<a href=\"zotero://open-pdf/library/items/WHXJGDKS?page=1\">Palmeira et al 2011:57</a>)</p>\n<p>\"implementation of a method for quick identification of P-gp modulators. A virtual screening using a pharmacophore model was performed, and the P-gp modulatory effects of the retrieved 21 hit drugs were experimentally explored\" (<a href=\"zotero://open-pdf/library/items/WHXJGDKS?page=2\">Palmeira et al 2011:58</a>)</p>\n<p>\"To create the pharmacophore, model we started with 26 P-gp known inhibitors from the flavonoid family\" (<a href=\"zotero://open-pdf/library/items/WHXJGDKS?page=2\">Palmeira et al 2011:58</a>)</p>\n<p>\"The GI 50 values for doxorubicin (concentration resulting in 50% inhibition of cell growth)\" (<a href=\"zotero://open-pdf/library/items/WHXJGDKS?page=3\">Palmeira et al 2011:59</a>)</p>\n<p>\"The reversal fold (RF) values, as potency of reversal, were obtained by calculating the coefficient RF = GI 50 of doxorubicin alone⁄ GI 50 of doxorubicin in the presence of a test compound.\" (<a href=\"zotero://open-pdf/library/items/WHXJGDKS?page=3\">Palmeira et al 2011:59</a>)</p>\n<p>\"The hits that did not comply with the Lipinski rules were discarded.\" (<a href=\"zotero://open-pdf/library/items/WHXJGDKS?page=4\">Palmeira et al 2011:60</a>)</p>\n<p>\"the principal components result mainly from the linear combination of descriptors related to the effect of hydrophilicity⁄ lipophilicity and number of hydrogen-bond donors and acceptors.\" (<a href=\"zotero://open-pdf/library/items/WHXJGDKS?page=12\">Palmeira et al 2011:68</a>)</p>",
+        "<p>Farmacoforo</p>\n<p>Test su cellule</p>\n<p>Risultati efficaci su poche molecole</p>"
+      ],
+      "pages": "57-72",
+      "publicationTitle": "Chemical Biology & Drug Design",
+      "shortTitle": "New Uses for Old Drugs",
+      "title": "New Uses for Old Drugs: Pharmacophore-Based Screening for the Discovery of P-Glycoprotein Inhibitors: Pharmacophore-Based Screening for the Discovery of P-Glycoprotein Inhibitors",
+      "url": "http://doi.wiley.com/10.1111/j.1747-0285.2011.01089.x",
+      "volume": "78"
+    },
+    {
+      "DOI": "10.1186/1758-2946-5-26",
+      "ISSN": "1758-2946",
+      "abstractNote": "Similarity-search methods using molecular fingerprints are an important tool for ligand-based virtual screening. A huge variety of fingerprints exist and their performance, usually assessed in retrospective benchmarking studies using data sets with known actives and known or assumed inactives, depends largely on the validation data sets used and the similarity measure used. Comparing new methods to existing ones in any systematic way is rather difficult due to the lack of standard data sets and evaluation procedures. Here, we present a standard platform for the benchmarking of 2D fingerprints. The open-source platform contains all source code, structural data for the actives and inactives used (drawn from three publicly available collections of data sets), and lists of randomly selected query molecules to be used for statistically valid comparisons of methods. This allows the exact reproduction and comparison of results for future studies. The results for 12 standard fingerprints together with two simple baseline fingerprints assessed by seven evaluation methods are shown together with the correlations between methods. High correlations were found between the 12 fingerprints and a careful statistical analysis showed that only the two baseline fingerprints were different from the others in a statistically significant way. High correlations were also found between six of the seven evaluation methods, indicating that despite their seeming differences, many of these methods are similar to each other.",
+      "accessDate": "2021-03-16T10:02:26Z",
+      "attachments": [],
+      "citationKey": "riniker13a",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Sereina",
+          "lastName": "Riniker"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Gregory A",
+          "lastName": "Landrum"
+        }
+      ],
+      "date": "12/2013",
+      "issue": "1",
+      "itemID": 38,
+      "itemType": "journalArticle",
+      "journalAbbreviation": "J Cheminform",
+      "language": "en",
+      "libraryCatalog": "DOI.org (Crossref)",
+      "notes": [
+        "<p>How to compare fingerprints</p>\n<p>Description of all the various fingerprints and which ones are correlated</p>"
+      ],
+      "pages": "26",
+      "publicationTitle": "Journal of Cheminformatics",
+      "title": "Open-source platform to benchmark fingerprints for ligand-based virtual screening",
+      "url": "https://jcheminf.biomedcentral.com/articles/10.1186/1758-2946-5-26",
+      "volume": "5"
+    },
+    {
+      "DOI": "10.1186/1758-2946-5-43",
+      "ISSN": "1758-2946",
+      "abstractNote": "Fingerprint similarity is a common method for comparing chemical structures. Similarity is an appealing approach because, with many fingerprint types, it provides intuitive results: a chemist looking at two molecules can understand why they have been determined to be similar. This transparency is partially lost with the fuzzier similarity methods that are often used for scaffold hopping and tends to vanish completely when molecular fingerprints are used as inputs to machine-learning (ML) models. Here we present similarity maps, a straightforward and general strategy to visualize the atomic contributions to the similarity between two molecules or the predicted probability of a ML model. We show the application of similarity maps to a set of dopamine D3 receptor ligands using atom-pair and circular fingerprints as well as two popular ML methods: random forests and naïve Bayes. An open-source implementation of the method is provided.",
+      "accessDate": "2021-03-11T07:49:46Z",
+      "attachments": [],
+      "citationKey": "riniker13",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Sereina",
+          "lastName": "Riniker"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Gregory A",
+          "lastName": "Landrum"
+        }
+      ],
+      "date": "12/2013",
+      "issue": "1",
+      "itemID": 39,
+      "itemType": "journalArticle",
+      "journalAbbreviation": "J Cheminform",
+      "language": "en",
+      "libraryCatalog": "DOI.org (Crossref)",
+      "notes": [
+        "<p>In order to make ML models more interpretable they decided to make a map visualization.</p>\n<p>The topological map is based on the paths of every single atom and their weight.</p>\n<p>It takes one reference molecule and displays which atoms are more similar and which ones are different.</p>\n<p>Non ho capito cosa significa la mappa che si tira fuori dal modello... la similaritá della molecola si puó calcolare senza modello, quella mappa dovrebbe rappresentare come ragiona il modello?</p>"
+      ],
+      "pages": "43",
+      "publicationTitle": "Journal of Cheminformatics",
+      "title": "Similarity maps - a visualization strategy for molecular fingerprints and machine-learning methods",
+      "url": "https://jcheminf.biomedcentral.com/articles/10.1186/1758-2946-5-43",
+      "volume": "5"
+    },
+    {
+      "abstractNote": "P-glycoprotein (P-gp) is a transmembrane protein that actively transports a wide variety of chemically diverse compounds out of the cell. It is highly associated with the ADMET (absorption, distribution, metabolism, excretion and toxicity) properties of drugs/drug candidates and contributes to decreasing toxicity by eliminating compounds from cells, thereby preventing intracellular accumulation. Therefore, in the drug discovery and toxicological assessment process it is advisable to pay attention to whether a compound under development could be transported by P-gp or not. In this study, an in silico multiclass classiﬁcation model capable of predicting the probability of a compound to interact with P-gp was developed using a counter-propagation artiﬁcial neural network (CP ANN) based on a set of 2D molecular descriptors, as well as an extensive dataset of 2512 compounds (1178 P-gp inhibitors, 477 P-gp substrates and 857 P-gp non-active compounds). The model provided a good classiﬁcation performance, producing non error rate (NER) values of 0.93 for the training set and 0.85 for the test set, while the average precision (AvPr) was 0.93 for the training set and 0.87 for the test set. An external validation set of 385 compounds was used to challenge the model’s performance. On the external validation set the NER and AvPr values were 0.70 for both indices. We believe that this in silico classiﬁer could be eﬀectively used as a reliable virtual screening tool for identifying potential P-gp ligands.",
+      "attachments": [],
+      "citationKey": "lagares19",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Liadys Mora",
+          "lastName": "Lagares"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Nikola",
+          "lastName": "Minovski"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Marjana",
+          "lastName": "Novič"
+        }
+      ],
+      "date": "2019",
+      "itemID": 4,
+      "itemType": "journalArticle",
+      "language": "en",
+      "libraryCatalog": "Zotero",
+      "pages": "22",
+      "title": "Multiclass Classifier for P-Glycoprotein Substrates, Inhibitors, and Non-Active Compounds"
+    },
+    {
+      "DOI": "10.1186/s13321-015-0069-3",
+      "ISSN": "1758-2946",
+      "abstractNote": "Background: Cheminformaticians are equipped with a very rich toolbox when carrying out molecular similarity calculations. A large number of molecular representations exist, and there are several methods (similarity and distance metrics) to quantify the similarity of molecular representations. In this work, eight well-known similarity/ distance metrics are compared on a large dataset of molecular fingerprints with sum of ranking differences (SRD) and ANOVA analysis. The effects of molecular size, selection methods and data pretreatment methods on the outcome of the comparison are also assessed.\nResults: A supplier database (https://mcule.com/) was used as the source of compounds for the similarity calculations in this study. A large number of datasets, each consisting of one hundred compounds, were compiled, molecular fingerprints were generated and similarity values between a randomly chosen reference compound and the rest were calculated for each dataset. Similarity metrics were compared based on their ranking of the compounds within one experiment (one dataset) using sum of ranking differences (SRD), while the results of the entire set of experiments were summarized on box and whisker plots. Finally, the effects of various factors (data pretreatment, molecule size, selection method) were evaluated with analysis of variance (ANOVA).\nConclusions: This study complements previous efforts to examine and rank various metrics for molecular similarity calculations. Here, however, an entirely general approach was taken to neglect any a priori knowledge on the compounds involved, as well as any bias introduced by examining only one or a few specific scenarios. The Tanimoto index, Dice index, Cosine coefficient and Soergel distance were identified to be the best (and in some sense equivalent) metrics for similarity calculations, i.e. these metrics could produce the rankings closest to the composite (average) ranking of the eight metrics. The similarity metrics derived from Euclidean and Manhattan distances are not recommended on their own, although their variability and diversity from other similarity metrics might be advantageous in certain cases (e.g. for data fusion). Conclusions are also drawn regarding the effects of molecule size, selection method and data pretreatment on the ranking behavior of the studied metrics.",
+      "accessDate": "2021-03-10T12:35:45Z",
+      "attachments": [],
+      "citationKey": "bajusz15",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Dávid",
+          "lastName": "Bajusz"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Anita",
+          "lastName": "Rácz"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Károly",
+          "lastName": "Héberger"
+        }
+      ],
+      "date": "12/2015",
+      "issue": "1",
+      "itemID": 40,
+      "itemType": "journalArticle",
+      "journalAbbreviation": "J Cheminform",
+      "language": "en",
+      "libraryCatalog": "DOI.org (Crossref)",
+      "pages": "20",
+      "publicationTitle": "Journal of Cheminformatics",
+      "title": "Why is Tanimoto index an appropriate choice for fingerprint-based similarity calculations?",
+      "url": "https://jcheminf.biomedcentral.com/articles/10.1186/s13321-015-0069-3",
+      "volume": "7"
+    },
+    {
+      "DOI": "10.1186/s13321-020-00445-4",
+      "ISSN": "1758-2946",
+      "abstractNote": "Background:  Molecular fingerprints are essential cheminformatics tools for virtual screening and mapping chemical space. Among the different types of fingerprints, substructure fingerprints perform best for small molecules such as drugs, while atom-pair fingerprints are preferable for large molecules such as peptides. However, no available finger‑print achieves good performance on both classes of molecules.\nResults:  Here we set out to design a new fingerprint suitable for both small and large molecules by combining substructure and atom-pair concepts. Our quest resulted in a new fingerprint called MinHashed atom-pair fingerprint up to a diameter of four bonds (MAP4). In this fingerprint the circular substructures with radii of r = 1 and r = 2 bonds around each atom in an atom-pair are written as two pairs of SMILES, each pair being combined with the topological distance separating the two central atoms. These so-called atom-pair molecular shingles are hashed, and the result‑ing set of hashes is MinHashed to form the MAP4 fingerprint. MAP4 significantly outperforms all other fingerprints on an extended benchmark that combines the Riniker and Landrum small molecule benchmark with a peptide benchmark recovering BLAST analogs from either scrambled or point mutation analogs. MAP4 furthermore produces well-organized chemical space tree-maps (TMAPs) for databases as diverse as DrugBank, ChEMBL, SwissProt and the Human Metabolome Database (HMBD), and differentiates between all metabolites in HMBD, over 70% of which are indistinguishable from their nearest neighbor using substructure fingerprints.\nConclusion:  MAP4 is a new molecular fingerprint suitable for drugs, biomolecules, and the metabolome and can be adopted as a universal fingerprint to describe and search chemical space. The source code is available at https://githu b.com/reymond-group/map4 and interactive MAP4 similarity search tools and TMAPs for various databases are acces‑sible at http://map-search.gdb.tools/ and http://tm.gdb.tools/map4/.",
+      "accessDate": "2021-03-16T07:51:03Z",
+      "attachments": [],
+      "citationKey": "capecchi20",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Alice",
+          "lastName": "Capecchi"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Daniel",
+          "lastName": "Probst"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Jean-Louis",
+          "lastName": "Reymond"
+        }
+      ],
+      "date": "12/2020",
+      "issue": "1",
+      "itemID": 41,
+      "itemType": "journalArticle",
+      "journalAbbreviation": "J Cheminform",
+      "language": "en",
+      "libraryCatalog": "DOI.org (Crossref)",
+      "notes": [
+        "<p>Comparison between fingerprints</p>\n<p>New fingerprint for large and small molecules</p>"
+      ],
+      "pages": "43",
+      "publicationTitle": "Journal of Cheminformatics",
+      "shortTitle": "One molecular fingerprint to rule them all",
+      "title": "One molecular fingerprint to rule them all: drugs, biomolecules, and the metabolome",
+      "url": "https://jcheminf.biomedcentral.com/articles/10.1186/s13321-020-00445-4",
+      "volume": "12"
+    },
+    {
+      "DOI": "10.1198/004017002317375064",
+      "ISSN": "0040-1706, 1537-2723",
+      "accessDate": "2021-03-10T12:36:49Z",
+      "attachments": [],
+      "citationKey": "fligner02",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Michael A",
+          "lastName": "Fligner"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Joseph S",
+          "lastName": "Verducci"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Paul E",
+          "lastName": "Blower"
+        }
+      ],
+      "date": "05/2002",
+      "issue": "2",
+      "itemID": 42,
+      "itemType": "journalArticle",
+      "journalAbbreviation": "Technometrics",
+      "language": "en",
+      "libraryCatalog": "DOI.org (Crossref)",
+      "notes": [
+        "<p>Misura di distanza simmetrica, Tanimoto viene mediato da due contributi, la formula classica e la formula in cui si considerano solo le assenze comuni.</p>\n<p>PROBABILMENTE INUTILE</p>"
+      ],
+      "pages": "110-119",
+      "publicationTitle": "Technometrics",
+      "title": "A Modification of the Jaccard–Tanimoto Similarity Index for Diverse Selection of Chemical Compounds Using Binary Strings",
+      "url": "http://www.tandfonline.com/doi/abs/10.1198/004017002317375064",
+      "volume": "44"
+    },
+    {
+      "DOI": "10.1214/18-SS119",
+      "ISSN": "1935-7516",
+      "abstractNote": "Model-based clustering is a popular approach for clustering multivariate data which has seen applications in numerous ﬁelds. Nowadays, high-dimensional data are more and more common and the modelbased clustering approach has adapted to deal with the increasing dimensionality. In particular, the development of variable selection techniques has received a lot of attention and research eﬀort in recent years. Even for small size problems, variable selection has been advocated to facilitate the interpretation of the clustering results. This review provides a summary of the methods developed for variable selection in model-based clustering. Existing R packages implementing the diﬀerent methods are indicated and illustrated in application to two data analysis examples.",
+      "accessDate": "2021-03-09T14:48:48Z",
+      "attachments": [],
+      "citationKey": "fop18",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Michael",
+          "lastName": "Fop"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Thomas Brendan",
+          "lastName": "Murphy"
+        }
+      ],
+      "date": "2018",
+      "extra": [
+        "Number: 0"
+      ],
+      "issue": "0",
+      "itemID": 43,
+      "itemType": "journalArticle",
+      "journalAbbreviation": "Statist. Surv.",
+      "language": "en",
+      "libraryCatalog": "DOI.org (Crossref)",
+      "pages": "18-65",
+      "publicationTitle": "Statistics Surveys",
+      "tags": [
+        {
+          "tag": "Nuovo"
+        }
+      ],
+      "title": "Variable selection methods for model-based clustering",
+      "url": "https://projecteuclid.org/euclid.ssu/1524729611",
+      "volume": "12"
+    },
+    {
+      "DOI": "10.1371/journal.pcbi.1002036",
+      "ISSN": "1553-7358",
+      "abstractNote": "Overexpression of the xenotoxin transporter P-glycoprotein (P-gp) represents one major reason for the development of multidrug resistance (MDR), leading to the failure of antibiotic and cancer therapies. Inhibitors of P-gp have thus been advocated as promising candidates for overcoming the problem of MDR. However, due to lack of a high-resolution structure the concrete mode of interaction of both substrates and inhibitors is still not known. Therefore, structure-based design studies have to rely on protein homology models. In order to identify binding hypotheses for propafenone-type Pgp inhibitors, five different propafenone derivatives with known structure-activity relationship (SAR) pattern were docked into homology models of the apo and the nucleotide-bound conformation of the transporter. To circumvent the uncertainty of scoring functions, we exhaustively sampled the pose space and analyzed the poses by combining information retrieved from SAR studies with common scaffold clustering. The results suggest propafenone binding at the transmembrane helices 5, 6, 7 and 8 in both models, with the amino acid residue Y307 playing a crucial role. The identified binding site in the non-energized state is overlapping with, but not identical to, known binding areas of cyclic P-gp inhibitors and verapamil. These findings support the idea of several small binding sites forming one large binding cavity. Furthermore, the binding hypotheses for both catalytic states were analyzed and showed only small differences in their protein-ligand interaction fingerprints, which indicates only small movements of the ligand during the catalytic cycle.",
+      "accessDate": "2021-03-04T09:36:31Z",
+      "attachments": [],
+      "citationKey": "klepsch11",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Freya",
+          "lastName": "Klepsch"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Peter",
+          "lastName": "Chiba"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Gerhard F.",
+          "lastName": "Ecker"
+        },
+        {
+          "creatorType": "editor",
+          "firstName": "James M.",
+          "lastName": "Briggs"
+        }
+      ],
+      "date": "2011-5-12",
+      "extra": [
+        "Number: 5"
+      ],
+      "issue": "5",
+      "itemID": 44,
+      "itemType": "journalArticle",
+      "journalAbbreviation": "PLoS Comput Biol",
+      "language": "en",
+      "libraryCatalog": "DOI.org (Crossref)",
+      "pages": "e1002036",
+      "publicationTitle": "PLoS Computational Biology",
+      "title": "Exhaustive Sampling of Docking Poses Reveals Binding Hypotheses for Propafenone Type Inhibitors of P-Glycoprotein",
+      "url": "https://dx.plos.org/10.1371/journal.pcbi.1002036",
+      "volume": "7"
+    },
+    {
+      "DOI": "10.1371/journal.pcbi.1002083",
+      "ISSN": "1553-7358",
+      "abstractNote": "P-glycoprotein (P-gp) is an ATP-dependent transport protein that is selectively expressed at entry points of xenobiotics where, acting as an efflux pump, it prevents their entering sensitive organs. The protein also plays a key role in the absorption and blood-brain barrier penetration of many drugs, while its overexpression in cancer cells has been linked to multidrug resistance in tumors. The recent publication of the mouse P-gp crystal structure revealed a large and hydrophobic binding cavity with no clearly defined sub-sites that supports an ‘‘induced-fit’’ ligand binding model. We employed flexible receptor docking to develop a new prediction algorithm for P-gp binding specificity. We tested the ability of this method to differentiate between binders and nonbinders of P-gp using consistently measured experimental data from P-gp efflux and calcein-inhibition assays. We also subjected the model to a blind test on a series of peptidic cysteine protease inhibitors, confirming the ability to predict compounds more likely to be P-gp substrates. Finally, we used the method to predict cellular metabolites that may be P-gp substrates. Overall, our results suggest that many P-gp substrates bind deeper in the cavity than the cyclic peptide in the crystal structure and that specificity in P-gp is better understood in terms of physicochemical properties of the ligands (and the binding site), rather than being defined by specific sub-sites.",
+      "accessDate": "2021-03-04T09:35:34Z",
+      "attachments": [],
+      "citationKey": "dolghih11",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Elena",
+          "lastName": "Dolghih"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Clifford",
+          "lastName": "Bryant"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Adam R.",
+          "lastName": "Renslo"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Matthew P.",
+          "lastName": "Jacobson"
+        },
+        {
+          "creatorType": "editor",
+          "firstName": "James M.",
+          "lastName": "Briggs"
+        }
+      ],
+      "date": "2011-6-23",
+      "extra": [
+        "Number: 6"
+      ],
+      "issue": "6",
+      "itemID": 45,
+      "itemType": "journalArticle",
+      "journalAbbreviation": "PLoS Comput Biol",
+      "language": "en",
+      "libraryCatalog": "DOI.org (Crossref)",
+      "pages": "e1002083",
+      "publicationTitle": "PLoS Computational Biology",
+      "title": "Predicting Binding to P-Glycoprotein by Flexible Receptor Docking",
+      "url": "https://dx.plos.org/10.1371/journal.pcbi.1002083",
+      "volume": "7"
+    },
+    {
+      "DOI": "10.1371/journal.pcbi.1006907",
+      "ISSN": "1553-7358",
+      "accessDate": "2021-03-09T08:50:32Z",
+      "attachments": [],
+      "citationKey": "nguyen19",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Lan Huong",
+          "lastName": "Nguyen"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Susan",
+          "lastName": "Holmes"
+        },
+        {
+          "creatorType": "editor",
+          "firstName": "Francis",
+          "lastName": "Ouellette"
+        }
+      ],
+      "date": "2019-6-20",
+      "extra": [
+        "Number: 6"
+      ],
+      "issue": "6",
+      "itemID": 46,
+      "itemType": "journalArticle",
+      "journalAbbreviation": "PLoS Comput Biol",
+      "language": "en",
+      "libraryCatalog": "DOI.org (Crossref)",
+      "pages": "e1006907",
+      "publicationTitle": "PLOS Computational Biology",
+      "title": "Ten quick tips for effective dimensionality reduction",
+      "url": "https://dx.plos.org/10.1371/journal.pcbi.1006907",
+      "volume": "15"
+    },
+    {
+      "DOI": "10.3390/ijms21114058",
+      "ISSN": "1422-0067",
+      "abstractNote": "The ABCB1 transporter also known as P-glycoprotein (P-gp) is a transmembrane protein belonging to the ATP binding cassette super-family of transporters; it is a xenobiotic eﬄux pump that limits intracellular drug accumulation by pumping the compounds out of cells. P-gp contributes to a decrease of toxicity and possesses broad substrate speciﬁcity. It is involved in the failure of numerous anticancer and antiviral chemotherapies due to the multidrug resistance (MDR) phenomenon, where it removes the chemotherapeutics out of the targeted cells. Understanding the details of the ligand–P-gp interaction is therefore crucial for the development of drugs that might overcome the MRD phenomenon and for obtaining a more eﬀective prediction of the toxicity of certain compounds. In this work, an in silico modeling was performed using homology modeling and molecular docking methods with the aim of better understanding the ligand–P-gp interactions. Based on diﬀerent mouse P-gp structural templates from the PDB repository, a 3D model of the human P-gp (hP-gp) was constructed by means of protein homology modeling. The homology model was then used to perform molecular docking calculations on a set of thirteen compounds, including some well-known compounds that interact with P-gp as substrates, inhibitors, or both. The sum of ranking diﬀerences (SRD) was employed for the comparison of the diﬀerent scoring functions used in the docking calculations. A consensus-ranking scheme was employed for the selection of the top-ranked pose for each docked ligand. The docking results showed that a high number of π interactions, mainly π–sigma, π–alkyl, and π–π type of interactions, together with the simultaneous presence of hydrogen bond interactions contribute to the stability of the ligand–protein complex in the binding site. It was also observed that some interacting residues in hP-gp are the same when compared to those observed in a co-crystallized ligand (PBDE-100) with mouse P-gp (PDB ID: 4XWK). Our in silico approach is consistent with available experimental results regarding P-gp eﬄux transport assay; therefore it could be useful in the prediction of the role of new compounds in systemic toxicity.",
+      "accessDate": "2021-03-03T11:08:17Z",
+      "attachments": [],
+      "citationKey": "moralagares20",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Liadys",
+          "lastName": "Mora Lagares"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Nikola",
+          "lastName": "Minovski"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Ana Yisel",
+          "lastName": "Caballero Alfonso"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Emilio",
+          "lastName": "Benfenati"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Sara",
+          "lastName": "Wellens"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Maxime",
+          "lastName": "Culot"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Fabien",
+          "lastName": "Gosselet"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Marjana",
+          "lastName": "Novič"
+        }
+      ],
+      "date": "2020-06-05",
+      "extra": [
+        "Number: 11"
+      ],
+      "issue": "11",
+      "itemID": 47,
+      "itemType": "journalArticle",
+      "journalAbbreviation": "IJMS",
+      "language": "en",
+      "libraryCatalog": "DOI.org (Crossref)",
+      "pages": "4058",
+      "publicationTitle": "International Journal of Molecular Sciences",
+      "title": "Homology Modeling of the Human P-glycoprotein (ABCB1) and Insights into Ligand Binding through Molecular Docking Studies",
+      "url": "https://www.mdpi.com/1422-0067/21/11/4058",
+      "volume": "21"
+    },
+    {
+      "abstractNote": "Variable and feature selection have become the focus of much research in areas of application for which datasets with tens or hundreds of thousands of variables are available. These areas include text processing of internet documents, gene expression array analysis, and combinatorial chemistry. The objective of variable selection is three-fold: improving the prediction performance of the predictors, providing faster and more cost-effective predictors, and providing a better understanding of the underlying process that generated the data. The contributions of this special issue cover a wide range of aspects of such problems: providing a better deﬁnition of the objective function, feature construction, feature ranking, multivariate feature selection, efﬁcient search methods, and feature validity assessment methods.",
+      "attachments": [],
+      "citationKey": "guyon00",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Isabelle",
+          "lastName": "Guyon"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Andre",
+          "lastName": "Elisseeff"
+        }
+      ],
+      "itemID": 5,
+      "itemType": "journalArticle",
+      "language": "en",
+      "libraryCatalog": "Zotero",
+      "pages": "26",
+      "title": "An Introduction to Variable and Feature Selection"
+    },
+    {
+      "attachments": [],
+      "citationKey": "martin15",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Eric",
+          "lastName": "Martin"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Eddie",
+          "lastName": "Cao"
+        }
+      ],
+      "date": "2015",
+      "itemID": 7,
+      "itemType": "journalArticle",
+      "language": "en",
+      "libraryCatalog": "Zotero",
+      "notes": [
+        "<p>Tanimoto distance is the standard to compare fingerprints</p>"
+      ],
+      "pages": "9",
+      "publicationTitle": "J Comput Aided Mol Des",
+      "title": "Euclidean chemical spaces from molecular ﬁngerprints: Hamming distance and Hempel’s ravens"
+    },
+    {
+      "attachments": [],
+      "citationKey": "gottesman00",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Michael M",
+          "lastName": "Gottesman"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Ira",
+          "lastName": "Pastant"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Suresh V",
+          "lastName": "Ambudkar"
+        }
+      ],
+      "itemID": 8,
+      "itemType": "journalArticle",
+      "language": "en",
+      "libraryCatalog": "Zotero",
+      "pages": "8",
+      "title": "P-glycoprotein and multidrug resistance"
+    },
+    {
+      "citationKey": "lagares00",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Liadys Mora",
+          "lastName": "Lagares"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Nikola",
+          "lastName": "Minovski"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Ana Yisel Caballero",
+          "lastName": "Alfonso"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Emilio",
+          "lastName": "Benfenati"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Sara",
+          "lastName": "Wellens"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Maxime",
+          "lastName": "Culot"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Fabien",
+          "lastName": "Gosselet"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Marjana",
+          "lastName": "Novič"
+        }
+      ],
+      "itemID": 9,
+      "itemType": "journalArticle",
+      "language": "en",
+      "libraryCatalog": "Zotero",
+      "pages": "12",
+      "title": "Homology Modelling of the Human P-glycoprotein (ABCB1) and Insights into Ligand Binding Through Molecular Docking Studies"
+    },
+    {
+      "accessDate": "2021-03-03T11:08:21Z",
+      "attachments": [],
+      "citationKey": "subramanian15",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Nandhitha",
+          "lastName": "Subramanian"
+        }
+      ],
+      "date": "2015-12-13",
+      "extra": [
+        "DOI: 10.14264/uql.2015.1108"
+      ],
+      "itemID": 6,
+      "itemType": "thesis",
+      "language": "en",
+      "libraryCatalog": "DOI.org (Crossref)",
+      "notes": [
+        "<p><strong>Extracted Annotations (3/10/2021, 10:16:10 AM)</strong></p>\n<p>\"potential of mean force (PMF)\" (<a href=\"zotero://open-pdf/library/items/M6JT2WL5?page=2\">Subramanian 2015:2</a>)</p>\n<p>\"However, none of the molecules have a distinct, well-defined binding site. Instead, the binding locations overlap with several residues interacting with multiple P-gp substrates. This suggests that the binding locations for both competitive and non-competitive substrates are not well separated and cannot be considered as unique.\" (<a href=\"zotero://open-pdf/library/items/M6JT2WL5?page=2\">Subramanian 2015:2</a>)</p>\n<p>\"It was found that the presence of cholesterol lowers the free energy associated with entering the middle of the bilayer in a substrate-specific manner, suggesting that P-gp substrates may preferentially accumulate in cholesterol-rich regions of the membrane\" (<a href=\"zotero://open-pdf/library/items/M6JT2WL5?page=3\">Subramanian 2015:3</a>)</p>\n<p>\"Furthermore, they demonstrate that the results obtained for substrate binding to P-gp are independent of the choice of starting structure.\" (<a href=\"zotero://open-pdf/library/items/M6JT2WL5?page=3\">Subramanian 2015:3</a>)</p>\n<p>\"ABC transporters are integral membrane proteins that utilize the energy from adenosine triphosphate (ATP) hydrolysis for the transport of their substrates across cellular membranes\" (<a href=\"zotero://open-pdf/library/items/M6JT2WL5?page=34\">Subramanian 2015:34</a>)</p>\n<p>\"most functional ABC transporters contain 2 TMDs with 12 α-helices per active transporter.\" (<a href=\"zotero://open-pdf/library/items/M6JT2WL5?page=39\">Subramanian 2015:39</a>)</p>\n<p>\"ABC transporters get their name from the conserved ATP binding domains known as NBDs. The NBDs are required for binding and hydrolyzing ATPs.\" (<a href=\"zotero://open-pdf/library/items/M6JT2WL5?page=39\">Subramanian 2015:39</a>)</p>\n<p>\"The precise molecular mechanism by which ATP hydrolysis is coupled with substrate transport is still unknown. Studies on ABC transporters have shown that there is dependence TMDs56 between ATP binding at the NBDs and substrate binding in the\" (<a href=\"zotero://open-pdf/library/items/M6JT2WL5?page=47\">Subramanian 2015:47</a>)</p>\n<p>\"P-glycoprotein (P-gp) is also known as multidrug resistance protein (MRP1). It belongs to the ABCB subfamily of transporters. P-gp is an integral membrane protein that transports a large number of hydrophobic, positively charged molecules and some specific peptides across membranes.\" (<a href=\"zotero://open-pdf/library/items/M6JT2WL5?page=49\">Subramanian 2015:49</a>)</p>\n<p>\"Because of its ability to transport a broad spectrum of molecules, overexpression of P-gp can lead to the development of MDR.\" (<a href=\"zotero://open-pdf/library/items/M6JT2WL5?page=49\">Subramanian 2015:49</a>)</p>\n<p>\"tissues60. P-gp is expressed in most In particular, it is highly expressed at the apical surface of epithelial cells lining the colon, small gland61. intestine, pancreatic ductules, bile ductules and kidney proximal tubules, and the adrenal P- 62, barrier63 gp is also found in the endothelial cells of blood-brain barrier (BBB) blood-testis and the barrier6 blood-mammary tissue\" (<a href=\"zotero://open-pdf/library/items/M6JT2WL5?page=52\">Subramanian 2015:52</a>)</p>\n<p>\"P-gp substrates are generally aromatic, hydrophobic and positively charged compounds.\" (<a href=\"zotero://open-pdf/library/items/M6JT2WL5?page=53\">Subramanian 2015:53</a>)</p>\n<p>\"The transport of over 50 drugs has been identified70. documented and more than 70 additional P-gp modulators or inhibitors have been The promiscuity of P-gp has made it difficult to define precisely the criteria that could be used to identify compounds as substrates or not.\" (<a href=\"zotero://open-pdf/library/items/M6JT2WL5?page=53\">Subramanian 2015:53</a>)</p>\n<p><em>It transports so much stuff that it's difficult to understand what will be transported. (<a href=\"zotero://open-pdf/library/items/M6JT2WL5?page=53\">note on p.53</a>)</em></p>\n<p> </p>\n<p>\"Modulators act by interfering with the ability of P-gp to transport other substrates and thus to generate a concentration gradient of these membrane74, 75 molecules across the\" (<a href=\"zotero://open-pdf/library/items/M6JT2WL5?page=53\">Subramanian 2015:53</a>)</p>\n<p>\"modulators have been shown to reverse MDR in intact cells in vitro, suggesting selective inhibitors or modulators of P-gp could lead to more efficacious cancer chemotherapy\" (<a href=\"zotero://open-pdf/library/items/M6JT2WL5?page=53\">Subramanian 2015:53</a>)</p>\n<p>\"verapamil76, A77, 78 To date, modulators such as nicardipine and cyclosporine have not proved to be useful clinically in reversing MDR\" (<a href=\"zotero://open-pdf/library/items/M6JT2WL5?page=54\">Subramanian 2015:54</a>)</p>\n<p>\"he majority of the information related to possible binding sites has been inferred from mutational studies.\" (<a href=\"zotero://open-pdf/library/items/M6JT2WL5?page=56\">Subramanian 2015:56</a>)</p>\n<p>\"only three residues Gln191, Gln343 and Ser340 were common to both proposals.\" (<a href=\"zotero://open-pdf/library/items/M6JT2WL5?page=57\">Subramanian 2015:57</a>)</p>\n<p>\"Molecular dynamics (MD) simulation is another approach that has been used extensively to provide insight into the properties of P-gp and other ABC transporters including substrate binding.\" (<a href=\"zotero://open-pdf/library/items/M6JT2WL5?page=57\">Subramanian 2015:57</a>)</p>\n<p>\"The difference in free energy between two states A and B of a molecular system can be expressed as a function of the ratio of the partition functions of the individual states:\" (<a href=\"zotero://open-pdf/library/items/M6JT2WL5?page=62\">Subramanian 2015:62</a>)</p>\n<p>\"The thermodynamic cycle can be used to estimate the difference in the free enthalpy associated with the binding of a series of alternative ligands to a receptor (for example, a protein).\" (<a href=\"zotero://open-pdf/library/items/M6JT2WL5?page=63\">Subramanian 2015:63</a>)</p>\n<p>\"These force fields are well parameterized for biomolecules such as proteins, DNA and RNA. All these force fields use a similar form for the potential energy function but they vary in terms of the parameters used to describe individual molecules\" (<a href=\"zotero://open-pdf/library/items/M6JT2WL5?page=67\">Subramanian 2015:67</a>)</p>\n<p>\"To overcome this limitation, an in-house database called Automated Topology Repository13 Builder (ATB) and\" (<a href=\"zotero://open-pdf/library/items/M6JT2WL5?page=67\">Subramanian 2015:67</a>)</p>\n<p>\"Before generating specific force field parameters for individual molecules, the protonation states for each of the molecules at pH 7.0 was determined by calculating the ionization constant of each\" (<a href=\"zotero://open-pdf/library/items/M6JT2WL5?page=67\">Subramanian 2015:67</a>)</p>\n<p>\"Parameters for the molecules in the protonated state at pH 7.0 were developed Repository132 using the Automated Topology Builder (ATB) and\" (<a href=\"zotero://open-pdf/library/items/M6JT2WL5?page=68\">Subramanian 2015:68</a>)</p>\n<p>\"Based on competitive binding studies, it has been proposed that verapamil and vinblastine interact with the same site in P-gp, commonly referred to as the site13, 33. vinblastine In a similar manner, colchicine and Hoechst 33342 have also been proposed to site34, 35. bind to P-gp at a separate pharmacological site, the H-site or Hoechst Rhodamine 123 and related molecules have been proposed to bind to a third pharmacologically distinct site, the R-site or site35 Rhodamine\" (<a href=\"zotero://open-pdf/library/items/M6JT2WL5?page=84\">Subramanian 2015:84</a>)</p>\n<p>\"in human P-gp, Phe303\" (<a href=\"zotero://open-pdf/library/items/M6JT2WL5?page=86\">Subramanian 2015:86</a>)</p>\n<p>\"41 Jara et al.\" (<a href=\"zotero://open-pdf/library/items/M6JT2WL5?page=86\">Subramanian 2015:86</a>)</p>\n<p>\"Automated Topology Builder (ATB) and Repository65\" (<a href=\"zotero://open-pdf/library/items/M6JT2WL5?page=90\">Subramanian 2015:90</a>)</p>\n<p>\"The simulations were carried out in the NPT ensemble at T = 300 K, and P = 1 bar. The temperature and pressure were temperature75 maintained close to the reference values by weakly coupling the system to an external and pressure bath using a relaxation time constant of 0.1 ps and 0.5 ps, respectively\" (<a href=\"zotero://open-pdf/library/items/M6JT2WL5?page=91\">Subramanian 2015:91</a>)</p>\n<p>\"Note, these parameters maintain the conformation of both morphine and nicardipine within &lt; 0.1 nm, (all-atom RMSD) from the conformation optimized at the B3LYP/6-31G* level of theory in solvent65. implicit\" (<a href=\"zotero://open-pdf/library/items/M6JT2WL5?page=92\">Subramanian 2015:92</a>)</p>\n<p>\"helices 1 and 12 common to both pathways\" (<a href=\"zotero://open-pdf/library/items/M6JT2WL5?page=120\">Subramanian 2015:120</a>)</p>\n<p>\"TM\" (<a href=\"zotero://open-pdf/library/items/M6JT2WL5?page=120\">Subramanian 2015:120</a>)</p>",
+        "<p>Description of PGP</p>"
+      ],
+      "publisher": "The University of Queensland",
+      "shortTitle": "Understanding multidrug resistance",
+      "title": "Understanding multidrug resistance: molecular dynamics studies of ligand recognition by P-glycoprotein",
+      "type": "PhD Thesis",
+      "url": "http://espace.library.uq.edu.au/view/UQ:373919"
+    }
+  ]
+}

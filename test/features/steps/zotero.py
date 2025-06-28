@@ -14,7 +14,7 @@ import urllib
 import requests
 import tempfile
 from munch import *
-from steps.utils import running, nested_dict_iter, benchmark, ROOT, assert_equal_diff, serialize, html2md, clean_html
+from steps.utils import running, nested_dict_iter, benchmark, ROOT, FIXTURES, EXPORTED, assert_equal_diff, serialize, html2md, clean_html
 from steps.library import load as cleanlib, sortbib
 import steps.utils as utils
 import shutil
@@ -43,9 +43,6 @@ import zipfile
 from ruamel.yaml import YAML
 yaml = YAML(typ='safe')
 yaml.default_flow_style = False
-
-EXPORTED = os.path.join(ROOT, 'exported')
-FIXTURES = os.path.join(ROOT, 'test/fixtures')
 
 #with open(os.path.join(ROOT, 'schema', 'BetterBibTeX JSON.json')) as f:
 #  bbt_json_schema = json.load(f)
@@ -272,10 +269,7 @@ class Library:
     return suffixes[-1]
 
   def save(self, path):
-    self.exported = os.path.join(EXPORTED, os.path.basename(os.path.dirname(path)), os.path.basename(path))
-    Path(self.exported).parent.mkdir(parents=True, exist_ok=True)
-    with open(self.exported, 'w') as f:
-      f.write(self.body)
+    utils.exported(path, selfbody)
 
   def clean(self):
     if self.exported:
@@ -333,6 +327,9 @@ class Zotero:
     self.redir = '>'
     self.start()
     self.redir = '>>'
+
+  def pull_export_url(self, query):
+    return f'http://127.0.0.1:{self.port}/better-bibtex/export?{query}'
 
   def execute(self, script, **args):
     headers = {

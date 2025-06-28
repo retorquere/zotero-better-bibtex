@@ -28,6 +28,7 @@ function displayOptions(request) {
 }
 
 function exportPreferences(request): Partial<Preferences> {
+  log.debug('3258: preferences =', request.data?.config?.preferences || {})
   return request.data?.config?.preferences || {}
 }
 

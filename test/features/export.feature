@@ -855,3 +855,8 @@ Feature: Export
     When I select the item with a field that contains "Quantum"
     And I refresh the citation key
     Then the citation key should be "DBLP:books/daglib/0032853"
+
+  Scenario: POST to pull-export #3258
+    Given I import 51 references from "export/*.json"
+    Then a pull-export from "/library;name:My%20Library/collection/Modelling%20methods/Classification.biblatex" with "export/*-skipauthor.preferences" should match "export/*-skipauthor.biblatex"
+    Then a pull-export from "/library;name:My%20Library/collection/Modelling%20methods/Classification.biblatex" with "export/*-skiptitle.preferences" should match "export/*-skiptitle.biblatex"

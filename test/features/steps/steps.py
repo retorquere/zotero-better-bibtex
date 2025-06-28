@@ -489,3 +489,26 @@ def step_impl(context, expected):
   assert type(context.selected) == list and len(context.selected) == 1, context.selected
   found = context.zotero.execute('return await Zotero.BetterBibTeX.TestSupport.citationKey(itemID)', itemID=context.selected[0])
   assert found == expected, { 'expected': expected, 'found': found }
+
+@then(u'a pull-export from "{collection}" with "{preferences}" should match "{expected}"')
+def step_impl(context, collection, preferences, expected):
+  preferences = expand_scenario_variables(context, preferences)
+  expected = expand_scenario_variables(context, expected)
+  url = context.zotero.pull_export_url(collection)
+
+  with open(os.path.join(utils.FIXTURES, expected)) as f:
+    _expected = f.read()
+
+  with open(os.path.join(utils.FIXTURES, preferences)) as f:
+    _preferences = f.read().encode('utf-8')
+
+  req = urllib.request.Request(url, data=_preferences, method='POST')
+  req.add_header('Content-Type', 'application/json')
+  with urllib.request.urlopen(req) as response:
+    _found = response.read().decode('utf-8')
+
+  try:
+    assert_equal_diff(_expected, _found)
+  except Exception as e:
+    utils.exported(expected, _found)
+    raise
