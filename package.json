@@ -56,7 +56,7 @@
     "test:nightly": "./test/behave --tags @nightly",
     "preupgrades": "npm-run-all -p --aggregate-output submodules ghu ncu get-schema",
     "submodules": "./setup/submodules.py && git submodule update --recursive",
-    "ncu": "ncu -u && npm i",
+    "ncu": "ncu -u && npm cache clean --force && rm -rf node_modules && rm -f package-lock.json && npm i",
     "get-schema": "./setup/item.py",
     "ghu": "./util/zver.py",
     "upgrades": "git add .github/ISSUE_TEMPLATE package.json package-lock.json submodules/* site/themes/relearn schema && git commit -m upgrades",
