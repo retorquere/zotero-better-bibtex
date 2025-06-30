@@ -44,13 +44,13 @@ export const Context = new class {
   constructor() {
     for (const [ label, header ] of Object.entries(byLabel)) {
       if (typeof header.displayOptions?.worker !== 'boolean') continue
-      this.defaults[label] = { ...unpick(header.displayOptions, ['cache', 'keepUpdated', 'worker']), translator: '' }
+      this.defaults[label] = { ...unpick(header.displayOptions, ['keepUpdated', 'worker']), translator: '' }
     }
   }
 
   make(translator: string, displayOptions: Partial<DisplayOptions>): string {
     const cp: Partial<DisplayOptions & { translator: string }> = this.defaults[translator]
-    if (!cp || (displayOptions.cache === false)) return ''
+    if (!cp) return ''
     // @ts-expect-error TS2345
     return stringify(pick({ ...cp, ...displayOptions, translator }, Object.keys(cp)))
   }

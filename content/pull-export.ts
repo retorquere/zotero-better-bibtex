@@ -29,7 +29,8 @@ function displayOptions(request) {
 }
 
 function exportPreferences(request): Partial<Preferences> {
-  return request.data?.config?.preferences || {}
+  const preferences = request.data?.config?.preferences // set for POST
+  return preferences ? { ...preferences, cache: false } : {}
 }
 
 class Handler {

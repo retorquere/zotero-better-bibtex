@@ -179,7 +179,7 @@ class Running {
   public async load(): Promise<void> {
     const itemIDs = this.job.data.items
     const translator = this.job.translator
-    const context = this.job.autoExport || Context.make(this.job.translator, this.job.options)
+    const context = this.job.preferences.cache ? this.job.autoExport || Context.make(this.job.translator, this.job.options) : false
     if (context) {
       ({ context: this.context, items: this.exported } = await Cache.Exports.load(translator, context))
     }
@@ -423,6 +423,7 @@ class WorkerZotero {
   public async start(job: Job): Promise<{ output: string; cacheRate: number }> {
     this.Date.init(dateFormats)
     Object.assign(job.preferences, { platform: client.platform, client: client.slug })
+    log.info(`starting ${job.preferences.cache ? '' : 'un'}cached export using ${ZOTERO_TRANSLATOR_INFO.label}`)
     this.running = new Running(job)
     await this.running.load()
     this.BetterBibTeX.setProgress(0)

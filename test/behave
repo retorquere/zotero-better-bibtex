@@ -68,7 +68,7 @@ parser.add_argument('--beta', action='store_true', default=('#beta' in CI.messag
 parser.add_argument('--legacy', action='store_true', default=('#legacy' in CI.message))
 parser.add_argument('--keep', '--no-keep', dest='keep', action=BooleanAction, default=False)
 parser.add_argument('--inspire-hep', '--no-inspire-hep', dest='inspireHEP', action=BooleanAction, default=True)
-parser.add_argument('--worker', '--no-worker', dest='worker', action=BooleanAction, default=False)
+parser.add_argument('--worker', '--no-worker', dest='worker', action=BooleanAction, default=True)
 parser.add_argument('--logging', '--no-logging', dest='logging', action=BooleanAction, default=False)
 parser.add_argument('--caching', '--no-caching', dest='caching', action=BooleanAction, default=True)
 parser.add_argument('--headless', '--no-headless', dest='headless', action=BooleanAction, default=platform.system() == 'Linux' and not os.getenv('XDG_SESSION_TYPE'))

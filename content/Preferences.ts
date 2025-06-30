@@ -347,7 +347,6 @@ export class PrefPane {
     if (!file.match(/.json$/)) file = `${file}.json`
 
     const options = structuredClone(Zotero.BetterBibTeX.lastExport.displayOptions)
-    delete options.cache
     delete options.exportDir
     delete options.exportPath
     delete options.keepUpdated

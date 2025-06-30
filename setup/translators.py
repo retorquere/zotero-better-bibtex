@@ -10,7 +10,6 @@ pseudoOptions = {
   'exportDir': '',
   'exportPath': '',
   'custom': False,
-  'cache': True,
 }
 explain = {
   'custom': 'for pandoc-filter CSL',

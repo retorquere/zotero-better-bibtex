@@ -1,5 +1,4 @@
 declare const Zotero: any
-declare const __estrace: any // eslint-disable-line no-underscore-dangle
 
 import * as client from '../../content/client'
 import { Path } from '../../content/file'
@@ -202,7 +201,7 @@ export class Translation {
       collected.preferences.separatorNames = ` ${ collected.preferences.separatorNames } `
     }
 
-    if (collected.preferences.testing && typeof __estrace === 'undefined' && collected.translator.configOptions?.cached) {
+    if (collected.preferences.testing && collected.translator.configOptions?.cached) {
       const allowedPreferences: Prefs.Preferences = (collected.translator.label === 'BetterBibTeX JSON' ? Object.keys(Prefs.defaults) : Prefs.affectedBy[collected.translator.label])
         .concat(['testing'])
         .reduce((acc: any, pref: Prefs.PreferenceName) => {
@@ -245,11 +244,7 @@ export class Translation {
       sep: this.collected.platform === 'win' ? '\\' : '/',
     }
 
-    try {
-      if (collected.displayOptions.cache === false) this.cacheable = false
-    }
-    catch {
-    }
+    if (!collected.preferences.cache) this.cacheable = false
 
     // when exporting file data you get relative paths, when not, you get absolute paths, only one version can go into the cache
     if (this.collected.displayOptions.exportFileData) this.cacheable = false
