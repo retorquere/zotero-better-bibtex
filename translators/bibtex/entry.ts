@@ -4,9 +4,28 @@
 
 declare const Zotero: any
 
-import { RegularItem as Item } from '../../gen/typings/serialized-item'
+import { RegularItem as Item, Attachment, Tag } from '../../gen/typings/serialized-item'
+
+export type Field = {
+  name: string
+  verbatim?: string
+  value: string | string[] | number | null | Attachment[] | Tag[]
+  enc?: 'raw' | 'url' | 'verbatim' | 'creators' | 'literal' | 'literal_list' | 'latex' | 'tags' | 'attachments' | 'date' | 'minimal' | 'bibtex' | 'biblatex' | 'extra'
+  orig?: { name?: string; verbatim?: string; inherit?: boolean }
+  bibtexStrings?: boolean
+  bare?: boolean
+  raw?: boolean
+
+  // kept as seperate booleans for backwards compat
+  replace?: boolean
+  fallback?: boolean
+
+  html?: boolean
+
+  bibtex?: string
+}
+
 import type { ExportedItemMetadata } from '../../content/worker/cache'
-import type { Translators } from '../../typings/translators'
 import * as DateParser from '../../content/dateparser'
 import fold2ascii from 'fold-to-ascii'
 
@@ -445,7 +464,7 @@ export class Entry {
    *   'enc' means 'enc_literal'. If you pass both 'bibtex' and 'value', 'bibtex' takes precedence (and 'value' will be
    *   ignored)
    */
-  public add(field: Translators.BibTeX.Field): string {
+  public add(field: Field): string {
     if (this.translation.collected.preferences.testing && !this.inPostscript && field.name !== field.name.toLowerCase()) {
       throw new Error(`Do not add mixed-case field ${ field.name }`)
     }
@@ -650,7 +669,7 @@ export class Entry {
 
   public hasCreator(type): boolean { return (this.item.creators || []).some(creator => creator.creatorType === type) }
 
-  public override(field: Translators.BibTeX.Field): void {
+  public override(field: Field): void {
     const itemtype_name = field.name.split('.')
     let name
     if (itemtype_name.length === 2) {

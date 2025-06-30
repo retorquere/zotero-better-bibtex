@@ -269,7 +269,7 @@ class Library:
     return suffixes[-1]
 
   def save(self, path):
-    utils.exported(path, selfbody)
+    utils.exported(path, self.body)
 
   def clean(self):
     if self.exported:

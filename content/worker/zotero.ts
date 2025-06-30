@@ -3,6 +3,7 @@
 import { Server as WorkerServerBase } from './json-rpc'
 import { Exporter as ExporterInterface } from './interface'
 import type { Item } from '../../gen/typings/serialized-item'
+import type { Header } from '../../gen/translators'
 
 import { ExportedItem, ExportedItemMetadata, Cache, Context } from './cache'
 
@@ -16,7 +17,6 @@ const ctx: DedicatedWorkerGlobalScope = self as any
 importScripts('resource://zotero/config.js') // import ZOTERO_CONFIG'
 
 import type { Message, Job } from '../translators/worker'
-import type { Translators } from '../../typings/translators'
 import { valid } from '../../gen/items/items'
 import { generateBibLaTeX } from '../../translators/bibtex/biblatex'
 import { generateBibTeX } from '../../translators/bibtex/bibtex'
@@ -28,7 +28,7 @@ import XRegExp from 'xregexp'
 
 import { DOMParser as XMLDOMParser } from '@xmldom/xmldom'
 
-declare var ZOTERO_TRANSLATOR_INFO: Translators.Header // eslint-disable-line no-var
+declare var ZOTERO_TRANSLATOR_INFO: Header // eslint-disable-line no-var
 
 const NodeType = {
   ELEMENT_NODE: 1,
@@ -160,7 +160,7 @@ import dateFormats from '../../schema/dateFormats.json'
 class Running {
   public serialized: Item[]
   public exported: Map<number, ExportedItem>
-  public context: number
+  public context: number | false
   public hits = 0
   public misses = 0
   public items: number
@@ -184,7 +184,7 @@ class Running {
       ({ context: this.context, items: this.exported } = await Cache.Exports.load(translator, context))
     }
     else {
-      this.context = -1
+      this.context = false
       this.exported = new Map
     }
     this.serialized = await Cache.Serialized.get(itemIDs)
@@ -202,12 +202,14 @@ class Running {
   }
 
   public store(item: Omit<ExportedItem, 'context'>): void {
-    this.pending.push({ ...item, context: this.context })
+    if (typeof this.context === 'number') this.pending.push({ ...item, context: this.context })
   }
 
   public async flush(): Promise<void> {
-    await Cache.Exports.store(this.pending)
-    Cache.updateStats(this.hits, this.misses)
+    if (typeof this.context === 'number') {
+      await Cache.Exports.store(this.pending)
+      Cache.updateStats(this.hits, this.misses)
+    }
     this.pending = []
   }
 }

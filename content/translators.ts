@@ -8,7 +8,6 @@ import { serializer } from './item-export-format'
 Components.utils.import('resource://zotero/config.js')
 declare const ZOTERO_CONFIG: any
 
-import type { Translators as Translator } from '../typings/translators'
 import { Preference } from './prefs'
 import { affects, Preferences } from '../gen/preferences/meta'
 import { log } from './logger'
@@ -16,7 +15,7 @@ import { Events } from './events'
 import { newQueue } from '@henrygd/queue'
 import { orchestrator } from './orchestrator'
 import type { Reason } from './bootstrap'
-import { headers as Headers, byLabel, byId, bySlug } from '../gen/translators'
+import { Header, headers as Headers, byLabel, byId, bySlug } from '../gen/translators'
 import { Job, worker, Exporter, Message } from './translators/worker'
 
 Events.on('preference-changed', async (pref: string) => {
@@ -52,12 +51,12 @@ export type ExportJob = {
 
 // export singleton: https://k94n.com/es6-modules-single-instance-pattern
 export const Translators = new class {
-  public byId: Record<string, Translator.Header> = {}
-  public byLabel: Record<string, Translator.Header> = {}
-  public bySlug: Record<string, Translator.Header> = {}
+  public byId: Record<string, Header> = {}
+  public byLabel: Record<string, Header> = {}
+  public bySlug: Record<string, Header> = {}
   public queue = newQueue(1)
 
-  private reinit: { header: Translator.Header; code: string }[]
+  private reinit: { header: Header; code: string }[]
 
   constructor() {
     const ready = Zotero.Promise.defer()
@@ -372,20 +371,20 @@ export const Translators = new class {
     return false
   }
 
-  public async needsInstall(): Promise<{ header: Translator.Header; code: string }[]> {
+  public async needsInstall(): Promise<{ header: Header; code: string }[]> {
     if (!this.reinit) {
-      const reinit: Record<string, { header: Translator.Header; code: string }> = {}
+      const reinit: Record<string, { header: Header; code: string }> = {}
 
       const code = (label: string) => [
         `ZOTERO_CONFIG = ${ JSON.stringify(ZOTERO_CONFIG) }`,
         Zotero.File.getContentsFromURL(`chrome://zotero-better-bibtex/content/resource/${ label }.js`),
       ].join('\n')
 
-      const headers: Translator.Header[] = Headers
+      const headers: Header[] = Headers
         .map(header => JSON.parse(Zotero.File.getContentsFromURL(`chrome://zotero-better-bibtex/content/resource/${ header.label }.json`)))
 
       const filenames = headers.map(header => `'${ header.label }.js'`).join(',')
-      const installed: Record<string, Translator.Header> = {}
+      const installed: Record<string, Header> = {}
       for (const { fileName, metadataJSON } of (await Zotero.DB.queryAsync(`SELECT fileName, metadataJSON FROM translatorCache WHERE fileName IN (${ filenames })`))) {
         try {
           installed[fileName.replace(/[.]js$/, '')] = JSON.parse(metadataJSON)

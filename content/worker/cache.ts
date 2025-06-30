@@ -34,25 +34,23 @@ import stringify from 'safe-stable-stringify'
 
 import { pick, unpick } from '../object'
 
-import { byLabel } from '../../gen/translators'
+import { byLabel, DisplayOptions } from '../../gen/translators'
 import { version } from '../../gen/version.json'
 // import { main as probe } from './cache-test'
 
-import type { Translators as Translator } from '../../typings/translators'
-
 export const Context = new class {
-  private defaults: Record<string, Partial<Translator.DisplayOptions & { translator: string }>> = {}
+  private defaults: Record<string, Partial<DisplayOptions & { translator: string }>> = {}
 
   constructor() {
     for (const [ label, header ] of Object.entries(byLabel)) {
       if (typeof header.displayOptions?.worker !== 'boolean') continue
-      this.defaults[label] = { ...unpick(header.displayOptions, ['keepUpdated', 'worker']), translator: '' }
+      this.defaults[label] = { ...unpick(header.displayOptions, ['cache', 'keepUpdated', 'worker']), translator: '' }
     }
   }
 
-  make(translator: string, displayOptions: Partial<Translator.DisplayOptions>): string {
-    const cp: Partial<Translator.DisplayOptions & { translator: string }> = this.defaults[translator]
-    if (!cp) return ''
+  make(translator: string, displayOptions: Partial<DisplayOptions>): string {
+    const cp: Partial<DisplayOptions & { translator: string }> = this.defaults[translator]
+    if (!cp || (displayOptions.cache === false)) return ''
     // @ts-expect-error TS2345
     return stringify(pick({ ...cp, ...displayOptions, translator }, Object.keys(cp)))
   }

@@ -20,6 +20,7 @@ function displayOptions(request) {
   if (!query.worker) query.worker = 'y'
 
   const options = structuredClone(request.data || {})
+  if (request.data?.config?.preferences) options.cache = false
   for (const option of ['exportNotes', 'useJournalAbbreviation', 'worker']) {
     if (query[option]) options[option] = !!query[option].match(/^(y(es)?|true)$/)
   }

@@ -1,55 +1,52 @@
 #!/usr/bin/env python3
 
-import glob
-import json
-import os
+from mako.template import Template
+import glob, json
+from collections import defaultdict
 
 print('translators')
-headers = []
 
 pseudoOptions = {
   'exportDir': '',
   'exportPath': '',
   'custom': False,
   'cache': True,
-  # 'displayOptions': '',
 }
 explain = {
   'custom': 'for pandoc-filter CSL',
   'displayOptions': 'for BetterBibTeX JSON'
 }
 
-displayOptions = pseudoOptions.copy()
+optionFor = defaultdict(list)
+displayOptions = {}
 
+headers = []
 for tr in sorted(glob.glob('translators/*.json')):
   with open(tr) as f:
     tr = json.load(f)
-    print(' ', tr['label'])
-    headers.append(tr)
-    if 'displayOptions' in tr:
-      displayOptions = displayOptions | tr['displayOptions']
+  headers.append(tr)
+  if 'displayOptions' in tr:
+    displayOptions = displayOptions | tr['displayOptions']
+    for option in tr['displayOptions']:
+      optionFor[option].append(tr['label'])
 
-DisplayOptions = "{\n"
-for option, default in sorted(displayOptions.items()):
-  explanation = f' // {explain[option]}' if option in explain else ''
-  DisplayOptions += f'  {option}?: { { str: "string", bool: "boolean" }[type(default)] }{explanation}\n'
-DisplayOptions += "}"
+jsType = {
+  str: 'string,',
+  bool: 'boolean,',
+}
+def optionName(o):
+  return o + '?:'
 
-open('gen/translators.ts', 'w').write(f"""
-/* eslint-disable @stylistic/quote-props, @stylistic/quotes, comma-dangle */
-import type {{ Translators }} from '../typings/translators.d.ts'
+def makeOption(o, d):
+  option = f'{optionName(o):25}{jsType[type(d)]:8}'
+  comment = optionFor[o].copy()
+  if o in explain:
+    comment.append(explain[o])
+  if len(comment) > 0:
+    comment = ' // ' + ', '.join(comment)
+  else:
+    comment = ''
+  return option + comment
 
-export const displayOptions = {json.dumps(sorted(displayOptions.keys()), indent='  ')}
-
-export const pseudoOptions = {json.dumps(sorted(pseudoOptions), indent='  ')}
-
-export type DisplayOptions = {DisplayOptions}
-
-export const headers: Translators.Header[] = {json.dumps(headers, indent='  ')}
-export const byId: Record<string, Translators.Header> = {{}}
-export const byLabel: Record<string, Translators.Header> = {{}}
-export const bySlug: Record<string, Translators.Header> = {{}}
-for (const header of headers) {{
-  byId[header.translatorID] = byLabel[header.label] = bySlug[header.label.replace(/ /g, '')] = header
-}}
-""".lstrip())
+with open('gen/translators.ts', 'w') as f:
+  f.write(Template(filename='setup/templates/translators.ts.mako').render(**globals()))
