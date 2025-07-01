@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="height=device-height, width=device-width, initial-scale=1.0, minimum-scale=1.0">
     <meta name="generator" content="Hugo 0.143.1">
-    <meta name="generator" content="Relearn 7.6.1+4407b4364ab6f7477f7671fbd20c0494bade40ee">
+    <meta name="generator" content="Relearn 7.6.1+81b6d3c32c77aeecc29c4700d2123bd2fb3401c2">
     <meta name="description" content="">
     <meta name="author" content="">
     <meta name="twitter:card" content="summary">
@@ -18,17 +18,26 @@
     <title>Automatic Export :: Tag :: Better BibTeX for Zotero</title>
     <link href="/zotero-better-bibtex/tags/automatic-export/index.xml" rel="alternate" type="application/rss+xml" title="Automatic Export :: Tag :: Better BibTeX for Zotero"><link rel="icon" href="/zotero-better-bibtex/better-bibtex.ico" type="image/x-icon">
 
-    <link href="/zotero-better-bibtex/fonts/fontawesome/css/fontawesome-all.min.css" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/zotero-better-bibtex/fonts/fontawesome/css/fontawesome-all.min.css" rel="stylesheet"></noscript>
-    <link href="/zotero-better-bibtex/css/perfect-scrollbar/perfect-scrollbar.min.css" rel="stylesheet">
-    <link href="/zotero-better-bibtex/css/theme.min.css" rel="stylesheet">
-    <link href="/zotero-better-bibtex/css/format-html.min.css" rel="stylesheet" id="R-format-style">
     <link href="/zotero-better-bibtex/css/auto-complete/auto-complete.min.css" rel="stylesheet">
     <script src="/zotero-better-bibtex/js/auto-complete/auto-complete.min.js" defer></script>
+    <script src="/zotero-better-bibtex/js/search-lunr.min.js" defer></script>
+    <script src="/zotero-better-bibtex/js/search.min.js" defer></script>
+    <script>
+      window.relearn = window.relearn || {};
+      window.relearn.index_js_url="/zotero-better-bibtex/searchindex.en.js";
+    </script>
     <script src="/zotero-better-bibtex/js/lunr/lunr.min.js" defer></script>
     <script src="/zotero-better-bibtex/js/lunr/lunr.stemmer.support.min.js" defer></script>
     <script src="/zotero-better-bibtex/js/lunr/lunr.multi.min.js" defer></script>
     <script src="/zotero-better-bibtex/js/lunr/lunr.en.min.js" defer></script>
-    <script src="/zotero-better-bibtex/js/search.min.js" defer></script>
+    <script>
+      window.relearn = window.relearn || {};
+      window.relearn.contentLangs=['en'];
+    </script>
+    <link href="/zotero-better-bibtex/fonts/fontawesome/css/fontawesome-all.min.css" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/zotero-better-bibtex/fonts/fontawesome/css/fontawesome-all.min.css" rel="stylesheet"></noscript>
+    <link href="/zotero-better-bibtex/css/perfect-scrollbar/perfect-scrollbar.min.css" rel="stylesheet">
+    <link href="/zotero-better-bibtex/css/theme.min.css" rel="stylesheet">
+    <link href="/zotero-better-bibtex/css/format-html.min.css" rel="stylesheet" id="R-format-style">
     <script>
       window.relearn = window.relearn || {};
       // configuration
@@ -37,8 +46,6 @@
       window.relearn.relBasePath='..\/..';
       window.relearn.relBaseUri='..\/..\/..';
       window.relearn.absBaseUri='\/zotero-better-bibtex';
-      window.relearn.contentLangs=['en'];
-      window.relearn.index_js_url="/zotero-better-bibtex/searchindex.en.js";
       window.relearn.disableAnchorCopy=false;
       window.relearn.disableAnchorScrolling=false;
       window.relearn.disableInlineCopyToClipboard=true;
@@ -47,6 +54,15 @@
       window.relearn.getItem = (s,n) => {return s.getItem(n)};
       window.relearn.setItem = (s,n,v) => {return s.setItem(n,v)};
       window.relearn.removeItem = (s,n) => {return s.removeItem(n)};
+      // translations
+      window.T_Copy_to_clipboard = `Copy to clipboard`;
+      window.T_Copied_to_clipboard = `Copied to clipboard!`;
+      window.T_Copy_link_to_clipboard = `Copy link to clipboard`;
+      window.T_Link_copied_to_clipboard = `Copied link to clipboard!`;
+      window.T_Reset_view = `Reset view`;
+      window.T_View_reset = `View reset!`;
+      window.T_No_results_found = `No results found for "{0}"`;
+      window.T_N_results_found = `{1} results found for "{0}"`;
       // variant stuff
       window.relearn.themevariants = [ 'green' ];
       window.relearn.customvariantname = "my-custom-variant";
@@ -74,15 +90,6 @@
       }
       window.relearn.initVariant();
       window.relearn.markVariant();
-      // translations
-      window.T_Copy_to_clipboard = `Copy to clipboard`;
-      window.T_Copied_to_clipboard = `Copied to clipboard!`;
-      window.T_Copy_link_to_clipboard = `Copy link to clipboard`;
-      window.T_Link_copied_to_clipboard = `Copied link to clipboard!`;
-      window.T_Reset_view = `Reset view`;
-      window.T_View_reset = `View reset!`;
-      window.T_No_results_found = `No results found for "{0}"`;
-      window.T_N_results_found = `{1} results found for "{0}"`;
     </script>
 
 <script type="text/javascript">
@@ -128,10 +135,7 @@
               </div>
             </div>
           </div>
-          <ol class="topbar-breadcrumbs breadcrumbs highlightable" itemscope itemtype="http://schema.org/BreadcrumbList">
-            <li itemscope itemtype="https://schema.org/ListItem" itemprop="itemListElement" class=""><a itemprop="item" href="/zotero-better-bibtex/index.html"><span itemprop="name">Better BibTeX for Zotero</span></a><meta itemprop="position" content="1">&nbsp;>&nbsp;</li>
-            <li itemscope itemtype="https://schema.org/ListItem" itemprop="itemListElement" class=""><a itemprop="item" href="/zotero-better-bibtex/tags/index.html"><span itemprop="name">Tags</span></a><meta itemprop="position" content="2">&nbsp;>&nbsp;</li>
-            <li itemscope itemtype="https://schema.org/ListItem" itemprop="itemListElement" class=""><span itemprop="name">Automatic Export</span><meta itemprop="position" content="3"></li>
+          <ol class="topbar-breadcrumbs breadcrumbs highlightable" itemscope itemtype="http://schema.org/BreadcrumbList"><li itemscope itemtype="https://schema.org/ListItem" itemprop="itemListElement" class=""><a itemprop="item" href="/zotero-better-bibtex/index.html"><span itemprop="name">Better BibTeX for Zotero</span></a><meta itemprop="position" content="1">&nbsp;>&nbsp;</li><li itemscope itemtype="https://schema.org/ListItem" itemprop="itemListElement" class=""><a itemprop="item" href="/zotero-better-bibtex/tags/index.html"><span itemprop="name">Tags</span></a><meta itemprop="position" content="2">&nbsp;>&nbsp;</li><li itemscope itemtype="https://schema.org/ListItem" itemprop="itemListElement" class=""><span itemprop="name">Automatic Export</span><meta itemprop="position" content="3"></li>
           </ol>
           <div class="topbar-area topbar-area-end" data-area="end">
             <div class="topbar-button topbar-button-prev" data-content-empty="disable" data-width-s="show" data-width-m="show" data-width-l="show"><a class="topbar-control" href="/zotero-better-bibtex/tags/index.html" title="Tags (🡐)"><i class="fa-fw fas fa-chevron-left"></i></a>
@@ -159,11 +163,11 @@
 
 <h2 id="a">A</h2>
 <ul class="columnize">
-  <li><a href="/zotero-better-bibtex/exporting/auto/index.html">Automatic export</a><div class="breadcrumbs highlightable" title="Better BibTeX for Zotero &gt;  Exporting">Better BibTeX for Zotero &gt;  Exporting</div></li>
+  <li><a href="/zotero-better-bibtex/exporting/auto/index.html">Automatic export</a><div class="breadcrumbs highlightable" title="Better BibTeX for Zotero &gt; Exporting">Better BibTeX for Zotero &gt; Exporting</div></li>
 </ul>
 <h2 id="e">E</h2>
 <ul class="columnize">
-  <li><a href="/zotero-better-bibtex/installation/preferences/export/index.html">Export</a><div class="breadcrumbs highlightable" title="Better BibTeX for Zotero &gt;  Installation &gt;  Citation keys">Better BibTeX for Zotero &gt;  Installation &gt;  Citation keys</div></li>
+  <li><a href="/zotero-better-bibtex/installation/preferences/export/index.html">Export</a><div class="breadcrumbs highlightable" title="Better BibTeX for Zotero &gt; Installation &gt; Citation keys">Better BibTeX for Zotero &gt; Installation &gt; Citation keys</div></li>
 </ul>
 
   <footer class="footline">
