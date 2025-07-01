@@ -132,7 +132,7 @@
     "@retorquere/zotero-sync": "^1.1.1",
     "@stylistic/eslint-plugin": "^5.1.0",
     "@types/bluebird": "^3.5.42",
-    "@types/node": "^24.0.7",
+    "@types/node": "^24.0.8",
     "@typescript-eslint/eslint-plugin": "^8.35.1",
     "@xmldom/xmldom": "^0.9.8",
     "ajv-keywords": "^5.1.0",

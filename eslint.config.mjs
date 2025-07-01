@@ -31,7 +31,7 @@ const config = [
       'content/key-manager/compile.js',
       'eslint.config.mjs',
       'esbuild.js',
-      'site/**/*.{ts,js}',
+      'site/**/*.{ts,js,mjs}',
       'build/**/*.{ts,js}',
       'headless/**/*.{ts,js}',
       'tmp/**/*.{ts,js}',
