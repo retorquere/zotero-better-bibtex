@@ -9,53 +9,35 @@ import Language from '../gen/babel/langmap.json'
 // import Tag from '../gen/babel/tag.json'
 const LanguagePrefixes = Object.keys(Language).sort().reverse().filter(prefix => prefix.length > 3)
 
-import charCategories = require('xregexp/tools/output/categories')
-import scripts = require('xregexp/tools/output/scripts')
+const RE = new class {
+  public leadingUnprotectedWord: RegExp
+  public protectedWords: RegExp
+  public unprotectedWord: RegExp
+  public sentenceEnd = /^[:?]/
+  public url = /^(https?|mailto):\/\/[^\s]+/
+  public whitespace: RegExp
+  public titleCaseKeep: RegExp
+  public singleLetter: RegExp
+  public notAlphaNum: RegExp
 
-const RE = {
-  Nl: charCategories.find(cat => cat.alias === 'Letter_Number').bmp,
-  Nd: charCategories.find(cat => cat.alias === 'Decimal_Number').bmp,
-  Mn: charCategories.find(cat => cat.alias === 'Nonspacing_Mark').bmp,
-  Mc: charCategories.find(cat => cat.alias === 'Spacing_Mark').bmp,
-  Lu: charCategories.find(cat => cat.alias === 'Uppercase_Letter').bmp,
-  Lt: charCategories.find(cat => cat.alias === 'Titlecase_Letter').bmp,
-  Ll: charCategories.find(cat => cat.alias === 'Lowercase_Letter').bmp,
-  Lm: charCategories.find(cat => cat.alias === 'Modifier_Letter').bmp,
-  Lo: charCategories.find(cat => cat.alias === 'Other_Letter').bmp,
+  constructor() {
+    const P = /\.\u002D\u2000-\u206F\u2E00-\u2E7F\\'!"#\$%&\(\)\*\+,\/:;<=>\?@\[\]^_`{\|}~/.source
+    const char = '\\p{Ll}\\p{Lt}\\p{Lm}\\p{Lo}\\p{Mn}\\p{Mc}\\p{Nd}\\p{Nl}'
+    const Char = `\\p{Lu}${char}`
+    const whitespace = ' \t\n\r\u00A0'
+    const protectedWord = `[${char}]*[\\p{Lu}][-${Char}]*`
+    const L = '\\p{Lu}\\p{Ll}\\p{Lt}\\p{Lm}\\p{Lo}'
 
-  // punctuation
-  P: /\.\u002D\u2000-\u206F\u2E00-\u2E7F\\'!"#\$%&\(\)\*\+,\/:;<=>\?@\[\]^_`{\|}~/.source,
-  // P: charCategories.find(cat => cat.alias === 'Punctuation').bmp,
+    this.leadingUnprotectedWord = new RegExp(`^([\\p{Lu}][${char}]*)[${whitespace}${P}]`, 'u')
+    this.protectedWords = new RegExp(`^(${protectedWord})(([${whitespace}])(${protectedWord}))*`, 'u')
+    this.unprotectedWord = new RegExp(`^[${Char}]+`, 'u')
+    this.whitespace = new RegExp(`^[${whitespace}]+`)
 
-  Whitespace: / \t\n\r\u00A0/.source,
-
-  // calculated below
-  lcChar: null,
-  char: null,
-  L: null,
-  protectedWord: null,
-
-  leadingUnprotectedWord: null,
-  protectedWords: null,
-  unprotectedWord: null,
-  url: null,
-  whitespace: null,
-  sentenceEnd: /^[:?]/,
+    this.titleCaseKeep = new RegExp(`(?:(?:[>:?]?[${whitespace}]+)[${L}][${P}]?(?:[${whitespace}]|$))|(?:(?:<span class="nocase">.*?</span>)|(?:<nc>.*?</nc>))`, 'ugi')
+    this.notAlphaNum = new RegExp(`[^${L}\\p{Nd}\\p{Nl}]`, 'u')
+    this.singleLetter = new RegExp(`^([>:?])?[${whitespace}]+(.)`)
+  }
 }
-
-RE.lcChar = RE.Ll + RE.Lt + RE.Lm + RE.Lo + RE.Mn + RE.Mc + RE.Nd + RE.Nl
-RE.char = RE.Lu + RE.lcChar
-RE.L = `${ RE.Lu }${ RE.Ll }${ RE.Lt }${ RE.Lm }${ RE.Lo }`
-RE.protectedWord = `[${ RE.lcChar }]*[${ RE.Lu }][-${ RE.char }]*`
-
-// actual regexps
-
-// TODO: add punctuation
-RE.leadingUnprotectedWord = new RegExp(`^([${ RE.Lu }][${ RE.lcChar }]*)[${ RE.Whitespace }${ RE.P }]`)
-RE.protectedWords = new RegExp(`^(${ RE.protectedWord })(([${ RE.Whitespace }])(${ RE.protectedWord }))*`)
-RE.unprotectedWord = new RegExp(`^[${ RE.char }]+`)
-RE.url = /^(https?|mailto):\/\/[^\s]+/
-RE.whitespace = new RegExp(`^[${ RE.Whitespace }]+`)
 
 const ligatures = {
   // '\u01F1': 'DZ',
@@ -81,16 +63,13 @@ const ligatures = {
   ǌ: 'nj',
 }
 
-const titleCaseKeep = new RegExp(`(?:(?:[>:?]?[${ RE.Whitespace }]+)[${ RE.L }][${ RE.P }]?(?:[${ RE.Whitespace }]|$))|(?:(?:<span class="nocase">.*?</span>)|(?:<nc>.*?</nc>))`, 'gi')
-const singleLetter = new RegExp(`^([>:?])?[${ RE.Whitespace }]+(.)`)
-
 export function titleCase(text: string): string {
   let titlecased: string = titleCased(text)
 
   // restore single-letter "words". Shame firefox doesn't do lookbehind, but this will work
-  text.replace(titleCaseKeep, (match: string, offset: number) => {
+  text.replace(RE.titleCaseKeep, (match: string, offset: number) => {
     if (match[0] !== '<') {
-      const [ , punc, l ] = match.match(singleLetter)
+      const [ , punc, l ] = match.match(RE.singleLetter)
       if (punc && (l === 'a' || l === 'A')) {
         match = match.toUpperCase()
       }
@@ -449,15 +428,14 @@ export const HTMLParser = new class {
   }
 }
 
-const notAlphaNum = new RegExp(`[^${ RE.L }${ RE.Nd }${ RE.Nl }]`)
 export function babelLanguage(language: string): string {
   if (!language) return ''
   const lc = language.toLowerCase()
   // eslint-disable-next-line @typescript-eslint/no-unsafe-return
   return Language[lc]
     || Language[lc.replace(/[^a-z0-9]/, '-')]
-    || Language[lc.replace(notAlphaNum, '')]
-    || (!lc.match(notAlphaNum) && Language[LanguagePrefixes.find((prefix: string) => lc.startsWith(prefix))])
+    || Language[lc.replace(RE.notAlphaNum, '')]
+    || (!lc.match(RE.notAlphaNum) && Language[LanguagePrefixes.find((prefix: string) => lc.startsWith(prefix))])
     || Language[lc.replace(/-.*/, '').replace(/[^a-z0-9]/, '-')]
     || language
 }
@@ -494,17 +472,6 @@ export function excelColumn(n: number): string {
 
   return col
 }
-
-export const CJK = new RegExp(`([${ scripts.map((s: { name: string; bmp: string }): string => {
-  switch (s.name) {
-    case 'Katakana':
-    case 'Hiragana':
-    case 'Han':
-      return s.bmp
-    default:
-      return ''
-  }
-}).join('') }])`, 'g')
 
 export function toClipboard(text: string): void {
   Components.classes['@mozilla.org/widget/clipboardhelper;1'].getService(Components.interfaces.nsIClipboardHelper).copyString(text)

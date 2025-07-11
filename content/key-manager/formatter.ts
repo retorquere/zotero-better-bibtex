@@ -23,7 +23,7 @@ import { Preference } from '../prefs'
 import { JournalAbbrev } from '../journal-abbrev'
 import * as Extra from '../extra'
 import { buildCiteKey as zotero_buildCiteKey } from '../../gen/ZoteroBibTeX.mjs'
-import { babelLanguage, CJK } from '../text'
+import { babelLanguage } from '../text'
 import { fetchSync as fetchInspireHEP } from '../inspire-hep'
 
 import { compile, upgrade } from './compile'
@@ -63,6 +63,8 @@ export type TransliterateMode
   | 'russian'
 
 export type TransliterateModeAlias = TransliterateMode | 'de' | 'ja' | 'chinese-traditional' | 'zh-hant' | 'zh' | 'tw' | 'ar' | 'uk' | 'mn' | 'ru'
+
+const CJK = /[\p{Script=Hiragana}\p{Script=Katakana}\p{Script=Han}]/ug
 
 const unaliasTransliterateMode: Record<TransliterateModeAlias, TransliterateMode> = {
   minimal: 'minimal',
