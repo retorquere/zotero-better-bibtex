@@ -64,7 +64,7 @@ export type TransliterateMode
 
 export type TransliterateModeAlias = TransliterateMode | 'de' | 'ja' | 'chinese-traditional' | 'zh-hant' | 'zh' | 'tw' | 'ar' | 'uk' | 'mn' | 'ru'
 
-const CJK = /[\p{Script=Hiragana}\p{Script=Katakana}\p{Script=Han}]/ug
+const CJK = /([\p{Script=Hiragana}\p{Script=Katakana}\p{Script=Han}])/ug
 
 const unaliasTransliterateMode: Record<TransliterateModeAlias, TransliterateMode> = {
   minimal: 'minimal',
