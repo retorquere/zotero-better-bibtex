@@ -24,7 +24,6 @@ import { generateCSLJSON } from '../../translators/csl/json'
 import { generateCSLYAML } from '../../translators/csl/yaml'
 import { generateBBTJSON } from '../../translators/lib/bbtjson'
 import type { Collected } from '../../translators/lib/collect'
-import XRegExp from 'xregexp'
 
 import { DOMParser as XMLDOMParser } from '@xmldom/xmldom'
 
@@ -285,7 +284,6 @@ class WorkerZoteroBetterBibTeX {
 const WorkerZoteroUtilities = {
   ...ZU,
   Item: ZUI,
-  XRegExp,
 
   getVersion: () => client.version,
 }

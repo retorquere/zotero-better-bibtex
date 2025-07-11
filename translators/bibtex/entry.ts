@@ -228,16 +228,16 @@ export class Entry {
   constructor(item, config: Config, translation: Translation) {
     if (!this.re) {
       Entry.prototype.re = {
-        // private nonLetters: new Zotero.Utilities.XRegExp('[^\\p{Letter}]', 'g')
-        punctuationAtEnd: new Zotero.Utilities.XRegExp('[\\p{Punctuation}]$'),
-        startsWithLowercase: new Zotero.Utilities.XRegExp('^[\\p{Ll}]'),
-        hasLowercaseWord: new Zotero.Utilities.XRegExp('\\s[\\p{Ll}]'),
-        whitespace: new Zotero.Utilities.XRegExp('[\\p{Zs}]+'),
-        nonwordish: new Zotero.Utilities.XRegExp('[^\\p{L}\\p{N}]', 'g'),
-        leadingUppercase: new Zotero.Utilities.XRegExp('^(\\p{Lu})(\\p{Lu}*)(\\p{Ll}.*)'),
-        initials: new Zotero.Utilities.XRegExp('^(\\p{L}+\\.\\s*)+$'),
-        longInitials: new Zotero.Utilities.XRegExp('\\p{L}{2}\\.'),
-        allCaps: new Zotero.Utilities.XRegExp('^\\p{Lu}{2,}$'),
+        // private nonLetters: /[^\p{Letter}]/ug,
+        punctuationAtEnd: /[\p{Punctuation}]$/u,
+        startsWithLowercase: /^[\p{Ll}]/u,
+        hasLowercaseWord: /\s[\p{Ll}]/u,
+        whitespace: /[\p{Zs}]+/ug,
+        nonwordish: /[^\p{L}\p{N}]/ug,
+        leadingUppercase: /^(\p{Lu})(\p{Lu}*)(\p{Ll}.*)/u,
+        initials: /^(\p{L}+\.\s*)+$/u,
+        longInitials: /\p{L}{2}\./u,
+        allCaps: /^\p{Lu}{2,}$/u,
       }
     }
 
@@ -428,7 +428,7 @@ export class Entry {
   private valueish(value) {
     switch (typeof value) {
       case 'number': return `${ value }`
-      case 'string': return Zotero.Utilities.XRegExp.replace(value, this.re.nonwordish, '', 'all').toLowerCase()
+      case 'string': return value.replace(this.re.nonwordish, '').toLowerCase()
       default: return ''
     }
   }
@@ -1017,7 +1017,7 @@ export class Entry {
   protected _enc_creators_scrub_name(name: string): string {
     name = name.replace(/uFFFC/g, '') // these should never appear
     name = name.replace(/\u00A0/g, '\uFFFC') // safeguard non-breaking spaces -- the only non-space space-ish allowed in names (see #859)
-    name = Zotero.Utilities.XRegExp.replace(name, this.re.whitespace, ' ', 'all') // all the rest must go
+    name = name.replace(this.re.whitespace, ' ') // all the rest must go
     name = name.replace(/\uFFFC/g, '\u00A0') // restore non-breaking spaces
     return name
   }
@@ -1260,7 +1260,7 @@ export class Entry {
     if (particle[particle.length - 1] === ' ') return particle
 
     if (this.translation.BetterBibLaTeX) {
-      if (Zotero.Utilities.XRegExp.test(particle, this.re.punctuationAtEnd)) this.metadata.DeclarePrefChars += particle[particle.length - 1]
+      if (particle.match(this.re.punctuationAtEnd)) this.metadata.DeclarePrefChars += particle[particle.length - 1]
       // if BBLT, always add a space if it isn't there
       return `${ particle } `
     }
@@ -1271,7 +1271,7 @@ export class Entry {
     if (particle[particle.length - 1] === '.') return `${ particle } `
 
     // if it ends in any other punctuation, it's probably something like d'Medici -- no space
-    if (Zotero.Utilities.XRegExp.test(particle, this.re.punctuationAtEnd)) {
+    if (particle.match(this.re.punctuationAtEnd)) {
       if (relax) return `${ particle }${ enc_creators_marker.relax } `
       return particle
     }
@@ -1283,7 +1283,7 @@ export class Entry {
   private detectInitials(name: { given?: string; initials?: string }) {
     if (!name.given) return
 
-    if (Zotero.Utilities.XRegExp.exec(name.given, this.re.allCaps) || (Zotero.Utilities.XRegExp.exec(name.given, this.re.initials) && Zotero.Utilities.XRegExp.exec(name.given, this.re.longInitials))) {
+    if (name.given.match(this.re.allCaps) || (name.given.match(this.re.initials) && name.given.match(this.re.longInitials))) {
       name.initials = name.given
       return
     }
@@ -1294,7 +1294,7 @@ export class Entry {
     let given = ''
     let multiChar = ''
     for (const part of name.given.split(/\s+/)) {
-      const m = Zotero.Utilities.XRegExp.exec(part, this.re.leadingUppercase)
+      const m = part.match(this.re.leadingUppercase)
       if (!m) return { given }
       multiChar = multiChar || m[2]
 
@@ -1315,13 +1315,13 @@ export class Entry {
 
     let initials: string
     if (name.given === name.initials) {
-      if (Zotero.Utilities.XRegExp.exec(name.given, this.re.allCaps)) {
+      if (name.given.match(this.re.allCaps)) {
         name.given = `<span relax="true">${ name.given }</span>`
       }
       else {
         name.given = name.given.split(' ')
           .map((initial: string) => {
-            if (Zotero.Utilities.XRegExp.exec(initial, this.re.longInitials)) {
+            if (initial.match(this.re.longInitials)) {
               return `<span relax="true">${ initial.replace(/[.]$/, '') }</span>${ initial.endsWith('.') ? '.' : '' }`
             }
             else {
@@ -1372,7 +1372,7 @@ export class Entry {
       if (family) namebuilder.push(`family=${ this._enc_creator_part(family) }`)
       if (name.given) namebuilder.push(`given=${ this._enc_creator_part(name.given) }`)
       if (name.initials) {
-        const initials = Zotero.Utilities.XRegExp.exec(name.initials, this.re.allCaps)
+        const initials = name.initials.match(this.re.allCaps)
           ? name.initials
           : name.initials
               .split(/[\s.]+/)
@@ -1389,7 +1389,7 @@ export class Entry {
       return namebuilder.join(', ')
     }
 
-    if (family && Zotero.Utilities.XRegExp.test(family, this.re.startsWithLowercase)) family = new String(family)
+    if (family && family.match(this.re.startsWithLowercase)) family = new String(family)
 
     if (family) family = this._enc_creator_part(family)
 
@@ -1431,7 +1431,7 @@ export class Entry {
     */
 
     if (name['non-dropping-particle']) family = new String(this._enc_creators_pad_particle(name['non-dropping-particle']) + family)
-    if (Zotero.Utilities.XRegExp.test(family, this.re.startsWithLowercase) || Zotero.Utilities.XRegExp.test(family, this.re.hasLowercaseWord)) family = new String(family)
+    if (family.match(this.re.startsWithLowercase) || family.match(this.re.hasLowercaseWord)) family = new String(family)
 
     // https://github.com/retorquere/zotero-better-bibtex/issues/978 -- enc_literal can return null
     family = family ? this._enc_creator_part(family) : ''
