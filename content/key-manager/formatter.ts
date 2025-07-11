@@ -367,12 +367,12 @@ export class PatternFormatter {
   private re = {
     unsafechars_allow_spaces: /\s/g,
     unsafechars: /\s/g,
-    alphanum: Zotero.Utilities.XRegExp('[^\\p{L}\\p{N}]'),
-    punct: Zotero.Utilities.XRegExp('\\p{Pe}|\\p{Pf}|\\p{Pi}|\\p{Po}|\\p{Ps}', 'g'),
-    dash: Zotero.Utilities.XRegExp('\\p{Pd}|\u2500|\uFF0D|\u2015', 'g'), // additional pseudo-dashes from #1880
-    caseNotUpperTitle: Zotero.Utilities.XRegExp('[^\\p{Lu}\\p{Lt}]', 'g'),
-    caseNotUpper: Zotero.Utilities.XRegExp('[^\\p{Lu}]', 'g'),
-    // word: Zotero.Utilities.XRegExp('[\\p{L}\\p{Nd}\\p{Pc}\\p{M}]+(-[\\p{L}\\p{Nd}\\p{Pc}\\p{M}]+)*', 'g'),
+    notAlphanum: /[^\p{L}\p{N}]/u,
+    punct: /\p{Pe}|\p{Pf}|\p{Pi}|\p{Po}|\p{Ps}/ug,
+    dash: /\p{Pd}|\u2500|\uFF0D|\u2015/ug, // additional pseudo-dashes from #1880
+    caseNotUpperTitle: /[^\p{Lu}\p{Lt}]/ug,
+    caseNotUpper: /[^\p{Lu}]/ug,
+    // word: /[\p{L}\p{Nd}\p{Pc}\p{M}]+(-[\p{L}\p{Nd}\p{Pc}\p{M}]+)*/ug,
   }
 
   private acronyms: Record<string, Record<string, string>> = {}
@@ -1347,8 +1347,7 @@ export class PatternFormatter {
 
   /** clears out everything but unicode alphanumeric characters (unicode character classes `L` and `N`) */
   public _alphanum(input: string): string {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-    return Zotero.Utilities.XRegExp.replace(input, this.re.alphanum, '', 'all').split(/\s+/).join(' ').trim()
+    return input.replace(this.re.notAlphanum, '').split(/\s+/).join(' ').trim()
   }
 
   /** uppercases the first letter of each word */
@@ -1357,9 +1356,9 @@ export class PatternFormatter {
   }
 
   private nopunct(text: string, dash = '-'): string {
-    text = Zotero.Utilities.XRegExp.replace(text, this.re.dash, dash, 'all')
-    text = Zotero.Utilities.XRegExp.replace(text, this.re.punct, '', 'all')
     return text
+      .replace(this.re.dash, dash)
+      .replace(this.re.punct, '')
   }
 
   /** Removes punctuation
@@ -1559,9 +1558,9 @@ export class PatternFormatter {
       initials = firstName[0]
     }
 
-    initials = Zotero.Utilities.XRegExp.replace(initials, this.re.caseNotUpperTitle, '', 'all')
+    initials = initials.replace(this.re.caseNotUpperTitle, '')
     initials = this.transliterate(initials)
-    initials = Zotero.Utilities.XRegExp.replace(initials, this.re.caseNotUpper, '', 'all')
+    initials = initials.replace(this.re.caseNotUpper, '')
     return initials
   }
 
