@@ -2,86 +2,114 @@
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
-    "options": {},
     "preferences": {
-      "citekeyFormat": "[auth][year]",
+      "ascii": "",
+      "asciiBibLaTeX": false,
+      "asciiBibTeX": true,
+      "autoAbbrev": false,
+      "autoExport": "immediate",
+      "autoExportDelay": 5,
+      "autoExportIdleWait": 10,
+      "autoExportPathReplaceDiacritics": false,
+      "autoExportPathReplaceDirSep": "-",
+      "autoExportPathReplaceSpace": " ",
+      "automaticTags": true,
+      "autoPinDelay": 0,
+      "auxImport": false,
+      "baseAttachmentPath": "",
+      "biblatexExtendedDateFormat": true,
+      "biblatexExtendedNameFormat": true,
+      "biblatexExtractEprint": true,
+      "bibtexEditionOrdinal": false,
+      "bibtexParticleNoOp": false,
+      "bibtexURL": "off",
+      "cache": true,
+      "cacheDelete": false,
+      "cacheRetain": false,
+      "charmap": "",
+      "chinese": false,
+      "chineseSplitName": true,
+      "citeCommand": "cite",
+      "citekeyCaseInsensitive": true,
+      "citekeyFold": true,
+      "citekeyFormat": "auth + year",
+      "citekeySearch": true,
+      "citekeyUnsafeChars": "\\\"#%'(),={}~",
+      "csquotes": "",
+      "DOIandURL": "both",
+      "exportBibTeXStrings": "off",
+      "exportBraceProtection": true,
+      "exportSort": "citekey",
+      "exportTitleCase": true,
+      "extraMergeCitekeys": false,
+      "extraMergeCSL": false,
+      "extraMergeTeX": false,
+      "git": "config",
+      "import": true,
+      "importBibTeXStrings": true,
+      "importCaseProtection": "as-needed",
+      "importCitationKey": true,
+      "importDetectURLs": true,
+      "importExtra": true,
       "importJabRefAbbreviations": false,
-      "importJabRefStrings": false
+      "importJabRefStrings": false,
+      "importNoteToExtra": "",
+      "importSentenceCase": "on+guess",
+      "importSentenceCaseQuoted": true,
+      "importUnknownTexCommand": "ignore",
+      "itemObserverDelay": 5,
+      "jabrefFormat": 0,
+      "japanese": false,
+      "keyConflictPolicy": "keep",
+      "keyScope": "library",
+      "language": "langid",
+      "mapMath": "",
+      "mapText": "",
+      "packages": "",
+      "parseParticles": true,
+      "patchDates": "dateadded=dateAdded, date-added=dateAdded, datemodified=dateModified, date-modified=dateModified",
+      "postscript": "",
+      "postscriptOverride": "",
+      "preferencesOverride": "",
+      "qualityReport": false,
+      "quickCopyEta": "",
+      "quickCopyMode": "latex",
+      "quickCopyOrgMode": "zotero",
+      "quickCopyPandocBrackets": false,
+      "quickCopySelectLink": "zotero",
+      "rawImports": false,
+      "rawLaTag": "#LaTeX",
+      "relativeFilePaths": false,
+      "separatorList": "and",
+      "separatorNames": "and",
+      "skipFields": "",
+      "skipWords": "a,ab,aboard,about,above,across,after,against,al,along,amid,among,an,and,anti,around,as,at,before,behind,below,beneath,beside,besides,between,beyond,but,by,d,da,das,de,del,dell,dello,dei,degli,della,dell,delle,dem,den,der,des,despite,die,do,down,du,during,ein,eine,einem,einen,einer,eines,el,en,et,except,for,from,gli,i,il,in,inside,into,is,l,la,las,le,les,like,lo,los,near,nor,of,off,on,onto,or,over,past,per,plus,round,save,since,so,some,sur,than,the,through,to,toward,towards,un,una,unas,under,underneath,une,unlike,uno,unos,until,up,upon,versus,via,von,while,with,within,without,yet,zu,zum",
+      "startupProgress": "popup",
+      "strings": "",
+      "stringsOverride": "",
+      "verbatimFields": "url,doi,file,pdf,ids,eprint,/^verb[a-z]$/,groups,/^citeulike-linkout-[0-9]+$/, /^bdsk-url-[0-9]+$/, keywords",
+      "warnBulkModify": 10,
+      "warnTitleCased": false
+    },
+    "options": {
+      "Items": true,
+      "Normalize": true,
+      "Preferences": true,
+      "exportFileData": false,
+      "exportNotes": true,
+      "keepUpdated": false,
+      "worker": true
     }
   },
+  "version": {
+    "zotero": "7.0.18",
+    "bbt": "7.0.36.emile.Mac.fritz.box"
+  },
+  "collections": {},
   "items": [
     {
-      "DOI": "10.1109/JPROC.2016.2526118",
-      "abstractNote": "Abstract here",
-      "citationKey": "test_citation1",
-      "creators": [
-        {
-          "creatorType": "author",
-          "firstName": "J.",
-          "lastName": "Doe"
-        },
-        {
-          "creatorType": "author",
-          "firstName": "R.",
-          "lastName": "Smith"
-        }
-      ],
-      "date": "2016-02",
-      "extra": [
-        "Citation Key: test_citation1",
-        "ISSN: 0193-6530"
-      ],
-      "itemID": 1,
-      "itemType": "conferencePaper",
-      "pages": "300\u2013301",
-      "publicationTitle": "IEEE_J_PROC",
-      "tags": [
-        {
-          "tag": "Keyword 1"
-        },
-        {
-          "tag": "Keyword 2"
-        }
-      ],
-      "title": "Test Title With 100 \ud835\udf07J, 200\u2009\ud835\udf07J Energy, and \u00b10.1% Accuracy, 0.2\u2009mm\u00b2 Size, and -50\u2009dB Attenuation"
-    },
-    {
-      "DOI": "10.1109/JPROC.2016.2526118",
-      "abstractNote": "Abstract here",
-      "citationKey": "test_citation2",
-      "creators": [
-        {
-          "creatorType": "author",
-          "firstName": "J.",
-          "lastName": "Doe"
-        },
-        {
-          "creatorType": "author",
-          "firstName": "R.",
-          "lastName": "Smith"
-        }
-      ],
-      "date": "2016-02",
-      "extra": [
-        "Citation Key: test_citation2",
-        "ISSN: 0193-6530"
-      ],
-      "itemID": 2,
-      "itemType": "conferencePaper",
-      "pages": "300\u2013301",
-      "publicationTitle": "IEEE_J_PROC",
-      "tags": [
-        {
-          "tag": "Keyword 1"
-        },
-        {
-          "tag": "Keyword 2"
-        }
-      ],
-      "title": "Test Title with space\u2003quad, space\u2004semi-colon, space\u205fcolon, space\u2009comma, space nbsp"
-    },
-    {
-      "itemID": 3,
+      "key": "IZ52EFT8",
+      "version": 0,
       "itemType": "note",
       "note": "Import errors found: <ul><li>Unresolved @string reference &quot;IEEE_J_PROC&quot;</li></ul>",
       "tags": [
@@ -89,7 +117,99 @@
           "tag": "#Better BibTeX import error",
           "type": 1
         }
-      ]
+      ],
+      "collections": [],
+      "relations": {},
+      "dateAdded": "2025-07-11T22:02:08Z",
+      "dateModified": "2025-07-11T22:02:08Z",
+      "uri": "http://zotero.org/users/8230813/items/IZ52EFT8",
+      "itemID": 104,
+      "itemKey": "IZ52EFT8",
+      "libraryID": 1
+    },
+    {
+      "key": "T7SSXZSX",
+      "version": 0,
+      "itemType": "conferencePaper",
+      "pages": "300–301",
+      "date": "2016-02",
+      "extra": "Citation Key: test_citation1\nISSN: 0193-6530",
+      "DOI": "10.1109/JPROC.2016.2526118",
+      "abstractNote": "Abstract here",
+      "title": "Test Title With 100 𝜇J, 200 𝜇J Energy, and ±0.1% Accuracy, 0.2 mm² Size, and -50 dB Attenuation",
+      "creators": [
+        {
+          "firstName": "J.",
+          "lastName": "Doe",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "R.",
+          "lastName": "Smith",
+          "creatorType": "author"
+        }
+      ],
+      "tags": [
+        {
+          "tag": "Keyword 1"
+        },
+        {
+          "tag": "Keyword 2"
+        }
+      ],
+      "relations": {},
+      "dateAdded": "2025-07-11T22:02:08Z",
+      "dateModified": "2025-07-11T22:02:08Z",
+      "uri": "http://zotero.org/users/8230813/items/T7SSXZSX",
+      "itemID": 102,
+      "attachments": [],
+      "notes": [],
+      "citationKey": "test_citation1",
+      "itemKey": "T7SSXZSX",
+      "libraryID": 1,
+      "publicationTitle": "IEEE_J_PROC"
+    },
+    {
+      "key": "QUX73SUB",
+      "version": 0,
+      "itemType": "conferencePaper",
+      "pages": "300–301",
+      "date": "2016-02",
+      "extra": "Citation Key: test_citation2\nISSN: 0193-6530",
+      "DOI": "10.1109/JPROC.2016.2526118",
+      "abstractNote": "Abstract here",
+      "title": "Test Title with space quad, space semi-colon, space colon, space comma, space nbsp",
+      "creators": [
+        {
+          "firstName": "J.",
+          "lastName": "Doe",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "R.",
+          "lastName": "Smith",
+          "creatorType": "author"
+        }
+      ],
+      "tags": [
+        {
+          "tag": "Keyword 1"
+        },
+        {
+          "tag": "Keyword 2"
+        }
+      ],
+      "relations": {},
+      "dateAdded": "2025-07-11T22:02:08Z",
+      "dateModified": "2025-07-11T22:02:08Z",
+      "uri": "http://zotero.org/users/8230813/items/QUX73SUB",
+      "itemID": 103,
+      "attachments": [],
+      "notes": [],
+      "citationKey": "test_citation2",
+      "itemKey": "QUX73SUB",
+      "libraryID": 1,
+      "publicationTitle": "IEEE_J_PROC"
     }
   ]
 }
