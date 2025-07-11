@@ -1,0 +1,145 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "options": {},
+    "preferences": {
+      "DOIandURL": "doi",
+      "autoExport": "off",
+      "bibtexParticleNoOp": true,
+      "cache": false,
+      "citekeyFormat": "authorsAlpha + shortyear",
+      "importCaseProtection": "on",
+      "keyConflictPolicy": "change",
+      "keyScope": "global",
+      "skipFields": "urldate,abstract,file,langid,shorttitle",
+      "skipWords": "a,ab,aboard,about,above,across,after,against,al,along,amid,among,an,and,anti,around,as,at,before,behind,below,beneath,beside,besides,between,beyond,but,by,d,da,das,de,del,dell,dello,dei,degli,della,dell,delle,dem,den,der,des,despite,die,do,down,du,during,ein,eine,einem,einen,einer,eines,el,en,et,except,for,from,gli,i,il,in,inside,into,is,l,la,las,le,les,like,lo,los,near,nor,of,off,on,onto,or,over,past,per,plus,round,save,since,so,some,sur,than,the,through,to,toward,towards,un,una,unas,under,underneath,une,unlike,uno,unos,until,up,upon,van,versus,via,von,while,with,within,without,yet,zu,zum"
+    }
+  },
+  "items": [
+    {
+      "ISBN": "978-3-642-13189-9 978-3-642-13190-5",
+      "abstractNote": "We describe a very simple “somewhat homomorphic” encryption scheme using only elementary modular arithmetic, and use Gentry’s techniques to convert it into a fully homomorphic scheme. Compared to Gentry’s construction, our somewhat homomorphic scheme merely uses addition and multiplication over the integers rather than working with ideal lattices over a polynomial ring. The main appeal of our approach is the conceptual simplicity.",
+      "accessDate": "2025-02-27T06:10:27Z",
+      "citationKey": "vGHV10",
+      "creators": [
+        {
+          "creatorType": "seriesEditor",
+          "firstName": "David",
+          "lastName": "Hutchison"
+        },
+        {
+          "creatorType": "seriesEditor",
+          "firstName": "Takeo",
+          "lastName": "Kanade"
+        },
+        {
+          "creatorType": "seriesEditor",
+          "firstName": "Josef",
+          "lastName": "Kittler"
+        },
+        {
+          "creatorType": "seriesEditor",
+          "firstName": "Jon M.",
+          "lastName": "Kleinberg"
+        },
+        {
+          "creatorType": "seriesEditor",
+          "firstName": "Friedemann",
+          "lastName": "Mattern"
+        },
+        {
+          "creatorType": "seriesEditor",
+          "firstName": "John C.",
+          "lastName": "Mitchell"
+        },
+        {
+          "creatorType": "seriesEditor",
+          "firstName": "Moni",
+          "lastName": "Naor"
+        },
+        {
+          "creatorType": "seriesEditor",
+          "firstName": "Oscar",
+          "lastName": "Nierstrasz"
+        },
+        {
+          "creatorType": "seriesEditor",
+          "firstName": "C.",
+          "lastName": "Pandu Rangan"
+        },
+        {
+          "creatorType": "seriesEditor",
+          "firstName": "Bernhard",
+          "lastName": "Steffen"
+        },
+        {
+          "creatorType": "seriesEditor",
+          "firstName": "Madhu",
+          "lastName": "Sudan"
+        },
+        {
+          "creatorType": "seriesEditor",
+          "firstName": "Demetri",
+          "lastName": "Terzopoulos"
+        },
+        {
+          "creatorType": "seriesEditor",
+          "firstName": "Doug",
+          "lastName": "Tygar"
+        },
+        {
+          "creatorType": "seriesEditor",
+          "firstName": "Moshe Y.",
+          "lastName": "Vardi"
+        },
+        {
+          "creatorType": "seriesEditor",
+          "firstName": "Gerhard",
+          "lastName": "Weikum"
+        },
+        {
+          "creatorType": "editor",
+          "firstName": "Henri",
+          "lastName": "Gilbert"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Marten",
+          "lastName": "van Dijk"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Craig",
+          "lastName": "Gentry"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Shai",
+          "lastName": "Halevi"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Vinod",
+          "lastName": "Vaikuntanathan"
+        }
+      ],
+      "date": "2010",
+      "extra": [
+        "Series Title: Lecture Notes in Computer Science",
+        "DOI: 10.1007/978-3-642-13190-5_2"
+      ],
+      "itemID": 1,
+      "itemType": "bookSection",
+      "language": "en",
+      "libraryCatalog": "DOI.org (Crossref)",
+      "pages": "24-43",
+      "place": "Berlin, Heidelberg",
+      "publicationTitle": "Advances in Cryptology – Eurocrypt 2010",
+      "publisher": "Springer Berlin Heidelberg",
+      "title": "Fully homomorphic encryption over the integers",
+      "url": "http://link.springer.com/10.1007/978-3-642-13190-5_2",
+      "volume": "6110"
+    }
+  ]
+}

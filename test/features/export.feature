@@ -13,6 +13,7 @@ Feature: Export
 
     Examples:
       | file                                                                                                                     | references |
+      | AuthorsAlpha cannot properly deal with lastname with prefix like von van de  when generating a citekey #3272             | 1          |
       | Handle HDL not included as eprint for biblatex #3250                                                                     | 4          |
       | Duplicate note is not correctly commented out in biblatex output #3040                                                   | 1          |
       | Embedding multiple formulas in a ternary expression doesnt work #3224                                                    | 1          |

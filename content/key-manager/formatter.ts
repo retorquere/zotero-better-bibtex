@@ -17,6 +17,8 @@ import fold2ascii from 'fold-to-ascii'
 import rescape from '@stdlib/utils-escape-regexp-string'
 import ucs2decode = require('punycode2/ucs2/decode')
 
+import * as CSL from 'citeproc'
+
 import { Preference } from '../prefs'
 import { JournalAbbrev } from '../journal-abbrev'
 import * as Extra from '../extra'
@@ -233,6 +235,18 @@ export type CreatorTypeCollection = CreatorTypeOrAll[][]
 
 type Creator = { lastName?: string; firstName?: string; name?: string; creatorType: string; fieldMode?: number; source?: string }
 
+function removeParticles(creator: Creator): Creator {
+  if (creator.lastName) {
+    const name = {
+      family: creator.lastName,
+      given: creator.firstName || '',
+    }
+    CSL.parseParticles(name)
+    creator.lastName = name.family
+  }
+  return creator
+}
+
 class Item {
   public item: Zotero.Item
   private language = ''
@@ -272,7 +286,7 @@ class Item {
       }
     }
 
-    this.creators = item.getCreatorsJSON()
+    this.creators = item.getCreatorsJSON().map(removeParticles)
     this.libraryID = item.libraryID
     this.title = item.getField('title', false, true)
 
