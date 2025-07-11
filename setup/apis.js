@@ -423,6 +423,8 @@ function KeyManager() {
       // const type = typePrinter.print(p.type)
       // const dflt = typeof p.defaultValue === 'undefined' ? '' : ` = ${p.defaultValue}`
 
+      if (!p.comment.summary) throw new Error(`${_name}.${p.name} has no doc comment`)
+
       parameters.push({
         name: `<code>${render(p.name)}</code>`,
         type: render(typePrinter.print(p.type)),

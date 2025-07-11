@@ -96,14 +96,6 @@ function skip() {
   throw { next: true } // eslint-disable-line @typescript-eslint/only-throw-error
 }
 
-function innerText(node): string {
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-  if (node.nodeName === '#text') return node.value
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-  if (node.childNodes) return node.childNodes.map(innerText).join('')
-  return ''
-}
-
 function parseDate(v): PartialDate {
   v = v || ''
   const parsed: {
@@ -233,17 +225,47 @@ export type CreatorTypeArray = CreatorType[]
 export type CreatorTypeOrAll = CreatorType | '*'
 export type CreatorTypeCollection = CreatorTypeOrAll[][]
 
-type Creator = { lastName?: string; firstName?: string; name?: string; creatorType: string; fieldMode?: number; source?: string }
+type Creator = {
+  lastName?: string
+  family?: string
 
-function removeParticles(creator: Creator): Creator {
+  firstName?: string
+  given?: string
+
+  name?: string
+
+  creatorType: string
+  fieldMode?: number
+  source?: string
+}
+
+function innerText(node): string {
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+  if (node.nodeName === '#text') return node.value
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+  if (node.childNodes) return node.childNodes.map(innerText).join('')
+  return ''
+}
+
+function stripHTML(s: string): string {
+  if (!s) return ''
+  return s.includes('<') ? innerText(parseFragment(`<span>${s}</span>`)) : s
+}
+
+function parseParticles(creator: Creator): Creator {
+  for (const name of ['name', 'lastName', 'firstName']) {
+    creator[name] = stripHTML((creator[name] || '').replace(/^"(.*)"$/, '$1'))
+  }
+
   if (creator.lastName) {
     const name = {
       family: creator.lastName,
-      given: creator.firstName || '',
+      given: creator.firstName,
     }
     CSL.parseParticles(name)
-    creator.lastName = name.family
+    Object.assign(creator, name)
   }
+
   return creator
 }
 
@@ -286,7 +308,7 @@ class Item {
       }
     }
 
-    this.creators = item.getCreatorsJSON().map(removeParticles)
+    this.creators = item.getCreatorsJSON().map(parseParticles)
     this.libraryID = item.libraryID
     this.title = item.getField('title', false, true)
 
@@ -323,7 +345,7 @@ class Item {
       this.date = null
     }
 
-    if (this.title.includes('<')) this.title = innerText(parseFragment(this.title))
+    this.title = stripHTML(this.title)
   }
 
   public babelTag(): BabelLanguageTag {
@@ -534,7 +556,7 @@ export class PatternFormatter {
       case 'number':
         return `${value}`
       case 'string':
-        return this.innerText(value)
+        return stripHTML(value)
       case 'undefined':
         return ''
       default:
@@ -715,7 +737,7 @@ export class PatternFormatter {
    * @param sep     use this character between authors
    */
   public $authorsAlpha(creator: AuthorType = '*', initials = false, sep = ' '): string {
-    const authors = this.creators(creator, initials ? `${this.config.creatorNames.template}%(I)s` : this.config.creatorNames.template)
+    const authors = this.creators(creator, initials ? '%(F)s%(I)s' : '%(F)s')
     if (!authors.length) return ''
 
     switch (authors.length) {
@@ -1520,21 +1542,10 @@ export class PatternFormatter {
     return words
   }
 
-  private innerText(str: string): string {
-    if (!str) return ''
-    return innerText(parseFragment(`<span>${ str }</span>`))
-  }
-
-  private stripQuotes(name: string): string {
-    if (!name) return ''
-    if (name.length >= 2 && name[0] === '"' && name[name.length - 1] === '"') return name.slice(1, -1)
-    return name
-  }
-
   private initials(creator, all = true): string {
     if (!creator.firstName) return ''
 
-    const firstName = this.stripQuotes(creator.firstName)
+    const firstName = creator.firstName
 
     let initials: string
     let m
@@ -1555,10 +1566,10 @@ export class PatternFormatter {
   }
 
   private name(creator: Creator, template: Template<'creators'>): string {
-    const name = creator.lastName || creator.name
     const vars = {
-      f: this.stripQuotes(this.innerText(name)),
-      g: this.stripQuotes(this.innerText(creator.firstName || '')),
+      f: creator.lastName || creator.name || '',
+      F: creator.family || creator.name || '',
+      g: creator.firstName || creator.given || '',
       I: this.initials(creator),
       i: this.initials(creator, false),
     }
