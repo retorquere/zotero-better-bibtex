@@ -25,7 +25,8 @@ const RE = new class {
     const char = '\\p{Ll}\\p{Lt}\\p{Lm}\\p{Lo}\\p{Mn}\\p{Mc}\\p{Nd}\\p{Nl}'
     const Char = `\\p{Lu}${char}`
     const whitespace = ' \t\n\r\u00A0'
-    const math = '\\p{Math_Symbol}\\p{Script=Greek}'
+    // const math = '\\p{Math_Symbol}\\p{Script=Greek}'
+    const math = '\\p{Script=Greek}'
     const protectedWord = [
       `[${char}]*[\\p{Lu}][-${Char}]*`,
       `[${Char}${math}]*?[${math}][${math}${Char}]*`,

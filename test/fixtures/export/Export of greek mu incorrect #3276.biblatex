@@ -1,0 +1,14 @@
+@inproceedings{inoue125mmCladdingCoupled19Core2024,
+  title = {125 {{μm μ μk μ}} Test  {{Cladding Coupled}} 19-{{Core Fiber}} with {{$<$10}}-Ps/{{√km Spatial Mode Dispersion}} and {{Suppressed Coating Leakage Loss}}},
+  booktitle = {2024 {{IEEE Opto-Electronics}} and {{Communications Conference}} ({{OECC}})},
+  author = {Inoue, Ayumi and Nagashima, Takuji and Takano, Junya and Luis, Ruben S. and Puttnam, Benjamin and Furukawa, Hideaki and Hayashi, Tetsuya},
+  date = {2024-06},
+  pages = {1--3},
+  issn = {2166-8892},
+  doi = {10.1109/OECC54135.2024.10975626},
+  url = {https://ieeexplore.ieee.org/document/10975626},
+  urldate = {2025-07-18},
+  abstract = {We demonstrate a randomly-coupled 19-core fiber with the standard 125-μm cladding, which simultaneously achieves the spatial mode dispersion less than 10 ps/√km and the transmission loss less than 0.20 dB/km, for the first time.},
+  eventtitle = {2024 {{IEEE Opto-Electronics}} and {{Communications Conference}} ({{OECC}})},
+  keywords = {Claddings,coupled multi-core fiber,multi-core fiber,Multicore processing,optical fiber,Optical fiber communication,Optical fiber dispersion,Optical fibers,Optical losses,Propagation losses,Scalability,Standards}
+}
