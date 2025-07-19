@@ -1,0 +1,119 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "options": {},
+    "preferences": {
+      "autoExportDelay": 2,
+      "citekeyFormat": "auth.lower.select(3).len(\">\", 0) + shorttitle(3, 3) + year;\nauth.lower.select(2).len(\">\", 0) + shorttitle(3, 3) + year;\nauth.lower.select(1).len(\">\", 0) + shorttitle(3, 3) + year"
+    }
+  },
+  "items": [
+    {
+      "DOI": "10.1109/OECC54135.2024.10975626",
+      "abstractNote": "We demonstrate a randomly-coupled 19-core fiber with the standard 125-μm cladding, which simultaneously achieves the spatial mode dispersion less than 10 ps/√km and the transmission loss less than 0.20 dB/km, for the first time.",
+      "accessDate": "2025-07-18T09:27:28Z",
+      "citationKey": "inoue125mmCladdingCoupled19Core2024",
+      "conferenceName": "2024 IEEE Opto-Electronics and Communications Conference (OECC)",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Ayumi",
+          "lastName": "Inoue"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Takuji",
+          "lastName": "Nagashima"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Junya",
+          "lastName": "Takano"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Ruben S.",
+          "lastName": "Luis"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Benjamin",
+          "lastName": "Puttnam"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Hideaki",
+          "lastName": "Furukawa"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Tetsuya",
+          "lastName": "Hayashi"
+        }
+      ],
+      "date": "2024-06",
+      "extra": [
+        "ISSN: 2166-8892",
+        "Citation Key: inoue125mmCladdingCoupled19Core2024"
+      ],
+      "itemID": 1,
+      "itemType": "conferencePaper",
+      "libraryCatalog": "IEEE Xplore",
+      "pages": "1-3",
+      "publicationTitle": "2024 IEEE Opto-Electronics and Communications Conference (OECC)",
+      "tags": [
+        {
+          "tag": "Claddings",
+          "type": 1
+        },
+        {
+          "tag": "coupled multi-core fiber",
+          "type": 1
+        },
+        {
+          "tag": "multi-core fiber",
+          "type": 1
+        },
+        {
+          "tag": "Multicore processing",
+          "type": 1
+        },
+        {
+          "tag": "optical fiber",
+          "type": 1
+        },
+        {
+          "tag": "Optical fiber communication",
+          "type": 1
+        },
+        {
+          "tag": "Optical fiber dispersion",
+          "type": 1
+        },
+        {
+          "tag": "Optical fibers",
+          "type": 1
+        },
+        {
+          "tag": "Optical losses",
+          "type": 1
+        },
+        {
+          "tag": "Propagation losses",
+          "type": 1
+        },
+        {
+          "tag": "Scalability",
+          "type": 1
+        },
+        {
+          "tag": "Standards",
+          "type": 1
+        }
+      ],
+      "title": "125 μm μ μk μ test  Cladding Coupled 19-Core Fiber with <10-ps/√km Spatial Mode Dispersion and Suppressed Coating Leakage Loss",
+      "url": "https://ieeexplore.ieee.org/document/10975626"
+    }
+  ]
+}

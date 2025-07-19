@@ -25,7 +25,11 @@ const RE = new class {
     const char = '\\p{Ll}\\p{Lt}\\p{Lm}\\p{Lo}\\p{Mn}\\p{Mc}\\p{Nd}\\p{Nl}'
     const Char = `\\p{Lu}${char}`
     const whitespace = ' \t\n\r\u00A0'
-    const protectedWord = `[${char}]*[\\p{Lu}][-${Char}]*`
+    const math = '\\p{Math_Symbol}\\p{Script=Greek}'
+    const protectedWord = [
+      `[${char}]*[\\p{Lu}][-${Char}]*`,
+      `[${Char}${math}]*?[${math}][${math}${Char}]*`,
+    ].join('|')
     const L = '\\p{Lu}\\p{Ll}\\p{Lt}\\p{Lm}\\p{Lo}'
 
     this.leadingUnprotectedWord = new RegExp(`^([\\p{Lu}][${char}]*)[${whitespace}${P}]`, 'u')

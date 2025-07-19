@@ -13,6 +13,7 @@ Feature: Export
 
     Examples:
       | file                                                                                                                     | references |
+      | Export of greek mu incorrect #3276                                                                                       | 1          |
       | AuthorsAlpha cannot properly deal with lastname with prefix like von van de  when generating a citekey #3272             | 1          |
       | Handle HDL not included as eprint for biblatex #3250                                                                     | 4          |
       | Duplicate note is not correctly commented out in biblatex output #3040                                                   | 1          |

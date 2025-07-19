@@ -100,7 +100,7 @@ if args.attach:
     print(formatter.serialize(data), file=f)
 
 # clean lib before putting it in place
-cleanlib = ["./util/clean-lib.ts", args.data]
+cleanlib = ['npx', 'ts-node', "./util/clean-lib.ts", args.data]
 if args.prefs: cleanlib.append('--prefs')
 if args.attachments: cleanlib.append('--attachments')
 assert call(cleanlib, cwd=root) == 0, 'clean failed'
