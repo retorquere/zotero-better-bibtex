@@ -1,10 +1,3 @@
-/*
-declare var Services: any
-if (typeof Services == 'undefined') {
-  var { Services } = ChromeUtils.import('resource://gre/modules/Services.jsm') // eslint-disable-line no-var
-}
-*/
-
 import { orchestrator } from './orchestrator'
 
 import ETA from 'node-eta'
