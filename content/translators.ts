@@ -59,7 +59,7 @@ export const Translators = new class {
   private reinit: { header: Header; code: string }[]
 
   constructor() {
-    const ready = Zotero.Promise.defer()
+    // const ready = Zotero.Promise.defer()
 
     Object.assign(this, { byLabel, byId, bySlug })
 
@@ -90,7 +90,7 @@ export const Translators = new class {
 
         await this.installTranslators()
 
-        ready.resolve(true as unknown as void)
+        // ready.resolve(true as unknown as void)
       },
       shutdown: async (reason: Reason) => {
         switch (reason) {

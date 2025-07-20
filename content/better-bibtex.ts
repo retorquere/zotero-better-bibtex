@@ -1,7 +1,7 @@
 /* eslint-disable prefer-rest-params */
 
-import type Bluebird from 'bluebird'
-const Ready = Zotero.Promise.defer()
+import { Deferred } from './promise'
+const Ready = new Deferred<boolean>
 
 Components.utils.importGlobalProperties(['FormData', 'structuredClone'])
 
@@ -434,7 +434,7 @@ export class BetterBibTeX {
   public Translators = Translators
   public MenuHelper = MenuHelper
 
-  public ready: Bluebird<void> = Ready.promise
+  public ready: Promise<boolean> = Ready.promise
   public dir: string
 
   public debugEnabledAtStart: boolean
@@ -447,7 +447,7 @@ export class BetterBibTeX {
   }
 
   public get starting(): boolean {
-    return this.ready.isPending()
+    return Ready.pending
   }
 
   public async scanAUX(target: string): Promise<void> {
@@ -647,7 +647,7 @@ export class BetterBibTeX {
       id: 'done',
       description: 'user interface',
       startup: async () => {
-        Ready.resolve()
+        Ready.resolve(true)
 
         ExportOptions.enable()
         if (Zotero.getMainWindow()) this.onMainWindowLoad({ window: Zotero.getMainWindow() })

@@ -204,24 +204,22 @@ class Git {
     const proc = Components.classes['@mozilla.org/process/util;1'].createInstance(Components.interfaces.nsIProcess)
     proc.init(cmd)
     proc.startHidden = !Zotero.Prefs.get('extensions.zotero.translators.better-bibtex.path.git.show')
-    const deferred = Zotero.Promise.defer()
-    proc.runwAsync(args, args.length, {
-      observe: (subject, topic) => {
-        if (topic !== 'process-finished') {
-          // @ts-expect-error zotero-types does not handle typed deferreds
-          deferred.reject(new Error(`[ ${ command } ] failed: ${ topic }`))
-        }
-        else if (proc.exitValue > 0) {
-          // @ts-expect-error zotero-types does not handle typed deferreds
-          deferred.reject(new Error(`[ ${ command } ] failed with exit status: ${ proc.exitValue }`))
-        }
-        else {
-          deferred.resolve()
-        }
-      },
-    })
 
-    return deferred.promise
+    return new Promise((resolve, reject) => {
+      proc.runwAsync(args, args.length, {
+        observe: (subject, topic) => {
+          if (topic !== 'process-finished') {
+            reject(new Error(`[ ${ command } ] failed: ${ topic }`))
+          }
+          else if (proc.exitValue > 0) {
+            reject(new Error(`[ ${ command } ] failed with exit status: ${ proc.exitValue }`))
+          }
+          else {
+            resolve()
+          }
+        },
+      })
+    })
   }
 }
 const git = (new Git)
