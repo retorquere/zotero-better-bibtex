@@ -63,8 +63,9 @@ preferences
 
   // the leading space is a marker to re-save the current default so it doesn't get replaced when the default changes later, which would change new keys suddenly
   preference(name="extensions.zotero.translators.better-bibtex.citekeyFormat" bbt:affects="" type="string" default=" auth.lower + shorttitle(3,3) + year")
-  bbt:doc Set the pattern used to generate citation keys. The format of the keys is documented [here]({{ ref . "citing" }}).
-  Changing this setting *does not* affect existign keys - for this you would need to select the items and refresh the keys.
+  bbt:doc
+    Set the pattern used to generate citation keys. The format of the keys is documented [here]({{ ref . "citing" }}).
+    Changing this setting *does not* affect existign keys - for this you would need to select the items and refresh the keys.
 
   preference(name="extensions.zotero.translators.better-bibtex.citekeyFormatEditing" bbt:affects="" type="string" default="")
 
