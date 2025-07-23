@@ -25,11 +25,8 @@ const RE = new class {
     const char = '\\p{Ll}\\p{Lt}\\p{Lm}\\p{Lo}\\p{Mn}\\p{Mc}\\p{Nd}\\p{Nl}'
     const Char = `\\p{Lu}${char}`
     const whitespace = ' \t\n\r\u00A0'
-    // const math = '\\p{Math_Symbol}\\p{Script=Greek}'
-    const math = '\\p{Script=Greek}'
     const protectedWord = [
       `[${char}]*[\\p{Lu}][-${Char}]*`,
-      `[${Char}${math}]*?[${math}][${math}${Char}]*`,
     ].join('|')
     const L = '\\p{Lu}\\p{Ll}\\p{Lt}\\p{Lm}\\p{Lo}'
 
@@ -317,7 +314,12 @@ export const HTMLParser = new class {
   }
 
   private walk(node, isNocased = false) {
-    const normalized_node: MarkupNode = { nodeName: node.nodeName, childNodes: [], attr: {}, class: {}}
+    const normalized_node: MarkupNode = {
+      nodeName: node.nodeName,
+      childNodes: [],
+      attr: {},
+      class: {},
+    }
     for (const { name, value } of (node.attrs || [])) {
       normalized_node.attr[name] = value
     }
