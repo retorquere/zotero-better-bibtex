@@ -286,6 +286,7 @@ class Zotero:
     self.beta = userdata.get('beta') == 'true'
     self.legacy = userdata.get('legacy') == 'true'
     self.dev = userdata.get('dev') == 'true'
+    self.bibliography = userdata.get('bibliography')
     self.token = str(uuid.uuid4())
     self.import_at_start = userdata.get('import', None)
     if self.import_at_start:
@@ -535,7 +536,9 @@ class Zotero:
 
     input = Library(path=references, client=self.client, variant=self.variant)
 
+    bibliography = None
     if input.path.endswith('.json'):
+      bibliography = self.bibliography
       # TODO: clean lib and test against schema
       config = input.data.get('config', {})
       preferences = config.get('preferences', {})
@@ -591,11 +594,12 @@ class Zotero:
 
       filename = references
       if not items: filename = None
-      return self.execute('return await Zotero.BetterBibTeX.TestSupport.importFile(filename, createNewCollection, preferences, localeDateOrder)',
+      return self.execute('return await Zotero.BetterBibTeX.TestSupport.importFile(filename, createNewCollection, preferences, bibliography)',
         filename = filename,
         createNewCollection = (collection != False),
         preferences = preferences,
-        localeDateOrder = localeDateOrder
+        localeDateOrder = localeDateOrder,
+        bibliography = bibliography
       )
 
   def expand_expected(self, expected):
