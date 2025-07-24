@@ -103,7 +103,7 @@ export class TestSupport {
 
     if (!path) return 0
 
-    const before = await Zotero.Items.getAll(Zotero.Libraries.userLibraryID, false, false, true)
+    const before = await Zotero.Items.getAll(Zotero.Libraries.userLibraryID, true, false, true)
 
     if (path.endsWith('.aux')) {
       await AUXScanner.scan(path)
@@ -116,11 +116,12 @@ export class TestSupport {
 
     await Zotero.Promise.delay(Zotero.Prefs.get('translators.better-bibtex.itemObserverDelay') as number * 3)
 
-    const after = await Zotero.Items.getAll(Zotero.Libraries.userLibraryID, true)
+    const after = await Zotero.Items.getAll(Zotero.Libraries.userLibraryID, true, false, true)
 
     if (bibstyle) {
+      const items = await Zotero.Items.getAll(Zotero.Libraries.userLibraryID, true)
       const cslEngine = Zotero.Styles.get(bibstyle).getCiteProc('en-US', 'text')
-      log.info(`${bibstyle}:\n${Zotero.Cite.makeFormattedBibliographyOrCitationList(cslEngine, after, 'text')}`)
+      log.info(`${bibstyle}:\n${Zotero.Cite.makeFormattedBibliographyOrCitationList(cslEngine, items, 'text')}`)
       cslEngine.free()
     }
 
