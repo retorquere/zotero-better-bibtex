@@ -153,6 +153,10 @@ to jump to the next formula if `auth` and `title` were both empty is now
 
 ### Generating citekeys
 
-To generate your citekeys, you use a formula composed of [functions and filters](formulas). Broadly, functions grab text from your item, and filters transform that text. **Note that the formula syntax has changed from a bracketed format to a javascript-ish format**. The old syntax was getting harder to maintain and its inflexibility prevented new extensions to the functions being implemented cleanly.
+To generate your citekeys, you use a formula composed of [functions and filters](formulas). Broadly, functions grab text from your item, and filters transform that text.
+
+**Note**: editing the formula **does not** update any citation keys. A new formula takes effect for items changed *from that point forward*. If you want to apply your new formula, select the items, right-click, and choose BBT -> Refresh
 
 For more details, head over to the [functions and filters](formulas) list.
+
+If you are used to the bracketed formula syntax, the syntax has changed to a javascript-ish format. The old syntax was getting harder to maintain and its inflexibility prevented new extensions to the functions being implemented cleanly.

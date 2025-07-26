@@ -91,7 +91,7 @@ export class TestSupport {
     return itemIDs.length
   }
 
-  public async importFile(path: string, createNewCollection: boolean, preferences: Record<string, number | boolean | string>): Promise<number> {
+  public async importFile(path: string, createNewCollection: boolean, preferences: Record<string, number | boolean | string>, bibstyle?: string): Promise<number> {
     preferences = preferences || {}
 
     for (let [ pref, value ] of Object.entries(preferences)) {
@@ -103,8 +103,7 @@ export class TestSupport {
 
     if (!path) return 0
 
-    let items = await Zotero.Items.getAll(Zotero.Libraries.userLibraryID, true, false, true)
-    const before = items.length
+    const before = await Zotero.Items.getAll(Zotero.Libraries.userLibraryID, true, false, true)
 
     if (path.endsWith('.aux')) {
       await AUXScanner.scan(path)
@@ -115,11 +114,18 @@ export class TestSupport {
       await (Zotero.getMainWindow() as unknown as any).Zotero_File_Interface.importFile({ file: Zotero.File.pathToFile(path), createNewCollection: !!createNewCollection })
     }
 
-    items = await Zotero.Items.getAll(Zotero.Libraries.userLibraryID, true, false, true)
-    const after = items.length
-
     await Zotero.Promise.delay(Zotero.Prefs.get('translators.better-bibtex.itemObserverDelay') as number * 3)
-    return (after - before)
+
+    const after = await Zotero.Items.getAll(Zotero.Libraries.userLibraryID, true, false, true)
+
+    if (bibstyle) {
+      const items = await Zotero.Items.getAll(Zotero.Libraries.userLibraryID, true)
+      const cslEngine = Zotero.Styles.get(bibstyle).getCiteProc('en-US', 'text')
+      log.info(`${bibstyle}:\n${Zotero.Cite.makeFormattedBibliographyOrCitationList(cslEngine, items, 'text')}`)
+      cslEngine.free()
+    }
+
+    return (after.length - before.length)
   }
 
   public async exportLibrary(translatorID: string, displayOptions: Record<string, number | string | boolean>, path?: string, collectionName?: string): Promise<string> {
