@@ -12,32 +12,32 @@ export class PreferenceManager {
 it.preferences.forEach(pref => {
   if (pref.name === 'platform') {
 -%>
-  set <%= pref.shortName %>(v: <%~ pref.valid %>) {
+  set <%= pref.name %>(v: <%~ pref.valid %>) {
 <%
   }
   else {
 -%>
-  set <%= pref.shortName %>(v: <%~ pref.valid %> | undefined) {
+  set <%= pref.name %>(v: <%~ pref.valid %> | undefined) {
     if (typeof v === 'undefined') v = <%~ JSON.stringify(pref.default) %>
 
-    if (v === this.<%= pref.shortName %>) return
+    if (v === this.<%= pref.name %>) return
 <%
   }
   if (pref.quoted_options) {
 -%>
-    if (!<%~ pref.quoted_options %>.includes(v)) throw new Error(`Preference <%= pref.shortName %> must be one of <%~ pref.quoted_options %>, got '${v}'`)
+    if (!<%~ pref.quoted_options %>.includes(v)) throw new Error(`Preference <%= pref.name %> must be one of <%~ pref.quoted_options %>, got '${v}'`)
 <%
   }
   else {
 -%>
-    if (typeof v !== '<%= pref.type %>') throw new Error(`Preference <%= pref.shortName %> must be of type <%= pref.type %>, got '${typeof v}'`)
+    if (typeof v !== '<%= pref.type %>') throw new Error(`Preference <%= pref.name %> must be of type <%= pref.type %>, got '${typeof v}'`)
 <%
   }
 -%>
-    Zotero.Prefs.set('translators.better-bibtex.<%= pref.shortName %>', v)
+    Zotero.Prefs.set('translators.better-bibtex.<%= pref.name %>', v)
   }
-  get <%= pref.shortName %>(): <%~ pref.valid %> {
-    const v: <%~ pref.valid %> = Zotero.Prefs.get('translators.better-bibtex.<%= pref.shortName %>') as <%~ pref.valid %>
+  get <%= pref.name %>(): <%~ pref.valid %> {
+    const v: <%~ pref.valid %> = Zotero.Prefs.get('translators.better-bibtex.<%= pref.name %>') as <%~ pref.valid %>
 
     return typeof v === 'undefined' ? <%~ JSON.stringify(pref.default) %> : v
   }

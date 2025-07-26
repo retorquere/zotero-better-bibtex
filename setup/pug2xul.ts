@@ -64,7 +64,6 @@ function render(src, options) {
 
 const pugs = [
   'content/ErrorReport.pug',
-  'content/Preferences/xul.pug',
   'content/Preferences/xhtml.pug',
   'content/ServerURL.pug',
   'content/ZoteroPane.pug',
@@ -73,7 +72,6 @@ const pugs = [
 for (const src of pugs) {
   let tgt = `build/${ src.replace(/pug$/, 'xul') }`
   switch (src) {
-    case 'content/Preferences/xul.pug':
     case 'content/Preferences/xhtml.pug':
       // handled in preferences.ts
       tgt = '/dev/null'
