@@ -14,8 +14,6 @@ import { Path, File } from '../file'
 
 const ctx: DedicatedWorkerGlobalScope = self as any
 
-importScripts('resource://zotero/config.js') // import ZOTERO_CONFIG'
-
 import type { Message, Job } from '../translators/worker'
 import { valid } from '../../gen/items/items'
 import { generateBibLaTeX } from '../../translators/bibtex/biblatex'
