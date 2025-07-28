@@ -1,29 +1,35 @@
 html:div
-  label(bbt:preference="extensions.zotero.translators.better-bibtex.skipFields") &better-bibtex_preferences_export_fields_skip;
-  textbox(size='30' preference='extensions.zotero.translators.better-bibtex.skipFields')
-groupbox
-  caption BibTeX/BibLaTeX
+  label(bbt:preference='extensions.zotero.translators.better-bibtex.skipFields', data-l10n-id='better-bibtex_preferences_export_fields_skip')
+  html:input(preference='extensions.zotero.translators.better-bibtex.skipFields', size='30', type='text')
+
+groupbox.bbt-prefs-subsection
+  label
+    html:h2 BibTeX/BibLaTeX
   html:div
-    label(bbt:preference="extensions.zotero.translators.better-bibtex.language") &better-bibtex_preferences_export_fields_language;
-    menulist(preference="extensions.zotero.translators.better-bibtex.language" preference-editable="true")
+    label(bbt:preference='extensions.zotero.translators.better-bibtex.language', data-l10n-id='better-bibtex_preferences_export_fields_language')
+    menulist(native='true', preference='extensions.zotero.translators.better-bibtex.language', preference-editable='true')
       menupopup
-        menuitem(value='langid' label='langid')
-        menuitem(value='language' label='language')
-        menuitem(value='both' label='&better-bibtex_preferences_export_fields_language_both.label;')
+        menuitem(label='langid', value='langid')
+        menuitem(label='language', value='language')
+        menuitem(data-l10n-id='better-bibtex_preferences_export_fields_language_both', value='both').
+
   html:div
-    label(bbt:preference="extensions.zotero.translators.better-bibtex.DOIandURL") &better-bibtex_preferences_export_fields_doi-and-url;
-    menulist(preference="extensions.zotero.translators.better-bibtex.DOIandURL" preference-editable="true")
+    label(bbt:preference='extensions.zotero.translators.better-bibtex.DOIandURL', data-l10n-id='better-bibtex_preferences_export_fields_doi-and-url')
+    menulist(native='true', preference='extensions.zotero.translators.better-bibtex.DOIandURL', preference-editable='true')
       menupopup
-        menuitem(value='both' label='&better-bibtex_preferences_export_fields_doi-and-url_both.label;')
-        menuitem(value='doi' label='&better-bibtex_preferences_export_fields_doi-and-url_doi.label;')
-        menuitem(value='url' label='&better-bibtex_preferences_export_fields_doi-and-url_url.label;')
-    image(tooltip="bbt-tooltip-DOIandURL" src="chrome://zotero-better-bibtex/content/skin/attention.svg" width='16px' height='16px')
+        menuitem(data-l10n-id='better-bibtex_preferences_export_fields_doi-and-url_both', value='both')
+        menuitem(data-l10n-id='better-bibtex_preferences_export_fields_doi-and-url_doi', value='doi')
+        menuitem(data-l10n-id='better-bibtex_preferences_export_fields_doi-and-url_url', value='url').
+
+    img(src='chrome://zotero-better-bibtex/content/skin/attention.svg', style='width:16px;height:16px', tooltip='bbt-tooltip-DOIandURL')
+
   html:div
-    label(bbt:preference="extensions.zotero.translators.better-bibtex.jabrefFormat") &better-bibtex_preferences_export_jabref-format;
-    menulist(preference="extensions.zotero.translators.better-bibtex.jabrefFormat" preference-editable="true")
+    label(bbt:preference='extensions.zotero.translators.better-bibtex.jabrefFormat', data-l10n-id='better-bibtex_preferences_export_jabref-format')
+    menulist(native='true', preference='extensions.zotero.translators.better-bibtex.jabrefFormat', preference-editable='true')
       menupopup
-        menuitem(value='0' label='&better-bibtex_preferences_export_jabref-format_0.label;')
-        menuitem(value='3' label='&better-bibtex_preferences_export_jabref-format_3.label;')
-        menuitem(value='4' label='&better-bibtex_preferences_export_jabref-format_4.label;')
-        menuitem(value='5' label='&better-bibtex_preferences_export_jabref-format_5.label;')
-    image(tooltip="bbt-tooltip-jabrefFormat" src="chrome://zotero-better-bibtex/content/skin/attention.svg" width='16px' height='16px')
+        menuitem(data-l10n-id='better-bibtex_preferences_export_jabref-format_0', value='0')
+        menuitem(data-l10n-id='better-bibtex_preferences_export_jabref-format_3', value='3')
+        menuitem(data-l10n-id='better-bibtex_preferences_export_jabref-format_4', value='4')
+        menuitem(data-l10n-id='better-bibtex_preferences_export_jabref-format_5', value='5').
+
+    img(src='chrome://zotero-better-bibtex/content/skin/attention.svg', style='width:16px;height:16px', tooltip='bbt-tooltip-jabrefFormat')

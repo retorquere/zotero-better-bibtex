@@ -1,27 +1,29 @@
-tabbox
-  tabs
-    tab(label='BibTeX')
-    tab(label='BibLaTeX')
-    tab(label='&better-bibtex_preferences_export_fields.label;')
-    tab(label="&better-bibtex_preferences_export_quick-copy.label;")
-    tab(bbt:preference="extensions.zotero.translators.better-bibtex.postscript" label="&better-bibtex_preferences_advanced_tab_postscript.label;")
-    tab(label='&better-bibtex_preferences_tab_misc.label;')
+groupbox.bbt-prefs-subsection
+  label
+    html:h2 BibTeX
+  include export/bibtex.pug
 
-  tabpanels
-    tabpanel(orient="vertical")
-      include export/bibtex.pug
+groupbox.bbt-prefs-subsection
+  label
+    html:h2 BibLaTeX
+  include export/biblatex.pug
 
-    tabpanel(orient="vertical")
-      include export/biblatex.pug
+groupbox.bbt-prefs-subsection
+  label
+    html:h2(data-l10n-id='better-bibtex_preferences_export_fields')
+  include export/fields.pug
 
-    tabpanel(orient="vertical")
-      include export/fields.pug
+groupbox.bbt-prefs-subsection
+  label
+    html:h2(data-l10n-id='better-bibtex_preferences_export_quick-copy')
+  include export/quickcopy.pug
 
-    tabpanel(orient="vertical")
-      include export/quickcopy.pug
+groupbox.bbt-prefs-subsection
+  label
+    html:h2(data-l10n-id='better-bibtex_preferences_advanced_tab_postscript')
+  include export/postscript.pug
 
-    tabpanel(orient="vertical")
-      include export/postscript.pug
-
-    tabpanel(orient="vertical")
-      include export/misc.pug
+groupbox.bbt-prefs-subsection
+  label
+    html:h2(data-l10n-id='better-bibtex_preferences_tab_misc')
+  include export/misc.pug

@@ -1,13 +1,30 @@
-checkbox(preference="extensions.zotero.translators.better-bibtex.asciiBibTeX" label="&better-bibtex_preferences_export_bibtex_ascii.label;")
-checkbox(preference="extensions.zotero.translators.better-bibtex.bibtexParticleNoOp" label="&better-bibtex_preferences_export_fields_bibtex-particle-no-op.label;")
-checkbox(preference="extensions.zotero.translators.better-bibtex.bibtexEditionOrdinal" label="&better-bibtex_preferences_export_fields_bibtex-edition-ordinal.label;")
+checkbox(
+  data-l10n-id='better-bibtex_preferences_export_bibtex_ascii'
+  preference='extensions.zotero.translators.better-bibtex.asciiBibTeX'
+  native='true'
+)
+
+checkbox(
+  data-l10n-id='better-bibtex_preferences_export_fields_bibtex-particle-no-op'
+  preference='extensions.zotero.translators.better-bibtex.bibtexParticleNoOp'
+  native='true'
+)
+
+checkbox(
+  data-l10n-id='better-bibtex_preferences_export_fields_bibtex-edition-ordinal'
+  preference='extensions.zotero.translators.better-bibtex.bibtexEditionOrdinal'
+  native='true'
+)
+
 html:div
-  label(bbt:preference="extensions.zotero.translators.better-bibtex.bibtexURL") &better-bibtex_preferences_export_bibtex_urls;
-  image(tooltip="bbt-tooltip-bibtexURL" src="chrome://zotero-better-bibtex/content/skin/attention.svg" width='16px' height='16px')
-menulist(preference="extensions.zotero.translators.better-bibtex.bibtexURL")
+  label(bbt:preference='extensions.zotero.translators.better-bibtex.bibtexURL', data-l10n-id='better-bibtex_preferences_export_bibtex_urls')
+  img(src='chrome://zotero-better-bibtex/content/skin/attention.svg', style='width:16px;height:16px', tooltip='bbt-tooltip-bibtexURL')
+
+menulist(native='true', preference='extensions.zotero.translators.better-bibtex.bibtexURL')
   menupopup
-    menuitem(value='off' label='&better-bibtex_preferences_export_bibtex_urls_off.label;')
-    menuitem(value='note' label='&better-bibtex_preferences_export_bibtex_urls_note.label;')
-    menuitem(value='note-url-ish' label='&better-bibtex_preferences_export_bibtex_urls_note-url-ish.label;')
-    menuitem(value='url' label='&better-bibtex_preferences_export_bibtex_urls_url.label;')
-    menuitem(value='url-ish' label='&better-bibtex_preferences_export_bibtex_urls_url-ish.label;')
+    menuitem(data-l10n-id='better-bibtex_preferences_export_bibtex_urls_off', value='off')
+    menuitem(data-l10n-id='better-bibtex_preferences_export_bibtex_urls_note', value='note')
+    menuitem(data-l10n-id='better-bibtex_preferences_export_bibtex_urls_note-url-ish', value='note-url-ish')
+    menuitem(data-l10n-id='better-bibtex_preferences_export_bibtex_urls_url', value='url')
+    menuitem(data-l10n-id='better-bibtex_preferences_export_bibtex_urls_url-ish', value='url-ish').
+

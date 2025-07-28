@@ -1,5 +1,18 @@
-groupbox
-  caption(label="&better-bibtex_preferences_advanced_extra-merge.label;")
-  checkbox(preference="extensions.zotero.translators.better-bibtex.extraMergeCitekeys" label="&better-bibtex_preferences_advanced_extra_merge-citekeys.label;")
-  checkbox(preference="extensions.zotero.translators.better-bibtex.extraMergeCSL" label="&better-bibtex_preferences_advanced_extra-merge-csl.label;")
-  checkbox(preference="extensions.zotero.translators.better-bibtex.extraMergeTeX" label="&better-bibtex_preferences_advanced_extra_merge-tex.label;")
+groupbox.bbt-prefs-subsection
+  label
+    html:h2(data-l10n-id='better-bibtex_preferences_advanced_extra-merge')
+  checkbox(
+    data-l10n-id='better-bibtex_preferences_advanced_extra_merge-citekeys'
+    preference='extensions.zotero.translators.better-bibtex.extraMergeCitekeys'
+    native='true'
+  )
+  checkbox(
+    data-l10n-id='better-bibtex_preferences_advanced_extra-merge-csl'
+    preference='extensions.zotero.translators.better-bibtex.extraMergeCSL'
+    native='true'
+  )
+  checkbox(
+    data-l10n-id='better-bibtex_preferences_advanced_extra_merge-tex'
+    preference='extensions.zotero.translators.better-bibtex.extraMergeTeX'
+    native='true'
+  )

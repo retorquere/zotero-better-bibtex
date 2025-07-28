@@ -1,36 +1,61 @@
-checkbox(label="&better-bibtex_preferences_auto-abbrev.label;" preference="extensions.zotero.translators.better-bibtex.autoAbbrev")
-
-//- separator.bbt-jurism
-
+checkbox(data-l10n-id='better-bibtex_preferences_auto-abbrev', native='true', preference='extensions.zotero.translators.better-bibtex.autoAbbrev')
 html:div
-  label(bbt:preference="extensions.zotero.translators.better-bibtex.exportSort") &better-bibtex_preferences_export_sort;
-  menulist(preference="extensions.zotero.translators.better-bibtex.exportSort")
+  label(bbt:preference='extensions.zotero.translators.better-bibtex.exportSort', data-l10n-id='better-bibtex_preferences_export_sort')
+  menulist(native='true', preference='extensions.zotero.translators.better-bibtex.exportSort')
     menupopup
-      menuitem(value='off' label='&better-bibtex_preferences_export_sort_off.label;')
-      menuitem(value='id' label='&better-bibtex_preferences_export_sort_id.label;')
-      menuitem(value='citekey' label='&better-bibtex_preferences_export_sort_citekey.label;')
+      menuitem(data-l10n-id='better-bibtex_preferences_export_sort_off', value='off')
+      menuitem(data-l10n-id='better-bibtex_preferences_export_sort_id', value='id')
+      menuitem(data-l10n-id='better-bibtex_preferences_export_sort_citekey', value='citekey').
 
-//- html:div.bbt-jurism
-  label.bbt-jurism(bbt:preference="extensions.zotero.translators.better-bibtex.autoAbbrevStyle") &better-bibtex_preferences_auto-abbrev_style;
-  menulist#bbt-abbrev-style.bbt-jurism(oncommand="Zotero.BetterBibTeX.PrefPane.styleChanged()")
-    menupopup
+checkbox(
+  data-l10n-id='better-bibtex_preferences_export_quality-report'
+  preference='extensions.zotero.translators.better-bibtex.qualityReport'
+  native='true'
+)
 
-checkbox(label="&better-bibtex_preferences_export_quality-report.label;" preference="extensions.zotero.translators.better-bibtex.qualityReport")
-checkbox(label="&better-bibtex_preferences_export_automatic-tags.label;" preference="extensions.zotero.translators.better-bibtex.automaticTags")
+checkbox(
+  data-l10n-id='better-bibtex_preferences_export_automatic-tags'
+  preference='extensions.zotero.translators.better-bibtex.automaticTags'
+  native='true'
+)
 
 html:div
-  checkbox(preference="extensions.zotero.translators.better-bibtex.exportTitleCase" label="&better-bibtex_preferences_advanced_export_title-case.label;")
-  image(tooltip="bbt-tooltip-exportTitleCase" src="chrome://zotero-better-bibtex/content/skin/attention.svg" width='16px' height='16px')
+  checkbox(
+    data-l10n-id='better-bibtex_preferences_advanced_export_title-case'
+    preference='extensions.zotero.translators.better-bibtex.exportTitleCase'
+    native='true'
+  )
+
+  img(src='chrome://zotero-better-bibtex/content/skin/attention.svg', style='width:16px;height:16px', tooltip='bbt-tooltip-exportTitleCase')
 
 html:div
-  checkbox(preference="extensions.zotero.translators.better-bibtex.exportBraceProtection" label="&better-bibtex_preferences_advanced_export_brace-protection.label;")
-  image(tooltip="bbt-tooltip-exportBraceProtection" src="chrome://zotero-better-bibtex/content/skin/attention.svg" width='16px' height='16px')
+  checkbox(
+    data-l10n-id='better-bibtex_preferences_advanced_export_brace-protection'
+    preference='extensions.zotero.translators.better-bibtex.exportBraceProtection'
+    native='true'
+  )
+  img(src='chrome://zotero-better-bibtex/content/skin/attention.svg', style='width:16px;height:16px', tooltip='bbt-tooltip-exportBraceProtection')
 
-groupbox
-  caption Cache
+groupbox.bbt-prefs-subsection
+  label
+    html:h2 Cache
   html:div
-    checkbox(preference="extensions.zotero.translators.better-bibtex.cacheRetain" label="&better-bibtex_preferences_advanced_export_retain-cache.label;")
-    image(tooltip="bbt-tooltip-retainCache" src="chrome://zotero-better-bibtex/content/skin/attention.svg" width='16px' height='16px')
-  checkbox(preference="extensions.zotero.translators.better-bibtex.cache" label="&better-bibtex_preferences_advanced_export_workers_cache.label;")
-  button(label="&better-bibtex_preferences_reset-cache.label;" oncommand="Zotero.BetterBibTeX.PrefPane.cacheReset()")
-  checkbox(readonly='true' preference="extensions.zotero.translators.better-bibtex.cacheDelete" label="&better-bibtex_preferences_advanced_export_reset-cache.label;")
+    checkbox(
+      data-l10n-id='better-bibtex_preferences_advanced_export_retain-cache'
+      preference='extensions.zotero.translators.better-bibtex.cacheRetain'
+      native='true'
+    )
+    img(src='chrome://zotero-better-bibtex/content/skin/attention.svg', style='width:16px;height:16px', tooltip='bbt-tooltip-retainCache')
+
+  checkbox(
+    data-l10n-id='better-bibtex_preferences_advanced_export_workers_cache'
+    preference='extensions.zotero.translators.better-bibtex.cache'
+    native='true'
+  )
+  button(data-l10n-id='better-bibtex_preferences_reset-cache', oncommand='Zotero.BetterBibTeX.PrefPane.cacheReset()')
+  checkbox(
+    data-l10n-id='better-bibtex_preferences_advanced_export_reset-cache'
+    preference='extensions.zotero.translators.better-bibtex.cacheDelete'
+    readonly
+    native='true'
+  )
