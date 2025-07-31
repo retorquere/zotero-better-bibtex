@@ -5,7 +5,7 @@ const Ready = new Deferred<boolean>
 
 Components.utils.importGlobalProperties(['FormData', 'structuredClone'])
 
-Components.utils.import('resource://gre/modules/FileUtils.jsm')
+ChromeUtils.importESModule('resource://gre/modules/FileUtils.sys.mjs')
 declare const FileUtils: any
 
 import { MenuManager } from 'zotero-plugin-toolkit'

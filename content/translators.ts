@@ -5,8 +5,7 @@ import merge from 'lodash.merge'
 import { Cache } from './translators/worker'
 import { serializer } from './item-export-format'
 
-Components.utils.import('resource://zotero/config.js')
-declare const ZOTERO_CONFIG: any
+const { ZOTERO_CONFIG } = ChromeUtils.importESModule('resource://zotero/config.mjs')
 
 import { Preference } from './prefs'
 import { affects, Preferences } from '../gen/preferences/meta'

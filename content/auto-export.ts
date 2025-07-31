@@ -1,4 +1,4 @@
-Components.utils.import('resource://gre/modules/FileUtils.jsm')
+ChromeUtils.importESModule('resource://gre/modules/FileUtils.sys.mjs')
 declare const FileUtils: any
 
 import { log } from './logger'
