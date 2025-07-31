@@ -1,11 +1,17 @@
 /* eslint-disable no-case-declarations, @typescript-eslint/no-unsafe-return */
 
-// import * as client from './client'
+import * as client from './client'
 import merge from 'lodash.merge'
 import { Cache } from './translators/worker'
 import { serializer } from './item-export-format'
 
-const { ZOTERO_CONFIG } = ChromeUtils.importESModule('resource://zotero/config.mjs')
+var ZOTERO_CONFIG: any // eslint-disable-line no-var
+if (client.isBeta) {
+  ({ ZOTERO_CONFIG } = ChromeUtils.importESModule('resource://zotero/config.mjs'))
+}
+else {
+  Components.utils.import('resource://zotero/config.js')
+}
 
 import { Preference } from './prefs'
 import { affects, Preferences } from '../gen/preferences/meta'
