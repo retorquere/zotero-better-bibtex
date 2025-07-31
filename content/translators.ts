@@ -373,7 +373,7 @@ export const Translators = new class {
       const reinit: Record<string, { header: Header; code: string }> = {}
 
       const code = (label: string) => [
-        `ZOTERO_CONFIG = ${ JSON.stringify(ZOTERO_CONFIG) }`,
+        `if (typeof ZOTERO_CONFIG === 'undefined') ZOTERO_CONFIG = ${JSON.stringify(ZOTERO_CONFIG)}`,
         Zotero.File.getContentsFromURL(`chrome://zotero-better-bibtex/content/resource/${ label }.js`),
       ].join('\n')
 

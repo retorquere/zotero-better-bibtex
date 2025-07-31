@@ -215,7 +215,11 @@ async function rebuild() {
     metafile: 'gen/better-bibtex-esbuild.json',
     inject: ['./setup/loaders/globals.js'],
     outdir: 'build/content',
-    banner: { js: 'if (!Zotero.BetterBibTeX) {\n' },
+    banner: { js: `
+      const { FileUtils } = ChromeUtils.importESModule('resource://gre/modules/FileUtils.sys.mjs')
+      Components.utils.importGlobalProperties(['FormData', 'structuredClone'])
+      if (!Zotero.BetterBibTeX) {
+      `},
     footer: { js: '\n}' },
     external: [
       'zotero/itemTree',

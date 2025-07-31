@@ -1,6 +1,3 @@
-ChromeUtils.importESModule('resource://gre/modules/FileUtils.sys.mjs')
-declare const FileUtils: any
-
 import { log } from './logger'
 import { Path, File } from './file'
 
