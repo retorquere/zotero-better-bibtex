@@ -6,7 +6,7 @@ import { Cache } from './translators/worker'
 import { serializer } from './item-export-format'
 
 var ZOTERO_CONFIG: any // eslint-disable-line no-var
-if (client.isBeta) {
+if (client.version[0] === '8') {
   ({ ZOTERO_CONFIG } = ChromeUtils.importESModule('resource://zotero/config.mjs'))
 }
 else {
