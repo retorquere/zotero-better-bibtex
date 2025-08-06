@@ -3,7 +3,7 @@
   <channel>
     <title>Installation :: Better BibTeX for Zotero</title>
     <link>/zotero-better-bibtex/installation/index.html</link>
-    <description>Install by downloading the latest release – if you use Firefox, make sure to right-click and save the XPI file, not just clicking it – and then in Zotero:&#xA;In the main menu go to Tools &gt; Add-ons Select ‘Plugins’ Click on the gear in the top-right corner and choose ‘Install Add-on From File…’ Choose .xpi that you’ve just downloaded, click ‘Install’ If you’re using Zotero 6, restart Zotero. Installation in Zotero 7 requires no restart. After the initial installation, the plugin will auto-update to newer releases, so you should need to perform the process described here only once.</description>
+    <description>Install by downloading the latest release – if you use Firefox, make sure to right-click and save the XPI file, not just clicking it – and then in Zotero:&#xA;In the main menu go to Tools &gt; Plugins Select ‘Plugins’ Click on the gear in the top-right corner and choose ‘Install Plugin From File…’ Choose .xpi that you’ve just downloaded, click ‘Install’ After the initial installation, the plugin will auto-update to newer releases, so you should need to perform the process described here only once.</description>
     <generator>Hugo</generator>
     <language>en</language>
     <atom:link href="/zotero-better-bibtex/installation/index.xml" rel="self" type="application/rss+xml" />
