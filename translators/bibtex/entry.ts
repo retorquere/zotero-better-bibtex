@@ -1054,7 +1054,7 @@ export class Entry {
 
         if (!this.translation.BetterBibLaTeX || !this.translation.collected.preferences.biblatexExtendedNameFormat) {
           // side effects to set use-prefix/uniorcomma -- make sure addCreators is called *before* adding 'options'
-          if (!this.useprefix) this.useprefix = !!name['non-dropping-particle']
+          if (!this.useprefix && this.translation.collected.preferences.biblatexUsePrefix) this.useprefix = !!name['non-dropping-particle']
           if (!this.juniorcomma) this.juniorcomma = (f.juniorcomma && name['comma-suffix'])
         }
 
@@ -1383,7 +1383,7 @@ export class Entry {
       if (name.suffix) namebuilder.push(`suffix=${ this._enc_creator_part(name.suffix) }`)
       if (name['dropping-particle'] || name['non-dropping-particle']) {
         namebuilder.push(`prefix=${ this._enc_creator_part(name['dropping-particle'] || name['non-dropping-particle']) }`)
-        namebuilder.push(`useprefix=${ !!name['non-dropping-particle'] }`)
+        if (this.translation.collected.preferences.biblatexUsePrefix) namebuilder.push(`useprefix=${ !!name['non-dropping-particle'] }`)
       }
       if (name['comma-suffix']) namebuilder.push('juniorcomma=true')
       return namebuilder.join(', ')

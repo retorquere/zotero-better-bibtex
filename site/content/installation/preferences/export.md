@@ -77,6 +77,13 @@ you can enable it here
 
 
 
+### add use-prefix when family name has a prefix
+
+default: `yes`
+
+When a family name prefix is found, add useprefix=true
+
+
 ## Fields
 
 ### Fields to omit from export (comma-separated)
