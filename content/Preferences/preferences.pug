@@ -1,0 +1,47 @@
+vbox(
+    onload='Zotero.BetterBibTeX.PrefPane.load(window, 7)'
+    xmlns='http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul'
+    xmlns:html='http://www.w3.org/1999/xhtml'
+  )
+  linkset
+    html:link(rel="localization" href="better-bibtex.ftl")/
+  popupset
+    tooltip#bbt-tooltip-bibtexURL
+      description &better-bibtex_preferences_export_fields_doi-and-url_warning;
+    tooltip#bbt-tooltip-jabrefFormat
+      description &better-bibtex_preferences_export_jabref-format_warn;
+    tooltip#bbt-tooltip-importSentenceCase
+      description &better-bibtex_preferences_advanced_import_sentence-case_warning;
+    tooltip#bbt-tooltip-importCaseProtection
+      description &better-bibtex_preferences_advanced_import_case-protection_warning;
+    tooltip#bbt-tooltip-exportTitleCase
+      description &better-bibtex_preferences_advanced_export_title-case_warning;
+    tooltip#bbt-tooltip-exportBraceProtection
+      description &better-bibtex_preferences_advanced_export_brace-protection_warning;
+    tooltip#bbt-tooltip-cacheRetain
+      description &better-bibtex_preferences_advanced_export_retain-cache_warning;
+
+  groupbox.bbt-prefs-section(bbt:page='_index')
+  label
+    html:h2(data-l10n-id='better-bibtex_preferences_tab_citekey')
+  include citekeys.pug
+
+  groupbox.bbt-prefs-section(bbt:page='export')
+  label
+    html:h2(data-l10n-id='better-bibtex_preferences_tab_export')
+  include export.pug
+
+  groupbox.bbt-prefs-section(bbt:page='automatic-export')
+  label
+    html:h2(data-l10n-id='better-bibtex_preferences_tab_auto-export')
+  include autoexport.pug
+
+  groupbox.bbt-prefs-section(bbt:page='miscellaneous')
+  label
+    html:h2(data-l10n-id='better-bibtex_preferences_tab_misc')
+  include misc.pug
+
+  groupbox.bbt-prefs-section(bbt:page='import')
+  label
+    html:h2(data-l10n-id='better-bibtex_preferences_tab_import')
+  include import.pug
