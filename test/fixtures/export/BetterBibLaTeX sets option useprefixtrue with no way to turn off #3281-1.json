@@ -1,0 +1,99 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "options": {},
+    "preferences": {
+      "DOIandURL": "doi",
+      "asciiBibLaTeX": true,
+      "autoExportDelay": 2,
+      "automaticTags": false,
+      "auxImport": true,
+      "bibtexParticleNoOp": true,
+      "biblatexUsePrefix": false,
+      "citekeyFormat": "auth.lower + shorttitle(3, 3) + year;\nextra(\"ADS Bibcode\")",
+      "citekeySearch": false,
+      "extraMergeTeX": true,
+      "postscript": "if (Translator.BetterBibLaTeX) {\n  if (tex.has.title)\n    tex.add({ name: 'title', value: zotero.title.replace(/(\\$.*?\\$)/g, '<script>{$1}</script>') })\n\n  if (tex.has.shorttitle)\n    tex.add({ name: 'shorttitle', value: zotero.shorttitle.replace(/(\\$.*?\\$)/g, '<script>{$1}</script>') })\n\n  if (tex.has.issn || tex.has.doi || zotero.arXiv || tex.has.isbn)\n    delete tex.has.url\n\n  if (tex.has.doi) {\n    delete tex.has.issn\n    delete tex.has.issn\n  }\n\n  if (tex.has.doi && zotero.arxiv) {\n    delete tex.has.eprint\n    delete tex.has.eprinttype\n    delete zotero.arxiv\n  }\n\n  if (tex.has.doi && tex.has.isbn)\n    delete tex.has.doi\n}\n\nif (Translator.BetterBibTeX) {\n  if (tex.has.issn || tex.has.doi || zotero.arXiv || tex.has.isbn)\n    delete tex.has.url\n\n  if (tex.has.doi) {\n    delete tex.has.issn\n    delete tex.has.issn\n  }\n\n  if (tex.has.doi && zotero.arxiv) {\n    delete tex.has.eprint\n    delete zotero.arxiv\n  }\n\n  if (tex.has.doi && zotero.arxiv) {\n    delete tex.has.eprinttype\n    delete zotero.arxiv\n  }\n\n  if (tex.has.isbn)\n    delete tex.has.doi\n}\n",
+      "skipFields": "file,keywords"
+    }
+  },
+  "items": [
+    {
+      "DOI": "10.1051/0004-6361/202040114",
+      "ISSN": "0004-6361",
+      "abstractNote": "Context. A significant fraction (10-20%) of the most massive stars move through space with a high (v \u2273 30 km s\u22121) velocity. One of the possible physical explanations is that a supernova in a compact binary system results in a high recoil velocity of the system. If the system remains bound, it can be subsequently observed as a spectroscopic binary (SB1), a high-mass X-ray binary, a compact binary, and finally a gravitational-wave event. Aims: If such a system is traced back to its parent cluster, binary evolution models can be tested in great detail. Methods: The Gaia proper motions and parallaxes are used to demonstrate that the high-mass X-ray binary HD 153919/4U 1700-37 originates from NGC 6231, the nucleus of the OB association Sco OB1. Results: The O supergiant and its compact companion, of which the physical nature (a neutron star or a black hole) is unknown, move with a space velocity of 63 \u00b1 5 km s\u22121 with respect to NGC 6231. The kinematical age of the system is 2.2 \u00b1 0.1 Myr. The parallaxes and accurate proper motions in Gaia DR2 were used to perform a membership analysis of NGC 6231; 273 members are identified, of which 268 have good quality photometry. The distance to NGC 6231 is 1.63 \u00b1 0.15 kpc. Isochrone fitting results in an age of 4.7 \u00b1 0.4 Myr and an extinction AV to the cluster of 1.7 \u00b1 0.1. With the identification of NGC 6231 as the parent cluster, the upper limit on the age of the progenitor of 4U1700-37 at the moment of the supernova explosion is 3.0 \u00b1 0.5 Myr. Conclusions: With these constraints, the evolutionary history of the system can be reconstructed with an initial mass of the progenitor of the compact object > 60 M\u2299. The high mass, the extreme mass ratio, and short orbital separation of the system make it difficult to produce possible progenitor systems through population synthesis. We propose that the system experienced a Case A mass transfer phase before the supernova, which typically widens a binary. In order to create a progenitor system that does not merge, a lot of angular momentum must be lost from the system during the phase of mass transfer and/or an asymmetry in the supernova explosion provides a kick resulting in the observed orbital parameters. Given its current high space velocity and the derived evolutionary history, the compact object in the system is more likely to have received a large natal kick, which suggests that it is more likely a neutron star than a black hole. HD 153919/4U1700-37 might be a prototype in the Milky Way for the progenitor of gravitational wave events such as GW190412. The parallaxes and proper motions used in this paper have been updated to EDR3.",
+      "accessDate": "2025-03-03T19:33:34Z",
+      "citationKey": "vandermeijConfirmingNGC62312021",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Vincent",
+          "lastName": "van der Meij"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Difeng",
+          "lastName": "Guo"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Lex",
+          "lastName": "Kaper"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Mathieu",
+          "lastName": "Renzo"
+        }
+      ],
+      "date": "2021-11-01",
+      "extra": [
+        "ADS Bibcode: 2021A&A...655A..31V"
+      ],
+      "itemID": 1,
+      "itemType": "journalArticle",
+      "journalAbbreviation": "A&A",
+      "libraryCatalog": "NASA ADS",
+      "pages": "A31",
+      "publicationTitle": "Astronomy and Astrophysics",
+      "tags": [
+        {
+          "tag": "Astrophysics - Astrophysics of Galaxies",
+          "type": 1
+        },
+        {
+          "tag": "Astrophysics - High Energy Astrophysical Phenomena",
+          "type": 1
+        },
+        {
+          "tag": "Astrophysics - Solar and Stellar Astrophysics",
+          "type": 1
+        },
+        {
+          "tag": "binaries: close",
+          "type": 1
+        },
+        {
+          "tag": "open clusters and associations: general",
+          "type": 1
+        },
+        {
+          "tag": "stars: massive",
+          "type": 1
+        },
+        {
+          "tag": "supernovae: general",
+          "type": 1
+        },
+        {
+          "tag": "X-rays: binaries",
+          "type": 1
+        }
+      ],
+      "title": "Confirming NGC 6231 as the parent cluster of the runaway high-mass X-ray binary HD 153919/4U 1700-37 with Gaia DR2",
+      "url": "https://ui.adsabs.harvard.edu/abs/2021A&A...655A..31V",
+      "volume": "655"
+    }
+  ]
+}

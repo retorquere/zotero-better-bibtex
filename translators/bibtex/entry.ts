@@ -328,6 +328,9 @@ export class Entry {
         delete item.extraFields.creator[name]
       }
     }
+    for (const creator of item.creators) {
+      creator.useprefix = true
+    }
 
     if (this.translation.collected.preferences.jabrefFormat) {
       if (this.translation.collected.preferences.testing) {
@@ -1048,13 +1051,14 @@ export class Entry {
         name = {
           family: this._enc_creators_scrub_name(creator.lastName || ''),
           given: this._enc_creators_scrub_name(creator.firstName || ''),
+          useprefix: creator.useprefix,
         }
 
         if (this.translation.collected.preferences.parseParticles) CSL.parseParticles(name)
 
         if (!this.translation.BetterBibLaTeX || !this.translation.collected.preferences.biblatexExtendedNameFormat) {
           // side effects to set use-prefix/uniorcomma -- make sure addCreators is called *before* adding 'options'
-          if (!this.useprefix && this.translation.collected.preferences.biblatexUsePrefix) this.useprefix = !!name['non-dropping-particle']
+          this.useprefix = this.translation.collected.preferences.biblatexUsePrefix && creator.useprefix && (this.useprefix || !!name['non-dropping-particle'])
           if (!this.juniorcomma) this.juniorcomma = (f.juniorcomma && name['comma-suffix'])
         }
 
@@ -1344,7 +1348,7 @@ export class Entry {
     return (part instanceof String) ? (new String(`{${ latex }}`) as string) : latex
   }
 
-  private _enc_creators_biblatex(name: { family?: string; given?: string; suffix?: string; initials?: string }): string {
+  private _enc_creators_biblatex(name: { family?: string; given?: string; suffix?: string; initials?: string; useprefix: boolean }): string {
     let family: string | String
     if ((name.family.length > 1) && (name.family[0] === '"') && (name.family[name.family.length - 1] === '"')) {
       family = new String(name.family.slice(1, -1))
@@ -1383,7 +1387,7 @@ export class Entry {
       if (name.suffix) namebuilder.push(`suffix=${ this._enc_creator_part(name.suffix) }`)
       if (name['dropping-particle'] || name['non-dropping-particle']) {
         namebuilder.push(`prefix=${ this._enc_creator_part(name['dropping-particle'] || name['non-dropping-particle']) }`)
-        if (this.translation.collected.preferences.biblatexUsePrefix) namebuilder.push(`useprefix=${ !!name['non-dropping-particle'] }`)
+        if (this.translation.collected.preferences.biblatexUsePrefix && name.useprefix) namebuilder.push(`useprefix=${ !!name['non-dropping-particle'] }`)
       }
       if (name['comma-suffix']) namebuilder.push('juniorcomma=true')
       return namebuilder.join(', ')

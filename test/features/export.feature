@@ -11,6 +11,8 @@ Feature: Export
 
     Examples:
       | file                                                                                                                     | references |
+      | BetterBibLaTeX sets option useprefixtrue with no way to turn off #3281-1                                                 | 1          |
+      | BetterBibLaTeX sets option useprefixtrue with no way to turn off #3281-2                                                 | 1          |
       | Export of greek mu incorrect #3276                                                                                       | 1          |
       | AuthorsAlpha cannot properly deal with lastname with prefix like von van de  when generating a citekey #3272             | 1          |
       | Handle HDL not included as eprint for biblatex #3250                                                                     | 4          |
