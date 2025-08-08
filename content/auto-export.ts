@@ -1,6 +1,3 @@
-Components.utils.import('resource://gre/modules/FileUtils.jsm')
-declare const FileUtils: any
-
 import { log } from './logger'
 import { Path, File } from './file'
 

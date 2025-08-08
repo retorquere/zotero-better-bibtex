@@ -4,8 +4,6 @@ Feature: Export
   Background:
     Given I set the temp directory to "test/tmp"
 
-  # And I cap the total memory use to 1.1G
-  # And I cap the memory increase use to 100M
   @biblatex
   Scenario Outline: Export <references> references for BibLaTeX to <file>
     When I import <references> references from "export/<file>.json"

@@ -1,6 +1,6 @@
 import steps.zotero as zotero
 from munch import *
-from behave import given, when, then, use_step_matcher
+from behave import given, when, then
 import behave
 import urllib.request
 import json
@@ -22,35 +22,11 @@ import pytablewriter
 
 from contextlib import contextmanager
 
-@contextmanager
-def step_matcher(matcher):
-    _matcher = behave.matchers.current_matcher
-    use_step_matcher(matcher)
-    yield
-    behave.matchers.current_matcher = _matcher
-
 import pathlib
 for d in pathlib.Path(__file__).resolve().parents:
   if os.path.exists(os.path.join(d, 'behave.ini')):
     ROOT = d
     break
-
-with step_matcher('re'):
-  @step(u'I cap the (?P<memory>total memory|memory increase) use to (?P<value>[.0-9]+[MG]?)')
-  def step_impl(context, memory, value):
-    if value.endswith('M'):
-      value = float(value[:-1])
-    elif value.endswith('G'):
-      value = float(value[:-1]) * 1024
-    else:
-      value = float(value) / (1024 * 1024)
-
-    if memory == 'total memory':
-      context.memory.total = value
-    elif memory == 'memory increase':
-      context.memory.increase = value
-    else:
-      raise AssertionError(f'unknown memory cap {json.dumps(memory)}')
 
 @given(u'I set the temp directory to {value}')
 def step_impl(context, value):

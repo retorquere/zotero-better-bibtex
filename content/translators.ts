@@ -1,12 +1,17 @@
 /* eslint-disable no-case-declarations, @typescript-eslint/no-unsafe-return */
 
-// import * as client from './client'
+import * as client from './client'
 import merge from 'lodash.merge'
 import { Cache } from './translators/worker'
 import { serializer } from './item-export-format'
 
-Components.utils.import('resource://zotero/config.js')
-declare const ZOTERO_CONFIG: any
+var ZOTERO_CONFIG: any // eslint-disable-line no-var
+if (client.version[0] === '8') {
+  ({ ZOTERO_CONFIG } = ChromeUtils.importESModule('resource://zotero/config.mjs'))
+}
+else {
+  Components.utils.import('resource://zotero/config.js')
+}
 
 import { Preference } from './prefs'
 import { affects, Preferences } from '../gen/preferences/meta'
@@ -374,7 +379,7 @@ export const Translators = new class {
       const reinit: Record<string, { header: Header; code: string }> = {}
 
       const code = (label: string) => [
-        `ZOTERO_CONFIG = ${ JSON.stringify(ZOTERO_CONFIG) }`,
+        `if (typeof ZOTERO_CONFIG === 'undefined') ZOTERO_CONFIG = ${JSON.stringify(ZOTERO_CONFIG)}`,
         Zotero.File.getContentsFromURL(`chrome://zotero-better-bibtex/content/resource/${ label }.js`),
       ].join('\n')
 

@@ -55,7 +55,7 @@ export async function startup({ resourceURI, rootURI = resourceURI.spec }, reaso
 
     if (Zotero.BetterBibTeX) throw new Error('Better BibTeX is already started')
 
-    const $window = Cc['@mozilla.org/appshell/appShellService;1'].getService(Ci.nsIAppShellService).hiddenDOMWindow
+    // const $window = Zotero.getMainWindow()
     Services.scriptloader.loadSubScriptWithOptions(`${ rootURI }content/better-bibtex.js`, {
       charset: 'utf=8',
       // ignoreCache: true,
@@ -65,25 +65,13 @@ export async function startup({ resourceURI, rootURI = resourceURI.spec }, reaso
         rootURI,
 
         // to pacify libraries that do env-detection
-        window: $window,
-        document: $window.document,
+        // window: $window,
+        // document: $window.document,
 
         setTimeout,
         clearTimeout,
         setInterval,
         clearInterval,
-
-        /*
-        // indexedDB: $window.indexedDB,
-        IDBRequest: $window.IDBRequest,
-        IDBTransaction: $window.IDBTransaction,
-        IDBDatabase: $window.IDBDatabase,
-        IDBObjectStore: $window.IDBObjectStore,
-        IDBIndex: $window.IDBIndex,
-        IDBCursor: $window.IDBCursor,
-        IDBKeyRange: $window.IDBKeyRange,
-        Event: $window.Event,
-        */
       },
     })
 
