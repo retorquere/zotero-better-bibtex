@@ -66,8 +66,6 @@ const pugs = [
   'content/ErrorReport.pug',
   'content/Preferences/preferences.pug',
   'content/ServerURL.pug',
-  'content/ZoteroPane.pug',
-  'content/zotero-preferences.pug',
 ]
 for (const src of pugs) {
   let tgt = `build/${ src.replace(/[.]pug$/, '.xhtml') }`
@@ -78,8 +76,7 @@ for (const src of pugs) {
       break
   }
 
-  if (tgt !== '/dev/null') console.log(' ', tgt)
-
+  console.log('=', src)
   const xhtml = new XHTML
   fs.writeFileSync(tgt, render(src, {
     pretty: true,
@@ -94,7 +91,7 @@ for (const src of pugs) {
   }))
 
   if (tgt !== '/dev/null') {
-    if (xhtml.modified) console.log(' ', tgt)
-    fs.unlinkSync(tgt)
+    if (xhtml.modified) console.log('>', tgt)
+    // fs.unlinkSync(tgt)
   }
 }
