@@ -54,7 +54,7 @@ jobs:
 
             Thank you.
 
-            **PS: If the Debug Log menu is not available, or if it fails to send the debug log**, you can use the option under “Help” > “Send debug log to file.io”.
+            **PS: If the Debug Log menu is not available, or if it fails to send the debug log**, you can use the option under “Help” > “Send debug log to bashupload.com”.
 
           close.message: Thanks for the feedback! Just so you know, GitHub doesn't let me control who can close issues, and @retorquere likes to leave bug reports and enhancements open as a nudge to merge them into the next release.
 
