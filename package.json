@@ -120,7 +120,7 @@
     "uzip": "^0.20201231.0",
     "wasmjieba-web": "^1.0.14",
     "words-to-numbers": "^1.5.1",
-    "zotero-plugin": "^5.0.22",
+    "zotero-plugin": "^5.0.23",
     "zotero-plugin-toolkit": "^5.0.1",
     "zotero-types": "^4.0.5"
   },
@@ -148,7 +148,7 @@
     "dotenv": "^17.2.1",
     "ejs": "^3.1.10",
     "esbuild": "^0.25.8",
-    "eslint": "^9.32.0",
+    "eslint": "^9.33.0",
     "eslint-plugin-import": "^2.32.0",
     "eslint-plugin-prefer-arrow": "^1.2.3",
     "eta": "^3.5.0",
