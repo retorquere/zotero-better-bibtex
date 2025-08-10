@@ -12,7 +12,7 @@ const pug = require('pug')
 module.exports.text = {
   name: 'text',
   setup(build) {
-    build.onLoad({ filter: /[.]bib$/i }, async (args) => {
+    build.onLoad({ filter: /[.](bib|pem)$/i }, async (args) => {
       let text = await fs.promises.readFile(args.path, 'utf-8')
       return {
         contents: text,
