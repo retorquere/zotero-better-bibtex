@@ -339,6 +339,43 @@ export class TestSupport {
     AutoExport.edit(path, field, value)
   }
 
+  public async keyPair(): Promise<string> {
+    const subtle = Zotero.getMainWindow().crypto.subtle
+
+    const keyPair = await subtle.generateKey({
+      name: 'RSA-OAEP',
+      modulusLength: 2048,
+      publicExponent: new Uint8Array([1, 0, 1]),
+      hash: 'SHA-256',
+    },
+    true,
+    ['encrypt', 'decrypt'])
+
+    function arrayBufferToBase64(buffer: ArrayBuffer): string {
+      let binary = ''
+      const bytes = new Uint8Array(buffer)
+      for (let i = 0; i < bytes.byteLength; i++) {
+        binary += String.fromCharCode(bytes[i])
+      }
+      return btoa(binary)
+    }
+
+    async function exportKeyToPem(key: CryptoKey): Promise<string> {
+      const exported = await subtle.exportKey(key.type === 'public' ? 'spki' : 'pkcs8', key)
+      const base64Key = arrayBufferToBase64(exported)
+        .replace(/(.{80})/g, '$1\n')
+
+      if (key.type === 'public') {
+        return `-----BEGIN PUBLIC KEY-----\n${base64Key}\n-----END PUBLIC KEY-----`
+      }
+      else {
+        return `-----BEGIN PRIVATE KEY-----\n${base64Key}\n-----END PRIVATE KEY-----`
+      }
+    }
+
+    return `${await exportKeyToPem(keyPair.publicKey)}\n${await exportKeyToPem(keyPair.privateKey)}`
+  }
+
   /*
   async benchmark(tests: Array<{ translator: string, runs: number, cached?: boolean }>, _path?: string): Promise<Record<string, string | number>[]> {
     await Zotero.BetterBibTeX.ready
