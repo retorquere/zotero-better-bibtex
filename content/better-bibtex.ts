@@ -651,9 +651,6 @@ export class BetterBibTeX {
         Zotero.Promise.delay(15000).then(() => {
           DebugLog.unregister('Better BibTeX')
         })
-        Zotero.Promise.delay(3000).then(() => {
-          DebugLog.convertLegacy()
-        })
 
         // don't know why this is not picked up from zotero-types
         const columnDataKey = await Zotero.ItemTreeManager.registerColumn({ // eslint-disable-line @typescript-eslint/await-thenable
