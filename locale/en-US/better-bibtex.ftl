@@ -271,6 +271,9 @@ better-bibtex_preferences_export_biblatex_extended-name-format =
 better-bibtex_preferences_export_bibtex_ascii = 
   .label = Export unicode as plain-text latex commands (recommended)
 
+better-bibtex_preferences_export_biblatex_use-prefix =
+  .label = add use-prefix when family name has a prefix
+
 better-bibtex_preferences_export_bibtex_urls = Add URLs to BibTeX export
 better-bibtex_preferences_export_bibtex_urls_note = in the 'note' field
   .label = { better-bibtex_preferences_export_bibtex_urls_note }

@@ -404,6 +404,12 @@ biblatexExtendedNameFormat:
   affects:
     - Better BibLaTeX
 
+biblatexUsePrefix:
+  description: When a family name prefix is found, add useprefix=true
+  default: true
+  affects:
+    - Better BibLaTeX
+
 startupProgress:
   description: >-
     Zotero takes a few seconds to start up, which is sometimes mistakenly

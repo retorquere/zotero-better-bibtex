@@ -173,6 +173,9 @@
             "biblatexExtractEprint": {
               "type": "boolean"
             },
+            "biblatexUsePrefix": {
+              "type": "boolean"
+            },
             "bibtexEditionOrdinal": {
               "type": "boolean"
             },
