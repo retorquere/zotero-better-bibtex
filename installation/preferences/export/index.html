@@ -31,7 +31,7 @@ Making any change here will drop your entire export cache. This is usually not a
     <meta itemprop="description" content="The Better BibTeX Configuration can be found under the regular Zotero preferences pane, tab ‘Better BibTeX’.
 The configuration of Better BibTeX is a little baroque compared to the standard Zotero Bib(La)TeX exporters (which only have hidden preferences). The defaults should just work, but here’s an attempt to describe what they do.
 Making any change here will drop your entire export cache. This is usually not a problem unless you have a really large library, but you can read about what is involved here.">
-    <meta itemprop="wordCount" content="1349">
+    <meta itemprop="wordCount" content="1368">
     <meta itemprop="keywords" content="Automatic Export,Configuration,Export,Preferences">
     <title>Export :: Better BibTeX for Zotero</title><link rel="icon" href="/zotero-better-bibtex/better-bibtex.ico" type="image/x-icon">
 
@@ -159,6 +159,7 @@ Making any change here will drop your entire export cache. This is usually not a
       <ul>
         <li><a href="#export-unicode-as-plain-text-latex-commands">Export unicode as plain-text latex commands</a></li>
         <li><a href="#use-biblatex-extended-name-format-requires-biblatex-35">Use BibLaTeX extended name format (requires biblatex 3.5)</a></li>
+        <li><a href="#add-use-prefix-when-family-name-has-a-prefix">add use-prefix when family name has a prefix</a></li>
       </ul>
     </li>
     <li><a href="#fields">Fields</a>
@@ -265,6 +266,9 @@ simply more pleasing to have things like accented characters translated to their
 This biblatex has a new (less ambiguous) way to store creator names. It&rsquo;s technically
 superior, but the LaTeX world moves slowly, so many people won&rsquo;t have it yet. But if you&rsquo;re an early adopter,
 you can enable it here</p>
+<h3 id="add-use-prefix-when-family-name-has-a-prefix">add use-prefix when family name has a prefix</h3>
+<p>default: <code>yes</code></p>
+<p>When a family name prefix is found, add useprefix=true</p>
 <h2 id="fields">Fields</h2>
 <h3 id="fields-to-omit-from-export-comma-separated">Fields to omit from export (comma-separated)</h3>
 <p>default: <code>&lt;not set&gt;</code></p>
