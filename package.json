@@ -120,7 +120,7 @@
     "uzip": "^0.20201231.0",
     "wasmjieba-web": "^1.0.14",
     "words-to-numbers": "^1.5.1",
-    "zotero-plugin": "^5.0.29",
+    "zotero-plugin": "^5.0.30",
     "zotero-plugin-toolkit": "^5.0.1",
     "zotero-types": "^4.0.5"
   },
