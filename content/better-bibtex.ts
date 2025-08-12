@@ -7,8 +7,8 @@ import { MenuManager } from 'zotero-plugin-toolkit'
 const Menu = new MenuManager
 
 import { DebugLog } from 'zotero-plugin/debug-log'
-// const pubkey: string = require('./public.pem')
-// DebugLog.register('Better BibTeX', ['extensions.zotero.translators.better-bibtex.'])
+const pubkey: string = require('./public.pem')
+DebugLog.register('Better BibTeX', ['extensions.zotero.translators.better-bibtex.'], pubkey)
 
 import { Scheduler } from './scheduler'
 import { TeXstudio } from './tex-studio'
