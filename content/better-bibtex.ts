@@ -648,7 +648,7 @@ export class BetterBibTeX {
         ExportOptions.enable()
         if (Zotero.getMainWindow()) this.onMainWindowLoad({ window: Zotero.getMainWindow() })
 
-        Zotero.Promise.delay(15000).then(() => {
+        Zotero.Promise.delay(150000).then(() => {
           DebugLog.unregister('Better BibTeX')
         })
 
