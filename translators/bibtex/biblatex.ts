@@ -230,7 +230,9 @@ class Entry extends BaseEntry {
           break
 
         case 'seriesEditor':
-          creators[creatorType.register('editor', 'redactor')].push(creator)
+          if (!this.translation.collected.displayOptions.biblatexAPA) {
+            creators[creatorType.register('editor', 'redactor')].push(creator)
+          }
           break
 
         case 'scriptwriter':
