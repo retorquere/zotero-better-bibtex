@@ -8,7 +8,7 @@
     },
     "preferences": {
       "bibtexURL": "note",
-      "citekeyFormat": "[auth][year]"
+      "citekeyFormat": "auth(n=0,m=1,creator=\"*\",initials=false).fold + year"
     }
   },
   "items": [
@@ -33,7 +33,7 @@
       "itemID": 1,
       "itemType": "bookSection",
       "libraryCatalog": "Google Scholar",
-      "pages": "120\u2013136",
+      "pages": "120–136",
       "publicationTitle": "Implementation of Functional Languages",
       "publisher": "Springer",
       "title": "Efficient combinator parsers"

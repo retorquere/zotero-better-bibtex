@@ -7,13 +7,13 @@
     "preferences": {
       "DOIandURL": "doi",
       "autoAbbrevStyle": "http://www.zotero.org/styles/cell",
-      "citekeyFormat": "[auth][shorttitle][year]",
+      "citekeyFormat": "auth(n=0,m=1,creator=\"*\",initials=false).fold + shorttitle + year",
       "importCaseProtection": "off",
       "itemObserverDelay": 100,
       "keyConflictPolicy": "change",
-      "kuroshiro": true,
       "qualityReport": true,
-      "skipFields": "abstract, copyright, googlebooks"
+      "skipFields": "abstract, copyright, googlebooks",
+      "japanese": true
     }
   },
   "items": [

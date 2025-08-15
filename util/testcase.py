@@ -7,8 +7,8 @@ import sys
 import os
 import json
 from munch import Munch
-from types import SimpleNamespace
 from glob import glob
+from dotwiz import DotWiz
 
 from compact_json import Formatter, EolStyle
 formatter = Formatter()
@@ -23,7 +23,7 @@ import argparse
 from github import Github
 #import os
 import re
-#from pathlib import Path
+from pathlib import Path
 import shutil
 import subprocess
 #import string
@@ -45,8 +45,10 @@ parser.add_argument('--translator', '-t', dest='translator', default='biblatex')
 parser.add_argument('--data',       '-d', dest='data', required=True)
 parser.add_argument('--feature',    '-f', dest='feature')
 parser.add_argument('--issue',      '-i', dest='issue', default=issue and str(issue))
+parser.add_argument('--title',            dest='title')
 parser.add_argument('--export',     '-e', dest='mode', action='store_const', const='export')
 parser.add_argument('--import'          , dest='mode', action='store_const', const='import')
+parser.add_argument('--citekey'         , dest='mode', action='store_const', const='citekey')
 parser.add_argument('--prefs'           , action='store_true')
 parser.add_argument('--attachments'     , action='store_true')
 parser.add_argument('--attach'     , action='store_true')
@@ -77,37 +79,39 @@ assert os.path.exists(args.data),  f'{args.data} does not exist'
 
 g = Github(os.environ['GITHUB_TOKEN'])
 repo = g.get_repo('retorquere/zotero-better-bibtex')
-issue = repo.get_issue(int(args.issue))
-args.title = re.sub(r'^\[[^\]]+\]\s*:', '', issue.title).strip()
-args.title = re.sub(r'^(Bug|Feature|Feature Request)\s*:', '', args.title, re.IGNORECASE).strip()
-args.title = re.sub(r'[^-A-Za-z0-9\s]', '', args.title).strip()
-args.title = sanitize_filename(f'{args.title} #{issue.number}'.strip()).replace('`', '').replace('?', '')
+if type(args.issue) == str: args.issue = int(args.issue)
+if not args.title:
+  issue = repo.get_issue(args.issue)
+  args.title = re.sub(r'^\[[^\]]+\]\s*:', '', issue.title).strip()
+  args.title = re.sub(r'^(Bug|Feature|Feature Request)\s*:', '', args.title, flags=re.IGNORECASE).strip()
+  args.title = re.sub(r'[^-A-Za-z0-9\s]', '', args.title).strip()
+args.title = sanitize_filename(f'{args.title} #{args.issue}'.strip()).replace('`', '').replace('?', '')
 
 if args.attach:
   candidates = { os.path.splitext(att)[1]: att for att in glob('attachments/*.*', root_dir = 'test/fixtures/export') }
   with open(args.data) as f:
-    data = json.load(f)
+    data = DotWiz(json.load(f))
     for item in data['items']:
       if 'attachments' in item:
-        for att in item['attachments']:
+        for att in item.attachments:
           if 'path' in att:
-            att['path'] = candidates[os.path.splitext(att['path'])[1]]
+            att.path = candidates[os.path.splitext(att.path)[1]]
   with open(args.data, 'w') as f:
     print(formatter.serialize(data), file=f)
 
 # clean lib before putting it in place
-cleanlib = ["./util/clean-lib.ts", args.data]
+cleanlib = ['npx', 'ts-node', "./util/clean-lib.ts", args.data]
 if args.prefs: cleanlib.append('--prefs')
 if args.attachments: cleanlib.append('--attachments')
 assert call(cleanlib, cwd=root) == 0, 'clean failed'
 with open(args.data) as f:
-  data = json.load(f)
+  data = DotWiz(json.load(f))
   args.n = len(data['items'])
   for item in data['items']:
     if 'attachments' in item:
-      for att in item['attachments']:
+      for att in item.attachments:
         if 'path' in att:
-          if not os.path.exists(os.path.join('test/fixtures/export', att['path'])):
+          if not os.path.exists(os.path.join('test/fixtures/export', Path(att.path).stem, att.path.replace('STORAGE:', ''))):
             print('*** WARNING ***:', args.data, 'has non-existing attachment', att['path'])
 
 # insert example

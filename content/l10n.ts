@@ -1,35 +1,35 @@
-import format = require('string-template')
 import { log } from './logger'
-import { is7 } from './client'
 
 declare const Localization: any
 
-const strings = is7
-  ? new Localization(['better-bibtex.ftl'], true)
-  : Services.strings.createBundle('chrome://zotero-better-bibtex/locale/zotero-better-bibtex.properties')
+const strings = new Localization(['better-bibtex.ftl'])
 
-export const localizev = is7
-  ? (id_with_branch: string, params: any = null): string => {
-      if (id_with_branch.includes('.')) {
-        const [ id, branch ] = id_with_branch.split('.')
-        const messages = strings.formatMessagesSync([{ id, args: params || {}}])
-        return messages[0].attributes[0][branch] as string
-      }
-      else {
-        return strings.formatValueSync(id_with_branch, params || {}) as string
-      }
-    }
-  : (id: string, params: any = null): string => {
-      const str: string = strings.GetStringFromName(id)
-      return params ? (format(str, params) as string) : str
-    }
+const localized: Record<string, string> = {}
 
-export function localize(id: string, params: any = null): string {
+async function prefetch(id_with_branch: string): Promise<void> {
   try {
-    return localizev(id, params) || `@${ id }`
+    if (id_with_branch.includes('.')) {
+      const [ id, branch ] = id_with_branch.split('.')
+      const messages = strings.formatMessages([{ id }])
+      localized[id_with_branch] = messages[0]?.attributes[0][branch] as string || `!! ${id_with_branch}`
+    }
+    else {
+      localized[id_with_branch] = await strings.formatValue(id_with_branch, {}) as string || `!! ${id_with_branch}`
+    }
   }
   catch (err) {
-    log.error('l10n.get error:', id, err)
-    return `!${ id }`
+    log.error('l10n.prefetch error:', id_with_branch, err)
+    localized[id_with_branch] = `!! ${id_with_branch}`
   }
+  log.info('l10n.prefetch:', { key: id_with_branch, localized: localized[id_with_branch] })
+}
+
+export function localize(id_with_branch: string, params?: Record<string, string | number>): string {
+  const l = localized[id_with_branch] || `?? ${id_with_branch}`
+  return params ? l.replace(/[{]\s*[$]([a-z]+)\s*[}]/gi, (m, term) => typeof params[term] === 'undefined' ? m : `${params[term]}`) : l
+}
+
+export async function initialize(): Promise<void> {
+  const load = (require('../gen/l10n.json') as string[]).map(key => prefetch(key))
+  await Promise.all(load)
 }

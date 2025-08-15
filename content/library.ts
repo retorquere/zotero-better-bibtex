@@ -1,19 +1,55 @@
-/* eslint-disable @typescript-eslint/no-unsafe-return, @typescript-eslint/explicit-module-boundary-types */
+import { log } from './logger'
 
-export function get(name?: string | number): { name: string; libraryID: number } {
-  if (typeof name === 'undefined') name = Zotero.Libraries.userLibraryID
-  const num = typeof name === 'number' ? name : parseInt(name)
-  if (!isNaN(num)) return Zotero.Libraries.get(num || Zotero.Libraries.userLibraryID)
-
-  if (!name) return Zotero.Libraries.get(Zotero.Libraries.userLibraryID)
-
-  const libraries = Zotero.Libraries.getAll().filter(lib => lib.name === name)
-  switch (libraries.length) {
-    case 0:
-      throw new Error(`Library '${ name }' not found`)
-    case 1:
-      return libraries[0]
-    default:
-      throw new Error(`Library name '${ name }' is not unique`)
+export function get(query: Record<string, string | number>, throws = false): Zotero.Library {
+  const oops = err => {
+    log.error(err)
+    if (throws) throw new Error(err)
   }
+
+  const libraries = Zotero.Libraries.getAll()
+
+  const found: Record<'libraryID' | 'groupID' | 'group', Set<number>> = {
+    libraryID: new Set,
+    groupID: new Set,
+    group: new Set,
+  }
+  let searched = false
+  for (const [search, value] of Object.entries(query)) {
+    if (typeof value === 'undefined') continue
+    searched = true
+    switch (search) {
+      case 'libraryID':
+        libraries.filter(l => l.libraryID === value || l.libraryID === parseInt(value as string)).forEach(l => found.libraryID.add(l.libraryID))
+        break
+
+      case 'groupID':
+        (libraries as unknown as Zotero.Group[]).filter(l => l.groupID === value || l.groupID === parseInt(value as string)).forEach(l => found.groupID.add(l.libraryID))
+        break
+
+      case 'group':
+      case 'library': // legacy compat, they are the same
+        libraries.filter(l => l.name === `${value}`).forEach(l => found.group.add(l.libraryID))
+        break
+
+      default:
+        oops(`library.get: unsupported parameter ${JSON.stringify(search)}`)
+        return
+    }
+  }
+  if (!searched) found.libraryID.add(Zotero.Libraries.userLibraryID)
+
+  for (const kind of ['libraryID', 'groupID', 'group']) {
+    switch (found[kind].size) {
+      case 0:
+        continue
+      case 1:
+        return Zotero.Libraries.get([...found[kind]][0]) as Zotero.Library
+      default:
+        oops(`library.get: ${kind} in ${JSON.stringify(query)} is not unique`)
+        return
+    }
+  }
+
+  oops(`library.get: ${JSON.stringify(query)} not found`)
+  return
 }

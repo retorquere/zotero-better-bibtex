@@ -2,10 +2,10 @@
 
 import { Translation } from './lib/translator'
 import { Collected } from './lib/collect'
-import type { Translators } from '../typings/translators.d.ts'
+import type { Header } from '../gen/translators'
+declare var ZOTERO_TRANSLATOR_INFO: Header // eslint-disable-line no-var
 
 declare const Zotero: any
-declare var ZOTERO_TRANSLATOR_INFO: Translators.Header // eslint-disable-line no-var
 
 import html2md from 'html-to-md'
 

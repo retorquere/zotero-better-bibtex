@@ -9,7 +9,7 @@
     "preferences": {
       "autoAbbrevStyle": "http://www.zotero.org/styles/cell",
       "bibtexURL": "note",
-      "citekeyFormat": "[auth:lower][Title:fold:nopunct:skipwords:select,1,1:lower:alphanum:prefix,\\:][year:prefix,\\:][0]",
+      "citekeyFormat": "auth(n=0,m=1,creator=\"*\",initials=false).fold.lower + Title.transliterate.nopunct.skipwords.select(1,1).lower.alphanum.prefix(\":\") + year.prefix(\":\") + postfix(\"-%(n)s\")",
       "skipFields": "file,abstract,pagetotal,keywords,notes,langid,volumes,timestamp,isbn,issn,doi"
     }
   },
@@ -42,7 +42,7 @@
           "tag": "#LaTeX"
         },
         {
-          "tag": "Arabisch, Linguistik, W\u00f6rterbuch"
+          "tag": "Arabisch, Linguistik, Wörterbuch"
         }
       ],
       "title": "Encyclopedia of Arabic Language and Linguistics",

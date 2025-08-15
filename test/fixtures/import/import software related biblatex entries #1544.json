@@ -2,211 +2,80 @@
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
-    "preferences": {
-      "ascii": "",
-      "asciiBibLaTeX": false,
-      "asciiBibTeX": true,
-      "autoAbbrev": false,
-      "autoAbbrevStyle": "",
-      "autoExport": "immediate",
-      "autoExportDelay": 5,
-      "autoExportIdleWait": 10,
-      "autoExportPathReplaceDiacritics": false,
-      "autoExportPathReplaceDirSep": "-",
-      "autoExportPathReplaceSpace": " ",
-      "automaticTags": true,
-      "autoPinDelay": 0,
-      "auxImport": false,
-      "baseAttachmentPath": "",
-      "biblatexExtendedDateFormat": true,
-      "biblatexExtendedNameFormat": true,
-      "biblatexExtractEprint": true,
-      "bibtexEditionOrdinal": false,
-      "bibtexParticleNoOp": false,
-      "bibtexURL": "off",
-      "cache": true,
-      "charmap": "",
-      "citeCommand": "cite",
-      "citekeyFold": true,
-      "citekeyFormat": "auth + year",
-      "citekeySearch": true,
-      "citekeyUnsafeChars": "\\\"#%'(),={}~",
-      "csquotes": "",
-      "DOIandURL": "both",
-      "exportBibTeXStrings": "off",
-      "exportBraceProtection": true,
-      "exportTitleCase": true,
-      "extraMergeCitekeys": false,
-      "extraMergeCSL": false,
-      "extraMergeTeX": false,
-      "git": "config",
-      "import": true,
-      "importBibTeXStrings": true,
-      "importCaseProtection": "as-needed",
-      "importCitationKey": true,
-      "importDetectURLs": true,
-      "importExtra": true,
-      "importJabRefAbbreviations": true,
-      "importJabRefStrings": true,
-      "importNoteToExtra": "",
-      "importSentenceCase": "on+guess",
-      "importSentenceCaseQuoted": true,
-      "importUnknownTexCommand": "ignore",
-      "itemObserverDelay": 5,
-      "jabrefFormat": 0,
-      "jieba": false,
-      "keyConflictPolicy": "keep",
-      "keyScope": "library",
-      "kuroshiro": false,
-      "language": "langid",
-      "mapMath": "",
-      "mapText": "",
-      "parseParticles": true,
-      "patchDates": "dateadded=dateAdded, date-added=dateAdded, datemodified=dateModified, date-modified=dateModified",
-      "postscript": "",
-      "postscriptOverride": "",
-      "preferencesOverride": "",
-      "qualityReport": false,
-      "quickCopyEta": "",
-      "quickCopyMode": "latex",
-      "quickCopyOrgMode": "zotero",
-      "quickCopyPandocBrackets": false,
-      "quickCopySelectLink": "zotero",
-      "rawImports": false,
-      "rawLaTag": "#LaTeX",
-      "relativeFilePaths": false,
-      "retainCache": false,
-      "separatorList": "and",
-      "separatorNames": "and",
-      "skipFields": "",
-      "skipWords": "a,ab,aboard,about,above,across,after,against,al,along,amid,among,an,and,anti,around,as,at,before,behind,below,beneath,beside,besides,between,beyond,but,by,d,da,das,de,del,dell,dello,dei,degli,della,dell,delle,dem,den,der,des,despite,die,do,down,du,during,ein,eine,einem,einen,einer,eines,el,en,et,except,for,from,gli,i,il,in,inside,into,is,l,la,las,le,les,like,lo,los,near,nor,of,off,on,onto,or,over,past,per,plus,round,save,since,so,some,sur,than,the,through,to,toward,towards,un,una,unas,under,underneath,une,unlike,uno,unos,until,up,upon,versus,via,von,while,with,within,without,yet,zu,zum",
-      "startupProgress": "popup",
-      "strings": "",
-      "stringsOverride": "",
-      "verbatimFields": "url,doi,file,pdf,ids,eprint,/^verb[a-z]$/,groups,/^citeulike-linkout-[0-9]+$/, /^bdsk-url-[0-9]+$/",
-      "warnBulkModify": 10,
-      "warnTitleCased": false
-    },
     "options": {
-      "exportNotes": true,
-      "exportFileData": false,
-      "keepUpdated": false,
-      "worker": false,
-      "Normalize": true
+      "Items": true,
+      "Preferences": true,
+      "exportNotes": true
+    },
+    "preferences": {
+      "citekeyFormat": "auth + year"
     }
   },
-  "version": {
-    "zotero": "6.0.27",
-    "bbt": "6.7.122.emile.limonia"
-  },
-  "collections": {},
   "items": [
     {
-      "version": 0,
-      "itemType": "computerProgram",
-      "url": "https://www.scilab.org/",
-      "rights": "Scilab license",
-      "date": "1994-01",
-      "extra": "Citation Key: delebecque:hal-02090402v1\ntex.hal_id: hal-02090402\ntex.hal_version: v1\ntex.swhid: swh:1:dir:1ba0b67b5d0c8f10961d878d91ae9d6e499d746a; origin=https://hal.archives-ouvertes.fr/hal-02090402",
-      "versionNumber": "1.1",
       "abstractNote": "Software for Numerical Computation freely distributed.",
-      "title": "Scilab",
-      "creators": [
-        {
-          "firstName": "François",
-          "lastName": "Delebecque",
-          "creatorType": "programmer"
-        },
-        {
-          "firstName": "Claude",
-          "lastName": "Gomez",
-          "creatorType": "programmer"
-        },
-        {
-          "firstName": "Maurice",
-          "lastName": "Goursat",
-          "creatorType": "programmer"
-        },
-        {
-          "firstName": "Ramine",
-          "lastName": "Nikoukhah",
-          "creatorType": "programmer"
-        },
-        {
-          "firstName": "Serge",
-          "lastName": "Steer",
-          "creatorType": "programmer"
-        },
-        {
-          "firstName": "Jean-Philippe",
-          "lastName": "Chancelier",
-          "creatorType": "programmer"
-        }
-      ],
-      "tags": [],
-      "relations": [],
-      "dateAdded": "2023-10-07T20:22:34Z",
-      "dateModified": "2023-10-07T20:22:34Z",
-      "uri": "http://zotero.org/users/8230813/items/PNBMF7C2",
       "attachments": [
         {
-          "version": 0,
           "itemType": "attachment",
-          "url": "https://github.com/scilab/scilab",
-          "accessDate": "2023-10-07T20:22:35Z",
           "title": "repository",
-          "parentItem": "PNBMF7C2",
-          "linkMode": "linked_url",
-          "contentType": "",
-          "charset": "",
-          "tags": [],
-          "relations": {},
-          "dateAdded": "2023-10-07T20:22:35Z",
-          "dateModified": "2023-10-07T20:22:35Z",
-          "uri": "http://zotero.org/users/8230813/items/8MFM9839",
-          "itemID": 111,
-          "itemKey": "8MFM9839",
-          "libraryID": 1
+          "url": "https://github.com/scilab/scilab"
         },
         {
-          "version": 0,
           "itemType": "attachment",
-          "url": "https://hal.inria.fr/hal-02090402/file/scilab-1.1.tar.gz",
-          "accessDate": "2023-10-07T20:22:34Z",
           "title": "scilab-1.1.tar",
-          "parentItem": "PNBMF7C2",
-          "linkMode": "linked_url",
-          "contentType": "",
-          "charset": "",
-          "tags": [],
-          "relations": {},
-          "dateAdded": "2023-10-07T20:22:34Z",
-          "dateModified": "2023-10-07T20:22:34Z",
-          "uri": "http://zotero.org/users/8230813/items/F3YFREUK",
-          "itemID": 110,
-          "itemKey": "F3YFREUK",
-          "libraryID": 1
-        }
-      ],
-      "notes": [
-        {
-          "key": "FX7T72YZ",
-          "version": 0,
-          "itemType": "note",
-          "parentItem": "PNBMF7C2",
-          "note": "First Scilab version. It was distributed by anonymous ftp.",
-          "tags": [],
-          "relations": {},
-          "dateAdded": "2023-10-07T20:22:34Z",
-          "dateModified": "2023-10-07T20:22:34Z",
-          "uri": "http://zotero.org/users/8230813/items/FX7T72YZ"
+          "url": "https://hal.inria.fr/hal-02090402/file/scilab-1.1.tar.gz"
         }
       ],
       "citationKey": "delebecque:hal-02090402v1",
-      "itemID": 105,
-      "itemKey": "PNBMF7C2",
-      "libraryID": 1,
-      "publisher": "Inria"
+      "creators": [
+        {
+          "creatorType": "programmer",
+          "firstName": "François",
+          "lastName": "Delebecque"
+        },
+        {
+          "creatorType": "programmer",
+          "firstName": "Claude",
+          "lastName": "Gomez"
+        },
+        {
+          "creatorType": "programmer",
+          "firstName": "Maurice",
+          "lastName": "Goursat"
+        },
+        {
+          "creatorType": "programmer",
+          "firstName": "Ramine",
+          "lastName": "Nikoukhah"
+        },
+        {
+          "creatorType": "programmer",
+          "firstName": "Serge",
+          "lastName": "Steer"
+        },
+        {
+          "creatorType": "programmer",
+          "firstName": "Jean-Philippe",
+          "lastName": "Chancelier"
+        }
+      ],
+      "date": "1994-01",
+      "extra": [
+        "Citation Key: delebecque:hal-02090402v1",
+        "tex.hal_id: hal-02090402",
+        "tex.hal_version: v1",
+        "tex.swhid: swh:1:dir:1ba0b67b5d0c8f10961d878d91ae9d6e499d746a; origin=https://hal.archives-ouvertes.fr/hal-02090402"
+      ],
+      "itemID": 1,
+      "itemType": "computerProgram",
+      "notes": [
+        "First Scilab version. It was distributed by anonymous ftp."
+      ],
+      "publisher": "Inria",
+      "rights": "Scilab license",
+      "title": "Scilab",
+      "url": "https://www.scilab.org/",
+      "versionNumber": "1.1"
     }
   ]
 }

@@ -10,7 +10,7 @@
       "autoAbbrevStyle": "http://www.zotero.org/styles/cell",
       "autoExport": "idle",
       "biblatexExtendedDateFormat": false,
-      "citekeyFormat": "[zotero]",
+      "citekeyFormat": "zotero",
       "itemObserverDelay": 100,
       "biblatexExtendedNameFormat": false
     }
@@ -31,7 +31,7 @@
       "language": "en",
       "numPages": "676",
       "place": "<pre>Basel and Boston and Berlin</pre>",
-      "publisher": "Birkh\u00e4user",
+      "publisher": "Birkhäuser",
       "shortTitle": "Geometry and Monadology",
       "title": "Geometry and Monadology: Leibniz's Analysis Situs and Philosophy of Space"
     }

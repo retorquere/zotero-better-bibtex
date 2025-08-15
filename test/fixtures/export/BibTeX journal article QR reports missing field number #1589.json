@@ -12,7 +12,7 @@
       "autoExport": "idle",
       "autoExportIdleWait": 60,
       "autoPinDelay": 1,
-      "citekeyFormat": "[auth:nopunct][year][0]",
+      "citekeyFormat": "auth(n=0,m=1,creator=\"*\",initials=false).fold.nopunct + year + postfix(\"-%(n)s\")",
       "importSentenceCase": "off",
       "itemObserverDelay": 100,
       "keyConflictPolicy": "change",
@@ -59,8 +59,7 @@
       "abstractNote": "Recent research carried out during organisation of the Cori Museum (Latina) has resulted in a significant revision and substantial updating of all our knowledge of the ancient city of Cora (Cori), in Latium. The study presented here is an updated and critical report on all the available sources and finds related to the history and the archaeology of the city and its territory, from its origins to medieval times. The analysis considers all these elements, specifically in the context of the history of Latium as a whole and its connections with Rome. With the help of unpublished or little-known information, the following elements are analysed in detail: the city's foundation myth; the important role of the archaic and high-republican city; the urban phases (focussing principally on the earliest organisation, dated to the archaic period, and on the 2nd century B.C. monumental building programme); the local pantheon and the principal sanctuaries; the monuments and the urban buildings; the organisation of the territory; the first evidence of the Christian cult.",
       "accessDate": "2019-12-14T13:33:17Z",
       "archive": "JSTOR",
-      "attachments": [
-      ],
+      "attachments": [],
       "citationKey": "Palombi2003",
       "creators": [
         {

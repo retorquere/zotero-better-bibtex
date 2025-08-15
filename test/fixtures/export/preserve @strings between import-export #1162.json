@@ -9,7 +9,7 @@
     "preferences": {
       "DOIandURL": "doi",
       "autoExport": "off",
-      "citekeyFormat": "[auth]:[year]:[shorttitle1_1]",
+      "citekeyFormat": "auth(n=0,m=1,creator=\"*\",initials=false).fold + \":\" + year + \":\" + shorttitle(1,1)",
       "exportBibTeXStrings": "match",
       "importBibTeXStrings": false,
       "itemObserverDelay": 100,

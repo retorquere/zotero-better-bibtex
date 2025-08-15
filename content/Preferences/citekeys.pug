@@ -1,56 +1,80 @@
-html:div(class='bbt-prefs-1col')
-  label(bbt:preference='extensions.zotero.translators.better-bibtex.citekeyFormatEditing') &better-bibtex_preferences_citekey_format;
-  html:textarea#bbt-preferences-citekeyFormatEditing(
-    preference='extensions.zotero.translators.better-bibtex.citekeyFormatEditing'
-    rows=10
-    cols=80
-  )
-  label#bbt-citekeyFormat-error(
-    preference='extensions.zotero.translators.better-bibtex.citekeyFormat'
-    rows=2
-    size=80
-    readonly='true'
+html:div.bbt-prefs-1col
+  label(bbt:preference='extensions.zotero.translators.better-bibtex.citekeyFormatEditing', data-l10n-id='better-bibtex_preferences_citekey_format')
+  html:textarea#bbt-preferences-citekeyFormatEditing(cols='80', preference='extensions.zotero.translators.better-bibtex.citekeyFormatEditing', rows='10')
+
+  hbox
+    button(label='⟳', oncommand='Zotero.BetterBibTeX.PrefPane.checkCitekeyFormat()', size='3', style='padding: 0px 5px;')
+    label.bbt-prefs-preview#bbt-citekey-preview(size='80')
+
+  label.bbt-prefs-error#bbt-citekeyFormat-error(
     multiline='true'
-    class='bbt-prefs-error'
-  )
-  label#bbt-label-citekeyFormat(bbt:preference="extensions.zotero.translators.better-bibtex.citekeyFormat") &better-bibtex_preferences_citekey_format_installed;
-  textbox#bbt-preferences-citekeyFormat(
     preference='extensions.zotero.translators.better-bibtex.citekeyFormat'
-    rows=5
-    size=80
-    readonly='true'
-    multiline='true'
+    readonly
+    rows='2'
+    size='80'
+  )
+  label#bbt-label-citekeyFormat(
+    bbt:preference='extensions.zotero.translators.better-bibtex.citekeyFormat'
+    data-l10n-id='better-bibtex_preferences_citekey_format_installed'
   )
 
-  checkbox(preference="extensions.zotero.translators.better-bibtex.citekeyFold" label="&better-bibtex_preferences_citekey_fold.label;")
-  checkbox(preference="extensions.zotero.translators.better-bibtex.citekeySearch" label="&better-bibtex_preferences_citekey_search.label;")
+  html:textarea#bbt-preferences-citekeyFormat(cols='80', preference='extensions.zotero.translators.better-bibtex.citekeyFormat', readonly, rows='5')
+
+  checkbox(data-l10n-id='better-bibtex_preferences_citekey_fold', native='true', preference='extensions.zotero.translators.better-bibtex.citekeyFold')
+  checkbox(data-l10n-id='better-bibtex_preferences_citekey_search', native='true', preference='extensions.zotero.translators.better-bibtex.citekeySearch')
 
   html:div
-    label(bbt:preference="extensions.zotero.translators.better-bibtex.autoPinDelay") &better-bibtex_preferences_citekey_auto-pin-delay;
-    html:input(type='range' min=0 max=30 preference="extensions.zotero.translators.better-bibtex.autoPinDelay")/
-    textbox(preference='extensions.zotero.translators.better-bibtex.autoPinDelay' size=2 rows=1 readonly='true')
-    label &better-bibtex_units_seconds;
+    label(bbt:preference='extensions.zotero.translators.better-bibtex.autoPinDelay', data-l10n-id='better-bibtex_preferences_citekey_auto-pin-delay')
+    html:input(max='30', min='0', preference='extensions.zotero.translators.better-bibtex.autoPinDelay', type='range')
+    html:input(preference='extensions.zotero.translators.better-bibtex.autoPinDelay', readonly, rows='1', size='2', type='text')
+    label(data-l10n-id='better-bibtex_units_seconds')
 
-  groupbox
-    caption(label="&better-bibtex_preferences_citekey_uniqueness.label;")
-    checkbox(preference="extensions.zotero.translators.better-bibtex.citekeyCaseInsensitive" label="&better-bibtex_preferences_citekey_uniqueness_case.label;")
-    html:div
-      label(bbt:preference="extensions.zotero.translators.better-bibtex.keyScope") &better-bibtex_preferences_citekey_uniqueness_scope;
-      menulist(preference="extensions.zotero.translators.better-bibtex.keyScope")
-        menupopup
-          menuitem(value='global' label='&better-bibtex_preferences_citekey_uniqueness_scope_global.label;')
-          menuitem(value='library' label='&better-bibtex_preferences_citekey_uniqueness_scope_library.label;')
-    html:div
-      label(bbt:preference="extensions.zotero.translators.better-bibtex.keyConflictPolicy") &better-bibtex_preferences_citekey_uniqueness_conflict;
-      menulist(preference="extensions.zotero.translators.better-bibtex.keyConflictPolicy")
-        menupopup
-          menuitem(value='change' label='&better-bibtex_preferences_citekey_uniqueness_conflict_change.label;')
-          menuitem(value='keep' label='&better-bibtex_preferences_citekey_uniqueness_conflict_keep.label;')
+  groupbox.bbt-prefs-subsection
+    label
+      html:h2(data-l10n-id='better-bibtex_preferences_citekey_uniqueness', label)
+    checkbox(
+      data-l10n-id='better-bibtex_preferences_citekey_uniqueness_case'
+      preference='extensions.zotero.translators.better-bibtex.citekeyCaseInsensitive'
+      native='true'
+    )
 
-  groupbox
-    caption(label="&better-bibtex_preferences_advanced_ideographs.label;")
-    checkbox(preference="extensions.zotero.translators.better-bibtex.kuroshiro" label="&better-bibtex_preferences_advanced_ideographs_kuroshiro.label;")
-    checkbox(preference="extensions.zotero.translators.better-bibtex.jieba" label="&better-bibtex_preferences_advanced_ideographs_jieba.label;")
+    html:div
+      label(bbt:preference='extensions.zotero.translators.better-bibtex.keyScope', data-l10n-id='better-bibtex_preferences_citekey_uniqueness_scope')
+      menulist(native='true', preference='extensions.zotero.translators.better-bibtex.keyScope')
+        menupopup
+          menuitem(data-l10n-id='better-bibtex_preferences_citekey_uniqueness_scope_global', value='global')
+          menuitem(data-l10n-id='better-bibtex_preferences_citekey_uniqueness_scope_library', value='library').
+
+    html:div
+      label(
+        bbt:preference='extensions.zotero.translators.better-bibtex.keyConflictPolicy'
+        data-l10n-id='better-bibtex_preferences_citekey_uniqueness_conflict'
+      )
+      menulist(native='true', preference='extensions.zotero.translators.better-bibtex.keyConflictPolicy')
+        menupopup
+          menuitem(data-l10n-id='better-bibtex_preferences_citekey_uniqueness_conflict_change', value='change')
+          menuitem(data-l10n-id='better-bibtex_preferences_citekey_uniqueness_conflict_keep', value='keep').
+
+  groupbox.bbt-prefs-subsection
+    label
+      html:h2(data-l10n-id='better-bibtex_preferences_advanced_ideographs', label)
+    checkbox(
+      data-l10n-id='better-bibtex_preferences_advanced_ideographs_japanese'
+      preference='extensions.zotero.translators.better-bibtex.japanese'
+      native='true'
+    )
+    checkbox(
+      data-l10n-id='better-bibtex_preferences_advanced_ideographs_chinese'
+      preference='extensions.zotero.translators.better-bibtex.chinese'
+      native='true'
+    )
+
+    checkbox#bbt-chinese-splitname(
+      data-l10n-id='better-bibtex_preferences_advanced_ideographs_splitName'
+      preference='extensions.zotero.translators.better-bibtex.chineseSplitName'
+      native='true'
+    )
+
   html:div
-    label(bbt:preference="extensions.zotero.translators.better-bibtex.warnBulkModify") &better-bibtex_preferences_bulk-warning;
-    textbox(size="5" preference="extensions.zotero.translators.better-bibtex.warnBulkModify")
+    label(bbt:preference='extensions.zotero.translators.better-bibtex.warnBulkModify', data-l10n-id='better-bibtex_preferences_bulk-warning')
+    html:input(preference='extensions.zotero.translators.better-bibtex.warnBulkModify', size='5', type='text')

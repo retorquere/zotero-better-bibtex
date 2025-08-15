@@ -129,8 +129,8 @@ export class Lint extends ASTWalker {
   }
 }
 
-export function walk(cls, ast) {
-  const walker = new cls
+export function walk(cls, ast, ...args) {
+  const walker = new cls(...args)
   walker.walk(ast, [])
   return walker
 }

@@ -15,6 +15,7 @@ import shlex
 from collections import UserDict
 import copy
 import unicodedata
+from pathlib import Path
 
 import warnings
 warnings.filterwarnings("ignore", category=UserWarning, module='bs4', message='.*looks like a URL.*')
@@ -24,6 +25,9 @@ for d in pathlib.Path(__file__).resolve().parents:
   if os.path.exists(os.path.join(d, 'behave.ini')):
     ROOT = d
     break
+
+FIXTURES = os.path.join(ROOT, 'test/fixtures')
+EXPORTED = os.path.join(ROOT, 'exported')
 
 def print(txt, end='\n'):
   sys.stdout.write(str(txt) + end)
@@ -116,3 +120,8 @@ def nested_dict_iter(nested, root = []):
     else:
       yield '.'.join(root) + '.' + key, value
 
+def exported(path, body):
+  _exported = os.path.join(EXPORTED, os.path.basename(os.path.dirname(path)), os.path.basename(path))
+  Path(_exported).parent.mkdir(parents=True, exist_ok=True)
+  with open(_exported, 'w') as f:
+    f.write(body)

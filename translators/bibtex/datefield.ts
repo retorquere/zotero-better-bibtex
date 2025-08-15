@@ -2,7 +2,7 @@
 
 import type { ParsedDate } from '../../content/dateparser'
 import { Translation } from '../lib/translator'
-import type { Translators } from '../../typings/translators'
+import type { Field } from './entry'
 
 function pad(v: string, padding: string): string {
   if (v.length >= padding.length) return v
@@ -42,8 +42,8 @@ function format(date, translation: Translation): string {
   return formatted
 }
 
-export function datefield(date: ParsedDate, field: Translators.BibTeX.Field, translation: Translation): Translators.BibTeX.Field {
-  field = JSON.parse(JSON.stringify({ ...field, value: '', enc: 'literal' }))
+export function datefield(date: ParsedDate, field: Field, translation: Translation): Field {
+  field = structuredClone({ ...field, value: '', enc: 'literal' })
 
   if (!date) return field
   if (date && !date.type && date.orig) return field

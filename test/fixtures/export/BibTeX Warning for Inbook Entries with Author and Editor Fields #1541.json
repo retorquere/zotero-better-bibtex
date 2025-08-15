@@ -10,7 +10,7 @@
       "asciiBibTeX": false,
       "biblatexExtendedNameFormat": true,
       "bibtexURL": "url",
-      "citekeyFormat": "[auth:lower][year]",
+      "citekeyFormat": "auth(n=0,m=1,creator=\"*\",initials=false).fold.lower + year",
       "postscript": "if (Translator.BetterBibTeX && item.itemType === 'conferencePaper' && item.extraFields.kv && item.publisher) {\n  if ('event-place' in item.extraFields.kv) {\n    let eventPlace = item.extraFields.kv['event-place']\n    reference.add({name: 'address', value: eventPlace})\n  }\n//  if ('publisher-place' in item.extraFields.kv) {\n//    let publisherPlace = item.extraFields.kv['publisher-place']\n//    reference.add({name: 'publisher',  value: item.publisher + ' (' + publisherPlace + ')'})\n//  }\n}",
       "skipFields": "abstract,file,keywords,note"
     }
@@ -80,10 +80,10 @@
       "place": "Berlin",
       "publicationTitle": "Linear algebra",
       "publisher": "Springer",
-      "rights": "\u00a9 by Springer-Verlag Berlin Heidelberg 1971",
+      "rights": "© by Springer-Verlag Berlin Heidelberg 1971",
       "series": "Handbook for automatic computation",
-      "shortTitle": "Introduction to part\u00a0II",
-      "title": "Introduction to part\u00a0II: the algebraic eigenvalue problem",
+      "shortTitle": "Introduction to part II",
+      "title": "Introduction to part II: the algebraic eigenvalue problem",
       "url": "https://link.springer.com/book/10.1007%2F978-3-662-39778-7",
       "volume": "2"
     }

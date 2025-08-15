@@ -1,0 +1,65 @@
+diff --git a/node_modules/@idxdb/promised/dist/src/component/transaction.js b/node_modules/@idxdb/promised/dist/src/component/transaction.js
+index 6bba55e..7ad7699 100644
+--- a/node_modules/@idxdb/promised/dist/src/component/transaction.js
++++ b/node_modules/@idxdb/promised/dist/src/component/transaction.js
+@@ -1,3 +1,4 @@
++import { SynchronousPromise } from 'synchronous-promise';
+ import { ObjectStore } from '../component/object-store.js';
+ import { Database } from '../component/database.js';
+ export class Transaction {
+@@ -6,7 +7,7 @@ export class Transaction {
+         this.ctx = ctx;
+     }
+     abort() {
+-        return new Promise((resolve, reject) => {
++        return new SynchronousPromise((resolve, reject) => {
+             this.ctx.transaction.addEventListener('abort', () => {
+                 resolve();
+             });
+@@ -19,7 +20,7 @@ export class Transaction {
+         });
+     }
+     commit() {
+-        return new Promise((resolve, reject) => {
++        return new SynchronousPromise((resolve, reject) => {
+             this.ctx.transaction.addEventListener('complete', () => {
+                 resolve();
+             });
+diff --git a/node_modules/@idxdb/promised/dist/src/database-factory.js b/node_modules/@idxdb/promised/dist/src/database-factory.js
+index 40ef97c..494d959 100644
+--- a/node_modules/@idxdb/promised/dist/src/database-factory.js
++++ b/node_modules/@idxdb/promised/dist/src/database-factory.js
+@@ -1,3 +1,4 @@
++import { SynchronousPromise } from 'synchronous-promise';
+ import { Transaction } from './component/transaction.js';
+ import { Database } from './component/database.js';
+ export class DatabaseFactory {
+@@ -25,7 +26,7 @@ export class DatabaseFactory {
+         return this.factory().databases();
+     }
+     static deleteDatabase(name) {
+-        return new Promise((resolve, reject) => {
++        return new SynchronousPromise((resolve, reject) => {
+             const request = this.factory().deleteDatabase(name);
+             request.addEventListener('success', () => {
+                 resolve();
+@@ -42,7 +43,7 @@ export class DatabaseFactory {
+         });
+     }
+     static open(name, version = 1, migrations = [], onBlocked) {
+-        return new Promise((resolve, reject) => {
++        return new SynchronousPromise((resolve, reject) => {
+             const request = this.factory().open(name, version);
+             request.addEventListener('success', (event) => {
+                 const target = event.target;
+diff --git a/node_modules/@idxdb/promised/dist/src/shared/request-resolver.js b/node_modules/@idxdb/promised/dist/src/shared/request-resolver.js
+index b1ed186..e08737b 100644
+--- a/node_modules/@idxdb/promised/dist/src/shared/request-resolver.js
++++ b/node_modules/@idxdb/promised/dist/src/shared/request-resolver.js
+@@ -1,4 +1,5 @@
+-export const requestResolver = (request) => new Promise((resolve, reject) => {
++import { SynchronousPromise } from 'synchronous-promise';
++export const requestResolver = (request) => new SynchronousPromise((resolve, reject) => {
+     const onsuccess = (event) => {
+         request.removeEventListener('success', onsuccess);
+         request.removeEventListener('error', onerror);

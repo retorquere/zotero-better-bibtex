@@ -1,11 +1,8 @@
-import { Shim } from './os'
-import { is7 } from './client'
-const $OS = is7 ? Shim : OS
+import { Path } from './file'
 
 import { log } from './logger'
 import { getItemsAsync } from './get-items-async'
 import type { Attachment, RegularItem, Item, Note } from '../gen/typings/serialized-item'
-export type Serialized = RegularItem | Attachment | Item
 
 import { JournalAbbrev } from './journal-abbrev'
 import { Preference } from './prefs'
@@ -14,16 +11,15 @@ export class Serializer {
   private attachment(serialized: Attachment, att): Attachment {
     if (att.attachmentLinkMode !== Zotero.Attachments.LINK_MODE_LINKED_URL) {
       serialized.localPath = att.getFilePath()
-      if (serialized.localPath) serialized.defaultPath = `files/${ att.id }/${ $OS.Path.basename(serialized.localPath) }`
+      if (serialized.localPath) serialized.defaultPath = `files/${att.id}/${Path.basename(serialized.localPath)}`
     }
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return serialized
   }
 
-  private async item(item: ZoteroItem, selectedLibraryID: number): Promise<Serialized> {
+  private async item(item: Zotero.Item, selectedLibraryID: number): Promise<Item> {
     if (item.libraryID !== selectedLibraryID) await item.loadAllData()
 
-    let serialized: Item = item.toJSON()
+    let serialized: Item = item.toJSON() as unknown as Item
     serialized.uri = Zotero.URI.getItemURI(item)
     serialized.itemID = item.id
 
@@ -44,17 +40,17 @@ export class Serializer {
         break
     }
 
-    return <Serialized>JSON.parse(JSON.stringify(fix(serialized, item)))
+    return structuredClone(fix(serialized, item))
   }
 
-  public async serialize(items: ZoteroItem[]): Promise<Serialized[]> {
+  public async serialize(items: Zotero.Item[]): Promise<Item[]> {
     const selectedLibraryID = Zotero.getActiveZoteroPane().getSelectedLibraryID()
     return Promise.all(items.map(item => this.item(item, selectedLibraryID)))
   }
 }
 export const serializer = new Serializer
 
-export function fix(serialized: Item, item: ZoteroItem): Item {
+export function fix(serialized: Item, item: Zotero.Item): Item {
   if (item.isRegularItem() && !item.isFeedItem) {
     const regular = <RegularItem>serialized
 
@@ -81,6 +77,5 @@ export function fix(serialized: Item, item: ZoteroItem): Item {
   serialized.itemKey = item.key
   serialized.libraryID = item.libraryID
 
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
   return serialized as unknown as Item
 }

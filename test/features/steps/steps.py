@@ -1,6 +1,6 @@
 import steps.zotero as zotero
 from munch import *
-from behave import given, when, then, use_step_matcher
+from behave import given, when, then
 import behave
 import urllib.request
 import json
@@ -22,35 +22,11 @@ import pytablewriter
 
 from contextlib import contextmanager
 
-@contextmanager
-def step_matcher(matcher):
-    _matcher = behave.matchers.current_matcher
-    use_step_matcher(matcher)
-    yield
-    behave.matchers.current_matcher = _matcher
-
 import pathlib
 for d in pathlib.Path(__file__).resolve().parents:
   if os.path.exists(os.path.join(d, 'behave.ini')):
     ROOT = d
     break
-
-with step_matcher('re'):
-  @step(u'I cap the (?P<memory>total memory|memory increase) use to (?P<value>[.0-9]+[MG]?)')
-  def step_impl(context, memory, value):
-    if value.endswith('M'):
-      value = float(value[:-1])
-    elif value.endswith('G'):
-      value = float(value[:-1]) * 1024
-    else:
-      value = float(value) / (1024 * 1024)
-
-    if memory == 'total memory':
-      context.memory.total = value
-    elif memory == 'memory increase':
-      context.memory.increase = value
-    else:
-      raise AssertionError(f'unknown memory cap {json.dumps(memory)}')
 
 @given(u'I set the temp directory to {value}')
 def step_impl(context, value):
@@ -435,7 +411,7 @@ def step_impl(context):
 
 @step(u'I copy date-added/date-modified for the selected items from the extra field')
 def step_impl(context):
-  context.zotero.execute('Zotero.getActiveZoteroPane().BetterBibTeX.patchDates()')
+  context.zotero.execute('Zotero.BetterBibTeX.MenuHelper.patchDates()')
 
 @step('I change {param} to {value} on the auto-export')
 def step_impl(context, param, value):
@@ -483,3 +459,32 @@ def step_impl(context):
   column_styles = [ pytablewriter.style.Style(align='left') for h in headers ]
   writer = pytablewriter.MarkdownTableWriter(headers=headers, value_matrix=rows, column_styles=column_styles, margin=1)
   utils.print('\n' + writer.dumps())
+
+@then(u'the citation key should be "{expected}"')
+def step_impl(context, expected):
+  assert type(context.selected) == list and len(context.selected) == 1, context.selected
+  found = context.zotero.execute('return await Zotero.BetterBibTeX.TestSupport.citationKey(itemID)', itemID=context.selected[0])
+  assert found == expected, { 'expected': expected, 'found': found }
+
+@then(u'a pull-export from "{collection}" with "{preferences}" should match "{expected}"')
+def step_impl(context, collection, preferences, expected):
+  preferences = expand_scenario_variables(context, preferences)
+  expected = expand_scenario_variables(context, expected)
+  url = context.zotero.pull_export_url(collection)
+
+  with open(os.path.join(utils.FIXTURES, expected)) as f:
+    _expected = f.read()
+
+  with open(os.path.join(utils.FIXTURES, preferences)) as f:
+    _preferences = f.read().encode('utf-8')
+
+  req = urllib.request.Request(url, data=_preferences, method='POST')
+  req.add_header('Content-Type', 'application/json')
+  with urllib.request.urlopen(req) as response:
+    _found = response.read().decode('utf-8')
+
+  try:
+    assert_equal_diff(_expected, _found)
+  except Exception as e:
+    utils.exported(expected, _found)
+    raise

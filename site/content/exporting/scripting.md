@@ -51,7 +51,7 @@ If you want to run a postscript in the CSL translators but don't care whether it
 
 In the postscript, the entry being built is available as `tex` (primary), `entry`, `reference` and `this` (legacy) in BetterTeX postscripts, or `csl` (primary), `entry`, `reference` and `this` in BetterCSL postscripts; the Zotero item it is being built from is available as `zotero` (primary) or `item` (legacy).
 
-You should really test for the translator context in your postscripts using the `Translator.<name>` tests mentioned above. If you don't because you have a postscript that pre-date postscript CSL support, you will probably be using the legacy use of `this` to set things on the entry being built, and calling `reference.add` in those postscripts; since, for CSL postscripts, `this` is not set, it will make the script will non-fatally error out, so you're very probably good to go as-is. But please fix your postscripts to test for the translator context.
+You should really test for the translator context in your postscripts using the `Translator.<name>` tests mentioned above. If you don't because you have a postscript that pre-date postscript CSL support, you will probably be using the legacy use of `this` to set things on the entry being built, and calling `tex.add` in those postscripts; since, for CSL postscripts, `this` is not set, it will make the script will non-fatally error out, so you're very probably good to go as-is. But please fix your postscripts to test for the translator context.
 
 ## The API for `Better BibTeX` and `Better BibLaTeX`
 
@@ -102,11 +102,11 @@ There isn't really an API. You can use regular javascript to manipulate the `csl
 
 In a postscript `zotero.itemType` will have one of these values:
 
-{{% postscript/itemtypes %}}
+{{< postscript/itemtypes >}}
 
 Other fields on the `zotero` object are:
 
-{{% postscript/fields %}}
+{{< postscript/fields >}}
 
 (types/fields marked <sup>Z</sup> are only available in Zotero, fields marked with <sup>JM</sup> are only available in Juris-M).
 
@@ -386,7 +386,7 @@ For example on a Linux machine you might have `/home/myname` and on MacOS it is 
 if (Translator.BetterTeX && !Translator.options.exportFileData && zotero.attachments && zotero.attachments.length) {
   for (const att of zotero.attachments) {
     if (att.localPath) {
-      att.localPath = att.localPath.replace(RegExp("^\/.*?\/.*?\/"), "~/")
+      att.localPath = att.localPath.replace(/^\/.*?\/.*?\//, '~/')
     }
   }
   tex.add({ name: 'file', value: zotero.attachments, enc: 'attachments' })
@@ -401,16 +401,16 @@ It can be useful to have paths to attachment files included in json files, which
 
 ```javascript
 if (Translator.BetterCSLJSON) {
-	entry.file = item.attachments.map(a => a.localPath).join(";");
+	csl.file = zotero.attachments.map(a => a.localPath).join(";");
 }
 ```
 
 ### Convert Windows attachment paths to Unix
 
 ```javascript
-if (Translator.BetterTeX && !Translator.options.exportFileData && item.attachments && Translator.exportPath.includes('\\\\')) {
-  if (item.attachments) {
-    reference.add({ name: 'file', bibtex: reference.enc_attachments({ value: item.attachments }, path => path.replace(/^[A-Z]:/i, '').replace(/\\\\/g, '/')) })
+if (Translator.BetterTeX && !Translator.options.exportFileData && zotero.attachments && Translator.exportPath.includes('\\\\')) {
+  if (zotero.attachments) {
+    tex.add({ name: 'file', bibtex: tex.enc_attachments({ value: zotero.attachments }, path => path.replace(/^[A-Z]:/i, '').replace(/\\\\/g, '/')) })
   }
 }
 ```

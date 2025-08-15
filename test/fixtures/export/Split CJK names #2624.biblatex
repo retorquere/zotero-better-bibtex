@@ -1,0 +1,209 @@
+@book{Dongfang.HansAuthorDongfangBubai,
+  title = {Hans Author: Dongfang Bubai},
+  author = {{东方不败}},
+  langid = {chinese}
+}
+
+@book{Dongfang.HantAuthorDongfangBubai,
+  title = {Hant Author: Dongfang Bubai},
+  author = {{東方不敗}},
+  langid = {chinese-traditional}
+}
+
+@book{Linghu.HansAuthorLinghuChong,
+  title = {Hans Author: Linghu Chong},
+  author = {{令狐冲}},
+  langid = {chinese}
+}
+
+@book{Linghu.HantAuthorLinghuChong,
+  title = {Hant Author: Linghu Chong},
+  author = {{令狐沖}},
+  langid = {chinese-traditional}
+}
+
+@book{Murong.HansAuthorMurongFu,
+  title = {Hans Author: Murong Fu},
+  author = {{慕容复}},
+  langid = {chinese}
+}
+
+@book{Murong.HantAuthorMurongFu,
+  title = {Hant Author: Murong Fu},
+  author = {{慕容復}},
+  langid = {chinese-traditional}
+}
+
+@book{Ouyang.HansAuthorOuyangFeng,
+  title = {Hans Author: Ouyang Feng},
+  author = {{欧阳锋}},
+  langid = {chinese}
+}
+
+@book{Ouyang.HantAuthorOuyangFeng,
+  title = {Hant Author: Ouyang Feng},
+  author = {{歐陽鋒}},
+  langid = {chinese-traditional}
+}
+
+@book{Ren.HansAuthorRenWoxing,
+  title = {Hans Author: Ren Woxing},
+  author = {{任我行}},
+  langid = {chinese}
+}
+
+@book{Ren.HantAuthorRenWoxing,
+  title = {Hant Author: Ren Woxing},
+  author = {{任我行}},
+  langid = {chinese-traditional}
+}
+
+@book{Shangguan.HansAuthorShangguanYun,
+  title = {Hans Author: Shangguan Yun},
+  author = {{上官云}},
+  langid = {chinese}
+}
+
+@book{Shangguan.HantAuthorShangguanYun,
+  title = {Hant Author: Shangguan Yun},
+  author = {{上官雲}},
+  langid = {chinese-traditional}
+}
+
+@book{Sima.HansAuthorSimaYi,
+  title = {Hans Author: Sima Yi},
+  author = {{司马懿}},
+  langid = {chinese}
+}
+
+@book{Sima.HansAuthorSimaZhongda,
+  title = {Hans Author: Sima Zhongda},
+  author = {{司马仲达}},
+  langid = {chinese}
+}
+
+@book{Sima.HantAuthorSimaYi,
+  title = {Hant Author: Sima Yi},
+  author = {{司馬懿}},
+  langid = {chinese-traditional}
+}
+
+@book{Sima.HantAuthorSimaZhongda,
+  title = {Hant Author: Sima Zhongda},
+  author = {{司馬仲達}},
+  langid = {chinese-traditional}
+}
+
+@book{Xiahou.HansAuthorXiahouDun,
+  title = {Hans Author: Xiahou Dun},
+  author = {{夏侯惇}},
+  langid = {chinese}
+}
+
+@book{Xiahou.HantAuthorXiahouDun,
+  title = {Hant Author: Xiahou Dun},
+  author = {{夏侯惇}},
+  langid = {chinese-traditional}
+}
+
+@book{Xiao.fayixuetiedaosunshangtupu,
+  title = {法医学铁道损伤图谱},
+  author = {{肖发民}},
+  langid = {chinese-simplified}
+}
+
+@book{Yang.HansAuthorYangLianting,
+  title = {Hans Author: Yang Lianting},
+  author = {{杨莲亭}},
+  langid = {chinese}
+}
+
+@book{Yang.HantAuthorYangLianting,
+  title = {Hant Author: Yang Lianting},
+  author = {{楊蓮亭}},
+  langid = {chinese-traditional}
+}
+
+@book{Yuchi.PossiblywrongpinyinHansAuthorYuchiRong,
+  title = {(Possibly wrong pinyin) Hans Author: Yuchi Rong},
+  author = {{尉迟融}},
+  langid = {chinese}
+}
+
+@book{Yuchi.PossiblywrongpinyinHantAuthorYuchiRong,
+  title = {(Possibly wrong pinyin) Hant Author: Yuchi Rong},
+  author = {{尉遲融}},
+  langid = {chinese-traditional}
+}
+
+@book{Zhangsun.PossiblywrongpinyinHansAuthorZhangsunWuji,
+  title = {(Possibly wrong pinyin) Hans Author: Zhangsun Wuji},
+  author = {{长孙无忌}},
+  langid = {chinese}
+}
+
+@book{Zhangsun.PossiblywrongpinyinHantAuthorZhangsunWuji,
+  title = {(Possibly wrong pinyin) Hant Author: Zhangsun Wuji},
+  author = {{長孫無忌}},
+  langid = {chinese-traditional}
+}
+
+@book{Zhuge.HansAuthorZhugeKongming,
+  title = {Hans Author: Zhuge Kongming},
+  author = {{诸葛孔明}},
+  langid = {chinese}
+}
+
+@book{Zhuge.HansAuthorZhugeLiang,
+  title = {Hans Author: Zhuge Liang},
+  author = {{诸葛亮}},
+  langid = {chinese}
+}
+
+@book{Zhuge.HantAuthorZhugeKongming,
+  title = {Hant Author: Zhuge Kongming},
+  author = {{諸葛孔明}},
+  langid = {chinese-traditional}
+}
+
+@book{Zhuge.HantAuthorZhugeLiang,
+  title = {Hant Author: Zhuge Liang},
+  author = {{諸葛亮}},
+  langid = {chinese-traditional}
+}
+
+@book{JohnSmith.RandomBook,
+  title = {A Random Book},
+  author = {{John Smith}},
+  langid = {chinese-simplified}
+}
+
+@book{Smith.RandomBook,
+  title = {A Random Book},
+  author = {Smith, John},
+  langid = {chinese-simplified}
+}
+
+@book{Lin.ZhSingleField,
+  title = {Zh Single Field},
+  author = {{林秀贞}},
+  langid = {chinese-simplified}
+}
+
+@book{Lin.ZhSplitField,
+  title = {Zh Split Field},
+  author = {林, 秀贞},
+  langid = {chinese-simplified}
+}
+
+@book{Hayashi.JaSplitField,
+  title = {Ja Split Field},
+  author = {林, 秀贞},
+  langid = {japanese}
+}
+
+@book{Alibaba.ZhNotName,
+  title = {Zh Not Name},
+  author = {{阿里巴巴}},
+  langid = {chinese-simplified}
+}

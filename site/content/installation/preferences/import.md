@@ -39,6 +39,8 @@ When this option is turned on, BBT will attempt to import such missing items fro
 
 ## Sentence-case titles on import:
 
+### Sentence-case titles on import:
+
 default: `yes, but try to exclude already-sentence-cased titles`
 
 Bib(La)TeX entries must be stored in Title Case; Zotero items are expected to be entered as sentence-case.

@@ -230,7 +230,9 @@ class Entry extends BaseEntry {
           break
 
         case 'seriesEditor':
-          creators[creatorType.register('editor', 'redactor')].push(creator)
+          if (!this.translation.collected.displayOptions.biblatexAPA) {
+            creators[creatorType.register('editor', 'redactor')].push(creator)
+          }
           break
 
         case 'scriptwriter':
@@ -389,9 +391,9 @@ export function generateBibLaTeX(collected: Collected): Translation {
 
     let number_added = ''
     if (!item.number?.match(/arxiv/i) || !entry.has.eprint) {
-      number_added = entry.add({ name: 'number', value: patent.number(item) || item.number || item.seriesNumber })
+      number_added = entry.add({ name: 'number', value: patent.number(item) || entry.normalizeDashes(item.number || item.seriesNumber) })
     }
-    entry.add({ name: !number_added && looks_like_number_field(item.issue) ? 'number' : 'issue', value: item.issue })
+    entry.add({ name: !number_added && looks_like_number_field(item.issue) ? 'number' : 'issue', value: entry.normalizeDashes(item.issue) })
 
     const journalAbbreviation = item.journalAbbreviation || item.autoJournalAbbreviation
     switch (entry.entrytype) {

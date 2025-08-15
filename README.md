@@ -4,14 +4,6 @@
 
 Better BibTeX (BBT) is an extension for [Zotero](https://www.zotero.org) and [Juris-M](https://juris-m.github.io) that makes it easier to manage bibliographic data, especially for people authoring documents using text-based toolchains (e.g. based on [LaTeX](https://www.latex-project.org) / [Markdown](https://www.markdownguide.org)).
 
-## Zotero 7 support
-
-Better BibTeX is mostly compatible with the Zotero 7 beta; I am awaiting a change by the Zotero team to get to complete support. You can find the status of Zotero 7 support in the first post of [#2522](https://github.com/retorquere/zotero-better-bibtex/issues/2522); if you find new problems (which are not still marked as unresolved in that top post), please report them as *new* issues, not by commenting on #2522.
-
-## Juris-M support
-
-Juris-M is unfortunately not compatible with BBT at the moment. To my understanding, work is underway to get a Zotero-7-based Juris-M, and then BBT will work in Juris-M.
-
 ## Features
 
 ### Facilities for generating citation keys
@@ -28,7 +20,7 @@ in your items that Bib(La)TeX won't understand.
 
 * BBT will convert from/to HTML/LaTeX:
 
-  - `<i>...</i>`&#8660;`\emph{...}`/`\textit{...}`
+  - `<i>...</i>`&#8660;`\emph{...}`/`\mkbibemph{...}`/`\textit{...}`
   - `<b>...</b>`&#8660;`\textbf{...}`
   - `<sup>...</sup>`&#8660;`\textsuperscript{...}` and `<sub>...</sub>`&#8660;`\textsubscript{...}`. 
   
@@ -86,7 +78,6 @@ but mind that Patreon takes a fairly large cut of what you give.
 
 Many, many thanks, also to the existing contributors -- thanks to you I've hit my first target and have been able to replace my trusty macbook air with a newer macbook pro which has much more breathing room.
 
-
 ![My github stats](https://github-readme-stats.vercel.app/api?username=retorquere&show_icons=true&hide_border=true&theme=dark)
 
-![Metrics](https://metrics.lecoq.io/retorquere?template=classic&config.timezone=Europe%2FOslo)
+I prefer communicating via github issues, but for private information you can reach me on [matrix](https://matrix.to/#/@retorquere:utwente.io)

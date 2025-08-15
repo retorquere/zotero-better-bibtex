@@ -1,31 +1,152 @@
-{
-  "<code>abbr</code>": "\n          <details class=\"details\"><summary class=\"summary\">parameters:</summary>\n          <table>\n            <thead><tr><th>parameter</th><th>type</th><th>description</th><th>default</th></tr></thead>\n            <tbody>\n              <tr><td><code>chars</code></td><td><i>number</i></td><td><p>number of characters to return per word</p></td><td><code>1</code> </td></tr>\n            </tbody>\n          </table>\n          </details>\n        <p>Abbreviates the text. Only the first character and subsequent characters following white space will be included. </p>",
-  "<code>acronym</code>": "\n          <details class=\"details\"><summary class=\"summary\">parameters:</summary>\n          <table>\n            <thead><tr><th>parameter</th><th>type</th><th>description</th><th>default</th></tr></thead>\n            <tbody>\n              <tr><td><code>list</code></td><td><i>string</i></td><td><p>lookup list. The list must be a CSV file and live in the <code>Zotero/better-bibtex</code> directory in your Zotero profile, and must use commas as the delimiter.</p></td><td><code>\"acronyms\"</code> </td></tr>\n<tr><td><code>reload</code></td><td><i>boolean</i></td><td><p>reload the list for every call. When off, the list will only be read at startup of Better BibTeX. You can set this to true temporarily to live-reload a list.</p></td><td><code>false</code> </td></tr>\n<tr><td><code>passthrough</code></td><td><i>boolean</i></td><td><p>if no match is found, pass through input. This is mostly for backwards compatibility, and I would encourage use of <code>(&lt;input&gt;.acronym || &lt;input&gt;)</code> over <code>&lt;input&gt;.acronym(passthrough=true)</code>. This option will be removed at some point in the future.</p></td><td><code>false</code> </td></tr>\n            </tbody>\n          </table>\n          </details>\n        <p>Does an acronym lookup for the text. </p>",
-  "<code>alphanum</code>": "<p>clears out everything but unicode alphanumeric characters (unicode character classes <code>L</code> and <code>N</code>) </p>",
-  "<code>ascii</code>": "<p>removes all non-ascii characters </p>",
-  "<code>capitalize</code>": "<p>uppercases the first letter of each word </p>",
-  "<code>clean</code>": "<p>transliterates the citation key and removes unsafe characters </p>",
-  "<code>condense</code>": "\n          <details class=\"details\"><summary class=\"summary\">parameters:</summary>\n          <table>\n            <thead><tr><th>parameter</th><th>type</th><th>description</th><th>default</th></tr></thead>\n            <tbody>\n              <tr><td><code>sep</code></td><td><i>string</i></td><td><p>replacement character</p></td><td><code>\"\"</code> </td></tr>\n            </tbody>\n          </table>\n          </details>\n        <p>replaces spaces in the value passed in. You can specify what to replace it with by adding it as a parameter, e.g <code>.condense('\\_')</code> will replace spaces with underscores. Equivalent to <code>.replace(/\\s+/g, sep)</code>. </p>",
-  "<code>default</code>": "\n          <details class=\"details\"><summary class=\"summary\">parameters:</summary>\n          <table>\n            <thead><tr><th>parameter</th><th>type</th><th>description</th><th>default</th></tr></thead>\n            <tbody>\n              <tr><td><code>text</code></td><td><i>string</i></td><td><p>literal text to return</p></td><td></td></tr>\n            </tbody>\n          </table>\n          </details>\n        <p>Returns the given text if no output was generated </p>",
-  "<code>discard</code>": "<p>discards the input </p>",
-  "<code>formatDate</code>": "\n          <details class=\"details\"><summary class=\"summary\">parameters:</summary>\n          <table>\n            <thead><tr><th>parameter</th><th>type</th><th>description</th><th>default</th></tr></thead>\n            <tbody>\n              <tr><td><code>format</code></td><td><i>string</i></td><td><p>sprintf-style format template</p></td><td><code>\"%Y-%m-%d\"</code> </td></tr>\n            </tbody>\n          </table>\n          </details>\n        <p>formats date as by replacing y, m and d in the format </p>",
-  "<code>ideographs</code>": "<p>Treat ideaographs as individual words </p>",
-  "<code>jieba</code>": "\n          <details class=\"details\"><summary class=\"summary\">parameters:</summary>\n          <table>\n            <thead><tr><th>parameter</th><th>type</th><th>description</th><th>default</th></tr></thead>\n            <tbody>\n              <tr><td><code>mode</code></td><td><code>cn</code> / <code>hant</code> / <code>tw</code></td><td><p>segmentation mode</p></td><td></td></tr>\n            </tbody>\n          </table>\n          </details>\n        <p>word segmentation for Chinese items. Uses substantial memory, and adds about 7 seconds to BBTs startup time; must be enabled under Preferences -&gt; Better BibTeX -&gt; Advanced -&gt; Citekeys </p>",
-  "<code>kuromoji</code>": "<p>word segmentation for Japanese items. Uses substantial memory; must be enabled under Preferences -&gt; Better BibTeX -&gt; Advanced -&gt; Citekeys </p>",
-  "<code>len</code>": "\n          <details class=\"details\"><summary class=\"summary\">parameters:</summary>\n          <table>\n            <thead><tr><th>parameter</th><th>type</th><th>description</th><th>default</th></tr></thead>\n            <tbody>\n              <tr><td><code>relation</code></td><td><code>!=</code> / <code><</code> / <code><=</code> / <code>=</code> / <code>></code> / <code>>=</code></td><td><p>comparison operator</p></td><td><code>\">\"</code> </td></tr>\n<tr><td><code>length</code></td><td><i>number</i></td><td><p>value to compare length with</p></td><td><code>0</code> </td></tr>\n            </tbody>\n          </table>\n          </details>\n        <p>If the length of the output does not match the given number, skip to the next pattern. </p>",
-  "<code>localTime</code>": "<p>transforms date/time to local time. Mainly useful for dateAdded and dateModified as it requires an ISO-formatted input. </p>",
-  "<code>lower</code>": "<p>Forces the text inserted by the field marker to be in lowercase. For example, <code>auth.lower</code> expands to the last name of the first author in lowercase. </p>",
-  "<code>match</code>": "\n          <details class=\"details\"><summary class=\"summary\">parameters:</summary>\n          <table>\n            <thead><tr><th>parameter</th><th>type</th><th>description</th><th>default</th></tr></thead>\n            <tbody>\n              <tr><td><code>match</code></td><td><i>RegExp</i> / <i>string</i></td><td><p>regex or string to match. String matches are case-insensitive</p></td><td></td></tr>\n<tr><td><code>clean</code></td><td><i>boolean</i></td><td><p>transliterates the current output and removes unsafe characters during matching</p></td><td><code>false</code> </td></tr>\n            </tbody>\n          </table>\n          </details>\n        <p>If the output does not match the given string/regex, skip to the next pattern. </p>",
-  "<code>nopunct</code>": "\n          <details class=\"details\"><summary class=\"summary\">parameters:</summary>\n          <table>\n            <thead><tr><th>parameter</th><th>type</th><th>description</th><th>default</th></tr></thead>\n            <tbody>\n              <tr><td><code>dash</code></td><td><i>string</i></td><td><p>replace dashes with given character</p></td><td><code>\"-\"</code> </td></tr>\n            </tbody>\n          </table>\n          </details>\n        <p>Removes punctuation </p>",
-  "<code>nopunctordash</code>": "<p>Removes punctuation and word-connecting dashes. alias for <code>nopunct(dash='')</code> </p>",
-  "<code>numeric</code>": "<p>returns the value if it's an integer </p>",
-  "<code>pinyin</code>": "<p>transliterates the citation key to pinyin </p>",
-  "<code>postfix</code>": "\n          <details class=\"details\"><summary class=\"summary\">parameters:</summary>\n          <table>\n            <thead><tr><th>parameter</th><th>type</th><th>description</th><th>default</th></tr></thead>\n            <tbody>\n              <tr><td><code>postfix</code></td><td><i>string</i></td><td><p>postfix string</p></td><td></td></tr>\n            </tbody>\n          </table>\n          </details>\n        <p>postfixes with its parameter, so <code>postfix('\\_')</code> will add an underscore to the end if, and only if, the value it is supposed to postfix isn't empty </p>",
-  "<code>prefix</code>": "\n          <details class=\"details\"><summary class=\"summary\">parameters:</summary>\n          <table>\n            <thead><tr><th>parameter</th><th>type</th><th>description</th><th>default</th></tr></thead>\n            <tbody>\n              <tr><td><code>prefix</code></td><td><i>string</i></td><td><p>prefix string</p></td><td></td></tr>\n            </tbody>\n          </table>\n          </details>\n        <p>prefixes with its parameter, so <code>.prefix('\\_')</code> will add an underscore to the front if, and only if, the value it is supposed to prefix isn't empty. </p>",
-  "<code>replace</code>": "\n          <details class=\"details\"><summary class=\"summary\">parameters:</summary>\n          <table>\n            <thead><tr><th>parameter</th><th>type</th><th>description</th><th>default</th></tr></thead>\n            <tbody>\n              <tr><td><code>find</code></td><td><i>string</i> / <i>RegExp</i></td><td><p>string or regex to match. String matches are case-insensitive</p></td><td></td></tr>\n<tr><td><code>replace</code></td><td><i>string</i></td><td><p>literal text to replace the match with</p></td><td></td></tr>\n            </tbody>\n          </table>\n          </details>\n        <p>replaces text, for the text to match you can pass either: - a string: <code>.replace('.etal','&amp;etal')</code> which will match case-insensitive, so will replace <code>.EtAl</code> with <code>&amp;etal</code>. - <a href=\"https://www.simplilearn.com/tutorials/javascript-tutorial/javascript-regex\">javascript regular expression</a>: <code>.replace(/[.]etal/ig, '&amp;etal')</code> </p>",
-  "<code>select</code>": "\n          <details class=\"details\"><summary class=\"summary\">parameters:</summary>\n          <table>\n            <thead><tr><th>parameter</th><th>type</th><th>description</th><th>default</th></tr></thead>\n            <tbody>\n              <tr><td><code>start</code></td><td><i>number</i></td><td><p>first word to select (1-based)</p></td><td><code>1</code> </td></tr>\n<tr><td><code>n</code></td><td><i>number</i></td><td><p>number of words to select. Default is all.</p></td><td></td></tr>\n            </tbody>\n          </table>\n          </details>\n        <p>selects words from the value passed in. The format is <code>select(start,number)</code> (1-based), so <code>select(1,4)</code> or <code>select(n=4)</code> would select the first four words. If <code>n</code> is not given, all words from <code>start</code> to the end are selected. </p>",
-  "<code>skipwords</code>": "\n          <details class=\"details\"><summary class=\"summary\">parameters:</summary>\n          <table>\n            <thead><tr><th>parameter</th><th>type</th><th>description</th><th>default</th></tr></thead>\n            <tbody>\n              <tr><td><code>nopunct</code></td><td><i>boolean</i></td><td><p>remove punctuation from words</p></td><td><code>false</code> </td></tr>\n            </tbody>\n          </table>\n          </details>\n        <p>filters out common words like 'of', 'the', … the list of words can be seen and changed by going into <code>about:config</code> under the key <code>extensions.zotero.translators.better-bibtex.skipWords</code> as a comma-separated, case-insensitive list of words.</p>\n<p>If you want to strip words like 'Jr.' from names, you could use something like <code>Auth.nopunct.skipwords.fold</code> after adding <code>jr</code> to the skipWords list. Note that this filter is always applied with <code>nopunct</code> on if you use <code>title</code> (which is different from <code>Title</code>) or <code>shorttitle</code>. </p>",
-  "<code>substring</code>": "\n          <details class=\"details\"><summary class=\"summary\">parameters:</summary>\n          <table>\n            <thead><tr><th>parameter</th><th>type</th><th>description</th><th>default</th></tr></thead>\n            <tbody>\n              <tr><td><code>start</code></td><td><i>number</i></td><td><p>starting character (1-based)</p></td><td><code>1</code> </td></tr>\n<tr><td><code>n</code></td><td><i>number</i></td><td><p>number of characters to select (default: remainder from <code>start</code>)</p></td><td></td></tr>\n            </tbody>\n          </table>\n          </details>\n        <p><code>substring(start,n)</code> selects <code>n</code> (default: all) characters starting at <code>start</code> </p>",
-  "<code>transliterate</code>": "\n          <details class=\"details\"><summary class=\"summary\">parameters:</summary>\n          <table>\n            <thead><tr><th>parameter</th><th>type</th><th>description</th><th>default</th></tr></thead>\n            <tbody>\n              <tr><td><code>mode</code></td><td><code>ar</code> / <code>arabic</code> / <code>chinese</code> / <code>de</code> / <code>german</code> / <code>ja</code> / <code>japanese</code> / <code>minimal</code> / <code>mn</code> / <code>mongolian</code> / <code>ru</code> / <code>russian</code> / <code>tw</code> / <code>uk</code> / <code>ukranian</code> / <code>zh</code> / <code>zh-hant</code></td><td><p>specialized translateration modes for german, japanese or chinese.</p></td><td></td></tr>\n            </tbody>\n          </table>\n          </details>\n        <p>transliterates the citation key. If you don't specify a mode, the mode is derived from the item language field </p>",
-  "<code>upper</code>": "<p>Forces the text inserted by the field marker to be in uppercase. For example, <code>auth.upper</code> expands the last name of the first author in uppercase. </p>"
-}
+[
+  {
+    "summary": "<b>abbr</b>(chars=1)",
+    "parameters": "<table>\n          <tr>\n            <th><b>parameter</b></th>\n            <th/>\n            <th>value assumed when not provided</th>\n            <th>valid values</th>\n          </tr>\n          <tr>\n            <td><code>chars</code></td>\n            <td>number of characters to return per word</td>\n            <td><code>1</code></td>\n            <td>number</td>\n          </tr></table>",
+    "description": "Abbreviates the text. Only the first character and subsequent characters following white space will be included."
+  },
+  {
+    "summary": "<b>acronym</b>(list=&#39;acronyms&#39;, reload=false, passthrough=false)",
+    "parameters": "<table>\n          <tr>\n            <th><b>parameter</b></th>\n            <th/>\n            <th>value assumed when not provided</th>\n            <th>valid values</th>\n          </tr>\n          <tr>\n            <td><code>list</code></td>\n            <td>lookup list. The list must be a CSV file and live in the <code>Zotero/better-bibtex</code> directory in your Zotero profile, and must use commas as the delimiter.</td>\n            <td><code>'acronyms'</code></td>\n            <td>string</td>\n          </tr>\n          <tr>\n            <td><code>reload</code></td>\n            <td>reload the list for every call. When off, the list will only be read at startup of Better BibTeX. You can set this to true temporarily to live-reload a list.</td>\n            <td><code>false</code></td>\n            <td>boolean</td>\n          </tr>\n          <tr>\n            <td><code>passthrough</code></td>\n            <td>if no match is found, pass through input.</td>\n            <td><code>false</code></td>\n            <td>boolean</td>\n          </tr></table>",
+    "description": "Does an acronym lookup for the text."
+  },
+  {
+    "summary": "<b>alphanum</b>",
+    "parameters": "",
+    "description": "clears out everything but unicode alphanumeric characters (unicode character classes <code>L</code> and <code>N</code>)"
+  },
+  {
+    "summary": "<b>ascii</b>",
+    "parameters": "",
+    "description": "removes all non-ascii characters"
+  },
+  {
+    "summary": "<b>capitalize</b>",
+    "parameters": "",
+    "description": "uppercases the first letter of each word"
+  },
+  {
+    "summary": "<b>clean</b>",
+    "parameters": "",
+    "description": "transliterates the citation key and removes unsafe characters"
+  },
+  {
+    "summary": "<b>condense</b>(sep=&#39;&#39;)",
+    "parameters": "<table>\n          <tr>\n            <th><b>parameter</b></th>\n            <th/>\n            <th>value assumed when not provided</th>\n            <th>valid values</th>\n          </tr>\n          <tr>\n            <td><code>sep</code></td>\n            <td>replacement character</td>\n            <td><code>''</code></td>\n            <td>string</td>\n          </tr></table>",
+    "description": "replaces spaces in the value passed in. You can specify what to replace it with by adding it as a\nparameter, e.g <code>.condense('_')</code> will replace spaces with underscores. Equivalent to <code>.replace(/\\s+/g, sep)</code>."
+  },
+  {
+    "summary": "<b>default</b>(text=?)",
+    "parameters": "<table>\n          <tr>\n            <th><b>parameter</b></th>\n            <th/>\n            <th>value assumed when not provided</th>\n            <th>valid values</th>\n          </tr>\n          <tr>\n            <td><code>text</code></td>\n            <td>literal text to return</td>\n            <td>none; must be provided</td>\n            <td>string</td>\n          </tr></table>",
+    "description": "Returns the given text if no output was generated"
+  },
+  {
+    "summary": "<b>discard</b>",
+    "parameters": "",
+    "description": "discards the input"
+  },
+  {
+    "summary": "<b>find</b>(match=?, passthrough=false)",
+    "parameters": "<table>\n          <tr>\n            <th><b>parameter</b></th>\n            <th/>\n            <th>value assumed when not provided</th>\n            <th>valid values</th>\n          </tr>\n          <tr>\n            <td><code>match</code></td>\n            <td>regex or string to match. String matches are case-insensitive</td>\n            <td>none; must be provided</td>\n            <td>(string | RegExp)</td>\n          </tr>\n          <tr>\n            <td><code>passthrough</code></td>\n            <td>if no match is found, pass through input.</td>\n            <td><code>false</code></td>\n            <td>boolean</td>\n          </tr></table>",
+    "description": "Finds a text in the string and returns it."
+  },
+  {
+    "summary": "<b>formatDate</b>(format=&#39;%Y-%m-%d&#39;)",
+    "parameters": "<table>\n          <tr>\n            <th><b>parameter</b></th>\n            <th/>\n            <th>value assumed when not provided</th>\n            <th>valid values</th>\n          </tr>\n          <tr>\n            <td><code>format</code></td>\n            <td>sprintf-style format template</td>\n            <td><code>'%Y-%m-%d'</code></td>\n            <td>string</td>\n          </tr></table>",
+    "description": "formats date as by replacing y, m and d in the format"
+  },
+  {
+    "summary": "<b>ideographs</b>",
+    "parameters": "",
+    "description": "Treat ideaographs as individual words"
+  },
+  {
+    "summary": "<b>jieba</b>",
+    "parameters": "",
+    "description": "word segmentation for Chinese items. Uses substantial memory, and adds about 7 seconds to BBTs startup time; must be enabled under Preferences -&gt; Better BibTeX -&gt; Advanced -&gt; Citekeys"
+  },
+  {
+    "summary": "<b>kuromoji</b>",
+    "parameters": "",
+    "description": "word segmentation for Japanese items. Uses substantial memory; must be enabled under Preferences -&gt; Better BibTeX -&gt; Advanced -&gt; Citekeys"
+  },
+  {
+    "summary": "<b>len</b>(relation=&#39;&gt;&#39;, length=0)",
+    "parameters": "<table>\n          <tr>\n            <th><b>parameter</b></th>\n            <th/>\n            <th>value assumed when not provided</th>\n            <th>valid values</th>\n          </tr>\n          <tr>\n            <td><code>relation</code></td>\n            <td>comparison operator</td>\n            <td><code>'>'</code></td>\n            <td>('<' | '>' | '<=' | '==' | '!=' | '>=')</td>\n          </tr>\n          <tr>\n            <td><code>length</code></td>\n            <td>value to compare length with</td>\n            <td><code>0</code></td>\n            <td>number</td>\n          </tr></table>",
+    "description": "If the length of the output does not match the given number, skip to the next pattern."
+  },
+  {
+    "summary": "<b>localTime</b>",
+    "parameters": "",
+    "description": "transforms date/time to local time. Mainly useful for dateAdded and dateModified as it requires an ISO-formatted input."
+  },
+  {
+    "summary": "<b>lower</b>",
+    "parameters": "",
+    "description": "Forces the text inserted by the field marker to be in lowercase. For example, <code>auth.lower</code> expands to the last name of the first author in lowercase."
+  },
+  {
+    "summary": "<b>match</b>(match=?, clean=false)",
+    "parameters": "<table>\n          <tr>\n            <th><b>parameter</b></th>\n            <th/>\n            <th>value assumed when not provided</th>\n            <th>valid values</th>\n          </tr>\n          <tr>\n            <td><code>match</code></td>\n            <td>regex or string to match. String matches are case-insensitive</td>\n            <td>none; must be provided</td>\n            <td>(string | RegExp)</td>\n          </tr>\n          <tr>\n            <td><code>clean</code></td>\n            <td>transliterates the current output and removes unsafe characters during matching</td>\n            <td><code>false</code></td>\n            <td>boolean</td>\n          </tr></table>",
+    "description": "If the output does not match the given string/regex, skip to the next pattern."
+  },
+  {
+    "summary": "<b>nopunct</b>(dash=&#39;-&#39;)",
+    "parameters": "<table>\n          <tr>\n            <th><b>parameter</b></th>\n            <th/>\n            <th>value assumed when not provided</th>\n            <th>valid values</th>\n          </tr>\n          <tr>\n            <td><code>dash</code></td>\n            <td>replace dashes with given character</td>\n            <td><code>'-'</code></td>\n            <td>string</td>\n          </tr></table>",
+    "description": "Removes punctuation"
+  },
+  {
+    "summary": "<b>nopunctordash</b>",
+    "parameters": "",
+    "description": "Removes punctuation and word-connecting dashes. alias for <code>nopunct(dash='')</code>"
+  },
+  {
+    "summary": "<b>numeric</b>",
+    "parameters": "",
+    "description": "returns the value if it's an integer"
+  },
+  {
+    "summary": "<b>pinyin</b>",
+    "parameters": "",
+    "description": "transliterates the citation key to pinyin"
+  },
+  {
+    "summary": "<b>postfix</b>(postfix=?)",
+    "parameters": "<table>\n          <tr>\n            <th><b>parameter</b></th>\n            <th/>\n            <th>value assumed when not provided</th>\n            <th>valid values</th>\n          </tr>\n          <tr>\n            <td><code>postfix</code></td>\n            <td>postfix string</td>\n            <td>none; must be provided</td>\n            <td>string</td>\n          </tr></table>",
+    "description": "postfixes with its parameter, so <code>postfix('_')</code> will add an underscore to the end if, and only if, the value\nit is supposed to postfix isn't empty"
+  },
+  {
+    "summary": "<b>prefix</b>(prefix=?)",
+    "parameters": "<table>\n          <tr>\n            <th><b>parameter</b></th>\n            <th/>\n            <th>value assumed when not provided</th>\n            <th>valid values</th>\n          </tr>\n          <tr>\n            <td><code>prefix</code></td>\n            <td>prefix string</td>\n            <td>none; must be provided</td>\n            <td>string</td>\n          </tr></table>",
+    "description": "prefixes with its parameter, so <code>.prefix('_')</code> will add an underscore to the front if, and only if, the value\nit is supposed to prefix isn't empty."
+  },
+  {
+    "summary": "<b>replace</b>(find=?, replace=?)",
+    "parameters": "<table>\n          <tr>\n            <th><b>parameter</b></th>\n            <th/>\n            <th>value assumed when not provided</th>\n            <th>valid values</th>\n          </tr>\n          <tr>\n            <td><code>find</code></td>\n            <td>string or regex to match. String matches are case-insensitive</td>\n            <td>none; must be provided</td>\n            <td>(string | RegExp)</td>\n          </tr>\n          <tr>\n            <td><code>replace</code></td>\n            <td>literal text to replace the match with</td>\n            <td>none; must be provided</td>\n            <td>string</td>\n          </tr></table>",
+    "description": "replaces text, for the text to match you can pass either:</p>\n<ul>\n<li>a string: <code>.replace('.etal','&amp;etal')</code> which will match case-insensitive, so will replace <code>.EtAl</code> with <code>&amp;etal</code>.</li>\n<li><a href=\"https://www.simplilearn.com/tutorials/javascript-tutorial/javascript-regex\">javascript regular expression</a>: <code>.replace(/[.]etal/ig, '&amp;etal')</code></li>\n</ul>"
+  },
+  {
+    "summary": "<b>select</b>(start=1, n=?)",
+    "parameters": "<table>\n          <tr>\n            <th><b>parameter</b></th>\n            <th/>\n            <th>value assumed when not provided</th>\n            <th>valid values</th>\n          </tr>\n          <tr>\n            <td><code>start</code></td>\n            <td>first word to select (1-based)</td>\n            <td><code>1</code></td>\n            <td>number</td>\n          </tr>\n          <tr>\n            <td><code>n</code></td>\n            <td>number of words to select. Default is all.</td>\n            <td></td>\n            <td>number</td>\n          </tr></table>",
+    "description": "selects words from the value passed in. The format is <code>select(start,number)</code> (1-based), so <code>select(1,4)</code> or <code>select(n=4)</code>\nwould select the first four words. If <code>n</code> is not given, all words from <code>start</code> to the end are\nselected."
+  },
+  {
+    "summary": "<b>skipwords</b>(nopunct=false)",
+    "parameters": "<table>\n          <tr>\n            <th><b>parameter</b></th>\n            <th/>\n            <th>value assumed when not provided</th>\n            <th>valid values</th>\n          </tr>\n          <tr>\n            <td><code>nopunct</code></td>\n            <td>remove punctuation from words</td>\n            <td><code>false</code></td>\n            <td>boolean</td>\n          </tr></table>",
+    "description": "filters out common words like 'of', 'the', … the list of words can be seen and changed by going into\n<code>about:config</code> under the key <code>extensions.zotero.translators.better-bibtex.skipWords</code> as a comma-separated,\ncase-insensitive list of words.</p>\n<p>If you want to strip words like 'Jr.' from names, you could use something like <code>Auth.nopunct.skipwords.fold</code>\nafter adding <code>jr</code> to the skipWords list.\nNote that this filter is always applied with <code>nopunct</code> on if you use <code>title</code> (which is different from <code>Title</code>) or <code>shorttitle</code>."
+  },
+  {
+    "summary": "<b>substring</b>(start=1, n=?)",
+    "parameters": "<table>\n          <tr>\n            <th><b>parameter</b></th>\n            <th/>\n            <th>value assumed when not provided</th>\n            <th>valid values</th>\n          </tr>\n          <tr>\n            <td><code>start</code></td>\n            <td>starting character (counting from 1)</td>\n            <td><code>1</code></td>\n            <td>number</td>\n          </tr>\n          <tr>\n            <td><code>n</code></td>\n            <td>number of characters to select (default: remainder from <code>start</code>)</td>\n            <td></td>\n            <td>number</td>\n          </tr></table>",
+    "description": "<code>substring(start,n)</code> selects <code>n</code> (default: all) characters starting at <code>start</code>"
+  },
+  {
+    "summary": "<b>transliterate</b>(mode=?)",
+    "parameters": "<table>\n          <tr>\n            <th><b>parameter</b></th>\n            <th/>\n            <th>value assumed when not provided</th>\n            <th>valid values</th>\n          </tr>\n          <tr>\n            <td><code>mode</code></td>\n            <td>specialized translateration modes for german, japanese or chinese.</td>\n            <td></td>\n            <td>(('minimal' | 'german' | 'japanese' | 'chinese' | 'arabic' | 'ukranian' | 'mongolian' | 'russian') | 'de' | 'ja' | 'chinese-traditional' | 'zh-hant' | 'zh' | 'tw' | 'ar' | 'uk' | 'mn' | 'ru')</td>\n          </tr></table>",
+    "description": "transliterates the citation key. If you don't specify a mode, the mode is derived from the item language field"
+  },
+  {
+    "summary": "<b>upper</b>",
+    "parameters": "",
+    "description": "Forces the text inserted by the field marker to be in uppercase. For example, <code>auth.upper</code> expands the last name of the first author in uppercase."
+  }
+]

@@ -19,7 +19,7 @@
       "asciiBibLaTeX": true,
       "autoAbbrevStyle": "http://www.zotero.org/styles/cell",
       "autoExport": "off",
-      "citekeyFormat": "[authors3][shortyear]",
+      "citekeyFormat": "authorsn(n=3,creator=\"*\",initials=false,sep=\" \").fold + shortyear",
       "importCaseProtection": "off",
       "itemObserverDelay": 100,
       "keyConflictPolicy": "change",
@@ -33,7 +33,7 @@
         {
           "creatorType": "author",
           "firstName": "M. R.",
-          "lastName": "Munaf\u0102\u02db"
+          "lastName": "MunafĂ˛"
         },
         {
           "creatorType": "author",
@@ -53,7 +53,7 @@
       "issue": "4",
       "itemID": 1,
       "itemType": "journalArticle",
-      "pages": "415\u2013419",
+      "pages": "415–419",
       "publicationTitle": "Molecular psychiatry",
       "title": "Does measurement instrument moderate the association between the serotonin transporter gene and anxiety-related personality traits? A meta-analysis.",
       "url": "http://www.ncbi.nlm.nih.gov/pubmed/15599377",

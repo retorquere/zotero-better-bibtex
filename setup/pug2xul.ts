@@ -64,36 +64,19 @@ function render(src, options) {
 
 const pugs = [
   'content/ErrorReport.pug',
-  'content/Preferences/xul.pug',
-  'content/Preferences/xhtml.pug',
+  'content/Preferences/preferences.pug',
   'content/ServerURL.pug',
-  'content/ZoteroPane.pug',
-  'content/zotero-preferences.pug',
 ]
 for (const src of pugs) {
-  let tgt = `build/${ src.replace(/pug$/, 'xul') }`
+  let tgt = `build/${ src.replace(/[.]pug$/, '.xhtml') }`
   switch (src) {
-    case 'content/Preferences/xul.pug':
-    case 'content/Preferences/xhtml.pug':
+    case 'content/Preferences/preferences.pug':
       // handled in preferences.ts
       tgt = '/dev/null'
       break
   }
 
-  const lint = new Lint(!!src.match(/(xul|xhtml).pug$/))
-  if (tgt !== '/dev/null') console.log(' ', tgt)
-  fs.writeFileSync(tgt, render(src, {
-    pretty: true,
-    plugins: [{
-      preCodeGen(ast) {
-        walk(SelfClosing, ast)
-        lint.walk(ast)
-        return ast
-      },
-    }],
-  }))
-
-  tgt = tgt.replace('.xul', '.xhtml')
+  console.log('=', src)
   const xhtml = new XHTML
   fs.writeFileSync(tgt, render(src, {
     pretty: true,
@@ -106,10 +89,9 @@ for (const src of pugs) {
       },
     }],
   }))
-  if (xhtml.modified) {
-    if (tgt !== '/dev/null') console.log(' ', tgt)
-  }
-  else {
-    fs.unlinkSync(tgt)
+
+  if (tgt !== '/dev/null') {
+    if (xhtml.modified) console.log('>', tgt)
+    // fs.unlinkSync(tgt)
   }
 }

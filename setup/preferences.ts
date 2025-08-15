@@ -8,16 +8,19 @@ import * as pug from 'pug'
 import * as fs from 'fs'
 import * as path from 'path'
 import * as glob from 'glob-promise'
-import * as peggy from 'peggy'
 import * as matter from 'gray-matter'
 import * as _ from 'lodash'
-import { walk, Lint, SelfClosing, ASTWalker as BaseASTWalker } from './pug-ast-walker'
+// import { walk, Lint, SelfClosing, ASTWalker as BaseASTWalker } from './pug-ast-walker'
+import { walk, Lint, ASTWalker as BaseASTWalker } from './pug-ast-walker'
+import { FluentBundle, FluentResource } from '@fluent/bundle'
+import * as yaml from 'js-yaml'
 
 import { Eta } from 'eta'
 const eta = new Eta
 
 function error(...args) {
   console.log(...args)
+  console.log((new Error).stack)
   process.exit(1)
 }
 
@@ -36,21 +39,50 @@ const translators = glob.sync('translators/*.json')
   })
 
 const l10n = new class {
-  private strings = peggy
-    .generate(fs.readFileSync('content/dtd-file.peggy', 'utf-8'))
-    .parse(fs.readFileSync('build/locale/en-US/zotero-better-bibtex.dtd', 'utf-8')) as Record<string, string>
+  private params = {
+    entries: '{entries}',
+    error: '{error}',
+    limit: '{limit}',
+    n: '{n}',
+    path: '{path}',
+    preference: '{preference}',
+    running: '{running}',
+    seconds: '{seconds}',
+    total: '{total}',
+    translator: '{translator}',
+    treshold: '{treshold}',
+    type: '{type}',
+    version: '{version}',
+  }
 
-  private find(id: string): string {
+  private bundle: FluentBundle
+  constructor() {
+    const resource = new FluentResource(fs.readFileSync('locale/en-US/better-bibtex.ftl', 'utf-8'))
+    this.bundle = new FluentBundle("en-US")
+    const errors = this.bundle.addResource(resource)
+    if (errors.length) console.log(errors)
+  }
+
+  public find(id: string, softfail=false): string {
+    if (!id) return ''
     if (id.startsWith('zotero.general.')) return `&${ id };`
     if (id.startsWith('zotero.errorReport.')) return `&${ id };`
-    if (this.strings[id]) return this.strings[id]
-    error(id, 'not in dtd')
+    if (id.includes('.')) error(id, 'may not have periods')
+
+    const msg = this.bundle.getMessage(id)
+    if (msg?.value) return this.bundle.formatPattern(msg.value, this.params).replace(/[\u2068\u2069]/g, '')
+
+    if (msg?.attributes) {
+      const label = msg.attributes.label
+      if (label) return this.bundle.formatPattern(label, this.params).replace(/[\u2068\u2069]/g, '')
+    }
+
+    if (!softfail) error(id, 'not in localization')
     return ''
   }
 
   tr(txt: string): string {
-    if (!txt) return txt
-    return txt.replace(/&([^;]+);/g, (entity, id) => this.find(id))
+    return this.find(txt, true) || txt
   }
 }
 
@@ -58,10 +90,14 @@ class ASTWalker extends BaseASTWalker {
   text(node) {
     switch (node.type) {
       case 'Text': return l10n.tr(node.val)
-      case 'Tag': return this.attr(node, 'label') || this.text(node.block)
+      case 'Tag': return this.l10n(node) || this.attr(node, 'label') || this.text(node.block)
       case 'Block': return node.nodes.map(n => this.text(n)).join('')
       default: return ''
     }
+  }
+
+  l10n(node): string {
+    return l10n.find(super.attr(node, 'data-l10n-id'))
   }
 
   attr(node, name: string, required = false): string {
@@ -70,84 +106,12 @@ class ASTWalker extends BaseASTWalker {
       case 'object':
         return null
       case 'string':
-        return l10n.tr(val)
       case 'number':
-        return val
       case 'boolean':
         return val
       default:
         error('unexpected type', typeof val)
     }
-  }
-}
-
-/*
-class Swap extends ASTWalker {
-  Tag(node) {
-    // make html the default namespace
-    if (node.name.startsWith('html:')) {
-      node.name = node.name.replace('html:', '')
-    }
-    else {
-      node.name = `xul:${node.name}`
-    }
-
-    this.walk(node.block)
-  }
-}
-*/
-
-class Flex extends ASTWalker {
-  flex(node): string {
-    const flex = node.attrs.find(attr => attr.name === 'flex')
-    if (!flex) return ''
-    if (typeof flex.val === 'number') return `${ flex.val }`
-    return flex.mustEscape ? flex.val : eval(flex.val)
-  }
-
-  Tag(node) {
-    const flex = this.flex(node)
-    if (!node.name.startsWith('html:')) {
-      switch (node.name) {
-        case 'vbox':
-        case 'hbox':
-        case 'radiogroup':
-        case 'textbox':
-        case 'tabbox':
-        case 'tabpanels':
-        case 'tabpanel':
-        case 'deck':
-          if (!flex) node.attrs.push({ name: 'flex', val: '\'1\'', mustEscape: false })
-          break
-        case 'prefpane':
-        case 'groupbox':
-        case 'prefwindow':
-        case 'tabs':
-        case 'tab':
-        case 'caption':
-        case 'preferences':
-        case 'preference':
-        case 'popupset':
-        case 'tooltip':
-        case 'description':
-        case 'label':
-        case 'checkbox':
-        case 'radio':
-        case 'button':
-        case 'image':
-        case 'separator':
-        case 'script':
-        case 'menupopup':
-        case 'menuitem':
-        case 'menulist':
-          if (flex) throw new Error(`${ node.name } has flex ${ flex }`)
-          break
-        default:
-          throw `no flex on ${ node.name }` // eslint-disable-line no-throw-literal
-      }
-    }
-    node.block = this.walk(node.block)
-    return node
   }
 }
 
@@ -166,7 +130,6 @@ class StripConfig extends ASTWalker {
 
 type Preference = {
   name: string
-  shortName: string
   label: string
   description: string
   type: 'number' | 'boolean' | 'string'
@@ -181,98 +144,32 @@ type Page = {
   matter?: any
 }
 
+const prefprefix = 'extensions.zotero.translators.better-bibtex.'
+
 class Docs extends ASTWalker {
   public preferences: Record<string, Preference> = {}
   public preference: string = null
   public pages: Record<string, Page> = {}
   public page: string = null
 
-  register(node) {
-    const name = this.attr(node, 'name', true)
-    const id = this.attr(node, 'id')
-    if (id) error('obsolete preference id', id)
-
-    const affects = this.attr(node, 'bbt:affects', true)
-      .split(/\s+/)
-      .reduce((acc, affects) => {
-        switch (affects) {
-          case '':
-            break
-
-          case '*':
-            acc.push(...translators.filter(tr => tr.cached).map(tr => tr.label))
-            break
-
-          case 'tex':
-          case 'bibtex':
-          case 'biblatex':
-          case 'csl':
-            acc.push(...translators.filter(tr => tr.cached).map(tr => tr.label).filter(tr => tr.toLowerCase().includes(affects)))
-            break
-
-          default:
-            error('Unexpected affects', affects, 'in', pref.affects, name)
-        }
-        return acc
-      }, [])
-      .sort()
-
-    let type: 'string' | 'number' | 'boolean' = 'string'
-    switch (this.attr(node, 'type', true)) {
-      case 'int':
-        type = 'number'
-        break
-      case 'string':
-        type = 'string'
-        break
-      case 'bool':
-        type = 'boolean'
-        break
-      default:
-        error('unsupported type', this.attr(node, 'type'))
+  constructor() {
+    super()
+    for (const [name, pref] of Object.entries(yaml.load(fs.readFileSync('content/Preferences/preferences.yaml', 'utf-8')) as Record<string, Preference>)) {
+      pref.description = pref.description || ''
+      this.preferences[`${prefprefix}${name}`] = { name, affects: [], type: typeof pref.default, ...pref }
     }
-    const pref: Preference = {
-      name,
-      shortName: name.replace(/^([^.]+[.])*/, ''),
-      label: '',
-      description: '',
-      type,
-      default: this.attr(node, 'default', true),
-      affects,
-    }
-
-    switch (pref.type) {
-      case 'boolean':
-      case 'number':
-        pref.default = eval(pref.default as string)
-      case 'string':
-        if (typeof pref.default !== pref.type) error(this.attr(node, 'default'), 'is not', pref.type)
-        break
-      default:
-        error('Unexpected type', pref.type)
-    }
-
-    for (const affected of pref.affects) {
-      for (const tr of translators) {
-        if (tr.cached && tr.label === affected) {
-          tr.affectedBy.push(pref.shortName)
-        }
-      }
-    }
-
-    this.preferences[this.preference = name] = pref
   }
 
   option(pref, label, value) {
     if (!this.preferences[pref]) error('option for unregistered', pref)
 
-    let v: number
     switch (this.preferences[pref].type) {
-      case 'number':
-        v = parseInt(value)
+      case 'number': {
+        const v = parseInt(value)
         if (isNaN(v)) error('non-integer option', value, 'for', this.preferences[pref].type, pref)
         value = v
         break
+      }
 
       case 'string':
         break
@@ -280,6 +177,7 @@ class Docs extends ASTWalker {
       default:
         error('option for', this.preferences[pref].type, pref)
     }
+
     this.preferences[pref].options = this.preferences[pref].options || new Map
     this.preferences[pref].options.set(value, label)
   }
@@ -292,12 +190,23 @@ class Docs extends ASTWalker {
     this.doc(doc.replace(/</g, '&lt;').replace(/>/g, '&gt;'), pref, 'description')
   }
 
-  doc(doc, pref, kind) {
+  doc(doc, pref, kind: 'label' | 'description') {
     pref = pref || this.preference
     if (!pref) error('doc for no pref')
-    if (!this.preferences[pref]) error('doc for unregistered', pref)
+    if (!this.preferences[pref]) error(`doc ${JSON.stringify(doc)} for unregistered`, pref)
     if (this.preferences[pref][kind]) error('re-doc for', pref, '\n**old**:', this.preferences[pref][kind], '\n**new**:', doc)
     this.preferences[pref][kind] = doc
+  }
+
+  groupboxlabel(node) {
+    for (const label of node.block.nodes) {
+      if (label.name === 'label') {
+        for (const h2 of label.block.nodes) {
+          if (h2.name === 'html:h2') return this.text(h2)
+        }
+      }
+    }
+    return ''
   }
 
   section(label, history: any[], offset = 0) {
@@ -312,32 +221,10 @@ class Docs extends ASTWalker {
     const hidden = history.find(parent => parent.name && this.attr(parent, 'hidden'))
 
     switch (node.name) {
-      case 'caption':
-        if (!hidden) {
-          pref = this.attr(node, 'bbt:preference')
-          label = this.attr(node, 'label') || this.text(node)
-          if (pref) {
-            this.label(label, pref)
-            this.section(`<%~ it.${ this.preferences[pref].shortName } %>\n`, history, 1)
-          }
-          else {
-            history.find(n => n.name === 'groupbox').$section = label
-            this.section(label, history)
-          }
-        }
-        break
-
-      case 'tabbox':
-        node.$labels = []
-        break
-
-      case 'tab':
-        history.find(n => n.name === 'tabbox').$labels.push(this.text(node))
-        break
-
-      case 'tabpanel':
-        label = history.find(n => n.name === 'tabbox').$labels.shift()
+      case 'groupbox':
         page = this.attr(node, 'bbt:page')
+        label = this.groupboxlabel(node)
+
         if (page) {
           this.page = page
           this.pages[page] = {
@@ -354,36 +241,37 @@ class Docs extends ASTWalker {
       case 'script':
         return node
 
-      case 'preference':
-        this.register(node)
-        // clone name to id
-        pref = node.attrs.find(attr => attr.name === 'name')
-        node.attrs.push({ ...pref, name: 'id' })
-        break
-
-      case 'tooltip':
+      case 'tooltip': {
         if (id = this.attr(node, 'id', true)) {
-          pref = id.replace('bbt-tooltip-', 'extensions.zotero.translators.better-bibtex.')
+          const pref = id.replace('bbt-tooltip-', prefprefix)
           if (!this.preferences[pref]) error('tooltip:', pref, 'does not exist')
           this.description(this.text(node), pref)
         }
         break
+      }
 
       case 'bbt:doc':
         this.description(this.text(node))
         break
 
-      case 'menuitem':
-        if (!hidden) {
-          pref = this.attr(history.find(n => n.name === 'menulist'), 'preference')
-          if (pref) this.option(pref, this.attr(node, 'label', true), this.attr(node, 'value', true))
+      case 'menuitem': break
+      case 'menulist':
+        pref = this.attr(node, 'preference')
+        if (pref && !hidden) {
+          const menupopup = node.block.nodes.find(mp => mp.name === 'menupopup')
+          for (const menuitem of menupopup.block.nodes) {
+            this.option(pref, this.attr(menuitem, 'label') || l10n.find(this.attr(menuitem, 'data-l10n-id', true)), this.attr(menuitem, 'value', true))
+          }
         }
         break
 
-      case 'radio':
-        if (!hidden) {
-          pref = this.attr(history.find(n => n.name === 'radiogroup'), 'preference', true)
-          this.option(pref, this.attr(node, 'label', true), this.attr(node, 'value', true))
+      case 'radio': break
+      case 'radiogroup':
+        pref = this.attr(node, 'preference')
+        if (pref && !hidden) {
+          for (const radio of node.block.nodes) {
+            this.option(pref, this.attr(radio, 'label') || l10n.find(this.attr(radio, 'data-l10n-id', true)), this.attr(radio, 'value', true))
+          }
         }
         break
 
@@ -393,10 +281,10 @@ class Docs extends ASTWalker {
           if (!this.preferences[pref]) error(pref, 'does not exist')
           pref = this.preferences[pref]
 
-          label = this.attr(node, 'label') || (node.name === 'label' && this.text(node))
+          label = l10n.tr(this.attr(node, 'data-l10n-id')) || (node.name === 'label' && this.text(node))
           if (!hidden && label && (bbt || !pref.label)) {
-            if (!pref.label && pref.description) this.section(`<%~ it.${ pref.shortName } %>\n`, history, 1)
-            this.label(label, pref.name)
+            if (!pref.label && pref.description) this.section(`<%~ it.${ pref.name } %>\n`, history, 1)
+            this.label(label, `${prefprefix}${pref.name}`)
           }
         }
         break
@@ -404,7 +292,7 @@ class Docs extends ASTWalker {
 
     const field = this.attr(node, 'data-ae-field')
     if (field) {
-      pref = Object.values(this.preferences).find(p => p.shortName === field)
+      pref = Object.values(this.preferences).find(p => p.name === field)
       if (pref) pref.override = true
     }
 
@@ -428,8 +316,8 @@ class Docs extends ASTWalker {
           break
       }
       if (typeof dflt === 'undefined') error('unsupported pref default', pref.type)
-      prefs[pref.shortName] = `${ pref.label || pref.shortName }\n\ndefault: \`${ dflt }\`\n\n${ pref.description }\n`
-      if (pref.options) prefs[pref.shortName] += `\nOptions:\n\n${ [...pref.options.values()].map(o => `* ${ o }`).join('\n') }\n`
+      prefs[pref.name] = `${ pref.label || pref.name }\n\ndefault: \`${ dflt }\`\n\n${ pref.description }\n`
+      if (pref.options) prefs[pref.name] += `\nOptions:\n\n${ [...pref.options.values()].map(o => `* ${ o }`).join('\n') }\n`
     }
 
     const hidden = `
@@ -443,7 +331,7 @@ The Better BibTeX hidden preferences are preceded by “extensions.zotero.transl
 
 `
     this.pages['hidden-preferences'] = {
-      content: hidden + Object.values(this.preferences).filter(p => !p.label && p.description).map(p => `## <%~ it.${ p.shortName } %>`).sort().join('\n'),
+      content: hidden + Object.values(this.preferences).filter(p => !p.label && p.description).map(p => `## <%~ it.${ p.name } %>`).sort().join('\n'),
     }
 
     for (const page of glob.sync(path.join(dir, '*.md'))) {
@@ -519,14 +407,14 @@ The Better BibTeX hidden preferences are preceded by “extensions.zotero.transl
       for (const label of pref.affects) {
         switch (pref.type) {
           case 'boolean':
-            schema[label][pref.shortName] = { type: 'boolean' }
+            schema[label][pref.name] = { type: 'boolean' }
             break
           case 'string':
-            schema[label][pref.shortName] = { type: 'string' }
-            if (pref.options) schema[label][pref.shortName].enum = [...pref.options.keys()]
+            schema[label][pref.name] = { type: 'string' }
+            if (pref.options) schema[label][pref.name].enum = [...pref.options.keys()]
             break
           case 'number':
-            schema[label][pref.shortName] = { type: 'number' }
+            schema[label][pref.name] = { type: 'number' }
             break
           default:
             throw new Error(`Don't know what to do with ${ pref.type }`)
@@ -552,26 +440,6 @@ class XHTML extends BaseASTWalker {
     return id
   }
 
-  tabbox(node, indent) {
-    const tabs = node.block.nodes.find(n => n.name === 'tabs').block.nodes
-    const tabpanels = node.block.nodes.find(n => n.name === 'tabpanels').block.nodes
-
-    const nodes = []
-    tabs.forEach((tab, i) => {
-      const tabpanel = tabpanels[i]
-
-      const label = this.attr(tab, 'label', true)
-      const l10n = label.includes('&') ? { 'data-l10n-id': label.replace(/&([^;.]+).label;/, '$1') } : {}
-      nodes.push(this.tag('groupbox', { class: indent ? 'bbt-prefs-group-main' : 'bbt-prefs-group-sub' }, [
-        this.tag('label', {}, [
-          this.tag('html:h2', l10n, label.includes('&') ? [] : [{ type: 'Text', val: label }]),
-        ]),
-        ...tabpanel.block.nodes,
-      ]))
-    })
-    return nodes
-  }
-
   Tag(node, history) {
     const cls = this.attr(node, 'class')
     if (cls && cls.split(' ').includes('bbt-prefs-2col-span')) {
@@ -579,57 +447,6 @@ class XHTML extends BaseASTWalker {
       if (!pcls?.includes('bbt-prefs-2col')) throw new Error('2-col span not in a 2-col parent')
     }
     if (node.name === 'script') throw new Error('scripts don\'t work in preference panes')
-
-    let style: string
-    switch (node.name) {
-      case 'image':
-        style = node.attrs.filter(a => a.name === 'height' || a.name === 'width').map(a => `${ a.name }:${ eval(a.val) }`).join(';')
-        if (style) node.attrs.push({ name: 'style', val: JSON.stringify(style), mustEscape: false })
-        break
-
-      case 'textbox':
-        node.attrs = node.attrs.filter(a => a.name !== 'flex')
-
-        if (node.attrs.find(a => a.name === 'multiline')) {
-          node.name = 'html:textarea'
-          node.attrs.forEach(a => {
-            if (a.name === 'size') a.name = 'cols'
-          })
-          node.attrs = node.attrs.filter(a => a.name !== 'multiline')
-          // arbitrary size
-          for (const [ name, val ] of Object.entries({ cols: '80', rows: '5' })) {
-            if (!node.attrs.find(a => a.name === name)) node.attrs.push({ name, val: JSON.stringify(val), mustEscape: false })
-          }
-        }
-        else {
-          node.name = 'html:input'
-          node.attrs.push({ name: 'type', val: '"text"', mustEscape: false })
-        }
-
-        break
-      case 'checkbox':
-      case 'radio':
-      case 'menulist':
-        node.attrs.push({ name: 'native', val: '"true"', mustEscape: false })
-        break
-      case 'groupbox':
-        node.block.nodes = node.block.nodes.map(child => {
-          if (child.name === 'caption') {
-            if (!node.attrs.find(a => a.name === 'class')) {
-              node.attrs.push({
-                name: 'class',
-                val: JSON.stringify('bbt-prefs-group-main'),
-                mustEscape: false,
-              })
-            }
-            return this.tag('label', {}, [{ ...child, name: 'html:h2' }])
-          }
-          else {
-            return child
-          }
-        })
-        break
-    }
 
     let l10n_id = ''
     for (const attr of node.attrs) {
@@ -649,8 +466,9 @@ class XHTML extends BaseASTWalker {
 
     const duplicate: Record<string, string> = {}
     for (const attr of node.attrs) {
-      if (attr.name !== 'class' && duplicate[attr.name]) {
-        throw new Error(`${ node.name }.${ attr.name }=${ attr.val }`)
+      if (attr.name === 'class') continue
+      if (attr.name in duplicate) {
+        throw new Error(`${ node.name }.${ attr.name }= ${duplicate[attr.name]} => ${ attr.val }`)
       }
       else {
         duplicate[attr.name] = attr.val
@@ -661,21 +479,9 @@ class XHTML extends BaseASTWalker {
   }
 
   Block(block, history) {
-    let nodes = []
-    for (let node of block.nodes) {
-      if (node.type === 'Tag' && node.name === 'deck' && this.attr(node, 'id') === 'bbt-prefs-deck') {
-        node = node.block.nodes.find(n => n.type === 'Tag' && n.name === 'tabbox')
-      }
-
-      if (node.type === 'Tag' && node.name === 'tabbox') {
-        const indent = history.filter(n => n.name === 'groupbox' && n.attrs.find(a => a.name === 'class')).length
-        nodes = [ ...nodes, ...(this.tabbox(node, indent).map(n => this.walk(n, history))) ]
-      }
-      else {
-        nodes.push(this.walk(node, history))
-      }
-    }
-    block.nodes = nodes.filter(n => n)
+    block.nodes = block.nodes
+      .map(node => this.walk(node, history))
+      .filter(node => node)
     return block
   }
 
@@ -704,49 +510,37 @@ function render(src, tgt, options) {
   fs.writeFileSync(tgt, xul.replace(/&amp;/g, '&').trim())
 }
 
-render('content/Preferences/xul.pug', 'build/content/preferences.xul', {
-  pretty: true,
-  plugins: [{
-    preCodeGen(ast, _options) { // eslint-disable-line prefer-arrow/prefer-arrow-functions
-      const docs = walk(Docs, ast)
-      docs.savePages('site/content/installation/preferences')
-      docs.saveDefaults('build/defaults/preferences/defaults.js')
-      docs.saveDefaults('build/prefs.js')
-      docs.saveTypescript()
-
-      walk(StripConfig, ast)
-      walk(Flex, ast)
-      walk(SelfClosing, ast)
-      walk(Lint, ast)
-
-      return ast
-    },
-  }],
-})
-
-render('content/Preferences/xhtml.pug', 'build/content/preferences.xhtml', {
+render('content/Preferences/preferences.pug', 'build/content/preferences.xhtml', {
   is7: true,
   pretty: true,
   plugins: [{
     preCodeGen(ast, _options) { // eslint-disable-line prefer-arrow/prefer-arrow-functions
+      const docs = walk(Docs, ast, true)
+
+      docs.savePages('site/content/installation/preferences')
+      docs.saveDefaults('build/defaults/preferences/defaults.js')
+      docs.saveDefaults('build/prefs.js')
+      docs.saveTypescript()
       walk(StripConfig, ast)
       walk(XHTML, ast)
-      walk(SelfClosing, ast)
+      // walk(SelfClosing, ast)
       walk(Lint, ast)
 
-      if (ast.type !== 'Block' || ast.nodes.length !== 1 || ast.nodes[0].type !== 'Tag' || ast.nodes[0].name !== 'vbox') throw new Error(`unexpected root`)
+      /*
       let onload = ast.nodes[0].attrs.filter(attr => attr.name === 'onload')
       const ns = ast.nodes[0].attrs.filter(attr => attr.name !== 'onload')
 
-      ast = ast.nodes[0].block
       for (const node of ast.nodes) {
+        if (node.type === 'Comment') continue
         const nodes = node.type === 'Block' ? node.nodes : [ node ]
 
         for (const n of nodes) {
+          if (n.type === 'Comment') continue
           n.attrs = [...n.attrs, ...onload, ...ns]
           onload = []
         }
       }
+      */
 
       return ast
     },

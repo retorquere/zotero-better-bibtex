@@ -1,4 +1,3 @@
-
 @inreference{apathy1063ABGB2010,
   title = {§ 1063 ABGB},
   booktitle = {Kurzkommentar zum ABGB},
@@ -9,7 +8,7 @@
   pages = {1183--1198},
   publisher = {Springer},
   location = {Wien},
-  langid = {austrian}
+  langid = {naustrian}
 }
 
 @incollection{apathySicherungsuebereignung2012,
@@ -23,7 +22,7 @@
   pages = {277--303},
   publisher = {Springer},
   location = {Wien},
-  langid = {austrian}
+  langid = {naustrian}
 }
 
 @incollection{apathySicherungszession2012,
@@ -37,7 +36,7 @@
   pages = {303--364},
   publisher = {Springer},
   location = {Wien},
-  langid = {austrian}
+  langid = {naustrian}
 }
 
 @inreference{basedow305BGB2019,
@@ -190,7 +189,7 @@
   edition = {6},
   publisher = {Verlag Österreich},
   location = {Wien},
-  langid = {austrian}
+  langid = {naustrian}
 }
 
 @article{bydlinskiEntscheidungNach981991,
@@ -203,7 +202,7 @@
   volume = {39},
   number = {2},
   pages = {106--113},
-  langid = {austrian}
+  langid = {naustrian}
 }
 
 @article{bydlinskiKeineAnalogeAnwendung2007,
@@ -216,7 +215,7 @@
   volume = {25},
   number = {10},
   pages = {599--600},
-  langid = {austrian}
+  langid = {naustrian}
 }
 
 @incollection{coesterAllgemeineGeschaeftsbedingungen2008,
@@ -241,7 +240,7 @@
   volume = {9},
   number = {17},
   pages = {63--69},
-  langid = {austrian}
+  langid = {naustrian}
 }
 
 @book{dagdelenSchutzBuergenRechtsvergleich2020,
@@ -251,7 +250,7 @@
   date = {2020},
   publisher = {Yetkin},
   location = {Ankara},
-  langid = {austrian}
+  langid = {naustrian}
 }
 
 @inreference{deillon-scheggArt963ZGB2016,
@@ -278,7 +277,7 @@
   pages = {1--69},
   publisher = {Springer},
   location = {Wien},
-  langid = {austrian}
+  langid = {naustrian}
 }
 
 @article{fountoulakisBuergschaftsrechtHoffnungenGesetzgebers2010,
@@ -362,7 +361,7 @@
   volume = {50},
   number = {11},
   pages = {885--902},
-  langid = {austrian}
+  langid = {naustrian}
 }
 
 @book{guhlNeueBuergschaftsrechtSchweiz1942,
@@ -396,7 +395,7 @@
   volume = {14},
   number = {2},
   pages = {75--85},
-  langid = {austrian}
+  langid = {naustrian}
 }
 
 @inreference{heinrichs305BGB2005,
@@ -505,7 +504,7 @@
   edition = {5},
   publisher = {Verlag Österreich},
   location = {Wien},
-  langid = {austrian}
+  langid = {naustrian}
 }
 
 @book{iroBuergerlichesRechtBand2016,
@@ -517,7 +516,7 @@
   edition = {6},
   publisher = {Verlag Österreich},
   location = {Wien},
-  langid = {austrian}
+  langid = {naustrian}
 }
 
 @incollection{iroHypothekenrecht2012,
@@ -530,7 +529,7 @@
   pages = {69--244},
   publisher = {Springer},
   location = {Wien},
-  langid = {austrian}
+  langid = {naustrian}
 }
 
 @inreference{jaeggiArt171973,
@@ -581,7 +580,7 @@
   pages = {435--485},
   publisher = {Springer},
   location = {Wien},
-  langid = {austrian}
+  langid = {naustrian}
 }
 
 @book{koehlerBGBAllgemeinerTeil2020,
@@ -648,7 +647,7 @@
   pages = {586--594},
   publisher = {Lexisnexis},
   location = {Wien},
-  langid = {austrian}
+  langid = {naustrian}
 }
 
 @inreference{kostkiewiczArt102IPRG2015,
@@ -672,7 +671,7 @@
   publisher = {Manz},
   location = {Wien},
   isbn = {3-214-14708-0},
-  langid = {austrian}
+  langid = {naustrian}
 }
 
 @book{luekeSachenrecht2018,
@@ -718,7 +717,7 @@
   pages = {2100--2103},
   publisher = {Springer},
   location = {Wien},
-  langid = {austrian}
+  langid = {naustrian}
 }
 
 @inreference{pestalozziArt4972015,
@@ -767,7 +766,7 @@
   edition = {5},
   publisher = {Springer},
   location = {Wien},
-  langid = {austrian}
+  langid = {naustrian}
 }
 
 @inreference{putzo449BGB2005,
@@ -803,7 +802,7 @@
   pages = {244--277},
   publisher = {Springer},
   location = {Wien},
-  langid = {austrian}
+  langid = {naustrian}
 }
 
 @incollection{riedlerKonsortialkrediteSicherheitenbestellungUnd2012,
@@ -817,7 +816,7 @@
   pages = {364--435},
   publisher = {Springer},
   location = {Wien},
-  langid = {austrian}
+  langid = {naustrian}
 }
 
 @inreference{rueediArt662011,
@@ -889,7 +888,7 @@
   pages = {850--856},
   publisher = {Lexisnexis},
   location = {Wien},
-  langid = {austrian}
+  langid = {naustrian}
 }
 
 @inreference{schwanderArt715ZGB2015,
@@ -947,7 +946,7 @@
   edition = {14},
   publisher = {Manz},
   location = {Wien},
-  langid = {austrian}
+  langid = {naustrian}
 }
 
 @incollection{welter26AuslandsbezugUnd2017,
@@ -983,7 +982,7 @@
   edition = {6},
   publisher = {Manz},
   location = {Wien},
-  langid = {austrian}
+  langid = {naustrian}
 }
 
 @inreference{westermann449BGB2016,
@@ -1017,7 +1016,7 @@
   edition = {6},
   publisher = {Facultas},
   location = {Wien},
-  langid = {austrian}
+  langid = {naustrian}
 }
 
 @article{ZoiaBlasonDOttavioEtAl13,
@@ -1038,5 +1037,3 @@
   langid = {english},
   keywords = {Birth,Eye movements,Eyes,Fetuses,Hands,Infants,Kinematics,Musculoskeletal system}
 }
-
-

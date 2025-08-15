@@ -14,7 +14,7 @@
       "autoExportIdleWait": 3,
       "automaticTags": false,
       "baseAttachmentPath": "F:\\Paper\\Archiv",
-      "citekeyFormat": "[auth1_1][auth1_2][auth1_3][auth1_4][>1][shortyear] | [auth3_1][shortyear]",
+      "citekeyFormat": "auth(n=1,m=1,creator=\"*\",initials=false).fold + auth(n=1,m=2,creator=\"*\",initials=false).fold + auth(n=1,m=3,creator=\"*\",initials=false).fold + auth(n=1,m=4,creator=\"*\",initials=false).fold + len('>',1) + shortyear;\nauth(n=3,m=1,creator=\"*\",initials=false).fold + shortyear;",
       "extraMergeCSL": true,
       "extraMergeCitekeys": true,
       "extraMergeTeX": true,
@@ -30,7 +30,7 @@
     {
       "DOI": "10.1109/TCE.1960.6368474",
       "ISSN": "2379-674X",
-      "abstractNote": "Thermoelectric generators are presently being developed for many uses which range from small flame-operated power supplies for automatic control systems to several kilowatt-size thermopiles for prototype evaluation of marine propulsion systems.1 This renewal of interest in thermoelectric power generation and thermoelectric heat pumping is based on recent advances in the development of special semiconducting materials which exhibit properties intermediate to metals and semiconductors of the type used in P-N junction transistor devices. Often called \u201csemimetals,\u201d these thermoelectric materials are prepared from semiconducting crystals which are more heavily doped than transistor devices to provide higher electrical conductivity. Such materials exhibit much lower thermal conductivity than do metals and substantially higher thermal emf (electromotive force).",
+      "abstractNote": "Thermoelectric generators are presently being developed for many uses which range from small flame-operated power supplies for automatic control systems to several kilowatt-size thermopiles for prototype evaluation of marine propulsion systems.1 This renewal of interest in thermoelectric power generation and thermoelectric heat pumping is based on recent advances in the development of special semiconducting materials which exhibit properties intermediate to metals and semiconductors of the type used in P-N junction transistor devices. Often called “semimetals,” these thermoelectric materials are prepared from semiconducting crystals which are more heavily doped than transistor devices to provide higher electrical conductivity. Such materials exhibit much lower thermal conductivity than do metals and substantially higher thermal emf (electromotive force).",
       "attachments": [],
       "citationKey": "Fri60",
       "creators": [

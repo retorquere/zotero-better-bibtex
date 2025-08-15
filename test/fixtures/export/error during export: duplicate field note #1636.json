@@ -9,7 +9,7 @@
     "preferences": {
       "auxImport": true,
       "bibtexURL": "url",
-      "citekeyFormat": "[auth][shorttitle3_3]",
+      "citekeyFormat": "auth(n=0,m=1,creator=\"*\",initials=false).fold + shorttitle(3,3)",
       "keyConflictPolicy": "change"
     }
   },

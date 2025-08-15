@@ -1,9 +1,9 @@
 import { Collected } from './lib/collect'
-import type { Translators } from '../typings/translators.d.ts'
+import type { Header } from '../gen/translators'
 import { detectImport as zotero_detectImport } from '../gen/ZoteroBibTeX.mjs'
 
 declare const Zotero: any
-declare var ZOTERO_TRANSLATOR_INFO: Translators.Header // eslint-disable-line no-var
+declare var ZOTERO_TRANSLATOR_INFO: Header // eslint-disable-line no-var
 
 export function doExport(): void {
   const translation = Zotero.BetterBibTeX.generateBibTeX(new Collected(ZOTERO_TRANSLATOR_INFO, 'export'))

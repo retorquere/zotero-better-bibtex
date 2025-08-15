@@ -13,17 +13,18 @@
       "auxImport": true,
       "biblatexExtendedNameFormat": true,
       "citekeyFold": false,
-      "citekeyFormat": "[Auth][Title:jieba:skipwords:capitalize:select=1,2:nopunct][year]",
+      "citekeyFormat": "auth(n=0,m=1,creator=\"*\",initials=false) + Title.jieba.skipwords.capitalize.select(1,2).nopunct + year",
       "extraMergeCSL": true,
       "extraMergeCitekeys": true,
       "extraMergeTeX": true,
       "importCaseProtection": "off",
-      "jieba": true,
       "qualityReport": true,
       "quickCopyMode": "orgRef",
       "skipFields": "abstract, keywords",
       "verbatimFields": "url,doi,file,eprint,verba,verbb,verbc",
-      "warnBulkModify": 0
+      "warnBulkModify": 0,
+      "chinese": true,
+      "chineseSplitName": false
     }
   },
   "items": [

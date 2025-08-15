@@ -1,14 +1,9 @@
-tabbox
-  tabs
-    tab(label="&better-bibtex_preferences_export_fields.label;")
-    tab(bbt:preference="extensions.zotero.translators.better-bibtex.strings" label="&better-bibtex_preferences_advanced_tab_strings.label;")
+groupbox.bbt-prefs-subsection
+  label
+    html:h2(data-l10n-id='better-bibtex_preferences_export_fields')
+  include misc/fields.pug
 
-  tabpanels
-    tabpanel(orient="vertical")
-      include misc/fields.pug
-
-    tabpanel(orient="vertical")
-      include misc/strings.pug
-
-    // tabpanel(orient="vertical")
-      // include misc/hidden.pug
+groupbox.bbt-prefs-subsection
+  label
+    html:h2(data-l10n-id='better-bibtex_preferences_advanced_tab_strings')
+  include misc/strings.pug

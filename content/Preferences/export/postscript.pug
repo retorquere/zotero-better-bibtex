@@ -1,15 +1,16 @@
-textbox#bbt-postscript(
+html:textarea#bbt-postscript(
   rows='10'
-  multiline='true'
-  preference='extensions.zotero.translators.better-bibtex.postscript'
+  cols='80'
   onblur='Zotero.BetterBibTeX.PrefPane.checkPostscript();'
   oninput='Zotero.BetterBibTeX.PrefPane.checkPostscript();'
   onkeypress='setTimeout(function() { Zotero.BetterBibTeX.PrefPane.checkPostscript() }, 1);'
+  preference='extensions.zotero.translators.better-bibtex.postscript'
 )
-textbox#bbt-cache-warn-postscript.plain(
-  class='bbt-prefs-emph'
+
+html:textarea.plain.bbt-prefs-emph#bbt-cache-warn-postscript(
   rows='2'
-  multiline='true'
-  readonly='true'
-  value='&better-bibtex_preferences_postscript_warn.value;'
+  cols='80'
+  data-l10n-id='better-bibtex_preferences_postscript_warn'
+  readonly
+  value
 )

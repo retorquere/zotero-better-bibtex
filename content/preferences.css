@@ -12,22 +12,28 @@
   grid-column: span 2;
 }
 
+.bbt-prefs-preview {
+  -moz-appearance: none !important;
+  background-color: LightGreen;
+}
+
 .bbt-prefs-error {
   -moz-appearance: none !important;
   background-color: DarkOrange;
 }
 
+
 .bbt-prefs-emph {
   color: red;
 }
 
-.bbt-prefs-group-main {
+.bbt-prefs-subsection {
   margin-left: 1em;
   padding-left: 1em;
   padding-bottom: 1em;
   box-shadow: -3px -3px 4px rgba(0,0,0,.1);
 }
 
-.bbt-prefs-group-sub {
+.bbt-prefs-section {
   border-top: 3px double black;
 }

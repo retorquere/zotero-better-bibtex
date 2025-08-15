@@ -1,3 +1,5 @@
+/* eslint-disable max-len, id-blacklist */
+
 import { Fields } from '../../content/extra'
 import type { arXiv } from '../../content/arXiv'
 
@@ -11,8 +13,18 @@ export interface Collection {
   parent?: string
 }
 
-export interface Tag { tag: string, type?: number }
-export interface Creator { creatorType: string, name?: string, firstName?: string, lastName?:string, fieldMode?: number, source?: string }
+export interface Tag {
+  tag: string
+  type?: number
+}
+export interface Creator {
+  creatorType: string
+  name?: string
+  firstName?: string
+  lastName?: string
+  fieldMode?: number
+  source?: string
+}
 
 interface ItemBase {
   itemKey: string
@@ -44,7 +56,7 @@ export interface Attachment extends ItemBase {
 
 export interface RegularItem extends ItemBase {
   itemType: ${' | '.join(["'" + itemType + "'" for itemType in itemTypes if itemType not in ['note', 'annotation', 'attachment']])}
-  citationKey: string
+  // citationKey: string
 
   // fields common to all items
   creators: Array<Creator>
@@ -66,7 +78,7 @@ export interface RegularItem extends ItemBase {
   cslVolumeTitle: string
   collections: string[]
   extraFields: Fields
-  arXiv: arXiv,
+  arXiv: arXiv
 
   multi?: {
     _keys: {

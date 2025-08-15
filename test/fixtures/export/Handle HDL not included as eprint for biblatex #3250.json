@@ -1,0 +1,149 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "preferences": {
+      "citekeyFormat": "creators(max = 5) + year;\ncreators(1) + creators([2, 10], name = \"%(f).1s\", max = 10) + year;\ncreators(1, etal = \"_etal\") + year",
+      "qualityReport": true,
+      "skipFields": "abstract,rights,file,keywords,note,langid,urldate,issn"
+    }
+  },
+  "items": [
+    {
+      "abstractNote": "Almost all phenomena in the universe are described, at the fundamental level, by quantum manybody \nmodels. In general, however, a complete understanding of large systems with many degrees of \nfreedom is impossible. While in general many-body quantum systems are intractable, there are \nspecial cases for which there are techniques that allow for an exact solution. \nExactly soluble models are interesting because they are soluble; beyond this, they can be used to \ngain intuition for further reaching many-body systems, including when they can be leveraged to help \nwith numerical approximations for general models. The work presented in this thesis considers \nexactly soluble models of quantum many-body systems. \nThe first part of this thesis extends the family of many-body spin models for which we can find a freefermion \nsolution. \nA solution method that was developed for a specific free-fermion model is generalized in such a way \nthat allows application to a broader class of many-body spin system than was previously known to be \nfree. Models which admit a solution via this method are characterized by a graph theory invariants: in \nbrief it is shown that a quantum spin system has an exact description via non-interacting fermions if \nits frustration graph is claw-free and contains a simplicial clique. \nThe second part of this thesis gives an explicit example of how the usefulness of exactly soluble \nmodels can extend beyond the solution itself. This chapter pertains to the calculation of the \ntopological entanglement entropy in topologically ordered loop-gas states. Topological entanglement \nentropy gives an understanding of how correlations may extend throughout a system. In this chapter \nthe topological entanglement entropy of two- and three-dimensional loop-gas states is calculated in \nthe bulk and at the boundary. We obtain a closed form expression for the topological entanglement in \nterms of the anyonic theory that the models support.",
+      "accessDate": "2023-05-07T02:13:21Z",
+      "citationKey": "Elman2023",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Samuel",
+          "lastName": "Elman"
+        }
+      ],
+      "date": "2023",
+      "extra": [
+        "Accepted: 2023-04-24T06:25:00Z"
+      ],
+      "itemID": 1,
+      "itemType": "thesis",
+      "language": "en",
+      "libraryCatalog": "ses.library.usyd.edu.au",
+      "publisher": "University of Sydney",
+      "rights": "The author retains copyright of this thesis. It may only be used for the purposes of research and study. It must not be used for any other purposes and may not be transmitted or shared with others without prior permission.",
+      "tags": [
+        {
+          "tag": "_tablet"
+        }
+      ],
+      "title": "Exactly soluble models in many-body physics",
+      "type": "phdthesis",
+      "url": "https://hdl.handle.net/2123/31137"
+    },
+    {
+      "abstractNote": "Anyons, comprising a special type of particles that exhibit  braid statistics,\nhave received considerable attention in the past decade, from physicists,\nmathematicians, and computer scientists. It turns out that so-called modular\ntensor categories naturally appear in the description of the key properties of\nanyons, which partly explains the interest of mathematicians in the subject.\n\nIn this thesis, we study the way such modular tensor categories emerge in two\nclasses of models, viz. quantum field theory in low-dimensional Minkowski\nspace-time, and quantum spin systems on an infinite spatial lattice. Although\nthe nature of these two classes of models is quite different, we show in this\nthesis that they may both be discussed in a similar (mathematically rigorous)\nframework.  This approach is inspired by the work of Dpplicher, Haag and\nRoberts (DHR) in algebraic quantum field theory. \n\nThe DHR approach leads to braided tensor categories, which describe the charges\nin the theory (in our case, these are anyons). These categories need not be\nmodular. In this thesis we present a method to remove an obstruction for\nmodularity, in the case of a space-time of dimension three. We then study (a\nvariant of) Kitaev's toric code,  regarded as a quantum spin model on an\ninfinite lattice. Using techniques inspired by the DHR programme, we show that\none can obtain a modular tensor category describing all relevant properties of\nthe anyons in this system. Finally, some generalisations to non-abelian models\nare discussed.",
+      "accessDate": "2015-09-08T11:23:13Z",
+      "citationKey": "Naaijkens2012",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Pieter",
+          "lastName": "Naaijkens"
+        }
+      ],
+      "date": "2012",
+      "extra": [
+        "Dissertation"
+      ],
+      "itemID": 2,
+      "itemType": "thesis",
+      "libraryCatalog": "repository.ubn.ru.nl",
+      "publisher": "Radboud University",
+      "shortTitle": "Anyons in Infinite Quantum Systems",
+      "tags": [
+        {
+          "tag": "#LaTeX"
+        }
+      ],
+      "title": "Anyons in Infinite Quantum Systems: QFT in $d=2+1$ and the Toric Code",
+      "type": "phdthesis",
+      "url": "http://repository.ubn.ru.nl/handle/2066/92737"
+    },
+    {
+      "abstractNote": "We introduce Thompson field theory, a class of toy models of conformal field theory in which Thompson's group T takes the role of a discrete analogue of the chiral conformal group. T and the related group F are discrete transformations of dyadic partitions of the circle and the unit interval, respectively. When vectors or tensors are associated with partitions, one can construct a direct limit Hilbert space, here called the semicontinuous limit, and F and T have unitary representations on this space. We give an abstract description of these representations following the work of Jones. We also show that T can be thought of as acting on the boundary of an equal-time Poincaré disk in AdS3. This defines a representation of T on the Hilbert space that contains all tree-like holographic states, as introduced by Pastawski, Yoshida, Harlow, and Preskill. It also establishes a bulk-boundary correspondence through Imbert's isomorphism between T and Penner's Ptolemy group. We further propose definitions of field operators and correlation functions for the discrete theory. Finally, we sketch new developments like particle creation and annihilation, as well as black holes and possible connections with topological quantum field theory.",
+      "accessDate": "2020-07-24T02:51:04Z",
+      "citationKey": "Stiegemann2019",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Deniz Ekrem",
+          "lastName": "Stiegemann"
+        }
+      ],
+      "date": "2019",
+      "extra": [
+        "DOI: 10.15488/5127"
+      ],
+      "itemID": 3,
+      "itemType": "thesis",
+      "language": "eng",
+      "libraryCatalog": "DOI.org (Datacite)",
+      "rights": "CC BY 3.0 DE,",
+      "tags": [
+        {
+          "tag": "Dewey Decimal Classification::500 | Naturwissenschaften::530 | Physik",
+          "type": 1
+        },
+        {
+          "tag": "Feldtheorie",
+          "type": 1
+        },
+        {
+          "tag": "field theory",
+          "type": 1
+        },
+        {
+          "tag": "holografisches Prinzip",
+          "type": 1
+        },
+        {
+          "tag": "holographic principle",
+          "type": 1
+        },
+        {
+          "tag": "Thompson-Gruppen",
+          "type": 1
+        },
+        {
+          "tag": "Thompson's groups",
+          "type": 1
+        }
+      ],
+      "title": "Thompson Field Theory",
+      "type": "phdthesis",
+      "url": "https://www.repo.uni-hannover.de/handle/123456789/5172"
+    },
+    {
+      "ISSN": "0049-4704",
+      "abstractNote": "La teoria dei limiti semplicemente connessi è ulteriormente sviluppata introducendo l’analogo categoriale dello spazio di ricoprimento universale. Questa categoria del ricoprimento universale è utilizzata per dare una dimostrazione concettuale del fatto che i limiti connessi possono essere calcolati utilizzando prodotti fibrati ed equalizzatori. Si dimostra anche una proprietà fondamentale di esattezza della riflessione di gruppoidi per categorie: che essa preserva certi oggetti comma.",
+      "accessDate": "2016-08-05T16:50:39Z",
+      "citationKey": "Pare1993",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Robert",
+          "lastName": "Paré"
+        }
+      ],
+      "date": "1993",
+      "itemID": 4,
+      "itemType": "journalArticle",
+      "language": "en",
+      "libraryCatalog": "www.openstarts.units.it",
+      "pages": "391-411",
+      "publicationTitle": "Rendiconti dell’Istituto di Matematica dell’Università di Trieste",
+      "title": "Universal covering categories",
+      "url": "http://hdl.handle.net/10077/4715",
+      "volume": "25"
+    }
+  ]
+}

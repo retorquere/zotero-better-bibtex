@@ -1,41 +1,43 @@
 name: Bug Report/Feature request
 description: File a bug report or a feature request
 body:
-  - type: markdown
-    attributes:
-      value: |
-        Use this form if you think you want a change to BBT.
+- type: markdown
+  attributes:
+    value: |
+      Use this form if you want a change to BBT.
 
-        Alongside a description of your problem/question/feature suggestion, please also include a debug log ID.
+      Alongside a description of your problem/question/feature suggestion, please also include a debug log ID.
 
-        You can generate a debug log ID by:
-        1. reproducing the problem
-        2. selecting the problematic reference(s)
-        3. right-clicking them
-        4. choose `BBT debug log` from the popup menu.
+      You can generate a debug log ID by:
+      1. reproducing the problem
+      2. selecting the problematic reference(s)
+      3. right-clicking them
+      4. choose `BBT debug log` from the popup menu.
 
-        Please be available in the days following your report for follow-up questions and testing.
+      Please be available in the days following your report for follow-up questions and testing.
 
-        ## Please don't enter "N/A" in the debug log ID field.
+      ## Please **DO NOT** enter "N/A" or somesuch in the debug log ID field.
 
-        "N/A" is usually inaccurate (for bugs and feature requests alike); if you're unsure of its relevance, please generate one anyway. When you omit it, the issue bot will guide you on creating a debug log ID. Please carefully review that message. If you genuinely believe it doesn't apply, kindly explain why. Your cooperation is appreciated.
+      I am done explaining why this is needed. Just include one.
 
-        *If the regular debug log submission does not work, use "send to file.io" from the help menu.*
+      *If the regular debug log submission does not work, use "send to bashupload.com" from the help menu.*
 
-        If you are sure your question does not relate to items in your library at all, just select any one item in your library.
-  - type: input
-    id: debug-log
-    attributes:
-      label: Debug log ID
-      description: Please fill in an actual debug log ID here. Logs that look like `D<number>` are Zotero logs, `@retorquere` has no access to those. Better BibTeX Debug logs will end in `-euc` or `-apse`, and if you are sending item samples, there will be `-refs-` in the ID.
-      placeholder: ex. ABCD1234-ref-euc or nNwplUbkYrQu-ABCD1234 for file.io.
-    validations:
-      required: true
-  - type: textarea
-    id: request
-    attributes:
-      label: What happened?
-      description: and what did you expect to happen?
-      placeholder: Tell us what you see!
-    validations:
-      required: true
+      If you are sure your question does not relate to items in your library at all, just select any one item in your library.
+- type: input
+  id: debug-log
+  attributes:
+    label: Debug log ID
+    description: Please fill in an actual debug log ID here. The ID must have 
+      `-euc` or `-apse` in it.
+    placeholder: ex. ABCD1234-ref-euc or nNwplUbkYrQu-buc-ABCD1234 for 
+      bashupload.com.
+  validations:
+    required: true
+- type: textarea
+  id: request
+  attributes:
+    label: What happened?
+    description: and what did you expect to happen?
+    placeholder: Tell us what you see!
+  validations:
+    required: true

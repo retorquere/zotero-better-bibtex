@@ -7,8 +7,8 @@
       "exportNotes": true
     },
     "preferences": {
-      "citekeyFormat": "[auth][shorttitle][year]",
-      "kuroshiro": true
+      "citekeyFormat": "auth(n=0,m=1,creator=\"*\",initials=false).fold + shorttitle + year",
+      "japanese": true
     }
   },
   "items": [

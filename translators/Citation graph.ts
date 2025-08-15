@@ -2,8 +2,8 @@ declare const Zotero: any
 
 import { Collected } from './lib/collect'
 import { Translation } from './lib/translator'
-import type { Translators } from '../typings/translators.d.ts'
-declare var ZOTERO_TRANSLATOR_INFO: Translators.Header // eslint-disable-line no-var
+import type { Header } from '../gen/translators'
+declare var ZOTERO_TRANSLATOR_INFO: Header // eslint-disable-line no-var
 
 function node(id, attributes = {}) {
   let n = JSON.stringify(id)
@@ -50,7 +50,6 @@ export function doExport(): void {
 
     const author = []
     if (add.authors && ref.creators && ref.creators.length) {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
       const name = ref.creators?.map(creator => (creator.name || creator.lastName || '').replace(/"/g, '\'')).filter(creator => creator).join(', ')
       if (name) author.push(name)
     }

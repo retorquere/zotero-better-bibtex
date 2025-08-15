@@ -11,6 +11,7 @@ import javaproperties
 from pathlib import Path
 from html import escape
 import os
+import json
 
 params = {
   "entries": "{entries}",
@@ -81,3 +82,7 @@ for ftl in Path('locale').rglob('*/better-bibtex.ftl'):
     print(javaproperties.dumps(properties), file=props)
     for key, value in properties.items():
       print(f'<!ENTITY {key} "' + escape(value).replace('&#x27;', "'") + '">', file=dtd)
+
+    if '/en-US/' in str(ftl):
+      with open('gen/l10n.json', 'w') as f:
+        json.dump(list(properties.keys()), f, indent='  ')

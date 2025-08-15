@@ -1,3 +1,5 @@
+declare type IZoteroMarkupNode = any;
+
 export interface MarkupNode {
   nodeName: string
   childNodes?: IZoteroMarkupNode[]
@@ -9,6 +11,7 @@ export interface MarkupNode {
   nocase?: boolean
   relax?: boolean
   enquote?: boolean
+  tt?: boolean
 
   offset?: number
   titleCased?: number

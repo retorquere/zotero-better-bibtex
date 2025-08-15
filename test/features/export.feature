@@ -4,8 +4,6 @@ Feature: Export
   Background:
     Given I set the temp directory to "test/tmp"
 
-  # And I cap the total memory use to 1.1G
-  # And I cap the memory increase use to 100M
   @biblatex
   Scenario Outline: Export <references> references for BibLaTeX to <file>
     When I import <references> references from "export/<file>.json"
@@ -13,6 +11,20 @@ Feature: Export
 
     Examples:
       | file                                                                                                                     | references |
+      | Exclude series editor for biblatex-apa option #3284                                                                      | 1          |
+      | BetterBibLaTeX sets option useprefixtrue with no way to turn off #3281-1                                                 | 1          |
+      | BetterBibLaTeX sets option useprefixtrue with no way to turn off #3281-2                                                 | 1          |
+      | Export of greek mu incorrect #3276                                                                                       | 1          |
+      | AuthorsAlpha cannot properly deal with lastname with prefix like von van de  when generating a citekey #3272             | 1          |
+      | Handle HDL not included as eprint for biblatex #3250                                                                     | 4          |
+      | Duplicate note is not correctly commented out in biblatex output #3040                                                   | 1          |
+      | Embedding multiple formulas in a ternary expression doesnt work #3224                                                    | 1          |
+      | Wrong performance for exports Bibtex a becomes textbackslash a #3184                                                     | 1          |
+      | Split CJK names #2624                                                                                                    | 35         |
+      | Uncommented-out notes in the generated bib file #3176                                                                    | 1          |
+      # | Unexpected output result with quotation marks in Title field #1573                                                       | 1          |
+      | pmid versus pubmed #3146                                                                                                 | 1          |
+      | Ensure en-dash is used for volumeissue ranges in exported BibTeXBiBibTeX #3118                                           | 1          |
       | Add option to translate ii to mkbibemph instead of emph #3096                                                            | 1          |
       | Better BibLatex copied year column as string if  character is found #3067                                                | 1          |
       | Cannot change citation key formula #3058                                                                                 | 1          |
@@ -222,6 +234,7 @@ Feature: Export
 
     Examples:
       | file                                                                                                               | references |
+      | Wrong year field in Better BibTeX export #3244                                                                     | 1          |
       | Export field zoteroautoJournalAbbreviation only available when zoterojournalAbbreviation is empty #3046            | 2          |
       | export langid as language #2909                                                                                    | 1          |
       | Better BibTeX export from Zotero missing Extra fields eg issued #2816                                              | 1          |
@@ -373,9 +386,9 @@ Feature: Export
 
   @708 @957
   Scenario: Citekey generation failure #708 and sort references on export #957
-    When I set preference .citekeyFormat to "[auth.etal][shortyear:prefix,.][0][Title:fold:nopunct:skipwords:select,1,1:abbr:lower:alphanum:prefix,.]"
+    When I set preference .citekeyFormat to "authEtal2.fold + shortyear.prefix('.') + postfix('-%(n)s') + Title.transliterate.nopunct.skipwords.select(1,1).abbr.lower.alphanum.prefix('.')"
     And I import 6 references from "export/*.json"
-    And I set preference .citekeyFormat to "[auth:lower]_[veryshorttitle:lower]_[year]"
+    And I set preference .citekeyFormat to "auth.fold.lower + '_' + veryshorttitle.lower + '_' + year"
     And I import 6 references from "export/*.json"
     Then an export using "Better BibLaTeX" should match "export/*.biblatex"
 
@@ -459,7 +472,7 @@ Feature: Export
 
   @86 @bbt @arXiv
   Scenario: Include first name initial(s) in cite key generation pattern (86)
-    When I set preference .citekeyFormat to "[auth+initials][year]"
+    When I set preference .citekeyFormat to "auth(initials=true).fold + year"
     And I import 1 reference from "export/*.json"
     Then an export using "Better BibTeX" should match "export/*.bibtex"
 
@@ -511,7 +524,7 @@ Feature: Export
   # And a schomd bibtex request using '[["Berndt1994"],{"translator":"biblatex"}]' should match "export/*.schomd.json"
   @journal-abbrev @bbt
   Scenario: Journal abbreviations
-    Given I set preference .citekeyFormat to "[authors][year][journal]"
+    Given I set preference .citekeyFormat to "authorsn.fold + year + journal"
     # And I set preference .autoAbbrevStyle to "http://www.zotero.org/styles/cell"
     And I import 1 reference with 1 attachment from "export/*.json"
     Then an export using "Better BibTeX" with useJournalAbbreviation on should match "export/*.bibtex"
@@ -522,7 +535,7 @@ Feature: Export
 
   @81 @bbt
   Scenario: Journal abbreviations exported in bibtex (81)
-    Given I set preference .citekeyFormat to "[authors2][year][journal:nopunct]"
+    Given I set preference .citekeyFormat to "authorsn(n=2).fold + year + journal.nopunct"
     # And I set preference .autoAbbrevStyle to "http://www.zotero.org/styles/cell"
     And I import 1 reference from "export/*.json"
     Then an export using "Better BibTeX" with useJournalAbbreviation on should match "export/*.bibtex"
@@ -728,7 +741,7 @@ Feature: Export
     And I set preference .citekeyFormat to "authorsn(n=3,creator=\"*\",initials=false,sep=\" \").fold + shortyear"
     And I set preference .itemObserverDelay to 100
     And I set preference .keyConflictPolicy to "change"
-    And I set preference .kuroshiro to true
+    And I set preference .japanese to true
     And I set preference .skipFields to "abstract, copyright, googlebooks, "
     # And I select the library named "CCNLab"
     And I set export option exportNotes to true
@@ -766,10 +779,10 @@ Feature: Export
   @1495
   Scenario: use author dash separation rather than camel casing in citekey #1495
     Given I import 1 reference from "export/*.json"
-    When I set preference .citekeyFormat to "[authors2+-:lower]_[year]-[shorttitle:condense=-:lower]"
+    When I set preference .citekeyFormat to "authorsn(n=2,sep='-').fold.lower + '_' + year + '-' + shorttitle.condense('-').lower"
     And I refresh all citation keys
     Then an export using "Better BibTeX" should match "export/*.bibtex"
-    When I set preference .citekeyFormat to "[authors2:condense=-:lower]_[year]-[shorttitle:condense=-:lower]"
+    When I set preference .citekeyFormat to "authorsn(n=2).fold.condense('-').lower + '_' + year + '-' + shorttitle.condense('-').lower"
     And I refresh all citation keys
     Then an export using "Better BibTeX" should match "export/*.bibtex"
 
@@ -827,3 +840,27 @@ Feature: Export
     When I change biblatexAPA to true on the auto-export
     And I wait 15 seconds
     Then "~/autoexport.bib" should match "export/*.after.biblatex"
+
+  Scenario: OR pattern condenses input #2957
+    Given I import 1 reference from "export/*.json"
+    When I select the item with a field that contains "Valuations"
+    When I set preference .citekeyFormat to "(ShortTitle.condense(_) || Title.condense(_))"
+    And I refresh the citation key
+    Then the citation key should be "The_Theory_of_Classical_Valuations"
+    When I set preference .citekeyFormat to "(ShortTitle || Title).condense(_)"
+    And I refresh the citation key
+    Then the citation key should be "The_Theory_of_Classical_Valuations"
+    When I set preference .citekeyFormat to "(ShortTitle ? ShortTitle : Title).condense(_)"
+    And I refresh the citation key
+    Then the citation key should be "The_Theory_of_Classical_Valuations"
+
+  Scenario: refresh fails for pinned keys #3173
+    Given I import 1 reference from "export/*.json"
+    When I select the item with a field that contains "Quantum"
+    And I refresh the citation key
+    Then the citation key should be "DBLP:books/daglib/0032853"
+
+  Scenario: POST to pull-export #3258
+    Given I import 51 references from "export/*.json"
+    Then a pull-export from "/library;name:My%20Library/collection/Modelling%20methods/Classification.biblatex" with "export/*-skipauthor.preferences" should match "export/*-skipauthor.biblatex"
+    Then a pull-export from "/library;name:My%20Library/collection/Modelling%20methods/Classification.biblatex" with "export/*-skiptitle.preferences" should match "export/*-skiptitle.biblatex"

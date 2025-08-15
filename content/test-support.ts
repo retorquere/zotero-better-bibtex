@@ -9,16 +9,13 @@ import * as Extra from './extra'
 import { defaults } from '../gen/preferences/meta'
 import { Preference } from './prefs'
 import * as memory from './memory'
-import { is7 } from './client'
-import { Cache } from './db/cache'
-// import { Bench } from 'tinybench'
+import { Cache } from './translators/worker'
 
-import { Shim } from './os'
-const $OS = is7 ? Shim : OS
+// import { Bench } from 'tinybench'
 
 const setatstart: string[] = [ 'testing', 'cache' ].filter(p => Preference[p] !== defaults[p])
 
-const idleService: any = Components.classes[`@mozilla.org/widget/${ is7 ? 'user' : '' }idleservice;1`].getService(Components.interfaces[is7 ? 'nsIUserIdleService' : 'nsIIdleService'])
+const idleService: any = Components.classes['@mozilla.org/widget/useridleservice;1'].getService(Components.interfaces.nsIUserIdleService)
 
 export class TestSupport {
   public timedMemoryLog: any
@@ -94,7 +91,7 @@ export class TestSupport {
     return itemIDs.length
   }
 
-  public async importFile(path: string, createNewCollection: boolean, preferences: Record<string, number | boolean | string>): Promise<number> {
+  public async importFile(path: string, createNewCollection: boolean, preferences: Record<string, number | boolean | string>, bibstyle?: string): Promise<number> {
     preferences = preferences || {}
 
     for (let [ pref, value ] of Object.entries(preferences)) {
@@ -106,8 +103,7 @@ export class TestSupport {
 
     if (!path) return 0
 
-    let items = await Zotero.Items.getAll(Zotero.Libraries.userLibraryID, true, false, true)
-    const before = items.length
+    const before = await Zotero.Items.getAll(Zotero.Libraries.userLibraryID, true, false, true)
 
     if (path.endsWith('.aux')) {
       await AUXScanner.scan(path)
@@ -115,14 +111,21 @@ export class TestSupport {
       await Zotero.Promise.delay(1500)
     }
     else {
-      await Zotero.getMainWindow().Zotero_File_Interface.importFile({ file: Zotero.File.pathToFile(path), createNewCollection: !!createNewCollection })
+      await (Zotero.getMainWindow() as unknown as any).Zotero_File_Interface.importFile({ file: Zotero.File.pathToFile(path), createNewCollection: !!createNewCollection })
     }
 
-    items = await Zotero.Items.getAll(Zotero.Libraries.userLibraryID, true, false, true)
-    const after = items.length
+    await Zotero.Promise.delay(Zotero.Prefs.get('translators.better-bibtex.itemObserverDelay') as number * 3)
 
-    await Zotero.Promise.delay(Zotero.Prefs.get('translators.better-bibtex.itemObserverDelay') * 3)
-    return (after - before)
+    const after = await Zotero.Items.getAll(Zotero.Libraries.userLibraryID, true, false, true)
+
+    if (bibstyle) {
+      const items = await Zotero.Items.getAll(Zotero.Libraries.userLibraryID, true)
+      const cslEngine = Zotero.Styles.get(bibstyle).getCiteProc('en-US', 'text')
+      log.info(`${bibstyle}:\n${Zotero.Cite.makeFormattedBibliographyOrCitationList(cslEngine, items, 'text')}`)
+      cslEngine.free()
+    }
+
+    return (after.length - before.length)
   }
 
   public async exportLibrary(translatorID: string, displayOptions: Record<string, number | string | boolean>, path?: string, collectionName?: string): Promise<string> {
@@ -153,9 +156,7 @@ export class TestSupport {
   }
 
   public async dumpCache(filename: string): Promise<void> {
-    const encoder = (new TextEncoder)
-    const array = encoder.encode(JSON.stringify(await Cache.dump(), null, 2))
-    await $OS.File.writeAtomic(filename, array) as void
+    await IOUtils.writeUTF8(filename, JSON.stringify(await Cache.dump(), null, 2))
   }
 
   public async select(ids: number[]): Promise<boolean> {
@@ -191,7 +192,7 @@ export class TestSupport {
     const s = (new Zotero.Search)
     for (const [ mode, text ] of Object.entries(query)) {
       if (![ 'is', 'contains' ].includes(mode)) throw new Error(`unsupported search mode ${ mode }`)
-      s.addCondition('field', mode, text)
+      s.addCondition('field', mode as _ZoteroTypes.Search.Operator, text)
     }
     ids = ids.concat(await s.search())
     ids = Array.from(new Set(ids))
@@ -261,46 +262,22 @@ export class TestSupport {
   }
 
   public async resetCache(): Promise<void> {
-    await Cache.clear('*')
+    await Cache.drop()
   }
 
   public async merge(ids: number[]): Promise<void> {
     const before = await Zotero.Items.getAll(Zotero.Libraries.userLibraryID, true, false, true)
 
-    if (is7) {
-      let other = await getItemsAsync(ids)
-      const master = other.find(item => item.id === ids[0])
-      other = other.filter(item => item.id !== ids[0])
-      const json = master.toJSON()
-      // Exclude certain properties that are empty in the cloned object, so we don't clobber them
-      const { relations: _r, collections: _c, tags: _t, ...keep } = master.clone().toJSON() // eslint-disable-line @typescript-eslint/no-unused-vars
-      Object.assign(json, keep)
+    let other = await getItemsAsync(ids)
+    const master = other.find(item => item.id === ids[0])
+    other = other.filter(item => item.id !== ids[0])
+    const json = master.toJSON()
+    // Exclude certain properties that are empty in the cloned object, so we don't clobber them
+    const { relations: _r, collections: _c, tags: _t, ...keep } = master.clone().toJSON() // eslint-disable-line @typescript-eslint/no-unused-vars
+    Object.assign(json, keep)
 
-      master.fromJSON(json)
-      Zotero.Items.merge(master, other)
-    }
-    else {
-      const zoteroPane = Zotero.getActiveZoteroPane()
-      await zoteroPane.selectItems(ids, true)
-      const selected = zoteroPane.getSelectedItems()
-      if (selected.length !== ids.length) throw new Error(`selected: ${ selected.length }, expected: ${ ids.length }`)
-
-      // zoteroPane.mergeSelectedItems()
-
-      selected.sort((a, b) => ids.indexOf(a.id) - ids.indexOf(b.id))
-
-      const win = Zotero.getMainWindow()
-
-      if (!win.Zotero_Duplicates_Pane) {
-        Components.classes['@mozilla.org/moz/jssubscript-loader;1']
-          .getService(Components.interfaces.mozIJSSubScriptLoader)
-          .loadSubScript('chrome://zotero/content/duplicatesMerge.js', win)
-      }
-
-      win.Zotero_Duplicates_Pane.setItems(selected)
-      await Zotero.Promise.delay(1500)
-      await win.Zotero_Duplicates_Pane.merge()
-    }
+    master.fromJSON(json)
+    await Zotero.Items.merge(master, other)
 
     await Zotero.Promise.delay(1500)
 
@@ -332,6 +309,10 @@ export class TestSupport {
     if (collection.getChildItems(true).length) throw new Error(`${ path } not empty`)
   }
 
+  public citationKey(itemID: number): string {
+    return Zotero.BetterBibTeX.KeyManager.get(itemID).citationKey
+  }
+
   public async quickCopy(itemIDs: number[], translator: string): Promise<string> {
     const format = {
       mode: 'export',
@@ -356,6 +337,43 @@ export class TestSupport {
     // assumes only one auto-export is set up
     const path: string = AutoExport.all()[0].path
     AutoExport.edit(path, field, value)
+  }
+
+  public async keyPair(): Promise<string> {
+    const subtle = Zotero.getMainWindow().crypto.subtle
+
+    const keyPair = await subtle.generateKey({
+      name: 'RSA-OAEP',
+      modulusLength: 2048,
+      publicExponent: new Uint8Array([1, 0, 1]),
+      hash: 'SHA-256',
+    },
+    true,
+    ['encrypt', 'decrypt'])
+
+    function arrayBufferToBase64(buffer: ArrayBuffer): string {
+      let binary = ''
+      const bytes = new Uint8Array(buffer)
+      for (let i = 0; i < bytes.byteLength; i++) {
+        binary += String.fromCharCode(bytes[i])
+      }
+      return btoa(binary)
+    }
+
+    async function exportKeyToPem(key: CryptoKey): Promise<string> {
+      const exported = await subtle.exportKey(key.type === 'public' ? 'spki' : 'pkcs8', key)
+      const base64Key = arrayBufferToBase64(exported)
+        .replace(/(.{80})/g, '$1\n')
+
+      if (key.type === 'public') {
+        return `-----BEGIN PUBLIC KEY-----\n${base64Key}\n-----END PUBLIC KEY-----`
+      }
+      else {
+        return `-----BEGIN PRIVATE KEY-----\n${base64Key}\n-----END PRIVATE KEY-----`
+      }
+    }
+
+    return `${await exportKeyToPem(keyPair.publicKey)}\n${await exportKeyToPem(keyPair.privateKey)}`
   }
 
   /*

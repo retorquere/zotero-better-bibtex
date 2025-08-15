@@ -8,7 +8,7 @@
     },
     "preferences": {
       "autoExportDelay": 30,
-      "citekeyFormat": "[auth][shorttitle3_3][year]",
+      "citekeyFormat": "auth(n=0,m=1,creator=\"*\",initials=false).fold + shorttitle(3,3) + year",
       "extraMergeCSL": true,
       "extraMergeCitekeys": true,
       "extraMergeTeX": true,

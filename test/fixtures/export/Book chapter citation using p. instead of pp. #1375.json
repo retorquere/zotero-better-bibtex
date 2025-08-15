@@ -11,7 +11,7 @@
       "automaticTags": false,
       "bibtexURL": "url",
       "citeCommand": "citep",
-      "citekeyFormat": "[zotero:clean]",
+      "citekeyFormat": "zotero.clean",
       "keyScope": "global",
       "skipFields": "month"
     }
@@ -40,10 +40,10 @@
       "itemID": 1,
       "itemType": "bookSection",
       "notes": [
-        "<p>In Valkenburg (2016):</p>\n<p>Uses-and-grati\ufb01cations theory: Attempts to understand why and how people actively seek out speci\ufb01c media to satisfy speci\ufb01c needs</p>"
+        "<p>In Valkenburg (2016):</p>\n<p>Uses-and-gratiﬁcations theory: Attempts to understand why and how people actively seek out speciﬁc media to satisfy speciﬁc needs</p>"
       ],
       "pages": "269-286",
-      "publicationTitle": "The uses of mass communications: Current perspectives on grati\ufb01cations research",
+      "publicationTitle": "The uses of mass communications: Current perspectives on gratiﬁcations research",
       "publisher": "SAGE Publications",
       "title": "Uses and gratifications: A paradigm outlined"
     }

@@ -5,9 +5,9 @@
     "localeDateOrder": "ymd",
     "options": {},
     "preferences": {
-      "citekeyFormat": "[auth][shorttitle][year]",
+      "citekeyFormat": "auth(n=0,m=1,creator=\"*\",initials=false).fold + shorttitle + year",
       "itemObserverDelay": 100,
-      "kuroshiro": true
+      "japanese": true
     }
   },
   "items": [

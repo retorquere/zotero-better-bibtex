@@ -10,7 +10,7 @@
       "asciiBibTeX": false,
       "biblatexExtendedNameFormat": true,
       "bibtexURL": "url",
-      "citekeyFormat": "[auth:lower][year]",
+      "citekeyFormat": "auth(n=0,m=1,creator=\"*\",initials=false).fold.lower + year",
       "postscript": "if (Translator.BetterBibTeX && item.itemType === 'conferencePaper' && item.extra) {\n    const lines = item.extra.split('\\n')\n    for (let line of lines) {\n        let matches = /^([A-Za-z0-9]+): *(.+)$/.exec(line)\n        if (matches === null || matches[1] !== 'Sponsor') {\n            continue\n        }\n        reference.add({name: 'organization', value: matches[2]})\n    }\n}\n\n//if (Translator.BetterBibTeX && item.itemType === 'conferencePaper' && item.extra && item.publisher) {\n//  Zotero.debug(JSON.stringify(item))\n//\n//    var event_place = ''\n//    var publisher_place = ''\n//\n//    const lines = item.extra.split('\\n')\n//    for (let line of lines) {\n//        let matches = /^([A-Za-z0-9]+): *(.+)$/.exec(line)\n//        if (matches !== null && matches[1] === 'Event Place') {\n//            event_place = matches[2]\n//        } else if (matches !== null && matches[1] === 'Publisher Place') {\n//            publisher_place = matches[2]\n//        }\n//    }\n//\n//    if (event_place !== '' && publisher_place !== '') {\n//        reference.add({name: 'address', value: event_place})\n//        reference.add({name: 'publisher', value: item.publisher + ', ' + publisher_place})\n//    }\n//}",
       "skipFields": "abstract,file,keywords,note"
     }
@@ -44,7 +44,7 @@
         },
         {
           "creatorType": "editor",
-          "firstName": "Jos\u00e9",
+          "firstName": "José",
           "lastName": "Blakeley"
         },
         {
@@ -70,7 +70,7 @@
         {
           "creatorType": "editor",
           "firstName": "Uwe",
-          "lastName": "R\u00f6hm"
+          "lastName": "Röhm"
         }
       ],
       "date": "2011",
@@ -84,7 +84,7 @@
       "itemType": "conferencePaper",
       "language": "en-US",
       "libraryCatalog": "ACM Digital Library",
-      "pages": "231\u2013242",
+      "pages": "231–242",
       "place": "United States of America",
       "publicationTitle": "Proceedings of the VLDB Endowment",
       "publisher": "VLDB Endowment",

@@ -1,9 +1,19 @@
-checkbox(preference="extensions.zotero.translators.better-bibtex.importBibTeXStrings" label="&better-bibtex_preferences_export_fields_import-strings.label;")
-label(bbt:preference="extensions.zotero.translators.better-bibtex.exportBibTeXStrings") &better-bibtex_preferences_export_fields_export-strings;
-menulist(preference="extensions.zotero.translators.better-bibtex.exportBibTeXStrings")
+checkbox(
+  data-l10n-id='better-bibtex_preferences_export_fields_import-strings'
+  preference='extensions.zotero.translators.better-bibtex.importBibTeXStrings'
+  native='true'
+)
+
+label(
+  data-l10n-id='better-bibtex_preferences_export_fields_export-strings'
+  bbt:preference='extensions.zotero.translators.better-bibtex.exportBibTeXStrings'
+)
+
+menulist(preference='extensions.zotero.translators.better-bibtex.exportBibTeXStrings', native='true')
   menupopup
-    menuitem(value='off' label='&better-bibtex_preferences_export_fields_export-strings_off.label;')
-    menuitem(value='detect' label='&better-bibtex_preferences_export_fields_export-strings_detect.label;')
-    menuitem(value='match' label='&better-bibtex_preferences_export_fields_export-strings_match.label;')
-    menuitem(value='match+reverse' label='&better-bibtex_preferences_export_fields_export-strings_match_reverse.label;')
-textbox(rows='10' multiline='true' preference='extensions.zotero.translators.better-bibtex.strings')
+    menuitem(data-l10n-id='better-bibtex_preferences_export_fields_export-strings_off', value='off')
+    menuitem(data-l10n-id='better-bibtex_preferences_export_fields_export-strings_detect', value='detect')
+    menuitem(data-l10n-id='better-bibtex_preferences_export_fields_export-strings_match', value='match')
+    menuitem(data-l10n-id='better-bibtex_preferences_export_fields_export-strings_match_reverse', value='match+reverse').
+
+html:textarea(preference='extensions.zotero.translators.better-bibtex.strings', cols='80', rows='10')

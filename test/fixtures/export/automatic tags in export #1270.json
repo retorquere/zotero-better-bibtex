@@ -8,10 +8,10 @@
     },
     "preferences": {
       "automaticTags": false,
-      "citekeyFormat": "[auth][shorttitle][year]",
+      "citekeyFormat": "auth(n=0,m=1,creator=\"*\",initials=false).fold + shorttitle + year",
       "importCaseProtection": "off",
       "itemObserverDelay": 100,
-      "kuroshiro": true
+      "japanese": true
     }
   },
   "items": [

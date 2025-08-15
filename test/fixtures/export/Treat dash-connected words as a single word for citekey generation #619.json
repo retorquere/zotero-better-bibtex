@@ -12,7 +12,7 @@
       "biblatexExtendedDateFormat": false,
       "bibtexURL": "url",
       "citeCommand": "autocite",
-      "citekeyFormat": "[authors2:postfix,_][year:postfix,_][Title:skipwords:nopunct:select,1:condense,_]",
+      "citekeyFormat": "authorsn(n=2,creator=\"*\",initials=false,sep=\" \").fold.postfix(_) + year.postfix(_) + Title.skipwords.nopunct.select(1).condense(_)",
       "itemObserverDelay": 100,
       "keyConflictPolicy": "change",
       "postscript": "if (this.item.DOI) {\n  var doi = this.item.DOI;\n  if (doi.indexOf('doi:') != 0) { doi = 'doi:' + doi; }\n  this.add({ name: 'note', duplicate: true, value: '[' + doi + ']' });\n}",

@@ -1,5 +1,5 @@
 declare const Zotero: any
-import type { Translators } from '../../typings/translators.d.ts'
+import type { Header } from '../../gen/translators'
 import { RegularItem, Item, Collection } from '../../gen/typings/serialized-item'
 import { displayOptions, DisplayOptions } from '../../gen/translators'
 import type { Preferences } from '../../gen/preferences/meta'
@@ -165,7 +165,7 @@ export class Collected {
   public Item: any
   public Collection: any
 
-  constructor(public translator: Translators.Header, mode: 'import' | 'export') {
+  constructor(public translator: Header, mode: 'import' | 'export') {
     switch (mode) {
       case 'export':
         this.items = new Items

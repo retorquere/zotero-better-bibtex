@@ -4,9 +4,28 @@
 
 declare const Zotero: any
 
-import { RegularItem as Item } from '../../gen/typings/serialized-item'
-import type { ExportedItemMetadata } from '../../content/db/cache'
-import type { Translators } from '../../typings/translators'
+import { RegularItem as Item, Attachment, Tag } from '../../gen/typings/serialized-item'
+
+export type Field = {
+  name: string
+  verbatim?: string
+  value: string | string[] | number | null | Attachment[] | Tag[]
+  enc?: 'raw' | 'url' | 'verbatim' | 'creators' | 'literal' | 'literal_list' | 'latex' | 'tags' | 'attachments' | 'date' | 'minimal' | 'bibtex' | 'biblatex' | 'extra'
+  orig?: { name?: string; verbatim?: string; inherit?: boolean }
+  bibtexStrings?: boolean
+  bare?: boolean
+  raw?: boolean
+
+  // kept as seperate booleans for backwards compat
+  replace?: boolean
+  fallback?: boolean
+
+  html?: boolean
+
+  bibtex?: string
+}
+
+import type { ExportedItemMetadata } from '../../content/worker/cache'
 import * as DateParser from '../../content/dateparser'
 import fold2ascii from 'fold-to-ascii'
 
@@ -170,8 +189,9 @@ export class Entry {
   public eprintType = {
     arxiv: 'arXiv',
     jstor: 'JSTOR',
-    pubmed: 'PMID',
-    hdl: 'HDL',
+    pmid: 'pubmed',
+    pmcid: 'pubmed',
+    hdl: 'hdl',
     googlebooks: 'GoogleBooksID',
   }
 
@@ -208,16 +228,16 @@ export class Entry {
   constructor(item, config: Config, translation: Translation) {
     if (!this.re) {
       Entry.prototype.re = {
-        // private nonLetters: new Zotero.Utilities.XRegExp('[^\\p{Letter}]', 'g')
-        punctuationAtEnd: new Zotero.Utilities.XRegExp('[\\p{Punctuation}]$'),
-        startsWithLowercase: new Zotero.Utilities.XRegExp('^[\\p{Ll}]'),
-        hasLowercaseWord: new Zotero.Utilities.XRegExp('\\s[\\p{Ll}]'),
-        whitespace: new Zotero.Utilities.XRegExp('[\\p{Zs}]+'),
-        nonwordish: new Zotero.Utilities.XRegExp('[^\\p{L}\\p{N}]', 'g'),
-        leadingUppercase: new Zotero.Utilities.XRegExp('^(\\p{Lu})(\\p{Lu}*)(\\p{Ll}.*)'),
-        initials: new Zotero.Utilities.XRegExp('^(\\p{L}+\\.\\s*)+$'),
-        longInitials: new Zotero.Utilities.XRegExp('\\p{L}{2}\\.'),
-        allCaps: new Zotero.Utilities.XRegExp('^\\p{Lu}{2,}$'),
+        // private nonLetters: /[^\p{Letter}]/ug,
+        punctuationAtEnd: /[\p{Punctuation}]$/u,
+        startsWithLowercase: /^[\p{Ll}]/u,
+        hasLowercaseWord: /\s[\p{Ll}]/u,
+        whitespace: /[\p{Zs}]+/ug,
+        nonwordish: /[^\p{L}\p{N}]/ug,
+        leadingUppercase: /^(\p{Lu})(\p{Lu}*)(\p{Ll}.*)/u,
+        initials: /^(\p{L}+\.\s*)+$/u,
+        longInitials: /\p{L}{2}\./u,
+        allCaps: /^\p{Lu}{2,}$/u,
       }
     }
 
@@ -234,7 +254,7 @@ export class Entry {
       this.english = BabelTag[this.language] === 'en'
     }
 
-    this.extraFields = JSON.parse(JSON.stringify(item.extraFields))
+    this.extraFields = structuredClone(item.extraFields)
 
     // should be const entrytype: string | { type: string, subtype?: string }
     // https://github.com/Microsoft/TypeScript/issues/10422
@@ -308,6 +328,9 @@ export class Entry {
         delete item.extraFields.creator[name]
       }
     }
+    for (const creator of item.creators) {
+      creator.useprefix = this.translation.collected.preferences.biblatexUsePrefix
+    }
 
     if (this.translation.collected.preferences.jabrefFormat) {
       if (this.translation.collected.preferences.testing) {
@@ -376,16 +399,26 @@ export class Entry {
     let m
     if (m = this.item.url.match(/^https?:\/\/www.jstor.org\/stable\/([\S]+)$/i)) {
       this.add({ name: 'eprinttype', value: 'jstor' })
-      this.add({ name: 'eprint', value: m[1].replace(/\?.*/, '') })
+      this.add({ name: 'eprint', value: decodeURI(m[1].replace(/\?.*/, '')) })
     }
     else if (m = this.item.url.match(/^https?:\/\/books.google.com\/books?id=([\S]+)$/i)) {
       this.add({ name: 'eprinttype', value: 'googlebooks' })
-      this.add({ name: 'eprint', value: m[1] })
+      this.add({ name: 'eprint', value: decodeURI(m[1]) })
     }
-    else if (m = this.item.url.match(/^https?:\/\/www.ncbi.nlm.nih.gov\/pubmed\/([\S]+)$/i)) {
+    else if (m = this.item.url.match(/^https?:\/\/www.ncbi.nlm.nih.gov\/pubmed\/(\d+)/i)) {
       this.add({ name: 'eprinttype', value: 'pubmed' })
       this.add({ name: 'eprint', value: m[1] })
     }
+    else if (m = this.item.url.match(/^https?:[/][/]hdl[.]handle[.]net[/]([^/]+[/].+)$/i)) {
+      this.add({ name: 'eprinttype', value: 'hdl' })
+      this.add({ name: 'eprint', value: decodeURI(m[1]) })
+    }
+    /*
+    else if (m = this.item.url.match(/[/]handle[/]([^/]+[/].+)$/)) {
+      this.add({ name: 'eprinttype', value: 'hdl' })
+      this.add({ name: 'eprint', value: decodeURI(m[1]) })
+    }
+    */
     else {
       return false
     }
@@ -398,13 +431,15 @@ export class Entry {
   private valueish(value) {
     switch (typeof value) {
       case 'number': return `${ value }`
-      case 'string': return Zotero.Utilities.XRegExp.replace(value, this.re.nonwordish, '', 'all').toLowerCase()
+      case 'string': return value.replace(this.re.nonwordish, '').toLowerCase()
       default: return ''
     }
   }
 
   /** normalize dashes, mainly for use in `pages` */
-  public normalizeDashes(ranges: string): string {
+  public normalizeDashes(ranges: string | number): string {
+    if (typeof ranges === 'number') return `${ranges}`
+
     ranges = (ranges || '').trim()
 
     if (this.item.raw) return ranges
@@ -432,7 +467,7 @@ export class Entry {
    *   'enc' means 'enc_literal'. If you pass both 'bibtex' and 'value', 'bibtex' takes precedence (and 'value' will be
    *   ignored)
    */
-  public add(field: Translators.BibTeX.Field): string {
+  public add(field: Field): string {
     if (this.translation.collected.preferences.testing && !this.inPostscript && field.name !== field.name.toLowerCase()) {
       throw new Error(`Do not add mixed-case field ${ field.name }`)
     }
@@ -506,7 +541,7 @@ export class Entry {
 
       if (!this.inPostscript && !field.replace) {
         const value = field.bibtex ? 'bibtex' : 'value'
-        throw new Error(`duplicate field '${ field.name }' for ${ this.item.citationKey }: old: ${ this.has[field.name][value] }, new: ${ field[value] }`)
+        throw new Error(`duplicate field '${ field.name }' for ${ this.item.citationKey }: old: ${ this.has[field.name][value] }, new: ${ field[value] as string }`)
       }
 
       if (!field.replace) {
@@ -516,7 +551,10 @@ export class Entry {
           v_old = v_old.toLowerCase()
           v_new = v_new.toLowerCase()
         }
-        if (v_old !== v_new) this.quality_report.push(`duplicate "${ field.name }" ("${ this.has[field.name].value }") ignored`)
+        if (v_old !== v_new) {
+          if (typeof v_old === 'string') v_old = v_old.replace(/[\r\n]+/g, ' ')
+          this.quality_report.push(`duplicate "${ field.name }" ("${ v_old }") ignored`)
+        }
       }
 
       delete this.has[field.name]
@@ -525,7 +563,7 @@ export class Entry {
     if (!field.bibtex) {
       let bibstring = ''
       if ((typeof field.value === 'number') || (field.bibtexStrings && (bibstring = this.getBibString(field.value)))) {
-        field.bibtex = `${ bibstring || field.value }`
+        field.bibtex = `${ bibstring || field.value as string }`
       }
       else {
         let value
@@ -634,7 +672,7 @@ export class Entry {
 
   public hasCreator(type): boolean { return (this.item.creators || []).some(creator => creator.creatorType === type) }
 
-  public override(field: Translators.BibTeX.Field): void {
+  public override(field: Field): void {
     const itemtype_name = field.name.split('.')
     let name
     if (itemtype_name.length === 2) {
@@ -982,7 +1020,7 @@ export class Entry {
   protected _enc_creators_scrub_name(name: string): string {
     name = name.replace(/uFFFC/g, '') // these should never appear
     name = name.replace(/\u00A0/g, '\uFFFC') // safeguard non-breaking spaces -- the only non-space space-ish allowed in names (see #859)
-    name = Zotero.Utilities.XRegExp.replace(name, this.re.whitespace, ' ', 'all') // all the rest must go
+    name = name.replace(this.re.whitespace, ' ') // all the rest must go
     name = name.replace(/\uFFFC/g, '\u00A0') // restore non-breaking spaces
     return name
   }
@@ -1013,13 +1051,14 @@ export class Entry {
         name = {
           family: this._enc_creators_scrub_name(creator.lastName || ''),
           given: this._enc_creators_scrub_name(creator.firstName || ''),
+          useprefix: creator.useprefix,
         }
 
         if (this.translation.collected.preferences.parseParticles) CSL.parseParticles(name)
 
         if (!this.translation.BetterBibLaTeX || !this.translation.collected.preferences.biblatexExtendedNameFormat) {
           // side effects to set use-prefix/uniorcomma -- make sure addCreators is called *before* adding 'options'
-          if (!this.useprefix) this.useprefix = !!name['non-dropping-particle']
+          this.useprefix = this.useprefix || (creator.useprefix && name['non-dropping-particle'])
           if (!this.juniorcomma) this.juniorcomma = (f.juniorcomma && name['comma-suffix'])
         }
 
@@ -1069,7 +1108,7 @@ export class Entry {
     if (!list.length) return null
     return list
       .map(elt => typeof elt === 'string' ? elt : `${ elt }`)
-      .map(elt => this.enc_literal({ ...f, value: elt.match(/(^| )and( |$)/) ? new String(elt) : elt }), options)
+      .map(elt => this.enc_literal({ ...f, value: elt.match(/(^| )and( |$)/) ? new String(elt) : elt }, options))
       .join(' and ')
   }
 
@@ -1154,7 +1193,6 @@ export class Entry {
       from.shift()
       to.shift()
     }
-    // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
     return `..${ this.translation.paths.sep }`.repeat(from.length) + to.join(this.translation.paths.sep)
   }
 
@@ -1226,7 +1264,7 @@ export class Entry {
     if (particle[particle.length - 1] === ' ') return particle
 
     if (this.translation.BetterBibLaTeX) {
-      if (Zotero.Utilities.XRegExp.test(particle, this.re.punctuationAtEnd)) this.metadata.DeclarePrefChars += particle[particle.length - 1]
+      if (particle.match(this.re.punctuationAtEnd)) this.metadata.DeclarePrefChars += particle[particle.length - 1]
       // if BBLT, always add a space if it isn't there
       return `${ particle } `
     }
@@ -1237,7 +1275,7 @@ export class Entry {
     if (particle[particle.length - 1] === '.') return `${ particle } `
 
     // if it ends in any other punctuation, it's probably something like d'Medici -- no space
-    if (Zotero.Utilities.XRegExp.test(particle, this.re.punctuationAtEnd)) {
+    if (particle.match(this.re.punctuationAtEnd)) {
       if (relax) return `${ particle }${ enc_creators_marker.relax } `
       return particle
     }
@@ -1249,7 +1287,7 @@ export class Entry {
   private detectInitials(name: { given?: string; initials?: string }) {
     if (!name.given) return
 
-    if (Zotero.Utilities.XRegExp.exec(name.given, this.re.allCaps) || (Zotero.Utilities.XRegExp.exec(name.given, this.re.initials) && Zotero.Utilities.XRegExp.exec(name.given, this.re.longInitials))) {
+    if (name.given.match(this.re.allCaps) || (name.given.match(this.re.initials) && name.given.match(this.re.longInitials))) {
       name.initials = name.given
       return
     }
@@ -1260,7 +1298,7 @@ export class Entry {
     let given = ''
     let multiChar = ''
     for (const part of name.given.split(/\s+/)) {
-      const m = Zotero.Utilities.XRegExp.exec(part, this.re.leadingUppercase)
+      const m = part.match(this.re.leadingUppercase)
       if (!m) return { given }
       multiChar = multiChar || m[2]
 
@@ -1281,13 +1319,13 @@ export class Entry {
 
     let initials: string
     if (name.given === name.initials) {
-      if (Zotero.Utilities.XRegExp.exec(name.given, this.re.allCaps)) {
+      if (name.given.match(this.re.allCaps)) {
         name.given = `<span relax="true">${ name.given }</span>`
       }
       else {
         name.given = name.given.split(' ')
           .map((initial: string) => {
-            if (Zotero.Utilities.XRegExp.exec(initial, this.re.longInitials)) {
+            if (initial.match(this.re.longInitials)) {
               return `<span relax="true">${ initial.replace(/[.]$/, '') }</span>${ initial.endsWith('.') ? '.' : '' }`
             }
             else {
@@ -1310,7 +1348,7 @@ export class Entry {
     return (part instanceof String) ? (new String(`{${ latex }}`) as string) : latex
   }
 
-  private _enc_creators_biblatex(name: { family?: string; given?: string; suffix?: string; initials?: string }): string {
+  private _enc_creators_biblatex(name: { family?: string; given?: string; suffix?: string; initials?: string; useprefix: boolean }): string {
     let family: string | String
     if ((name.family.length > 1) && (name.family[0] === '"') && (name.family[name.family.length - 1] === '"')) {
       family = new String(name.family.slice(1, -1))
@@ -1338,24 +1376,24 @@ export class Entry {
       if (family) namebuilder.push(`family=${ this._enc_creator_part(family) }`)
       if (name.given) namebuilder.push(`given=${ this._enc_creator_part(name.given) }`)
       if (name.initials) {
-        const initials = Zotero.Utilities.XRegExp.exec(name.initials, this.re.allCaps)
+        const initials = name.initials.match(this.re.allCaps)
           ? name.initials
           : name.initials
-            .split(/[\s.]+/)
-            .map(initial => initial.length > 1 ? `<span class="nocase">${ initial }</span>` : initial)
-            .join('')
+              .split(/[\s.]+/)
+              .map(initial => initial.length > 1 ? `<span class="nocase">${ initial }</span>` : initial)
+              .join('')
         namebuilder.push(`given-i=${ this._enc_creator_part(initials) }`)
       }
       if (name.suffix) namebuilder.push(`suffix=${ this._enc_creator_part(name.suffix) }`)
       if (name['dropping-particle'] || name['non-dropping-particle']) {
         namebuilder.push(`prefix=${ this._enc_creator_part(name['dropping-particle'] || name['non-dropping-particle']) }`)
-        namebuilder.push(`useprefix=${ !!name['non-dropping-particle'] }`)
+        if (name.useprefix) namebuilder.push(`useprefix=${ !!name['non-dropping-particle'] }`)
       }
       if (name['comma-suffix']) namebuilder.push('juniorcomma=true')
       return namebuilder.join(', ')
     }
 
-    if (family && Zotero.Utilities.XRegExp.test(family, this.re.startsWithLowercase)) family = new String(family)
+    if (family && family.match(this.re.startsWithLowercase)) family = new String(family)
 
     if (family) family = this._enc_creator_part(family)
 
@@ -1396,9 +1434,8 @@ export class Entry {
       in the label, use {\relax van} Gogh or something like this.
     */
 
-    // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
     if (name['non-dropping-particle']) family = new String(this._enc_creators_pad_particle(name['non-dropping-particle']) + family)
-    if (Zotero.Utilities.XRegExp.test(family, this.re.startsWithLowercase) || Zotero.Utilities.XRegExp.test(family, this.re.hasLowercaseWord)) family = new String(family)
+    if (family.match(this.re.startsWithLowercase) || family.match(this.re.hasLowercaseWord)) family = new String(family)
 
     // https://github.com/retorquere/zotero-better-bibtex/issues/978 -- enc_literal can return null
     family = family ? this._enc_creator_part(family) : ''
@@ -1489,7 +1526,7 @@ export class Entry {
 
     report = report.concat(this.quality_report)
 
-    let used_values: Array<string | number> = Object.values(this.has) // eslint-disable-line @typescript-eslint/array-type
+    let used_values: Array<string | number> = Object.values(this.has)
       .filter(field => typeof field.value === 'string' || typeof field.value === 'number')
       .map(field => `${ field.value }`)
       .filter(value => value)

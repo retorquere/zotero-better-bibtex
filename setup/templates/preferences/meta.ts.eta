@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/quotes, max-len, quote-props, comma-dangle, eol-last */
+/* eslint-disable @stylistic/member-delimiter-style, @stylistic/quotes, max-len, @stylistic/quote-props, comma-dangle, eol-last */
 <%
 function stringify(o, indent=true) {
   return JSON.stringify(o, null, indent ? 2 : undefined)
@@ -7,7 +7,7 @@ function stringify(o, indent=true) {
 
 export type Preferences = {
 <% for (const pref of it.preferences) { %>
-  <%=pref.shortName %>: <%~ pref.valid %>
+  <%=pref.name %>: <%~ pref.valid %>
 
 <% } %>
 }
@@ -15,14 +15,14 @@ export type PreferenceName = keyof Preferences
 
 export const defaults: Preferences = {
 <% for (const pref of it.preferences) { %>
-  <%= pref.shortName %>: <%~ stringify(pref.shortName === 'citekeyFormat' ? pref.default.replace('\u200b', '') : pref.default, false) %>,
+  <%= pref.name %>: <%~ stringify(pref.name === 'citekeyFormat' ? pref.default.replace('\u200b', '') : pref.default, false) %>,
 <% } %>
 }
 
 export const affects: Partial<Record<PreferenceName, string[]>> = <%~ stringify(
   it
   .preferences
-  .reduce((acc, p) => { if (p.affects && p.affects.length) acc[p.shortName] = p.affects; return acc}, {})
+  .reduce((acc, p) => { if (p.affects && p.affects.length) acc[p.name] = p.affects; return acc}, {})
 ) %>
 
 export const affectedBy: Record<string, PreferenceName[]> = <%~ stringify(
@@ -31,7 +31,7 @@ export const affectedBy: Record<string, PreferenceName[]> = <%~ stringify(
   .reduce((acc, p) => {
     for (const tr of (p.affects || [])) {
       acc[tr] = acc[tr] || []
-      acc[tr].push(p.shortName)
+      acc[tr].push(p.name)
     }
     return acc
   }, { 'BetterBibTeX JSON': []})
@@ -42,7 +42,7 @@ export const options: Partial<Record<PreferenceName, Record<string, string>>> = 
   it
   .preferences
   .reduce((acc, pref) => {
-    if (pref.options) acc[pref.shortName] = [...pref.options.entries()].reduce((acc, [k, v]) => Object.assign(acc, {[k]: v}), {})
+    if (pref.options) acc[pref.name] = [...pref.options.entries()].reduce((acc, [k, v]) => Object.assign(acc, {[k]: v}), {})
     return acc
   }, {})
 ) %>
@@ -56,7 +56,7 @@ for (const header of it.translators) {
 
   autoExport[header.translatorID] = {
     options: Object.keys(header.displayOptions).filter(o => it.displayOptions.includes(o)),
-    preferences: overrides.filter(p => p.affects.includes(header.label)).map(p => p.shortName),
+    preferences: overrides.filter(p => p.affects.includes(header.label)).map(p => p.name),
   }
 }
 

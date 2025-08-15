@@ -9,7 +9,7 @@
     "preferences": {
       "asciiBibTeX": false,
       "automaticTags": false,
-      "citekeyFormat": "[=journalArticle][shorttitle][date=%oY] | [=forumPost][shorttitle][Date:format-date=%Y-%m-%d.%H\\:%M:prefix=-] | [shorttitle][origyear:prefix=-]",
+      "citekeyFormat": "type(journalArticle) + shorttitle + date(\"%oY\");\ntype(forumPost) + shorttitle + Date.formatDate(\"%Y-%m-%d.%H:%M\").prefix(\"-\");\nshorttitle + origyear.prefix(\"-\");",
       "keyScope": "global",
       "quickCopyMode": "orgRef",
       "warnBulkModify": 0
@@ -23,7 +23,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "lastName": "austad\u00edsimos"
+          "lastName": "austadísimos"
         }
       ],
       "date": "2020-04-11T08:09:10",
@@ -39,7 +39,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "lastName": "austad\u00edsimos"
+          "lastName": "austadísimos"
         }
       ],
       "date": "2020-04-11T08:09:10",
@@ -55,7 +55,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "lastName": "austad\u00edsimos"
+          "lastName": "austadísimos"
         }
       ],
       "date": "2020",

@@ -1,6 +1,5 @@
 ---
 aliases:
-  - /Configuration
   - /configuration
 tags:
   - configuration
@@ -14,9 +13,11 @@ weight: 10
 
 ## Active citation key formula
 
-default: `auth.lower + shorttitle(3,3) + year`
+default: ` auth.lower + shorttitle(3,3) + year`
 
 Set the pattern used to generate citation keys. The format of the keys is documented [here]({{ ref . "citing" }}).
+Changing this setting *does not* affect existign keys - for this you would need to select the items and refresh the keys.
+
 
 
 ## Force citation key to plain text
@@ -96,6 +97,13 @@ When on, BBT will load kuroshiro for romajization in citation keys. This uses a 
 default: `no`
 
 When on, BBT will make Chinese word segmentation (jieba) and transliteration (pinyin) available for citation keys generation. This uses a lot of memory, easily 70MB, and adds several seconds to the startup time of BBT. If you don't have Chinese titles/names, keep this off.
+
+
+### Split all Chinese-like single-field names, unless the item's language is set to Japanese and Japanese support is enabled.
+
+default: `yes`
+
+Split all Chinese-like single-field names.
 
 
 ## Warn me when changing citation keys in bulk

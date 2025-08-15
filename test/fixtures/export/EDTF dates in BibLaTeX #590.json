@@ -9,7 +9,7 @@
     "preferences": {
       "autoAbbrevStyle": "http://www.zotero.org/styles/cell",
       "autoExport": "idle",
-      "citekeyFormat": "[Auth:condense,_:lower]_[year]_[veryshorttitle:lower]"
+      "citekeyFormat": "auth(n=0,m=1,creator=\"*\",initials=false).condense(_).lower + \"_\" + year + \"_\" + veryshorttitle.lower"
     }
   },
   "items": [

@@ -14,7 +14,7 @@ import urllib
 import requests
 import tempfile
 from munch import *
-from steps.utils import running, nested_dict_iter, benchmark, ROOT, assert_equal_diff, serialize, html2md, clean_html
+from steps.utils import running, nested_dict_iter, benchmark, ROOT, FIXTURES, EXPORTED, assert_equal_diff, serialize, html2md, clean_html
 from steps.library import load as cleanlib, sortbib
 import steps.utils as utils
 import shutil
@@ -43,9 +43,6 @@ import zipfile
 from ruamel.yaml import YAML
 yaml = YAML(typ='safe')
 yaml.default_flow_style = False
-
-EXPORTED = os.path.join(ROOT, 'exported')
-FIXTURES = os.path.join(ROOT, 'test/fixtures')
 
 #with open(os.path.join(ROOT, 'schema', 'BetterBibTeX JSON.json')) as f:
 #  bbt_json_schema = json.load(f)
@@ -183,6 +180,7 @@ class Config:
 
 class Library:
   def __init__(self, path=None, body=None, client=None, variant='', ext=None):
+    #utils.print(f'\n\npath={path}, body={type(body)}, client={type(client)}, variant={variant}, ext={ext}')
     if path and not os.path.isabs(path):
       path = os.path.join(FIXTURES, path)
 
@@ -271,10 +269,7 @@ class Library:
     return suffixes[-1]
 
   def save(self, path):
-    self.exported = os.path.join(EXPORTED, os.path.basename(os.path.dirname(path)), os.path.basename(path))
-    Path(self.exported).parent.mkdir(parents=True, exist_ok=True)
-    with open(self.exported, 'w') as f:
-      f.write(self.body)
+    utils.exported(path, self.body)
 
   def clean(self):
     if self.exported:
@@ -291,6 +286,7 @@ class Zotero:
     self.beta = userdata.get('beta') == 'true'
     self.legacy = userdata.get('legacy') == 'true'
     self.dev = userdata.get('dev') == 'true'
+    self.bibliography = userdata.get('bibliography')
     self.token = str(uuid.uuid4())
     self.import_at_start = userdata.get('import', None)
     if self.import_at_start:
@@ -333,6 +329,9 @@ class Zotero:
     self.start()
     self.redir = '>>'
 
+  def pull_export_url(self, query):
+    return f'http://127.0.0.1:{self.port}/better-bibtex/export?{query}'
+
   def execute(self, script, **args):
     headers = {
       'Content-Type': 'application/json'
@@ -347,7 +346,8 @@ class Zotero:
 
     headers = {
       'Authorization': f'Bearer {self.token}',
-      'Content-Type': 'application/javascript'
+      # 'Content-Type': 'application/javascript'
+      'Content-Type': 'text/plain',
     }
 
     with Pinger(20):
@@ -536,7 +536,9 @@ class Zotero:
 
     input = Library(path=references, client=self.client, variant=self.variant)
 
+    bibliography = None
     if input.path.endswith('.json'):
+      bibliography = self.bibliography
       # TODO: clean lib and test against schema
       config = input.data.get('config', {})
       preferences = config.get('preferences', {})
@@ -592,11 +594,12 @@ class Zotero:
 
       filename = references
       if not items: filename = None
-      return self.execute('return await Zotero.BetterBibTeX.TestSupport.importFile(filename, createNewCollection, preferences, localeDateOrder)',
+      return self.execute('return await Zotero.BetterBibTeX.TestSupport.importFile(filename, createNewCollection, preferences, bibliography)',
         filename = filename,
         createNewCollection = (collection != False),
         preferences = preferences,
-        localeDateOrder = localeDateOrder
+        localeDateOrder = localeDateOrder,
+        bibliography = bibliography
       )
 
   def expand_expected(self, expected):

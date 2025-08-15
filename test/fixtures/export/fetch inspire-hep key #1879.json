@@ -7,14 +7,13 @@
       "exportNotes": true
     },
     "preferences": {
-      "citekeyFormat": "[inspire-hep]",
-      "kuroshiro": true
+      "citekeyFormat": "inspireHep",
+      "japanese": true
     }
   },
   "items": [
     {
-      "attachments": [
-      ],
+      "attachments": [],
       "citationKey": "bhupaldev2019",
       "creators": [
         {
