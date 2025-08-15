@@ -94,8 +94,13 @@ export abstract class CSLExporter {
 
       if (item.accessDate) csl.accessed = this.date2CSL(dateparser.parse(item.accessDate))
 
-      /* ham-fisted workaround for #365 */
-      if ((csl.type === 'motion_picture' || csl.type === 'broadcast') && csl.author && !csl.director) [ csl.author, csl.director ] = [ csl.director, csl.author ]
+      if (item.itemType === 'podcast') { // #3285
+        [ csl.author, csl.host ] = [ csl.host, csl.author ]
+      }
+      else if ((csl.type === 'motion_picture' || csl.type === 'broadcast') && csl.author && !csl.director) {
+        // ham-fisted workaround for #365
+        [ csl.author, csl.director ] = [ csl.director, csl.author ]
+      }
 
       csl.id = item.citationKey
 

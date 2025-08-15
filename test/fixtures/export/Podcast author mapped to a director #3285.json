@@ -1,0 +1,43 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "options": {},
+    "preferences": {
+      "DOIandURL": "doi",
+      "autoExportDelay": 300,
+      "citekeyFormat": "auth.lower + shorttitle(3, 3) + year",
+      "extraMergeCSL": true,
+      "extraMergeTeX": true,
+      "itemObserverDelay": 100,
+      "keyConflictPolicy": "change",
+      "quickCopyMode": "pandoc",
+      "warnBulkModify": 0
+    }
+  },
+  "items": [
+    {
+      "abstractNote": "The Hidden Brain helps curious people understand the world – and themselves. Using science and storytelling, Hidden Brain's host Shankar Vedantam reveals the unconscious patterns that drive human behavior, the biases that shape our choices, and the triggers that direct the course of our relationships.",
+      "accessDate": "2019-10-26T22:41:44Z",
+      "citationKey": "vedantamHiddenBrain2015",
+      "creators": [
+        {
+          "creatorType": "podcaster",
+          "firstName": "Shankar",
+          "lastName": "Vedantam"
+        }
+      ],
+      "extra": [
+        "Publisher: NPR",
+        "Issued: 2015/2019"
+      ],
+      "itemID": 1,
+      "itemType": "podcast",
+      "language": "en",
+      "medium": "audio podcast",
+      "rights": "APA7 93",
+      "title": "Hidden Brain",
+      "url": "https://www.npr.org/series/423302056/hidden-brain"
+    }
+  ]
+}
