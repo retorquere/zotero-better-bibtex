@@ -11,6 +11,7 @@ Feature: Export
 
     Examples:
       | file                                                                                                                     | references |
+      | Exclude series editor for biblatex-apa option #3284                                                                      | 1          |
       | BetterBibLaTeX sets option useprefixtrue with no way to turn off #3281-1                                                 | 1          |
       | BetterBibLaTeX sets option useprefixtrue with no way to turn off #3281-2                                                 | 1          |
       | Export of greek mu incorrect #3276                                                                                       | 1          |
