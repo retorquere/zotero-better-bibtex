@@ -29,7 +29,7 @@ Making any change here will drop your entire export cache. This is usually not a
     <meta itemprop="description" content="The Better BibTeX Configuration can be found under the regular Zotero preferences pane, tab ‘Better BibTeX’.
 The configuration of Better BibTeX is a little baroque compared to the standard Zotero Bib(La)TeX exporters (which only have hidden preferences). The defaults should just work, but here’s an attempt to describe what they do.
 Making any change here will drop your entire export cache. This is usually not a problem unless you have a really large library, but you can read about what is involved here.">
-    <meta itemprop="wordCount" content="1459">
+    <meta itemprop="wordCount" content="1504">
     <meta itemprop="keywords" content="Configuration,Preferences">
     <title>Hidden preferences :: Better BibTeX for Zotero</title><link rel="icon" href="/zotero-better-bibtex/better-bibtex.ico" type="image/x-icon">
 
@@ -159,6 +159,7 @@ Making any change here will drop your entire export cache. This is usually not a
     <li><a href="#importjabrefabbreviations">importJabRefAbbreviations</a></li>
     <li><a href="#importjabrefstrings">importJabRefStrings</a></li>
     <li><a href="#importnotetoextra">importNoteToExtra</a></li>
+    <li><a href="#importplaceevent">importPlaceEvent</a></li>
     <li><a href="#importsentencecasequoted">importSentenceCaseQuoted</a></li>
     <li><a href="#importunknowntexcommand">importUnknownTexCommand</a></li>
     <li><a href="#itemobserverdelay">itemObserverDelay</a></li>
@@ -274,6 +275,9 @@ will be replaced with a <code>\\enquote{...}</code> construct.</p>
 <h2 id="importnotetoextra">importNoteToExtra</h2>
 <p>default: <code>&lt;not set&gt;</code></p>
 <p>On import, import note-like fields in this comma-separated list to the <code>extra</code> field, unless the note has rich text.</p>
+<h2 id="importplaceevent">importPlaceEvent</h2>
+<p>default: <code>inproceedings,conference,presentation,talk</code></p>
+<p>During import of bib(la)tex, these types will be treated as event-like, in which case if an entry has both an <code>location</code> and an <code>address</code> field, the <code>location</code> will go to Zotero&rsquo;s <code>Place</code> field. In all other instances, <code>address</code> will go to <code>Place</code>.</p>
 <h2 id="importsentencecasequoted">importSentenceCaseQuoted</h2>
 <p>default: <code>yes</code></p>
 <p>During import, also sentence-case quoted parts of titles</p>
