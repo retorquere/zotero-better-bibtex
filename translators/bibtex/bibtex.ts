@@ -722,7 +722,7 @@ class ZoteroItem {
       source: 'address',
       value: clean(asarray(this.bibtex.fields.address)),
     }
-    const place = this.bibtex.type.match(/^(conference|presentation|talk)$/) // #3287
+    const place = this.bibtex.type.match(/^(inproceedings|conference|presentation|talk)$/) // #3287
       ? { field: location, extra: address }
       : { extra: location, field: address }
     if (!place.field.value) Object.assign(place, { field: place.extra, extra: place.field })

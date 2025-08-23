@@ -25,60 +25,6 @@ active_tag_value_provider = {
 }
 active_tag_matcher = ActiveTagMatcher(active_tag_value_provider)
 
-def patch_scenario_with_softfail(scenario):
-  """Monkey-patches :func:`~behave.model.Scenario.run()` to soft-fail a
-  scenario that fails.
-
-  This is helpful when the test infrastructure (server/network environment)
-  is unreliable (which should be a rare case).
-
-  :param scenario:    Scenario or ScenarioOutline to patch.
-  """
-  def scenario_run_with_softfail(scenario_run, *args, **kwargs):
-    if not scenario_run(*args, **kwargs):
-      return False # -- NOT-FAILED = PASSED
-    # -- SCENARIO FAILED:
-    print("SOFT-FAIL")
-    return False
-
-  if isinstance(scenario, ScenarioOutline):
-    scenario_outline = scenario
-    for scenario in scenario_outline.scenarios:
-      scenario_run = scenario.run
-      scenario.run = functools.partial(scenario_run_with_softfail, scenario_run)
-  else:
-    scenario_run = scenario.run
-    scenario.run = functools.partial(scenario_run_with_softfail, scenario_run)
-
-def timestamp(phase, name):
-  with open('cpu_usage.csv', 'a') as f:
-    writer = csv.writer(f)
-    writer.writerow([phase, name, int(time.time())])
-def before_step(context, step):
-  timestamp('start', step.name)
-def after_step(context, step):
-  timestamp('end', step.name)
-
-def before_feature(context, feature):
-  if lme:= context.config.userdata.get('log_memory_every'):
-    context.zotero.execute('Zotero.BetterBibTeX.TestSupport.startTimedMemoryLog(msecs)', msecs=int(lme))
-  if active_tag_matcher.should_exclude_with(feature.tags):
-    feature.skip(reason="DISABLED ACTIVE-TAG")
-
-  for scenario in feature.walk_scenarios():
-    retries = 0
-    optional = False
-    for tag in scenario.effective_tags:
-      if tag.startswith('optional'):
-        optional = True
-      if tag.startswith('retries='):
-        retries = int(tag.split('=')[1])
-
-    if retries > 0:
-      patch_scenario_with_autoretry(scenario, max_attempts=retries + 1)
-    if optional:
-      patch_scenario_with_softfail(scenario)
-
 class TestBin:
   def __init__(self):
     self.bin = None
@@ -128,6 +74,72 @@ class TestBin:
     return self.tests.get(self.nameof(scenario), 0)
 TestBin = TestBin()
 
+def skip(context, scenario):
+  if active_tag_matcher.should_exclude_with(scenario.effective_tags):
+    scenario.skip()
+  elif not TestBin.test_here(scenario):
+    scenario.skip()
+  elif context.tests and not any(test in scenario.name.lower() for test in context.tests):
+    scenario.skip()
+  else:
+    return False
+  return True
+
+def patch_scenario_with_softfail(scenario):
+  """Monkey-patches :func:`~behave.model.Scenario.run()` to soft-fail a
+  scenario that fails.
+
+  This is helpful when the test infrastructure (server/network environment)
+  is unreliable (which should be a rare case).
+
+  :param scenario:    Scenario or ScenarioOutline to patch.
+  """
+  def scenario_run_with_softfail(scenario_run, *args, **kwargs):
+    if not scenario_run(*args, **kwargs):
+      return False # -- NOT-FAILED = PASSED
+    # -- SCENARIO FAILED:
+    print("SOFT-FAIL")
+    return False
+
+  if isinstance(scenario, ScenarioOutline):
+    scenario_outline = scenario
+    for scenario in scenario_outline.scenarios:
+      scenario_run = scenario.run
+      scenario.run = functools.partial(scenario_run_with_softfail, scenario_run)
+  else:
+    scenario_run = scenario.run
+    scenario.run = functools.partial(scenario_run_with_softfail, scenario_run)
+
+def timestamp(phase, name):
+  with open('cpu_usage.csv', 'a') as f:
+    writer = csv.writer(f)
+    writer.writerow([phase, name, int(time.time())])
+def before_step(context, step):
+  timestamp('start', step.name)
+def after_step(context, step):
+  timestamp('end', step.name)
+
+def before_feature(context, feature):
+  if lme:= context.config.userdata.get('log_memory_every'):
+    context.zotero.execute('Zotero.BetterBibTeX.TestSupport.startTimedMemoryLog(msecs)', msecs=int(lme))
+  if active_tag_matcher.should_exclude_with(feature.tags):
+    feature.skip(reason="DISABLED ACTIVE-TAG")
+
+  feature.scenarios = [ scenario for scenario in feature.scenarios if not skip(context, scenario) ]
+  for scenario in feature.walk_scenarios():
+    retries = 0
+    optional = False
+    for tag in scenario.effective_tags:
+      if tag.startswith('optional'):
+        optional = True
+      if tag.startswith('retries='):
+        retries = int(tag.split('=')[1])
+
+    if retries > 0:
+      patch_scenario_with_autoretry(scenario, max_attempts=retries + 1)
+    if optional:
+      patch_scenario_with_softfail(scenario)
+
 def before_all(context):
   TestBin.load(context)
   context.memory = Munch(total=None, increase=None)
@@ -143,25 +155,8 @@ def after_all(context):
   TestBin.save(context)
 
 def before_scenario(context, scenario):
-  if active_tag_matcher.should_exclude_with(scenario.effective_tags):
-    #scenario.skip(f"DISABLED ACTIVE-TAG {str(active_tag_value_provider)}")
-    scenario.skip()
+  if skip(context, scenario):
     return
-  if not TestBin.test_here(scenario):
-    #scenario.skip(f'TESTED IN BIN {TestBin.test_in(scenario)}')
-    scenario.skip()
-    return
-  #utils.print(scenario.name.lower())
-  #utils.print(json.dumps(context.tests))
-  #utils.print(json.dumps([test in scenario.name.lower() for test in context.tests]))
-  if context.tests and not any(test in scenario.name.lower() for test in context.tests):
-    #scenario.skip(f"ONLY TESTING SCENARIOS WITH {context.config.userdata['test']}")
-    scenario.skip()
-    return
-  #if 'inspireHEP' in context.config.userdata and context.config.userdata['inspireHEP'] != 'true' and 'inspire' in scenario.name.lower():
-  #  scenario.skip('skipping inspire-HEP')
-  #  scenario.skip()
-  #  return
 
   TestBin.start(scenario)
   context.zotero.reset(scenario.name)
