@@ -712,13 +712,31 @@ class ZoteroItem {
     return this.$location(value, field)
   }
 
-  protected $location(value: string, field: string): boolean {
-    const location = this.bibtex.fields.location
-    const address = this.bibtex.fields.address
-    if (field === 'address' && location?.length && address?.length) return true // handled through location
+  protected $location(_value: string, _field: string): boolean {
+    const clean = (a: string[]) => a.map((v: string) => v.replace(/[\n ]+/g, ' ').trim()).filter(_ => _).join(' and ')
+    const location = {
+      source: 'location',
+      value: clean(asarray(this.bibtex.fields.location)),
+    }
+    const address = {
+      source: 'address',
+      value: clean(asarray(this.bibtex.fields.address)),
+    }
+    const place = this.bibtex.type.match(/^(conference|presentation|talk)$/) // #3287
+      ? { field: location, extra: address }
+      : { extra: location, field: address }
+    if (!place.field.value) Object.assign(place, { field: place.extra, extra: place.field })
 
-    const place = [ ...asarray(location), ...asarray(address) ].map((v: string) => v.replace(/[\n ]+/g, ' ').trim()).filter(_ => _).join(' and ')
-    return !!place && this.set('place', place, ['place'])
+    if (place.field.value) {
+      this.set('place', place.field.value, ['place'])
+      if (place.extra.value) this.extra.push(`tex.${place.extra.source}: ${place.extra.value}`)
+
+      // scrub so they are not double-dipped
+      delete this.bibtex.fields.location
+      delete this.bibtex.fields.address
+    }
+
+    return true
   }
 
   protected '$call-number'(value: string): boolean {

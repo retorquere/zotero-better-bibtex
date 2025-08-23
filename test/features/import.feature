@@ -15,6 +15,11 @@ Feature: Import
     And I import 1 reference from "import/*.bib"
     Then the library should match "import/*.json"
 
+  Scenario: Allow location and address field in imported bibtex entries to be stored in Extra field #3287
+    When I apply the preferences from "import/*.json"
+    And I import 1 reference from "import/*.bib"
+    Then the library should match "import/*.json"
+
   # And the markdown citation for Torre2008 should be '\(Torre & Verducci, 2008\)'
   # And the markdown bibliography for Torre2008 should be '<a name="@Torre2008"></a>Torre, J., & Verducci, T. \(2008\). _The Yankee Years_.  Doubleday.'
   # And the markdown citation for orre2008 should be ''

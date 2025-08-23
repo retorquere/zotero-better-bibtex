@@ -1,0 +1,120 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "options": {
+      "Items": true,
+      "Preferences": true,
+      "exportNotes": true,
+      "worker": true
+    },
+    "preferences": {
+      "bibtexURL": "url",
+      "citekeyFormat": "auth + year",
+      "exportBraceProtection": false,
+      "importCaseProtection": "off",
+      "importSentenceCase": "off",
+      "postscript": "// covers both Translator.BetterBibTeX and Translator.BetterBibLaTeX\nif (Translator.BetterTeX) {\n  if (zotero.itemType === 'conferencePaper') {\n    // For @inproceedings\n    const { author, booktitle, title, doi, editor, isbn, location, pages, url, publisher, series, address, articleno, file, issn, keywords, numpages, qualityassured, readstatus, relevance, timestamp, year, ...rest } = tex.has\n\ttex.has = { author, booktitle, title, doi, editor, isbn, location, pages, url, publisher, series, address, articleno, file, issn, keywords, numpages, qualityassured, readstatus, relevance, timestamp, year, ...rest }\n    Object.keys(tex.has).forEach(key => tex.has[key] === undefined && delete tex.has[key])\n  } else if (zotero.itemType === 'journalArticle') {\n    // For @article\n    const { author, title, doi, issn, number, pages, volume, address, file, journal, keywords, month, publisher, qualityassured, readstatus, relevance, timestamp, year, ...rest } = tex.has\n\ttex.has = { author, title, doi, issn, number, pages, volume, address, file, journal, keywords, month, publisher, qualityassured, readstatus, relevance, timestamp, year, ...rest }\n    Object.keys(tex.has).forEach(key => tex.has[key] === undefined && delete tex.has[key])\n  } else if (zotero.itemType === 'bookSection') {\n    // For @incollection\n    const { author, booktitle, title, doi, edition, editor, isbn, pages, publisher, volume, address, file, issn, year, ...rest } = tex.has\n\ttex.has = { author, booktitle, title, doi, edition, editor, isbn, pages, publisher, volume, address, file, issn, year, ...rest }\n    Object.keys(tex.has).forEach(key => tex.has[key] === undefined && delete tex.has[key])\n  } else if (zotero.itemType === 'book') {\n    // For @book\n    const { author, title, doi, isbn, publisher, address, numpages, qualityassured, timestamp, year, ...rest } = tex.has\n\ttex.has = { author, title, doi, isbn, publisher, address, numpages, qualityassured, timestamp, year, ...rest }\n    Object.keys(tex.has).forEach(key => tex.has[key] === undefined && delete tex.has[key])\n  } else if (zotero.itemType === 'document') {\n    // For @misc\n    const { author, date, title, url, urldate, file, year, ...rest } = tex.has\n\ttex.has = { author, date, title, url, urldate, file, year, ...rest }\n    Object.keys(tex.has).forEach(key => tex.has[key] === undefined && delete tex.has[key])\n  } else if (zotero.itemType === 'thesis') {\n    // For @phdthesis\n    const { author, title, url, file, school, year, ...rest } = tex.has\n\ttex.has = { author, title, url, file, school, year, ...rest }\n    Object.keys(tex.has).forEach(key => tex.has[key] === undefined && delete tex.has[key])\n  }\n}"
+    }
+  },
+  "items": [
+    {
+      "DOI": "10.1145/3290605.3300233",
+      "ISBN": "978-1-4503-5970-2",
+      "citationKey": "10.1145/3290605.3300233",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Saleema",
+          "lastName": "Amershi"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Dan",
+          "lastName": "Weld"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Mihaela",
+          "lastName": "Vorvoreanu"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Adam",
+          "lastName": "Fourney"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Besmira",
+          "lastName": "Nushi"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Penny",
+          "lastName": "Collisson"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Jina",
+          "lastName": "Suh"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Shamsi",
+          "lastName": "Iqbal"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Paul N.",
+          "lastName": "Bennett"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Kori",
+          "lastName": "Inkpen"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Jaime",
+          "lastName": "Teevan"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Ruth",
+          "lastName": "Kikin-Gil"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Eric",
+          "lastName": "Horvitz"
+        }
+      ],
+      "date": "2019",
+      "extra": [
+        "Citation Key: 10.1145/3290605.3300233",
+        "Number of pages: 13",
+        "tex.location: Glasgow, Scotland Uk"
+      ],
+      "itemID": 1,
+      "itemType": "conferencePaper",
+      "pages": "1–13",
+      "place": "New York, NY, USA",
+      "publicationTitle": "Proceedings of the 2019 CHI Conference on Human Factors in Computing Systems",
+      "publisher": "Association for Computing Machinery",
+      "series": "CHI '19",
+      "tags": [
+        {
+          "tag": "ai-infused systems"
+        },
+        {
+          "tag": "design guidelines"
+        },
+        {
+          "tag": "human-ai interaction"
+        }
+      ],
+      "title": "Guidelines for Human-AI Interaction",
+      "url": "https://doi.org/10.1145/3290605.3300233"
+    }
+  ]
+}
