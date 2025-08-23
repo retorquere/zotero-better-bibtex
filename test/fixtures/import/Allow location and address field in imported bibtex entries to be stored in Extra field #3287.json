@@ -2,106 +2,194 @@
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
+    "preferences": {
+      "ascii": "",
+      "asciiBibLaTeX": false,
+      "asciiBibTeX": true,
+      "autoAbbrev": false,
+      "autoExport": "immediate",
+      "autoExportDelay": 5,
+      "autoExportIdleWait": 10,
+      "autoExportPathReplaceDiacritics": false,
+      "autoExportPathReplaceDirSep": "-",
+      "autoExportPathReplaceSpace": " ",
+      "automaticTags": true,
+      "autoPinDelay": 0,
+      "auxImport": false,
+      "baseAttachmentPath": "",
+      "biblatexExtendedDateFormat": true,
+      "biblatexExtendedNameFormat": true,
+      "biblatexExtractEprint": true,
+      "biblatexUsePrefix": true,
+      "bibtexEditionOrdinal": false,
+      "bibtexParticleNoOp": false,
+      "bibtexURL": "url",
+      "cache": true,
+      "cacheDelete": false,
+      "cacheRetain": false,
+      "charmap": "",
+      "chinese": false,
+      "chineseSplitName": true,
+      "citeCommand": "cite",
+      "citekeyCaseInsensitive": true,
+      "citekeyFold": true,
+      "citekeyFormat": "auth + year",
+      "citekeySearch": true,
+      "citekeyUnsafeChars": "\\\"#%'(),={}~",
+      "csquotes": "",
+      "DOIandURL": "both",
+      "exportBibTeXStrings": "off",
+      "exportBraceProtection": false,
+      "exportSort": "citekey",
+      "exportTitleCase": true,
+      "extraMergeCitekeys": false,
+      "extraMergeCSL": false,
+      "extraMergeTeX": false,
+      "git": "config",
+      "import": true,
+      "importBibTeXStrings": true,
+      "importCaseProtection": "off",
+      "importCitationKey": true,
+      "importDetectURLs": true,
+      "importExtra": true,
+      "importJabRefAbbreviations": true,
+      "importJabRefStrings": true,
+      "importNoteToExtra": "",
+      "importPlaceEvent": "inproceedings,conference,presentation,talk",
+      "importSentenceCase": "off",
+      "importSentenceCaseQuoted": true,
+      "importUnknownTexCommand": "ignore",
+      "itemObserverDelay": 5,
+      "jabrefFormat": 0,
+      "japanese": false,
+      "keyConflictPolicy": "keep",
+      "keyScope": "library",
+      "language": "langid",
+      "mapMath": "",
+      "mapText": "",
+      "packages": "",
+      "parseParticles": true,
+      "patchDates": "dateadded=dateAdded, date-added=dateAdded, datemodified=dateModified, date-modified=dateModified",
+      "postscript": "// covers both Translator.BetterBibTeX and Translator.BetterBibLaTeX\nif (Translator.BetterTeX) {\n  if (zotero.itemType === 'conferencePaper') {\n    // For @inproceedings\n    const { author, booktitle, title, doi, editor, isbn, location, pages, url, publisher, series, address, articleno, file, issn, keywords, numpages, qualityassured, readstatus, relevance, timestamp, year, ...rest } = tex.has\n\ttex.has = { author, booktitle, title, doi, editor, isbn, location, pages, url, publisher, series, address, articleno, file, issn, keywords, numpages, qualityassured, readstatus, relevance, timestamp, year, ...rest }\n    Object.keys(tex.has).forEach(key => tex.has[key] === undefined && delete tex.has[key])\n  } else if (zotero.itemType === 'journalArticle') {\n    // For @article\n    const { author, title, doi, issn, number, pages, volume, address, file, journal, keywords, month, publisher, qualityassured, readstatus, relevance, timestamp, year, ...rest } = tex.has\n\ttex.has = { author, title, doi, issn, number, pages, volume, address, file, journal, keywords, month, publisher, qualityassured, readstatus, relevance, timestamp, year, ...rest }\n    Object.keys(tex.has).forEach(key => tex.has[key] === undefined && delete tex.has[key])\n  } else if (zotero.itemType === 'bookSection') {\n    // For @incollection\n    const { author, booktitle, title, doi, edition, editor, isbn, pages, publisher, volume, address, file, issn, year, ...rest } = tex.has\n\ttex.has = { author, booktitle, title, doi, edition, editor, isbn, pages, publisher, volume, address, file, issn, year, ...rest }\n    Object.keys(tex.has).forEach(key => tex.has[key] === undefined && delete tex.has[key])\n  } else if (zotero.itemType === 'book') {\n    // For @book\n    const { author, title, doi, isbn, publisher, address, numpages, qualityassured, timestamp, year, ...rest } = tex.has\n\ttex.has = { author, title, doi, isbn, publisher, address, numpages, qualityassured, timestamp, year, ...rest }\n    Object.keys(tex.has).forEach(key => tex.has[key] === undefined && delete tex.has[key])\n  } else if (zotero.itemType === 'document') {\n    // For @misc\n    const { author, date, title, url, urldate, file, year, ...rest } = tex.has\n\ttex.has = { author, date, title, url, urldate, file, year, ...rest }\n    Object.keys(tex.has).forEach(key => tex.has[key] === undefined && delete tex.has[key])\n  } else if (zotero.itemType === 'thesis') {\n    // For @phdthesis\n    const { author, title, url, file, school, year, ...rest } = tex.has\n\ttex.has = { author, title, url, file, school, year, ...rest }\n    Object.keys(tex.has).forEach(key => tex.has[key] === undefined && delete tex.has[key])\n  }\n}",
+      "postscriptOverride": "",
+      "preferencesOverride": "",
+      "qualityReport": false,
+      "quickCopyEta": "",
+      "quickCopyMode": "latex",
+      "quickCopyOrgMode": "zotero",
+      "quickCopyPandocBrackets": false,
+      "quickCopySelectLink": "zotero",
+      "rawImports": false,
+      "rawLaTag": "#LaTeX",
+      "relativeFilePaths": false,
+      "separatorList": "and",
+      "separatorNames": "and",
+      "skipFields": "",
+      "skipWords": "a,ab,aboard,about,above,across,after,against,al,along,amid,among,an,and,anti,around,as,at,before,behind,below,beneath,beside,besides,between,beyond,but,by,d,da,das,de,del,dell,dello,dei,degli,della,dell,delle,dem,den,der,des,despite,die,do,down,du,during,ein,eine,einem,einen,einer,eines,el,en,et,except,for,from,gli,i,il,in,inside,into,is,l,la,las,le,les,like,lo,los,near,nor,of,off,on,onto,or,over,past,per,plus,round,save,since,so,some,sur,than,the,through,to,toward,towards,un,una,unas,under,underneath,une,unlike,uno,unos,until,up,upon,versus,via,von,while,with,within,without,yet,zu,zum",
+      "startupProgress": "popup",
+      "strings": "",
+      "stringsOverride": "",
+      "verbatimFields": "url,doi,file,pdf,ids,eprint,/^verb[a-z]$/,groups,/^citeulike-linkout-[0-9]+$/, /^bdsk-url-[0-9]+$/, keywords",
+      "warnBulkModify": 10,
+      "warnTitleCased": false
+    },
     "options": {
       "Items": true,
+      "Normalize": true,
       "Preferences": true,
+      "exportFileData": false,
       "exportNotes": true,
+      "keepUpdated": false,
       "worker": true
-    },
-    "preferences": {
-      "bibtexURL": "url",
-      "citekeyFormat": "auth + year",
-      "exportBraceProtection": false,
-      "importCaseProtection": "off",
-      "importSentenceCase": "off",
-      "postscript": "// covers both Translator.BetterBibTeX and Translator.BetterBibLaTeX\nif (Translator.BetterTeX) {\n  if (zotero.itemType === 'conferencePaper') {\n    // For @inproceedings\n    const { author, booktitle, title, doi, editor, isbn, location, pages, url, publisher, series, address, articleno, file, issn, keywords, numpages, qualityassured, readstatus, relevance, timestamp, year, ...rest } = tex.has\n\ttex.has = { author, booktitle, title, doi, editor, isbn, location, pages, url, publisher, series, address, articleno, file, issn, keywords, numpages, qualityassured, readstatus, relevance, timestamp, year, ...rest }\n    Object.keys(tex.has).forEach(key => tex.has[key] === undefined && delete tex.has[key])\n  } else if (zotero.itemType === 'journalArticle') {\n    // For @article\n    const { author, title, doi, issn, number, pages, volume, address, file, journal, keywords, month, publisher, qualityassured, readstatus, relevance, timestamp, year, ...rest } = tex.has\n\ttex.has = { author, title, doi, issn, number, pages, volume, address, file, journal, keywords, month, publisher, qualityassured, readstatus, relevance, timestamp, year, ...rest }\n    Object.keys(tex.has).forEach(key => tex.has[key] === undefined && delete tex.has[key])\n  } else if (zotero.itemType === 'bookSection') {\n    // For @incollection\n    const { author, booktitle, title, doi, edition, editor, isbn, pages, publisher, volume, address, file, issn, year, ...rest } = tex.has\n\ttex.has = { author, booktitle, title, doi, edition, editor, isbn, pages, publisher, volume, address, file, issn, year, ...rest }\n    Object.keys(tex.has).forEach(key => tex.has[key] === undefined && delete tex.has[key])\n  } else if (zotero.itemType === 'book') {\n    // For @book\n    const { author, title, doi, isbn, publisher, address, numpages, qualityassured, timestamp, year, ...rest } = tex.has\n\ttex.has = { author, title, doi, isbn, publisher, address, numpages, qualityassured, timestamp, year, ...rest }\n    Object.keys(tex.has).forEach(key => tex.has[key] === undefined && delete tex.has[key])\n  } else if (zotero.itemType === 'document') {\n    // For @misc\n    const { author, date, title, url, urldate, file, year, ...rest } = tex.has\n\ttex.has = { author, date, title, url, urldate, file, year, ...rest }\n    Object.keys(tex.has).forEach(key => tex.has[key] === undefined && delete tex.has[key])\n  } else if (zotero.itemType === 'thesis') {\n    // For @phdthesis\n    const { author, title, url, file, school, year, ...rest } = tex.has\n\ttex.has = { author, title, url, file, school, year, ...rest }\n    Object.keys(tex.has).forEach(key => tex.has[key] === undefined && delete tex.has[key])\n  }\n}"
     }
   },
+  "version": {
+    "zotero": "7.0.18",
+    "bbt": "7.0.44.emile.kiku.local"
+  },
+  "collections": {},
   "items": [
     {
-      "DOI": "10.1145/3290605.3300233",
+      "key": "CMIUIGH5",
+      "version": 0,
+      "itemType": "conferencePaper",
+      "url": "https://doi.org/10.1145/3290605.3300233",
+      "series": "CHI '19",
+      "place": "Glasgow, Scotland Uk",
+      "publisher": "Association for Computing Machinery",
+      "pages": "1–13",
       "ISBN": "978-1-4503-5970-2",
-      "citationKey": "10.1145/3290605.3300233",
+      "date": "2019",
+      "extra": "Citation Key: 10.1145/3290605.3300233\nNumber of pages: 13\ntex.address: New York, NY, USA",
+      "DOI": "10.1145/3290605.3300233",
+      "title": "Guidelines for Human-AI Interaction",
       "creators": [
         {
-          "creatorType": "author",
           "firstName": "Saleema",
-          "lastName": "Amershi"
+          "lastName": "Amershi",
+          "creatorType": "author"
         },
         {
-          "creatorType": "author",
           "firstName": "Dan",
-          "lastName": "Weld"
+          "lastName": "Weld",
+          "creatorType": "author"
         },
         {
-          "creatorType": "author",
           "firstName": "Mihaela",
-          "lastName": "Vorvoreanu"
+          "lastName": "Vorvoreanu",
+          "creatorType": "author"
         },
         {
-          "creatorType": "author",
           "firstName": "Adam",
-          "lastName": "Fourney"
+          "lastName": "Fourney",
+          "creatorType": "author"
         },
         {
-          "creatorType": "author",
           "firstName": "Besmira",
-          "lastName": "Nushi"
+          "lastName": "Nushi",
+          "creatorType": "author"
         },
         {
-          "creatorType": "author",
           "firstName": "Penny",
-          "lastName": "Collisson"
+          "lastName": "Collisson",
+          "creatorType": "author"
         },
         {
-          "creatorType": "author",
           "firstName": "Jina",
-          "lastName": "Suh"
+          "lastName": "Suh",
+          "creatorType": "author"
         },
         {
-          "creatorType": "author",
           "firstName": "Shamsi",
-          "lastName": "Iqbal"
+          "lastName": "Iqbal",
+          "creatorType": "author"
         },
         {
-          "creatorType": "author",
           "firstName": "Paul N.",
-          "lastName": "Bennett"
+          "lastName": "Bennett",
+          "creatorType": "author"
         },
         {
-          "creatorType": "author",
           "firstName": "Kori",
-          "lastName": "Inkpen"
+          "lastName": "Inkpen",
+          "creatorType": "author"
         },
         {
-          "creatorType": "author",
           "firstName": "Jaime",
-          "lastName": "Teevan"
+          "lastName": "Teevan",
+          "creatorType": "author"
         },
         {
-          "creatorType": "author",
           "firstName": "Ruth",
-          "lastName": "Kikin-Gil"
+          "lastName": "Kikin-Gil",
+          "creatorType": "author"
         },
         {
-          "creatorType": "author",
           "firstName": "Eric",
-          "lastName": "Horvitz"
+          "lastName": "Horvitz",
+          "creatorType": "author"
         }
       ],
-      "date": "2019",
-      "extra": [
-        "Citation Key: 10.1145/3290605.3300233",
-        "Number of pages: 13",
-        "tex.location: Glasgow, Scotland Uk"
-      ],
-      "itemID": 1,
-      "itemType": "conferencePaper",
-      "pages": "1–13",
-      "place": "New York, NY, USA",
-      "publicationTitle": "Proceedings of the 2019 CHI Conference on Human Factors in Computing Systems",
-      "publisher": "Association for Computing Machinery",
-      "series": "CHI '19",
       "tags": [
         {
           "tag": "ai-infused systems"
@@ -113,8 +201,17 @@
           "tag": "human-ai interaction"
         }
       ],
-      "title": "Guidelines for Human-AI Interaction",
-      "url": "https://doi.org/10.1145/3290605.3300233"
+      "relations": {},
+      "dateAdded": "2025-08-23T14:26:28Z",
+      "dateModified": "2025-08-23T14:26:28Z",
+      "uri": "http://zotero.org/users/8230813/items/CMIUIGH5",
+      "itemID": 102,
+      "attachments": [],
+      "notes": [],
+      "citationKey": "10.1145/3290605.3300233",
+      "itemKey": "CMIUIGH5",
+      "libraryID": 1,
+      "publicationTitle": "Proceedings of the 2019 CHI Conference on Human Factors in Computing Systems"
     }
   ]
 }

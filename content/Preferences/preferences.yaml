@@ -855,6 +855,9 @@ autoExportPathReplaceSpace:
 autoExportPathReplaceDiacritics:
   default: false
 
+importPlaceEvent:
+  default: inproceedings,conference,presentation,talk
+
 baseAttachmentPath:
   default: ''
   affects:

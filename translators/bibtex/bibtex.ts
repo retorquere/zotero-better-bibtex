@@ -595,6 +595,8 @@ async function parseBibTeX(translation: Translation): Promise<Library> {
 
 const months = [ 'jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec' ]
 class ZoteroItem {
+  private event: Set<string>
+
   public typeMap = {
     article: 'journalArticle',
     audio: 'audioRecording',
@@ -656,6 +658,7 @@ class ZoteroItem {
   constructor(private translation: Translation, private item: any, private bibtex: BibTeXEntry, private jabref: JabRefMetadata) {
     // hard for users to debug, replace with regular spaces
     this.bibtex = JSON.parse(JSON.stringify(this.bibtex, (k, v) => (typeof v === 'string' ? v.replace(/\u00A0/g, ' ').trim() : v) as string))
+    this.event = new Set(translation.collected.preferences.importPlaceEvent.trim().split(/\s*,\s*/).filter(_ => _))
   }
 
   private fallback(fields: string[], value: string): boolean {
@@ -722,7 +725,7 @@ class ZoteroItem {
       source: 'address',
       value: clean(asarray(this.bibtex.fields.address)),
     }
-    const place = this.bibtex.type.match(/^(inproceedings|conference|presentation|talk)$/) // #3287
+    const place = this.event.size && this.event.has(this.bibtex.type) // #3287
       ? { field: location, extra: address }
       : { extra: location, field: address }
     if (!place.field.value) Object.assign(place, { field: place.extra, extra: place.field })

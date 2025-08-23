@@ -76,13 +76,14 @@ TestBin = TestBin()
 
 def skip(context, scenario):
   if active_tag_matcher.should_exclude_with(scenario.effective_tags):
-    scenario.skip()
+    pass
   elif not TestBin.test_here(scenario):
-    scenario.skip()
+    pass
   elif context.tests and not any(test in scenario.name.lower() for test in context.tests):
-    scenario.skip()
+    pass
   else:
     return False
+  scenario.skip()
   return True
 
 def patch_scenario_with_softfail(scenario):
@@ -125,8 +126,10 @@ def before_feature(context, feature):
   if active_tag_matcher.should_exclude_with(feature.tags):
     feature.skip(reason="DISABLED ACTIVE-TAG")
 
-  feature.scenarios = [ scenario for scenario in feature.scenarios if not skip(context, scenario) ]
   for scenario in feature.walk_scenarios():
+    if skip(context, scenario):
+      continue
+
     retries = 0
     optional = False
     for tag in scenario.effective_tags:
