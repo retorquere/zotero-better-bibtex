@@ -185,9 +185,9 @@ jobs:
     - name: Run tests
       # continue-on-error: ${{ matrix.client == 'jurism' }}
       run: ./test/behave --client ${{ matrix.client }} ${{ matrix.worker }} 
-        --format ci --bin ${{ matrix.bin }} --bins ${{ needs.build.outputs.bins 
-        }} --durations test/stats/durations--${{ matrix.client }}--${{ 
-        matrix.bin }}${{ matrix.worker }}.json ${{ needs.build.outputs.slow }}
+        --bin ${{ matrix.bin }} --bins ${{ needs.build.outputs.bins }} 
+        --durations test/stats/durations--${{ matrix.client }}--${{ matrix.bin 
+        }}${{ matrix.worker }}.json ${{ needs.build.outputs.slow }}
       env:
         PYTHONUNBUFFERED: true
 
