@@ -62,6 +62,9 @@ export type TransliterateMode
   | 'mongolian'
   | 'russian'
 
+const replace_german: Record<string, string> = Object.entries({ ä: 'ae', ö: 'oe', ü: 'ue', Ä: 'Ae', Ö: 'Oe', Ü: 'Ue' })
+  .reduce((acc, [char, tr]) => ({ ...acc, [char.normalize('NFD')]: tr, [char.normalize('NFC')]: tr }), {})
+
 export type TransliterateModeAlias = TransliterateMode | 'de' | 'ja' | 'chinese-traditional' | 'zh-hant' | 'zh' | 'tw' | 'ar' | 'uk' | 'mn' | 'ru'
 
 const CJK = /([\p{Script=Hiragana}\p{Script=Katakana}\p{Script=Han}])/ug
@@ -1426,14 +1429,7 @@ export class PatternFormatter {
     let replace: Record<string, string> = {}
     switch (mode) {
       case 'german':
-        replace = {
-          ä: 'ae',
-          ö: 'oe',
-          ü: 'ue',
-          Ä: 'Ae',
-          Ö: 'Oe',
-          Ü: 'Ue',
-        }
+        replace = replace_german
         break
 
       case 'chinese':

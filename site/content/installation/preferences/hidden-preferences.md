@@ -93,6 +93,12 @@ During import, replace titles matching a list of common @string definitions with
 default: `<not set>`
 
 On import, import note-like fields in this comma-separated list to the `extra` field, unless the note has rich text.
+## importPlaceEvent
+
+default: `inproceedings,conference,presentation,talk`
+
+During import of bib(la)tex, these types will be treated as event-like, in which case if an entry has both an `location` and an `address` field, the `location` will go to Zotero's `Place` field. In all other instances, `address` will go to `Place`.
+
 ## importSentenceCaseQuoted
 
 default: `yes`
