@@ -62,9 +62,6 @@ export type TransliterateMode
   | 'mongolian'
   | 'russian'
 
-const replace_german: Record<string, string> = Object.entries({ ä: 'ae', ö: 'oe', ü: 'ue', Ä: 'Ae', Ö: 'Oe', Ü: 'Ue' })
-  .reduce((acc, [char, tr]) => ({ ...acc, [char.normalize('NFD')]: tr, [char.normalize('NFC')]: tr }), {})
-
 export type TransliterateModeAlias = TransliterateMode | 'de' | 'ja' | 'chinese-traditional' | 'zh-hant' | 'zh' | 'tw' | 'ar' | 'uk' | 'mn' | 'ru'
 
 const CJK = /([\p{Script=Hiragana}\p{Script=Katakana}\p{Script=Han}])/ug
@@ -1426,10 +1423,9 @@ export class PatternFormatter {
   private transliterate(str: string, mode?: TransliterateMode): string {
     mode = mode || this.item.transliterateMode || 'minimal'
 
-    let replace: Record<string, string> = {}
     switch (mode) {
       case 'german':
-        replace = replace_german
+        str = str.normalize('NFC').replace(/[äöüÄÖÜ]/g, char => ({ ä: 'ae', ö: 'oe', ü: 'ue', Ä: 'Ae', Ö: 'Oe', Ü: 'Ue' }[char]))
         break
 
       case 'chinese':
@@ -1461,10 +1457,7 @@ export class PatternFormatter {
         break
     }
 
-    str = transliterate(str || '', {
-      unknown: '\uFFFD', // unicode replacement char
-      replace,
-    })
+    str = transliterate(str || '', { unknown: '\uFFFD' })
 
     str = fold2ascii.foldMaintaining(str)
 
