@@ -11,6 +11,7 @@ Feature: Export
 
     Examples:
       | file                                                                                                                     | references |
+      | Option to omit last name prefixes in citekey generation #3295                                                            | 1          |
       | Exclude series editor for biblatex-apa option #3284                                                                      | 1          |
       | BetterBibLaTeX sets option useprefixtrue with no way to turn off #3281-1                                                 | 1          |
       | BetterBibLaTeX sets option useprefixtrue with no way to turn off #3281-2                                                 | 1          |

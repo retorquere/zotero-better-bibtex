@@ -1,0 +1,42 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "options": {},
+    "preferences": {
+      "DOIandURL": "doi",
+      "automaticTags": false,
+      "baseAttachmentPath": "/Users/jdh/Documents/Academia/Library",
+      "citekeyFormat": "creatornames('%(F)s') + authEtAl2(creator = '*', initials = false, sep = '_') + '_' + year",
+      "citekeySearch": false,
+      "keyScope": "global",
+      "quickCopyMode": "pandoc"
+    }
+  },
+  "items": [
+    {
+      "DOI": "10.1177/1463499617751315",
+      "ISSN": "1463-4996",
+      "abstractNote": "This paper focuses on the notion of ‘participation’ as it has been used in the social sciences throughout the 20th century. It proposes that there are two main traditions of use – an ‘individual’ one, and a ‘dividual’ one – and it argues in favour of the latter. It does this by examining how Simmel and Goffman, on the one hand, and Lévy-Bruhl and Durkheim, on the other, defined participation. Developed by Lucien Lévy-Bruhl in the first part of the last century, ‘participation’ in the dividual sense is today being given new life by sociocultural anthropologists such as Marshall Sahlins and phenomenologically inclined cognitive scientists such as Shaun Gallagher. The paper addresses the roots of the concept in Scholastic theology and proposes to show how central it can come to be to a sociocultural anthropology that is willing to take on frontally the challenges presently being posed by embodied cognition.",
+      "accessDate": "2025-08-28T22:17:40Z",
+      "citationKey": "dePina-Cabral_2018",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "João",
+          "lastName": "de Pina-Cabral"
+        }
+      ],
+      "date": "2018-12-01",
+      "issue": "4",
+      "itemID": 1,
+      "itemType": "journalArticle",
+      "language": "en",
+      "pages": "435-455",
+      "publicationTitle": "Anthropological Theory",
+      "title": "Modes of participation",
+      "url": "https://doi.org/10.1177/1463499617751315",
+      "volume": "18"
+    }
+  ]
+}
