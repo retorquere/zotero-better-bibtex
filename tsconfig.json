@@ -6,7 +6,7 @@
     "esModuleInterop": true,
     "noUnusedParameters": false,
     "importHelpers": true,
-    "target": "es2017",
+    "target": "es2018",
     "disableSizeLimit": true,
     "module": "commonjs",
     "noImplicitAny": false,
