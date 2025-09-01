@@ -26,7 +26,7 @@ parameter value assumed when not provided valid values n the number of character
     <meta itemprop="description" content="Note: a number of functions below talk about the author’s lastname; you can read that as “when available”. If you have the name as a single-field name (for entities like International Business Machines or Aristoteles), Zotero doesn’t have a last name, and the full single-field name is taken instead.
 Functions auth(n=0, m=1, creator=&#39;*&#39;, initials=false)The first n (default: all) characters of the mth (default: first) author&#39;s last name.
 parameter value assumed when not provided valid values n the number of characters to take from the name, 0 = all 0 number m select the mth author 1 number creator kind of creator to select, * selects author first, and if not present, editor, translator or collaborator, in that order. &#39;*&#39; (&#39;author&#39; | &#39;editor&#39; | &#39;translator&#39; | &#39;collaborator&#39; | &#39;*&#39;) initials add author initials false boolean authAuthEa(creator=&#39;*&#39;, initials=false, sep=&#39;.&#39;)The last name of the first two authors, and &#34;.ea&#34; if there are more than two.">
-    <meta itemprop="wordCount" content="3997">
+    <meta itemprop="wordCount" content="4017">
     <meta itemprop="keywords" content="Citation Keys">
     <title>Formulas :: Better BibTeX for Zotero</title>
     <link href="/zotero-better-bibtex/citing/formulas/index.xml" rel="alternate" type="application/rss+xml" title="Formulas :: Better BibTeX for Zotero"><link rel="icon" href="/zotero-better-bibtex/better-bibtex.ico" type="image/x-icon">
@@ -497,6 +497,7 @@ authors.</p><table>
 <p>in the creator template, you can use:</p>
 <ul>
 <li><code>%(f)s</code>: family ("last") name</li>
+<li><code>%(F)s</code>: family ("last") name without dropping particles</li>
 <li><code>%(f_zh)s</code>: family ("last") name extracted from chinese compound names. Need <code>jieba</code> to be enabled</li>
 <li><code>%(g)s</code>: given ("first") name</li>
 <li><code>%(g_zh)s</code>: given ("first") name extracted from chinese compound names. Need <code>jieba</code> to be enabled</li>
@@ -527,6 +528,7 @@ authors.</p><table>
 <p>in the creator template, you can use:</p>
 <ul>
 <li><code>%(f)s</code>: family ("last") name</li>
+<li><code>%(F)s</code>: family ("last") name without dropping particles</li>
 <li><code>%(f_zh)s</code>: family ("last") name extracted from chinese compound names. Need <code>jieba</code> to be enabled</li>
 <li><code>%(g)s</code>: given ("first") name</li>
 <li><code>%(g_zh)s</code>: given ("first") name extracted from chinese compound names. Need <code>jieba</code> to be enabled</li>
@@ -553,7 +555,7 @@ authors.</p><table>
           </tr>
           <tr>
             <td><code>name</code></td>
-            <td>sprintf-js template. Available named parameters are: <code>f</code> (family name), <code>g</code> (given name), <code>i</code> (initials)</td>
+            <td>sprintf-js template. Available named parameters are: <code>f</code> (family name), <code>F</code> (family name without dropping particle), <code>g</code> (given name), <code>i</code> (initials)</td>
             <td><code>''</code></td>
             <td>('' | <code>sprintf-style format template</code>)</td>
           </tr>
