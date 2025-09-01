@@ -277,7 +277,7 @@ const main = async () => {
   fs.writeFileSync(argv.feature, format(document))
 
   // Copy/create test fixtures
-  const fixture = path.join(root, `test/fixtures/${argv.mode}`, title)
+  const fixture = path.join(root, `test/fixtures/${argv.mode}`, argv.title)
   const source = `${fixture}.json`
   try {
     fs.copyFileSync(argv.data, source)

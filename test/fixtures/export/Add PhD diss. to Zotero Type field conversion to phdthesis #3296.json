@@ -1,0 +1,47 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "options": {},
+    "preferences": {
+      "DOIandURL": "doi",
+      "autoPinDelay": 10,
+      "automaticTags": false,
+      "baseAttachmentPath": "/Users/jdh/Documents/Academia/Library",
+      "citekeyFormat": "authEtAl2(creator = \"*\", initials = false, sep = \"_\") + \"_\" + year",
+      "citekeySearch": false,
+      "keyScope": "global",
+      "quickCopyMode": "pandoc"
+    }
+  },
+  "items": [
+    {
+      "abstractNote": "This study explores alternative paths for understanding linguistic phenomena in Tukano that align more closely with the ontological perspective of speakers and, consequently, diverge from the modern Western epistemology that underlies linguistic studies. To achieve this, I initially review the foundations upon which hegemonic linguistics is based, revealing its connections with Modernity (Toulmin, 1990) and coloniality (Mignolo, 1996, 2000, 2002, 2007). I illustrate how anthropology, too, has been shaped by the dichotomies inherent in Western epistemology but has sought to distance itself from such a perspective since the 1980s. I emphasize the advances made through the Amerindian Perspectivism (Viveiros de Castro, 1996, 2002, 2018), which, by proposing a continuous decolonization of thought, can be employed to conceptualize the development of a decolonial linguistics. I also demonstrate how the perspectivist concept of equivocation applies to the notion of language, highlighting that the definition of what constitutes language is shaped by an ontological perspective. Thus, for the Tukanoans, language is not equivalent to language for non-indigenous Westerners. This proposal is supported through an analogy between the structural differences of the Western ichthyological classification system and the Tukano ichthyological classification system, as mapped by J. P. Barreto (2013), and the differences between the Western linguistic system and a possible way to conceive a Tukano linguistic system, suggested here. Finally, I explore the implications of this alternative language conception in the analysis of three linguistic event data collected in the field. I propose a discussion on the meaning of evidentiality morphemes in the presented data, demonstrating how their analysis can benefit from a perspective that goes beyond the strictly linguistic sense of such morphemes (as proposed by Ramirez, 1997a) and not exclusively focusing on the morpheme\\'s sense in relation to its immediate context (as done by Aikhenvald, 2004, 2018). Instead, it seeks to understand language as an integral and constitutive part of a distinct ontological perspective, Tukano, in which the process of signification differs from the Western perspective.",
+      "accessDate": "2025-08-24T18:19:52Z",
+      "citationKey": "Savoldi_2024",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Dora",
+          "lastName": "Savoldi"
+        }
+      ],
+      "date": "2024-04-24",
+      "extra": [
+        "Citation Key: Savoldi_2024",
+        "DOI: 10.11606/D.8.2024.tde-15102024-121507",
+        "tex.author=Savoldi da Rocha Azevedo, Dora",
+        "tex.shortauthor=Savoldi"
+      ],
+      "itemID": 1,
+      "itemType": "thesis",
+      "language": "pt-BR",
+      "place": "São Paulo",
+      "publisher": "Universidade de São Paulo",
+      "shortTitle": "Dos peixes à língua",
+      "title": "Dos peixes à língua: implicações da concepção de língua em um registro ontológico tukano para a análise linguística",
+      "type": "PhD Diss.",
+      "url": "https://www.teses.usp.br/teses/disponiveis/8/8139/tde-15102024-121507/"
+    }
+  ]
+}

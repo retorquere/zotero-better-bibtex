@@ -214,6 +214,7 @@ class Library:
 
     if not self.body and self.base and os.path.exists(self.base):
       with open(self.base) as f:
+        utils.print(f'reading {self.base}')
         self.body = f.read()
 
     self.normalized = self.body
