@@ -1470,6 +1470,7 @@ export class Entry {
       dissertation: phdthesis,
       phddissertation: phdthesis,
       doctoraldissertation: phdthesis,
+      phddiss: phdthesis,
 
       ma: mastersthesis,
       master: mastersthesis,

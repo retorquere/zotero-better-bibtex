@@ -43,6 +43,7 @@ const config = [
       'submodules/**/*.{mts,ts,js,mjs,tsx,cjs}',
       'setup/**/*.{ts,js}',
       'util/*.ts',
+      'util/*.mjs',
       'minitests/**/*.{ts,js}',
     ],
   },

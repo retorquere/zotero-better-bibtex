@@ -35,6 +35,7 @@
   ],
   "exclude": [
     "headless",
+    "util",
     "**/*.spec.ts"
   ]
 }
