@@ -1,5 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 
+import { log } from '../../content/logger'
+log.dump(`worker query: ${JSON.stringify(location.search)}`)
 import { Server as WorkerServerBase } from './json-rpc'
 import { Exporter as ExporterInterface } from './interface'
 import type { Item } from '../../gen/typings/serialized-item'
@@ -145,7 +147,6 @@ declare const doExport: () => void
 import * as DateParser from '../../content/dateparser'
 // import * as Extra from '../../content/extra'
 import itemCreators from '../../gen/items/creators.json'
-import { log } from '../../content/logger'
 import { Collection } from '../../gen/typings/serialized-item'
 // import { CSL_MAPPINGS } from '../../gen/items/items'
 
