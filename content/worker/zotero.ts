@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 
 import { log } from '../../content/logger'
-log.dump(`worker query: ${JSON.stringify(location.search)}`)
 import { Server as WorkerServerBase } from './json-rpc'
 import { Exporter as ExporterInterface } from './interface'
 import type { Item } from '../../gen/typings/serialized-item'
@@ -527,6 +526,7 @@ class WorkerServer extends WorkerServerBase implements ExporterInterface {
     Zotero.Schema = { ...config.CSL_MAPPINGS }
     ZD.init(config.dateFormatsJSON)
     await Cache.open(config.lastUpdated)
+    log.info(`worker startup: ${JSON.stringify(location.search)}`)
   }
 
   async start(job: Job): Promise<{ output: string; cacheRate: number }> {
