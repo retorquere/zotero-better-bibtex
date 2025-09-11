@@ -20,7 +20,7 @@ body:
 
       I am done explaining why this is needed. Just include one.
 
-      *If the regular debug log submission does not work, use "send to bashupload.com" from the help menu.*
+      *If the regular debug log submission does not work, use "send plugin debug log" from the help menu.*
 
       If you are sure your question does not relate to items in your library at all, just select any one item in your library.
 - type: input
