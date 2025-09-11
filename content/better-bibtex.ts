@@ -1,5 +1,7 @@
 /* eslint-disable prefer-rest-params */
 
+declare const rootURI: string
+
 import { Deferred } from './promise'
 const Ready = new Deferred<boolean>
 
@@ -647,7 +649,7 @@ export class BetterBibTeX {
         Ready.resolve(true)
 
         ExportOptions.enable()
-        if (Zotero.getMainWindow()) this.onMainWindowLoad({ window: Zotero.getMainWindow() })
+        if (Zotero.getMainWindow()) await this.onMainWindowLoad({ window: Zotero.getMainWindow() })
 
         Zotero.Promise.delay(15000).then(() => {
           DebugLog.unregister('Better BibTeX')
@@ -779,8 +781,21 @@ export class BetterBibTeX {
     await orchestrator.shutdown(reason)
   }
 
-  public onMainWindowLoad({ window }: { window: Window }): void {
+  public async onMainWindowLoad({ window }: { window: Window }): Promise<void> {
     const doc = window.document
+
+    try {
+      await Zotero.PreferencePanes.register({
+        pluginID: 'better-bibtex@iris-advies.com',
+        src: `${rootURI}content/preferences.xhtml`,
+        stylesheets: [`${rootURI}content/preferences.css`],
+        label: 'Better BibTeX',
+        defaultXUL: true,
+      })
+    }
+    catch (err) {
+      log.error('could not register preference pane:', err.message, err.stack)
+    }
 
     if (!doc.querySelector('#better-bibtex-menuFile')) {
       Menu.register('menuFile', {
