@@ -9,7 +9,7 @@
     "email": "Emiliano.Heyns@iris-advies.com"
   },
   "xpi": {
-    "id": "better-bibtex",
+    "id": "better-bibtex@iris-advies.com",
     "name": "Better BibTex for Zotero",
     "iconURL": "chrome://zotero-better-bibtex/content/skin/better-bibtex.svg",
     "optionsURL": "chrome://zotero/content/preferences/preferences.xul#better-bibtex",
