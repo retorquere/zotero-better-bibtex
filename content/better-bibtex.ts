@@ -541,31 +541,24 @@ export class BetterBibTeX {
       startup: async () => {
         // https://groups.google.com/d/msg/zotero-dev/QYNGxqTSpaQ/uvGObVNlCgAJ
         // this is what really takes long
-        log.info('STARTUP: waiting for zotero to initialize')
         await Zotero.initializationPromise
 
-        log.info('STARTUP: emergency log')
-        DebugLog.register('Better BibTeX', ['extensions.zotero.translators.better-bibtex.'], pubkey)
+        DebugLog.register('Better BibTeX', ['translators.better-bibtex.'], pubkey)
 
-        log.info('STARTUP: translators')
         // and this
         if ((await Translators.needsInstall()).length) await Zotero.Translators.init()
 
-        log.info('STARTUP: l10n')
         await l10n.initialize()
 
-        log.info('STARTUP: preferences')
         this.dir = PathUtils.join(Zotero.DataDirectory.dir, 'better-bibtex')
         await IOUtils.makeDirectory(this.dir, { ignoreExisting: true, createAncestors: true })
         await Preference.startup(this.dir)
 
-        log.info('STARTUP: events')
         Events.startup()
         Events.on('export-progress', ({ pct, message }) => {
           this.setProgress(pct, message)
         })
 
-        log.info('STARTUP: cache')
         Events.cacheTouch = async (ids: number[]) => {
           const withParents: Set<number> = new Set(ids)
           for (const item of await Zotero.Items.getAsync(ids)) {
@@ -573,12 +566,10 @@ export class BetterBibTeX {
           }
           await Cache.touch([...withParents])
         }
-        log.info('STARTUP: idle')
         Events.addIdleListener('cache-purge', Preference.autoExportIdleWait)
         Events.on('idle', async state => {
           if (state.topic === 'cache-purge' && Cache.ready) await Cache.Serialized.purge()
         })
-        log.info('STARTUP: done')
       },
     })
 
