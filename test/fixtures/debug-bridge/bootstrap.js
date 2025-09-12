@@ -184,7 +184,8 @@ async function startup({ resourceURI, rootURI = resourceURI.spec }, reason) {
         }
       }
 
-      log(`executing\n${request.data} with ${JSON.stringify(query)}`)
+      const script = request.data.trim().match(/^\/\/ debug bridge:(?<script>[^\r\n]+)/i)?.groups?.script || request.data
+      log(`executing\n${script} with ${JSON.stringify(query)}`)
       const start = Date.now()
       let response
       try {

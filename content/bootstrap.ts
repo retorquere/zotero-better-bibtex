@@ -33,10 +33,10 @@ export function install(_data: any, _reason: ReasonId) {
   log('install, nothing to do')
 }
 
-export async function onMainWindowLoad({ window }) {
+export function onMainWindowLoad({ window }) {
   log('onMainWindowLoad')
   window.MozXULElement.insertFTLIfNeeded('better-bibtex.ftl')
-  await Zotero.BetterBibTeX.onMainWindowLoad({ window })
+  Zotero.BetterBibTeX.onMainWindowLoad({ window })
 }
 
 export function onMainWindowUnload({ window }) {
@@ -50,7 +50,7 @@ async function section(name: string, f: () => Promise<void>) {
     await f()
   }
   catch (err) {
-    const title = `BBT startup ${name} failed`
+    const title = `STARTUP: section ${name} failed`
     const text = `${err}\n${err.stack}`
     alert({ title, text })
     log(`${title}\n${text}`)
@@ -88,6 +88,16 @@ export async function startup({ resourceURI, rootURI = resourceURI.spec }, reaso
 
     await section('plugin startup', async () => {
       await Zotero.BetterBibTeX.startup(BOOTSTRAP_REASONS[reason])
+    })
+
+    await section('preference pane', async () => {
+      await Zotero.PreferencePanes.register({
+        pluginID: 'better-bibtex@iris-advies.com',
+        src: `${rootURI}content/preferences.xhtml`,
+        stylesheets: [`${rootURI}content/preferences.css`],
+        label: 'Better BibTeX',
+        defaultXUL: true,
+      })
     })
     log('startup done')
   }

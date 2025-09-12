@@ -421,6 +421,7 @@ class Zotero:
 
         try:
           ready = self.execute("""
+            // debug bridge: startup detection
             if (!Zotero.BetterBibTeX) {
               Zotero.debug('{better-bibtex:debug bridge}: startup: BetterBibTeX not loaded')
               return false;

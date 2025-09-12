@@ -1,7 +1,5 @@
 /* eslint-disable prefer-rest-params */
 
-declare const rootURI: string
-
 import { Deferred } from './promise'
 const Ready = new Deferred<boolean>
 
@@ -543,24 +541,31 @@ export class BetterBibTeX {
       startup: async () => {
         // https://groups.google.com/d/msg/zotero-dev/QYNGxqTSpaQ/uvGObVNlCgAJ
         // this is what really takes long
+        log.info('STARTUP: waiting for zotero to initialize')
         await Zotero.initializationPromise
 
+        log.info('STARTUP: emergency log')
         DebugLog.register('Better BibTeX', ['extensions.zotero.translators.better-bibtex.'], pubkey)
 
+        log.info('STARTUP: translators')
         // and this
         if ((await Translators.needsInstall()).length) await Zotero.Translators.init()
 
+        log.info('STARTUP: l10n')
         await l10n.initialize()
 
+        log.info('STARTUP: preferences')
         this.dir = PathUtils.join(Zotero.DataDirectory.dir, 'better-bibtex')
         await IOUtils.makeDirectory(this.dir, { ignoreExisting: true, createAncestors: true })
         await Preference.startup(this.dir)
 
+        log.info('STARTUP: events')
         Events.startup()
         Events.on('export-progress', ({ pct, message }) => {
           this.setProgress(pct, message)
         })
 
+        log.info('STARTUP: cache')
         Events.cacheTouch = async (ids: number[]) => {
           const withParents: Set<number> = new Set(ids)
           for (const item of await Zotero.Items.getAsync(ids)) {
@@ -568,10 +573,12 @@ export class BetterBibTeX {
           }
           await Cache.touch([...withParents])
         }
+        log.info('STARTUP: idle')
         Events.addIdleListener('cache-purge', Preference.autoExportIdleWait)
         Events.on('idle', async state => {
           if (state.topic === 'cache-purge' && Cache.ready) await Cache.Serialized.purge()
         })
+        log.info('STARTUP: done')
       },
     })
 
@@ -649,7 +656,7 @@ export class BetterBibTeX {
         Ready.resolve(true)
 
         ExportOptions.enable()
-        if (Zotero.getMainWindow()) await this.onMainWindowLoad({ window: Zotero.getMainWindow() })
+        if (Zotero.getMainWindow()) this.onMainWindowLoad({ window: Zotero.getMainWindow() })
 
         Zotero.Promise.delay(15000).then(() => {
           DebugLog.unregister('Better BibTeX')
@@ -781,21 +788,8 @@ export class BetterBibTeX {
     await orchestrator.shutdown(reason)
   }
 
-  public async onMainWindowLoad({ window }: { window: Window }): Promise<void> {
+  public onMainWindowLoad({ window }: { window: Window }): void {
     const doc = window.document
-
-    try {
-      await Zotero.PreferencePanes.register({
-        pluginID: 'better-bibtex@iris-advies.com',
-        src: `${rootURI}content/preferences.xhtml`,
-        stylesheets: [`${rootURI}content/preferences.css`],
-        label: 'Better BibTeX',
-        defaultXUL: true,
-      })
-    }
-    catch (err) {
-      log.error('could not register preference pane:', err.message, err.stack)
-    }
 
     if (!doc.querySelector('#better-bibtex-menuFile')) {
       Menu.register('menuFile', {
