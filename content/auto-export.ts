@@ -18,6 +18,7 @@ import * as l10n from './l10n'
 import { orchestrator } from './orchestrator'
 import * as blink from 'blinkdb'
 import { pick } from './object'
+import { uri } from './escape'
 
 const cmdMeta = /(["^&|<>()%!])/
 const cmdMetaOrSpace = /[\s"^&|<>()%!]/
@@ -408,7 +409,7 @@ export const AutoExport = new class $AutoExport {
   private unwatch: UnwatchCallback[] = []
 
   private key(path: string): string {
-    return encodeURIComponent(path).replace(/[.!'()*]/g, c => `%${c.charCodeAt(0).toString(16)}`)
+    return uri.encode(path).replace(/[.!'()*]/g, c => `%${c.charCodeAt(0).toString(16)}`)
   }
 
   constructor() {

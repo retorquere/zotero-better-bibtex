@@ -9,6 +9,7 @@ import { TeXstudio } from './tex-studio'
 import * as blink from 'blinkdb'
 import { AutoExport } from './auto-export'
 import { Translators } from './translators'
+import { uri } from './escape'
 
 export async function clipSelected(translatorID: string): Promise<void> {
   const items = Zotero.getActiveZoteroPane().getSelectedItems()
@@ -181,26 +182,26 @@ export function pullExport(): void {
 
   if (library.groupID) {
     params.url.short += `/group;id:${library.groupID}`
-    params.url.long += `/group;name:${encodeURIComponent(library.name)}`
+    params.url.long += `/group;name:${uri.encode(library.name)}`
   }
   else {
     params.url.short += `/library;id:${library.libraryID}`
-    params.url.long += `/library;name:${encodeURIComponent(library.name)}`
+    params.url.long += `/library;name:${uri.encode(library.name)}`
   }
 
   if (collection) {
     params.url.short += `/collection;key:${collection.key}/${collection.name}`
 
-    let path = `/${encodeURIComponent(collection.name)}`
+    let path = `/${uri.encode(collection.name)}`
     while (typeof collection.parentID === 'number') {
       collection = Zotero.Collections.get(collection.parentID)
-      path = `/${encodeURIComponent(collection.name)}${path}`
+      path = `/${uri.encode(collection.name)}${path}`
     }
     params.url.long += `/collection${path}`
   }
   else {
-    params.url.short += `/${encodeURIComponent(library.name) || 'library'}`
-    params.url.long += `/${encodeURIComponent(library.name) || 'library'}`
+    params.url.short += `/${uri.encode(library.name) || 'library'}`
+    params.url.long += `/${uri.encode(library.name) || 'library'}`
   }
 
   Zotero.getMainWindow().openDialog('chrome://zotero-better-bibtex/content/ServerURL.xhtml', '', 'chrome,dialog,centerscreen,modal', params)

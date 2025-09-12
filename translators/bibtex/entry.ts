@@ -44,6 +44,7 @@ import { babelLanguage, titleCase } from '../../content/text'
 import BabelTag from '../../gen/babel/tag.json'
 
 import { arXiv } from '../../content/arXiv'
+import { uri } from '../../content/escape'
 
 import { stringCompare } from '../lib/string-compare'
 import * as CSL from 'citeproc'
@@ -399,11 +400,11 @@ export class Entry {
     let m
     if (m = this.item.url.match(/^https?:\/\/www.jstor.org\/stable\/([\S]+)$/i)) {
       this.add({ name: 'eprinttype', value: 'jstor' })
-      this.add({ name: 'eprint', value: decodeURI(m[1].replace(/\?.*/, '')) })
+      this.add({ name: 'eprint', value: uri.decode(m[1].replace(/\?.*/, '')) })
     }
     else if (m = this.item.url.match(/^https?:\/\/books.google.com\/books?id=([\S]+)$/i)) {
       this.add({ name: 'eprinttype', value: 'googlebooks' })
-      this.add({ name: 'eprint', value: decodeURI(m[1]) })
+      this.add({ name: 'eprint', value: uri.decode(m[1]) })
     }
     else if (m = this.item.url.match(/^https?:\/\/www.ncbi.nlm.nih.gov\/pubmed\/(\d+)/i)) {
       this.add({ name: 'eprinttype', value: 'pubmed' })
@@ -411,12 +412,12 @@ export class Entry {
     }
     else if (m = this.item.url.match(/^https?:[/][/]hdl[.]handle[.]net[/]([^/]+[/].+)$/i)) {
       this.add({ name: 'eprinttype', value: 'hdl' })
-      this.add({ name: 'eprint', value: decodeURI(m[1]) })
+      this.add({ name: 'eprint', value: uri.decode(m[1]) })
     }
     /*
     else if (m = this.item.url.match(/[/]handle[/]([^/]+[/].+)$/)) {
       this.add({ name: 'eprinttype', value: 'hdl' })
-      this.add({ name: 'eprint', value: decodeURI(m[1]) })
+      this.add({ name: 'eprint', value: uri.decode(m[1]) })
     }
     */
     else {

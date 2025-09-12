@@ -1,7 +1,7 @@
 declare const Zotero: any
 
 import { simplifyForExport } from '../gen/items/simplify'
-import { html as escapeHTML } from '../content/escape'
+import { uri, html as escapeHTML } from '../content/escape'
 
 import { Eta } from 'eta'
 const eta = new Eta({ autoEscape: true })
@@ -11,7 +11,7 @@ function select_by_key(item) {
   return (kind === 'users') ? `zotero://select/library/items/${ key }` : `zotero://select/groups/${ lib }/items/${ key }`
 }
 function select_by_citekey(item) {
-  return `zotero://select/items/@${ encodeURIComponent(item.citationKey) }`
+  return `zotero://select/items/@${uri.encode(item.citationKey)}`
 }
 
 export function citeCreators(creators: { name?: string; lastName?: string }[]): string {

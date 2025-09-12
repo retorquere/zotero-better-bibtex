@@ -35,6 +35,7 @@ import * as Extra from './extra'
 import { sentenceCase, HTMLParser, HTMLParserOptions } from './text'
 
 import { AutoExport } from './auto-export'
+import { uri } from './escape'
 
 import { log } from './logger'
 // import { trace } from './logger'
@@ -154,7 +155,7 @@ monkey.patch(Zotero.Items, 'merge', original => async function Zotero_Items_merg
 
 // https://github.com/retorquere/zotero-better-bibtex/issues/769
 function parseLibraryKeyFromCitekey(libraryKey) {
-  const decoded = decodeURIComponent(libraryKey)
+  const decoded = uri.decode(libraryKey)
   const m = decoded.match(/^@(.+)|bbt:(?:[{](\d+)[}])?(.+)/)
   if (!m) return
 
