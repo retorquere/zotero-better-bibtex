@@ -648,7 +648,9 @@ export class BetterBibTeX {
         Ready.resolve(true)
 
         ExportOptions.enable()
-        if (Zotero.getMainWindow()) this.onMainWindowLoad({ window: Zotero.getMainWindow() })
+        Zotero.getMainWindows().forEach(win => {
+          this.onMainWindowLoad({ window: win })
+        })
 
         Zotero.Promise.delay(15000).then(() => {
           DebugLog.unregister('Better BibTeX')
@@ -756,6 +758,9 @@ export class BetterBibTeX {
         monkey.enable()
       },
       shutdown: async () => { // eslint-disable-line @typescript-eslint/require-await
+        Zotero.getMainWindows().forEach(win => {
+          this.onMainWindowUnload({ window: win })
+        })
         scheduler.clear()
         ExportOptions.disable()
         Events.shutdown()
@@ -781,6 +786,8 @@ export class BetterBibTeX {
   }
 
   public onMainWindowLoad({ window }: { window: Window }): void {
+    window.MozXULElement.insertFTLIfNeeded('better-bibtex.ftl')
+
     const doc = window.document
 
     if (!doc.querySelector('#better-bibtex-menuFile')) {
@@ -867,6 +874,7 @@ export class BetterBibTeX {
 
   public onMainWindowUnload({ window }: { window: Window }): void {
     log.info(`onMainWindowUnload ${typeof window}`)
+    window.document.querySelector('[href="better-bibtex.ftl"]')?.remove()
     Menu.unregisterAll()
   }
 

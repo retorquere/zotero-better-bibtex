@@ -35,7 +35,6 @@ export function install(_data: any, _reason: ReasonId) {
 
 export function onMainWindowLoad({ window }) {
   log('onMainWindowLoad')
-  window.MozXULElement.insertFTLIfNeeded('better-bibtex.ftl')
   Zotero.BetterBibTeX.onMainWindowLoad({ window })
 }
 
@@ -84,7 +83,6 @@ export async function startup({ resourceURI, rootURI = resourceURI.spec }, reaso
       defaultXUL: true,
     })
     log('startup done')
-    onMainWindowLoad({ window: Zotero.getMainWindow() })
   }
   catch (err) {
     alert({ title: 'Better BibTeX startup failed', text: `${err}\n${err.stack}` })
