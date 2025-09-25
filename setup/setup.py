@@ -8,7 +8,6 @@ import kuroshiro
 import item
 import babel_languages
 import scannablecite
-import manifest
 import ftl2dtd
 import unicode
 

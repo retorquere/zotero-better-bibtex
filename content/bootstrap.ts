@@ -20,12 +20,12 @@ type ReasonId = keyof typeof BOOTSTRAP_REASONS
 export type Reason = typeof BOOTSTRAP_REASONS[ReasonId]
 
 function log(msg) {
-  msg = `{better-bibtex} bootstrap: ${ msg }`
+  msg = `{better-bibtex} bootstrap: ${msg}`
   if (Zotero?.debug) {
-    Zotero.debug(`Better BibTeX bootstrap: ${ msg }`) // eslint-disable-line no-restricted-syntax
+    Zotero.debug(`Better BibTeX bootstrap: ${msg}`) // eslint-disable-line no-restricted-syntax
   }
   else {
-    dump(`${ msg }\n`) // eslint-disable-line no-restricted-syntax
+    dump(`${msg}\n`) // eslint-disable-line no-restricted-syntax
   }
 }
 
@@ -49,13 +49,21 @@ export async function startup({ resourceURI, rootURI = resourceURI.spec }, reaso
     log('startup started')
 
     const aomStartup = Cc['@mozilla.org/addons/addon-manager-startup;1'].getService(Ci.amIAddonManagerStartup)
-    const manifestURI = Services.io.newURI(`${ rootURI }manifest.json`)
-    chromeHandle = aomStartup.registerChrome(manifestURI, require('../gen/chrome.json'))
+    const manifestURI = Services.io.newURI(`${rootURI}manifest.json`)
+    log(manifestURI.spec)
+    chromeHandle = aomStartup.registerChrome(manifestURI, [
+      ['content', 'zotero-better-bibtex', 'content/'],
+      ['locale', 'zotero-better-bibtex', 'en-US', 'locale/en-US/'],
+      ['locale', 'zotero-better-bibtex', 'fr-FR', 'locale/fr-FR/'],
+      ['locale', 'zotero-better-bibtex', 'pt-BR', 'locale/pt-BR/'],
+      ['locale', 'zotero-better-bibtex', 'zh-CN', 'locale/zh-CN/'],
+      ['locale', 'zotero-better-bibtex', 'it-IT', 'locale/it-IT/'],
+    ])
 
     if (Zotero.BetterBibTeX) throw new Error('Better BibTeX is already started')
 
     // const $window = Zotero.getMainWindow()
-    Services.scriptloader.loadSubScriptWithOptions(`${ rootURI }content/better-bibtex.js`, {
+    Services.scriptloader.loadSubScriptWithOptions(`${rootURI}content/better-bibtex.js`, {
       charset: 'utf=8',
       // ignoreCache: true,
       target: {
@@ -77,8 +85,8 @@ export async function startup({ resourceURI, rootURI = resourceURI.spec }, reaso
     await Zotero.BetterBibTeX.startup(BOOTSTRAP_REASONS[reason])
     await Zotero.PreferencePanes.register({
       pluginID: 'better-bibtex@iris-advies.com',
-      src: `${ rootURI }content/preferences.xhtml`,
-      stylesheets: [`${ rootURI }content/preferences.css`],
+      src: `${rootURI}content/preferences.xhtml`,
+      stylesheets: [`${rootURI}content/preferences.css`],
       label: 'Better BibTeX',
       defaultXUL: true,
     })
@@ -86,7 +94,7 @@ export async function startup({ resourceURI, rootURI = resourceURI.spec }, reaso
   }
   catch (err) {
     alert({ title: 'Better BibTeX startup failed', text: `${err}\n${err.stack}` })
-    log(`${ err }\n${err.stack}`)
+    log(`${err}\n${err.stack}`)
   }
 }
 
@@ -108,8 +116,8 @@ export async function shutdown(data: any, reason: ReasonId) {
     log('shutdown done')
   }
   catch (err) {
-    alert({ title: 'Better BibTeX shutdown failed', text: `${ err }` })
-    log(`${ err }\n${ err.stack }`)
+    alert({ title: 'Better BibTeX shutdown failed', text: `${err}` })
+    log(`${err}\n${err.stack}`)
   }
 }
 
