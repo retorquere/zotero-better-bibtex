@@ -394,6 +394,7 @@ export class PatternFormatter {
     creatorNames: {
       template: '%(f)s' as Template<'creator'>,
       transliterate: false,
+      space: ' ',
     },
     postfix: {
       offset: 0,
@@ -664,13 +665,15 @@ export class PatternFormatter {
   }
 
   /**
-   * Sets the sprintf-template default for representing creator names. Default is '%(f)s'.
-   * @param template template string
-   * @param transliterate transliterate the returned name
+   * Sets the defaults for formatting creator names
+   * @param template sprintf-template default for representing creator names. Default is '%(f)s'.
+   * @param transliterate transliterate the name
+   * @param space replace spaces in the name (in case of multi-part names for example) with this string
    */
-  public $creatornames(template?: Template<'creator'>, transliterate?: boolean): string { // eslint-disable-line @typescript-eslint/no-shadow
+  public $creatornames(template?: Template<'creator'>, transliterate?: boolean, space?: string): string { // eslint-disable-line @typescript-eslint/no-shadow
     if (typeof template !== 'undefined') this.config.creatorNames.template = template
     if (typeof transliterate !== 'undefined') this.config.creatorNames.transliterate = transliterate
+    if (typeof space !== 'undefined') this.config.creatorNames.space = space
     return ''
   }
 
@@ -1576,7 +1579,11 @@ export class PatternFormatter {
       vars.f = this.transliterate(vars.f)
       vars.g = this.transliterate(vars.g)
     }
-    return sprintf(template, vars) as string
+    let name = sprintf(template, vars) as string
+    if (this.config.creatorNames.space.trim()) {
+      name = name.replace(/\s+/, this.config.creatorNames.space)
+    }
+    return name
   }
 
   private creators(select: AuthorType, template?: Template<'creators'>): string[] {
