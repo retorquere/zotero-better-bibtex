@@ -21,7 +21,6 @@ async function prefetch(id_with_branch: string): Promise<void> {
     log.error('l10n.prefetch error:', id_with_branch, err)
     localized[id_with_branch] = `!! ${id_with_branch}`
   }
-  log.info('l10n.prefetch:', { key: id_with_branch, localized: localized[id_with_branch] })
 }
 
 export function localize(id_with_branch: string, params?: Record<string, string | number>): string {
