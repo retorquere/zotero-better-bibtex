@@ -542,7 +542,11 @@ export class BetterBibTeX {
       startup: async () => {
         // https://groups.google.com/d/msg/zotero-dev/QYNGxqTSpaQ/uvGObVNlCgAJ
         // this is what really takes long
-        await Zotero.initializationPromise
+        await Promise.all([
+          Zotero.initializationPromise,
+          Zotero.unlockPromise,
+          // Zotero.uiReadyPromise,
+        ])
 
         DebugLog.register('Better BibTeX', ['translators.better-bibtex.'], pubkey)
 
