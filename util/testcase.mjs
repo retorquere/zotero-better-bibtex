@@ -1,17 +1,17 @@
 #!/usr/bin/env node
 
+import anyAscii from 'any-ascii'
 import { execSync } from 'child_process'
 import fs from 'fs'
 import glob from 'glob'
 import path from 'path'
-import { fileURLToPath } from 'url'
 import sanitize from 'sanitize-filename'
-import anyAscii from 'any-ascii'
+import { fileURLToPath } from 'url'
 
 import yargs from 'yargs'
 import { hideBin } from 'yargs/helpers'
 
-import { TableRow, TableCell } from 'gherkin-ast'
+import { TableCell, TableRow } from 'gherkin-ast'
 import { format } from 'gherkin-formatter'
 import { read } from 'gherkin-io'
 
@@ -120,6 +120,31 @@ for (const mode of ['import', 'export', 'citekey']) {
 }
 if (!argv.feature) argv.feature = path.join(root, 'test', 'features', `${argv.mode}.feature`)
 
+const Translator = new class {
+  constructor() {
+    switch (argv.translator.toLowerCase()) {
+      case 'biblatex':
+        this.name = 'BibLaTeX'
+        this.ext = '.biblatex'
+        break
+      case 'bibtex':
+        this.name = 'BibTeX'
+        this.ext = '.bibtex'
+        break
+      case 'csl':
+      case 'csl-json':
+        this.name = 'CSL-JSON'
+        this.ext = '.csl.json'
+        break
+      case 'yml':
+      case 'csl-yaml':
+        this.name = 'CSL-YAML'
+        this.ext = '.csl.yml'
+        break
+    }
+  }
+}()
+
 const main = async () => {
   // Validate arguments
   if (!argv.issue) {
@@ -138,17 +163,7 @@ const main = async () => {
     process.exit(1)
   }
 
-  // Map translator names
-  const translators = {
-    biblatex: 'BibLaTeX',
-    bibtex: 'BibTeX',
-    csl: 'CSL-JSON',
-    'csl-json': 'CSL-JSON',
-    yml: 'CSL-YAML',
-    'csl-yaml': 'CSL-YAML',
-  }
-  const translator = translators[argv.translator.toLowerCase()]
-  if (!translator) {
+  if (!Translator.name) {
     console.error(`Error: Invalid translator specified: ${argv.translator}`)
     process.exit(1)
   }
@@ -235,7 +250,7 @@ const main = async () => {
             root,
             'test/fixtures/export',
             path.basename(path.dirname(att.path)),
-            att.path.replace('STORAGE:', '')
+            att.path.replace('STORAGE:', ''),
           )
           if (!fs.existsSync(attPath)) {
             console.warn(`*** WARNING ***: ${argv.data} has non-existing attachment ${att.path}`)
@@ -253,12 +268,12 @@ const main = async () => {
 
   const name = argv.import
     ? /^Import <references> references/
-    : new RegExp(`^Export <references> references for ${translator} to`)
+    : new RegExp(`^Export <references> references for ${Translator.name} to`)
   const outlines = document.feature.elements
-      .filter(_ => _.keyword === 'Scenario Outline' && _.name.match(name))
+    .filter(_ => _.keyword === 'Scenario Outline' && _.name.match(name))
 
   if (outlines.length !== 1) {
-    console.error(`Error: Found ${outlines.length} outlines containing "${translator}"`)
+    console.error(`Error: Found ${outlines.length} outlines containing "${Translator.name}"`)
     process.exit(1)
   }
 
@@ -273,7 +288,7 @@ const main = async () => {
     existing.cells[1] = new TableCell(`${argv.number}`)
   }
   else {
-    examples.unshift(new TableRow([ new TableCell(argv.title), new TableCell(`${argv.number}`) ]))
+    examples.unshift(new TableRow([new TableCell(argv.title), new TableCell(`${argv.number}`)]))
   }
   fs.writeFileSync(argv.feature, format(document))
 
@@ -284,16 +299,8 @@ const main = async () => {
     fs.copyFileSync(argv.data, source)
     execSync(`git add "${source}"`, { cwd: root, stdio: 'inherit' })
 
-    let ext = 'bib'
-    if (argv.export) {
-      ext = translator.toLowerCase().replace('csl-json', 'json').replace('csl-yaml', 'yml')
-      if (translator === 'BibTeX') {
-        ext = 'bib'
-      }
-    }
-
-    const target = `${fixture}.${ext}`
-    if (translator === 'CSL-JSON') {
+    const target = `${fixture}${argv.export ? Translator.ext : '.bib'}`
+    if (Translator.name === 'CSL-JSON') {
       fs.writeFileSync(target, '{}', 'utf8')
     }
     else if (!fs.existsSync(target)) {
@@ -302,8 +309,8 @@ const main = async () => {
 
     execSync(`git add "${target}"`, { cwd: root, stdio: 'inherit' })
   }
-  catch (error) {
-    console.error('Error creating/copying fixture files:', error.message)
+  catch (err) {
+    console.error('Error creating/copying fixture files:', err.message)
     process.exit(1)
   }
 }
