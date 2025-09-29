@@ -26,7 +26,7 @@ parameter value assumed when not provided valid values n the number of character
     <meta itemprop="description" content="Note: a number of functions below talk about the author’s lastname; you can read that as “when available”. If you have the name as a single-field name (for entities like International Business Machines or Aristoteles), Zotero doesn’t have a last name, and the full single-field name is taken instead.
 Functions auth(n=0, m=1, creator=&#39;*&#39;, initials=false)The first n (default: all) characters of the mth (default: first) author&#39;s last name.
 parameter value assumed when not provided valid values n the number of characters to take from the name, 0 = all 0 number m select the mth author 1 number creator kind of creator to select, * selects author first, and if not present, editor, translator or collaborator, in that order. &#39;*&#39; (&#39;author&#39; | &#39;editor&#39; | &#39;translator&#39; | &#39;collaborator&#39; | &#39;*&#39;) initials add author initials false boolean authAuthEa(creator=&#39;*&#39;, initials=false, sep=&#39;.&#39;)The last name of the first two authors, and &#34;.ea&#34; if there are more than two.">
-    <meta itemprop="wordCount" content="4017">
+    <meta itemprop="wordCount" content="4037">
     <meta itemprop="keywords" content="Citation Keys">
     <title>Formulas :: Better BibTeX for Zotero</title>
     <link href="/zotero-better-bibtex/citing/formulas/index.xml" rel="alternate" type="application/rss+xml" title="Formulas :: Better BibTeX for Zotero"><link rel="icon" href="/zotero-better-bibtex/better-bibtex.ico" type="image/x-icon">
@@ -493,7 +493,7 @@ authors.</p><table>
             <td>string</td>
           </tr></table>
 
-  <h3><b>creatornames</b>(template=?, transliterate=?)</h3><p>Sets the sprintf-template default for representing creator names. Default is '%(f)s'.</p>
+  <h3><b>creatornames</b>(template=?, transliterate=?, space=?)</h3><p>Sets the defaults for formatting creator names</p>
 <p>in the creator template, you can use:</p>
 <ul>
 <li><code>%(f)s</code>: family ("last") name</li>
@@ -512,15 +512,21 @@ authors.</p><table>
           </tr>
           <tr>
             <td><code>template</code></td>
-            <td>template string</td>
+            <td>sprintf-template default for representing creator names. Default is '%(f)s'.</td>
             <td></td>
             <td><code>sprintf-style format template</code></td>
           </tr>
           <tr>
             <td><code>transliterate</code></td>
-            <td>transliterate the returned name</td>
+            <td>transliterate the name</td>
             <td></td>
             <td>boolean</td>
+          </tr>
+          <tr>
+            <td><code>space</code></td>
+            <td>replace spaces in the name (in case of multi-part names for example) with this string</td>
+            <td></td>
+            <td>string</td>
           </tr></table>
 
   <h3><b>creators</b>(n=0, type=[[&#39;primary&#39;, &#39;editor&#39;, &#39;translator&#39;, &#39;*&#39;]], name=&#39;&#39;, etal=&#39;&#39;, sep=&#39; &#39;, min=0, max=0)</h3><p>Author/editor information.</p>
