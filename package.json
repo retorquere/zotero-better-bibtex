@@ -135,6 +135,7 @@
     "@typescript-eslint/eslint-plugin": "^8.44.1",
     "@xmldom/xmldom": "^0.9.8",
     "ajv-keywords": "^5.1.0",
+    "any-ascii": "^0.3.3",
     "archiver": "^7.0.1",
     "assert": "^2.1.0",
     "barcoder": "^2.0.1",

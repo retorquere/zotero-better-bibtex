@@ -6,6 +6,7 @@ import glob from 'glob'
 import path from 'path'
 import { fileURLToPath } from 'url'
 import sanitize from 'sanitize-filename'
+import anyAscii from 'any-ascii'
 
 import yargs from 'yargs'
 import { hideBin } from 'yargs/helpers'
@@ -177,7 +178,7 @@ const main = async () => {
   }
 
   // Sanitize title
-  argv.title = sanitize(`${argv.title} #${argv.issue}`).replace(/`/g, '').replace(/\?/g, '')
+  argv.title = anyAscii(sanitize(`${argv.title} #${argv.issue}`).replace(/[`'"?]/g, ''))
 
   // Handle attachment logic
   if (argv.attach) {
