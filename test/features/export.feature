@@ -11,6 +11,7 @@ Feature: Export
 
     Examples:
       | file                                                                                                                     | references |
+      | Replacement option for space between multipart last names in citekey generation #3289                                    | 1          |
       | Option to omit last name prefixes in citekey generation #3295                                                            | 1          |
       | Add PhD diss. to Zotero Type field conversion to phdthesis #3296                                                         | 1          |
       | Exclude series editor for biblatex-apa option #3284                                                                      | 1          |
@@ -88,7 +89,7 @@ Feature: Export
       | Extensions to citation format syntax #1933                                                                               | 1          |
       | Specific BBT citation key format is no longer working for my use case after update #1970                                 | 1          |
       | Define word delimiter characters #1943                                                                                   | 1          |
-      | How to use the last word of the title #1746                                                                             | 1          |
+      | How to use the last word of the title #1746                                                                              | 1          |
       | Detect journal abbreviation in the publication field #1951                                                               | 1          |
       | Define word delimiter characters #1943                                                                                   | 1          |
       | Export of hypen for range in the volume field #1929                                                                      | 1          |
@@ -98,7 +99,7 @@ Feature: Export
       | Better Biblatex export generates invalid latex when processing zero-width spaces #1892                                   | 1          |
       | Cite archive documents with BetterBibLaTeX #1799                                                                         | 1          |
       | biber 2.14 rejects the date field generated from Better BibLaTex #1695                                                   | 1          |
-      | Export fails for duplicate extra field #1739                                                                           | 1          |
+      | Export fails for duplicate extra field #1739                                                                             | 1          |
       | type dataset exported as @data instead of @dataset for BibLaTeX #1720                                                    | 2          |
       | google-scholar like references #1705                                                                                     | 2          |
       | Book Title exports to Journaltitle for Biblatex @incollection reference type #1691                                       | 2          |
@@ -259,7 +260,7 @@ Feature: Export
       | citation key format nopunctordash filter list #1880                                                                | 1          |
       | Export report+type as preprint                                                                                     | 1          |
       | Use creator in extra field when there is no creator in the usual places #1873                                      | 1          |
-      | Exporting month = {season} for BibTeX #1810                                                                      | 1          |
+      | Exporting month = {season} for BibTeX #1810                                                                        | 1          |
       | bibtex does not export season dates                                                                                | 1          |
       | DOI not escaped using postscript #1803                                                                             | 1          |
       | Using the Extra field in the exported Citation Key #1571                                                           | 1          |

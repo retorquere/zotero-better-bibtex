@@ -1,0 +1,50 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "preferences": {
+      "automaticTags": false,
+      "autoPinDelay": 10,
+      "baseAttachmentPath": "/Users/jdh/Documents/Academia/Library",
+      "citekeyFormat": "creatornames(template='%(F)s', space='.') + authEtAl2(creator = '*', initials = false, sep = '_') + '_' + year",
+      "citekeySearch": false,
+      "DOIandURL": "doi",
+      "keyScope": "global",
+      "quickCopyMode": "pandoc"
+    },
+    "options": {}
+  },
+  "version": {
+    "zotero": "7.0.26",
+    "bbt": "7.0.50"
+  },
+  "collections": {},
+  "items": [
+    {
+      "key": "A9753VVJ",
+      "version": 1466,
+      "itemType": "book",
+      "title": "Omnia sunt communia: on the commons and the transformation to postcapitalism",
+      "abstractNote": "In this weaving of radical political economy, Omnia Sunt Communia sets out the steps to postcapitalism. By conceptualising the commons not just as common goods but as a set of social systems, Massimo De Angelis shows their pervasive presence in everyday life, mapping out a strategy for total social transformation.From the micro to the macro, De Angelis unveils the commons as fields of power relations – shared space, objects, subjects – that explode the limits of daily life under capitalism. He exposes attempts to co-opt the commons, through the use of code words such as 'participation' and 'governance', and reveals the potential for radical transformation rooted in the reproduction of our communities, of life, of work and of society as a whole.",
+      "date": "2017-04-15",
+      "language": "en",
+      "shortTitle": "Omnia sunt communia",
+      "publisher": "Zed Books",
+      "ISBN": "978-1-78360-064-9",
+      "creators": [
+        {
+          "firstName": "Massimo",
+          "lastName": "De Angelis",
+          "creatorType": "author"
+        }
+      ],
+      "tags": [],
+      "dateAdded": "2025-09-28T10:57:48Z",
+      "dateModified": "2025-09-29T21:37:44Z",
+      "itemID": 448,
+      "attachments": [],
+      "notes": [],
+      "citationKey": "DeAngelis_2017"
+    }
+  ]
+}
