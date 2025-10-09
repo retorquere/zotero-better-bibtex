@@ -1,12 +1,3 @@
----
-aliases:
-  - /installation/configuration/advanced
-tags:
-  - configuration
-  - preferences
-title: Import
-weight: 13
----
 
 
 {{% preferences/header %}}

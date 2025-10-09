@@ -1,31 +1,34 @@
 #!/usr/bin/env node
 'use strict'
 
-const Showdown = require('showdown')
+import Showdown from 'showdown'
 const showdown = new Showdown.Converter()
-const findRoot = require('find-root')
-const path = require('path')
-const fs = require('fs')
-const jsesc = require('jsesc')
-const root = findRoot(__dirname)
-const ast = require('./api/type-doc').parse
-const crypto = require('crypto')
+import findRoot from 'find-root'
+import path from 'path'
+import fs from 'fs'
+import jsesc from 'jsesc'
+import { fileURLToPath } from 'url'
+
+const root = findRoot(path.dirname(fileURLToPath(import.meta.url)))
+
+import { parse as ast } from './api/type-doc.js'
+import crypto from 'crypto'
 
 function render(md) {
   return showdown.makeHtml(md).replace(/^<p>/, '').replace(/<\/p>$/, '')
 }
 
-if (!fs.existsSync('gen/api')) fs.mkdirSync('gen/api', { recursive: true })
-fs.writeFileSync('gen/api/key-formatter.js', '')
-fs.writeFileSync('gen/api/json-rpc.js', '')
+const stringSort = (a, b) => a.localeCompare(b, undefined, { sensitivity: 'base' })
 
-const stringify = require('safe-stable-stringify')
-const Ajv = require('ajv/dist/2020')
-const { _ } = Ajv
+if (!fs.existsSync('gen/api')) fs.mkdirSync('gen/api', { recursive: true })
+
+import stringify from 'safe-stable-stringify'
+import Ajv, { _ } from 'ajv/dist/2020.js'
+// const { _ } = Ajv
 const ajv = new Ajv({
   code: { source: true },
 })
-const standaloneCode = require('ajv/dist/standalone').default
+import standaloneCode from 'ajv/dist/standalone/index.js'
 
 ajv.addKeyword({
   keyword: 'instanceof',
@@ -49,7 +52,7 @@ ajv.addKeyword({
 })
 
 const Zotero = {
-  schema: require(path.join(root, 'schema/zotero.json')),
+  schema: JSON.parse(fs.readFileSync(path.join(root, 'schema/zotero.json'), 'utf-8')),
 }
 Zotero.itemTypes = Zotero.schema.itemTypes.map(it => it.itemType)
 Zotero.creatorTypes = new Set()
@@ -58,14 +61,14 @@ for (const itemType of Zotero.schema.itemTypes) {
     Zotero.creatorTypes.add(creatorType.creatorType)
   }
 }
-Zotero.creatorTypes = [...Zotero.creatorTypes].sort()
+Zotero.creatorTypes = [...Zotero.creatorTypes].sort(stringSort)
 ajv.addFormat('item-type', new RegExp(`^(${Zotero.itemTypes.join('|')})$`, 'i'))
 ajv.addFormat('creator-type', new RegExp(`^(${Zotero.creatorTypes.join('|')})$`, 'i'))
 
 const Babel = {
-  tags: require('../gen/babel/tag.json'),
+  tags: JSON.parse(fs.readFileSync('gen/babel/tag.json', 'utf-8')),
 }
-Babel.languages = [...(new Set([...Object.keys(Babel.tags), ...Object.values(Babel.tags)]))].sort()
+Babel.languages = [...(new Set([...Object.keys(Babel.tags), ...Object.values(Babel.tags)]))].sort(stringSort)
 ajv.addFormat('babel-language', new RegExp(`^(${Babel.languages.join('|')})$`, 'i'))
 
 Zotero.fields = new Set(['dateAdded', 'dateModified'])
@@ -80,7 +83,7 @@ for (const itemType of Zotero.schema.itemTypes) {
     }
   }
 }
-Zotero.fields = [...Zotero.fields].sort()
+Zotero.fields = [...Zotero.fields].sort(stringSort)
 ajv.addFormat('item-field', new RegExp(`^(${Zotero.fields.join('|')})$`, 'i'))
 
 function flattenUnion(type) {

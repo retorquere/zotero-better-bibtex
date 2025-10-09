@@ -4,7 +4,7 @@ import { HTMLParser } from '../../content/text'
 import type { MarkupNode } from '../../typings/markup'
 
 import { log } from '../../content/logger'
-import HE = require('he')
+import HE from 'he'
 import { Transform } from 'unicode2latex'
 
 export type ConverterOptions = {

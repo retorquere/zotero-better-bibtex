@@ -1,14 +1,14 @@
-#!/usr/bin/env npx ts-node
+#!/usr/bin/env node
 
 /* eslint-disable prefer-arrow/prefer-arrow-functions, @typescript-eslint/no-unsafe-return, no-console, @typescript-eslint/no-shadow, no-eval, @typescript-eslint/no-empty-function, id-blacklist */
 
 console.log('converting pug to XUL/XHTML')
 import * as pug from 'pug'
 import * as fs from 'fs'
-import { walk, Lint, SelfClosing, ASTWalker } from './pug-ast-walker'
+import { walk, Lint, SelfClosing, ASTWalker } from './pug-ast-walker.js'
 
 class XHTML extends ASTWalker {
-  public modified = false
+  modified = false
 
   Mixin(_mixin) {
     throw new Error('mixin')

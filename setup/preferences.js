@@ -1,4 +1,4 @@
-#!/usr/bin/env -S npx ts-node
+#!/usr/bin/env node
 
 /* eslint-disable @typescript-eslint/no-unsafe-return, no-console, @typescript-eslint/no-shadow, no-eval, @typescript-eslint/no-empty-function, id-blacklist */
 
@@ -8,10 +8,10 @@ import * as pug from 'pug'
 import * as fs from 'fs'
 import * as path from 'path'
 import * as glob from 'glob-promise'
-import * as matter from 'gray-matter'
-import * as _ from 'lodash'
-// import { walk, Lint, SelfClosing, ASTWalker as BaseASTWalker } from './pug-ast-walker'
-import { walk, Lint, ASTWalker as BaseASTWalker } from './pug-ast-walker'
+import frontmatter from 'gray-matter'
+import _ from 'lodash'
+// import { walk, Lint, SelfClosing, ASTWalker as BaseASTWalker } from './pug-ast-walker.js'
+import { walk, Lint, ASTWalker as BaseASTWalker } from './pug-ast-walker.js'
 import { FluentBundle, FluentResource } from '@fluent/bundle'
 import * as yaml from 'js-yaml'
 
@@ -31,7 +31,7 @@ function ensureDir(file) {
 
 const translators = glob.sync('translators/*.json')
   .map(file => {
-    const tr = require(`../${ file }`)
+    const tr = JSON.parse(fs.readFileSync(file, 'utf-8'))
     tr.keepUpdated = typeof tr.displayOptions?.keepUpdated === 'boolean'
     tr.cached = tr.label.startsWith('Better ') && !tr.label.includes('Quick')
     tr.affectedBy = []
@@ -39,7 +39,7 @@ const translators = glob.sync('translators/*.json')
   })
 
 const l10n = new class {
-  private params = {
+  params = {
     entries: '{entries}',
     error: '{error}',
     limit: '{limit}',
@@ -55,7 +55,6 @@ const l10n = new class {
     version: '{version}',
   }
 
-  private bundle: FluentBundle
   constructor() {
     const resource = new FluentResource(fs.readFileSync('locale/en-US/better-bibtex.ftl', 'utf-8'))
     this.bundle = new FluentBundle("en-US")
@@ -63,7 +62,7 @@ const l10n = new class {
     if (errors.length) console.log(errors)
   }
 
-  public find(id: string, softfail=false): string {
+  find(id, softfail=false) {
     if (!id) return ''
     if (id.startsWith('zotero.general.')) return `&${ id };`
     if (id.startsWith('zotero.errorReport.')) return `&${ id };`
@@ -81,7 +80,7 @@ const l10n = new class {
     return ''
   }
 
-  tr(txt: string): string {
+  tr(txt) {
     return this.find(txt, true) || txt
   }
 }
@@ -96,11 +95,11 @@ class ASTWalker extends BaseASTWalker {
     }
   }
 
-  l10n(node): string {
+  l10n(node) {
     return l10n.find(super.attr(node, 'data-l10n-id'))
   }
 
-  attr(node, name: string, required = false): string {
+  attr(node, name, required = false) {
     const val = super.attr(node, name, required)
     switch (typeof val) {
       case 'object':
@@ -128,6 +127,7 @@ class StripConfig extends ASTWalker {
   }
 }
 
+/*
 type Preference = {
   name: string
   label: string
@@ -143,18 +143,19 @@ type Page = {
   path?: string
   matter?: any
 }
+*/
 
 const prefprefix = 'extensions.zotero.translators.better-bibtex.'
 
 class Docs extends ASTWalker {
-  public preferences: Record<string, Preference> = {}
-  public preference: string = null
-  public pages: Record<string, Page> = {}
-  public page: string = null
+  preferences = {}
+  preference = null
+  pages = {}
+  page = null
 
   constructor() {
     super()
-    for (const [name, pref] of Object.entries(yaml.load(fs.readFileSync('content/Preferences/preferences.yaml', 'utf-8')) as Record<string, Preference>)) {
+    for (const [name, pref] of Object.entries(yaml.load(fs.readFileSync('content/Preferences/preferences.yaml', 'utf-8')))) {
       pref.description = pref.description || ''
       this.preferences[`${prefprefix}${name}`] = { name, affects: [], type: typeof pref.default, ...pref }
     }
@@ -182,15 +183,15 @@ class Docs extends ASTWalker {
     this.preferences[pref].options.set(value, label)
   }
 
-  label(doc, pref?) {
+  label(doc, pref) {
     this.doc(doc, pref, 'label')
   }
 
-  description(doc, pref?) {
+  description(doc, pref) {
     this.doc(doc.replace(/</g, '&lt;').replace(/>/g, '&gt;'), pref, 'description')
   }
 
-  doc(doc, pref, kind: 'label' | 'description') {
+  doc(doc, pref, kind) {
     pref = pref || this.preference
     if (!pref) error('doc for no pref')
     if (!this.preferences[pref]) error(`doc ${JSON.stringify(doc)} for unregistered`, pref)
@@ -209,7 +210,7 @@ class Docs extends ASTWalker {
     return ''
   }
 
-  section(label, history: any[], offset = 0) {
+  section(label, history, offset = 0) {
     const level = history.filter(n => n.$section).length + 1 + offset
     if (label.includes('<%') && this.pages[this.page].content.includes(label)) error('duplicate', label)
     this.pages[this.page].content += `${ '#'.repeat(level) } ${ label }\n\n`
@@ -309,7 +310,7 @@ class Docs extends ASTWalker {
           dflt = pref.default
           break
         case 'string':
-          dflt = pref.options ? pref.options.get(pref.default as string) : (pref.default || '<not set>')
+          dflt = pref.options ? pref.options.get(pref.default) : (pref.default || '<not set>')
           break
         case 'boolean':
           dflt = pref.default ? 'yes' : 'no'
@@ -338,7 +339,7 @@ The Better BibTeX hidden preferences are preceded by “extensions.zotero.transl
       const slug = path.basename(page, '.md')
       if (!this.pages[slug]) error('no page data for', path.basename(page))
       this.pages[slug].path = page
-      this.pages[slug].matter = matter.read(page)
+      this.pages[slug].matter = frontmatter(page)
       if (this.pages[slug].title) this.pages[slug].matter.data.title = this.pages[slug].title
     }
 
@@ -368,7 +369,7 @@ The Better BibTeX hidden preferences are preceded by “extensions.zotero.transl
       }
     }
 
-    const displayOptions = require('./templates/auto-export-displayOptions.json')
+    const displayOptions = JSON.parse(fs.readFileSync('setup/templates/auto-export-displayOptions.json', 'utf-8'))
     ensureDir('gen/preferences/meta.ts')
     fs.writeFileSync('gen/preferences.ts', eta.renderString(fs.readFileSync('setup/templates/preferences/preferences.ts.eta', 'utf-8'), { preferences }))
     fs.writeFileSync('gen/preferences/meta.ts', eta.renderString(fs.readFileSync('setup/templates/preferences/meta.ts.eta', 'utf-8'), {
@@ -464,7 +465,7 @@ class XHTML extends BaseASTWalker {
 
     node.block = this.walk(node.block, history)
 
-    const duplicate: Record<string, string> = {}
+    const duplicate = {}
     for (const attr of node.attrs) {
       if (attr.name === 'class') continue
       if (attr.name in duplicate) {

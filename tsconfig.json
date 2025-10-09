@@ -6,9 +6,9 @@
     "esModuleInterop": true,
     "noUnusedParameters": false,
     "importHelpers": true,
-    "target": "es2018",
+    "target": "es2022",
     "disableSizeLimit": true,
-    "module": "commonjs",
+    "module": "es2022",
     "noImplicitAny": false,
     "removeComments": false,
     "preserveConstEnums": true,
@@ -24,7 +24,7 @@
     ],
     "skipDefaultLibCheck": true,
     "types": ["zotero-types"],
-    "lib": [ "es2017", "dom", "dom.iterable", "webworker", "ES2021.WeakRef" ]
+    "lib": [ "es2022", "dom", "dom.iterable", "webworker", "ES2021.WeakRef" ]
   },
   "include": [
     "content/**/*",

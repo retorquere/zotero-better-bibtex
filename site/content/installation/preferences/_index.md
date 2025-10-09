@@ -1,12 +1,3 @@
----
-aliases:
-  - /configuration
-tags:
-  - configuration
-  - cache
-title: Citation keys
-weight: 10
----
 
 
 {{% preferences/header %}}

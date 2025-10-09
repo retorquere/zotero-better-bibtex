@@ -1,12 +1,3 @@
----
-aliases:
-  - /installation/configuration/advanced
-tags:
-  - configuration
-  - preferences
-title: Miscellaneous
-weight: 14
----
 
 
 {{% preferences/header %}}

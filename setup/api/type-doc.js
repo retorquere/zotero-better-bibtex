@@ -1,12 +1,13 @@
 #!/usr/bin/env node
 
-const { spawnSync } = require('child_process')
-const path = require('path')
-const fs = require('fs')
-const tmp = require('tmp')
-const ts = require('typescript')
+import { spawnSync } from 'child_process'
+import path from 'path'
+import fs from 'fs'
+import tmp from 'tmp'
+import ts from 'typescript'
+import { fileURLToPath } from 'url'
 
-const plugin = path.resolve(path.join(__dirname, 'type-doc-all-defaults.mjs'))
+const plugin = './setup/api/type-doc-all-defaults.mjs'
 
 function shlexQuote(s) {
   if (typeof s !== 'string') {
@@ -23,17 +24,16 @@ function run(cmd, args) {
   return spawnSync(cmd, args)
 }
 
-function parse(src, tgt) {
+export function parse(src, tgt) {
   src = path.resolve(src)
   tgt = tgt
     ? { name: path.resolve(tgt), removeCallback: () => {} }
     : tmp.fileSync({ postfix: '.json' })
 
-  // const tsconfig = path.resolve(__dirname, `../../tsconfig${Math.random()}.json`)
   // fs.writeFileSync(tsconfig, JSON.stringify({ ...require('../../tsconfig.json'), moduleResolution: 'node' }))
   const result = run('npx', [
     'typedoc',
-    // '--tsconfig', tsconfig,
+    '--tsconfig', 'tsconfig.setup.json',
     '--json', tgt.name,
     '--plugin', plugin,
     '--externalPattern', '**/*/{items,zotero}.ts',
@@ -75,11 +75,11 @@ function parse(src, tgt) {
   return doc
 }
 
-if (require.main === module) {
+const currentFilePath = fileURLToPath(import.meta.url)
+const mainFilePath = path.resolve(process.argv[1])
+const isMainModule = currentFilePath === mainFilePath
+if (isMainModule) {
   for (const ts of process.argv.slice(2)) {
     parse(ts, path.resolve(path.parse(ts).name + '.json'))
   }
-}
-else {
-  module.exports = { parse }
 }

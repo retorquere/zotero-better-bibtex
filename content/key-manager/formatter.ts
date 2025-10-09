@@ -15,7 +15,7 @@ import { Events } from '../events'
 import { log } from '../logger'
 import fold2ascii from 'fold-to-ascii'
 import rescape from '@stdlib/utils-escape-regexp-string'
-import ucs2decode = require('punycode2/ucs2/decode')
+import ucs2decode from 'punycode2/ucs2/decode'
 
 import * as CSL from 'citeproc'
 
@@ -31,7 +31,7 @@ import * as DateParser from '../dateparser'
 
 import itemCreators from '../../gen/items/creators.json'
 import * as items from '../../gen/items/items'
-import { ZoteroItemType } from '../../gen/items/items'
+import { ZoteroItemType, ZoteroFieldName } from '../../gen/items/items'
 
 import { parseFragment } from 'parse5'
 
@@ -48,7 +48,8 @@ import { listsync as csv2list } from '../load-csv'
 import BabelTag from '../../gen/babel/tag.json'
 type ValueOf<T> = T[keyof T]
 type BabelLanguageTag = ValueOf<typeof BabelTag>
-type BabelLanguage = keyof typeof BabelTag
+type BabelLanguageName = keyof typeof BabelTag
+type BabelLanguage = BabelLanguageTag | BabelLanguageName
 
 class Template<K> extends String {} // eslint-disable-line @typescript-eslint/no-unused-vars
 
@@ -500,11 +501,11 @@ export class PatternFormatter {
    * Tests whether the item has the given language set, and skips to the next pattern if not
    * @param name one or more language codes
    */
-  public $language(...name: (BabelLanguage | BabelLanguageTag)[]): string {
+  public $language(...name: BabelLanguage[]): string {
     if (!name.concat(name.map(n => BabelTag[n] as string).filter(n => n)).includes(this.item.babelTag())) skip()
     return ''
   }
-  public $$language(...name: (BabelLanguage | BabelLanguageTag)[]): string {
+  public $$language(...name: BabelLanguage[]): string {
     this.$language(...name)
     return '$$language'
   }
@@ -550,7 +551,7 @@ export class PatternFormatter {
    * Gets the value of the item field
    * @param name name of the field
    */
-  public $field(name: string): string {
+  public $field(name: ZoteroFieldName): string {
     const field = items.name.field[name.replace(/ /g, '').toLowerCase()]
     if (!field) throw new Error(`Unknown item field ${ name }`)
 

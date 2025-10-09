@@ -1,14 +1,3 @@
----
-aliases:
-  - /installation/configuration/export
-tags:
-  - automatic export
-  - configuration
-  - export
-  - preferences
-title: Export
-weight: 11
----
 
 
 {{% preferences/header %}}

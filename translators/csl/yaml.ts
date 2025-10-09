@@ -1,4 +1,4 @@
-import YAML = require('js-yaml')
+import YAML from 'js-yaml'
 import { Date as CSLDate, Data as CSLItem, LooseNumber } from 'csl-json'
 
 import type { Collected } from '../lib/collect'

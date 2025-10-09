@@ -1,13 +1,3 @@
----
-aliases:
-  - /installation/configuration/citation-keys
-tags:
-  - citation keys
-  - configuration
-  - preferences
-title: Automatic export
-weight: 12
----
 
 
 {{% preferences/header %}}

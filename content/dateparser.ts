@@ -1,6 +1,6 @@
 /* eslint-disable no-case-declarations */
-import EDTF = require('edtf')
-import edtfy = require('edtfy')
+import EDTF from 'edtf'
+import edtfy from 'edtfy'
 
 // import escapeStringRegexp = require('escape-string-regexp')
 

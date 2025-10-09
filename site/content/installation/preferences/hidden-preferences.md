@@ -1,12 +1,3 @@
----
-aliases:
-  - /installation/configuration/hidden-preferences
-tags:
-  - configuration
-  - preferences
-title: Hidden preferences
-weight: 15
----
 
 
 {{% preferences/header %}}

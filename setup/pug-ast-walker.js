@@ -3,8 +3,8 @@
 import fs from 'fs'
 import path from 'path'
 
-export function pugs(directory: string): string[] {
-  let fileList: string[] = []
+export function pugs(directory) {
+  let fileList = []
 
   const files = fs.readdirSync(directory)
   for (const file of files) {
@@ -21,7 +21,7 @@ export function pugs(directory: string): string[] {
 }
 
 export class ASTWalker {
-  walk(node, history?) {
+  walk(node, history) {
     if (history) history = [ node, ...history ]
 
     if (this[node.type]) return this[node.type](node, history)
@@ -29,7 +29,7 @@ export class ASTWalker {
     throw new Error(`No handler for ${ node.type } ${ Object.keys(node) }`)
   }
 
-  tag(name: string, attrs = {}, nodes = []) {
+  tag(name, attrs = {}, nodes = []) {
     return {
       type: 'Tag',
       name,
@@ -42,7 +42,7 @@ export class ASTWalker {
     }
   }
 
-  attr(node, name: string, required = false): string {
+  attr(node, name, required = false) {
     const attr = node.attrs.find(a => a.name === name)
     if (!attr && required) throw new Error(`could not find ${ node.name }.${ name } in ${ node.attrs.map(a => a.name) }`)
     return attr ? eval(attr.val) : null
@@ -97,10 +97,11 @@ export class SelfClosing extends ASTWalker {
 }
 
 export class Lint extends ASTWalker {
-  private ids: string[] = []
+  ids = []
 
-  constructor(private needsNamespace = false) {
+  constructor(needsNamespace = false) {
     super()
+    this.needsNamespace = needsNamespace
   }
 
   Tag(tag) {
