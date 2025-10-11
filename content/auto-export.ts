@@ -509,7 +509,7 @@ export const AutoExport = new class $AutoExport {
         for (const key of Services.prefs.getBranch('extensions.zotero.translators.better-bibtex.autoExport.').getChildList('')) {
           try {
             const ae = JSON.parse(Zotero.Prefs.get(`translators.better-bibtex.autoExport.${key}`) as string)
-            blink.insert(this.db, ae)
+            blink.insert(this.db, { ...ae, created: Date.now(), updated: Date.now() })
             if (ae.status !== 'done') queue.add(ae.path)
           }
           catch {
@@ -594,7 +594,7 @@ export const AutoExport = new class $AutoExport {
       ae[option] = ae[option] ?? job[option] ?? displayOptions[option] ?? false
     }
 
-    blink.upsert(this.db, ae)
+    blink.upsert(this.db, { created: Date.now(), ...ae, updated: Date.now() })
     queue.add(ae.path)
   }
 
@@ -675,7 +675,7 @@ export const AutoExport = new class $AutoExport {
   public edit(path: string, setting: JobSetting, value: number | boolean | string): void {
     const ae: Job = blink.first(this.db, { where: { path }});
     (ae[setting] as any) = value as any
-    blink.upsert(this.db, ae)
+    blink.upsert(this.db, { created: Date.now(), ...ae, updated: Date.now() })
     queue.add(ae.path)
   }
 
