@@ -385,7 +385,6 @@ type Job = {
   path: string
   recursive: boolean
   status: 'scheduled' | 'running' | 'done' | 'error'
-  updated: number
   error: string
   exportNotes?: boolean
   useJournalAbbreviation?: boolean
@@ -395,6 +394,9 @@ type Job = {
   bibtexURL?: boolean
   biblatexAPA?: boolean
   biblatexChicago?: boolean
+
+  created: number
+  updated: number
 }
 export type JobSetting = keyof Job
 
@@ -581,6 +583,7 @@ export const AutoExport = new class $AutoExport {
       ...pick(job, ['path', 'translatorID', 'type', 'id', 'status']),
       error: job.error || '',
       recursive: job.recursive ?? false,
+      created: job.created || Date.now(),
       updated: job.updated || Date.now(),
       enabled: true,
     }
@@ -646,6 +649,7 @@ export const AutoExport = new class $AutoExport {
       id: job.scope.type === 'library' ? job.scope.id : job.scope.collection.id,
       recursive: false,
       error: '',
+      created: Date.now(),
       updated: Date.now(),
       status: 'done',
       translatorID: job.translatorID,

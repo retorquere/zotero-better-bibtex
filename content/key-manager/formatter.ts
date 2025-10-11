@@ -46,10 +46,7 @@ import { ukranian, mongolian, russian } from './cyrillic'
 import { listsync as csv2list } from '../load-csv'
 
 import BabelTag from '../../gen/babel/tag.json'
-type ValueOf<T> = T[keyof T]
-type BabelLanguageTag = ValueOf<typeof BabelTag>
-type BabelLanguageName = keyof typeof BabelTag
-type BabelLanguage = BabelLanguageTag | BabelLanguageName
+type BabelLanguage = string
 
 class Template<K> extends String {} // eslint-disable-line @typescript-eslint/no-unused-vars
 
@@ -351,8 +348,8 @@ class Item {
     this.title = stripHTML(this.title)
   }
 
-  public babelTag(): BabelLanguageTag {
-    return BabelTag[this.language as BabelLanguage] || ''
+  public babelTag(): BabelLanguage {
+    return (BabelTag[this.language] || '') as BabelLanguage
   }
 
   public getTags(): Tag[] {

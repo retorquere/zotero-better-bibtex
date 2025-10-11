@@ -79,6 +79,7 @@ export class NSAutoExport {
         path,
         status: 'done',
         recursive: false,
+        created: Date.now(),
         updated: Date.now(),
         error: '',
         translatorID,

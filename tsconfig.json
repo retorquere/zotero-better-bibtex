@@ -23,6 +23,7 @@
       "./typings"
     ],
     "skipDefaultLibCheck": true,
+    "skipLibCheck": true,
     "types": ["zotero-types"],
     "lib": [ "es2022", "dom", "dom.iterable", "webworker", "ES2021.WeakRef" ]
   },

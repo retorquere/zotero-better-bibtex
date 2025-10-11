@@ -444,7 +444,6 @@ class APIReader {
             case 'ZoteroFieldName':
               return { type: 'string', format: 'item-field' }
             case 'BabelLanguage':
-            case 'BabelLanguageTag':
               return { type: 'string', format: 'babel-language' }
             case 'CreatorType':
               return { type: 'string', format: 'creator-type' }

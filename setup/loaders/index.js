@@ -1,15 +1,14 @@
-const fs = require('fs-extra')
-const path = require('path')
-const diff = require('diff')
-const peggy = require('peggy')
-const shell = require('shelljs')
-const { filePathFilter } = require('file-path-filter')
-const esbuild = require('esbuild')
-const child_process = require('child_process')
-const jsesc = require('jsesc')
-const pug = require('pug')
+import fs from 'fs-extra'
+import path from 'path'
+import Peggy from 'peggy'
+import shell from 'shelljs'
+import { filePathFilter } from 'file-path-filter'
+import esbuild from 'esbuild'
+import child_process from 'child_process'
+import jsesc from 'jsesc'
+import Pug from 'pug'
 
-module.exports.text = {
+export const text = {
   name: 'text',
   setup(build) {
     build.onLoad({ filter: /[.](bib|pem)$/i }, async (args) => {
@@ -22,7 +21,7 @@ module.exports.text = {
   }
 }
 
-module.exports.resettableBinary = {
+export const resettableBinary = {
   name: 'resettable-binary',
   setup(build) {
     build.onLoad({ filter: /[.]wasm$/i }, async (args) => {
@@ -52,7 +51,7 @@ module.exports.resettableBinary = {
   }
 }
 
-module.exports.sql = {
+export const sql = {
   name: 'text',
   setup(build) {
     build.onLoad({ filter: /[.]sql$/i }, async (args) => {
@@ -68,7 +67,7 @@ module.exports.sql = {
   }
 }
 
-module.exports.json = {
+export const json = {
   name: 'json',
   setup(build) {
     build.onLoad({ filter: /\.json$/ }, async (args) => {
@@ -81,12 +80,12 @@ module.exports.json = {
   }
 }
 
-module.exports.peggy = {
+export const peggy = {
   name: 'peggy',
   setup(build) {
     build.onLoad({ filter: /\.peggy$/ }, async (args) => {
       return {
-        contents: peggy.generate(await fs.promises.readFile(args.path, 'utf-8'), {
+        contents: Peggy.generate(await fs.promises.readFile(args.path, 'utf-8'), {
           output: 'source',
           cache: false,
           optimize: 'speed',
@@ -99,7 +98,7 @@ module.exports.peggy = {
   }
 }
 
-module.exports.__dirname = {
+export const __dirname = {
   name: '__dirname',
   setup(build) {
     build.onLoad({ filter: /\/node_modules\/.+\.js$/ }, async (args) => {
@@ -121,12 +120,12 @@ module.exports.__dirname = {
   }
 }
 
-module.exports.pug = {
+export const pug = {
   name: 'pug',
   setup(build) {
     build.onLoad({ filter: /\.pug$/ }, async (args) => {
       const template = await fs.promises.readFile(args.path, 'utf-8')
-      const template_function = pug.compileClient(template, { globals: [ 'Date', 'Math' ] })
+      const template_function = Pug.compileClient(template, { globals: [ 'Date', 'Math' ] })
         .split('\n')
         .filter(line => !line.trim().match(/^;pug_debug_line = [0-9]+;$/))
         .join('\n')

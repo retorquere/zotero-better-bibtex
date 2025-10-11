@@ -1,6 +1,9 @@
-const path = require('path')
+import path from 'path'
+import { fileURLToPath } from 'url'
 
-module.exports = {
+const __dirname = path.dirname(fileURLToPath(import.meta.url))
+
+export const shims = {
   name: 'shims',
   setup(build) {
     build.onResolve({ filter: /^(node:)?(path|fs|os)$/ }, args => {

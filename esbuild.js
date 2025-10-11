@@ -1,15 +1,15 @@
-const path = require('path')
-const fs = require('fs')
+import path from 'path'
+import fs from 'fs'
 const exists = fs.existsSync
-const esbuild = require('esbuild')
-const exec = require('child_process').exec
-const glob = require('glob-promise')
-const crypto = require('crypto')
-const branch = require('git-branch')
-const stringify = require('safe-stable-stringify')
+import esbuild from 'esbuild'
+import { exec } from 'child_process'
+import glob from 'glob-promise'
+import crypto from 'crypto'
+import branch from 'git-branch'
+import stringify from 'safe-stable-stringify'
 
-const loader = require('./setup/loaders/index.cjs')
-const shims = require('./setup/shims/index.cjs')
+import * as loader from './setup/loaders/index.js'
+import { shims } from './setup/shims/index.js'
 
 function execShellCommand(cmd) {
   console.log(cmd)
@@ -213,7 +213,7 @@ async function rebuild() {
       shims
     ],
     metafile: 'gen/better-bibtex-esbuild.json',
-    inject: ['./setup/loaders/globals.cjs'],
+    inject: ['./setup/loaders/globals.js'],
     outdir: 'build/content',
     banner: { js: `
       const { FileUtils } = ChromeUtils.importESModule('resource://gre/modules/FileUtils.sys.mjs')
@@ -280,7 +280,7 @@ async function rebuild() {
 
   // translators
   for (const translator of (await glob('translators/*.json')).map(tr => path.parse(tr))) {
-    const header = require('./' + path.join(translator.dir, translator.name + '.json'))
+    const header = JSON.parse(fs.readFileSync(path.join(translator.dir, translator.name + '.json'), 'utf-8'))
     const outfile = path.join('build/content/resource', translator.name + '.js')
 
     // https://esbuild.github.io/api/#write
