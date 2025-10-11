@@ -1,9 +1,14 @@
 'use strict'
-const estraverse = require('estraverse')
-const meriyah = require('meriyah')
-const astring = require('astring')
-const API = require('../../gen/api/key-formatter')
-const aliases = require('./alias.json')
+import * as estraverse from 'estraverse'
+import * as meriyah from 'meriyah'
+import * as astring from 'astring'
+import * as API from '../../gen/api/key-formatter.js'
+const aliases = {
+  _fold: '_transliterate',
+  _splitideographs: '_ideographs',
+  $getField: '$field',
+  $authors: '$creators',
+}
 
 for (const [_old, _new] of Object.entries(aliases)) {
   API.methods[_old] = API.methods[_new]
@@ -657,7 +662,8 @@ const tester = `
     }
   }
 `
-function compile(code, options) {
+
+export function compile(code, options) {
   const ast = meriyah.parse(code, { ecmaVersion: 2020 })
 
   estraverse.replace(ast, breaker)
@@ -684,17 +690,8 @@ function compile(code, options) {
   return generatedCode.join('\n')
 }
 
-module.exports.compile = compile
-
-module.exports.upgrade = function(code) {
+export function upgrade (code) {
   const ast = meriyah.parse(code, { ecmaVersion: 2020 })
   estraverse.replace(ast, breaker)
   return astring.generate(ast).trim().replace(/;$/, '')
 }
-
-/*
-console.log(module.exports.broken('auth + title'))
-const code = "auth(n=1,m=1,creator='*',initials=false).fold + auth(n=1,m=2,creator='*',initials=false).fold + auth(n=1,m=3,creator='*',initials=false).fold + auth(n=1,m=4,creator='*',initials=false).fold + len('>',1) + (shortyear ? shortyear : year);\nauth(n=3,m=1,creator='*',initials=false).fold + (shortyear, year);"
-console.log(code)
-console.log(compile(code, { logging: false }))
-*/

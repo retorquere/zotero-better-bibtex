@@ -95,7 +95,7 @@ export class NSUser {
   /**
    * List the libraries (also known as groups) the user has in Zotero
    *
-   * @param includeCollections Wether or not the result should inlcude a list of collection for each library (default is false)
+   * @param includeCollections Wether or not the result should include a list of collection for each library (default is false)
    */
   public async groups(includeCollections?: boolean): Promise<{ id: number; name: string; collections: any[] }[]> {
     return Zotero.Libraries
@@ -374,7 +374,7 @@ export class NSItem {
    *
    * @param citekeys An array of citekeys
    * @param {object} format   A specification of how the bibliography should be formatted
-   * @param {string} format.quickCopy    Format as specified in the Zotero quick-copy settings
+   * @param {} format.quickCopy    Format as specified in the Zotero quick-copy settings
    * @param {} format.contentType  Output as HTML or text
    * @param {} format.locale       Locale to use to generate the bibliography
    * @param {} format.id           CSL style to use

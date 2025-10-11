@@ -8,8 +8,8 @@ const crypto = require('crypto')
 const branch = require('git-branch')
 const stringify = require('safe-stable-stringify')
 
-const loader = require('./setup/loaders')
-const shims = require('./setup/shims')
+const loader = require('./setup/loaders/index.cjs')
+const shims = require('./setup/shims/index.cjs')
 
 function execShellCommand(cmd) {
   console.log(cmd)
@@ -213,7 +213,7 @@ async function rebuild() {
       shims
     ],
     metafile: 'gen/better-bibtex-esbuild.json',
-    inject: ['./setup/loaders/globals.js'],
+    inject: ['./setup/loaders/globals.cjs'],
     outdir: 'build/content',
     banner: { js: `
       const { FileUtils } = ChromeUtils.importESModule('resource://gre/modules/FileUtils.sys.mjs')

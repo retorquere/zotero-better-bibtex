@@ -782,20 +782,8 @@ class Preferences:
     self.pref = {}
     self.prefix = 'translators.better-bibtex.'
 
-    with open(os.path.join(ROOT, 'schema/BetterBibTeX JSON.json')) as f:
-      schema = json.load(f, object_hook=Munch)
-      self.supported = {
-        self.prefix + pref: {'string': str, 'boolean': bool, 'number': int}[tpe.type]
-        for pref, tpe in schema.properties.config.properties.preferences.properties.items()
-      }
-    self.supported[self.prefix + 'removeStock'] = bool
-
   def __setitem__(self, key, value):
     if key[0] == '.': key = self.prefix + key[1:]
-
-    if key.startswith(self.prefix):
-      assert key in self.supported, f'Unknown preference "{key}"'
-      assert type(value) == self.supported[key], f'Unexpected value of type {type(value)} for preference {key}'
 
     if key == 'translators.better-bibtex.postscript':
       with open(os.path.join(FIXTURES, value)) as f:
