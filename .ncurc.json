@@ -1,6 +1,7 @@
 {
   "upgrade": true,
   "reject": [
-    "_eta"
+    "typescript-eslint",
+    "@typescript-eslint/eslint-plugin"
   ]
 }
