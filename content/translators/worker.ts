@@ -104,7 +104,9 @@ orchestrator.add({
     await Exporter.initialize({
       CSL_MAPPINGS: Object.entries(Zotero.Schema).reduce((acc, [ k, v ]) => { if (k.startsWith('CSL')) acc[k] = v; return acc }, {}),
       dateFormatsJSON: Zotero.File.getResource('resource://zotero/schema/dateFormats.json'),
-      lastUpdated: Zotero.Prefs.get(cacheDelete) ? 'delete' : (await Zotero.DB.valueQueryAsync('SELECT MAX(dateModified) FROM items') as string || ''),
+      lastUpdated: Zotero.Prefs.get(cacheDelete)
+        ? 'delete'
+        : (await Zotero.DB.valueQueryAsync('SELECT MAX(dateModified) FROM items') as string || ''),
     })
     Zotero.Prefs.clear(cacheDelete)
     Exporter.ready = true
