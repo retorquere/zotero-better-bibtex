@@ -5,7 +5,7 @@ import { log } from '../../content/logger'
 import { Exporter as BibTeXExporter } from './exporter'
 import { parse as arXiv } from '../../content/arXiv'
 import { valid, label } from '../../gen/items/items'
-import { wordsToNumbers } from 'words-to-numbers'
+import wordsToNumbers from '@insomnia-dev/words-to-numbers'
 
 import { ParsedDate, parse as parseDate, strToISO as strToISODate } from '../../content/dateparser'
 

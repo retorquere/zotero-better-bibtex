@@ -3,9 +3,8 @@ import fs from 'fs'
 const exists = fs.existsSync
 import esbuild from 'esbuild'
 import { exec } from 'child_process'
-import glob from 'glob-promise'
+import { glob } from 'glob'
 import crypto from 'crypto'
-import branch from 'git-branch'
 import stringify from 'safe-stable-stringify'
 
 import * as loader from './setup/loaders/index.js'
