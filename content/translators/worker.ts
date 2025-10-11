@@ -47,9 +47,9 @@ log.info('json-rpc: main worker started')
 
 class ExporterClient extends WorkerClient implements ExporterInterface {
   public ready = false
-  public initialize: (config: { CSL_MAPPINGS: any; dateFormatsJSON: any; lastUpdated: string }) => Promise<void>
-  public terminate: () => Promise<void>
-  public start: (config: Job) => Promise<{ cacheRate: number; output: string }>
+  public initialize!: (config: { CSL_MAPPINGS: any; dateFormatsJSON: any; lastUpdated: string }) => Promise<void>
+  public terminate!: () => Promise<void>
+  public start!: (config: Job) => Promise<{ cacheRate: number; output: string }>
 
   constructor() {
     super(worker)
@@ -58,15 +58,15 @@ class ExporterClient extends WorkerClient implements ExporterInterface {
 export const Exporter = new ExporterClient
 
 class ExportsCacheClient extends WorkerClient {
-  dropTranslator: (translator: string) => Promise<void>
-  dropAutoExport: (path: string, deleted: boolean) => Promise<void>
+  dropTranslator!: (translator: string) => Promise<void>
+  dropAutoExport!: (path: string, deleted: boolean) => Promise<void>
 }
 
 class SerializedCacheClient extends WorkerClient {
-  missing: (itemIDs: number[]) => Promise<number[]>
-  fill: (items: Item[]) => Promise<void>
-  drop: () => Promise<any>
-  purge: () => Promise<any>
+  missing!: (itemIDs: number[]) => Promise<number[]>
+  fill!: (items: Item[]) => Promise<void>
+  drop!: () => Promise<any>
+  purge!: () => Promise<any>
 }
 
 class CacheClient extends WorkerClient implements CacheInterface {
@@ -77,10 +77,10 @@ class CacheClient extends WorkerClient implements CacheInterface {
     return { rate: rate.length ? rate.reduce((acc, v) => acc + v) / rate.length : 0, count: await this.count() }
   }
 
-  public count: () => Promise<number>
-  public touch: (itemIDs: number[]) => Promise<void>
-  public drop: () => Promise<void>
-  public dump: () => Promise<any>
+  public count!: () => Promise<number>
+  public touch!: (itemIDs: number[]) => Promise<void>
+  public drop!: () => Promise<void>
+  public dump!: () => Promise<any>
 
   public Exports: ExportsCacheClient
   public Serialized: SerializedCacheClient

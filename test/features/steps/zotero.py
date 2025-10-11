@@ -561,7 +561,6 @@ class Zotero:
 
       for k, v in preferences.items():
         assert self.preferences.prefix + k in self.preferences.supported, f'Unsupported preference "{k}"'
-        assert type(v) == self.preferences.supported[self.preferences.prefix + k], f'Value for preference {k} has unexpected type {type(v)}'
       for item in input.data['items']:
         for att in item.get('attachments') or []:
           if path := att.get('path'):
@@ -782,8 +781,15 @@ class Preferences:
     self.pref = {}
     self.prefix = 'translators.better-bibtex.'
 
+    with open(os.path.join(ROOT, 'content/Preferences/preferences.yaml')) as f:
+      self.supported = [self.prefix + pref for pref in yaml.load(f).keys()]
+    self.supported.append(self.prefix + 'removeStock')
+
   def __setitem__(self, key, value):
     if key[0] == '.': key = self.prefix + key[1:]
+
+    if key.startswith(self.prefix):
+      assert key in self.supported, f'Unknown preference "{key}"'
 
     if key == 'translators.better-bibtex.postscript':
       with open(os.path.join(FIXTURES, value)) as f:

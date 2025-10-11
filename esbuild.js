@@ -140,7 +140,7 @@ async function bundle(config) {
   config = {
     bundle: true,
     format: 'iife',
-    target: ['firefox60'],
+    target: ['firefox115'],
     inject: [],
     treeShaking: true,
     plugins: [],
