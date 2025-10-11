@@ -7,7 +7,7 @@ console.log('pre-processing preferences')
 import * as pug from 'pug'
 import * as fs from 'fs'
 import * as path from 'path'
-import * as glob from 'glob-promise'
+import * as glob from 'glob'
 import frontmatter from 'gray-matter'
 import _ from 'lodash'
 // import { walk, Lint, SelfClosing, ASTWalker as BaseASTWalker } from './pug-ast-walker.js'
@@ -29,7 +29,7 @@ function ensureDir(file) {
   if (!fs.existsSync(parent)) fs.mkdirSync(parent, { recursive: true })
 }
 
-const translators = glob.sync('translators/*.json')
+const translators = glob.globSync('translators/*.json')
   .map(file => {
     const tr = JSON.parse(fs.readFileSync(file, 'utf-8'))
     tr.keepUpdated = typeof tr.displayOptions?.keepUpdated === 'boolean'
