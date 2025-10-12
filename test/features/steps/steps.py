@@ -255,6 +255,7 @@ def parse_json(text):
     return True
   except:
     return False
+
 @step('an export using "{translator}" with {displayOption} on should match {expected}')
 def step_impl(context, translator, displayOption, expected):
   assert parse_json(expected), expected

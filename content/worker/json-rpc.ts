@@ -41,7 +41,7 @@ export class Client {
 
     return new Proxy(this, {
       get(target, property, receiver) {
-        if (typeof property === 'string' && typeof Reflect.get(target, property, receiver) === 'undefined') {
+        if (typeof property === 'string' && !Reflect.has(target, property)) {
           log.dump(`json-rpc: dynamic call to ${property}`)
           return function(...args) {
             return new Promise((resolve, reject) => {

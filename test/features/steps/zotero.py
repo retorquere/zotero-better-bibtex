@@ -180,7 +180,7 @@ class Config:
 
 class Library:
   def __init__(self, path=None, body=None, client=None, variant='', ext=None):
-    #utils.print(f'\n\npath={path}, body={type(body)}, client={type(client)}, variant={variant}, ext={ext}')
+    utils.print(f'\n\npath={path}, body={type(body)}, client={type(client)}, variant={variant}, ext={ext}')
     if path and not os.path.isabs(path):
       path = os.path.join(FIXTURES, path)
 
@@ -219,6 +219,7 @@ class Library:
 
     self.normalized = self.body
 
+    utils.print(f'\n\nnormalized={type(self.normalized)}, ext={type(self.ext)}')
     if self.normalized is None or self.ext is None:
       raise ValueError('need something to work with')
 
@@ -518,6 +519,7 @@ class Zotero:
 
     if expected is None: return
 
+    utils.print(f'export_library: expected={expected}')
     expected = Library(path=expected, client=self.client, variant=self.variant)
     found = Library(path=output, body=found, client=self.client, variant=self.variant, ext=expected)
     found.save(expected.path)
