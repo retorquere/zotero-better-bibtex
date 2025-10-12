@@ -179,8 +179,11 @@ class Config:
     return str(self.data)
 
 class Library:
-  def __init__(self, path=None, body=None, client=None, variant='', ext=None):
-    utils.print(f'\n\npath={path}, body={type(body)}, client={type(client)}, variant={variant}, ext={ext}')
+  def __init__(self, path=None, body=None, client=None, variant='', ext=None, name=None):
+    utils.print('-------------------------')
+    for n, v in locals().items():
+      utils.print(f'  {n}: {v} ({type(v)})')
+
     if path and not os.path.isabs(path):
       path = os.path.join(FIXTURES, path)
 
@@ -519,9 +522,8 @@ class Zotero:
 
     if expected is None: return
 
-    utils.print(f'export_library: expected={expected}')
-    expected = Library(path=expected, client=self.client, variant=self.variant)
-    found = Library(path=output, body=found, client=self.client, variant=self.variant, ext=expected)
+    expected = Library(path=expected, client=self.client, variant=self.variant, name='expected')
+    found = Library(path=output, body=found, client=self.client, variant=self.variant, ext=expected, name='found')
     found.save(expected.path)
 
     if expected.ext in ['.csl.json', '.csl.yml', '.html', '.bib', '.bibtex', '.biblatex']:

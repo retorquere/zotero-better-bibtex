@@ -20,7 +20,6 @@ export class Client {
   #id: string
 
   constructor(worker: Worker, namespace = '') {
-    log.dump(`json-rpc: client for ${namespace}`)
     this.#namespace = namespace
     this.#id = `[${this.#namespace}${Date.now()}:${Math.random()}]`
 
@@ -34,7 +33,6 @@ export class Client {
         log.error(`json-rpc: ERROR: main has no handler for json-rpc response ${req.id}`)
         return
       }
-      log.dump(`json-rpc: main received ${req.error ? 'error' : 'success'} for ${req.method || req.id}`)
       this.#handlers[req.id](req)
       delete this.#handlers[req.id]
     })
@@ -42,7 +40,6 @@ export class Client {
     return new Proxy(this, {
       get(target, property, receiver) {
         if (typeof property === 'string' && !Reflect.has(target, property)) {
-          log.dump(`json-rpc: dynamic call to ${property}`)
           return function(...args) {
             return new Promise((resolve, reject) => {
               const message = {
@@ -115,7 +112,7 @@ export class Server {
           error: {
             code: INTERNAL_ERROR,
             message: err.message,
-            stack: (new Error('').stack),
+            stack: err.stack,
           },
           id: req.id,
         })

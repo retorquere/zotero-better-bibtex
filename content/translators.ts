@@ -75,6 +75,7 @@ export const Translators = new class {
       startup: async () => {
         worker.addEventListener('message', (e: MessageEvent) => {
           const data = e.data as Message
+          if (!data || (data as unknown as any).id) return // data.id means it is a JSON-RPC message
 
           switch (data?.kind) {
             case 'debug':

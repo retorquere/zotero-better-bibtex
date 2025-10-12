@@ -144,11 +144,16 @@ export class TestSupport {
 
     const job = { translatorID, displayOptions: displayOptions as Record<string, boolean>, scope, path }
 
-    await AutoExport.register(job)
+    if (displayOptions.keepUpdated) await AutoExport.register(job)
 
     const start = Date.now()
     try {
-      return await Translators.exportItems(job)
+      const res = await Translators.exportItems(job)
+      log.debug('json-rpc:', job, res)
+      return res
+    }
+    catch (err) {
+      log.error('json-rpc: export failed:', job, err)
     }
     finally {
       log.info(`performance: ${ translatorID } export took ${ Date.now() - start }`)

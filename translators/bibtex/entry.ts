@@ -175,7 +175,7 @@ export class Entry {
   private quality_report: string[] = []
   private extraFields: ParsedExtraFields
 
-  private re: {
+  declare private re: {
     punctuationAtEnd: any
     startsWithLowercase: any
     hasLowercaseWord: any
