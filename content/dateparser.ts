@@ -6,11 +6,31 @@ import edtfy from 'edtfy'
 
 import * as months from '../gen/dateparser-months.json'
 const Month = new class {
-  private months = months
-  private re = new RegExp(Object.keys(months).sort((a, b) => b.length - a.length).map(month => `${month}[.]?`).join('|'), 'i')
+  #re = new RegExp(Object.keys(months).sort((a, b) => b.length - a.length).map(month => `${month}[.]?`).join('|'), 'gi')
+  #no = {
+    january: 1,
+    february: 2,
+    march: 3,
+    april: 4,
+    may: 5,
+    june: 6,
+    july: 7,
+    august: 8,
+    september: 9,
+    october: 10,
+    november: 11,
+    december: 12,
+  }
+
+  public re = [...(new Set(Object.values(months)))].sort((a, b) => b.length - a.length).map(month => `${month}[.]?`).join('|')
+  public map = months
+
+  no(name: string): number {
+    return this.#no[name.toLowerCase()] as number
+  }
 
   english(date: string): string {
-    return date.replace(this.re, (month: string) => this.months[month.toLowerCase().replace('.', '')] as string || month)
+    return date.replace(this.#re, (month: string) => this.map[month.toLowerCase().replace('.', '')].toLowerCase() as string)
   }
 }
 
@@ -128,12 +148,12 @@ function is_valid_date(date: ParsedDate) {
 }
 
 // swap day/month for our American friends
-function swap_day_month(day: number, month: number, fix_only = false): number[] {
-  if (!day) return [ undefined, month ]
+function swap_day_month(date: ParsedDate, fix_only = false): ParsedDate {
+  if (!date.day) return date
 
-  if (!is_valid_month(month, false) && is_valid_month(day, false)) return [ month, day ]
-  if (!fix_only && getLocaleDateOrder() === 'mdy' && is_valid_month(day, false)) return [ month, day ]
-  return [ day, month ]
+  if (!is_valid_month(date.month, false) && is_valid_month(date.day, false)) return { ...date, month: date.day, day: date.month }
+  if (!fix_only && getLocaleDateOrder() === 'mdy' && is_valid_month(date.day, false)) return { ...date, month: date.day, day: date.month }
+  return date
 }
 
 function parseEDTF(value: string, english: string): ParsedDate {
@@ -162,9 +182,66 @@ function parseEDTF(value: string, english: string): ParsedDate {
   return null
 }
 
-export function parse(value: string, try_range = true): ParsedDate {
+const re = {
+  // February 28, 1969
+  Mdy: new RegExp(`^(?<month>${Month.re})\\s+(?<day>\\d+)[,\\s]\\s*(?<year>\\d+)$`, 'i'),
+
+  // https://forums.zotero.org/discussion/73729/name-and-year-import-issues-with-new-nasa-ads
+  nasa: {
+    dash: /^(?<date>-?\d+)-00-00$/,
+    slash: /^(?<date>-?\d+)\/00\/00$/,
+    ym: /^(?<date>-?\d+-\d+)-00$/,
+  },
+
+  // https://github.com/retorquere/zotero-better-bibtex/issues/1513
+  spanish: new RegExp(`^(?<day>\\d+)\\s+(de\\s+)?(?<month>${Month.re})\\s+(de\\s+)?(?<year>\\d+)$`, 'i'),
+
+  // '30-Mar-2020'
+  d_M_y: new RegExp(`^(?<day>\\d+)-(?<month>${Month.re})-(?<year>\\d+)$`, 'i'),
+
+  My: new RegExp(`^(?<month>${Month.re})[-/](?<year>\\d+)$`, 'i'),
+
+  // '[origdate] date' and '[origdate]'
+  orig_date: /^\[(?<orig>.+?)\]\s*(?<date>.*)$/,
+  // 'date [origdate]'
+  date_orig: /^(?<date>.+?)\s*\[(?<orig>.+)\]$/,
+
+  // 747 'jan 20-22 1977'
+  M_d_d_y: new RegExp(`^(?<month>${Month.re})\\s+(?<day1>\\d+)(?:--|-|\u2013)(?<day2>\\d+)[, ]\\s*(?<year>\\d+)$`, 'i'),
+
+  // #747: January 30–February 3, 1989
+  M_d_M_d_y: new RegExp(`^(?<month1>${Month.re})\\s+(?<day1>\\d+)(?:--|-|\u2013)(?<month2>${Month.re})\\s+(?<day2>\\d+)[, ]\\s*(?<year>\\d+)$`, 'i'),
+
+  // #746: 22-26 June 2015, 29 June-1 July 2011
+  d_M_d_M_y: new RegExp(`^(?<day1>\\d+)\\s*(?<month1>${Month.re})?(?:--|-|\u2013)\\s*(?<day2>\\d+)\\s+(?<month2>${Month.re})\\s+(?<year>\\d+)$`, 'i'),
+
+  // July-October 1985
+  M_M_y: new RegExp(`^(?<month1>${Month.re})(?:--|-|\u2013)(?<month2>${Month.re})(?:--|-|\u2013|\\s+)(?<year>\\d+)$`, 'i'),
+
+  y_d_m: /^(?<year>\d{3,})([-\s/.])(?<month>\d{1,2})(?:\2(?<day>\d{1,2}))?$/,
+
+  // https://github.com/retorquere/zotero-better-bibtex/issues/1112
+  pubmed: /^(?<day>\d{1,2})\s+(?<month>\d{1,2})\s*,\s*(?<year>\d{4,})$/,
+
+  d_m_y: /^(?<day>\d{1,2})([-\s/.])(?<month>\d{1,2})(?:\2(?<year>\d{3,}))$/,
+
+  m_y: /^(?<month>\d{1,2})[-\s/.](?<year>\d{3,})$/,
+
+  y_m: /^(?<year>\d{3,})[-\s/.](?<month>\d{1,2})$/,
+
+  y: /^(?<year>-?\d{3,})$/,
+
+  // https://github.com/retorquere/zotero-better-bibtex/issues/868
+  y_M_d: new RegExp(`^(?<year>\\d{3,})\\s+(?<month>${Month.re})(?:\\s+(?<day>\\d+))$`, 'i'),
+}
+
+export function parse(value: string): ParsedDate {
+  const parsed = $parse(value)
+  return parsed
+}
+export function $parse(value: string, try_range = true): ParsedDate {
   value = (value || '').trim()
-  let date: ParsedDate
+  let $date: ParsedDate
 
   let m: RegExpMatchArray
 
@@ -177,91 +254,76 @@ export function parse(value: string, try_range = true): ParsedDate {
 
   // if (value.match(/[T ]/) && !(date = parseEDTF(value)).verbatim) return date
 
-  // https://forums.zotero.org/discussion/73729/name-and-year-import-issues-with-new-nasa-ads#latest
-  if (m = (/^(-?[0-9]+)-00-00$/.exec(value) || /^(-?[0-9]+)\/00\/00$/.exec(value) || /^(-?[0-9]+-[0-9]+)-00$/.exec(value))) return parse(m[1], false)
-
-  // https://github.com/retorquere/zotero-better-bibtex/issues/1513
-  if ((m = (/^([0-9]+) (de )?([a-z]+) (de )?([0-9]+)$/i).exec(value)) && (m[2] || m[4]) && (months[m[3].toLowerCase()])) return parse(`${ m[1] } ${ m[3] } ${ m[5] }`, false)
-
-  // '30-Mar-2020'
-  if (m = (/^([0-9]+)-([a-z]+)-([0-9]+)$/i).exec(value)) {
-    let [ , day, month, year ] = m
-    if (parseInt(day) > 31 && parseInt(year) < 31) [ day, year ] = [ year, day ]
-    date = parse(`${ month } ${ day } ${ year }`, false)
-    if (date.type === 'date') return date
-  }
-
   const english = Month.english(value.normalize('NFC').replace(/[.] /, ' ')) // 8. july 2011
 
-  if (m = (/^([a-z]+)[-/]([0-9]+)$/i).exec(english)) {
-    const [ , month, year ] = m
-    if (months[month.toLowerCase()]) {
-      date = parse(`${ month } ${ year }`, false)
-      if (date.type === 'date') return date
+  if (m = re.Mdy.exec(english)) {
+    return { type: 'date', year: parseInt(m.groups.year), month: Month.no(m.groups.month), day: parseInt(m.groups.day) }
+  }
+
+  if (m = (re.nasa.dash.exec(value) || re.nasa.slash.exec(value) || re.nasa.ym.exec(value))) return $parse(m.groups.date, false)
+
+  if (m = re.spanish.exec(english)) return $parse(`${m.groups.day} ${Month.map[m.groups.month.toLowerCase()]} ${m.groups.year}`, false)
+
+  if (re.d_M_y.exec(english)) {
+    let { day, month, year } = m.groups
+    if (parseInt(m.groups.day) > 31 && parseInt(m.groups.year) < 31) [ day, year ] = [ year, day ]
+    const parsed = $parse(`${month} ${day} ${year}`, false)
+    if (parsed.type === 'date') return parsed
+  }
+
+  if (m = re.My.exec(english)) {
+    return { type: 'date', year: parseInt(m.groups.year), month: Month.no(m.groups.month) }
+  }
+
+  if (try_range && (m = re.orig_date.exec(value) || re.date_orig.exec(value))) {
+    const { orig, date } = m.groups
+    const parsed = {
+      orig: $parse(orig, false),
+      date: date ? $parse(date, false) : {},
+    }
+    if (parsed.orig.type === 'date' && parsed.date.type === 'date') return { ...parsed.date, orig: parsed.orig }
+  }
+
+  if (try_range && (m = re.M_d_d_y.exec(english))) {
+    const { month, day1, day2, year } = m.groups
+
+    const from = $parse(`${month} ${day1} ${year}`, false)
+    const to = $parse(`${month} ${day2} ${year}`, false)
+
+    if (from.type === 'date' && to.type === 'date') return { type: 'interval', from, to }
+  }
+
+  // #747: January 30–February 3, 1989
+  if (try_range && (m = re.M_d_M_d_y.exec(value))) {
+    const { month1, day1, month2, day2, year } = m.groups
+
+    return {
+      type: 'interval',
+      from: { type: 'date', year: parseInt(year), month: Month.no(month1), day: parseInt(day1) },
+      to: { type: 'date', year: parseInt(year), month: Month.no(month2), day: parseInt(day2) },
     }
   }
 
-  // '[origdate] date'
-  if (try_range && (m = /^\[(.+)\]\s*(.+)$/.exec(value))) {
-    const [ , _orig, _date ] = m
-    date = parse(_date, false)
-    const orig = parse(_orig, false)
-    if (date.type === 'date' && orig.type === 'date') return { ...date, ...{ orig }}
-  }
+  // #746: 22-26 June 2015, 29 June-1 July 2011
+  if (try_range && (m = re.d_M_d_M_y.exec(value))) {
+    const { day1, month1, day2, month2, year } = m.groups
 
-  // 'date [origdate]'
-  if (try_range && (m = /^(.+)\s*\[(.+)\]$/.exec(value))) {
-    const [ , _date, _orig ] = m
-    date = parse(_date, false)
-    const orig = parse(_orig, false)
-    if (date.type === 'date' && orig.type === 'date') return { ...date, ...{ orig }}
-  }
-
-  // '[origdate]'
-  if (try_range && (m = /^\[(.+)\]$/.exec(value))) {
-    const [ , _orig ] = m
-    const orig = parse(_orig, false)
-    if (orig.type === 'date') return { ...{ orig }}
-  }
-
-  // 747 'jan 20-22 1977'
-  if (try_range && (m = /^([a-zA-Z]+)\s+([0-9]+)(?:--|-|\u2013)([0-9]+)[, ]\s*([0-9]+)$/.exec(value))) {
-    const [ , month, day1, day2, year ] = m
-
-    const from = parse(`${ month } ${ day1 } ${ year }`, false)
-    const to = parse(`${ month } ${ day2 } ${ year }`, false)
-
-    if (from.type === 'date' && to.type === 'date') return { type: 'interval', from, to }
-  }
-
-  // 747, January 30–February 3, 1989
-  if (try_range && (m = /^([a-zA-Z]+\s+[0-9]+)(?:--|-|\u2013)([a-zA-Z]+\s+[0-9]+)[, ]\s*([0-9]+)$/.exec(value))) {
-    const [ , date1, date2, year ] = m
-
-    const from = parse(`${ date1 } ${ year }`, false)
-    const to = parse(`${ date2 } ${ year }`, false)
-
-    if (from.type === 'date' && to.type === 'date') return { type: 'interval', from, to }
-  }
-
-  // 746, 22-26 June 2015, 29 June-1 July 2011
-  if (try_range && (m = /^([0-9]+)\s*([a-zA-Z]+)?\s*(?:--|-|\u2013)\s*([0-9]+)\s+([a-zA-Z]+)\s+([0-9]+)$/.exec(value))) {
-    const [ , day1, month1, day2, month2, year ] = m
-
-    const from = parse(`${ month1 || month2 } ${ day1 } ${ year }`, false)
-    const to = parse(`${ month2 } ${ day2 } ${ year }`, false)
-
-    if (from.type === 'date' && to.type === 'date') return { type: 'interval', from, to }
+    return {
+      type: 'interval',
+      from: { type: 'date', year: parseInt(year), month: Month.no(month1 || month2), day: parseInt(day1) },
+      to: { type: 'date', year: parseInt(year), month: Month.no(month2), day: parseInt(day2) },
+    }
   }
 
   // July-October 1985
-  if (try_range && (m = (/^([a-z]+)(?:--|-|\u2013)([a-z]+)(?:--|-|\u2013|\s+)([0-9]+)$/i).exec(value))) {
-    const [ , month1, month2, year ] = m
+  if (try_range && (m = re.M_M_y.exec(english))) {
+    const { month1, month2, year } = m.groups
 
-    const from = parse(`${ month1 } ${ year }`, false)
-    const to = parse(`${ month2 } ${ year }`, false)
-
-    if (from.type === 'date' && to.type === 'date') return { type: 'interval', from, to }
+    return {
+      type: 'interval',
+      from: { type: 'date', year: parseInt(year), month: Month.no(month1) },
+      to: { type: 'date', year: parseInt(year), month: Month.no(month2) },
+    }
   }
 
   const time_doubt: ParsedDate = {}
@@ -280,80 +342,59 @@ export function parse(value: string, try_range = true): ParsedDate {
 
   // these assume a sensible y/m/d format by default. There's no sane way to guess between y/d/m and y/m/d, and y/d/m is
   // just wrong. https://en.wikipedia.org/wiki/Date_format_by_country
-  if (m = /^(-?[0-9]{3,})([-\s/.])([0-9]{1,2})(\2([0-9]{1,2}))?$/.exec(date_only)) {
-    const [ , _year, , _month, , _day ] = m
-    const year = parseInt(_year)
-    const [ day, month ] = swap_day_month(parseInt(_day), parseInt(_month), true)
+  if (m = re.y_d_m.exec(value) || re.d_m_y.exec(date_only) || re.m_y.exec(date_only) || re.y_m.exec(date_only)) {
+    const { year, month, day } = m.groups
+    const parsed = swap_day_month({
+      type: 'date',
+      year: parseInt(year),
+      month: parseInt(month),
+      day: day && parseInt(day),
+      ...time_doubt,
+    }, true)
 
     // if (!month && !day) return { type: 'date', year, ...time_doubt }
-    if (!day && has_valid_month(date = { type: 'date', year, month })) return Season.seasonize({ ...date, ...time_doubt })
-    if (is_valid_date(date = { type: 'date', year, month, day })) return { ...date, ...time_doubt }
+    if (!day && has_valid_month($date = { type: 'date', year: parsed.year, month: parsed.month })) return Season.seasonize({ ...$date, ...time_doubt })
+    if (is_valid_date(parsed)) return parsed
   }
 
   // https://github.com/retorquere/zotero-better-bibtex/issues/1112
-  if (m = /^([0-9]{1,2})\s+([0-9]{1,2})\s*,\s*([0-9]{4,})$/.exec(date_only)) {
-    const [ , _day, _month, _year ] = m
-    const year = parseInt(_year)
-    const [ day, month ] = swap_day_month(parseInt(_day), parseInt(_month))
+  if (m = re.pubmed.exec(date_only)) {
+    const { day, month, year } = m.groups
+    const parsed = swap_day_month({
+      type: 'date',
+      year: parseInt(year),
+      month: parseInt(month),
+      day: parseInt(day),
+      ...time_doubt,
+    })
 
-    if (!month && !day) return { type: 'date', year, ...time_doubt }
-    if (!day && has_valid_month(date = { type: 'date', year, month })) return Season.seasonize({ ...date, ...time_doubt })
-    if (is_valid_date(date = { type: 'date', year, month, day })) return { ...date, ...time_doubt }
+    if (is_valid_date(parsed)) return parsed
   }
 
-  if (m = /^([0-9]{1,2})([-\s/.])([0-9]{1,2})(\2([0-9]{3,}))$/.exec(date_only)) {
-    const [ , _day, , _month, , _year ] = m
-    const year = parseInt(_year)
-    const [ day, month ] = swap_day_month(parseInt(_day), parseInt(_month))
-
-    if (!month && !day) return { type: 'date', year, ...time_doubt }
-    if (!day && has_valid_month(date = { type: 'date', year, month })) return Season.seasonize({ ...date, ...time_doubt })
-    if (is_valid_date(date = { type: 'date', year, month, day })) return { ...date, ...time_doubt }
+  if (m = re.y.exec(date_only)) {
+    const { year } = m.groups
+    return { type: 'date', year: parseInt(year), ...time_doubt }
   }
 
-  if (m = /^([0-9]{1,2})[-\s/.]([0-9]{3,})$/.exec(date_only)) {
-    const [ , _month, _year ] = m
-    const month = parseInt(_month)
-    const year = parseInt(_year)
-
-    if (!month) return { type: 'date', year, ...time_doubt }
-    if (has_valid_month(date = { type: 'date', year, month })) return Season.seasonize({ ...date, ...time_doubt })
-  }
-
-  if (m = /^([0-9]{3,})[-\s/.]([0-9]{1,2})$/.exec(date_only)) {
-    const [ , _year, _month ] = m
-    const year = parseInt(_year)
-    const month = parseInt(_month)
-
-    if (!month) return { type: 'date', year, ...time_doubt }
-    if (has_valid_month(date = { type: 'date', year, month })) return Season.seasonize({ ...date, ...time_doubt })
-  }
-
-  if (date_only.match(/^-?[0-9]{3,}$/)) {
-    return { type: 'date', year: parseInt(date_only), ...time_doubt }
-  }
-
-  if (date = parseEDTF(value, english)) return date
+  if ($date = parseEDTF(value, english)) return $date
 
   // https://github.com/retorquere/zotero-better-bibtex/issues/868
-  if (m = /^([0-9]{3,})\s([^0-9]+)(?:\s+([0-9]+))?$/.exec(english)) {
-    const [ , year, month, day ] = m
-    if (months[month]) {
-      try {
-        const edtf = normalize_edtf(EDTF.parse(edtfy(`${ day || '' } ${ month } ${ year }`.trim())))
-        if (edtf) return edtf
-      }
-      catch {}
+  if (m = re.y_M_d.exec(english)) {
+    const { year, month, day } = m.groups
+    try {
+      const edtf = normalize_edtf(EDTF.parse(edtfy(`${day || ''} ${month} ${year}`.trim())))
+      if (edtf) return edtf
     }
+    catch {}
   }
 
   if (try_range) { // try ranges
     for (const sep of [ '--', '-', '/', '_', '\u2013' ]) {
       const split = value.split(sep)
       if (split.length === 2) {
-        const from = parse(split[0], false)
+        const from = $parse(split[0], false)
         if (from.type !== 'date' && from.type !== 'season') continue
-        const to = parse(split[1], false)
+        const to = $parse(split[1], false)
         if (to.type !== 'date' && to.type !== 'season') continue
         return { type: 'interval', from, to }
       }

@@ -246,6 +246,7 @@ export class Entry {
     this.item = item
     this.config = config
     this.date = item.date ? DateParser.parse(item.date) : { type: 'none' }
+    log.debug('date:', item.date, '=>', this.date)
 
     if (!item.language) {
       this.english = true
@@ -505,6 +506,7 @@ export class Entry {
       }
 
       const date = DateParser.parse(field.value as string)
+      log.debug('date:', field.value, '=>', date)
 
       this.add(datefield(date, field, this.translation))
 

@@ -180,10 +180,6 @@ class Config:
 
 class Library:
   def __init__(self, path=None, body=None, client=None, variant='', ext=None, name=None):
-    utils.print('-------------------------')
-    for n, v in locals().items():
-      utils.print(f'  {n}: {v} ({type(v)})')
-
     if path and not os.path.isabs(path):
       path = os.path.join(FIXTURES, path)
 
@@ -217,12 +213,10 @@ class Library:
 
     if not self.body and self.base and os.path.exists(self.base):
       with open(self.base) as f:
-        utils.print(f'reading {self.base}')
         self.body = f.read()
 
     self.normalized = self.body
 
-    utils.print(f'\n\nnormalized={type(self.normalized)}, ext={type(self.ext)}')
     if self.normalized is None or self.ext is None:
       raise ValueError('need something to work with')
 
@@ -460,7 +454,6 @@ class Zotero:
           with open(self.import_at_start) as f:
             data = json.load(f)
             prefs = data.get('config', {}).get('preferences', {})
-        utils.print(f'import at start: {json.dumps(self.import_at_start)}, {json.dumps(prefs)}')
         self.execute('return await Zotero.BetterBibTeX.TestSupport.importFile(file, true, prefs)', file=self.import_at_start, prefs=prefs)
       except Exception as e:
         utils.print(f'failed to import at start: {json.dumps(self.import_at_start)}, {json.dumps(prefs)}')
@@ -678,7 +671,6 @@ class Zotero:
     ini.set(profile.id, 'Default', None)
     with open(profile.ini, 'w') as f:
       ini.write(f, space_around_delimiters=False)
-    utils.print(str(dict(ini[profile.id])))
 
     # layout profile
     if self.config.profile:
