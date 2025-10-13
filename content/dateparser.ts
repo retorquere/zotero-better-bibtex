@@ -90,8 +90,7 @@ const Season = new class {
 function normalize_edtf(date: any): ParsedDate {
   if (date instanceof EDTFDate) {
     // https://github.com/inukshuk/edtf.js/issues/55
-    // const {year, month, day, hour, minute, second } = date
-    let [ year, month, day, hour, minute, second ] = date.values
+    let {year, month, date: day, hour, minute, second } = date
     if (typeof month === 'number') month += 1
     return {
       type: 'date',
@@ -104,8 +103,7 @@ function normalize_edtf(date: any): ParsedDate {
   }
 
   if (date instanceof EDTFInterval) {
-    // const { min, max } = date
-    const [ min, max ] = date.values
+    const { min, max } = date
     return {
       type: 'interval',
       from: normalize_edtf(min),
@@ -114,8 +112,7 @@ function normalize_edtf(date: any): ParsedDate {
   }
 
   if (date instanceof EDTFSeason) {
-    // const { year, month } = date
-    const [ year, month ] = date.values
+    const { year, month } = date
     if (typeof Season.fromMonth(month) !== 'number') throw new Error(`normalize EDTF: Unexpected season ${month}`)
     return Season.seasonize({
       type: 'date',
@@ -417,7 +414,7 @@ export function parse(value: string, options = { range: true, reparse: true }): 
   if (m = english.match(re.y_M_d)) {
     const { year, month, day } = m.groups
     try {
-      const edtf = normalize_edtf(EDTF.parse(edtfy(`${day || ''} ${month} ${year}`.trim())))
+      const edtf = normalize_edtf(EDTF(edtfy(`${day || ''} ${month} ${year}`.trim())))
       if (edtf) return edtf
     }
     catch {}
@@ -441,7 +438,7 @@ export function parse(value: string, options = { range: true, reparse: true }): 
 
 function testEDTF(value: string): boolean {
   try {
-    return (EDTF.parse(value, { level: 1 }) as boolean)
+    return (EDTF(value, { level: 1 }) as boolean)
   }
   catch {
     return false
