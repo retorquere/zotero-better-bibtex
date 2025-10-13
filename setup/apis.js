@@ -664,7 +664,7 @@ function compile(method) {
       required: method.parameters.filter(p => !p.isOptional && typeof p.defaultValue === 'undefined').map(p => p.name),
       validate: method.parameters.reduce((parameters, p) => ({
         ...parameters,
-        [p.name]: Validator.make(p.type),
+        [p.name]: Validator.make(p.isRest ? p.type.items : p.type),
       }), {}),
     }
 }
