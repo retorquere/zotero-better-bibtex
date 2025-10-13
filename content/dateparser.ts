@@ -1,6 +1,9 @@
 /* eslint-disable no-case-declarations */
-import EDTF, { Date as EDTFDate, Interval as EDTFInterval, Season as EDTFSeason, List as EDTFList } from 'edtf'
+import { parse as EDTF} from 'edtf'
 import edtfy from 'edtfy'
+
+// declare const dump: (msg: string) => void
+// function dump(...msg) { console.log(...msg) }
 
 import * as months from '../gen/dateparser-months.json'
 const Month = new class {
@@ -89,9 +92,7 @@ const Season = new class {
 }
 
 function normalize_edtf(date: any): ParsedDate {
-  if (date instanceof EDTFDate) {
-    // https://github.com/inukshuk/edtf.js/issues/55
-    // let {year, month, date: day, hour, minute, second: seconds } = date
+  if (date.type === 'Date') {
     let [ year, month, day, hour, minute, seconds ] = date.values
     if (typeof month === 'number') month += 1
     return {
@@ -99,13 +100,13 @@ function normalize_edtf(date: any): ParsedDate {
       year, month, day,
       hour, minute, seconds,
       offset: date.offset,
-      approximate: !!(date.approximate.value || date.unspecified.value),
-      uncertain: !!date.uncertain.value,
+      approximate: !!(date.approximate || date.unspecified),
+      uncertain: !!date.uncertain,
     }
   }
 
-  if (date instanceof EDTFInterval) {
-    const { min, max } = date
+  if (date.type === 'Interval') {
+    const [ min, max ] = date.values
     return {
       type: 'interval',
       from: normalize_edtf(min),
@@ -113,21 +114,20 @@ function normalize_edtf(date: any): ParsedDate {
     }
   }
 
-  if (date instanceof EDTFSeason) {
-    let { year, month } = date
+  if (date.type === 'Season') {
+    let [ year, month ] = date.values
     if (typeof month === 'number') month += 1
     if (typeof Season.fromMonth(month) !== 'number') throw new Error(`normalize EDTF: Unexpected season ${month}`)
     return Season.seasonize({
       type: 'date',
-      year,
-      month,
+      year, month,
     })
   }
 
-  if (date instanceof EDTFList) {
+  if (date.type === 'List') {
     return {
       type: 'list',
-      dates: [...date].map(normalize_edtf),
+      dates: date.values.map(normalize_edtf),
     }
   }
 
@@ -269,6 +269,7 @@ const re = {
 
 export function parse(value: string, options = { range: true, reparse: true }): ParsedDate {
   const { reparse, range } = options
+  // dump(`dateparser: parsing ${JSON.stringify({ value, reparse, range })}\n`)
 
   value = (value || '').trim()
   let $date: ParsedDate

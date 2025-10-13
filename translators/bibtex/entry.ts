@@ -503,7 +503,6 @@ export class Entry {
       }
 
       const date = DateParser.parse(field.value as string)
-      log.debug('date:', field.value, '=>', date)
 
       this.add(datefield(date, field, this.translation))
 

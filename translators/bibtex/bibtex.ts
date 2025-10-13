@@ -374,12 +374,12 @@ function addDate(ref: Entry, date: ParsedDate | { type: 'none' }, verbatim: stri
         ref.add({ name: 'year', value: `[${ date.orig.year }] ${ date.year }` })
       }
       else {
-        ref.add({ name: 'year', value: `${ date.year }` })
+        ref.add({ name: 'year', value: `${date.year}`, bare: true })
       }
       return
 
     case 'season':
-      ref.add({ name: 'year', value: date.year })
+      ref.add({ name: 'year', value: date.year, bare: true })
       break
 
     default:

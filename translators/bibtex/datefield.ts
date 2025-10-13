@@ -1,5 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 
+// declare const dump: (msg: string) => void
+
 import type { ParsedDate } from '../../content/dateparser'
 import { Translation } from '../lib/translator'
 import type { Field } from './entry'
@@ -42,6 +44,12 @@ function format(date, translation: Translation): string {
   return formatted
 }
 
+function isnumber(v) {
+  if (typeof v === 'number') return true
+  if (typeof v === 'string' && v.match(/^\d+$/)) return true
+  return false
+}
+
 export function datefield(date: ParsedDate, field: Field, translation: Translation): Field {
   field = structuredClone({ ...field, value: '', enc: 'literal' })
 
@@ -70,6 +78,8 @@ export function datefield(date: ParsedDate, field: Field, translation: Translati
   }
 
   if (!field.value || !field.name) return field
+
+  if (translation.BetterBibTeX && isnumber(field.value)) field.bare = true
 
   // well this is fairly dense... the date field is not an verbatim field, so the 'circa' symbol ('~') ought to mean a
   // NBSP... but some magic happens in that field (always with the magic, BibLaTeX...). But hey, if I insert an NBSP,
