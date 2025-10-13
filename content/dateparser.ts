@@ -3,6 +3,7 @@ import EDTF, { Date as EDTFDate, Interval as EDTFInterval, Season as EDTFSeason,
 import edtfy from 'edtfy'
 
 declare const dump: (msg: string) => void
+// function dump(...msg) { console.log(...msg) }
 
 import * as months from '../gen/dateparser-months.json'
 const Month = new class {
@@ -97,8 +98,8 @@ function normalize_edtf(date: any): ParsedDate {
       year, month, day,
       hour, minute, seconds: second,
       offset: date.offset,
-      approximate: !!(date.approximate || date.unspecified),
-      uncertain: !!date.uncertain,
+      approximate: !!(date.approximate.value || date.unspecified.value),
+      uncertain: !!date.uncertain.value,
     }
   }
 
@@ -226,7 +227,7 @@ const re = {
   // '30-Mar-2020'
   d_M_y: new RegExp(`^(?<day>\\d+)-(?<month>${Month.re})-(?<year>\\d+)$`, 'i'),
 
-  My: new RegExp(`^(?<month>${Month.re})[-/](?<year>\\d+)$`, 'i'),
+  My: new RegExp(`^(?<month>${Month.re})(?:[-/]|\\s+)(?<year>\\d+)$`, 'i'),
 
   // '[origdate] date' and '[origdate]'
   orig_date: /^\[(?<orig>.+?)\]\s*(?<date>.*)$/,
