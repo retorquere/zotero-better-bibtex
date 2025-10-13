@@ -124,6 +124,12 @@ class Pinger():
     utils.print('.', end='')
     threading.Timer(every, self.display, [start, every, stop]).start()
 
+def show(context, what):
+  utils.print(f'----------------- {context} -----------------')
+  for k, v in what.items():
+    if k == 'self': continue
+    utils.print(f'  {k}: {v}')
+
 class Config:
   def __init__(self, userdata):
     self.data = [
@@ -180,6 +186,7 @@ class Config:
 
 class Library:
   def __init__(self, path=None, body=None, client=None, variant='', ext=None, name=None):
+    show(f'Library.__init__({name})' if name else 'Library.__init__', locals())
     if path and not os.path.isabs(path):
       path = os.path.join(FIXTURES, path)
 
@@ -218,7 +225,7 @@ class Library:
     self.normalized = self.body
 
     if self.normalized is None or self.ext is None:
-      raise ValueError('need something to work with')
+      raise ValueError('No library body -- maybe export failed?')
 
     #if self.base and not os.path.exists(self.base):
     #  with open(self.base, 'w') as f:
@@ -488,6 +495,8 @@ class Zotero:
     assert_equal_diff(expected.body, found.strip())
 
   def export_library(self, translator, displayOptions = {}, collection = None, output = None, expected = None, resetCache = False):
+    show('export_library', locals())
+
     assert not displayOptions.get('keepUpdated', False) or output # Auto-export needs a destination
 
     if translator.startswith('id:'):
