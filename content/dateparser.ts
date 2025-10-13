@@ -313,9 +313,9 @@ export function parse(value: string, options = { range: true, reparse: true }): 
     const { orig, date } = m.groups
     const parsed = {
       orig: parse(orig, { range, reparse: false }),
-      date: date ? parse(date, { range, reparse: false }) : {},
+      date: date ? parse(date, { range, reparse: false }) : undefined,
     }
-    if (parsed.orig.type === 'date' && parsed.date.type === 'date') return { ...parsed.date, orig: parsed.orig }
+    if (parsed.orig.type === 'date' && (!parsed.date || parsed.date.type === 'date')) return { ...parsed.date, orig: parsed.orig }
   }
 
   if (reparse && (m = english.match(re.M_d_d_y))) {
@@ -364,8 +364,8 @@ export function parse(value: string, options = { range: true, reparse: true }): 
   const date_only = value
     .replace(re.withtime, (...match) => {
       const { hour, minute, seconds, offsetH, offsetM, doubt } = match.pop()
-      time_doubt.hour = parseInt(hour)
-      time_doubt.minute = parseInt(minute)
+      if (hour) time_doubt.hour = parseInt(hour)
+      if (minute) time_doubt.minute = parseInt(minute)
       if (seconds) time_doubt.seconds = parseFloat(seconds)
       if (offsetH) time_doubt.offset = 60 * parseInt(offsetH)
       if (offsetM) time_doubt.offset += (offsetH[0] === '-' ? -1 : 1) * parseInt(offsetM)

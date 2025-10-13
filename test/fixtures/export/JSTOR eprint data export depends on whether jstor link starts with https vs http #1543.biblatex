@@ -12,7 +12,7 @@
   issn = {0012-9682},
   doi = {10.2307/2938351},
   url = {https://www.jstor.org/stable/2938351},
-  urldate = {2020-04-30},
+  urldate = {2020-04-29},
   abstract = {This paper considers asymptotically efficient instrumental variables estimation of nonlinear models in an i.i.d. environment. The class of models includes nonlinear simultaneous equations models and other models of interest. A problem in constructing efficient instrumental variables estimators for such models is that the optimal instruments involve a conditional expectation, calculation of which can require functional form assumptions for the conditional distribution of endogenous variables, as well as integration. Nonparametric methods provide a way of avoiding this difficulty. Here it is shown that nonparametric estimates of the optimal instruments can give asymptotically efficient instrumental variables estimators. Also, ways of choosing the nonparametric estimate in applications are discussed. Two types of nonparametric estimates of the optimal instruments are considered. Each involves nonparametric regression, one by nearest neighbor and the other by series approximation. The finite sample properties of the estimators are considered in a small sampling experiment involving an endogenous dummy variable model.},
   keywords = {626}
 }
