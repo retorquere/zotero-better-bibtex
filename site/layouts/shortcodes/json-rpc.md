@@ -32,7 +32,7 @@ Scan an AUX file for citekeys and populate a Zotero collection from them. The ta
 
 **item.attachments**(citekey: string, library?: string | number)
 
-
+returns: any
 
 * citekey: The citekey to search for
 * library: The libraryID to search in (optional). Pass `*` to search across your library and all groups.
@@ -95,7 +95,7 @@ Fetch the notes for a range of citekeys
 
 **item.pandoc_filter**(citekeys: string[], asCSL: boolean, libraryID?: string | number | string[], style?: string, locale?: string)
 
-
+returns: any
 
 * citekeys: Array of citekeys
 * asCSL: Return the items as CSL
@@ -106,7 +106,7 @@ Generate an export for a list of citekeys, tailored for the pandoc zotero filter
 
 **item.search**(terms: string | ([ string ] | [ string, string ] | [ string, string, string | number ] | [ string, string, string | number, boolean ])[], library?: string | number)
 
-
+returns: any
 
 * terms: Single string as typed into the search box in Zotero (search for Title Creator Year)
               Array of tuples similar as typed into the advanced search box in Zotero

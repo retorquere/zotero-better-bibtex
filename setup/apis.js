@@ -138,8 +138,13 @@ export function printed(schema, parenthesize) {
         ? `[ ${schema.prefixItems.map(printed).join(', ')} ]`
         : `${parens(printed(schema.items))}[]`
 
+    case 'any':
+      return 'any'
+
+    case 'void':
+      return 'void'
+
     default:
-      if (!Object.keys(schema).length) return 'any'
       if (schema.instanceof) return schema.instanceof
       if (schema.oneOf) return schema.oneOf.map(subtype => printed(subtype)).join(' | ')
       if (schema.sprintf) return `string containing at least one of ${wordlist([...(schema.sprintf.matchAll(/%(.*?)s/g))].flatMap(r => `%(${r[1]})s`), ', ')}`
@@ -409,8 +414,10 @@ class APIReader {
     let name
     switch (ts.SyntaxKind[type.kind] || '') {
       case 'AnyKeyword':
+        return { type: 'any' }
+
       case 'VoidKeyword':
-        return {}
+        return { type: 'void' }
 
       case 'ArrayType':
         return { type: 'array', items: this.resolveType(type.elementType) }
@@ -729,7 +736,7 @@ function compile(method) {
     for (let [method, declaration] of Object.entries(methods)) {
       method = `${ns}.${method}`
       let returnType = `returns: ${printed(declaration.returns)}`
-      if (returnType === 'returns: any') returnType = ''
+      if (returnType === 'returns: void') returnType = ''
       page.push([
         `**${method}**${printParameters(declaration, true)}`,
         '',
