@@ -1,4 +1,4 @@
-import Pinyin from 'pinyin'
+import { pinyin as Pinyin } from 'pinyin'
 import _wasm from 'wasmjieba-web/wasmjieba-web_bg.wasm'
 import { cut, initSync } from 'wasmjieba-web'
 import { CjkName, splitName as $splitName } from 'spellnames'

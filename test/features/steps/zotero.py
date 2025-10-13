@@ -125,6 +125,7 @@ class Pinger():
     threading.Timer(every, self.display, [start, every, stop]).start()
 
 def show(context, what):
+  return
   utils.print(f'----------------- {context} -----------------')
   for k, v in what.items():
     if k == 'self': continue
