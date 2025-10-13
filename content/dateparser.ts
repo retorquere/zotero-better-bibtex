@@ -1,8 +1,8 @@
 /* eslint-disable no-case-declarations */
-import EDTF from 'edtf'
+import EDTF, { Date as EDTFDate, Interval as EDTFInterval, Season as EDTFSeason, List as EDTFList } from 'edtf'
 import edtfy from 'edtfy'
 
-// import escapeStringRegexp = require('escape-string-regexp')
+declare const dump: (msg: string) => void
 
 import * as months from '../gen/dateparser-months.json'
 const Month = new class {
@@ -87,31 +87,50 @@ const Season = new class {
 }
 
 function normalize_edtf(date: any): ParsedDate {
-  let year, month, day, hour, minute, seconds
-
-  switch (date.type) {
-    case 'Date':
-      [ year, month, day, hour, minute, seconds ] = date.values
-      if (typeof month === 'number') month += 1
-      return { type: 'date', year, month, day, hour, minute, seconds, offset: date.offset, approximate: date.approximate || date.unspecified, uncertain: date.uncertain }
-
-    case 'Interval':
-      if (date.values.length !== 2) throw new Error(JSON.stringify(date))
-      const from: ParsedDate = date.values[0] ? normalize_edtf(date.values[0]) : { type: 'open' }
-      const to: ParsedDate = date.values[1] ? normalize_edtf(date.values[1]) : { type: 'open' }
-      return { type: 'interval', from, to }
-
-    case 'Season':
-      [ year, month ] = date.values
-      if (typeof Season.fromMonth(month) !== 'number') throw new Error(`Unexpected season ${ month }`)
-      return Season.seasonize({ type: 'date', year, month })
-
-    case 'List':
-      return { type: 'list', dates: date.values.map(normalize_edtf) }
-
-    default:
-      throw new Error(JSON.stringify(date))
+  if (date instanceof EDTFDate) {
+    // https://github.com/inukshuk/edtf.js/issues/55
+    // const {year, month, day, hour, minute, second } = date
+    let [ year, month, day, hour, minute, second ] = date.values
+    if (typeof month === 'number') month += 1
+    return {
+      type: 'date',
+      year, month, day,
+      hour, minute, seconds: second,
+      offset: date.offset,
+      approximate: !!(date.approximate || date.unspecified),
+      uncertain: !!date.uncertain,
+    }
   }
+
+  if (date instanceof EDTFInterval) {
+    // const { min, max } = date
+    const [ min, max ] = date.values
+    return {
+      type: 'interval',
+      from: normalize_edtf(min),
+      to: normalize_edtf(max),
+    }
+  }
+
+  if (date instanceof EDTFSeason) {
+    // const { year, month } = date
+    const [ year, month ] = date.values
+    if (typeof Season.fromMonth(month) !== 'number') throw new Error(`normalize EDTF: Unexpected season ${month}`)
+    return Season.seasonize({
+      type: 'date',
+      year,
+      month,
+    })
+  }
+
+  if (date instanceof EDTFList) {
+    return {
+      type: 'list',
+      dates: [...date].map(normalize_edtf),
+    }
+  }
+
+  throw new Error(`normalize EDTF: failed to normalize ${date}`)
 }
 
 function upgrade_edtf(date: string): string {
@@ -160,24 +179,32 @@ function parseEDTF(value: string, english: string): ParsedDate {
   // 2378 + 2275
   let date = value
 
-  let m: RegExpMatchArray
-  if (m = /^(\d+)[^\d]+(\d+)[^\d]+(\d+)[^\d]+(\d{2}:\d{2}:\d{2}(?:[.]\d+)?)(.*)/.exec(date)) {
-    const [ , year, month, day, time, tz ] = m
-    date = `${ year.padStart(4, '0') }-${ month.padStart(2, '0') }-${ day.padStart(2, '0') }T${ time }${ (tz || '').replace(/\s/g, '') }`
+  const m = date.match(re.edtf)
+  if (m) {
+    let { year, month, day, time, tz } = m.groups
+    year = year.padStart(4, '0')
+    month = month.padStart(2, '0')
+    day = day.padStart(2, '0')
+    tz = (tz || '').replace(/\s/g, '')
+    date = `${year}-${month}-${day}T${time}${tz}`
   }
 
   try {
     // https://github.com/inukshuk/edtf.js/issues/5
-    const edtf = normalize_edtf(EDTF.parse(upgrade_edtf(date.replace(/_|--/, '/'))))
+    const edtf = normalize_edtf(EDTF(upgrade_edtf(date.replace(/_|--/, '/'))))
     if (edtf) return edtf
   }
-  catch {}
+  catch (err) {
+    dump(`parseEDTF (upgrade) error: ${err.message}\n${err.stack}\n`)
+  }
 
   try {
-    const edtf = normalize_edtf(EDTF.parse(edtfy(english)))
+    const edtf = normalize_edtf(EDTF(edtfy(english)))
     if (edtf) return edtf
   }
-  catch {}
+  catch (err) {
+    dump(`parseEDTF (edtfy) error: ${err.message}\n`)
+  }
 
   return null
 }
@@ -233,13 +260,13 @@ const re = {
 
   // https://github.com/retorquere/zotero-better-bibtex/issues/868
   y_M_d: new RegExp(`^(?<year>\\d{3,})\\s+(?<month>${Month.re})(?:\\s+(?<day>\\d+))$`, 'i'),
+
+  withtime: /(?:(?:\s*|T)(?<hour>\d{2}):(?<minute>\d{2})(?::(?<seconds>\d{2}(?:[.]\d+)?)\s*(?:Z|(?<offsetH>[+-]\d{2}):?(?<offsetM>\d{2})?)?)?)?(?<doubt>[~?]*)$/,
+
+  edtf: /^(?<year>\d+)[^\d]+(?<month>\d+)[^\d]+(?<day>\d+)[^\d]+(?<time>\d{2}:\d{2}:\d{2}(?:[.]\d+)?)(?<tz>.*?)/,
 }
 
-export function parse(value: string): ParsedDate {
-  const parsed = $parse(value)
-  return parsed
-}
-export function $parse(value: string, try_range = true): ParsedDate {
+export function parse(value: string, try_range = true): ParsedDate {
   value = (value || '').trim()
   let $date: ParsedDate
 
@@ -256,45 +283,45 @@ export function $parse(value: string, try_range = true): ParsedDate {
 
   const english = Month.english(value.normalize('NFC').replace(/[.] /, ' ')) // 8. july 2011
 
-  if (m = re.Mdy.exec(english)) {
+  if (m = english.match(re.Mdy)) {
     return { type: 'date', year: parseInt(m.groups.year), month: Month.no(m.groups.month), day: parseInt(m.groups.day) }
   }
 
-  if (m = (re.nasa.dash.exec(value) || re.nasa.slash.exec(value) || re.nasa.ym.exec(value))) return $parse(m.groups.date, false)
+  if (m = (value.match(re.nasa.dash) || value.match(re.nasa.slash) || value.match(re.nasa.ym))) return parse(m.groups.date, false)
 
-  if (m = re.spanish.exec(english)) return $parse(`${m.groups.day} ${Month.map[m.groups.month.toLowerCase()]} ${m.groups.year}`, false)
+  if (m = english.match(re.spanish)) return parse(`${m.groups.day} ${Month.map[m.groups.month.toLowerCase()]} ${m.groups.year}`, false)
 
-  if (re.d_M_y.exec(english)) {
+  if (english.match(re.d_M_y)) {
     let { day, month, year } = m.groups
     if (parseInt(m.groups.day) > 31 && parseInt(m.groups.year) < 31) [ day, year ] = [ year, day ]
-    const parsed = $parse(`${month} ${day} ${year}`, false)
+    const parsed = parse(`${month} ${day} ${year}`, false)
     if (parsed.type === 'date') return parsed
   }
 
-  if (m = re.My.exec(english)) {
+  if (m = english.match(re.My)) {
     return { type: 'date', year: parseInt(m.groups.year), month: Month.no(m.groups.month) }
   }
 
-  if (try_range && (m = re.orig_date.exec(value) || re.date_orig.exec(value))) {
+  if (try_range && (m = value.match(re.orig_date) || value.match(re.date_orig))) {
     const { orig, date } = m.groups
     const parsed = {
-      orig: $parse(orig, false),
-      date: date ? $parse(date, false) : {},
+      orig: parse(orig, false),
+      date: date ? parse(date, false) : {},
     }
     if (parsed.orig.type === 'date' && parsed.date.type === 'date') return { ...parsed.date, orig: parsed.orig }
   }
 
-  if (try_range && (m = re.M_d_d_y.exec(english))) {
+  if (try_range && (m = english.match(re.M_d_d_y))) {
     const { month, day1, day2, year } = m.groups
 
-    const from = $parse(`${month} ${day1} ${year}`, false)
-    const to = $parse(`${month} ${day2} ${year}`, false)
+    const from = parse(`${month} ${day1} ${year}`, false)
+    const to = parse(`${month} ${day2} ${year}`, false)
 
     if (from.type === 'date' && to.type === 'date') return { type: 'interval', from, to }
   }
 
   // #747: January 30–February 3, 1989
-  if (try_range && (m = re.M_d_M_d_y.exec(value))) {
+  if (try_range && (m = value.match(re.M_d_M_d_y))) {
     const { month1, day1, month2, day2, year } = m.groups
 
     return {
@@ -305,7 +332,7 @@ export function $parse(value: string, try_range = true): ParsedDate {
   }
 
   // #746: 22-26 June 2015, 29 June-1 July 2011
-  if (try_range && (m = re.d_M_d_M_y.exec(value))) {
+  if (try_range && (m = value.match(re.d_M_d_M_y))) {
     const { day1, month1, day2, month2, year } = m.groups
 
     return {
@@ -316,7 +343,7 @@ export function $parse(value: string, try_range = true): ParsedDate {
   }
 
   // July-October 1985
-  if (try_range && (m = re.M_M_y.exec(english))) {
+  if (try_range && (m = english.match(re.M_M_y))) {
     const { month1, month2, year } = m.groups
 
     return {
@@ -328,10 +355,11 @@ export function $parse(value: string, try_range = true): ParsedDate {
 
   const time_doubt: ParsedDate = {}
   const date_only = value
-    .replace(/(?:(?:\s+|T)(\d{2}):(\d{2})(?::(\d{2}(?:[.]\d+)?)\s*(?:Z|([+-]\d{2}):?(\d{2})?)?)?)?([~?]*)$/, (match, H, M, S, offsetH, offsetM, doubt) => {
-      time_doubt.hour = parseInt(H)
-      time_doubt.minute = parseInt(M)
-      if (S) time_doubt.seconds = parseFloat(S)
+    .replace(re.withtime, (...match) => {
+      const { hour, minute, seconds, offsetH, offsetM, doubt } = match.pop()
+      time_doubt.hour = parseInt(hour)
+      time_doubt.minute = parseInt(minute)
+      if (seconds) time_doubt.seconds = parseFloat(seconds)
       if (offsetH) time_doubt.offset = 60 * parseInt(offsetH)
       if (offsetM) time_doubt.offset += (offsetH[0] === '-' ? -1 : 1) * parseInt(offsetM)
       if (doubt && doubt.indexOf('~') >= 0) time_doubt.approximate = true
@@ -342,7 +370,7 @@ export function $parse(value: string, try_range = true): ParsedDate {
 
   // these assume a sensible y/m/d format by default. There's no sane way to guess between y/d/m and y/m/d, and y/d/m is
   // just wrong. https://en.wikipedia.org/wiki/Date_format_by_country
-  if (m = re.y_d_m.exec(value) || re.d_m_y.exec(date_only) || re.m_y.exec(date_only) || re.y_m.exec(date_only)) {
+  if (m = value.match(re.y_d_m) || date_only.match(re.d_m_y) || date_only.match(re.m_y) || date_only.match(re.y_m)) {
     const { year, month, day } = m.groups
     const parsed = swap_day_month({
       type: 'date',
@@ -358,7 +386,7 @@ export function $parse(value: string, try_range = true): ParsedDate {
   }
 
   // https://github.com/retorquere/zotero-better-bibtex/issues/1112
-  if (m = re.pubmed.exec(date_only)) {
+  if (m = date_only.match(re.pubmed)) {
     const { day, month, year } = m.groups
     const parsed = swap_day_month({
       type: 'date',
@@ -371,7 +399,7 @@ export function $parse(value: string, try_range = true): ParsedDate {
     if (is_valid_date(parsed)) return parsed
   }
 
-  if (m = re.y.exec(date_only)) {
+  if (m = date_only.match(re.y)) {
     const { year } = m.groups
     return { type: 'date', year: parseInt(year), ...time_doubt }
   }
@@ -379,7 +407,7 @@ export function $parse(value: string, try_range = true): ParsedDate {
   if ($date = parseEDTF(value, english)) return $date
 
   // https://github.com/retorquere/zotero-better-bibtex/issues/868
-  if (m = re.y_M_d.exec(english)) {
+  if (m = english.match(re.y_M_d)) {
     const { year, month, day } = m.groups
     try {
       const edtf = normalize_edtf(EDTF.parse(edtfy(`${day || ''} ${month} ${year}`.trim())))
@@ -392,9 +420,9 @@ export function $parse(value: string, try_range = true): ParsedDate {
     for (const sep of [ '--', '-', '/', '_', '\u2013' ]) {
       const split = value.split(sep)
       if (split.length === 2) {
-        const from = $parse(split[0], false)
+        const from = parse(split[0], false)
         if (from.type !== 'date' && from.type !== 'season') continue
-        const to = $parse(split[1], false)
+        const to = parse(split[1], false)
         if (to.type !== 'date' && to.type !== 'season') continue
         return { type: 'interval', from, to }
       }
