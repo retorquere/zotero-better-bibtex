@@ -2,9 +2,6 @@
 import EDTF, { Date as EDTFDate, Interval as EDTFInterval, Season as EDTFSeason, List as EDTFList } from 'edtf'
 import edtfy from 'edtfy'
 
-declare const dump: (msg: string) => void
-// function dump(...msg) { console.log(...msg) }
-
 import * as months from '../gen/dateparser-months.json'
 const Month = new class {
   #re = new RegExp(`\\b${Object.keys(months).sort((a, b) => b.length - a.length).map(month => `${month}[.]?`).join('|')}\\b`, 'ugi')
@@ -90,12 +87,13 @@ const Season = new class {
 function normalize_edtf(date: any): ParsedDate {
   if (date instanceof EDTFDate) {
     // https://github.com/inukshuk/edtf.js/issues/55
-    let {year, month, date: day, hour, minute, second } = date
+    // let {year, month, date: day, hour, minute, second: seconds } = date
+    let [ year, month, day, hour, minute, seconds ] = date.values
     if (typeof month === 'number') month += 1
     return {
       type: 'date',
       year, month, day,
-      hour, minute, seconds: second,
+      hour, minute, seconds,
       offset: date.offset,
       approximate: !!(date.approximate.value || date.unspecified.value),
       uncertain: !!date.uncertain.value,
@@ -192,16 +190,16 @@ function parseEDTF(value: string, english: string): ParsedDate {
     const edtf = normalize_edtf(EDTF(upgrade_edtf(date.replace(/_|--/, '/'))))
     if (edtf) return edtf
   }
-  catch (err) {
-    dump(`parseEDTF (upgrade) error: ${err.message}\n${err.stack}\n`)
+  catch {
+    // dump(`parseEDTF (upgrade) error: ${err.message}\n${err.stack}\n`)
   }
 
   try {
     const edtf = normalize_edtf(EDTF(edtfy(english)))
     if (edtf) return edtf
   }
-  catch (err) {
-    dump(`parseEDTF (edtfy) error: ${err.message}\n`)
+  catch {
+    // dump(`parseEDTF (edtfy) error: ${err.message}\n`)
   }
 
   return null
