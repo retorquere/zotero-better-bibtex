@@ -1,11 +1,10 @@
-
 @software{heyns2021,
   title = {Retorquere/Zotero-Better-Bibtex 2},
   author = {Wittgenstein, Ludwig},
-  date = {2021-04-08},
-  origdate = {2013-09-20},
+  date = {2021-04-08T00:39:34Z},
+  origdate = {2013-09-20T08:26:14Z},
   url = {https://github.com/retorquere/zotero-better-bibtex},
-  urldate = {2021-04-08},
+  urldate = {2021-04-07},
   abstract = {Make Zotero effective for us LaTeX holdouts. Contribute to retorquere/zotero-better-bibtex development by creating an account on GitHub.},
   keywords = {bib,biblatex,bibtex,citation-keys,latex,zotero}
 }
@@ -13,12 +12,10 @@
 @software{heyns2021a,
   title = {Retorquere/Zotero-Better-Bibtex 2},
   author = {Heyns, Emiliano},
-  date = {2021-04-08},
-  origdate = {2013-09-20},
+  date = {2021-04-08T00:39:34Z},
+  origdate = {2013-09-20T08:26:14Z},
   url = {https://github.com/retorquere/zotero-better-bibtex},
-  urldate = {2021-04-08},
+  urldate = {2021-04-07},
   abstract = {Make Zotero effective for us LaTeX holdouts. Contribute to retorquere/zotero-better-bibtex development by creating an account on GitHub.},
   keywords = {bib,biblatex,bibtex,citation-keys,latex,zotero}
 }
-
-

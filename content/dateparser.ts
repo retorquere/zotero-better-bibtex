@@ -18,6 +18,10 @@ const Month = new class {
     october: 10,
     november: 11,
     december: 12,
+    sprint: 13,
+    summer: 14,
+    autumn: 15,
+    winter: 16,
   }
 
   public re = `\\b${[...(new Set(Object.values(months)))].sort((a, b) => b.length - a.length).map(month => `${month}[.]?`).join('|')}\\b`
@@ -110,7 +114,8 @@ function normalize_edtf(date: any): ParsedDate {
   }
 
   if (date instanceof EDTFSeason) {
-    const { year, month } = date
+    let { year, month } = date
+    if (typeof month === 'number') month += 1
     if (typeof Season.fromMonth(month) !== 'number') throw new Error(`normalize EDTF: Unexpected season ${month}`)
     return Season.seasonize({
       type: 'date',

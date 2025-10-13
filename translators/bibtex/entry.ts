@@ -494,9 +494,6 @@ export class Entry {
         })
       }
 
-      // bare year
-      // if (this.translation.BetterBibLaTeX && (typeof field.value === 'number' || (typeof field.value === 'string' && field.value.match(/^[0-9]+$/)))) return this.add({...field, bibtex: `${field.value}`, enc: 'literal'})
-
       if (this.translation.BetterBibLaTeX && this.translation.collected.preferences.biblatexExtendedDateFormat && DateParser.isEDTF(field.value as string, true)) {
         return this.add({
           ...field,
