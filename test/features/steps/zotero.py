@@ -28,35 +28,49 @@ import datetime
 import jsonschema
 import traceback
 
+from collections import OrderedDict
+from collections.abc import MutableMapping
+
 class CompactEncoder(json.JSONEncoder):
   def __init__(self, *args, **kwargs):
-    kwargs.setdefault('indent', 2)
-    kwargs.setdefault('sort_keys', True)
     kwargs.setdefault('ensure_ascii', True)
     super().__init__(*args, **kwargs)
     self.max_inline_length = 80
 
-  def encode(self, o):
-    if isinstance(o, (dict, list)) and self._is_compact(o):
-      return json.dumps(o, separators=(',', ':'), sort_keys=True)
-    return super().encode(o)
-
   def iterencode(self, o, _one_shot=False):
-    if isinstance(o, (dict, list)) and self._is_compact(o):
-      yield json.dumps(o, separators=(',', ':'), sort_keys=True)
+    yield self._encode_recursive(o, level=0)
+
+  def _encode_recursive(self, o, level):
+    indent_str = '  ' * level
+
+    if isinstance(o, dict):
+      items = []
+      for k in sorted(o):
+        v = o[k]
+        encoded_v = self._encode_recursive(v, level + 1)
+        items.append(f'{json.dumps(k)}: {encoded_v}')
+      compact = '{' + ', '.join(items) + '}'
+      if len(compact) <= self.max_inline_length:
+        return compact
+      pretty = '{\n' + ',\n'.join(
+        f'{indent_str}  {json.dumps(k)}: {self._encode_recursive(v, level + 1)}'
+        for k, v in sorted(o.items())
+      ) + f'\n{indent_str}}}'
+      return pretty
+
+    elif isinstance(o, list):
+      items = [self._encode_recursive(i, level + 1) for i in o]
+      compact = '[' + ', '.join(items) + ']'
+      if len(compact) <= self.max_inline_length:
+        return compact
+      pretty = '[\n' + ',\n'.join(
+        f'{indent_str}  {self._encode_recursive(i, level + 1)}'
+        for i in o
+      ) + f'\n{indent_str}]'
+      return pretty
+
     else:
-      yield from super().iterencode(o, _one_shot)
-
-  def _is_compact(self, o):
-    """Check if object is small enough to be inlined."""
-    try:
-      test = json.dumps(o, separators=(',', ':'), sort_keys=True)
-      return len(test) <= self.max_inline_length
-    except Exception:
-      return False
-
-from collections import OrderedDict
-from collections.abc import MutableMapping
+      return json.dumps(o, ensure_ascii=True)
 
 import sys
 import threading
