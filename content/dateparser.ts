@@ -6,7 +6,8 @@ import edtfy from 'edtfy'
 
 import * as months from '../gen/dateparser-months.json'
 const Month = new class {
-  #re = new RegExp(`\\b${Object.keys(months).sort((a, b) => b.length - a.length).map(month => `${month}[.]?`).join('|')}\\b`, 'ugi')
+  // https://github.com/retorquere/zotero-better-bibtex/issues/1513
+  #re = new RegExp(`(?:\\bde\\s+)?\\b(${Object.keys(months).sort((a, b) => b.length - a.length).map(month => `${month}[.]?`).join('|')})\\b(?:\\s+de\\b)?`, 'ugi')
   #no = {
     january: 1,
     february: 2,
@@ -34,7 +35,9 @@ const Month = new class {
   }
 
   english(date: string): string {
-    return date.replace(this.#re, (month: string) => this.map[month.toLowerCase().replace('.', '')].toLowerCase() as string)
+    return date
+      .replace(this.#re, (m, month: string) => this.map[month.toLowerCase().replace('.', '')].toLowerCase() as string)
+      .replace(/,/g, ' ')
   }
 }
 
@@ -187,8 +190,16 @@ function swap_day_month(date: ParsedDate, fix_only = false): ParsedDate {
 }
 
 const re = {
+  // '30-Mar-2020', '30 Mar 2020',
+  dMy: new RegExp(`^(?<day>\\d+)(\\s+|-)(?<month>${Month.re})(\\s+|-)(?<year>\\d+)$`, 'ui'),
+
   // February 28, 1969
-  Mdy: new RegExp(`^(?<month>${Month.re})\\s+(?<day>\\d+)[,\\s]\\s*(?<year>\\d+)$`, 'ui'),
+  Mdy: new RegExp(`^(?<month>${Month.re})\\s+(?<day>\\d+)[\\s]\\s*(?<year>\\d+)$`, 'ui'),
+
+  ydm: /^(?<year>\d{3,})([-\s/.])(?<month>\d{1,2})(?:\2(?<day>\d{1,2}))?$/,
+  dmy: /^(?<day>\d{1,2})([-\s/.])(?<month>\d{1,2})(?:\2(?<year>\d{3,}))$/,
+  my: /^(?<month>\d{1,2})[-\s/.](?<year>\d{3,})$/,
+  ym: /^(?<year>\d{3,})[-\s/.](?<month>\d{1,2})$/,
 
   // https://forums.zotero.org/discussion/73729/name-and-year-import-issues-with-new-nasa-ads
   nasa: {
@@ -196,12 +207,6 @@ const re = {
     slash: /^(?<date>-?\d+)\/00\/00$/,
     ym: /^(?<date>-?\d+-\d+)-00$/,
   },
-
-  // https://github.com/retorquere/zotero-better-bibtex/issues/1513
-  spanish: new RegExp(`^(?<day>\\d+)\\s+(de\\s+)?(?<month>${Month.re})\\s+(de\\s+)?(?<year>\\d+)$`, 'ui'),
-
-  // '30-Mar-2020'
-  d_M_y: new RegExp(`^(?<day>\\d+)-(?<month>${Month.re})-(?<year>\\d+)$`, 'ui'),
 
   My: new RegExp(`^(?<month>${Month.re})(?:[-/]|\\s+)(?<year>\\d+)$`, 'ui'),
   yM: new RegExp(`^(?<year>\\d+)(?:[-/]|\\s+)(?<month>${Month.re})$`, 'ui'),
@@ -223,16 +228,8 @@ const re = {
   // July-October 1985
   M_M_y: new RegExp(`^(?<month1>${Month.re})(?:--|-|\u2013)(?<month2>${Month.re})(?:--|-|\u2013|\\s+)(?<year>\\d+)$`, 'ui'),
 
-  y_d_m: /^(?<year>\d{3,})([-\s/.])(?<month>\d{1,2})(?:\2(?<day>\d{1,2}))?$/,
-
   // https://github.com/retorquere/zotero-better-bibtex/issues/1112
   pubmed: /^(?<day>\d{1,2})\s+(?<month>\d{1,2})\s*,\s*(?<year>\d{4,})$/,
-
-  d_m_y: /^(?<day>\d{1,2})([-\s/.])(?<month>\d{1,2})(?:\2(?<year>\d{3,}))$/,
-
-  m_y: /^(?<month>\d{1,2})[-\s/.](?<year>\d{3,})$/,
-
-  y_m: /^(?<year>\d{3,})[-\s/.](?<month>\d{1,2})$/,
 
   y: /^(?<year>-?\d{3,})$/,
 
@@ -268,23 +265,22 @@ class DateParser {
 
     const english = Month.english(value.normalize('NFC').replace(/[.] /, ' ')) // 8. july 2011
 
-    if (m = english.match(re.Mdy)) {
-      return { type: 'date', year: parseInt(m.groups.year), month: Month.no(m.groups.month), day: parseInt(m.groups.day) }
+    if (m = (english.match(re.Mdy) || english.match(re.dMy))) {
+      const { day: sday, month, year: syear } = m.groups
+      let day = parseInt(sday)
+      let year = parseInt(syear)
+      if (day > 31 && year < 31) [day, year] = [year, day]
+
+      return {
+        type: 'date',
+        year,
+        month: Month.no(month),
+        day,
+      }
     }
 
     if (reparse && (m = value.match(re.nasa.dash) || value.match(re.nasa.slash) || value.match(re.nasa.ym))) {
       return this.parse(m.groups.date, { range, reparse: false })
-    }
-
-    if (reparse && (m = english.match(re.spanish))) {
-      return this.parse(`${m.groups.day} ${Month.map[m.groups.month.toLowerCase()]} ${m.groups.year}`, { range, reparse: false })
-    }
-
-    if (reparse && (m = english.match(re.d_M_y))) {
-      let { day, month, year } = m.groups
-      if (parseInt(m.groups.day) > 31 && parseInt(m.groups.year) < 31) [day, year] = [year, day]
-      const parsed = this.parse(`${month} ${day} ${year}`, { range, reparse: false })
-      if (parsed.type === 'date') return parsed
     }
 
     if (m = english.match(re.My) || english.match(re.yM)) {
@@ -310,7 +306,7 @@ class DateParser {
     }
 
     // #747: January 30–February 3, 1989
-    if (m = value.match(re.M_d_M_d_y)) {
+    if (m = english.match(re.M_d_M_d_y)) {
       const { month1, day1, month2, day2, year } = m.groups
 
       return {
@@ -321,7 +317,7 @@ class DateParser {
     }
 
     // #746: 22-26 June 2015, 29 June-1 July 2011
-    if (m = value.match(re.d_M_d_M_y)) {
+    if (m = english.match(re.d_M_d_M_y)) {
       const { day1, month1, day2, month2, year } = m.groups
 
       return {
@@ -359,7 +355,7 @@ class DateParser {
 
     // these assume a sensible y/m/d format by default. There's no sane way to guess between y/d/m and y/m/d, and y/d/m is
     // just wrong. https://en.wikipedia.org/wiki/Date_format_by_country
-    if (m = value.match(re.y_d_m) || date_only.match(re.d_m_y) || date_only.match(re.m_y) || date_only.match(re.y_m)) {
+    if (m = value.match(re.ydm) || date_only.match(re.dmy) || date_only.match(re.my) || date_only.match(re.ym)) {
       const { year, month, day } = m.groups
       const parsed = swap_day_month({
         type: 'date',

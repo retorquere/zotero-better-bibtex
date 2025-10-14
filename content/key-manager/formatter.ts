@@ -474,6 +474,7 @@ export class PatternFormatter {
     if (citekey && Preference.citekeyFold) citekey = this.transliterate(citekey)
     citekey = citekey.replace(this.re.unsafechars, '')
     if (!citekey.includes(this.postfix.marker)) citekey += this.postfix.marker
+    log.debug('formatted:', citekey)
     return citekey
   }
 
