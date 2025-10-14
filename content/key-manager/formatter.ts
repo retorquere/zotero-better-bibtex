@@ -107,7 +107,7 @@ function parseDate(v): PartialDate {
     od?: number
   } = {}
 
-  let date = DateParser.parse(v)
+  let date = DateParser.parse(v, false)
   if (date.type === 'list') date = date.dates.find(d => d.type !== 'open') || date.dates[0]
   if (date.type === 'interval') date = (date.from && date.from.type !== 'open') ? date.from : date.to
   if (!date.type) date.type = 'date' // will rescue 'orig' if present
