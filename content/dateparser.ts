@@ -91,7 +91,9 @@ const Season = new class {
 }
 
 function normalize_edtf(date: any): ParsedDate {
-  if (date.type === 'Date') {
+  const type = date.type.replace('_', '')
+
+  if (type === 'Date') {
     let [year, month, day, hour, minute, seconds] = date.values
     if (typeof month === 'number') month += 1
     return {
@@ -108,7 +110,7 @@ function normalize_edtf(date: any): ParsedDate {
     }
   }
 
-  if (date.type === 'Interval') {
+  if (type === 'Interval') {
     const [min, max] = date.values
     return {
       type: 'interval',
@@ -117,7 +119,7 @@ function normalize_edtf(date: any): ParsedDate {
     }
   }
 
-  if (date.type === 'Season') {
+  if (type === 'Season') {
     let [year, month] = date.values
     if (typeof month === 'number') month += 1
     if (typeof Season.fromMonth(month) !== 'number') throw new Error(`normalize EDTF: Unexpected season ${month}`)
@@ -128,14 +130,14 @@ function normalize_edtf(date: any): ParsedDate {
     })
   }
 
-  if (date.type === 'List') {
+  if (type === 'List') {
     return {
       type: 'list',
       dates: date.values.map(normalize_edtf),
     }
   }
 
-  throw new Error(`normalize EDTF: failed to normalize ${date}`)
+  throw new Error(`normalize EDTF: failed to normalize ${type}`)
 }
 
 function upgrade_edtf(date: string): string {
@@ -396,7 +398,9 @@ class DateParser {
         const edtf = normalize_edtf(this.edtf(edtfy(`${day || ''} ${month} ${year}`.trim())))
         if (edtf) return edtf
       }
-      catch {}
+      catch {
+        // dump(`edtf error: ${err}\n`)
+      }
     }
 
     if (range) {
@@ -457,7 +461,7 @@ class DateParser {
       if (edtf) return edtf
     }
     catch {
-      // dump(`parseEDTF (upgrade) error: ${err.message}\n${err.stack}\n`)
+      // dump(`edtf (upgrade) error: ${err}\n`)
     }
 
     try {
@@ -465,7 +469,7 @@ class DateParser {
       if (edtf) return edtf
     }
     catch {
-      // dump(`parseEDTF (edtfy) error: ${err.message}\n`)
+      // dump(`parseEDTF (edtfy) error: ${err}\n`)
     }
 
     return null
@@ -502,10 +506,6 @@ export function isEDTF(value: string, minuteLevelPrecision = false): boolean {
   return testEDTF(value) || (minuteLevelPrecision && testEDTF(`${value}:00`))
 }
 
-export function strToISO(str: string): string {
-  return dateToISO(parse(str))
-}
-
 export function dateToISO(date: ParsedDate): string {
   if (date.type === 'interval') return `${dateToISO(date.from)}/${dateToISO(date.to)}`.replace(/^[/]$/, '')
 
@@ -523,4 +523,8 @@ export function dateToISO(date: ParsedDate): string {
   }
 
   return iso
+}
+
+export function strToISO(str: string): string {
+  return dateToISO(parse(str))
 }
