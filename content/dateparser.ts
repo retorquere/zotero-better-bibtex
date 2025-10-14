@@ -228,6 +228,7 @@ const re = {
   d_M_y: new RegExp(`^(?<day>\\d+)-(?<month>${Month.re})-(?<year>\\d+)$`, 'ui'),
 
   My: new RegExp(`^(?<month>${Month.re})(?:[-/]|\\s+)(?<year>\\d+)$`, 'ui'),
+  yM: new RegExp(`^(?<year>\\d+)(?:[-/]|\\s+)(?<month>${Month.re})$`, 'ui'),
 
   // '[origdate] date' and '[origdate]'
   orig_date: /^\[(?<orig>.+?)\]\s*(?<date>.*)$/,
@@ -299,14 +300,14 @@ export function parse(value: string, options = { range: true, reparse: true }): 
     return parse(`${m.groups.day} ${Month.map[m.groups.month.toLowerCase()]} ${m.groups.year}`, { range, reparse: false })
   }
 
-  if (reparse && english.match(re.d_M_y)) {
+  if (reparse && (m = english.match(re.d_M_y))) {
     let { day, month, year } = m.groups
     if (parseInt(m.groups.day) > 31 && parseInt(m.groups.year) < 31) [ day, year ] = [ year, day ]
     const parsed = parse(`${month} ${day} ${year}`, { range, reparse: false })
     if (parsed.type === 'date') return parsed
   }
 
-  if (m = english.match(re.My)) {
+  if (m = (english.match(re.My) || english.match(yM))) {
     return { type: 'date', year: parseInt(m.groups.year), month: Month.no(m.groups.month) }
   }
 
