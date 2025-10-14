@@ -90,6 +90,10 @@ const Season = new class {
   }
 }
 
+function flagged(v: boolean | { value: number }): boolean | number {
+  return typeof v === 'boolean' ? v : v.value
+}
+
 function normalize_edtf(date: any): ParsedDate {
   const type = date.type.replace('_', '')
 
@@ -105,8 +109,8 @@ function normalize_edtf(date: any): ParsedDate {
       minute,
       seconds,
       offset: date.offset,
-      approximate: !!(date.approximate || date.unspecified),
-      uncertain: !!date.uncertain,
+      approximate: !!(flagged(date.approximate) || flagged(date.unspecified)),
+      uncertain: !!flagged(date.uncertain),
     }
   }
 
