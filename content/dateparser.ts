@@ -307,7 +307,7 @@ export function parse(value: string, options = { range: true, reparse: true }): 
     if (parsed.type === 'date') return parsed
   }
 
-  if (m = (english.match(re.My) || english.match(yM))) {
+  if (m = (english.match(re.My) || english.match(re.yM))) {
     return { type: 'date', year: parseInt(m.groups.year), month: Month.no(m.groups.month) }
   }
 
