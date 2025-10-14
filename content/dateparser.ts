@@ -429,11 +429,33 @@ export function parse(value: string, options = { range: true, reparse: true }): 
     for (const sep of [ '--', '-', '/', '_', '\u2013' ]) {
       const split = value.split(sep)
       if (split.length === 2) {
+        let dates = 0
+
         const from = parse(split[0], { reparse, range: false })
-        if (from.type !== 'date' && from.type !== 'season') continue
+        switch (from.type) {
+          case 'date':
+          case 'season':
+            dates++
+            break
+          case 'open':
+            break
+          default:
+            continue
+        }
+
         const to = parse(split[1], { reparse, range: false })
-        if (to.type !== 'date' && to.type !== 'season') continue
-        return { type: 'interval', from, to }
+        switch (to.type) {
+          case 'date':
+          case 'season':
+            dates++
+            break
+          case 'open':
+            break
+          default:
+            continue
+        }
+
+        if (dates) return { type: 'interval', from, to }
       }
     }
   }

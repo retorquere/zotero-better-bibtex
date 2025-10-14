@@ -28,6 +28,33 @@ import datetime
 import jsonschema
 import traceback
 
+class CompactEncoder(json.JSONEncoder):
+  def __init__(self, *args, **kwargs):
+    kwargs.setdefault('indent', 2)
+    kwargs.setdefault('sort_keys', True)
+    kwargs.setdefault('ensure_ascii', True)
+    super().__init__(*args, **kwargs)
+    self.max_inline_length = 80
+
+  def encode(self, o):
+    if isinstance(o, (dict, list)) and self._is_compact(o):
+      return json.dumps(o, separators=(',', ':'), sort_keys=True)
+    return super().encode(o)
+
+  def iterencode(self, o, _one_shot=False):
+    if isinstance(o, (dict, list)) and self._is_compact(o):
+      yield json.dumps(o, separators=(',', ':'), sort_keys=True)
+    else:
+      yield from super().iterencode(o, _one_shot)
+
+  def _is_compact(self, o):
+    """Check if object is small enough to be inlined."""
+    try:
+      test = json.dumps(o, separators=(',', ':'), sort_keys=True)
+      return len(test) <= self.max_inline_length
+    except Exception:
+      return False
+
 from collections import OrderedDict
 from collections.abc import MutableMapping
 
@@ -242,8 +269,8 @@ class Library:
         self.data = jsonpatch.JsonPatch(json.load(f)).apply(self.data)
 
       if self.ext in ['.csl.json', '.csl.yml']:
-        self.data = sorted(self.data, key=lambda item: json.dumps(item, sort_keys=True))
-        self.normalized = json.dumps(self.data, indent=2, ensure_ascii=True, sort_keys=True)
+        self.data = sorted(self.data, key=lambda item: json.dumps(item, cls=CompactEncoder))
+        self.normalized = json.dumps(self.data, cls=CompactEncoder)
 
         if self.ext == '.csl.yml':
           normalized = io.StringIO()
@@ -253,8 +280,8 @@ class Library:
 
       elif self.ext == '.json':
         if 'config' in self.data and 'preferences' in self.data['config']: self.data['config']['preferences'].pop('autoAbbrevStyle', None)
-        self.data['items'] = sorted(self.data['items'], key=lambda item: json.dumps(item, sort_keys=True))
-        self.normalized = json.dumps(cleanlib(copy.deepcopy(self.data)), indent=2, ensure_ascii=True, sort_keys=True)
+        self.data['items'] = sorted(self.data['items'], key=lambda item: json.dumps(item, cls=CompactEncoder))
+        self.normalized = json.dumps(cleanlib(copy.deepcopy(self.data)), cls=CompactEncoder)
 
     elif self.ext in ['.biblatex', '.bibtex', '.bib']:
       if self.patch:
