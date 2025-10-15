@@ -208,10 +208,10 @@ const re = {
   // February 28, 1969
   Mdy: new RegExp(`^(?<month>${Month.english})\\s+(?<day>\\d+)[\\s]\\s*(?<year>\\d+)$`, 'ui'),
 
-  ydm: /^(?<year>\d{3,})(\p{P})(?<month>\d{1,2})(?:\2(?<day>\d{1,2}))?$/u,
-  dmy: /^(?<day>\d{1,2})(\p{P})(?<month>\d{1,2})(?:\2(?<year>\d{3,}))$/u,
-  my: /^(?<month>\d{1,2})\p{P}+(?<year>\d{3,})$/u,
-  ym: /^(?<year>\d{3,})\p{P}+(?<month>\d{1,2})$/u,
+  ydm: /^(?<year>\d{3,})([\s\p{P}])(?<month>\d{1,2})(?:\2(?<day>\d{1,2}))?$/u,
+  dmy: /^(?<day>\d{1,2})([\s\p{P}])(?<month>\d{1,2})(?:\2(?<year>\d{3,}))$/u,
+  my: /^(?<month>\d{1,2})(\s+|\p{P}+)(?<year>\d{3,})$/u,
+  ym: /^(?<year>\d{3,})(\s+|\p{P}+)(?<month>\d{1,2})$/u,
 
   // https://forums.zotero.org/discussion/73729/name-and-year-import-issues-with-new-nasa-ads
   nasa: {
