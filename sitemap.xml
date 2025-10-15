@@ -58,25 +58,7 @@
     <loc>/zotero-better-bibtex/exporting/advanced/index.html</loc>
   </url>
   <url>
-    <loc>/zotero-better-bibtex/installation/preferences/index.html</loc>
-  </url>
-  <url>
-    <loc>/zotero-better-bibtex/installation/preferences/export/index.html</loc>
-  </url>
-  <url>
-    <loc>/zotero-better-bibtex/installation/preferences/automatic-export/index.html</loc>
-  </url>
-  <url>
-    <loc>/zotero-better-bibtex/installation/preferences/import/index.html</loc>
-  </url>
-  <url>
     <loc>/zotero-better-bibtex/exporting/json-rpc/index.html</loc>
-  </url>
-  <url>
-    <loc>/zotero-better-bibtex/installation/preferences/miscellaneous/index.html</loc>
-  </url>
-  <url>
-    <loc>/zotero-better-bibtex/installation/preferences/hidden-preferences/index.html</loc>
   </url>
   <url>
     <loc>/zotero-better-bibtex/installation/bundled-translators/index.html</loc>
@@ -97,9 +79,6 @@
     <loc>/zotero-better-bibtex/tags/cite-as-you-write/index.html</loc>
   </url>
   <url>
-    <loc>/zotero-better-bibtex/tags/configuration/index.html</loc>
-  </url>
-  <url>
     <loc>/zotero-better-bibtex/tags/export/index.html</loc>
   </url>
   <url>
@@ -116,9 +95,6 @@
   </url>
   <url>
     <loc>/zotero-better-bibtex/tags/overleaf/index.html</loc>
-  </url>
-  <url>
-    <loc>/zotero-better-bibtex/tags/preferences/index.html</loc>
   </url>
   <url>
     <loc>/zotero-better-bibtex/tags/scripting/index.html</loc>

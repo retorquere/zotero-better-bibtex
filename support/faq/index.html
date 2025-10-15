@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="height=device-height, width=device-width, initial-scale=1.0, minimum-scale=1.0">
     <meta name="generator" content="Hugo 0.143.1">
-    <meta name="generator" content="Relearn 8.0.0+97777ec5111409397e83f44eca496eea97697836">
+    <meta name="generator" content="Relearn 8.1.1+9d74be278d6e8456f2f18305c9b27e38bc2de91c">
     <meta name="description" content="Add-on could not be installed because it appears to be corrupt. You have downloaded the Better BibTeX plugin by clicking on the download link using Firefox. As Zotero and Firefox use the same plugin technology, Firefox think the BetterBibTeX plugin is intended for itself, tries to install it, and then finds out it won’t work. You need to download the plugin without installinging it into Firefox by right-clicking the download link, choose save-as, and then install it into Zotero using installation instructions to get started with BBT.">
     <meta name="author" content="">
     <meta name="twitter:card" content="summary">
@@ -151,7 +151,7 @@
           <ol class="topbar-breadcrumbs breadcrumbs highlightable" itemscope itemtype="http://schema.org/BreadcrumbList"><li itemscope itemtype="https://schema.org/ListItem" itemprop="itemListElement" class=""><a itemprop="item" href="/zotero-better-bibtex/index.html"><span itemprop="name">Better BibTeX for Zotero</span></a><meta itemprop="position" content="1">&nbsp;>&nbsp;</li><li itemscope itemtype="https://schema.org/ListItem" itemprop="itemListElement" class=""><a itemprop="item" href="/zotero-better-bibtex/support/index.html"><span itemprop="name">Support</span></a><meta itemprop="position" content="2">&nbsp;>&nbsp;</li><li itemscope itemtype="https://schema.org/ListItem" itemprop="itemListElement" class=""><span itemprop="name">FAQ</span><meta itemprop="position" content="3"></li>
           </ol>
           <div class="topbar-area topbar-area-end" data-area="end">
-            <div class="topbar-button topbar-button-edit" data-content-empty="disable" data-width-s="area-more" data-width-m="show" data-width-l="show"><a class="topbar-control" href="https://github.com/retorquere/zotero-better-bibtex/edit/master/site/content/support/faq.md" rel="external" target="_blank" title="Edit (CTRL+ALT+w)"><i class="fa-fw fas fa-pen"></i></a>
+            <div class="topbar-button topbar-button-edit" data-content-empty="disable" data-width-s="area-more" data-width-m="show" data-width-l="show"><a class="topbar-control" href="https://github.com/retorquere/zotero-better-bibtex/edit/master/site/content/support/faq.md" rel="external" title="Edit (CTRL+ALT+w)"><i class="fa-fw fas fa-pen"></i></a>
             </div>
             <div class="topbar-button topbar-button-prev" data-content-empty="disable" data-width-s="show" data-width-m="show" data-width-l="show"><a class="topbar-control" href="/zotero-better-bibtex/support/index.html" title="Support (🡐)"><i class="fa-fw fas fa-chevron-left"></i></a>
             </div>
@@ -195,7 +195,7 @@ it into Zotero using <a href="/zotero-better-bibtex/installation/">installation 
 fields. For most I can make reasonable choices, but there are some things where
 Better BibTeX takes a little more liberties with your items in order to get
 sensible output.</p>
-<p>Title fields in particular are a total mess. Zotero <a href="https://zotero-manual.github.io/adding-items/#sentence-and-title-case" rel="external" target="_blank">recommends having your
+<p>Title fields in particular are a total mess. Zotero <a href="https://zotero-manual.github.io/adding-items/#sentence-and-title-case" rel="external">recommends having your
 titles in sentence
 case</a>
 because that&rsquo;s what the embedded citation processor expects, but of course,
@@ -246,8 +246,8 @@ Bib(La)TeX will differ, and you can&rsquo;t complain about this.</p>
 single braces (<code>{...}</code>)?</p>
 <p>This is not because of some arcane aesthetic preference, but because the
 Bib(La)TeX case protection rules are incredibly convoluted
-(<a href="https://github.com/retorquere/zotero-better-bibtex/issues/541" rel="external" target="_blank">#541</a>,
-<a href="https://github.com/retorquere/zotero-better-bibtex/issues/383" rel="external" target="_blank">#383</a>). For
+(<a href="https://github.com/retorquere/zotero-better-bibtex/issues/541" rel="external">#541</a>,
+<a href="https://github.com/retorquere/zotero-better-bibtex/issues/383" rel="external">#383</a>). For
 example, here are some &ldquo;interesting&rdquo; cases that BBT has learned to deal with.
 Did you know that</p>
 <ul>
@@ -256,19 +256,19 @@ surprise to me. So <code>\emph{Homo sapiens}</code> is case-protected (will not 
 recapitalized by Bib(La)TeX), but <code>{\emph{Homo sapiens}}</code> <em>is not</em>
 case-protected so it <em>will</em> be recapitalized. So to get predictable
 behavior, this is written out as <code>{{\emph{Homo sapiens}}}</code>.</li>
-<li>casing behavior over the <em>whole</em> entry field depends on <a href="https://github.com/retorquere/zotero-better-bibtex/issues/541#issuecomment-240156274" rel="external" target="_blank">whether there&rsquo;s
+<li>casing behavior over the <em>whole</em> entry field depends on <a href="https://github.com/retorquere/zotero-better-bibtex/issues/541#issuecomment-240156274" rel="external">whether there&rsquo;s
 a slash-command at the first
 position</a>
 of the title?</li>
-<li><a href="https://github.com/retorquere/zotero-better-bibtex/issues/541#issuecomment-240999396" rel="external" target="_blank">apparently</a>,
+<li><a href="https://github.com/retorquere/zotero-better-bibtex/issues/541#issuecomment-240999396" rel="external">apparently</a>,
 to make sure that <code>Reading HLA Hart's: &lt;i&gt;The Concept of Law&lt;/i&gt;</code> renders as
 expected means I have to output the astoundingly ugly <code>{Reading {{HLA Hart}}'s: {{{\emph{The Concept}}}}{\emph{ of }}{{{\emph{Law}}}}}</code>?</li>
 </ul>
 <p>To make matters even more complex, so many people have in the past wrongly
 recommended to &ldquo;just wrap everything in one extra set of braces&rdquo; that biblatex
 now ignores exactly that pattern (see
-<a href="https://tex.stackexchange.com/a/327387/27603" rel="external" target="_blank">here</a> and
-<a href="https://tex.stackexchange.com/a/233976/27603" rel="external" target="_blank">here</a>).</p>
+<a href="https://tex.stackexchange.com/a/327387/27603" rel="external">here</a> and
+<a href="https://tex.stackexchange.com/a/233976/27603" rel="external">here</a>).</p>
 <p>The double-bracing is the only unambiguous rule I could construct that
 consistently gets the rendered entries right (so far).</p>
 <p>Bib(La)TeX provides a never-ending stream of edge cases, which BBT tries to
@@ -312,11 +312,11 @@ Make sure the latter path is correct, as JabRef might continue finding files and
 <p>Among the reasons to just prefer Zotero over Mendeley outright you will find:</p>
 <ul>
 <li>Mendeley is owned by Elsevier.</li>
-<li>Mendeley thinks you <a href="https://www.zotero.org/support/kb/mendeley_import#mendeley_database_encryption" rel="external" target="_blank">cannot be trusted with your own data</a></li>
+<li>Mendeley thinks you <a href="https://www.zotero.org/support/kb/mendeley_import#mendeley_database_encryption" rel="external">cannot be trusted with your own data</a></li>
 </ul>
 <p>But wrt bibtex export, I don&rsquo;t think the Mendeley engineers actively use bib(la)tex:</p>
 <ul>
-<li>Mendeley is still double-bracing titles &ndash; a behavior so wrong (yet unfortunately ubiquitous), biblatex started <a href="/zotero-better-bibtex/support/faq/index.html">ignoring double-braced titles</a> (see <a href="https://tex.stackexchange.com/a/327387/27603" rel="external" target="_blank">here</a> and <a href="https://tex.stackexchange.com/a/233976/27603" rel="external" target="_blank">here</a>).</li>
+<li>Mendeley is still double-bracing titles &ndash; a behavior so wrong (yet unfortunately ubiquitous), biblatex started <a href="/zotero-better-bibtex/support/faq/index.html">ignoring double-braced titles</a> (see <a href="https://tex.stackexchange.com/a/327387/27603" rel="external">here</a> and <a href="https://tex.stackexchange.com/a/233976/27603" rel="external">here</a>).</li>
 <li>Mendeley uses CSL, so items should be entered in sentence case (as is the case in Zotero). But bib(la)tex expects title-case, so titles should be converted to title case during export. This is difficult, so Mendeley just doesn&rsquo;t bother doing it.</li>
 <li>Verbatim fields that should per spec be exported as regular fields by Mendeley. This will get you compilation errors.</li>
 </ul>
@@ -1027,7 +1027,7 @@ Better BibTeX for Zotero
         </div>
         <div class="R-sidebarmenu R-shortcutmenu-homelinks">
           <ul class="space collapsible-menu">
-            <li class="" data-nav-id="/zotero-better-bibtex/index.html"><a class="padding" href="/zotero-better-bibtex/index.html"><i class="fa-fw fas fa-home"></i> Home</a></li>
+            <li class="" data-nav-url="/zotero-better-bibtex/index.html"><a class="padding" href="/zotero-better-bibtex/index.html"><i class="fa-fw fas fa-home"></i> Home</a></li>
           </ul>
         </div>
         <div class="R-menu-divider default-animation">
@@ -1044,23 +1044,23 @@ Better BibTeX for Zotero
       <div id="R-content-wrapper" class="highlightable">
         <div class="R-sidebarmenu R-shortcutmenu-main">
           <ul class="enlarge morespace collapsible-menu">
-            <li class="" data-nav-id="/zotero-better-bibtex/installation/index.html"><a class="padding" href="/zotero-better-bibtex/installation/index.html">Installation</a><ul id="R-subsections-ff749ccaab053548f690f97bcd6daed0" class="collapsible-menu"></ul></li>
-            <li class="" data-nav-id="/zotero-better-bibtex/exporting/index.html"><a class="padding" href="/zotero-better-bibtex/exporting/index.html">Exporting</a><ul id="R-subsections-1d584ca98d27013df6242b6c17171d5e" class="collapsible-menu"></ul></li>
-            <li class="" data-nav-id="/zotero-better-bibtex/citing/index.html"><a class="padding" href="/zotero-better-bibtex/citing/index.html">Citation Keys</a><ul id="R-subsections-21d11d1b73fd6487fde6cbf6c72fa642" class="collapsible-menu"></ul></li>
-            <li class="parent " data-nav-id="/zotero-better-bibtex/support/index.html"><a class="padding" href="/zotero-better-bibtex/support/index.html">Support</a><ul id="R-subsections-caa68563dfb61577c2c4699e1aa63010" class="collapsible-menu">
-            <li class="active " data-nav-id="/zotero-better-bibtex/support/faq/index.html"><a class="padding" href="/zotero-better-bibtex/support/faq/index.html">FAQ</a></li>
-            <li class="" data-nav-id="/zotero-better-bibtex/support/performance/index.html"><a class="padding" href="/zotero-better-bibtex/support/performance/index.html">Performance</a></li>
-            <li class="" data-nav-id="/zotero-better-bibtex/support/translations/index.html"><a class="padding" href="/zotero-better-bibtex/support/translations/index.html">Translations</a></li>
-            <li class="" data-nav-id="/zotero-better-bibtex/support/tests/index.html"><a class="padding" href="/zotero-better-bibtex/support/tests/index.html">Testing</a></li></ul></li>
-            <li class="" data-nav-id="/zotero-better-bibtex/sponsoring/index.html"><a class="padding" href="/zotero-better-bibtex/sponsoring/index.html">Sponsoring BBT</a></li>
+            <li class="" data-nav-url="/zotero-better-bibtex/installation/index.html"><a class="padding" href="/zotero-better-bibtex/installation/index.html">Installation</a><ul id="R-subsections-ff749ccaab053548f690f97bcd6daed0" class="collapsible-menu"></ul></li>
+            <li class="" data-nav-url="/zotero-better-bibtex/exporting/index.html"><a class="padding" href="/zotero-better-bibtex/exporting/index.html">Exporting</a><ul id="R-subsections-1d584ca98d27013df6242b6c17171d5e" class="collapsible-menu"></ul></li>
+            <li class="" data-nav-url="/zotero-better-bibtex/citing/index.html"><a class="padding" href="/zotero-better-bibtex/citing/index.html">Citation Keys</a><ul id="R-subsections-21d11d1b73fd6487fde6cbf6c72fa642" class="collapsible-menu"></ul></li>
+            <li class="parent " data-nav-url="/zotero-better-bibtex/support/index.html"><a class="padding" href="/zotero-better-bibtex/support/index.html">Support</a><ul id="R-subsections-caa68563dfb61577c2c4699e1aa63010" class="collapsible-menu">
+            <li class="active " data-nav-url="/zotero-better-bibtex/support/faq/index.html"><a class="padding" href="/zotero-better-bibtex/support/faq/index.html">FAQ</a></li>
+            <li class="" data-nav-url="/zotero-better-bibtex/support/performance/index.html"><a class="padding" href="/zotero-better-bibtex/support/performance/index.html">Performance</a></li>
+            <li class="" data-nav-url="/zotero-better-bibtex/support/translations/index.html"><a class="padding" href="/zotero-better-bibtex/support/translations/index.html">Translations</a></li>
+            <li class="" data-nav-url="/zotero-better-bibtex/support/tests/index.html"><a class="padding" href="/zotero-better-bibtex/support/tests/index.html">Testing</a></li></ul></li>
+            <li class="" data-nav-url="/zotero-better-bibtex/sponsoring/index.html"><a class="padding" href="/zotero-better-bibtex/sponsoring/index.html">Sponsoring BBT</a></li>
           </ul>
         </div>
         <div class="R-sidebarmenu R-shortcutmenu-shortcuts">
           <div class="nav-title padding">More</div>
           <ul class="space collapsible-menu">
-            <li class="" data-nav-id="https://github.com/retorquere/zotero-better-bibtex/releases/latest"><a class="padding" href="https://github.com/retorquere/zotero-better-bibtex/releases/latest" rel="external" target="_blank"><i class='fas fa-fw fa-download'></i> Download</a></li>
-            <li class="" data-nav-id="/zotero-better-bibtex/sponsoring"><a class="padding" href="/zotero-better-bibtex/sponsoring"><i class='fas fa-fw fa-heart'></i> Sponsorship</a></li>
-            <li class="" data-nav-id="https://github.com/retorquere/zotero-better-bibtex"><a class="padding" href="https://github.com/retorquere/zotero-better-bibtex" rel="external" target="_blank"><i class='fab fa-fw fa-github'></i> GitHub repo</a></li>
+            <li class="" data-nav-url="https://github.com/retorquere/zotero-better-bibtex/releases/latest"><a class="padding" href="https://github.com/retorquere/zotero-better-bibtex/releases/latest" rel="external"><i class='fas fa-fw fa-download'></i> Download</a></li>
+            <li class="" data-nav-url="/zotero-better-bibtex/sponsoring"><a class="padding" href="/zotero-better-bibtex/sponsoring"><i class='fas fa-fw fa-heart'></i> Sponsorship</a></li>
+            <li class="" data-nav-url="https://github.com/retorquere/zotero-better-bibtex"><a class="padding" href="https://github.com/retorquere/zotero-better-bibtex" rel="external"><i class='fab fa-fw fa-github'></i> GitHub repo</a></li>
           </ul>
         </div>
         <div id="R-footer-margin"></div>
@@ -1089,7 +1089,7 @@ Better BibTeX for Zotero
             
             
             
-            <span style="white-space: nowrap"><a href="/zotero-better-bibtex/tags/automatic-export" style="font-size:1.1666666666666667em"><i class="fas fa-tag"></i>automatic export</a></span>
+            <span style="white-space: nowrap"><a href="/zotero-better-bibtex/tags/automatic-export" style="font-size:1em"><i class="fas fa-tag"></i>automatic export</a></span>
         
             
             
@@ -1097,7 +1097,7 @@ Better BibTeX for Zotero
             
             
             
-            <span style="white-space: nowrap"><a href="/zotero-better-bibtex/tags/cache" style="font-size:1.1666666666666667em"><i class="fas fa-tag"></i>cache</a></span>
+            <span style="white-space: nowrap"><a href="/zotero-better-bibtex/tags/cache" style="font-size:1em"><i class="fas fa-tag"></i>cache</a></span>
         
             
             
@@ -1105,7 +1105,7 @@ Better BibTeX for Zotero
             
             
             
-            <span style="white-space: nowrap"><a href="/zotero-better-bibtex/tags/citation-keys" style="font-size:1.4308270834535262em"><i class="fas fa-tag"></i>citation keys</a></span>
+            <span style="white-space: nowrap"><a href="/zotero-better-bibtex/tags/citation-keys" style="font-size:1.413543737673458em"><i class="fas fa-tag"></i>citation keys</a></span>
         
             
             
@@ -1121,15 +1121,7 @@ Better BibTeX for Zotero
             
             
             
-            <span style="white-space: nowrap"><a href="/zotero-better-bibtex/tags/configuration" style="font-size:1.4308270834535262em"><i class="fas fa-tag"></i>configuration</a></span>
-        
-            
-            
-            
-            
-            
-            
-            <span style="white-space: nowrap"><a href="/zotero-better-bibtex/tags/export" style="font-size:1.4678924870096006em"><i class="fas fa-tag"></i>export</a></span>
+            <span style="white-space: nowrap"><a href="/zotero-better-bibtex/tags/export" style="font-size:1.460391110580801em"><i class="fas fa-tag"></i>export</a></span>
         
             
             
@@ -1161,7 +1153,7 @@ Better BibTeX for Zotero
             
             
             
-            <span style="white-space: nowrap"><a href="/zotero-better-bibtex/tags/overleaf" style="font-size:1.1666666666666667em"><i class="fas fa-tag"></i>overleaf</a></span>
+            <span style="white-space: nowrap"><a href="/zotero-better-bibtex/tags/overleaf" style="font-size:1.1781035935540112em"><i class="fas fa-tag"></i>overleaf</a></span>
         
             
             
@@ -1169,15 +1161,7 @@ Better BibTeX for Zotero
             
             
             
-            <span style="white-space: nowrap"><a href="/zotero-better-bibtex/tags/preferences" style="font-size:1.3869880158145604em"><i class="fas fa-tag"></i>preferences</a></span>
-        
-            
-            
-            
-            
-            
-            
-            <span style="white-space: nowrap"><a href="/zotero-better-bibtex/tags/scripting" style="font-size:1.1666666666666667em"><i class="fas fa-tag"></i>scripting</a></span>
+            <span style="white-space: nowrap"><a href="/zotero-better-bibtex/tags/scripting" style="font-size:1.1781035935540112em"><i class="fas fa-tag"></i>scripting</a></span>
         
             
             

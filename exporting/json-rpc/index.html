@@ -4,42 +4,42 @@
     <meta charset="utf-8">
     <meta name="viewport" content="height=device-height, width=device-width, initial-scale=1.0, minimum-scale=1.0">
     <meta name="generator" content="Hugo 0.143.1">
-    <meta name="generator" content="Relearn 8.0.0+97777ec5111409397e83f44eca496eea97697836">
+    <meta name="generator" content="Relearn 8.1.1+9d74be278d6e8456f2f18305c9b27e38bc2de91c">
     <meta name="description" content="You can call into BBT using JSON-RPC on the URL http://localhost:23119/better-bibtex/json-rpc . An example could look like:
 curl http://localhost:23119/better-bibtex/json-rpc -X POST -H &#34;Content-Type: application/json&#34; -H &#34;Accept: application/json&#34; --data-binary &#39;{&#34;jsonrpc&#34;: &#34;2.0&#34;, &#34;method&#34;: &#34;collection.scanAUX&#34;, &#34;params&#34;: [&#34;/My Library/thesis/article1&#34;, &#34;/Users/phantom/Downloads/output.aux&#34;] }&#39; The available methods are:
-api.ready(): { betterbibtex: string; zotero: string }
+api.ready()
+returns: { betterbibtex: string; zotero: string }
 Returns the Zotero and BetterBibTeX version to show the JSON-RPC API is ready.
-autoexport.add(collection=?, translator=?, path=?, displayOptions={}, replace=false): { id: number; key: string; libraryID: number }
-collection: The forward-slash separated path to the collection. The first part of the path must be the library name, or empty (//); empty is your personal library. Intermediate collections that do not exist will be created as needed. translator: The name or GUID of a BBT translator path: The absolute path to which the collection will be auto-exported displayOptions: Options which you would be able to select during an interactive export; exportNotes, default false, and useJournalAbbreviation, default false replace: Replace the auto-export if it exists, default false Add an auto-export for the given collection. The target collection will be created if it does not exist collection.scanAUX(collection=?, aux=?): { key: string; libraryID: number }">
+autoexport.add(collection: string, translator: string, path: string, displayOptions?: { [string]: boolean }, replace: boolean=false)">
     <meta name="author" content="">
     <meta name="twitter:card" content="summary">
     <meta name="twitter:title" content="JSON-RPC :: Better BibTeX for Zotero">
     <meta name="twitter:description" content="You can call into BBT using JSON-RPC on the URL http://localhost:23119/better-bibtex/json-rpc . An example could look like:
 curl http://localhost:23119/better-bibtex/json-rpc -X POST -H &#34;Content-Type: application/json&#34; -H &#34;Accept: application/json&#34; --data-binary &#39;{&#34;jsonrpc&#34;: &#34;2.0&#34;, &#34;method&#34;: &#34;collection.scanAUX&#34;, &#34;params&#34;: [&#34;/My Library/thesis/article1&#34;, &#34;/Users/phantom/Downloads/output.aux&#34;] }&#39; The available methods are:
-api.ready(): { betterbibtex: string; zotero: string }
+api.ready()
+returns: { betterbibtex: string; zotero: string }
 Returns the Zotero and BetterBibTeX version to show the JSON-RPC API is ready.
-autoexport.add(collection=?, translator=?, path=?, displayOptions={}, replace=false): { id: number; key: string; libraryID: number }
-collection: The forward-slash separated path to the collection. The first part of the path must be the library name, or empty (//); empty is your personal library. Intermediate collections that do not exist will be created as needed. translator: The name or GUID of a BBT translator path: The absolute path to which the collection will be auto-exported displayOptions: Options which you would be able to select during an interactive export; exportNotes, default false, and useJournalAbbreviation, default false replace: Replace the auto-export if it exists, default false Add an auto-export for the given collection. The target collection will be created if it does not exist collection.scanAUX(collection=?, aux=?): { key: string; libraryID: number }">
+autoexport.add(collection: string, translator: string, path: string, displayOptions?: { [string]: boolean }, replace: boolean=false)">
     <meta property="og:url" content="/zotero-better-bibtex/exporting/json-rpc/index.html">
     <meta property="og:site_name" content="Better BibTeX for Zotero">
     <meta property="og:title" content="JSON-RPC :: Better BibTeX for Zotero">
     <meta property="og:description" content="You can call into BBT using JSON-RPC on the URL http://localhost:23119/better-bibtex/json-rpc . An example could look like:
 curl http://localhost:23119/better-bibtex/json-rpc -X POST -H &#34;Content-Type: application/json&#34; -H &#34;Accept: application/json&#34; --data-binary &#39;{&#34;jsonrpc&#34;: &#34;2.0&#34;, &#34;method&#34;: &#34;collection.scanAUX&#34;, &#34;params&#34;: [&#34;/My Library/thesis/article1&#34;, &#34;/Users/phantom/Downloads/output.aux&#34;] }&#39; The available methods are:
-api.ready(): { betterbibtex: string; zotero: string }
+api.ready()
+returns: { betterbibtex: string; zotero: string }
 Returns the Zotero and BetterBibTeX version to show the JSON-RPC API is ready.
-autoexport.add(collection=?, translator=?, path=?, displayOptions={}, replace=false): { id: number; key: string; libraryID: number }
-collection: The forward-slash separated path to the collection. The first part of the path must be the library name, or empty (//); empty is your personal library. Intermediate collections that do not exist will be created as needed. translator: The name or GUID of a BBT translator path: The absolute path to which the collection will be auto-exported displayOptions: Options which you would be able to select during an interactive export; exportNotes, default false, and useJournalAbbreviation, default false replace: Replace the auto-export if it exists, default false Add an auto-export for the given collection. The target collection will be created if it does not exist collection.scanAUX(collection=?, aux=?): { key: string; libraryID: number }">
+autoexport.add(collection: string, translator: string, path: string, displayOptions?: { [string]: boolean }, replace: boolean=false)">
     <meta property="og:locale" content="en">
     <meta property="og:type" content="article">
     <meta property="article:section" content="Exporting items">
     <meta itemprop="name" content="JSON-RPC :: Better BibTeX for Zotero">
     <meta itemprop="description" content="You can call into BBT using JSON-RPC on the URL http://localhost:23119/better-bibtex/json-rpc . An example could look like:
 curl http://localhost:23119/better-bibtex/json-rpc -X POST -H &#34;Content-Type: application/json&#34; -H &#34;Accept: application/json&#34; --data-binary &#39;{&#34;jsonrpc&#34;: &#34;2.0&#34;, &#34;method&#34;: &#34;collection.scanAUX&#34;, &#34;params&#34;: [&#34;/My Library/thesis/article1&#34;, &#34;/Users/phantom/Downloads/output.aux&#34;] }&#39; The available methods are:
-api.ready(): { betterbibtex: string; zotero: string }
+api.ready()
+returns: { betterbibtex: string; zotero: string }
 Returns the Zotero and BetterBibTeX version to show the JSON-RPC API is ready.
-autoexport.add(collection=?, translator=?, path=?, displayOptions={}, replace=false): { id: number; key: string; libraryID: number }
-collection: The forward-slash separated path to the collection. The first part of the path must be the library name, or empty (//); empty is your personal library. Intermediate collections that do not exist will be created as needed. translator: The name or GUID of a BBT translator path: The absolute path to which the collection will be auto-exported displayOptions: Options which you would be able to select during an interactive export; exportNotes, default false, and useJournalAbbreviation, default false replace: Replace the auto-export if it exists, default false Add an auto-export for the given collection. The target collection will be created if it does not exist collection.scanAUX(collection=?, aux=?): { key: string; libraryID: number }">
-    <meta itemprop="wordCount" content="740">
+autoexport.add(collection: string, translator: string, path: string, displayOptions?: { [string]: boolean }, replace: boolean=false)">
+    <meta itemprop="wordCount" content="869">
     <title>JSON-RPC :: Better BibTeX for Zotero</title><link rel="icon" href="/zotero-better-bibtex/better-bibtex.ico" type="image/x-icon">
 
     <link href="/zotero-better-bibtex/css/auto-complete/auto-complete.min.css" rel="stylesheet">
@@ -155,7 +155,7 @@ collection: The forward-slash separated path to the collection. The first part o
           <ol class="topbar-breadcrumbs breadcrumbs highlightable" itemscope itemtype="http://schema.org/BreadcrumbList"><li itemscope itemtype="https://schema.org/ListItem" itemprop="itemListElement" class=""><a itemprop="item" href="/zotero-better-bibtex/index.html"><span itemprop="name">Better BibTeX for Zotero</span></a><meta itemprop="position" content="1">&nbsp;>&nbsp;</li><li itemscope itemtype="https://schema.org/ListItem" itemprop="itemListElement" class=""><a itemprop="item" href="/zotero-better-bibtex/exporting/index.html"><span itemprop="name">Exporting</span></a><meta itemprop="position" content="2">&nbsp;>&nbsp;</li><li itemscope itemtype="https://schema.org/ListItem" itemprop="itemListElement" class=""><span itemprop="name">JSON-RPC</span><meta itemprop="position" content="3"></li>
           </ol>
           <div class="topbar-area topbar-area-end" data-area="end">
-            <div class="topbar-button topbar-button-edit" data-content-empty="disable" data-width-s="area-more" data-width-m="show" data-width-l="show"><a class="topbar-control" href="https://github.com/retorquere/zotero-better-bibtex/edit/master/site/content/exporting/json-rpc.md" rel="external" target="_blank" title="Edit (CTRL+ALT+w)"><i class="fa-fw fas fa-pen"></i></a>
+            <div class="topbar-button topbar-button-edit" data-content-empty="disable" data-width-s="area-more" data-width-m="show" data-width-l="show"><a class="topbar-control" href="https://github.com/retorquere/zotero-better-bibtex/edit/master/site/content/exporting/json-rpc.md" rel="external" title="Edit (CTRL+ALT+w)"><i class="fa-fw fas fa-pen"></i></a>
             </div>
             <div class="topbar-button topbar-button-prev" data-content-empty="disable" data-width-s="show" data-width-m="show" data-width-l="show"><a class="topbar-control" href="/zotero-better-bibtex/exporting/advanced/index.html" title="Advanced (🡐)"><i class="fa-fw fas fa-chevron-left"></i></a>
             </div>
@@ -181,75 +181,90 @@ collection: The forward-slash separated path to the collection. The first part o
 
 <h1 id="json-rpc">JSON-RPC</h1>
 
-<p>You can call into BBT using <a href="https://www.jsonrpc.org/" rel="external" target="_blank">JSON-RPC</a> on the URL http://localhost:23119/better-bibtex/json-rpc . An example could look like:</p>
+<p>You can call into BBT using <a href="https://www.jsonrpc.org/" rel="external">JSON-RPC</a> on the URL http://localhost:23119/better-bibtex/json-rpc . An example could look like:</p>
 <div class="highlight wrap-code" dir="auto"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>curl http://localhost:23119/better-bibtex/json-rpc -X POST -H <span style="color:#e6db74">&#34;Content-Type: application/json&#34;</span> -H <span style="color:#e6db74">&#34;Accept: application/json&#34;</span> --data-binary <span style="color:#e6db74">&#39;{&#34;jsonrpc&#34;: &#34;2.0&#34;, &#34;method&#34;: &#34;collection.scanAUX&#34;, &#34;params&#34;: [&#34;/My Library/thesis/article1&#34;, &#34;/Users/phantom/Downloads/output.aux&#34;] }&#39;</span></span></span></code></pre></div>
 <p>The available methods are:</p>
-<p><strong>api.ready</strong>(): { betterbibtex: string; zotero: string }</p>
+<p><strong>api.ready</strong>()</p>
+<p>returns: { betterbibtex: string; zotero: string }</p>
 <p>Returns the Zotero and BetterBibTeX version to show the JSON-RPC API is ready.</p>
-<p><strong>autoexport.add</strong>(collection=?, translator=?, path=?, displayOptions={}, replace=false): { id: number; key: string; libraryID: number }</p>
+<p><strong>autoexport.add</strong>(collection: string, translator: string, path: string, displayOptions?: { [string]: boolean }, replace: boolean=false)</p>
+<p>returns: { id: number; key: string; libraryID: number }</p>
 <ul>
 <li>collection: The forward-slash separated path to the collection. The first part of the path must be the library name, or empty (<code>//</code>); empty is your personal library. Intermediate collections that do not exist will be created as needed.</li>
 <li>translator: The name or GUID of a BBT translator</li>
 <li>path: The absolute path to which the collection will be auto-exported</li>
 <li>displayOptions: Options which you would be able to select during an interactive export; <code>exportNotes</code>, default <code>false</code>, and <code>useJournalAbbreviation</code>, default <code>false</code></li>
-<li>replace: Replace the auto-export if it exists, default <code>false</code>
-Add an auto-export for the given collection. The target collection will be created if it does not exist</li>
+<li>replace: Replace the auto-export if it exists, default <code>false</code></li>
 </ul>
-<p><strong>collection.scanAUX</strong>(collection=?, aux=?): { key: string; libraryID: number }</p>
+<p>Add an auto-export for the given collection. The target collection will be created if it does not exist</p>
+<p><strong>collection.scanAUX</strong>(collection: string, aux: string)</p>
+<p>returns: { key: string; libraryID: number }</p>
 <ul>
 <li>collection: The forward-slash separated path to the collection. The first part of the path must be the library name, or empty (<code>//</code>); empty is your personal library. Intermediate collections that do not exist will be created as needed.</li>
-<li>aux: The absolute path to the AUX file on disk
-Scan an AUX file for citekeys and populate a Zotero collection from them. The target collection will be cleared if it exists.</li>
+<li>aux: The absolute path to the AUX file on disk</li>
 </ul>
-<p><strong>item.attachments</strong>(citekey=?, library=?): any</p>
+<p>Scan an AUX file for citekeys and populate a Zotero collection from them. The target collection will be cleared if it exists.</p>
+<p><strong>item.attachments</strong>(citekey: string, library?: string | number)</p>
+<p>returns: any</p>
 <ul>
 <li>citekey: The citekey to search for</li>
-<li>library: The libraryID to search in (optional). Pass <code>*</code> to search across your library and all groups.
-List attachments for an item with the given citekey</li>
+<li>library: The libraryID to search in (optional). Pass <code>*</code> to search across your library and all groups.</li>
 </ul>
-<p><strong>item.bibliography</strong>(citekeys=?, format={}, library=?): string</p>
+<p>List attachments for an item with the given citekey</p>
+<p><strong>item.bibliography</strong>(citekeys: string[], format?: { contentType: &lsquo;html&rsquo; | &rsquo;text&rsquo;; id: string; locale: string; quickCopy: boolean }, library?: string | number)</p>
+<p>returns: string</p>
 <ul>
 <li>citekeys: An array of citekeys</li>
-<li>format: A specification of how the bibliography should be formatted
-Generate a bibliography for the given citekeys</li>
+<li>format: A specification of how the bibliography should be formatted</li>
+<li>.quickCopy: Format as specified in the Zotero quick-copy settings</li>
+<li>.contentType: Output as HTML or text</li>
+<li>.locale: Locale to use to generate the bibliography</li>
+<li>.id: CSL style to use</li>
 </ul>
-<p><strong>item.citationkey</strong>(item_keys=?): Record&lt;string, string&gt;</p>
+<p>Generate a bibliography for the given citekeys</p>
+<p><strong>item.citationkey</strong>(item_keys: string[] | &lsquo;selected&rsquo;)</p>
+<p>returns: { [string]: string }</p>
 <ul>
-<li>item_keys: A list of [libraryID]:[itemKey] strings. If [libraryID] is omitted, assume &lsquo;My Library&rsquo;
-Fetch citationkeys given item keys</li>
+<li>item_keys: A list of [libraryID]:[itemKey] strings. If [libraryID] is omitted, assume &lsquo;My Library&rsquo;</li>
 </ul>
-<p><strong>item.collections</strong>(citekeys=?, includeParents=?): Record&lt;string, { key: string; name: string }&gt;</p>
+<p>Fetch citationkeys given item keys</p>
+<p><strong>item.collections</strong>(citekeys: string[], includeParents?: boolean)</p>
+<p>returns: { [string]: { key: string; name: string } }</p>
 <ul>
 <li>citekeys: An array of citekeys</li>
-<li>includeParents: Include all parent collections back to the library root
-Fetch the collections containing a range of citekeys</li>
+<li>includeParents: Include all parent collections back to the library root</li>
 </ul>
-<p><strong>item.export</strong>(citekeys=?, translator=?, libraryID=?): string</p>
+<p>Fetch the collections containing a range of citekeys</p>
+<p><strong>item.export</strong>(citekeys: string[], translator: string, libraryID?: string | number)</p>
+<p>returns: string</p>
 <ul>
 <li>citekeys: Array of citekeys</li>
 <li>translator: BBT translator name or GUID</li>
-<li>libraryID: ID of library to select the items from. When omitted, assume &lsquo;My Library&rsquo;
-Generate an export for a list of citekeys</li>
+<li>libraryID: ID of library to select the items from. When omitted, assume &lsquo;My Library&rsquo;</li>
 </ul>
-<p><strong>item.notes</strong>(citekeys=?): Record&lt;string, { note: string }[]&gt;</p>
+<p>Generate an export for a list of citekeys</p>
+<p><strong>item.notes</strong>(citekeys: string[])</p>
+<p>returns: { [string]: { note: string }[] }</p>
 <ul>
-<li>citekeys: An array of citekeys
-Fetch the notes for a range of citekeys</li>
+<li>citekeys: An array of citekeys</li>
 </ul>
-<p><strong>item.pandoc_filter</strong>(citekeys=?, asCSL=?, libraryID=?, style=?, locale=?): any</p>
+<p>Fetch the notes for a range of citekeys</p>
+<p><strong>item.pandoc_filter</strong>(citekeys: string[], asCSL: boolean, libraryID?: string | number | string[], style?: string, locale?: string)</p>
+<p>returns: any</p>
 <ul>
 <li>citekeys: Array of citekeys</li>
 <li>asCSL: Return the items as CSL</li>
-<li>libraryID: ID of library to select the items from. When omitted, assume &lsquo;My Library&rsquo;
-Generate an export for a list of citekeys, tailored for the pandoc zotero filter</li>
+<li>libraryID: ID of library to select the items from. When omitted, assume &lsquo;My Library&rsquo;</li>
 </ul>
-<p><strong>item.search</strong>(terms=?, library=?): any</p>
+<p>Generate an export for a list of citekeys, tailored for the pandoc zotero filter</p>
+<p><strong>item.search</strong>(terms: string | ([ string ] | [ string, string ] | [ string, string, string | number ] | [ string, string, string | number, boolean ])[], library?: string | number)</p>
+<p>returns: any</p>
 <ul>
 <li>terms: Single string as typed into the search box in Zotero (search for Title Creator Year)
 Array of tuples similar as typed into the advanced search box in Zotero
-(<a href="https://github.com/zotero/zotero/blob/9971f15e617f19f1bc72f8b24bb00b72d2a4736f/chrome/content/zotero/xpcom/data/searchConditions.js#L72-L610" rel="external" target="_blank">https://github.com/zotero/zotero/blob/9971f15e617f19f1bc72f8b24bb00b72d2a4736f/chrome/content/zotero/xpcom/data/searchConditions.js#L72-L610</a>)
-Search for items in Zotero.</li>
+(<a href="https://github.com/zotero/zotero/blob/9971f15e617f19f1bc72f8b24bb00b72d2a4736f/chrome/content/zotero/xpcom/data/searchConditions.js#L72-L610" rel="external">https://github.com/zotero/zotero/blob/9971f15e617f19f1bc72f8b24bb00b72d2a4736f/chrome/content/zotero/xpcom/data/searchConditions.js#L72-L610</a>)</li>
 </ul>
+<p>Search for items in Zotero.</p>
 <p>Examples</p>
 <ul>
 <li>search(&rsquo;&rsquo;) or search([]): return every entries</li>
@@ -263,18 +278,19 @@ Search for items in Zotero.</li>
 <li>search([[&lsquo;joinMode&rsquo;, &lsquo;any&rsquo;], [&lsquo;creator&rsquo;, &lsquo;contains&rsquo;, &lsquo;Johnny&rsquo;], [&rsquo;title&rsquo;, &lsquo;contains&rsquo;, &lsquo;Zotero&rsquo;]]): search for entries with Creator &lsquo;Johnny&rsquo; OR Title &lsquo;Zotero&rsquo;</li>
 <li>search([[&lsquo;joinMode&rsquo;, &lsquo;any&rsquo;], [&lsquo;creator&rsquo;, &lsquo;contains&rsquo;, &lsquo;Johnny&rsquo;], [&rsquo;title&rsquo;, &lsquo;contains&rsquo;, &lsquo;Zotero&rsquo;], [&lsquo;creator&rsquo;, &lsquo;contains&rsquo;, &lsquo;Smith&rsquo;, true]]): search for entries with (Creator &lsquo;Johnny&rsquo; OR Title &lsquo;Zotero&rsquo;) AND (Creator &lsquo;Smith&rsquo;)</li>
 </ul>
-<p><strong>user.groups</strong>(includeCollections=?): { collections: any[]; id: number; name: string }[]</p>
+<p><strong>user.groups</strong>(includeCollections?: boolean)</p>
+<p>returns: { collections: any[]; id: number; name: string }[]</p>
 <ul>
-<li>includeCollections: Wether or not the result should inlcude a list of collection for each library (default is false)
-List the libraries (also known as groups) the user has in Zotero</li>
+<li>includeCollections: Wether or not the result should include a list of collection for each library (default is false)</li>
 </ul>
-<p><strong>viewer.viewPDF</strong>(id=?, page=?)</p>
+<p>List the libraries (also known as groups) the user has in Zotero</p>
+<p><strong>viewer.viewPDF</strong>(id: string, page: number)</p>
 <ul>
-<li>id: id in the form of <a href="http://zotero.org/users/12345678/items/ABCDEFG0" rel="external" target="_blank">http://zotero.org/users/12345678/items/ABCDEFG0</a></li>
-<li>page: Page Number, counting from zero
-Open the PDF associated with an entry with a given id.
-the id can be retrieve with e.g. item.search(&ldquo;mypdf&rdquo;) -&gt; result[0].id</li>
+<li>id: id in the form of <a href="http://zotero.org/users/12345678/items/ABCDEFG0" rel="external">http://zotero.org/users/12345678/items/ABCDEFG0</a></li>
+<li>page: Page Number, counting from zero</li>
 </ul>
+<p>Open the PDF associated with an entry with a given id.
+the id can be retrieve with e.g. item.search(&ldquo;mypdf&rdquo;) -&gt; result[0].id</p>
 <p>mind that the <code>items.export</code> method had a bug where it would double-wrap the JSON-RPC response; the extra layer has been removed in 6.7.143, but if you were expecting the previous result you will have to update your code.</p>
 
   <footer class="footline">
@@ -913,7 +929,7 @@ Better BibTeX for Zotero
         </div>
         <div class="R-sidebarmenu R-shortcutmenu-homelinks">
           <ul class="space collapsible-menu">
-            <li class="" data-nav-id="/zotero-better-bibtex/index.html"><a class="padding" href="/zotero-better-bibtex/index.html"><i class="fa-fw fas fa-home"></i> Home</a></li>
+            <li class="" data-nav-url="/zotero-better-bibtex/index.html"><a class="padding" href="/zotero-better-bibtex/index.html"><i class="fa-fw fas fa-home"></i> Home</a></li>
           </ul>
         </div>
         <div class="R-menu-divider default-animation">
@@ -930,27 +946,27 @@ Better BibTeX for Zotero
       <div id="R-content-wrapper" class="highlightable">
         <div class="R-sidebarmenu R-shortcutmenu-main">
           <ul class="enlarge morespace collapsible-menu">
-            <li class="" data-nav-id="/zotero-better-bibtex/installation/index.html"><a class="padding" href="/zotero-better-bibtex/installation/index.html">Installation</a><ul id="R-subsections-ff749ccaab053548f690f97bcd6daed0" class="collapsible-menu"></ul></li>
-            <li class="parent " data-nav-id="/zotero-better-bibtex/exporting/index.html"><a class="padding" href="/zotero-better-bibtex/exporting/index.html">Exporting</a><ul id="R-subsections-1d584ca98d27013df6242b6c17171d5e" class="collapsible-menu">
-            <li class="" data-nav-id="/zotero-better-bibtex/exporting/auto/index.html"><a class="padding" href="/zotero-better-bibtex/exporting/auto/index.html">Automatic export</a></li>
-            <li class="" data-nav-id="/zotero-better-bibtex/exporting/pandoc/index.html"><a class="padding" href="/zotero-better-bibtex/exporting/pandoc/index.html">Markdown/Pandoc</a></li>
-            <li class="" data-nav-id="/zotero-better-bibtex/exporting/pull/index.html"><a class="padding" href="/zotero-better-bibtex/exporting/pull/index.html">Pull export</a></li>
-            <li class="" data-nav-id="/zotero-better-bibtex/exporting/scripting/index.html"><a class="padding" href="/zotero-better-bibtex/exporting/scripting/index.html">Scripting</a></li>
-            <li class="" data-nav-id="/zotero-better-bibtex/exporting/extra-fields/index.html"><a class="padding" href="/zotero-better-bibtex/exporting/extra-fields/index.html">Extra fields</a></li>
-            <li class="" data-nav-id="/zotero-better-bibtex/exporting/unicode/index.html"><a class="padding" href="/zotero-better-bibtex/exporting/unicode/index.html">Unicode</a></li>
-            <li class="" data-nav-id="/zotero-better-bibtex/exporting/advanced/index.html"><a class="padding" href="/zotero-better-bibtex/exporting/advanced/index.html">Advanced</a></li>
-            <li class="active " data-nav-id="/zotero-better-bibtex/exporting/json-rpc/index.html"><a class="padding" href="/zotero-better-bibtex/exporting/json-rpc/index.html">JSON-RPC</a></li></ul></li>
-            <li class="" data-nav-id="/zotero-better-bibtex/citing/index.html"><a class="padding" href="/zotero-better-bibtex/citing/index.html">Citation Keys</a><ul id="R-subsections-21d11d1b73fd6487fde6cbf6c72fa642" class="collapsible-menu"></ul></li>
-            <li class="" data-nav-id="/zotero-better-bibtex/support/index.html"><a class="padding" href="/zotero-better-bibtex/support/index.html">Support</a><ul id="R-subsections-caa68563dfb61577c2c4699e1aa63010" class="collapsible-menu"></ul></li>
-            <li class="" data-nav-id="/zotero-better-bibtex/sponsoring/index.html"><a class="padding" href="/zotero-better-bibtex/sponsoring/index.html">Sponsoring BBT</a></li>
+            <li class="" data-nav-url="/zotero-better-bibtex/installation/index.html"><a class="padding" href="/zotero-better-bibtex/installation/index.html">Installation</a><ul id="R-subsections-ff749ccaab053548f690f97bcd6daed0" class="collapsible-menu"></ul></li>
+            <li class="parent " data-nav-url="/zotero-better-bibtex/exporting/index.html"><a class="padding" href="/zotero-better-bibtex/exporting/index.html">Exporting</a><ul id="R-subsections-1d584ca98d27013df6242b6c17171d5e" class="collapsible-menu">
+            <li class="" data-nav-url="/zotero-better-bibtex/exporting/auto/index.html"><a class="padding" href="/zotero-better-bibtex/exporting/auto/index.html">Automatic export</a></li>
+            <li class="" data-nav-url="/zotero-better-bibtex/exporting/pandoc/index.html"><a class="padding" href="/zotero-better-bibtex/exporting/pandoc/index.html">Markdown/Pandoc</a></li>
+            <li class="" data-nav-url="/zotero-better-bibtex/exporting/pull/index.html"><a class="padding" href="/zotero-better-bibtex/exporting/pull/index.html">Pull export</a></li>
+            <li class="" data-nav-url="/zotero-better-bibtex/exporting/scripting/index.html"><a class="padding" href="/zotero-better-bibtex/exporting/scripting/index.html">Scripting</a></li>
+            <li class="" data-nav-url="/zotero-better-bibtex/exporting/extra-fields/index.html"><a class="padding" href="/zotero-better-bibtex/exporting/extra-fields/index.html">Extra fields</a></li>
+            <li class="" data-nav-url="/zotero-better-bibtex/exporting/unicode/index.html"><a class="padding" href="/zotero-better-bibtex/exporting/unicode/index.html">Unicode</a></li>
+            <li class="" data-nav-url="/zotero-better-bibtex/exporting/advanced/index.html"><a class="padding" href="/zotero-better-bibtex/exporting/advanced/index.html">Advanced</a></li>
+            <li class="active " data-nav-url="/zotero-better-bibtex/exporting/json-rpc/index.html"><a class="padding" href="/zotero-better-bibtex/exporting/json-rpc/index.html">JSON-RPC</a></li></ul></li>
+            <li class="" data-nav-url="/zotero-better-bibtex/citing/index.html"><a class="padding" href="/zotero-better-bibtex/citing/index.html">Citation Keys</a><ul id="R-subsections-21d11d1b73fd6487fde6cbf6c72fa642" class="collapsible-menu"></ul></li>
+            <li class="" data-nav-url="/zotero-better-bibtex/support/index.html"><a class="padding" href="/zotero-better-bibtex/support/index.html">Support</a><ul id="R-subsections-caa68563dfb61577c2c4699e1aa63010" class="collapsible-menu"></ul></li>
+            <li class="" data-nav-url="/zotero-better-bibtex/sponsoring/index.html"><a class="padding" href="/zotero-better-bibtex/sponsoring/index.html">Sponsoring BBT</a></li>
           </ul>
         </div>
         <div class="R-sidebarmenu R-shortcutmenu-shortcuts">
           <div class="nav-title padding">More</div>
           <ul class="space collapsible-menu">
-            <li class="" data-nav-id="https://github.com/retorquere/zotero-better-bibtex/releases/latest"><a class="padding" href="https://github.com/retorquere/zotero-better-bibtex/releases/latest" rel="external" target="_blank"><i class='fas fa-fw fa-download'></i> Download</a></li>
-            <li class="" data-nav-id="/zotero-better-bibtex/sponsoring"><a class="padding" href="/zotero-better-bibtex/sponsoring"><i class='fas fa-fw fa-heart'></i> Sponsorship</a></li>
-            <li class="" data-nav-id="https://github.com/retorquere/zotero-better-bibtex"><a class="padding" href="https://github.com/retorquere/zotero-better-bibtex" rel="external" target="_blank"><i class='fab fa-fw fa-github'></i> GitHub repo</a></li>
+            <li class="" data-nav-url="https://github.com/retorquere/zotero-better-bibtex/releases/latest"><a class="padding" href="https://github.com/retorquere/zotero-better-bibtex/releases/latest" rel="external"><i class='fas fa-fw fa-download'></i> Download</a></li>
+            <li class="" data-nav-url="/zotero-better-bibtex/sponsoring"><a class="padding" href="/zotero-better-bibtex/sponsoring"><i class='fas fa-fw fa-heart'></i> Sponsorship</a></li>
+            <li class="" data-nav-url="https://github.com/retorquere/zotero-better-bibtex"><a class="padding" href="https://github.com/retorquere/zotero-better-bibtex" rel="external"><i class='fab fa-fw fa-github'></i> GitHub repo</a></li>
           </ul>
         </div>
         <div id="R-footer-margin"></div>
@@ -979,7 +995,7 @@ Better BibTeX for Zotero
             
             
             
-            <span style="white-space: nowrap"><a href="/zotero-better-bibtex/tags/automatic-export" style="font-size:1.1666666666666667em"><i class="fas fa-tag"></i>automatic export</a></span>
+            <span style="white-space: nowrap"><a href="/zotero-better-bibtex/tags/automatic-export" style="font-size:1em"><i class="fas fa-tag"></i>automatic export</a></span>
         
             
             
@@ -987,7 +1003,7 @@ Better BibTeX for Zotero
             
             
             
-            <span style="white-space: nowrap"><a href="/zotero-better-bibtex/tags/cache" style="font-size:1.1666666666666667em"><i class="fas fa-tag"></i>cache</a></span>
+            <span style="white-space: nowrap"><a href="/zotero-better-bibtex/tags/cache" style="font-size:1em"><i class="fas fa-tag"></i>cache</a></span>
         
             
             
@@ -995,7 +1011,7 @@ Better BibTeX for Zotero
             
             
             
-            <span style="white-space: nowrap"><a href="/zotero-better-bibtex/tags/citation-keys" style="font-size:1.4308270834535262em"><i class="fas fa-tag"></i>citation keys</a></span>
+            <span style="white-space: nowrap"><a href="/zotero-better-bibtex/tags/citation-keys" style="font-size:1.413543737673458em"><i class="fas fa-tag"></i>citation keys</a></span>
         
             
             
@@ -1011,15 +1027,7 @@ Better BibTeX for Zotero
             
             
             
-            <span style="white-space: nowrap"><a href="/zotero-better-bibtex/tags/configuration" style="font-size:1.4308270834535262em"><i class="fas fa-tag"></i>configuration</a></span>
-        
-            
-            
-            
-            
-            
-            
-            <span style="white-space: nowrap"><a href="/zotero-better-bibtex/tags/export" style="font-size:1.4678924870096006em"><i class="fas fa-tag"></i>export</a></span>
+            <span style="white-space: nowrap"><a href="/zotero-better-bibtex/tags/export" style="font-size:1.460391110580801em"><i class="fas fa-tag"></i>export</a></span>
         
             
             
@@ -1051,7 +1059,7 @@ Better BibTeX for Zotero
             
             
             
-            <span style="white-space: nowrap"><a href="/zotero-better-bibtex/tags/overleaf" style="font-size:1.1666666666666667em"><i class="fas fa-tag"></i>overleaf</a></span>
+            <span style="white-space: nowrap"><a href="/zotero-better-bibtex/tags/overleaf" style="font-size:1.1781035935540112em"><i class="fas fa-tag"></i>overleaf</a></span>
         
             
             
@@ -1059,15 +1067,7 @@ Better BibTeX for Zotero
             
             
             
-            <span style="white-space: nowrap"><a href="/zotero-better-bibtex/tags/preferences" style="font-size:1.3869880158145604em"><i class="fas fa-tag"></i>preferences</a></span>
-        
-            
-            
-            
-            
-            
-            
-            <span style="white-space: nowrap"><a href="/zotero-better-bibtex/tags/scripting" style="font-size:1.1666666666666667em"><i class="fas fa-tag"></i>scripting</a></span>
+            <span style="white-space: nowrap"><a href="/zotero-better-bibtex/tags/scripting" style="font-size:1.1781035935540112em"><i class="fas fa-tag"></i>scripting</a></span>
         
             
             
