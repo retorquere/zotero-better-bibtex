@@ -97,8 +97,8 @@ function flagged(v: boolean | { value: number }): boolean | number {
   return typeof v === 'boolean' ? v : v?.value
 }
 
-function normalize_edtf(date: any): ParsedDate {
-  if (!date) return date
+function normalize_edtf(date: any): ParsedDate | null {
+  if (!date) return null
 
   const type = date.type.replace('_', '')
 
