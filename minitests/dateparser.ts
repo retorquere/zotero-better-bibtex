@@ -1,67 +1,32 @@
-// tslint:disable:no-console
+#!/usr/bin/env bun
 
-const edtf = require('edtf')
-const Zotero = {
-  Debug: {
-    enabled: true,
-  },
-  debug(str) { return console.log(str) },
+function date2csl(date) {
+  let csl
+  switch (date.type) {
+    case 'open':
+      return [0]
+
+    case 'date':
+      csl = [`${ date.year > 0 ? date.year : date.year - 1 }`]
+      if (date.month) {
+        csl.push(date.month)
+        if (date.day) {
+          csl.push(date.day)
+        }
+      }
+      return csl // eslint-disable-line @typescript-eslint/no-unsafe-return
+
+    case 'season':
+      // https://github.com/retorquere/zotero-better-bibtex/issues/860
+      return [ `${ date.year > 0 ? date.year : date.year - 1 }`, date.season + 12 ]
+
+    default:
+      throw new Error(`Expected date or open, got ${ date.type }`)
+  }
 }
 
-const parseDate = require('../content/dateparser.coffee')
-const dates = require('./dateparser.json')
-
-function scrub(o) {
-  if ((typeof o !== 'object') || !!Array.isArray(o)) return o
-
-  for (const [k, v] of Object.entries(o)) {
-    if ((typeof v === 'undefined') || (v === false) || (v === true)) {
-      delete o[k]
-    } else {
-      scrub(v)
-    }
-  }
-  return o
-}
-
-function deepEqual(a, b) {
-  if (a === b) return true
-
-  if ((a === null) || (typeof a !== 'object') || (b === null) || (typeof b !== 'object')) return false
-
-  if (Array.isArray(a) && Array.isArray(b)) {
-    if (a.length !== b.length) return false
-    for (let i = 0; i < a.length; i++) {
-      v = a[i]
-      if (!deepEqual(v, b[i])) return false
-    }
-    return true
-  }
-
-  if (Array.isArray(a) || Array.isArray(b)) return false
-
-  if (Object.keys(a).length !== Object.keys(b).length) return false
-
-  for (const [k, v] in Object.entries(a)) {
-    if (!deepEqual(v, b[k])) return false
-  }
-  return true
-}
-
-for (const [raw, cooked] of Object.entries(dates)) {
-  try {
-    edtf.parse(raw)
-    console.log(`${raw} is edtf`)
-  } catch (error) {
-    console.log(`${raw} is not edtf`)
-  }
-  const parsed = scrub(parseDate(raw))
-  scrub(cooked)
-  if (deepEqual(parsed, cooked)) continue
-  console.log('input:', raw)
-  console.log('expected:', JSON.stringify(cooked))
-  console.log('found:   ', JSON.stringify(parsed))
-  throw new Error(raw)
-}
-
-console.log(scrub(parseDate('März 1, 2008')))
+import { parse, strToISO } from '../content/dateparser'
+const value = "Spring 2015"
+console.log(value)
+console.log('parse: +tz', parse(value, true))
+// console.log('parse: -tz', parse(value, false))
