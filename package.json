@@ -48,7 +48,7 @@
     "release": "zp-release --release-message @setup/release-message.md",
     "branches": "zp-branches",
     "fix-fixtures": "./util/fix-test-fixtures.js",
-    "postversion": "git add -u && git commit -m version && git push --follow-tags",
+    "postversion": "git push --follow-tags",
     "running": "ps auxw | grep -i zotero | grep -v grep || true",
     "docs:serve": "npm run setup && cd site && hugo serve",
     "docs:serve:minimal": "cd site && hugo serve",
