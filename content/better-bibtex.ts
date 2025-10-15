@@ -422,6 +422,7 @@ export class BetterBibTeX {
   public CSL() { return CSL }
   public TestSupport: TestSupport
   public KeyManager = KeyManager
+  public AutoExport = AutoExport
   public Text = { sentenceCase }
 
   // panes
