@@ -5,7 +5,6 @@ import { qualityReport } from '../../gen/biber-tool'
 import type { Collected } from '../lib/collect'
 
 import { Entry as BaseEntry, Config } from './entry'
-import { $dump } from '../../content/logger'
 
 const config: Config = {
   fieldEncoding: {
@@ -535,7 +534,6 @@ export function generateBibLaTeX(collected: Collected): Translation {
     }
 
     if (item.accessDate && item.url) entry.add({ name: 'urldate', value: strToISO(item.accessDate), enc: 'date' })
-    $dump(`urldate: accessDate: ${item.accessDate}, url: ${item.url}, parsed: ${JSON.stringify(parse(item.accessDate))}, urldate: ${strToISO(item.accessDate)}`)
 
     entry.add({ name: 'date', verbatim: 'year', orig: { name: 'origdate', verbatim: 'origdate' }, value: item.date, enc: 'date' })
     // #293 has both date="year [origyear]" and extra="original-date: origyear"

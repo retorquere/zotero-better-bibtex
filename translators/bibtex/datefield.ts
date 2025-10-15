@@ -1,7 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 
-declare const dump: (msg: string) => void
-
 import type { ParsedDate } from '../../content/dateparser'
 import { Translation } from '../lib/translator'
 import type { Field } from './entry'
@@ -27,7 +25,6 @@ function format(date, translation: Translation): string {
     formatted = `${year(date.year)}-${pad(date.month, '00')}-${pad(date.day, '00')}`
   }
   else if (typeof date.year === 'number' && (date.month || date.season)) {
-    dump(`format-date: ${JSON.stringify(date)}\n`)
     formatted = `${year(date.year)}-${pad((date.month || ((date.season as number) + 20)), '00')}`
   }
   else if (typeof date.year === 'number') {

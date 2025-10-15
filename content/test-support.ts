@@ -149,7 +149,6 @@ export class TestSupport {
     const start = Date.now()
     try {
       const res = await Translators.exportItems(job)
-      log.debug('json-rpc:', job, res)
       return res
     }
     catch (err) {

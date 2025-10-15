@@ -246,7 +246,6 @@ export class Entry {
     this.item = item
     this.config = config
     this.date = item.date ? DateParser.parse(item.date) : { type: 'none' }
-    log.debug('date:', item.date, '=>', this.date)
 
     if (!item.language) {
       this.english = true
