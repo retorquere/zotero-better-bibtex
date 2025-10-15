@@ -29,14 +29,14 @@ const Month = new class {
 
   constructor() {
     // https://github.com/retorquere/zotero-better-bibtex/issues/1513
-    this.english = this.anyof(Object.values(monthsMap))
-    this.#any = new RegExp(`(?:\\bde\\s+)?\\b(${this.anyof(Object.keys(monthsMap))})[.](?:\\s+\\bde)?`, 'ugi')
+    this.english = `\\b(${this.anyof(Object.values(monthsMap))})\\b`
+    this.#any = new RegExp(`(?:\\bde\\s+)?\\b(${this.anyof(Object.keys(monthsMap))})[.]?\\b(?:\\s+\\bde)?`, 'ugi')
   }
 
   private anyof(names: string[]) {
     names = names.map(name => name.normalize('NFC'))
     names = [...(new Set(names))].sort((a, b) => b.length - a.length)
-    return `\\b(?:${names.join('|')})\\b`
+    return `(${names.join('|')})`
   }
 
   no(name: string): number {
