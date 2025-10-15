@@ -63,11 +63,11 @@
   annotation = {Actual: 2016-07-18T20:26:06+10:00}
 }
 
-@article{barker13_1999_turkey,
+@article{barker13_-51234_20171101,
   entrysubtype = {newspaper},
-  title = {Turkey Divided between Secular and {{Islamist}} Rule},
+  title = {2017-11-01 19:41:03 +0100-2},
   author = {Barker13, Anne},
-  date = {1999-01-uu},
+  date = {y-51234},
   journaltitle = {ABC News},
   url = {http://www.abc.net.au/news/2016-07-18/turkey-coup-attempt-shows-division-over-wish-for-islamist-rule/7639292},
   urldate = {2016-07-24},
@@ -76,11 +76,11 @@
   annotation = {Actual: 2016-07-18T20:26:06+10:00}
 }
 
-@article{barker13_y-51234_20171101,
+@article{barker13_1999_turkey,
   entrysubtype = {newspaper},
-  title = {2017-11-01 19:41:03 +0100-2},
+  title = {Turkey Divided between Secular and {{Islamist}} Rule},
   author = {Barker13, Anne},
-  date = {y-51234},
+  date = {1999-01-uu},
   journaltitle = {ABC News},
   url = {http://www.abc.net.au/news/2016-07-18/turkey-coup-attempt-shows-division-over-wish-for-islamist-rule/7639292},
   urldate = {2016-07-24},
@@ -141,7 +141,7 @@
   annotation = {Actual: 2016-07-18T20:26:06+10:00}
 }
 
-@article{barker4_y52000_20171101,
+@article{barker4_52000_20171101,
   entrysubtype = {newspaper},
   title = {2017-11-01 19:41:03 +0100-3},
   author = {Barker4, Anne},

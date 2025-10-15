@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 
-// declare const dump: (msg: string) => void
+declare const dump: (msg: string) => void
 
 import type { ParsedDate } from '../../content/dateparser'
 import { Translation } from '../lib/translator'
@@ -13,10 +13,10 @@ function pad(v: string, padding: string): string {
 
 function year(y) {
   if (Math.abs(y) > 999) {
-    return `${ y }`
+    return `${y}`
   }
   else {
-    return (y < 0 ? '-' : '') + (`000${ Math.abs(y) }`).slice(-4)
+    return (y < 0 ? '-' : '') + (`000${Math.abs(y)}`).slice(-4)
   }
 }
 
@@ -24,10 +24,11 @@ function format(date, translation: Translation): string {
   let formatted
 
   if (typeof date.year === 'number' && date.month && date.day) {
-    formatted = `${ year(date.year) }-${ pad(date.month, '00') }-${ pad(date.day, '00') }`
+    formatted = `${year(date.year)}-${pad(date.month, '00')}-${pad(date.day, '00')}`
   }
   else if (typeof date.year === 'number' && (date.month || date.season)) {
-    formatted = `${ year(date.year) }-${ pad((date.month || ((date.season as number) + 20)), '00') }`
+    dump(`format-date: ${JSON.stringify(date)}\n`)
+    formatted = `${year(date.year)}-${pad((date.month || ((date.season as number) + 20)), '00')}`
   }
   else if (typeof date.year === 'number') {
     formatted = year(date.year)

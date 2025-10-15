@@ -19,7 +19,7 @@ const Month = new class {
     october: 10,
     november: 11,
     december: 12,
-    sprint: 13,
+    spring: 13,
     summer: 14,
     autumn: 15,
     winter: 16,
@@ -113,7 +113,7 @@ function normalize_edtf(date: any): ParsedDate | null {
 
   const type = date.type.replace('_', '')
 
-  if (type === 'Date') {
+  if (type === 'Date' || type === 'Year') {
     let [year, month, day, hour, minute, seconds] = date.values
     if (typeof month === 'number') month += 1
     return {
@@ -137,8 +137,7 @@ function normalize_edtf(date: any): ParsedDate | null {
   }
 
   if (type === 'Season') {
-    let [year, month] = date.values
-    if (typeof month === 'number') month += 1
+    const [year, month] = date.values
     if (typeof Season.fromMonth(month) !== 'number') throw new Error(`normalize EDTF: Unexpected season ${month}`)
     return Season.seasonize({
       type: 'date',
@@ -154,7 +153,7 @@ function normalize_edtf(date: any): ParsedDate | null {
     }
   }
 
-  throw new Error(`normalize EDTF: failed to normalize ${type}`)
+  throw new Error(`normalize EDTF: failed to normalize ${type} ${JSON.stringify(date.values)}`)
 }
 
 function upgrade_edtf(date: string): string {
@@ -297,12 +296,12 @@ class DateParser {
       let year = parseInt(syear)
       if (day > 31 && year < 31) [day, year] = [year, day]
 
-      return {
+      return Season.seasonize({
         type: 'date',
         year,
         month: Month.no(month),
         day,
-      }
+      })
     }
 
     if (reparse && (m = value.match(re.nasa.dash) || value.match(re.nasa.slash) || value.match(re.nasa.ym))) {
@@ -310,7 +309,11 @@ class DateParser {
     }
 
     if (m = english.match(re.My) || english.match(re.yM)) {
-      return { type: 'date', year: parseInt(m.groups.year), month: Month.no(m.groups.month) }
+      return Season.seasonize({
+        type: 'date',
+        year: parseInt(m.groups.year),
+        month: Month.no(m.groups.month),
+      })
     }
 
     if (reparse && (m = value.match(re.orig_date) || value.match(re.date_orig))) {
@@ -337,8 +340,8 @@ class DateParser {
 
       return {
         type: 'interval',
-        from: { type: 'date', year: parseInt(year), month: Month.no(month1), day: parseInt(day1) },
-        to: { type: 'date', year: parseInt(year), month: Month.no(month2), day: parseInt(day2) },
+        from: Season.seasonize({ type: 'date', year: parseInt(year), month: Month.no(month1), day: parseInt(day1) }),
+        to: Season.seasonize({ type: 'date', year: parseInt(year), month: Month.no(month2), day: parseInt(day2) }),
       }
     }
 
@@ -348,8 +351,8 @@ class DateParser {
 
       return {
         type: 'interval',
-        from: { type: 'date', year: parseInt(year), month: Month.no(month1 || month2), day: parseInt(day1) },
-        to: { type: 'date', year: parseInt(year), month: Month.no(month2), day: parseInt(day2) },
+        from: Season.seasonize({ type: 'date', year: parseInt(year), month: Month.no(month1 || month2), day: parseInt(day1) }),
+        to: Season.seasonize({ type: 'date', year: parseInt(year), month: Month.no(month2), day: parseInt(day2) }),
       }
     }
 
@@ -359,8 +362,8 @@ class DateParser {
 
       return {
         type: 'interval',
-        from: { type: 'date', year: parseInt(year), month: Month.no(month1) },
-        to: { type: 'date', year: parseInt(year), month: Month.no(month2) },
+        from: Season.seasonize({ type: 'date', year: parseInt(year), month: Month.no(month1) }),
+        to: Season.seasonize({ type: 'date', year: parseInt(year), month: Month.no(month2) }),
       }
     }
 
@@ -393,7 +396,7 @@ class DateParser {
 
       // if (!month && !day) return { type: 'date', year, ...time_doubt }
       if (!day && has_valid_month($date = { type: 'date', year: parsed.year, month: parsed.month })) return Season.seasonize({ ...$date, ...time_doubt })
-      if (is_valid_date(parsed)) return parsed
+      if (is_valid_date(parsed)) return Season.seasonize(parsed)
     }
 
     // https://github.com/retorquere/zotero-better-bibtex/issues/1112
@@ -407,12 +410,12 @@ class DateParser {
         ...time_doubt,
       })
 
-      if (is_valid_date(parsed)) return parsed
+      if (is_valid_date(parsed)) return Season.seasonize(parsed)
     }
 
     if (m = date_only.match(re.y)) {
       const { year } = m.groups
-      return { type: 'date', year: parseInt(year), ...time_doubt }
+      return Season.seasonize({ type: 'date', year: parseInt(year), ...time_doubt })
     }
 
     if ($date = this.parseEDTF(value, english)) return $date
