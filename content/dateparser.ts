@@ -28,9 +28,10 @@ const Month = new class {
   public english: string
 
   constructor() {
+    // new RegExp(`(?<=^|\\P{L})${word}(?=\\P{L}|$)`, 'gu');
     // https://github.com/retorquere/zotero-better-bibtex/issues/1513
-    this.english = `\\b(${this.anyof(Object.values(monthsMap))})\\b`
-    this.#any = new RegExp(`(?:\\bde\\s+)?\\b(${this.anyof(Object.keys(monthsMap))})[.]?\\b(?:\\s+\\bde)?`, 'ugi')
+    this.english = `(?<=^|\\P{L})(${this.anyof(Object.values(monthsMap))})(?=\\P{L}|$)`
+    this.#any = new RegExp(`(?:(?<=^|\\P{L})de\\s+)?(?<=^|\\P{L})(${this.anyof(Object.keys(monthsMap))})[.]?(?=\\P{L}|$)(?:\\s+de(?=\\P{L}|$))?`, 'ugi')
   }
 
   private anyof(names: string[]) {

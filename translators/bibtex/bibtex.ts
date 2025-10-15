@@ -369,7 +369,7 @@ function addDate(ref: Entry, date: ParsedDate | { type: 'none' }, verbatim: stri
     }
 
     case 'date':
-      if (date.month) ref.add({ name: 'month', value: months[date.month - 1], bare: true })
+      if (date.month) ref.add({ name: 'month', value: months[date.month - 1], bare: date.month <= 12 })
       if (date.orig?.type === 'date') {
         ref.add({ name: 'year', value: `[${ date.orig.year }] ${ date.year }` })
       }
@@ -593,7 +593,7 @@ async function parseBibTeX(translation: Translation): Promise<Library> {
   })
 }
 
-const months = [ 'jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec' ]
+const months = [ 'jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec', 'spring', 'summer', 'fall', 'winter' ]
 class ZoteroItem {
   private event: Set<string>
 
