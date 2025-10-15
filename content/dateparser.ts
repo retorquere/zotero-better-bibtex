@@ -4,10 +4,8 @@ import edtfy from 'edtfy'
 // declare const dump: (msg: string) => void
 // function dump(...msg) { console.log(...msg) }
 
-import * as months from '../gen/dateparser-months.json'
+import monthsMap from '../gen/dateparser-months.json'
 const Month = new class {
-  // https://github.com/retorquere/zotero-better-bibtex/issues/1513
-  #re = new RegExp(`(?:\\bde\\s+)?\\b(${Object.keys(months).sort((a, b) => b.length - a.length).map(month => `${month}[.]?`).join('|')})\\b(?:\\s+de\\b)?`, 'ugi')
   #no = {
     january: 1,
     february: 2,
@@ -26,18 +24,30 @@ const Month = new class {
     autumn: 15,
     winter: 16,
   }
+  #any: RegExp
+  public english: string
 
-  public re = `\\b${[...(new Set(Object.values(months)))].sort((a, b) => b.length - a.length).map(month => `${month}[.]?`).join('|')}\\b`
-  public map = months
+  constructor() {
+    // https://github.com/retorquere/zotero-better-bibtex/issues/1513
+    this.english = this.any(Object.values(monthsMap))
+    this.#any = new RegExp(`(?:\\bde\\s+)?\\b(${this.any(Object.keys(monthsMap))})[.](?:\\s+\\bde)?`, 'ugi')
+  }
+
+  private any(names: string[]) {
+    names = names.map(name => name.normalize('NFC'))
+    names = [...(new Set(names))].sort((a, b) => b.length - a.length)
+    return `\\b(?:${names.join('|')})\\b`
+  }
 
   no(name: string): number {
     return this.#no[name.toLowerCase()] as number
   }
 
-  english(date: string): string {
+  toEnglish(date: string): string {
     return date
-      .replace(this.#re, (m, month: string) => this.map[month.toLowerCase().replace('.', '')].toLowerCase() as string)
-      .replace(/,/g, ' ')
+      .normalize('NFC')
+      .replace(this.#any, (m, month: string) => monthsMap[month.toLowerCase()])
+      .toLowerCase() as string
   }
 }
 
@@ -91,7 +101,7 @@ const Season = new class {
     }
     return date
   }
-}
+}()
 
 function flagged(v: boolean | { value: number }): boolean | number {
   return typeof v === 'boolean' ? v : v?.value
@@ -193,15 +203,15 @@ function swap_day_month(date: ParsedDate, fix_only = false): ParsedDate {
 
 const re = {
   // '30-Mar-2020', '30 Mar 2020',
-  dMy: new RegExp(`^(?<day>\\d+)(\\s+|-)(?<month>${Month.re})(\\s+|-)(?<year>\\d+)$`, 'ui'),
+  dMy: new RegExp(`^(?<day>\\d+)(\\s+|-)(?<month>${Month.english})(\\s+|-)(?<year>\\d+)$`, 'ui'),
 
   // February 28, 1969
-  Mdy: new RegExp(`^(?<month>${Month.re})\\s+(?<day>\\d+)[\\s]\\s*(?<year>\\d+)$`, 'ui'),
+  Mdy: new RegExp(`^(?<month>${Month.english})\\s+(?<day>\\d+)[\\s]\\s*(?<year>\\d+)$`, 'ui'),
 
-  ydm: /^(?<year>\d{3,})([-\s/.])(?<month>\d{1,2})(?:\2(?<day>\d{1,2}))?$/,
-  dmy: /^(?<day>\d{1,2})([-\s/.])(?<month>\d{1,2})(?:\2(?<year>\d{3,}))$/,
-  my: /^(?<month>\d{1,2})[-\s/.](?<year>\d{3,})$/,
-  ym: /^(?<year>\d{3,})[-\s/.](?<month>\d{1,2})$/,
+  ydm: /^(?<year>\d{3,})(\p{P})(?<month>\d{1,2})(?:\2(?<day>\d{1,2}))?$/u,
+  dmy: /^(?<day>\d{1,2})(\p{P})(?<month>\d{1,2})(?:\2(?<year>\d{3,}))$/,
+  my: /^(?<month>\d{1,2})\p{P}+(?<year>\d{3,})$/u,
+  ym: /^(?<year>\d{3,})\p{P}+(?<month>\d{1,2})$/u,
 
   // https://forums.zotero.org/discussion/73729/name-and-year-import-issues-with-new-nasa-ads
   nasa: {
@@ -210,8 +220,8 @@ const re = {
     ym: /^(?<date>-?\d+-\d+)-00$/,
   },
 
-  My: new RegExp(`^(?<month>${Month.re})(?:[-/]|\\s+)(?<year>\\d+)$`, 'ui'),
-  yM: new RegExp(`^(?<year>\\d+)(?:[-/]|\\s+)(?<month>${Month.re})$`, 'ui'),
+  My: new RegExp(`^(?<month>${Month.english})(?:\\p{P}+|\\s+)(?<year>\\d+)$`, 'ui'),
+  yM: new RegExp(`^(?<year>\\d+)(?:\\p{P}+|\\s+)(?<month>${Month.english})$`, 'ui'),
 
   // '[origdate] date' and '[origdate]'
   orig_date: /^\[(?<orig>.+?)\]\s*(?<date>.*)$/,
@@ -219,16 +229,16 @@ const re = {
   date_orig: /^(?<date>.+?)\s*\[(?<orig>.+)\]$/,
 
   // 747 'jan 20-22 1977'
-  M_d_d_y: new RegExp(`^(?<month>${Month.re})\\s+(?<day1>\\d+)(?:--|-|\u2013)(?<day2>\\d+)[, ]\\s*(?<year>\\d+)$`, 'ui'),
+  M_d_d_y: new RegExp(`^(?<month>${Month.english})\\s+(?<day1>\\d+)(?:--|-|\u2013)(?<day2>\\d+)[, ]\\s*(?<year>\\d+)$`, 'ui'),
 
   // #747: January 30–February 3, 1989
-  M_d_M_d_y: new RegExp(`^(?<month1>${Month.re})\\s+(?<day1>\\d+)(?:--|-|\u2013)(?<month2>${Month.re})\\s+(?<day2>\\d+)[, ]\\s*(?<year>\\d+)$`, 'ui'),
+  M_d_M_d_y: new RegExp(`^(?<month1>${Month.english})\\s+(?<day1>\\d+)(?:--|-|\u2013)(?<month2>${Month.english})\\s+(?<day2>\\d+)[, ]\\s*(?<year>\\d+)$`, 'ui'),
 
   // #746: 22-26 June 2015, 29 June-1 July 2011
-  d_M_d_M_y: new RegExp(`^(?<day1>\\d+)\\s*(?<month1>${Month.re})?(?:--|-|\u2013)\\s*(?<day2>\\d+)\\s+(?<month2>${Month.re})\\s+(?<year>\\d+)$`, 'ui'),
+  d_M_d_M_y: new RegExp(`^(?<day1>\\d+)\\s*(?<month1>${Month.english})?(?:--|-|\u2013)\\s*(?<day2>\\d+)\\s+(?<month2>${Month.english})\\s+(?<year>\\d+)$`, 'ui'),
 
   // July-October 1985
-  M_M_y: new RegExp(`^(?<month1>${Month.re})(?:--|-|\u2013)(?<month2>${Month.re})(?:--|-|\u2013|\\s+)(?<year>\\d+)$`, 'ui'),
+  M_M_y: new RegExp(`^(?<month1>${Month.english})(?:--|-|\u2013)(?<month2>${Month.english})(?:--|-|\u2013|\\s+)(?<year>\\d+)$`, 'ui'),
 
   // https://github.com/retorquere/zotero-better-bibtex/issues/1112
   pubmed: /^(?<day>\d{1,2})\s+(?<month>\d{1,2})\s*,\s*(?<year>\d{4,})$/,
@@ -236,7 +246,7 @@ const re = {
   y: /^(?<year>-?\d{3,})$/,
 
   // https://github.com/retorquere/zotero-better-bibtex/issues/868
-  y_M_d: new RegExp(`^(?<year>\\d{3,})\\s+(?<month>${Month.re})(?:\\s+(?<day>\\d+))$`, 'ui'),
+  y_M_d: new RegExp(`^(?<year>\\d{3,})\\s+(?<month>${Month.english})(?:\\s+(?<day>\\d+))$`, 'ui'),
 
   withtime: /(?:(?:\s*|T)(?<hour>\d{2}):(?<minute>\d{2})(?::(?<seconds>\d{2}(?:[.]\d+)?)\s*(?:Z|(?<offsetH>[+-]\d{2}):?(?<offsetM>\d{2})?)?)?)?(?<doubt>[~?]*)$/,
 
@@ -244,12 +254,23 @@ const re = {
 }
 
 class DateParser {
+  edtfy(date: string): string {
+    if (!date) return ''
+    try {
+      return edtfy(date)
+    }
+    catch {
+      return ''
+    }
+  }
+
   edtf(date: string): any {
+    if (!date) return ''
     try {
       return EDTF(date)
     }
     catch {
-      return null
+      return ''
     }
   }
 
@@ -262,7 +283,7 @@ class DateParser {
     let m: RegExpMatchArray
 
     if (value === 'today') {
-      const now = new Date
+      const now = new Date()
       return { type: 'date', year: now.getFullYear(), month: now.getMonth() + 1, day: now.getDate() }
     }
 
@@ -270,9 +291,9 @@ class DateParser {
 
     // if (value.match(/[T ]/) && !(date = this.parseEDTF(value)).verbatim) return date
 
-    const english = Month.english(value.normalize('NFC').replace(/[.] /, ' ')) // 8. july 2011
+    const english = reparse ? Month.toEnglish(value) : value
 
-    if (m = (english.match(re.Mdy) || english.match(re.dMy))) {
+    if (m = english.match(re.Mdy) || english.match(re.dMy)) {
       const { day: sday, month, year: syear } = m.groups
       let day = parseInt(sday)
       let year = parseInt(syear)
@@ -401,7 +422,7 @@ class DateParser {
     // https://github.com/retorquere/zotero-better-bibtex/issues/868
     if (m = english.match(re.y_M_d)) {
       const { year, month, day } = m.groups
-      const edtf = normalize_edtf(this.edtf(edtfy(`${day || ''} ${month} ${year}`.trim())))
+      const edtf = normalize_edtf(this.edtf(this.edtfy(`${day || ''} ${month} ${year}`.trim())))
       if (edtf) return edtf
     }
 
@@ -461,7 +482,7 @@ class DateParser {
     let edtf = normalize_edtf(this.edtf(upgrade_edtf(date.replace(/_|--/, '/'))))
     if (edtf) return edtf
 
-    edtf = normalize_edtf(this.edtf(edtfy(english)))
+    edtf = normalize_edtf(this.edtf(this.edtfy(english)))
     if (edtf) return edtf
 
     return null
@@ -480,8 +501,8 @@ class NOTZParser extends DateParser {
 }
 
 const parser = {
-  withtz: new DateParser,
-  notz: new NOTZParser,
+  withtz: new DateParser(),
+  notz: new NOTZParser(),
 }
 
 export function parse(date: string, tz = true): ParsedDate {
