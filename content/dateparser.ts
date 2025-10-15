@@ -29,11 +29,11 @@ const Month = new class {
 
   constructor() {
     // https://github.com/retorquere/zotero-better-bibtex/issues/1513
-    this.english = this.any(Object.values(monthsMap))
-    this.#any = new RegExp(`(?:\\bde\\s+)?\\b(${this.any(Object.keys(monthsMap))})[.](?:\\s+\\bde)?`, 'ugi')
+    this.english = this.anyof(Object.values(monthsMap))
+    this.#any = new RegExp(`(?:\\bde\\s+)?\\b(${this.anyof(Object.keys(monthsMap))})[.](?:\\s+\\bde)?`, 'ugi')
   }
 
-  private any(names: string[]) {
+  private anyof(names: string[]) {
     names = names.map(name => name.normalize('NFC'))
     names = [...(new Set(names))].sort((a, b) => b.length - a.length)
     return `\\b(?:${names.join('|')})\\b`
@@ -46,8 +46,8 @@ const Month = new class {
   toEnglish(date: string): string {
     return date
       .normalize('NFC')
-      .replace(this.#any, (m, month: string) => monthsMap[month.toLowerCase()])
-      .toLowerCase() as string
+      .replace(this.#any, (m, month: string) => (monthsMap[month.toLowerCase()] as string) || month)
+      .toLowerCase()
   }
 }
 
@@ -101,7 +101,7 @@ const Season = new class {
     }
     return date
   }
-}()
+}
 
 function flagged(v: boolean | { value: number }): boolean | number {
   return typeof v === 'boolean' ? v : v?.value
@@ -209,7 +209,7 @@ const re = {
   Mdy: new RegExp(`^(?<month>${Month.english})\\s+(?<day>\\d+)[\\s]\\s*(?<year>\\d+)$`, 'ui'),
 
   ydm: /^(?<year>\d{3,})(\p{P})(?<month>\d{1,2})(?:\2(?<day>\d{1,2}))?$/u,
-  dmy: /^(?<day>\d{1,2})(\p{P})(?<month>\d{1,2})(?:\2(?<year>\d{3,}))$/,
+  dmy: /^(?<day>\d{1,2})(\p{P})(?<month>\d{1,2})(?:\2(?<year>\d{3,}))$/u,
   my: /^(?<month>\d{1,2})\p{P}+(?<year>\d{3,})$/u,
   ym: /^(?<year>\d{3,})\p{P}+(?<month>\d{1,2})$/u,
 
@@ -257,7 +257,7 @@ class DateParser {
   edtfy(date: string): string {
     if (!date) return ''
     try {
-      return edtfy(date)
+      return edtfy(date) as string
     }
     catch {
       return ''
@@ -283,7 +283,7 @@ class DateParser {
     let m: RegExpMatchArray
 
     if (value === 'today') {
-      const now = new Date()
+      const now = new Date
       return { type: 'date', year: now.getFullYear(), month: now.getMonth() + 1, day: now.getDate() }
     }
 
@@ -501,8 +501,8 @@ class NOTZParser extends DateParser {
 }
 
 const parser = {
-  withtz: new DateParser(),
-  notz: new NOTZParser(),
+  withtz: new DateParser,
+  notz: new NOTZParser,
 }
 
 export function parse(date: string, tz = true): ParsedDate {
