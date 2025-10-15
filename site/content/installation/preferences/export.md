@@ -1,3 +1,6 @@
+---
+preferences: true
+---
 
 
 {{% preferences/header %}}
