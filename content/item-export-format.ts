@@ -7,7 +7,7 @@ import type { Attachment, RegularItem, Item, Note } from '../gen/typings/seriali
 import { JournalAbbrev } from './journal-abbrev'
 import { Preference } from './prefs'
 
-export class Serializer {
+class Serializer {
   private attachment(serialized: Attachment, att): Attachment {
     if (att.attachmentLinkMode !== Zotero.Attachments.LINK_MODE_LINKED_URL) {
       serialized.localPath = att.getFilePath()
