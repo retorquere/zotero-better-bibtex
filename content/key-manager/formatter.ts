@@ -112,6 +112,7 @@ function parseDate(v): PartialDate {
   if (date.type === 'interval') date = (date.from && date.from.type !== 'open') ? date.from : date.to
   if (!date.type) date.type = 'date' // will rescue 'orig' if present
 
+  log.debug('origdate:', v, '=>', date)
   switch (date.type) {
     case 'open':
       break
@@ -957,6 +958,7 @@ export class PatternFormatter {
 
   /** the original year of the publication */
   public $origyear(): string {
+    log.debug('origyear:', this.item.date)
     return this.padYear(this.format_date(this.item.date, '%-oY'), 2)
   }
 

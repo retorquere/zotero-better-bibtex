@@ -94,10 +94,12 @@ const Season = new class {
 }
 
 function flagged(v: boolean | { value: number }): boolean | number {
-  return typeof v === 'boolean' ? v : v.value
+  return typeof v === 'boolean' ? v : v?.value
 }
 
 function normalize_edtf(date: any): ParsedDate {
+  if (!date) return date
+
   const type = date.type.replace('_', '')
 
   if (type === 'Date') {
@@ -243,7 +245,12 @@ const re = {
 
 class DateParser {
   edtf(date: string): any {
-    return EDTF(date)
+    try {
+      return EDTF(date)
+    }
+    catch {
+      return null
+    }
   }
 
   parse(value: string, options = { range: true, reparse: true }): ParsedDate {
@@ -394,13 +401,8 @@ class DateParser {
     // https://github.com/retorquere/zotero-better-bibtex/issues/868
     if (m = english.match(re.y_M_d)) {
       const { year, month, day } = m.groups
-      try {
-        const edtf = normalize_edtf(this.edtf(edtfy(`${day || ''} ${month} ${year}`.trim())))
-        if (edtf) return edtf
-      }
-      catch {
-        // dump(`edtf error: ${err}\n`)
-      }
+      const edtf = normalize_edtf(this.edtf(edtfy(`${day || ''} ${month} ${year}`.trim())))
+      if (edtf) return edtf
     }
 
     if (range) {
@@ -455,22 +457,12 @@ class DateParser {
       date = `${year}-${month}-${day}T${time}${tz}`
     }
 
-    try {
-      // https://github.com/inukshuk/edtf.js/issues/5
-      const edtf = normalize_edtf(this.edtf(upgrade_edtf(date.replace(/_|--/, '/'))))
-      if (edtf) return edtf
-    }
-    catch {
-      // dump(`edtf (upgrade) error: ${err}\n`)
-    }
+    // https://github.com/inukshuk/edtf.js/issues/5
+    let edtf = normalize_edtf(this.edtf(upgrade_edtf(date.replace(/_|--/, '/'))))
+    if (edtf) return edtf
 
-    try {
-      const edtf = normalize_edtf(this.edtf(edtfy(english)))
-      if (edtf) return edtf
-    }
-    catch {
-      // dump(`parseEDTF (edtfy) error: ${err}\n`)
-    }
+    edtf = normalize_edtf(this.edtf(edtfy(english)))
+    if (edtf) return edtf
 
     return null
   }
@@ -478,7 +470,12 @@ class DateParser {
 
 class NOTZParser extends DateParser {
   edtf(date: string): any {
-    return EDTFnotz(date)
+    try {
+      return EDTFnotz(date)
+    }
+    catch {
+      return null
+    }
   }
 }
 
