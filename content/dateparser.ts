@@ -131,11 +131,8 @@ function normalize_edtf(date: any): ParsedDate | null {
 
   if (type === 'Interval') {
     const [min, max] = date.values
-    return {
-      type: 'interval',
-      from: normalize_edtf(min),
-      to: normalize_edtf(max),
-    }
+    if (!min || !max) return null
+    return { type: 'interval', from: normalize_edtf(min), to: normalize_edtf(max) }
   }
 
   if (type === 'Season') {
