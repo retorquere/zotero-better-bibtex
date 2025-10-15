@@ -1,6 +1,6 @@
 import { Exporter as BibTeXExporter } from './exporter'
 import { Translation } from '../lib/translator'
-import { strToISO, parse } from '../../content/dateparser'
+import { strToISO } from '../../content/dateparser'
 import { qualityReport } from '../../gen/biber-tool'
 import type { Collected } from '../lib/collect'
 
