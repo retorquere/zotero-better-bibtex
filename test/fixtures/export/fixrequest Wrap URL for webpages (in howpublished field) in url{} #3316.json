@@ -1,0 +1,47 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "preferences": {
+      "baseAttachmentPath": "/Users/mjbaldwin/Library/CloudStorage/GoogleDrive-mjbaldwinjr@gmail.com/My Drive/Zotero/Sources",
+      "bibtexParticleNoOp": true,
+      "citekeyFormat": "auth.lower + shorttitle(3, 3) + year",
+      "postscript": "if (Translator.BetterBibTeX) {\n  Zotero.debug('Postscript running for item: ' + zotero.title);\n  if (zotero.creators && zotero.creators.length) {\n    for (let creator of zotero.creators) {\n      const lastNorm = creator.lastName.replace(/\\./g,'').trim().toLowerCase();\n      const firstNorm = creator.firstName.replace(/\\./g,'').trim().toLowerCase();\n      // Standardize Stokes\n      if (lastNorm === 'stokes') creator.firstName = 'Donald E.';\n      // Standardize Tideman\n      if (lastNorm === 'tideman') creator.firstName = 'Nicolaus';\n      // Standardize Young\n      if (lastNorm === 'young') creator.firstName = 'H. Peyton';\n    }\n    // Apply the modified creators to the BibTeX export\n    tex.addCreators();  // NO arguments!\n    Zotero.debug('Updated creators for export: ' + zotero.creators.map(c => c.firstName + ' ' + c.lastName).join(', '));\n  } else {\n    Zotero.debug('No creators found for this item.');\n  }\n}\n",
+      "skipFields": "abstract,keywords,file,month,eprint"
+    },
+    "options": {}
+  },
+  "version": {
+    "zotero": "7.0.26",
+    "bbt": "7.0.50"
+  },
+  "collections": {},
+  "items": [
+    {
+      "key": "AX5KSJYQ",
+      "version": 12502,
+      "itemType": "webpage",
+      "title": "Condorcet methods explained: An interactive guide to alternative voting methods",
+      "abstractNote": "An Interactive Guide to Alternative Voting Methods",
+      "date": "2019-06",
+      "language": "en",
+      "url": "https://smartvotesim.com/condorcet/",
+      "accessDate": "2025-04-10T01:21:25Z",
+      "creators": [
+        {
+          "firstName": "Paul",
+          "lastName": "Camann",
+          "creatorType": "author"
+        }
+      ],
+      "tags": [],
+      "dateAdded": "2025-04-10T01:21:25Z",
+      "dateModified": "2025-09-01T22:11:59Z",
+      "itemID": 3336,
+      "attachments": [],
+      "notes": [],
+      "citationKey": "camannCondorcetMethodsExplained2019",
+      "publicationTitle": "Smart Voting Simulator"
+    }
+  ]
+}
