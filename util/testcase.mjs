@@ -3,7 +3,7 @@
 import anyAscii from 'any-ascii'
 import { execSync } from 'child_process'
 import fs from 'fs'
-import glob from 'glob'
+import { globSync as glob } from 'glob'
 import path from 'path'
 import sanitize from 'sanitize-filename'
 import { fileURLToPath } from 'url'
@@ -199,7 +199,7 @@ const main = async () => {
   if (argv.attach) {
     try {
       const attachmentDir = path.join(root, 'test/fixtures/export')
-      const candidates = glob.sync('attachments/*.*', { cwd: attachmentDir }).reduce((acc, file) => {
+      const candidates = glob('attachments/*.*', { cwd: attachmentDir }).reduce((acc, file) => {
         const ext = path.extname(file)
         acc[ext] = file
         return acc
