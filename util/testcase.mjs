@@ -181,10 +181,15 @@ const main = async () => {
         repo: 'zotero-better-bibtex',
         issue_number: argv.issue,
       })
+
       argv.title = issue.title
-        .replace(/^\[[^\]]+\]\s*:/, '').trim()
-        .replace(/^(Bug|Feature|Feature Request)\s*:/i, '')
+        .replace(/^\[[^\]]+\]\s*:/, '')
         .trim()
+      while (true) {
+        const title = argv.title.replace(/^\s*(Bug|Feature|Request)[/:\s]*/i, '').trim()
+        if (title.length === argv.title.length) break
+        argv.title = title
+      }
     }
     catch (error) {
       console.error(`Error fetching issue title for #${argv.issue}:`, error.message)
