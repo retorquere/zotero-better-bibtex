@@ -430,7 +430,7 @@ class APIReader {
             acc[m.name.getText()] = this.resolveType(m.type)
             return acc
           }, {}),
-          required: type.members.filter(m => m.questionToken !== undefined).map(m => m.name.getText()),
+          required: type.members.filter(m => !m.questionToken && !m.initializer).map(m => m.name.getText()),
           additionalProperties: false,
         }
 
