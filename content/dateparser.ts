@@ -57,7 +57,7 @@ import { getLocaleDateOrder } from '../submodules/zotero-utilities/date'
 type SeasonID = 1 | 2 | 3 | 4
 
 export type ParsedDate = {
-  type?: 'date' | 'open' | 'verbatim' | 'season' | 'interval' | 'list'
+  type?: 'date' | 'open' | 'verbatim' | 'season' | 'interval' | 'list' | 'century'
   year?: number
   month?: number
   day?: number
@@ -76,6 +76,9 @@ export type ParsedDate = {
   dates?: ParsedDate[]
 
   season?: SeasonID
+
+  century?: number
+
   uncertain?: boolean
   approximate?: boolean
 }
@@ -453,12 +456,11 @@ class DateParser {
         const split = value.split(sep)
         if (split.length === 2) {
           const valid = (d: ParsedDate) => {
-            switch (from.type) {
+            switch (d.type) {
               case 'date':
               case 'season':
               case 'century':
                 return 1
-                break
               case 'open':
                 return 0
               default:
@@ -546,7 +548,7 @@ export function dateToISO(date: ParsedDate): string {
     case 'interval':
       return `${dateToISO(date.from)}/${dateToISO(date.to)}`.replace(/^[/]$/, '')
 
-    case 'year': {
+    case 'date': {
       if (typeof date.year !== 'number') return ''
 
       let iso = `${date.year}`.padStart(4, '0')
