@@ -13,6 +13,19 @@
   keywords = {Finished,Ntergenerational memory,Place attachment,Place identity,Resettlement,Roia jiu coal mine,Romania}
 }
 
+@article{eckmannHarmonischeFunktionenUnd1944,
+  title = {Harmonische Funktionen und Randwertaufgaben in einem Komplex.},
+  author = {Eckmann, Beno},
+  date = {1944/1945},
+  journaltitle = {Commentarii mathematici Helvetici},
+  volume = {17},
+  pages = {240--255},
+  issn = {0010-2571; 1420-8946/e},
+  url = {https://eudml.org/doc/138857},
+  urldate = {2022-03-23},
+  langid = {nil}
+}
+
 @book{gravelleMicroeconomics,
   title = {Microeconomics},
   author = {Gravelle, Hugh and Rees, Ray},
@@ -23,4 +36,19 @@
   isbn = {978-0-582-40487-8},
   langid = {english},
   pagetotal = {738}
+}
+
+@article{soleckiFiniteAtlasesManifolds1973,
+  title = {Finite Atlases on Manifolds},
+  author = {Solecki, A.},
+  date = {1973/1974},
+  journaltitle = {Polskiego Towarzystwa Matematycznego},
+  shortjournal = {Comment. Math. Prace Mat.},
+  volume = {17},
+  pages = {469--473},
+  issn = {0373-8299},
+  fjournal = {Roczniki Polskiego Towarzystwa Matematycznego. Seria I. Commentationes Mathematicae. Prace Matematyczne},
+  mrclass = {58A05},
+  mrnumber = {368060},
+  mrreviewer = {S.Y.Husseini}
 }

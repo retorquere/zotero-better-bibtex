@@ -97,6 +97,62 @@
       "attachments": [],
       "notes": [],
       "citationKey": "GravelleReesMicroeconomics"
+    },
+    {
+      "key": "V83UWY34",
+      "version": 9544,
+      "itemType": "journalArticle",
+      "title": "Finite atlases on manifolds",
+      "date": "1973/74",
+      "extra": "tex.fjournal: Roczniki Polskiego Towarzystwa Matematycznego. Seria I. Commentationes Mathematicae. Prace Matematyczne\ntex.mrclass: 58A05\ntex.mrnumber: 368060\ntex.mrreviewer: S.Y.Husseini",
+      "volume": "17",
+      "pages": "469\u2013473",
+      "publicationTitle": "Polskiego Towarzystwa Matematycznego",
+      "journalAbbreviation": "Comment. Math. Prace Mat.",
+      "ISSN": "0373-8299",
+      "creators": [
+        {
+          "firstName": "A.",
+          "lastName": "Solecki",
+          "creatorType": "author"
+        }
+      ],
+      "tags": [],
+      "dateAdded": "2024-10-04T16:31:18Z",
+      "dateModified": "2025-10-17T13:55:30Z",
+      "itemID": 701,
+      "attachments": [],
+      "notes": [],
+      "citationKey": "soleckiFiniteAtlasesManifolds"
+    },
+    {
+      "key": "FFR6TMIV",
+      "version": 1419,
+      "itemType": "journalArticle",
+      "title": "Harmonische Funktionen und Randwertaufgaben in einem Komplex.",
+      "date": "1944/45",
+      "language": "und",
+      "libraryCatalog": "eudml.org",
+      "url": "https://eudml.org/doc/138857",
+      "accessDate": "2022-03-23T07:20:50Z",
+      "volume": "17",
+      "pages": "240-255",
+      "publicationTitle": "Commentarii mathematici Helvetici",
+      "ISSN": "0010-2571; 1420-8946/e",
+      "creators": [
+        {
+          "firstName": "Beno",
+          "lastName": "Eckmann",
+          "creatorType": "author"
+        }
+      ],
+      "tags": [],
+      "dateAdded": "2022-03-23T07:20:50Z",
+      "dateModified": "2022-03-23T07:20:50Z",
+      "itemID": 175,
+      "attachments": [],
+      "notes": [],
+      "citationKey": "eck1944:harmonische"
     }
   ]
 }
