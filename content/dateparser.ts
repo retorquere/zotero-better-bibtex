@@ -112,44 +112,53 @@ function normalize_edtf(date: any): ParsedDate | null {
   if (!date) return null
 
   const type = date.type.replace('_', '')
-
-  if (type === 'Date' || type === 'Year') {
-    let [year, month, day, hour, minute, seconds] = date.values
-    if (typeof month === 'number') month += 1
-    return {
-      type: 'date',
-      year,
-      month,
-      day,
-      hour,
-      minute,
-      seconds,
-      offset: date.offset,
-      approximate: !!(flagged(date.approximate) || flagged(date.unspecified)),
-      uncertain: !!flagged(date.uncertain),
+  switch (type) {
+    case 'Date':
+    case 'Year': {
+      let [year, month, day, hour, minute, seconds] = date.values
+      if (typeof month === 'number') month += 1
+      return {
+        type: 'date',
+        year,
+        month,
+        day,
+        hour,
+        minute,
+        seconds,
+        offset: date.offset,
+        approximate: !!(flagged(date.approximate) || flagged(date.unspecified)),
+        uncertain: !!flagged(date.uncertain),
+      }
     }
-  }
 
-  if (type === 'Interval') {
-    const [min, max] = date.values
-    if (!min || !max) return null
-    return { type: 'interval', from: normalize_edtf(min), to: normalize_edtf(max) }
-  }
+    case 'Interval': {
+      const [min, max] = date.values
+      if (!min || !max) return null
+      return { type: 'interval', from: normalize_edtf(min), to: normalize_edtf(max) }
+    }
 
-  if (type === 'Season') {
-    const [year, month] = date.values
-    if (typeof Season.fromMonth(month) !== 'number') throw new Error(`normalize EDTF: Unexpected season ${month}`)
-    return Season.seasonize({
-      type: 'date',
-      year,
-      month,
-    })
-  }
+    case 'Season': {
+      const [year, month] = date.values
+      if (typeof Season.fromMonth(month) !== 'number') throw new Error(`normalize EDTF: Unexpected season ${month}`)
+      return Season.seasonize({
+        type: 'date',
+        year,
+        month,
+      })
+    }
 
-  if (type === 'List') {
-    return {
-      type: 'list',
-      dates: date.values.map(normalize_edtf),
+    case 'List': {
+      return {
+        type: 'list',
+        dates: date.values.map(normalize_edtf),
+      }
+    }
+
+    case 'Century': {
+      return {
+        type: 'century',
+        century: date.values[0],
+      }
     }
   }
 
@@ -443,33 +452,28 @@ class DateParser {
       for (const sep of ['--', '-', '/', '_', '\u2013']) {
         const split = value.split(sep)
         if (split.length === 2) {
+          const valid = (d: ParsedDate) => {
+            switch (from.type) {
+              case 'date':
+              case 'season':
+              case 'century':
+                return 1
+                break
+              case 'open':
+                return 0
+              default:
+                return -10
+            }
+          }
           let dates = 0
 
           const from = this.parse(split[0], { reparse, range: false })
-          switch (from.type) {
-            case 'date':
-            case 'season':
-              dates++
-              break
-            case 'open':
-              break
-            default:
-              continue
-          }
+          dates += valid(from)
 
           const to = this.parse(split[1], { reparse, range: false })
-          switch (to.type) {
-            case 'date':
-            case 'season':
-              dates++
-              break
-            case 'open':
-              break
-            default:
-              continue
-          }
+          dates += valid(to)
 
-          if (dates) return { type: 'interval', from, to }
+          if (dates > 0) return { type: 'interval', from, to }
         }
       }
     }
@@ -538,22 +542,29 @@ export function isEDTF(value: string, minuteLevelPrecision = false): boolean {
 }
 
 export function dateToISO(date: ParsedDate): string {
-  if (date.type === 'interval') return `${dateToISO(date.from)}/${dateToISO(date.to)}`.replace(/^[/]$/, '')
+  switch (date.type) {
+    case 'interval':
+      return `${dateToISO(date.from)}/${dateToISO(date.to)}`.replace(/^[/]$/, '')
 
-  if (typeof date.year !== 'number') return ''
+    case 'year': {
+      if (typeof date.year !== 'number') return ''
 
-  let iso = `${date.year}`.padStart(4, '0')
+      let iso = `${date.year}`.padStart(4, '0')
 
-  if (typeof date.month === 'number') {
-    const month = `${date.month}`.padStart(2, '0')
-    iso += `-${month}`
-    if (date.day) {
-      const day = `${date.day}`.padStart(2, '0')
-      iso += `-${day}`
+      if (typeof date.month === 'number') {
+        const month = `${date.month}`.padStart(2, '0')
+        iso += `-${month}`
+        if (date.day) {
+          const day = `${date.day}`.padStart(2, '0')
+          iso += `-${day}`
+        }
+      }
+      return iso
     }
-  }
 
-  return iso
+    default:
+      throw new Error(`failed to convert ${date.type} to ISO`)
+  }
 }
 
 export function strToISO(str: string): string {
