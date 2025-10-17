@@ -401,7 +401,7 @@ class DateParser {
       const { year, month, day } = m.groups
 
       // #3322
-      if (year.length === 4 && month.length === 2 && month > '24' && year < ($year = `${year.substring(0, 2)}${month}`)) {
+      if (!day && year.length === 4 && month.length === 2 && month > '24' && year < ($year = `${year.substring(0, 2)}${month}`)) {
         return {
           type: 'interval',
           from: { type: 'date', year: parseInt(year) },
