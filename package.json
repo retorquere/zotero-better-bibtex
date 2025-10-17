@@ -167,7 +167,6 @@
     "global": "^4.4.0",
     "gray-matter": "^4.0.3",
     "he": "^1.2.0",
-    "html2pug": "^4.0.0",
     "indent-string": "^5.0.0",
     "ini": "^5.0.0",
     "install": "^0.13.0",
