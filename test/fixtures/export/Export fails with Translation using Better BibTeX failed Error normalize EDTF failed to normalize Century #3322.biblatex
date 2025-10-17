@@ -1,0 +1,26 @@
+@article{bora2021,
+  title = {Resettlement, Intergenerational Memory, Place Attachment, and Place Identity in {{Roșia Jiu}} Coal Mine - {{Gorj County}}, {{Romania}}},
+  author = {Bora, Iuliana and Voiculescu, Mircea},
+  date = {1973/1974},
+  journaltitle = {Journal of Rural Studies},
+  volume = {86},
+  pages = {578--586},
+  issn = {07430167},
+  doi = {10.1016/j.jrurstud.2021.07.008},
+  url = {https://www.sciencedirect.com/science/article/pii/S0743016721002059},
+  urldate = {2021-08-05},
+  langid = {english},
+  keywords = {Finished,Ntergenerational memory,Place attachment,Place identity,Resettlement,Roia jiu coal mine,Romania}
+}
+
+@book{gravelleMicroeconomics,
+  title = {Microeconomics},
+  author = {Gravelle, Hugh and Rees, Ray},
+  date = {20},
+  edition = {3. ed., [Nachdr.]},
+  publisher = {Financial Times Prentice Hall},
+  location = {Harlow Munich},
+  isbn = {978-0-582-40487-8},
+  langid = {english},
+  pagetotal = {738}
+}

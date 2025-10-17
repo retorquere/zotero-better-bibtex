@@ -11,7 +11,7 @@ Feature: Export
 
     Examples:
       | file                                                                                                                     | references |
-      | Export fails with Translation using Better BibTeX failed Error normalize EDTF failed to normalize Century #3322          | 1          |
+      | Export fails with Translation using Better BibTeX failed Error normalize EDTF failed to normalize Century #3322          | 2          |
       | Option to omit last name prefixes in citekey generation #3295                                                            | 1          |
       | Add PhD diss. to Zotero Type field conversion to phdthesis #3296                                                         | 1          |
       | Exclude series editor for biblatex-apa option #3284                                                                      | 1          |

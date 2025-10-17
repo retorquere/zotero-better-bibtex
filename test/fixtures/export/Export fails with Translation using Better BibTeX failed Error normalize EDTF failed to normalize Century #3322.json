@@ -2,8 +2,7 @@
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
-    "preferences": {
-    }
+    "preferences": {}
   },
   "items": [
     {
@@ -62,9 +61,42 @@
           "type": 1
         }
       ],
-      "title": "Resettlement, intergenerational memory, place attachment, and place identity in Roșia Jiu coal mine - Gorj County, Romania",
+      "title": "Resettlement, intergenerational memory, place attachment, and place identity in Ro\u0219ia Jiu coal mine - Gorj County, Romania",
       "url": "https://www.sciencedirect.com/science/article/pii/S0743016721002059",
       "volume": "86"
+    },
+    {
+      "key": "9QCNAAK4",
+      "version": 35619,
+      "itemType": "book",
+      "title": "Microeconomics",
+      "date": "20",
+      "language": "en",
+      "libraryCatalog": "K10plus ISBN",
+      "place": "Harlow Munich",
+      "publisher": "Financial Times Prentice Hall",
+      "ISBN": "978-0-582-40487-8",
+      "edition": "3. ed., [Nachdr.]",
+      "numPages": "738",
+      "creators": [
+        {
+          "firstName": "Hugh",
+          "lastName": "Gravelle",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "Ray",
+          "lastName": "Rees",
+          "creatorType": "author"
+        }
+      ],
+      "tags": [],
+      "dateAdded": "2024-01-21T08:35:10Z",
+      "dateModified": "2025-10-17T09:05:59Z",
+      "itemID": 5831,
+      "attachments": [],
+      "notes": [],
+      "citationKey": "GravelleReesMicroeconomics"
     }
   ]
 }
