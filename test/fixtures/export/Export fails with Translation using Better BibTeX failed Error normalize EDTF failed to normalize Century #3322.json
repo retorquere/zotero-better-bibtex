@@ -1,0 +1,70 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "preferences": {
+    }
+  },
+  "items": [
+    {
+      "DOI": "10.1016/j.jrurstud.2021.07.008",
+      "ISSN": "07430167",
+      "accessDate": "2021-08-05T05:08:44Z",
+      "citationKey": "bora2021",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Iuliana",
+          "lastName": "Bora"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Mircea",
+          "lastName": "Voiculescu"
+        }
+      ],
+      "date": "1973/74",
+      "extra": [
+        "Citation Key: bora2021"
+      ],
+      "itemID": 1,
+      "itemType": "journalArticle",
+      "language": "en",
+      "libraryCatalog": "ScienceDirect",
+      "pages": "578-586",
+      "publicationTitle": "Journal of Rural Studies",
+      "tags": [
+        {
+          "tag": "Finished"
+        },
+        {
+          "tag": "Ntergenerational memory",
+          "type": 1
+        },
+        {
+          "tag": "Place attachment",
+          "type": 1
+        },
+        {
+          "tag": "Place identity",
+          "type": 1
+        },
+        {
+          "tag": "Resettlement",
+          "type": 1
+        },
+        {
+          "tag": "Roia jiu coal mine",
+          "type": 1
+        },
+        {
+          "tag": "Romania",
+          "type": 1
+        }
+      ],
+      "title": "Resettlement, intergenerational memory, place attachment, and place identity in Roșia Jiu coal mine - Gorj County, Romania",
+      "url": "https://www.sciencedirect.com/science/article/pii/S0743016721002059",
+      "volume": "86"
+    }
+  ]
+}

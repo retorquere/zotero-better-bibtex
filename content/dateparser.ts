@@ -276,6 +276,7 @@ class DateParser {
 
     value = (value || '').trim()
     let $date: ParsedDate
+    let $year: string
 
     let m: RegExpMatchArray
 
@@ -386,6 +387,16 @@ class DateParser {
     // just wrong. https://en.wikipedia.org/wiki/Date_format_by_country
     if (m = value.match(re.ydm) || date_only.match(re.dmy) || date_only.match(re.my) || date_only.match(re.ym)) {
       const { year, month, day } = m.groups
+
+      // #3322
+      if (year.length === 4 && month.length === 2 && year < ($year = `${year.substring(0, 2)}${month}`)) {
+        return {
+          type: 'interval',
+          from: { type: 'date', year: parseInt(year) },
+          to: { type: 'date', year: parseInt($year) },
+        }
+      }
+
       const parsed = swap_day_month({
         type: 'date',
         year: parseInt(year),
@@ -402,6 +413,7 @@ class DateParser {
     // https://github.com/retorquere/zotero-better-bibtex/issues/1112
     if (m = date_only.match(re.pubmed)) {
       const { day, month, year } = m.groups
+
       const parsed = swap_day_month({
         type: 'date',
         year: parseInt(year),

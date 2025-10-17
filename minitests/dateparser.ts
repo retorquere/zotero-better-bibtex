@@ -26,7 +26,7 @@ function date2csl(date) {
 }
 
 import { parse, strToISO } from '../content/dateparser'
-const value = "Spring 2015"
+const value = "1973/74"
 console.log(value)
 console.log('parse: +tz', parse(value, true))
 // console.log('parse: -tz', parse(value, false))
