@@ -149,6 +149,9 @@ class Exporter extends CSLExporter {
       case 'verbatim':
         return [{ literal: date.verbatim }] as unknown as CSLDate
 
+      case 'century':
+        return [{ literal: `${date.century}th century` }] as unknown as CSLDate
+
       default:
         throw new Error(`Unexpected date type ${ JSON.stringify(date) }`)
     }

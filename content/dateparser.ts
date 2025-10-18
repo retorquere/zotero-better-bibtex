@@ -81,6 +81,8 @@ export type ParsedDate = {
 
   uncertain?: boolean
   approximate?: boolean
+
+  edtf?: string
 }
 
 const Season = new class {

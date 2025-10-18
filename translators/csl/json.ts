@@ -49,6 +49,9 @@ class Exporter extends CSLExporter {
       case 'verbatim':
         return { literal: date.verbatim }
 
+      case 'century':
+        return { literal: `${date.century}th century` }
+
       case 'season':
         return {
           'date-parts': [[date.year]],

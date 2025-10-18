@@ -153,6 +153,21 @@
       "attachments": [],
       "notes": [],
       "citationKey": "eck1944:harmonische"
+    },
+    {
+      "key": "6KGK8DZS",
+      "version": 65764,
+      "itemType": "book",
+      "title": "test",
+      "date": "20",
+      "creators": [],
+      "tags": [],
+      "dateAdded": "2025-10-17T22:27:38Z",
+      "dateModified": "2025-10-17T22:28:03Z",
+      "itemID": 7275,
+      "attachments": [],
+      "notes": [],
+      "citationKey": "-Test"
     }
   ]
 }

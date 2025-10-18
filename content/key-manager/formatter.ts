@@ -146,6 +146,9 @@ function parseDate(v): PartialDate {
       parsed.y = parsed.oy = date.year
       break
 
+    case 'century':
+      Object.assign(parsed, { y: date.century * 100 })
+
     default:
       throw new Error(`Unexpected parsed date ${ JSON.stringify(v) } => ${ JSON.stringify(date) }`)
   }

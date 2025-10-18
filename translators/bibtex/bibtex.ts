@@ -348,6 +348,38 @@ export async function importBibTeX(collected: Collected): Promise<void> {
 }
 
 function addDate(ref: Entry, date: ParsedDate | { type: 'none' }, verbatim: string) {
+  log.debug('adding bibtex date', date, verbatim)
+
+  const print = (d: ParsedDate) => {
+    switch (d.type) {
+      case 'date':
+      case 'season':
+        return d.year
+      case 'century':
+        return `${d.century}th century`
+      default:
+        return ''
+    }
+  }
+  if (date.type === 'interval') {
+    const { from, to } = date
+
+    if (from.type === 'open' && to.type === 'open') return
+
+    if (from.type === 'open') {
+      date = to
+    }
+    else if (to.type === 'open' || (from.year && from.year === to.year)) {
+      date = from
+    }
+    else if (ref.add({ name: 'year', value: [print(from), print(to)].filter(_ => _).join('\u2013') })) {
+      return
+    }
+    else {
+      ref.add({ name: 'year', value: verbatim })
+    }
+  }
+
   switch (date.type) {
     case 'open':
     case 'none':
@@ -357,16 +389,9 @@ function addDate(ref: Entry, date: ParsedDate | { type: 'none' }, verbatim: stri
       ref.add({ name: 'year', value: date.verbatim })
       return
 
-    case 'interval': {
-      const { from, to } = date
-      if (typeof from.year === 'number' && typeof to.year === 'number' && from.year === to.year) {
-        addDate(ref, from, verbatim)
-      }
-      else if (from.type !== 'open' || to.type !== 'open') {
-        ref.add({ name: 'year', value: verbatim })
-      }
+    case 'century':
+      ref.add({ name: 'year', value: `${date.century}th century` })
       return
-    }
 
     case 'date':
       if (date.month) ref.add({ name: 'month', value: months[date.month - 1], bare: date.month <= 12 })
