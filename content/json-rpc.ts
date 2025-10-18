@@ -32,6 +32,31 @@ function getStyle(id: string): any {
   return style
 }
 
+function find(library?: string | number): (citationKey: string) => number | undefined {
+  const lib: Query = {}
+  switch (typeof library) {
+    case 'undefined':
+      lib.libraryID = Zotero.Libraries.userLibraryID
+      break
+    case 'string':
+      if (library !== '*') lib.libraryID = getLibrary(library)
+      break
+    default:
+      lib.libraryID = getLibrary(library)
+      break
+  }
+
+  return function(citationKey: string): number | undefined {
+    citationKey = citationKey.replace('@', '')
+    return Zotero.BetterBibTeX.KeyManager.first({
+      where: {
+        ...lib,
+        ...(Preference.citekeyCaseInsensitive ? { lcCitationKey: citationKey.toLowerCase() } : { citationKey }),
+      },
+    })?.itemID
+  }
+}
+
 export class NSCollection {
   /**
    * Scan an AUX file for citekeys and populate a Zotero collection from them. The target collection will be cleared if it exists.
@@ -410,7 +435,8 @@ export class NSItem {
       where.citationKey = { in: citekeys }
     }
 
-    const items = await getItemsAsync(Zotero.BetterBibTeX.KeyManager.find({ where }).map(key => key.itemID))
+    const resolve = find(library)
+    const items = await getItemsAsync(citekeys.map(resolve).filter(_ => _))
 
     const bibliography = Zotero.QuickCopy.getContentFromItems(items, { ...format, mode: 'bibliography' }, null, false)
     return bibliography[format.contentType || 'html']
