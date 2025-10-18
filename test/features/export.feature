@@ -12,6 +12,7 @@ Feature: Export
     Examples:
       | file                                                                                                                     | references |
       | Export fails with Translation using Better BibTeX failed Error normalize EDTF failed to normalize Century #3322          | 5          |
+      | Replacement option for space between multipart last names in citekey generation #3289                                    | 1          |
       | Option to omit last name prefixes in citekey generation #3295                                                            | 1          |
       | Add PhD diss. to Zotero Type field conversion to phdthesis #3296                                                         | 1          |
       | Exclude series editor for biblatex-apa option #3284                                                                      | 1          |
