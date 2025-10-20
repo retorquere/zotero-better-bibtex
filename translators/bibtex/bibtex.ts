@@ -605,12 +605,12 @@ async function parseBibTeX(translation: Translation): Promise<Library> {
 
   return await parse(translation.collected.input, {
     // we are actually sure it's a valid enum value; stupid workaround for TS2322: Type 'string' is not assignable to type 'boolean | "as-needed" | "strict"'.
-    unsupported: (node, tex, _entry) => {
+    unsupported: (node, tex: string, _entry) => {
       switch (translation.collected.preferences.importUnknownTexCommand) {
         case 'tex':
-          return `<script>${ tex }</script>`
+          return `<script>${tex}</script>`
         case 'text':
-          return node.type === 'macro' ? node.content : tex
+          return node.type === 'macro' ? node.content as string : tex
         case 'ignore':
           return ''
         default:
@@ -721,7 +721,13 @@ class ZoteroItem {
 
   protected $holder(): boolean {
     if (this.item.itemType === 'patent') {
-      this.item.assignee = this.bibtex.fields.holder.map(creator => [ creator.name, creator.lastName, creator.firstName ].filter(name => name).map(name => name.replace(/"/g, '')).join(', ')).join('; ')
+      this.item.assignee = this.bibtex.fields.holder
+        .map(creator => [ creator.name, creator.lastName, creator.firstName ]
+          .filter(name => name)
+          .map((name: string) => name.replace(/"/g, ''))
+          .join(', ')
+        )
+        .join('; ')
     }
     return true
   }
@@ -1471,7 +1477,7 @@ class ZoteroItem {
       if (Array.isArray(values) && this.bibtex.mode[field] === 'literallist') values = (values as string[]).join(' and ')
       if (typeof values === 'string') values = [values]
 
-      for (const value of values) {
+      for (const value of (values as string[])) {
         if (this.bibtex.mode[field] === 'creatorlist' && this[`$${ field }`]?.(value, field)) continue
 
         if (typeof value !== 'string') {
