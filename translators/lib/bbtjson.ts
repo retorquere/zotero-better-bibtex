@@ -4,7 +4,7 @@ import type { Library } from './normalize'
 import { log } from '../../content/logger'
 import { Translation } from './translator'
 import { simplifyForExport, simplifyForImport } from '../../gen/items/simplify'
-import { version } from '../../gen/version.json'
+import BBT from '../../gen/version.json'
 
 // import { validItem } from '../content/ajv'
 // import { stringify } from '../content/stringify'
@@ -48,7 +48,7 @@ export function generateBBTJSON(collected: Collected): Translation {
     },
     version: {
       zotero: Zotero.version,
-      bbt: version,
+      bbt: BBT.version,
     },
     collections: translation.collections,
     items: [],

@@ -35,7 +35,7 @@ import * as postscript from '../lib/postscript'
 
 import { replace_command_spacers, Mode as ConversionMode } from './unicode_translator'
 import { datefield } from './datefield'
-import * as ExtraFields from '../../gen/items/extra-fields.json'
+import ExtraFields from '../../gen/items/extra-fields.json'
 import { label as propertyLabel } from '../../gen/items/items'
 import type { Fields as ParsedExtraFields } from '../../content/extra'
 import { zoteroCreator as ExtraZoteroCreator } from '../../content/extra'
@@ -48,8 +48,6 @@ import { uri } from '../../content/escape'
 
 import { stringCompare } from '../lib/string-compare'
 import * as CSL from 'citeproc'
-
-import { toWordsOrdinal, toOrdinal } from 'number-to-words'
 
 /*
  * h1 class: Entry
@@ -1575,19 +1573,6 @@ export class Entry {
       if (uniq.indexOf(c) < 0) uniq += c
     }
     return uniq
-  }
-
-  public toEnglishOrdinal(n: number | string): string {
-    const sortaNum = typeof n === 'number' ? `${ n }` : (n || '').replace(/(st|nd|th)$/, '')
-    if (sortaNum.match(/^[0-9]{1,2}$/)) {
-      return toWordsOrdinal(sortaNum).replace(/^\w/, (c: string) => c.toUpperCase())
-    }
-    else if (sortaNum.match(/^[0-9]+$/)) {
-      return toOrdinal(sortaNum).replace(/^\w/, (c: string) => c.toUpperCase())
-    }
-    else {
-      return typeof n === 'string' ? n : ''
-    }
   }
 }
 

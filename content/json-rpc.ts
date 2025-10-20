@@ -11,7 +11,7 @@ import { Preference } from './prefs'
 import { orchestrator } from './orchestrator'
 import { Server } from './server'
 
-import { version as BBTVersion } from '../gen/version.json'
+import BBT from '../gen/version.json'
 
 import { methods } from '../gen/api/json-rpc'
 
@@ -657,7 +657,7 @@ export class NSAPI {
    * Returns the Zotero and BetterBibTeX version to show the JSON-RPC API is ready.
    */
   public async ready(): Promise<{ zotero: string; betterbibtex: string }> {
-    return { zotero: Zotero.version, betterbibtex: BBTVersion }
+    return { zotero: Zotero.version, betterbibtex: BBT.version }
   }
 }
 

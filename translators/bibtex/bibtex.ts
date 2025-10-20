@@ -6,6 +6,7 @@ import { Exporter as BibTeXExporter } from './exporter'
 import { parse as arXiv } from '../../content/arXiv'
 import { valid, label } from '../../gen/items/items'
 import wordsToNumbers from '@insomnia-dev/words-to-numbers'
+import { toWordsOrdinal, toOrdinal } from 'number-to-words'
 
 import { ParsedDate, parse as parseDate, strToISO as strToISODate } from '../../content/dateparser'
 
@@ -17,6 +18,19 @@ import { Translation } from '../lib/translator'
 import { Entry as BaseEntry, Config } from './entry'
 
 import { Library, Entry as BibTeXEntry, JabRefMetadata, ParseError, Creator, parseAsync as parse } from '@retorquere/bibtex-parser'
+
+function toEnglishOrdinal(n: number | string): string {
+  const sortaNum = typeof n === 'number' ? `${n}` : (n || '').replace(/(st|nd|th)$/, '')
+  if (sortaNum.match(/^[0-9]{1,2}$/)) {
+    return toWordsOrdinal(sortaNum).replace(/^\w/, (c: string) => c.toUpperCase()) as string
+  }
+  else if (sortaNum.match(/^[0-9]+$/)) {
+    return toOrdinal(sortaNum).replace(/^\w/, (c: string) => c.toUpperCase()) as string
+  }
+  else {
+    return typeof n === 'string' ? n : ''
+  }
+}
 
 function unique(value, index, self) {
   return self.indexOf(value) === index
@@ -348,15 +362,13 @@ export async function importBibTeX(collected: Collected): Promise<void> {
 }
 
 function addDate(ref: Entry, date: ParsedDate | { type: 'none' }, verbatim: string) {
-  log.debug('adding bibtex date', date, verbatim)
-
   const print = (d: ParsedDate) => {
     switch (d.type) {
       case 'date':
       case 'season':
         return d.year
       case 'century':
-        return `${d.century}th century`
+        return `${toEnglishOrdinal(d.century)} century`
       default:
         return ''
     }
@@ -390,7 +402,7 @@ function addDate(ref: Entry, date: ParsedDate | { type: 'none' }, verbatim: stri
       return
 
     case 'century':
-      ref.add({ name: 'year', value: `${date.century}th century` })
+      ref.add({ name: 'year', value: `${toEnglishOrdinal(date.century)} century` })
       return
 
     case 'date':
@@ -428,7 +440,7 @@ export function generateBibTeX(collected: Collected): Translation {
 
     ref.add({ name: 'address', value: item.place })
     ref.add({ name: 'chapter', value: item.section })
-    ref.add({ name: 'edition', value: ref.english && collected.preferences.bibtexEditionOrdinal ? ref.toEnglishOrdinal(item.edition) : item.edition })
+    ref.add({ name: 'edition', value: ref.english && collected.preferences.bibtexEditionOrdinal ? toEnglishOrdinal(item.edition) : item.edition })
     ref.add({ name: 'type', value: item.type })
     ref.add({ name: 'series', value: item.series, bibtexStrings: true })
     ref.add({ name: 'title', value: item.title })

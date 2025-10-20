@@ -60,7 +60,7 @@ export const sql = {
         //.map(ddl => ddl.replace(/[\s\n]+/g, ' '))
         .filter(stmt => !stmt.startsWith('#'))
       return {
-        contents: `module.exports = ${jsesc(ddl)}`,
+        contents: `export default ${jsesc(ddl)}`,
         loader: 'js'
       }
     })
@@ -73,7 +73,7 @@ export const json = {
     build.onLoad({ filter: /\.json$/ }, async (args) => {
       const json = JSON.parse(await fs.promises.readFile(args.path, 'utf-8'))
       return {
-        contents: `module.exports = ${jsesc(json)}`,
+        contents: `export default ${jsesc(json)}`,
         loader: 'js'
       }
     })
@@ -135,7 +135,7 @@ export const pug = {
       console.log(template_function);
 
       return {
-        contents: `module.exports = ${template_function}`,
+        contents: `export default ${template_function}`,
         loader: 'js'
       }
     })

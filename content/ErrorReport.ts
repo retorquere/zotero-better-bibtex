@@ -22,7 +22,7 @@ const ENV = Components.classes['@mozilla.org/process/environment;1'].getService(
 
 import { alert } from './prompt'
 
-import * as s3 from './s3.json'
+import s3 from './s3.json'
 
 const kB = 1024
 
@@ -41,7 +41,7 @@ type Wizard = HTMLElement & {
   }
 }
 
-import { version as running } from '../gen/version.json'
+import BBT from '../gen/version.json'
 
 type Report = {
   context: string
@@ -81,13 +81,13 @@ class Upgrades {
   public bbt: Upgrade = {
     id: 'bbt',
     program: 'BetterBibTeX',
-    running,
+    running: BBT.version,
     upgrade: '',
   }
 
   public async init(document: Document) {
     this.zotero.running = Zotero.version
-    this.bbt.running = running
+    this.bbt.running = BBT.version
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     const manifest = async updates => JSON.parse((await Zotero.HTTP.request('GET', updates, { noCache: true })).response)
 

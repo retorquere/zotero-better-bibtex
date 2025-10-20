@@ -7,7 +7,7 @@ import { findBinary } from './path-search'
 import { log } from './logger'
 import { alert } from './prompt'
 
-import { version } from '../gen/version.json'
+import BBT from '../gen/version.json'
 
 type Parsed = {
   source: 'MarkDown' | 'BibTeX AUX'
@@ -130,7 +130,7 @@ export const AUXScanner = new class {
   }
 
   private async luaFilter(): Promise<string> {
-    const filter: string = PathUtils.join(Zotero.BetterBibTeX.dir, `list-citekeys-${version}.lua`)
+    const filter: string = PathUtils.join(Zotero.BetterBibTeX.dir, `list-citekeys-${BBT.version}.lua`)
 
     for (const old of await IOUtils.getChildren(Zotero.BetterBibTeX.dir)) {
       if (old !== filter && PathUtils.filename(old).match(/^list-citekeys-.*[.]lua$/) && await File.isFile(old)) await IOUtils.remove(old)

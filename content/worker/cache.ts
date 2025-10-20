@@ -35,7 +35,7 @@ import stringify from 'safe-stable-stringify'
 import { pick, unpick } from '../object'
 
 import { byLabel, DisplayOptions } from '../../gen/translators'
-import { version } from '../../gen/version.json'
+import BBT from '../../gen/version.json'
 // import { main as probe } from './cache-test'
 
 export const Context = new class {
@@ -394,8 +394,8 @@ class $Cache implements CacheInterface {
         test: metadata.Zotero && metadata.Zotero !== metadata.Zotero,
       },
       {
-        reason: `Better BibTeX version changed from ${metadata.BetterBibTeX || 'none'} to ${version}`,
-        test: metadata.BetterBibTeX && metadata.BetterBibTeX !== version,
+        reason: `Better BibTeX version changed from ${metadata.BetterBibTeX || 'none'} to ${BBT.version}`,
+        test: metadata.BetterBibTeX && metadata.BetterBibTeX !== BBT.version,
       },
       {
         reason: `cache gap found: cache = ${metadata.lastUpdated}, zotero = ${lastZoteroUpdate}`,
@@ -404,7 +404,7 @@ class $Cache implements CacheInterface {
     ]
     const reason = reasons.filter(r => r.test).map(r => r.reason).join(' and ') || false
 
-    log.info('cache:', metadata, { Zotero: Zotero.version, BetterBibTeX: version, lastUpdated: lastZoteroUpdate }, '=>', reasons, '=>', reason)
+    log.info('cache:', metadata, { Zotero: Zotero.version, BetterBibTeX: BBT.version, lastUpdated: lastZoteroUpdate }, '=>', reasons, '=>', reason)
     if (reason) {
       log.info(`cache: reset-reopen because ${reason}`)
       this.db.close()
@@ -414,7 +414,7 @@ class $Cache implements CacheInterface {
     const tx = this.db.transaction('metadata', 'readwrite')
     const store = tx.objectStore('metadata')
     await store.put<CacheMetadata, string>({ key: 'Zotero', value: Zotero.version })
-    await store.put<CacheMetadata, string>({ key: 'BetterBibTeX', value: version })
+    await store.put<CacheMetadata, string>({ key: 'BetterBibTeX', value: BBT.version })
     await tx.commit()
   }
 
