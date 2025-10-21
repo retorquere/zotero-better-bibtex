@@ -1,7 +1,7 @@
 import { validate as isISBN } from 'is-isbn'
-import { validate as isISSN } from './issn'
+import { validate as isISSN } from './issn.js'
 import EAN from 'barcoder'
-import { isEDTF } from './dateparser'
+import { isEDTF } from './dateparser.js'
 
 const ismn_prefix = '9790'
 

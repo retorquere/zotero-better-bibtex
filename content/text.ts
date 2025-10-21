@@ -1,11 +1,11 @@
 import { toSentenceCase } from '@retorquere/bibtex-parser'
 
-import type { MarkupNode } from '../typings/markup'
-import { titleCased } from './csl-titlecase'
+import type { MarkupNode } from '../typings/markup.js'
+import { titleCased } from './csl-titlecase.js'
 
 import { serialize, parseFragment } from 'parse5'
 
-import Language from '../gen/babel/langmap.json'
+import Language from '../gen/babel/langmap.json' with { type: 'json' }
 // import Tag from '../gen/babel/tag.json'
 const LanguagePrefixes = Object.keys(Language).sort().reverse().filter(prefix => prefix.length > 3)
 

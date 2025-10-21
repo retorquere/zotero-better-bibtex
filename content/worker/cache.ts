@@ -2,8 +2,8 @@
 import { DatabaseFactory, Database } from '@idxdb/promised'
 // import { SynchronousPromise } from 'synchronous-promise'
 
-import type { Item } from '../../gen/typings/serialized-item'
-import { Cache as CacheInterface } from './interface'
+import type { Item } from '../../gen/typings/serialized-item.js'
+import { Cache as CacheInterface } from './interface.js'
 
 export type ExportContext = {
   context: string
@@ -29,14 +29,14 @@ export type CacheMetadata = {
   value: string
 }
 
-import { log } from '../logger'
+import { log } from '../logger.js'
 import stringify from 'safe-stable-stringify'
 
-import { pick, unpick } from '../object'
+import { pick, unpick } from '../object.js'
 
-import { byLabel, DisplayOptions } from '../../gen/translators'
-import BBT from '../../gen/version.json'
-// import { main as probe } from './cache-test'
+import { byLabel, DisplayOptions } from '../../gen/translators.js'
+import BBT from '../../gen/version.json' with { type: 'json' }
+// import { main as probe } from './cache-test.js'
 
 export const Context = new class {
   private defaults: Record<string, Partial<DisplayOptions & { translator: string }>> = {}

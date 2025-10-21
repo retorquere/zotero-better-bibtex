@@ -1,20 +1,20 @@
 declare const Zotero: any
 
-import { Translation } from '../lib/translator'
+import { Translation } from '../lib/translator.js'
 
-import { simplifyForExport } from '../../gen/items/simplify'
-import { Fields as ParsedExtraFields, get as getExtra, cslCreator } from '../../content/extra'
-import type { ExportedItem } from '../../content/worker/cache'
-import ExtraFields from '../../gen/items/extra-fields.json'
-import { log } from '../../content/logger'
-import { RegularItem } from '../../gen/typings/serialized-item'
-import * as postscript from '../lib/postscript'
-import * as dateparser from '../../content/dateparser'
+import { simplifyForExport } from '../../gen/items/simplify.js'
+import { Fields as ParsedExtraFields, get as getExtra, cslCreator } from '../../content/extra.js'
+import type { ExportedItem } from '../../content/worker/cache.js'
+import ExtraFields from '../../gen/items/extra-fields.json' with { type: 'json' }
+import { log } from '../../content/logger.js'
+import { RegularItem } from '../../gen/typings/serialized-item.js'
+import * as postscript from '../lib/postscript.js'
+import * as dateparser from '../../content/dateparser.js'
 import { Date as CSLDate, Data as CSLItem } from 'csl-json'
 
 type ExtendedItem = RegularItem & { extraFields: ParsedExtraFields }
 
-const CSLField = require('../../gen/items/csl.json')
+import CSLField from '../../gen/items/csl.json' with { type: 'json' }
 
 const keyOrder = [
   'id',
@@ -121,7 +121,7 @@ export abstract class CSLExporter {
             continue
           }
           if (cslField.$ref === '#/definitions/date-variable') {
-            csl[name] = this.date2CSL(dateparser.parse(value))
+            csl[name] = this.date2CSL(dateparser.parse(value as string))
             delete item.extraFields.kv[name]
             continue
           }
@@ -136,10 +136,10 @@ export abstract class CSLExporter {
         if (!ef?.csl) continue
 
         if (ef.type === 'date') {
-          csl[name] = this.date2CSL(dateparser.parse(value))
+          csl[name] = this.date2CSL(dateparser.parse(value as string))
         }
         else if (name === 'csl-type') {
-          if (!CSLField.type.enum.includes(value)) continue // and keep the kv variable, maybe for postscripting
+          if (!CSLField.type.enum.includes(value as string)) continue // and keep the kv variable, maybe for postscripting
           csl.type = value
         }
         else if (!csl[name]) {
@@ -151,7 +151,7 @@ export abstract class CSLExporter {
 
       for (const [ field, value ] of Object.entries(item.extraFields.creator)) {
         if (!ExtraFields[field].csl) continue
-        csl[field] = value.map(cslCreator)
+        csl[field] = (value as string[]).map(cslCreator)
 
         delete item.extraFields.creator[field]
       }

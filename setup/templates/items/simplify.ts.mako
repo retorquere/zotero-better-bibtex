@@ -1,7 +1,7 @@
 /* eslint-disable @stylistic/member-delimiter-style, @stylistic/space-infix-ops, @stylistic/padded-blocks, id-blacklist, @typescript-eslint/explicit-module-boundary-types */
 
-import { Item } from '../typings/serialized-item'
-import * as client from '../../content/client'
+import { Item } from '../typings/serialized-item.js'
+import * as client from '../../content/client.js'
 const zotero = client.slug === 'zotero'
 const jurism = !zotero
 

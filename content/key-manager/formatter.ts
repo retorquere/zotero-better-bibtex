@@ -1,6 +1,6 @@
-import type { Tag } from '../../gen/typings/serialized-item'
+import type { Tag } from '../../gen/typings/serialized-item.js'
 
-import * as client from '../../content/client'
+import * as client from '../../content/client.js'
 
 import nlp from 'compromise/one'
 interface Term {
@@ -10,61 +10,49 @@ interface Term {
   post: string
 }
 
-import { Events } from '../events'
+import { Events } from '../events.js'
 
-import { log } from '../logger'
+import { log } from '../logger.js'
 import fold2ascii from 'fold-to-ascii'
 import rescape from '@stdlib/utils-escape-regexp-string'
-import ucs2decode from 'punycode2/ucs2/decode'
+import { ucs2 } from 'punycode2'
 
 import * as CSL from 'citeproc'
 
-import { Preference } from '../prefs'
-import { JournalAbbrev } from '../journal-abbrev'
-import * as Extra from '../extra'
+import { Preference } from '../prefs.js'
+import { JournalAbbrev } from '../journal-abbrev.js'
+import * as Extra from '../extra.js'
 import { buildCiteKey as zotero_buildCiteKey } from '../../gen/ZoteroBibTeX.mjs'
-import { babelLanguage } from '../text'
-import { fetchSync as fetchInspireHEP } from '../inspire-hep'
+import { babelLanguage } from '../text.js'
+import { fetchSync as fetchInspireHEP } from '../inspire-hep.js'
 
-import { compile, upgrade } from './compile'
-import * as DateParser from '../dateparser'
+import { compile, upgrade } from './compile.js'
+import * as DateParser from '../dateparser.js'
 
-import itemCreators from '../../gen/items/creators.json'
-import * as items from '../../gen/items/items'
-import { ZoteroItemType, ZoteroFieldName } from '../../gen/items/items'
+import itemCreators from '../../gen/items/creators.json' with { type: 'json' }
+import * as items from '../../gen/items/items.js'
+import { ZoteroItemType, ZoteroFieldName } from '../../gen/items/items.js'
 
 import { parseFragment } from 'parse5'
 
 import { sprintf } from 'sprintf-js'
 
-import { chinese } from './chinese'
-import { japanese } from './japanese'
-import { transliterate as arabic } from './arabic'
-import { transliterate } from 'transliteration/dist/node/src/node/index'
-import { ukranian, mongolian, russian } from './cyrillic'
+import { chinese } from './chinese.js'
+import { japanese } from './japanese.js'
+import { transliterate as arabic } from './arabic.js'
+import { transliterate } from 'transliteration'
+import * as cyrillic from './cyrillic.js'
 
-import { listsync as csv2list } from '../load-csv'
+import { listsync as csv2list } from '../load-csv.js'
 
-import BabelTag from '../../gen/babel/tag.json'
+import BabelTag from '../../gen/babel/tag.json' with { type: 'json' }
 type BabelLanguage = string
 
 class Template<K> extends String {} // eslint-disable-line @typescript-eslint/no-unused-vars
 
-export type TransliterateMode
-  = 'minimal'
-  | 'german'
-  | 'japanese'
-  | 'chinese'
-  | 'arabic'
-  | 'ukranian'
-  | 'mongolian'
-  | 'russian'
-
-export type TransliterateModeAlias = TransliterateMode | 'de' | 'ja' | 'chinese-traditional' | 'zh-hant' | 'zh' | 'tw' | 'ar' | 'uk' | 'mn' | 'ru'
-
 const CJK = /([\p{Script=Hiragana}\p{Script=Katakana}\p{Script=Han}])/ug
 
-const unaliasTransliterateMode: Record<TransliterateModeAlias, TransliterateMode> = {
+const unaliasTransliterateMode = {
   minimal: 'minimal',
 
   german: 'german',
@@ -85,12 +73,20 @@ const unaliasTransliterateMode: Record<TransliterateModeAlias, TransliterateMode
   ukranian: 'ukranian',
   uk: 'ukranian',
 
-  mongolian: 'mongolian',
-  mn: 'mongolian',
-
   russian: 'russian',
   ru: 'russian',
-}
+
+  macedonian: 'macedonian',
+  mk: 'macedonian',
+
+  bulgarian: 'bulgarian',
+  bg: 'bulgarian',
+
+  serbian: 'serbian',
+  rs: 'serbian',
+} as const
+export type TransliterateModeAlias = keyof typeof unaliasTransliterateMode
+export type TransliterateMode = (typeof unaliasTransliterateMode)[keyof typeof unaliasTransliterateMode]
 
 function skip() {
   throw { next: true } // eslint-disable-line @typescript-eslint/only-throw-error
@@ -1445,15 +1441,23 @@ export class PatternFormatter {
         break
 
       case 'ukranian':
-        str = ukranian(str)
+        str = cyrillic.ukranian(str)
         break
 
-      case 'mongolian':
-        str = mongolian(str)
+      case 'bulgarian':
+        str = cyrillic.bulgarian(str)
+        break
+
+      case 'serbian':
+        str = cyrillic.serbian(str)
+        break
+
+      case 'macedonian':
+        str = cyrillic.macedonian(str)
         break
 
       case 'russian':
-        str = russian(str)
+        str = cyrillic.russian(str)
         break
 
       case 'minimal':
@@ -1496,7 +1500,7 @@ export class PatternFormatter {
     title = title.replace(/<\/?(?:i|b|sc|nc|code|span[^>]*)>|["]/ig, '').replace(/[/:]/g, ' ')
     let words = this.split(title)
       .map(word => options.nopunct ? this.nopunct(word, '') : word)
-      .filter(word => word && !(options.skipWords && ucs2decode(word).length === 1 && !word.match(/^\d+$/) && !word.match(CJK)))
+      .filter(word => word && !(options.skipWords && ucs2.decode(word).length === 1 && !word.match(/^\d+$/) && !word.match(CJK)))
 
     // apply jieba.cut and flatten.
     if (chinese.enabled && options.skipWords && this.item.transliterateMode === 'chinese') {

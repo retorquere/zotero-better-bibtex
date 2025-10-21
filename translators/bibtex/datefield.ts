@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 
-import type { ParsedDate } from '../../content/dateparser'
-import { Translation } from '../lib/translator'
-import type { Field } from './entry'
+import type { ParsedDate } from '../../content/dateparser.js'
+import { Translation } from '../lib/translator.js'
+import type { Field } from './entry.js'
 
 function pad(v: string, padding: string): string {
   if (v.length >= padding.length) return v

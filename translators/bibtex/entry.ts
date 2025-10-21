@@ -4,7 +4,7 @@
 
 declare const Zotero: any
 
-import { RegularItem as Item, Attachment, Tag } from '../../gen/typings/serialized-item'
+import { RegularItem as Item, Attachment, Tag } from '../../gen/typings/serialized-item.js'
 
 export type Field = {
   name: string
@@ -25,28 +25,28 @@ export type Field = {
   bibtex?: string
 }
 
-import type { ExportedItemMetadata } from '../../content/worker/cache'
-import * as DateParser from '../../content/dateparser'
+import type { ExportedItemMetadata } from '../../content/worker/cache.js'
+import * as DateParser from '../../content/dateparser.js'
 import fold2ascii from 'fold-to-ascii'
 
-import { Translation } from '../lib/translator'
+import { Translation } from '../lib/translator.js'
 
-import * as postscript from '../lib/postscript'
+import * as postscript from '../lib/postscript.js'
 
-import { replace_command_spacers, Mode as ConversionMode } from './unicode_translator'
-import { datefield } from './datefield'
-import ExtraFields from '../../gen/items/extra-fields.json'
-import { label as propertyLabel } from '../../gen/items/items'
-import type { Fields as ParsedExtraFields } from '../../content/extra'
-import { zoteroCreator as ExtraZoteroCreator } from '../../content/extra'
-import { log } from '../../content/logger'
-import { babelLanguage, titleCase } from '../../content/text'
-import BabelTag from '../../gen/babel/tag.json'
+import { replace_command_spacers, Mode as ConversionMode } from './unicode_translator.js'
+import { datefield } from './datefield.js'
+import ExtraFields from '../../gen/items/extra-fields.json' with { type: 'json' }
+import { label as propertyLabel } from '../../gen/items/items.js'
+import type { Fields as ParsedExtraFields, TeXString } from '../../content/extra.js'
+import { zoteroCreator as ExtraZoteroCreator } from '../../content/extra.js'
+import { log } from '../../content/logger.js'
+import { babelLanguage, titleCase } from '../../content/text.js'
+import BabelTag from '../../gen/babel/tag.json' with { type: 'json' }
 
-import { arXiv } from '../../content/arXiv'
-import { uri } from '../../content/escape'
+import { arXiv } from '../../content/arXiv.js'
+import { uri } from '../../content/escape.js'
 
-import { stringCompare } from '../lib/string-compare'
+import { stringCompare } from '../lib/string-compare.js'
 import * as CSL from 'citeproc'
 
 /*
@@ -130,7 +130,7 @@ const fieldOrder = [
   return acc
 }, {})
 
-function property_sort(a: [string, string], b: [string, string]): number {
+function property_sort(a: [string, string, string], b: [string, string, string]): number {
   return stringCompare(a[0], b[0])
 }
 
@@ -427,9 +427,9 @@ export class Entry {
     return true
   }
 
-  private valueish(value) {
+  private valueish(value: number | string): string {
     switch (typeof value) {
-      case 'number': return `${ value }`
+      case 'number': return `${value}`
       case 'string': return value.replace(this.re.nonwordish, '').toLowerCase()
       default: return ''
     }
@@ -821,7 +821,7 @@ export class Entry {
       }
 
       if (name) {
-        this.override({ name, verbatim: name, orig: { inherit: true }, value, enc, replace, fallback: !replace })
+        this.override({ name, verbatim: name, orig: { inherit: true }, value: value as string, enc, replace, fallback: !replace })
       }
       else {
         log.error(`Unmapped extra field ${ key }=${ value }`)
@@ -839,10 +839,10 @@ export class Entry {
     }
 
     const bibtexStrings = this.translation.collected.preferences.exportBibTeXStrings.startsWith('match')
-    for (const [ name, field ] of Object.entries(this.item.extraFields.tex)) {
+    for (const [ name, field ] of Object.entries(this.item.extraFields.tex) as [ string, TeXString ][]) {
       // psuedo-var, sets the entry type. Repeat application here because this needs to override all else.
       if (name === 'entrytype' || name === 'referencetype') { // phase out reference
-        this.entrytype = field.value
+        this.entrytype = field.value as string
         continue
       }
 
@@ -1551,7 +1551,7 @@ export class Entry {
     ]
     const unused_props = Object.entries(this.item.extraFields.kv).map(([ p, v ]) => [ `extra: ${ propertyLabel[p.toLowerCase()] || p }`, v ])
       .concat(Object.entries(this.item))
-      .map(([ p, v ]) => [ p, v, this.valueish(v) ])
+      .map(([ p, v ]: [ string, string ]) => [ p, v, this.valueish(v) ] as [ string, string, string ])
       .filter(([ p, v, vi ]) => !ignore_unused_props.includes(p) && !used_values.includes(v) && (vi && !used_values.includes(vi)))
       .sort(property_sort)
 

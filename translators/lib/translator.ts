@@ -1,17 +1,17 @@
 declare const Zotero: any
 
-import * as client from '../../content/client'
-import { Path } from '../../content/file'
+import * as client from '../../content/client.js'
+import { Path } from '../../content/file.js'
 
-import * as Prefs from '../../gen/preferences/meta'
+import * as Prefs from '../../gen/preferences/meta.js'
 const PrefNames: Set<string> = new Set(Object.keys(Prefs.defaults))
-import { DisplayOptions } from '../../gen/translators'
-import { regex as escapeRE } from '../../content/escape'
-import { Collection, Attachment } from '../../gen/typings/serialized-item'
-import type { Exporter as BibTeXExporter } from '../bibtex/exporter'
+import { DisplayOptions } from '../../gen/translators.js'
+import { regex as escapeRE } from '../../content/escape.js'
+import { Collection, Attachment } from '../../gen/typings/serialized-item.js'
+import type { Exporter as BibTeXExporter } from '../bibtex/exporter.js'
 import type { CharMap } from 'unicode2latex'
-import { log } from '../../content/logger'
-import type { Collected } from './collect'
+import { log } from '../../content/logger.js'
+import type { Collected } from './collect.js'
 
 export type Output = {
   body: string
@@ -81,17 +81,17 @@ class Override {
 }
 
 export class Translation {
-  public importToExtra: Record<string, 'plain' | 'force'>
-  public skipFields: string[]
-  public skipField: RegExp
+  public importToExtra!: Record<string, 'plain' | 'force'>
+  public skipFields!: string[]
+  public skipField!: RegExp
   public verbatimFields?: (string | RegExp)[]
-  public csquotes: { open: string; close: string }
+  public csquotes!: { open: string; close: string }
   public export: { dir: string; path: string } = {
     dir: undefined,
     path: undefined,
   }
 
-  public charmap: CharMap
+  public charmap!: CharMap
 
   public BetterBibLaTeX?: boolean
   public BetterBibTeX?: boolean
@@ -116,13 +116,13 @@ export class Translation {
 
   private cacheable = true
 
-  public preferences: Prefs.Preferences
-  public options: DisplayOptions
+  public preferences!: Prefs.Preferences
+  public options!: DisplayOptions
 
-  public isJurisM: boolean
-  public isZotero: boolean
-  public unicode: boolean
-  public paths: {
+  public isJurisM!: boolean
+  public isZotero!: boolean
+  public unicode!: boolean
+  public paths!: {
     caseSensitive: boolean
     sep: string
   }

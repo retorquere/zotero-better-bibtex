@@ -1,5 +1,5 @@
-import { Collected } from './lib/collect'
-import type { Header } from '../gen/translators'
+import { Collected } from './lib/collect.js'
+import type { Header } from '../gen/translators.js'
 import { detectImport as zotero_detectImport } from '../gen/ZoteroBibTeX.mjs'
 
 declare const Zotero: any

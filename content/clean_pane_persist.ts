@@ -1,4 +1,4 @@
-import { log } from './logger'
+import { log } from './logger.js'
 
 export function clean_pane_persist(): void {
   const pref = Zotero.Prefs.get('pane.persist') as string

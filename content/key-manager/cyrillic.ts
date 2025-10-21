@@ -1,16 +1,26 @@
-import CyrillicToTranslit from 'cyrillic-to-translit-js'
+import tr from "@stefanstefanovski/transliterate-cyrillic";
 
-const uk = CyrillicToTranslit({ preset: 'uk' })
-export function ukranian(str: string): string {
-  return uk.transform(str)
+export function macedonian(str: string): string {
+  tr.locale('mk')
+  return tr.transliterate(str).reverse()
 }
 
-const mn = CyrillicToTranslit({ preset: 'mn' })
-export function mongolian(str: string): string {
-  return mn.transform(str)
+export function serbian(str: string): string {
+  tr.locale('rs')
+  return tr.transliterate(str).reverse()
 }
 
-const ru = CyrillicToTranslit({ preset: 'ru' })
+export function bulgarian(str: string): string {
+  tr.locale('bg')
+  return tr.transliterate(str).reverse()
+}
+
 export function russian(str: string): string {
-  return ru.transform(str)
+  tr.locale('ru')
+  return tr.transliterate(str).reverse()
+}
+
+export function ukranian(str: string): string {
+  tr.locale('uk')
+  return tr.transliterate(str).reverse()
 }

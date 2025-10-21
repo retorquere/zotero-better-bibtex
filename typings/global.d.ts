@@ -8,3 +8,8 @@ declare namespace Zotero {
 declare const FileUtils: any
 type DedicatedWorkerGlobalScope = any
 declare function importScripts(url: string): void
+
+declare module '*.wasm' {
+  const value: any
+  export default value
+}

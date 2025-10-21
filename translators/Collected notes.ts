@@ -1,18 +1,19 @@
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 
-import { Translation } from './lib/translator'
-import { Collected } from './lib/collect'
-import type { Header } from '../gen/translators'
+import { Translation } from './lib/translator.js'
+import { Collected } from './lib/collect.js'
+import type { Header } from '../gen/translators.js'
 declare var ZOTERO_TRANSLATOR_INFO: Header // eslint-disable-line no-var
 
 declare const Zotero: any
 
-import html2md from 'html-to-md'
+import Turndown from 'turndown'
+const turndown = new Turndown
 
-import { Item } from '../gen/typings/serialized-item'
+import { Item } from '../gen/typings/serialized-item.js'
 
-import * as escape from '../content/escape'
-import * as Extra from '../content/extra'
+import * as escape from '../content/escape.js'
+import * as Extra from '../content/extra.js'
 
 function clean(item: Item): Item {
   switch (item.itemType) {
@@ -92,7 +93,7 @@ class Exporter {
     style += '  blockquote { border-left: 1px solid gray; }\n'
 
     this.html = `<html><head><style>${ style }</style></head><body>${ this.body }</body></html>`
-    if (this.translation.collected.displayOptions.markdown) this.markdown = html2md(this.html)
+    if (this.translation.collected.displayOptions.markdown) this.markdown = turndown.turndown(this.html)
   }
 
   write_collection(collection, level = 1) {

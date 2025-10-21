@@ -1,5 +1,5 @@
-import { log } from './logger'
-import { isWin } from './client'
+import { log } from './logger.js'
+import { isWin } from './client.js'
 
 export const File = new class {
   public async exists(path: string): Promise<boolean> {

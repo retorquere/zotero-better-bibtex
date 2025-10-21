@@ -1,6 +1,6 @@
-import { log } from './logger'
-import { parse as arXiv } from './arXiv'
-import * as Extra from './extra'
+import { log } from './logger.js'
+import { parse as arXiv } from './arXiv.js'
+import * as Extra from './extra.js'
 
 function urls(item): { type: string; id: string; url: string }[] {
   const parsed = Extra.get(item.getField('extra'), 'zotero')

@@ -1,18 +1,18 @@
-import * as client from './client'
-import { Path, File } from './file'
+import * as client from './client.js'
+import { Path, File } from './file.js'
 
-import { Cache } from './translators/worker'
-import { regex as escapeRE } from './escape'
+import { Cache } from './translators/worker.js'
+import { regex as escapeRE } from './escape.js'
 
-import { Preference } from './prefs'
+import { Preference } from './prefs.js'
 
-import { defaults } from '../gen/preferences/meta'
+import { defaults } from '../gen/preferences/meta.js'
 const supported: string[] = Object.keys(defaults).filter(name => ![ 'client', 'testing', 'platform', 'newTranslatorsAskRestart' ].includes(name))
 
-import { byId } from '../gen/translators'
-import { log } from './logger'
-import { AutoExport } from './auto-export'
-import { KeyManager } from './key-manager'
+import { byId } from '../gen/translators.js'
+import { log } from './logger.js'
+import { AutoExport } from './auto-export.js'
+import { KeyManager } from './key-manager.js'
 
 import { FilePickerHelper } from 'zotero-plugin-toolkit'
 
@@ -20,9 +20,9 @@ import * as UZip from 'uzip'
 
 const ENV = Components.classes['@mozilla.org/process/environment;1'].getService(Components.interfaces.nsIEnvironment)
 
-import { alert } from './prompt'
+import { alert } from './prompt.js'
 
-import s3 from './s3.json'
+import s3 from './s3.json' with { type: 'json' }
 
 const kB = 1024
 
@@ -41,7 +41,7 @@ type Wizard = HTMLElement & {
   }
 }
 
-import BBT from '../gen/version.json'
+import BBT from '../gen/version.json' with { type: 'json' }
 
 type Report = {
   context: string

@@ -1,6 +1,8 @@
 {
   "compilerOptions": {
     "allowUnreachableCode": false,
+    "allowSyntheticDefaultImports": true,
+    "forceConsistentCasingInFileNames": true,
     "noUnusedLocals": true,
     "isolatedModules": true,
     "esModuleInterop": true,
@@ -8,13 +10,13 @@
     "importHelpers": true,
     "target": "es2022",
     "disableSizeLimit": true,
-    "module": "nodenext",
     "noImplicitAny": false,
     "removeComments": false,
     "preserveConstEnums": true,
     "sourceMap": false,
     "downlevelIteration": true,
     "resolveJsonModule": true,
+    "module": "nodenext",
     "moduleResolution": "nodenext",
     "typeRoots": [
       "./node_modules",
@@ -30,12 +32,10 @@
   "include": [
     "content/**/*",
     "translators/**/*",
-    "setup/**/*",
     "gen/**/*",
     "typings/*"
   ],
   "exclude": [
-    "headless",
     "util",
     "**/*.spec.ts"
   ]

@@ -1,12 +1,12 @@
 declare const ChromeUtils: any
 
-import { Formatter } from './cayw/formatter'
-import { TeXstudio } from './tex-studio'
-import { flash } from './flash'
-import { log, stringify } from './logger'
-import { orchestrator } from './orchestrator'
-import { Server } from './server'
-import { toClipboard } from './text'
+import { Formatter } from './cayw/formatter.js'
+import { TeXstudio } from './tex-studio.js'
+import { flash } from './flash.js'
+import { log, stringify } from './logger.js'
+import { orchestrator } from './orchestrator.js'
+import { Server } from './server.js'
+import { toClipboard } from './text.js'
 
 class FieldEnumerator {
   public QueryInterface = ChromeUtils.generateQI([ Components.interfaces.nsISupports, Components.interfaces.nsISimpleEnumerator ])

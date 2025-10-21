@@ -1,7 +1,7 @@
-import * as client from './client'
-import { orchestrator } from './orchestrator'
+import * as client from './client.js'
+import { orchestrator } from './orchestrator.js'
 
-import { simplifyForExport as simplify } from '../gen/items/simplify'
+import { simplifyForExport as simplify } from '../gen/items/simplify.js'
 
 export const JournalAbbrev = new class {
   private style: any

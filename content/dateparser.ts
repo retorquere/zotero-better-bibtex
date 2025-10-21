@@ -4,7 +4,7 @@ import edtfy from 'edtfy'
 // declare const dump: (msg: string) => void
 // function dump(...msg) { console.log(...msg) }
 
-import monthsMap from '../gen/dateparser-months.json'
+import monthsMap from '../gen/dateparser-months.json' with { type: 'json' }
 const Month = new class {
   #no = {
     january: 1,
@@ -52,7 +52,7 @@ const Month = new class {
   }
 }
 
-import { getLocaleDateOrder } from '../submodules/zotero-utilities/date'
+import { getLocaleDateOrder } from '../submodules/zotero-utilities/date.js'
 
 type SeasonID = 1 | 2 | 3 | 4
 

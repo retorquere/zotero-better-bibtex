@@ -1,19 +1,19 @@
 /* eslint-disable @typescript-eslint/no-unsafe-return, @typescript-eslint/only-throw-error, @typescript-eslint/require-await */
 
-import { getItemsAsync } from './get-items-async'
-import { AUXScanner } from './aux-scanner'
-import { AutoExport } from './auto-export'
-import { Translators } from './translators'
-import { get as getCollection } from './collection'
-import * as Library from './library'
-import { log } from './logger'
-import { Preference } from './prefs'
-import { orchestrator } from './orchestrator'
-import { Server } from './server'
+import { getItemsAsync } from './get-items-async.js'
+import { AUXScanner } from './aux-scanner.js'
+import { AutoExport } from './auto-export.js'
+import { Translators } from './translators.js'
+import { get as getCollection } from './collection.js'
+import * as Library from './library.js'
+import { log } from './logger.js'
+import { Preference } from './prefs.js'
+import { orchestrator } from './orchestrator.js'
+import { Server } from './server.js'
 
-import BBT from '../gen/version.json'
+import BBT from '../gen/version.json' with { type: 'json' }
 
-import { methods } from '../gen/api/json-rpc'
+import { methods } from '../gen/api/json-rpc.js'
 
 const OK = 200
 

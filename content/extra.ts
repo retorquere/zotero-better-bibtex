@@ -1,7 +1,7 @@
-import mapping from '../gen/items/extra-fields.json'
+import mapping from '../gen/items/extra-fields.json' with { type: 'json' }
 import * as CSL from 'citeproc'
 
-type TeXString = { value: string; mode?: 'raw' | 'cased'; line: number }
+export type TeXString = { value: string; mode?: 'raw' | 'cased'; line: number }
 
 type Creator = {
   name: string

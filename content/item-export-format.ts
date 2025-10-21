@@ -1,11 +1,11 @@
-import { Path } from './file'
+import { Path } from './file.js'
 
-import { log } from './logger'
-import { getItemsAsync } from './get-items-async'
-import type { Attachment, RegularItem, Item, Note } from '../gen/typings/serialized-item'
+import { log } from './logger.js'
+import { getItemsAsync } from './get-items-async.js'
+import type { Attachment, RegularItem, Item, Note } from '../gen/typings/serialized-item.js'
 
-import { JournalAbbrev } from './journal-abbrev'
-import { Preference } from './prefs'
+import { JournalAbbrev } from './journal-abbrev.js'
+import { Preference } from './prefs.js'
 
 class Serializer {
   private attachment(serialized: Attachment, att): Attachment {

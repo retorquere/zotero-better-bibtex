@@ -1,6 +1,6 @@
 /* eslint-disable prefer-rest-params */
 
-import { Deferred } from './promise'
+import { Deferred } from './promise.js'
 const Ready = new Deferred<boolean>
 
 import { MenuManager } from 'zotero-plugin-toolkit'
@@ -9,52 +9,51 @@ const Menu = new MenuManager
 import { DebugLog } from 'zotero-plugin/debug-log'
 const pubkey: string = require('./public.pem')
 
-import { Scheduler } from './scheduler'
-import { TeXstudio } from './tex-studio'
-import { icons } from './icons'
-import { prompt } from './prompt'
-import { Elements } from './create-element'
-import * as ExportOptions from './ExportOptions'
-import * as MenuHelper from './menu-helper'
-import { PrefPane } from './Preferences'
-import { ErrorReport } from './ErrorReport'
-import { monkey } from './monkey-patch'
-import { clean_pane_persist } from './clean_pane_persist'
-import { flash } from './flash'
-import { orchestrator } from './orchestrator'
-import type { Reason } from './bootstrap'
-import type { ExportedItem, ExportedItemMetadata } from './worker/cache'
-import { Cache } from './translators/worker'
-import { DisplayOptions } from '../gen/translators'
+import { Scheduler } from './scheduler.js'
+import { TeXstudio } from './tex-studio.js'
+import { icons } from './icons.js'
+import { prompt } from './prompt.js'
+import { Elements } from './create-element.js'
+import * as ExportOptions from './ExportOptions.js'
+import * as MenuHelper from './menu-helper.js'
+import { PrefPane } from './Preferences.js'
+import { ErrorReport } from './ErrorReport.js'
+import { monkey } from './monkey-patch.js'
+import { clean_pane_persist } from './clean_pane_persist.js'
+import { flash } from './flash.js'
+import { orchestrator } from './orchestrator.js'
+import type { Reason } from './bootstrap.js'
+import type { ExportedItem, ExportedItemMetadata } from './worker/cache.js'
+import { Cache } from './translators/worker.js'
+import { DisplayOptions } from '../gen/translators.js'
 
-import { Preference } from './prefs' // needs to be here early, initializes the prefs observer
+import { Preference } from './prefs.js' // needs to be here early, initializes the prefs observer
 require('./pull-export') // just require, initializes the pull-export end points
 require('./json-rpc') // just require, initializes the json-rpc end point
-import { AUXScanner } from './aux-scanner'
-import * as Extra from './extra'
-import { sentenceCase, HTMLParser, HTMLParserOptions } from './text'
+import { AUXScanner } from './aux-scanner.js'
+import * as Extra from './extra.js'
+import { sentenceCase, HTMLParser, HTMLParserOptions } from './text.js'
 
-import { AutoExport } from './auto-export'
-import { uri } from './escape'
+import { AutoExport } from './auto-export.js'
+import { uri } from './escape.js'
 
-import { log } from './logger'
-// import { trace } from './logger'
-import { Events } from './events'
+import { log } from './logger.js'
+import { Events } from './events.js'
 
-import { Translators } from './translators'
-import { Exporter } from './translators/worker'
-import { fix as fixExportFormat } from './item-export-format'
-import { KeyManager } from './key-manager'
-import { TestSupport } from './test-support'
-import * as l10n from './l10n'
+import { Translators } from './translators.js'
+import { Exporter } from './translators/worker.js'
+import { fix as fixExportFormat } from './item-export-format.js'
+import { KeyManager } from './key-manager.js'
+import { TestSupport } from './test-support.js'
+import * as l10n from './l10n.js'
 import * as CSL from 'citeproc'
 
-import { generateBibLaTeX } from '../translators/bibtex/biblatex'
-import { generateBibTeX, importBibTeX } from '../translators/bibtex/bibtex'
-import { generateBBTJSON, importBBTJSON } from '../translators/lib/bbtjson'
-import { generateCSLYAML, parseCSLYAML } from '../translators/csl/yaml'
-import { generateCSLJSON } from '../translators/csl/json'
-import type { Collected } from '../translators/lib/collect'
+import { generateBibLaTeX } from '../translators/bibtex/biblatex.js'
+import { generateBibTeX, importBibTeX } from '../translators/bibtex/bibtex.js'
+import { generateBBTJSON, importBBTJSON } from '../translators/lib/bbtjson.js'
+import { generateCSLYAML, parseCSLYAML } from '../translators/csl/yaml.js'
+import { generateCSLJSON } from '../translators/csl/json.js'
+import type { Collected } from '../translators/lib/collect.js'
 
 // MONKEY PATCHES
 
@@ -275,15 +274,15 @@ monkey.patch(Zotero.Item.prototype, 'clone', original => function Zotero_Item_pr
   return item
 })
 
-import * as CAYW from './cayw'
+import * as CAYW from './cayw.js'
 monkey.patch(Zotero.Integration, 'getApplication', original => function Zotero_Integration_getApplication(agent: string, _command: any, _docId: any) {
   if (agent === 'BetterBibTeX') return CAYW.Application
   // eslint-disable-next-line @typescript-eslint/no-unsafe-return
   return original.apply(this, arguments)
 })
 
-import * as DateParser from './dateparser'
-import type { ParsedDate } from './dateparser'
+import * as DateParser from './dateparser.js'
+import type { ParsedDate } from './dateparser.js'
 
 Zotero.Translate.Export.prototype.Sandbox.BetterBibTeX = {
   clientName: Zotero.clientName,

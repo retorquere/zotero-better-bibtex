@@ -1,13 +1,13 @@
-import { Path, File } from './file'
+import { Path, File } from './file.js'
 
-import { Translators } from './translators'
-import { Preference } from './prefs'
+import { Translators } from './translators.js'
+import { Preference } from './prefs.js'
 import { FilePickerHelper } from 'zotero-plugin-toolkit'
-import { findBinary } from './path-search'
-import { log } from './logger'
-import { alert } from './prompt'
+import { findBinary } from './path-search.js'
+import { log } from './logger.js'
+import { alert } from './prompt.js'
 
-import BBT from '../gen/version.json'
+import BBT from '../gen/version.json' with { type: 'json' }
 
 type Parsed = {
   source: 'MarkDown' | 'BibTeX AUX'

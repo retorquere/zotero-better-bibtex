@@ -1,19 +1,19 @@
-import * as client from './client'
-import { Path } from './file'
+import * as client from './client.js'
+import { Path } from './file.js'
 
-import { log } from './logger'
+import { log } from './logger.js'
 
-import { Preference } from './prefs'
-import { options as preferenceOptions, defaults as preferenceDefaults } from '../gen/preferences/meta'
-import { Formatter } from './key-manager/formatter'
-import { AutoExport } from './auto-export'
-import { Translators } from './translators'
-import * as l10n from './l10n'
-import { Events } from './events'
+import { Preference } from './prefs.js'
+import { options as preferenceOptions, defaults as preferenceDefaults } from '../gen/preferences/meta.js'
+import { Formatter } from './key-manager/formatter.js'
+import { AutoExport } from './auto-export.js'
+import { Translators } from './translators.js'
+import * as l10n from './l10n.js'
+import { Events } from './events.js'
 import { FilePickerHelper } from 'zotero-plugin-toolkit'
-import { flash } from './flash'
-import { icons } from './icons'
-import { Cache } from './translators/worker'
+import { flash } from './flash.js'
+import { icons } from './icons.js'
+import { Cache } from './translators/worker.js'
 
 // safe to keep "global" since only one pref pane will be loaded at any one time
 let $window: Window & { sizeToContent(): void }

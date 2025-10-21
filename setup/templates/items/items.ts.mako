@@ -1,6 +1,6 @@
 /* eslint-disable id-blacklist */
 
-import * as client from '../../content/client'
+import * as client from '../../content/client.js'
 const jurism = client.slug === 'jurism'
 const zotero = !jurism
 

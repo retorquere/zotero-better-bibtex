@@ -2,7 +2,7 @@
 
 const monkeys: Monkey[] = []
 
-import { log } from './logger'
+import { log } from './logger.js'
 
 export class Monkey {
   constructor(public enabled = false) {

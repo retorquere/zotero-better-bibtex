@@ -1,14 +1,14 @@
 /* eslint-disable @typescript-eslint/require-await, @typescript-eslint/no-unsafe-return, @typescript-eslint/no-shadow */
 
-import { Translators } from '../translators'
-import { getItemsAsync } from '../get-items-async'
-import { Preference } from '../prefs'
-import { html as escapeHTML } from '../escape'
-import { scannableCite } from '../../gen/ScannableCite'
-import { citeCreators, yearFromDate } from '../../translators/Better BibTeX Citation Key Quick Copy'
+import { Translators } from '../translators.js'
+import { getItemsAsync } from '../get-items-async.js'
+import { Preference } from '../prefs.js'
+import { html as escapeHTML } from '../escape.js'
+import { scannableCite } from '../../gen/ScannableCite.js'
+import { citeCreators, yearFromDate } from '../../translators/Better BibTeX Citation Key Quick Copy.js'
 import { Eta } from 'eta'
 const eta = new Eta({ autoEscape: true })
-import { simplifyForExport } from '../../gen/items/simplify'
+import { simplifyForExport } from '../../gen/items/simplify.js'
 
 import { Transform } from 'unicode2latex'
 

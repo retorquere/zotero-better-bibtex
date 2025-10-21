@@ -1,15 +1,15 @@
-import * as client from './client'
-import { File } from './file'
+import * as client from './client.js'
+import { File } from './file.js'
 
-import { Events } from './events'
+import { Events } from './events.js'
 import type { CharMap } from 'unicode2latex'
 
-import { Preferences as $Preferences, PreferenceName, defaults } from '../gen/preferences/meta'
-import { PreferenceManager as PreferenceManagerBase } from '../gen/preferences'
-import { dict as csv2dict } from './load-csv'
-import { log } from './logger'
-import { flash } from './flash'
-import { pick } from './object'
+import { Preferences as $Preferences, PreferenceName, defaults } from '../gen/preferences/meta.js'
+import { PreferenceManager as PreferenceManagerBase } from '../gen/preferences.js'
+import { dict as csv2dict } from './load-csv.js'
+import { log } from './logger.js'
+import { flash } from './flash.js'
+import { pick } from './object.js'
 
 export const Preference = new class PreferenceManager extends PreferenceManagerBase {
   public prefix = 'translators.better-bibtex.'

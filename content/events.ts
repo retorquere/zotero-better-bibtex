@@ -1,6 +1,6 @@
 import Emittery from 'emittery'
 
-import { log } from './logger'
+import { log } from './logger.js'
 
 type ZoteroAction = 'modify' | 'add' | 'trash' | 'delete'
 

@@ -1,9 +1,9 @@
-import { Translation } from '../lib/translator'
-import { HTMLParser } from '../../content/text'
+import { Translation } from '../lib/translator.js'
+import { HTMLParser } from '../../content/text.js'
 
-import type { MarkupNode } from '../../typings/markup'
+import type { MarkupNode } from '../../typings/markup.js'
 
-import { log } from '../../content/logger'
+import { log } from '../../content/logger.js'
 import HE from 'he'
 import { Transform } from 'unicode2latex'
 
