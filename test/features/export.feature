@@ -10,7 +10,7 @@ Feature: Export
     Then an export using "Better BibLaTeX" should match "export/*.biblatex"
 
     Examples:
-      | file                                                                                                                     | references |
+      | file                                                                                                                       | references |
       | Export fails with Translation using Better BibTeX failed Error normalize EDTF failed to normalize Century #3322          | 5          |
       | Replacement option for space between multipart last names in citekey generation #3289                                    | 1          |
       | Option to omit last name prefixes in citekey generation #3295                                                            | 1          |
@@ -47,7 +47,7 @@ Feature: Export
       | Support for Chinese Quotation Marks When Exporting with Export unicode as plaintext latex commands #2810                 | 1          |
       | Exporting item type film merges scriptwriter with other contributors #2802                                               | 1          |
       | en-dash and i-circumflex translation error #2796                                                                         | 3          |
-      | Exporting # in hashtags. #2795                                                                                           | 1          |
+      | Exporting # in hashtags. \\#2795                                                                                         | 1          |
       | My citation key formula suddenly includes editors for book sections even when there is a declared author #2794           | 2          |
       | Direct access to Zotero Creators fields #2787                                                                            | 1          |
       | shorttitle in citekeys always pinyinized #2770                                                                           | 1          |
@@ -78,8 +78,8 @@ Feature: Export
       | authEtal2(sep='&') + year =  & disappears #2252                                                                          | 1          |
       | Apply Title Casing to tex.subtitle entry on export #2213                                                                 | 1          |
       | Citation key format backward compatibility issue. #2204                                                                  | 1          |
-      | noclean                                                                                                                  | 1          |
-      | date with fractional seconds                                                                                             | 1          |
+      | noclean                                                                                                                    | 1          |
+      | date with fractional seconds                                                                                               | 1          |
       | Citation key add `_preprint` if URL contains `arxiv.org` #2163                                                           | 12         |
       | Authors export looks like this prefix=von useprefix=true... #2138                                                        | 1          |
       | Zotero's Manuscript 'Type' is mapped to both biblatex's 'type' and 'howpublished' #2114                                  | 1          |
@@ -109,37 +109,37 @@ Feature: Export
       | error during export: duplicate field note #1636                                                                          | 1          |
       | Unexpected HTML tags abort export #1575                                                                                  | 1          |
       | JSTOR eprint data export depends on whether jstor link starts with https vs http #1543                                   | 1          |
-      | lone ogonek should have brace                                                                                            | 1          |
+      | lone ogonek should have brace                                                                                              | 1          |
       | Dateparser does not recognize de in Spanish dates #1513                                                                  | 1          |
       | Inconsistent date field formatting in BibLaTeX export #1493                                                              | 1          |
       | Regression in export to better biblatex #1491                                                                            | 1          |
       | Some Unicode characters converted to LaTeX #1481                                                                         | 1          |
       | @jurisdiction; map court,authority to institution #326                                                                   | 1          |
-      | BBT export of square brackets in date #245 -- xref should not be escaped #246                                            | 3          |
+      | BBT export of square brackets in date #245 -- xref should not be escaped \\#246                                          | 3          |
       | BBT yields error with quality report #1387                                                                               | 1          |
       | Be robust against misconfigured journal abbreviator #127                                                                 | 1          |
-      | Better BibLaTeX.001                                                                                                      | 1          |
-      | Better BibLaTeX.002                                                                                                      | 2          |
-      | Better BibLaTeX.003                                                                                                      | 2          |
-      | Better BibLaTeX.004                                                                                                      | 1          |
-      | Better BibLaTeX.005                                                                                                      | 1          |
-      | Better BibLaTeX.006                                                                                                      | 1          |
-      | Better BibLaTeX.007                                                                                                      | 1          |
-      | Better BibLaTeX.009                                                                                                      | 2          |
-      | Better BibLaTeX.010                                                                                                      | 1          |
-      | Better BibLaTeX.011                                                                                                      | 1          |
-      | Better BibLaTeX.012                                                                                                      | 1          |
-      | Better BibLaTeX.013                                                                                                      | 1          |
-      | Better BibLaTeX.014                                                                                                      | 1          |
-      | Better BibLaTeX.015                                                                                                      | 1          |
-      | Better BibLaTeX.016                                                                                                      | 1          |
-      | Better BibLaTeX.017                                                                                                      | 1          |
-      | Better BibLaTeX.019                                                                                                      | 1          |
-      | Better BibLaTeX.020                                                                                                      | 1          |
-      | Better BibLaTeX.021                                                                                                      | 1          |
-      | Better BibLaTeX.022                                                                                                      | 1          |
-      | Better BibLaTeX.023                                                                                                      | 1          |
-      | Better BibLaTeX.stable-keys                                                                                              | 6          |
+      | Better BibLaTeX.001                                                                                                        | 1          |
+      | Better BibLaTeX.002                                                                                                        | 2          |
+      | Better BibLaTeX.003                                                                                                        | 2          |
+      | Better BibLaTeX.004                                                                                                        | 1          |
+      | Better BibLaTeX.005                                                                                                        | 1          |
+      | Better BibLaTeX.006                                                                                                        | 1          |
+      | Better BibLaTeX.007                                                                                                        | 1          |
+      | Better BibLaTeX.009                                                                                                        | 2          |
+      | Better BibLaTeX.010                                                                                                        | 1          |
+      | Better BibLaTeX.011                                                                                                        | 1          |
+      | Better BibLaTeX.012                                                                                                        | 1          |
+      | Better BibLaTeX.013                                                                                                        | 1          |
+      | Better BibLaTeX.014                                                                                                        | 1          |
+      | Better BibLaTeX.015                                                                                                        | 1          |
+      | Better BibLaTeX.016                                                                                                        | 1          |
+      | Better BibLaTeX.017                                                                                                        | 1          |
+      | Better BibLaTeX.019                                                                                                        | 1          |
+      | Better BibLaTeX.020                                                                                                        | 1          |
+      | Better BibLaTeX.021                                                                                                        | 1          |
+      | Better BibLaTeX.022                                                                                                        | 1          |
+      | Better BibLaTeX.023                                                                                                        | 1          |
+      | Better BibLaTeX.stable-keys                                                                                                | 6          |
       | Better BibTeX does not use biblatex fields eprint and eprinttype #170                                                    | 1          |
       | BetterBibLaTeX; Software field company is mapped to publisher instead of organization #1054                              | 1          |
       | BibLaTeX Patent author handling, type #1060                                                                              | 2          |
@@ -147,7 +147,7 @@ Feature: Export
       | BibTeX variable support for journal titles. #309                                                                         | 1          |
       | Book converted to mvbook #288                                                                                            | 1          |
       | Book sections have book title for journal in citekey #409                                                                | 1          |
-      | BraceBalancer                                                                                                            | 1          |
+      | BraceBalancer                                                                                                              | 1          |
       | CSL status = biblatex pubstate #573                                                                                      | 1          |
       | CSL title, volume-title, container-title=BL title, booktitle, maintitle #381                                             | 2          |
       | CSL variables only recognized when in lowercase #408                                                                     | 1          |
@@ -166,22 +166,22 @@ Feature: Export
       | Duplicate number field causes export error #1448                                                                         | 1          |
       | EDTF dates in BibLaTeX #590                                                                                              | 27         |
       | Error exporting duplicate eprinttype #1128                                                                               | 1          |
-      | Export Forthcoming as Forthcoming                                                                                        | 1          |
+      | Export Forthcoming as Forthcoming                                                                                          | 1          |
       | Export Newspaper Article misses section field #132                                                                       | 1          |
       | Export Patent Applications as such #1413                                                                                 | 2          |
       | Export error for items without publicationTitle and Preserve BibTeX variables enabled #201                               | 1          |
       | Export mapping for reporter field #219                                                                                   | 1          |
       | Exporting of single-field author lacks braces #130                                                                       | 1          |
       | Extra semicolon in biblatexadata causes export failure #133                                                              | 3          |
-      | Fields in Extra should override defaults                                                                                 | 1          |
+      | Fields in Extra should override defaults                                                                                   | 1          |
       | German Umlaut separated by brackets #146                                                                                 | 1          |
-      | HTML Fragment separator escaped in url #140 #147                                                                         | 1          |
-      | Hang on non-file attachment export #112 - URL export broken #114                                                         | 2          |
+      | HTML Fragment separator escaped in url #140 \\#147                                                                       | 1          |
+      | Hang on non-file attachment export #112 - URL export broken \\#114                                                       | 2          |
       | Ignore HTML tags when generating citation key #264                                                                       | 1          |
       | Japanese rendered as Chinese in Citekey #979                                                                             | 1          |
       | Juris-M missing multi-lingual fields #482                                                                                | 2          |
       | Latex commands in extra-field treated differently #1207                                                                  | 1          |
-      | Malformed HTML                                                                                                           | 1          |
+      | Malformed HTML                                                                                                             | 1          |
       | Math parts in title #113                                                                                                 | 1          |
       | Month showing up in year field on export #889                                                                            | 1          |
       | Multiple locations and-or publishers and BibLaTeX export #689                                                            | 1          |
@@ -190,7 +190,7 @@ Feature: Export
       | Oriental dates trip up date parser #389                                                                                  | 1          |
       | Protect math sections #1148                                                                                              | 1          |
       | References with multiple notes fail to export #174                                                                       | 1          |
-      | Shortjournal does not get exported to biblatex format #102 - biblatexcitekey #105                                        | 1          |
+      | Shortjournal does not get exported to biblatex format #102 - biblatexcitekey \\#105                                      | 1          |
       | Spaces not stripped from citation keys #294                                                                              | 1          |
       | Suppress brace protection #1139                                                                                          | 1          |
       | Text that legally contains the text of HTML entities such as &nbsp; triggers an overzealous decoding second-guesser #253 | 1          |
@@ -213,7 +213,7 @@ Feature: Export
       | transliteration for citekey #580                                                                                         | 1          |
       | typo stature-statute (zotero item type) #284                                                                             | 1          |
       | urldate when only DOI is exported #869                                                                                   | 1          |
-      | Allow explicit field override                                                                                            | 1          |
+      | Allow explicit field override                                                                                              | 1          |
       | Abbreviations in key generated for Conference Proceedings #548                                                           | 1          |
       | ADS exports dates like 1993-00-00 #1066                                                                                  | 1          |
       | @legislation; map code,container-title to journaltitle #327                                                              | 1          |
@@ -226,7 +226,7 @@ Feature: Export
       | biblatex; Language tag xx is exported, xx-XX is not #380                                                                 | 1          |
       | biblatex export of Presentation; Use type and venue fields #644                                                          | 2          |
       | URL-DOI exclusive export broken for item types with no dedicated DOI field #1331                                         | 1          |
-      | date ranges #747+#746                                                                                                    | 5          |
+      | date ranges #747+\\#746                                                                                                  | 5          |
       | preserve @strings between import-export #1162                                                                            | 1          |
       | inspireHep fetching broken #2201                                                                                         | 1          |
       | fetch inspire-hep key #1879                                                                                              | 1          |
@@ -237,18 +237,18 @@ Feature: Export
     Then an export using "Better BibTeX" should match "export/*.bibtex"
 
     Examples:
-      | file                                                                                                               | references |
+      | file                                                                                                                 | references |
       | Export fails with Translation using Better BibTeX failed Error normalize EDTF failed to normalize Century #3322    | 5          |
       | Wrong year field in Better BibTeX export #3244                                                                     | 1          |
       | Export field zoteroautoJournalAbbreviation only available when zoterojournalAbbreviation is empty #3046            | 2          |
       | export langid as language #2909                                                                                    | 1          |
       | Better BibTeX export from Zotero missing Extra fields eg issued #2816                                              | 1          |
-      | formula grouping                                                                                                   | 1          |
-      | formula grouping-upgrade                                                                                           | 1          |
-      | BBT does not escape # in first argument of href in note #2617                                                      | 2          |
-      | BBT does not escape # in first argument of href in note #2617-note                                                 | 2          |
-      | Ternary in citekey formula                                                                                         | 1          |
-      | LogicalOr in citekey formula                                                                                       | 1          |
+      | formula grouping                                                                                                     | 1          |
+      | formula grouping-upgrade                                                                                             | 1          |
+      | BBT does not escape # in first argument of href in note \\#2617                                                    | 2          |
+      | BBT does not escape # in first argument of href in note \\#2617-note                                               | 2          |
+      | Ternary in citekey formula                                                                                           | 1          |
+      | LogicalOr in citekey formula                                                                                         | 1          |
       | event-place in extra not exported to address #2533                                                                 | 1          |
       | arXiv categories missing in the BibTeX output when stored only in the Extra field #2483                            | 1          |
       | missing  before _ in url in .bib file #2466                                                                        | 1          |
@@ -260,10 +260,10 @@ Feature: Export
       | Debugging translator issue for PhD Dissertation type #1950                                                         | 1          |
       | Customise name-separator and list-separator #1927                                                                  | 1          |
       | citation key format nopunctordash filter list #1880                                                                | 1          |
-      | Export report+type as preprint                                                                                     | 1          |
+      | Export report+type as preprint                                                                                       | 1          |
       | Use creator in extra field when there is no creator in the usual places #1873                                      | 1          |
       | Exporting month = {season} for BibTeX #1810                                                                        | 1          |
-      | bibtex does not export season dates                                                                                | 1          |
+      | bibtex does not export season dates                                                                                  | 1          |
       | DOI not escaped using postscript #1803                                                                             | 1          |
       | Using the Extra field in the exported Citation Key #1571                                                           | 1          |
       | shortyear adds 00 when date is missing #1769                                                                       | 1          |
@@ -285,7 +285,7 @@ Feature: Export
       | Exporting Book Sections as Inbook #1474                                                                            | 1          |
       | Missing $ in TeX export of < to langle #1469                                                                       | 1          |
       | Better BibTeX does not export collections #901                                                                     | 36         |
-      | Better BibTeX.027                                                                                                  | 1          |
+      | Better BibTeX.027                                                                                                    | 1          |
       | Minimize bibtex export package dependencies #1402                                                                  | 1          |
       | No booktitle field when exporting references from conference proceedings #1069                                     | 1          |
       | Underscores break capital-preservation #300                                                                        | 1          |
@@ -300,8 +300,8 @@ Feature: Export
       | Empty bibtex clause in extra gobbles whatever follows #99                                                          | 1          |
       | Double superscript in title field on export #1217                                                                  | 1          |
       | BetterBibtex export fails for missing last name #978                                                               | 1          |
-      | Better BibTeX.018                                                                                                  | 1          |
-      | Better BibTeX.026                                                                                                  | 1          |
+      | Better BibTeX.018                                                                                                    | 1          |
+      | Better BibTeX.026                                                                                                    | 1          |
       | Book chapter citation using p. instead of pp. #1375                                                                | 1          |
       | Braces around author last name when exporting BibTeX #565                                                          | 5          |
       | Edition Numbers in BibTeX Exports #1446                                                                            | 1          |
@@ -322,7 +322,7 @@ Feature: Export
       | braces after textemdash followed by unicode #980                                                                   | 1          |
       | creating a key with [authForeIni] and [authN] not working properly #892                                            | 2          |
       | date not always parsed properly into month and year with PubMed #1112                                              | 2          |
-      | date ranges #747+#746                                                                                              | 5          |
+      | date ranges #747+\\#746                                                                                            | 5          |
       | preserve @strings between import-export #1162                                                                      | 1          |
       | titles are title-cased in .bib file #558                                                                           | 2          |
 
@@ -336,7 +336,87 @@ Feature: Export
     Then an export using "Better CSL JSON" should match "export/*.csl.json"
 
     Examples:
-      | file                                                                            | references |
+      | file                                                                              | references |
+      | Export to Better CSL JSON not working in latest built 7900-7988 #3332            | 88         |
+      | Export to Better CSL JSON not working in latest built 7800-7900 #3332           | 100        |
+      | Export to Better CSL JSON not working in latest built 7700-7800 #3332           | 100        |
+      | Export to Better CSL JSON not working in latest built 7600-7700 #3332           | 100        |
+      | Export to Better CSL JSON not working in latest built 7500-7600 #3332           | 100        |
+      | Export to Better CSL JSON not working in latest built 7400-7500 #3332           | 100        |
+      | Export to Better CSL JSON not working in latest built 7300-7400 #3332           | 100        |
+      | Export to Better CSL JSON not working in latest built 7200-7300 #3332           | 100        |
+      | Export to Better CSL JSON not working in latest built 7100-7200 #3332           | 100        |
+      | Export to Better CSL JSON not working in latest built 7000-7100 #3332           | 100        |
+      | Export to Better CSL JSON not working in latest built 6900-7000 #3332           | 100        |
+      | Export to Better CSL JSON not working in latest built 6800-6900 #3332           | 100        |
+      | Export to Better CSL JSON not working in latest built 6700-6800 #3332           | 100        |
+      | Export to Better CSL JSON not working in latest built 6600-6700 #3332           | 100        |
+      | Export to Better CSL JSON not working in latest built 6500-6600 #3332           | 100        |
+      | Export to Better CSL JSON not working in latest built 6400-6500 #3332           | 100        |
+      | Export to Better CSL JSON not working in latest built 6300-6400 #3332           | 100        |
+      | Export to Better CSL JSON not working in latest built 6200-6300 #3332           | 100        |
+      | Export to Better CSL JSON not working in latest built 6100-6200 #3332           | 100        |
+      | Export to Better CSL JSON not working in latest built 6000-6100 #3332           | 100        |
+      | Export to Better CSL JSON not working in latest built 5900-6000 #3332           | 100        |
+      | Export to Better CSL JSON not working in latest built 5800-5900 #3332           | 100        |
+      | Export to Better CSL JSON not working in latest built 5700-5800 #3332           | 100        |
+      | Export to Better CSL JSON not working in latest built 5600-5700 #3332           | 100        |
+      | Export to Better CSL JSON not working in latest built 5500-5600 #3332           | 100        |
+      | Export to Better CSL JSON not working in latest built 5400-5500 #3332           | 100        |
+      | Export to Better CSL JSON not working in latest built 5300-5400 #3332           | 100        |
+      | Export to Better CSL JSON not working in latest built 5200-5300 #3332           | 100        |
+      | Export to Better CSL JSON not working in latest built 5100-5200 #3332           | 100        |
+      | Export to Better CSL JSON not working in latest built 5000-5100 #3332           | 100        |
+      | Export to Better CSL JSON not working in latest built 4900-5000 #3332           | 100        |
+      | Export to Better CSL JSON not working in latest built 4800-4900 #3332           | 100        |
+      | Export to Better CSL JSON not working in latest built 4700-4800 #3332           | 100        |
+      | Export to Better CSL JSON not working in latest built 4600-4700 #3332           | 100        |
+      | Export to Better CSL JSON not working in latest built 4500-4600 #3332           | 100        |
+      | Export to Better CSL JSON not working in latest built 4400-4500 #3332           | 100        |
+      | Export to Better CSL JSON not working in latest built 4300-4400 #3332           | 100        |
+      | Export to Better CSL JSON not working in latest built 4200-4300 #3332           | 100        |
+      | Export to Better CSL JSON not working in latest built 4100-4200 #3332           | 100        |
+      | Export to Better CSL JSON not working in latest built 4000-4100 #3332           | 100        |
+      | Export to Better CSL JSON not working in latest built 3900-4000 #3332           | 100        |
+      | Export to Better CSL JSON not working in latest built 3800-3900 #3332           | 100        |
+      | Export to Better CSL JSON not working in latest built 3700-3800 #3332           | 100        |
+      | Export to Better CSL JSON not working in latest built 3600-3700 #3332           | 100        |
+      | Export to Better CSL JSON not working in latest built 3500-3600 #3332           | 100        |
+      | Export to Better CSL JSON not working in latest built 3400-3500 #3332           | 100        |
+      | Export to Better CSL JSON not working in latest built 3300-3400 #3332           | 100        |
+      | Export to Better CSL JSON not working in latest built 3200-3300 #3332           | 100        |
+      | Export to Better CSL JSON not working in latest built 3100-3200 #3332           | 100        |
+      | Export to Better CSL JSON not working in latest built 3000-3100 #3332           | 100        |
+      | Export to Better CSL JSON not working in latest built 2900-3000 #3332           | 100        |
+      | Export to Better CSL JSON not working in latest built 2800-2900 #3332           | 100        |
+      | Export to Better CSL JSON not working in latest built 2700-2800 #3332           | 100        |
+      | Export to Better CSL JSON not working in latest built 2600-2700 #3332           | 100        |
+      | Export to Better CSL JSON not working in latest built 2500-2600 #3332           | 100        |
+      | Export to Better CSL JSON not working in latest built 2400-2500 #3332           | 100        |
+      | Export to Better CSL JSON not working in latest built 2300-2400 #3332           | 100        |
+      | Export to Better CSL JSON not working in latest built 2200-2300 #3332           | 100        |
+      | Export to Better CSL JSON not working in latest built 2100-2200 #3332           | 100        |
+      | Export to Better CSL JSON not working in latest built 2000-2100 #3332           | 100        |
+      | Export to Better CSL JSON not working in latest built 1900-2000 #3332           | 100        |
+      | Export to Better CSL JSON not working in latest built 1800-1900 #3332           | 100        |
+      | Export to Better CSL JSON not working in latest built 1700-1800 #3332           | 100        |
+      | Export to Better CSL JSON not working in latest built 1600-1700 #3332           | 100        |
+      | Export to Better CSL JSON not working in latest built 1500-1600 #3332           | 100        |
+      | Export to Better CSL JSON not working in latest built 1400-1500 #3332           | 100        |
+      | Export to Better CSL JSON not working in latest built 1300-1400 #3332           | 100        |
+      | Export to Better CSL JSON not working in latest built 1200-1300 #3332           | 100        |
+      | Export to Better CSL JSON not working in latest built 1100-1200 #3332           | 100        |
+      | Export to Better CSL JSON not working in latest built 1000-1100 #3332           | 100        |
+      | Export to Better CSL JSON not working in latest built 900-1000 #3332            | 100        |
+      | Export to Better CSL JSON not working in latest built 800-900 #3332             | 100        |
+      | Export to Better CSL JSON not working in latest built 700-800 #3332             | 100        |
+      | Export to Better CSL JSON not working in latest built 600-700 #3332             | 100        |
+      | Export to Better CSL JSON not working in latest built 500-600 #3332             | 100        |
+      | Export to Better CSL JSON not working in latest built 400-500 #3332             | 100        |
+      | Export to Better CSL JSON not working in latest built 300-400 #3332             | 100        |
+      | Export to Better CSL JSON not working in latest built 200-300 #3332             | 100        |
+      | Export to Better CSL JSON not working in latest built 100-200 #3332             | 100        |
+      | Export to Better CSL JSON not working in latest built 0-100 #3332               | 100        |
       | Better CSL does not extract extra variables #2963                               | 1          |
       | Does setting a type via cheater syntax work currently #2473                     | 1          |
       | _eprint in extra causes CSL-JSON export error #2430                             | 1          |
@@ -344,7 +424,7 @@ Feature: Export
       | Export Error Unexpected date type #2303                                         | 1          |
       | Better CSL JSON does not include authority field #2019                          | 1          |
       | Multiple creators in Extra not exported in Better CSL JSON #2015                | 1          |
-      | Deterministic ordering for CSL #1178 #1400                                      | 26         |
+      | Deterministic ordering for CSL #1178 \\#1400                                    | 26         |
       | CSL exporters; ignore [Fields to omit from export] setting #1179                | 26         |
       | Quotes around last names should be removed from citekeys #856                   | 1          |
       | BBT CSL JSON; Do not use shortTitle and journalAbbreviation #372                | 1          |
