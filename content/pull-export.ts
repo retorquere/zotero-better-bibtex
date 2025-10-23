@@ -320,21 +320,23 @@ class ItemHandler {
   }
 }
 
-orchestrator.add({
-  id: 'pull-export',
-  description: 'JSON-RPC endpoint',
-  needs: ['translators'],
+export function startup(): void {
+  orchestrator.add({
+    id: 'pull-export',
+    description: 'JSON-RPC endpoint',
+    needs: ['translators'],
 
-  startup: async () => { // eslint-disable-line @typescript-eslint/require-await
-    Server.register('/better-bibtex/export', Handler)
-    Server.register('/better-bibtex/export/item', ItemHandler)
-    Server.register([ '/better-bibtex/export/collection', '/better-bibtex/collection' ], CollectionHandler)
-    Server.register([ '/better-bibtex/export/library', '/better-bibtex/library' ], LibraryHandler)
-    Server.register([ '/better-bibtex/export/selected', '/better-bibtex/select' ], SelectedHandler)
-    Server.startup()
-  },
+    startup: async () => { // eslint-disable-line @typescript-eslint/require-await
+      Server.register('/better-bibtex/export', Handler)
+      Server.register('/better-bibtex/export/item', ItemHandler)
+      Server.register([ '/better-bibtex/export/collection', '/better-bibtex/collection' ], CollectionHandler)
+      Server.register([ '/better-bibtex/export/library', '/better-bibtex/library' ], LibraryHandler)
+      Server.register([ '/better-bibtex/export/selected', '/better-bibtex/select' ], SelectedHandler)
+      Server.startup()
+    },
 
-  shutdown: async () => { // eslint-disable-line @typescript-eslint/require-await
-    Server.shutdown()
-  },
-})
+    shutdown: async () => { // eslint-disable-line @typescript-eslint/require-await
+      Server.shutdown()
+    },
+  })
+}

@@ -41,7 +41,7 @@ type Wizard = HTMLElement & {
   }
 }
 
-import BBT from '../gen/version.json' with { type: 'json' }
+import BBT from '../gen/version.cjs'
 
 type Report = {
   context: string

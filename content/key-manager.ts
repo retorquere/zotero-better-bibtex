@@ -33,7 +33,7 @@ import { newQueue } from '@henrygd/queue'
 
 import * as l10n from './l10n.js'
 
-type CitekeyRecord = {
+export type CitekeyRecord = {
   itemID: number
   libraryID: number
   itemKey: string

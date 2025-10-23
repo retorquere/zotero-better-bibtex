@@ -6,6 +6,7 @@ import { log } from './logger.js'
 import { Preference } from './prefs.js'
 import { options as preferenceOptions, defaults as preferenceDefaults } from '../gen/preferences/meta.js'
 import { Formatter } from './key-manager/formatter.js'
+import type { CitekeyRecord } from './key-manager.js'
 import { AutoExport } from './auto-export.js'
 import { Translators } from './translators.js'
 import * as l10n from './l10n.js'
@@ -437,7 +438,13 @@ export class PrefPane {
 
     const preview = $window.document.getElementById('bbt-citekey-preview') as HTMLInputElement
     preview.style.display = 'initial'
-    const previews = Zotero.getActiveZoteroPane().getSelectedItems().slice(0, 10).map(item => Zotero.BetterBibTeX.KeyManager.propose(item)).filter(key => !key.pinned).map(key => key.citationKey)
+    const previews = Zotero
+      .getActiveZoteroPane()
+      .getSelectedItems()
+      .slice(0, 10)
+      .map(item => Zotero.BetterBibTeX.KeyManager.propose(item) as CitekeyRecord)
+      .filter(key => !key.pinned)
+      .map(key => key.citationKey)
     preview.value = previews.join(', ')
   }
 

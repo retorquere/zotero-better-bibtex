@@ -35,7 +35,7 @@ import stringify from 'safe-stable-stringify'
 import { pick, unpick } from '../object.js'
 
 import { byLabel, DisplayOptions } from '../../gen/translators.js'
-import BBT from '../../gen/version.json' with { type: 'json' }
+import BBT from '../../gen/version.cjs'
 // import { main as probe } from './cache-test.js'
 
 export const Context = new class {

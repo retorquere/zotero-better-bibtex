@@ -28,7 +28,8 @@ export function localize(id_with_branch: string, params?: Record<string, string 
   return params ? l.replace(/[{]\s*[$]([a-z]+)\s*[}]/gi, (m, term) => typeof params[term] === 'undefined' ? m : `${params[term]}`) : l
 }
 
+import ids from '../gen/l10n.js'
 export async function initialize(): Promise<void> {
-  const load = (require('../gen/l10n.json') as string[]).map(key => prefetch(key))
+  const load = ids.map(key => prefetch(key))
   await Promise.all(load)
 }

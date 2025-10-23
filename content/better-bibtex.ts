@@ -7,7 +7,7 @@ import { MenuManager } from 'zotero-plugin-toolkit'
 const Menu = new MenuManager
 
 import { DebugLog } from 'zotero-plugin/debug-log'
-const pubkey: string = require('./public.pem')
+import pubkey from './public.pem'
 
 import { Scheduler } from './scheduler.js'
 import { TeXstudio } from './tex-studio.js'
@@ -27,9 +27,14 @@ import type { ExportedItem, ExportedItemMetadata } from './worker/cache.js'
 import { Cache } from './translators/worker.js'
 import { DisplayOptions } from '../gen/translators.js'
 
-import { Preference } from './prefs.js' // needs to be here early, initializes the prefs observer
-require('./pull-export') // just require, initializes the pull-export end points
-require('./json-rpc') // just require, initializes the json-rpc end point
+import { Preference } from './prefs.js'
+
+import { startup as pullExportStartup } from './pull-export.js'
+pullExportStartup()
+
+import { startup as JSONRPCStartup } from './json-rpc.js'
+JSONRPCStartup()
+
 import { AUXScanner } from './aux-scanner.js'
 import * as Extra from './extra.js'
 import { sentenceCase, HTMLParser, HTMLParserOptions } from './text.js'
@@ -43,7 +48,7 @@ import { Events } from './events.js'
 import { Translators } from './translators.js'
 import { Exporter } from './translators/worker.js'
 import { fix as fixExportFormat } from './item-export-format.js'
-import { KeyManager } from './key-manager.js'
+import { KeyManager, CitekeyRecord } from './key-manager.js'
 import { TestSupport } from './test-support.js'
 import * as l10n from './l10n.js'
 import * as CSL from 'citeproc'
@@ -97,7 +102,10 @@ monkey.patch(Zotero.Items, 'merge', original => async function Zotero_Items_merg
       // get citekeys of other items
       if (merge.citationKey) {
         const otherIDs = otherItems.map(i => i.id)
-        extra.extraFields.aliases = [ ...extra.extraFields.aliases, ...Zotero.BetterBibTeX.KeyManager.find({ where: { itemID: { in: otherIDs }}}).map(key => key.citationKey) ]
+        extra.extraFields.aliases = [
+          ...extra.extraFields.aliases,
+          ...Zotero.BetterBibTeX.KeyManager.find({ where: { itemID: { in: otherIDs }}}).map((key: CitekeyRecord) => key.citationKey),
+        ]
       }
 
       // add any aliases they were already holding
@@ -171,7 +179,7 @@ monkey.patch(Zotero.API, 'getResultsFromParams', original => function Zotero_API
   function ck(key: string): string {
     const m = key.match(/^(bbt:|@)(.+)/)
     if (!m) return key
-    const citekey = Zotero.BetterBibTeX.KeyManager.first({ where: { libraryID, citationKey: m[2] }})
+    const citekey: CitekeyRecord = Zotero.BetterBibTeX.KeyManager.first({ where: { libraryID, citationKey: m[2] }})
     return citekey ? citekey.itemKey : key
   }
 
@@ -248,7 +256,7 @@ monkey.patch(Zotero.Item.prototype, 'getField', original => function Zotero_Item
   try {
     if (field === 'citationKey' || field === 'citekey') {
       if (Zotero.BetterBibTeX.starting) return ''
-      return Zotero.BetterBibTeX.KeyManager.get(this.id).citationKey
+      return (Zotero.BetterBibTeX.KeyManager.get(this.id) as CitekeyRecord).citationKey
     }
   }
   catch (err) {
@@ -289,7 +297,7 @@ Zotero.Translate.Export.prototype.Sandbox.BetterBibTeX = {
   clientVersion: Zotero.version,
 
   strToISO(_sandbox: any, str: string) { return DateParser.strToISO(str) },
-  getContents(_sandbox: any, path: string): string { return Zotero.BetterBibTeX.getContents(path) },
+  getContents(_sandbox: any, path: string): string { return Zotero.BetterBibTeX.getContents(path) as string },
 
   generateBibLaTeX(_sandbox: any, collected: Collected) { return generateBibLaTeX(collected) },
   generateBibTeX(_sandbox: any, collected: Collected) { return generateBibTeX(collected) },
@@ -399,6 +407,8 @@ monkey.patch(Zotero.Translate.Export.prototype, 'translate', original => functio
 })
 
 const scheduler = new Scheduler<'column-refresh'>(500)
+
+import DDL from './db/citation-key.sql'
 
 export class BetterBibTeX {
   public clientName = Zotero.clientName
@@ -590,7 +600,7 @@ export class BetterBibTeX {
 
         const NoParse = { noParseParams: true }
 
-        for (const ddl of require('./db/citation-key.sql')) {
+        for (const ddl of DDL) {
           await Zotero.DB.queryAsync(ddl, [], NoParse)
         }
 
@@ -680,7 +690,7 @@ export class BetterBibTeX {
           nowrap: false,
           editable: false,
           onGetData({ item }) {
-            const citekey = Zotero.BetterBibTeX.KeyManager.get(item.id) || { citationKey: '', pinned: false }
+            const citekey: CitekeyRecord = Zotero.BetterBibTeX.KeyManager.get(item.id) || { citationKey: '', pinned: false }
             return citekey.citationKey
           },
           /*

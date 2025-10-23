@@ -84,6 +84,10 @@ const unaliasTransliterateMode = {
 
   serbian: 'serbian',
   rs: 'serbian',
+
+  // new lib does not support mg
+  mg: 'ukranian',
+  mongolian: 'ukranian',
 } as const
 export type TransliterateModeAlias = keyof typeof unaliasTransliterateMode
 export type TransliterateMode = (typeof unaliasTransliterateMode)[keyof typeof unaliasTransliterateMode]

@@ -11,7 +11,7 @@ import { Preference } from './prefs.js'
 import { orchestrator } from './orchestrator.js'
 import { Server } from './server.js'
 
-import BBT from '../gen/version.json' with { type: 'json' }
+import BBT from '../gen/version.cjs'
 
 import { methods } from '../gen/api/json-rpc.js'
 
@@ -755,17 +755,19 @@ class Handler {
   }
 }
 
-orchestrator.add({
-  id: 'json-rpc',
-  description: 'JSON-RPC endpoint',
-  needs: ['translators'],
+export function startup(): void {
+  orchestrator.add({
+    id: 'json-rpc',
+    description: 'JSON-RPC endpoint',
+    needs: ['translators'],
 
-  startup: async () => {
-    Server.register('/better-bibtex/json-rpc', Handler)
-    Server.startup()
-  },
+    startup: async () => {
+      Server.register('/better-bibtex/json-rpc', Handler)
+      Server.startup()
+    },
 
-  shutdown: async () => {
-    Server.shutdown()
-  },
-})
+    shutdown: async () => {
+      Server.shutdown()
+    },
+  })
+}

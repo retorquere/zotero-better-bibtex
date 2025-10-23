@@ -5,15 +5,11 @@ import { fileURLToPath } from 'url'
 
 import './pug2xul.js'
 import './preferences.js'
-import 'zotero-plugin/copy-assets.js'
-import 'zotero-plugin/manifest.js'
-import 'zotero-plugin/version.js'
+import 'zotero-plugin/copy-assets'
+import 'zotero-plugin/make-manifest'
+import 'zotero-plugin/make-version'
 import './bibertool.js'
 import './apis.js'
-
-function resolve(path) {
-  return fileURLToPath(import.meta.resolve(path))
-}
 
 fs.copyFileSync('node_modules/@retorquere/bibtex-parser/dist/data/unabbrev.json', 'build/content/resource/bibtex/unabbrev.json')
 fs.copyFileSync('node_modules/@retorquere/bibtex-parser/dist/data/strings.bib', 'build/content/resource/bibtex/strings.bib')

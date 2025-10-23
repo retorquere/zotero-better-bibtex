@@ -1,0 +1,146 @@
+diff --git a/node_modules/kuromoji/src/loader/BrowserDictionaryLoader.js b/node_modules/kuromoji/src/loader/BrowserDictionaryLoader.js
+index 04bfdcd..3479f6b 100644
+--- a/node_modules/kuromoji/src/loader/BrowserDictionaryLoader.js
++++ b/node_modules/kuromoji/src/loader/BrowserDictionaryLoader.js
+@@ -31,30 +31,28 @@ function BrowserDictionaryLoader(dic_path) {
+ 
+ BrowserDictionaryLoader.prototype = Object.create(DictionaryLoader.prototype);
+ 
++async function fetchArrayBuffer(url) {
++  Zotero.debug(`kuromoji: BrowserDictionaryLoader: loading ${url}`)
++  const response = await fetch(url)
++  if (!response.ok) throw new Error(`kuromoji: loading ${url} failed: status = ${response.status}`)
++  return await response.arrayBuffer()
++}
++
+ /**
+  * Utility function to load gzipped dictionary
+  * @param {string} url Dictionary URL
+  * @param {BrowserDictionaryLoader~onLoad} callback Callback function
+  */
+ BrowserDictionaryLoader.prototype.loadArrayBuffer = function (url, callback) {
+-    var xhr = new XMLHttpRequest();
+-    xhr.open("GET", url, true);
+-    xhr.responseType = "arraybuffer";
+-    xhr.onload = function () {
+-        if (this.status > 0 && this.status !== 200) {
+-            callback(xhr.statusText, null);
+-            return;
+-        }
+-        var arraybuffer = this.response;
+-
+-        var gz = new zlib.Zlib.Gunzip(new Uint8Array(arraybuffer));
+-        var typed_array = gz.decompress();
+-        callback(null, typed_array.buffer);
+-    };
+-    xhr.onerror = function (err) {
+-        callback(err, null);
+-    };
+-    xhr.send();
++  url = `chrome://zotero-better-bibtex/content/resource/kuromoji/${url.replace(/.*[\\/]/, '').replace('.gz', '')}`
++  fetchArrayBuffer(url)
++    .then(arrayBuffer => {
++      callback(null, arrayBuffer)
++    })
++    .catch(err => {
++      Zotero.debug(`kuromoji: BrowserDictionaryLoader: loading ${url} failed: ${err}`)
++      callback(err, null)
++    })
+ };
+ 
+ /**
+diff --git a/node_modules/kuromoji/src/loader/NodeDictionaryLoader.js b/node_modules/kuromoji/src/loader/NodeDictionaryLoader.js
+index 26eb792..85a558b 100644
+--- a/node_modules/kuromoji/src/loader/NodeDictionaryLoader.js
++++ b/node_modules/kuromoji/src/loader/NodeDictionaryLoader.js
+@@ -32,25 +32,29 @@ function NodeDictionaryLoader(dic_path) {
+ 
+ NodeDictionaryLoader.prototype = Object.create(DictionaryLoader.prototype);
+ 
++async function fetchArrayBuffer(url) {
++  Zotero.debug(`kuromoji: NodeDictionaryLoader: loading ${url}`)
++  const response = await fetch(url)
++  if (!response.ok) throw new Error(`kuromoji: loading ${url} failed: status = ${response.status}`)
++  return await response.arrayBuffer()
++}
++
+ /**
+  * Utility function
+  * @param {string} file Dictionary file path
+  * @param {NodeDictionaryLoader~onLoad} callback Callback function
+  */
+ NodeDictionaryLoader.prototype.loadArrayBuffer = function (file, callback) {
+-    fs.readFile(file, function (err, buffer) {
+-        if(err) {
+-            return callback(err);
+-        }
+-        node_zlib.gunzip(buffer, function (err2, decompressed) {
+-            if(err2) {
+-                return callback(err2);
+-            }
+-            var typed_array = new Uint8Array(decompressed);
+-            callback(null, typed_array.buffer);
+-        });
+-    });
+-};
++  file = `chrome://zotero-better-bibtex/content/resource/kuromoji/${file.replace(/.*[\\/]/, '').replace('.gz', '')}`
++  fetchArrayBuffer(file)
++    .then(arrayBuffer => {
++      callback(null, arrayBuffer)
++    })
++    .catch(err => {
++      Zotero.debug(`kuromoji: NodeDictionaryLoader: loading ${file} failed: ${err}`)
++      callback(err, null)
++    })
++}
+ 
+ /**
+  * @callback NodeDictionaryLoader~onLoad
+diff --git a/node_modules/kuromoji/src/loader/NodeDictionaryLoader.js.rej b/node_modules/kuromoji/src/loader/NodeDictionaryLoader.js.rej
+new file mode 100644
+index 0000000..150a2f1
+--- /dev/null
++++ b/node_modules/kuromoji/src/loader/NodeDictionaryLoader.js.rej
+@@ -0,0 +1,42 @@
++@@ -32,25 +32,28 @@
++ 
++ NodeDictionaryLoader.prototype = Object.create(DictionaryLoader.prototype);
++ 
+++async function fetchArrayBuffer(url): Promise<ArrayBuffer> {
+++  const response = await fetch(url)
+++  if (!response.ok) throw new Error(`kuroshiro: loading ${url} failed: status = ${response.status}`)
+++  return await response.arrayBuffer()
+++}
+++
++ /**
++  * Utility function
++  * @param {string} file Dictionary file path
++  * @param {NodeDictionaryLoader~onLoad} callback Callback function
++  */
++ NodeDictionaryLoader.prototype.loadArrayBuffer = function (file, callback) {
++-    fs.readFile(file, function (err, buffer) {
++-        if(err) {
++-            return callback(err);
++-        }
++-        node_zlib.gunzip(buffer, function (err2, decompressed) {
++-            if(err2) {
++-                return callback(err2);
++-            }
++-            var typed_array = new Uint8Array(decompressed);
++-            callback(null, typed_array.buffer);
++-        });
++-    });
++-};
+++  file = `chrome://zotero-better-bibtex/content/resource/kuromoji/${file.replace(/.*[\\/]/, '').replace(/\.gz$/, '')}`
+++  fetchArrayBuffer(file)
+++    .then(arrayBuffer => {
+++      callback(null, arrayBuffer)
+++    })
+++    .catch(err => {
+++      Zotero.debug(`kuroshiro: loading ${file} failed: ${err}`)
+++      callback(err, null)
+++    })
+++}
++ 
++ /**
++  * @callback NodeDictionaryLoader~onLoad

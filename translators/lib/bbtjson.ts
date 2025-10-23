@@ -4,7 +4,7 @@ import type { Library } from './normalize.js'
 import { log } from '../../content/logger.js'
 import { Translation } from './translator.js'
 import { simplifyForExport, simplifyForImport } from '../../gen/items/simplify.js'
-import BBT from '../../gen/version.json' with { type: 'json' }
+import BBT from '../../gen/version.cjs'
 
 // import { validItem } from '../content/ajv.js'
 // import { stringify } from '../content/stringify.js'

@@ -60,7 +60,7 @@ function win_quote(s: string, forCmd = true): string {
   return parts.join('')
 }
 
-const posix_quote = require('shell-quote/quote')
+import { quote as posix_quote } from 'shell-quote'
 
 function quote(cmd: string[]): string {
   return client.isWin ? cmd.map(s => win_quote(s)).join(' ') : <string>posix_quote(cmd)

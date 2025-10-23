@@ -33,6 +33,7 @@
     "content/**/*",
     "translators/**/*",
     "gen/**/*",
+    "**/*.cjs",
     "typings/*"
   ],
   "exclude": [

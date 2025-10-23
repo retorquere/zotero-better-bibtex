@@ -84,5 +84,5 @@ for ftl in Path('locale').rglob('*/better-bibtex.ftl'):
       print(f'<!ENTITY {key} "' + escape(value).replace('&#x27;', "'") + '">', file=dtd)
 
     if '/en-US/' in str(ftl):
-      with open('gen/l10n.json', 'w') as f:
-        json.dump(list(properties.keys()), f, indent='  ')
+      with open('gen/l10n.ts', 'w') as f:
+        f.write('export default ' + json.dumps(list(properties.keys()), indent='  '))

@@ -7,7 +7,7 @@ import { findBinary } from './path-search.js'
 import { log } from './logger.js'
 import { alert } from './prompt.js'
 
-import BBT from '../gen/version.json' with { type: 'json' }
+import BBT from '../gen/version.cjs'
 
 type Parsed = {
   source: 'MarkDown' | 'BibTeX AUX'

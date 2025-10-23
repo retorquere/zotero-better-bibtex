@@ -10,6 +10,7 @@ import { defaults } from '../gen/preferences/meta.js'
 import { Preference } from './prefs.js'
 import * as memory from './memory.js'
 import { Cache } from './translators/worker.js'
+import { CitekeyRecord } from './key-manager.js'
 
 // import { Bench } from 'tinybench'
 
@@ -190,8 +191,15 @@ export class TestSupport {
 
     let ids: number[] = []
 
-    if (query.contains) ids = ids.concat(Zotero.BetterBibTeX.KeyManager.all().filter(key => key.citationKey.toLowerCase().includes(query.contains.toLowerCase())).map(key => key.itemID))
-    if (query.is) ids = ids.concat(Zotero.BetterBibTeX.KeyManager.find({ where: { citationKey: query.is }}).map(key => key.itemID))
+    if (query.contains) {
+      ids = ids
+        .concat(
+          Zotero.BetterBibTeX.KeyManager.all()
+            .filter((key: CitekeyRecord) => key.citationKey.toLowerCase().includes(query.contains.toLowerCase()))
+            .map((key: CitekeyRecord) => key.itemID)
+        )
+    }
+    if (query.is) ids = ids.concat(Zotero.BetterBibTeX.KeyManager.find({ where: { citationKey: query.is }}).map((key: CitekeyRecord) => key.itemID))
 
     const s = (new Zotero.Search)
     for (const [ mode, text ] of Object.entries(query)) {
@@ -314,7 +322,7 @@ export class TestSupport {
   }
 
   public citationKey(itemID: number): string {
-    return Zotero.BetterBibTeX.KeyManager.get(itemID).citationKey
+    return (Zotero.BetterBibTeX.KeyManager.get(itemID) as CitekeyRecord).citationKey
   }
 
   public async quickCopy(itemIDs: number[], translator: string): Promise<string> {

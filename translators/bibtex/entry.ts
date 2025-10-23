@@ -824,7 +824,7 @@ export class Entry {
         this.override({ name, verbatim: name, orig: { inherit: true }, value: value as string, enc, replace, fallback: !replace })
       }
       else {
-        log.error(`Unmapped extra field ${ key }=${ value }`)
+        log.error(`Unmapped extra field ${key}=${value as string}`)
       }
     }
 
@@ -839,10 +839,11 @@ export class Entry {
     }
 
     const bibtexStrings = this.translation.collected.preferences.exportBibTeXStrings.startsWith('match')
-    for (const [ name, field ] of Object.entries(this.item.extraFields.tex) as [ string, TeXString ][]) {
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
+    for (const [ name, field ] of Object.entries(this.item.extraFields.tex) as [ string, TeXString][]) {
       // psuedo-var, sets the entry type. Repeat application here because this needs to override all else.
       if (name === 'entrytype' || name === 'referencetype') { // phase out reference
-        this.entrytype = field.value as string
+        this.entrytype = field.value
         continue
       }
 
