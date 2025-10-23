@@ -22,7 +22,7 @@ Functions auth(n: number=0, m: number=1, creator: &#39;*&#39; | &#39;author&#39;
     <meta itemprop="name" content="Formulas :: Better BibTeX for Zotero">
     <meta itemprop="description" content="Note: a number of functions below talk about the author’s lastname; you can read that as “when available”. If you have the name as a single-field name (for entities like International Business Machines or Aristoteles), Zotero doesn’t have a last name, and the full single-field name is taken instead.
 Functions auth(n: number=0, m: number=1, creator: &#39;*&#39; | &#39;author&#39; | &#39;collaborator&#39; | &#39;editor&#39; | &#39;translator&#39;=&#39;*&#39;, initials: boolean=false)The first n (default: all) characters of the mth (default: first) author&#39;s last name.">
-    <meta itemprop="wordCount" content="4697">
+    <meta itemprop="wordCount" content="4745">
     <meta itemprop="keywords" content="Citation Keys">
     <title>Formulas :: Better BibTeX for Zotero</title>
     <link href="/zotero-better-bibtex/citing/formulas/index.xml" rel="alternate" type="application/rss+xml" title="Formulas :: Better BibTeX for Zotero"><link rel="icon" href="/zotero-better-bibtex/better-bibtex.ico" type="image/x-icon">
@@ -807,7 +807,7 @@ in the template, you can use:</p>
 
   <h3><b>title</b></h3><p>Capitalize all the significant words of the title, and concatenate them. For example, <code>An awesome paper on JabRef</code> will become <code>AnAwesomePaperJabref</code></p>
 
-  <h3><b>transliterate</b>(mode: &#39;ar&#39; | &#39;arabic&#39; | &#39;chinese&#39; | &#39;chinese-traditional&#39; | &#39;de&#39; | &#39;german&#39; | &#39;ja&#39; | &#39;japanese&#39; | &#39;minimal&#39; | &#39;mn&#39; | &#39;mongolian&#39; | &#39;ru&#39; | &#39;russian&#39; | &#39;tw&#39; | &#39;uk&#39; | &#39;ukranian&#39; | &#39;zh&#39; | &#39;zh-hant&#39;)</h3><p>Set the default transliteration mode. If you don't specify a mode, the mode for an entry is derived from the item language field</p><table>
+  <h3><b>transliterate</b>(mode: &#39;ar&#39; | &#39;arabic&#39; | &#39;bg&#39; | &#39;bulgarian&#39; | &#39;chinese&#39; | &#39;chinese-traditional&#39; | &#39;de&#39; | &#39;german&#39; | &#39;ja&#39; | &#39;japanese&#39; | &#39;macedonian&#39; | &#39;mg&#39; | &#39;minimal&#39; | &#39;mk&#39; | &#39;mongolian&#39; | &#39;rs&#39; | &#39;ru&#39; | &#39;russian&#39; | &#39;serbian&#39; | &#39;tw&#39; | &#39;uk&#39; | &#39;ukranian&#39; | &#39;zh&#39; | &#39;zh-hant&#39;)</h3><p>Set the default transliteration mode. If you don't specify a mode, the mode for an entry is derived from the item language field</p><table>
               <tr>
                 <th><b>parameter</b></th>
                 <th/>
@@ -818,7 +818,7 @@ in the template, you can use:</p>
                 <td><code>mode</code></td>
                 <td>specialized translateration modes for german, japanese or chinese.</td>
                 <td>none; must be provided</td>
-                <td>'ar' | 'arabic' | 'chinese' | 'chinese-traditional' | 'de' | 'german' | 'ja' | 'japanese' | 'minimal' | 'mn' | 'mongolian' | 'ru' | 'russian' | 'tw' | 'uk' | 'ukranian' | 'zh' | 'zh-hant'</td>
+                <td>'ar' | 'arabic' | 'bg' | 'bulgarian' | 'chinese' | 'chinese-traditional' | 'de' | 'german' | 'ja' | 'japanese' | 'macedonian' | 'mg' | 'minimal' | 'mk' | 'mongolian' | 'rs' | 'ru' | 'russian' | 'serbian' | 'tw' | 'uk' | 'ukranian' | 'zh' | 'zh-hant'</td>
               </tr></table>
 
   <h3><b>type</b>(allowed...: (&#39;annotation&#39; | &#39;artwork&#39; | &#39;attachment&#39; | &#39;audioRecording&#39; | &#39;bill&#39; | &#39;blogPost&#39; | &#39;book&#39; | &#39;bookSection&#39; | &#39;case&#39; | &#39;computerProgram&#39; | &#39;conferencePaper&#39; | &#39;dataset&#39; | &#39;dictionaryEntry&#39; | &#39;document&#39; | &#39;email&#39; | &#39;encyclopediaArticle&#39; | &#39;film&#39; | &#39;forumPost&#39; | &#39;hearing&#39; | &#39;instantMessage&#39; | &#39;interview&#39; | &#39;journalArticle&#39; | &#39;letter&#39; | &#39;magazineArticle&#39; | &#39;manuscript&#39; | &#39;map&#39; | &#39;newspaperArticle&#39; | &#39;note&#39; | &#39;patent&#39; | &#39;podcast&#39; | &#39;preprint&#39; | &#39;presentation&#39; | &#39;radioBroadcast&#39; | &#39;report&#39; | &#39;standard&#39; | &#39;statute&#39; | &#39;thesis&#39; | &#39;tvBroadcast&#39; | &#39;videoRecording&#39; | &#39;webpage&#39;)[])</h3><p>Without arguments, returns the item type.
@@ -1605,7 +1605,7 @@ Note that this filter is always applied with <code>nopunct</code> on if you use 
                 <td>number</td>
               </tr></table>
 
-  <h3><b>.transliterate</b>(mode?: &#39;ar&#39; | &#39;arabic&#39; | &#39;chinese&#39; | &#39;chinese-traditional&#39; | &#39;de&#39; | &#39;german&#39; | &#39;ja&#39; | &#39;japanese&#39; | &#39;minimal&#39; | &#39;mn&#39; | &#39;mongolian&#39; | &#39;ru&#39; | &#39;russian&#39; | &#39;tw&#39; | &#39;uk&#39; | &#39;ukranian&#39; | &#39;zh&#39; | &#39;zh-hant&#39;)</h3><p>transliterates the citation key. If you don't specify a mode, the mode is derived from the item language field</p><table>
+  <h3><b>.transliterate</b>(mode?: &#39;ar&#39; | &#39;arabic&#39; | &#39;bg&#39; | &#39;bulgarian&#39; | &#39;chinese&#39; | &#39;chinese-traditional&#39; | &#39;de&#39; | &#39;german&#39; | &#39;ja&#39; | &#39;japanese&#39; | &#39;macedonian&#39; | &#39;mg&#39; | &#39;minimal&#39; | &#39;mk&#39; | &#39;mongolian&#39; | &#39;rs&#39; | &#39;ru&#39; | &#39;russian&#39; | &#39;serbian&#39; | &#39;tw&#39; | &#39;uk&#39; | &#39;ukranian&#39; | &#39;zh&#39; | &#39;zh-hant&#39;)</h3><p>transliterates the citation key. If you don't specify a mode, the mode is derived from the item language field</p><table>
               <tr>
                 <th><b>parameter</b></th>
                 <th/>
@@ -1616,7 +1616,7 @@ Note that this filter is always applied with <code>nopunct</code> on if you use 
                 <td><code>mode</code></td>
                 <td>specialized translateration modes for german, japanese or chinese.</td>
                 <td>undefined</td>
-                <td>'ar' | 'arabic' | 'chinese' | 'chinese-traditional' | 'de' | 'german' | 'ja' | 'japanese' | 'minimal' | 'mn' | 'mongolian' | 'ru' | 'russian' | 'tw' | 'uk' | 'ukranian' | 'zh' | 'zh-hant'</td>
+                <td>'ar' | 'arabic' | 'bg' | 'bulgarian' | 'chinese' | 'chinese-traditional' | 'de' | 'german' | 'ja' | 'japanese' | 'macedonian' | 'mg' | 'minimal' | 'mk' | 'mongolian' | 'rs' | 'ru' | 'russian' | 'serbian' | 'tw' | 'uk' | 'ukranian' | 'zh' | 'zh-hant'</td>
               </tr></table>
 
   <h3><b>.upper</b></h3><p>Forces the text inserted by the field marker to be in uppercase. For example, <code>auth.upper</code> expands the last name of the first author in uppercase.</p>
