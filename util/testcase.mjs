@@ -61,11 +61,11 @@ const argv = yargs(hideBin(process.argv))
     type: 'string',
     description: 'Scenario title',
   })
-  .option('number', {
-    alias: 'n',
-    type: 'number',
-    default: 1,
-    description: 'Number of items',
+  .option('postfix', {
+    alias: 'p',
+    type: 'string',
+    default: '',
+    description: 'title postfix',
   })
   .option('mode', {
     type: 'string',
@@ -196,6 +196,8 @@ const main = async () => {
       process.exit(1)
     }
   }
+
+  argv.title += argv.postfix
 
   // Sanitize title
   argv.title = anyAscii(sanitize(`${argv.title} #${argv.issue}`).replace(/[`'"?]/g, ''))
