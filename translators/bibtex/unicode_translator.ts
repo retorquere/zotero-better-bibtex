@@ -10,7 +10,7 @@ import { Transform } from 'unicode2latex'
 export type ConverterOptions = {
   caseConversion?: boolean
   html?: boolean
-  creator?: boolean
+  // creator?: boolean
   commandspacers?: boolean
 }
 

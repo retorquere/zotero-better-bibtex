@@ -1134,7 +1134,12 @@ export class Entry {
     if (f.raw || options.raw) return f.value
 
     const caseConversion = this.config.caseConversion[f.name] || f.caseConversion
-    const { latex, packages, raw } = this.translation.bibtex.text2latex(f.value, { html: f.html, caseConversion: caseConversion && this.english, creator: options.creator }, options.mode)
+    const { latex, packages, raw } = this.translation.bibtex
+      .text2latex(f.value, {
+        html: f.html,
+        caseConversion: caseConversion && this.english,
+        // creator: options.creator
+      }, options.mode)
     for (const pkg of packages) {
       this.packages[pkg] = true
     }
@@ -1338,7 +1343,10 @@ export class Entry {
   }
 
   private _enc_creator_part(part: string | String): string {
-    const { latex, packages } = this.translation.bibtex.text2latex((part as string), { creator: true, commandspacers: true })
+    const { latex, packages } = this.translation.bibtex.text2latex((part as string), {
+      // creator: true,
+      commandspacers: true,
+    })
     for (const pkg of packages) {
       this.packages[pkg] = true
     }
