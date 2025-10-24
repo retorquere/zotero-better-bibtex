@@ -262,9 +262,46 @@ I of course prefer very clearly documented issue reports over fuzzy ones, but I 
             <h1 class="a11y-only">Subsections of Installation</h1>
 <article class="default">
   <header class="headline">
+<div class="R-taxonomy taxonomy-tags cstyle tags" title="Tags" style="--VARIABLE-TAGS-BG-color: var(--INTERNAL-TAG-BG-color);">
+  <ul>
+    <li><a class="term-link" href="/zotero-better-bibtex/tags/export/index.html">Export</a></li>
+    <li><a class="term-link" href="/zotero-better-bibtex/tags/import/index.html">Import</a></li>
+  </ul>
+</div>
   </header>
 
-<h1 id="general-preferences">General preferences</h1>
+<h1 id="bundled-translators">Bundled translators</h1>
+
+<p>Better BibTeX bundles 5 translators you might care about:</p>
+<h2 id="export">Export</h2>
+<p>These translators are supported by the auto-export functionality built into Better BibTeX:</p>
+<ul>
+<li><strong>Better BibLaTeX</strong> exports items in BibLaTeX format (but better, natch)</li>
+<li><strong>Better BibTeX</strong> exports items in BibTeX format</li>
+<li><strong>Better CSL JSON</strong> exports items in pandoc-compatible CSL-JSON format, with added citation keys and parsing of metadata</li>
+<li><strong>Better CSL YAML</strong> exports the same as the <strong>Better CSL JSON</strong> exporter, but in YAML format</li>
+<li><strong>Collected Notes</strong> exports just notes &ndash; standalone notes and notes attached to items, not the extra field &ndash; to HTML. This way, Zotero can serve as a (very) simple research notebook.</li>
+</ul>
+<h2 id="import">Import</h2>
+<ul>
+<li><strong>Better BibTeX</strong> exports and imports entries in Bib(La)TeX format</li>
+</ul>
+<h2 id="included-but-you-should-usually-ignore-it">Included, but you should usually ignore it.</h2>
+<p>I would hide these if I could. They&rsquo;re used for Zotero&rsquo;s drag-and-drop citation facility, and for Better BibTeX debugging.</p>
+<ul>
+<li><strong>BetterBibTeX JSON</strong> exports and imports items in BetterBibTeX debug format. The error reporter uses this format</li>
+<li><strong>Better BibTeX Quick Copy</strong> exports citations to be copy-pasted into your LaTeX/Markdown document in the form <code>\cite{&lt; key &gt;}</code>/<code>[@key]</code></li>
+</ul>
+
+  <footer class="footline">
+  </footer>
+</article>
+          </section>
+<article class="default">
+  <header class="headline">
+  </header>
+
+<h1 id="preferences">Preferences</h1>
 
 <p>The Better BibTeX Configuration can be found under the regular Zotero preferences pane, tab &lsquo;Better BibTeX&rsquo;.</p>
 <p>The configuration of Better BibTeX is a little baroque compared to the standard Zotero Bib(La)TeX exporters (which
@@ -330,7 +367,7 @@ all your citation keys at once.</p>
   </footer>
 </article>
           <section>
-            <h1 class="a11y-only">Subsections of General preferences</h1>
+            <h1 class="a11y-only">Subsections of Preferences</h1>
 <article class="default">
   <header class="headline">
   </header>
@@ -800,43 +837,6 @@ when you import/save items in Zotero with titles that look like they&rsquo;re Ti
 <div class="R-taxonomy taxonomy-tags cstyle tags" title="Tags" style="--VARIABLE-TAGS-BG-color: var(--INTERNAL-TAG-BG-color);">
   <ul>
     <li><a class="term-link" href="/zotero-better-bibtex/tags/export/index.html">Export</a></li>
-    <li><a class="term-link" href="/zotero-better-bibtex/tags/import/index.html">Import</a></li>
-  </ul>
-</div>
-  </header>
-
-<h1 id="bundled-translators">Bundled translators</h1>
-
-<p>Better BibTeX bundles 5 translators you might care about:</p>
-<h2 id="export">Export</h2>
-<p>These translators are supported by the auto-export functionality built into Better BibTeX:</p>
-<ul>
-<li><strong>Better BibLaTeX</strong> exports items in BibLaTeX format (but better, natch)</li>
-<li><strong>Better BibTeX</strong> exports items in BibTeX format</li>
-<li><strong>Better CSL JSON</strong> exports items in pandoc-compatible CSL-JSON format, with added citation keys and parsing of metadata</li>
-<li><strong>Better CSL YAML</strong> exports the same as the <strong>Better CSL JSON</strong> exporter, but in YAML format</li>
-<li><strong>Collected Notes</strong> exports just notes &ndash; standalone notes and notes attached to items, not the extra field &ndash; to HTML. This way, Zotero can serve as a (very) simple research notebook.</li>
-</ul>
-<h2 id="import">Import</h2>
-<ul>
-<li><strong>Better BibTeX</strong> exports and imports entries in Bib(La)TeX format</li>
-</ul>
-<h2 id="included-but-you-should-usually-ignore-it">Included, but you should usually ignore it.</h2>
-<p>I would hide these if I could. They&rsquo;re used for Zotero&rsquo;s drag-and-drop citation facility, and for Better BibTeX debugging.</p>
-<ul>
-<li><strong>BetterBibTeX JSON</strong> exports and imports items in BetterBibTeX debug format. The error reporter uses this format</li>
-<li><strong>Better BibTeX Quick Copy</strong> exports citations to be copy-pasted into your LaTeX/Markdown document in the form <code>\cite{&lt; key &gt;}</code>/<code>[@key]</code></li>
-</ul>
-
-  <footer class="footline">
-  </footer>
-</article>
-          </section>
-<article class="default">
-  <header class="headline">
-<div class="R-taxonomy taxonomy-tags cstyle tags" title="Tags" style="--VARIABLE-TAGS-BG-color: var(--INTERNAL-TAG-BG-color);">
-  <ul>
-    <li><a class="term-link" href="/zotero-better-bibtex/tags/export/index.html">Export</a></li>
     <li><a class="term-link" href="/zotero-better-bibtex/tags/scripting/index.html">Scripting</a></li>
   </ul>
 </div>
@@ -845,11 +845,11 @@ when you import/save items in Zotero with titles that look like they&rsquo;re Ti
 <h1 id="exporting-items">Exporting items</h1>
 
 <p>Better BibTex adds a couple of export formats to Zotero&rsquo;s export dialog and several ways to improve export for plaintext-based authoring.
-The Better BibTeX <a href="/zotero-better-bibtex/installation/preferences/">configuration</a> pane can be found under the regular Zotero preferences pane, tab &lsquo;Better BibTeX&rsquo; where you can tweak the exports, such as</p>
+The Better BibTeX <a href="/zotero-better-bibtex/preferences/">configuration</a> pane can be found under the regular Zotero preferences pane, tab &lsquo;Better BibTeX&rsquo; where you can tweak the exports, such as</p>
 <ul>
-<li><a href="/zotero-better-bibtex/installation/preferences/export/#fields-to-omit-from-export-comma-separated">Omitting fields from exports</a> to slim down your bib files.</li>
+<li><a href="/zotero-better-bibtex/preferences/export/#fields-to-omit-from-export-comma-separated">Omitting fields from exports</a> to slim down your bib files.</li>
 <li>Configuring how <a href="/zotero-better-bibtex/citing/">citation keys are generated</a>.</li>
-<li>And really a <a href="/zotero-better-bibtex/installation/preferences/">ton more</a>.</li>
+<li>And really a <a href="/zotero-better-bibtex/preferences/">ton more</a>.</li>
 </ul>
 <p>Additionally you can automate exporting (parts of) your library either using <a href="/zotero-better-bibtex/exporting/auto/">auto-export</a> or <a href="/zotero-better-bibtex/exporting/pull/">pull export</a>.</p>
 <h2 id="pinning-fixing-the-citation-key">Pinning (fixing) the citation key</h2>
@@ -950,7 +950,7 @@ from here, that can only be done by initiating an export.</p>
 <li>con: requires technical expertise to set up, paid option on overleaf</li>
 </ul>
 </li>
-<li><a href="https://retorque.re/zotero-better-bibtex/installation/preferences/index.html#automatically-pin-citation-key-after" rel="external">citekey pinning</a>:
+<li><a href="https://retorque.re/zotero-better-bibtex/preferences/index.html#automatically-pin-citation-key-after" rel="external">citekey pinning</a>:
 <ul>
 <li>pro: no setup, free</li>
 <li>con: only gets the BBT citekeys, BibTeX is generated by Zotero itself</li>
@@ -980,7 +980,7 @@ from here, that can only be done by initiating an export.</p>
 <p>If you only want BBTs citation keys on Overleaf, you can simply pin
 them and use the regular Overleaf-Zotero integration. This will get
 you the pinned keys, but the bibtex is generated by the standard
-Zotero exporters. If you want this to be done by default, set <a href="https://retorque.re/zotero-better-bibtex/installation/preferences/hidden-preferences/#autopindelay" rel="external">autoPinDelay</a> to a non-zero value.</p>
+Zotero exporters. If you want this to be done by default, set <a href="https://retorque.re/zotero-better-bibtex/preferences/hidden-preferences/#autopindelay" rel="external">autoPinDelay</a> to a non-zero value.</p>
 
   <footer class="footline">
   </footer>
@@ -993,7 +993,7 @@ Zotero exporters. If you want this to be done by default, set <a href="https://r
 
 <p>In addition to LaTeX, BBT plays very well with pandoc:</p>
 <ul>
-<li>you can <a href="/zotero-better-bibtex/installation/preferences/#quick-copydrag-and-drop-citations">drag and drop</a> citations from Zotero into your markdown documents.</li>
+<li>you can <a href="/zotero-better-bibtex/preferences/#quick-copydrag-and-drop-citations">drag and drop</a> citations from Zotero into your markdown documents.</li>
 <li>you can <a href="/zotero-better-bibtex/citing/cayw/">cite as you write</a> in your favorite editor with varying levels of comfort, mostly depending on how easy (VSCode, Sublime) or hard (looking at you Scrivener) it is to extend your editor.</li>
 <li>you can even convert your markdown document into a LibreOffice/Word document with actual live Zotero items as if you had entered them into Zotero all along (see below)</li>
 </ul>
@@ -1931,7 +1931,7 @@ never uses it in its standard styles, and we find no indication
 that either biblatex-apa or biblatex-chicago would use it for a
 physical archive.)</p>
 <p>Given all of this, I&rsquo;m going to leave referencing of physical
-location to postscripts for now. If you enable the <a href="/zotero-better-bibtex/installation/preferences/export/#include-comments-about-potential-problems-with-the-references">quality report</a>, BBT
+location to postscripts for now. If you enable the <a href="/zotero-better-bibtex/preferences/export/#include-comments-about-potential-problems-with-the-references">quality report</a>, BBT
 will list Zotero fields with data that has not been used in the
 export:</p>
 <div class="highlight wrap-code" dir="auto"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bibtex" data-lang="bibtex"><span style="display:flex;"><span><span style="color:#a6e22e">@letter</span>{MillionDemiInfirmes1968,
@@ -19877,7 +19877,7 @@ bibliography, this is a piece of data you want to have control over. BBT offers 
 <code>extra</code> field of the item on a line of its own. You can generate a pinned citation key by selecting one or more items, right-clicking, and selecting <code>Generate BibTeX key</code>, which will add the current citation key to the <code>extra</code> field, thereby pinning it.</p>
 <h2 id="drag-and-drophotkey-citations">Drag and drop/hotkey citations</h2>
 <p>You can drag and drop citations into your LaTeX/Markdown/Orgmode editor, and it will add a proper <code>\cite{citekey}</code>/<code>[@citekey]</code>/<code>[[zotero://select...][@citekey]</code>. The <code>cite</code> command is
-configurable for LaTeX by setting the config option in the <a href="/zotero-better-bibtex/installation/preferences/">preferences</a>. Do not include the leading backslash.</p>
+configurable for LaTeX by setting the config option in the <a href="/zotero-better-bibtex/preferences/">preferences</a>. Do not include the leading backslash.</p>
 <p>This feature requires a one-time setup: choose the Quick Copy format under the <code>Citation keys</code> preferences for BBT, and go to Zotero preferences, tab Export, under Default Output Format, select &ldquo;Better BibTeX Quick Copy: [format you just selected]&rdquo;.</p>
 <!--
 ## Find duplicate keys through integration with [Report Customizer](https://github.com/retorquere/zotero-report-customizer)
@@ -21919,7 +21919,7 @@ work in the Word/LibreOffice plugins as well as in the BibTeX export. This will
 be required for words you wish to always keep lowercase, for example. Also, if
 you don&rsquo;t generally use Zotero for generating bibliographies but just for BibTeX
 reference management, you can turn on the hidden preference
-<a href="/zotero-better-bibtex/installation/preferences/hidden-preferences/#suppresstitlecase">suppressTitleCase</a> to keep BBT
+<a href="/zotero-better-bibtex/preferences/hidden-preferences/#suppresstitlecase">suppressTitleCase</a> to keep BBT
 from applying title-casing, but take note that if you do this, the
 bibliographies you get from Zotero and the bibliograhies you get through
 Bib(La)TeX will differ, and you can&rsquo;t complain about this.</p>
@@ -21979,7 +21979,7 @@ and <em>also</em> brace-protect it.</p>
 <p>BBT will export that as</p>
 <blockquote>
 <p><code>title = {I {{Like ISDN Heaps Better}} than {{Dialup}}}</code></p></blockquote>
-<p>which is clearly not correct. The proper way to fix this is to sentence case this in Zotero &ndash; if you generate a bibliography through Zotero itself, there are styles where this title-cased title will not render correctly. But if you have a lot of these, and you do not care about the quality of the bibliographies generated by Zotero itself, you can disable the <a href="/zotero-better-bibtex/installation/preferences/export/#apply-title-casing-to-titles">title-casing</a> and/or the <a href="/zotero-better-bibtex/installation/preferences/export/#apply-case-protection-to-capitalized-words-by-enclosing-them-in-braces">brace protection</a>.</p>
+<p>which is clearly not correct. The proper way to fix this is to sentence case this in Zotero &ndash; if you generate a bibliography through Zotero itself, there are styles where this title-cased title will not render correctly. But if you have a lot of these, and you do not care about the quality of the bibliographies generated by Zotero itself, you can disable the <a href="/zotero-better-bibtex/preferences/export/#apply-title-casing-to-titles">title-casing</a> and/or the <a href="/zotero-better-bibtex/preferences/export/#apply-case-protection-to-capitalized-words-by-enclosing-them-in-braces">brace protection</a>.</p>
 <h2 id="importing-jabref-databases">Importing JabRef databases</h2>
 <p>JabRef import works generally well but has a few gotchas:</p>
 <ul>
@@ -22151,7 +22151,7 @@ make will drop all cache entries for that item (so all variants you had for diff
 for that item will be refreshed as soon as you export it again, either manually or
 <a href="/zotero-better-bibtex/exporting/">automatically</a>.</p>
 <h3 id="cache-drop">Cache drop</h3>
-<p><em>Any</em> change you make to the Better BibTeX <a href="/zotero-better-bibtex/installation/preferences/">preferences</a> will drop the whole cache. The behavior of
+<p><em>Any</em> change you make to the Better BibTeX <a href="/zotero-better-bibtex/preferences/">preferences</a> will drop the whole cache. The behavior of
 the Better BibTeX exporters are highly configurable, and it is impossible for me to figure out which entries would be
 affected specifically. Keep this in mind for large libraries; if you want to make changes to your configuration, make them all at once.</p>
 <p>The same applies to upgrades. As the export behavior quite frequently changes between versions, Better BibTeX will drop
@@ -22234,10 +22234,10 @@ means a lot) so I can save up for a replacement a year or so down
 the line, head on over to <a href="https://www.patreon.com/retorquere" rel="external">Patreon</a>,
 but mind that Patreon takes a fairly large cut of what you give.</p>
 <p>Many, many thanks, also to the existing contributors &ndash; thanks to you I&rsquo;ve hit my first target and have been able to replace my trusty macbook air with a newer macbook pro which has much more breathing room.</p>
-<p><a href="#R-image-792b6a4d4b7b768a0f142b59c9fbf7ed" class="lightbox-link"><img alt="My github stats" class="lazy lightbox figure-image" loading="lazy" src="https://github-readme-stats.vercel.app/api?username=retorquere&show_icons=true&hide_border=true&theme=dark" style="height: auto;width: auto;"></a>
-<a href="javascript:history.back();" class="lightbox-back" id="R-image-792b6a4d4b7b768a0f142b59c9fbf7ed"><img alt="My github stats" class="lazy lightbox lightbox-image" loading="lazy" src="https://github-readme-stats.vercel.app/api?username=retorquere&show_icons=true&hide_border=true&theme=dark"></a></p>
-<p><a href="#R-image-aafa67518e52d72f93022a69b63c2cb4" class="lightbox-link"><img alt="Metrics" class="lazy lightbox figure-image" loading="lazy" src="https://metrics.lecoq.io/retorquere?template=classic&config.timezone=Europe%2FOslo" style="height: auto;width: auto;"></a>
-<a href="javascript:history.back();" class="lightbox-back" id="R-image-aafa67518e52d72f93022a69b63c2cb4"><img alt="Metrics" class="lazy lightbox lightbox-image" loading="lazy" src="https://metrics.lecoq.io/retorquere?template=classic&config.timezone=Europe%2FOslo"></a></p>
+<p><a href="#R-image-0d5afdf7c778848ba2037a5ee9bf32c7" class="lightbox-link"><img alt="My github stats" class="lazy lightbox figure-image" loading="lazy" src="https://github-readme-stats.vercel.app/api?username=retorquere&show_icons=true&hide_border=true&theme=dark" style="height: auto;width: auto;"></a>
+<a href="javascript:history.back();" class="lightbox-back" id="R-image-0d5afdf7c778848ba2037a5ee9bf32c7"><img alt="My github stats" class="lazy lightbox lightbox-image" loading="lazy" src="https://github-readme-stats.vercel.app/api?username=retorquere&show_icons=true&hide_border=true&theme=dark"></a></p>
+<p><a href="#R-image-ef252bc5b3da0967e367e26b094e7e7a" class="lightbox-link"><img alt="Metrics" class="lazy lightbox figure-image" loading="lazy" src="https://metrics.lecoq.io/retorquere?template=classic&config.timezone=Europe%2FOslo" style="height: auto;width: auto;"></a>
+<a href="javascript:history.back();" class="lightbox-back" id="R-image-ef252bc5b3da0967e367e26b094e7e7a"><img alt="Metrics" class="lazy lightbox lightbox-image" loading="lazy" src="https://metrics.lecoq.io/retorquere?template=classic&config.timezone=Europe%2FOslo"></a></p>
 
   <footer class="footline">
   </footer>
