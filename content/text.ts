@@ -1,3 +1,5 @@
+import { toWordsOrdinal, toOrdinal } from 'number-to-words'
+
 import { toSentenceCase } from '@retorquere/bibtex-parser'
 
 import type { MarkupNode } from '../typings/markup.js'
@@ -482,4 +484,17 @@ export function excelColumn(n: number): string {
 
 export function toClipboard(text: string): void {
   Components.classes['@mozilla.org/widget/clipboardhelper;1'].getService(Components.interfaces.nsIClipboardHelper).copyString(text)
+}
+
+export function toEnglishOrdinal(n: number | string): string {
+  const sortaNum = typeof n === 'number' ? `${n}` : (n || '').replace(/(st|nd|th)$/, '')
+  if (sortaNum.match(/^[0-9]{1,2}$/)) {
+    return toWordsOrdinal(sortaNum).replace(/^\w/, (c: string) => c.toUpperCase()) as string
+  }
+  else if (sortaNum.match(/^[0-9]+$/)) {
+    return toOrdinal(sortaNum).replace(/^\w/, (c: string) => c.toUpperCase()) as string
+  }
+  else {
+    return typeof n === 'string' ? n : ''
+  }
 }

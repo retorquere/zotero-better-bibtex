@@ -1,5 +1,6 @@
 import EDTF, { parse as EDTFnotz } from 'edtf'
 import edtfy from 'edtfy'
+import { toEnglishOrdinal } from './text.js'
 
 // declare const dump: (msg: string) => void
 // function dump(...msg) { console.log(...msg) }
@@ -573,4 +574,9 @@ export function dateToISO(date: ParsedDate): string {
 
 export function strToISO(str: string): string {
   return dateToISO(parse(str))
+}
+
+export function century(n: number | string): string {
+  const ordinal = toEnglishOrdinal(n)
+  return ordinal ? `${ordinal} century` : `${n}`
 }

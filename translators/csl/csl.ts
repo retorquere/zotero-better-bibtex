@@ -88,8 +88,18 @@ export abstract class CSLExporter {
 
       if (item.date) {
         const parsed = dateparser.parse(item.date)
-        if (parsed.type) csl.issued = this.date2CSL(parsed) // possible for there to be an orig-date only
-        if (parsed.orig) csl['original-date'] = this.date2CSL(parsed.orig)
+        try {
+          // preconvert both so the values get set only if both are convertable
+          const issued = parsed.type ? this.date2CSL(parsed) : undefined // possible for there to be an orig-date only
+          const original = parsed.orig ? this.date2CSL(parsed.orig) : undefined
+
+          if (issued) csl.issued = issued
+          if (original) csl['original-date'] = original
+        }
+        catch (err) {
+          log.error('could not convert CSL date', { input: item.date, parsed }, err)
+          csl.issued = { literal: item.date }
+        }
       }
 
       if (item.accessDate) csl.accessed = this.date2CSL(dateparser.parse(item.accessDate))

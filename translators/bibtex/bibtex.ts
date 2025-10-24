@@ -6,9 +6,9 @@ import { Exporter as BibTeXExporter } from './exporter.js'
 import { parse as arXiv } from '../../content/arXiv.js'
 import { valid, label } from '../../gen/items/items.js'
 import wordsToNumbers from '@insomnia-dev/words-to-numbers'
-import { toWordsOrdinal, toOrdinal } from 'number-to-words'
 
-import { ParsedDate, parse as parseDate, strToISO as strToISODate } from '../../content/dateparser.js'
+import { ParsedDate, parse as parseDate, strToISO as strToISODate, century } from '../../content/dateparser.js'
+import { toEnglishOrdinal } from '../../content/text.js'
 
 import { parseBuffer as parsePList } from 'bplist-parser'
 
@@ -18,19 +18,6 @@ import { Translation } from '../lib/translator.js'
 import { Entry as BaseEntry, Config } from './entry.js'
 
 import { Library, Entry as BibTeXEntry, JabRefMetadata, ParseError, Creator, parseAsync as parse } from '@retorquere/bibtex-parser'
-
-function toEnglishOrdinal(n: number | string): string {
-  const sortaNum = typeof n === 'number' ? `${n}` : (n || '').replace(/(st|nd|th)$/, '')
-  if (sortaNum.match(/^[0-9]{1,2}$/)) {
-    return toWordsOrdinal(sortaNum).replace(/^\w/, (c: string) => c.toUpperCase()) as string
-  }
-  else if (sortaNum.match(/^[0-9]+$/)) {
-    return toOrdinal(sortaNum).replace(/^\w/, (c: string) => c.toUpperCase()) as string
-  }
-  else {
-    return typeof n === 'string' ? n : ''
-  }
-}
 
 function unique(value, index, self) {
   return self.indexOf(value) === index
@@ -368,7 +355,7 @@ function addDate(ref: Entry, date: ParsedDate | { type: 'none' }, verbatim: stri
       case 'season':
         return d.year
       case 'century':
-        return `${toEnglishOrdinal(d.century)} century`
+        return century(d.century)
       default:
         return ''
     }
@@ -402,7 +389,7 @@ function addDate(ref: Entry, date: ParsedDate | { type: 'none' }, verbatim: stri
       return
 
     case 'century':
-      ref.add({ name: 'year', value: `${toEnglishOrdinal(date.century)} century` })
+      ref.add({ name: 'year', value: century(date.century) })
       return
 
     case 'date':

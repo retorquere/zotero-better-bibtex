@@ -1,7 +1,7 @@
 import { Translation } from '../lib/translator.js'
 import type { Collected } from '../lib/collect.js'
 
-import { ParsedDate } from '../../content/dateparser.js'
+import { ParsedDate, century } from '../../content/dateparser.js'
 import { CSLExporter } from './csl.js'
 import { Date as CSLDate, Data as CSLItem, LooseNumber } from 'csl-json'
 
@@ -50,7 +50,7 @@ class Exporter extends CSLExporter {
         return { literal: date.verbatim }
 
       case 'century':
-        return { literal: `${date.century}th century` }
+        return { literal: century(date.century) }
 
       case 'season':
         return {
