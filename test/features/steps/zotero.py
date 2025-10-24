@@ -115,7 +115,7 @@ class FirefoxProfile(webdriver.FirefoxProfile):
 
 def install_proxies(xpis, profile):
   for xpi in xpis:
-    assert os.path.isdir(xpi)
+    assert os.path.isdir(xpi), xpi
     utils.print(f'installing {xpi}')
     rdf = etree.parse(os.path.join(xpi, 'install.rdf'))
     xpi_id = rdf.xpath('/rdf:RDF/rdf:Description/em:id', namespaces={'rdf': 'http://www.w3.org/1999/02/22-rdf-syntax-ns#', 'em': 'http://www.mozilla.org/2004/em-rdf#'})[0].text
@@ -441,7 +441,7 @@ class Zotero:
         for p in alive:
           utils.print("process {} survived SIGKILL; giving up" % p)
     self.proc = None
-    assert not running('Zotero')
+    assert not running('Zotero'), 'Zotero is running'
 
   def restart(self, **kwargs):
     self.shutdown()
@@ -539,7 +539,7 @@ class Zotero:
   def export_library(self, translator, displayOptions = {}, collection = None, output = None, expected = None, resetCache = False):
     show('export_library', locals())
 
-    assert not displayOptions.get('keepUpdated', False) or output # Auto-export needs a destination
+    assert not displayOptions.get('keepUpdated', False) or output, ('Auto-export needs a path', displayOptions, output) # Auto-export needs a destination
 
     if translator.startswith('id:'):
       translator = translator[len('id:'):]
@@ -582,7 +582,7 @@ class Zotero:
     found.clean()
 
   def import_file(self, context, references, collection = False, items=True):
-    assert type(collection) in [bool, str]
+    assert type(collection) in [bool, str], type(collection)
 
     input = Library(path=references, client=self.client, variant=self.variant)
 
@@ -656,7 +656,7 @@ class Zotero:
     if ext in ['.yml', '.json'] and base.endswith('.csl'):
       base = os.path.splitext(base)[0]
       ext = '.csl' + ext
-    assert ext != ''
+    assert ext != '', 'no extension'
 
     if self.client == 'zotero': return [ os.path.join(FIXTURES, expected), ext ]
 

@@ -72,7 +72,7 @@ def step_impl(context, pref, value):
 @step('I set export option {option} to {value}')
 def step_impl(context, option, value):
   value = json.loads(value)
-  assert type(value) == bool
+  assert type(value) == bool, value
   context.displayOptions[option] = value
 
 @step('I set preference {pref} to {value}')
@@ -295,7 +295,7 @@ def step_impl(context, collection):
 
 @when(u'I remove the selected item')
 def step_impl(context):
-  assert len(context.selected) == 1
+  assert len(context.selected) == 1, context.selected
   context.zotero.execute('await Zotero.Items.trashTx([id])', id=context.selected[0])
 
 @step(u'I remove all items')
@@ -307,12 +307,12 @@ def step_impl(context):
 
 @when(u'I remove the selected items')
 def step_impl(context):
-  assert len(context.selected) > 0
+  assert len(context.selected) > 0, context.selected
   context.zotero.execute('await Zotero.Items.trashTx(ids)', ids=context.selected)
 
 @when(u'I merge the selected items')
 def step_impl(context):
-  assert len(context.selected) > 1
+  assert len(context.selected) > 1, context.selected
   context.zotero.execute('''
     try {
       return await Zotero.BetterBibTeX.TestSupport.merge(selected)
@@ -331,7 +331,7 @@ def step_impl(context):
 @when(u'I pick "{title}" for CAYW')
 def step_impl(context, title):
   pick = zotero.Pick(id = context.zotero.execute('return await Zotero.BetterBibTeX.TestSupport.find({contains: title})', title=title))
-  assert pick['id'] is not None
+  assert pick['id'] is not None, 'no item picked'
 
   pick[context.table.headings[0]] = context.table.headings[1]
   for row in context.table:
@@ -345,18 +345,18 @@ def step_impl(context, fmt, expected):
 
 @when(u'I {change} the citation key')
 def step_impl(context, change):
-  assert change in ['pin', 'unpin', 'refresh']
+  assert change in ['pin', 'unpin', 'refresh'], change
   assert len(context.selected) == 1
   context.zotero.execute('await Zotero.BetterBibTeX.TestSupport.pinCiteKey(itemID, action)', itemID=context.selected[0], action=change)
 
 @when(u'I {change} all citation keys')
 def step_impl(context, change):
-  assert change in ['pin', 'unpin', 'refresh']
+  assert change in ['pin', 'unpin', 'refresh'], change
   context.zotero.execute('await Zotero.BetterBibTeX.TestSupport.pinCiteKey(null, action)', action=change)
 
 @when(u'I pin the citation key to "{citekey}"')
 def step_impl(context, citekey):
-  assert len(context.selected) == 1
+  assert len(context.selected) == 1, context.selected
   context.zotero.execute('await Zotero.BetterBibTeX.TestSupport.pinCiteKey(id, "pin", citekey)', id=context.selected[0], citekey=citekey)
 
 @step(u'dump the cache to {cache}')
@@ -421,7 +421,7 @@ def step_impl(context, param, value):
 
 @step('I change its {field} field to {value}')
 def step_impl(context, field, value):
-  assert len(context.selected) == 1
+  assert len(context.selected) == 1, context.selected
   context.zotero.execute('''
     const items = await Zotero.Items.getAsync([id])
     const item = items[0]

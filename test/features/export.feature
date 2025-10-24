@@ -47,7 +47,7 @@ Feature: Export
       | Support for Chinese Quotation Marks When Exporting with Export unicode as plaintext latex commands #2810                 | 1          |
       | Exporting item type film merges scriptwriter with other contributors #2802                                               | 1          |
       | en-dash and i-circumflex translation error #2796                                                                         | 3          |
-      | Exporting # in hashtags. \\#2795                                                                                         | 1          |
+      | Exporting # in hashtags. #2795                                                                                         | 1          |
       | My citation key formula suddenly includes editors for book sections even when there is a declared author #2794           | 2          |
       | Direct access to Zotero Creators fields #2787                                                                            | 1          |
       | shorttitle in citekeys always pinyinized #2770                                                                           | 1          |
@@ -115,7 +115,7 @@ Feature: Export
       | Regression in export to better biblatex #1491                                                                            | 1          |
       | Some Unicode characters converted to LaTeX #1481                                                                         | 1          |
       | @jurisdiction; map court,authority to institution #326                                                                   | 1          |
-      | BBT export of square brackets in date #245 -- xref should not be escaped \\#246                                          | 3          |
+      | BBT export of square brackets in date #245 -- xref should not be escaped #246                                          | 3          |
       | BBT yields error with quality report #1387                                                                               | 1          |
       | Be robust against misconfigured journal abbreviator #127                                                                 | 1          |
       | Better BibLaTeX.001                                                                                                        | 1          |
@@ -175,8 +175,8 @@ Feature: Export
       | Extra semicolon in biblatexadata causes export failure #133                                                              | 3          |
       | Fields in Extra should override defaults                                                                                   | 1          |
       | German Umlaut separated by brackets #146                                                                                 | 1          |
-      | HTML Fragment separator escaped in url #140 \\#147                                                                       | 1          |
-      | Hang on non-file attachment export #112 - URL export broken \\#114                                                       | 2          |
+      | HTML Fragment separator escaped in url #140 #147                                                                       | 1          |
+      | Hang on non-file attachment export #112 - URL export broken #114                                                       | 2          |
       | Ignore HTML tags when generating citation key #264                                                                       | 1          |
       | Japanese rendered as Chinese in Citekey #979                                                                             | 1          |
       | Juris-M missing multi-lingual fields #482                                                                                | 2          |
@@ -190,7 +190,7 @@ Feature: Export
       | Oriental dates trip up date parser #389                                                                                  | 1          |
       | Protect math sections #1148                                                                                              | 1          |
       | References with multiple notes fail to export #174                                                                       | 1          |
-      | Shortjournal does not get exported to biblatex format #102 - biblatexcitekey \\#105                                      | 1          |
+      | Shortjournal does not get exported to biblatex format #102 - biblatexcitekey #105                                      | 1          |
       | Spaces not stripped from citation keys #294                                                                              | 1          |
       | Suppress brace protection #1139                                                                                          | 1          |
       | Text that legally contains the text of HTML entities such as &nbsp; triggers an overzealous decoding second-guesser #253 | 1          |
@@ -226,7 +226,7 @@ Feature: Export
       | biblatex; Language tag xx is exported, xx-XX is not #380                                                                 | 1          |
       | biblatex export of Presentation; Use type and venue fields #644                                                          | 2          |
       | URL-DOI exclusive export broken for item types with no dedicated DOI field #1331                                         | 1          |
-      | date ranges #747+\\#746                                                                                                  | 5          |
+      | date ranges #747+#746                                                                                                  | 5          |
       | preserve @strings between import-export #1162                                                                            | 1          |
       | inspireHep fetching broken #2201                                                                                         | 1          |
       | fetch inspire-hep key #1879                                                                                              | 1          |
@@ -245,8 +245,8 @@ Feature: Export
       | Better BibTeX export from Zotero missing Extra fields eg issued #2816                                              | 1          |
       | formula grouping                                                                                                     | 1          |
       | formula grouping-upgrade                                                                                             | 1          |
-      | BBT does not escape # in first argument of href in note \\#2617                                                    | 2          |
-      | BBT does not escape # in first argument of href in note \\#2617-note                                               | 2          |
+      | BBT does not escape # in first argument of href in note #2617                                                    | 2          |
+      | BBT does not escape # in first argument of href in note #2617-note                                               | 2          |
       | Ternary in citekey formula                                                                                           | 1          |
       | LogicalOr in citekey formula                                                                                         | 1          |
       | event-place in extra not exported to address #2533                                                                 | 1          |
@@ -322,7 +322,7 @@ Feature: Export
       | braces after textemdash followed by unicode #980                                                                   | 1          |
       | creating a key with [authForeIni] and [authN] not working properly #892                                            | 2          |
       | date not always parsed properly into month and year with PubMed #1112                                              | 2          |
-      | date ranges #747+\\#746                                                                                            | 5          |
+      | date ranges #747+#746                                                                                            | 5          |
       | preserve @strings between import-export #1162                                                                      | 1          |
       | titles are title-cased in .bib file #558                                                                           | 2          |
 
@@ -337,86 +337,86 @@ Feature: Export
 
     Examples:
       | file                                                                              | references |
-#      | Export to Better CSL JSON not working in latest built 7900-7988 #3332            | 88         |
-#      | Export to Better CSL JSON not working in latest built 7800-7900 #3332           | 100        |
-#      | Export to Better CSL JSON not working in latest built 7700-7800 #3332           | 100        |
-#      | Export to Better CSL JSON not working in latest built 7600-7700 #3332           | 100        |
-#      | Export to Better CSL JSON not working in latest built 7500-7600 #3332           | 100        |
-#      | Export to Better CSL JSON not working in latest built 7400-7500 #3332           | 100        |
-#      | Export to Better CSL JSON not working in latest built 7300-7400 #3332           | 100        |
-#      | Export to Better CSL JSON not working in latest built 7200-7300 #3332           | 100        |
-#      | Export to Better CSL JSON not working in latest built 7100-7200 #3332           | 100        |
-#      | Export to Better CSL JSON not working in latest built 7000-7100 #3332           | 100        |
-#      | Export to Better CSL JSON not working in latest built 6900-7000 #3332           | 100        |
-#      | Export to Better CSL JSON not working in latest built 6800-6900 #3332           | 100        |
-#      | Export to Better CSL JSON not working in latest built 6700-6800 #3332           | 100        |
-#      | Export to Better CSL JSON not working in latest built 6600-6700 #3332           | 100        |
-#      | Export to Better CSL JSON not working in latest built 6500-6600 #3332           | 100        |
-#      | Export to Better CSL JSON not working in latest built 6400-6500 #3332           | 100        |
-#      | Export to Better CSL JSON not working in latest built 6300-6400 #3332           | 100        |
-#      | Export to Better CSL JSON not working in latest built 6200-6300 #3332           | 100        |
-#      | Export to Better CSL JSON not working in latest built 6100-6200 #3332           | 100        |
-#      | Export to Better CSL JSON not working in latest built 6000-6100 #3332           | 100        |
-#      | Export to Better CSL JSON not working in latest built 5900-6000 #3332           | 100        |
-#      | Export to Better CSL JSON not working in latest built 5800-5900 #3332           | 100        |
-#      | Export to Better CSL JSON not working in latest built 5700-5800 #3332           | 100        |
-#      | Export to Better CSL JSON not working in latest built 5600-5700 #3332           | 100        |
-#      | Export to Better CSL JSON not working in latest built 5500-5600 #3332           | 100        |
-#      | Export to Better CSL JSON not working in latest built 5400-5500 #3332           | 100        |
-#      | Export to Better CSL JSON not working in latest built 5300-5400 #3332           | 100        |
-#      | Export to Better CSL JSON not working in latest built 5200-5300 #3332           | 100        |
-#      | Export to Better CSL JSON not working in latest built 5100-5200 #3332           | 100        |
-#      | Export to Better CSL JSON not working in latest built 5000-5100 #3332           | 100        |
-#      | Export to Better CSL JSON not working in latest built 4900-5000 #3332           | 100        |
-#      | Export to Better CSL JSON not working in latest built 4800-4900 #3332           | 100        |
-#      | Export to Better CSL JSON not working in latest built 4700-4800 #3332           | 100        |
-#      | Export to Better CSL JSON not working in latest built 4600-4700 #3332           | 100        |
-#      | Export to Better CSL JSON not working in latest built 4500-4600 #3332           | 100        |
-#      | Export to Better CSL JSON not working in latest built 4400-4500 #3332           | 100        |
-#      | Export to Better CSL JSON not working in latest built 4300-4400 #3332           | 100        |
-#      | Export to Better CSL JSON not working in latest built 4200-4300 #3332           | 100        |
-#      | Export to Better CSL JSON not working in latest built 4100-4200 #3332           | 100        |
-#      | Export to Better CSL JSON not working in latest built 4000-4100 #3332           | 100        |
-#      | Export to Better CSL JSON not working in latest built 3900-4000 #3332           | 100        |
-#      | Export to Better CSL JSON not working in latest built 3800-3900 #3332           | 100        |
-#      | Export to Better CSL JSON not working in latest built 3700-3800 #3332           | 100        |
-#      | Export to Better CSL JSON not working in latest built 3600-3700 #3332           | 100        |
-#      | Export to Better CSL JSON not working in latest built 3500-3600 #3332           | 100        |
-#      | Export to Better CSL JSON not working in latest built 3400-3500 #3332           | 100        |
-#      | Export to Better CSL JSON not working in latest built 3300-3400 #3332           | 100        |
-#      | Export to Better CSL JSON not working in latest built 3200-3300 #3332           | 100        |
-#      | Export to Better CSL JSON not working in latest built 3100-3200 #3332           | 100        |
-#      | Export to Better CSL JSON not working in latest built 3000-3100 #3332           | 100        |
-#      | Export to Better CSL JSON not working in latest built 2900-3000 #3332           | 100        |
-#      | Export to Better CSL JSON not working in latest built 2800-2900 #3332           | 100        |
-#      | Export to Better CSL JSON not working in latest built 2700-2800 #3332           | 100        |
-#      | Export to Better CSL JSON not working in latest built 2600-2700 #3332           | 100        |
-#      | Export to Better CSL JSON not working in latest built 2500-2600 #3332           | 100        |
-#      | Export to Better CSL JSON not working in latest built 2400-2500 #3332           | 100        |
-#      | Export to Better CSL JSON not working in latest built 2300-2400 #3332           | 100        |
-#      | Export to Better CSL JSON not working in latest built 2200-2300 #3332           | 100        |
-#      | Export to Better CSL JSON not working in latest built 2100-2200 #3332           | 100        |
-#      | Export to Better CSL JSON not working in latest built 2000-2100 #3332           | 100        |
-#      | Export to Better CSL JSON not working in latest built 1900-2000 #3332           | 100        |
-#      | Export to Better CSL JSON not working in latest built 1800-1900 #3332           | 100        |
-#      | Export to Better CSL JSON not working in latest built 1700-1800 #3332           | 100        |
-#      | Export to Better CSL JSON not working in latest built 1600-1700 #3332           | 100        |
-#      | Export to Better CSL JSON not working in latest built 1500-1600 #3332           | 100        |
-#      | Export to Better CSL JSON not working in latest built 1400-1500 #3332           | 100        |
-#      | Export to Better CSL JSON not working in latest built 1300-1400 #3332           | 100        |
-#      | Export to Better CSL JSON not working in latest built 1200-1300 #3332           | 100        |
-#      | Export to Better CSL JSON not working in latest built 1100-1200 #3332           | 100        |
-#      | Export to Better CSL JSON not working in latest built 1000-1100 #3332           | 100        |
-#      | Export to Better CSL JSON not working in latest built 900-1000 #3332            | 100        |
-#      | Export to Better CSL JSON not working in latest built 800-900 #3332             | 100        |
-#      | Export to Better CSL JSON not working in latest built 700-800 #3332             | 100        |
-#      | Export to Better CSL JSON not working in latest built 600-700 #3332             | 100        |
-#      | Export to Better CSL JSON not working in latest built 500-600 #3332             | 100        |
-#      | Export to Better CSL JSON not working in latest built 400-500 #3332             | 100        |
-#      | Export to Better CSL JSON not working in latest built 300-400 #3332             | 100        |
-#      | Export to Better CSL JSON not working in latest built 200-300 #3332             | 100        |
-#      | Export to Better CSL JSON not working in latest built 100-200 #3332             | 100        |
-#      | Export to Better CSL JSON not working in latest built 0-100 #3332               | 100        |
+      | Export to Better CSL JSON not working in latest built 7900-7988 #3332            | 88         |
+      | Export to Better CSL JSON not working in latest built 7800-7900 #3332           | 100        |
+      | Export to Better CSL JSON not working in latest built 7700-7800 #3332           | 100        |
+      | Export to Better CSL JSON not working in latest built 7600-7700 #3332           | 100        |
+      | Export to Better CSL JSON not working in latest built 7500-7600 #3332           | 100        |
+      | Export to Better CSL JSON not working in latest built 7400-7500 #3332           | 100        |
+      | Export to Better CSL JSON not working in latest built 7300-7400 #3332           | 100        |
+      | Export to Better CSL JSON not working in latest built 7200-7300 #3332           | 100        |
+      | Export to Better CSL JSON not working in latest built 7100-7200 #3332           | 100        |
+      | Export to Better CSL JSON not working in latest built 7000-7100 #3332           | 100        |
+      | Export to Better CSL JSON not working in latest built 6900-7000 #3332           | 100        |
+      | Export to Better CSL JSON not working in latest built 6800-6900 #3332           | 100        |
+      | Export to Better CSL JSON not working in latest built 6700-6800 #3332           | 100        |
+      | Export to Better CSL JSON not working in latest built 6600-6700 #3332           | 100        |
+      | Export to Better CSL JSON not working in latest built 6500-6600 #3332           | 100        |
+      | Export to Better CSL JSON not working in latest built 6400-6500 #3332           | 100        |
+      | Export to Better CSL JSON not working in latest built 6300-6400 #3332           | 100        |
+      | Export to Better CSL JSON not working in latest built 6200-6300 #3332           | 100        |
+      | Export to Better CSL JSON not working in latest built 6100-6200 #3332           | 100        |
+      | Export to Better CSL JSON not working in latest built 6000-6100 #3332           | 100        |
+      | Export to Better CSL JSON not working in latest built 5900-6000 #3332           | 100        |
+      | Export to Better CSL JSON not working in latest built 5800-5900 #3332           | 100        |
+      | Export to Better CSL JSON not working in latest built 5700-5800 #3332           | 100        |
+      | Export to Better CSL JSON not working in latest built 5600-5700 #3332           | 100        |
+      | Export to Better CSL JSON not working in latest built 5500-5600 #3332           | 100        |
+      | Export to Better CSL JSON not working in latest built 5400-5500 #3332           | 100        |
+      | Export to Better CSL JSON not working in latest built 5300-5400 #3332           | 100        |
+      | Export to Better CSL JSON not working in latest built 5200-5300 #3332           | 100        |
+      | Export to Better CSL JSON not working in latest built 5100-5200 #3332           | 100        |
+      | Export to Better CSL JSON not working in latest built 5000-5100 #3332           | 100        |
+      | Export to Better CSL JSON not working in latest built 4900-5000 #3332           | 100        |
+      | Export to Better CSL JSON not working in latest built 4800-4900 #3332           | 100        |
+      | Export to Better CSL JSON not working in latest built 4700-4800 #3332           | 100        |
+      | Export to Better CSL JSON not working in latest built 4600-4700 #3332           | 100        |
+      | Export to Better CSL JSON not working in latest built 4500-4600 #3332           | 100        |
+      | Export to Better CSL JSON not working in latest built 4400-4500 #3332           | 100        |
+      | Export to Better CSL JSON not working in latest built 4300-4400 #3332           | 100        |
+      | Export to Better CSL JSON not working in latest built 4200-4300 #3332           | 100        |
+      | Export to Better CSL JSON not working in latest built 4100-4200 #3332           | 100        |
+      | Export to Better CSL JSON not working in latest built 4000-4100 #3332           | 100        |
+      | Export to Better CSL JSON not working in latest built 3900-4000 #3332           | 100        |
+      | Export to Better CSL JSON not working in latest built 3800-3900 #3332           | 100        |
+      | Export to Better CSL JSON not working in latest built 3700-3800 #3332           | 100        |
+      | Export to Better CSL JSON not working in latest built 3600-3700 #3332           | 100        |
+      | Export to Better CSL JSON not working in latest built 3500-3600 #3332           | 100        |
+      | Export to Better CSL JSON not working in latest built 3400-3500 #3332           | 100        |
+      | Export to Better CSL JSON not working in latest built 3300-3400 #3332           | 100        |
+      | Export to Better CSL JSON not working in latest built 3200-3300 #3332           | 100        |
+      | Export to Better CSL JSON not working in latest built 3100-3200 #3332           | 100        |
+      | Export to Better CSL JSON not working in latest built 3000-3100 #3332           | 100        |
+      | Export to Better CSL JSON not working in latest built 2900-3000 #3332           | 100        |
+      | Export to Better CSL JSON not working in latest built 2800-2900 #3332           | 100        |
+      | Export to Better CSL JSON not working in latest built 2700-2800 #3332           | 100        |
+      | Export to Better CSL JSON not working in latest built 2600-2700 #3332           | 100        |
+      | Export to Better CSL JSON not working in latest built 2500-2600 #3332           | 100        |
+      | Export to Better CSL JSON not working in latest built 2400-2500 #3332           | 100        |
+      | Export to Better CSL JSON not working in latest built 2300-2400 #3332           | 100        |
+      | Export to Better CSL JSON not working in latest built 2200-2300 #3332           | 100        |
+      | Export to Better CSL JSON not working in latest built 2100-2200 #3332           | 100        |
+      | Export to Better CSL JSON not working in latest built 2000-2100 #3332           | 100        |
+      | Export to Better CSL JSON not working in latest built 1900-2000 #3332           | 100        |
+      | Export to Better CSL JSON not working in latest built 1800-1900 #3332           | 100        |
+      | Export to Better CSL JSON not working in latest built 1700-1800 #3332           | 100        |
+      | Export to Better CSL JSON not working in latest built 1600-1700 #3332           | 100        |
+      | Export to Better CSL JSON not working in latest built 1500-1600 #3332           | 100        |
+      | Export to Better CSL JSON not working in latest built 1400-1500 #3332           | 100        |
+      | Export to Better CSL JSON not working in latest built 1300-1400 #3332           | 100        |
+      | Export to Better CSL JSON not working in latest built 1200-1300 #3332           | 100        |
+      | Export to Better CSL JSON not working in latest built 1100-1200 #3332           | 100        |
+      | Export to Better CSL JSON not working in latest built 1000-1100 #3332           | 100        |
+      | Export to Better CSL JSON not working in latest built 900-1000 #3332            | 100        |
+      | Export to Better CSL JSON not working in latest built 800-900 #3332             | 100        |
+      | Export to Better CSL JSON not working in latest built 700-800 #3332             | 100        |
+      | Export to Better CSL JSON not working in latest built 600-700 #3332             | 100        |
+      | Export to Better CSL JSON not working in latest built 500-600 #3332             | 100        |
+      | Export to Better CSL JSON not working in latest built 400-500 #3332             | 100        |
+      | Export to Better CSL JSON not working in latest built 300-400 #3332             | 100        |
+      | Export to Better CSL JSON not working in latest built 200-300 #3332             | 100        |
+      | Export to Better CSL JSON not working in latest built 100-200 #3332             | 100        |
+      | Export to Better CSL JSON not working in latest built 0-100 #3332               | 100        |
       | Better CSL does not extract extra variables #2963                               | 1          |
       | Does setting a type via cheater syntax work currently #2473                     | 1          |
       | _eprint in extra causes CSL-JSON export error #2430                             | 1          |
@@ -424,7 +424,7 @@ Feature: Export
       | Export Error Unexpected date type #2303                                         | 1          |
       | Better CSL JSON does not include authority field #2019                          | 1          |
       | Multiple creators in Extra not exported in Better CSL JSON #2015                | 1          |
-      | Deterministic ordering for CSL #1178 \\#1400                                    | 26         |
+      | Deterministic ordering for CSL #1178 #1400                                    | 26         |
       | CSL exporters; ignore [Fields to omit from export] setting #1179                | 26         |
       | Quotes around last names should be removed from citekeys #856                   | 1          |
       | BBT CSL JSON; Do not use shortTitle and journalAbbreviation #372                | 1          |
