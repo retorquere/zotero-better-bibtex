@@ -339,14 +339,14 @@ The Better BibTeX hidden preferences are preceded by “extensions.zotero.transl
       const slug = path.basename(page, '.md')
       if (!this.pages[slug]) error('no page data for', path.basename(page))
       this.pages[slug].path = page
-      this.pages[slug].matter = frontmatter(page)
-      if (this.pages[slug].title) this.pages[slug].matter.data.title = this.pages[slug].title
+      this.pages[slug].matter = frontmatter(fs.readFileSync(page, 'utf-8'))
+      this.pages[slug].matter.data.title = this.pages[slug].matter.data.title || slug
     }
 
     for (const [ slug, page ] of Object.entries(this.pages)) {
       if (!page.path) error('no template for', slug)
+      console.log(page.matter.data)
       page.matter.content = eta.renderString(`\n\n{{% preferences/header %}}\n\n${ page.content }`, prefs)
-      page.matter.data.preferences = true
       ensureDir(page.path)
       fs.writeFileSync(page.path, page.matter.stringify())
     }

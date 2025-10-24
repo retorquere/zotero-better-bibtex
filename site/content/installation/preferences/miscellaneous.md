@@ -1,5 +1,6 @@
 ---
-preferences: true
+title: miscellaneous
+weight: 5
 ---
 
 

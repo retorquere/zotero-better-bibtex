@@ -1,5 +1,6 @@
 ---
-preferences: true
+title: hidden-preferences
+weight: 6
 ---
 
 
