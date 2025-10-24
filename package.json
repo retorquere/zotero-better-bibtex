@@ -109,7 +109,7 @@
     "patch-package": "^8.0.1",
     "pinyin": "^4.0.0",
     "punycode2": "^1.0.1",
-    "reserved-identifiers": "^1.0.0",
+    "reserved-identifiers": "^1.1.0",
     "safe-stable-stringify": "^2.5.0",
     "shell-quote": "^1.8.3",
     "spellnames": "^1.0.5",
@@ -123,7 +123,7 @@
     "turndown": "^7.2.1",
     "uzip": "^0.20201231.0",
     "wasmjieba-web": "^1.0.14",
-    "zotero-plugin": "^7.0.9",
+    "zotero-plugin": "^7.0.10",
     "zotero-plugin-toolkit": "^5.0.1",
     "zotero-types": "^4.0.5"
   },
