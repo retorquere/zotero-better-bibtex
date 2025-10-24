@@ -39,7 +39,7 @@ You can fix the citation key (called `pinning` in BBT) for an item by adding the
 ## Drag and drop/hotkey citations
 
 You can drag and drop citations into your LaTeX/Markdown/Orgmode editor, and it will add a proper `\cite{citekey}`/`[@citekey]`/`[[zotero://select...][@citekey]`. The `cite` command is
-configurable for LaTeX by setting the config option in the [preferences]({{% ref "installation/preferences" %}}). Do not include the leading backslash.
+configurable for LaTeX by setting the config option in the [preferences]({{% ref "preferences" %}}). Do not include the leading backslash.
 
 This feature requires a one-time setup: choose the Quick Copy format under the `Citation keys` preferences for BBT, and go to Zotero preferences, tab Export, under Default Output Format, select "Better BibTeX Quick Copy: [format you just selected]".
 
