@@ -1,6 +1,7 @@
-import EDTF, { parse as EDTFnotz } from 'edtf'
-import edtfy from 'edtfy'
 import { toEnglishOrdinal } from './text.js'
+import EDTF, { defaults } from 'edtf'
+defaults.offset = false
+import edtfy from 'edtfy'
 
 // declare const dump: (msg: string) => void
 // function dump(...msg) { console.log(...msg) }
@@ -511,24 +512,10 @@ class DateParser {
   }
 }
 
-class NOTZParser extends DateParser {
-  edtf(date: string): any {
-    try {
-      return EDTFnotz(date)
-    }
-    catch {
-      return null
-    }
-  }
-}
+const parser = new DateParser
 
-const parser = {
-  withtz: new DateParser,
-  notz: new NOTZParser,
-}
-
-export function parse(date: string, tz = true): ParsedDate {
-  return tz ? parser.withtz.parse(date) : parser.notz.parse(date)
+export function parse(date: string): ParsedDate {
+  return parser.parse(date)
 }
 
 function testEDTF(value: string): boolean {
