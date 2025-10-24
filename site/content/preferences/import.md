@@ -1,6 +1,8 @@
 ---
 title: Import
 weight: 4
+aliases:
+  - /installation/preferences/import
 ---
 
 

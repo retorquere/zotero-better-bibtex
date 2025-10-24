@@ -1,6 +1,8 @@
 ---
 title: Preferences
 weight: 1
+aliases:
+  - /installation/preferences
 ---
 
 

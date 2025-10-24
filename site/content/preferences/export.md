@@ -1,6 +1,8 @@
 ---
 title: Export
 weight: 2
+aliases:
+  - /installation/preferences/export
 ---
 
 

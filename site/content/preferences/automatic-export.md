@@ -1,6 +1,8 @@
 ---
 title: Automatic export
 weight: 3
+aliases:
+  - /installation/preferences/automatic-export
 ---
 
 

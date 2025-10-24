@@ -1,6 +1,8 @@
 ---
 title: Hidden preferences
 weight: 6
+aliases:
+  - /installation/preferences/hidden-preferences
 ---
 
 

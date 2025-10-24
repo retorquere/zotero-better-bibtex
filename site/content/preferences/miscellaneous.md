@@ -1,6 +1,8 @@
 ---
 title: Miscellaneous
 weight: 5
+aliases:
+  - /installation/preferences/miscellaneous
 ---
 
 
