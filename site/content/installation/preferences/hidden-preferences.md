@@ -1,5 +1,5 @@
 ---
-title: hidden-preferences
+title: Hidden preferences
 weight: 6
 ---
 

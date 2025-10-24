@@ -1,5 +1,5 @@
 ---
-title: import
+title: Import
 weight: 4
 ---
 

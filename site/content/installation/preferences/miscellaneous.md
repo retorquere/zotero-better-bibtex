@@ -1,5 +1,5 @@
 ---
-title: miscellaneous
+title: Miscellaneous
 weight: 5
 ---
 

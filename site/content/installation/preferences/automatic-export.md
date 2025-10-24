@@ -1,5 +1,5 @@
 ---
-title: automatic-export
+title: Automatic export
 weight: 3
 ---
 
