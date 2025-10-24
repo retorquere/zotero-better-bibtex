@@ -258,6 +258,7 @@ jobs:
     - name: install node packages
       run: npm install && npm ls
 
+    - run: find xpi -type f
     - run: npm run release
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
