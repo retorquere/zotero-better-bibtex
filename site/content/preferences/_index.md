@@ -1,5 +1,5 @@
 ---
-title: General preferences
+title: Preferences
 weight: 1
 ---
 

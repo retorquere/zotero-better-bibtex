@@ -519,7 +519,7 @@ render('content/Preferences/preferences.pug', 'build/content/preferences.xhtml',
     preCodeGen(ast, _options) { // eslint-disable-line prefer-arrow/prefer-arrow-functions
       const docs = walk(Docs, ast, true)
 
-      docs.savePages('site/content/installation/preferences')
+      docs.savePages('site/content/preferences')
       docs.saveDefaults('build/defaults/preferences/defaults.js')
       docs.saveDefaults('build/prefs.js')
       docs.saveTypescript()
