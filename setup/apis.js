@@ -101,7 +101,7 @@ const Zotero = new class {
 const Babel = new class {
   constructor() {
     const tags = JSON.parse(fs.readFileSync('gen/babel/tag.json', 'utf-8'))
-    this.languages = unique([Object.keys(tags), ...Object.values(tags)])
+    this.languages = unique(...[Object.keys(tags), ...Object.values(tags)])
   }
 }()
 export function printed(schema, parenthesize) {
