@@ -6,7 +6,6 @@ import { generateSchema } from 'json-schema-it'
 import path from 'path'
 import ts from 'typescript'
 import { inspect } from 'util'
-import { parse as parseComment } from 'comment-parser'
 
 import Showdown from 'showdown'
 const Markdown = new class {
@@ -19,30 +18,27 @@ const Markdown = new class {
   }
 }()
 
-const TSDoc = new class {
-  extract(comment) {
-    if (!comment) return { body: '', parameters: {} }
+function JsDoc(node) {
+  const comment = node.jsDoc?.find(n => n.kind === ts.SyntaxKind.JSDocComment)
+  const body = comment?.comment || ''
 
-    const parsedBlocks = parseComment(comment, { spacing: 'preserve' })
-
-    const body = parsedBlocks[0].description
-    const parameters = {}
+  const parameters = {}
+  if (comment && comment.tags) {
     let m
-    for (const tag of parsedBlocks[0].tags) {
-      if (tag.tag === 'param') {
-        if (m = tag.name.match(/^([^.]+)[.](.+)/)) {
-          const [, name, member ] = m
-          parameters[name] += `\n * .${member}: ${tag.description}`
-        }
-        else {
-          parameters[tag.name] = tag.description
-        }
+    for (const tag of comment.tags.filter(t => t.kind === ts.SyntaxKind.JSDocParameterTag)) {
+      const name = tag.name.getText()
+      if (m = name.match(/^(?<obj>[^.]+)[.](?<member>.+)/)) {
+        const { obj, member } = m.groups
+        parameters[obj] += `\n * .${member}: ${tag.comment}`
+      }
+      else {
+        parameters[name] = tag.comment
       }
     }
-
-    return { body, parameters }
   }
-}()
+
+  return { body, parameters }
+}
 
 function escapeHTML(str) {
   const escapeChars = {
@@ -352,26 +348,26 @@ class APIReader {
 
   traverse(node) {
     if (ts.isClassDeclaration(node) && node.name) {
-      this.currentClassName = node.name.getText(this.parsedSourceFile)
+      this.currentClassName = node.name.getText()
     }
     else if (this.currentClassName?.match(this.className) && ts.isMethodDeclaration(node)) {
       this.templateDoc = ''
-      const methodName = node.name.getText(this.parsedSourceFile)
+      const methodName = node.name.getText()
 
       if (methodName.match(this.methodName)) {
         if (!this.api[this.currentClassName]) this.api[this.currentClassName] = {}
 
-        const doc = TSDoc.extract(this.getTSDoc(node))
+        const doc = JsDoc(node)
 
         if (!node.type) throw node.getText()
         const returnType = simplifySchema(this.resolveType(node.type))
 
         const parameters = node.parameters.map(param => {
-          const paramName = param.name.getText(this.parsedSourceFile)
+          const paramName = param.name.getText()
 
           const isOptional = !!param.questionToken || !!param.initializer
-          const defaultValue = param.initializer ? eval(param.initializer.getText(this.parsedSourceFile)) : undefined
-          // const originalParamTypeString = param.type ? param.type.getText(this.parsedSourceFile) : defaultValue
+          const defaultValue = param.initializer ? eval(param.initializer.getText()) : undefined
+          // const originalParamTypeString = param.type ? param.type.getText() : defaultValue
 
           let paramType
           if (param.type) {
@@ -419,7 +415,7 @@ class APIReader {
       if (!decl.initializer) continue
       if (decl.initializer.kind !== ts.SyntaxKind.AsExpression) continue
       if (decl.initializer.type?.kind !== ts.SyntaxKind.TypeReference) continue
-      if (decl.initializer.type.typeName.getText(this.parsedSourceFile) !== 'const') continue
+      if (decl.initializer.type.typeName.getText() !== 'const') continue
       if (decl.initializer.expression.kind !== ts.SyntaxKind.ObjectLiteralExpression) continue
       this.constDeclaration[decl.name.getText()] = eval(`(${decl.initializer.expression.getText()})`)
     }
@@ -580,28 +576,17 @@ class APIReader {
         }
         stop('Unexpected TypeOperator', ts.SyntaxKind[type.operator])
 
+      /*
       case 'TypeQuery':
         if (ts.SyntaxKind[type.exprName.kind] === 'Identifier') {
           const name = type.exprName.getText()
           console.log(name, 'TypeQuery', { ...type, parent: undefined })
         }
         break
+      */
     }
 
     stop('Unexpected type component', ts.SyntaxKind[type.kind])
-  }
-
-  getTSDoc(node) {
-    const leadingCommentRanges = ts.getLeadingCommentRanges(this.parsedSourceFile.text, node.pos)
-    if (!leadingCommentRanges) {
-      return null
-    }
-
-    for (const range of leadingCommentRanges) {
-      const commentText = this.parsedSourceFile.text.substring(range.pos, range.end)
-      if (commentText.trim().startsWith('/**')) return commentText
-    }
-    return null
   }
 }
 

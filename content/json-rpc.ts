@@ -399,11 +399,11 @@ export class NSItem {
    * Generate a bibliography for the given citekeys
    *
    * @param citekeys An array of citekeys
-   * @param {object} format   A specification of how the bibliography should be formatted
-   * @param {} format.quickCopy    Format as specified in the Zotero quick-copy settings
-   * @param {} format.contentType  Output as HTML or text
-   * @param {} format.locale       Locale to use to generate the bibliography
-   * @param {} format.id           CSL style to use
+   * @param format   A specification of how the bibliography should be formatted
+   * @param format.quickCopy    Format as specified in the Zotero quick-copy settings
+   * @param format.contentType  Output as HTML or text
+   * @param format.locale       Locale to use to generate the bibliography
+   * @param format.id           CSL style to use
    *
    * @returns  A formatted bibliography
    */

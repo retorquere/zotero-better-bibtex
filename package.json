@@ -143,7 +143,6 @@
     "benchmark": "^2.1.4",
     "buffer": "^6.0.3",
     "clp": "^4.0.13",
-    "comment-parser": "^1.4.1",
     "current-git-branch": "^2.0.2",
     "dedent-js": "^1.0.1",
     "deep-cleaner": "^1.2.1",
