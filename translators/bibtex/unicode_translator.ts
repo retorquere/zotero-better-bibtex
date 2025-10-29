@@ -31,8 +31,6 @@ export class HTMLConverter {
   private packages: Set<string> = new Set
   private translation: Translation
 
-  private mode: string
-
   constructor(translation: Translation) {
     this.translation = translation
 
