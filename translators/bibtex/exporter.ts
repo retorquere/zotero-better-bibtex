@@ -20,8 +20,6 @@ export class Exporter {
   public citekeys: Record<string, number> = {}
 
   private translation: Translation
-  // private htmlconverter: Partial<Record<ConversionMode, HTMLConverter>> = {}
-  // private htmlconverterMode: ConversionMode
   private tx: HTMLConverter
 
   constructor(translation: Translation) {
@@ -103,8 +101,6 @@ export class Exporter {
   text2latex(text: string, options: ConverterOptions = {}): TeX {
     if (typeof options.html === 'undefined') options.html = false
     this.tx = this.tx || new HTMLConverter(this.translation)
-    // mode = mode || this.htmlconverterMode
-    // if (!this.htmlconverter[mode]) this.htmlconverter[mode] = new HTMLConverter(this.translation, mode)
     return this.tx.tolatex(text, options)
   }
 

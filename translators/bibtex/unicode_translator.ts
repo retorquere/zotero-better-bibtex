@@ -69,7 +69,6 @@ export class HTMLConverter {
 
     if (!options.commandspacers) this.latex = replace_command_spacers(this.latex)
 
-    log.debug('ogonek: tx mode', `${this.mode}${options.creator ? '-creator' : ''}`, { text: source, tex: this.latex })
     this.latex = this.latex
       // .replace(/(\\\\)+[^\S\n]*\n\n/g, '\n\n') // I don't recall why I had the middle match, replaced by match below until I figure it out
       .replace(/(\\\\)+\n\n/g, '\n\n') // paragraph breaks followed by line breaks == line breaks
@@ -237,8 +236,6 @@ export class HTMLConverter {
 
   private chars(text, nocased) {
     if (this.options.html) text = HE.decode(text, { isAttributeValue: true })
-    let tex: string
-    this.latex += (tex = this.tx.tolatex(text, { bracemath: !nocased, preservemacrospacers: true, packages: this.packages }))
-    log.debug('ogonek: append:', { bracemath: !nocased, preservemacrospacers: true }, { text, tex })
+    this.latex += this.tx.tolatex(text, { bracemath: !nocased, preservemacrospacers: true, packages: this.packages })
   }
 }
