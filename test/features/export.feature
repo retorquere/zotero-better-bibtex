@@ -276,7 +276,7 @@ Feature: Export
       | Format disambiguations #1554                                                                                       | 2          |
       | BibTeX Warning for Inbook Entries with Author and Editor Fields #1541                                              | 1          |
       | Unicode oslash in author name is exported with trailing space which does not work in bibtex #1538                  | 1          |
-      #| lone ogonek should have brace                                                                                      | 1          |
+      | lone ogonek should have brace                                                                                      | 1          |
       | Regression in export to better biblatex #1491                                                                      | 1          |
       | add date, origdate functions, and format-date filter #1488                                                         | 4          |
       | Some Unicode characters converted to LaTeX #1481                                                                   | 1          |

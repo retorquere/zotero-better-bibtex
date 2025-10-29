@@ -10,7 +10,7 @@ import * as bibtexParser from '@retorquere/bibtex-parser'
 import { Postfix } from './postfix.js'
 import * as Extra from '../../content/extra.js'
 import type { ExportedItem } from '../../content/worker/cache.js'
-import { HTMLConverter, Mode as ConversionMode, ConverterOptions, ParseResult } from './unicode_translator.js'
+import { HTMLConverter, ConverterOptions, TeX } from './unicode_translator.js'
 
 export class Exporter {
   public postfix: Postfix
@@ -20,13 +20,14 @@ export class Exporter {
   public citekeys: Record<string, number> = {}
 
   private translation: Translation
-  private htmlconverter: Partial<Record<ConversionMode, HTMLConverter>> = {}
-  private htmlconverterMode: ConversionMode
+  // private htmlconverter: Partial<Record<ConversionMode, HTMLConverter>> = {}
+  // private htmlconverterMode: ConversionMode
+  private tx: HTMLConverter
 
   constructor(translation: Translation) {
     this.translation = translation
     this.jabref = new JabRef(translation)
-    this.htmlconverterMode = translation.unicode ? 'minimal' : (translation.BetterBibTeX ? 'bibtex' : 'biblatex')
+    // this.htmlconverterMode = translation.unicode ? 'minimal' : (translation.BetterBibTeX ? 'bibtex' : 'biblatex')
   }
 
   public prepare_strings(): void {
@@ -99,11 +100,12 @@ export class Exporter {
     }
   }
 
-  text2latex(text: string, options: ConverterOptions = {}, mode?: ConversionMode): ParseResult {
+  text2latex(text: string, options: ConverterOptions = {}): TeX {
     if (typeof options.html === 'undefined') options.html = false
-    mode = mode || this.htmlconverterMode
-    if (!this.htmlconverter[mode]) this.htmlconverter[mode] = new HTMLConverter(this.translation, mode)
-    return this.htmlconverter[mode].tolatex(text, options)
+    this.tx = this.tx || new HTMLConverter(this.translation)
+    // mode = mode || this.htmlconverterMode
+    // if (!this.htmlconverter[mode]) this.htmlconverter[mode] = new HTMLConverter(this.translation, mode)
+    return this.tx.tolatex(text, options)
   }
 
   public complete(): void {

@@ -62,8 +62,10 @@ function replacer() {
   }
 }
 
-export function stringify(obj: any, indent: number | string = 2): string {
-  return JSON.stringify(obj, replacer(), indent)
+export function stringify(obj: any): string {
+  const stringified = JSON.stringify(obj, replacer())
+  return stringified
+  // return stringified.length > 20 ? JSON.stringify(JSON.parse(stringified), null, 2) : stringified
 }
 
 function to_s(obj: any): string {

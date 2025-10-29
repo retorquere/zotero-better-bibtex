@@ -33,7 +33,7 @@ import { Translation } from '../lib/translator.js'
 
 import * as postscript from '../lib/postscript.js'
 
-import { replace_command_spacers, Mode as ConversionMode } from './unicode_translator.js'
+import { replace_command_spacers } from './unicode_translator.js'
 import { datefield } from './datefield.js'
 import ExtraFields from '../../gen/items/extra-fields.json' with { type: 'json' }
 import { label as propertyLabel } from '../../gen/items/items.js'
@@ -603,7 +603,7 @@ export class Entry {
           case 'minimal':
           case 'bibtex':
           case 'biblatex':
-            value = this.enc_literal(field, { raw: this.item.raw, mode: field.enc })
+            value = this.enc_literal(field, { raw: this.item.raw })
             break
 
           default:
@@ -1110,7 +1110,7 @@ export class Entry {
   }
 
   // legacy support
-  protected enc_latex(f, options: { raw?: boolean; creator?: boolean; mode?: ConversionMode } = {}) {
+  protected enc_latex(f, options: { raw?: boolean; creator?: boolean } = {}) {
     return this.enc_literal(f, options)
   }
 
@@ -1122,7 +1122,7 @@ export class Entry {
    * @param {field} field to encode.
    * @return {String} field.value encoded as author-style value
    */
-  protected enc_literal(f, options: { raw?: boolean; creator?: boolean; mode?: ConversionMode } = {}) {
+  protected enc_literal(f, options: { raw?: boolean; creator?: boolean } = {}) {
     if (typeof f.value === 'number') return f.value
     if (!f.value) return null
 
@@ -1138,8 +1138,8 @@ export class Entry {
       .text2latex(f.value, {
         html: f.html,
         caseConversion: caseConversion && this.english,
-        // creator: options.creator
-      }, options.mode)
+        creator: options.creator,
+      })
     for (const pkg of packages) {
       this.packages[pkg] = true
     }
@@ -1344,7 +1344,7 @@ export class Entry {
 
   private _enc_creator_part(part: string | String): string {
     const { latex, packages } = this.translation.bibtex.text2latex((part as string), {
-      // creator: true,
+      creator: true,
       commandspacers: true,
     })
     for (const pkg of packages) {

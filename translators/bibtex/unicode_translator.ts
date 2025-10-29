@@ -10,7 +10,7 @@ import { Transform } from 'unicode2latex'
 export type ConverterOptions = {
   caseConversion?: boolean
   html?: boolean
-  // creator?: boolean
+  creator?: boolean
   commandspacers?: boolean
 }
 
@@ -18,31 +18,40 @@ export function replace_command_spacers(latex: string): string {
   return latex.replace(/\0(\s)/g, '{}$1').replace(/\0([^;.,!?${}_^\\/])/g, ' $1').replace(/\0/g, '')
 }
 
-export type ParseResult = { latex: string; raw: boolean; packages: string[] }
-
-export type Mode = 'minimal' | 'bibtex' | 'biblatex'
+export type TeX = { latex: string; raw: boolean; packages: string[] }
 
 export class HTMLConverter {
   private latex = ''
   private tx: Transform
+  private txt: Transform
+  private txc: Transform
   private stack: any[] = []
   private options: ConverterOptions = {}
   private embraced: boolean
   private packages: Set<string> = new Set
   private translation: Translation
 
-  constructor(translation: Translation, mode: 'minimal' | 'bibtex' | 'biblatex') {
+  private mode: string
+
+  constructor(translation: Translation) {
     this.translation = translation
-    this.tx = new Transform(mode, {
+
+    const options = {
       math: this.translation.collected.preferences.mapMath,
       text: this.translation.collected.preferences.mapText,
       charmap: translation.charmap,
       ascii: this.translation.collected.preferences.ascii,
       packages: this.translation.collected.preferences.packages.trim().split(/\s*,\s*/),
-    })
+    }
+
+    const mode = this.mode = translation.unicode ? 'minimal' : (translation.BetterBibTeX ? 'bibtex' : 'biblatex')
+    this.txt = new Transform(mode, options)
+    this.txc = mode === 'bibtex' ? new Transform('bibtex-creator', options) : this.txt
   }
 
-  public tolatex(source: string, options: ConverterOptions): ParseResult {
+  public tolatex(source: string, options: ConverterOptions): TeX {
+    this.tx = options.creator ? this.txc : this.txt
+
     this.embraced = false
     this.options = options
     this.latex = ''
@@ -60,6 +69,7 @@ export class HTMLConverter {
 
     if (!options.commandspacers) this.latex = replace_command_spacers(this.latex)
 
+    log.debug('ogonek: tx mode', `${this.mode}${options.creator ? '-creator' : ''}`, { text: source, tex: this.latex })
     this.latex = this.latex
       // .replace(/(\\\\)+[^\S\n]*\n\n/g, '\n\n') // I don't recall why I had the middle match, replaced by match below until I figure it out
       .replace(/(\\\\)+\n\n/g, '\n\n') // paragraph breaks followed by line breaks == line breaks
@@ -68,7 +78,7 @@ export class HTMLConverter {
       .replace(/\n*\\par\n*$/, '')
       .replace(/^\n*\\par\n*/, '')
 
-    return { latex: this.latex, raw: ast.nodeName === 'pre', packages: [...this.packages]}
+    return { latex: this.latex, raw: ast.nodeName === 'pre', packages: [...this.packages] }
   }
 
   private walk(tag: MarkupNode, nocased = false) {
@@ -227,6 +237,8 @@ export class HTMLConverter {
 
   private chars(text, nocased) {
     if (this.options.html) text = HE.decode(text, { isAttributeValue: true })
-    this.latex += this.tx.tolatex(text, { bracemath: !nocased, preservemacrospacers: true, packages: this.packages })
+    let tex: string
+    this.latex += (tex = this.tx.tolatex(text, { bracemath: !nocased, preservemacrospacers: true, packages: this.packages }))
+    log.debug('ogonek: append:', { bracemath: !nocased, preservemacrospacers: true }, { text, tex })
   }
 }
