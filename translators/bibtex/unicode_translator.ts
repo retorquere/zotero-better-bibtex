@@ -42,7 +42,7 @@ export class HTMLConverter {
       packages: this.translation.collected.preferences.packages.trim().split(/\s*,\s*/),
     }
 
-    const mode = this.mode = translation.unicode ? 'minimal' : (translation.BetterBibTeX ? 'bibtex' : 'biblatex')
+    const mode = translation.unicode ? 'minimal' : (translation.BetterBibTeX ? 'bibtex' : 'biblatex')
     this.txt = new Transform(mode, options)
     this.txc = mode === 'bibtex' ? new Transform('bibtex-creator', options) : this.txt
   }
