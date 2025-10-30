@@ -537,8 +537,6 @@ class Zotero:
     assert_equal_diff(expected.body, found.strip())
 
   def export_library(self, translator, displayOptions = {}, collection = None, output = None, expected = None, resetCache = False):
-    show('export_library', locals())
-
     assert not displayOptions.get('keepUpdated', False) or output, ('Auto-export needs a path', displayOptions, output) # Auto-export needs a destination
 
     if translator.startswith('id:'):

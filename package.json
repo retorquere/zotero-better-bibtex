@@ -128,7 +128,7 @@
     "zotero-types": "^4.0.5"
   },
   "devDependencies": {
-    "@eslint/compat": "^1.4.0",
+    "@eslint/compat": "^1.4.1",
     "@fluent/bundle": "^0.19.1",
     "@retorquere/bibtex-parser": "^9.0.25",
     "@stylistic/eslint-plugin": "^5.5.0",
@@ -199,7 +199,7 @@
     "typedoc": "^0.28.14",
     "typescript": "^5.9.3",
     "typescript-eslint": "^8.45.0",
-    "unicode2latex": "^7.0.14",
+    "unicode2latex": "^7.0.17",
     "uri-templates": "^0.2.0",
     "util": "^0.12.5",
     "xml-parser": "^1.2.1",
