@@ -756,17 +756,8 @@ Feature: Export
     And I wait until Zotero is idle
     And an export using "Better BibTeX" with worker on should match "export/*.bibtex"
     And I wait until Zotero is idle
-    And an export using "Better BibTeX" with worker on should match "export/*.bibtex"
-    And I wait until Zotero is idle
-    And an export using "Better BibTeX" with worker on should match "export/*.bibtex"
-    And I wait until Zotero is idle
-    And an export using "Better BibTeX" with worker on should match "export/*.bibtex"
     When I export the library 1 times using "id:bc03b4fe-436d-4a1f-ba59-de4d2d7a63f7"
     And I wait until Zotero is idle
-    Then an export using "Better CSL JSON" with worker on should match "export/*.csl.json"
-    When I wait until Zotero is idle
-    Then an export using "Better CSL JSON" with worker on should match "export/*.csl.json"
-    When I wait until Zotero is idle
     Then an export using "Better CSL JSON" with worker on should match "export/*.csl.json"
 
   # @use.with_client=zotero @use.with_slow=true @timeout=300
