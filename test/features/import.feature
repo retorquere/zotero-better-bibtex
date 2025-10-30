@@ -90,74 +90,75 @@ Feature: Import
     Then the library should match "import/*.json"
 
     Examples:
-      | file                                                                                                                  | references |
-      | Double newlines means parbreak #2789                                                                                  | 1          |
-      | Report number field is incorrectly translated into the issue field when importing a techreport from a .bib file #2752 | 1          |
-      | Report number field is incorrectly translated into the issue field when importing a dataset from a .bib file #2752 | 1 |
-      | Report number field is incorrectly translated into the issue field when importing a jurisdiction from a .bib file #2752 | 1 |
-      | Report number field is incorrectly translated into the issue field when importing a legislation from a .bib file #2752 | 1 |
-      | Report number field is incorrectly translated into the issue field when importing a patent from a .bib file #2752 | 1 |
-      | Report number field is incorrectly translated into the issue field when importing a report from a .bib file #2752 | 1 |
-      | Report number field is incorrectly translated into the issue field when importing a standard from a .bib file #2752 | 1 |
-      | Report number field is incorrectly translated into the issue field when importing a techreport from a .bib file #2752 | 1 |
-      | Imported name suffix in family part #2744                                                                             | 1          |
-      | DOIs excluded from export in 6.7.86 #2555                                                                             | 1          |
-      | issuenumberarticle-number #2551                                                                                       | 1          |
-      | Allow spaces between href arguments for import #2504                                                                  | 4          |
-      | Film references do not export properly for APA formating #2494                                                        | 4          |
-      | article with entrysubtype                                                                                             | 1          |
-      | Qiqqa                                                                                                                 | 2          |
-      | Import from Clipboard stopped working #2377                                                                           | 1          |
-      | Child items that use the crossref field do not have their parent fields imported #2373                                | 3          |
-      | accessDate must be ISO date #2376                                                                                     | 2          |
-      | Dealing with base64-encoded paths from BibDesk #2374                                                                  | 3          |
-      | Lowercase A in BBT Sentence Case #2078                                                                                | 1          |
-      | Map the call-number field from Bib(La)TeX to call number #2021                                                        | 1          |
-      | Detect journal abbreviation in the publication field #1951                                                            | 1          |
-      | Improve import of films #1837                                                                                         | 4          |
-      | tex.origdate ignored in citekey generation #1696                                                                      | 1          |
-      | collaborators to contributors                                                                                         | 1          |
-      | BBT does not import groups from JabRef 5.1 #1641                                                                      | 20         |
-      | Importing changes Journal to The Journal #1601                                                                        | 1          |
-      | Import of langle and rangle TeX commands #1468                                                                        | 1          |
-      | Overline during Import #1467                                                                                          | 8          |
-      | Better BibLaTeX import improvements #549                                                                              | 9          |
-      | Better BibTeX.003                                                                                                     | 2          |
-      | Better BibTeX.004                                                                                                     | 1          |
-      | Better BibTeX.005                                                                                                     | 1          |
-      | Better BibTeX.006                                                                                                     | 1          |
-      | Better BibTeX.009                                                                                                     | 3          |
-      | Better BibTeX.011                                                                                                     | 1          |
-      | Better BibTeX.012                                                                                                     | 1          |
-      | Better BibTeX.014                                                                                                     | 1          |
-      | Biblatex Annotation Import Bug #613                                                                                   | 1          |
-      | Endnote should parse                                                                                                  | 1          |
-      | Import location to event-place for conference papers                                                                  | 1          |
-      | Issues with round instead of curly braces do not import correctly #871                                                | 1          |
-      | Math formatting lost on import #627                                                                                   | 1          |
-      | Spaces lost when expanding string variables during import #1081                                                       | 1          |
-      | Wrong ring-above import #1115                                                                                         | 1          |
-      | eprinttype field dropped on import #959                                                                               | 1          |
-      | support Local-Zo-Url-x field from BibDesk2Zotero_attachments #667                                                     | 1          |
-      | Author splitter failure                                                                                               | 1          |
-      | Better BibTeX.001                                                                                                     | 2          |
-      | Better BibTeX.008                                                                                                     | 1          |
-      | Better BibTeX.010                                                                                                     | 1          |
-      | Better BibTeX.015                                                                                                     | 1          |
-      | BibLaTeX Patent author handling, type #1060                                                                           | 2          |
-      | BibTeX import; preamble with def create problems #732                                                                 | 1          |
-      | Failure to handle unparsed author names (92)                                                                          | 1          |
-      | Import Jabref fileDirectory, unexpected reference type #1058                                                          | 2          |
-      | Import fails to perform @String substitutions #154                                                                    | 1          |
-      | Literal names                                                                                                         | 1          |
-      | Problem when importing BibTeX entries with percent sign #95 or preamble #96                                           | 1          |
-      | Problem when importing BibTeX entries with square brackets #94                                                        | 1          |
-      | Title of German entry converted to lowercase during import #1350                                                      | 4          |
-      | space after citekey creates confusion #716                                                                            | 2          |
-      | zbb (quietly) chokes on this .bib #664                                                                                | 1          |
-      | import software related biblatex entries #1544                                                                        | 1          |
-      | BBT + Zotfile creating duplicate files in the wrong location #2300                                                    | 7          |
-      | Imported tags from Calibre (bibtex.file) are a single tag in Zotero #2743                                             | 1          |
+      | file                                                                                                                    | references |
+      | Book imported as book section when duplicate book title field is present #3328                                          | 1  |
+      | Double newlines means parbreak #2789                                                                                    | 1          |
+      | Report number field is incorrectly translated into the issue field when importing a techreport from a .bib file #2752   | 1          |
+      | Report number field is incorrectly translated into the issue field when importing a dataset from a .bib file #2752      | 1          |
+      | Report number field is incorrectly translated into the issue field when importing a jurisdiction from a .bib file #2752 | 1          |
+      | Report number field is incorrectly translated into the issue field when importing a legislation from a .bib file #2752  | 1          |
+      | Report number field is incorrectly translated into the issue field when importing a patent from a .bib file #2752       | 1          |
+      | Report number field is incorrectly translated into the issue field when importing a report from a .bib file #2752       | 1          |
+      | Report number field is incorrectly translated into the issue field when importing a standard from a .bib file #2752     | 1          |
+      | Report number field is incorrectly translated into the issue field when importing a techreport from a .bib file #2752   | 1          |
+      | Imported name suffix in family part #2744                                                                               | 1          |
+      | DOIs excluded from export in 6.7.86 #2555                                                                               | 1          |
+      | issuenumberarticle-number #2551                                                                                         | 1          |
+      | Allow spaces between href arguments for import #2504                                                                    | 4          |
+      | Film references do not export properly for APA formating #2494                                                          | 4          |
+      | article with entrysubtype                                                                                               | 1          |
+      | Qiqqa                                                                                                                   | 2          |
+      | Import from Clipboard stopped working #2377                                                                             | 1          |
+      | Child items that use the crossref field do not have their parent fields imported #2373                                  | 3          |
+      | accessDate must be ISO date #2376                                                                                       | 2          |
+      | Dealing with base64-encoded paths from BibDesk #2374                                                                    | 3          |
+      | Lowercase A in BBT Sentence Case #2078                                                                                  | 1          |
+      | Map the call-number field from Bib(La)TeX to call number #2021                                                          | 1          |
+      | Detect journal abbreviation in the publication field #1951                                                              | 1          |
+      | Improve import of films #1837                                                                                           | 4          |
+      | tex.origdate ignored in citekey generation #1696                                                                        | 1          |
+      | collaborators to contributors                                                                                           | 1          |
+      | BBT does not import groups from JabRef 5.1 #1641                                                                        | 20         |
+      | Importing changes Journal to The Journal #1601                                                                          | 1          |
+      | Import of langle and rangle TeX commands #1468                                                                          | 1          |
+      | Overline during Import #1467                                                                                            | 8          |
+      | Better BibLaTeX import improvements #549                                                                                | 9          |
+      | Better BibTeX.003                                                                                                       | 2          |
+      | Better BibTeX.004                                                                                                       | 1          |
+      | Better BibTeX.005                                                                                                       | 1          |
+      | Better BibTeX.006                                                                                                       | 1          |
+      | Better BibTeX.009                                                                                                       | 3          |
+      | Better BibTeX.011                                                                                                       | 1          |
+      | Better BibTeX.012                                                                                                       | 1          |
+      | Better BibTeX.014                                                                                                       | 1          |
+      | Biblatex Annotation Import Bug #613                                                                                     | 1          |
+      | Endnote should parse                                                                                                    | 1          |
+      | Import location to event-place for conference papers                                                                    | 1          |
+      | Issues with round instead of curly braces do not import correctly #871                                                  | 1          |
+      | Math formatting lost on import #627                                                                                     | 1          |
+      | Spaces lost when expanding string variables during import #1081                                                         | 1          |
+      | Wrong ring-above import #1115                                                                                           | 1          |
+      | eprinttype field dropped on import #959                                                                                 | 1          |
+      | support Local-Zo-Url-x field from BibDesk2Zotero_attachments #667                                                       | 1          |
+      | Author splitter failure                                                                                                 | 1          |
+      | Better BibTeX.001                                                                                                       | 2          |
+      | Better BibTeX.008                                                                                                       | 1          |
+      | Better BibTeX.010                                                                                                       | 1          |
+      | Better BibTeX.015                                                                                                       | 1          |
+      | BibLaTeX Patent author handling, type #1060                                                                             | 2          |
+      | BibTeX import; preamble with def create problems #732                                                                   | 1          |
+      | Failure to handle unparsed author names (92)                                                                            | 1          |
+      | Import Jabref fileDirectory, unexpected reference type #1058                                                            | 2          |
+      | Import fails to perform @String substitutions #154                                                                      | 1          |
+      | Literal names                                                                                                           | 1          |
+      | Problem when importing BibTeX entries with percent sign #95 or preamble #96                                             | 1          |
+      | Problem when importing BibTeX entries with square brackets #94                                                          | 1          |
+      | Title of German entry converted to lowercase during import #1350                                                        | 4          |
+      | space after citekey creates confusion #716                                                                              | 2          |
+      | zbb (quietly) chokes on this .bib #664                                                                                  | 1          |
+      | import software related biblatex entries #1544                                                                          | 1          |
+      | BBT + Zotfile creating duplicate files in the wrong location #2300                                                      | 7          |
+      | Imported tags from Calibre (bibtex.file) are a single tag in Zotero #2743                                               | 1          |
 
   @use.with_slow=true @timeout=3000
   Scenario: Some bibtex entries quietly discarded on import from bib file #873
@@ -229,4 +230,3 @@ Feature: Import
     And I set preference .importJabRefAbbreviations to false
     When I import 1 reference from "import/*.bib"
     Then the library should match "import/*.json"
-
