@@ -12,7 +12,7 @@ aliases:
 
 default: ` auth.lower + shorttitle(3,3) + year`
 
-Set the pattern used to generate citation keys. The format of the keys is documented [here]({{% ref "citing" %}}).
+Set the pattern used to generate citation keys. The format of the keys is documented [here]({{ ref . "citing" }}).
 Changing this setting *does not* affect existign keys - for this you would need to select the items and refresh the keys.
 
 
@@ -21,7 +21,7 @@ Changing this setting *does not* affect existign keys - for this you would need 
 
 default: `yes`
 
-If you have deviated from the default citation key format pattern by [specifying your own]({{% ref "citing" %}}), you may
+If you have deviated from the default citation key format pattern by [specifying your own]({{ ref . "citing" }}), you may
 wind up with non-ASCII characters in your citation keys. You can prevent that using the `fold` function at the
 appropriate place in your pattern, but checking this checkbox will just apply `fold` to all your keys.
 
