@@ -1,0 +1,109 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "preferences": {
+      "ascii": "–",
+      "asciiBibLaTeX": true,
+      "asciiBibTeX": false,
+      "autoExport": "idle",
+      "automaticTags": false,
+      "autoPinDelay": 1,
+      "biblatexExtractEprint": false,
+      "cacheRetain": true,
+      "charmap": "{\"·\":{\"text\":\"·\",\"math\":\"\"},\"ș\":{\"text\":\"ș\",\"math\":\"\"}}",
+      "citekeyFormat": "auth.transliterate.lower + year",
+      "DOIandURL": "doi",
+      "exportSort": "off",
+      "exportTitleCase": false,
+      "extraMergeCSL": true,
+      "keyConflictPolicy": "change",
+      "keyScope": "global",
+      "postscript": "if (Translator.BetterBibLaTeX) {\n  if (\n    [\n      \"book\",\n      \"bookSection\",\n      \"journalArticle\",\n      \"newspaperArticle\",\n      \"thesis\",\n      \"report\",\n    ].includes(item.itemType)\n  ) {\n    delete this.has.url;\n    delete this.has.urldate;\n\n    if ([\"book\", \"bookSection\"].includes(item.itemType)) {\n      delete this.has.number;\n    }\n\n    if (item.itemType == \"journalArticle\") {\n      delete this.has.publisher;\n    }\n\n    if (item.itemType == \"newspaperArticle\") {\n      delete this.has.location;\n    }\n  }\n\n  // Remove number and pubstate for arXiv preprints\n  if (item.DOI && item.DOI.includes(\"arXiv\")) {\n    delete this.has.number;\n    delete this.has.pubstate;\n  }\n\n  // Remove number for statute items\n  if (item.itemType == \"statute\") {\n    delete this.has.number;\n  }\n\n  // Omit shortjournal if it's exactly the same as journaltitle\n  {\n    const jt = tex.has.journaltitle?.value;\n    const sj = tex.has.shortjournal?.value;\n    if (jt && sj && jt === sj) {\n      delete this.has.shortjournal;\n    }\n  }\n\n  // Check if more than 10% of the title is CJK\n  // https://github.com/retorquere/zotero-better-bibtex/issues/2810\n  for (const field of [\"title\", \"shorttitle\"]) {\n    const value = tex.has[field]?.value;\n    if (\n      value &&\n      value.replace(/[^\\u4E00-\\u9FFF]/g, \"\").length / value.length > 0.1\n    ) {\n      tex.add({ name: field, value, enc: \"minimal\" });\n    }\n  }\n}\n\nif (Translator.BetterCSLJSON) {\n  delete csl.ISBN;\n  delete csl.ISSN;\n\n  if (\n    [\n      \"book\",\n      \"bookSection\",\n      \"journalArticle\",\n      \"newspaperArticle\",\n      \"thesis\",\n      \"report\",\n    ].includes(item.itemType)\n  ) {\n    delete csl.URL;\n    delete csl[\"accessed\"];\n    delete csl.PMID;\n    delete csl.PMCID;\n\n    if ([\"book\", \"bookSection\"].includes(item.itemType)) {\n      delete csl.number;\n    }\n\n    if (item.itemType == \"journalArticle\") {\n      delete csl.publisher;\n    }\n\n    if (item.itemType == \"newspaperArticle\") {\n      delete csl[\"publisher-place\"];\n    }\n  }\n\n  // Remove number and status for arXiv preprints\n  if (csl.DOI && csl.DOI.includes(\"arXiv\")) {\n    delete csl.number;\n    delete csl.publisher;\n  }\n\n  // Remove number for statute items\n  if (item.itemType == \"statute\") {\n    delete csl.number;\n  }\n\n  if (csl.DOI && csl.URL) {\n    delete csl.URL;\n    delete csl[\"accessed\"];\n  }\n  // Add file field for CSL JSON export\n  csl.file = zotero.attachments.map((a) => a.localPath).join(\";\");\n\n  // Omit shortjournal if it's exactly the same as journaltitle\n  if (\n    csl[\"container-title\"] &&\n    csl[\"container-title-short\"] &&\n    csl[\"container-title\"] === csl[\"container-title-short\"]\n  ) {\n    delete csl[\"container-title-short\"];\n  }\n}",
+      "quickCopyMode": "pandoc",
+      "quickCopySelectLink": "citationkey",
+      "skipFields": "language, langid, annotation, eprint, eprintclass, pmcid, eprinttype, editortype, issn, isbn, series, editora, editorb, editoratype, editorbtype, pagetotal, collection-title, source, number-of-pages, event-place, license, citation-key, call-number, collection-number, collection-editor, journalsubtitle, keywords, abstract, note"
+    },
+    "options": {
+      "keepUpdated": false,
+      "worker": true,
+      "exportDir": "/Users/rentao/Downloads",
+      "exportPath": "/Users/rentao/Downloads/Exported Items.json",
+      "cache": true
+    }
+  },
+  "version": {
+    "zotero": "7.0.27",
+    "bbt": "7.0.59"
+  },
+  "collections": {},
+  "items": [
+    {
+      "key": "53GCBTIT",
+      "version": 66429,
+      "itemType": "journalArticle",
+      "title": "Coexistence or competition for resources? Transboundary transformations of natural resource use in China’s neighborhood",
+      "abstractNote": "Over the past three decades, rural places along China’s land borders have faced interconnected processes of socio-political, economic, and ecological change. These changes, along with an increase in transboundary investment by actors from China in infrastructure on the one hand, and in agriculture and resource extraction on the other, are locally met with a combination of suspicion, fear, and desire for future prosperity. This special issue scrutinizes these dynamics in extractive sectors, particularly agriculture, the plantation industry, and mining, in the context of transboundary processes that can be conceptualized as “neighboring”. With an array of qualitative and ethnographic methods and case studies from borderlands in North, Central, South and Southeast Asia that are rarely thought of together, the six articles of this special issue provide a unique perspective on “China’s rise” in Asia that goes beyond schematical geopolitical and macro-economic accounts of the ‘Belt and Road Initiative.‘ This introduction to the special issue discusses the key insights and arguments it brings forward and calls for (a) more comparative research on transboundary natural resource use in China’s neighborhood and (b) more holistic and multi-scalar research perspectives to make sense of the complex dynamics on the ground.",
+      "date": "2023-11-17",
+      "language": "en",
+      "shortTitle": "Coexistence or competition for resources?",
+      "libraryCatalog": "Taylor and Francis+NEJM",
+      "url": "https://doi.org/10.1080/15387216.2023.2258150",
+      "accessDate": "2024-04-23T01:13:48Z",
+      "extra": "Citation Key: alff2023",
+      "volume": "64",
+      "pages": "797\u2013810",
+      "publicationTitle": "Eurasian Geography and Economics",
+      "DOI": "10.1080/15387216.2023.2258150",
+      "issue": "7-8",
+      "journalAbbreviation": "Eurasian Geogr. Econ.",
+      "ISSN": "1538-7216",
+      "creators": [
+        {
+          "firstName": "Henryk",
+          "lastName": "Alff",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "Michael",
+          "lastName": "Spies",
+          "creatorType": "author"
+        }
+      ],
+      "tags": [
+        {
+          "tag": "PhD Thesis"
+        },
+        {
+          "tag": "mining",
+          "type": 1
+        },
+        {
+          "tag": "resource extraction",
+          "type": 1
+        },
+        {
+          "tag": "agriculture",
+          "type": 1
+        },
+        {
+          "tag": "Asian borderlands",
+          "type": 1
+        },
+        {
+          "tag": "Belt and road initiative",
+          "type": 1
+        },
+        {
+          "tag": "Global China",
+          "type": 1
+        }
+      ],
+      "dateAdded": "2023-11-11T08:15:15Z",
+      "dateModified": "2025-10-19T14:37:30Z",
+      "itemID": 10489,
+      "notes": [],
+      "citationKey": "alff2023"
+    }
+  ]
+}

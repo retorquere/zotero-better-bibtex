@@ -72,6 +72,22 @@ export abstract class CSLExporter {
 
       let csl = Zotero.Utilities.Item.itemToCSLJSON(item)
 
+      let m: RegExpMatchArray
+      for (const field of ['page', 'issue', 'volume']) {
+        log.debug('3327:', field, csl[field])
+        if (csl[field]) {
+          log.debug(field, csl[field].split(/(\s*,\s*)/))
+          csl[field] = csl[field]
+            .split(/(\s*,\s*)/)
+            .map((range: string) => {
+              log.debug('3327: range:', range.match(/^(\d+)-(\d+)$/))
+              return (m = range.match(/^(\d+)-(\d+)$/)) ? `${m[1]}\u2013${m[2]}` : range
+            })
+
+            .join('')
+        }
+      }
+
       csl['citation-key'] = item.citationKey
       if (this.translation.collected.displayOptions.custom) csl.custom = { uri: item.uri, itemID: item.itemID }
 
