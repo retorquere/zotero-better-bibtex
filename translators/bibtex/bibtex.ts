@@ -1319,8 +1319,9 @@ class ZoteroItem {
 
     if (
       this.item.itemType === 'book'
-      && this.bibtex.fields.title?.length
-      && this.bibtex.fields.booktitle?.length
+      && this.bibtex.fields.title
+      && this.bibtex.fields.booktitle
+      && this.bibtex.fields.title !== this.bibtex.fields.booktitle
       && !this.bibtex.crossref?.donated.includes('booktitle')) this.item.itemType = 'bookSection'
 
     if (
