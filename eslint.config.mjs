@@ -363,7 +363,6 @@ const config = [
       }],
 
       '@typescript-eslint/unbound-method': 'error',
-      '@typescript-eslint/unified-signatures': 'error',
       'arrow-body-style': 'error',
 
       'brace-style': ['error', 'stroustrup', {
