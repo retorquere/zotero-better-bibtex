@@ -284,7 +284,7 @@ Feature: Export
       | 30-Mar-2020 parsed as literal #1476                                                                                | 1          |
       | BibTeX Entries with Volume and Number Fields #1475                                                                 | 1          |
       | Exporting Book Sections as Inbook #1474                                                                            | 1          |
-      | Missing $ in TeX export of < to langle #1469                                                                       | 1          |
+      | Missing $ in TeX export of lt to langle #1469                                                                      | 1          |
       | Better BibTeX does not export collections #901                                                                     | 36         |
       | Better BibTeX.027                                                                                                  | 1          |
       | Minimize bibtex export package dependencies #1402                                                                  | 1          |
