@@ -20,6 +20,7 @@
       "biblatexExtendedDateFormat": true,
       "biblatexExtendedNameFormat": true,
       "biblatexExtractEprint": true,
+      "biblatexUsePrefix": true,
       "bibtexEditionOrdinal": false,
       "bibtexParticleNoOp": false,
       "bibtexURL": "off",
@@ -54,6 +55,7 @@
       "importJabRefAbbreviations": false,
       "importJabRefStrings": false,
       "importNoteToExtra": "",
+      "importPlaceEvent": "inproceedings,conference,presentation,talk",
       "importSentenceCase": "on+guess",
       "importSentenceCaseQuoted": true,
       "importUnknownTexCommand": "ignore",
@@ -102,13 +104,13 @@
     }
   },
   "version": {
-    "zotero": "7.0.18",
-    "bbt": "7.0.36.emile.Mac.fritz.box"
+    "zotero": "7.0.29",
+    "bbt": "7.0.63.emile.kiku.fritz.box"
   },
   "collections": {},
   "items": [
     {
-      "key": "IZ52EFT8",
+      "key": "7I6HPU3Q",
       "version": 0,
       "itemType": "note",
       "note": "Import errors found: <ul><li>Unresolved @string reference &quot;IEEE_J_PROC&quot;</li></ul>",
@@ -120,15 +122,15 @@
       ],
       "collections": [],
       "relations": {},
-      "dateAdded": "2025-07-11T22:02:08Z",
-      "dateModified": "2025-07-11T22:02:08Z",
-      "uri": "http://zotero.org/users/8230813/items/IZ52EFT8",
-      "itemID": 104,
-      "itemKey": "IZ52EFT8",
+      "dateAdded": "2025-10-31T23:41:55Z",
+      "dateModified": "2025-10-31T23:41:55Z",
+      "uri": "http://zotero.org/users/8230813/items/7I6HPU3Q",
+      "itemID": 110,
+      "itemKey": "7I6HPU3Q",
       "libraryID": 1
     },
     {
-      "key": "T7SSXZSX",
+      "key": "G9Y94ELZ",
       "version": 0,
       "itemType": "conferencePaper",
       "pages": "300–301",
@@ -158,19 +160,19 @@
         }
       ],
       "relations": {},
-      "dateAdded": "2025-07-11T22:02:08Z",
-      "dateModified": "2025-07-11T22:02:08Z",
-      "uri": "http://zotero.org/users/8230813/items/T7SSXZSX",
-      "itemID": 102,
+      "dateAdded": "2025-10-31T23:41:55Z",
+      "dateModified": "2025-10-31T23:41:55Z",
+      "uri": "http://zotero.org/users/8230813/items/G9Y94ELZ",
+      "itemID": 108,
       "attachments": [],
       "notes": [],
       "citationKey": "test_citation1",
-      "itemKey": "T7SSXZSX",
+      "itemKey": "G9Y94ELZ",
       "libraryID": 1,
       "publicationTitle": "IEEE_J_PROC"
     },
     {
-      "key": "QUX73SUB",
+      "key": "GR4YEXGD",
       "version": 0,
       "itemType": "conferencePaper",
       "pages": "300–301",
@@ -200,14 +202,14 @@
         }
       ],
       "relations": {},
-      "dateAdded": "2025-07-11T22:02:08Z",
-      "dateModified": "2025-07-11T22:02:08Z",
-      "uri": "http://zotero.org/users/8230813/items/QUX73SUB",
-      "itemID": 103,
+      "dateAdded": "2025-10-31T23:41:55Z",
+      "dateModified": "2025-10-31T23:41:55Z",
+      "uri": "http://zotero.org/users/8230813/items/GR4YEXGD",
+      "itemID": 109,
       "attachments": [],
       "notes": [],
       "citationKey": "test_citation2",
-      "itemKey": "QUX73SUB",
+      "itemKey": "GR4YEXGD",
       "libraryID": 1,
       "publicationTitle": "IEEE_J_PROC"
     }
