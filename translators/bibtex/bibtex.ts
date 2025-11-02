@@ -1062,6 +1062,7 @@ class ZoteroItem {
       '\u0013': '\\',
     }
 
+    // jabref garbage
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     for (const record of value.replace(/\\[\\;:]/g, escaped => replace[escaped]).split(';')) {
       const att = {
@@ -1091,6 +1092,12 @@ class ZoteroItem {
       }
 
       this.addAttachment(att)
+    }
+
+    // calibre garbage #3338
+    for (let att of value.split(/,\s+/)) {
+      att = att.replace(/^:/, '')
+      if (att) this.addAttachment({ path: att })
     }
 
     return true
