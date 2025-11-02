@@ -91,7 +91,8 @@ Feature: Import
 
     Examples:
       | file                                                                                                                    | references |
-      | Book imported as book section when duplicate book title field is present #3328                                          | 1  |
+      | Multiple attachments in calibre bibtex file not imported in Zotero #3338                                                | undefined  |
+      | Book imported as book section when duplicate book title field is present #3328                                          | 1          |
       | Double newlines means parbreak #2789                                                                                    | 1          |
       | Report number field is incorrectly translated into the issue field when importing a techreport from a .bib file #2752   | 1          |
       | Report number field is incorrectly translated into the issue field when importing a dataset from a .bib file #2752      | 1          |

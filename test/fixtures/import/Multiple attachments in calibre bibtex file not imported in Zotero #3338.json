@@ -1,0 +1,44 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "preferences": {
+      "autoPinDelay": 1,
+      "citekeyFormat": "auth.lower + shorttitle(3, 3) + year"
+    },
+    "options": {}
+  },
+  "version": {
+    "zotero": "7.0.27",
+    "bbt": "7.0.62"
+  },
+  "collections": {},
+  "items": [
+    {
+      "key": "27INRCAT",
+      "version": 0,
+      "itemType": "document",
+      "date": "100-12",
+      "extra": "Citation Key: DAISYConsortium1\nVolume: 1\ntex.author_sort: Consortium, DAISY\ntex.calibreid: 1\ntex.cover: /home/flakeuser/My library/DAISY Consortium/Fundamental Accessibility Tests_ Basic Functionality (1)/cover.jpg\ntex.formats: epub, pdf\ntex.languages: eng\ntex.library_name: My library\ntex.size: 254132 octets\ntex.timestamp: 2025-11-01\ntex.title_sort: Fundamental Accessibility Tests: Basic Functionality\ntex.uuid: 1010c95f-a6e8-4415-8228-d8db6a88650e",
+      "title": "Fundamental accessibility tests: Basic functionality",
+      "creators": [
+        {
+          "firstName": "DAISY",
+          "lastName": "Consortium",
+          "creatorType": "author"
+        }
+      ],
+      "tags": [
+        {
+          "tag": "basic-functionality"
+        }
+      ],
+      "dateAdded": "2025-11-01T20:07:01Z",
+      "dateModified": "2025-11-01T20:07:01Z",
+      "itemID": 43504,
+      "attachments": [],
+      "notes": [],
+      "citationKey": "DAISYConsortium1"
+    }
+  ]
+}
