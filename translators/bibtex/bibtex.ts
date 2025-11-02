@@ -1032,7 +1032,12 @@ class ZoteroItem {
     att.title = att.title || att.path.split(/[\\/]/).pop().replace(/\.[^.]+$/, '')
     if (!att.title) delete att.title
 
-    if (att.mimeType?.toLowerCase() === 'pdf' || (!att.mimeType && att.path.toLowerCase().endsWith('.pdf'))) att.mimeType = 'application/pdf'
+    if (att.mimeType?.toLowerCase() === 'pdf' || (!att.mimeType && att.path.toLowerCase().endsWith('.pdf'))) {
+      att.mimeType = 'application/pdf'
+    }
+    else if (att.mimeType?.toLowerCase() === 'epub' || (!att.mimeType && att.path.toLowerCase().endsWith('.epub'))) {
+      att.mimeType = 'application/epub+zip'
+    }
     if (!att.mimeType) delete att.mimeType
 
     this.item.attachments = this.item.attachments.filter(a => a.path !== att.path)
@@ -1046,7 +1051,8 @@ class ZoteroItem {
     }
   }
 
-  // "files(Mendeley)/filename(Qiqqa)" will import the same as "file" but won't be treated as verbatim by the bibtex parser. Needed because the people at Mendeley/Qiqqa can't be bothered to read the manual apparently.
+  // "files(Mendeley)/filename(Qiqqa)" will import the same as "file" but won't be treated as verbatim by the bibtex parser.
+  // Needed because the people at Mendeley/Qiqqa can't be bothered to read the manual apparently.
   protected $pdf(value: string): boolean { return this.$file(value) }
   protected $files(value: string): boolean { return this.$file(value) }
   protected $filename(value: string): boolean { return this.$file(value) }
@@ -1095,10 +1101,17 @@ class ZoteroItem {
     }
 
     // calibre garbage #3338
-    for (let att of value.split(/,\s+/)) {
-      att = att.replace(/^:/, '')
-      if (att) this.addAttachment({ path: att })
+    for (const att of value.split(/,\s+/)) {
+      const m = att.match(/^:?(?<path>.+?)(?::(?<mimeType>[a-z]+))?$/i)
+      if (m) {
+        this.addAttachment(m.groups as { path: string })
+      }
+      else {
+        this.addAttachment({ path: att })
+      }
     }
+
+    log.info('attempting import of', this.item.attachments)
 
     return true
   }
