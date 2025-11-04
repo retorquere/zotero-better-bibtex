@@ -15,7 +15,7 @@ index 04bfdcd..74e4f88 100644
 -            callback(xhr.statusText, null);
 -            return;
 +BrowserDictionaryLoader.prototype.loadArrayBuffer = async function (url, callback) {
-+    url = `chrome://zotero-better-bibtex/content/resource/kuromoji/${url.replace(/.*\//, '')}`
++    url = `chrome://zotero-better-bibtex/content/resource/kuromoji/${url.replace(/.*[\\\/]/, '')}`
 +    Zotero.debug(`BrowserDictionaryLoader.loadArrayBuffer: ${url}`)
 +
 +    try {
