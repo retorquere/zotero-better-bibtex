@@ -7,7 +7,7 @@ import { MenuManager } from 'zotero-plugin-toolkit'
 const Menu = new MenuManager
 
 import { DebugLog } from 'zotero-plugin/debug-log'
-import pubkey from './public.pem'
+import { jwk as pubkey } from './public.js'
 
 import { Scheduler } from './scheduler.js'
 import { TeXstudio } from './tex-studio.js'
