@@ -322,7 +322,7 @@ class DateParser {
     }
 
     if (reparse && (m = value.match(re.nasa.dash) || value.match(re.nasa.slash) || value.match(re.nasa.ym))) {
-      return this.parse(m.groups.date, { range, reparse: false })
+      return this.parse(m.groups.date, { range: false, reparse: false })
     }
 
     if (m = english.match(re.My) || english.match(re.yM)) {
@@ -336,8 +336,8 @@ class DateParser {
     if (reparse && (m = value.match(re.orig_date) || value.match(re.date_orig))) {
       const { orig, date } = m.groups
       const parsed = {
-        orig: this.parse(orig, { range, reparse: false }),
-        date: date ? this.parse(date, { range, reparse: false }) : undefined,
+        orig: this.parse(orig, { range: false, reparse: false }),
+        date: date ? this.parse(date, { range: false, reparse: false }) : undefined,
       }
       if (parsed.orig.type === 'date' && (!parsed.date || parsed.date.type === 'date')) return { ...parsed.date, orig: parsed.orig }
     }
@@ -345,8 +345,8 @@ class DateParser {
     if (reparse && (m = english.match(re.M_d_d_y))) {
       const { month, day1, day2, year } = m.groups
 
-      const from = this.parse(`${month} ${day1} ${year}`, { range, reparse: false })
-      const to = this.parse(`${month} ${day2} ${year}`, { range, reparse: false })
+      const from = this.parse(`${month} ${day1} ${year}`, { range: false, reparse: false })
+      const to = this.parse(`${month} ${day2} ${year}`, { range: false, reparse: false })
 
       if (from.type === 'date' && to.type === 'date') return { type: 'interval', from, to }
     }
@@ -473,10 +473,10 @@ class DateParser {
           }
           let dates = 0
 
-          const from = this.parse(split[0], { reparse, range: false })
+          const from = this.parse(split[0], { reparse: true, range: false })
           dates += valid(from)
 
-          const to = this.parse(split[1], { reparse, range: false })
+          const to = this.parse(split[1], { reparse: true, range: false })
           dates += valid(to)
 
           if (dates > 0) return { type: 'interval', from, to }
