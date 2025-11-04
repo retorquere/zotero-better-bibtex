@@ -32,7 +32,7 @@
     "setup": "./setup/setup.py && ./setup/index.js",
     "prebuild": "npm install && npm run setup",
     "build": "npm run rebuild",
-    "postinstall": "patch-package && rm -rf node_modules/zotero-plugin/dist && cp -r ../plugin/dist node_modules/zotero-plugin",
+    "postinstall": "patch-package",
     "rebuild": "npm-run-all -p --aggregate-output lint esbuild tsc",
     "postbuild": "npm run zipup-better-bibtex && npm run zipup-debug-bridge",
     "tsc": "tsc --noEmit",
