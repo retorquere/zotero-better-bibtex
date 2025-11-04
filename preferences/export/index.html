@@ -27,7 +27,7 @@ Making any change here will drop your entire export cache. This is usually not a
     <meta itemprop="description" content="The Better BibTeX Configuration can be found under the regular Zotero preferences pane, tab ‘Better BibTeX’.
 The configuration of Better BibTeX is a little baroque compared to the standard Zotero Bib(La)TeX exporters (which only have hidden preferences). The defaults should just work, but here’s an attempt to describe what they do.
 Making any change here will drop your entire export cache. This is usually not a problem unless you have a really large library, but you can read about what is involved here.">
-    <meta itemprop="wordCount" content="1368">
+    <meta itemprop="wordCount" content="1216">
     <title>Export :: Better BibTeX for Zotero</title><link rel="icon" href="/zotero-better-bibtex/better-bibtex.ico" type="image/x-icon">
 
     <link href="/zotero-better-bibtex/css/auto-complete/auto-complete.min.css" rel="stylesheet">
@@ -379,10 +379,6 @@ they are descriptive of the item. When this is off, such tags will not be includ
 <p>default: <code>yes</code></p>
 <p>If you&rsquo;re dead-set on ignoring both BibTeX/BibLaTeX best practice (see the BBT FAQ) and the Zotero recommendations on title/sentence casing, you can turn this off to suppress automatic brace-protection for words with uppercase letters.</p>
 <h3 id="cache">Cache</h3>
-<h4 id="retain-export-cache-across-upgrades">Retain export cache across upgrades</h4>
-<p>default: <code>no</code></p>
-<p>By default, BBT clears all caches whenever BBT or Zotero is upgraded. I can&rsquo;t realistically predict whether a change in Zotero or BBT is going to affect the output generated for any given item, so to be sure you always have the latest export-affecting fixes, the caches are discarded when a new version of either is detected. If you have a very large library however, of which you regularly export significant portions, you might want to retain the cached items even if that does come with the risk that you get wrong output on export that has been fixed in the interim.</p>
-<p>If you have this on, and you experience any problem that is not the cache getting dropped on upgrade, you <em>must</em> clear the cache and reproduce the problem. When you change this setting, as with any setting change, the cache will be dropped.</p>
 <h4 id="enable-caching-for-background-exports">Enable caching for background exports</h4>
 <p>default: <code>yes</code></p>
 <p>Even though BBT exports happen in a separate thread, some work needs to be done before the background export can
