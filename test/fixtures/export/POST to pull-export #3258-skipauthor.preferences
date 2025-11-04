@@ -31,7 +31,6 @@
       "bibtexURL": "off",
       "cache": true,
       "cacheDelete": false,
-      "cacheRetain": false,
       "charmap": "",
       "chinese": false,
       "chineseSplitName": true,

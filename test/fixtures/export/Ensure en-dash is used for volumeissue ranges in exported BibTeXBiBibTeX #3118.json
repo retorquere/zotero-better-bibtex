@@ -11,7 +11,6 @@
       "autoPinDelay": 1,
       "automaticTags": false,
       "biblatexExtractEprint": false,
-      "cacheRetain": true,
       "charmap": "{\"·\":{\"text\":\"·\",\"math\":\"\"},\"ș\":{\"text\":\"ș\",\"math\":\"\"}}",
       "citekeyFormat": "auth.transliterate.lower+year",
       "exportSort": "off",

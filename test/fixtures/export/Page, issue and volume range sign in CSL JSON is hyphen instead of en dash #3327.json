@@ -10,7 +10,6 @@
       "automaticTags": false,
       "autoPinDelay": 1,
       "biblatexExtractEprint": false,
-      "cacheRetain": true,
       "charmap": "{\"·\":{\"text\":\"·\",\"math\":\"\"},\"ș\":{\"text\":\"ș\",\"math\":\"\"}}",
       "citekeyFormat": "auth.transliterate.lower + year",
       "DOIandURL": "doi",
