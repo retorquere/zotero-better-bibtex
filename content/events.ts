@@ -263,7 +263,7 @@ class ItemListener extends ZoteroListener {
       })
     }
     catch (err) {
-      log.error(`error in ${ this.type } notify handler: ${ err.message }`)
+      log.error(`error in ${type} ${action} handler for ${JSON.stringify(ids)}: ${err.message}`)
     }
   }
 }
@@ -282,7 +282,7 @@ class TagListener extends ZoteroListener {
       void Events.emit('items-changed', { items: Zotero.Items.get(ids), action: 'modify', reason: 'tagged' })
     }
     catch (err) {
-      log.error(`error in ${ this.type } notify handler: ${ err.message }`)
+      log.error(`error in ${type} ${action} handler for ${JSON.stringify(pairs)}: ${err.message}`)
     }
   }
 }
@@ -298,7 +298,7 @@ class CollectionListener extends ZoteroListener {
       if ((action === 'delete') && ids.length) void Events.emit('collections-removed', ids)
     }
     catch (err) {
-      log.error(`error in ${ this.type } notify handler: ${ err.message }`)
+      log.error(`error in ${type} ${action} handler for ${JSON.stringify(ids)}: ${err.message}`)
     }
   }
 }
@@ -326,7 +326,7 @@ class MemberListener extends ZoteroListener {
       if (changed.size) void Events.emit('collections-changed', Array.from(changed))
     }
     catch (err) {
-      log.error(`error in ${ this.type } notify handler: ${ err.message }`)
+      log.error(`error in ${type} ${action} handler for ${JSON.stringify(pairs)}: ${err.message}`)
     }
   }
 }
@@ -342,7 +342,7 @@ class GroupListener extends ZoteroListener {
       if ((action === 'delete') && ids.length) void Events.emit('libraries-removed', ids)
     }
     catch (err) {
-      log.error(`error in ${ this.type } notify handler: ${ err.message }`)
+      log.error(`error in ${type} ${action} handler for ${JSON.stringify(ids)}: ${err.message}`)
     }
   }
 }
