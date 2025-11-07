@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/require-await, @typescript-eslint/no-unsafe-return, @typescript-eslint/no-shadow */
 
 import { Translators } from '../translators.js'
-import { getItemsAsync } from '../get-items-async.js'
+import { getItemAsync, getItemsAsync } from '../get-items-async.js'
 import { Preference } from '../prefs.js'
 import { html as escapeHTML } from '../escape.js'
 import { scannableCite } from '../../gen/ScannableCite.js'
@@ -204,7 +204,7 @@ export const Formatter = new class {
   public async 'scannable-cite'(citations, options) {
     let markers = ''
     for (const citation of citations) {
-      const scannable = scannableCite(await getItemsAsync(citation.id))
+      const scannable = scannableCite(await getItemAsync(citation.id))
 
       const enriched = [
         citation.prefix || '',

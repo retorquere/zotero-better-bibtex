@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unsafe-return, @typescript-eslint/only-throw-error, @typescript-eslint/require-await */
 
-import { getItemsAsync } from './get-items-async.js'
+import { getItemAsync, getItemsAsync } from './get-items-async.js'
 import { AUXScanner } from './aux-scanner.js'
 import { AutoExport } from './auto-export.js'
 import { Translators } from './translators.js'
@@ -262,7 +262,7 @@ export class NSItem {
     if (library !== '*') where.libraryID = getLibrary(library)
     const key = Zotero.BetterBibTeX.KeyManager.first({ where })
     if (!key) throw { code: INVALID_PARAMETERS, message: `${ citekey } not found` }
-    const item = await getItemsAsync(key.itemID)
+    const item = await getItemAsync(key.itemID)
     const attachments = await getItemsAsync(item.getAttachments())
     const output: Record<string, any>[] = []
 
@@ -350,7 +350,7 @@ export class NSItem {
 
     const collections = {}
     for (const key of keys) {
-      const item = await getItemsAsync(key.itemID)
+      const item = await getItemAsync(key.itemID)
       collections[key.citationKey] = item.getCollections().map(id => {
         const col = structuredClone(Zotero.Collections.get(id).toJSON())
 
@@ -389,7 +389,7 @@ export class NSItem {
 
     const notes = {}
     for (const key of keys) {
-      const item = await getItemsAsync(key.itemID)
+      const item = await getItemAsync(key.itemID)
       notes[key.citationKey] = (await getItemsAsync(item.getNotes())).map(note => note.getNote())
     }
     return notes

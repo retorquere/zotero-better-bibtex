@@ -17,7 +17,7 @@ import { excelColumn, sentenceCase } from './text.js'
 
 import * as ZoteroDB from './db/zotero.js'
 
-import { getItemsAsync } from './get-items-async.js'
+import { getItemAsync, getItemsAsync } from './get-items-async.js'
 
 import { Preference } from './prefs.js'
 import { Formatter } from './key-manager/formatter.js'
@@ -120,7 +120,7 @@ export const KeyManager = new class _KeyManager {
 
     await Cache.touch(ids)
 
-    const item = await getItemsAsync(ids[0])
+    const item = await getItemAsync(ids[0])
     item.setField('extra', Extra.set(item.getField('extra'), { citationKey }))
     await item.saveTx() // this should cause an update and key registration
   }
@@ -573,7 +573,7 @@ export const KeyManager = new class _KeyManager {
       const progress = new Progress(missing.length, 'Assigning citation keys')
       for (const itemID of missing) {
         try {
-          this.update(await getItemsAsync(itemID))
+          this.update(await getItemAsync(itemID))
         }
         catch (err) {
           log.error('KeyManager.rescan: update failed:', err.message || `${ err }`, err.stack)

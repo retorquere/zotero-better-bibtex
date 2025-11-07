@@ -1,6 +1,7 @@
 import Emittery from 'emittery'
 
 import { log } from './logger.js'
+import { getItemsAsync } from './get-items-async.js'
 
 type ZoteroAction = 'modify' | 'add' | 'trash' | 'delete'
 
@@ -184,12 +185,15 @@ class ItemListener extends ZoteroListener {
 
   public async notify(action: ZoteroAction, type: string, ids: number[], extraData?: Record<number, { libraryID?: number }>) {
     try {
+      let load = false
       switch (action) {
         case 'trash':
           action = 'delete'
           break
         case 'modify':
         case 'add':
+          load = true
+          break
         case 'delete':
           break
         default:
@@ -202,6 +206,8 @@ class ItemListener extends ZoteroListener {
       // https://github.com/retorquere/zotero-better-bibtex/issues/774
       // https://groups.google.com/forum/#!topic/zotero-dev/yGP4uJQCrMc
       await Zotero.Promise.delay(Events.itemObserverDelay)
+
+      if (load) await getItemsAsync(ids)
 
       const touched = {
         collections: new Set<number>,

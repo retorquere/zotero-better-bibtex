@@ -3,7 +3,7 @@ import * as ZoteroDB from './db/zotero.js'
 import { log } from './logger.js'
 import { Translators } from './translators.js'
 import { Formatter as CAYWFormatter } from './cayw/formatter.js'
-import { getItemsAsync } from './get-items-async.js'
+import { getItemAsync, getItemsAsync } from './get-items-async.js'
 import { AUXScanner } from './aux-scanner.js'
 import * as Extra from './extra.js'
 import { defaults } from '../gen/preferences/meta.js'
@@ -218,7 +218,7 @@ export class TestSupport {
     for (const citation of citations) {
       if (citation.id.length !== 1) throw new Error(`Expected 1 item, got ${ citation.id.length }`)
       citation.citationKey = Zotero.BetterBibTeX.KeyManager.get(citation.id[0]).citationKey
-      citation.uri = Zotero.URI.getItemURI(await getItemsAsync(citation.id[0]))
+      citation.uri = Zotero.URI.getItemURI(await getItemAsync(citation.id[0]))
     }
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return await CAYWFormatter[format](citations, {})
