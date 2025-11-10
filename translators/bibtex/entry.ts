@@ -892,8 +892,13 @@ export class Entry {
 
     // sort before postscript so the postscript can affect field order
     const keys = Object.keys(this.has).sort((a, b) => {
-      const fa = fieldOrder[a]
-      const fb = fieldOrder[b]
+      const abase = a.split('+')[0]
+      const bbase = b.split('+')[0]
+
+      if (abase === bbase) return a.length - b.length
+
+      const fa = fieldOrder[abase]
+      const fb = fieldOrder[bbase]
 
       if (fa && fb) return Math.abs(fa) - Math.abs(fb)
       if (fa) return -fa
