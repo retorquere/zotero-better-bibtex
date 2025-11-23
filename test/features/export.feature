@@ -11,6 +11,7 @@ Feature: Export
 
     Examples:
       | file                                                                                                                     | references |
+      | Generating citation keys and special letters (i.e. o, u, a) #3351                                                        | 1          |
       | urldate exported to .bib does not match Zoteros date anymore #3330                                                       | 1          |
       | Export fails with Translation using Better BibTeX failed Error normalize EDTF failed to normalize Century #3322          | 5          |
       | Replacement option for space between multipart last names in citekey generation #3289                                    | 1          |

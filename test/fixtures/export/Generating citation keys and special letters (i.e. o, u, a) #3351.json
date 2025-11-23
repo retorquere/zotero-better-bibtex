@@ -1,0 +1,47 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "preferences": {
+      "citekeyFold": false,
+      "citekeyFormat": "authors(n = 1, etal = Et_al) + \"_\" + year + \"_\" + shorttitle(3, 3)"
+    },
+    "options": {}
+  },
+  "version": {
+    "zotero": "7.0.27",
+    "bbt": "7.0.67"
+  },
+  "collections": {},
+  "items": [
+    {
+      "key": "UK9UY2RF",
+      "version": 0,
+      "itemType": "journalArticle",
+      "title": "Über Ambivalenz",
+      "date": "2011-12-01",
+      "url": "https://doi.org/10.1007/s00451-011-0087-3",
+      "volume": "27",
+      "pages": "323-327",
+      "publicationTitle": "Forum der Psychoanalyse",
+      "DOI": "10.1007/s00451-011-0087-3",
+      "issue": "4",
+      "journalAbbreviation": "Forum der Psychoanalyse",
+      "ISSN": "1437-0751",
+      "creators": [
+        {
+          "firstName": "Kurt",
+          "lastName": "Lüscher",
+          "creatorType": "author"
+        }
+      ],
+      "tags": [],
+      "dateAdded": "2025-09-18T19:21:39Z",
+      "dateModified": "2025-09-18T19:21:39Z",
+      "itemID": 15,
+      "attachments": [],
+      "notes": [],
+      "citationKey": "Lüscher_2011_UberAmbivalenz"
+    }
+  ]
+}

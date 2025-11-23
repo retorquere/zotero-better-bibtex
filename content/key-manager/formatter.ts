@@ -671,9 +671,8 @@ export class PatternFormatter {
    * @param transliterate transliterate the name
    * @param space replace spaces in the name (in case of multi-part names for example) with this string
    */
-  public $creatornames(template?: Template<'creator'>, transliterate?: boolean, space?: string): string { // eslint-disable-line @typescript-eslint/no-shadow
+  public $creatornames(template?: Template<'creator'>, space?: string): string { // eslint-disable-line @typescript-eslint/no-shadow
     if (typeof template !== 'undefined') this.config.creatorNames.template = template
-    if (typeof transliterate !== 'undefined') this.config.creatorNames.transliterate = transliterate
     if (typeof space !== 'undefined') this.config.creatorNames.space = space
     return ''
   }
@@ -897,10 +896,10 @@ export class PatternFormatter {
   /**
    * The first `n` (default: 3) words of the title, apply capitalization to first `m` (default: 0) of those.
    * @param n number of words to select
-   * @param m number of words to capitalize. `0` means no words will be capitalized. Mind that existing capitals are not removed. If you enable capitalization, you also get transliteration; for CJK, capitalization is not meaningful, so if you want capitalization, BBT romanizes first.
+   * @param m number of words to capitalize. `0` means no words will be capitalized. Mind that existing capitals are not removed.
    */
   public $shorttitle(n: number = 3, m: number = 0): string { // eslint-disable-line @typescript-eslint/no-inferrable-types
-    const words = this.titleWords(this.item.title, { skipWords: true, nopunct: true, transliterate: m > 0 })
+    const words = this.titleWords(this.item.title, { skipWords: true, nopunct: true })
     if (!words) return ''
 
     return words.slice(0, n).map((word, i) => i < m ? word.charAt(0).toUpperCase() + word.slice(1) : word).join(' ')
@@ -1087,7 +1086,6 @@ export class PatternFormatter {
   /**
    * Finds a text in the string and returns it.
    * @param match regex or string to match. String matches are case-insensitive
-   * @param clean   transliterates the current output and removes unsafe characters during matching
    * @param passthrough if no match is found, pass through input.
    */
   public _find(input: string, match: RegExp | string, passthrough = false): string {
@@ -1417,11 +1415,11 @@ export class PatternFormatter {
     return ''
   }
   /**
-   * transliterates the citation key. If you don't specify a mode, the mode is derived from the item language field
+   * transliterates the input. If you don't specify a mode, the mode is derived from the item language field
    * @param mode specialized translateration modes for german, japanese or chinese.
    */
   public _transliterate(input: string, mode?: TransliterateModeAlias): string {
-    return this.transliterate(input, (unaliasTransliterateMode[mode] || mode) as TransliterateMode)
+    return this.transliterate(input, (unaliasTransliterateMode[mode] || mode || this.item.transliterateMode) as TransliterateMode)
   }
 
   private transliterate(str: string, mode?: TransliterateMode): string {
@@ -1498,7 +1496,7 @@ export class PatternFormatter {
     return contracted.map(term => term.text).filter(term => !this.skipWords.has(term.toLowerCase()))
   }
 
-  private titleWords(title, options: { transliterate?: boolean; skipWords?: boolean; nopunct?: boolean } = {}): string[] {
+  private titleWords(title, options: { skipWords?: boolean; nopunct?: boolean } = {}): string[] {
     if (!title) return null
 
     title = title.replace(/<\/?(?:i|b|sc|nc|code|span[^>]*)>|["]/ig, '').replace(/[/:]/g, ' ')
@@ -1519,24 +1517,6 @@ export class PatternFormatter {
         .filter((word: string) => !this.skipWords.has(word.toLowerCase()))
     }
 
-    if (options.transliterate) {
-      words = words.map((word: string) => {
-        if (this.item.transliterateMode) {
-          return this.transliterate(word)
-        }
-        else if (japanese.enabled) {
-          return this.transliterate(japanese.convert(word, { to: 'romaji' }), 'minimal')
-        }
-        else if (chinese.enabled) {
-          return this.transliterate(chinese.pinyin(word), 'minimal')
-        }
-        else {
-          return this.transliterate(word)
-        }
-      })
-    }
-
-    // remove transliterated and non-CJK skipwords
     if (options.skipWords) words = words.filter((word: string) => !this.skipWords.has(word.toLowerCase()))
 
     if (words.length === 0) return null
