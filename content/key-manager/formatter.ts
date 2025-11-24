@@ -902,7 +902,7 @@ export class PatternFormatter {
    * @param m number of words to capitalize. `0` means no words will be capitalized. Mind that existing capitals are not removed.
    */
   public $shorttitle(n: number = 3, m: number = 0): string { // eslint-disable-line @typescript-eslint/no-inferrable-types
-    const words = this.titleWords(this.item.title, { skipWords: true, nopunct: true })
+    const words = this.titleWords(this.item.title, true)
     if (!words) return ''
 
     return words.slice(0, n).map((word, i) => i < m ? word.charAt(0).toUpperCase() + word.slice(1) : word).join(' ')
@@ -977,7 +977,7 @@ export class PatternFormatter {
 
   /** Capitalize all the significant words of the title, and concatenate them. For example, `An awesome paper on JabRef` will become `AnAwesomePaperJabref` */
   public $title(): string {
-    return (this.titleWords(this.item.title, { skipWords: true, nopunct: true }) || []).join(' ')
+    return (this.titleWords(this.item.title, true) || []).join(' ')
   }
 
   private postfixstart(start: number | string): number {
@@ -1304,7 +1304,7 @@ export class PatternFormatter {
    * @param nopunct remove punctuation from words
    */
   public _skipwords(input: string, nopunct: boolean = false): string { // eslint-disable-line @typescript-eslint/no-inferrable-types
-    const words = this.titleWords(input, { skipWords: true, nopunct })
+    const words = this.titleWords(input, nopunct)
     return words ? words.join(' ') : ''
   }
 
@@ -1499,45 +1499,46 @@ export class PatternFormatter {
     return contracted.map(term => term.text).filter(term => !this.skipWords.has(term.toLowerCase()))
   }
 
-  private titleWords(title, options: { skipWords?: boolean; nopunct?: boolean } = {}): string[] {
+  private titleWords(title, nopunct = false): string[] {
     if (!title) return null
 
     title = title.replace(/<\/?(?:i|b|sc|nc|code|span[^>]*)>|["]/ig, '').replace(/[/:]/g, ' ')
     let words = this.split(title)
-      .map(word => options.nopunct ? this.nopunct(word, '') : word)
-      .filter(word => word && !(options.skipWords && ucs2.decode(word).length === 1 && !word.match(/^\d+$/) && !word.match(CJK)))
+      .map(word => nopunct ? this.nopunct(word, '') : word)
+      .filter(word => word && !(ucs2.decode(word).length === 1 && !word.match(/^\d+$/) && !word.match(CJK)))
 
     // apply jieba.cut and flatten.
-    if (chinese.enabled && options.skipWords && this.item.transliterateMode === 'chinese') {
+    if (chinese.enabled && this.item.transliterateMode === 'chinese') {
       words = [].concat(...words.map((word: string) => chinese.jieba(word)))
-      // remove CJK skipwords
-      words = words.filter((word: string) => !this.skipWords.has(word.toLowerCase()))
     }
 
-    if (japanese.enabled && options.skipWords && this.item.transliterateMode === 'japanese') {
-      words = words
-        .flatMap((word: string) => japanese.tokenize(word))
-        .filter((word: string) => !this.skipWords.has(word.toLowerCase()))
+    if (japanese.enabled && this.item.transliterateMode === 'japanese') {
+      words = words.flatMap((word: string) => japanese.tokenize(word))
     }
 
-    if (Preference.citekeyFold) {
-      words = words.map((word: string) => {
+    if (this.skipWords.size) {
+      words = words.filter((word: string) => {
+        word = word.toLowerCase()
+        let transliterated = word
+
         if (this.item.transliterateMode) {
-          return this.transliterate(word)
+          transliterated = this.transliterate(word)
         }
         else if (japanese.enabled) {
-          return this.transliterate(japanese.convert(word, { to: 'romaji' }), 'minimal')
+          transliterated = this.transliterate(japanese.convert(word, { to: 'romaji' }), 'minimal')
         }
         else if (chinese.enabled) {
-          return this.transliterate(chinese.pinyin(word), 'minimal')
+          transliterated = this.transliterate(chinese.pinyin(word), 'minimal')
         }
         else {
-          return this.transliterate(word)
+          transliterated = this.transliterate(word)
         }
+
+        return !(this.skipWords.has(word) || this.skipWords.has(transliterated))
       })
     }
 
-    if (options.skipWords) words = words.filter((word: string) => !this.skipWords.has(word.toLowerCase()))
+    words = words.filter((word: string) => !this.skipWords.has(word.toLowerCase()))
 
     if (words.length === 0) return null
 
