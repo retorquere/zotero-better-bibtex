@@ -286,6 +286,7 @@ class Item {
   public id: number
   public libraryID: number
   public transliterateMode: TransliterateMode | ''
+  public transliterateModeCJK: boolean
   public getField: (name: string) => number | string
   public extra: string
   public extraFields: Extra.Fields
@@ -318,6 +319,7 @@ class Item {
     this.language = babelLanguage((this.getField('language') as string) || '')
     const babelTag = this.babelTag() as TransliterateMode
     this.transliterateMode = unaliasTransliterateMode[babelTag] || babelTag
+    this.transliterateModeCJK = ['chinese', 'japanese'].includes(this.transliterateMode)
 
     const extraFields = Extra.get(this.getField('extra') as string, 'zotero', { kv: true, tex: true })
     this.extra = extraFields.extra
@@ -1516,7 +1518,7 @@ export class PatternFormatter {
       words = words.flatMap((word: string) => japanese.tokenize(word))
     }
 
-    if (this.skipWords.size) {
+    if (!this.item.transliterateModeCJK && this.skipWords.size) {
       words = words.filter((word: string) => {
         word = word.toLowerCase()
         let transliterated = word
@@ -1524,12 +1526,14 @@ export class PatternFormatter {
         if (this.item.transliterateMode) {
           transliterated = this.transliterate(word)
         }
+        /*
         else if (japanese.enabled) {
           transliterated = this.transliterate(japanese.convert(word, { to: 'romaji' }), 'minimal')
         }
         else if (chinese.enabled) {
           transliterated = this.transliterate(chinese.pinyin(word), 'minimal')
         }
+        */
         else {
           transliterated = this.transliterate(word)
         }
@@ -1537,8 +1541,6 @@ export class PatternFormatter {
         return !(this.skipWords.has(word) || this.skipWords.has(transliterated))
       })
     }
-
-    words = words.filter((word: string) => !this.skipWords.has(word.toLowerCase()))
 
     if (words.length === 0) return null
 
