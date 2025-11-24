@@ -6,9 +6,9 @@ import AJV from 'ajv'
 const ajv = new AJV
 import * as jsonpatch from 'fast-json-patch'
 
-import { normalize } from '../translators/lib/normalize.js'
+import { normalize } from '../translators/lib/normalize'
 import stringify from 'safe-stable-stringify'
-import * as fs from 'node:fs'
+import * as fs from 'fs'
 
 import { defaults } from '../gen/preferences/meta'
 const supported: string[] = Object.keys(defaults).filter(name => !['client', 'testing', 'platform', 'newTranslatorsAskRestart'].includes(name))

@@ -69,7 +69,7 @@ monkey.patch(Zotero.Utilities.Item?.itemToCSLJSON ? Zotero.Utilities.Item : Zote
   try {
     if (typeof Zotero.Item !== 'undefined' && !(zoteroItem instanceof Zotero.Item)) {
       const citekey = Zotero.BetterBibTeX.KeyManager.get(zoteroItem.itemID)
-      if (citekey) {
+      if (citekey?.citationKey) {
         cslItem['citation-key'] = citekey.citationKey
       }
     }
@@ -96,7 +96,7 @@ monkey.patch(Zotero.Items, 'merge', original => async function Zotero_Items_merg
       const extra = Extra.get(item.getField('extra'), 'zotero', { citationKey: merge.citationKey, aliases: merge.citationKey, tex: merge.tex, kv: merge.kv })
       if (!extra.extraFields.citationKey) { // why is the citationkey stripped from extra before we get to this point?!
         const pinned = Zotero.BetterBibTeX.KeyManager.get(item.id)
-        if (pinned.pinned) extra.extraFields.citationKey = pinned.citationKey
+        if (pinned?.pinned) extra.extraFields.citationKey = pinned.citationKey
       }
 
       // get citekeys of other items
@@ -139,7 +139,7 @@ monkey.patch(Zotero.Items, 'merge', original => async function Zotero_Items_merg
       }
 
       if (merge.citationKey) {
-        const citekey = Zotero.BetterBibTeX.KeyManager.get(item.id).citationKey
+        const citekey = Zotero.BetterBibTeX.KeyManager.get(item.id)?.citationKey
         extra.extraFields.aliases = extra.extraFields.aliases.filter(alias => alias !== citekey)
       }
 

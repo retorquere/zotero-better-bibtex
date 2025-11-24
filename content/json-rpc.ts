@@ -246,7 +246,7 @@ export class NSItem {
       return {
         ...Zotero.Utilities.Item.itemToCSLJSON(item),
         library: libraries[item.libraryID],
-        citekey: Zotero.BetterBibTeX.KeyManager.get(item.id).citationKey,
+        citekey: Zotero.BetterBibTeX.KeyManager.get(item.id)?.citationKey || '',
       }
     })
   }

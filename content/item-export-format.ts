@@ -59,7 +59,7 @@ export function fix(serialized: Item, item: Zotero.Item): Item {
       regular.citationKey = ''
     }
     else {
-      regular.citationKey = Zotero.BetterBibTeX.KeyManager.get(item.id).citationKey
+      regular.citationKey = Zotero.BetterBibTeX.KeyManager.get(item.id)?.citationKey
       if (!regular.citationKey) {
         // throw new Error(`no citation key for ${ Zotero.ItemTypes.getName(item.itemTypeID) } ${ item.id }`)
         log.error(`no citation key for ${ Zotero.ItemTypes.getName(item.itemTypeID) } ${ item.id } ${ JSON.stringify(regular) }`)

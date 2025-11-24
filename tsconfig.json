@@ -16,7 +16,7 @@
     "sourceMap": false,
     "downlevelIteration": true,
     "resolveJsonModule": true,
-    "module": "esnext",
+    "module": "preserve",
     "moduleResolution": "bundler",
     "typeRoots": [
       "./node_modules",

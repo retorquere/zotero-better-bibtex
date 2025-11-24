@@ -114,7 +114,7 @@ export const KeyManager = new class _KeyManager {
 
     if (ids.length !== 1) return alert({ text: l10n.localize('better-bibtex_citekey_set_toomany') })
 
-    const existingKey = this.get(ids[0]).citationKey
+    const existingKey = this.get(ids[0])?.citationKey || ''
     const citationKey = prompt({ text: l10n.localize('better-bibtex_citekey_set_change'), value: existingKey }) || existingKey
     if (citationKey === existingKey) return
 
@@ -142,7 +142,7 @@ export const KeyManager = new class _KeyManager {
       else {
         if (parsed.extraFields.citationKey) continue
 
-        citationKey = this.get(item.id).citationKey || this.update(item)
+        citationKey = this.get(item.id)?.citationKey || this.update(item)
       }
 
       item.setField('extra', Extra.set(extra, { citationKey }))
@@ -611,7 +611,6 @@ export const KeyManager = new class _KeyManager {
     // I cannot prevent being called before the init is done because Zotero unlocks the UI *way* before I'm getting the
     // go-ahead to *start* my init.
     if (!this.keys || !this.started) return null
-
     return blink.first(this.keys, byItemID(itemID))
   }
 
