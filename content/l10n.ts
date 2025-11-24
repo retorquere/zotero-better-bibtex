@@ -1,4 +1,4 @@
-import { log } from './logger.js'
+import { log } from './logger'
 
 declare const Localization: any
 
@@ -28,7 +28,7 @@ export function localize(id_with_branch: string, params?: Record<string, string 
   return params ? l.replace(/[{]\s*[$]([a-z]+)\s*[}]/gi, (m, term) => typeof params[term] === 'undefined' ? m : `${params[term]}`) : l
 }
 
-import ids from '../gen/l10n.js'
+import ids from '../gen/l10n'
 export async function initialize(): Promise<void> {
   const load = ids.map(key => prefetch(key))
   await Promise.all(load)

@@ -1,11 +1,11 @@
-import { Path, File } from './file.js'
+import { Path, File } from './file'
 
-import { Translators } from './translators.js'
-import { Preference } from './prefs.js'
+import { Translators } from './translators'
+import { Preference } from './prefs'
 import { FilePickerHelper } from 'zotero-plugin-toolkit'
-import { findBinary } from './path-search.js'
-import { log } from './logger.js'
-import { alert } from './prompt.js'
+import { findBinary } from './path-search'
+import { log } from './logger'
+import { alert } from './prompt'
 
 import BBT from '../gen/version.cjs'
 

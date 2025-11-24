@@ -1,13 +1,13 @@
-import type { Collected } from './collect.js'
-import type { Library } from './normalize.js'
+import type { Collected } from './collect'
+import type { Library } from './normalize'
 
-import { log } from '../../content/logger.js'
-import { Translation } from './translator.js'
-import { simplifyForExport, simplifyForImport } from '../../gen/items/simplify.js'
+import { log } from '../../content/logger'
+import { Translation } from './translator'
+import { simplifyForExport, simplifyForImport } from '../../gen/items/simplify'
 import BBT from '../../gen/version.cjs'
 
-// import { validItem } from '../content/ajv.js'
-// import { stringify } from '../content/stringify.js'
+// import { validItem } from '../content/ajv'
+// import { stringify } from '../content/stringify'
 
 function addSelect(item: any, translation: Translation) {
   if (translation.collected.preferences.testing) return

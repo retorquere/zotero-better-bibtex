@@ -4,7 +4,7 @@
 
 declare const Zotero: any
 
-import { RegularItem as Item, Attachment, Tag } from '../../gen/typings/serialized-item.js'
+import { RegularItem as Item, Attachment, Tag } from '../../gen/typings/serialized-item'
 
 export type Field = {
   name: string
@@ -25,28 +25,28 @@ export type Field = {
   bibtex?: string
 }
 
-import type { ExportedItemMetadata } from '../../content/worker/cache.js'
-import * as DateParser from '../../content/dateparser.js'
+import type { ExportedItemMetadata } from '../../content/worker/cache'
+import * as DateParser from '../../content/dateparser'
 import fold2ascii from 'fold-to-ascii'
 
-import { Translation } from '../lib/translator.js'
+import { Translation } from '../lib/translator'
 
-import * as postscript from '../lib/postscript.js'
+import * as postscript from '../lib/postscript'
 
-import { replace_command_spacers } from './unicode_translator.js'
-import { datefield } from './datefield.js'
+import { replace_command_spacers } from './unicode_translator'
+import { datefield } from './datefield'
 import ExtraFields from '../../gen/items/extra-fields.json' with { type: 'json' }
-import { label as propertyLabel } from '../../gen/items/items.js'
-import type { Fields as ParsedExtraFields, TeXString } from '../../content/extra.js'
-import { zoteroCreator as ExtraZoteroCreator } from '../../content/extra.js'
-import { log } from '../../content/logger.js'
-import { babelLanguage, titleCase } from '../../content/text.js'
+import { label as propertyLabel } from '../../gen/items/items'
+import type { Fields as ParsedExtraFields, TeXString } from '../../content/extra'
+import { zoteroCreator as ExtraZoteroCreator } from '../../content/extra'
+import { log } from '../../content/logger'
+import { babelLanguage, titleCase } from '../../content/text'
 import BabelTag from '../../gen/babel/tag.json' with { type: 'json' }
 
-import { arXiv } from '../../content/arXiv.js'
-import { uri } from '../../content/escape.js'
+import { arXiv } from '../../content/arXiv'
+import { uri } from '../../content/escape'
 
-import { stringCompare } from '../lib/string-compare.js'
+import { stringCompare } from '../lib/string-compare'
 import * as CSL from 'citeproc'
 
 /*

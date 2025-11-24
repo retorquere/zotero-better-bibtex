@@ -1,12 +1,12 @@
 declare const ChromeUtils: any
 
-import { Formatter } from './cayw/formatter.js'
-import { TeXstudio } from './tex-studio.js'
-import { flash } from './flash.js'
-import { log, stringify } from './logger.js'
-import { orchestrator } from './orchestrator.js'
-import { Server } from './server.js'
-import { toClipboard } from './text.js'
+import { Formatter } from './cayw/formatter'
+import { TeXstudio } from './tex-studio'
+import { flash } from './flash'
+import { log, stringify } from './logger'
+import { orchestrator } from './orchestrator'
+import { Server } from './server'
+import { toClipboard } from './text'
 
 class FieldEnumerator {
   public QueryInterface = ChromeUtils.generateQI([ Components.interfaces.nsISupports, Components.interfaces.nsISimpleEnumerator ])
@@ -266,7 +266,7 @@ class Document {
       prefix: item.prefix || '',
       suffix: item.suffix || '',
       label: item.locator ? (item.label || 'page') : '',
-      citationKey: Zotero.BetterBibTeX.KeyManager.get(item.id).citationKey,
+      citationKey: Zotero.BetterBibTeX.KeyManager.get(item.id)?.citationKey || '',
 
       uri: Array.isArray(item.uri) ? item.uri[0] : undefined,
       itemType: item.itemData ? item.itemData.type : undefined,
@@ -354,7 +354,7 @@ async function selected(options): Promise<string> {
     prefix: '',
     suffix: '',
     label: '',
-    citationKey: Zotero.BetterBibTeX.KeyManager.get(item.id).citationKey,
+    citationKey: Zotero.BetterBibTeX.KeyManager.get(item.id)?.citationKey || '',
 
     uri: undefined,
     itemType: undefined,

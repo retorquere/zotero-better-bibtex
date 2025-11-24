@@ -1,6 +1,6 @@
-import { Translation } from '../lib/translator.js'
+import { Translation } from '../lib/translator'
 
-import { stringCompare } from '../lib/string-compare.js'
+import { stringCompare } from '../lib/string-compare'
 
 export class JabRef {
   public citekeys: Map<number, string>

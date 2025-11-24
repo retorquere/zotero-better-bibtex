@@ -1,16 +1,16 @@
-import { AutoExport, JobSetting } from './auto-export.js'
-import * as ZoteroDB from './db/zotero.js'
-import { log } from './logger.js'
-import { Translators } from './translators.js'
-import { Formatter as CAYWFormatter } from './cayw/formatter.js'
-import { getItemAsync, getItemsAsync } from './get-items-async.js'
-import { AUXScanner } from './aux-scanner.js'
-import * as Extra from './extra.js'
-import { defaults } from '../gen/preferences/meta.js'
-import { Preference } from './prefs.js'
-import * as memory from './memory.js'
-import { Cache } from './translators/worker.js'
-import { CitekeyRecord } from './key-manager.js'
+import { AutoExport, JobSetting } from './auto-export'
+import * as ZoteroDB from './db/zotero'
+import { log } from './logger'
+import { Translators } from './translators'
+import { Formatter as CAYWFormatter } from './cayw/formatter'
+import { getItemAsync, getItemsAsync } from './get-items-async'
+import { AUXScanner } from './aux-scanner'
+import * as Extra from './extra'
+import { defaults } from '../gen/preferences/meta'
+import { Preference } from './prefs'
+import * as memory from './memory'
+import { Cache } from './translators/worker'
+import { CitekeyRecord } from './key-manager'
 
 // import { Bench } from 'tinybench'
 
@@ -217,7 +217,7 @@ export class TestSupport {
   public async pick(format: string, citations: { id: number[]; uri: string; citationKey: string }[]): Promise<string> {
     for (const citation of citations) {
       if (citation.id.length !== 1) throw new Error(`Expected 1 item, got ${ citation.id.length }`)
-      citation.citationKey = Zotero.BetterBibTeX.KeyManager.get(citation.id[0]).citationKey
+      citation.citationKey = Zotero.BetterBibTeX.KeyManager.get(citation.id[0])?.citationKey || ''
       citation.uri = Zotero.URI.getItemURI(await getItemAsync(citation.id[0]))
     }
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return

@@ -1,37 +1,37 @@
-import { orchestrator } from './orchestrator.js'
+import { orchestrator } from './orchestrator'
 
 import ETA from 'node-eta'
 
-import { alert, prompt } from './prompt.js'
+import { alert, prompt } from './prompt'
 
-import { japanese } from './key-manager/japanese.js'
-import { chinese } from './key-manager/chinese.js'
+import { japanese } from './key-manager/japanese'
+import { chinese } from './key-manager/chinese'
 
-import { Scheduler } from './scheduler.js'
-import { log } from './logger.js'
-import { flash } from './flash.js'
-import { Events } from './events.js'
-import { fetchAsync as fetchInspireHEP } from './inspire-hep.js'
-import * as Extra from './extra.js'
-import { excelColumn, sentenceCase } from './text.js'
+import { Scheduler } from './scheduler'
+import { log } from './logger'
+import { flash } from './flash'
+import { Events } from './events'
+import { fetchAsync as fetchInspireHEP } from './inspire-hep'
+import * as Extra from './extra'
+import { excelColumn, sentenceCase } from './text'
 
-import * as ZoteroDB from './db/zotero.js'
+import * as ZoteroDB from './db/zotero'
 
-import { getItemAsync, getItemsAsync } from './get-items-async.js'
+import { getItemAsync, getItemsAsync } from './get-items-async'
 
-import { Preference } from './prefs.js'
-import { Formatter } from './key-manager/formatter.js'
+import { Preference } from './prefs'
+import { Formatter } from './key-manager/formatter'
 
 import { createDB, createTable, Query, BlinkKey } from 'blinkdb'
 import * as blink from 'blinkdb'
-import { Cache } from './translators/worker.js'
+import { Cache } from './translators/worker'
 
-import { monkey } from './monkey-patch.js'
+import { monkey } from './monkey-patch'
 
 import { sprintf } from 'sprintf-js'
 import { newQueue } from '@henrygd/queue'
 
-import * as l10n from './l10n.js'
+import * as l10n from './l10n'
 
 export type CitekeyRecord = {
   itemID: number
@@ -114,7 +114,7 @@ export const KeyManager = new class _KeyManager {
 
     if (ids.length !== 1) return alert({ text: l10n.localize('better-bibtex_citekey_set_toomany') })
 
-    const existingKey = this.get(ids[0]).citationKey
+    const existingKey = this.get(ids[0])?.citationKey || ''
     const citationKey = prompt({ text: l10n.localize('better-bibtex_citekey_set_change'), value: existingKey }) || existingKey
     if (citationKey === existingKey) return
 
@@ -142,7 +142,7 @@ export const KeyManager = new class _KeyManager {
       else {
         if (parsed.extraFields.citationKey) continue
 
-        citationKey = this.get(item.id).citationKey || this.update(item)
+        citationKey = this.get(item.id)?.citationKey || this.update(item)
       }
 
       item.setField('extra', Extra.set(extra, { citationKey }))
@@ -611,7 +611,6 @@ export const KeyManager = new class _KeyManager {
     // I cannot prevent being called before the init is done because Zotero unlocks the UI *way* before I'm getting the
     // go-ahead to *start* my init.
     if (!this.keys || !this.started) return null
-
     return blink.first(this.keys, byItemID(itemID))
   }
 

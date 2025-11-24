@@ -1,6 +1,6 @@
-import { log } from './logger.js'
-import * as client from './client.js'
-import { File } from './file.js'
+import { log } from './logger'
+import * as client from './client'
+import { File } from './file'
 
 // https://searchfox.org/mozilla-central/source/toolkit/modules/subprocess/subprocess_win.jsm#135 doesn't seem to work on Windows.
 export async function findBinary(bin: string, installationDirectory: { mac?: string[]; win?: string[] } = {}): Promise<string> {

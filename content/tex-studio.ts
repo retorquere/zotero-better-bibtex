@@ -1,6 +1,6 @@
-import { findBinary } from './path-search.js'
-import { log } from './logger.js'
-import { orchestrator } from './orchestrator.js'
+import { findBinary } from './path-search'
+import { log } from './logger'
+import { orchestrator } from './orchestrator'
 
 // export singleton: https://k94n.com/es6-modules-single-instance-pattern
 export const TeXstudio = new class {

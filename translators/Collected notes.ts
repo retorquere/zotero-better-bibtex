@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 
-import { Translation } from './lib/translator.js'
-import { Collected } from './lib/collect.js'
-import type { Header } from '../gen/translators.js'
+import { Translation } from './lib/translator'
+import { Collected } from './lib/collect'
+import type { Header } from '../gen/translators'
 declare var ZOTERO_TRANSLATOR_INFO: Header // eslint-disable-line no-var
 
 declare const Zotero: any
@@ -10,10 +10,10 @@ declare const Zotero: any
 import Turndown from 'turndown'
 const turndown = new Turndown
 
-import { Item } from '../gen/typings/serialized-item.js'
+import { Item } from '../gen/typings/serialized-item'
 
-import * as escape from '../content/escape.js'
-import * as Extra from '../content/extra.js'
+import * as escape from '../content/escape'
+import * as Extra from '../content/extra'
 
 function clean(item: Item): Item {
   switch (item.itemType) {

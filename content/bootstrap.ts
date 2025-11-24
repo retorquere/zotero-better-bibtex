@@ -4,7 +4,7 @@ declare const Cc: any
 declare const Ci: any
 declare const dump: (msg: string) => void
 
-import { alert } from './prompt.js'
+import { alert } from './prompt'
 
 const BOOTSTRAP_REASONS = {
   1: 'APP_STARTUP',

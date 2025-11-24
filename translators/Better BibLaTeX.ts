@@ -1,7 +1,7 @@
 declare const Zotero: any
 
-import { Collected } from './lib/collect.js'
-import type { Header } from '../gen/translators.js'
+import { Collected } from './lib/collect'
+import type { Header } from '../gen/translators'
 declare var ZOTERO_TRANSLATOR_INFO: Header // eslint-disable-line no-var
 
 export function doExport(): void {

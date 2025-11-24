@@ -1,8 +1,8 @@
 export type Actor = 'worker' | 'start' | 'done' | 'auto-export' | 'translators' | 'TeXstudio' | 'abbreviator' | 'keymanager' | 'cache' | 'sqlite' | 'git-push' | 'citekeysearch' | 'cayw' | 'json-rpc' | 'pull-export'
 export type PhaseID = 'startup' | 'shutdown'
-import type { Reason } from './bootstrap.js'
-import { log } from './logger.js'
-import { Preference } from './prefs.js'
+import type { Reason } from './bootstrap'
+import { log } from './logger'
+import { Preference } from './prefs'
 
 type Handler = (reason: Reason, task?: Task) => void | string | Promise<void | string>
 

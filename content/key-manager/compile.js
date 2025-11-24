@@ -2,7 +2,7 @@
 import * as estraverse from 'estraverse'
 import * as meriyah from 'meriyah'
 import * as astring from 'astring'
-import * as API from '../../gen/api/key-formatter.js'
+import * as API from '../../gen/api/key-formatter'
 const aliases = {
   _fold: '_transliterate',
   _splitideographs: '_ideographs',

@@ -1,19 +1,19 @@
 /* eslint-disable @typescript-eslint/no-unsafe-return, @typescript-eslint/only-throw-error, @typescript-eslint/require-await */
 
-import { getItemAsync, getItemsAsync } from './get-items-async.js'
-import { AUXScanner } from './aux-scanner.js'
-import { AutoExport } from './auto-export.js'
-import { Translators } from './translators.js'
-import { get as getCollection } from './collection.js'
-import * as Library from './library.js'
-import { log } from './logger.js'
-import { Preference } from './prefs.js'
-import { orchestrator } from './orchestrator.js'
-import { Server } from './server.js'
+import { getItemAsync, getItemsAsync } from './get-items-async'
+import { AUXScanner } from './aux-scanner'
+import { AutoExport } from './auto-export'
+import { Translators } from './translators'
+import { get as getCollection } from './collection'
+import * as Library from './library'
+import { log } from './logger'
+import { Preference } from './prefs'
+import { orchestrator } from './orchestrator'
+import { Server } from './server'
 
 import BBT from '../gen/version.cjs'
 
-import { methods } from '../gen/api/json-rpc.js'
+import { methods } from '../gen/api/json-rpc'
 
 const OK = 200
 
@@ -246,7 +246,7 @@ export class NSItem {
       return {
         ...Zotero.Utilities.Item.itemToCSLJSON(item),
         library: libraries[item.libraryID],
-        citekey: Zotero.BetterBibTeX.KeyManager.get(item.id).citationKey,
+        citekey: Zotero.BetterBibTeX.KeyManager.get(item.id)?.citationKey || '',
       }
     })
   }

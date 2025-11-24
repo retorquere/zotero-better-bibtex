@@ -5,15 +5,15 @@ const NOT_FOUND = 404
 // const CONFLICT = 409
 const BAD_REQUEST = 400
 
-import { Translators } from './translators.js'
-import * as Collection from './collection.js'
-import * as Library from './library.js'
-import { getItemsAsync } from './get-items-async.js'
-import { fromPairs } from './object.js'
-import { orchestrator } from './orchestrator.js'
-import { Server } from './server.js'
-import { log } from './logger.js'
-import { Preferences } from '../gen/preferences/meta.js'
+import { Translators } from './translators'
+import * as Collection from './collection'
+import * as Library from './library'
+import { getItemsAsync } from './get-items-async'
+import { fromPairs } from './object'
+import { orchestrator } from './orchestrator'
+import { Server } from './server'
+import { log } from './logger'
+import { Preferences } from '../gen/preferences/meta'
 
 function displayOptions(request) {
   const query = Server.queryParams(request)

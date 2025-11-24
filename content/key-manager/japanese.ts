@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 import Kuroshiro from 'kuroshiro'
-import { log } from '../logger.js'
-import { Preference } from '../prefs.js'
+import { log } from '../logger'
+import { Preference } from '../prefs'
 import KuromojiAnalyzer from 'kuroshiro-analyzer-kuromoji'
-import { Events } from '../events.js'
-import * as client from '../client.js'
+import { Events } from '../events'
+import * as client from '../client'
 
 export const japanese = new class {
   public enabled: typeof this = null

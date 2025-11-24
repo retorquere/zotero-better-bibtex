@@ -1,17 +1,17 @@
 declare const Zotero: any
 
-import * as client from '../../content/client.js'
-import { Path } from '../../content/file.js'
+import * as client from '../../content/client'
+import { Path } from '../../content/file'
 
-import * as Prefs from '../../gen/preferences/meta.js'
+import * as Prefs from '../../gen/preferences/meta'
 const PrefNames: Set<string> = new Set(Object.keys(Prefs.defaults))
-import { DisplayOptions } from '../../gen/translators.js'
-import { regex as escapeRE } from '../../content/escape.js'
-import { Collection, Attachment } from '../../gen/typings/serialized-item.js'
-import type { Exporter as BibTeXExporter } from '../bibtex/exporter.js'
+import { DisplayOptions } from '../../gen/translators'
+import { regex as escapeRE } from '../../content/escape'
+import { Collection, Attachment } from '../../gen/typings/serialized-item'
+import type { Exporter as BibTeXExporter } from '../bibtex/exporter'
 import type { CharMap } from 'unicode2latex'
-import { log } from '../../content/logger.js'
-import type { Collected } from './collect.js'
+import { log } from '../../content/logger'
+import type { Collected } from './collect'
 
 export type Output = {
   body: string

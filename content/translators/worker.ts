@@ -1,10 +1,10 @@
-import * as client from '../client.js'
-import type { Item } from '../../gen/typings/serialized-item.js'
-import { Client as WorkerClient } from '../worker/json-rpc.js'
-import { Exporter as ExporterInterface, Cache as CacheInterface } from '../worker/interface.js'
-import { orchestrator } from '../orchestrator.js'
-import type { Collection } from '../../gen/typings/serialized-item.js'
-import { log } from '../logger.js'
+import * as client from '../client'
+import type { Item } from '../../gen/typings/serialized-item'
+import { Client as WorkerClient } from '../worker/json-rpc'
+import { Exporter as ExporterInterface, Cache as CacheInterface } from '../worker/interface'
+import { orchestrator } from '../orchestrator'
+import type { Collection } from '../../gen/typings/serialized-item'
+import { log } from '../logger'
 
 export type Message
 //    { kind: 'initialize', CSL_MAPPINGS: any, dateFormatsJSON: any }

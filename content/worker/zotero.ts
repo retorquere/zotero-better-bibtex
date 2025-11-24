@@ -1,28 +1,28 @@
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 
-import { log } from '../../content/logger.js'
-import { Server as WorkerServerBase } from './json-rpc.js'
-import { Exporter as ExporterInterface } from './interface.js'
-import type { Item } from '../../gen/typings/serialized-item.js'
-import type { Header } from '../../gen/translators.js'
+import { log } from '../../content/logger'
+import { Server as WorkerServerBase } from './json-rpc'
+import { Exporter as ExporterInterface } from './interface'
+import type { Item } from '../../gen/typings/serialized-item'
+import type { Header } from '../../gen/translators'
 
-import { ExportedItem, ExportedItemMetadata, Cache, Context } from './cache.js'
+import { ExportedItem, ExportedItemMetadata, Cache, Context } from './cache'
 
 declare const IOUtils: any
 
-import * as client from '../client.js'
-import { Path, File } from '../file.js'
+import * as client from '../client'
+import { Path, File } from '../file'
 
 const ctx: DedicatedWorkerGlobalScope = self as any
 
-import type { Message, Job } from '../translators/worker.js'
-import { valid } from '../../gen/items/items.js'
-import { generateBibLaTeX } from '../../translators/bibtex/biblatex.js'
-import { generateBibTeX } from '../../translators/bibtex/bibtex.js'
-import { generateCSLJSON } from '../../translators/csl/json.js'
-import { generateCSLYAML } from '../../translators/csl/yaml.js'
-import { generateBBTJSON } from '../../translators/lib/bbtjson.js'
-import type { Collected } from '../../translators/lib/collect.js'
+import type { Message, Job } from '../translators/worker'
+import { valid } from '../../gen/items/items'
+import { generateBibLaTeX } from '../../translators/bibtex/biblatex'
+import { generateBibTeX } from '../../translators/bibtex/bibtex'
+import { generateCSLJSON } from '../../translators/csl/json'
+import { generateCSLYAML } from '../../translators/csl/yaml'
+import { generateBBTJSON } from '../../translators/lib/bbtjson'
+import type { Collected } from '../../translators/lib/collect'
 
 import { DOMParser as XMLDOMParser } from '@xmldom/xmldom'
 
@@ -137,16 +137,16 @@ export class DOMParser extends XMLDOMParser {
   }
 }
 
-import ZU from '../../submodules/zotero-utilities/utilities.js'
-import ZUI from '../../submodules/zotero-utilities/utilities_item.js'
-import ZD from '../../submodules/zotero-utilities/date.js'
+import ZU from '../../submodules/zotero-utilities/utilities'
+import ZUI from '../../submodules/zotero-utilities/utilities_item'
+import ZD from '../../submodules/zotero-utilities/date'
 
 declare const doExport: () => void
 
-import * as DateParser from '../../content/dateparser.js'
-// import * as Extra from '../../content/extra.js'
+import * as DateParser from '../../content/dateparser'
+// import * as Extra from '../../content/extra'
 import itemCreators from '../../gen/items/creators.json' with { type: 'json' }
-import { Collection } from '../../gen/typings/serialized-item.js'
+import { Collection } from '../../gen/typings/serialized-item'
 // import { CSL_MAPPINGS } from '../../gen/items/items'
 
 import zotero_schema from '../../schema/zotero.json' with { type: 'json' }

@@ -1,9 +1,9 @@
 /* eslint-disable no-case-declarations, @typescript-eslint/no-unsafe-return */
 
-import * as client from './client.js'
+import * as client from './client'
 import merge from 'lodash.merge'
-import { Cache } from './translators/worker.js'
-import { serializer } from './item-export-format.js'
+import { Cache } from './translators/worker'
+import { serializer } from './item-export-format'
 
 var ZOTERO_CONFIG: any // eslint-disable-line no-var
 if (client.version[0] === '8') {
@@ -13,15 +13,15 @@ else {
   Components.utils.import('resource://zotero/config.js')
 }
 
-import { Preference } from './prefs.js'
-import { affects, Preferences } from '../gen/preferences/meta.js'
-import { log } from './logger.js'
-import { Events } from './events.js'
+import { Preference } from './prefs'
+import { affects, Preferences } from '../gen/preferences/meta'
+import { log } from './logger'
+import { Events } from './events'
 import { newQueue } from '@henrygd/queue'
-import { orchestrator } from './orchestrator.js'
-import type { Reason } from './bootstrap.js'
-import { Header, headers as Headers, byLabel, byId, bySlug } from '../gen/translators.js'
-import { Job, worker, Exporter, Message } from './translators/worker.js'
+import { orchestrator } from './orchestrator'
+import type { Reason } from './bootstrap'
+import { Header, headers as Headers, byLabel, byId, bySlug } from '../gen/translators'
+import { Job, worker, Exporter, Message } from './translators/worker'
 
 Events.on('preference-changed', async (pref: string) => {
   for (const translator of (affects[pref] || [])) {
@@ -29,7 +29,7 @@ Events.on('preference-changed', async (pref: string) => {
   }
 })
 
-import * as l10n from './l10n.js'
+import * as l10n from './l10n'
 
 class TimeoutError extends Error {
   timeout: number

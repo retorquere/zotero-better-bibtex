@@ -1,11 +1,11 @@
-import { Path } from './file.js'
+import { Path } from './file'
 
-import { log } from './logger.js'
-import { getItemsAsync } from './get-items-async.js'
-import type { Attachment, RegularItem, Item, Note } from '../gen/typings/serialized-item.js'
+import { log } from './logger'
+import { getItemsAsync } from './get-items-async'
+import type { Attachment, RegularItem, Item, Note } from '../gen/typings/serialized-item'
 
-import { JournalAbbrev } from './journal-abbrev.js'
-import { Preference } from './prefs.js'
+import { JournalAbbrev } from './journal-abbrev'
+import { Preference } from './prefs'
 
 class Serializer {
   private attachment(serialized: Attachment, att): Attachment {
@@ -59,7 +59,7 @@ export function fix(serialized: Item, item: Zotero.Item): Item {
       regular.citationKey = ''
     }
     else {
-      regular.citationKey = Zotero.BetterBibTeX.KeyManager.get(item.id).citationKey
+      regular.citationKey = Zotero.BetterBibTeX.KeyManager.get(item.id)?.citationKey
       if (!regular.citationKey) {
         // throw new Error(`no citation key for ${ Zotero.ItemTypes.getName(item.itemTypeID) } ${ item.id }`)
         log.error(`no citation key for ${ Zotero.ItemTypes.getName(item.itemTypeID) } ${ item.id } ${ JSON.stringify(regular) }`)

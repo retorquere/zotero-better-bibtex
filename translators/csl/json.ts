@@ -1,8 +1,8 @@
-import { Translation } from '../lib/translator.js'
-import type { Collected } from '../lib/collect.js'
+import { Translation } from '../lib/translator'
+import type { Collected } from '../lib/collect'
 
-import { ParsedDate, century } from '../../content/dateparser.js'
-import { CSLExporter } from './csl.js'
+import { ParsedDate, century } from '../../content/dateparser'
+import { CSLExporter } from './csl'
 import { Date as CSLDate, Data as CSLItem, LooseNumber } from 'csl-json'
 
 function date2csl(date: ParsedDate): [LooseNumber, LooseNumber?, LooseNumber?] {

@@ -1,7 +1,7 @@
 import Emittery from 'emittery'
 
-import { log } from './logger.js'
-import { getItemsAsync } from './get-items-async.js'
+import { log } from './logger'
+import { getItemsAsync } from './get-items-async'
 
 type ZoteroAction = 'modify' | 'add' | 'trash' | 'delete'
 
