@@ -905,7 +905,7 @@ export class PatternFormatter {
    */
   public $shorttitle(n: number = 3, m: number = 0): string { // eslint-disable-line @typescript-eslint/no-inferrable-types
     const words = this.titleWords(this.item.title, true)
-    if (!words) return ''
+    if (!words.length) return ''
 
     return words.slice(0, n).map((word, i) => i < m ? word.charAt(0).toUpperCase() + word.slice(1) : word).join(' ')
   }
@@ -979,7 +979,7 @@ export class PatternFormatter {
 
   /** Capitalize all the significant words of the title, and concatenate them. For example, `An awesome paper on JabRef` will become `AnAwesomePaperJabref` */
   public $title(): string {
-    return (this.titleWords(this.item.title, true) || []).join(' ')
+    return this.titleWords(this.item.title, true).join(' ')
   }
 
   private postfixstart(start: number | string): number {
@@ -1306,8 +1306,7 @@ export class PatternFormatter {
    * @param nopunct remove punctuation from words
    */
   public _skipwords(input: string, nopunct: boolean = false): string { // eslint-disable-line @typescript-eslint/no-inferrable-types
-    const words = this.titleWords(input, nopunct)
-    return words ? words.join(' ') : ''
+    return this.titleWords(input, nopunct).join(' ')
   }
 
   /**
@@ -1502,7 +1501,7 @@ export class PatternFormatter {
   }
 
   private titleWords(title, nopunct = false): string[] {
-    if (!title) return null
+    if (!title) return []
 
     title = title.replace(/<\/?(?:i|b|sc|nc|code|span[^>]*)>|["]/ig, '').replace(/[/:]/g, ' ')
     let words: string[] = this.split(title)
@@ -1517,6 +1516,8 @@ export class PatternFormatter {
     if (japanese.enabled && this.item.transliterateMode === 'japanese') {
       words = words.flatMap(word => japanese.tokenize(word))
     }
+
+    if (this.skipWords.size) words = words.filter(word => !this.skipWords.has(word.toLowerCase()))
 
     if (Preference.citekeyFold) {
       words = words.map(word => {
@@ -1534,10 +1535,6 @@ export class PatternFormatter {
         }
       })
     }
-
-    if (this.skipWords.size) words = words.filter(word => !this.skipWords.has(word))
-
-    if (words.length === 0) return null
 
     return words
   }

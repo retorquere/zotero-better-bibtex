@@ -9,7 +9,6 @@
       "DOIandURL": "doi",
       "asciiBibLaTeX": true,
       "citekeyFormat": "title.transliterate.capitalize",
-      "warnBulkModify": 0,
       "chinese": true
     }
   },
