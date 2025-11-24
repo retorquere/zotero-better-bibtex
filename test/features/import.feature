@@ -183,7 +183,7 @@ Feature: Import
     When I import 1 reference from "import/*.bib"
     Then the library should match "import/*.json"
 
-  Scenario: Options to use default import process? #1562
+  Scenario: Options to use default import process #1562
     Given I set preference .importExtra to false
     And I set preference .importCitationKey to false
     When I import 1 reference from "import/*.bib"
