@@ -8,7 +8,6 @@
     "preferences": {
       "DOIandURL": "doi",
       "asciiBibLaTeX": true,
-      "baseAttachmentPath": "D:\\OneDrive - ZnqbuZ\\Documents",
       "citekeyFormat": "title.transliterate.capitalize",
       "warnBulkModify": 0,
       "chinese": true
