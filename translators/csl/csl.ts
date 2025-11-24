@@ -1,15 +1,15 @@
 declare const Zotero: any
 
-import { Translation } from '../lib/translator.js'
+import { Translation } from '../lib/translator'
 
-import { simplifyForExport } from '../../gen/items/simplify.js'
-import { Fields as ParsedExtraFields, get as getExtra, cslCreator } from '../../content/extra.js'
-import type { ExportedItem } from '../../content/worker/cache.js'
+import { simplifyForExport } from '../../gen/items/simplify'
+import { Fields as ParsedExtraFields, get as getExtra, cslCreator } from '../../content/extra'
+import type { ExportedItem } from '../../content/worker/cache'
 import ExtraFields from '../../gen/items/extra-fields.json' with { type: 'json' }
-import { log } from '../../content/logger.js'
-import { RegularItem } from '../../gen/typings/serialized-item.js'
-import * as postscript from '../lib/postscript.js'
-import * as dateparser from '../../content/dateparser.js'
+import { log } from '../../content/logger'
+import { RegularItem } from '../../gen/typings/serialized-item'
+import * as postscript from '../lib/postscript'
+import * as dateparser from '../../content/dateparser'
 import { Date as CSLDate, Data as CSLItem } from 'csl-json'
 
 type ExtendedItem = RegularItem & { extraFields: ParsedExtraFields }

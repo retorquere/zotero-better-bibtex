@@ -1,4 +1,4 @@
-import { Preference } from './prefs.js'
+import { Preference } from './prefs'
 
 type Handler = () => void
 type TimerHandle = ReturnType<typeof setTimeout>

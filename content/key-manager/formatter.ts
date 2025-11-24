@@ -1,6 +1,6 @@
-import type { Tag } from '../../gen/typings/serialized-item.js'
+import type { Tag } from '../../gen/typings/serialized-item'
 
-import * as client from '../../content/client.js'
+import * as client from '../../content/client'
 
 import nlp from 'compromise/one'
 interface Term {
@@ -10,40 +10,40 @@ interface Term {
   post: string
 }
 
-import { Events } from '../events.js'
+import { Events } from '../events'
 
-import { log } from '../logger.js'
+import { log } from '../logger'
 import fold2ascii from 'fold-to-ascii'
 import rescape from '@stdlib/utils-escape-regexp-string'
 import { ucs2 } from 'punycode2'
 
 import * as CSL from 'citeproc'
 
-import { Preference } from '../prefs.js'
-import { JournalAbbrev } from '../journal-abbrev.js'
-import * as Extra from '../extra.js'
+import { Preference } from '../prefs'
+import { JournalAbbrev } from '../journal-abbrev'
+import * as Extra from '../extra'
 import { buildCiteKey as zotero_buildCiteKey } from '../../gen/ZoteroBibTeX.mjs'
-import { babelLanguage } from '../text.js'
-import { fetchSync as fetchInspireHEP } from '../inspire-hep.js'
+import { babelLanguage } from '../text'
+import { fetchSync as fetchInspireHEP } from '../inspire-hep'
 
-import { compile, upgrade } from './compile.js'
-import * as DateParser from '../dateparser.js'
+import { compile, upgrade } from './compile'
+import * as DateParser from '../dateparser'
 
 import itemCreators from '../../gen/items/creators.json' with { type: 'json' }
-import * as items from '../../gen/items/items.js'
-import { ZoteroItemType, ZoteroFieldName } from '../../gen/items/items.js'
+import * as items from '../../gen/items/items'
+import { ZoteroItemType, ZoteroFieldName } from '../../gen/items/items'
 
 import { parseFragment } from 'parse5'
 
 import { sprintf } from 'sprintf-js'
 
-import { chinese } from './chinese.js'
-import { japanese } from './japanese.js'
-import { transliterate as arabic } from './arabic.js'
+import { chinese } from './chinese'
+import { japanese } from './japanese'
+import { transliterate as arabic } from './arabic'
 import { transliterate } from 'transliteration'
-import * as cyrillic from './cyrillic.js'
+import * as cyrillic from './cyrillic'
 
-import { listsync as csv2list } from '../load-csv.js'
+import { listsync as csv2list } from '../load-csv'
 
 import BabelTag from '../../gen/babel/tag.json' with { type: 'json' }
 type BabelLanguage = string

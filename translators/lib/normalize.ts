@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 
 import stringify from 'safe-stable-stringify'
-import type { RegularItem, Collection } from '../../gen/typings/serialized-item.js'
+import type { RegularItem, Collection } from '../../gen/typings/serialized-item'
 
 function rjust(str: string | number, width: number, padding: string): string {
   if (typeof str === 'number') str = `${ str }`

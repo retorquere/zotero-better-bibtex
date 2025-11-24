@@ -1,4 +1,4 @@
-import { toEnglishOrdinal } from './text.js'
+import { toEnglishOrdinal } from './text'
 import EDTF, { defaults } from 'edtf'
 defaults.offset = false
 import edtfy from 'edtfy'
@@ -54,7 +54,7 @@ const Month = new class {
   }
 }
 
-import { getLocaleDateOrder } from '../submodules/zotero-utilities/date.js'
+import { getLocaleDateOrder } from '../submodules/zotero-utilities/date'
 
 type SeasonID = 1 | 2 | 3 | 4
 

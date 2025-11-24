@@ -1,8 +1,8 @@
-import { Preference } from '../prefs.js'
-import { Events } from '../events.js'
+import { Preference } from '../prefs'
+import { Events } from '../events'
 // import { discard } from '../logger'
 
-import type { splitName as splitNameFunc, jieba as jiebaFunc, pinyin as pinyinFunc } from './chinese-optional.js'
+import type { splitName as splitNameFunc, jieba as jiebaFunc, pinyin as pinyinFunc } from './chinese-optional'
 
 // Replace the console object with the empty shim
 export const chinese = new class {

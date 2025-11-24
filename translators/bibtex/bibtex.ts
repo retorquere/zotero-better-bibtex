@@ -1,21 +1,21 @@
 declare const Zotero: any
 
-import * as escape from '../../content/escape.js'
-import { log } from '../../content/logger.js'
-import { Exporter as BibTeXExporter } from './exporter.js'
-import { parse as arXiv } from '../../content/arXiv.js'
-import { valid, label } from '../../gen/items/items.js'
+import * as escape from '../../content/escape'
+import { log } from '../../content/logger'
+import { Exporter as BibTeXExporter } from './exporter'
+import { parse as arXiv } from '../../content/arXiv'
+import { valid, label } from '../../gen/items/items'
 import wordsToNumbers from '@insomnia-dev/words-to-numbers'
 
-import { ParsedDate, parse as parseDate, strToISO as strToISODate, century } from '../../content/dateparser.js'
-import { toEnglishOrdinal } from '../../content/text.js'
+import { ParsedDate, parse as parseDate, strToISO as strToISODate, century } from '../../content/dateparser'
+import { toEnglishOrdinal } from '../../content/text'
 
 import { parseBuffer as parsePList } from 'bplist-parser'
 
-import type { Collected } from '../lib/collect.js'
-import { Translation } from '../lib/translator.js'
+import type { Collected } from '../lib/collect'
+import { Translation } from '../lib/translator'
 
-import { Entry as BaseEntry, Config } from './entry.js'
+import { Entry as BaseEntry, Config } from './entry'
 
 import { Library, Entry as BibTeXEntry, JabRefMetadata, ParseError, Creator, parseAsync as parse } from '@retorquere/bibtex-parser'
 

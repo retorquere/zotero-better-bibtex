@@ -1,9 +1,9 @@
 declare const Zotero: any
-import type { Header } from '../../gen/translators.js'
-import { RegularItem, Item, Collection } from '../../gen/typings/serialized-item.js'
-import { displayOptions, DisplayOptions } from '../../gen/translators.js'
-import type { Preferences } from '../../gen/preferences/meta.js'
-import { defaults } from '../../gen/preferences/meta.js'
+import type { Header } from '../../gen/translators'
+import { RegularItem, Item, Collection } from '../../gen/typings/serialized-item'
+import { displayOptions, DisplayOptions } from '../../gen/translators'
+import type { Preferences } from '../../gen/preferences/meta'
+import { defaults } from '../../gen/preferences/meta'
 
 type CacheableItem = Item & { $cacheable: boolean }
 type CacheableRegularItem = RegularItem & { $cacheable: boolean }

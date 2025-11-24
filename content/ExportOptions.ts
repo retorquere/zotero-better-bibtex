@@ -1,6 +1,6 @@
-import { Monkey } from './monkey-patch.js'
-import * as l10n from './l10n.js'
-import { Events } from './events.js'
+import { Monkey } from './monkey-patch'
+import * as l10n from './l10n'
+import { Events } from './events'
 
 let enabled = true
 

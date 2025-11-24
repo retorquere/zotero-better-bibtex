@@ -1,4 +1,4 @@
-import * as Library from './library.js'
+import * as Library from './library'
 
 class CollectionError extends Error {
   kind: 'duplicate' | 'notfound'

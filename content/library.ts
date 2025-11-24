@@ -1,4 +1,4 @@
-import { log } from './logger.js'
+import { log } from './logger'
 
 export function get(query: Record<string, string | number>, throws = false): Zotero.Library {
   const oops = err => {

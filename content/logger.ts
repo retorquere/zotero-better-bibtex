@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-unsafe-return, @typescript-eslint/no-empty-function, no-restricted-syntax */
 
-import * as client from './client.js'
+import * as client from './client'
 
 declare const dump: (msg: string) => void
 
