@@ -2,8 +2,8 @@ import { toWordsOrdinal, toOrdinal } from 'number-to-words'
 
 import { toSentenceCase } from '@retorquere/bibtex-parser'
 
-import type { MarkupNode } from '../typings/markup.js'
-import { titleCased } from './csl-titlecase.js'
+import type { MarkupNode } from '../typings/markup'
+import { titleCased } from './csl-titlecase'
 
 import { serialize, parseFragment } from 'parse5'
 

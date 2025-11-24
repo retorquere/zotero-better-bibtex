@@ -1,16 +1,16 @@
 declare const Zotero: any
 
-import { Translation } from '../lib/translator.js'
+import { Translation } from '../lib/translator'
 
-import { RegularItem } from '../../gen/typings/serialized-item.js'
+import { RegularItem } from '../../gen/typings/serialized-item'
 
-import { JabRef } from '../bibtex/jabref.js'
-import { simplifyForExport } from '../../gen/items/simplify.js'
+import { JabRef } from '../bibtex/jabref'
+import { simplifyForExport } from '../../gen/items/simplify'
 import * as bibtexParser from '@retorquere/bibtex-parser'
-import { Postfix } from './postfix.js'
-import * as Extra from '../../content/extra.js'
-import type { ExportedItem } from '../../content/worker/cache.js'
-import { HTMLConverter, ConverterOptions, TeX } from './unicode_translator.js'
+import { Postfix } from './postfix'
+import * as Extra from '../../content/extra'
+import type { ExportedItem } from '../../content/worker/cache'
+import { HTMLConverter, ConverterOptions, TeX } from './unicode_translator'
 
 export class Exporter {
   public postfix: Postfix

@@ -1,37 +1,37 @@
-import { orchestrator } from './orchestrator.js'
+import { orchestrator } from './orchestrator'
 
 import ETA from 'node-eta'
 
-import { alert, prompt } from './prompt.js'
+import { alert, prompt } from './prompt'
 
-import { japanese } from './key-manager/japanese.js'
-import { chinese } from './key-manager/chinese.js'
+import { japanese } from './key-manager/japanese'
+import { chinese } from './key-manager/chinese'
 
-import { Scheduler } from './scheduler.js'
-import { log } from './logger.js'
-import { flash } from './flash.js'
-import { Events } from './events.js'
-import { fetchAsync as fetchInspireHEP } from './inspire-hep.js'
-import * as Extra from './extra.js'
-import { excelColumn, sentenceCase } from './text.js'
+import { Scheduler } from './scheduler'
+import { log } from './logger'
+import { flash } from './flash'
+import { Events } from './events'
+import { fetchAsync as fetchInspireHEP } from './inspire-hep'
+import * as Extra from './extra'
+import { excelColumn, sentenceCase } from './text'
 
-import * as ZoteroDB from './db/zotero.js'
+import * as ZoteroDB from './db/zotero'
 
-import { getItemAsync, getItemsAsync } from './get-items-async.js'
+import { getItemAsync, getItemsAsync } from './get-items-async'
 
-import { Preference } from './prefs.js'
-import { Formatter } from './key-manager/formatter.js'
+import { Preference } from './prefs'
+import { Formatter } from './key-manager/formatter'
 
 import { createDB, createTable, Query, BlinkKey } from 'blinkdb'
 import * as blink from 'blinkdb'
-import { Cache } from './translators/worker.js'
+import { Cache } from './translators/worker'
 
-import { monkey } from './monkey-patch.js'
+import { monkey } from './monkey-patch'
 
 import { sprintf } from 'sprintf-js'
 import { newQueue } from '@henrygd/queue'
 
-import * as l10n from './l10n.js'
+import * as l10n from './l10n'
 
 export type CitekeyRecord = {
   itemID: number

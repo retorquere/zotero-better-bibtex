@@ -1,4 +1,4 @@
-import { log } from '../logger.js'
+import { log } from '../logger'
 
 type JsonRpcMessage = {
   jsonrpc: '2.0'

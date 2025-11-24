@@ -1,15 +1,15 @@
 import YAML from 'js-yaml'
 import { Date as CSLDate, Data as CSLItem, LooseNumber } from 'csl-json'
 
-import type { Collected } from '../lib/collect.js'
-import { Translation } from '../lib/translator.js'
+import type { Collected } from '../lib/collect'
+import { Translation } from '../lib/translator'
 
-import type { MarkupNode } from '../../typings/markup.js'
+import type { MarkupNode } from '../../typings/markup'
 
-import { CSLExporter } from './csl.js'
-import { log } from '../../content/logger.js'
-import { ParsedDate, century } from '../../content/dateparser.js'
-import { HTMLParser } from '../../content/text.js'
+import { CSLExporter } from './csl'
+import { log } from '../../content/logger'
+import { ParsedDate, century } from '../../content/dateparser'
+import { HTMLParser } from '../../content/text'
 
 const htmlConverter = new class HTML {
   private markdown: string

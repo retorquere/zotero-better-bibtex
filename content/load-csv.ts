@@ -1,7 +1,7 @@
-import { File } from './file.js'
+import { File } from './file'
 
 import csv from 'papaparse'
-import { log } from './logger.js'
+import { log } from './logger'
 
 async function read(path: string): Promise<string> {
   try {

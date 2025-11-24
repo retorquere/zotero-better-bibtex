@@ -1,10 +1,10 @@
-import { Exporter as BibTeXExporter } from './exporter.js'
-import { Translation } from '../lib/translator.js'
-import { strToISO } from '../../content/dateparser.js'
-import { qualityReport } from '../../gen/biber-tool.js'
-import type { Collected } from '../lib/collect.js'
+import { Exporter as BibTeXExporter } from './exporter'
+import { Translation } from '../lib/translator'
+import { strToISO } from '../../content/dateparser'
+import { qualityReport } from '../../gen/biber-tool'
+import type { Collected } from '../lib/collect'
 
-import { Entry as BaseEntry, Config } from './entry.js'
+import { Entry as BaseEntry, Config } from './entry'
 
 const config: Config = {
   fieldEncoding: {

@@ -2,10 +2,10 @@ export type Allow = {
   cache: boolean
   write: boolean
 }
-import type { Translation } from '../lib/translator.js'
+import type { Translation } from '../lib/translator'
 
-import type { Fields as ExtraFields } from '../../content/extra.js'
-import { log } from '../../content/logger.js'
+import type { Fields as ExtraFields } from '../../content/extra'
+import { log } from '../../content/logger'
 
 export type Postscript = (target: any, source: any, translator: Translation, extra: ExtraFields) => Allow
 
