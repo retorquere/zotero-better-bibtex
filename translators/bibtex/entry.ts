@@ -821,10 +821,10 @@ export class Entry {
       }
 
       if (name) {
-        this.override({ name, verbatim: name, orig: { inherit: true }, value: value as string, enc, replace, fallback: !replace })
+        this.override({ name, verbatim: name, orig: { inherit: true }, value, enc, replace, fallback: !replace })
       }
       else {
-        log.error(`Unmapped extra field ${key}=${value as string}`)
+        log.error(`Unmapped extra field ${key}=${value}`)
       }
     }
 

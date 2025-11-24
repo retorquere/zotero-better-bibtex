@@ -407,7 +407,12 @@ function addDate(ref: Entry, date: ParsedDate | { type: 'none' }, verbatim: stri
       break
 
     default:
-      log.error(`Unexpected date type ${ JSON.stringify({ date: verbatim, parsed: date }) }`)
+      if (!date.type && date.orig?.type === 'date') {
+        ref.add({ name: 'year', value: `[${ date.orig.year }]` })
+      }
+      else {
+        log.error(`Unexpected date type ${ JSON.stringify({ date: verbatim, parsed: date }) }`)
+      }
   }
 }
 
@@ -597,7 +602,7 @@ async function parseBibTeX(translation: Translation): Promise<Library> {
         case 'tex':
           return `<script>${tex}</script>`
         case 'text':
-          return node.type === 'macro' ? node.content as string : tex
+          return node.type === 'macro' ? node.content : tex
         case 'ignore':
           return ''
         default:

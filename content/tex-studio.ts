@@ -1,7 +1,6 @@
 import { findBinary } from './path-search.js'
 import { log } from './logger.js'
 import { orchestrator } from './orchestrator.js'
-import type { CitekeyRecord } from './key-manager.js'
 
 // export singleton: https://k94n.com/es6-modules-single-instance-pattern
 export const TeXstudio = new class {
@@ -30,7 +29,7 @@ export const TeXstudio = new class {
       try {
         const pane = Zotero.getActiveZoteroPane() // can Zotero 5 have more than one pane at all?
         const items = pane.getSelectedItems()
-        citation = items.map(item => (Zotero.BetterBibTeX.KeyManager.get(item.id) as CitekeyRecord).citationKey).filter(citekey => citekey).join(',')
+        citation = items.map(item => Zotero.BetterBibTeX.KeyManager.get(item.id)?.citationKey).filter(citekey => citekey).join(',')
       }
       catch (err) { // zoteroPane.getSelectedItems() doesn't test whether there's a selection and errors out if not
         log.error('TeXstudio: Could not get selected items:', err)

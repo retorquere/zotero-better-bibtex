@@ -131,6 +131,7 @@ function date2csl(date): [LooseNumber, LooseNumber?, LooseNumber?] { // fudge fo
       } as unknown as [LooseNumber, LooseNumber?, LooseNumber?]
 
     default:
+      if (!date.type && date.orig === 'date') return null // handled by orig-handler
       throw new Error(`Expected date or open, got ${ date.type }`)
   }
 }
