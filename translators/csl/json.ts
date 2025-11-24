@@ -60,6 +60,7 @@ class Exporter extends CSLExporter {
         }
 
       default:
+        if (!date.type && date.orig) return null // handled by orig-handler
         throw new Error(`Unexpected date type ${ JSON.stringify(date) }`)
     }
   }

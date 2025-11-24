@@ -136,7 +136,7 @@ export abstract class CSLExporter {
             continue
           }
           if (cslField.$ref === '#/definitions/date-variable') {
-            csl[name] = this.date2CSL(dateparser.parse(value as string))
+            csl[name] = this.date2CSL(dateparser.parse(value))
             delete item.extraFields.kv[name]
             continue
           }
@@ -151,10 +151,10 @@ export abstract class CSLExporter {
         if (!ef?.csl) continue
 
         if (ef.type === 'date') {
-          csl[name] = this.date2CSL(dateparser.parse(value as string))
+          csl[name] = this.date2CSL(dateparser.parse(value))
         }
         else if (name === 'csl-type') {
-          if (!CSLField.type.enum.includes(value as string)) continue // and keep the kv variable, maybe for postscripting
+          if (!CSLField.type.enum.includes(value)) continue // and keep the kv variable, maybe for postscripting
           csl.type = value
         }
         else if (!csl[name]) {
@@ -166,7 +166,7 @@ export abstract class CSLExporter {
 
       for (const [ field, value ] of Object.entries(item.extraFields.creator)) {
         if (!ExtraFields[field].csl) continue
-        csl[field] = (value as string[]).map(cslCreator)
+        csl[field] = value.map(cslCreator)
 
         delete item.extraFields.creator[field]
       }

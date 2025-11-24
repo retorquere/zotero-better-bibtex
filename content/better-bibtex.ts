@@ -226,7 +226,7 @@ monkey.patch(Zotero.Item.prototype, 'setField', original => function Zotero_Item
     if (Zotero.BetterBibTeX.starting) return false
 
     const citekey = Zotero.BetterBibTeX.KeyManager.get(this.id)
-    if (citekey.retry) return false
+    if (!citekey) return false
 
     if (typeof value !== 'string') value = ''
     if (!value) {
@@ -256,7 +256,7 @@ monkey.patch(Zotero.Item.prototype, 'getField', original => function Zotero_Item
   try {
     if (field === 'citationKey' || field === 'citekey') {
       if (Zotero.BetterBibTeX.starting) return ''
-      return (Zotero.BetterBibTeX.KeyManager.get(this.id) as CitekeyRecord).citationKey
+      return Zotero.BetterBibTeX.KeyManager.get(this.id)?.citationKey || ''
     }
   }
   catch (err) {
@@ -297,7 +297,7 @@ Zotero.Translate.Export.prototype.Sandbox.BetterBibTeX = {
   clientVersion: Zotero.version,
 
   strToISO(_sandbox: any, str: string) { return DateParser.strToISO(str) },
-  getContents(_sandbox: any, path: string): string { return Zotero.BetterBibTeX.getContents(path) as string },
+  getContents(_sandbox: any, path: string): string { return Zotero.BetterBibTeX.getContents(path) },
 
   generateBibLaTeX(_sandbox: any, collected: Collected) { return generateBibLaTeX(collected) },
   generateBibTeX(_sandbox: any, collected: Collected) { return generateBibTeX(collected) },
@@ -690,8 +690,7 @@ export class BetterBibTeX {
           nowrap: false,
           editable: false,
           onGetData({ item }) {
-            const citekey: CitekeyRecord = Zotero.BetterBibTeX.KeyManager.get(item.id) || { citationKey: '', pinned: false }
-            return citekey.citationKey
+            return Zotero.BetterBibTeX.KeyManager.get(item.id)?.citationKey || ''
           },
           /*
           onSetData({ rowID, item, tabType, editable, value }) {

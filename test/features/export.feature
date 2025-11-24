@@ -12,6 +12,7 @@ Feature: Export
     Examples:
       | file                                                                                                                     | references |
       | Generating citation keys and special letters (i.e. o, u, a) #3351                                                        | 1          |
+      | Export to BetterBibTeX .bib no longer works and fails #3352                                                              | 1          |
       | urldate exported to .bib does not match Zoteros date anymore #3330                                                       | 1          |
       | Export fails with Translation using Better BibTeX failed Error normalize EDTF failed to normalize Century #3322          | 5          |
       | Replacement option for space between multipart last names in citekey generation #3289                                    | 1          |
@@ -108,7 +109,7 @@ Feature: Export
       | Book Title exports to Journaltitle for Biblatex @incollection reference type #1691                                       | 2          |
       | When exporting notes, also handle the blockquote tag #1656                                                               | 1          |
       | Entries with URL exported with (partial) URL in eprint field #1639                                                       | 2          |
-      | error during export: duplicate field note #1636                                                                          | 1          |
+      | error during export; duplicate field note #1636                                                                          | 1          |
       | Unexpected HTML tags abort export #1575                                                                                  | 1          |
       | JSTOR eprint data export depends on whether jstor link starts with https vs http #1543                                   | 1          |
       | lone ogonek should have brace                                                                                            | 1          |
