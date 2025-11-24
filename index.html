@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="height=device-height, width=device-width, initial-scale=1.0, minimum-scale=1.0">
     <meta name="generator" content="Hugo 0.143.1">
-    <meta name="generator" content="Relearn 8.2.0+9cac649a184a2967957ef9bbececf9402192846c">
+    <meta name="generator" content="Relearn 8.2.0+f69a085322cc70b3e14577c0823c5bc781ec6bb2">
     <meta name="description" content="Make Zotero more useful for us LaTeX holdouts">
     <meta name="author" content="">
     <meta name="twitter:card" content="summary">
@@ -51,8 +51,6 @@
       window.relearn.relBasePath='.';
       window.relearn.relBaseUri='..';
       window.relearn.absBaseUri='\/zotero-better-bibtex';
-      window.relearn.disableAnchorCopy=false;
-      window.relearn.disableAnchorScrolling=false;
       window.relearn.disableInlineCopyToClipboard=true;
       window.relearn.enableBlockCodeWrap=true;
       // legal
@@ -60,14 +58,14 @@
       window.relearn.setItem = (s,n,v) => {return s.setItem(n,v)};
       window.relearn.removeItem = (s,n) => {return s.removeItem(n)};
       // translations
-      window.T_Copy_to_clipboard = `Copy to clipboard`;
-      window.T_Copied_to_clipboard = `Copied to clipboard!`;
-      window.T_Copy_link_to_clipboard = `Copy link to clipboard`;
-      window.T_Link_copied_to_clipboard = `Copied link to clipboard!`;
+      window.T_Copy_to_clipboard = `Copy text to clipboard`;
+      window.T_Copied_to_clipboard = `Text copied to clipboard!`;
+      window.T_Link_copied_to_clipboard = `Link copied to clipboard!`;
       window.T_Reset_view = `Reset view`;
       window.T_View_reset = `View reset!`;
       window.T_No_results_found = `No results found for "{0}"`;
       window.T_N_results_found = `{1} results found for "{0}"`;
+      window.T_Browser_unsupported_feature = `This browser doesn't support this feature`;
       // variant stuff
       window.relearn.themevariants = [ 'green' ];
       window.relearn.customvariantname = "my-custom-variant";
@@ -125,10 +123,10 @@
           <div class="topbar-sidebar-divider"></div>
           <div class="topbar-area topbar-area-start" data-area="start">
             <div class="topbar-button topbar-button-sidebar" data-content-empty="disable" data-width-s="show" data-width-m="hide" data-width-l="hide">
-<span class="btn cstyle link noborder notitle interactive"><button onclick="toggleNav()" type="button" title="Menu (CTRL&#43;ALT&#43;n)"><i class="fa-fw fas fa-bars"></i></button></span>
+<span class="btn cstyle button link noborder notitle interactive"><button onclick="toggleNav()" type="button" title="Menu (CTRL&#43;ALT&#43;n)"><i class="fa-fw fas fa-bars"></i></button></span>
             </div>
             <div class="topbar-button topbar-button-toc" data-content-empty="hide" data-width-s="show" data-width-m="show" data-width-l="show">
-<span class="btn cstyle link noborder notitle interactive"><button onclick="toggleTopbarFlyout(this)" type="button" title="Table of Contents (CTRL&#43;ALT&#43;t)"><i class="fa-fw fas fa-list-alt"></i></button></span>
+<span class="btn cstyle button link noborder notitle interactive"><button onclick="toggleTopbarFlyout(this)" type="button" title="Table of Contents (CTRL&#43;ALT&#43;t)"><i class="fa-fw fas fa-list-alt"></i></button></span>
               <div class="topbar-content">
                 <div class="topbar-content-wrapper">
 <nav class="TableOfContents">
@@ -153,19 +151,19 @@
           </ol>
           <div class="topbar-area topbar-area-end" data-area="end">
             <div class="topbar-button topbar-button-edit" data-content-empty="disable" data-width-s="area-more" data-width-m="show" data-width-l="show">
-<span class="btn cstyle link noborder notitle interactive"><a href="https://github.com/retorquere/zotero-better-bibtex/edit/master/site/content/_index.md" rel="external" title="Edit (CTRL+ALT+w)"><i class="fa-fw fas fa-pen"></i></a></span>
+<span class="btn cstyle button link noborder notitle interactive"><a href="https://github.com/retorquere/zotero-better-bibtex/edit/master/site/content/_index.md" rel="external" title="Edit (CTRL+ALT+w)"><i class="fa-fw fas fa-pen"></i></a></span>
             </div>
             <div class="topbar-button topbar-button-print" data-content-empty="disable" data-width-s="area-more" data-width-m="show" data-width-l="show">
-<span class="btn cstyle link noborder notitle interactive"><a href="/zotero-better-bibtex/index.print.html" title="Print whole chapter (CTRL+ALT+p)"><i class="fa-fw fas fa-print"></i></a></span>
+<span class="btn cstyle button link noborder notitle interactive"><a href="/zotero-better-bibtex/index.print.html" title="Print whole chapter (CTRL+ALT+p)"><i class="fa-fw fas fa-print"></i></a></span>
             </div>
             <div class="topbar-button topbar-button-prev" data-content-empty="disable" data-width-s="show" data-width-m="show" data-width-l="show">
-<span class="btn cstyle link noborder notitle"><span><i class="fa-fw fas fa-chevron-left"></i></span></span>
+<span class="btn cstyle button link noborder notitle"><span><i class="fa-fw fas fa-chevron-left"></i></span></span>
             </div>
             <div class="topbar-button topbar-button-next" data-content-empty="disable" data-width-s="show" data-width-m="show" data-width-l="show">
-<span class="btn cstyle link noborder notitle interactive"><a href="/zotero-better-bibtex/installation/index.html" title="Installation (🡒)"><i class="fa-fw fas fa-chevron-right"></i></a></span>
+<span class="btn cstyle button link noborder notitle interactive"><a href="/zotero-better-bibtex/installation/index.html" title="Installation (🡒)"><i class="fa-fw fas fa-chevron-right"></i></a></span>
             </div>
             <div class="topbar-button topbar-button-more" data-content-empty="hide" data-width-s="show" data-width-m="show" data-width-l="show">
-<span class="btn cstyle link noborder notitle interactive"><button onclick="toggleTopbarFlyout(this)" type="button" title="More"><i class="fa-fw fas fa-ellipsis-v"></i></button></span>
+<span class="btn cstyle button link noborder notitle interactive"><button onclick="toggleTopbarFlyout(this)" type="button" title="More"><i class="fa-fw fas fa-ellipsis-v"></i></button></span>
               <div class="topbar-content">
                 <div class="topbar-content-wrapper">
                   <div class="topbar-area topbar-area-more" data-area="more">
@@ -187,14 +185,14 @@
 
 <!-- WARNING: GENERATED FROM https://github.com/retorquere/zotero-better-bibtex/blob/master/README.md. EDITS WILL BE OVERWRITTEN -->
 <p>Better BibTeX (BBT) is a plugin for <a href="https://www.zotero.org" rel="external">Zotero</a> and <a href="https://juris-m.github.io" rel="external">Juris-M</a> that makes it easier to manage bibliographic data, especially for people authoring documents using text-based toolchains (e.g. based on <a href="https://www.latex-project.org" rel="external">LaTeX</a> / <a href="https://www.markdownguide.org" rel="external">Markdown</a>).</p>
-<h2 id="features">Features</h2>
-<h3 id="facilities-for-generating-citation-keys">Facilities for generating citation keys</h3>
+<h2 id="features">Features<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h2>
+<h3 id="facilities-for-generating-citation-keys">Facilities for generating citation keys<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h3>
 <ul>
 <li>Automatically generate <a href="/zotero-better-bibtex/citing/">citation keys</a> without key clashes! Generate citation keys that take into account existing keys in your library even when they are not part of the items you export. Prevent random breakage!</li>
 <li>Generate citation keys based on contents of your items using <a href="/zotero-better-bibtex/citing/#configurable-citekey-generator">citekey formulas</a>.</li>
 <li>Set your own, stable citation keys, drag and drop LaTeX citations, add other custom BibLaTeX fields.</li>
 </ul>
-<h3 id="conversion-between-formats-and-encodings">Conversion between formats and encodings</h3>
+<h3 id="conversion-between-formats-and-encodings">Conversion between formats and encodings<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h3>
 <ul>
 <li>
 <p>Zotero does all its work in UTF-8 Unicode, which is absolutely the right thing to do. Unfortunately, for those shackled
@@ -213,7 +211,7 @@ in your items that Bib(La)TeX won&rsquo;t understand.</p>
 <p>If you need literal LaTeX in your export: surround it with <code>&lt;script&gt;</code>&hellip;<code>&lt;/script&gt;</code> (or <code>&lt;pre&gt;</code>&hellip;<code>&lt;/pre&gt;</code>, which do the same) markers.</p>
 </li>
 </ul>
-<h3 id="facilities-for-exporting-data-from-zotero">Facilities for exporting data from Zotero</h3>
+<h3 id="facilities-for-exporting-data-from-zotero">Facilities for exporting data from Zotero<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h3>
 <ul>
 <li>Highly <a href="/zotero-better-bibtex/exporting/">customized exports</a>.</li>
 <li>Fixes date field exports: export dates like &lsquo;forthcoming&rsquo; as &lsquo;forthcoming&rsquo; instead of empty, but normalize valid dates
@@ -222,9 +220,9 @@ to unambiguous international format.</li>
 <li><a href="/zotero-better-bibtex/exporting/pull/">Pull export</a> from the embedded webserver.</li>
 <li>Automatic <a href="/zotero-better-bibtex/citing/">journal abbreviation</a>.</li>
 </ul>
-<h2 id="getting-started">Getting started</h2>
+<h2 id="getting-started">Getting started<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h2>
 <p>To get started, read the <a href="/zotero-better-bibtex/installation/">installation instructions</a>.</p>
-<h2 id="how-does-it-work-">How does it work ?</h2>
+<h2 id="how-does-it-work-">How does it work ?<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h2>
 <p>At its core, BBT behaves like any Zotero import/export module; anywhere you can export or import bibliography items in Zotero,
 you&rsquo;ll find <em>Better X</em> listed among the choices.</p>
 <p>If nothing else, you could keep your existing workflow as-is, and just enjoy the improved LaTeX ↔ unicode translation on import and export and more accurate field mapping.</p>
@@ -233,7 +231,7 @@ BeaST</a> for BibTeX, and
 <a href="http://mirrors.ctan.org/macros/latex/contrib/biblatex/doc/biblatex.pdf" rel="external">The Biblatex Package</a> for BibLaTeX, but
 since there isn&rsquo;t really a definitive manual for either format that is universally followed by Bib(La)TeX
 editors/processors, I&rsquo;m pragmatic about implementing what works.</p>
-<h2 id="got-problems-we-got-fixes">Got problems? We got fixes!</h2>
+<h2 id="got-problems-we-got-fixes">Got problems? We got fixes!<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h2>
 <p>If you have any questions on BBT&rsquo;s use, do not hesitate to <a href="https://github.com/retorquere/zotero-better-bibtex/issues/new/choose" rel="external">file a GitHub issue</a> and ask for help.</p>
 <p>If you&rsquo;re reporting a bug in BBT, please take a moment to glance through the <a href="/zotero-better-bibtex/support/">support request guidelines</a>; it will make sure I get your problem fixed as quick as possible.
 Clear bug reports commonly have really short time-to-fix, so if you report something, stick around &ndash; it may be done as you wait.</p>
@@ -1034,8 +1032,8 @@ Better BibTeX for Zotero
 </div>
       </div>
     </aside>
-    <script src="/zotero-better-bibtex/js/clipboard/clipboard.min.js" defer></script>
     <script src="/zotero-better-bibtex/js/perfect-scrollbar/perfect-scrollbar.min.js" defer></script>
     <script src="/zotero-better-bibtex/js/theme.min.js" defer></script>
+    <div id="toast-container" role="status" aria-live="polite" aria-atomic="false"></div>
   </body>
 </html>

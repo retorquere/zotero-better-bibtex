@@ -4,25 +4,22 @@
     <meta charset="utf-8">
     <meta name="viewport" content="height=device-height, width=device-width, initial-scale=1.0, minimum-scale=1.0">
     <meta name="generator" content="Hugo 0.143.1">
-    <meta name="generator" content="Relearn 8.2.0+9cac649a184a2967957ef9bbececf9402192846c">
+    <meta name="generator" content="Relearn 8.2.0+f69a085322cc70b3e14577c0823c5bc781ec6bb2">
     <meta name="description" content="PSA: as of Zotero 5.0.71, access to the CAYW URL will no longer work from the browser for security reasons; curl and other programmatic access such as from editors access will work.
 Good news for TeXnicians and those down with Mark (aka Markdown, RST, whatnot): this is the time to go pester the author of your favorite editor for Zotero integration!
-Editor integration vim Graciously supplied by David Lukes:
-paste it in your .vimrc (and modify to your liking):">
+Editor integration vim Graciously supplied by David Lukes:">
     <meta name="author" content="">
     <meta name="twitter:card" content="summary">
     <meta name="twitter:title" content="Cite as you Write :: Better BibTeX for Zotero">
     <meta name="twitter:description" content="PSA: as of Zotero 5.0.71, access to the CAYW URL will no longer work from the browser for security reasons; curl and other programmatic access such as from editors access will work.
 Good news for TeXnicians and those down with Mark (aka Markdown, RST, whatnot): this is the time to go pester the author of your favorite editor for Zotero integration!
-Editor integration vim Graciously supplied by David Lukes:
-paste it in your .vimrc (and modify to your liking):">
+Editor integration vim Graciously supplied by David Lukes:">
     <meta property="og:url" content="/zotero-better-bibtex/citing/cayw/index.html">
     <meta property="og:site_name" content="Better BibTeX for Zotero">
     <meta property="og:title" content="Cite as you Write :: Better BibTeX for Zotero">
     <meta property="og:description" content="PSA: as of Zotero 5.0.71, access to the CAYW URL will no longer work from the browser for security reasons; curl and other programmatic access such as from editors access will work.
 Good news for TeXnicians and those down with Mark (aka Markdown, RST, whatnot): this is the time to go pester the author of your favorite editor for Zotero integration!
-Editor integration vim Graciously supplied by David Lukes:
-paste it in your .vimrc (and modify to your liking):">
+Editor integration vim Graciously supplied by David Lukes:">
     <meta property="og:locale" content="en">
     <meta property="og:type" content="article">
     <meta property="article:section" content="Citation Keys">
@@ -32,8 +29,7 @@ paste it in your .vimrc (and modify to your liking):">
     <meta itemprop="name" content="Cite as you Write :: Better BibTeX for Zotero">
     <meta itemprop="description" content="PSA: as of Zotero 5.0.71, access to the CAYW URL will no longer work from the browser for security reasons; curl and other programmatic access such as from editors access will work.
 Good news for TeXnicians and those down with Mark (aka Markdown, RST, whatnot): this is the time to go pester the author of your favorite editor for Zotero integration!
-Editor integration vim Graciously supplied by David Lukes:
-paste it in your .vimrc (and modify to your liking):">
+Editor integration vim Graciously supplied by David Lukes:">
     <meta itemprop="wordCount" content="1438">
     <meta itemprop="keywords" content="Citation Keys,Overleaf,Cite as You Write">
     <title>Cite as you Write :: Better BibTeX for Zotero</title><link rel="icon" href="/zotero-better-bibtex/better-bibtex.ico" type="image/x-icon">
@@ -66,8 +62,6 @@ paste it in your .vimrc (and modify to your liking):">
       window.relearn.relBasePath='..\/..';
       window.relearn.relBaseUri='..\/..\/..';
       window.relearn.absBaseUri='\/zotero-better-bibtex';
-      window.relearn.disableAnchorCopy=false;
-      window.relearn.disableAnchorScrolling=false;
       window.relearn.disableInlineCopyToClipboard=true;
       window.relearn.enableBlockCodeWrap=true;
       // legal
@@ -75,14 +69,14 @@ paste it in your .vimrc (and modify to your liking):">
       window.relearn.setItem = (s,n,v) => {return s.setItem(n,v)};
       window.relearn.removeItem = (s,n) => {return s.removeItem(n)};
       // translations
-      window.T_Copy_to_clipboard = `Copy to clipboard`;
-      window.T_Copied_to_clipboard = `Copied to clipboard!`;
-      window.T_Copy_link_to_clipboard = `Copy link to clipboard`;
-      window.T_Link_copied_to_clipboard = `Copied link to clipboard!`;
+      window.T_Copy_to_clipboard = `Copy text to clipboard`;
+      window.T_Copied_to_clipboard = `Text copied to clipboard!`;
+      window.T_Link_copied_to_clipboard = `Link copied to clipboard!`;
       window.T_Reset_view = `Reset view`;
       window.T_View_reset = `View reset!`;
       window.T_No_results_found = `No results found for "{0}"`;
       window.T_N_results_found = `{1} results found for "{0}"`;
+      window.T_Browser_unsupported_feature = `This browser doesn't support this feature`;
       // variant stuff
       window.relearn.themevariants = [ 'green' ];
       window.relearn.customvariantname = "my-custom-variant";
@@ -140,10 +134,10 @@ paste it in your .vimrc (and modify to your liking):">
           <div class="topbar-sidebar-divider"></div>
           <div class="topbar-area topbar-area-start" data-area="start">
             <div class="topbar-button topbar-button-sidebar" data-content-empty="disable" data-width-s="show" data-width-m="hide" data-width-l="hide">
-<span class="btn cstyle link noborder notitle interactive"><button onclick="toggleNav()" type="button" title="Menu (CTRL&#43;ALT&#43;n)"><i class="fa-fw fas fa-bars"></i></button></span>
+<span class="btn cstyle button link noborder notitle interactive"><button onclick="toggleNav()" type="button" title="Menu (CTRL&#43;ALT&#43;n)"><i class="fa-fw fas fa-bars"></i></button></span>
             </div>
             <div class="topbar-button topbar-button-toc" data-content-empty="hide" data-width-s="show" data-width-m="show" data-width-l="show">
-<span class="btn cstyle link noborder notitle interactive"><button onclick="toggleTopbarFlyout(this)" type="button" title="Table of Contents (CTRL&#43;ALT&#43;t)"><i class="fa-fw fas fa-list-alt"></i></button></span>
+<span class="btn cstyle button link noborder notitle interactive"><button onclick="toggleTopbarFlyout(this)" type="button" title="Table of Contents (CTRL&#43;ALT&#43;t)"><i class="fa-fw fas fa-list-alt"></i></button></span>
               <div class="topbar-content">
                 <div class="topbar-content-wrapper">
 <nav class="TableOfContents">
@@ -171,16 +165,16 @@ paste it in your .vimrc (and modify to your liking):">
           </ol>
           <div class="topbar-area topbar-area-end" data-area="end">
             <div class="topbar-button topbar-button-edit" data-content-empty="disable" data-width-s="area-more" data-width-m="show" data-width-l="show">
-<span class="btn cstyle link noborder notitle interactive"><a href="https://github.com/retorquere/zotero-better-bibtex/edit/master/site/content/citing/cayw.md" rel="external" title="Edit (CTRL+ALT+w)"><i class="fa-fw fas fa-pen"></i></a></span>
+<span class="btn cstyle button link noborder notitle interactive"><a href="https://github.com/retorquere/zotero-better-bibtex/edit/master/site/content/citing/cayw.md" rel="external" title="Edit (CTRL+ALT+w)"><i class="fa-fw fas fa-pen"></i></a></span>
             </div>
             <div class="topbar-button topbar-button-prev" data-content-empty="disable" data-width-s="show" data-width-m="show" data-width-l="show">
-<span class="btn cstyle link noborder notitle interactive"><a href="/zotero-better-bibtex/citing/index.html" title="Citation Keys (🡐)"><i class="fa-fw fas fa-chevron-left"></i></a></span>
+<span class="btn cstyle button link noborder notitle interactive"><a href="/zotero-better-bibtex/citing/index.html" title="Citation Keys (🡐)"><i class="fa-fw fas fa-chevron-left"></i></a></span>
             </div>
             <div class="topbar-button topbar-button-next" data-content-empty="disable" data-width-s="show" data-width-m="show" data-width-l="show">
-<span class="btn cstyle link noborder notitle interactive"><a href="/zotero-better-bibtex/citing/migrating/index.html" title="Migrating from Word/Libreoffice (🡒)"><i class="fa-fw fas fa-chevron-right"></i></a></span>
+<span class="btn cstyle button link noborder notitle interactive"><a href="/zotero-better-bibtex/citing/migrating/index.html" title="Migrating from Word/Libreoffice (🡒)"><i class="fa-fw fas fa-chevron-right"></i></a></span>
             </div>
             <div class="topbar-button topbar-button-more" data-content-empty="hide" data-width-s="show" data-width-m="show" data-width-l="show">
-<span class="btn cstyle link noborder notitle interactive"><button onclick="toggleTopbarFlyout(this)" type="button" title="More"><i class="fa-fw fas fa-ellipsis-v"></i></button></span>
+<span class="btn cstyle button link noborder notitle interactive"><button onclick="toggleTopbarFlyout(this)" type="button" title="More"><i class="fa-fw fas fa-ellipsis-v"></i></button></span>
               <div class="topbar-content">
                 <div class="topbar-content-wrapper">
                   <div class="topbar-area topbar-area-more" data-area="more">
@@ -210,11 +204,11 @@ paste it in your .vimrc (and modify to your liking):">
 
 <p><strong>PSA: as of Zotero 5.0.71, access to the CAYW URL will no longer work from the browser for security reasons; <code>curl</code> and other programmatic access such as from editors access will work.</strong></p>
 <p>Good news for TeXnicians and those down with Mark (aka Markdown, RST, whatnot): this is the time to go pester the author of your favorite editor for Zotero integration!</p>
-<h2 id="editor-integration">Editor integration</h2>
-<h3 id="vim">vim</h3>
+<h2 id="editor-integration">Editor integration<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h2>
+<h3 id="vim">vim<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h3>
 <p>Graciously supplied by David Lukes:</p>
 <p>paste it in your .vimrc (and modify to your liking):</p>
-<div class="highlight wrap-code" dir="auto"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-vim" data-lang="vim"><span style="display:flex;"><span><span style="color:#66d9ef">function</span>! <span style="color:#a6e22e">ZoteroCite</span>()
+<div class="highlight actionbar-wrapper wrap-code" dir="auto"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-vim" data-lang="vim"><span style="display:flex;"><span><span style="color:#66d9ef">function</span>! <span style="color:#a6e22e">ZoteroCite</span>()
 </span></span><span style="display:flex;"><span><span style="color:#75715e">  &#34; pick a format based on the filetype (customize at will)</span>
 </span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">format</span> = &amp;<span style="color:#66d9ef">filetype</span> =~ <span style="color:#e6db74">&#39;.*tex&#39;</span> ? <span style="color:#e6db74">&#39;citep&#39;</span> : <span style="color:#e6db74">&#39;pandoc&#39;</span>
 </span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">api_call</span> = <span style="color:#e6db74">&#39;http://127.0.0.1:23119/better-bibtex/cayw?format=&#39;</span>.<span style="color:#a6e22e">format</span>.<span style="color:#e6db74">&#39;&amp;brackets=1&#39;</span>
@@ -226,7 +220,7 @@ paste it in your .vimrc (and modify to your liking):">
 </span></span><span style="display:flex;"><span><span style="color:#a6e22e">inoremap</span> &lt;<span style="color:#a6e22e">C</span>-<span style="color:#a6e22e">z</span>&gt; &lt;<span style="color:#a6e22e">C</span>-<span style="color:#a6e22e">r</span>&gt;=<span style="color:#a6e22e">ZoteroCite</span>()&lt;<span style="color:#a6e22e">CR</span>&gt;</span></span></code></pre></div>
 <p>This inserts the citation at the cursor using the shortcut ctrl-z (in insert mode) or <code>&lt;leader&gt;</code>z (in normal, visual etc. modes, <code>&lt;leader&gt;</code> being backslash by default).</p>
 <p>Alternatively, if you use a recent version of Vim (not Neovim) and have written your config file in <code>vim9script</code>, you may be interested in a <code>vim9script</code> version of the above solution to take advantage of JIT compilation:</p>
-<div class="highlight wrap-code" dir="auto"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-vim" data-lang="vim"><span style="display:flex;"><span><span style="color:#a6e22e">def</span> <span style="color:#a6e22e">g</span>:<span style="color:#a6e22e">ZoteroCite</span>(): <span style="color:#a6e22e">string</span>
+<div class="highlight actionbar-wrapper wrap-code" dir="auto"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-vim" data-lang="vim"><span style="display:flex;"><span><span style="color:#a6e22e">def</span> <span style="color:#a6e22e">g</span>:<span style="color:#a6e22e">ZoteroCite</span>(): <span style="color:#a6e22e">string</span>
 </span></span><span style="display:flex;"><span>    # <span style="color:#a6e22e">Pick</span> <span style="color:#a6e22e">a</span> <span style="color:#a6e22e">citation</span> <span style="color:#a6e22e">format</span> <span style="color:#a6e22e">based</span> <span style="color:#a6e22e">on</span> <span style="color:#a6e22e">the</span> <span style="color:#66d9ef">filetype</span> (<span style="color:#a6e22e">feel</span> <span style="color:#a6e22e">free</span> <span style="color:#a6e22e">to</span> <span style="color:#a6e22e">customize</span>)
 </span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">var</span> <span style="color:#a6e22e">format</span>: <span style="color:#a6e22e">string</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> &amp;<span style="color:#66d9ef">filetype</span> =~ <span style="color:#e6db74">&#39;.*tex&#39;</span>
@@ -243,30 +237,30 @@ paste it in your .vimrc (and modify to your liking):">
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#a6e22e">inoremap</span> &lt;<span style="color:#a6e22e">C</span>-<span style="color:#a6e22e">x</span>&gt;&lt;<span style="color:#a6e22e">C</span>-<span style="color:#a6e22e">z</span>&gt; &lt;<span style="color:#a6e22e">C</span>-<span style="color:#a6e22e">r</span>&gt;=<span style="color:#a6e22e">g</span>:<span style="color:#a6e22e">ZoteroCite</span>()&lt;<span style="color:#a6e22e">cr</span>&gt;</span></span></code></pre></div>
 <p>In this case, the keybinding Ctrl-X Ctrl-Z in insert mode inserts a Zotero citation. You can add a normal-mode keybinding in the same way as for the legacy VimScript version provided above.</p>
-<h3 id="emacs">emacs</h3>
+<h3 id="emacs">emacs<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h3>
 <p>@newhallroad wrote a function in elisp, which brings up the CAYW input, adds the chosen items as pandoc citations to the buffer, and moves the point to after the citations. This is for markdown-mode. Emacs users who use org-mode may (or may not) need something different.</p>
-<div class="highlight wrap-code" dir="auto"><pre tabindex="0"><code>(defun alk/bbt-zotero-insert-key ()
+<div class="highlight actionbar-wrapper wrap-code" dir="auto"><pre tabindex="0"><code>(defun alk/bbt-zotero-insert-key ()
   &#34;Run shell command to bring up better bibtex cayw input and insert pandoc citation at point&#34;
   (interactive)
   (shell-command &#34;curl -s http://127.0.0.1:23119/better-bibtex/cayw?format=pandoc^&amp;brackets=true&#34; t nil) ; caret escapes ampersand 
   (search-forward &#34;]&#34;) ; place cursor after inserted citation
   )</code></pre></div>
-<h3 id="zotero-citations-for-atom">Zotero Citations for Atom</h3>
+<h3 id="zotero-citations-for-atom">Zotero Citations for Atom<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h3>
 <p>A sample implementation of real integration (rather than the working-but-clunky workarounds using paste) can be found in the <a href="https://atom.io/packages/zotero-citations" rel="external">Zotero Citations</a> package for the <a href="http://atom.io" rel="external">Atom</a> editor.</p>
-<h3 id="vs-code-citation-picker-for-zotero">VS Code Citation Picker for Zotero</h3>
+<h3 id="vs-code-citation-picker-for-zotero">VS Code Citation Picker for Zotero<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h3>
 <p>If you don&rsquo;t feel like typing citations out (and let&rsquo;s be honest, you don&rsquo;t), executing <a href="https://marketplace.visualstudio.com/items?itemName=mblode.zotero" rel="external">VS Code Citation Picker for Zotero</a> extension for the <a href="https://code.visualstudio.com/" rel="external">VS Code</a> editor will call up a graphical picker which will insert these for you, formatted and all.</p>
-<h3 id="scrivener-20marked-2-for-mac">Scrivener 2.0/Marked 2 for Mac</h3>
+<h3 id="scrivener-20marked-2-for-mac">Scrivener 2.0/Marked 2 for Mac<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h3>
 <p>Dave Smith has gracefully written <a href="http://davepwsmith.github.io/academic-scrivener-howto/" rel="external">instructions</a> on how to set up Scrivener 2.0 and Marked 2 for OSX to use the CAYW picker, including ready-to-run apps</p>
-<h3 id="scrivener-10-for-windows">Scrivener 1.0 for Windows</h3>
+<h3 id="scrivener-10-for-windows">Scrivener 1.0 for Windows<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h3>
 <p>Emilie has writen <a href="https://github.com/AmomentOfMusic/Zotero_scrivener_picker_windows" rel="external">instructions</a> for using the CAYW picker for Scrivener 1.0 in Windows 10, with the necessary files</p>
-<h3 id="linux">Linux</h3>
+<h3 id="linux">Linux<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h3>
 <ul>
 <li>Emma Reisz has gracefully written <a href="https://emmareisz.github.io/zotpicknix/" rel="external">instructions and scripts</a> for setting up CAYW on Linux.</li>
 <li>ConorIA has more versatile solution called <a href="https://gitlab.com/ConorIA/shell-scripts/tree/master/zotero4overleaf" rel="external">zotero4overleaf</a>, which was inspired by Emma&rsquo;s scripts. This should allow use with Overleaf, which is pretty insane that it&rsquo;s possible if you think about it.</li>
 </ul>
-<h3 id="overleaf">Overleaf</h3>
+<h3 id="overleaf">Overleaf<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h3>
 <p>David Lukes takes Overleaf integration one step further with a GreaseMonkey/TamperMonkey <a href="https://github.com/dlukes/zotero-sharelatex-cayw" rel="external">userscript</a> which not only allows popping up the CAYW picker straight from your browser, no other tools required, but adds a hotkey to refresh your bib file on Overleaf. This should work with the free subscription, no fiddling with git or dropbox required.</p>
-<h2 id="diy">DIY</h2>
+<h2 id="diy">DIY<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h2>
 <p>BBT exposes an URL at http://127.0.0.1:23119/better-bibtex/cayw <sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>. The url accepts
 the following URL parameters:</p>
 <table>
@@ -1300,8 +1294,8 @@ Better BibTeX for Zotero
 </div>
       </div>
     </aside>
-    <script src="/zotero-better-bibtex/js/clipboard/clipboard.min.js" defer></script>
     <script src="/zotero-better-bibtex/js/perfect-scrollbar/perfect-scrollbar.min.js" defer></script>
     <script src="/zotero-better-bibtex/js/theme.min.js" defer></script>
+    <div id="toast-container" role="status" aria-live="polite" aria-atomic="false"></div>
   </body>
 </html>

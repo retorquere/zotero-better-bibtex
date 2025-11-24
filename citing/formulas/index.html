@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="height=device-height, width=device-width, initial-scale=1.0, minimum-scale=1.0">
     <meta name="generator" content="Hugo 0.143.1">
-    <meta name="generator" content="Relearn 8.2.0+9cac649a184a2967957ef9bbececf9402192846c">
+    <meta name="generator" content="Relearn 8.2.0+f69a085322cc70b3e14577c0823c5bc781ec6bb2">
     <meta name="description" content="Note: a number of functions below talk about the author’s lastname; you can read that as “when available”. If you have the name as a single-field name (for entities like International Business Machines or Aristoteles), Zotero doesn’t have a last name, and the full single-field name is taken instead.
 Functions auth(n: number=0, m: number=1, creator: &#39;*&#39; | &#39;author&#39; | &#39;collaborator&#39; | &#39;editor&#39; | &#39;translator&#39;=&#39;*&#39;, initials: boolean=false)The first n (default: all) characters of the mth (default: first) author&#39;s last name.">
     <meta name="author" content="">
@@ -55,8 +55,6 @@ Functions auth(n: number=0, m: number=1, creator: &#39;*&#39; | &#39;author&#39;
       window.relearn.relBasePath='..\/..';
       window.relearn.relBaseUri='..\/..\/..';
       window.relearn.absBaseUri='\/zotero-better-bibtex';
-      window.relearn.disableAnchorCopy=false;
-      window.relearn.disableAnchorScrolling=false;
       window.relearn.disableInlineCopyToClipboard=true;
       window.relearn.enableBlockCodeWrap=true;
       // legal
@@ -64,14 +62,14 @@ Functions auth(n: number=0, m: number=1, creator: &#39;*&#39; | &#39;author&#39;
       window.relearn.setItem = (s,n,v) => {return s.setItem(n,v)};
       window.relearn.removeItem = (s,n) => {return s.removeItem(n)};
       // translations
-      window.T_Copy_to_clipboard = `Copy to clipboard`;
-      window.T_Copied_to_clipboard = `Copied to clipboard!`;
-      window.T_Copy_link_to_clipboard = `Copy link to clipboard`;
-      window.T_Link_copied_to_clipboard = `Copied link to clipboard!`;
+      window.T_Copy_to_clipboard = `Copy text to clipboard`;
+      window.T_Copied_to_clipboard = `Text copied to clipboard!`;
+      window.T_Link_copied_to_clipboard = `Link copied to clipboard!`;
       window.T_Reset_view = `Reset view`;
       window.T_View_reset = `View reset!`;
       window.T_No_results_found = `No results found for "{0}"`;
       window.T_N_results_found = `{1} results found for "{0}"`;
+      window.T_Browser_unsupported_feature = `This browser doesn't support this feature`;
       // variant stuff
       window.relearn.themevariants = [ 'green' ];
       window.relearn.customvariantname = "my-custom-variant";
@@ -129,10 +127,10 @@ Functions auth(n: number=0, m: number=1, creator: &#39;*&#39; | &#39;author&#39;
           <div class="topbar-sidebar-divider"></div>
           <div class="topbar-area topbar-area-start" data-area="start">
             <div class="topbar-button topbar-button-sidebar" data-content-empty="disable" data-width-s="show" data-width-m="hide" data-width-l="hide">
-<span class="btn cstyle link noborder notitle interactive"><button onclick="toggleNav()" type="button" title="Menu (CTRL&#43;ALT&#43;n)"><i class="fa-fw fas fa-bars"></i></button></span>
+<span class="btn cstyle button link noborder notitle interactive"><button onclick="toggleNav()" type="button" title="Menu (CTRL&#43;ALT&#43;n)"><i class="fa-fw fas fa-bars"></i></button></span>
             </div>
             <div class="topbar-button topbar-button-toc" data-content-empty="hide" data-width-s="show" data-width-m="show" data-width-l="show">
-<span class="btn cstyle link noborder notitle interactive"><button onclick="toggleTopbarFlyout(this)" type="button" title="Table of Contents (CTRL&#43;ALT&#43;t)"><i class="fa-fw fas fa-list-alt"></i></button></span>
+<span class="btn cstyle button link noborder notitle interactive"><button onclick="toggleTopbarFlyout(this)" type="button" title="Table of Contents (CTRL&#43;ALT&#43;t)"><i class="fa-fw fas fa-list-alt"></i></button></span>
               <div class="topbar-content">
                 <div class="topbar-content-wrapper">
 <nav class="TableOfContents">
@@ -150,16 +148,16 @@ Functions auth(n: number=0, m: number=1, creator: &#39;*&#39; | &#39;author&#39;
           </ol>
           <div class="topbar-area topbar-area-end" data-area="end">
             <div class="topbar-button topbar-button-edit" data-content-empty="disable" data-width-s="area-more" data-width-m="show" data-width-l="show">
-<span class="btn cstyle link noborder notitle interactive"><a href="https://github.com/retorquere/zotero-better-bibtex/edit/master/site/content/citing/formulas/_index.md" rel="external" title="Edit (CTRL+ALT+w)"><i class="fa-fw fas fa-pen"></i></a></span>
+<span class="btn cstyle button link noborder notitle interactive"><a href="https://github.com/retorquere/zotero-better-bibtex/edit/master/site/content/citing/formulas/_index.md" rel="external" title="Edit (CTRL+ALT+w)"><i class="fa-fw fas fa-pen"></i></a></span>
             </div>
             <div class="topbar-button topbar-button-prev" data-content-empty="disable" data-width-s="show" data-width-m="show" data-width-l="show">
-<span class="btn cstyle link noborder notitle interactive"><a href="/zotero-better-bibtex/citing/aux-scanner/index.html" title="AUX Scanner (🡐)"><i class="fa-fw fas fa-chevron-left"></i></a></span>
+<span class="btn cstyle button link noborder notitle interactive"><a href="/zotero-better-bibtex/citing/aux-scanner/index.html" title="AUX Scanner (🡐)"><i class="fa-fw fas fa-chevron-left"></i></a></span>
             </div>
             <div class="topbar-button topbar-button-next" data-content-empty="disable" data-width-s="show" data-width-m="show" data-width-l="show">
-<span class="btn cstyle link noborder notitle interactive"><a href="/zotero-better-bibtex/support/index.html" title="Support (🡒)"><i class="fa-fw fas fa-chevron-right"></i></a></span>
+<span class="btn cstyle button link noborder notitle interactive"><a href="/zotero-better-bibtex/support/index.html" title="Support (🡒)"><i class="fa-fw fas fa-chevron-right"></i></a></span>
             </div>
             <div class="topbar-button topbar-button-more" data-content-empty="hide" data-width-s="show" data-width-m="show" data-width-l="show">
-<span class="btn cstyle link noborder notitle interactive"><button onclick="toggleTopbarFlyout(this)" type="button" title="More"><i class="fa-fw fas fa-ellipsis-v"></i></button></span>
+<span class="btn cstyle button link noborder notitle interactive"><button onclick="toggleTopbarFlyout(this)" type="button" title="More"><i class="fa-fw fas fa-ellipsis-v"></i></button></span>
               <div class="topbar-content">
                 <div class="topbar-content-wrapper">
                   <div class="topbar-area topbar-area-more" data-area="more">
@@ -186,7 +184,7 @@ Functions auth(n: number=0, m: number=1, creator: &#39;*&#39; | &#39;author&#39;
 <h1 id="formulas">Formulas</h1>
 
 <p>Note: a number of functions below talk about the author&rsquo;s lastname; you can read that as &ldquo;when available&rdquo;. If you have the name as a single-field name (for entities like <code>International Business Machines</code> or <code>Aristoteles</code>), Zotero doesn&rsquo;t have a last name, and the full single-field name is taken instead.</p>
-<h2 id="functions">Functions</h2>
+<h2 id="functions">Functions<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h2>
 
   <h3><b>auth</b>(n: number=0, m: number=1, creator: &#39;*&#39; | &#39;author&#39; | &#39;collaborator&#39; | &#39;editor&#39; | &#39;translator&#39;=&#39;*&#39;, initials: boolean=false)</h3><p>The first <code>n</code> (default: all) characters of the <code>m</code>th (default: first) author's last name.</p><table>
               <tr>
@@ -873,7 +871,7 @@ use this if you have existing papers that rely on this behavior.</p>
 
 <p><strong>Note</strong>: All <code>auth...</code> functions will fall back to editors if no authors are present on the item.</p>
 <p><strong>Note</strong>: The functions above used to have the <code>clean</code> function automatically applied to them, <strong>this is no longer the case</strong>, so if you have CJK authors/titles and you want to manipulate them (using eg. <code>capitalize</code>), you could have to use <code>transliterate</code> on them first, eg. <code>authEtal2.transliterate.capitalize + year + shorttitle(3, 3)</code>.</p>
-<h2 id="direct-access-to-unprocessed-fields-field-functions">Direct access to unprocessed fields (&ldquo;Field functions&rdquo;)</h2>
+<h2 id="direct-access-to-unprocessed-fields-field-functions">Direct access to unprocessed fields (&ldquo;Field functions&rdquo;)<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h2>
 <p>The above functions all retrieve information stored in the item&rsquo;s fields and process it in some way. If you don&rsquo;t want this, you can instead call field contents without any processing. To access Zotero fields, refer to them as given in the table below:</p>
 <table>
   
@@ -1312,7 +1310,7 @@ use this if you have existing papers that rely on this behavior.</p>
 </table>
 
 <p>(fields marked <sup>Z</sup> are only available in Zotero, fields marked with <sup>JM</sup> are only available in Juris-M).</p>
-<h2 id="filters">Filters</h2>
+<h2 id="filters">Filters<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h2>
 
   <h3><b>.abbr</b>(chars: number=1)</h3><p>Abbreviates the text. Only the first character and subsequent characters following white space will be included.</p><table>
               <tr>
@@ -2431,8 +2429,8 @@ Better BibTeX for Zotero
 </div>
       </div>
     </aside>
-    <script src="/zotero-better-bibtex/js/clipboard/clipboard.min.js" defer></script>
     <script src="/zotero-better-bibtex/js/perfect-scrollbar/perfect-scrollbar.min.js" defer></script>
     <script src="/zotero-better-bibtex/js/theme.min.js" defer></script>
+    <div id="toast-container" role="status" aria-live="polite" aria-atomic="false"></div>
   </body>
 </html>

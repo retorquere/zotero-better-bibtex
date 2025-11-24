@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="height=device-height, width=device-width, initial-scale=1.0, minimum-scale=1.0">
     <meta name="generator" content="Hugo 0.143.1">
-    <meta name="generator" content="Relearn 8.2.0+9cac649a184a2967957ef9bbececf9402192846c">
+    <meta name="generator" content="Relearn 8.2.0+f69a085322cc70b3e14577c0823c5bc781ec6bb2">
     <meta name="description" content="The Better BibTeX Configuration can be found under the regular Zotero preferences pane, tab ‘Better BibTeX’.
 The configuration of Better BibTeX is a little baroque compared to the standard Zotero Bib(La)TeX exporters (which only have hidden preferences). The defaults should just work, but here’s an attempt to describe what they do.
 Making any change here will drop your entire export cache. This is usually not a problem unless you have a really large library, but you can read about what is involved here.">
@@ -58,8 +58,6 @@ Making any change here will drop your entire export cache. This is usually not a
       window.relearn.relBasePath='..\/..';
       window.relearn.relBaseUri='..\/..\/..';
       window.relearn.absBaseUri='\/zotero-better-bibtex';
-      window.relearn.disableAnchorCopy=false;
-      window.relearn.disableAnchorScrolling=false;
       window.relearn.disableInlineCopyToClipboard=true;
       window.relearn.enableBlockCodeWrap=true;
       // legal
@@ -67,14 +65,14 @@ Making any change here will drop your entire export cache. This is usually not a
       window.relearn.setItem = (s,n,v) => {return s.setItem(n,v)};
       window.relearn.removeItem = (s,n) => {return s.removeItem(n)};
       // translations
-      window.T_Copy_to_clipboard = `Copy to clipboard`;
-      window.T_Copied_to_clipboard = `Copied to clipboard!`;
-      window.T_Copy_link_to_clipboard = `Copy link to clipboard`;
-      window.T_Link_copied_to_clipboard = `Copied link to clipboard!`;
+      window.T_Copy_to_clipboard = `Copy text to clipboard`;
+      window.T_Copied_to_clipboard = `Text copied to clipboard!`;
+      window.T_Link_copied_to_clipboard = `Link copied to clipboard!`;
       window.T_Reset_view = `Reset view`;
       window.T_View_reset = `View reset!`;
       window.T_No_results_found = `No results found for "{0}"`;
       window.T_N_results_found = `{1} results found for "{0}"`;
+      window.T_Browser_unsupported_feature = `This browser doesn't support this feature`;
       // variant stuff
       window.relearn.themevariants = [ 'green' ];
       window.relearn.customvariantname = "my-custom-variant";
@@ -136,10 +134,10 @@ Making any change here will drop your entire export cache. This is usually not a
           <div class="topbar-sidebar-divider"></div>
           <div class="topbar-area topbar-area-start" data-area="start">
             <div class="topbar-button topbar-button-sidebar" data-content-empty="disable" data-width-s="show" data-width-m="hide" data-width-l="hide">
-<span class="btn cstyle link noborder notitle interactive"><button onclick="toggleNav()" type="button" title="Menu (CTRL&#43;ALT&#43;n)"><i class="fa-fw fas fa-bars"></i></button></span>
+<span class="btn cstyle button link noborder notitle interactive"><button onclick="toggleNav()" type="button" title="Menu (CTRL&#43;ALT&#43;n)"><i class="fa-fw fas fa-bars"></i></button></span>
             </div>
             <div class="topbar-button topbar-button-toc" data-content-empty="hide" data-width-s="show" data-width-m="show" data-width-l="show">
-<span class="btn cstyle link noborder notitle interactive"><button onclick="toggleTopbarFlyout(this)" type="button" title="Table of Contents (CTRL&#43;ALT&#43;t)"><i class="fa-fw fas fa-list-alt"></i></button></span>
+<span class="btn cstyle button link noborder notitle interactive"><button onclick="toggleTopbarFlyout(this)" type="button" title="Table of Contents (CTRL&#43;ALT&#43;t)"><i class="fa-fw fas fa-list-alt"></i></button></span>
               <div class="topbar-content">
                 <div class="topbar-content-wrapper">
 <nav class="TableOfContents">
@@ -162,16 +160,16 @@ Making any change here will drop your entire export cache. This is usually not a
           </ol>
           <div class="topbar-area topbar-area-end" data-area="end">
             <div class="topbar-button topbar-button-edit" data-content-empty="disable" data-width-s="area-more" data-width-m="show" data-width-l="show">
-<span class="btn cstyle link noborder notitle interactive"><a href="https://github.com/retorquere/zotero-better-bibtex/edit/master/site/content/preferences/import.md" rel="external" title="Edit (CTRL+ALT+w)"><i class="fa-fw fas fa-pen"></i></a></span>
+<span class="btn cstyle button link noborder notitle interactive"><a href="https://github.com/retorquere/zotero-better-bibtex/edit/master/site/content/preferences/import.md" rel="external" title="Edit (CTRL+ALT+w)"><i class="fa-fw fas fa-pen"></i></a></span>
             </div>
             <div class="topbar-button topbar-button-prev" data-content-empty="disable" data-width-s="show" data-width-m="show" data-width-l="show">
-<span class="btn cstyle link noborder notitle interactive"><a href="/zotero-better-bibtex/preferences/automatic-export/index.html" title="Automatic export (🡐)"><i class="fa-fw fas fa-chevron-left"></i></a></span>
+<span class="btn cstyle button link noborder notitle interactive"><a href="/zotero-better-bibtex/preferences/automatic-export/index.html" title="Automatic export (🡐)"><i class="fa-fw fas fa-chevron-left"></i></a></span>
             </div>
             <div class="topbar-button topbar-button-next" data-content-empty="disable" data-width-s="show" data-width-m="show" data-width-l="show">
-<span class="btn cstyle link noborder notitle interactive"><a href="/zotero-better-bibtex/preferences/miscellaneous/index.html" title="Miscellaneous (🡒)"><i class="fa-fw fas fa-chevron-right"></i></a></span>
+<span class="btn cstyle button link noborder notitle interactive"><a href="/zotero-better-bibtex/preferences/miscellaneous/index.html" title="Miscellaneous (🡒)"><i class="fa-fw fas fa-chevron-right"></i></a></span>
             </div>
             <div class="topbar-button topbar-button-more" data-content-empty="hide" data-width-s="show" data-width-m="show" data-width-l="show">
-<span class="btn cstyle link noborder notitle interactive"><button onclick="toggleTopbarFlyout(this)" type="button" title="More"><i class="fa-fw fas fa-ellipsis-v"></i></button></span>
+<span class="btn cstyle button link noborder notitle interactive"><button onclick="toggleTopbarFlyout(this)" type="button" title="More"><i class="fa-fw fas fa-ellipsis-v"></i></button></span>
               <div class="topbar-content">
                 <div class="topbar-content-wrapper">
                   <div class="topbar-area topbar-area-more" data-area="more">
@@ -196,7 +194,7 @@ Making any change here will drop your entire export cache. This is usually not a
 only have hidden preferences). The defaults should just work, but here&rsquo;s an attempt to describe what they do.</p>
 <p><strong>Making any change here will drop your entire export cache.</strong> This is usually not a problem unless you have a
 really large library, but you can read about what is involved <a href="/zotero-better-bibtex/support/performance/">here</a>.</p>
-<h2 id="insert-case-protection-for-braces">Insert case-protection for braces:</h2>
+<h2 id="insert-case-protection-for-braces">Insert case-protection for braces:<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h2>
 <p>default: <code>minimal</code></p>
 <p>On import, BBT will add case-protection (&lt;span class=&ldquo;nocase&rdquo;&gt;&hellip;&lt;span&gt;) to titles that have words in {Braces}.</p>
 <p>There&rsquo;s plenty of bib(la)tex files out there that do this a little overzealously, and you may not like the resulting HTML code in your items, even though this is what the braces mean in bib(la)tex, and Zotero supports it.</p>
@@ -207,12 +205,12 @@ really large library, but you can read about what is involved <a href="/zotero-b
 <li>yes</li>
 <li>no</li>
 </ul>
-<h2 id="when-scanning-an-aux-file-attempt-to-import-entries-from-the-attached-bib-file-when-their-citation-keys-are-not-in-zotero">When scanning an AUX file, attempt to import entries from the attached bib file when their citation keys are not in Zotero</h2>
+<h2 id="when-scanning-an-aux-file-attempt-to-import-entries-from-the-attached-bib-file-when-their-citation-keys-are-not-in-zotero">When scanning an AUX file, attempt to import entries from the attached bib file when their citation keys are not in Zotero<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h2>
 <p>default: <code>no</code></p>
 <p>By default, when scanning for cited items in the aux file, BBT will just generate a note listing all citation keys it cannot find in Zotero.
 When this option is turned on, BBT will attempt to import such missing items from the bib file that the AUX file being scanned points to.</p>
-<h2 id="sentence-case-titles-on-import">Sentence-case titles on import:</h2>
-<h3 id="sentence-case-titles-on-import-1">Sentence-case titles on import:</h3>
+<h2 id="sentence-case-titles-on-import">Sentence-case titles on import:<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h2>
+<h3 id="sentence-case-titles-on-import-1">Sentence-case titles on import:<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h3>
 <p>default: <code>yes, but try to exclude already-sentence-cased titles</code></p>
 <p>Bib(La)TeX entries must be stored in Title Case; Zotero items are expected to be entered as sentence-case.</p>
 <p>With this option on, BBT will try to sentence-case during import. This sentence-casing uses heuristics, no natural language processing is performed, and the results are not perfect.</p>
@@ -224,7 +222,7 @@ With &lsquo;yes, but try to exclude already-sentence-cased titles&rsquo;, BBT wi
 <li>yes</li>
 <li>no (import titles as-is)</li>
 </ul>
-<h2 id="migrate-betterbibtex-preferencescitation-keys">Migrate BetterBibTeX preferences/citation keys</h2>
+<h2 id="migrate-betterbibtex-preferencescitation-keys">Migrate BetterBibTeX preferences/citation keys<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h2>
 
   <footer class="footline">
   </footer>
@@ -1025,8 +1023,8 @@ Better BibTeX for Zotero
 </div>
       </div>
     </aside>
-    <script src="/zotero-better-bibtex/js/clipboard/clipboard.min.js" defer></script>
     <script src="/zotero-better-bibtex/js/perfect-scrollbar/perfect-scrollbar.min.js" defer></script>
     <script src="/zotero-better-bibtex/js/theme.min.js" defer></script>
+    <div id="toast-container" role="status" aria-live="polite" aria-atomic="false"></div>
   </body>
 </html>

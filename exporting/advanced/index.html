@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="height=device-height, width=device-width, initial-scale=1.0, minimum-scale=1.0">
     <meta name="generator" content="Hugo 0.143.1">
-    <meta name="generator" content="Relearn 8.2.0+9cac649a184a2967957ef9bbececf9402192846c">
+    <meta name="generator" content="Relearn 8.2.0+f69a085322cc70b3e14577c0823c5bc781ec6bb2">
     <meta name="description" content="You are a hardcore LaTeX user If you’d really just rather hand-code your LaTeX constructs, BBT makes that possible:
 You can add literal LaTeX anywhere in your item by surrounding it with &lt;script&gt;...&lt;/script&gt; (&lt;pre&gt;...&lt;/pre&gt; will also work for historical reasons) markers. BBT will convert to/from unicode and (un)escape where required but will pass whatever is enclosed in the pre tags unchanged. An entry tagged with #LaTeX (case-sensitive!) will have all fields exported as if they’re wrapped in &lt;script&gt;...&lt;/script&gt;, so you can include LaTeX markup in your items. Recognizing initials in names In names, you can force first names like Philippe to be exported to {\relax Ph}ilippe (which causes it to get initial Ph. rather than P. in styles that do initials) capitalizing the letters you want to have used as the initials, so PHilippe.">
     <meta name="author" content="">
@@ -54,8 +54,6 @@ You can add literal LaTeX anywhere in your item by surrounding it with &lt;scrip
       window.relearn.relBasePath='..\/..';
       window.relearn.relBaseUri='..\/..\/..';
       window.relearn.absBaseUri='\/zotero-better-bibtex';
-      window.relearn.disableAnchorCopy=false;
-      window.relearn.disableAnchorScrolling=false;
       window.relearn.disableInlineCopyToClipboard=true;
       window.relearn.enableBlockCodeWrap=true;
       // legal
@@ -63,14 +61,14 @@ You can add literal LaTeX anywhere in your item by surrounding it with &lt;scrip
       window.relearn.setItem = (s,n,v) => {return s.setItem(n,v)};
       window.relearn.removeItem = (s,n) => {return s.removeItem(n)};
       // translations
-      window.T_Copy_to_clipboard = `Copy to clipboard`;
-      window.T_Copied_to_clipboard = `Copied to clipboard!`;
-      window.T_Copy_link_to_clipboard = `Copy link to clipboard`;
-      window.T_Link_copied_to_clipboard = `Copied link to clipboard!`;
+      window.T_Copy_to_clipboard = `Copy text to clipboard`;
+      window.T_Copied_to_clipboard = `Text copied to clipboard!`;
+      window.T_Link_copied_to_clipboard = `Link copied to clipboard!`;
       window.T_Reset_view = `Reset view`;
       window.T_View_reset = `View reset!`;
       window.T_No_results_found = `No results found for "{0}"`;
       window.T_N_results_found = `{1} results found for "{0}"`;
+      window.T_Browser_unsupported_feature = `This browser doesn't support this feature`;
       // variant stuff
       window.relearn.themevariants = [ 'green' ];
       window.relearn.customvariantname = "my-custom-variant";
@@ -128,10 +126,10 @@ You can add literal LaTeX anywhere in your item by surrounding it with &lt;scrip
           <div class="topbar-sidebar-divider"></div>
           <div class="topbar-area topbar-area-start" data-area="start">
             <div class="topbar-button topbar-button-sidebar" data-content-empty="disable" data-width-s="show" data-width-m="hide" data-width-l="hide">
-<span class="btn cstyle link noborder notitle interactive"><button onclick="toggleNav()" type="button" title="Menu (CTRL&#43;ALT&#43;n)"><i class="fa-fw fas fa-bars"></i></button></span>
+<span class="btn cstyle button link noborder notitle interactive"><button onclick="toggleNav()" type="button" title="Menu (CTRL&#43;ALT&#43;n)"><i class="fa-fw fas fa-bars"></i></button></span>
             </div>
             <div class="topbar-button topbar-button-toc" data-content-empty="hide" data-width-s="show" data-width-m="show" data-width-l="show">
-<span class="btn cstyle link noborder notitle interactive"><button onclick="toggleTopbarFlyout(this)" type="button" title="Table of Contents (CTRL&#43;ALT&#43;t)"><i class="fa-fw fas fa-list-alt"></i></button></span>
+<span class="btn cstyle button link noborder notitle interactive"><button onclick="toggleTopbarFlyout(this)" type="button" title="Table of Contents (CTRL&#43;ALT&#43;t)"><i class="fa-fw fas fa-list-alt"></i></button></span>
               <div class="topbar-content">
                 <div class="topbar-content-wrapper">
 <nav class="TableOfContents">
@@ -148,16 +146,16 @@ You can add literal LaTeX anywhere in your item by surrounding it with &lt;scrip
           </ol>
           <div class="topbar-area topbar-area-end" data-area="end">
             <div class="topbar-button topbar-button-edit" data-content-empty="disable" data-width-s="area-more" data-width-m="show" data-width-l="show">
-<span class="btn cstyle link noborder notitle interactive"><a href="https://github.com/retorquere/zotero-better-bibtex/edit/master/site/content/exporting/advanced.md" rel="external" title="Edit (CTRL+ALT+w)"><i class="fa-fw fas fa-pen"></i></a></span>
+<span class="btn cstyle button link noborder notitle interactive"><a href="https://github.com/retorquere/zotero-better-bibtex/edit/master/site/content/exporting/advanced.md" rel="external" title="Edit (CTRL+ALT+w)"><i class="fa-fw fas fa-pen"></i></a></span>
             </div>
             <div class="topbar-button topbar-button-prev" data-content-empty="disable" data-width-s="show" data-width-m="show" data-width-l="show">
-<span class="btn cstyle link noborder notitle interactive"><a href="/zotero-better-bibtex/exporting/unicode/index.html" title="Unicode (🡐)"><i class="fa-fw fas fa-chevron-left"></i></a></span>
+<span class="btn cstyle button link noborder notitle interactive"><a href="/zotero-better-bibtex/exporting/unicode/index.html" title="Unicode (🡐)"><i class="fa-fw fas fa-chevron-left"></i></a></span>
             </div>
             <div class="topbar-button topbar-button-next" data-content-empty="disable" data-width-s="show" data-width-m="show" data-width-l="show">
-<span class="btn cstyle link noborder notitle interactive"><a href="/zotero-better-bibtex/exporting/json-rpc/index.html" title="JSON-RPC (🡒)"><i class="fa-fw fas fa-chevron-right"></i></a></span>
+<span class="btn cstyle button link noborder notitle interactive"><a href="/zotero-better-bibtex/exporting/json-rpc/index.html" title="JSON-RPC (🡒)"><i class="fa-fw fas fa-chevron-right"></i></a></span>
             </div>
             <div class="topbar-button topbar-button-more" data-content-empty="hide" data-width-s="show" data-width-m="show" data-width-l="show">
-<span class="btn cstyle link noborder notitle interactive"><button onclick="toggleTopbarFlyout(this)" type="button" title="More"><i class="fa-fw fas fa-ellipsis-v"></i></button></span>
+<span class="btn cstyle button link noborder notitle interactive"><button onclick="toggleTopbarFlyout(this)" type="button" title="More"><i class="fa-fw fas fa-ellipsis-v"></i></button></span>
               <div class="topbar-content">
                 <div class="topbar-content-wrapper">
                   <div class="topbar-area topbar-area-more" data-area="more">
@@ -177,7 +175,7 @@ You can add literal LaTeX anywhere in your item by surrounding it with &lt;scrip
 
 <h1 id="advanced">Advanced</h1>
 
-<h2 id="you-are-a-hardcore-latex-user">You are a hardcore LaTeX user</h2>
+<h2 id="you-are-a-hardcore-latex-user">You are a hardcore LaTeX user<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h2>
 <p>If you&rsquo;d really just rather hand-code your LaTeX constructs, BBT makes that possible:</p>
 <ul>
 <li>You can add literal LaTeX anywhere in your item by surrounding it with <code>&lt;script&gt;...&lt;/script&gt;</code> (<code>&lt;pre&gt;...&lt;/pre&gt;</code> will also work for historical reasons) markers. BBT will
@@ -185,7 +183,7 @@ convert to/from unicode and (un)escape where required but will pass whatever is 
 <li>An entry tagged with <code>#LaTeX</code> (case-sensitive!) will have all fields exported as if they&rsquo;re wrapped in
 <code>&lt;script&gt;...&lt;/script&gt;</code>, so you can include LaTeX markup in your items.</li>
 </ul>
-<h2 id="recognizing-initials-in-names">Recognizing initials in names</h2>
+<h2 id="recognizing-initials-in-names">Recognizing initials in names<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h2>
 <p>In names, you can force first names like <code>Philippe</code> to be exported to <code>{\relax Ph}ilippe</code> (which causes it to get initial <code>Ph.</code> rather than <code>P.</code> in styles that do initials) capitalizing the letters you want to have used as the initials, so <code>PHilippe</code>.</p>
 
   <footer class="footline">
@@ -990,8 +988,8 @@ Better BibTeX for Zotero
 </div>
       </div>
     </aside>
-    <script src="/zotero-better-bibtex/js/clipboard/clipboard.min.js" defer></script>
     <script src="/zotero-better-bibtex/js/perfect-scrollbar/perfect-scrollbar.min.js" defer></script>
     <script src="/zotero-better-bibtex/js/theme.min.js" defer></script>
+    <div id="toast-container" role="status" aria-live="polite" aria-atomic="false"></div>
   </body>
 </html>

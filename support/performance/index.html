@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="height=device-height, width=device-width, initial-scale=1.0, minimum-scale=1.0">
     <meta name="generator" content="Hugo 0.143.1">
-    <meta name="generator" content="Relearn 8.2.0+9cac649a184a2967957ef9bbececf9402192846c">
+    <meta name="generator" content="Relearn 8.2.0+f69a085322cc70b3e14577c0823c5bc781ec6bb2">
     <meta name="description" content="The Better BibTeX exporters are a lot slower than the standard Zotero Bib(La)TeX exporters. If you have a small library, you will not likely notice this, but if you have several thousand items, and you are in the habit of exporting substantial parts of your library, this gets annoying really fast.
 To deal with this problem, Better BibTeX implements an extensive caching system. With a filled cache, Better BibTeX is substantially faster than the default Zotero exporters. Specifically for automatic background exports, a filled cache is a good thing to have.">
     <meta name="author" content="">
@@ -57,8 +57,6 @@ To deal with this problem, Better BibTeX implements an extensive caching system.
       window.relearn.relBasePath='..\/..';
       window.relearn.relBaseUri='..\/..\/..';
       window.relearn.absBaseUri='\/zotero-better-bibtex';
-      window.relearn.disableAnchorCopy=false;
-      window.relearn.disableAnchorScrolling=false;
       window.relearn.disableInlineCopyToClipboard=true;
       window.relearn.enableBlockCodeWrap=true;
       // legal
@@ -66,14 +64,14 @@ To deal with this problem, Better BibTeX implements an extensive caching system.
       window.relearn.setItem = (s,n,v) => {return s.setItem(n,v)};
       window.relearn.removeItem = (s,n) => {return s.removeItem(n)};
       // translations
-      window.T_Copy_to_clipboard = `Copy to clipboard`;
-      window.T_Copied_to_clipboard = `Copied to clipboard!`;
-      window.T_Copy_link_to_clipboard = `Copy link to clipboard`;
-      window.T_Link_copied_to_clipboard = `Copied link to clipboard!`;
+      window.T_Copy_to_clipboard = `Copy text to clipboard`;
+      window.T_Copied_to_clipboard = `Text copied to clipboard!`;
+      window.T_Link_copied_to_clipboard = `Link copied to clipboard!`;
       window.T_Reset_view = `Reset view`;
       window.T_View_reset = `View reset!`;
       window.T_No_results_found = `No results found for "{0}"`;
       window.T_N_results_found = `{1} results found for "{0}"`;
+      window.T_Browser_unsupported_feature = `This browser doesn't support this feature`;
       // variant stuff
       window.relearn.themevariants = [ 'green' ];
       window.relearn.customvariantname = "my-custom-variant";
@@ -131,10 +129,10 @@ To deal with this problem, Better BibTeX implements an extensive caching system.
           <div class="topbar-sidebar-divider"></div>
           <div class="topbar-area topbar-area-start" data-area="start">
             <div class="topbar-button topbar-button-sidebar" data-content-empty="disable" data-width-s="show" data-width-m="hide" data-width-l="hide">
-<span class="btn cstyle link noborder notitle interactive"><button onclick="toggleNav()" type="button" title="Menu (CTRL&#43;ALT&#43;n)"><i class="fa-fw fas fa-bars"></i></button></span>
+<span class="btn cstyle button link noborder notitle interactive"><button onclick="toggleNav()" type="button" title="Menu (CTRL&#43;ALT&#43;n)"><i class="fa-fw fas fa-bars"></i></button></span>
             </div>
             <div class="topbar-button topbar-button-toc" data-content-empty="hide" data-width-s="show" data-width-m="show" data-width-l="show">
-<span class="btn cstyle link noborder notitle interactive"><button onclick="toggleTopbarFlyout(this)" type="button" title="Table of Contents (CTRL&#43;ALT&#43;t)"><i class="fa-fw fas fa-list-alt"></i></button></span>
+<span class="btn cstyle button link noborder notitle interactive"><button onclick="toggleTopbarFlyout(this)" type="button" title="Table of Contents (CTRL&#43;ALT&#43;t)"><i class="fa-fw fas fa-list-alt"></i></button></span>
               <div class="topbar-content">
                 <div class="topbar-content-wrapper">
 <nav class="TableOfContents">
@@ -161,16 +159,16 @@ To deal with this problem, Better BibTeX implements an extensive caching system.
           </ol>
           <div class="topbar-area topbar-area-end" data-area="end">
             <div class="topbar-button topbar-button-edit" data-content-empty="disable" data-width-s="area-more" data-width-m="show" data-width-l="show">
-<span class="btn cstyle link noborder notitle interactive"><a href="https://github.com/retorquere/zotero-better-bibtex/edit/master/site/content/support/performance.md" rel="external" title="Edit (CTRL+ALT+w)"><i class="fa-fw fas fa-pen"></i></a></span>
+<span class="btn cstyle button link noborder notitle interactive"><a href="https://github.com/retorquere/zotero-better-bibtex/edit/master/site/content/support/performance.md" rel="external" title="Edit (CTRL+ALT+w)"><i class="fa-fw fas fa-pen"></i></a></span>
             </div>
             <div class="topbar-button topbar-button-prev" data-content-empty="disable" data-width-s="show" data-width-m="show" data-width-l="show">
-<span class="btn cstyle link noborder notitle interactive"><a href="/zotero-better-bibtex/support/faq/index.html" title="Frequently Asked Questions (🡐)"><i class="fa-fw fas fa-chevron-left"></i></a></span>
+<span class="btn cstyle button link noborder notitle interactive"><a href="/zotero-better-bibtex/support/faq/index.html" title="Frequently Asked Questions (🡐)"><i class="fa-fw fas fa-chevron-left"></i></a></span>
             </div>
             <div class="topbar-button topbar-button-next" data-content-empty="disable" data-width-s="show" data-width-m="show" data-width-l="show">
-<span class="btn cstyle link noborder notitle interactive"><a href="/zotero-better-bibtex/support/translations/index.html" title="Translations (🡒)"><i class="fa-fw fas fa-chevron-right"></i></a></span>
+<span class="btn cstyle button link noborder notitle interactive"><a href="/zotero-better-bibtex/support/translations/index.html" title="Translations (🡒)"><i class="fa-fw fas fa-chevron-right"></i></a></span>
             </div>
             <div class="topbar-button topbar-button-more" data-content-empty="hide" data-width-s="show" data-width-m="show" data-width-l="show">
-<span class="btn cstyle link noborder notitle interactive"><button onclick="toggleTopbarFlyout(this)" type="button" title="More"><i class="fa-fw fas fa-ellipsis-v"></i></button></span>
+<span class="btn cstyle button link noborder notitle interactive"><button onclick="toggleTopbarFlyout(this)" type="button" title="More"><i class="fa-fw fas fa-ellipsis-v"></i></button></span>
               <div class="topbar-content">
                 <div class="topbar-content-wrapper">
                   <div class="topbar-area topbar-area-more" data-area="more">
@@ -205,7 +203,7 @@ substantially faster than the default Zotero exporters.  Specifically for <a hre
 a good thing to have.</p>
 <p>For technical reasons, if you export the file attachments as part of your export, the cache is skipped altogether, so
 this will always be slow. This is also why you cannot set up auto-exports with file exports.</p>
-<h3 id="tldr">TL;DR</h3>
+<h3 id="tldr">TL;DR<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h3>
 <p>There&rsquo;s a more technical explanation below, but the TL;DR version is that you want to have a filled cache. If you want
 to get it over with, export your entire library (once, no need to tick &lsquo;Keep Updated&rsquo;) using the &lsquo;Better BibTeX&rsquo; format
 and go grab coffee (or lunch, depending on the size of your library). After that, things should be <em>much</em> better.</p>
@@ -246,20 +244,20 @@ and go grab coffee (or lunch, depending on the size of your library). After that
   </tbody>
 </table>
 <p><strong>note</strong>: if you have &lsquo;Export files&rsquo; enabled during export, or set the JabRef export format to <code>4</code>, the cache will not be active. If you do large (auto)exports, avoid these.</p>
-<h2 id="caching">Caching</h2>
-<h3 id="initial-state">Initial state</h3>
+<h2 id="caching">Caching<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h2>
+<h3 id="initial-state">Initial state<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h3>
 <p>Initially, your cache will be empty. The first export of any item using Better BibTeX will therefore be a little
 over twice as slow as subsequent exports. After that, it gets pretty zippy, as the process of exporting a item
 will also cache the output entry for that item <em>for the current export settings</em>. This means if you export once with, and once without
 notes (one of the options in the export popup), you will hit an empty cache twice. If you set up an automatic export,
 the export you do that registers it for auto-update will already be the first export, so if your items weren&rsquo;t
 cached already, they will be before subsequent auto-exports.</p>
-<h3 id="cache-refresh">Cache refresh</h3>
+<h3 id="cache-refresh">Cache refresh<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h3>
 <p>The cache entry for a item is retained as long as you do not make any changes to that item. Any change you
 make will drop all cache entries for that item (so all variants you had for different export options). The cache
 for that item will be refreshed as soon as you export it again, either manually or
 <a href="/zotero-better-bibtex/exporting/">automatically</a>.</p>
-<h3 id="cache-drop">Cache drop</h3>
+<h3 id="cache-drop">Cache drop<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h3>
 <p><em>Any</em> change you make to the Better BibTeX <a href="/zotero-better-bibtex/preferences/">preferences</a> will drop the whole cache. The behavior of
 the Better BibTeX exporters are highly configurable, and it is impossible for me to figure out which entries would be
 affected specifically. Keep this in mind for large libraries; if you want to make changes to your configuration, make them all at once.</p>
@@ -1064,8 +1062,8 @@ Better BibTeX for Zotero
 </div>
       </div>
     </aside>
-    <script src="/zotero-better-bibtex/js/clipboard/clipboard.min.js" defer></script>
     <script src="/zotero-better-bibtex/js/perfect-scrollbar/perfect-scrollbar.min.js" defer></script>
     <script src="/zotero-better-bibtex/js/theme.min.js" defer></script>
+    <div id="toast-container" role="status" aria-live="polite" aria-atomic="false"></div>
   </body>
 </html>

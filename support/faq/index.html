@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="height=device-height, width=device-width, initial-scale=1.0, minimum-scale=1.0">
     <meta name="generator" content="Hugo 0.143.1">
-    <meta name="generator" content="Relearn 8.2.0+9cac649a184a2967957ef9bbececf9402192846c">
+    <meta name="generator" content="Relearn 8.2.0+f69a085322cc70b3e14577c0823c5bc781ec6bb2">
     <meta name="description" content="Add-on could not be installed because it appears to be corrupt. You have downloaded the Better BibTeX plugin by clicking on the download link using Firefox. As Zotero and Firefox use the same plugin technology, Firefox think the BetterBibTeX plugin is intended for itself, tries to install it, and then finds out it won’t work. You need to download the plugin without installinging it into Firefox by right-clicking the download link, choose save-as, and then install it into Zotero using installation instructions to get started with BBT.">
     <meta name="author" content="">
     <meta name="twitter:card" content="summary">
@@ -52,8 +52,6 @@
       window.relearn.relBasePath='..\/..';
       window.relearn.relBaseUri='..\/..\/..';
       window.relearn.absBaseUri='\/zotero-better-bibtex';
-      window.relearn.disableAnchorCopy=false;
-      window.relearn.disableAnchorScrolling=false;
       window.relearn.disableInlineCopyToClipboard=true;
       window.relearn.enableBlockCodeWrap=true;
       // legal
@@ -61,14 +59,14 @@
       window.relearn.setItem = (s,n,v) => {return s.setItem(n,v)};
       window.relearn.removeItem = (s,n) => {return s.removeItem(n)};
       // translations
-      window.T_Copy_to_clipboard = `Copy to clipboard`;
-      window.T_Copied_to_clipboard = `Copied to clipboard!`;
-      window.T_Copy_link_to_clipboard = `Copy link to clipboard`;
-      window.T_Link_copied_to_clipboard = `Copied link to clipboard!`;
+      window.T_Copy_to_clipboard = `Copy text to clipboard`;
+      window.T_Copied_to_clipboard = `Text copied to clipboard!`;
+      window.T_Link_copied_to_clipboard = `Link copied to clipboard!`;
       window.T_Reset_view = `Reset view`;
       window.T_View_reset = `View reset!`;
       window.T_No_results_found = `No results found for "{0}"`;
       window.T_N_results_found = `{1} results found for "{0}"`;
+      window.T_Browser_unsupported_feature = `This browser doesn't support this feature`;
       // variant stuff
       window.relearn.themevariants = [ 'green' ];
       window.relearn.customvariantname = "my-custom-variant";
@@ -126,10 +124,10 @@
           <div class="topbar-sidebar-divider"></div>
           <div class="topbar-area topbar-area-start" data-area="start">
             <div class="topbar-button topbar-button-sidebar" data-content-empty="disable" data-width-s="show" data-width-m="hide" data-width-l="hide">
-<span class="btn cstyle link noborder notitle interactive"><button onclick="toggleNav()" type="button" title="Menu (CTRL&#43;ALT&#43;n)"><i class="fa-fw fas fa-bars"></i></button></span>
+<span class="btn cstyle button link noborder notitle interactive"><button onclick="toggleNav()" type="button" title="Menu (CTRL&#43;ALT&#43;n)"><i class="fa-fw fas fa-bars"></i></button></span>
             </div>
             <div class="topbar-button topbar-button-toc" data-content-empty="hide" data-width-s="show" data-width-m="show" data-width-l="show">
-<span class="btn cstyle link noborder notitle interactive"><button onclick="toggleTopbarFlyout(this)" type="button" title="Table of Contents (CTRL&#43;ALT&#43;t)"><i class="fa-fw fas fa-list-alt"></i></button></span>
+<span class="btn cstyle button link noborder notitle interactive"><button onclick="toggleTopbarFlyout(this)" type="button" title="Table of Contents (CTRL&#43;ALT&#43;t)"><i class="fa-fw fas fa-list-alt"></i></button></span>
               <div class="topbar-content">
                 <div class="topbar-content-wrapper">
 <nav class="TableOfContents">
@@ -154,16 +152,16 @@
           </ol>
           <div class="topbar-area topbar-area-end" data-area="end">
             <div class="topbar-button topbar-button-edit" data-content-empty="disable" data-width-s="area-more" data-width-m="show" data-width-l="show">
-<span class="btn cstyle link noborder notitle interactive"><a href="https://github.com/retorquere/zotero-better-bibtex/edit/master/site/content/support/faq.md" rel="external" title="Edit (CTRL+ALT+w)"><i class="fa-fw fas fa-pen"></i></a></span>
+<span class="btn cstyle button link noborder notitle interactive"><a href="https://github.com/retorquere/zotero-better-bibtex/edit/master/site/content/support/faq.md" rel="external" title="Edit (CTRL+ALT+w)"><i class="fa-fw fas fa-pen"></i></a></span>
             </div>
             <div class="topbar-button topbar-button-prev" data-content-empty="disable" data-width-s="show" data-width-m="show" data-width-l="show">
-<span class="btn cstyle link noborder notitle interactive"><a href="/zotero-better-bibtex/support/index.html" title="Support (🡐)"><i class="fa-fw fas fa-chevron-left"></i></a></span>
+<span class="btn cstyle button link noborder notitle interactive"><a href="/zotero-better-bibtex/support/index.html" title="Support (🡐)"><i class="fa-fw fas fa-chevron-left"></i></a></span>
             </div>
             <div class="topbar-button topbar-button-next" data-content-empty="disable" data-width-s="show" data-width-m="show" data-width-l="show">
-<span class="btn cstyle link noborder notitle interactive"><a href="/zotero-better-bibtex/support/performance/index.html" title="Performance (🡒)"><i class="fa-fw fas fa-chevron-right"></i></a></span>
+<span class="btn cstyle button link noborder notitle interactive"><a href="/zotero-better-bibtex/support/performance/index.html" title="Performance (🡒)"><i class="fa-fw fas fa-chevron-right"></i></a></span>
             </div>
             <div class="topbar-button topbar-button-more" data-content-empty="hide" data-width-s="show" data-width-m="show" data-width-l="show">
-<span class="btn cstyle link noborder notitle interactive"><button onclick="toggleTopbarFlyout(this)" type="button" title="More"><i class="fa-fw fas fa-ellipsis-v"></i></button></span>
+<span class="btn cstyle button link noborder notitle interactive"><button onclick="toggleTopbarFlyout(this)" type="button" title="More"><i class="fa-fw fas fa-ellipsis-v"></i></button></span>
               <div class="topbar-content">
                 <div class="topbar-content-wrapper">
                   <div class="topbar-area topbar-area-more" data-area="more">
@@ -189,7 +187,7 @@
 
 <h1 id="frequently-asked-questions">Frequently Asked Questions</h1>
 
-<h2 id="add-on-could-not-be-installed-because-it-appears-to-be-corrupt">Add-on could not be installed because it appears to be corrupt.</h2>
+<h2 id="add-on-could-not-be-installed-because-it-appears-to-be-corrupt">Add-on could not be installed because it appears to be corrupt.<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h2>
 <p>You have downloaded the Better BibTeX plugin by clicking on the
 download link using Firefox. As Zotero and Firefox use the same
 plugin technology, Firefox think the BetterBibTeX plugin is intended
@@ -197,7 +195,7 @@ for itself, tries to install it, and then finds out it won&rsquo;t work.
 You need to download the plugin without installinging it into Firefox
 by right-clicking the download link, choose save-as, and then install
 it into Zotero using <a href="/zotero-better-bibtex/installation/">installation instructions</a> to get started with BBT.</p>
-<h2 id="bbt-is-changing-the-capitalization-of-my-titles----why">BBT is changing the capitalization of my titles &ndash; why?</h2>
+<h2 id="bbt-is-changing-the-capitalization-of-my-titles----why">BBT is changing the capitalization of my titles &ndash; why?<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h2>
 <p>There isn&rsquo;t a straightforward one-to-one mapping for all Zotero to Bib(La)TeX
 fields. For most I can make reasonable choices, but there are some things where
 Better BibTeX takes a little more liberties with your items in order to get
@@ -248,7 +246,7 @@ reference management, you can turn on the hidden preference
 from applying title-casing, but take note that if you do this, the
 bibliographies you get from Zotero and the bibliograhies you get through
 Bib(La)TeX will differ, and you can&rsquo;t complain about this.</p>
-<h2 id="why-the-double-braces">Why the double braces?</h2>
+<h2 id="why-the-double-braces">Why the double braces?<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h2>
 <p>But why then the double-braces (<code>{{...}}</code>) rather than the commonly recommended
 single braces (<code>{...}</code>)?</p>
 <p>This is not because of some arcane aesthetic preference, but because the
@@ -286,7 +284,7 @@ reasonable-to-well-rendering in the BBT case will have to include &ldquo;follows
 Zotero recommendations for storing items&rdquo; and &ldquo;prefer intent-preserving
 LaTeX over pretty-looking LaTeX&rdquo;.</p>
 <p>Bib(La)TeX be crazy.</p>
-<h2 id="but-why-so-many-double-braces">But why <em>so many</em> double braces?</h2>
+<h2 id="but-why-so-many-double-braces">But why <em>so many</em> double braces?<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h2>
 <p>Zotero expects titles to be entered in sentence case; bib(la)tex
 expects them to be entered in Title Case. BBT converts titles to
 title case to compensate for this. Zotero does allow for exceptions
@@ -305,7 +303,7 @@ and <em>also</em> brace-protect it.</p>
 <blockquote>
 <p><code>title = {I {{Like ISDN Heaps Better}} than {{Dialup}}}</code></p></blockquote>
 <p>which is clearly not correct. The proper way to fix this is to sentence case this in Zotero &ndash; if you generate a bibliography through Zotero itself, there are styles where this title-cased title will not render correctly. But if you have a lot of these, and you do not care about the quality of the bibliographies generated by Zotero itself, you can disable the <a href="/zotero-better-bibtex/preferences/export/#apply-title-casing-to-titles">title-casing</a> and/or the <a href="/zotero-better-bibtex/preferences/export/#apply-case-protection-to-capitalized-words-by-enclosing-them-in-braces">brace protection</a>.</p>
-<h2 id="importing-jabref-databases">Importing JabRef databases</h2>
+<h2 id="importing-jabref-databases">Importing JabRef databases<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h2>
 <p>JabRef import works generally well but has a few gotchas:</p>
 <ul>
 <li>If you have dynamic (query-based) groups these will not be imported.</li>
@@ -315,7 +313,7 @@ directory, but BBT can&rsquo;t read those preferences, so all attachments would
 fail to import. Make imports work with JabRef&rsquo;s library-specific setting <code>Library -&gt; Library Properties -&gt; General File Directory</code>.
 Make sure the latter path is correct, as JabRef might continue finding files and not notify you if it contains errors.</li>
 </ul>
-<h3 id="why-zotero--bbt-instead-of-mendeley">Why Zotero + BBT instead of Mendeley?</h3>
+<h3 id="why-zotero--bbt-instead-of-mendeley">Why Zotero + BBT instead of Mendeley?<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h3>
 <p>Among the reasons to just prefer Zotero over Mendeley outright you will find:</p>
 <ul>
 <li>Mendeley is owned by Elsevier.</li>
@@ -327,13 +325,13 @@ Make sure the latter path is correct, as JabRef might continue finding files and
 <li>Mendeley uses CSL, so items should be entered in sentence case (as is the case in Zotero). But bib(la)tex expects title-case, so titles should be converted to title case during export. This is difficult, so Mendeley just doesn&rsquo;t bother doing it.</li>
 <li>Verbatim fields that should per spec be exported as regular fields by Mendeley. This will get you compilation errors.</li>
 </ul>
-<h2 id="exporting-language-fields-in-addition-to-langid">Exporting <code>language</code> fields in addition to <code>langid</code></h2>
+<h2 id="exporting-language-fields-in-addition-to-langid">Exporting <code>language</code> fields in addition to <code>langid</code><span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h2>
 <p>Zotero&rsquo;s <code>language</code> field exports to the biblatex field <code>langid</code> only, not bib(la)tex <code>language</code>. Zotero&rsquo;s <code>language</code> field and the biblatex <code>langid</code> field are supposed to contain only language tags that control formatting, e.g. capitalization of titles and hyphenation.</p>
 <p>Biblatex&rsquo;s `language&quot; field, by contrast, which has no equivalent in Zotero, is used to generate textual output in a formatted bibliography.</p>
 <p>Exporting Zotero&rsquo;s <code>language</code> field to the biblatex field <code>language</code> would result in what are now merely language-dependent formatting instructions all of a sudden turned into textual output as well, breaking virtually every style on the biblatex side.</p>
 <p>If you want the <code>language</code> field filled nonetheless, you can either use a BBT postscript, or the biblatex <code>langid</code> tags can still be used to selectively generate <code>language</code> fields that produce the output when rendered, assuming the aim is to eg have only items tagged as Japanese, i.e., containing biblatex <code>langid</code> fields whose contents begin with <code>ja</code> receive the string <code>[in Japanese]</code> in the formatted output.</p>
 <p>In the following, biblatex&rsquo;s <code>\DeclareSourcemap</code> mechanism is used to generate such language fields at runtime. Details can be found in the biblatex manual.</p>
-<div class="highlight wrap-code" dir="auto"><pre tabindex="0"><code>\documentclass{article}
+<div class="highlight actionbar-wrapper wrap-code" dir="auto"><pre tabindex="0"><code>\documentclass{article}
 \begin{filecontents}[overwrite]{tmp.bib}
 @article{UseLanguage,
   title = {Title of UseLanguage},
@@ -394,9 +392,9 @@ Make sure the latter path is correct, as JabRef might continue finding files and
 \printbibliography
 \end{document}</code></pre></div>
 <p>If you just want the bib(la)tex <code>language</code> field to show whatever is in your Zotero <code>language</code> field, you can do it with this postscript:</p>
-<div class="highlight wrap-code" dir="auto"><pre tabindex="0"><code>if (Translator.BetterTeX) { tex.add({ name: &#39;language&#39;, value: zotero.language }) }</code></pre></div>
+<div class="highlight actionbar-wrapper wrap-code" dir="auto"><pre tabindex="0"><code>if (Translator.BetterTeX) { tex.add({ name: &#39;language&#39;, value: zotero.language }) }</code></pre></div>
 <p>If you want the language field translated (to the best of BBTs abilities) to what would otherwise show up in <code>langid</code>, you can use:</p>
-<div class="highlight wrap-code" dir="auto"><pre tabindex="0"><code>if (Translator.BetterTeX) { tex.add({ name: &#39;language&#39;, value: tex.langid() }) }</code></pre></div>
+<div class="highlight actionbar-wrapper wrap-code" dir="auto"><pre tabindex="0"><code>if (Translator.BetterTeX) { tex.add({ name: &#39;language&#39;, value: tex.langid() }) }</code></pre></div>
 
   <footer class="footline">
   </footer>
@@ -1196,8 +1194,8 @@ Better BibTeX for Zotero
 </div>
       </div>
     </aside>
-    <script src="/zotero-better-bibtex/js/clipboard/clipboard.min.js" defer></script>
     <script src="/zotero-better-bibtex/js/perfect-scrollbar/perfect-scrollbar.min.js" defer></script>
     <script src="/zotero-better-bibtex/js/theme.min.js" defer></script>
+    <div id="toast-container" role="status" aria-live="polite" aria-atomic="false"></div>
   </body>
 </html>

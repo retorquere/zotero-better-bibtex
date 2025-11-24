@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="height=device-height, width=device-width, initial-scale=1.0, minimum-scale=1.0">
     <meta name="generator" content="Hugo 0.143.1">
-    <meta name="generator" content="Relearn 8.2.0+9cac649a184a2967957ef9bbececf9402192846c">
+    <meta name="generator" content="Relearn 8.2.0+f69a085322cc70b3e14577c0823c5bc781ec6bb2">
     <meta name="description" content="In addition to LaTeX, BBT plays very well with pandoc:
 you can drag and drop citations from Zotero into your markdown documents. you can cite as you write in your favorite editor with varying levels of comfort, mostly depending on how easy (VSCode, Sublime) or hard (looking at you Scrivener) it is to extend your editor. you can even convert your markdown document into a LibreOffice/Word document with actual live Zotero items as if you had entered them into Zotero all along (see below) Use CSL, not bibtex with pandoc Many tutorials on the use of pandoc to generate documents with citations seem to use bibtex as a bibliography format. I would encourage the use of CSL instead. Internally, both Zotero and pandoc-citeproc use CSL citation engines; the two options you have are:">
     <meta name="author" content="">
@@ -54,8 +54,6 @@ you can drag and drop citations from Zotero into your markdown documents. you ca
       window.relearn.relBasePath='..\/..';
       window.relearn.relBaseUri='..\/..\/..';
       window.relearn.absBaseUri='\/zotero-better-bibtex';
-      window.relearn.disableAnchorCopy=false;
-      window.relearn.disableAnchorScrolling=false;
       window.relearn.disableInlineCopyToClipboard=true;
       window.relearn.enableBlockCodeWrap=true;
       // legal
@@ -63,14 +61,14 @@ you can drag and drop citations from Zotero into your markdown documents. you ca
       window.relearn.setItem = (s,n,v) => {return s.setItem(n,v)};
       window.relearn.removeItem = (s,n) => {return s.removeItem(n)};
       // translations
-      window.T_Copy_to_clipboard = `Copy to clipboard`;
-      window.T_Copied_to_clipboard = `Copied to clipboard!`;
-      window.T_Copy_link_to_clipboard = `Copy link to clipboard`;
-      window.T_Link_copied_to_clipboard = `Copied link to clipboard!`;
+      window.T_Copy_to_clipboard = `Copy text to clipboard`;
+      window.T_Copied_to_clipboard = `Text copied to clipboard!`;
+      window.T_Link_copied_to_clipboard = `Link copied to clipboard!`;
       window.T_Reset_view = `Reset view`;
       window.T_View_reset = `View reset!`;
       window.T_No_results_found = `No results found for "{0}"`;
       window.T_N_results_found = `{1} results found for "{0}"`;
+      window.T_Browser_unsupported_feature = `This browser doesn't support this feature`;
       // variant stuff
       window.relearn.themevariants = [ 'green' ];
       window.relearn.customvariantname = "my-custom-variant";
@@ -128,10 +126,10 @@ you can drag and drop citations from Zotero into your markdown documents. you ca
           <div class="topbar-sidebar-divider"></div>
           <div class="topbar-area topbar-area-start" data-area="start">
             <div class="topbar-button topbar-button-sidebar" data-content-empty="disable" data-width-s="show" data-width-m="hide" data-width-l="hide">
-<span class="btn cstyle link noborder notitle interactive"><button onclick="toggleNav()" type="button" title="Menu (CTRL&#43;ALT&#43;n)"><i class="fa-fw fas fa-bars"></i></button></span>
+<span class="btn cstyle button link noborder notitle interactive"><button onclick="toggleNav()" type="button" title="Menu (CTRL&#43;ALT&#43;n)"><i class="fa-fw fas fa-bars"></i></button></span>
             </div>
             <div class="topbar-button topbar-button-toc" data-content-empty="hide" data-width-s="show" data-width-m="show" data-width-l="show">
-<span class="btn cstyle link noborder notitle interactive"><button onclick="toggleTopbarFlyout(this)" type="button" title="Table of Contents (CTRL&#43;ALT&#43;t)"><i class="fa-fw fas fa-list-alt"></i></button></span>
+<span class="btn cstyle button link noborder notitle interactive"><button onclick="toggleTopbarFlyout(this)" type="button" title="Table of Contents (CTRL&#43;ALT&#43;t)"><i class="fa-fw fas fa-list-alt"></i></button></span>
               <div class="topbar-content">
                 <div class="topbar-content-wrapper">
 <nav class="TableOfContents">
@@ -148,16 +146,16 @@ you can drag and drop citations from Zotero into your markdown documents. you ca
           </ol>
           <div class="topbar-area topbar-area-end" data-area="end">
             <div class="topbar-button topbar-button-edit" data-content-empty="disable" data-width-s="area-more" data-width-m="show" data-width-l="show">
-<span class="btn cstyle link noborder notitle interactive"><a href="https://github.com/retorquere/zotero-better-bibtex/edit/master/site/content/exporting/pandoc.md" rel="external" title="Edit (CTRL+ALT+w)"><i class="fa-fw fas fa-pen"></i></a></span>
+<span class="btn cstyle button link noborder notitle interactive"><a href="https://github.com/retorquere/zotero-better-bibtex/edit/master/site/content/exporting/pandoc.md" rel="external" title="Edit (CTRL+ALT+w)"><i class="fa-fw fas fa-pen"></i></a></span>
             </div>
             <div class="topbar-button topbar-button-prev" data-content-empty="disable" data-width-s="show" data-width-m="show" data-width-l="show">
-<span class="btn cstyle link noborder notitle interactive"><a href="/zotero-better-bibtex/exporting/auto/index.html" title="Automatic export (🡐)"><i class="fa-fw fas fa-chevron-left"></i></a></span>
+<span class="btn cstyle button link noborder notitle interactive"><a href="/zotero-better-bibtex/exporting/auto/index.html" title="Automatic export (🡐)"><i class="fa-fw fas fa-chevron-left"></i></a></span>
             </div>
             <div class="topbar-button topbar-button-next" data-content-empty="disable" data-width-s="show" data-width-m="show" data-width-l="show">
-<span class="btn cstyle link noborder notitle interactive"><a href="/zotero-better-bibtex/exporting/pull/index.html" title="Pull export (🡒)"><i class="fa-fw fas fa-chevron-right"></i></a></span>
+<span class="btn cstyle button link noborder notitle interactive"><a href="/zotero-better-bibtex/exporting/pull/index.html" title="Pull export (🡒)"><i class="fa-fw fas fa-chevron-right"></i></a></span>
             </div>
             <div class="topbar-button topbar-button-more" data-content-empty="hide" data-width-s="show" data-width-m="show" data-width-l="show">
-<span class="btn cstyle link noborder notitle interactive"><button onclick="toggleTopbarFlyout(this)" type="button" title="More"><i class="fa-fw fas fa-ellipsis-v"></i></button></span>
+<span class="btn cstyle button link noborder notitle interactive"><button onclick="toggleTopbarFlyout(this)" type="button" title="More"><i class="fa-fw fas fa-ellipsis-v"></i></button></span>
               <div class="topbar-content">
                 <div class="topbar-content-wrapper">
                   <div class="topbar-area topbar-area-more" data-area="more">
@@ -183,7 +181,7 @@ you can drag and drop citations from Zotero into your markdown documents. you ca
 <li>you can <a href="/zotero-better-bibtex/citing/cayw/">cite as you write</a> in your favorite editor with varying levels of comfort, mostly depending on how easy (VSCode, Sublime) or hard (looking at you Scrivener) it is to extend your editor.</li>
 <li>you can even convert your markdown document into a LibreOffice/Word document with actual live Zotero items as if you had entered them into Zotero all along (see below)</li>
 </ul>
-<h2 id="use-csl-not-bibtex-with-pandoc">Use CSL, not bibtex with pandoc</h2>
+<h2 id="use-csl-not-bibtex-with-pandoc">Use CSL, not bibtex with pandoc<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h2>
 <p>Many tutorials on the use of pandoc to generate documents with
 citations seem to use bibtex as a bibliography format. I would
 encourage the use of CSL instead. Internally, both Zotero and pandoc-citeproc use
@@ -213,14 +211,14 @@ pandoc-citeproc do not necessarily have the same business rules,
 and this unspoken difference can be another cause of loss.</li>
 </ul>
 <p>All of these problems go away if you just skip the detour via bibtex and export (Better) CSL from Zotero and use that in your pandoc process.</p>
-<h2 id="from-markdown-to-zotero-live-citations">From Markdown to Zotero live citations</h2>
+<h2 id="from-markdown-to-zotero-live-citations">From Markdown to Zotero live citations<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h2>
 <p>You can convert a Pandoc-compatible markdown source to a LibreOffice or Word document with live citation fields connecting to Zotero.</p>
 <ul>
 <li>make sure you have pandoc version 2.16.2 or later.</li>
 <li>download the <a href="../zotero.lua">Pandoc filter</a></li>
 <li>optional: add some metadata to your markdown file in a YAML header:</li>
 </ul>
-<div class="highlight wrap-code" dir="auto"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span>---
+<div class="highlight actionbar-wrapper wrap-code" dir="auto"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span>---
 </span></span><span style="display:flex;"><span><span style="color:#75715e"># all the regular stuff you have here</span>
 </span></span><span style="display:flex;"><span><span style="color:#f92672">zotero</span>:
 </span></span><span style="display:flex;"><span>  <span style="color:#f92672">library</span>: <span style="color:#ae81ff">&lt;group name&gt;</span> <span style="color:#75715e"># omitted to use your personal library</span>
@@ -231,7 +229,7 @@ and this unspoken difference can be another cause of loss.</li>
 </span></span><span style="display:flex;"><span>  <span style="color:#f92672">sorted</span>: <span style="color:#66d9ef">true</span> <span style="color:#75715e"># sort clustered citations by author.</span>
 </span></span><span style="display:flex;"><span>...</span></span></code></pre></div>
 <p>or you can specify them on the pandoc command line:</p>
-<div class="highlight wrap-code" dir="auto"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>pandoc -s --lua-filter<span style="color:#f92672">=</span>zotero.lua --metadata<span style="color:#f92672">=</span>zotero_scannable_cite:true --metadata<span style="color:#f92672">=</span>zotero_client:jurism ...</span></span></code></pre></div>
+<div class="highlight actionbar-wrapper wrap-code" dir="auto"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>pandoc -s --lua-filter<span style="color:#f92672">=</span>zotero.lua --metadata<span style="color:#f92672">=</span>zotero_scannable_cite:true --metadata<span style="color:#f92672">=</span>zotero_client:jurism ...</span></span></code></pre></div>
 <p>And hey presto, a live LibreOffice/Word file, or an ODT file with
 scannable cites. When you first open the document with live citations, open the Zotero
 document preferences and click <code>OK</code> <em>before</em> you refresh, or you&rsquo;ll get a confirmation
@@ -1047,8 +1045,8 @@ Better BibTeX for Zotero
 </div>
       </div>
     </aside>
-    <script src="/zotero-better-bibtex/js/clipboard/clipboard.min.js" defer></script>
     <script src="/zotero-better-bibtex/js/perfect-scrollbar/perfect-scrollbar.min.js" defer></script>
     <script src="/zotero-better-bibtex/js/theme.min.js" defer></script>
+    <div id="toast-container" role="status" aria-live="polite" aria-atomic="false"></div>
   </body>
 </html>

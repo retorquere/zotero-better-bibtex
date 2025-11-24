@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="height=device-height, width=device-width, initial-scale=1.0, minimum-scale=1.0">
     <meta name="generator" content="Hugo 0.143.1">
-    <meta name="generator" content="Relearn 8.2.0+9cac649a184a2967957ef9bbececf9402192846c">
+    <meta name="generator" content="Relearn 8.2.0+f69a085322cc70b3e14577c0823c5bc781ec6bb2">
     <meta name="description" content="Better BibTex adds a couple of export formats to Zotero’s export dialog and several ways to improve export for plaintext-based authoring. The Better BibTeX configuration pane can be found under the regular Zotero preferences pane, tab ‘Better BibTeX’ where you can tweak the exports, such as
 Omitting fields from exports to slim down your bib files. Configuring how citation keys are generated. And really a ton more. Additionally you can automate exporting (parts of) your library either using auto-export or pull export.">
     <meta name="author" content="">
@@ -55,8 +55,6 @@ Omitting fields from exports to slim down your bib files. Configuring how citati
       window.relearn.relBasePath='..';
       window.relearn.relBaseUri='..\/..';
       window.relearn.absBaseUri='\/zotero-better-bibtex';
-      window.relearn.disableAnchorCopy=false;
-      window.relearn.disableAnchorScrolling=false;
       window.relearn.disableInlineCopyToClipboard=true;
       window.relearn.enableBlockCodeWrap=true;
       // legal
@@ -64,14 +62,14 @@ Omitting fields from exports to slim down your bib files. Configuring how citati
       window.relearn.setItem = (s,n,v) => {return s.setItem(n,v)};
       window.relearn.removeItem = (s,n) => {return s.removeItem(n)};
       // translations
-      window.T_Copy_to_clipboard = `Copy to clipboard`;
-      window.T_Copied_to_clipboard = `Copied to clipboard!`;
-      window.T_Copy_link_to_clipboard = `Copy link to clipboard`;
-      window.T_Link_copied_to_clipboard = `Copied link to clipboard!`;
+      window.T_Copy_to_clipboard = `Copy text to clipboard`;
+      window.T_Copied_to_clipboard = `Text copied to clipboard!`;
+      window.T_Link_copied_to_clipboard = `Link copied to clipboard!`;
       window.T_Reset_view = `Reset view`;
       window.T_View_reset = `View reset!`;
       window.T_No_results_found = `No results found for "{0}"`;
       window.T_N_results_found = `{1} results found for "{0}"`;
+      window.T_Browser_unsupported_feature = `This browser doesn't support this feature`;
       // variant stuff
       window.relearn.themevariants = [ 'green' ];
       window.relearn.customvariantname = "my-custom-variant";
@@ -129,10 +127,10 @@ Omitting fields from exports to slim down your bib files. Configuring how citati
           <div class="topbar-sidebar-divider"></div>
           <div class="topbar-area topbar-area-start" data-area="start">
             <div class="topbar-button topbar-button-sidebar" data-content-empty="disable" data-width-s="show" data-width-m="hide" data-width-l="hide">
-<span class="btn cstyle link noborder notitle interactive"><button onclick="toggleNav()" type="button" title="Menu (CTRL&#43;ALT&#43;n)"><i class="fa-fw fas fa-bars"></i></button></span>
+<span class="btn cstyle button link noborder notitle interactive"><button onclick="toggleNav()" type="button" title="Menu (CTRL&#43;ALT&#43;n)"><i class="fa-fw fas fa-bars"></i></button></span>
             </div>
             <div class="topbar-button topbar-button-toc" data-content-empty="hide" data-width-s="show" data-width-m="show" data-width-l="show">
-<span class="btn cstyle link noborder notitle interactive"><button onclick="toggleTopbarFlyout(this)" type="button" title="Table of Contents (CTRL&#43;ALT&#43;t)"><i class="fa-fw fas fa-list-alt"></i></button></span>
+<span class="btn cstyle button link noborder notitle interactive"><button onclick="toggleTopbarFlyout(this)" type="button" title="Table of Contents (CTRL&#43;ALT&#43;t)"><i class="fa-fw fas fa-list-alt"></i></button></span>
               <div class="topbar-content">
                 <div class="topbar-content-wrapper">
 <nav class="TableOfContents">
@@ -156,16 +154,16 @@ Omitting fields from exports to slim down your bib files. Configuring how citati
           </ol>
           <div class="topbar-area topbar-area-end" data-area="end">
             <div class="topbar-button topbar-button-edit" data-content-empty="disable" data-width-s="area-more" data-width-m="show" data-width-l="show">
-<span class="btn cstyle link noborder notitle interactive"><a href="https://github.com/retorquere/zotero-better-bibtex/edit/master/site/content/exporting/_index.md" rel="external" title="Edit (CTRL+ALT+w)"><i class="fa-fw fas fa-pen"></i></a></span>
+<span class="btn cstyle button link noborder notitle interactive"><a href="https://github.com/retorquere/zotero-better-bibtex/edit/master/site/content/exporting/_index.md" rel="external" title="Edit (CTRL+ALT+w)"><i class="fa-fw fas fa-pen"></i></a></span>
             </div>
             <div class="topbar-button topbar-button-prev" data-content-empty="disable" data-width-s="show" data-width-m="show" data-width-l="show">
-<span class="btn cstyle link noborder notitle interactive"><a href="/zotero-better-bibtex/preferences/hidden-preferences/index.html" title="Hidden preferences (🡐)"><i class="fa-fw fas fa-chevron-left"></i></a></span>
+<span class="btn cstyle button link noborder notitle interactive"><a href="/zotero-better-bibtex/preferences/hidden-preferences/index.html" title="Hidden preferences (🡐)"><i class="fa-fw fas fa-chevron-left"></i></a></span>
             </div>
             <div class="topbar-button topbar-button-next" data-content-empty="disable" data-width-s="show" data-width-m="show" data-width-l="show">
-<span class="btn cstyle link noborder notitle interactive"><a href="/zotero-better-bibtex/exporting/auto/index.html" title="Automatic export (🡒)"><i class="fa-fw fas fa-chevron-right"></i></a></span>
+<span class="btn cstyle button link noborder notitle interactive"><a href="/zotero-better-bibtex/exporting/auto/index.html" title="Automatic export (🡒)"><i class="fa-fw fas fa-chevron-right"></i></a></span>
             </div>
             <div class="topbar-button topbar-button-more" data-content-empty="hide" data-width-s="show" data-width-m="show" data-width-l="show">
-<span class="btn cstyle link noborder notitle interactive"><button onclick="toggleTopbarFlyout(this)" type="button" title="More"><i class="fa-fw fas fa-ellipsis-v"></i></button></span>
+<span class="btn cstyle button link noborder notitle interactive"><button onclick="toggleTopbarFlyout(this)" type="button" title="More"><i class="fa-fw fas fa-ellipsis-v"></i></button></span>
               <div class="topbar-content">
                 <div class="topbar-content-wrapper">
                   <div class="topbar-area topbar-area-more" data-area="more">
@@ -200,31 +198,31 @@ The Better BibTeX <a href="/zotero-better-bibtex/preferences/">configuration</a>
 <li>And really a <a href="/zotero-better-bibtex/preferences/">ton more</a>.</li>
 </ul>
 <p>Additionally you can automate exporting (parts of) your library either using <a href="/zotero-better-bibtex/exporting/auto/">auto-export</a> or <a href="/zotero-better-bibtex/exporting/pull/">pull export</a>.</p>
-<h2 id="pinning-fixing-the-citation-key">Pinning (fixing) the citation key</h2>
+<h2 id="pinning-fixing-the-citation-key">Pinning (fixing) the citation key<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h2>
 <p>By default, BBT will generate citation keys from your items using the <a href="/zotero-better-bibtex/citing/">formatting pattern</a> you specified. If you want the key to be stable even when you change the item,
 you can fix its citation key to a value of your choosing by adding the text <code>Citation Key: [your citekey]</code> on a line of its own in the <code>extra</code> field of the item.</p>
-<h2 id="add-your-own-biblatex-fields">Add your own BibLaTeX fields</h2>
-<h3 id="latex-fields">LaTeX fields</h3>
+<h2 id="add-your-own-biblatex-fields">Add your own BibLaTeX fields<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h2>
+<h3 id="latex-fields">LaTeX fields<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h3>
 <p>You can add your own fields to the export which are not derived from regular Zotero item fields by adding them in the <code>extra</code> field:</p>
 <p>either by using lines such as</p>
-<div class="highlight wrap-code" dir="auto"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>tex.origdate= 1856
+<div class="highlight actionbar-wrapper wrap-code" dir="auto"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>tex.origdate= 1856
 </span></span><span style="display:flex;"><span>tex.origtitle= All This &amp; More</span></span></code></pre></div>
 <p>or</p>
-<div class="highlight wrap-code" dir="auto"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>tex.origdate: 1856
+<div class="highlight actionbar-wrapper wrap-code" dir="auto"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>tex.origdate: 1856
 </span></span><span style="display:flex;"><span>tex.origtitle: All This &amp; More</span></span></code></pre></div>
 <p>The difference between lines with an <code>=</code> or an <code>:</code> is that the fields marked with <code>=</code> are considered to be valid (&ldquo;raw&rdquo;) latex and will be passed on into the generated files as-is. The lines marked with <code>:</code> are assumed to be plain-text and LaTeX special characters (such as the <code>&amp;</code> above) will be escaped.</p>
-<h3 id="csl-fields">CSL fields</h3>
+<h3 id="csl-fields">CSL fields<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h3>
 <p>The final way to add fields is by using <a href="https://docs.citationstyles.org/en/stable/specification.html#appendix-iv-variables" rel="external">CSL fields</a> in the
 format <code>{:original-date: 1856}</code> or <code>Original Date: 1856</code> on a line of its own. These fields will not only be exported to Bib(La)TeX, but will
 also be <a href="https://forums.zotero.org/discussion/3673/original-date-of-publication/" rel="external">picked up</a> by the Zotero Bibliography manager, even though not all Zotero styles yet support this.</p>
 <p>Note that the default biblatex styles do not seem to support origdate; you can find possible solutions for this at Stack
 Exchange <a href="http://tex.stackexchange.com/questions/142999/the-proper-way-to-cite-the-earliest-publication-date-in-brackets-followed-by" rel="external">here</a>
 and <a href="http://tex.stackexchange.com/questions/55859/getting-origyear-to-work-in-biblatex" rel="external">here</a>.</p>
-<h3 id="changing-the-exported-entry-type">Changing the exported entry type</h3>
+<h3 id="changing-the-exported-entry-type">Changing the exported entry type<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h3>
 <p>If you add a field called <code>tex.entrytype</code>, the value of that field value will be used as the entry type
 instead of the one usually inferred from the Zotero item type. You can use this to create, for example,
 <code>@customa{citekeyhere, ....}</code> type entries.</p>
-<h3 id="background-exports">Background exports</h3>
+<h3 id="background-exports">Background exports<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h3>
 <p>To help out with larger libraries, BBT will export using an isolated thread (&ldquo;worker thread&rdquo;), which will prevent Zotero from locking up during exports.
 This was introduced in 5.2.0; at time of writing it passes all tests, and feedback so far has been positive, but it&rsquo;s a wild departure from how Zotero exports work, so
 I consider it experimental at this stage. If you are experiencing errors,</p>
@@ -1036,8 +1034,8 @@ Better BibTeX for Zotero
 </div>
       </div>
     </aside>
-    <script src="/zotero-better-bibtex/js/clipboard/clipboard.min.js" defer></script>
     <script src="/zotero-better-bibtex/js/perfect-scrollbar/perfect-scrollbar.min.js" defer></script>
     <script src="/zotero-better-bibtex/js/theme.min.js" defer></script>
+    <div id="toast-container" role="status" aria-live="polite" aria-atomic="false"></div>
   </body>
 </html>

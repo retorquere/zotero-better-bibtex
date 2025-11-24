@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="height=device-height, width=device-width, initial-scale=1.0, minimum-scale=1.0">
     <meta name="generator" content="Hugo 0.143.1">
-    <meta name="generator" content="Relearn 8.2.0+9cac649a184a2967957ef9bbececf9402192846c">
+    <meta name="generator" content="Relearn 8.2.0+f69a085322cc70b3e14577c0823c5bc781ec6bb2">
     <meta name="description" content="LaTeX en unicode If you’re lucky and you live in the 21st century or later, you can just use unicode in BibLaTeX and you don’t have to bother about anything that follows except if you’re the curious kind.
 Some of us though are bound to outlets that still demand BibTeX, and there’s geezers like me who just prefer the aesthetic of TeX commands over fancy-schmancy unicode, or you find TeX commands easier to search for in your doc than having to memorize how to enter Ψ. BBT has an extensive map of unicode characters, but translating unicode to TeX comes with a massive downside – support for non-ascii characters is scattered across a myriad of packages that you will have to usepackage into your document. The default set are supported by your latex distribution, and require nothing extra in your preamble, but to achieve that I’ve had to make some compromises. You can amend those choices by telling BBT you have extra packages available. BBT can export commands from the following packages:">
     <meta name="author" content="">
@@ -54,8 +54,6 @@ Some of us though are bound to outlets that still demand BibTeX, and there’s g
       window.relearn.relBasePath='..\/..';
       window.relearn.relBaseUri='..\/..\/..';
       window.relearn.absBaseUri='\/zotero-better-bibtex';
-      window.relearn.disableAnchorCopy=false;
-      window.relearn.disableAnchorScrolling=false;
       window.relearn.disableInlineCopyToClipboard=true;
       window.relearn.enableBlockCodeWrap=true;
       // legal
@@ -63,14 +61,14 @@ Some of us though are bound to outlets that still demand BibTeX, and there’s g
       window.relearn.setItem = (s,n,v) => {return s.setItem(n,v)};
       window.relearn.removeItem = (s,n) => {return s.removeItem(n)};
       // translations
-      window.T_Copy_to_clipboard = `Copy to clipboard`;
-      window.T_Copied_to_clipboard = `Copied to clipboard!`;
-      window.T_Copy_link_to_clipboard = `Copy link to clipboard`;
-      window.T_Link_copied_to_clipboard = `Copied link to clipboard!`;
+      window.T_Copy_to_clipboard = `Copy text to clipboard`;
+      window.T_Copied_to_clipboard = `Text copied to clipboard!`;
+      window.T_Link_copied_to_clipboard = `Link copied to clipboard!`;
       window.T_Reset_view = `Reset view`;
       window.T_View_reset = `View reset!`;
       window.T_No_results_found = `No results found for "{0}"`;
       window.T_N_results_found = `{1} results found for "{0}"`;
+      window.T_Browser_unsupported_feature = `This browser doesn't support this feature`;
       // variant stuff
       window.relearn.themevariants = [ 'green' ];
       window.relearn.customvariantname = "my-custom-variant";
@@ -128,10 +126,10 @@ Some of us though are bound to outlets that still demand BibTeX, and there’s g
           <div class="topbar-sidebar-divider"></div>
           <div class="topbar-area topbar-area-start" data-area="start">
             <div class="topbar-button topbar-button-sidebar" data-content-empty="disable" data-width-s="show" data-width-m="hide" data-width-l="hide">
-<span class="btn cstyle link noborder notitle interactive"><button onclick="toggleNav()" type="button" title="Menu (CTRL&#43;ALT&#43;n)"><i class="fa-fw fas fa-bars"></i></button></span>
+<span class="btn cstyle button link noborder notitle interactive"><button onclick="toggleNav()" type="button" title="Menu (CTRL&#43;ALT&#43;n)"><i class="fa-fw fas fa-bars"></i></button></span>
             </div>
             <div class="topbar-button topbar-button-toc" data-content-empty="hide" data-width-s="show" data-width-m="show" data-width-l="show">
-<span class="btn cstyle link noborder notitle interactive"><button onclick="toggleTopbarFlyout(this)" type="button" title="Table of Contents (CTRL&#43;ALT&#43;t)"><i class="fa-fw fas fa-list-alt"></i></button></span>
+<span class="btn cstyle button link noborder notitle interactive"><button onclick="toggleTopbarFlyout(this)" type="button" title="Table of Contents (CTRL&#43;ALT&#43;t)"><i class="fa-fw fas fa-list-alt"></i></button></span>
               <div class="topbar-content">
                 <div class="topbar-content-wrapper">
 <nav class="TableOfContents">
@@ -167,16 +165,16 @@ Some of us though are bound to outlets that still demand BibTeX, and there’s g
           </ol>
           <div class="topbar-area topbar-area-end" data-area="end">
             <div class="topbar-button topbar-button-edit" data-content-empty="disable" data-width-s="area-more" data-width-m="show" data-width-l="show">
-<span class="btn cstyle link noborder notitle interactive"><a href="https://github.com/retorquere/zotero-better-bibtex/edit/master/site/content/exporting/unicode.md" rel="external" title="Edit (CTRL+ALT+w)"><i class="fa-fw fas fa-pen"></i></a></span>
+<span class="btn cstyle button link noborder notitle interactive"><a href="https://github.com/retorquere/zotero-better-bibtex/edit/master/site/content/exporting/unicode.md" rel="external" title="Edit (CTRL+ALT+w)"><i class="fa-fw fas fa-pen"></i></a></span>
             </div>
             <div class="topbar-button topbar-button-prev" data-content-empty="disable" data-width-s="show" data-width-m="show" data-width-l="show">
-<span class="btn cstyle link noborder notitle interactive"><a href="/zotero-better-bibtex/exporting/extra-fields/index.html" title="Extra fields (🡐)"><i class="fa-fw fas fa-chevron-left"></i></a></span>
+<span class="btn cstyle button link noborder notitle interactive"><a href="/zotero-better-bibtex/exporting/extra-fields/index.html" title="Extra fields (🡐)"><i class="fa-fw fas fa-chevron-left"></i></a></span>
             </div>
             <div class="topbar-button topbar-button-next" data-content-empty="disable" data-width-s="show" data-width-m="show" data-width-l="show">
-<span class="btn cstyle link noborder notitle interactive"><a href="/zotero-better-bibtex/exporting/advanced/index.html" title="Advanced (🡒)"><i class="fa-fw fas fa-chevron-right"></i></a></span>
+<span class="btn cstyle button link noborder notitle interactive"><a href="/zotero-better-bibtex/exporting/advanced/index.html" title="Advanced (🡒)"><i class="fa-fw fas fa-chevron-right"></i></a></span>
             </div>
             <div class="topbar-button topbar-button-more" data-content-empty="hide" data-width-s="show" data-width-m="show" data-width-l="show">
-<span class="btn cstyle link noborder notitle interactive"><button onclick="toggleTopbarFlyout(this)" type="button" title="More"><i class="fa-fw fas fa-ellipsis-v"></i></button></span>
+<span class="btn cstyle button link noborder notitle interactive"><button onclick="toggleTopbarFlyout(this)" type="button" title="More"><i class="fa-fw fas fa-ellipsis-v"></i></button></span>
               <div class="topbar-content">
                 <div class="topbar-content-wrapper">
                   <div class="topbar-area topbar-area-more" data-area="more">
@@ -196,11 +194,11 @@ Some of us though are bound to outlets that still demand BibTeX, and there’s g
 
 <h1 id="unicode">Unicode</h1>
 
-<h2 id="latex-en-unicode">LaTeX en unicode</h2>
+<h2 id="latex-en-unicode">LaTeX en unicode<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h2>
 <p>If you&rsquo;re lucky and you live in the 21st century or later, you can just use unicode in BibLaTeX and you don&rsquo;t have to bother about anything that follows except if you&rsquo;re the curious kind.</p>
 <p>Some of us though are bound to outlets that still demand BibTeX, and there&rsquo;s geezers like me who just prefer the aesthetic of TeX commands over fancy-schmancy unicode, or you find TeX commands easier to search for in your doc than having to memorize how to enter <code>Ψ</code>. BBT has an extensive map of unicode characters, but translating unicode to TeX comes with a massive downside &ndash; support for non-ascii characters is scattered across a myriad of packages that you will have to <code>usepackage</code> into your document. The default set are supported by your latex distribution, and require nothing extra in your preamble, but to achieve that I&rsquo;ve had to make some compromises. You can amend those choices by telling BBT you have extra packages available. BBT can export commands from the following packages:</p>
 <!-- generated tables below -->
-<h3 id="wasysym">wasysym</h3>
+<h3 id="wasysym">wasysym<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h3>
 <table>
   <thead>
       <tr>
@@ -235,7 +233,7 @@ Some of us though are bound to outlets that still demand BibTeX, and there’s g
       </tr>
   </tbody>
 </table>
-<h3 id="unicode-math">unicode-math</h3>
+<h3 id="unicode-math">unicode-math<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h3>
 <table>
   <thead>
       <tr>
@@ -7340,7 +7338,7 @@ Some of us though are bound to outlets that still demand BibTeX, and there’s g
       </tr>
   </tbody>
 </table>
-<h3 id="amssymb">amssymb</h3>
+<h3 id="amssymb">amssymb<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h3>
 <table>
   <thead>
       <tr>
@@ -7389,7 +7387,7 @@ Some of us though are bound to outlets that still demand BibTeX, and there’s g
       </tr>
   </tbody>
 </table>
-<h3 id="arevmath">arevmath</h3>
+<h3 id="arevmath">arevmath<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h3>
 <table>
   <thead>
       <tr>
@@ -7424,7 +7422,7 @@ Some of us though are bound to outlets that still demand BibTeX, and there’s g
       </tr>
   </tbody>
 </table>
-<h3 id="minionpro">MinionPro</h3>
+<h3 id="minionpro">MinionPro<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h3>
 <table>
   <thead>
       <tr>
@@ -7459,7 +7457,7 @@ Some of us though are bound to outlets that still demand BibTeX, and there’s g
       </tr>
   </tbody>
 </table>
-<h3 id="mathrsfs">mathrsfs</h3>
+<h3 id="mathrsfs">mathrsfs<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h3>
 <table>
   <thead>
       <tr>
@@ -7662,7 +7660,7 @@ Some of us though are bound to outlets that still demand BibTeX, and there’s g
       </tr>
   </tbody>
 </table>
-<h3 id="mnsymbol">MnSymbol</h3>
+<h3 id="mnsymbol">MnSymbol<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h3>
 <table>
   <thead>
       <tr>
@@ -7697,7 +7695,7 @@ Some of us though are bound to outlets that still demand BibTeX, and there’s g
       </tr>
   </tbody>
 </table>
-<h3 id="mathabx">mathabx</h3>
+<h3 id="mathabx">mathabx<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h3>
 <table>
   <thead>
       <tr>
@@ -7732,7 +7730,7 @@ Some of us though are bound to outlets that still demand BibTeX, and there’s g
       </tr>
   </tbody>
 </table>
-<h3 id="xecjk">xecjk</h3>
+<h3 id="xecjk">xecjk<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h3>
 <table>
   <thead>
       <tr>
@@ -7865,7 +7863,7 @@ Some of us though are bound to outlets that still demand BibTeX, and there’s g
       </tr>
   </tbody>
 </table>
-<h3 id="textcomp">textcomp</h3>
+<h3 id="textcomp">textcomp<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h3>
 <table>
   <thead>
       <tr>
@@ -7984,7 +7982,7 @@ Some of us though are bound to outlets that still demand BibTeX, and there’s g
       </tr>
   </tbody>
 </table>
-<h3 id="inputenx">inputenx</h3>
+<h3 id="inputenx">inputenx<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h3>
 <table>
   <thead>
       <tr>
@@ -8019,7 +8017,7 @@ Some of us though are bound to outlets that still demand BibTeX, and there’s g
       </tr>
   </tbody>
 </table>
-<h3 id="tipa">tipa</h3>
+<h3 id="tipa">tipa<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h3>
 <table>
   <thead>
       <tr>
@@ -8236,7 +8234,7 @@ Some of us though are bound to outlets that still demand BibTeX, and there’s g
       </tr>
   </tbody>
 </table>
-<h3 id="ipa">ipa</h3>
+<h3 id="ipa">ipa<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h3>
 <table>
   <thead>
       <tr>
@@ -8271,7 +8269,7 @@ Some of us though are bound to outlets that still demand BibTeX, and there’s g
       </tr>
   </tbody>
 </table>
-<h3 id="mathscinet">mathscinet</h3>
+<h3 id="mathscinet">mathscinet<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h3>
 <table>
   <thead>
       <tr>
@@ -8306,7 +8304,7 @@ Some of us though are bound to outlets that still demand BibTeX, and there’s g
       </tr>
   </tbody>
 </table>
-<h3 id="textalpha">textalpha</h3>
+<h3 id="textalpha">textalpha<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h3>
 <table>
   <thead>
       <tr>
@@ -8341,7 +8339,7 @@ Some of us though are bound to outlets that still demand BibTeX, and there’s g
       </tr>
   </tbody>
 </table>
-<h3 id="graphics">graphics</h3>
+<h3 id="graphics">graphics<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h3>
 <table>
   <thead>
       <tr>
@@ -8376,7 +8374,7 @@ Some of us though are bound to outlets that still demand BibTeX, and there’s g
       </tr>
   </tbody>
 </table>
-<h3 id="pmboxdraw">pmboxdraw</h3>
+<h3 id="pmboxdraw">pmboxdraw<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h3>
 <table>
   <thead>
       <tr>
@@ -9704,8 +9702,8 @@ Better BibTeX for Zotero
 </div>
       </div>
     </aside>
-    <script src="/zotero-better-bibtex/js/clipboard/clipboard.min.js" defer></script>
     <script src="/zotero-better-bibtex/js/perfect-scrollbar/perfect-scrollbar.min.js" defer></script>
     <script src="/zotero-better-bibtex/js/theme.min.js" defer></script>
+    <div id="toast-container" role="status" aria-live="polite" aria-atomic="false"></div>
   </body>
 </html>

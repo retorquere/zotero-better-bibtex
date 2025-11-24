@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="height=device-height, width=device-width, initial-scale=1.0, minimum-scale=1.0">
     <meta name="generator" content="Hugo 0.143.1">
-    <meta name="generator" content="Relearn 8.2.0+9cac649a184a2967957ef9bbececf9402192846c">
+    <meta name="generator" content="Relearn 8.2.0+f69a085322cc70b3e14577c0823c5bc781ec6bb2">
     <meta name="description" content="To export a library, group or collection, right-click on it in the left Zotero pane and choose “Export Library…” or “Export Collection…”. With BBT’s export translators (e.g., “Better BibTeX”), checking the Keep updated option will register the export for automation. After you’ve completed the current export, any changes to the collection or library will trigger an automatic re-export to update the file. You can review/remove exports from the BBT preferences. While I’ve gone to some lengths to make sure performance is OK, don’t go overboard with the number of auto-exports you have going. Also, exporting only targeted selections over your whole library will get you better performance. You can set up separate exports for separate papers for example if you have set up a collection for each.">
     <meta name="author" content="">
     <meta name="twitter:card" content="summary">
@@ -55,8 +55,6 @@
       window.relearn.relBasePath='..\/..';
       window.relearn.relBaseUri='..\/..\/..';
       window.relearn.absBaseUri='\/zotero-better-bibtex';
-      window.relearn.disableAnchorCopy=false;
-      window.relearn.disableAnchorScrolling=false;
       window.relearn.disableInlineCopyToClipboard=true;
       window.relearn.enableBlockCodeWrap=true;
       // legal
@@ -64,14 +62,14 @@
       window.relearn.setItem = (s,n,v) => {return s.setItem(n,v)};
       window.relearn.removeItem = (s,n) => {return s.removeItem(n)};
       // translations
-      window.T_Copy_to_clipboard = `Copy to clipboard`;
-      window.T_Copied_to_clipboard = `Copied to clipboard!`;
-      window.T_Copy_link_to_clipboard = `Copy link to clipboard`;
-      window.T_Link_copied_to_clipboard = `Copied link to clipboard!`;
+      window.T_Copy_to_clipboard = `Copy text to clipboard`;
+      window.T_Copied_to_clipboard = `Text copied to clipboard!`;
+      window.T_Link_copied_to_clipboard = `Link copied to clipboard!`;
       window.T_Reset_view = `Reset view`;
       window.T_View_reset = `View reset!`;
       window.T_No_results_found = `No results found for "{0}"`;
       window.T_N_results_found = `{1} results found for "{0}"`;
+      window.T_Browser_unsupported_feature = `This browser doesn't support this feature`;
       // variant stuff
       window.relearn.themevariants = [ 'green' ];
       window.relearn.customvariantname = "my-custom-variant";
@@ -129,10 +127,10 @@
           <div class="topbar-sidebar-divider"></div>
           <div class="topbar-area topbar-area-start" data-area="start">
             <div class="topbar-button topbar-button-sidebar" data-content-empty="disable" data-width-s="show" data-width-m="hide" data-width-l="hide">
-<span class="btn cstyle link noborder notitle interactive"><button onclick="toggleNav()" type="button" title="Menu (CTRL&#43;ALT&#43;n)"><i class="fa-fw fas fa-bars"></i></button></span>
+<span class="btn cstyle button link noborder notitle interactive"><button onclick="toggleNav()" type="button" title="Menu (CTRL&#43;ALT&#43;n)"><i class="fa-fw fas fa-bars"></i></button></span>
             </div>
             <div class="topbar-button topbar-button-toc" data-content-empty="hide" data-width-s="show" data-width-m="show" data-width-l="show">
-<span class="btn cstyle link noborder notitle interactive"><button onclick="toggleTopbarFlyout(this)" type="button" title="Table of Contents (CTRL&#43;ALT&#43;t)"><i class="fa-fw fas fa-list-alt"></i></button></span>
+<span class="btn cstyle button link noborder notitle interactive"><button onclick="toggleTopbarFlyout(this)" type="button" title="Table of Contents (CTRL&#43;ALT&#43;t)"><i class="fa-fw fas fa-list-alt"></i></button></span>
               <div class="topbar-content">
                 <div class="topbar-content-wrapper">
 <nav class="TableOfContents">
@@ -155,16 +153,16 @@
           </ol>
           <div class="topbar-area topbar-area-end" data-area="end">
             <div class="topbar-button topbar-button-edit" data-content-empty="disable" data-width-s="area-more" data-width-m="show" data-width-l="show">
-<span class="btn cstyle link noborder notitle interactive"><a href="https://github.com/retorquere/zotero-better-bibtex/edit/master/site/content/exporting/auto.md" rel="external" title="Edit (CTRL+ALT+w)"><i class="fa-fw fas fa-pen"></i></a></span>
+<span class="btn cstyle button link noborder notitle interactive"><a href="https://github.com/retorquere/zotero-better-bibtex/edit/master/site/content/exporting/auto.md" rel="external" title="Edit (CTRL+ALT+w)"><i class="fa-fw fas fa-pen"></i></a></span>
             </div>
             <div class="topbar-button topbar-button-prev" data-content-empty="disable" data-width-s="show" data-width-m="show" data-width-l="show">
-<span class="btn cstyle link noborder notitle interactive"><a href="/zotero-better-bibtex/exporting/index.html" title="Exporting items (🡐)"><i class="fa-fw fas fa-chevron-left"></i></a></span>
+<span class="btn cstyle button link noborder notitle interactive"><a href="/zotero-better-bibtex/exporting/index.html" title="Exporting items (🡐)"><i class="fa-fw fas fa-chevron-left"></i></a></span>
             </div>
             <div class="topbar-button topbar-button-next" data-content-empty="disable" data-width-s="show" data-width-m="show" data-width-l="show">
-<span class="btn cstyle link noborder notitle interactive"><a href="/zotero-better-bibtex/exporting/pandoc/index.html" title="Markdown/Pandoc (🡒)"><i class="fa-fw fas fa-chevron-right"></i></a></span>
+<span class="btn cstyle button link noborder notitle interactive"><a href="/zotero-better-bibtex/exporting/pandoc/index.html" title="Markdown/Pandoc (🡒)"><i class="fa-fw fas fa-chevron-right"></i></a></span>
             </div>
             <div class="topbar-button topbar-button-more" data-content-empty="hide" data-width-s="show" data-width-m="show" data-width-l="show">
-<span class="btn cstyle link noborder notitle interactive"><button onclick="toggleTopbarFlyout(this)" type="button" title="More"><i class="fa-fw fas fa-ellipsis-v"></i></button></span>
+<span class="btn cstyle button link noborder notitle interactive"><button onclick="toggleTopbarFlyout(this)" type="button" title="More"><i class="fa-fw fas fa-ellipsis-v"></i></button></span>
               <div class="topbar-content">
                 <div class="topbar-content-wrapper">
                   <div class="topbar-area topbar-area-more" data-area="more">
@@ -198,7 +196,7 @@ With BBT&rsquo;s export translators (e.g., &ldquo;Better BibTeX&rdquo;), checkin
 After you’ve completed the current export, any changes to the collection or library will trigger an automatic re-export to update the file.
 You can review/remove exports from the BBT preferences.  While I&rsquo;ve gone to some lengths to make sure performance is OK, don&rsquo;t go overboard with the number of auto-exports you have going. Also, exporting only targeted selections over your whole library will get you better performance. You can set up
 separate exports for separate papers for example if you have set up a collection for each.</p>
-<h2 id="managing-auto-exports">Managing auto-exports</h2>
+<h2 id="managing-auto-exports">Managing auto-exports<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h2>
 <p>There are two important concepts in play for auto-export</p>
 <ul>
 <li>register a collection/library for scheduled exports, and</li>
@@ -216,7 +214,7 @@ you can manage your auto-exports in the BBT preferences under the
 <code>Automatic exports</code> tab. There, you can remove auto-exports or change
 settings on them. You cannot add new auto-exports
 from here, that can only be done by initiating an export.</p>
-<h2 id="getting-your-bbt-generated-biblatexcitekeys-to-other-places">Getting your BBT-generated bib(la)tex/citekeys to other places</h2>
+<h2 id="getting-your-bbt-generated-biblatexcitekeys-to-other-places">Getting your BBT-generated bib(la)tex/citekeys to other places<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h2>
 <p>You may want to use your BBT generated bib(la)tex on other systems; maybe you use Overleaf (as I do), maybe you have your documents compiled using github actions (as I do). In any case, you want your auto-exported items to show up somewhere else. If you&rsquo;re thinking of this in the context of Overleaf, here&rsquo;s a TL;DR of the pros and cons:</p>
 <ul>
 <li>Auto-export + cloud-sync + import by URL
@@ -245,14 +243,14 @@ from here, that can only be done by initiating an export.</p>
 </ul>
 </li>
 </ul>
-<h3 id="dropbox--google-drive--boxcom--">DropBox / Google Drive / Box.com / &hellip;</h3>
+<h3 id="dropbox--google-drive--boxcom--">DropBox / Google Drive / Box.com / &hellip;<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h3>
 <p>Or any other of the plethora of choices that are available today that will &ldquo;cloud-sync&rdquo; your files. Will work with any cloud service, as long as it delivers direct-download links, as this method will import into Overleaf by URL.
 1.Export the Better Bibtex / Better LaTeX file into an cloud shared folder, with the &ldquo;keep updated&rdquo;-option checked
 2.Create/generate/find a direct-download link. Google is your friend.
 3.Import your cloud-saved bib-file into Overleaf by &ldquo;Add file -&gt; From external URL&rdquo;
 4.When adding new sources, refresh both the Zotero client, and click the &ldquo;refresh&rdquo;-button in the file on Overleaf</p>
 <p>If working in a group, this can be accomplished by repeating step 1 for each person into the same cloud-shared folder. When doing step 1, make sure to use the same filename as the original bib-file. This will overwrite the bib-file every time the library is refreshed.</p>
-<h3 id="git-support">git support</h3>
+<h3 id="git-support">git support<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h3>
 <p>BBT auto-export works nicely with git services (such as Overleaf, which is where I use it myself; the instructions for setting up Overleaf for git can be found <a href="https://www.overleaf.com/blog/195-new-collaborate-online-and-offline-with-overleaf-and-git-beta" rel="external">here</a>, but any git service (gitlab, github, etc) should work exactly the same. I&rsquo;m toying with various online services <a href="https://github.com/retorquere/zotero-better-bibtex/projects/2" rel="external">here</a>.</p>
 <p><strong>Note that this is more for the technically inclined,</strong> you will need to be comfortable with the command line to set this up. I can&rsquo;t think of a real benefit to using git over cloud-sync unless, like me, you like to keep a backup history in git.</p>
 <p>To activate git support, first clone the repo that holds your article/thesis/whatnot from your provider (github, overleaf, etc), run <code>git config zotero.betterbibtex.push true</code> in a command shell in that clone, and set up an auto export to that directory; at each update, BBT will now also push your library to the git service. For the technically curious, that means it does:</p>
@@ -264,7 +262,7 @@ from here, that can only be done by initiating an export.</p>
 <li><code>git push</code></li>
 </ol>
 <p>Note that the nature of git commit/push is not file-bound; if you made edits to other files, and added those, they will be committed and pushed along. If you want to be super-careful, the best way to go about it is to have a separate clone of your repo that BBT auto-exports to, and then another repo that you do your own edits in. I don&rsquo;t use it myself this way, but you have been warned.</p>
-<h3 id="pinning-bbt-citekeys-for-overleaf">Pinning BBT citekeys for Overleaf</h3>
+<h3 id="pinning-bbt-citekeys-for-overleaf">Pinning BBT citekeys for Overleaf<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h3>
 <p>If you only want BBTs citation keys on Overleaf, you can simply pin
 them and use the regular Overleaf-Zotero integration. This will get
 you the pinned keys, but the bibtex is generated by the standard
@@ -1072,8 +1070,8 @@ Better BibTeX for Zotero
 </div>
       </div>
     </aside>
-    <script src="/zotero-better-bibtex/js/clipboard/clipboard.min.js" defer></script>
     <script src="/zotero-better-bibtex/js/perfect-scrollbar/perfect-scrollbar.min.js" defer></script>
     <script src="/zotero-better-bibtex/js/theme.min.js" defer></script>
+    <div id="toast-container" role="status" aria-live="polite" aria-atomic="false"></div>
   </body>
 </html>
