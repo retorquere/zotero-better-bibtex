@@ -234,6 +234,7 @@ class Library:
 
     if path:
       self.ext = self.suffix(path)
+
     elif ext:
       if type(ext) == Library:
         self.ext = self.suffix(ext.path)
@@ -260,7 +261,8 @@ class Library:
       if self.patch:
         self.path = self.base[:-len(self.ext)] + '.' + self.patch.split('.')[-2] + self.ext
 
-    if not self.body and self.base and os.path.exists(self.base):
+    if not self.body and self.base:
+      assert os.path.exists(self.base), f'{json.dumps(self.base)} does not exist'
       with open(self.base) as f:
         self.body = f.read()
 
