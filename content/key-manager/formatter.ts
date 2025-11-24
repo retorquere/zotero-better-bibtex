@@ -435,6 +435,8 @@ export class PatternFormatter {
     this.re.unsafechars = new RegExp(`[${ unsafechars }\\s]`, 'g')
     this.skipWords = new Set(Preference.skipWords.split(',').map((word: string) => word.trim().toLowerCase()).filter((word: string) => word))
 
+    this.config.creatorNames.transliterate = Preference.citekeyFold
+
     let error = ''
     const ts = Date.now()
     // the zero-width-space is a marker to re-save the current default so it doesn't get replaced when the default changes later, which would change new keys suddenly
@@ -671,8 +673,9 @@ export class PatternFormatter {
    * @param transliterate transliterate the name
    * @param space replace spaces in the name (in case of multi-part names for example) with this string
    */
-  public $creatornames(template?: Template<'creator'>, space?: string): string { // eslint-disable-line @typescript-eslint/no-shadow
+  public $creatornames(template?: Template<'creator'>, transliterate?: boolean, space?: string): string { // eslint-disable-line @typescript-eslint/no-shadow
     if (typeof template !== 'undefined') this.config.creatorNames.template = template
+    if (typeof transliterate !== 'undefined') this.config.creatorNames.transliterate = transliterate
     if (typeof space !== 'undefined') this.config.creatorNames.space = space
     return ''
   }
@@ -1515,6 +1518,23 @@ export class PatternFormatter {
       words = words
         .flatMap((word: string) => japanese.tokenize(word))
         .filter((word: string) => !this.skipWords.has(word.toLowerCase()))
+    }
+
+    if (Preference.citekeyFold) {
+      words = words.map((word: string) => {
+        if (this.item.transliterateMode) {
+          return this.transliterate(word)
+        }
+        else if (japanese.enabled) {
+          return this.transliterate(japanese.convert(word, { to: 'romaji' }), 'minimal')
+        }
+        else if (chinese.enabled) {
+          return this.transliterate(chinese.pinyin(word), 'minimal')
+        }
+        else {
+          return this.transliterate(word)
+        }
+      })
     }
 
     if (options.skipWords) words = words.filter((word: string) => !this.skipWords.has(word.toLowerCase()))
