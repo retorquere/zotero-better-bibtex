@@ -607,14 +607,12 @@ export const KeyManager = new class _KeyManager {
     return proposed.citationKey
   }
 
-  public get(itemID: number): Partial<CitekeyRecord> & { retry?: boolean } {
+  public get(itemID: number): CitekeyRecord {
     // I cannot prevent being called before the init is done because Zotero unlocks the UI *way* before I'm getting the
     // go-ahead to *start* my init.
-    if (!this.keys || !this.started) return { citationKey: '', pinned: false, retry: true }
+    if (!this.keys || !this.started) return null
 
-    const key = blink.first(this.keys, byItemID(itemID))
-    if (key) return key
-    return { citationKey: '', pinned: false, retry: true }
+    return blink.first(this.keys, byItemID(itemID))
   }
 
   public first(query: Query<CitekeyRecord, 'itemID'>): CitekeyRecord {

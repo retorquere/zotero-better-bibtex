@@ -146,6 +146,8 @@ async function bundle(config) {
     plugins: [],
     minify: false,
     drop: ['console'],
+    minify: true,
+    sourcemap: true,
     ...config,
   }
   if (!config.plugins.includes(loader.json)) config.plugins.push(loader.json)

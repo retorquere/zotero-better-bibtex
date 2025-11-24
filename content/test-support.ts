@@ -322,7 +322,7 @@ export class TestSupport {
   }
 
   public citationKey(itemID: number): string {
-    return (Zotero.BetterBibTeX.KeyManager.get(itemID) as CitekeyRecord).citationKey
+    return Zotero.BetterBibTeX.KeyManager.get(itemID)?.citationKey || ''
   }
 
   public async quickCopy(itemIDs: number[], translator: string): Promise<string> {
