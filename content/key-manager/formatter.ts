@@ -1505,42 +1505,37 @@ export class PatternFormatter {
     if (!title) return null
 
     title = title.replace(/<\/?(?:i|b|sc|nc|code|span[^>]*)>|["]/ig, '').replace(/[/:]/g, ' ')
-    let words = this.split(title)
+    let words: string[] = this.split(title)
       .map(word => nopunct ? this.nopunct(word, '') : word)
       .filter(word => word && !(ucs2.decode(word).length === 1 && !word.match(/^\d+$/) && !word.match(CJK)))
 
     // apply jieba.cut and flatten.
     if (chinese.enabled && this.item.transliterateMode === 'chinese') {
-      words = [].concat(...words.map((word: string) => chinese.jieba(word)))
+      words = [].concat(...words.map(word => chinese.jieba(word)))
     }
 
     if (japanese.enabled && this.item.transliterateMode === 'japanese') {
-      words = words.flatMap((word: string) => japanese.tokenize(word))
+      words = words.flatMap(word => japanese.tokenize(word))
     }
 
-    if (!this.item.transliterateModeCJK && this.skipWords.size) {
-      words = words.filter((word: string) => {
-        word = word.toLowerCase()
-        let transliterated = word
-
+    if (Preference.citekeyFold) {
+      words = words.map(word => {
         if (this.item.transliterateMode) {
-          transliterated = this.transliterate(word)
+          return this.transliterate(word)
         }
-        /*
         else if (japanese.enabled) {
-          transliterated = this.transliterate(japanese.convert(word, { to: 'romaji' }), 'minimal')
+          return this.transliterate(japanese.convert(word, { to: 'romaji' }), 'minimal')
         }
         else if (chinese.enabled) {
-          transliterated = this.transliterate(chinese.pinyin(word), 'minimal')
+          return this.transliterate(chinese.pinyin(word), 'minimal')
         }
-        */
         else {
-          transliterated = this.transliterate(word)
+          return this.transliterate(word)
         }
-
-        return !(this.skipWords.has(word) || this.skipWords.has(transliterated))
       })
     }
+
+    if (this.skipWords.size) words = words.filter(word => !this.skipWords.has(word))
 
     if (words.length === 0) return null
 

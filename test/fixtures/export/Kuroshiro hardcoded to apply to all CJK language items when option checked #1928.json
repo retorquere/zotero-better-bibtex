@@ -7,7 +7,6 @@
       "exportNotes": true
     },
     "preferences": {
-      "baseAttachmentPath": "C:\\Users\\jtcar\\Dropbox\\Juris-M",
       "citekeyFold": true,
       "citekeyFormat": "language(ja) + authEtAl(creator=\"*\",initials=false,sep=\" \").fold + shorttitle(2,2) + year;\nauthorsn(n=0,creator=\"*\",initials=false,sep=\" \").jieba.select(1,2).transliterate(zh) + Title.jieba.skipwords.select(1,2).nopunct.transliterate(zh) + year;",
       "verbatimFields": "url,doi,file,eprint,verba,verbb,verbc,groups",
