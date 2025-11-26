@@ -657,7 +657,7 @@ Some of us though are bound to outlets that still demand BibTeX, and there's gee
 
 | **character** | **text** | **math** | **character** | **text** | **math** | **character** | **text** | **math** | **character** | **text** | **math** |
 |---------------|----------|----------|---------------|----------|----------|---------------|----------|----------|---------------|----------|----------|
-|  ἐ | \textgreek{ἐ} |  |  ῐ | \textgreek{ῐ} |  |  ᾰ | \textgreek{ᾰ} |  |  | |  |
+|  ἐ | \textgreek{ἐ} |  |  ῐ́ | \textgreek{ῐ} |  |  ᾰ | \textgreek{ᾰ} |  |  | |  |
 
 
 ### textalpha
