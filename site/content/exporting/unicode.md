@@ -653,6 +653,13 @@ Some of us though are bound to outlets that still demand BibTeX, and there's gee
 |  ʿ | \lasp |  |  | |  |  | |  |  | |  |
 
 
+### textgreek
+
+| **character** | **text** | **math** | **character** | **text** | **math** | **character** | **text** | **math** | **character** | **text** | **math** |
+|---------------|----------|----------|---------------|----------|----------|---------------|----------|----------|---------------|----------|----------|
+|  ἐ | \textgreek{ἐ} |  |  ῐ́ | \textgreek{ῐ} |  |  ᾰ | \textgreek{ᾰ} |  |  | |  |
+
+
 ### textalpha
 
 | **character** | **text** | **math** | **character** | **text** | **math** | **character** | **text** | **math** | **character** | **text** | **math** |

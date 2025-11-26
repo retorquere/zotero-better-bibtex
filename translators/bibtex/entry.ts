@@ -1268,10 +1268,10 @@ export class Entry {
 
   private _enc_creators_pad_particle(particle: string, relax = false): string {
     // space at end is always OK
-    if (particle[particle.length - 1] === ' ') return particle
+    if (particle.at(-1) === ' ') return particle
 
     if (this.translation.BetterBibLaTeX) {
-      if (particle.match(this.re.punctuationAtEnd)) this.metadata.DeclarePrefChars += particle[particle.length - 1]
+      if (particle.match(this.re.punctuationAtEnd)) this.metadata.DeclarePrefChars += particle.at(-1)
       // if BBLT, always add a space if it isn't there
       return `${ particle } `
     }
@@ -1279,7 +1279,7 @@ export class Entry {
     // otherwise, we're in BBT.
 
     // If the particle ends in a period, add a space
-    if (particle[particle.length - 1] === '.') return `${ particle } `
+    if (particle.at(-1) === '.') return `${ particle } `
 
     // if it ends in any other punctuation, it's probably something like d'Medici -- no space
     if (particle.match(this.re.punctuationAtEnd)) {
@@ -1360,7 +1360,7 @@ export class Entry {
 
   private _enc_creators_biblatex(name: { family?: string; given?: string; suffix?: string; initials?: string; useprefix: boolean }): string {
     let family: string | String
-    if ((name.family.length > 1) && (name.family[0] === '"') && (name.family[name.family.length - 1] === '"')) {
+    if ((name.family.length > 1) && (name.family[0] === '"') && (name.family.at(-1) === '"')) {
       family = new String(name.family.slice(1, -1))
     }
     else {
@@ -1419,7 +1419,7 @@ export class Entry {
 
   private _enc_creators_bibtex(name): string {
     let family: string | String
-    if ((name.family.length > 1) && (name.family[0] === '"') && (name.family[name.family.length - 1] === '"')) { // quoted
+    if ((name.family.length > 1) && (name.family[0] === '"') && (name.family.at(-1) === '"')) { // quoted
       family = new String(name.family.slice(1, -1))
     }
     else {

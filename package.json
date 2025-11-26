@@ -1,7 +1,7 @@
 {
   "name": "zotero-better-bibtex",
   "type": "module",
-  "version": "7.0.67",
+  "version": "7.0.68",
   "description": "Make Zotero useful for us LaTeX holdouts.",
   "homepage": "https://retorque.re/zotero-better-bibtex",
   "license": "ISC",
@@ -199,7 +199,7 @@
     "typedoc": "^0.28.14",
     "typescript": "^5.9.3",
     "typescript-eslint": "^8.45.0",
-    "unicode2latex": "^7.0.25",
+    "unicode2latex": "^7.0.30",
     "uri-templates": "^0.2.0",
     "util": "^0.12.5",
     "xml-parser": "^1.2.1",
