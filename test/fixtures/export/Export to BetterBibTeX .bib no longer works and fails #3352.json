@@ -4,6 +4,7 @@
     "label": "BetterBibTeX JSON",
     "preferences": {
       "autoPinDelay": 5,
+      "asciiBibLaTeX": true,
       "citekeyFormat": "auth + (origyear || year) + shorttitle(1, 1)",
       "keyConflictPolicy": "change",
       "keyScope": "global",
