@@ -573,7 +573,7 @@ const reset = {
 function trim(args) {
   args = [...args]
   let last
-  while (args.length && (last = args[args.length - 1]) && ((last.type === 'Literal' && !last.value) || (last.type === 'Identifier' && last.name === 'undefined'))) {
+  while (args.length && (last = args.at(-1)) && ((last.type === 'Literal' && !last.value) || (last.type === 'Identifier' && last.name === 'undefined'))) {
     args.pop()
   }
   return args

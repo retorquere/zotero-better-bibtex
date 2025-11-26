@@ -133,7 +133,7 @@ export class HTMLConverter {
       case 'br':
         latex = ''
         /* line-breaks on empty line makes LaTeX sad */
-        if (this.latex !== '' && this.latex[this.latex.length - 1] !== '\n') latex = '\\\\'
+        if (this.latex !== '' && this.latex.at(-1) !== '\n') latex = '\\\\'
         latex += '\n\x1D'
         break
 

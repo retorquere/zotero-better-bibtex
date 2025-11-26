@@ -720,7 +720,7 @@ export class PatternFormatter {
    */
   public $authorLastForeIni(creator: AuthorType = '*'): string {
     const authors = this.creators(creator, '%(I)s')
-    const author = authors[authors.length - 1] || ''
+    const author = authors.at(-1) || ''
     return author
   }
 
@@ -731,7 +731,7 @@ export class PatternFormatter {
    */
   public $authorLast(creator: AuthorType = '*', initials = false): string {
     const authors = this.creators(creator, initials ? `${this.config.creatorNames.template}%(I)s` : this.config.creatorNames.template)
-    const author = authors[authors.length - 1] || ''
+    const author = authors.at(-1) || ''
     return author
   }
 
