@@ -585,8 +585,6 @@ export class BetterBibTeX {
         Events.on('idle', async state => {
           if (state.topic === 'cache-purge' && Cache.ready) await Cache.Serialized.purge()
         })
-
-        if (Zotero) throw new Error('sourcemap?')
       },
     })
 
