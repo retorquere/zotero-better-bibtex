@@ -4,7 +4,7 @@ import { HTMLParser } from '../../content/text'
 import type { MarkupNode } from '../../typings/markup'
 
 import { log } from '../../content/logger'
-import HE from 'he'
+import { decodeHTMLAttribute } from 'entities'
 import { Transform } from 'unicode2latex'
 
 export type ConverterOptions = {
@@ -233,7 +233,7 @@ export class HTMLConverter {
   }
 
   private chars(text, nocased) {
-    if (this.options.html) text = HE.decode(text, { isAttributeValue: true })
+    if (this.options.html) text = decodeHTMLAttribute(text)
     this.latex += this.tx.tolatex(text, { bracemath: !nocased, preservemacrospacers: true, packages: this.packages })
   }
 }
