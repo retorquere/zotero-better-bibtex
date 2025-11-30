@@ -145,6 +145,7 @@ async function bundle(config) {
     treeShaking: true,
     plugins: [],
     minify: false,
+    sourcemap: true,
     drop: ['console'],
     ...config,
   }
