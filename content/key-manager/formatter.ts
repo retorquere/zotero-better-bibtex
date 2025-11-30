@@ -286,7 +286,7 @@ class Item {
   public id: number
   public libraryID: number
   public transliterateMode: TransliterateMode | ''
-  public transliterateModeCJK: boolean
+  // public transliterateModeCJK: boolean
   public getField: (name: string) => number | string
   public extra: string
   public extraFields: Extra.Fields
@@ -319,7 +319,7 @@ class Item {
     this.language = babelLanguage((this.getField('language') as string) || '')
     const babelTag = this.babelTag() as TransliterateMode
     this.transliterateMode = unaliasTransliterateMode[babelTag] || babelTag
-    this.transliterateModeCJK = ['chinese', 'japanese'].includes(this.transliterateMode)
+    // this.transliterateModeCJK = ['chinese', 'japanese'].includes(this.transliterateMode)
 
     const extraFields = Extra.get(this.getField('extra') as string, 'zotero', { kv: true, tex: true })
     this.extra = extraFields.extra
