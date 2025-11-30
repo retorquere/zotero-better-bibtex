@@ -22,7 +22,7 @@ Functions auth(n: number=0, m: number=1, creator: &#39;*&#39; | &#39;author&#39;
     <meta itemprop="name" content="Formulas :: Better BibTeX for Zotero">
     <meta itemprop="description" content="Note: a number of functions below talk about the author’s lastname; you can read that as “when available”. If you have the name as a single-field name (for entities like International Business Machines or Aristoteles), Zotero doesn’t have a last name, and the full single-field name is taken instead.
 Functions auth(n: number=0, m: number=1, creator: &#39;*&#39; | &#39;author&#39; | &#39;collaborator&#39; | &#39;editor&#39; | &#39;translator&#39;=&#39;*&#39;, initials: boolean=false)The first n (default: all) characters of the mth (default: first) author&#39;s last name.">
-    <meta itemprop="wordCount" content="5301">
+    <meta itemprop="wordCount" content="5278">
     <meta itemprop="keywords" content="Citation Keys">
     <title>Formulas :: Better BibTeX for Zotero</title>
     <link href="/zotero-better-bibtex/citing/formulas/index.xml" rel="alternate" type="application/rss+xml" title="Formulas :: Better BibTeX for Zotero"><link rel="icon" href="/zotero-better-bibtex/better-bibtex.ico" type="image/x-icon">
@@ -803,7 +803,7 @@ in the template, you can use:</p>
               </tr>
               <tr>
                 <td><code>m</code></td>
-                <td>number of words to capitalize. <code>0</code> means no words will be capitalized. Mind that existing capitals are not removed. If you enable capitalization, you also get transliteration; for CJK, capitalization is not meaningful, so if you want capitalization, BBT romanizes first.</td>
+                <td>number of words to capitalize. <code>0</code> means no words will be capitalized. Mind that existing capitals are not removed.</td>
                 <td>undefined</td>
                 <td>number</td>
               </tr></table>
@@ -1610,7 +1610,7 @@ Note that this filter is always applied with <code>nopunct</code> on if you use 
                 <td>number</td>
               </tr></table>
 
-  <h3><b>.transliterate</b>(mode?: &#39;ar&#39; | &#39;arabic&#39; | &#39;bg&#39; | &#39;bulgarian&#39; | &#39;chinese&#39; | &#39;chinese-traditional&#39; | &#39;de&#39; | &#39;german&#39; | &#39;ja&#39; | &#39;japanese&#39; | &#39;macedonian&#39; | &#39;mg&#39; | &#39;minimal&#39; | &#39;mk&#39; | &#39;mongolian&#39; | &#39;rs&#39; | &#39;ru&#39; | &#39;russian&#39; | &#39;serbian&#39; | &#39;tw&#39; | &#39;uk&#39; | &#39;ukranian&#39; | &#39;zh&#39; | &#39;zh-hant&#39;)</h3><p>transliterates the citation key. If you don't specify a mode, the mode is derived from the item language field</p><table>
+  <h3><b>.transliterate</b>(mode?: &#39;ar&#39; | &#39;arabic&#39; | &#39;bg&#39; | &#39;bulgarian&#39; | &#39;chinese&#39; | &#39;chinese-traditional&#39; | &#39;de&#39; | &#39;german&#39; | &#39;ja&#39; | &#39;japanese&#39; | &#39;macedonian&#39; | &#39;mg&#39; | &#39;minimal&#39; | &#39;mk&#39; | &#39;mongolian&#39; | &#39;rs&#39; | &#39;ru&#39; | &#39;russian&#39; | &#39;serbian&#39; | &#39;tw&#39; | &#39;uk&#39; | &#39;ukranian&#39; | &#39;zh&#39; | &#39;zh-hant&#39;)</h3><p>transliterates the input. If you don't specify a mode, the mode is derived from the item language field</p><table>
               <tr>
                 <th><b>parameter</b></th>
                 <th/>
