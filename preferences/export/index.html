@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="height=device-height, width=device-width, initial-scale=1.0, minimum-scale=1.0">
     <meta name="generator" content="Hugo 0.143.1">
-    <meta name="generator" content="Relearn 8.3.0">
+    <meta name="generator" content="Relearn 8.3.0+4c32e640f51f94e695b134319f91e444f51fa9f6">
     <meta name="description" content="The Better BibTeX Configuration can be found under the regular Zotero preferences pane, tab ‘Better BibTeX’.
 The configuration of Better BibTeX is a little baroque compared to the standard Zotero Bib(La)TeX exporters (which only have hidden preferences). The defaults should just work, but here’s an attempt to describe what they do.
 Making any change here will drop your entire export cache. This is usually not a problem unless you have a really large library, but you can read about what is involved here.">
@@ -75,7 +75,7 @@ Making any change here will drop your entire export cache. This is usually not a
       window.T_Browser_unsupported_feature = `This browser doesn't support this feature`;
       // variant stuff
       window.relearn.themevariants = [ 'green' ];
-      window.relearn.customvariantname = "my-custom-variant";
+      window.relearn.customvariantprefix = "my-custom-";
       window.relearn.changeVariant = function(variant) {
         var oldVariant = document.documentElement.dataset.rThemeVariant;
         window.relearn.setItem(window.localStorage, window.relearn.absBaseUri + "/variant", variant);
@@ -91,8 +91,9 @@ Making any change here will drop your entire export cache. This is usually not a
       }
       window.relearn.initVariant = function() {
         var variant = window.relearn.getItem(window.localStorage, window.relearn.absBaseUri + "/variant") ?? "";
-        if( variant == window.relearn.customvariantname ){
-        }else if( !variant || !window.relearn.themevariants.includes(variant) ){
+        if( !variant ||
+            (!variant.startsWith(window.relearn.customvariantprefix) && !window.relearn.themevariants.includes(variant)) ||
+            (variant.startsWith(window.relearn.customvariantprefix) && !window.relearn.getItem(window.localStorage, window.relearn.absBaseUri + "/variantstylesheet-" + variant)) ){
           variant = window.relearn.themevariants[0];
           window.relearn.setItem(window.localStorage, window.relearn.absBaseUri + "/variant", variant);
         }
@@ -129,14 +130,14 @@ Making any change here will drop your entire export cache. This is usually not a
   <body class="mobile-support html" data-url="/zotero-better-bibtex/preferences/export/index.html">
     <div id="R-body" class="default-animation">
       <div id="R-body-overlay"></div>
-      <nav id="R-topbar">
-        <div class="topbar-wrapper">
-          <div class="topbar-sidebar-divider"></div>
+      <nav id="R-topbar" class="default-animation">
+        <div class="topbar-wrapper default-animation">
+          <div class="topbar-sidebar-divider default-animation"></div>
           <div class="topbar-area topbar-area-start" data-area="start">
-            <div class="topbar-button topbar-button-sidebar" data-content-empty="disable" data-width-s="show" data-width-m="hide" data-width-l="hide">
+            <div class="topbar-button topbar-button-sidebar default-animation" data-content-empty="disable" data-width-s="show" data-width-m="hide" data-width-l="hide">
 <span class="btn cstyle button link noborder notitle interactive"><button onclick="toggleNav()" type="button" title="Menu (CTRL&#43;ALT&#43;n)"><i class="fa-fw fas fa-bars"></i></button></span>
             </div>
-            <div class="topbar-button topbar-button-toc" data-content-empty="hide" data-width-s="show" data-width-m="show" data-width-l="show">
+            <div class="topbar-button topbar-button-toc default-animation" data-content-empty="hide" data-width-s="show" data-width-m="show" data-width-l="show">
 <span class="btn cstyle button link noborder notitle interactive"><button onclick="toggleTopbarFlyout(this)" type="button" title="Table of Contents (CTRL&#43;ALT&#43;t)"><i class="fa-fw fas fa-list-alt"></i></button></span>
               <div class="topbar-content">
                 <div class="topbar-content-wrapper">
@@ -189,16 +190,16 @@ Making any change here will drop your entire export cache. This is usually not a
           <ol class="topbar-breadcrumbs breadcrumbs highlightable" itemscope itemtype="http://schema.org/BreadcrumbList"><li itemscope itemtype="https://schema.org/ListItem" itemprop="itemListElement" class=""><a itemprop="item" href="/zotero-better-bibtex/index.html"><span itemprop="name">Better BibTeX for Zotero</span></a><meta itemprop="position" content="1">&nbsp;>&nbsp;</li><li itemscope itemtype="https://schema.org/ListItem" itemprop="itemListElement" class=""><a itemprop="item" href="/zotero-better-bibtex/preferences/index.html"><span itemprop="name">Preferences</span></a><meta itemprop="position" content="2">&nbsp;>&nbsp;</li><li itemscope itemtype="https://schema.org/ListItem" itemprop="itemListElement" class=""><span itemprop="name">Export</span><meta itemprop="position" content="3"></li>
           </ol>
           <div class="topbar-area topbar-area-end" data-area="end">
-            <div class="topbar-button topbar-button-edit" data-content-empty="disable" data-width-s="area-more" data-width-m="show" data-width-l="show">
+            <div class="topbar-button topbar-button-edit default-animation" data-content-empty="disable" data-width-s="area-more" data-width-m="show" data-width-l="show">
 <span class="btn cstyle button link noborder notitle interactive"><a href="https://github.com/retorquere/zotero-better-bibtex/edit/master/site/content/preferences/export.md" rel="external" title="Edit (CTRL+ALT+w)"><i class="fa-fw fas fa-pen"></i></a></span>
             </div>
-            <div class="topbar-button topbar-button-prev" data-content-empty="disable" data-width-s="show" data-width-m="show" data-width-l="show">
+            <div class="topbar-button topbar-button-prev default-animation" data-content-empty="disable" data-width-s="show" data-width-m="show" data-width-l="show">
 <span class="btn cstyle button link noborder notitle interactive"><a href="/zotero-better-bibtex/preferences/index.html" title="Preferences (🡐)"><i class="fa-fw fas fa-chevron-left"></i></a></span>
             </div>
-            <div class="topbar-button topbar-button-next" data-content-empty="disable" data-width-s="show" data-width-m="show" data-width-l="show">
+            <div class="topbar-button topbar-button-next default-animation" data-content-empty="disable" data-width-s="show" data-width-m="show" data-width-l="show">
 <span class="btn cstyle button link noborder notitle interactive"><a href="/zotero-better-bibtex/preferences/automatic-export/index.html" title="Automatic export (🡒)"><i class="fa-fw fas fa-chevron-right"></i></a></span>
             </div>
-            <div class="topbar-button topbar-button-more" data-content-empty="hide" data-width-s="show" data-width-m="show" data-width-l="show">
+            <div class="topbar-button topbar-button-more default-animation" data-content-empty="hide" data-width-s="show" data-width-m="show" data-width-l="show">
 <span class="btn cstyle button link noborder notitle interactive"><button onclick="toggleTopbarFlyout(this)" type="button" title="More"><i class="fa-fw fas fa-ellipsis-v"></i></button></span>
               <div class="topbar-content">
                 <div class="topbar-content-wrapper">
@@ -391,9 +392,7 @@ the cache, at the cost of longer export times.</p>
     </div>
     <aside id="R-sidebar" class="default-animation">
       <div id="R-header-topbar" class="default-animation"></div>
-      <div id="R-header-wrapper" class="default-animation">
-        <div id="R-header" class="default-animation">
-<a id="logo" href="/zotero-better-bibtex/">
+      <div id="R-header-wrapper" class="default-animation"><a id="logo" href="/zotero-better-bibtex/">
 <span style="vertical-align: text-top">
 <svg
    xmlns:dc="http://purl.org/dc/elements/1.1/"
@@ -1003,7 +1002,6 @@ Better BibTeX for Zotero
 </span>
 </a>
 
-        </div>
         <search><form action="/zotero-better-bibtex/search/index.html" method="get">
           <div class="searchbox default-animation">
             <button class="search-detail" type="submit" title="Search (CTRL+ALT+f)"><i class="fas fa-search"></i></button>
@@ -1015,41 +1013,41 @@ Better BibTeX for Zotero
       </div>
       <div id="R-homelinks" class="default-animation homelinks">
         <div class="R-menu-divider default-animation">
-          <hr class="padding">
+          <hr class="padding default-animation">
         </div>
-        <div class="R-sidebarmenu R-shortcutmenu-homelinks">
+        <div class="R-sidebarmenu R-shortcutmenu-homelinks default-animation">
           <ul class="space collapsible-menu">
             <li class="" data-nav-url="/zotero-better-bibtex/index.html"><a class="padding" href="/zotero-better-bibtex/index.html"><i class="fa-fw fas fa-home"></i> Home</a></li>
           </ul>
         </div>
         <div class="R-menu-divider default-animation">
-          <hr class="padding">
+          <hr class="padding default-animation">
         </div>
-        <div class="R-sidebarmenu R-shortcutmenu-headercontrols">
+        <div class="R-sidebarmenu R-shortcutmenu-headercontrols default-animation">
           <ul class="">
           </ul>
         </div>
         <div class="R-menu-divider default-animation">
-          <hr class="padding">
+          <hr class="padding default-animation">
         </div>
       </div>
       <div id="R-content-wrapper" class="highlightable">
-        <div class="R-sidebarmenu R-shortcutmenu-main">
+        <div class="R-sidebarmenu R-shortcutmenu-main default-animation">
           <ul class="enlarge morespace collapsible-menu">
-            <li class="" data-nav-url="/zotero-better-bibtex/installation/index.html"><a class="padding" href="/zotero-better-bibtex/installation/index.html">Installation</a><ul id="R-subsections-ff749ccaab053548f690f97bcd6daed0" class="collapsible-menu"></ul></li>
-            <li class="parent " data-nav-url="/zotero-better-bibtex/preferences/index.html"><a class="padding" href="/zotero-better-bibtex/preferences/index.html">Preferences</a><ul id="R-subsections-1c1559add52e3008dc9a8d12492194cb" class="collapsible-menu">
+            <li class="" data-nav-url="/zotero-better-bibtex/installation/index.html"><a class="padding default-animation" href="/zotero-better-bibtex/installation/index.html">Installation</a><ul id="R-subsections-ff749ccaab053548f690f97bcd6daed0" class="collapsible-menu"></ul></li>
+            <li class="parent " data-nav-url="/zotero-better-bibtex/preferences/index.html"><a class="padding default-animation" href="/zotero-better-bibtex/preferences/index.html">Preferences</a><ul id="R-subsections-1c1559add52e3008dc9a8d12492194cb" class="collapsible-menu">
             <li class="active " data-nav-url="/zotero-better-bibtex/preferences/export/index.html"><a class="padding" href="/zotero-better-bibtex/preferences/export/index.html">Export</a></li>
             <li class="" data-nav-url="/zotero-better-bibtex/preferences/automatic-export/index.html"><a class="padding" href="/zotero-better-bibtex/preferences/automatic-export/index.html">Automatic export</a></li>
             <li class="" data-nav-url="/zotero-better-bibtex/preferences/import/index.html"><a class="padding" href="/zotero-better-bibtex/preferences/import/index.html">Import</a></li>
             <li class="" data-nav-url="/zotero-better-bibtex/preferences/miscellaneous/index.html"><a class="padding" href="/zotero-better-bibtex/preferences/miscellaneous/index.html">Miscellaneous</a></li>
             <li class="" data-nav-url="/zotero-better-bibtex/preferences/hidden-preferences/index.html"><a class="padding" href="/zotero-better-bibtex/preferences/hidden-preferences/index.html">Hidden preferences</a></li></ul></li>
-            <li class="" data-nav-url="/zotero-better-bibtex/exporting/index.html"><a class="padding" href="/zotero-better-bibtex/exporting/index.html">Exporting</a><ul id="R-subsections-1d584ca98d27013df6242b6c17171d5e" class="collapsible-menu"></ul></li>
-            <li class="" data-nav-url="/zotero-better-bibtex/citing/index.html"><a class="padding" href="/zotero-better-bibtex/citing/index.html">Citation Keys</a><ul id="R-subsections-21d11d1b73fd6487fde6cbf6c72fa642" class="collapsible-menu"></ul></li>
-            <li class="" data-nav-url="/zotero-better-bibtex/support/index.html"><a class="padding" href="/zotero-better-bibtex/support/index.html">Support</a><ul id="R-subsections-caa68563dfb61577c2c4699e1aa63010" class="collapsible-menu"></ul></li>
+            <li class="" data-nav-url="/zotero-better-bibtex/exporting/index.html"><a class="padding default-animation" href="/zotero-better-bibtex/exporting/index.html">Exporting</a><ul id="R-subsections-1d584ca98d27013df6242b6c17171d5e" class="collapsible-menu"></ul></li>
+            <li class="" data-nav-url="/zotero-better-bibtex/citing/index.html"><a class="padding default-animation" href="/zotero-better-bibtex/citing/index.html">Citation Keys</a><ul id="R-subsections-21d11d1b73fd6487fde6cbf6c72fa642" class="collapsible-menu"></ul></li>
+            <li class="" data-nav-url="/zotero-better-bibtex/support/index.html"><a class="padding default-animation" href="/zotero-better-bibtex/support/index.html">Support</a><ul id="R-subsections-caa68563dfb61577c2c4699e1aa63010" class="collapsible-menu"></ul></li>
             <li class="" data-nav-url="/zotero-better-bibtex/sponsoring/index.html"><a class="padding" href="/zotero-better-bibtex/sponsoring/index.html">Sponsoring BBT</a></li>
           </ul>
         </div>
-        <div class="R-sidebarmenu R-shortcutmenu-shortcuts">
+        <div class="R-sidebarmenu R-shortcutmenu-shortcuts default-animation">
           <div class="nav-title padding">More</div>
           <ul class="space collapsible-menu">
             <li class="" data-nav-url="https://github.com/retorquere/zotero-better-bibtex/releases/latest"><a class="padding" href="https://github.com/retorquere/zotero-better-bibtex/releases/latest" rel="external"><i class='fas fa-fw fa-download'></i> Download</a></li>
@@ -1057,15 +1055,15 @@ Better BibTeX for Zotero
             <li class="" data-nav-url="https://github.com/retorquere/zotero-better-bibtex"><a class="padding" href="https://github.com/retorquere/zotero-better-bibtex" rel="external"><i class='fab fa-fw fa-github'></i> GitHub repo</a></li>
           </ul>
         </div>
-        <div id="R-footer-margin"></div>
+        <div id="R-footer-margin" class="default-animation"></div>
         <div class="R-menu-divider default-animation">
-          <hr class="padding">
+          <hr class="padding default-animation">
         </div>
-        <div class="R-sidebarmenu R-shortcutmenu-footercontrols">
+        <div class="R-sidebarmenu R-shortcutmenu-footercontrols default-animation">
           <ul class="">
           </ul>
         </div>
-<div id="R-footer">
+<div id="R-footer" class="default-animation">
     
     
     

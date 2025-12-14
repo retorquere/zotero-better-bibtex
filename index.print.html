@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="height=device-height, width=device-width, initial-scale=1.0, minimum-scale=1.0">
     <meta name="generator" content="Hugo 0.143.1">
-    <meta name="generator" content="Relearn 8.3.0">
+    <meta name="generator" content="Relearn 8.3.0+4c32e640f51f94e695b134319f91e444f51fa9f6">
     <meta name="description" content="Make Zotero more useful for us LaTeX holdouts">
     <meta name="author" content="">
     <meta name="twitter:card" content="summary">
@@ -68,7 +68,7 @@
       window.T_Browser_unsupported_feature = `This browser doesn't support this feature`;
       // variant stuff
       window.relearn.themevariants = [ 'green' ];
-      window.relearn.customvariantname = "my-custom-variant";
+      window.relearn.customvariantprefix = "my-custom-";
       window.relearn.changeVariant = function(variant) {
         var oldVariant = document.documentElement.dataset.rThemeVariant;
         window.relearn.setItem(window.localStorage, window.relearn.absBaseUri + "/variant", variant);
@@ -84,8 +84,9 @@
       }
       window.relearn.initVariant = function() {
         var variant = window.relearn.getItem(window.localStorage, window.relearn.absBaseUri + "/variant") ?? "";
-        if( variant == window.relearn.customvariantname ){
-        }else if( !variant || !window.relearn.themevariants.includes(variant) ){
+        if( !variant ||
+            (!variant.startsWith(window.relearn.customvariantprefix) && !window.relearn.themevariants.includes(variant)) ||
+            (variant.startsWith(window.relearn.customvariantprefix) && !window.relearn.getItem(window.localStorage, window.relearn.absBaseUri + "/variantstylesheet-" + variant)) ){
           variant = window.relearn.themevariants[0];
           window.relearn.setItem(window.localStorage, window.relearn.absBaseUri + "/variant", variant);
         }
@@ -118,14 +119,14 @@
   <body class="mobile-support print" data-url="/zotero-better-bibtex/index.html">
     <div id="R-body" class="default-animation">
       <div id="R-body-overlay"></div>
-      <nav id="R-topbar">
-        <div class="topbar-wrapper">
-          <div class="topbar-sidebar-divider"></div>
+      <nav id="R-topbar" class="default-animation">
+        <div class="topbar-wrapper default-animation">
+          <div class="topbar-sidebar-divider default-animation"></div>
           <div class="topbar-area topbar-area-start" data-area="start">
-            <div class="topbar-button topbar-button-sidebar" data-content-empty="disable" data-width-s="show" data-width-m="hide" data-width-l="hide">
+            <div class="topbar-button topbar-button-sidebar default-animation" data-content-empty="disable" data-width-s="show" data-width-m="hide" data-width-l="hide">
 <span class="btn cstyle button link noborder notitle interactive"><button onclick="toggleNav()" type="button" title="Menu (CTRL&#43;ALT&#43;n)"><i class="fa-fw fas fa-bars"></i></button></span>
             </div>
-            <div class="topbar-button topbar-button-toc" data-content-empty="hide" data-width-s="show" data-width-m="show" data-width-l="show">
+            <div class="topbar-button topbar-button-toc default-animation" data-content-empty="hide" data-width-s="show" data-width-m="show" data-width-l="show">
 <span class="btn cstyle button link noborder notitle interactive"><button onclick="toggleTopbarFlyout(this)" type="button" title="Table of Contents (CTRL&#43;ALT&#43;t)"><i class="fa-fw fas fa-list-alt"></i></button></span>
               <div class="topbar-content">
                 <div class="topbar-content-wrapper">
@@ -150,19 +151,19 @@
           <ol class="topbar-breadcrumbs breadcrumbs highlightable" itemscope itemtype="http://schema.org/BreadcrumbList"><li itemscope itemtype="https://schema.org/ListItem" itemprop="itemListElement" class=""><span itemprop="name">Better BibTeX for Zotero</span><meta itemprop="position" content="1"></li>
           </ol>
           <div class="topbar-area topbar-area-end" data-area="end">
-            <div class="topbar-button topbar-button-edit" data-content-empty="disable" data-width-s="area-more" data-width-m="show" data-width-l="show">
+            <div class="topbar-button topbar-button-edit default-animation" data-content-empty="disable" data-width-s="area-more" data-width-m="show" data-width-l="show">
 <span class="btn cstyle button link noborder notitle interactive"><a href="https://github.com/retorquere/zotero-better-bibtex/edit/master/site/content/_index.md" rel="external" title="Edit (CTRL+ALT+w)"><i class="fa-fw fas fa-pen"></i></a></span>
             </div>
-            <div class="topbar-button topbar-button-print" data-content-empty="disable" data-width-s="area-more" data-width-m="show" data-width-l="show">
+            <div class="topbar-button topbar-button-print default-animation" data-content-empty="disable" data-width-s="area-more" data-width-m="show" data-width-l="show">
 <span class="btn cstyle button link noborder notitle interactive"><a href="/zotero-better-bibtex/index.print.html" title="Print whole chapter (CTRL+ALT+p)"><i class="fa-fw fas fa-print"></i></a></span>
             </div>
-            <div class="topbar-button topbar-button-prev" data-content-empty="disable" data-width-s="show" data-width-m="show" data-width-l="show">
+            <div class="topbar-button topbar-button-prev default-animation" data-content-empty="disable" data-width-s="show" data-width-m="show" data-width-l="show">
 <span class="btn cstyle button link noborder notitle"><span><i class="fa-fw fas fa-chevron-left"></i></span></span>
             </div>
-            <div class="topbar-button topbar-button-next" data-content-empty="disable" data-width-s="show" data-width-m="show" data-width-l="show">
+            <div class="topbar-button topbar-button-next default-animation" data-content-empty="disable" data-width-s="show" data-width-m="show" data-width-l="show">
 <span class="btn cstyle button link noborder notitle interactive"><a href="/zotero-better-bibtex/installation/index.html" title="Installation (🡒)"><i class="fa-fw fas fa-chevron-right"></i></a></span>
             </div>
-            <div class="topbar-button topbar-button-more" data-content-empty="hide" data-width-s="show" data-width-m="show" data-width-l="show">
+            <div class="topbar-button topbar-button-more default-animation" data-content-empty="hide" data-width-s="show" data-width-m="show" data-width-l="show">
 <span class="btn cstyle button link noborder notitle interactive"><button onclick="toggleTopbarFlyout(this)" type="button" title="More"><i class="fa-fw fas fa-ellipsis-v"></i></button></span>
               <div class="topbar-content">
                 <div class="topbar-content-wrapper">
@@ -14113,10 +14114,10 @@ means a lot) so I can save up for a replacement a year or so down
 the line, head on over to <a href="https://www.patreon.com/retorquere" rel="external">Patreon</a>,
 but mind that Patreon takes a fairly large cut of what you give.</p>
 <p>Many, many thanks, also to the existing contributors &ndash; thanks to you I&rsquo;ve hit my first target and have been able to replace my trusty macbook air with a newer macbook pro which has much more breathing room.</p>
-<p><a href="#R-image-9a2c13473f537a9b9f44f57522860b94" class="lightbox-link"><img alt="My github stats" class="lazy lightbox figure-image" loading="lazy" src="https://github-readme-stats.vercel.app/api?username=retorquere&show_icons=true&hide_border=true&theme=dark" style="height: auto;width: auto;"></a>
-<a href="javascript:history.back();" class="lightbox-back" id="R-image-9a2c13473f537a9b9f44f57522860b94"><img alt="My github stats" class="lazy lightbox lightbox-image" loading="lazy" src="https://github-readme-stats.vercel.app/api?username=retorquere&show_icons=true&hide_border=true&theme=dark"></a></p>
-<p><a href="#R-image-5f744bc5a7d5b176a5faf61118264cc1" class="lightbox-link"><img alt="Metrics" class="lazy lightbox figure-image" loading="lazy" src="https://metrics.lecoq.io/retorquere?template=classic&config.timezone=Europe%2FOslo" style="height: auto;width: auto;"></a>
-<a href="javascript:history.back();" class="lightbox-back" id="R-image-5f744bc5a7d5b176a5faf61118264cc1"><img alt="Metrics" class="lazy lightbox lightbox-image" loading="lazy" src="https://metrics.lecoq.io/retorquere?template=classic&config.timezone=Europe%2FOslo"></a></p>
+<p><a href="#R-image-8aeab2a30c5ce4484a1565c767bb2798" class="lightbox-link"><img alt="My github stats" class="lazy lightbox figure-image" loading="lazy" src="https://github-readme-stats.vercel.app/api?username=retorquere&show_icons=true&hide_border=true&theme=dark" style="height: auto;width: auto;"></a>
+<a href="javascript:history.back();" class="lightbox-back" id="R-image-8aeab2a30c5ce4484a1565c767bb2798"><img alt="My github stats" class="lazy lightbox lightbox-image" loading="lazy" src="https://github-readme-stats.vercel.app/api?username=retorquere&show_icons=true&hide_border=true&theme=dark"></a></p>
+<p><a href="#R-image-2e53cdd8ee5c45c5ba61df2682b9bb5a" class="lightbox-link"><img alt="Metrics" class="lazy lightbox figure-image" loading="lazy" src="https://metrics.lecoq.io/retorquere?template=classic&config.timezone=Europe%2FOslo" style="height: auto;width: auto;"></a>
+<a href="javascript:history.back();" class="lightbox-back" id="R-image-2e53cdd8ee5c45c5ba61df2682b9bb5a"><img alt="Metrics" class="lazy lightbox lightbox-image" loading="lazy" src="https://metrics.lecoq.io/retorquere?template=classic&config.timezone=Europe%2FOslo"></a></p>
 
   <footer class="footline">
   </footer>
