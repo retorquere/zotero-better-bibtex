@@ -1076,12 +1076,19 @@ export class PatternFormatter {
     if (!match) return input
 
     const cleaned = (t: string) => clean ? this.clean(t, true) : t
-
     if (typeof match === 'string') match = new RegExp(rescape(cleaned(match)), 'i')
-    const m = cleaned(input).match(match)
-    if (!m) skip()
-    if (m.length === 1) return input
-    return m.slice(1).join('')
+
+    if (match.global) {
+      const m = [...(cleaned(input).matchAll(match))]
+      if (!m.length) skip()
+      return m.map(g => g[0]).join(' ')
+    }
+    else {
+      const m = cleaned(input).match(match)
+      if (!m) skip()
+      if (m.length === 1) return input
+      return m.slice(1).join(' ')
+    }
   }
   public __match(input: string, match: RegExp | string, clean = false): string {
     this._match(input, match, clean)
