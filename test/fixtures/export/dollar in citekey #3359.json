@@ -1,0 +1,50 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "preferences": {
+      "citekeyFormat": "(auth.transliterate(ar) + '-' + shorttitle(3, 3).replace(' ', '-') + '-' + year).lower"
+    },
+    "options": {}
+  },
+  "version": {
+    "zotero": "7.0.30",
+    "bbt": "7.0.70"
+  },
+  "collections": {},
+  "items": [
+    {
+      "key": "2NLNUAWJ",
+      "version": 0,
+      "itemType": "book",
+      "title": "شيعة العراق",
+      "date": "1996",
+      "language": "arabic",
+      "libraryCatalog": "Open WorldCat",
+      "url": "http://www.aruc.org/fullbib.aspx?id=247449",
+      "accessDate": "2025-12-23T03:02:20Z",
+      "extra": "OCLC: 4770618200",
+      "place": "دمشق",
+      "publisher": "دار المدى للثقافة والنشر،",
+      "edition": "ط. 1",
+      "creators": [
+        {
+          "firstName": "إسحاق",
+          "lastName": "نقاش",
+          "creatorType": "author"
+        },
+        {
+          "name": "النعيمي، عبد الإله",
+          "creatorType": "translator"
+        }
+      ],
+      "tags": [],
+      "dateAdded": "2025-12-23T03:02:20Z",
+      "dateModified": "2025-12-23T07:16:00Z",
+      "itemID": 21,
+      "attachments": [],
+      "notes": [],
+      "citationKey": "isHAq.$yEpAlErAq1996"
+    }
+  ]
+}
