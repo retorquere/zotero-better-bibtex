@@ -345,12 +345,13 @@ export const KeyManager = new class _KeyManager {
   }
 
   private async $store(key: CitekeyRecord) {
-    await Zotero.DB.queryAsync('REPLACE INTO betterbibtex.citationkey (itemID, itemKey, libraryID, citationKey, pinned) VALUES (?, ?, ?, ?, ?)', [
+    await Zotero.DB.queryAsync(`REPLACE INTO betterbibtex.citationkey (itemID, itemKey, libraryID, citationKey, pinned${ key.pinned ? ', lastPinned' : ''}) VALUES (?, ?, ?, ?, ?${ key.pinned ? ', ?' : ''})`, [
       key.itemID,
       key.itemKey,
       key.libraryID,
       key.citationKey,
       key.pinned ? 1 : 0,
+      ...(key.pinned ? [ key.citationKey ] : []),
     ])
 
     if (!blink.first(this.keys, byItemID(key.itemID))) return

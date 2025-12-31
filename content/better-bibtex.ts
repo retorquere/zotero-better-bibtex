@@ -409,6 +409,7 @@ monkey.patch(Zotero.Translate.Export.prototype, 'translate', original => functio
 const scheduler = new Scheduler<'column-refresh'>(500)
 
 import DDL from './db/citation-key.sql'
+import KEYBACKUP from './db/backup-pinned.sql'
 
 export class BetterBibTeX {
   public clientName = Zotero.clientName
@@ -602,6 +603,14 @@ export class BetterBibTeX {
 
         for (const ddl of DDL) {
           await Zotero.DB.queryAsync(ddl, [], NoParse)
+        }
+        for (const ddl of KEYBACKUP) {
+          try {
+            await Zotero.DB.queryAsync(ddl, [], NoParse)
+          }
+          catch (err) {
+            log.info(ddl, err)
+          }
         }
 
         if (tables.betterbibtex) {
