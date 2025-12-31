@@ -510,6 +510,14 @@ with fetch('zotero') as z, fetch('jurism') as j:
   SCHEMA.zotero = Munch.fromDict(patch(json.load(z), 'schema.patch', 'zotero.patch'))
   SCHEMA.jurism = Munch.fromDict(patch(json.load(j), 'schema.patch', 'jurism.patch'))
 
+  print('  ###### PMID/PMCID HACK: TODO: REMOVE #####')
+  for it in SCHEMA.zotero.itemTypes.values():
+    if it.itemType in ['annotation', 'attachment', 'note']:
+      continue
+    for pm in ['PMID', 'PMCID']:
+      if pm not in it.fields:
+        it.fields[pm] = pm
+
   #with open('schema.json', 'w') as f:
   #  json.dump(SCHEMA.jurism, f, indent='  ')
 

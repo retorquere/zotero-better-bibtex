@@ -388,6 +388,22 @@ def step_impl(context):
   while not context.zotero.execute('return await Zotero.BetterBibTeX.TestSupport.isIdle()'):
     time.sleep(5)
 
+@step(u'I wait until migrations are done')
+def step_impl(context):
+  needsUpdate = '''
+    var needsUpdate = await Zotero.DB.valueQueryAsync(
+      "SELECT COUNT(*) FROM settings WHERE setting='globalSchema' AND key='migrateExtra'"
+    );
+    return needsUpdate
+  '''
+
+  start = time.perf_counter()
+  while context.zotero.execute(needsUpdate):
+    time.sleep(5)
+    elapsed = time.perf_counter() - start
+    if elapsed > 7:
+      utils.print(datetime.timedelta(seconds=int(elapsed)))
+
 @step(u'I wait at most {seconds:d} seconds until all auto-exports are done')
 def step_impl(context, seconds):
   printed = False

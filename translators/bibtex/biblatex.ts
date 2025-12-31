@@ -576,6 +576,9 @@ export function generateBibLaTeX(collected: Collected): Translation {
       }
     }
 
+    entry.add({ name: 'pmid', value: item.PMID })
+    entry.add({ name: 'pmcid', value: item.PMCID })
+
     for (const eprinttype of [ 'pmid', 'arxiv', 'jstor', 'hdl', 'googlebooks' ]) {
       if (entry.has[eprinttype]) {
         if (!entry.has.eprinttype) {

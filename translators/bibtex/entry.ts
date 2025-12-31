@@ -856,7 +856,8 @@ export class Entry {
         case 'zbl':
           this.override({ name: 'zmnumber', value: field.value, ...mode })
           break
-        case 'lccn': case 'pmcid':
+        case 'lccn':
+        case 'pmcid':
           this.override({ name, value: field.value, ...mode })
           break
         case 'pmid':

@@ -546,6 +546,8 @@ export function generateBibTeX(collected: Collected): Translation {
 
     addDate(ref, ref.date, item.date)
 
+    ref.add({ name: 'pmid', value: item.PMID })
+
     ref.add({ name: 'keywords', value: item.tags, enc: 'tags' })
 
     ref.add({ name: 'pages', value: ref.normalizeDashes(item.pages) })
