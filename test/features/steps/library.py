@@ -102,7 +102,9 @@ def clean_item(item):
 
   # make diffs more readable
   if 'extra' in item and type(item['extra']) != list:
-      item['extra'] = item['extra'].split('\n')
+    item['extra'] = item['extra'].split('\n')
+  if 'extra' in item:
+    item['extra'] = [line for line in item['extra'] if not line.lower().startswith('citation key:')]
 
   if unnest_and_clean(item, 'note'):
     item['notes'] = [note.split('\n') for note in item['notes']]
