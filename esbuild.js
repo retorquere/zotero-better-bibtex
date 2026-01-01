@@ -228,6 +228,9 @@ async function rebuild() {
       'nock',
       'aws-sdk',
     ],
+    alias: {
+      'transliteration': 'transliteration/dist/browser/bundle.esm.min.js',
+    }
   })
 
   // chinese for dynamic loading
