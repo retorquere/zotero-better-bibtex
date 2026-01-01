@@ -12,7 +12,7 @@ export const name: string = (() => {
 
 export const version: string = (() => {
   if (worker) return searchParams.get('version')
-  const $version: string = Zotero.version || Zotero.BetterBibTeX?.clientVersion // foreground translator doesn't have Zotero.clientName
+  const $version: string = Zotero.version || Zotero.BetterBibTeX?.clientVersion // foreground translator doesn't have Zotero.version
   if (!$version) throw new Error('Unable to detect clientVersion')
   return $version
 })()

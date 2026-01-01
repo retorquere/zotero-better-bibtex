@@ -213,22 +213,33 @@ if (typeof Zotero.DataObjects.prototype.parseLibraryKey === 'function') {
   })
 }
 
-// otherwise the display of the citekey in the item pane flames out
-monkey.patch(Zotero.ItemFields, 'isFieldOfBase', original => function Zotero_ItemFields_isFieldOfBase(field: string, _baseField: any) {
-  if (field === 'citationKey') return false
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-  return original.apply(this, arguments)
-})
+function patchItemAccess() {
+  const FieldId = {
+    citationKey: Zotero.ItemFields.getID('citationKey'),
+    extra: Zotero.ItemFields.getID('extra'),
+  }
+  function native(item: Zotero.Item, fieldId: number = FieldId.citationKey): boolean {
+    return Zotero.ItemFields.isValidForType(fieldId, item.itemTypeID) as boolean
+  }
 
-// because the zotero item editor does not check whether a textbox is read-only. *sigh*
-monkey.patch(Zotero.Item.prototype, 'setField', original => function Zotero_Item_prototype_setField(field: string, value: string | undefined, _loadIn: any) {
-  if (field === 'citationKey') {
-    if (Zotero.BetterBibTeX.starting) return false
+  // otherwise the display of the citekey in the item pane flames out
+  monkey.patch(Zotero.ItemFields, 'isFieldOfBase', original => function Zotero_ItemFields_isFieldOfBase(field: string, _baseField: any) {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+    if (field !== 'citationKey' || native(this)) return original.apply(this, arguments)
+    return false
+  })
+
+  // because the zotero item editor does not check whether a textbox is read-only. *sigh*
+  monkey.patch(Zotero.Item.prototype, 'setField', original => function Zotero_Item_prototype_setField(field: string, value: string | undefined, _loadIn: any) {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+    if (field !== 'citationKey' || native(this)) return original.apply(this, arguments)
+
+    if (!native(this, FieldId.extra)) return false // should not really happen, because all real items have 'extra'
 
     const citekey = Zotero.BetterBibTeX.KeyManager.get(this.id)
-    if (!citekey) return false
+    if (!citekey) return false // type has no citation key
 
-    if (typeof value !== 'string') value = ''
+    if (typeof value !== 'string') value = `${value}`
     if (!value) {
       this.setField('extra', Extra.get(this.getField('extra') as string, 'zotero', { citationKey: true }).extra)
       Zotero.BetterBibTeX.KeyManager.update(this)
@@ -244,43 +255,39 @@ monkey.patch(Zotero.Item.prototype, 'setField', original => function Zotero_Item
     else {
       return false
     }
-  }
-  else {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-    return original.apply(this, arguments)
-  }
-})
+  })
 
-// To show the citekey in the item list
-monkey.patch(Zotero.Item.prototype, 'getField', original => function Zotero_Item_prototype_getField(field: any, unformatted: any, includeBaseMapped: any) {
-  try {
-    if (field === 'citationKey' || field === 'citekey') {
-      if (Zotero.BetterBibTeX.starting) return ''
+  monkey.patch(Zotero.Item.prototype, 'getField', original => function Zotero_Item_prototype_getField(field: any, unformatted: any, includeBaseMapped: any) {
+    // NO NATIVE CHECK HERE until we drop non-pinned key support
+    if (field !== 'citationKey') return original.apply(this, arguments) as string
+
+    try {
       return Zotero.BetterBibTeX.KeyManager.get(this.id)?.citationKey || ''
     }
-  }
-  catch (err) {
-    log.error('patched getField:', { field, unformatted, includeBaseMapped, err })
-    return ''
-  }
-
-  return original.apply(this, arguments) as string
-})
-
-// #1579
-monkey.patch(Zotero.Item.prototype, 'clone', original => function Zotero_Item_prototype_clone(libraryID: number, options = {}) {
-  const item = original.apply(this, arguments)
-  try {
-    if ((typeof libraryID === 'undefined' || this.libraryID === libraryID) && item.isRegularItem()) {
-      item.setField('extra', item.getField('extra').replace(/(^|\n)citation key:[^\n]*(\n|$)/i, '\n').trim())
+    catch (err) {
+      log.error('patched getField:', { field, unformatted, includeBaseMapped, err })
+      return ''
     }
-  }
-  catch (err) {
-    log.error('patched clone:', { libraryID, options, err })
-  }
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-  return item
-})
+  })
+
+  // #1579
+  monkey.patch(Zotero.Item.prototype, 'clone', original => function Zotero_Item_prototype_clone(libraryID: number, options = {}) {
+    const item = original.apply(this, arguments)
+    if (native(item)) item.setField('citationKey', '')
+    if (native(item, FieldId.extra)) {
+      try {
+        if ((typeof libraryID === 'undefined' || this.libraryID === libraryID) && item.isRegularItem()) {
+          item.setField('extra', item.getField('extra').replace(/(^|\n)citation key:[^\n]*(\n|$)/i, '\n').trim())
+        }
+      }
+      catch (err) {
+        log.error('patched clone:', { libraryID, options, err })
+      }
+    }
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+    return item
+  })
+}
 
 import * as CAYW from './cayw'
 monkey.patch(Zotero.Integration, 'getApplication', original => function Zotero_Integration_getApplication(agent: string, _command: any, _docId: any) {
@@ -558,6 +565,7 @@ export class BetterBibTeX {
           Zotero.unlockPromise,
           // Zotero.uiReadyPromise,
         ])
+        patchItemAccess()
 
         DebugLog.register('Better BibTeX', ['translators.better-bibtex.'], pubkey)
 
