@@ -864,7 +864,7 @@ export class Entry {
         case 'arxiv':
         case 'jstor':
         case 'hdl':
-          if (this.translation.BetterBibLaTeX) {
+          if (this.translation.BetterBibLaTeX && !this.has.eprinttype) {
             this.override({ name: 'eprinttype', value: this.eprintType[name] || name })
             this.override({ name: 'eprint', value: field.value, ...mode })
           }
@@ -873,7 +873,7 @@ export class Entry {
           }
           break
         case 'googlebooksid':
-          if (this.translation.BetterBibLaTeX) {
+          if (this.translation.BetterBibLaTeX && !this.has.eprinttype) {
             this.override({ name: 'eprinttype', value: 'googlebooks' })
             this.override({ name: 'eprint', value: field.value, ...mode })
           }
