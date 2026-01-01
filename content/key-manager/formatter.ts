@@ -40,7 +40,7 @@ import { sprintf } from 'sprintf-js'
 import { chinese } from './chinese'
 import { japanese } from './japanese'
 import { transliterate as arabic } from './arabic'
-import transliterate from '@sindresorhus/transliterate'
+import { transliterate } from 'transliteration'
 import * as cyrillic from './cyrillic'
 
 import { listsync as csv2list } from '../load-csv'
@@ -1474,7 +1474,7 @@ export class PatternFormatter {
         break
     }
 
-    return fold2ascii.foldMaintaining(transliterate(str)) as string
+    return fold2ascii.foldMaintaining(transliterate(str, { unknown: '\uFFFD' })) as string
   }
 
   private clean(str: string, allow_spaces = false): string {
