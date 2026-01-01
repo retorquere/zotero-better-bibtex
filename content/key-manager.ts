@@ -483,13 +483,17 @@ export const KeyManager = new class _KeyManager {
     await Zotero.DB.executeTransaction(async () => {
       const $items = `
         WITH _items AS (
-          SELECT items.itemID, items.key as itemKey, items.libraryID, extra.value AS extra
-          FROM items
-          LEFT JOIN itemData extraField ON extraField.itemID = items.itemID AND extraField.fieldID IN (SELECT fieldID FROM fields WHERE fieldName = 'extra')
-          LEFT JOIN itemDataValues extra ON extra.valueID = extraField.valueID
-          WHERE items.itemID NOT IN (SELECT itemID FROM deletedItems)
-          AND items.itemTypeID NOT IN (SELECT itemTypeID FROM itemTypes WHERE typeName IN ('attachment', 'note', 'annotation'))
-          AND items.itemID NOT IN (SELECT itemID from feedItems)
+          SELECT item.itemID, item.key as itemKey, item.libraryID,
+            MAX(CASE WHEN f.fieldName = 'extra' THEN idv.value END) AS extra,
+            MAX(CASE WHEN f.fieldName = 'citationKey' THEN idv.value END) AS citationKey
+          FROM items item
+          LEFT JOIN itemData id ON item.itemID = id.itemID
+          LEFT JOIN fields f ON id.fieldID = f.fieldID AND f.fieldName IN ('extra', 'citationKey')
+          LEFT JOIN itemDataValues idv ON id.valueID = idv.valueID
+          WHERE item.itemID NOT IN (SELECT itemID FROM deletedItems)
+            AND item.itemTypeID NOT IN (SELECT itemTypeID FROM itemTypes WHERE typeName IN ('attachment', 'note', 'annotation'))
+            AND item.itemID NOT IN (SELECT itemID from feedItems)
+          GROUP BY item.itemID
         )
       `
 
@@ -511,7 +515,7 @@ export const KeyManager = new class _KeyManager {
 
       let pinned: string
       for (const item of (await ZoteroDB.queryAsync(`${ $items } SELECT itemID, itemKey, libraryID, extra FROM _items`))) {
-        pinned = getKey(item.extra)
+        pinned = item.citationKey || getKey(item.extra)
         if (pinned) {
           keys.set(item.itemID, lc({ itemID: item.itemID, itemKey: item.itemKey, libraryID: item.libraryID, citationKey: pinned, pinned: true }))
         }
