@@ -248,6 +248,7 @@ function patchItemAccess() {
       return true
     }
     else if (value !== citekey.citationKey || !citekey.pinned) {
+      // still write to the extra field for sync
       this.setField('extra', Extra.set(this.getField('extra'), { citationKey: value }))
       // citekey.pinned = true
       // citekey.citekey = value
