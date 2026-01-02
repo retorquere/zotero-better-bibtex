@@ -69,7 +69,7 @@ def clean_item(item):
   if 'extra' in item and type(item['extra']) != list:
     item['extra'] = item['extra'].split('\n')
   if 'extra' in item:
-    utils.print(json.dumps(item['extra']))
+    # utils.print(json.dumps(item['extra']))
     extra = item['extra']
     item['extra'] = []
     for line in extra:
@@ -83,7 +83,20 @@ def clean_item(item):
       match k:
         case 'citation key':
           item['citationKey'] = v
-          pass
+        case 'isbn':
+          item['ISBN'] = v
+        case 'issn':
+          item['ISSN'] = v
+        case 'place':
+          item['place'] = v
+        case 'publisher':
+          item['publisher'] = v
+        case 'original date':
+          item['originalDate'] = v
+        case 'pmid':
+          item['PMID'] = v
+        case 'pmcid':
+          item['PMCID'] = v
         case 'doi':
           item['DOI'] = v
         case _:
