@@ -435,16 +435,23 @@ def step_impl(context, param, value):
   value = json.loads(value)
   context.zotero.execute('await Zotero.BetterBibTeX.TestSupport.editAutoExport(field, value)', field=param, value=value)
 
-@step('I change its {field} field to {value}')
-def step_impl(context, field, value):
+@step('I {action} its {field} field to {value}')
+def step_impl(context, action, field, value):
+  assert action in ['change', 'reset'], action
   assert len(context.selected) == 1, context.selected
   context.zotero.execute('''
-    const items = await Zotero.Items.getAsync([id])
-    const item = items[0]
+    let items = await Zotero.Items.getAsync([id])
+    let item = items[0]
     await item.loadAllData()
     item.setField(field, value)
     await item.saveTx()
-  ''', id=context.selected[0], field=json.loads(field), value=json.loads(value))
+
+    if (action === 'reset' && value === '') return
+
+    items = await Zotero.Items.getAsync([id])
+    item = items[0]
+    if (item.getField(field) !== value) throw new Error(`expected ${JSON.stringify(value)}, got ${JSON.stringify(item.getField(field))}`)
+  ''', id=context.selected[0], action=action, field=json.loads(field), value=json.loads(value))
 
 @step('I {action} extension {xpi}')
 def step_impl(context, action, xpi):

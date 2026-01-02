@@ -232,7 +232,9 @@ function patchItemAccess() {
   // because the zotero item editor does not check whether a textbox is read-only. *sigh*
   monkey.patch(Zotero.Item.prototype, 'setField', original => function Zotero_Item_prototype_setField(field: string, value: string | undefined, _loadIn: any) {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-    if (field !== 'citationKey' || native(this)) return original.apply(this, arguments)
+    if (field !== 'citationKey') return original.apply(this, arguments)
+
+    if (native(this)) original.apply(this, arguments)
 
     if (!native(this, FieldId.extra)) return false // should not really happen, because all real items have 'extra'
 

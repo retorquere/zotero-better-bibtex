@@ -677,7 +677,7 @@ Feature: Export
     When I change its "citationKey" field to "edited"
     And I wait 10 seconds
     Then "~/autoexport.bib" should match "export/*.pinned.bibtex"
-    When I change its "citationKey" field to ""
+    When I reset its "citationKey" field to ""
     And I wait 10 seconds
     Then "~/autoexport.bib" should match "export/*.before.bibtex"
 
