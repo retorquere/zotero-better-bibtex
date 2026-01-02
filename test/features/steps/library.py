@@ -87,10 +87,6 @@ def clean_item(item):
           item['ISBN'] = v
         case 'issn':
           item['ISSN'] = v
-        case 'place':
-          item['place'] = v
-        case 'publisher':
-          item['publisher'] = v
         case 'original date':
           item['originalDate'] = v
         case 'pmid':
@@ -99,8 +95,13 @@ def clean_item(item):
           item['PMCID'] = v
         case 'doi':
           item['DOI'] = v
+        case 'place' | 'volume' | 'publisher':
+          item[k] = v
         case _:
           item['extra'].append(line)
+
+  if 'ISBN' in item:
+    item['ISBN'] = item['ISBN'].replace('-', '')
 
   if 'relations' in item and 'dc:replaces' in item['relations']:
     del item['relations']['dc:replaces']
