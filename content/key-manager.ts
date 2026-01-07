@@ -29,7 +29,7 @@ import { Cache } from './translators/worker'
 import { monkey } from './monkey-patch'
 
 import { sprintf } from 'sprintf-js'
-import { newQueue } from '@henrygd/queue'
+import { newQueue } from '@henrygd/queue/rl'
 
 import * as l10n from './l10n'
 
@@ -84,9 +84,36 @@ class Progress {
   }
 }
 
+type BatchedQuery = {
+  query: string
+  params: Array<string | number>
+}
+
 export const KeyManager = new class _KeyManager {
   public searchEnabled = false
-  private queue = newQueue(1)
+
+  private db = {
+    queue: newQueue(1, 1, 5000),
+    batch: [] as BatchedQuery[],
+
+    schedule(query: string, params: Array<string | number>) {
+      this.batch.push({ query, params })
+
+      this.queue.add(async () => {
+        if (this.batch.length) {
+          log.info('keymanager batch: execute', this.batch.length)
+
+          const batch = this.batch
+          this.batch = []
+          await Zotero.DB.executeTransaction(async () => {
+            for (const q of batch) {
+              await Zotero.DB.queryAsync(q.query, q.params)
+            }
+          })
+        }
+      })
+    },
+  }
 
   // Table<CitekeyRecord, "itemID">
   public keys = createTable<CitekeyRecord>(createDB({ clone: true }), 'citationKeys')({
@@ -272,7 +299,7 @@ export const KeyManager = new class _KeyManager {
         for (const cb of this.unwatch) {
           cb()
         }
-        await this.queue.done()
+        await this.db.queue.done()
       },
     })
     orchestrator.add({
@@ -339,13 +366,8 @@ export const KeyManager = new class _KeyManager {
     })
   }
 
-  // serialize so background stores from onRemove at all happen in order
   private async store(key: CitekeyRecord) {
-    await this.queue.add(() => this.$store(key))
-  }
-
-  private async $store(key: CitekeyRecord) {
-    await Zotero.DB.queryAsync(`REPLACE INTO betterbibtex.citationkey (itemID, itemKey, libraryID, citationKey, pinned${ key.pinned ? ', lastPinned' : ''}) VALUES (?, ?, ?, ?, ?${ key.pinned ? ', ?' : ''})`, [
+    this.db.schedule(`REPLACE INTO betterbibtex.citationkey (itemID, itemKey, libraryID, citationKey, pinned${ key.pinned ? ', lastPinned' : ''}) VALUES (?, ?, ?, ?, ?${ key.pinned ? ', ?' : ''})`, [
       key.itemID,
       key.itemKey,
       key.libraryID,
@@ -396,26 +418,19 @@ export const KeyManager = new class _KeyManager {
     }
   }
 
-  // serialize so background stores from onRemove at all happen in order
-  private async remove(keys: CitekeyRecord | CitekeyRecord[]) {
-    await this.queue.add(() => this.$remove(keys))
-  }
-
-  private async $remove(keys: CitekeyRecord | CitekeyRecord[]) {
+  private remove(keys: CitekeyRecord | CitekeyRecord[]) {
     if (Array.isArray(keys)) {
-      await Zotero.DB.executeTransaction(async () => {
-        let pos = 0
-        const chunk = 50
-        while (pos < keys.length) {
-          const slice = keys.slice(pos, chunk + pos)
-          if (!slice.length) break
-          pos += chunk
-          await Zotero.DB.queryAsync(`DELETE FROM betterbibtex.citationkey WHERE itemID IN (${ Array(slice.length).fill('?').join(',') })`, slice.map(key => key.itemID))
-        }
-      })
+      let pos = 0
+      const chunk = 50
+      while (pos < keys.length) {
+        const slice = keys.slice(pos, chunk + pos)
+        if (!slice.length) break
+        pos += chunk
+        this.db.schedule(`DELETE FROM betterbibtex.citationkey WHERE itemID IN (${ Array(slice.length).fill('?').join(',') })`, slice.map(key => key.itemID))
+      }
     }
     else {
-      await Zotero.DB.queryTx('DELETE FROM betterbibtex.citationkey WHERE itemID = ?', [keys.itemID])
+      this.db.schedule('DELETE FROM betterbibtex.citationkey WHERE itemID = ?', [keys.itemID])
     }
   }
 
@@ -563,7 +578,7 @@ export const KeyManager = new class _KeyManager {
       }),
       this.keys[BlinkKey].events.onRemove.register(changes => {
         for (const change of changes) {
-          void this.remove(change.entity).catch(err => log.error('keymanager.remove', err))
+          this.remove(change.entity)
         }
         void notify(changes.map(change => change.entity.itemID))
       }),
@@ -575,6 +590,7 @@ export const KeyManager = new class _KeyManager {
 
     if (missing.length) {
       // generate keys for entries that don't have them yet
+      const start = Date.now()
       const progress = new Progress(missing.length, 'Assigning citation keys')
       for (const itemID of missing) {
         try {
@@ -586,6 +602,7 @@ export const KeyManager = new class _KeyManager {
 
         progress.next()
       }
+      log.info('keymanager batch: keys assigned in', Date.now() - start)
 
       progress.done()
     }
