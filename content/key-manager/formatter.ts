@@ -1030,17 +1030,9 @@ export class PatternFormatter {
    * @param match  Regex to test the creator-type list. When passed, and the creator-type list does not match the regex, jump to the next formule. When it matches, return nothing but stay in the current formule. When no regex is passed, output the creator-type list for the item (mainly useful for debugging).
    */
   public $creatortypes(match?: RegExp): string {
-    const encode = (cr: Creator, primaryCreator: string, replace: boolean) => {
-      const parts = typeof cr.name === 'string' ? 1 : 2
-      const name = cr.creatorType === primary && replace ? 'primary' : cr.creatorType
-      const mark = cr.creatorType === primary && !replace ? '@' : ''
-      return `${parts}${mark}${name}`
-    }
-
-    const primary = Items.creators.findOne({ itemType: this.item.itemType, primary: true })?.creator || ''
-    const creators = [ false, true ] // replace actual primary creator name with the text 'primary' for generic 'primary' matching
-      .map(replace => (this.item.creators || []).map(cr => encode(cr, primary, replace)).join(','))
-      .map(cr => `${this.item.itemType}:${cr}`) // prefix item type
+    const creators = [...(new Set([ '', (itemCreators[client.slug][this.item.itemType] || [])[0] || '' ]))].sort() // this will shake out duplicates and put the empty string first
+      .map(primary => (this.item.creators || []).map(cr => `${ typeof cr.name === 'string' ? 1 : 2 }${ cr.creatorType === primary ? 'primary' : cr.creatorType }`).join(';'))
+      .map(cr => `${ this.item.itemType }:${ cr }`)
 
     if (match && !creators.find(cr => cr.match(match))) skip()
     return creators[0] // return list
