@@ -1,4 +1,4 @@
-import type { Tag, Creator } from '../../gen/typings/serialized'
+import type { Tag } from '../../gen/typings/serialized-item'
 
 import * as client from '../../content/client'
 
