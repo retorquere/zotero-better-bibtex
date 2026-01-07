@@ -70,7 +70,7 @@
   },
   "dependencies": {
     "@artsy/to-title-case": "^1.2.0",
-    "@ast-grep/napi": "^0.40.3",
+    "@ast-grep/napi": "^0.40.4",
     "@caeser1996/titlecase": "^3.0.2",
     "@henrygd/queue": "^1.2.0",
     "@idxdb/promised": "^4.1.0",
@@ -91,7 +91,7 @@
     "compromise": "^14.14.5",
     "csl-json": "^0.1.0",
     "detect-file-encoding-and-language": "^2.4.0",
-    "edtf": "^4.9.0",
+    "edtf": "^4.9.1",
     "edtfy": "^0.0.8",
     "emittery": "^1.2.0",
     "entities": "^7.0.0",
