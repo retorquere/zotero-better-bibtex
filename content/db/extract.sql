@@ -6,8 +6,8 @@ WHERE item.itemID NOT IN (SELECT itemID FROM deletedItems)
     SELECT itemTypeID
     FROM itemTypes
     WHERE typeName IN ('attachment', 'note', 'annotation')
-  )
---
+  );
+
 INSERT OR REPLACE INTO betterbibtex.citationkey (itemID, itemKey, libraryID, citationKey, pinned)
 WITH
   ExtractKey AS (
@@ -40,4 +40,4 @@ WITH
   )
 SELECT itemID, itemKey, libraryID, COALESCE(fromNative, fromExtra) AS citationKey, 1
 FROM ExtractKey
-WHERE fromExtra IS NOT NULL OR fromNative IS NOT NULL
+WHERE fromExtra IS NOT NULL OR fromNative IS NOT NULL;

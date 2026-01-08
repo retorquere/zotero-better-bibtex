@@ -56,9 +56,9 @@ export const sql = {
   setup(build) {
     build.onLoad({ filter: /[.]sql$/i }, async (args) => {
       let text = await fs.promises.readFile(args.path, 'utf-8')
-      const queries = text.split('\n--\n')
-        .map(q => q.split('\n').map(line => line.replace(/--.*/, '')).join(' '))
-        .filter(stmt => !stmt.startsWith('#'))
+      const queries = text.split(';\n')
+        .map(q => q.split('\n').map(line => line.replace(/--.*/, '')).join(' ').trim())
+        .filter(stmt => stmt)
       return {
         contents: `export default ${jsesc(queries)}`,
         loader: 'js'

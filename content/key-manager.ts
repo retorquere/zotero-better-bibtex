@@ -374,15 +374,12 @@ export const KeyManager = new class _KeyManager {
     if (!saved) return
 
     if (saved.citationKey !== key.citationKey || (!!saved.pinned !== !!key.pinned)) {
-      log.debug(saved, 'updated to', key)
-
-      this.db.schedule(`REPLACE INTO betterbibtex.citationkey (itemID, itemKey, libraryID, citationKey, pinned${ key.pinned ? ', lastPinned' : ''}) VALUES (?, ?, ?, ?, ?${ key.pinned ? ', ?' : ''})`, [
+      this.db.schedule('REPLACE INTO betterbibtex.citationkey (itemID, itemKey, libraryID, citationKey, pinned) VALUES (?, ?, ?, ?, ?)', [
         key.itemID,
         key.itemKey,
         key.libraryID,
         key.citationKey,
         key.pinned ? 1 : 0,
-        ...(key.pinned ? [ key.citationKey ] : []),
       ])
     }
 
@@ -618,10 +615,7 @@ export const KeyManager = new class _KeyManager {
   public propose(item: Zotero.Item, mem?: Set<string>): Partial<CitekeyRecord> {
     const native = item.getField('zotero:citationKey') || ''
     const extra = Extra.get(item.getField('extra'), 'zotero', { citationKey: true }).extraFields.citationKey || ''
-    log.debug('propose:', { native, extra })
     let citationKey: string = native || extra
-
-    if (!citationKey) log.debug(`propose: impossible! no key for ${item.id}, new: ${!!item.id}, changed: ${item.hasChanged()} @ ${(new Error('')).stack}`)
 
     if (citationKey) return { citationKey, pinned: true }
 
