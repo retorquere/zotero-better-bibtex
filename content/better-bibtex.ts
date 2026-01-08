@@ -568,6 +568,9 @@ export class BetterBibTeX {
           Zotero.unlockPromise,
           // Zotero.uiReadyPromise,
         ])
+        while (await Zotero.DB.valueQueryAsync("SELECT COUNT(*) FROM settings WHERE setting='globalSchema' AND key='migrateExtra'")) {
+          await new Promise(resolve => setTimeout(resolve, 5000))
+        }
         patchItemAccess()
 
         DebugLog.register('Better BibTeX', ['translators.better-bibtex.'], pubkey)
