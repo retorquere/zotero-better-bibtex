@@ -98,8 +98,8 @@ export const KeyManager = new class _KeyManager {
     queue: newQueue(1, 1, 5000),
     batch: [] as BatchedQuery[],
 
-    schedule(_query: string, _params: Array<string | number>) {
-      // this.batch.push({ query, params })
+    schedule(query: string, params: Array<string | number>) {
+      this.batch.push({ query, params })
 
       this.queue.add(async () => {
         if (this.batch.length) {
@@ -486,26 +486,16 @@ export const KeyManager = new class _KeyManager {
   }
 
   public async load(): Promise<void> {
-    const [ regularitems, extracted ] = Q
+    const [ regularitems, extract ] = Q
 
     const keys: CitekeyRecord[] = []
     let key: CitekeyRecord
 
     let missing: number[] = []
 
-    // eslint-disable-next-line no-underscore-dangle
-    const connection = ((await Zotero.DB._getConnectionAsync()) as unknown as any)._connectionData._dbConn
-    connection.createFunction('BBT_EXTRACT_KEY', 1, {
-      onFunctionCall(args) {
-        if (args.getType(0) !== 3) return null
-        const m = (args.getUTF8String(0) as string).match(/(?:$|\n)citation key:(.+?)(?:\n|$)/i)
-        return m[1].trim() || null
-      },
-    })
-
     await Zotero.DB.executeTransaction(async () => {
       // extract pinned keys
-      await ZoteroDB.queryAsync(extracted)
+      await ZoteroDB.queryAsync(extract)
 
       // delete orphans
       await ZoteroDB.queryAsync(`WITH RegularItems AS (${regularitems}) DELETE FROM betterbibtex.citationkey WHERE itemID NOT IN (SELECT itemID FROM RegularItems)`)
