@@ -1,11 +1,7 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 
-import { log } from '../logger'
-
 function normalize(query: string): string {
-  query = query.replace(/[\s\n]+/g, ' ').trim()
-  log.info('executing', query)
-  return query
+  return query.replace(/[\s\n]+/g, ' ').trim()
 }
 
 const options = {
