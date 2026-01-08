@@ -261,16 +261,28 @@ function patchItemAccess() {
   })
 
   monkey.patch(Zotero.Item.prototype, 'getField', original => function Zotero_Item_prototype_getField(field: any, unformatted: any, includeBaseMapped: any) {
+    if (field === 'zotero:citationKey') {
+      try {
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+        return original.apply(this, [...arguments].map((a, i) => i ? a : 'citationKey'))
+      }
+      catch (err) {
+        log.error('native citationkey fetch:', err)
+        return ''
+      }
+    }
     // NO NATIVE CHECK HERE until we drop non-pinned key support
-    if (field !== 'citationKey') return original.apply(this, arguments) as string
+    if (field === 'citationKey') {
+      try {
+        return Zotero.BetterBibTeX.KeyManager.get(this.id)?.citationKey || ''
+      }
+      catch (err) {
+        log.error('patched getField:', { field, unformatted, includeBaseMapped, err })
+        return ''
+      }
+    }
 
-    try {
-      return Zotero.BetterBibTeX.KeyManager.get(this.id)?.citationKey || ''
-    }
-    catch (err) {
-      log.error('patched getField:', { field, unformatted, includeBaseMapped, err })
-      return ''
-    }
+    return original.apply(this, arguments) as string
   })
 
   // #1579

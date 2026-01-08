@@ -31,6 +31,8 @@ import { monkey } from './monkey-patch'
 import { sprintf } from 'sprintf-js'
 import { newQueue } from '@henrygd/queue/rl'
 
+import Q from './db/extract.sql'
+
 import * as l10n from './l10n'
 
 export type CitekeyRecord = {
@@ -96,8 +98,8 @@ export const KeyManager = new class _KeyManager {
     queue: newQueue(1, 1, 5000),
     batch: [] as BatchedQuery[],
 
-    schedule(query: string, params: Array<string | number>) {
-      this.batch.push({ query, params })
+    schedule(_query: string, _params: Array<string | number>) {
+      // this.batch.push({ query, params })
 
       this.queue.add(async () => {
         if (this.batch.length) {
@@ -107,7 +109,7 @@ export const KeyManager = new class _KeyManager {
           this.batch = []
           await Zotero.DB.executeTransaction(async () => {
             for (const q of batch) {
-              await Zotero.DB.queryAsync(q.query, q.params)
+              await ZoteroDB.queryAsync(q.query, q.params)
             }
           })
         }
@@ -367,30 +369,21 @@ export const KeyManager = new class _KeyManager {
   }
 
   private async store(key: CitekeyRecord) {
-    this.db.schedule(`REPLACE INTO betterbibtex.citationkey (itemID, itemKey, libraryID, citationKey, pinned${ key.pinned ? ', lastPinned' : ''}) VALUES (?, ?, ?, ?, ?${ key.pinned ? ', ?' : ''})`, [
-      key.itemID,
-      key.itemKey,
-      key.libraryID,
-      key.citationKey,
-      key.pinned ? 1 : 0,
-      ...(key.pinned ? [ key.citationKey ] : []),
-    ])
+    const saved = blink.first(this.keys, byItemID(key.itemID))
 
-    if (!blink.first(this.keys, byItemID(key.itemID))) return
+    if (!saved) return
 
-    let item
-    try {
-      item = await Zotero.Items.getAsync(key.itemID)
-      if (!item) log.error('could not load', key.itemID)
-    }
-    catch (err) {
-      log.error('could not load', key.itemID, err)
-    }
-    if (!item) return
+    if (saved.citationKey !== key.citationKey || (!!saved.pinned !== !!key.pinned)) {
+      log.debug(saved, 'updated to', key)
 
-    if (item.isFeedItem || !item.isRegularItem()) {
-      log.error('citekey registered for item of type', item.isFeedItem ? 'feedItem' : Zotero.ItemTypes.getName(item.itemTypeID))
-      return
+      this.db.schedule(`REPLACE INTO betterbibtex.citationkey (itemID, itemKey, libraryID, citationKey, pinned${ key.pinned ? ', lastPinned' : ''}) VALUES (?, ?, ?, ?, ?${ key.pinned ? ', ?' : ''})`, [
+        key.itemID,
+        key.itemKey,
+        key.libraryID,
+        key.citationKey,
+        key.pinned ? 1 : 0,
+        ...(key.pinned ? [ key.citationKey ] : []),
+      ])
     }
 
     if (!key.pinned && this.autopin.enabled) {
@@ -412,7 +405,7 @@ export const KeyManager = new class _KeyManager {
       delete where.where[Preference.citekeyCaseInsensitive ? 'citationKey' : 'lcCitationKey']
 
       for (const conflict of blink.many(this.keys, where)) {
-        item = await Zotero.Items.getAsync(conflict.itemID)
+        const item = await Zotero.Items.getAsync(conflict.itemID)
         this.update(item, conflict)
       }
     }
@@ -440,7 +433,7 @@ export const KeyManager = new class _KeyManager {
 
   private async start(): Promise<void> {
     if (Zotero.Libraries.userLibraryID > 1) {
-      await Zotero.DB.queryAsync('UPDATE betterbibtex.citationkey SET libraryID = ? WHERE libraryID IN (0, 1)', [Zotero.Libraries.userLibraryID])
+      await ZoteroDB.queryTx('UPDATE betterbibtex.citationkey SET libraryID = ? WHERE libraryID IN (0, 1)', [Zotero.Libraries.userLibraryID])
     }
 
     await this.load()
@@ -493,56 +486,30 @@ export const KeyManager = new class _KeyManager {
   }
 
   public async load(): Promise<void> {
-    let missing: number[]
+    const [ regularitems, extracted ] = Q
+    log.debug(regularitems, extracted)
 
+    // const keys: Map<number, CitekeyRecord> = new Map
+    // let key: CitekeyRecord
+    const missing: number[] = []
+
+    /*
     await Zotero.DB.executeTransaction(async () => {
-      const $items = `
-        WITH _items AS (
-          SELECT item.itemID, item.key as itemKey, item.libraryID,
-            MAX(CASE WHEN f.fieldName = 'extra' THEN idv.value END) AS extra,
-            MAX(CASE WHEN f.fieldName = 'citationKey' THEN idv.value END) AS citationKey
-          FROM items item
-          LEFT JOIN itemData id ON item.itemID = id.itemID
-          LEFT JOIN fields f ON id.fieldID = f.fieldID AND f.fieldName IN ('extra', 'citationKey')
-          LEFT JOIN itemDataValues idv ON id.valueID = idv.valueID
-          WHERE item.itemID NOT IN (SELECT itemID FROM deletedItems)
-            AND item.itemTypeID NOT IN (SELECT itemTypeID FROM itemTypes WHERE typeName IN ('attachment', 'note', 'annotation'))
-            AND item.itemID NOT IN (SELECT itemID from feedItems)
-          GROUP BY item.itemID
-        )
-      `
+      // extract pinned keys
+      await ZoteroDB.queryAsync(extracted)
 
-      await ZoteroDB.queryAsync(`${ $items } DELETE FROM betterbibtex.citationkey WHERE itemID NOT IN (SELECT itemID FROM _items)`)
+      // delete orphans
+      await ZoteroDB.queryAsync(`WITH RegularItems AS (${regularitems}) DELETE FROM betterbibtex.citationkey WHERE itemID NOT IN (SELECT itemID FROM RegularItems)`)
 
-      const keys: Map<number, CitekeyRecord> = new Map
-      let key: CitekeyRecord
-      for (key of await Zotero.DB.queryAsync('SELECT * from betterbibtex.citationkey') as CitekeyRecord[]) {
-        keys.set(key.itemID, lc({ itemID: key.itemID, itemKey: key.itemKey, libraryID: key.libraryID, citationKey: key.citationKey, pinned: key.pinned }))
+      // load what we have in memory
+      for (key of await ZoteroDB.queryAsync('SELECT * from betterbibtex.citationkey') as CitekeyRecord[]) {
+        keys.set(key.itemID, lc({ itemID: key.itemID, itemKey: key.itemKey, libraryID: key.libraryID, citationKey: key.citationKey, pinned: false }))
       }
-
-      // fetch pinned keys to be sure
-      const keyLine = /(^|\n)Citation Key\s*:\s*(.+?)(\n|$)/i
-      const getKey = (extra: string) => {
-        if (!extra) return ''
-        const m = keyLine.exec(extra)
-        return m ? m[2].trim() : ''
-      }
-
-      let pinned: string
-      for (const item of (await ZoteroDB.queryAsync(`${ $items } SELECT itemID, itemKey, libraryID, extra FROM _items`))) {
-        pinned = item.citationKey || getKey(item.extra)
-        if (pinned) {
-          keys.set(item.itemID, lc({ itemID: item.itemID, itemKey: item.itemKey, libraryID: item.libraryID, citationKey: pinned, pinned: true }))
-        }
-        else if (key = keys.get(item.itemID)) {
-          key.pinned = false
-        }
-      }
-
       blink.insertMany(this.keys, [...keys.values()])
 
-      missing = await ZoteroDB.columnQueryAsync(`${ $items } SELECT itemID FROM _items WHERE itemID NOT IN (SELECT itemID from betterbibtex.citationkey)`)
+      missing = (await ZoteroDB.columnQueryAsync(`WITH RegularItems AS (${regularitems}) SELECT itemID FROM RegularItems WHERE itemID NOT IN (SELECT itemID from betterbibtex.citationkey)`))
     })
+    */
 
     const notify = async (ids: number[]) => {
       if (!Cache.ready) {
@@ -589,6 +556,7 @@ export const KeyManager = new class _KeyManager {
     ]
 
     if (missing.length) {
+      log.info('keymanager batch:', missing.length, 'missing keys')
       // generate keys for entries that don't have them yet
       const start = Date.now()
       const progress = new Progress(missing.length, 'Assigning citation keys')
@@ -650,7 +618,12 @@ export const KeyManager = new class _KeyManager {
 
   // mem is for https://github.com/retorquere/zotero-better-bibtex/issues/2926
   public propose(item: Zotero.Item, mem?: Set<string>): Partial<CitekeyRecord> {
-    let citationKey: string = Extra.get(item.getField('extra'), 'zotero', { citationKey: true }).extraFields.citationKey
+    const native = item.getField('zotero:citationKey') || ''
+    const extra = Extra.get(item.getField('extra'), 'zotero', { citationKey: true }).extraFields.citationKey || ''
+    log.debug('propose:', { native, extra })
+    let citationKey: string = native || extra
+
+    if (!citationKey) log.debug(`propose: impossible! no key for ${item.id}, new: ${!!item.id}, changed: ${item.hasChanged()} @ ${(new Error('')).stack}`)
 
     if (citationKey) return { citationKey, pinned: true }
 

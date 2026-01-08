@@ -744,6 +744,8 @@ Feature: Export
   @use.with_client=zotero @use.with_whopper=true @timeout=3000 @whopper
   Scenario: Really Big whopping library
     When I restart Zotero with "1287"
+    And I wait 15 seconds
+    And I wait until migrations are done
     And I set preference .DOIandURL to "doi"
     # And I set preference .autoAbbrevStyle to "http://www.zotero.org/styles/cell"
     And I set preference .autoExport to "off"
@@ -755,7 +757,6 @@ Feature: Export
     # And I select the library named "CCNLab"
     And I set export option exportNotes to true
     And I wait until Zotero is idle
-    # And I wait until migrations are done
     And I export the library 1 times using "id:9cb70025-a888-4a29-a210-93ec52da40d4"
     And I wait until Zotero is idle
     And an export using "Better BibTeX" with worker on should match "export/*.bibtex"

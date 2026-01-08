@@ -32,5 +32,4 @@ import ids from '../gen/l10n'
 export async function initialize(): Promise<void> {
   const load = ids.map(key => prefetch(key))
   await Promise.all(load)
-  log.info('l10n prefetch', ids, 'to', localized)
 }
