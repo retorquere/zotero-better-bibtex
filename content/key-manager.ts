@@ -486,56 +486,30 @@ export const KeyManager = new class _KeyManager {
   }
 
   public async load(): Promise<void> {
-    let missing: number[]
+    const [ regularitems, extracted ] = Q
+    log.debug(regularitems, extracted)
 
+    // const keys: Map<number, CitekeyRecord> = new Map
+    // let key: CitekeyRecord
+    const missing: number[] = []
+
+    /*
     await Zotero.DB.executeTransaction(async () => {
-      const $items = `
-        WITH _items AS (
-          SELECT item.itemID, item.key as itemKey, item.libraryID,
-            MAX(CASE WHEN f.fieldName = 'extra' THEN idv.value END) AS extra,
-            MAX(CASE WHEN f.fieldName = 'citationKey' THEN idv.value END) AS citationKey
-          FROM items item
-          LEFT JOIN itemData id ON item.itemID = id.itemID
-          LEFT JOIN fields f ON id.fieldID = f.fieldID AND f.fieldName IN ('extra', 'citationKey')
-          LEFT JOIN itemDataValues idv ON id.valueID = idv.valueID
-          WHERE item.itemID NOT IN (SELECT itemID FROM deletedItems)
-            AND item.itemTypeID NOT IN (SELECT itemTypeID FROM itemTypes WHERE typeName IN ('attachment', 'note', 'annotation'))
-            AND item.itemID NOT IN (SELECT itemID from feedItems)
-          GROUP BY item.itemID
-        )
-      `
+      // extract pinned keys
+      await ZoteroDB.queryAsync(extracted)
 
-      await ZoteroDB.queryAsync(`${ $items } DELETE FROM betterbibtex.citationkey WHERE itemID NOT IN (SELECT itemID FROM _items)`)
+      // delete orphans
+      await ZoteroDB.queryAsync(`WITH RegularItems AS (${regularitems}) DELETE FROM betterbibtex.citationkey WHERE itemID NOT IN (SELECT itemID FROM RegularItems)`)
 
-      const keys: Map<number, CitekeyRecord> = new Map
-      let key: CitekeyRecord
-      for (key of await Zotero.DB.queryAsync('SELECT * from betterbibtex.citationkey') as CitekeyRecord[]) {
-        keys.set(key.itemID, lc({ itemID: key.itemID, itemKey: key.itemKey, libraryID: key.libraryID, citationKey: key.citationKey, pinned: key.pinned }))
+      // load what we have in memory
+      for (key of await ZoteroDB.queryAsync('SELECT * from betterbibtex.citationkey') as CitekeyRecord[]) {
+        keys.set(key.itemID, lc({ itemID: key.itemID, itemKey: key.itemKey, libraryID: key.libraryID, citationKey: key.citationKey, pinned: false }))
       }
-
-      // fetch pinned keys to be sure
-      const keyLine = /(^|\n)Citation Key\s*:\s*(.+?)(\n|$)/i
-      const getKey = (extra: string) => {
-        if (!extra) return ''
-        const m = keyLine.exec(extra)
-        return m ? m[2].trim() : ''
-      }
-
-      let pinned: string
-      for (const item of (await ZoteroDB.queryAsync(`${ $items } SELECT itemID, itemKey, libraryID, extra FROM _items`))) {
-        pinned = item.citationKey || getKey(item.extra)
-        if (pinned) {
-          keys.set(item.itemID, lc({ itemID: item.itemID, itemKey: item.itemKey, libraryID: item.libraryID, citationKey: pinned, pinned: true }))
-        }
-        else if (key = keys.get(item.itemID)) {
-          key.pinned = false
-        }
-      }
-
       blink.insertMany(this.keys, [...keys.values()])
 
-      missing = await ZoteroDB.columnQueryAsync(`${ $items } SELECT itemID FROM _items WHERE itemID NOT IN (SELECT itemID from betterbibtex.citationkey)`)
+      missing = (await ZoteroDB.columnQueryAsync(`WITH RegularItems AS (${regularitems}) SELECT itemID FROM RegularItems WHERE itemID NOT IN (SELECT itemID from betterbibtex.citationkey)`))
     })
+    */
 
     const notify = async (ids: number[]) => {
       if (!Cache.ready) {
@@ -582,6 +556,7 @@ export const KeyManager = new class _KeyManager {
     ]
 
     if (missing.length) {
+      log.info('keymanager batch:', missing.length, 'missing keys')
       // generate keys for entries that don't have them yet
       const start = Date.now()
       const progress = new Progress(missing.length, 'Assigning citation keys')
