@@ -57,7 +57,7 @@ export const sql = {
     build.onLoad({ filter: /[.]sql$/i }, async (args) => {
       let text = await fs.promises.readFile(args.path, 'utf-8')
       const ddl = text.split('\n--\n')
-        .map(ddl => ddl.split('\n').map(line => line.replace(/-- .*/, '')).join(' '))
+        //.map(ddl => ddl.replace(/[\s\n]+/g, ' '))
         .filter(stmt => !stmt.startsWith('#'))
       return {
         contents: `export default ${jsesc(ddl)}`,
