@@ -487,13 +487,22 @@ export const KeyManager = new class _KeyManager {
 
   public async load(): Promise<void> {
     const [ regularitems, extracted ] = Q
-    log.debug(regularitems, extracted)
 
-    // const keys: Map<number, CitekeyRecord> = new Map
-    // let key: CitekeyRecord
-    const missing: number[] = []
+    const keys: CitekeyRecord[] = []
+    let key: CitekeyRecord
 
-    /*
+    let missing: number[] = []
+
+    // eslint-disable-next-line no-underscore-dangle
+    const connection = ((await Zotero.DB._getConnectionAsync()) as unknown as any)._connectionData._dbConn
+    connection.createFunction('BBT_EXTRACT_KEY', 1, {
+      onFunctionCall(args) {
+        if (args.getType(0) !== 3) return null
+        const m = (args.getUTF8String(0) as string).match(/(?:$|\n)citation key:(.+?)(?:\n|$)/i)
+        return m[1].trim() || null
+      },
+    })
+
     await Zotero.DB.executeTransaction(async () => {
       // extract pinned keys
       await ZoteroDB.queryAsync(extracted)
@@ -503,13 +512,12 @@ export const KeyManager = new class _KeyManager {
 
       // load what we have in memory
       for (key of await ZoteroDB.queryAsync('SELECT * from betterbibtex.citationkey') as CitekeyRecord[]) {
-        keys.set(key.itemID, lc({ itemID: key.itemID, itemKey: key.itemKey, libraryID: key.libraryID, citationKey: key.citationKey, pinned: false }))
+        keys.push(lc({ itemID: key.itemID, itemKey: key.itemKey, libraryID: key.libraryID, citationKey: key.citationKey, pinned: false }))
       }
-      blink.insertMany(this.keys, [...keys.values()])
+      blink.insertMany(this.keys, keys)
 
       missing = (await ZoteroDB.columnQueryAsync(`WITH RegularItems AS (${regularitems}) SELECT itemID FROM RegularItems WHERE itemID NOT IN (SELECT itemID from betterbibtex.citationkey)`))
     })
-    */
 
     const notify = async (ids: number[]) => {
       if (!Cache.ready) {
