@@ -4,8 +4,7 @@ on:
   push: null
   pull_request: null
   schedule:
-  # - cron: 0 0 * * *
-  - cron: 0 */2 * * *
+  - cron: 0 0 * * *
 
 jobs:
   build:
