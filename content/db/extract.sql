@@ -31,8 +31,8 @@ WITH PreparedItems AS (
 Extracted AS (
     SELECT
         itemID, itemKey, libraryID,
-        MAX(CASE WHEN fieldName = 'citationKey' THEN rawValue END) AS fromNative,
-        MAX(CASE
+        NULLIF(MAX(CASE WHEN fieldName = 'citationKey' THEN rawValue END), '') AS fromNative,
+        NULLIF(MAX(CASE
             WHEN fieldName = 'extra' AND INSTR(searchVal, CHAR(10) || 'citation key:') > 0
             THEN
                 TRIM(SUBSTR(
@@ -44,7 +44,7 @@ Extracted AS (
                         ELSE LENGTH(extractVal)
                     END
                 ))
-        END) AS fromExtra
+        END), '') AS fromExtra
     FROM PreparedItems
     GROUP BY itemID
 )
