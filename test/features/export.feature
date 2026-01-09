@@ -11,6 +11,7 @@ Feature: Export
 
     Examples:
       | file                                                                                                                     | references |
+      | New and edited items are not added or dropped from better-bibtex.sql #3370                                               | 1          |
       | Generating citation keys and special letters (i.e. o, u, a) #3351                                                        | 1          |
       | Export to BetterBibTeX .bib no longer works and fails #3352                                                              | 1          |
       | urldate exported to .bib does not match Zoteros date anymore #3330                                                       | 1          |

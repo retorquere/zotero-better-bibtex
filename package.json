@@ -203,7 +203,8 @@
     "uri-templates": "^0.2.0",
     "util": "^0.12.5",
     "xml-parser": "^1.2.1",
-    "xpath": "^0.0.34"
+    "xpath": "^0.0.34",
+    "yargs": "^18.0.0"
   },
   "repository": {
     "type": "git",

@@ -99,11 +99,12 @@ export const KeyManager = new class _KeyManager {
     batch: [] as BatchedQuery[],
 
     schedule(query: string, params: Array<string | number>) {
+      log.debug('3370: scheduled', { query, params })
       this.batch.push({ query, params })
 
       this.queue.add(async () => {
         if (this.batch.length) {
-          log.info('keymanager batch: execute', this.batch.length)
+          log.debug('3370: keymanager batch: execute', this.batch.length)
 
           const batch = this.batch
           this.batch = []
@@ -373,15 +374,13 @@ export const KeyManager = new class _KeyManager {
 
     if (!saved) return
 
-    if (saved.citationKey !== key.citationKey || (!!saved.pinned !== !!key.pinned)) {
-      this.db.schedule('REPLACE INTO betterbibtex.citationkey (itemID, itemKey, libraryID, citationKey, pinned) VALUES (?, ?, ?, ?, ?)', [
-        key.itemID,
-        key.itemKey,
-        key.libraryID,
-        key.citationKey,
-        key.pinned ? 1 : 0,
-      ])
-    }
+    this.db.schedule('REPLACE INTO betterbibtex.citationkey (itemID, itemKey, libraryID, citationKey, pinned) VALUES (?, ?, ?, ?, ?)', [
+      key.itemID,
+      key.itemKey,
+      key.libraryID,
+      key.citationKey,
+      key.pinned ? 1 : 0,
+    ])
 
     if (!key.pinned && this.autopin.enabled) {
       this.autopin.schedule(key.itemID, () => {

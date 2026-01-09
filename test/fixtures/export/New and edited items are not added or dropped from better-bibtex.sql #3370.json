@@ -1,0 +1,59 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "preferences": {
+      "autoPinDelay": 1,
+      "citekeyFormat": "authEtal2(creator = \"*\", initials = false, sep = \"_\") + \"_\" + year + infix",
+      "keyConflictPolicy": "change",
+      "keyScope": "global",
+      "warnBulkModify": 0
+    },
+    "options": {}
+  },
+  "version": {
+    "zotero": "7.0.30",
+    "bbt": "7.0.75"
+  },
+  "collections": {},
+  "items": [
+    {
+      "key": "Q79892MX",
+      "version": 2548,
+      "itemType": "journalArticle",
+      "title": "Staring at Tables: Exploring Conceptual Data Modeling as a Rich Collaborative Activity",
+      "date": "2018",
+      "language": "en",
+      "libraryCatalog": "Zotero",
+      "extra": "Citation Key: Koesten_etal_2018",
+      "creators": [
+        {
+          "firstName": "Laura",
+          "lastName": "Koesten",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "Daphne",
+          "lastName": "Miedema",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "Hsiang-Yun",
+          "lastName": "Wu",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "Mathias",
+          "lastName": "Funk",
+          "creatorType": "author"
+        }
+      ],
+      "tags": [],
+      "dateAdded": "2026-01-08T14:28:10Z",
+      "dateModified": "2026-01-09T19:34:48Z",
+      "itemID": 7331,
+      "notes": [],
+      "citationKey": "Koesten_etal_2018"
+    }
+  ]
+}
