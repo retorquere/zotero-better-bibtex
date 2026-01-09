@@ -99,13 +99,10 @@ export const KeyManager = new class _KeyManager {
     batch: [] as BatchedQuery[],
 
     schedule(query: string, params: Array<string | number>) {
-      log.debug('3370: scheduled', { query, params })
       this.batch.push({ query, params })
 
       this.queue.add(async () => {
         if (this.batch.length) {
-          log.debug('3370: keymanager batch: execute', this.batch.length)
-
           const batch = this.batch
           this.batch = []
           await Zotero.DB.executeTransaction(async () => {
