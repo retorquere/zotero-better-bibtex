@@ -14,11 +14,11 @@ if github.event_name == 'push':
   if github.event.head_commit.message == package.version and github.ref == f'refs/tags/v{package.version}':
     print('release build')
     flags.add('slow')
-  elif github.ref_name in ['master', 'z7'] : # builds on master.
+  elif github.ref_name in ['master'] : # builds on master.
     print(github.ref_name)
     flags.add('slow')
     flags.add('beta')
-    flags.add('legacy')
+    flags.add('whopper')
   else:
     print('debug build')
 #  elif os.path.isfile('beta.txt'):
@@ -34,7 +34,7 @@ if github.event_name == 'schedule': # nightlies
   flags.add('beta')
   flags.add('whopper')
 
-print('flags =', flags)
+print('workflow flags =', flags)
 
 if len(flags) > 0:
   with open(os.environ['GITHUB_ENV'], 'a') as env:
