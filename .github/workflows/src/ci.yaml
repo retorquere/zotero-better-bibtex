@@ -4,7 +4,8 @@ on:
   push: null
   pull_request: null
   schedule:
-  - cron: 0 0 * * *
+  # - cron: 0 0 * * *
+  - cron: 0 */2 * * *
 
 _anchors:
   get_version: &get_version
@@ -58,7 +59,7 @@ jobs:
     - *install_python_packages
     - *install_node
     - *install_node_packages
-    - name: set slow/legacy/beta flags
+    - name: set slow/beta/whopper flags
       run: ./util/action-flags
       env:
         GITHUB_CONTEXT: ${{ toJson(github) }}
