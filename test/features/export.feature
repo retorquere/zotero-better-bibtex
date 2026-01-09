@@ -744,8 +744,6 @@ Feature: Export
   @use.with_client=zotero @use.with_whopper=true @timeout=3000 @whopper
   Scenario: Really Big whopping library
     When I restart Zotero with "1287"
-    And I wait 15 seconds
-    And I wait until migrations are done
     And I set preference .DOIandURL to "doi"
     # And I set preference .autoAbbrevStyle to "http://www.zotero.org/styles/cell"
     And I set preference .autoExport to "off"
