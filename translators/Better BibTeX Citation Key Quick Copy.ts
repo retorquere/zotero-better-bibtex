@@ -1,6 +1,6 @@
 declare const Zotero: any
 
-import { simplifyForExport } from '../gen/items/simplify'
+import { simplifyForExport } from '../content/simplify'
 import { uri, html as escapeHTML } from '../content/escape'
 
 import { Eta } from 'eta'

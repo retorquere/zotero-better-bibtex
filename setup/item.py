@@ -3,6 +3,7 @@
 from dotenv import load_dotenv, find_dotenv
 load_dotenv(find_dotenv(), override=True)
 
+from types import SimpleNamespace
 from networkx.readwrite import json_graph
 
 from collections import OrderedDict
@@ -181,8 +182,9 @@ class fetch(object):
             if (client == 'zotero'):
               with jar.open('resource/schema/dateFormats.json') as f:
                 dateFormats = json.load(f)
-              with open(os.path.join('schema', 'dateFormats.json'), 'w') as f:
-                json.dump(dateFormats, f, indent='  ')
+
+              #x with open(os.path.join('schema', 'x-dateFormats.json'), 'w') as f:
+              #x   json.dump(dateFormats, f, indent='  ')
           except KeyError:
             hashes[client][release] = None
             print('      release', release, 'does not have a bundled schema')
@@ -559,8 +561,8 @@ for creatorTypes in jsonpath.parse('*.itemTypes.*.creatorTypes').find(SCHEMA):
   if not itemType in creators[client]: creators[client][itemType] = []
   for creatorType in creatorTypes.value:
     creators[client][itemType].append(creatorType)
-with open(os.path.join(ITEMS, 'creators.json'), 'w') as f:
-  json.dump(creators, f, indent='  ', default=lambda x: sorted(list(x)) if isinstance(x, set) else x)
+#x with open(os.path.join(ITEMS, 'x-creators.json'), 'w') as f:
+#x  json.dump(creators, f, indent='  ', default=lambda x: sorted(list(x)) if isinstance(x, set) else x)
 with open(os.path.join(root, 'site/layouts/shortcodes/citekey-formatters/creatortypes.html'), 'w') as f:
   creators = sorted(list(set(sum([crs
     for itemtypes in creators.values()
@@ -573,201 +575,206 @@ def template(tmpl):
   return Template(filename=os.path.join(root, 'setup/templates', tmpl))
 
 print('  writing typing for serialized item')
-with open(os.path.join(TYPINGS, 'serialized-item.d.ts'), 'w') as f:
-  fields = sorted(list(set(field.value for field in jsonpath.parse('*.itemTypes.*.fields.*').find(SCHEMA))))
-  itemTypes = sorted(list(set(field.value for field in jsonpath.parse('*.itemTypes.*.itemType').find(SCHEMA))))
-  print(template('items/serialized-item.d.ts.mako').render(fields=fields, itemTypes=itemTypes).strip(), file=f)
-
-print('  writing field simplifier')
-with open(os.path.join(ITEMS, 'items.ts'), 'w') as items, open(os.path.join(ITEMS, 'simplify.ts'), 'w') as simplify:
-  valid = Munch(type={}, field={})
-  for itemType in jsonpath.parse('*.itemTypes.*.itemType').find(SCHEMA):
-    client = str(itemType.full_path).split('.')[0]
-    itemType = itemType.value
-
-    if not itemType in valid.type:
-      valid.type[itemType] = client
-      if itemType == 'note':
-        valid.field[itemType] = {field: 'true' for field in 'itemType tags note id itemID dateAdded dateModified'.split(' ')}
-      elif itemType == 'attachment':
-        valid.field[itemType] = {field: 'true' for field in 'itemType tags id itemID dateAdded dateModified'.split(' ')}
-      else:
-        valid.field[itemType] = {field: 'true' for field in 'itemType creators tags attachments notes seeAlso id itemID dateAdded dateModified multi'.split(' ')}
-    elif valid.type[itemType] != client:
-      valid.type[itemType] = 'true'
-
-  for field in jsonpath.parse('*.itemTypes.*.fields.*').find(SCHEMA):
-    client, itemType = operator.itemgetter(0, 2)(str(field.full_path).split('.'))
-    for field in [str(field.path), field.value]:
-      if not field in valid.field[itemType]:
-        valid.field[itemType][field] = client
-      elif valid.field[itemType][field] != client:
-        valid.field[itemType][field] = 'true'
-  valid.field['patent']['number'] = 'true'
-
-  jsonschema = sqlite3.connect(':memory:')
-  jsonschema.execute('CREATE TABLE valid (client, itemType, field)')
-  for itemType, fields in valid.field.items():
-    for field, validfor in fields.items():
-      validfor = ['zotero', 'jurism'] if validfor == 'true' else [validfor]
-      for client in validfor:
-        jsonschema.execute('INSERT INTO valid (client, itemType, field) VALUES (?, ?, ?)', (client, itemType, field))
-
-  for client in ['zotero', 'jurism']:
-    schema = {
-      'type': 'object',
-      'discriminator': { 'propertyName': 'itemType' },
-      'required': ['itemType'],
-      'oneOf': [],
-      '$defs': {
-        'attachments': {
-          'type': 'array',
-          'items': {
-            'type': 'object',
-            'additionalProperties': False,
-            'properties': {
-              'path': { 'type': 'string' },
-              'accessDate': { 'type': 'string' },
-              'contentType': { 'type': 'string' },
-              'itemType': { 'type': 'string' },
-              'mimeType': { 'type': 'string' },
-              'key': { 'type': 'string' },
-              'linkMode': { 'type': 'string' },
-              'title': { 'type': 'string' },
-              'uri': { 'type': 'string' },
-              'url': { 'type': 'string' },
-            }
-          }
-        },
-
-        'creators': {
-          'type': 'array',
-          'items': {
-            'type': 'object',
-            'additionalProperties': False,
-            'properties': {
-              'creatorType': { 'type': 'string' },
-              'firstName': { 'type': 'string' },
-              'lastName': { 'type': 'string' },
-              'fieldMode': { 'type': 'number' },
-              'multi': { 'type': 'object' },
-            }
-          }
-        },
-
-        'notes': {
-          'type': 'array',
-          'items': { 'type': 'string' },
-        },
-
-        'tags': {
-          'type': 'array',
-          'items': {
-            'oneOf': [
-              {
-                'type': 'object',
-                'additionalProperties': False,
-                'properties': {
-                  'tag': { 'type': 'string' },
-                  'type': { 'type': 'number' },
-                },
-                'required': ['tag'],
-              },
-              { 'type': 'string' }
-            ],
-          },
-        },
-
-        'edition': {
-          'oneOf': [
-            { 'type': 'string' },
-            { 'type': 'number' },
-          ]
-        },
-
-        'multi': { 'type': 'object' },
-        'seeAlso': { 'type': 'array' },
-
-      }
-    }
-    for itemType, in jsonschema.execute('SELECT DISTINCT itemType FROM valid WHERE client = ? ORDER BY itemType', (client,)):
-      schema['oneOf'].append({
-        'type': 'object',
-        'additionalProperties': False,
-        'properties': {
-           'itemType': { 'const': itemType },
-         },
-      })
-      for field, in jsonschema.execute('SELECT field FROM valid WHERE client = ? AND itemType = ? ORDER BY field', (client, itemType)):
-        if field == 'itemType': continue
-        assert field not in schema['oneOf'][-1]['properties'], (itemType, field)
-
-        if field in schema['$defs']:
-          schema['oneOf'][-1]['properties'][field] = { '$ref': '#/$defs/' + field }
-        elif field in ['itemID']:
-          schema['oneOf'][-1]['properties'][field] = { 'type': 'number' }
-        else:
-          schema['oneOf'][-1]['properties'][field] = { 'type': 'string' }
-
-    with open(os.path.join(ITEMS, client + '.json'), 'w') as v:
-      json.dump(schema, v, indent='  ')
-
-  # map aliases to base names
-  DG = nx.DiGraph()
-  for field in jsonpath.parse('*.itemTypes.*.fields.*').find(SCHEMA):
-    client = str(field.full_path).split('.')[0]
-    baseField = field.value
-    field = str(field.path)
-    if field == baseField: continue
-
-    if not (data := DG.get_edge_data(field, baseField, default=None)):
-      DG.add_edge(field, baseField, client=client)
-    elif data['client'] != client:
-      DG.edges[field, baseField]['client'] = 'both'
-  aliases = {}
-  for field, baseField, client in DG.edges.data('client'):
-    if not client in aliases: aliases[client] = {}
-    if not baseField in aliases[client]: aliases[client][baseField] = []
-    aliases[client][baseField].append(field)
-
-  # map names to basenames
-  names = Munch(field={}, type={})
-  names.field['dateadded'] = Munch(jurism='dateAdded', zotero='dateAdded')
-  names.field['datemodified'] = Munch(jurism='dateModified', zotero='dateModified')
-  labels = {}
-  for field in jsonpath.parse('*.itemTypes.*.fields.*').find(SCHEMA):
-    client, itemType = operator.itemgetter(0, 2)(str(field.full_path).split('.'))
-    baseField = field.value
-    field = str(field.path)
-    for section, field, name in [('field', field.lower(), baseField), ('field', baseField.lower(), baseField), ('type', itemType.lower(), itemType)]:
-      if not field in names[section]:
-        names[section][field] = Munch.fromDict({ client: name })
-      elif not client in names[section][field]:
-        names[section][field][client] = name
-      else:
-        assert names[section][field][client] == name, (client, section, field, names[section][field][client], name)
-
-      if name == 'numPages':
-        label = 'Number of pages'
-      else:
-        label = name[0].upper() + re.sub('([a-z])([A-Z])', lambda m: m.group(1) + ' ' + m.group(2).lower(), re.sub('[-_]', ' ', name[1:]))
-      if not field in labels:
-        labels[field] = Munch.fromDict({ client: label })
-      elif not client in labels[field]:
-        labels[field][client] = label
-      else:
-        assert labels[field][client] == label, (client, field, labels[field][client], label)
-
+#with open(os.path.join(TYPINGS, 'x-serialized-item.d.ts'), 'w') as f:
+#  fields = sorted(list(set(field.value for field in jsonpath.parse('*.itemTypes.*.fields.*').find(SCHEMA))))
+#  itemTypes = sorted(list(set(field.value for field in jsonpath.parse('*.itemTypes.*.itemType').find(SCHEMA))))
+#  print(template('items/serialized-item.d.ts.mako').render(fields=fields, itemTypes=itemTypes).strip(), file=f)
+with open(os.path.join(TYPINGS, 'serialized.d.ts'), 'w') as f, open('submodules/zotero/resource/schema/global/schema.json') as schema:
   try:
-    print(template('items/items.ts.mako').render(names=names, labels=labels, valid=valid, aliases=aliases, schemas=SCHEMA).strip(), file=items)
+    print(template('items/serialized.d.ts.mako').render(schema=json.load(schema, object_hook=lambda d: SimpleNamespace(**d))).strip(), file=f)
   except:
     print(exceptions.text_error_template().render())
-  try:
-    print(template('items/simplify.ts.mako').render(names=names, labels=labels, valid=valid, aliases=aliases, schemas=SCHEMA).strip(), file=simplify)
-  except:
-    print(exceptions.text_error_template().render())
-  #stringizer = lambda x: DG.nodes[x]['name'] if x in DG.nodes else x
-  #nx.write_gml(DG, 'fields.gml') # , stringizer)
+
+#x print('  writing field simplifier')
+#x with open(os.path.join(ITEMS, 'x-items.ts'), 'w') as items, open(os.path.join(ITEMS, 'x-simplify.ts'), 'w') as simplify:
+#x   valid = Munch(type={}, field={})
+#x   for itemType in jsonpath.parse('*.itemTypes.*.itemType').find(SCHEMA):
+#x     client = str(itemType.full_path).split('.')[0]
+#x     itemType = itemType.value
+#x 
+#x     if not itemType in valid.type:
+#x       valid.type[itemType] = client
+#x       if itemType == 'note':
+#x         valid.field[itemType] = {field: 'true' for field in 'itemType tags note id itemID dateAdded dateModified'.split(' ')}
+#x       elif itemType == 'attachment':
+#x         valid.field[itemType] = {field: 'true' for field in 'itemType tags id itemID dateAdded dateModified'.split(' ')}
+#x       else:
+#x         valid.field[itemType] = {field: 'true' for field in 'itemType creators tags attachments notes seeAlso id itemID dateAdded dateModified multi'.split(' ')}
+#x     elif valid.type[itemType] != client:
+#x       valid.type[itemType] = 'true'
+#x 
+#x   for field in jsonpath.parse('*.itemTypes.*.fields.*').find(SCHEMA):
+#x     client, itemType = operator.itemgetter(0, 2)(str(field.full_path).split('.'))
+#x     for field in [str(field.path), field.value]:
+#x       if not field in valid.field[itemType]:
+#x         valid.field[itemType][field] = client
+#x       elif valid.field[itemType][field] != client:
+#x         valid.field[itemType][field] = 'true'
+#x   valid.field['patent']['number'] = 'true'
+#x 
+#x   jsonschema = sqlite3.connect(':memory:')
+#x   jsonschema.execute('CREATE TABLE valid (client, itemType, field)')
+#x   for itemType, fields in valid.field.items():
+#x     for field, validfor in fields.items():
+#x       validfor = ['zotero', 'jurism'] if validfor == 'true' else [validfor]
+#x       for client in validfor:
+#x         jsonschema.execute('INSERT INTO valid (client, itemType, field) VALUES (?, ?, ?)', (client, itemType, field))
+#x 
+#x   for client in ['zotero', 'jurism']:
+#x     schema = {
+#x       'type': 'object',
+#x       'discriminator': { 'propertyName': 'itemType' },
+#x       'required': ['itemType'],
+#x       'oneOf': [],
+#x       '$defs': {
+#x         'attachments': {
+#x           'type': 'array',
+#x           'items': {
+#x             'type': 'object',
+#x             'additionalProperties': False,
+#x             'properties': {
+#x               'path': { 'type': 'string' },
+#x               'accessDate': { 'type': 'string' },
+#x               'contentType': { 'type': 'string' },
+#x               'itemType': { 'type': 'string' },
+#x               'mimeType': { 'type': 'string' },
+#x               'key': { 'type': 'string' },
+#x               'linkMode': { 'type': 'string' },
+#x               'title': { 'type': 'string' },
+#x               'uri': { 'type': 'string' },
+#x               'url': { 'type': 'string' },
+#x             }
+#x           }
+#x         },
+#x 
+#x         'creators': {
+#x           'type': 'array',
+#x           'items': {
+#x             'type': 'object',
+#x             'additionalProperties': False,
+#x             'properties': {
+#x               'creatorType': { 'type': 'string' },
+#x               'firstName': { 'type': 'string' },
+#x               'lastName': { 'type': 'string' },
+#x               'fieldMode': { 'type': 'number' },
+#x               'multi': { 'type': 'object' },
+#x             }
+#x           }
+#x         },
+#x 
+#x         'notes': {
+#x           'type': 'array',
+#x           'items': { 'type': 'string' },
+#x         },
+#x 
+#x         'tags': {
+#x           'type': 'array',
+#x           'items': {
+#x             'oneOf': [
+#x               {
+#x                 'type': 'object',
+#x                 'additionalProperties': False,
+#x                 'properties': {
+#x                   'tag': { 'type': 'string' },
+#x                   'type': { 'type': 'number' },
+#x                 },
+#x                 'required': ['tag'],
+#x               },
+#x               { 'type': 'string' }
+#x             ],
+#x           },
+#x         },
+#x 
+#x         'edition': {
+#x           'oneOf': [
+#x             { 'type': 'string' },
+#x             { 'type': 'number' },
+#x           ]
+#x         },
+#x 
+#x         'multi': { 'type': 'object' },
+#x         'seeAlso': { 'type': 'array' },
+#x 
+#x       }
+#x     }
+#x     for itemType, in jsonschema.execute('SELECT DISTINCT itemType FROM valid WHERE client = ? ORDER BY itemType', (client,)):
+#x       schema['oneOf'].append({
+#x         'type': 'object',
+#x         'additionalProperties': False,
+#x         'properties': {
+#x            'itemType': { 'const': itemType },
+#x          },
+#x       })
+#x       for field, in jsonschema.execute('SELECT field FROM valid WHERE client = ? AND itemType = ? ORDER BY field', (client, itemType)):
+#x         if field == 'itemType': continue
+#x         assert field not in schema['oneOf'][-1]['properties'], (itemType, field)
+#x 
+#x         if field in schema['$defs']:
+#x           schema['oneOf'][-1]['properties'][field] = { '$ref': '#/$defs/' + field }
+#x         elif field in ['itemID']:
+#x           schema['oneOf'][-1]['properties'][field] = { 'type': 'number' }
+#x         else:
+#x           schema['oneOf'][-1]['properties'][field] = { 'type': 'string' }
+#x 
+#x     with open(os.path.join(ITEMS, client + '.json'), 'w') as v:
+#x       json.dump(schema, v, indent='  ')
+#x 
+#x   # map aliases to base names
+#x   DG = nx.DiGraph()
+#x   for field in jsonpath.parse('*.itemTypes.*.fields.*').find(SCHEMA):
+#x     client = str(field.full_path).split('.')[0]
+#x     baseField = field.value
+#x     field = str(field.path)
+#x     if field == baseField: continue
+#x 
+#x     if not (data := DG.get_edge_data(field, baseField, default=None)):
+#x       DG.add_edge(field, baseField, client=client)
+#x     elif data['client'] != client:
+#x       DG.edges[field, baseField]['client'] = 'both'
+#x   aliases = {}
+#x   for field, baseField, client in DG.edges.data('client'):
+#x     if not client in aliases: aliases[client] = {}
+#x     if not baseField in aliases[client]: aliases[client][baseField] = []
+#x     aliases[client][baseField].append(field)
+#x 
+#x   # map names to basenames
+#x   names = Munch(field={}, type={})
+#x   names.field['dateadded'] = Munch(jurism='dateAdded', zotero='dateAdded')
+#x   names.field['datemodified'] = Munch(jurism='dateModified', zotero='dateModified')
+#x   labels = {}
+#x   for field in jsonpath.parse('*.itemTypes.*.fields.*').find(SCHEMA):
+#x     client, itemType = operator.itemgetter(0, 2)(str(field.full_path).split('.'))
+#x     baseField = field.value
+#x     field = str(field.path)
+#x     for section, field, name in [('field', field.lower(), baseField), ('field', baseField.lower(), baseField), ('type', itemType.lower(), itemType)]:
+#x       if not field in names[section]:
+#x         names[section][field] = Munch.fromDict({ client: name })
+#x       elif not client in names[section][field]:
+#x         names[section][field][client] = name
+#x       else:
+#x         assert names[section][field][client] == name, (client, section, field, names[section][field][client], name)
+#x 
+#x       if name == 'numPages':
+#x         label = 'Number of pages'
+#x       else:
+#x         label = name[0].upper() + re.sub('([a-z])([A-Z])', lambda m: m.group(1) + ' ' + m.group(2).lower(), re.sub('[-_]', ' ', name[1:]))
+#x       if not field in labels:
+#x         labels[field] = Munch.fromDict({ client: label })
+#x       elif not client in labels[field]:
+#x         labels[field][client] = label
+#x       else:
+#x         assert labels[field][client] == label, (client, field, labels[field][client], label)
+#x 
+#x   try:
+#x     print(template('items/items.ts.mako').render(names=names, labels=labels, valid=valid, aliases=aliases, schemas=SCHEMA).strip(), file=items)
+#x   except:
+#x     print(exceptions.text_error_template().render())
+#x   try:
+#x     print(template('items/simplify.ts.mako').render(names=names, labels=labels, valid=valid, aliases=aliases, schemas=SCHEMA).strip(), file=simplify)
+#x   except:
+#x     print(exceptions.text_error_template().render())
+#x   #stringizer = lambda x: DG.nodes[x]['name'] if x in DG.nodes else x
+#x   #nx.write_gml(DG, 'fields.gml') # , stringizer)
 
 print('  writing csl-metadata')
 with open(os.path.join(ITEMS, 'csl.json'), 'w') as f, open('submodules/citation-style-language-schema/schemas/input/csl-data.json') as s:
