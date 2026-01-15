@@ -8,6 +8,7 @@ import schema from '../submodules/zotero/resource/schema/global/schema.json' wit
 export const Schema = schema
 import { Serialized } from '../gen/typings/serialized'
 
+// eslint-disable-next-line @typescript-eslint/no-namespace
 export namespace ItemType {
   export type Field = {
     itemType: string
@@ -27,6 +28,7 @@ export namespace ItemType {
   }
 }
 
+// eslint-disable-next-line @typescript-eslint/no-namespace
 export namespace CSL {
   export type Mapping = {
     csl: string
