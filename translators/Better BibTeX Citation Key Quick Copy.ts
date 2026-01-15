@@ -1,6 +1,6 @@
 declare const Zotero: any
 
-import { simplifyForExport } from '../content/simplify'
+import { ItemType } from '../content/item-type'
 import { uri, html as escapeHTML } from '../content/escape'
 
 import { Eta } from 'eta'
@@ -137,7 +137,7 @@ const Mode = {
 
   eta(items) {
     try {
-      Zotero.write(eta.renderString(Zotero.getHiddenPref('better-bibtex.quickCopyEta'), { items: items.map(simplifyForExport) }))
+      Zotero.write(eta.renderString(Zotero.getHiddenPref('better-bibtex.quickCopyEta'), { items: items.map(i => ItemType.simplifyForExport(i)) }))
     }
     catch (err) {
       Zotero.write(`${ err }`)

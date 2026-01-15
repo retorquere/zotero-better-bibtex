@@ -29,8 +29,7 @@ import { fetchSync as fetchInspireHEP } from '../inspire-hep'
 import { compile, upgrade } from './compile'
 import * as DateParser from '../dateparser'
 
-import { valid } from '../../content/simplify'
-import * as items from '../../gen/items/items'
+import { ItemType } from '../../content/item-type'
 import { ZoteroItemType, ZoteroFieldName } from '../../gen/items/items'
 
 import { parseFragment } from 'parse5'
@@ -1591,8 +1590,7 @@ export class PatternFormatter {
 
   private creators(select: AuthorType, template?: Template<'creators'>): string[] {
     template = template || this.config.creatorNames.template
-    const types = itemCreators[client.slug][this.item.itemType] || []
-    const primary = types[0]
+    const primary = ItemType.creators.findOne({ itemType: this.item.itemType, primary: true })?.creator
 
     const creators = {
       editor: [],

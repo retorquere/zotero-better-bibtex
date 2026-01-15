@@ -2,7 +2,7 @@
 import { DatabaseFactory, Database } from '@idxdb/promised'
 // import { SynchronousPromise } from 'synchronous-promise'
 
-import type { Item } from '../../gen/typings/serialized-item'
+import type { Serialized } from '../../gen/typings/serialized'
 import { Cache as CacheInterface } from './interface'
 
 export type ExportContext = {
@@ -208,7 +208,7 @@ class SerializedCache {
     return missing
   }
 
-  public async fill(items: Item[]): Promise<void> {
+  public async fill(items: Serialized.Item[]): Promise<void> {
     if (items.length) {
       const tx = Cache.db.transaction(['Serialized'], 'readwrite')
       const store = tx.objectStore('Serialized')
@@ -219,11 +219,11 @@ class SerializedCache {
     }
   }
 
-  public async get(ids: number[]): Promise<Item[]> {
+  public async get(ids: number[]): Promise<Serialized.Item[]> {
     const tx = Cache.db.transaction('Serialized', 'readonly')
     const store = tx.objectStore('Serialized')
     const requested = new Set(ids)
-    const items: Item[] = (await store.getAll<Item, number>()).filter(item => requested.has(item.itemID))
+    const items: Serialized.Item[] = (await store.getAll<Serialized.Item, number>()).filter(item => requested.has(item.itemID))
 
     if (ids.length !== items.length) log.error(`indexed: failed to fetch ${ ids.length - items.length } items`)
     return items

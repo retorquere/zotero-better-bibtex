@@ -538,6 +538,8 @@ export function generateBibLaTeX(collected: Collected): Translation {
     entry.add({ name: 'date', verbatim: 'year', orig: { name: 'origdate', verbatim: 'origdate' }, value: item.date, enc: 'date' })
     // #293 has both date="year [origyear]" and extra="original-date: origyear"
     entry.add({ name: 'origdate', value: item.originalDate, enc: 'date', replace: true })
+
+    // @ts-expect-error jurism
     entry.add({ name: 'eventdate', value: item.conferenceDate, enc: 'date' })
 
     entry.add({ name: 'pages', value: entry.normalizeDashes(item.pages) })
@@ -562,14 +564,17 @@ export function generateBibLaTeX(collected: Collected): Translation {
 
     entry.add({ name: 'file', value: item.attachments, enc: 'attachments' })
 
+    // @ts-expect-error jurism
     if (item.volumeTitle) { // #381
       if (entry.entrytype === 'book' && entry.has.title) {
+        // @ts-expect-error jurism
         entry.add({ name: 'maintitle', value: item.volumeTitle }); // ; to prevent chaining
         [ entry.has.title.bibtex, entry.has.maintitle.bibtex ] = [ entry.has.maintitle.bibtex, entry.has.title.bibtex ]; // ; to prevent chaining
         [ entry.has.title.value, entry.has.maintitle.value ] = [ entry.has.maintitle.value, entry.has.title.value ]
       }
 
       if ([ 'incollection', 'chapter' ].includes(entry.entrytype) && entry.has.booktitle) {
+        // @ts-expect-error jurism
         entry.add({ name: 'maintitle', value: item.volumeTitle }); // ; to prevent chaining
         [ entry.has.booktitle.bibtex, entry.has.maintitle.bibtex ] = [ entry.has.maintitle.bibtex, entry.has.booktitle.bibtex ]; // ; to preven chaining
         [ entry.has.booktitle.value, entry.has.maintitle.value ] = [ entry.has.maintitle.value, entry.has.booktitle.value ]

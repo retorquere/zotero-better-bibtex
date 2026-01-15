@@ -7,7 +7,7 @@ import * as Prefs from '../../gen/preferences/meta'
 const PrefNames: Set<string> = new Set(Object.keys(Prefs.defaults))
 import { DisplayOptions } from '../../gen/translators'
 import { regex as escapeRE } from '../../content/escape'
-import { Collection, Attachment } from '../../gen/typings/serialized-item'
+import { Serialized } from '../../gen/typings/serialized'
 import type { Exporter as BibTeXExporter } from '../bibtex/exporter'
 import type { CharMap } from 'unicode2latex'
 import { log } from '../../content/logger'
@@ -15,7 +15,7 @@ import type { Collected } from './collect'
 
 export type Output = {
   body: string
-  attachments: Attachment[]
+  attachments: Serialized.Attachment[]
 }
 
 class Override {
@@ -108,7 +108,7 @@ export class Translation {
 
   public bibtex: BibTeXExporter
 
-  public collections: Record<string, Collection> = {} // keep because it is being used in postscripts
+  public collections: Record<string, Serialized.Collection> = {} // keep because it is being used in postscripts
   public output: Output = {
     body: '',
     attachments: [],

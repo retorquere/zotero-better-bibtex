@@ -5,59 +5,71 @@ loki.LokiOps.$eqi = (a, b) => {
 }
 
 import schema from '../submodules/zotero/resource/schema/global/schema.json' with { type: 'json' }
-import SchemaSample from '../submodules/zotero/resource/schema/global/schema.json'
-type ItemSchema = typeof SchemaSample
-
+export const Schema = schema
 import { Serialized } from '../gen/typings/serialized'
 
-export type Field = {
-  itemType: string
-  field: string
-  baseField: string | null
-  date: boolean
-  label: string
-  extra: string
+export namespace ItemType {
+  export type Field = {
+    itemType: string
+    field: string
+    baseField: string | null
+    date: boolean
+    label: string
+    extra: string
+  }
+
+  export type Creator = {
+    itemType: string
+    creator: string
+    primary: boolean
+    // label: string
+    // extra: string
+  }
 }
-export type Creator = {
-  itemType: string
-  creator: string
-  primary: boolean
-  label: string
-  extra: string
+
+export namespace CSL {
+  export type Mapping = {
+    csl: string
+    zotero: string
+    // extra: string
+  }
 }
-export type CSLMapping = {
-  kind: 'type' | 'field' | 'creator'
-  csl: string
-  zotero: string
-  extra: string
+
+function unalias(item: Serialized.Item, scrub = true) {
+  delete item.inPublications
+
+  const itemType = schema.itemTypes.find(itemType === item.itemType)
+  if (!itemType) return
+  for (const field of itemType.fields) {
+    if (field.baseField && item[field.field] && !item[field.baseField]) {
+      item[field.baseField] = item[field.field]
+      delete item[field.field]
+    }
+  }
 }
 
 export const ItemType = new class $ItemType {
   public db = new loki('schema')
-  public fields: Collection<Field>
-  public creators: Collection<Creator>
-  public csl: Collection<CSLMapping>
+  public fields: Collection<ItemType.Field>
+  public creators: Collection<ItemType.Creator>
+  public types: string[] = Object.keys(schema.itemTypes)
+
+  public csl: { types: Collection<CSL.Mapping>; fields: Collection<CSL.Mapping>; creators: Collection<CSL.Mapping> }
 
   #validFields: Record<string, Record<string, boolean>> = {}
 
   constructor() {
-    this.fields = this.db.addCollection<Field>('fields')
-    this.creators = this.db.addCollection<Creator>('creators')
-    this.csl = this.db.addCollection<CSLMapping>('csl')
-  }
-
-  private extra(name: string): string {
-    return name.replace(/[A-Z]/, c => ` ${c.toLowerCase()}`).replace(/^./, c => c.toUpperCase())
-  }
-
-  public async load(): Promise<any> {
-    const schema: ItemSchema = (await (await fetch('resource://zotero/schema/global/schema.json')).json()) as unknown as ItemSchema
-    const date: Record<string, boolean> = {
-      accessDate: true,
+    this.fields = this.db.addCollection<Field>('fields', { indices: ['itemType', 'field', 'baseField'] })
+    this.creators = this.db.addCollection<Creator>('creators', { indices: ['itemType', 'creator', 'primary'] })
+    this.csl = {
+      types: this.db.addCollection<CSL.Mapping>('csl.types', { indices: ['csl', 'zotero'] }),
+      fields: this.db.addCollection<CSL.Mapping>('csl.types', { indices: ['csl', 'zotero'] }),
+      creators: this.db.addCollection<CSL.Mapping>('csl.types', { indices: ['csl', 'zotero'] }),
     }
-    for (const [ field, meta ] of Object.entries(schema.meta.fields)) {
-      date[field] = meta.type === 'date'
-    }
+
+    const date: Record<string, boolean> = Object.entries(schema.meta.fields)
+      .reduce((acc, [ field, meta ]) => { acc[field] = meta.type === 'date' }, { accessDate: true })
+
     for (const itemType of schema.itemTypes) {
       for (const { field, baseField } of itemType.fields) {
         this.fields.insert({
@@ -69,6 +81,7 @@ export const ItemType = new class $ItemType {
           extra: this.extra(field),
         })
       }
+
       for (const { creatorType, primary } of itemType.creatorTypes) {
         this.creators.insert({
           itemType: itemType.itemType,
@@ -85,6 +98,7 @@ export const ItemType = new class $ItemType {
         this.csl.insert({ kind: 'type', csl, zotero, extra: this.extra(csl) })
       }
     }
+
     for (const kind of ['text', 'date']) {
       // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
       for (const [ csl, zoteroFields ] of Object.entries(schema.csl.fields[kind]) as [ string, string[] ][]) {
@@ -99,12 +113,19 @@ export const ItemType = new class $ItemType {
 
     this.fields.ensureAllIndexes(true)
     this.creators.ensureAllIndexes(true)
-    this.csl.ensureAllIndexes(true)
+    this.csl.types.ensureAllIndexes(true)
+    this.csl.fields.ensureAllIndexes(true)
+    this.csl.creators.ensureAllIndexes(true)
+  }
 
-    return this.db.collections.reduce((acc, collection) => {
-      acc[collection.name] = collection.data
-      return acc
-    }, {})
+  public field(field: string, itemType?: string): Field {
+    const q = { $or: [ { field: { $eqi: field } }, { baseField: { $eqi: field } } ] }
+    if (itemType) q.itemType = itemType
+    return this.fields.findOne({ $or: [ { field: { $eqi: field } }, { baseField: { $eqi: field } } ] })
+  }
+
+  private extra(name: string): string {
+    return name.replace(/[A-Z]/, c => ` ${c.toLowerCase()}`).replace(/^./, c => c.toUpperCase())
   }
 
   validFields(itemType: string) {
@@ -120,28 +141,6 @@ export const ItemType = new class $ItemType {
     }
 
     return this.#validFields[itemType]
-  }
-
-  public serialize(): string {
-    return this.db.serialize()
-  }
-
-  public unserialize(serialized: string) {
-    this.db.loadJSON(serialized)
-    this.fields = this.db.getCollection<Field>('fields')
-    this.creators = this.db.getCollection<Creator>('creators')
-    this.csl = this.db.getCollection<CSLMapping>('csl')
-  }
-
-  private unalias(item: any, scrub = true): void {
-    delete item.inPublications
-
-    for (const { field, baseField } of this.fields.find({ itemType: item.itemType, baseField: { $ne: null } })) {
-      if (baseField) {
-        item[baseField] ||= item[field]
-        if (scrub) delete item[field]
-      }
-    }
   }
 
   // import & export translators expect different creator formats... nice
@@ -161,12 +160,13 @@ export const ItemType = new class $ItemType {
       }
     }
 
-    if (item.itemType === 'attachment' || item.itemType === 'note') {
+    if (item.itemType === 'attachment' || item.itemType === 'note' || item.itemType === 'annotation') {
       delete item.attachments
       delete item.notes
     }
     else {
       item.attachments ??= []
+      item.notes ??= []
     }
 
     return item as Serialized.Item
@@ -190,5 +190,37 @@ export const ItemType = new class $ItemType {
     if (!multi) delete item.multi
 
     return item as Serialized.Item
+  }
+}
+
+// maps variable to its extra-field label
+export const label: Record<string, string> = {}
+
+// valid types and fields per type
+export const valid: {
+  type: Record<string, boolean>
+  field: Record<string, Record<string, boolean>>
+  creators: Record<string, string[]>
+} = {
+  type: {},
+  field: {},
+  creators: {},
+}
+
+for (const itemType of schema.itemTypes) {
+  valid.type[itemType.itemType] = true
+  valid.field[itemType.itemType] = {}
+  valid.creators[itemType.itemType] = []
+  itemType.creatorTypes = [
+    ...itemType.creatorTypes.filter(c => c.primary),
+    ...itemType.creatorTypes.filter(c => !c.primary),
+  ]
+
+  for (const field of itemType.fields) {
+    label[field.field.toLowerCase()] = label[(field.baseField || field.field).toLowerCase()] = (field.baseField || field.field).replace(/([a-z])([A-Z])/g, '$1 $2').replace(/^./, c => c.toUpperCase())
+    valid[itemType.itemType][field.field] = valid[itemType.itemType][field.baseField || field.field] = true
+  }
+  for (const creatorType of itemType.creatorTypes) {
+    valid.creators[itemType.itemType].push(creatorType.creatorType)
   }
 }

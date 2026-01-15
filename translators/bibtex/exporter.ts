@@ -2,10 +2,10 @@ declare const Zotero: any
 
 import { Translation } from '../lib/translator'
 
-import { RegularItem } from '../../gen/typings/serialized-item'
+import { Serialized } from '../../gen/typings/serialized'
 
 import { JabRef } from '../bibtex/jabref'
-import { simplifyForExport } from '../../content/simplify'
+import { ItemType } from '../../content/item-type'
 import * as bibtexParser from '@retorquere/bibtex-parser'
 import { Postfix } from './postfix'
 import * as Extra from '../../content/extra'
@@ -39,11 +39,11 @@ export class Exporter {
     }
   }
 
-  public get items(): Generator<RegularItem, void, unknown> {
+  public get items(): Generator<Serialized.RegularItem, void, unknown> {
     return this.itemsGenerator()
   }
 
-  private *itemsGenerator(): Generator<RegularItem, void, unknown> {
+  private *itemsGenerator(): Generator<Serialized.RegularItem, void, unknown> {
     if (!this.postfix && this.translation.BetterTeX) this.postfix = new Postfix(this.translation.collected.preferences.qualityReport)
 
     for (const item of this.translation.collected.items.regular) {
@@ -70,7 +70,7 @@ export class Exporter {
 
       this.jabref.citekeys.set(item.itemID, item.citationKey)
 
-      simplifyForExport(item)
+      ItemType.simplifyForExport(item)
 
       // strip extra.tex fields that are not for me
       const prefix = this.translation.BetterBibLaTeX ? 'biblatex.' : 'bibtex.'

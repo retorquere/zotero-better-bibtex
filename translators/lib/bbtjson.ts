@@ -3,7 +3,7 @@ import type { Library } from './normalize'
 
 import { log } from '../../content/logger'
 import { Translation } from './translator'
-import { simplifyForExport, simplifyForImport } from '../../content/simplify'
+import { ItemType } from '../../content/item-type'
 import BBT from '../../gen/version.cjs'
 
 // import { validItem } from '../content/ajv'
@@ -88,7 +88,7 @@ export function generateBBTJSON(collected: Collected): Translation {
         default:
           delete item.collections
 
-          if (translation.collected.displayOptions.Normalize) simplifyForExport(item, {})
+          if (translation.collected.displayOptions.Normalize) ItemType.simplifyForExport(item, {})
 
           for (const att of item.attachments || []) {
             handle(att)
@@ -111,7 +111,7 @@ export async function importBBTJSON(collected: Collected): Promise<void> {
 
   const items = new Set<number>
   for (const source of (data.items as any[])) {
-    simplifyForImport(source)
+    ItemType.simplifyForImport(source)
 
     // I do export these but the cannot be imported back
     delete source.relations

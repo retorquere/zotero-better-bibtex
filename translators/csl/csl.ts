@@ -2,17 +2,17 @@ declare const Zotero: any
 
 import { Translation } from '../lib/translator'
 
-import { simplifyForExport } from '../../content/simplify'
+import { ItemType } from '../../content/item-type'
 import { Fields as ParsedExtraFields, get as getExtra, cslCreator } from '../../content/extra'
 import type { ExportedItem } from '../../content/worker/cache'
 import ExtraFields from '../../gen/items/extra-fields.json' with { type: 'json' }
 import { log } from '../../content/logger'
-import { RegularItem } from '../../gen/typings/serialized-item'
+import { Serialized } from '../../gen/typings/serialized'
 import * as postscript from '../lib/postscript'
 import * as dateparser from '../../content/dateparser'
 import { Date as CSLDate, Data as CSLItem } from 'csl-json'
 
-type ExtendedItem = RegularItem & { extraFields: ParsedExtraFields }
+type ExtendedItem = Serialized.RegularItem & { extraFields: ParsedExtraFields }
 
 import CSLField from '../../gen/items/csl.json' with { type: 'json' }
 
@@ -63,7 +63,7 @@ export abstract class CSLExporter {
       }
 
       Object.assign(item, getExtra(item.extra, 'csl'))
-      simplifyForExport(item)
+      ItemType.simplifyForExport(item)
       if (item.accessDate) { // WTH is Juris-M doing with those dates?
         item.accessDate = item.accessDate.replace(/T?[0-9]{2}:[0-9]{2}:[0-9]{2}.*/, '').trim()
       }

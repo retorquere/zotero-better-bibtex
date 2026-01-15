@@ -1,4 +1,4 @@
-import type { Item } from '../../gen/typings/serialized-item'
+import type { Serialized } from '../../gen/typings/serialized'
 import type { Job } from '../translators/worker'
 
 export interface Cache {
@@ -9,7 +9,7 @@ export interface Cache {
 
   Serialized: {
     missing(itemIDs: number[]): Promise<number[]>
-    fill(items: Item[]): Promise<void>
+    fill(items: Serialized.Item[]): Promise<void>
     drop(): Promise<any>
     purge(): Promise<any>
   }

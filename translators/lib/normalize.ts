@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 
 import stringify from 'safe-stable-stringify'
-import type { RegularItem, Collection } from '../../gen/typings/serialized-item.d.ts'
+import type { Serialized } from '../../gen/typings/serialized'
 
 function rjust(str: string | number, width: number, padding: string): string {
   if (typeof str === 'number') str = `${ str }`
@@ -123,7 +123,7 @@ export function normalize(library: Library, sort = true): void {
     strip(item)
 
     if (item.extra?.length) {
-      item.extra = (item as RegularItem).extra.split('\n')
+      item.extra = (item as Serialized.RegularItem).extra.split('\n')
     }
     else {
       delete item.extra
@@ -145,9 +145,9 @@ export function normalize(library: Library, sort = true): void {
   }, {})
 
   if (library.collections && Object.keys(library.collections).length) {
-    const collectionOrder: Collection[] = Object.values(library.collections)
-      .sort((a: Collection, b: Collection): number => stringify({ ...a, key: '', parent: '' }).localeCompare(stringify({ ...b, key: '', parent: '' })))
-    const collectionKeys: Record<string, string> = collectionOrder.reduce((acc: Record<string, string>, coll: Collection, i: number): Record<string, string> => {
+    const collectionOrder: Serialized.Collection[] = Object.values(library.collections)
+      .sort((a: Serialized.Collection, b: Serialized.Collection): number => stringify({ ...a, key: '', parent: '' }).localeCompare(stringify({ ...b, key: '', parent: '' })))
+    const collectionKeys: Record<string, string> = collectionOrder.reduce((acc: Record<string, string>, coll: Serialized.Collection, i: number): Record<string, string> => {
       coll.key = acc[coll.key] = `coll:${ rjust(i, 5, '0') }`
       return acc
     }, {})

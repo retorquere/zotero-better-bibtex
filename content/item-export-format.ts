@@ -2,7 +2,7 @@ import { Path } from './file'
 
 import { log } from './logger'
 import { getItemsAsync } from './get-items-async'
-import type { Attachment, RegularItem, Item, Note } from '../gen/typings/serialized-item'
+import type { Serialized } from '../gen/typings/serialized'
 
 import { JournalAbbrev } from './journal-abbrev'
 import { Preference } from './prefs'

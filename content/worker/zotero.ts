@@ -3,7 +3,7 @@
 import { log } from '../../content/logger'
 import { Server as WorkerServerBase } from './json-rpc'
 import { Exporter as ExporterInterface } from './interface'
-import type { Item } from '../../gen/typings/serialized-item'
+import type { Serialized } from '../../gen/typings/serialized'
 import type { Header } from '../../gen/translators'
 
 import { ExportedItem, ExportedItemMetadata, Cache, Context } from './cache'
@@ -16,7 +16,6 @@ import { Path, File } from '../file'
 const ctx: DedicatedWorkerGlobalScope = self as any
 
 import type { Message, Job } from '../translators/worker'
-import { valid } from '../../gen/items/items'
 import { generateBibLaTeX } from '../../translators/bibtex/biblatex'
 import { generateBibTeX } from '../../translators/bibtex/bibtex'
 import { generateCSLJSON } from '../../translators/csl/json'
@@ -25,6 +24,7 @@ import { generateBBTJSON } from '../../translators/lib/bbtjson'
 import type { Collected } from '../../translators/lib/collect'
 
 import { DOMParser as XMLDOMParser } from '@xmldom/xmldom'
+import { ItemType, Schema } from '../item-type'
 
 declare var ZOTERO_TRANSLATOR_INFO: Header // eslint-disable-line no-var
 
@@ -144,18 +144,10 @@ import ZD from '../../submodules/zotero-utilities/date'
 declare const doExport: () => void
 
 import * as DateParser from '../../content/dateparser'
-// import * as Extra from '../../content/extra'
-import itemCreators from '../../gen/items/creators.json' with { type: 'json' }
-import { Collection } from '../../gen/typings/serialized-item'
-// import { CSL_MAPPINGS } from '../../gen/items/items'
-
-import zotero_schema from '../../schema/zotero.json' with { type: 'json' }
-import jurism_schema from '../../schema/jurism.json' with { type: 'json' }
-const schema = client.slug === 'zotero' ? zotero_schema : jurism_schema
-import dateFormats from '../../schema/dateFormats.json' with { type: 'json' }
+import dateFormats from '../../submodules/zotero/resource/schema/dateFormats.json' with { type: 'json' }
 
 class Running {
-  public serialized: Item[]
+  public serialized: Serialized.Item[]
   public exported: Map<number, ExportedItem>
   public context: number | false
   public hits = 0
@@ -344,19 +336,19 @@ async function saveFile(path, overwrite) {
 
 class WorkerZoteroCreatorTypes {
   public getTypesForItemType(itemTypeID: string): { name: string } {
-    return itemCreators[client.slug][itemTypeID]?.map(name => ({ name })) || []
+    return ItemType.creators.find({ itemType: itemTypeID }).map(cr => cr.creator)
   }
 
   public isValidForItemType(creatorTypeID, itemTypeID) {
-    return itemCreators[client.slug][itemTypeID]?.includes(creatorTypeID)
+    return !!ItemType.creators.findOne({ itemType: itemTypeID, creator: creatorTypeID })
   }
 
   public getLocalizedString(type: string): string {
-    return schema.locales[Zotero.locale]?.types[type] || type[0].toUpperCase() + type.substr(1).replace(/([A-Z])([a-z])/g, (m, u, l) => `${ u.toLowerCase() } ${ l }`)
+    return Schema.locales[Zotero.locale]?.types[type] || type[0].toUpperCase() + type.substr(1).replace(/([A-Z])([a-z])/g, (m, u, l) => `${ u.toLowerCase() } ${ l }`)
   }
 
   public getPrimaryIDForType(typeID) {
-    return itemCreators[client.slug][typeID]?.[0]
+    return ItemType.creators.findOne({ itemType: typeID, primary: true })?.creator
   }
 
   public getID(typeName) {
@@ -376,7 +368,7 @@ class WorkerZoteroItemTypes {
 
 class WorkerZoteroItemFields {
   public isValidForType(fieldID: string, itemTypeID: string) {
-    return valid.field[itemTypeID]?.[fieldID]
+    return !!ItemType.fields.findOne({ itemType: itemTypeID, $or: [ { field: fieldID }, { baseField: fieldID } ] })
   }
 
   public getID(field: string): string {
@@ -496,7 +488,7 @@ class WorkerZotero {
     return this.running.serialized.shift()
   }
 
-  public nextCollection(): Collection {
+  public nextCollection(): Serialized.Collection {
     return this.running.job.data.collections.shift()
   }
 

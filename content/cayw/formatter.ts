@@ -8,13 +8,13 @@ import { scannableCite } from '../../gen/ScannableCite'
 import { citeCreators, yearFromDate } from '../../translators/Better BibTeX Citation Key Quick Copy'
 import { Eta } from 'eta'
 const eta = new Eta({ autoEscape: true })
-import { simplifyForExport } from '../simplify'
+import { ItemType } from '../item-type'
 
 import { Transform } from 'unicode2latex'
 
 function serialized(item) {
   if (item) {
-    const ser = simplifyForExport(Zotero.Utilities.Internal.itemToExportFormat(item, false, true))
+    const ser = simplifyForExport(Zotero.Utilities.Internal.itemToExportFormat(item, false, true) as Serialized.Item)
     ser.uri = Zotero.URI.getItemURI(item)
     ser.itemID = item.id
     return ser

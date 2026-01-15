@@ -10,26 +10,26 @@ declare const Zotero: any
 import Turndown from 'turndown'
 const turndown = new Turndown
 
-import { Item } from '../gen/typings/serialized-item'
+import { Serialized } from '../gen/typings/serialized'
 
 import * as escape from '../content/escape'
 import * as Extra from '../content/extra'
 
-function clean(item: Item): Item {
+function clean(item: Serialized.Item): Serialized.Item {
   switch (item.itemType) {
     case 'note':
     case 'annotation':
     case 'attachment':
       return item
   }
-  const cleaned: Item = { ...item, extra: Extra.get(item.extra, 'zotero').extra }
+  const cleaned: Serialized.Item = { ...item, extra: Extra.get(item.extra, 'zotero').extra }
   cleaned.extra = cleaned.extra.split('\n').filter(line => !line.match(/^OCLC:/i)).join('\n')
   return cleaned
 }
 
 type ExpandedCollection = {
   name: string
-  items: Item[]
+  items: Serialized.Item[]
   collections: ExpandedCollection[]
   root: boolean
 }
@@ -47,7 +47,7 @@ class Exporter {
 
   constructor(translation: Translation) {
     this.translation = translation
-    const items: Record<number, Item> = {}
+    const items: Record<number, Serialized.Item> = {}
     const filed: Set<number> = new Set
     const collections: Record<string, ExpandedCollection> = {}
 

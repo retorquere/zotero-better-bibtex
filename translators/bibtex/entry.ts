@@ -4,12 +4,12 @@
 
 declare const Zotero: any
 
-import { RegularItem as Item, Attachment, Tag } from '../../gen/typings/serialized-item'
+import { Serialized } from '../../gen/typings/serialized'
 
 export type Field = {
   name: string
   verbatim?: string
-  value: string | string[] | number | null | Attachment[] | Tag[]
+  value: string | string[] | number | null | Serialized.Attachment[] | Serialized.Tag[]
   enc?: 'raw' | 'url' | 'verbatim' | 'creators' | 'literal' | 'literal_list' | 'latex' | 'tags' | 'attachments' | 'date' | 'minimal' | 'bibtex' | 'biblatex' | 'extra'
   orig?: { name?: string; verbatim?: string; inherit?: boolean }
   bibtexStrings?: boolean
@@ -36,7 +36,7 @@ import * as postscript from '../lib/postscript'
 import { replace_command_spacers } from './unicode_translator'
 import { datefield } from './datefield'
 import ExtraFields from '../../gen/items/extra-fields.json' with { type: 'json' }
-import { label as propertyLabel } from '../../content/simplify'
+import { ItemType } from '../../content/item-type'
 import type { Fields as ParsedExtraFields, TeXString } from '../../content/extra'
 import { zoteroCreator as ExtraZoteroCreator } from '../../content/extra'
 import { log } from '../../content/logger'
@@ -159,7 +159,7 @@ const nonAcademicSubtype = new Set(['newspaper', 'magazine'])
  */
 export class Entry {
   public has: Record<string, any> = {}
-  public item: Item
+  public item: Serialized.RegularItem
   public entrytype: string
   public entrytype_source: string
   public useprefix: boolean
@@ -1564,7 +1564,7 @@ export class Entry {
       'uri',
       'version',
     ]
-    const unused_props = Object.entries(this.item.extraFields.kv).map(([ p, v ]) => [ `extra: ${ propertyLabel[p.toLowerCase()] || p }`, v ])
+    const unused_props = Object.entries(this.item.extraFields.kv).map(([ p, v ]) => [ `extra: ${ ItemType.field(p)?.label || p }`, v ])
       .concat(Object.entries(this.item))
       .map(([ p, v ]: [ string, string ]) => [ p, v, this.valueish(v) ] as [ string, string, string ])
       .filter(([ p, v, vi ]) => !ignore_unused_props.includes(p) && !used_values.includes(v) && (vi && !used_values.includes(vi)))
@@ -1573,7 +1573,7 @@ export class Entry {
     for (const [ prop, value, valueish ] of unused_props) {
       if (prop === 'language' && this.has.langid) continue
       if (prop === 'libraryCatalog' && valueish.includes('arxiv') && this.item.arXiv) continue
-      report.push(`? unused ${ propertyLabel[prop.toLowerCase()] || prop } ("${ value }")`)
+      report.push(`? unused ${ ItemType.field(prop)?.label || prop } ("${ value }")`)
     }
 
     if (!report.length) return ''

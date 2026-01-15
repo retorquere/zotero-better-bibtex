@@ -4,7 +4,7 @@ import * as escape from '../../content/escape'
 import { log } from '../../content/logger'
 import { Exporter as BibTeXExporter } from './exporter'
 import { parse as arXiv } from '../../content/arXiv'
-import { valid, label } from '../../content/simplify'
+import { ItemType } from '../../content/item-type'
 import wordsToNumbers from '@insomnia-dev/words-to-numbers'
 
 import { ParsedDate, parse as parseDate, strToISO as strToISODate, century } from '../../content/dateparser'
@@ -694,10 +694,10 @@ class ZoteroItem {
   }
 
   private fallback(fields: string[], value: string): boolean {
-    const field = fields.find((f: string) => label[f])
+    const field = fields.reduce((acc: ItemType.Field, f: string) => (acc ?? ItemType.field(f)), null)
     if (field) {
       if (typeof value === 'string') value = value.replace(/\n+/g, '')
-      this.extra.push(`${ label[field] }: ${ value }`)
+      this.extra.push(`${ field.extra }: ${ value }`)
       return true
     }
     return false
@@ -1357,8 +1357,8 @@ class ZoteroItem {
       && this.bibtex.fields.booktitle?.length
       && this.bibtex.fields.booktitle.match(/proceeding/i)) this.item.itemType = 'conferencePaper'
 
-    if (!valid.type[this.item.itemType]) this.error(`import error: unexpected item ${ this.bibtex.key } of type ${ this.item.itemType }`)
-    this.validFields = valid.field[this.item.itemType]
+    if (!ItemType.types.includes(this.item.itemType)) this.error(`import error: unexpected item ${ this.bibtex.key } of type ${ this.item.itemType }`)
+    this.validFields = ItemType.validFields(this.item.itemType)
 
     if (!this.bibtex.fields.type) {
       switch (this.bibtex.type) {
@@ -1472,10 +1472,6 @@ class ZoteroItem {
       delete this.bibtex.fields[type]
     }
 
-    const zoteroField = {
-      conference: 'conferenceName',
-    }
-
     if (this.item.itemType === 'patent' && this.bibtex.fields.type) {
       this.patentNumberPrefix = {
         patent: '',
@@ -1561,14 +1557,13 @@ class ZoteroItem {
             else if (value.indexOf('\n') >= 0) {
               this.item.notes.push(`<p><b>${ Zotero.Utilities.text2html(field, false) }</b></p>${ Zotero.Utilities.text2html(value, false) }`)
             }
+            else if (this.validFields[field] && !this.item[field]) {
+              this.item[field] = value
+            }
             else {
-              const candidates = [ field, zoteroField[field] ]
-              let name
-              if ((name = candidates.find(f => this.validFields[f])) && !this.item[field]) {
-                this.item[name] = value
-              }
-              else if (name = candidates.find(f => label[f])) {
-                this.extra.push(`${ label[name] }: ${ value }`)
+              const alternate = ItemType.field(field)
+              if (alternate) {
+                this.extra.push(`${alternate.extra}: ${value}`)
               }
               else {
                 this.extra.push(`tex.${ field.match(/[:=]/) ? `"${ field }"` : field }: ${ value }`)

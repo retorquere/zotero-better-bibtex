@@ -1,9 +1,8 @@
 import * as client from '../client'
-import type { Item } from '../../gen/typings/serialized-item'
+import type { Serialized } from '../../gen/typings/serialized'
 import { Client as WorkerClient } from '../worker/json-rpc'
 import { Exporter as ExporterInterface, Cache as CacheInterface } from '../worker/interface'
 import { orchestrator } from '../orchestrator'
-import type { Collection } from '../../gen/typings/serialized-item'
 import { log } from '../logger'
 
 export type Message
@@ -29,7 +28,7 @@ export type Job = {
 
   data?: {
     items: number[]
-    collections: Collection[]
+    collections: Serialized.Collection[]
   }
 }
 
@@ -64,7 +63,7 @@ class ExportsCacheClient extends WorkerClient {
 
 class SerializedCacheClient extends WorkerClient {
   declare missing: (itemIDs: number[]) => Promise<number[]>
-  declare fill: (items: Item[]) => Promise<void>
+  declare fill: (items: Serialized.Item[]) => Promise<void>
   declare drop: () => Promise<any>
   declare purge: () => Promise<any>
 }

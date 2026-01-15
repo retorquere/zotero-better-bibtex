@@ -104,6 +104,7 @@
     "lodash.clonedeep": "^4.5.0",
     "lodash.frompairs": "^4.0.1",
     "lodash.merge": "^4.6.2",
+    "lokijs": "^1.5.12",
     "p-defer": "^4.0.1",
     "papaparse": "^5.5.3",
     "parse5": "^8.0.0",
