@@ -46,12 +46,12 @@ function unalias(item: Serialized.Item, scrub = true) {
   for (const field of itemType.fields) {
     if (field.baseField && item[field.field] && !item[field.baseField]) {
       item[field.baseField] = item[field.field]
-      delete item[field.field]
+      if (scrub) delete item[field.field]
     }
   }
 }
 
-export const ItemType = new class $ItemType {
+export const ItemType = new class $ItemType { // eslint-disable-line no-redeclare
   public db = new loki('schema')
   public fields: Collection<ItemType.Field>
   public creators: Collection<ItemType.Creator>
