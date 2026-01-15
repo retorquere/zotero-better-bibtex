@@ -8,7 +8,7 @@ import { JournalAbbrev } from './journal-abbrev'
 import { Preference } from './prefs'
 
 class Serializer {
-  private attachment(serialized: Attachment, att): Attachment {
+  private attachment(serialized: Serialized.Attachment, att): Serialized.Attachment {
     if (att.attachmentLinkMode !== Zotero.Attachments.LINK_MODE_LINKED_URL) {
       serialized.localPath = att.getFilePath()
       if (serialized.localPath) serialized.defaultPath = `files/${att.id}/${Path.basename(serialized.localPath)}`
@@ -16,10 +16,10 @@ class Serializer {
     return serialized
   }
 
-  private async item(item: Zotero.Item, selectedLibraryID: number): Promise<Item> {
+  private async item(item: Zotero.Item, selectedLibraryID: number): Promise<Serialized.Item> {
     if (item.libraryID !== selectedLibraryID) await item.loadAllData()
 
-    let serialized: Item = item.toJSON() as unknown as Item
+    let serialized: Serialized.Item = item.toJSON() as unknown as Serialized.Item
     serialized.uri = Zotero.URI.getItemURI(item)
     serialized.itemID = item.id
 
@@ -29,30 +29,30 @@ class Serializer {
         break
 
       case 'attachment':
-        serialized = this.attachment(serialized as unknown as Attachment, item)
+        serialized = this.attachment(serialized as unknown as Serialized.Attachment, item)
         break
 
       default:
         serialized.attachments = (await getItemsAsync(item.getAttachments()))
-          .map(att => this.attachment({ ...att.toJSON(), uri: Zotero.URI.getItemURI(att) } as Attachment, att))
+          .map(att => this.attachment({ ...att.toJSON(), uri: Zotero.URI.getItemURI(att) } as Serialized.Attachment, att))
         serialized.notes = (await getItemsAsync(item.getNotes()))
-          .map(note => ({ ...note.toJSON(), uri: Zotero.URI.getItemURI(note) } as Note))
+          .map(note => ({ ...note.toJSON(), uri: Zotero.URI.getItemURI(note) } as Serialized.Note))
         break
     }
 
     return structuredClone(fix(serialized, item))
   }
 
-  public async serialize(items: Zotero.Item[]): Promise<Item[]> {
+  public async serialize(items: Zotero.Item[]): Promise<Serialized.Item[]> {
     const selectedLibraryID = Zotero.getActiveZoteroPane().getSelectedLibraryID()
     return Promise.all(items.map(item => this.item(item, selectedLibraryID)))
   }
 }
 export const serializer = new Serializer
 
-export function fix(serialized: Item, item: Zotero.Item): Item {
+export function fix(serialized: Serialized.Item, item: Zotero.Item): Serialized.Item {
   if (item.isRegularItem() && !item.isFeedItem) {
-    const regular = <RegularItem>serialized
+    const regular = <Serialized.RegularItem>serialized
 
     if (Zotero.BetterBibTeX.starting) {
       // with the new "title as citation", CSL can request these items before the key manager is online
@@ -77,5 +77,5 @@ export function fix(serialized: Item, item: Zotero.Item): Item {
   serialized.itemKey = item.key
   serialized.libraryID = item.libraryID
 
-  return serialized as unknown as Item
+  return serialized as unknown as Serialized.Item
 }

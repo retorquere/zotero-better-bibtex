@@ -335,8 +335,8 @@ async function saveFile(path, overwrite) {
 }
 
 class WorkerZoteroCreatorTypes {
-  public getTypesForItemType(itemTypeID: string): { name: string } {
-    return ItemType.creators.find({ itemType: itemTypeID }).map(cr => cr.creator)
+  public getTypesForItemType(itemTypeID: string): { name: string }[] {
+    return ItemType.creators.find({ itemType: itemTypeID }).map(cr => ({ name: cr.creator }))
   }
 
   public isValidForItemType(creatorTypeID, itemTypeID) {

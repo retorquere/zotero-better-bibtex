@@ -78,6 +78,7 @@
     "@lifeparticle/ap-style-title-case": "^1.5.0",
     "@stdlib/utils-escape-regexp-string": "^0.2.2",
     "@stefanstefanovski/transliterate-cyrillic": "^1.0.0",
+    "@types/lokijs": "^1.5.14",
     "@ungap/structured-clone": "^1.3.0",
     "ajv": "^8.17.1",
     "astring": "^1.9.0",

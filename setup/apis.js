@@ -446,6 +446,22 @@ class APIReader {
         }
 
       case 'TypeReference':
+        switch (type.getText()) {
+          case 'Serialized.RegularItemType':
+            return { type: 'string', format: 'item-type' }
+          case 'Serialized.FieldName':
+            return { type: 'string', format: 'item-field' }
+          case 'BabelLanguage':
+            return { type: 'string', format: 'babel-language' }
+          case 'CreatorType':
+            return { type: 'string', format: 'creator-type' }
+          case 'RegExp':
+            return { instanceof: 'RegExp' }
+          default:
+            // console.log(type.getText())
+            break
+        }
+
         if (ts.SyntaxKind[type.typeName.kind] === 'Identifier') {
           name = type.typeName.text
           switch (name) {
@@ -457,14 +473,6 @@ class APIReader {
             case 'Promise':
               if (type.typeArguments.length !== 1) throw type.getText()
               return this.resolveType(type.typeArguments[0])
-            case 'ZoteroItemType':
-              return { type: 'string', format: 'item-type' }
-            case 'ZoteroFieldName':
-              return { type: 'string', format: 'item-field' }
-            case 'BabelLanguage':
-              return { type: 'string', format: 'babel-language' }
-            case 'CreatorType':
-              return { type: 'string', format: 'creator-type' }
             case 'Template':
               switch (type.typeArguments[0].literal.text) {
                 case 'creator':
@@ -492,9 +500,6 @@ class APIReader {
                   return { sprintf: '%as%As%ns' }
               }
               break
-
-            case 'RegExp':
-              return { instanceof: name }
           }
 
           if (!this.typeDeclaration[name]) {

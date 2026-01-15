@@ -1,6 +1,4 @@
-import type { Tag } from '../../gen/typings/serialized-item'
-
-import * as client from '../../content/client'
+import type { Serialized } from '../../gen/typings/serialized'
 
 import nlp from 'compromise/one'
 interface Term {
@@ -30,7 +28,6 @@ import { compile, upgrade } from './compile'
 import * as DateParser from '../dateparser'
 
 import { ItemType } from '../../content/item-type'
-import { ZoteroItemType, ZoteroFieldName } from '../../gen/items/items'
 
 import { parseFragment } from 'parse5'
 
@@ -356,7 +353,7 @@ class Item {
     return (BabelTag[this.language] || '') as BabelLanguage
   }
 
-  public getTags(): Tag[] {
+  public getTags(): Serialized.Tag[] {
     return this.item.getTags()
   }
 }
@@ -488,14 +485,14 @@ export class PatternFormatter {
    * When arguments as passed, tests whether the item is of any of the given types, and skips to the next pattern if not, eg `type(book) + veryshorttitle | auth + year`.
    * @param allowed one or more item type names
    */
-  public $type(...allowed: ZoteroItemType[]): string {
+  public $type(...allowed: Serialized.RegularItemType[]): string {
     if (!allowed.length) return this.item.itemType
 
     if (!allowed.map(type => type.toLowerCase()).includes(this.item.itemType.toLowerCase())) skip()
     return ''
   }
 
-  public $$type(...allowed: ZoteroItemType[]): string {
+  public $$type(...allowed: Serialized.RegularItemType[]): string {
     this.$type(...allowed)
     return '$$allowed'
   }
@@ -554,8 +551,8 @@ export class PatternFormatter {
    * Gets the value of the item field
    * @param name name of the field
    */
-  public $field(name: ZoteroFieldName): string {
-    const field = items.name.field[name.replace(/ /g, '').toLowerCase()]
+  public $field(name: Serialized.FieldName): string {
+    const field = ItemType.field(name)?.field
     if (!field) throw new Error(`Unknown item field ${ name }`)
 
     const value = this.item.getField(field)
@@ -618,7 +615,7 @@ export class PatternFormatter {
     name = name || this.config.creatorNames.template
     const include: string[] = []
     const exclude: string[] = []
-    const primary = valid.creators[this.item.itemType][0]
+    const primary = ItemType.creators.findOne({ itemType: this.item.itemType, primary: true })?.creator
 
     const types = this.item.creators.map(cr => cr.creatorType)
     if (typeof type === 'string') {
@@ -1029,9 +1026,17 @@ export class PatternFormatter {
    * @param match  Regex to test the creator-type list. When passed, and the creator-type list does not match the regex, jump to the next formule. When it matches, return nothing but stay in the current formule. When no regex is passed, output the creator-type list for the item (mainly useful for debugging).
    */
   public $creatortypes(match?: RegExp): string {
-    const creators = [...(new Set([ '', (itemCreators[client.slug][this.item.itemType] || [])[0] || '' ]))].sort() // this will shake out duplicates and put the empty string first
-      .map(primary => (this.item.creators || []).map(cr => `${ typeof cr.name === 'string' ? 1 : 2 }${ cr.creatorType === primary ? 'primary' : cr.creatorType }`).join(';'))
-      .map(cr => `${ this.item.itemType }:${ cr }`)
+    const primary = ItemType.creators.findOne({ itemType: this.item.itemType, primary: true })?.creator
+    const encode = (cr: Creator, replace: boolean) => {
+      const parts = typeof cr.name === 'string' ? 1 : 2
+      const name = cr.creatorType === primary && replace ? 'primary' : cr.creatorType
+      const mark = cr.creatorType === primary && !replace ? '@' : ''
+      return `${parts}${mark}${name}`
+    }
+
+    const creators = [ false, true ] // replace actual primary creator name with the text 'primary' for generic 'primary' matching
+      .map(replace => (this.item.creators || []).map(cr => encode(cr, replace)).join(','))
+      .map(cr => `${this.item.itemType}:${cr}`) // prefix item type
 
     if (match && !creators.find(cr => cr.match(match))) skip()
     return creators[0] // return list

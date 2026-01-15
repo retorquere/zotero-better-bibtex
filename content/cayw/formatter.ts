@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/require-await, @typescript-eslint/no-unsafe-return, @typescript-eslint/no-shadow */
 
 import { Translators } from '../translators'
+import { Serialized } from '../../gen/typings/serialized'
 import { getItemAsync, getItemsAsync } from '../get-items-async'
 import { Preference } from '../prefs'
 import { html as escapeHTML } from '../escape'
@@ -14,7 +15,7 @@ import { Transform } from 'unicode2latex'
 
 function serialized(item) {
   if (item) {
-    const ser = simplifyForExport(Zotero.Utilities.Internal.itemToExportFormat(item, false, true) as Serialized.Item)
+    const ser = ItemType.simplifyForExport(Zotero.Utilities.Internal.itemToExportFormat(item, false, true) as Serialized.Item)
     ser.uri = Zotero.URI.getItemURI(item)
     ser.itemID = item.id
     return ser

@@ -36,9 +36,10 @@ export namespace CSL {
 }
 
 function unalias(item: Serialized.Item, scrub = true) {
+  // @ts-expect-error TS2339
   delete item.inPublications
 
-  const itemType = schema.itemTypes.find(itemType === item.itemType)
+  const itemType = schema.itemTypes.find(it => it.itemType === item.itemType)
   if (!itemType) return
   for (const field of itemType.fields) {
     if (field.baseField && item[field.field] && !item[field.baseField]) {
@@ -59,8 +60,8 @@ export const ItemType = new class $ItemType {
   #validFields: Record<string, Record<string, boolean>> = {}
 
   constructor() {
-    this.fields = this.db.addCollection<Field>('fields', { indices: ['itemType', 'field', 'baseField'] })
-    this.creators = this.db.addCollection<Creator>('creators', { indices: ['itemType', 'creator', 'primary'] })
+    this.fields = this.db.addCollection<ItemType.Field>('fields', { indices: ['itemType', 'field', 'baseField'] })
+    this.creators = this.db.addCollection<ItemType.Creator>('creators', { indices: ['itemType', 'creator', 'primary'] })
     this.csl = {
       types: this.db.addCollection<CSL.Mapping>('csl.types', { indices: ['csl', 'zotero'] }),
       fields: this.db.addCollection<CSL.Mapping>('csl.types', { indices: ['csl', 'zotero'] }),
@@ -68,7 +69,7 @@ export const ItemType = new class $ItemType {
     }
 
     const date: Record<string, boolean> = Object.entries(schema.meta.fields)
-      .reduce((acc, [ field, meta ]) => { acc[field] = meta.type === 'date' }, { accessDate: true })
+      .reduce((acc, [ field, meta ]) => ({ ...acc, [field]: meta.type === 'date' }), { accessDate: true } as Record<string, boolean>)
 
     for (const itemType of schema.itemTypes) {
       for (const { field, baseField } of itemType.fields) {
@@ -87,15 +88,14 @@ export const ItemType = new class $ItemType {
           itemType: itemType.itemType,
           creator: creatorType,
           primary: !!primary,
-          label: schema.locales['en-US'].creatorTypes[creatorType],
-          extra: this.extra(creatorType),
+          // label: schema.locales['en-US'].creatorTypes[creatorType],
         })
       }
     }
 
     for (const [ csl, zoteroTypes ] of Object.entries(schema.csl.types)) {
       for (const zotero of zoteroTypes) {
-        this.csl.insert({ kind: 'type', csl, zotero, extra: this.extra(csl) })
+        this.csl.types.insert({ csl, zotero })
       }
     }
 
@@ -103,12 +103,12 @@ export const ItemType = new class $ItemType {
       // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
       for (const [ csl, zoteroFields ] of Object.entries(schema.csl.fields[kind]) as [ string, string[] ][]) {
         for (const zotero of zoteroFields) {
-          this.csl.insert({ kind: 'field', csl, zotero, extra: this.extra(csl) })
+          this.csl.fields.insert({ csl, zotero })
         }
       }
     }
     for (const [ zotero, csl ] of Object.entries(schema.csl.names)) {
-      this.csl.insert({ kind: 'creator', csl, zotero, extra: this.extra(csl) })
+      this.csl.creators.insert({ csl, zotero })
     }
 
     this.fields.ensureAllIndexes(true)
@@ -118,8 +118,9 @@ export const ItemType = new class $ItemType {
     this.csl.creators.ensureAllIndexes(true)
   }
 
-  public field(field: string, itemType?: string): Field {
+  public field(field: string, itemType?: string): ItemType.Field {
     const q = { $or: [ { field: { $eqi: field } }, { baseField: { $eqi: field } } ] }
+    // @ts-expect-error TS2339
     if (itemType) q.itemType = itemType
     return this.fields.findOne({ $or: [ { field: { $eqi: field } }, { baseField: { $eqi: field } } ] })
   }
@@ -145,7 +146,7 @@ export const ItemType = new class $ItemType {
 
   // import & export translators expect different creator formats... nice
   public simplifyForExport(item: any, { creators = true, scrub = true }: { creators?: boolean; scrub?: boolean } = {}): Serialized.Item {
-    this.unalias(item, scrub)
+    unalias(item, scrub)
 
     if (item.filingDate) item.filingDate = item.filingDate.replace(/^0000-00-00 /, '')
 
