@@ -2,7 +2,7 @@ declare const Zotero: any
 
 import { Translation } from '../lib/translator'
 
-import { simplifyForExport } from '../../gen/items/simplify'
+import { simplifyForExport } from '../../content/simplify'
 import { Fields as ParsedExtraFields, get as getExtra, cslCreator } from '../../content/extra'
 import type { ExportedItem } from '../../content/worker/cache'
 import ExtraFields from '../../gen/items/extra-fields.json' with { type: 'json' }

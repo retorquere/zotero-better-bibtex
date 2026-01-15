@@ -3,7 +3,7 @@ import type { Library } from './normalize'
 
 import { log } from '../../content/logger'
 import { Translation } from './translator'
-import { simplifyForExport, simplifyForImport } from '../../gen/items/simplify'
+import { simplifyForExport, simplifyForImport } from '../../content/simplify'
 import BBT from '../../gen/version.cjs'
 
 // import { validItem } from '../content/ajv'

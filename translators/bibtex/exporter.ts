@@ -5,7 +5,7 @@ import { Translation } from '../lib/translator'
 import { RegularItem } from '../../gen/typings/serialized-item'
 
 import { JabRef } from '../bibtex/jabref'
-import { simplifyForExport } from '../../gen/items/simplify'
+import { simplifyForExport } from '../../content/simplify'
 import * as bibtexParser from '@retorquere/bibtex-parser'
 import { Postfix } from './postfix'
 import * as Extra from '../../content/extra'

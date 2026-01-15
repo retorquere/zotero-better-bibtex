@@ -36,7 +36,7 @@ import * as postscript from '../lib/postscript'
 import { replace_command_spacers } from './unicode_translator'
 import { datefield } from './datefield'
 import ExtraFields from '../../gen/items/extra-fields.json' with { type: 'json' }
-import { label as propertyLabel } from '../../gen/items/items'
+import { label as propertyLabel } from '../../content/simplify'
 import type { Fields as ParsedExtraFields, TeXString } from '../../content/extra'
 import { zoteroCreator as ExtraZoteroCreator } from '../../content/extra'
 import { log } from '../../content/logger'

@@ -4,7 +4,7 @@ import * as escape from '../../content/escape'
 import { log } from '../../content/logger'
 import { Exporter as BibTeXExporter } from './exporter'
 import { parse as arXiv } from '../../content/arXiv'
-import { valid, label } from '../../gen/items/items'
+import { valid, label } from '../../content/simplify'
 import wordsToNumbers from '@insomnia-dev/words-to-numbers'
 
 import { ParsedDate, parse as parseDate, strToISO as strToISODate, century } from '../../content/dateparser'
