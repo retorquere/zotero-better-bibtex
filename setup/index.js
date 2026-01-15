@@ -15,5 +15,5 @@ fs.copyFileSync('node_modules/@retorquere/bibtex-parser/dist/data/unabbrev.json'
 fs.copyFileSync('node_modules/@retorquere/bibtex-parser/dist/data/strings.bib', 'build/content/resource/bibtex/strings.bib')
 const manifest = JSON.parse(fs.readFileSync('build/manifest.json', 'utf-8'))
 manifest.applications.zotero.strict_min_version = '7.0.15'
-manifest.applications.zotero.strict_max_version = '7.0.30'
+manifest.applications.zotero.strict_max_version = '8.*'
 fs.writeFileSync('build/manifest.json', JSON.stringify(manifest, null, 2))
