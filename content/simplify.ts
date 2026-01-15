@@ -67,14 +67,32 @@ export function simplifyForImport(item: Serialized.Item): Serialized.Item {
 
 // maps variable to its extra-field label
 export const label: Record<string, string> = {}
+
 // valid types and fields per type
-export const valid: { type: Record<string, boolean>; field: Record<string, Record<string, boolean>> } = { type: {}, field: {} }
+export const valid: {
+  type: Record<string, boolean>
+  field: Record<string, Record<string, boolean>>
+  creators: Record<string, string[]>
+} = {
+  type: {},
+  field: {},
+  creators: {},
+}
+
 for (const itemType of schema.itemTypes) {
   valid.type[itemType.itemType] = true
   valid.field[itemType.itemType] = {}
+  valid.creators[itemType.itemType] = []
+  itemType.creatorTypes = [
+    ...itemType.creatorTypes.filter(c => c.primary),
+    ...itemType.creatorTypes.filter(c => !c.primary),
+  ]
+
   for (const field of itemType.fields) {
     label[field.field.toLowerCase()] = label[(field.baseField || field.field).toLowerCase()] = (field.baseField || field.field).replace(/([a-z])([A-Z])/g, '$1 $2').replace(/^./, c => c.toUpperCase())
     valid[itemType.itemType][field.field] = valid[itemType.itemType][field.baseField || field.field] = true
   }
+  for (const creatorType of itemType.creatorTypes) {
+    valid.creators[itemType.itemType].push(creatorType.creatorType)
+  }
 }
-

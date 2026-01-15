@@ -29,7 +29,7 @@ import { fetchSync as fetchInspireHEP } from '../inspire-hep'
 import { compile, upgrade } from './compile'
 import * as DateParser from '../dateparser'
 
-import itemCreators from '../../gen/items/creators.json' with { type: 'json' }
+import { valid } from '../../content/simplify'
 import * as items from '../../gen/items/items'
 import { ZoteroItemType, ZoteroFieldName } from '../../gen/items/items'
 
@@ -619,7 +619,7 @@ export class PatternFormatter {
     name = name || this.config.creatorNames.template
     const include: string[] = []
     const exclude: string[] = []
-    const primary = itemCreators[client.slug][this.item.itemType][0]
+    const primary = valid.creators[this.item.itemType][0]
 
     const types = this.item.creators.map(cr => cr.creatorType)
     if (typeof type === 'string') {
