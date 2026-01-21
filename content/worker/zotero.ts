@@ -1,5 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 
+declare const dump: (msg: string) => void
+
 import { log } from '../../content/logger'
 import { Server as WorkerServerBase } from './json-rpc'
 import { Exporter as ExporterInterface } from './interface'
@@ -336,11 +338,12 @@ async function saveFile(path, overwrite) {
 
 class WorkerZoteroCreatorTypes {
   public getTypesForItemType(itemTypeID: string): { name: string }[] {
-    return Object.keys(ItemType.valid[itemTypeID]?.creators || {}).map(name => ({ name }))
+    dump(`1270: getTypesForItemType(${JSON.stringify(itemTypeID)}) => ${JSON.stringify(ItemType.valid.creators[itemTypeID])}\n`)
+    return Object.keys(ItemType.valid.creators[itemTypeID] || {}).map(name => ({ name }))
   }
 
   public isValidForItemType(creatorTypeID, itemTypeID) {
-    return ItemType.valid[itemTypeID]?.[creatorTypeID]
+    return ItemType.valid.creators[itemTypeID]?.[creatorTypeID]
   }
 
   public getLocalizedString(type: string): string {
@@ -368,7 +371,7 @@ class WorkerZoteroItemTypes {
 
 class WorkerZoteroItemFields {
   public isValidForType(fieldID: string, itemTypeID: string) {
-    return ItemType.valid[itemTypeID][fieldID]
+    return ItemType.valid.fields[itemTypeID][fieldID]
   }
 
   public getID(field: string): string {

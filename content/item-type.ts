@@ -2,6 +2,8 @@ import schema from '../submodules/zotero/resource/schema/global/schema.json' wit
 export const Schema = schema
 import { Serialized } from '../gen/typings/serialized'
 
+declare const dump: (msg: string) => void
+
 // eslint-disable-next-line @typescript-eslint/no-namespace
 export namespace ItemType {
   export type Field = {
@@ -99,9 +101,9 @@ export const ItemType = new class $ItemType { // eslint-disable-line no-redeclar
     }
 
     for (const itemType of schema.itemTypes) {
-      this.valid.fields[itemType.itemType] = {}
       this.lookup.type[itemType.itemType.toLowerCase()] = itemType.itemType
 
+      this.valid.fields[itemType.itemType] = {}
       for (const { field, baseField } of itemType.fields) {
         this.valid.fields[itemType.itemType][field] = true
         this.valid.fields[itemType.itemType][baseField || field] = true
@@ -131,8 +133,9 @@ export const ItemType = new class $ItemType { // eslint-disable-line no-redeclar
         })
       }
 
+      this.valid.creators[itemType.itemType] = {}
       for (const { creatorType, primary } of itemType.creatorTypes) {
-        this.valid.creators[creatorType] = {}
+        this.valid.creators[itemType.itemType][creatorType] = true
         this.lookup.creator[creatorType.toLowerCase()] = creatorType
 
         this.schema.creators.push({
@@ -160,6 +163,8 @@ export const ItemType = new class $ItemType { // eslint-disable-line no-redeclar
       }
     }
     */
+
+    dump(`1270: valid = ${JSON.stringify(this.valid.creators)}\n`)
   }
 
   public field(field: string, itemType = ''): ItemType.Field {
@@ -176,8 +181,7 @@ export const ItemType = new class $ItemType { // eslint-disable-line no-redeclar
     if (!name) return ''
     return name
       .replace(/[-_]/g, ' ')
-      .replace(/([a-z])([A-Z])/g, '$1 $2')
-      .toLowerCase()
+      .replace(/([a-z\s])([A-Z])/g, (m, l, u) => `${l}${u.toLowerCase()}`)
       .replace(/^./, c => c.toUpperCase())
   }
 

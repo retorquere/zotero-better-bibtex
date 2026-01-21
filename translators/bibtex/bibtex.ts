@@ -226,7 +226,9 @@ class Entry extends BaseEntry {
     const editors = []
     const translators = []
     const collaborators = []
-    const primaryCreatorType = Zotero.Utilities.getCreatorsForType(this.item.itemType)[0]
+    const primaryCreatorType = Zotero.Utilities.getCreatorsForType(this.item.itemType)[0] || null
+
+    log.debug('1270:', { primaryCreatorType, creators: this.item.creators, forType: Zotero.Utilities.getCreatorsForType(this.item.itemType) })
 
     for (const creator of this.item.creators) {
       switch (creator.creatorType) {
