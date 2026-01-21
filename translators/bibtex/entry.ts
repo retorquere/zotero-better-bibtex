@@ -1571,6 +1571,7 @@ export class Entry {
     ]
 
     const pretty = (k: string): string => {
+      if (k === 'numPages') return 'Number of pages'
       const label = Schema.locales['en-US'].fields[k]
       if (!label || label.includes('.')) return ItemType.toLabel(k)
       return label.replace(/ [A-Z]/g, c => c.toLowerCase())

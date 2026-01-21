@@ -432,7 +432,7 @@ export function generateBibTeX(collected: Collected): Translation {
     if (item.itemType === 'report' && item.type?.toLowerCase().includes('manual')) ref.entrytype = 'manual'
     if ([ 'zotero.bookSection', 'csl.chapter', 'tex.chapter' ].includes(ref.entrytype_source) && ref.hasCreator('bookAuthor')) ref.entrytype = 'inbook'
 
-    ref.add({ name: 'address', value: item.place })
+    ref.add({ name: 'address', value: item.itemType === 'conferencePaper' ? item.eventPlace || item.place : item.place || item.eventPlace })
     ref.add({ name: 'chapter', value: item.section })
     ref.add({ name: 'edition', value: ref.english && collected.preferences.bibtexEditionOrdinal ? toEnglishOrdinal(item.edition) : item.edition })
     ref.add({ name: 'type', value: item.type })

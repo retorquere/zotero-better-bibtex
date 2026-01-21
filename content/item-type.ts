@@ -71,6 +71,10 @@ function LookUp(): Record<string, string> {
 }
 
 export const ItemType = new class $ItemType { // eslint-disable-line no-redeclare
+  #extra = {
+    numPages: ['Number of pages'],
+  }
+
   public schema = {
     fields: [] as ItemType.Field[],
     creators: [] as ItemType.Creator[],
@@ -88,6 +92,11 @@ export const ItemType = new class $ItemType { // eslint-disable-line no-redeclar
   }
 
   constructor() {
+    if (!schema.itemTypes.find(itemType => itemType.fields.find(field => field.field === 'eventDate'))) {
+      // not sure how this ended up in the test suite
+      schema.itemTypes.find(itemType => itemType.itemType === 'conferencePaper').fields.push({ field: 'eventDate', baseField: 'date' })
+    }
+
     this.labeled = (name: string): ItemType.Field | ItemType.Creator => {
       name = name.toLowerCase()
       return this.schema.fields.find(_ => _.labels.includes(name)) || this.schema.creators.find(_ => _.labels.includes(name))
@@ -117,9 +126,6 @@ export const ItemType = new class $ItemType { // eslint-disable-line no-redeclar
       cslmap.names[zotero].push(csl)
     }
 
-    const extra = {
-      numPages: ['Number of pages'],
-    }
     for (const itemType of schema.itemTypes) {
       this.lookup.type[itemType.itemType] = itemType.itemType
 
@@ -138,7 +144,7 @@ export const ItemType = new class $ItemType { // eslint-disable-line no-redeclar
           field,
           baseField: baseField || '',
           csl,
-          extra: extra[field] || this.toLabel(baseField || field),
+          extra: this.#extra[field] || this.toLabel(baseField || field),
           labels: uniq([
             this.toLabel(field),
             field,
@@ -148,7 +154,7 @@ export const ItemType = new class $ItemType { // eslint-disable-line no-redeclar
             schema.locales['en-US'].fields[baseField],
             ...csl,
             ...(csl.map(l => this.toLabel(l))),
-            ...(extra[field] || []),
+            ...(this.#extra[field] || []),
           ]).map(_ => _.toLowerCase()),
         })
       }
