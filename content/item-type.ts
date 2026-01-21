@@ -13,6 +13,7 @@ export namespace ItemType {
 
     csl: string[]
 
+    extra: string
     labels: string[]
   }
 
@@ -22,7 +23,10 @@ export namespace ItemType {
     itemType: string
     creator: string
     primary: boolean
+
     csl: string[]
+
+    extra: string
     labels: string[]
   }
 }
@@ -113,6 +117,7 @@ export const ItemType = new class $ItemType { // eslint-disable-line no-redeclar
           field,
           baseField: baseField || '',
           csl,
+          extra: this.toLabel(field),
           labels: uniq([
             this.toLabel(field),
             field,
@@ -137,6 +142,7 @@ export const ItemType = new class $ItemType { // eslint-disable-line no-redeclar
           creator: creatorType,
           primary: !!primary,
           csl: cslmap[creatorType] || [],
+          extra: this.toLabel(creatorType),
           labels: uniq([
             this.toLabel(creatorType),
             creatorType,

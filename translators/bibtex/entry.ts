@@ -1568,7 +1568,7 @@ export class Entry {
       'uri',
       'version',
     ]
-    const unused_props = Object.entries(this.item.extraFields.kv).map(([ p, v ]) => [ `extra: ${ ItemType.field(p)?.labels[0] || p }`, v ])
+    const unused_props = Object.entries(this.item.extraFields.kv).map(([ p, v ]) => [ `extra: ${ ItemType.field(p)?.extra || p }`, v ])
       .concat(Object.entries(this.item))
       .map(([ p, v ]: [ string, string ]) => [ p, v, this.valueish(v) ] as [ string, string, string ])
       .filter(([ p, v, vi ]) => !ignore_unused_props.includes(p) && !used_values.includes(v) && (vi && !used_values.includes(vi)))
@@ -1577,7 +1577,7 @@ export class Entry {
     for (const [ prop, value, valueish ] of unused_props) {
       if (prop === 'language' && this.has.langid) continue
       if (prop === 'libraryCatalog' && valueish.includes('arxiv') && this.item.arXiv) continue
-      report.push(`? unused ${ ItemType.field(prop)?.labels[0] || prop } ("${ value }")`)
+      report.push(`? unused ${ ItemType.field(prop)?.extra || prop } ("${ value }")`)
     }
 
     if (!report.length) return ''

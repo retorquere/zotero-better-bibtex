@@ -697,7 +697,7 @@ class ZoteroItem {
     const field = fields.reduce((acc: ItemType.Field, f: string) => (acc ?? ItemType.labeled(f)), null)
     if (field) {
       if (typeof value === 'string') value = value.replace(/\n+/g, '')
-      this.extra.push(`${field.labels[0]}: ${ value }`)
+      this.extra.push(`${field.extra}: ${ value }`)
       return true
     }
     return false
@@ -1563,7 +1563,7 @@ class ZoteroItem {
             else {
               const alternate = ItemType.field(field)
               if (alternate) {
-                this.extra.push(`${alternate.labels[0]}: ${value}`)
+                this.extra.push(`${alternate.extra}: ${value}`)
               }
               else {
                 this.extra.push(`tex.${ field.match(/[:=]/) ? `"${ field }"` : field }: ${ value }`)
