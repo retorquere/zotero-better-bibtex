@@ -1569,8 +1569,14 @@ export class Entry {
       'uri',
       'version',
     ]
+
+    const pretty = (k: string): string => {
+      const label = Schema.locales['en-US'].fields[k]
+      if (!label || label.includes('.')) return ItemType.toLabel(k)
+      return label.replace(/ [A-Z]/g, c => c.toLowerCase())
+    }
     const unused_data = Object.entries(this.item.extraFields.kv).map(([ k, v ]) => [ '', `extra: ${k}`, v ])
-      .concat(Object.entries(this.item).map(([ k, v ]) => [ k, Schema.locales['en-US'].fields[k]?.replace(/ [A-Z]/g, c => c.toLowerCase()) || ItemType.toLabel(k), v ]))
+      .concat(Object.entries(this.item).map(([ k, v ]) => [ k, pretty(k), v ]))
       .map(([ k, label, v ]: [ string, string, string ]) => [ k, label, v, this.valueish(v) ] as [ string, string, string, string ])
       .filter(([ k, _label, v, vi ]) => !ignore_unused_props.includes(k) && !used_values.includes(v) && (vi && !used_values.includes(vi)))
       .sort(property_sort)
