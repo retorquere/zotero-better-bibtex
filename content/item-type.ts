@@ -197,7 +197,7 @@ export const ItemType = new class $ItemType { // eslint-disable-line no-redeclar
     return (this.schema.fields.find(_ => _.field === fieldName || _.baseField === fieldName) || this.schema.creators.find(_ => _.creator === fieldName))?.type
   }
 
-  public toLabel(name: strin): string {
+  public toLabel(name: string): string {
     if (!name) return ''
     return name
       .replace(/[-_]/g, ' ')
