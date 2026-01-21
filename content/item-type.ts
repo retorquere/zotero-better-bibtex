@@ -2,8 +2,6 @@ import schema from '../submodules/zotero/resource/schema/global/schema.json' wit
 export const Schema = schema
 import { Serialized } from '../gen/typings/serialized'
 
-declare const dump: (msg: string) => void
-
 // eslint-disable-next-line @typescript-eslint/no-namespace
 export namespace ItemType {
   export type Field = {
@@ -50,15 +48,37 @@ function unalias(item: Serialized.Item, scrub = true) {
 function uniq(list: string[]): string[] {
   return [...(new Set(list.filter(_ => _)))]
 }
+
+function LookUp(): Record<string, string> {
+  return new Proxy({}, {
+    get(target, prop) {
+      return target[typeof prop === 'string' ? prop.toLowerCase() : prop] // eslint-disable-line @typescript-eslint/no-unsafe-return
+    },
+
+    set(target, prop, value) {
+      target[typeof prop === 'string' ? prop.toLowerCase() : prop] = value
+      return true
+    },
+
+    has(target, prop) {
+      return (typeof prop === 'string' ? prop.toLowerCase() : prop) in target
+    },
+
+    deleteProperty(target, prop) {
+      return delete target[typeof prop === 'string' ? prop.toLowerCase() : prop]
+    },
+  }) as Record<string, string>
+}
+
 export const ItemType = new class $ItemType { // eslint-disable-line no-redeclare
   public schema = {
     fields: [] as ItemType.Field[],
     creators: [] as ItemType.Creator[],
   }
   public lookup = {
-    type: {} as Record<string, string>,
-    field: {} as Record<string, string>,
-    creator: {} as Record<string, string>,
+    type: LookUp(),
+    field: LookUp(),
+    creator: LookUp(),
   }
   public labeled: (name: string) => ItemType.Field | ItemType.Creator
 
@@ -76,42 +96,42 @@ export const ItemType = new class $ItemType { // eslint-disable-line no-redeclar
     const date: Record<string, boolean> = Object.entries(schema.meta.fields)
       .reduce((acc, [ field, meta ]) => ({ ...acc, [field]: meta.type === 'date' }), { accessDate: true } as Record<string, boolean>)
 
-    const cslmap: Record<string, string[]> = {}
+    const cslmap = {
+      fields: ({} as Record<string, string[]>),
+      names: ({} as Record<string, string[]>),
+    }
+
     for (const [csl, zoteros] of Object.entries(schema.csl.fields.text)) {
       for (const zotero of zoteros) {
-        this.lookup.field[csl.toLowerCase()] = zotero
-        cslmap[zotero] ??= []
-        cslmap[zotero].push(csl)
+        cslmap.fields[zotero] ??= []
+        cslmap.fields[zotero].push(csl)
         if (csl === 'event-place') {
-          cslmap.eventPlace ??= []
-          cslmap.eventPlace.push(csl)
+          cslmap.fields.eventPlace ??= []
+          cslmap.fields.eventPlace.push(csl)
         }
       }
     }
     for (const [csl, zotero] of Object.entries(schema.csl.fields.date)) {
-      cslmap[zotero] ??= []
-      cslmap[zotero].push(csl)
-      this.lookup.field[csl.toLowerCase()] = zotero
+      cslmap.fields[zotero] ??= []
+      cslmap.fields[zotero].push(csl)
     }
 
     for (const [zotero, csl] of Object.entries(schema.csl.names)) {
-      cslmap[zotero] ??= []
-      cslmap[zotero].push(csl)
-      this.lookup.field[csl.toLowerCase()] = zotero
+      cslmap.names[zotero] ??= []
+      cslmap.names[zotero].push(csl)
     }
 
     for (const itemType of schema.itemTypes) {
-      this.lookup.type[itemType.itemType.toLowerCase()] = itemType.itemType
+      this.lookup.type[itemType.itemType] = itemType.itemType
 
       this.valid.fields[itemType.itemType] = {}
       for (const { field, baseField } of itemType.fields) {
         this.valid.fields[itemType.itemType][field] = true
         this.valid.fields[itemType.itemType][baseField || field] = true
 
-        this.lookup.field[field.toLowerCase()] = field
-        this.lookup.field[(baseField || field).toLowerCase()] = baseField || field
+        this.lookup.field[field] = this.lookup.field[baseField || field] = baseField || field
 
-        const csl = uniq([...(cslmap[field] || []), ...(cslmap[baseField] || [])])
+        const csl = uniq([...(cslmap.fields[field] || []), ...(cslmap.fields[baseField] || [])])
         this.schema.fields.push({
           type: date[field] || date[baseField] ? 'date' : 'text',
 
@@ -136,7 +156,7 @@ export const ItemType = new class $ItemType { // eslint-disable-line no-redeclar
       this.valid.creators[itemType.itemType] = {}
       for (const { creatorType, primary } of itemType.creatorTypes) {
         this.valid.creators[itemType.itemType][creatorType] = true
-        this.lookup.creator[creatorType.toLowerCase()] = creatorType
+        this.lookup.creator[creatorType] = creatorType
 
         this.schema.creators.push({
           type: 'name',
@@ -144,7 +164,7 @@ export const ItemType = new class $ItemType { // eslint-disable-line no-redeclar
           itemType: itemType.itemType,
           creator: creatorType,
           primary: !!primary,
-          csl: cslmap[creatorType] || [],
+          csl: cslmap.names[creatorType] || [],
           extra: this.toLabel(creatorType),
           labels: uniq([
             this.toLabel(creatorType),
@@ -156,20 +176,16 @@ export const ItemType = new class $ItemType { // eslint-disable-line no-redeclar
       }
     }
 
-    /*
-    for (const [ csl, zoteroTypes ] of Object.entries(schema.csl.types)) {
-      for (const zotero of zoteroTypes) {
-        this.csl.types.insert({ csl, zotero })
+    for (const [ zotero, csls ] of Object.entries(cslmap.fields)) {
+      for (const csl of csls) {
+        this.lookup.field[csl] ??= this.lookup.field[zotero]
       }
     }
-    */
-
-    dump(`1270: valid = ${JSON.stringify(this.valid.creators)}\n`)
   }
 
   public field(field: string, itemType = ''): ItemType.Field {
-    field = this.lookup.field[field.toLowerCase()] || field
-    itemType = this.lookup.type[itemType.toLowerCase()] || itemType
+    field = this.lookup.field[field] || field
+    itemType = this.lookup.type[itemType] || itemType
     return this.schema.fields.find(f => (f.field === field || f.baseField === field) && (!itemType || (itemType === f.itemType)))
   }
 

@@ -259,7 +259,7 @@ export class Entry {
     let entrytype: any
 
     // workaround for preprints, https://forums.zotero.org/discussion/comment/385524#Comment_385524
-    const pseudoPrePrint = this.translation.BetterBibTeX && item.itemType === 'report' && item.extraFields.kv.type?.toLowerCase() === 'article'
+    const pseudoPrePrint = this.translation.BetterBibTeX && item.itemType === 'report' && item.extraFields.kv.type === 'article'
 
     // preserve for thesis type etc
     let csl_type = item.extraFields.kv.type
@@ -310,13 +310,14 @@ export class Entry {
     }
 
     // TODO: maybe just use item.extraFields.var || item.var instead of deleting them here
-    for (let [ fieldName, value ] of Object.entries(item.extraFields.kv)) {
-      fieldName = ItemType.lookup.field[fieldName] // might be CSL or Zotero
-      const type = ItemType.typeOf(fieldName)
+    for (const [ fieldName, value ] of Object.entries(item.extraFields.kv)) {
+      const name = ItemType.lookup.field[fieldName] // might be CSL or Zotero
+      const type = ItemType.typeOf(name)
+      log.debug('migrate:', { fieldName, value, name, type })
       switch (type) {
         case 'text':
         case 'date':
-          if (!item[fieldName] || type === 'date') item[fieldName] = value
+          if (!item[fieldName] || type === 'date') item[name] = value
           delete item.extraFields.kv[fieldName]
           break
       }
