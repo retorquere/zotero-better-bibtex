@@ -127,17 +127,17 @@ export abstract class CSLExporter {
       for (const [ fieldName, value ] of Object.entries(item.extraFields.kv)) {
         if (!value) continue
 
-        const cslField = CSLField[fieldName]
-        const zoteroField = ItemType.labeled(fieldName)
-        const cslDerivedField = zoteroField?.csl[0]
+        const cslField = CSLField[fieldName] || {}
+        const zoteroField = ItemType.labeled(fieldName) || ({ csl: [] } as unknown as ItemType.Field)
+        const cslDerivedField = zoteroField.csl[0]
 
-        if (cslField?.type === 'string' && cslField.enum?.includes(value)) {
+        if (cslField.type === 'string' && cslField.enum?.includes(value)) {
           csl[fieldName] = value
         }
-        else if (cslField?.$ref === '#/definitions/date-variable') {
+        else if (cslField.$ref === '#/definitions/date-variable') {
           csl[fieldName] = this.date2CSL(dateparser.parse(value))
         }
-        else if (cslField?.type === 'string' || (Array.isArray(cslField.type) || cslField.type.join(',') === 'number,string')) {
+        else if (cslField.type === 'string' || (Array.isArray(cslField.type) && cslField.type.join(',') === 'number,string')) {
           csl[fieldName] = value
         }
         else if (fieldName === 'csl-type') {
