@@ -35,7 +35,6 @@ import * as postscript from '../lib/postscript'
 
 import { replace_command_spacers } from './unicode_translator'
 import { datefield } from './datefield'
-import ExtraFields from '../../gen/items/extra-fields.json' with { type: 'json' }
 import { ItemType } from '../../content/item-type'
 import type { Fields as ParsedExtraFields, TeXString } from '../../content/extra'
 import { zoteroCreator as ExtraZoteroCreator } from '../../content/extra'
@@ -311,20 +310,25 @@ export class Entry {
     }
 
     // TODO: maybe just use item.extraFields.var || item.var instead of deleting them here
-    for (const [ name, value ] of Object.entries(item.extraFields.kv)) {
-      const ef = ExtraFields[name]
-      if (ef?.zotero) {
-        if (!item[name] || ef.type === 'date') item[name] = value
-        delete item.extraFields.kv[name]
+    for (let [ fieldName, value ] of Object.entries(item.extraFields.kv)) {
+      fieldName = ItemType.lookup.field[fieldName] // might be CSL or Zotero
+      const type = ItemType.typeOf(fieldName)
+      switch (type) {
+        case 'text':
+        case 'date':
+          if (!item[fieldName] || type === 'date') item[fieldName] = value
+          delete item.extraFields.kv[fieldName]
+          break
       }
     }
 
-    for (const [ name, value ] of Object.entries(item.extraFields.creator)) {
-      if (ExtraFields[name].zotero) {
-        for (const creator of (value as string[])) {
-          item.creators.push({ ...ExtraZoteroCreator(creator, name), source: creator })
+    for (let [ creatorType, values ] of Object.entries(item.extraFields.creator)) {
+      creatorType = ItemType.lookup[creatorType] // might be CSL or Zotero
+      if (creatorType) {
+        for (const creator of (values as string[])) {
+          item.creators.push({ ...ExtraZoteroCreator(creator, creatorType), source: creator })
         }
-        delete item.extraFields.creator[name]
+        delete item.extraFields.creator[creatorType]
       }
     }
     for (const creator of item.creators) {
@@ -708,7 +712,7 @@ export class Entry {
     for (const [ key, value ] of Object.entries(this.item.extraFields.kv)) {
       if (key === '_eprint') continue
 
-      const type = ExtraFields[key]?.type || 'string'
+      const type = ItemType.typeOf(key)
       let enc = { name: 'creator', text: 'literal' }[type] || type
       const replace = type === 'date'
       // these are handled just like 'arXiv' and 'lccn', respectively
@@ -1564,7 +1568,7 @@ export class Entry {
       'uri',
       'version',
     ]
-    const unused_props = Object.entries(this.item.extraFields.kv).map(([ p, v ]) => [ `extra: ${ ItemType.field(p)?.label || p }`, v ])
+    const unused_props = Object.entries(this.item.extraFields.kv).map(([ p, v ]) => [ `extra: ${ ItemType.field(p)?.labels[0] || p }`, v ])
       .concat(Object.entries(this.item))
       .map(([ p, v ]: [ string, string ]) => [ p, v, this.valueish(v) ] as [ string, string, string ])
       .filter(([ p, v, vi ]) => !ignore_unused_props.includes(p) && !used_values.includes(v) && (vi && !used_values.includes(vi)))
@@ -1573,7 +1577,7 @@ export class Entry {
     for (const [ prop, value, valueish ] of unused_props) {
       if (prop === 'language' && this.has.langid) continue
       if (prop === 'libraryCatalog' && valueish.includes('arxiv') && this.item.arXiv) continue
-      report.push(`? unused ${ ItemType.field(prop)?.label || prop } ("${ value }")`)
+      report.push(`? unused ${ ItemType.field(prop)?.labels[0] || prop } ("${ value }")`)
     }
 
     if (!report.length) return ''

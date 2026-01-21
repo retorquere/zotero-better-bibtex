@@ -336,19 +336,19 @@ async function saveFile(path, overwrite) {
 
 class WorkerZoteroCreatorTypes {
   public getTypesForItemType(itemTypeID: string): { name: string }[] {
-    return ItemType.creators.find({ itemType: itemTypeID }).map(cr => ({ name: cr.creator }))
+    return Object.keys(ItemType.valid[itemTypeID]?.creators || {}).map(name => ({ name }))
   }
 
   public isValidForItemType(creatorTypeID, itemTypeID) {
-    return !!ItemType.creators.findOne({ itemType: itemTypeID, creator: creatorTypeID })
+    return ItemType.valid[itemTypeID]?.[creatorTypeID]
   }
 
   public getLocalizedString(type: string): string {
-    return Schema.locales[Zotero.locale]?.types[type] || type[0].toUpperCase() + type.substr(1).replace(/([A-Z])([a-z])/g, (m, u, l) => `${ u.toLowerCase() } ${ l }`)
+    return Schema.locales[Zotero.locale]?.types[type] || ItemType.toLabel(type)
   }
 
   public getPrimaryIDForType(typeID) {
-    return ItemType.creators.findOne({ itemType: typeID, primary: true })?.creator
+    return ItemType.schema.creators.find(_ => _.itemType === typeID && _.primary)?.creator
   }
 
   public getID(typeName) {
@@ -368,7 +368,7 @@ class WorkerZoteroItemTypes {
 
 class WorkerZoteroItemFields {
   public isValidForType(fieldID: string, itemTypeID: string) {
-    return !!ItemType.fields.findOne({ itemType: itemTypeID, $or: [ { field: fieldID }, { baseField: fieldID } ] })
+    return ItemType.valid[itemTypeID][fieldID]
   }
 
   public getID(field: string): string {

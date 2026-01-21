@@ -615,7 +615,7 @@ export class PatternFormatter {
     name = name || this.config.creatorNames.template
     const include: string[] = []
     const exclude: string[] = []
-    const primary = ItemType.creators.findOne({ itemType: this.item.itemType, primary: true })?.creator
+    const primary = ItemType.schema.creators.find(_ => _.itemType === this.item.itemType && _.primary)?.creator
 
     const types = this.item.creators.map(cr => cr.creatorType)
     if (typeof type === 'string') {
@@ -1026,7 +1026,7 @@ export class PatternFormatter {
    * @param match  Regex to test the creator-type list. When passed, and the creator-type list does not match the regex, jump to the next formule. When it matches, return nothing but stay in the current formule. When no regex is passed, output the creator-type list for the item (mainly useful for debugging).
    */
   public $creatortypes(match?: RegExp): string {
-    const primary = ItemType.creators.findOne({ itemType: this.item.itemType, primary: true })?.creator
+    const primary = ItemType.schema.creators.find(_ => _.itemType === this.item.itemType && _.primary)?.creator
     const encode = (cr: Creator, replace: boolean) => {
       const parts = typeof cr.name === 'string' ? 1 : 2
       const name = cr.creatorType === primary && replace ? 'primary' : cr.creatorType
@@ -1595,7 +1595,7 @@ export class PatternFormatter {
 
   private creators(select: AuthorType, template?: Template<'creators'>): string[] {
     template = template || this.config.creatorNames.template
-    const primary = ItemType.creators.findOne({ itemType: this.item.itemType, primary: true })?.creator
+    const primary = ItemType.schema.creators.find(_ => _.itemType === this.item.itemType && _.primary)?.creator
 
     const creators = {
       editor: [],

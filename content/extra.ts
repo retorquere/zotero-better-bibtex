@@ -1,4 +1,4 @@
-import mapping from '../gen/items/extra-fields.json' with { type: 'json' }
+import { ItemType } from './item-type'
 import * as CSL from 'citeproc'
 
 export type TeXString = { value: string; mode?: 'raw' | 'cased'; line: number }
@@ -76,8 +76,6 @@ export function get(extra: string, mode: 'zotero' | 'csl', options?: GetOptions)
     defaults = true
   }
 
-  const other = { zotero: 'csl', csl: 'zotero' }[mode]
-
   extra = extra || ''
 
   const extraFields: Fields = {
@@ -134,23 +132,20 @@ export function get(extra: string, mode: 'zotero' | 'csl', options?: GetOptions)
       return false
     }
 
-    if (options.kv && key !== 'citation key' && (ef = mapping[key]) && !tex) {
-      for (const field of (ef[mode] || ef[other])) {
-        switch (ef.type) {
-          case 'name':
-            extraFields.creator[field] = extraFields.creator[field] || []
-            extraFields.creator[field].push(value)
-            extraFields.creators.push({ name: value, type: field })
-            break
-          case 'text':
-          case 'date':
-            extraFields.kv[field] = value
-            break
-          default:
-            throw new Error(`Unexpected extra field type ${ ef.type }`)
-        }
+    if (options.kv && key !== 'citation key' && (!tex && (ef = ItemType.labeled(key)))) {
+      switch (ef.type) {
+        case 'name':
+          extraFields.creator[ef.creator] ??= []
+          extraFields.creator[ef.creator].push(value)
+          extraFields.creators.push({ name: value, type: ef.creator })
+          break
+        case 'text':
+        case 'date':
+          extraFields.kv[ef.field] = value
+          break
+        default:
+          throw new Error(`Unexpected extra field type ${ ef.type }`)
       }
-      return false
     }
 
     if (options.tex && tex && !key.includes(' ')) {

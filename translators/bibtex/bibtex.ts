@@ -694,10 +694,10 @@ class ZoteroItem {
   }
 
   private fallback(fields: string[], value: string): boolean {
-    const field = fields.reduce((acc: ItemType.Field, f: string) => (acc ?? ItemType.field(f)), null)
+    const field = fields.reduce((acc: ItemType.Field, f: string) => (acc ?? ItemType.labeled(f)), null)
     if (field) {
       if (typeof value === 'string') value = value.replace(/\n+/g, '')
-      this.extra.push(`${ field.extra }: ${ value }`)
+      this.extra.push(`${field.labels[0]}: ${ value }`)
       return true
     }
     return false
@@ -1357,8 +1357,8 @@ class ZoteroItem {
       && this.bibtex.fields.booktitle?.length
       && this.bibtex.fields.booktitle.match(/proceeding/i)) this.item.itemType = 'conferencePaper'
 
-    if (!ItemType.types.includes(this.item.itemType)) this.error(`import error: unexpected item ${ this.bibtex.key } of type ${ this.item.itemType }`)
-    this.validFields = ItemType.validFields(this.item.itemType)
+    this.validFields = ItemType.valid.fields[this.item.itemType]
+    if (!this.validFields) this.error(`import error: unexpected item ${ this.bibtex.key } of type ${ this.item.itemType }`)
 
     if (!this.bibtex.fields.type) {
       switch (this.bibtex.type) {
@@ -1563,7 +1563,7 @@ class ZoteroItem {
             else {
               const alternate = ItemType.field(field)
               if (alternate) {
-                this.extra.push(`${alternate.extra}: ${value}`)
+                this.extra.push(`${alternate.labels[0]}: ${value}`)
               }
               else {
                 this.extra.push(`tex.${ field.match(/[:=]/) ? `"${ field }"` : field }: ${ value }`)

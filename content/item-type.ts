@@ -1,9 +1,3 @@
-import loki, { Collection } from 'lokijs'
-loki.LokiOps.$eqi = (a, b) => {
-  if (typeof a !== 'string' || typeof b != 'string') return false
-  return a.toLowerCase() === b.toLowerCase()
-}
-
 import schema from '../submodules/zotero/resource/schema/global/schema.json' with { type: 'json' }
 export const Schema = schema
 import { Serialized } from '../gen/typings/serialized'
@@ -11,29 +5,25 @@ import { Serialized } from '../gen/typings/serialized'
 // eslint-disable-next-line @typescript-eslint/no-namespace
 export namespace ItemType {
   export type Field = {
+    type: 'date' | 'text'
+
     itemType: string
     field: string
-    baseField: string | null
-    date: boolean
-    label: string
-    extra: string
+    baseField: string
+
+    csl: string[]
+
+    labels: string[]
   }
 
   export type Creator = {
+    type: 'name'
+
     itemType: string
     creator: string
     primary: boolean
-    // label: string
-    // extra: string
-  }
-}
-
-// eslint-disable-next-line @typescript-eslint/no-namespace
-export namespace CSL {
-  export type Mapping = {
-    csl: string
-    zotero: string
-    // extra: string
+    csl: string[]
+    labels: string[]
   }
 }
 
@@ -51,99 +41,137 @@ function unalias(item: Serialized.Item, scrub = true) {
   }
 }
 
+function uniq(list: string[]): string[] {
+  return [...(new Set(list.filter(_ => _)))]
+}
 export const ItemType = new class $ItemType { // eslint-disable-line no-redeclare
-  public db = new loki('schema')
-  public fields: Collection<ItemType.Field>
-  public creators: Collection<ItemType.Creator>
-  public types: string[] = Object.keys(schema.itemTypes)
+  public schema = {
+    fields: [] as ItemType.Field[],
+    creators: [] as ItemType.Creator[],
+  }
+  public lookup = {
+    type: {} as Record<string, string>,
+    field: {} as Record<string, string>,
+    creator: {} as Record<string, string>,
+  }
+  public labeled: (name: string) => ItemType.Field | ItemType.Creator
 
-  public csl: { types: Collection<CSL.Mapping>; fields: Collection<CSL.Mapping>; creators: Collection<CSL.Mapping> }
-
-  #validFields: Record<string, Record<string, boolean>> = {}
+  public valid = {
+    fields: {} as Record<string, Record<string, boolean>>,
+    creators: {} as Record<string, Record<string, boolean>>,
+  }
 
   constructor() {
-    this.fields = this.db.addCollection<ItemType.Field>('fields', { indices: ['itemType', 'field', 'baseField'] })
-    this.creators = this.db.addCollection<ItemType.Creator>('creators', { indices: ['itemType', 'creator', 'primary'] })
-    this.csl = {
-      types: this.db.addCollection<CSL.Mapping>('csl.types', { indices: ['csl', 'zotero'] }),
-      fields: this.db.addCollection<CSL.Mapping>('csl.types', { indices: ['csl', 'zotero'] }),
-      creators: this.db.addCollection<CSL.Mapping>('csl.types', { indices: ['csl', 'zotero'] }),
+    this.labeled = (name: string): ItemType.Field | ItemType.Creator => {
+      name = name.toLowerCase()
+      return this.schema.fields.find(_ => _.labels.includes(name)) || this.schema.creators.find(_ => _.labels.includes(name))
     }
 
     const date: Record<string, boolean> = Object.entries(schema.meta.fields)
       .reduce((acc, [ field, meta ]) => ({ ...acc, [field]: meta.type === 'date' }), { accessDate: true } as Record<string, boolean>)
 
+    const cslmap: Record<string, string[]> = {}
+    for (const [csl, zoteros] of Object.entries(schema.csl.fields.text)) {
+      for (const zotero of zoteros) {
+        this.lookup.field[csl.toLowerCase()] = zotero
+        cslmap[zotero] ??= []
+        cslmap[zotero].push(csl)
+        if (csl === 'event-place') {
+          cslmap.eventPlace ??= []
+          cslmap.eventPlace.push(csl)
+        }
+      }
+    }
+    for (const [csl, zotero] of Object.entries(schema.csl.fields.date)) {
+      cslmap[zotero] ??= []
+      cslmap[zotero].push(csl)
+      this.lookup.field[csl.toLowerCase()] = zotero
+    }
+
+    for (const [zotero, csl] of Object.entries(schema.csl.names)) {
+      cslmap[zotero] ??= []
+      cslmap[zotero].push(csl)
+      this.lookup.field[csl.toLowerCase()] = zotero
+    }
+
     for (const itemType of schema.itemTypes) {
+      this.valid.fields[itemType.itemType] = {}
+      this.lookup.type[itemType.itemType.toLowerCase()] = itemType.itemType
+
       for (const { field, baseField } of itemType.fields) {
-        this.fields.insert({
+        this.valid.fields[itemType.itemType][field] = true
+        this.valid.fields[itemType.itemType][baseField || field] = true
+
+        this.lookup.field[field.toLowerCase()] = field
+        this.lookup.field[(baseField || field).toLowerCase()] = baseField || field
+
+        const csl = uniq([...(cslmap[field] || []), ...(cslmap[baseField] || [])])
+        this.schema.fields.push({
+          type: date[field] || date[baseField] ? 'date' : 'text',
+
           itemType: itemType.itemType,
           field,
-          baseField: baseField || null,
-          date: date[field] || date[baseField] || false,
-          label: schema.locales['en-US'].fields[field || baseField],
-          extra: this.extra(field),
+          baseField: baseField || '',
+          csl,
+          labels: uniq([
+            this.toLabel(field),
+            field,
+            this.toLabel(baseField),
+            baseField,
+            schema.locales['en-US'].fields[field],
+            schema.locales['en-US'].fields[baseField],
+            ...csl,
+            ...(csl.map(l => this.toLabel(l))),
+          ]).map(_ => _.toLowerCase()),
         })
       }
 
       for (const { creatorType, primary } of itemType.creatorTypes) {
-        this.creators.insert({
+        this.valid.creators[creatorType] = {}
+        this.lookup.creator[creatorType.toLowerCase()] = creatorType
+
+        this.schema.creators.push({
+          type: 'name',
+
           itemType: itemType.itemType,
           creator: creatorType,
           primary: !!primary,
-          // label: schema.locales['en-US'].creatorTypes[creatorType],
+          csl: cslmap[creatorType] || [],
+          labels: uniq([
+            this.toLabel(creatorType),
+            creatorType,
+            schema.locales['en-US'].creatorTypes[creatorType],
+            ...((cslmap[creatorType] || []).map(l => this.toLabel(l))),
+          ]).map(_ => _.toLowerCase()),
         })
       }
     }
 
+    /*
     for (const [ csl, zoteroTypes ] of Object.entries(schema.csl.types)) {
       for (const zotero of zoteroTypes) {
         this.csl.types.insert({ csl, zotero })
       }
     }
-
-    for (const kind of ['text', 'date']) {
-      // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
-      for (const [ csl, zoteroFields ] of Object.entries(schema.csl.fields[kind]) as [ string, string[] ][]) {
-        for (const zotero of zoteroFields) {
-          this.csl.fields.insert({ csl, zotero })
-        }
-      }
-    }
-    for (const [ zotero, csl ] of Object.entries(schema.csl.names)) {
-      this.csl.creators.insert({ csl, zotero })
-    }
-
-    this.fields.ensureAllIndexes(true)
-    this.creators.ensureAllIndexes(true)
-    this.csl.types.ensureAllIndexes(true)
-    this.csl.fields.ensureAllIndexes(true)
-    this.csl.creators.ensureAllIndexes(true)
+    */
   }
 
-  public field(field: string, itemType?: string): ItemType.Field {
-    const q = { $or: [ { field: { $eqi: field } }, { baseField: { $eqi: field } } ] }
-    // @ts-expect-error TS2339
-    if (itemType) q.itemType = itemType
-    return this.fields.findOne({ $or: [ { field: { $eqi: field } }, { baseField: { $eqi: field } } ] })
+  public field(field: string, itemType = ''): ItemType.Field {
+    field = this.lookup.field[field.toLowerCase()] || field
+    itemType = this.lookup.type[itemType.toLowerCase()] || itemType
+    return this.schema.fields.find(f => (f.field === field || f.baseField === field) && (!itemType || (itemType === f.itemType)))
   }
 
-  private extra(name: string): string {
-    return name.replace(/[A-Z]/, c => ` ${c.toLowerCase()}`).replace(/^./, c => c.toUpperCase())
+  public typeOf(fieldName: string): 'date' | 'name' | 'text' {
+    return (this.schema.fields.find(_ => _.field === fieldName || _.baseField === fieldName) || this.schema.creators.find(_ => _.creator === fieldName))?.type
   }
 
-  validFields(itemType: string) {
-    if (!this.#validFields[itemType]) {
-      const fields = this.fields.find({ itemType })
-      if (!fields.length) throw new Error(`unexpected item type ${JSON.stringify(itemType)}`)
-
-      this.#validFields[itemType] = {}
-      for (const field of fields) {
-        this.#validFields[itemType][field.field] = true
-        if (field.baseField) this.#validFields[itemType][field.baseField] = true
-      }
-    }
-
-    return this.#validFields[itemType]
+  public toLabel(name: string): string {
+    if (!name) return ''
+    return name
+      .replace(/[-_]/g, ' ')
+      .replace(/([a-z])([A-Z])/g, '$1 $2')
+      .replace(/^./, c => c.toUpperCase())
   }
 
   // import & export translators expect different creator formats... nice

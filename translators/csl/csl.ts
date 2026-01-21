@@ -5,7 +5,6 @@ import { Translation } from '../lib/translator'
 import { ItemType } from '../../content/item-type'
 import { Fields as ParsedExtraFields, get as getExtra, cslCreator } from '../../content/extra'
 import type { ExportedItem } from '../../content/worker/cache'
-import ExtraFields from '../../gen/items/extra-fields.json' with { type: 'json' }
 import { log } from '../../content/logger'
 import { Serialized } from '../../gen/typings/serialized'
 import * as postscript from '../lib/postscript'
@@ -125,50 +124,45 @@ export abstract class CSLExporter {
         delete item.extraFields.kv.type
       }
 
-      for (const [ name, value ] of Object.entries(item.extraFields.kv)) {
+      for (const [ fieldName, value ] of Object.entries(item.extraFields.kv)) {
         if (!value) continue
 
-        const cslField = CSLField[name]
-        if (cslField) {
-          if (cslField.type === 'string' && cslField.enum?.includes(value)) {
-            csl[name] = value
-            delete item.extraFields.kv[name]
-            continue
-          }
-          if (cslField.$ref === '#/definitions/date-variable') {
-            csl[name] = this.date2CSL(dateparser.parse(value))
-            delete item.extraFields.kv[name]
-            continue
-          }
-          if (cslField.type === 'string' || (Array.isArray(cslField.type) || cslField.type.join(',') === 'number,string')) {
-            csl[name] = value
-            delete item.extraFields.kv[name]
-            continue
-          }
-        }
+        const cslField = CSLField[fieldName]
+        const zoteroField = ItemType.labeled(fieldName)
+        const cslDerivedField = zoteroField?.csl[0]
 
-        const ef = ExtraFields[name]
-        if (!ef?.csl) continue
-
-        if (ef.type === 'date') {
-          csl[name] = this.date2CSL(dateparser.parse(value))
+        if (cslField?.type === 'string' && cslField.enum?.includes(value)) {
+          csl[fieldName] = value
         }
-        else if (name === 'csl-type') {
+        else if (cslField?.$ref === '#/definitions/date-variable') {
+          csl[fieldName] = this.date2CSL(dateparser.parse(value))
+        }
+        else if (cslField?.type === 'string' || (Array.isArray(cslField.type) || cslField.type.join(',') === 'number,string')) {
+          csl[fieldName] = value
+        }
+        else if (fieldName === 'csl-type') {
           if (!CSLField.type.enum.includes(value)) continue // and keep the kv variable, maybe for postscripting
           csl.type = value
         }
-        else if (!csl[name]) {
-          csl[name] = value
+        else if (!cslDerivedField) {
+          continue // skip out of the loop, keep the kv-var
+        }
+        else if (zoteroField.type === 'date') {
+          csl[cslDerivedField] = this.date2CSL(dateparser.parse(value))
+        }
+        else if (!csl[cslDerivedField]) {
+          csl[cslDerivedField] = value
         }
 
-        delete item.extraFields.kv[name]
+        delete item.extraFields.kv[fieldName]
       }
 
-      for (const [ field, value ] of Object.entries(item.extraFields.creator)) {
-        if (!ExtraFields[field].csl) continue
-        csl[field] = value.map(cslCreator)
-
-        delete item.extraFields.creator[field]
+      for (const [ fieldName, value ] of Object.entries(item.extraFields.creator)) {
+        const field = ItemType.labeled(fieldName)
+        if (field?.csl.length) {
+          csl[field.csl[0]] = value.map(cslCreator)
+          delete item.extraFields.creator[fieldName]
+        }
       }
 
       /* Juris-M workarounds to match Zotero as close as possible */
