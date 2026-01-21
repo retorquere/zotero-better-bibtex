@@ -104,6 +104,7 @@ export function get(extra: string, mode: 'zotero' | 'csl', options?: GetOptions)
     key = key.trim()
     value = value.trim()
     extraFields.raw[key.toLowerCase()] = value
+
     if (tex) {
       key = key.toLowerCase()
     }
@@ -138,13 +139,12 @@ export function get(extra: string, mode: 'zotero' | 'csl', options?: GetOptions)
           extraFields.creator[ef.creator] ??= []
           extraFields.creator[ef.creator].push(value)
           extraFields.creators.push({ name: value, type: ef.creator })
-          break
+          return false
+
         case 'text':
         case 'date':
           extraFields.kv[ef.field] = value
-          break
-        default:
-          throw new Error(`Unexpected extra field type ${ ef.type }`)
+          return false
       }
     }
 
