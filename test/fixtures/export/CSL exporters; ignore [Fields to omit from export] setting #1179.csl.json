@@ -170,7 +170,6 @@
         "given": "Lawrence"
       }
     ],
-    "event-place": "London, United Kingdom",
     "id": "duncan2002",
     "issued": {
       "date-parts": [
@@ -245,7 +244,6 @@
         "given": "Paul"
       }
     ],
-    "event-place": "New York, NY",
     "id": "grady2004",
     "issued": {
       "date-parts": [
@@ -436,7 +434,6 @@
         "given": "Paul"
       }
     ],
-    "event-place": "New York, NY",
     "id": "knowles2004",
     "issued": {
       "date-parts": [
@@ -725,7 +722,6 @@
     ],
     "citation-key": "pink2013",
     "edition": "3",
-    "event-place": "London, United Kingdom",
     "id": "pink2013",
     "issued": {
       "date-parts": [
@@ -759,7 +755,6 @@
         "given": "Christopher J."
       }
     ],
-    "event-place": "Bingley, United Kingdom",
     "id": "pole2004",
     "issued": {
       "date-parts": [

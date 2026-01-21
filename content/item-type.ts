@@ -105,10 +105,6 @@ export const ItemType = new class $ItemType { // eslint-disable-line no-redeclar
       for (const zotero of zoteros) {
         cslmap.fields[zotero] ??= []
         cslmap.fields[zotero].push(csl)
-        if (csl === 'event-place') {
-          cslmap.fields.eventPlace ??= []
-          cslmap.fields.eventPlace.push(csl)
-        }
       }
     }
     for (const [csl, zotero] of Object.entries(schema.csl.fields.date)) {
