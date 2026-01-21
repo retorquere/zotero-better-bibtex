@@ -1577,7 +1577,8 @@ export class Entry {
     for (const [ prop, value, valueish ] of unused_props) {
       if (prop === 'language' && this.has.langid) continue
       if (prop === 'libraryCatalog' && valueish.includes('arxiv') && this.item.arXiv) continue
-      report.push(`? unused ${ ItemType.field(prop)?.extra || prop } ("${ value }")`)
+      log.debug('3250:', { prop, field: ItemType.field(prop), label: ItemType.toLabel(prop) })
+      report.push(`? unused ${ ItemType.field(prop)?.extra || ItemType.toLabel(prop) } ("${ value }")`)
     }
 
     if (!report.length) return ''
