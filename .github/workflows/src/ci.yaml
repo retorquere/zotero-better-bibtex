@@ -36,7 +36,7 @@ _anchors:
     with:
       persist-credentials: false
       fetch-depth: 1
-      submodules: true
+      submodules: recursive
 
 jobs:
   build:
