@@ -294,6 +294,8 @@ class Item {
     this.itemKey = this.key = item.key
     this.itemType = Zotero.ItemTypes.getName(item.itemTypeID)
     this.getField = function(name: string): string | number {
+      if (!name) return ''
+
       switch (name) {
         case 'dateAdded':
         case 'dateModified':
@@ -552,10 +554,10 @@ export class PatternFormatter {
    * @param name name of the field
    */
   public $field(name: Serialized.FieldName): string {
-    const field = ItemType.field(name)?.field
+    const field = ItemType.field(name, this.item.itemType) || ItemType.field(name)
     if (!field) throw new Error(`Unknown item field ${ name }`)
 
-    const value = this.item.getField(field)
+    const value = this.item.getField(field.baseField) || this.item.getField(field.field)
     switch (typeof value) {
       case 'number':
         return `${value}`
