@@ -143,7 +143,7 @@ export function get(extra: string, mode: 'zotero' | 'csl', options?: GetOptions)
 
         case 'text':
         case 'date':
-          extraFields.kv[ef.field] = value
+          extraFields.kv[ef.baseField || ef.field] = value
           return false
       }
     }
