@@ -35,7 +35,7 @@ import * as postscript from '../lib/postscript'
 
 import { replace_command_spacers } from './unicode_translator'
 import { datefield } from './datefield'
-import { ItemType } from '../../content/item-type'
+import { Schema, ItemType } from '../../content/item-type'
 import type { Fields as ParsedExtraFields, TeXString } from '../../content/extra'
 import { zoteroCreator as ExtraZoteroCreator } from '../../content/extra'
 import { log } from '../../content/logger'
@@ -129,7 +129,7 @@ const fieldOrder = [
   return acc
 }, {})
 
-function property_sort(a: [string, string, string], b: [string, string, string]): number {
+function property_sort(a: [string, string, string, string], b: [string, string, string, string]): number {
   return stringCompare(a[0], b[0])
 }
 
@@ -1569,17 +1569,16 @@ export class Entry {
       'uri',
       'version',
     ]
-    const unused_props = Object.entries(this.item.extraFields.kv).map(([ p, v ]) => [ `extra: ${ ItemType.field(p)?.extra || p }`, v ])
-      .concat(Object.entries(this.item))
-      .map(([ p, v ]: [ string, string ]) => [ p, v, this.valueish(v) ] as [ string, string, string ])
-      .filter(([ p, v, vi ]) => !ignore_unused_props.includes(p) && !used_values.includes(v) && (vi && !used_values.includes(vi)))
+    const unused_data = Object.entries(this.item.extraFields.kv).map(([ k, v ]) => [ '', `extra: ${k}`, v ])
+      .concat(Object.entries(this.item).map(([ k, v ]) => [ k, Schema.locales['en-US'].fields[k]?.replace(/ [A-Z]/g, c => c.toLowerCase()) || ItemType.toLabel(k), v ]))
+      .map(([ k, label, v ]: [ string, string, string ]) => [ k, label, v, this.valueish(v) ] as [ string, string, string, string ])
+      .filter(([ k, _label, v, vi ]) => !ignore_unused_props.includes(k) && !used_values.includes(v) && (vi && !used_values.includes(vi)))
       .sort(property_sort)
 
-    for (const [ prop, value, valueish ] of unused_props) {
-      if (prop === 'language' && this.has.langid) continue
-      if (prop === 'libraryCatalog' && valueish.includes('arxiv') && this.item.arXiv) continue
-      log.debug('3250:', { prop, field: ItemType.field(prop), label: ItemType.toLabel(prop) })
-      report.push(`? unused ${ ItemType.field(prop)?.extra || ItemType.toLabel(prop) } ("${ value }")`)
+    for (const [ key, label, value, valueish ] of unused_data) {
+      if (key === 'language' && this.has.langid) continue
+      if (key === 'libraryCatalog' && valueish.includes('arxiv') && this.item.arXiv) continue
+      report.push(`? unused ${label} (${JSON.stringify(value)})`)
     }
 
     if (!report.length) return ''
