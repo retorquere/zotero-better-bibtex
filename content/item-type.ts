@@ -177,6 +177,7 @@ export const ItemType = new class $ItemType { // eslint-disable-line no-redeclar
     return name
       .replace(/[-_]/g, ' ')
       .replace(/([a-z])([A-Z])/g, '$1 $2')
+      .toLowerCase()
       .replace(/^./, c => c.toUpperCase())
   }
 
