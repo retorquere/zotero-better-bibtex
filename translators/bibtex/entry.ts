@@ -324,7 +324,7 @@ export class Entry {
     }
 
     for (let [ creatorType, values ] of Object.entries(item.extraFields.creator)) {
-      creatorType = ItemType.lookup[creatorType] // might be CSL or Zotero
+      creatorType = ItemType.lookup.creator[creatorType] // might be CSL or Zotero
       if (creatorType) {
         for (const creator of (values as string[])) {
           item.creators.push({ ...ExtraZoteroCreator(creator, creatorType), source: creator })
