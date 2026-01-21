@@ -121,6 +121,9 @@ export const ItemType = new class $ItemType { // eslint-disable-line no-redeclar
       cslmap.names[zotero].push(csl)
     }
 
+    const extra = {
+      numPages: ['Number of pages'],
+    }
     for (const itemType of schema.itemTypes) {
       this.lookup.type[itemType.itemType] = itemType.itemType
 
@@ -139,7 +142,7 @@ export const ItemType = new class $ItemType { // eslint-disable-line no-redeclar
           field,
           baseField: baseField || '',
           csl,
-          extra: this.toLabel(baseField || field),
+          extra: extra[field] || this.toLabel(baseField || field),
           labels: uniq([
             this.toLabel(field),
             field,
@@ -149,6 +152,7 @@ export const ItemType = new class $ItemType { // eslint-disable-line no-redeclar
             schema.locales['en-US'].fields[baseField],
             ...csl,
             ...(csl.map(l => this.toLabel(l))),
+            ...(extra[field] || []),
           ]).map(_ => _.toLowerCase()),
         })
       }
@@ -193,7 +197,7 @@ export const ItemType = new class $ItemType { // eslint-disable-line no-redeclar
     return (this.schema.fields.find(_ => _.field === fieldName || _.baseField === fieldName) || this.schema.creators.find(_ => _.creator === fieldName))?.type
   }
 
-  public toLabel(name: string): string {
+  public toLabel(name: strin): string {
     if (!name) return ''
     return name
       .replace(/[-_]/g, ' ')
