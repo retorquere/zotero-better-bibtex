@@ -117,7 +117,7 @@ export const ItemType = new class $ItemType { // eslint-disable-line no-redeclar
           field,
           baseField: baseField || '',
           csl,
-          extra: this.toLabel(field),
+          extra: this.toLabel(baseField || field),
           labels: uniq([
             this.toLabel(field),
             field,
