@@ -58,7 +58,7 @@ jobs:
     - *install_python_packages
     - *install_node
     - *install_node_packages
-    - name: set slow/beta/whopper flags
+    - name: set slow/beta/legacy/whopper flags
       run: ./util/action-flags
       env:
         GITHUB_CONTEXT: ${{ toJson(github) }}

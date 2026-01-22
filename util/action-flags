@@ -19,6 +19,7 @@ if github.event_name == 'push':
     flags.add('slow')
     flags.add('beta')
     flags.add('whopper')
+    flags.add('legacy')
   else:
     print('debug build')
 #  elif os.path.isfile('beta.txt'):
@@ -33,6 +34,7 @@ if github.event_name == 'schedule': # nightlies
   flags.add('slow')
   flags.add('beta')
   flags.add('whopper')
+  flags.add('legacy')
 
 print('workflow flags =', flags)
 
