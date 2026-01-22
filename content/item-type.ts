@@ -11,7 +11,7 @@ export namespace ItemType {
     field: string
     baseField: string
 
-    csl: string[]
+    csl: string
 
     extra: string
     labels: string[]
@@ -24,7 +24,7 @@ export namespace ItemType {
     creator: string
     primary: boolean
 
-    csl: string[]
+    csl: string
 
     extra: string
     labels: string[]
@@ -84,7 +84,7 @@ export const ItemType = new class $ItemType { // eslint-disable-line no-redeclar
     field: LookUp(),
     creator: LookUp(),
   }
-  public labeled: (name: string) => ItemType.Field | ItemType.Creator
+  public labeled: (name: string, hasCSL?: boolean) => ItemType.Field | ItemType.Creator
 
   public valid = {
     fields: {} as Record<string, Record<string, boolean>>,
@@ -92,23 +92,34 @@ export const ItemType = new class $ItemType { // eslint-disable-line no-redeclar
   }
 
   constructor() {
-    if (!schema.itemTypes.find(itemType => itemType.fields.find(field => field.field === 'eventDate'))) {
-      // not sure how this ended up in the test suite
-      schema.itemTypes.find(itemType => itemType.itemType === 'conferencePaper').fields.push({ field: 'eventDate', baseField: 'date' })
+    const cslmap = {
+      fields: ({} as Record<string, string[]>),
+      names: ({} as Record<string, string[]>),
     }
 
-    this.labeled = (name: string): ItemType.Field | ItemType.Creator => {
+    if (!schema.itemTypes.find(itemType => itemType.fields.find(field => field.field === 'eventDate'))) {
+      // not sure how this ended up in the test suite
+      schema.itemTypes.find(itemType => itemType.itemType === 'conferencePaper').fields.push({ field: 'eventDate' })
+      cslmap.fields.eventDate = [ 'event-date' ]
+    }
+
+    this.labeled = (name: string, hasCSL?: boolean): ItemType.Field | ItemType.Creator => {
       name = name.toLowerCase().replace(/[^a-z]/g, '')
-      dump(`2015: ${JSON.stringify(this.schema)}\n`)
-      return this.schema.fields.find(_ => _.labels.includes(name)) || this.schema.creators.find(_ => _.labels.includes(name))
+      const match = (f: ItemType.Field | ItemType.Creator) => (!hasCSL || f.csl) && f.labels.includes(name)
+      return this.schema.fields.find(match) || this.schema.creators.find(match)
     }
 
     const date: Record<string, boolean> = Object.entries(schema.meta.fields)
       .reduce((acc, [ field, meta ]) => ({ ...acc, [field]: meta.type === 'date' }), { accessDate: true } as Record<string, boolean>)
 
-    const cslmap = {
-      fields: ({} as Record<string, string[]>),
-      names: ({} as Record<string, string[]>),
+    const cslSort = (a: string, b: string) => {
+      const aDash = a.includes('-')
+      const bDash = b.includes('-')
+
+      if (aDash && !bDash) return -1
+      if (!aDash && bDash) return 1
+
+      return a.localeCompare(b)
     }
 
     for (const [csl, zoteros] of Object.entries(schema.csl.fields.text)) {
@@ -139,14 +150,14 @@ export const ItemType = new class $ItemType { // eslint-disable-line no-redeclar
 
         this.lookup.field[field] = this.lookup.field[baseField || field] = baseField || field
 
-        const csl = uniq([...(cslmap.fields[field] || []), ...(cslmap.fields[baseField] || [])])
+        const csl = uniq([...(cslmap.fields[field] || []), ...(cslmap.fields[baseField] || [])]).sort(cslSort)
         this.schema.fields.push({
           type: date[field] || date[baseField] ? 'date' : 'text',
 
           itemType: itemType.itemType,
           field,
           baseField: baseField || '',
-          csl,
+          csl: csl[0] || '',
           extra: this.#extra[field] || this.toLabel(baseField || field),
           labels: labels([
             field,
@@ -164,14 +175,14 @@ export const ItemType = new class $ItemType { // eslint-disable-line no-redeclar
         this.valid.creators[itemType.itemType][creatorType] = true
         this.lookup.creator[creatorType] = creatorType
 
-        const csl = cslmap.names[creatorType] || []
+        const csl = (cslmap.names[creatorType] || []).sort(cslSort)
         this.schema.creators.push({
           type: 'name',
 
           itemType: itemType.itemType,
           creator: creatorType,
           primary: !!primary,
-          csl,
+          csl: csl[0] || '',
           extra: this.toLabel(creatorType),
           labels: labels([
             creatorType,
@@ -187,6 +198,17 @@ export const ItemType = new class $ItemType { // eslint-disable-line no-redeclar
         this.lookup.field[csl] ??= this.lookup.field[zotero]
       }
     }
+
+    const cslduplicates = uniq([
+      ...Object.values(cslmap.fields).map(f => f.join(',')),
+      ...Object.values(cslmap.names).map(f => f.join(',')),
+    ])
+      .filter(f => f.includes(','))
+    if (cslduplicates.length) {
+      dump(`csl duplicates: ${JSON.stringify(cslduplicates)}\n`)
+    }
+
+    dump(`item-type: ${JSON.stringify(this.schema, null, 2)}\n`)
   }
 
   public field(field: string, itemType = ''): ItemType.Field {

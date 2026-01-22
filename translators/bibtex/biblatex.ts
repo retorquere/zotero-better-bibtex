@@ -540,7 +540,7 @@ export function generateBibLaTeX(collected: Collected): Translation {
     entry.add({ name: 'origdate', value: item.originalDate, enc: 'date', replace: true })
 
     // @ts-expect-error jurism
-    entry.add({ name: 'eventdate', value: item.conferenceDate, enc: 'date' })
+    entry.add({ name: 'eventdate', value: item.conferenceDate || item.eventDate, enc: 'date' })
 
     entry.add({ name: 'pages', value: entry.normalizeDashes(item.pages) })
     entry.add({ name: 'volume', value: entry.normalizeDashes(item.volume) })

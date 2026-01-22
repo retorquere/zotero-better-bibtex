@@ -129,31 +129,28 @@ export abstract class CSLExporter {
       for (const [ fieldName, value ] of Object.entries(item.extraFields.kv)) {
         if (!value) continue
 
-        const cslField = CSLField[fieldName] || {}
-        const zoteroField = ItemType.labeled(fieldName) || ({ csl: [] } as unknown as ItemType.Field)
-        const cslDerivedField = zoteroField.csl[0]
+        const cslField = ItemType.labeled(fieldName, true)?.csl
+        const cslMeta = CSLField[cslField || fieldName] || {}
+        dump(`811: ${JSON.stringify({ fieldName, cslField, value })}\n`)
 
-        if (cslField.type === 'string' && cslField.enum?.includes(value)) {
-          csl[fieldName] = value
+        if (cslMeta.type === 'string' && cslMeta.enum?.includes(value)) {
+          csl[cslField] = value
         }
-        else if (cslField.$ref === '#/definitions/date-variable') {
-          csl[fieldName] = this.date2CSL(dateparser.parse(value))
+        else if (cslMeta.$ref === '#/definitions/date-variable') {
+          csl[cslField] = this.date2CSL(dateparser.parse(value))
         }
-        else if (cslField.type === 'string' || (Array.isArray(cslField.type) && cslField.type.join(',') === 'number,string')) {
-          csl[fieldName] = value
+        else if (cslMeta.type === 'string' || (Array.isArray(cslMeta.type) && cslMeta.type.join(',') === 'number,string')) {
+          csl[cslField] = value
         }
         else if (fieldName === 'csl-type') {
-          if (!CSLField.type.enum.includes(value)) continue // and keep the kv variable, maybe for postscripting
+          if (!cslMeta.type.enum.includes(value)) continue // and keep the kv variable, maybe for postscripting
           csl.type = value
         }
-        else if (!cslDerivedField) {
+        else if (!cslField) {
           continue // skip out of the loop, keep the kv-var
         }
-        else if (zoteroField.type === 'date') {
-          csl[cslDerivedField] = this.date2CSL(dateparser.parse(value))
-        }
-        else if (!csl[cslDerivedField]) {
-          csl[cslDerivedField] = value
+        else if (!csl[cslField]) {
+          csl[cslField] = value
         }
 
         delete item.extraFields.kv[fieldName]
@@ -163,8 +160,8 @@ export abstract class CSLExporter {
       for (const [ fieldName, value ] of Object.entries(item.extraFields.creator)) {
         const field = ItemType.labeled(fieldName)
         dump(`2015: ${fieldName} => ${JSON.stringify(field)}\n`)
-        if (field?.csl.length) {
-          csl[field.csl[0]] = value.map(cslCreator)
+        if (field?.csl) {
+          csl[field.csl] = value.map(cslCreator)
           delete item.extraFields.creator[fieldName]
         }
       }
