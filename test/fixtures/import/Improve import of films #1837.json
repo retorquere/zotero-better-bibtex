@@ -2,118 +2,242 @@
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
+    "preferences": {
+      "ascii": "",
+      "asciiBibLaTeX": false,
+      "asciiBibTeX": true,
+      "autoAbbrev": false,
+      "autoExport": "immediate",
+      "autoExportDelay": 5,
+      "autoExportIdleWait": 10,
+      "autoExportPathReplaceDiacritics": false,
+      "autoExportPathReplaceDirSep": "-",
+      "autoExportPathReplaceSpace": " ",
+      "automaticTags": true,
+      "autoPinDelay": 0,
+      "auxImport": false,
+      "baseAttachmentPath": "",
+      "biblatexExtendedDateFormat": true,
+      "biblatexExtendedNameFormat": true,
+      "biblatexExtractEprint": true,
+      "biblatexUsePrefix": true,
+      "bibtexEditionOrdinal": false,
+      "bibtexParticleNoOp": false,
+      "bibtexURL": "off",
+      "cache": true,
+      "cacheDelete": false,
+      "charmap": "",
+      "chinese": false,
+      "chineseSplitName": true,
+      "citeCommand": "cite",
+      "citekeyCaseInsensitive": true,
+      "citekeyFold": true,
+      "citekeyFormat": "auth + year",
+      "citekeySearch": true,
+      "citekeyUnsafeChars": "\\\"#%'(),={}~",
+      "csquotes": "",
+      "DOIandURL": "both",
+      "exportBibTeXStrings": "off",
+      "exportBraceProtection": true,
+      "exportSort": "citekey",
+      "exportTitleCase": true,
+      "extraMergeCitekeys": false,
+      "extraMergeCSL": false,
+      "extraMergeTeX": false,
+      "git": "config",
+      "import": true,
+      "importBibTeXStrings": true,
+      "importCaseProtection": "as-needed",
+      "importCitationKey": true,
+      "importDetectURLs": true,
+      "importExtra": true,
+      "importJabRefAbbreviations": true,
+      "importJabRefStrings": true,
+      "importNoteToExtra": "",
+      "importPlaceEvent": "inproceedings,conference,presentation,talk",
+      "importSentenceCase": "on+guess",
+      "importSentenceCaseQuoted": true,
+      "importUnknownTexCommand": "ignore",
+      "itemObserverDelay": 5,
+      "jabrefFormat": 0,
+      "japanese": false,
+      "keyConflictPolicy": "keep",
+      "keyScope": "library",
+      "language": "langid",
+      "mapMath": "",
+      "mapText": "",
+      "packages": "",
+      "parseParticles": true,
+      "patchDates": "dateadded=dateAdded, date-added=dateAdded, datemodified=dateModified, date-modified=dateModified",
+      "postscript": "",
+      "postscriptOverride": "",
+      "preferencesOverride": "",
+      "qualityReport": false,
+      "quickCopyEta": "",
+      "quickCopyMode": "latex",
+      "quickCopyOrgMode": "zotero",
+      "quickCopyPandocBrackets": false,
+      "quickCopySelectLink": "zotero",
+      "rawImports": false,
+      "rawLaTag": "#LaTeX",
+      "relativeFilePaths": false,
+      "separatorList": "and",
+      "separatorNames": "and",
+      "skipFields": "",
+      "skipWords": "a,ab,aboard,about,above,across,after,against,al,along,amid,among,an,and,anti,around,as,at,before,behind,below,beneath,beside,besides,between,beyond,but,by,d,da,das,de,del,dell,dello,dei,degli,della,dell,delle,dem,den,der,des,despite,die,do,down,du,during,ein,eine,einem,einen,einer,eines,el,en,et,except,for,from,gli,i,il,in,inside,into,is,l,la,las,le,les,like,lo,los,near,nor,of,off,on,onto,or,over,past,per,plus,round,save,since,so,some,sur,than,the,through,to,toward,towards,un,una,unas,under,underneath,une,unlike,uno,unos,until,up,upon,versus,via,von,while,with,within,without,yet,zu,zum",
+      "startupProgress": "popup",
+      "strings": "",
+      "stringsOverride": "",
+      "verbatimFields": "url,doi,file,pdf,ids,eprint,/^verb[a-z]$/,groups,/^citeulike-linkout-[0-9]+$/, /^bdsk-url-[0-9]+$/, keywords",
+      "warnBulkModify": 10,
+      "warnTitleCased": false
+    },
     "options": {
       "Items": true,
+      "Normalize": true,
       "Preferences": true,
-      "exportNotes": true
-    },
-    "preferences": {
-      "citekeyFormat": "auth + year"
+      "exportFileData": false,
+      "exportNotes": true,
+      "keepUpdated": false,
+      "worker": true
     }
   },
+  "version": {
+    "zotero": "7.0.32",
+    "bbt": "7.0.77.emile.macbookemiliano.fritz.box"
+  },
+  "collections": {},
   "items": [
     {
+      "key": "PDM74QFX",
+      "version": 0,
+      "itemType": "film",
+      "place": "US",
+      "date": "2014",
+      "extra": "Citation Key: Ball.W:2014a",
+      "title": "The maze runner",
       "citationKey": "Ball.W:2014a",
       "creators": [
         {
-          "creatorType": "director",
           "firstName": "Wes",
-          "lastName": "Ball"
+          "lastName": "Ball",
+          "creatorType": "director"
         },
         {
-          "creatorType": "scriptwriter",
           "firstName": "Noah",
-          "lastName": "Oppenheim"
+          "lastName": "Oppenheim",
+          "creatorType": "scriptwriter"
         },
         {
-          "creatorType": "scriptwriter",
           "firstName": "Grant Pierce",
-          "lastName": "Myers"
+          "lastName": "Myers",
+          "creatorType": "scriptwriter"
         },
         {
-          "creatorType": "scriptwriter",
           "firstName": "T.S.",
-          "lastName": "Nowlin"
+          "lastName": "Nowlin",
+          "creatorType": "scriptwriter"
         }
       ],
-      "date": "2014",
-      "extra": [
-        "Citation Key: Ball.W:2014a",
-        "Place: US"
-      ],
-      "itemID": 1,
-      "itemType": "film",
-      "title": "The maze runner"
+      "tags": [],
+      "relations": {},
+      "dateAdded": "2026-01-22T11:58:41Z",
+      "dateModified": "2026-01-22T11:58:41Z",
+      "uri": "http://zotero.org/users/8230813/items/PDM74QFX",
+      "itemID": 107,
+      "attachments": [],
+      "notes": [],
+      "itemKey": "PDM74QFX",
+      "libraryID": 1
     },
     {
+      "key": "BIS3VVNQ",
+      "version": 0,
+      "itemType": "film",
+      "place": "DE",
+      "date": "2011",
+      "extra": "Citation Key: Marka.S:2011movie\ntex.date-added: 2021-09-16 13:56:16 +0200\ntex.date-modified: 2021-09-16 13:56:52 +0200\ntex.read: 1",
+      "title": "Interview",
       "citationKey": "Marka.S:2011movie",
       "creators": [
         {
-          "creatorType": "director",
           "firstName": "Sebastiaan",
-          "lastName": "Marka"
+          "lastName": "Marka",
+          "creatorType": "director"
         }
       ],
-      "date": "2011",
-      "extra": [
-        "Citation Key: Marka.S:2011movie",
-        "Place: DE",
-        "tex.date-added: 2021-09-16 13:56:16 +0200",
-        "tex.date-modified: 2021-09-16 13:56:52 +0200",
-        "tex.read: 1"
-      ],
-      "itemID": 2,
-      "itemType": "film",
-      "title": "Interview"
+      "tags": [],
+      "relations": {},
+      "dateAdded": "2026-01-22T11:58:41Z",
+      "dateModified": "2026-01-22T11:58:41Z",
+      "uri": "http://zotero.org/users/8230813/items/BIS3VVNQ",
+      "itemID": 104,
+      "attachments": [],
+      "notes": [],
+      "itemKey": "BIS3VVNQ",
+      "libraryID": 1
     },
     {
+      "key": "ZUGT37KQ",
+      "version": 0,
+      "itemType": "videoRecording",
+      "place": "DE",
+      "date": "2011",
+      "extra": "Citation Key: Marka.S:2011video\ntex.date-added: 2020-09-16 13:56:16 +0200\ntex.date-modified: 2020-09-16 13:56:52 +0200\ntex.read: 1",
+      "title": "Interview",
       "citationKey": "Marka.S:2011video",
       "creators": [
         {
-          "creatorType": "director",
           "firstName": "Sebastian",
-          "lastName": "Marka"
+          "lastName": "Marka",
+          "creatorType": "director"
         }
       ],
-      "date": "2011",
-      "extra": [
-        "Citation Key: Marka.S:2011video",
-        "tex.date-added: 2020-09-16 13:56:16 +0200",
-        "tex.date-modified: 2020-09-16 13:56:52 +0200",
-        "tex.read: 1"
-      ],
-      "itemID": 3,
-      "itemType": "videoRecording",
-      "place": "DE",
-      "title": "Interview"
+      "tags": [],
+      "relations": {},
+      "dateAdded": "2026-01-22T11:58:41Z",
+      "dateModified": "2026-01-22T11:58:41Z",
+      "uri": "http://zotero.org/users/8230813/items/ZUGT37KQ",
+      "itemID": 105,
+      "attachments": [],
+      "notes": [],
+      "itemKey": "ZUGT37KQ",
+      "libraryID": 1
     },
     {
-      "citationKey": "Roy.O:2017a",
-      "creators": [
-        {
-          "creatorType": "author",
-          "firstName": "Olivier",
-          "lastName": "Roy"
-        },
-        {
-          "creatorType": "translator",
-          "firstName": "Cynthia",
-          "lastName": "Schoch"
-        }
-      ],
-      "date": "2017",
-      "extra": [
-        "Citation Key: Roy.O:2017a",
-        "Original Date: 2016",
-        "Original publisher place: Paris",
-        "Original title: Le djihad et la mort Le djihad et la mort",
-        "tex.origlanguage: french"
-      ],
-      "itemID": 4,
+      "key": "7C3Y3TZ4",
+      "version": 0,
       "itemType": "book",
       "place": "New York",
       "publisher": "Oxford University Press",
-      "title": "Jihad and death. The global appeal of islamic state"
+      "date": "2017",
+      "extra": "Citation Key: Roy.O:2017a\nOriginal title: Le djihad et la mort Le djihad et la mort\ntex.origlanguage: french",
+      "title": "Jihad and death. The global appeal of islamic state",
+      "citationKey": "Roy.O:2017a",
+      "originalDate": "2016",
+      "originalPlace": "Paris",
+      "creators": [
+        {
+          "firstName": "Olivier",
+          "lastName": "Roy",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "Cynthia",
+          "lastName": "Schoch",
+          "creatorType": "translator"
+        }
+      ],
+      "tags": [],
+      "relations": {},
+      "dateAdded": "2026-01-22T11:58:41Z",
+      "dateModified": "2026-01-22T11:58:41Z",
+      "uri": "http://zotero.org/users/8230813/items/7C3Y3TZ4",
+      "itemID": 106,
+      "attachments": [],
+      "notes": [],
+      "itemKey": "7C3Y3TZ4",
+      "libraryID": 1
     }
   ]
 }
