@@ -98,7 +98,8 @@ export const ItemType = new class $ItemType { // eslint-disable-line no-redeclar
     }
 
     this.labeled = (name: string): ItemType.Field | ItemType.Creator => {
-      name = name.toLowerCase()
+      name = name.toLowerCase().replace(/[^a-z]/g, '')
+      dump(`2015: ${JSON.stringify(this.schema)}\n`)
       return this.schema.fields.find(_ => _.labels.includes(name)) || this.schema.creators.find(_ => _.labels.includes(name))
     }
 
@@ -126,6 +127,8 @@ export const ItemType = new class $ItemType { // eslint-disable-line no-redeclar
       cslmap.names[zotero].push(csl)
     }
 
+    const labels = (names: string[]) => uniq(names.map(_ => (_ || '').toLowerCase().replace(/[^a-z]/g, '')).filter(_ => _))
+
     for (const itemType of schema.itemTypes) {
       this.lookup.type[itemType.itemType] = itemType.itemType
 
@@ -145,17 +148,14 @@ export const ItemType = new class $ItemType { // eslint-disable-line no-redeclar
           baseField: baseField || '',
           csl,
           extra: this.#extra[field] || this.toLabel(baseField || field),
-          labels: uniq([
-            this.toLabel(field),
+          labels: labels([
             field,
-            this.toLabel(baseField),
             baseField,
             schema.locales['en-US'].fields[field],
             schema.locales['en-US'].fields[baseField],
             ...csl,
-            ...(csl.map(l => this.toLabel(l))),
             ...(this.#extra[field] || []),
-          ]).map(_ => _.toLowerCase()),
+          ]),
         })
       }
 
@@ -164,20 +164,20 @@ export const ItemType = new class $ItemType { // eslint-disable-line no-redeclar
         this.valid.creators[itemType.itemType][creatorType] = true
         this.lookup.creator[creatorType] = creatorType
 
+        const csl = cslmap.names[creatorType] || []
         this.schema.creators.push({
           type: 'name',
 
           itemType: itemType.itemType,
           creator: creatorType,
           primary: !!primary,
-          csl: cslmap.names[creatorType] || [],
+          csl,
           extra: this.toLabel(creatorType),
-          labels: uniq([
-            this.toLabel(creatorType),
+          labels: labels([
             creatorType,
             schema.locales['en-US'].creatorTypes[creatorType],
-            ...((cslmap[creatorType] || []).map(l => this.toLabel(l))),
-          ]).map(_ => _.toLowerCase()),
+            ...csl,
+          ]),
         })
       }
     }

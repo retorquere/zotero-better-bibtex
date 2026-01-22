@@ -3,6 +3,8 @@ import * as CSL from 'citeproc'
 
 export type TeXString = { value: string; mode?: 'raw' | 'cased'; line: number }
 
+declare const dump: (msg: string) => void
+
 type Creator = {
   name: string
   type: string
@@ -133,6 +135,7 @@ export function get(extra: string, mode: 'zotero' | 'csl', options?: GetOptions)
       return false
     }
 
+    dump(`2015: ${JSON.stringify({ options, key, tex, ef: ItemType.labeled(key) || null })}\n`)
     if (options.kv && key !== 'citation key' && (!tex && (ef = ItemType.labeled(key)))) {
       switch (ef.type) {
         case 'name':

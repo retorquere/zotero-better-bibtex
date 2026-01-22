@@ -2,6 +2,8 @@ declare const Zotero: any
 
 import { Translation } from '../lib/translator'
 
+declare const dump: (msg: string) => void
+
 import { ItemType } from '../../content/item-type'
 import { Fields as ParsedExtraFields, get as getExtra, cslCreator } from '../../content/extra'
 import type { ExportedItem } from '../../content/worker/cache'
@@ -157,8 +159,10 @@ export abstract class CSLExporter {
         delete item.extraFields.kv[fieldName]
       }
 
+      dump(`2015: ${JSON.stringify(item.extraFields.creator)}\n`)
       for (const [ fieldName, value ] of Object.entries(item.extraFields.creator)) {
         const field = ItemType.labeled(fieldName)
+        dump(`2015: ${fieldName} => ${JSON.stringify(field)}\n`)
         if (field?.csl.length) {
           csl[field.csl[0]] = value.map(cslCreator)
           delete item.extraFields.creator[fieldName]
