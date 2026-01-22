@@ -685,7 +685,7 @@ class Zotero:
     if self.beta:
       self.variant = '-beta'
     elif self.legacy:
-      self.variant = '6'
+      self.variant = '7'
     elif self.dev:
       self.variant = '-dev'
     profile.binary = {
