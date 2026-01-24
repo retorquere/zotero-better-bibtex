@@ -79,6 +79,7 @@ export function get(extra: string, mode: 'zotero' | 'csl', options?: GetOptions)
   }
 
   extra = extra || ''
+  const cslMode = mode === 'csl'
 
   const extraFields: Fields = {
     raw: {},
@@ -136,17 +137,19 @@ export function get(extra: string, mode: 'zotero' | 'csl', options?: GetOptions)
     }
 
     dump(`2015: ${JSON.stringify({ options, key, tex, ef: ItemType.labeled(key) || null })}\n`)
-    if (options.kv && key !== 'citation key' && (!tex && (ef = ItemType.labeled(key)))) {
+    if (options.kv && key !== 'citation key' && (!tex && (ef = ItemType.labeled(key, cslMode) || ItemType.labeled(key)))) {
+      const fieldName = (cslMode ? ef.csl : '') || ef.baseField || ef.field
+
       switch (ef.type) {
         case 'name':
-          extraFields.creator[ef.creator] ??= []
-          extraFields.creator[ef.creator].push(value)
-          extraFields.creators.push({ name: value, type: ef.creator })
+          extraFields.creator[fieldName] ??= []
+          extraFields.creator[fieldName].push(value)
+          extraFields.creators.push({ name: value, type: fieldName })
           return false
 
         case 'text':
         case 'date':
-          extraFields.kv[ef.baseField || ef.field] = value
+          extraFields.kv[fieldName] = value
           return false
       }
     }

@@ -351,7 +351,7 @@ class WorkerZoteroCreatorTypes {
   }
 
   public getPrimaryIDForType(typeID) {
-    return ItemType.schema.creators.find(_ => _.itemType === typeID && _.primary)?.creator
+    return ItemType.schema.creators.find(_ => _.itemType === typeID && _.primary)?.field
   }
 
   public getID(typeName) {

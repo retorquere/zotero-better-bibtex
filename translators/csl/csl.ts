@@ -15,7 +15,7 @@ import { Date as CSLDate, Data as CSLItem } from 'csl-json'
 
 type ExtendedItem = Serialized.RegularItem & { extraFields: ParsedExtraFields }
 
-import CSLField from '../../gen/items/csl.json' with { type: 'json' }
+import CSLMeta from '../../gen/items/csl.json' with { type: 'json' }
 
 const keyOrder = [
   'id',
@@ -121,7 +121,7 @@ export abstract class CSLExporter {
 
       // special case for #587... not pretty
       // checked separately because .type isn't actually a CSL var so wouldn't pass the ef.type test below
-      if (!CSLField.type.enum.includes(item.extraFields.kv['csl-type']) && CSLField.type.enum.includes(item.extraFields.kv.type)) {
+      if (!CSLMeta.type.enum.includes(item.extraFields.kv['csl-type']) && CSLMeta.type.enum.includes(item.extraFields.kv.type)) {
         csl.type = item.extraFields.kv.type
         delete item.extraFields.kv.type
       }
@@ -129,28 +129,25 @@ export abstract class CSLExporter {
       for (const [ fieldName, value ] of Object.entries(item.extraFields.kv)) {
         if (!value) continue
 
-        const cslField = ItemType.labeled(fieldName, true)?.csl
-        const cslMeta = CSLField[cslField || fieldName] || {}
-        dump(`811: ${JSON.stringify({ fieldName, cslField, value })}\n`)
+        const cslMeta = CSLMeta[fieldName]
+        dump(`811: ${JSON.stringify({ fieldName, cslMeta: cslMeta || null, value })}\n`)
+        if (!cslMeta) continue
 
-        if (cslMeta.type === 'string' && cslMeta.enum?.includes(value)) {
-          csl[cslField] = value
+        if (cslMeta.type === 'string' && (!cslMeta.enum || cslMeta.enum.includes(value))) {
+          csl[fieldName] = value
         }
         else if (cslMeta.$ref === '#/definitions/date-variable') {
-          csl[cslField] = this.date2CSL(dateparser.parse(value))
+          csl[fieldName] = this.date2CSL(dateparser.parse(value))
         }
         else if (cslMeta.type === 'string' || (Array.isArray(cslMeta.type) && cslMeta.type.join(',') === 'number,string')) {
-          csl[cslField] = value
+          csl[fieldName] = value
         }
         else if (fieldName === 'csl-type') {
           if (!cslMeta.type.enum.includes(value)) continue // and keep the kv variable, maybe for postscripting
           csl.type = value
         }
-        else if (!cslField) {
+        else {
           continue // skip out of the loop, keep the kv-var
-        }
-        else if (!csl[cslField]) {
-          csl[cslField] = value
         }
 
         delete item.extraFields.kv[fieldName]
@@ -158,10 +155,9 @@ export abstract class CSLExporter {
 
       dump(`2015: ${JSON.stringify(item.extraFields.creator)}\n`)
       for (const [ fieldName, value ] of Object.entries(item.extraFields.creator)) {
-        const field = ItemType.labeled(fieldName)
-        dump(`2015: ${fieldName} => ${JSON.stringify(field)}\n`)
-        if (field?.csl) {
-          csl[field.csl] = value.map(cslCreator)
+        dump(`2015: ${fieldName} => ${JSON.stringify(CSLMeta[fieldName] || null)}\n`)
+        if (CSLMeta[fieldName]) {
+          csl[fieldName] = [ ...(csl[fieldName] || []), ...value.map(cslCreator) ]
           delete item.extraFields.creator[fieldName]
         }
       }

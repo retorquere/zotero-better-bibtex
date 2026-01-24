@@ -21,7 +21,7 @@ export namespace ItemType {
     type: 'name'
 
     itemType: string
-    creator: string
+    field: string
     primary: boolean
 
     csl: string
@@ -49,25 +49,29 @@ function uniq(list: string[]): string[] {
   return [...(new Set(list.filter(_ => _)))]
 }
 
-function LookUp(): Record<string, string> {
-  return new Proxy({}, {
+function LookUp<T = string>(): Record<string, T> {
+  return new Proxy({} as Record<string, T>, { // eslint-disable-line @typescript-eslint/no-unnecessary-type-assertion
     get(target, prop) {
-      return target[typeof prop === 'string' ? prop.toLowerCase() : prop] // eslint-disable-line @typescript-eslint/no-unsafe-return
+      const key = typeof prop === 'string' ? prop.toLowerCase() : prop
+      return target[key as keyof typeof target]
     },
 
     set(target, prop, value) {
-      target[typeof prop === 'string' ? prop.toLowerCase() : prop] = value
+      const key = typeof prop === 'string' ? prop.toLowerCase() : prop
+      target[key as keyof typeof target] = value
       return true
     },
 
     has(target, prop) {
-      return (typeof prop === 'string' ? prop.toLowerCase() : prop) in target
+      const key = typeof prop === 'string' ? prop.toLowerCase() : prop
+      return key in target
     },
 
     deleteProperty(target, prop) {
-      return delete target[typeof prop === 'string' ? prop.toLowerCase() : prop]
+      const key = typeof prop === 'string' ? prop.toLowerCase() : prop
+      return delete target[key as keyof typeof target]
     },
-  }) as Record<string, string>
+  }) as Record<string, T>
 }
 
 export const ItemType = new class $ItemType { // eslint-disable-line no-redeclare
@@ -180,7 +184,7 @@ export const ItemType = new class $ItemType { // eslint-disable-line no-redeclar
           type: 'name',
 
           itemType: itemType.itemType,
-          creator: creatorType,
+          field: creatorType,
           primary: !!primary,
           csl: csl[0] || '',
           extra: this.toLabel(creatorType),
@@ -218,7 +222,7 @@ export const ItemType = new class $ItemType { // eslint-disable-line no-redeclar
   }
 
   public typeOf(fieldName: string): 'date' | 'name' | 'text' {
-    return (this.schema.fields.find(_ => _.field === fieldName || _.baseField === fieldName) || this.schema.creators.find(_ => _.creator === fieldName))?.type
+    return (this.schema.fields.find(_ => _.field === fieldName || _.baseField === fieldName) || this.schema.creators.find(_ => _.field === fieldName))?.type
   }
 
   public toLabel(name: string): string {
