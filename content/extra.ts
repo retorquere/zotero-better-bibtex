@@ -136,7 +136,7 @@ export function get(extra: string, mode: 'zotero' | 'csl', options?: GetOptions)
       return false
     }
 
-    dump(`2015: ${JSON.stringify({ options, key, tex, ef: ItemType.labeled(key) || null })}\n`)
+    dump(`825: ${JSON.stringify({ options, key, tex, ef: ItemType.labeled(key, cslMode) || ItemType.labeled(key) || null })}\n`)
     if (options.kv && key !== 'citation key' && (!tex && (ef = ItemType.labeled(key, cslMode) || ItemType.labeled(key)))) {
       const fieldName = (cslMode ? ef.csl : '') || ef.baseField || ef.field
 
