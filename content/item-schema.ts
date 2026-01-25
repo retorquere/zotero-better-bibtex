@@ -67,6 +67,9 @@ export const Schema = new class $Schema {
   }
 
   constructor() {
+    // @ts-expect-error no idea why this is not in the zotero schema
+    this.zotero.meta.fields.accessDate = { type: 'date' }
+
     for (const { itemType, fields, creatorTypes } of this.zotero.itemTypes) {
       this.valid.fields[itemType] = {}
       this.valid.creators[itemType] = {}

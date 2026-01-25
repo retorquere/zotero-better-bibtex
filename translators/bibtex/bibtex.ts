@@ -1161,8 +1161,8 @@ class ZoteroItem {
 
     return this.set('accessDate', strToISODate(date))
   }
-
   protected $lastchecked(value: string): boolean { return this.$urldate(value) }
+  protected $accessed(value: string): boolean { return this.$urldate(value) }
 
   protected $number(value: string): boolean {
     if (this.item.itemType === 'patent' && this.patentNumberPrefix) {
