@@ -30,14 +30,6 @@ with open(os.path.join('gen/typings/serialized.d.ts'), 'w') as f:
   except:
     print(exceptions.text_error_template().render())
 
-print('  writing csl-metadata')
-with open('gen/items/csl.json', 'w') as f:
-  schema = csl['items'].properties
-  for p, m in schema.items():
-    if 'type' in m and type(m.type) == list:
-      m.type = sorted(m.type)
-  json.dump(schema, f, indent='  ')
-
 print('  writing zotero citation key formatter')
 with open('submodules/translators/BibTeX.js') as fin, open('gen/ZoteroBibTeX.mjs', 'w') as fout:
   fout.write('''
