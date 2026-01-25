@@ -5,7 +5,7 @@ import { Translation } from '../lib/translator'
 import { Serialized } from '../../gen/typings/serialized'
 
 import { JabRef } from '../bibtex/jabref'
-import { ItemType } from '../../content/item-type'
+import { simplifyForExport } from '../../content/item-schema'
 import * as bibtexParser from '@retorquere/bibtex-parser'
 import { Postfix } from './postfix'
 import * as Extra from '../../content/extra'
@@ -70,7 +70,7 @@ export class Exporter {
 
       this.jabref.citekeys.set(item.itemID, item.citationKey)
 
-      ItemType.simplifyForExport(item)
+      simplifyForExport(item)
 
       // strip extra.tex fields that are not for me
       const prefix = this.translation.BetterBibLaTeX ? 'biblatex.' : 'bibtex.'

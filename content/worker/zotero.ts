@@ -26,7 +26,7 @@ import { generateBBTJSON } from '../../translators/lib/bbtjson'
 import type { Collected } from '../../translators/lib/collect'
 
 import { DOMParser as XMLDOMParser } from '@xmldom/xmldom'
-import { ItemType, Schema } from '../item-type'
+import { Schema } from '../item-schema'
 
 declare var ZOTERO_TRANSLATOR_INFO: Header // eslint-disable-line no-var
 
@@ -338,20 +338,20 @@ async function saveFile(path, overwrite) {
 
 class WorkerZoteroCreatorTypes {
   public getTypesForItemType(itemTypeID: string): { name: string }[] {
-    dump(`1270: getTypesForItemType(${JSON.stringify(itemTypeID)}) => ${JSON.stringify(ItemType.valid.creators[itemTypeID])}\n`)
-    return Object.keys(ItemType.valid.creators[itemTypeID] || {}).map(name => ({ name }))
+    dump(`1270: getTypesForItemType(${JSON.stringify(itemTypeID)}) => ${JSON.stringify(Schema.valid.creators[itemTypeID])}\n`)
+    return Object.keys(Schema.valid.creators[itemTypeID] || {}).map(name => ({ name }))
   }
 
   public isValidForItemType(creatorTypeID, itemTypeID) {
-    return ItemType.valid.creators[itemTypeID]?.[creatorTypeID]
+    return Schema.valid.creators[itemTypeID]?.[creatorTypeID]
   }
 
   public getLocalizedString(type: string): string {
-    return Schema.locales[Zotero.locale]?.types[type] || ItemType.toLabel(type)
+    return Schema.zotero.locales[Zotero.locale]?.types[type] || Schema.toLabel(type)
   }
 
   public getPrimaryIDForType(typeID) {
-    return ItemType.schema.creators.find(_ => _.itemType === typeID && _.primary)?.field
+    return Schema.primaryCreator[typeID]
   }
 
   public getID(typeName) {
@@ -371,7 +371,7 @@ class WorkerZoteroItemTypes {
 
 class WorkerZoteroItemFields {
   public isValidForType(fieldID: string, itemTypeID: string) {
-    return ItemType.valid.fields[itemTypeID][fieldID]
+    return Schema.valid.fields[itemTypeID][fieldID]
   }
 
   public getID(field: string): string {

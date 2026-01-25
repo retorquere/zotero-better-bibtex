@@ -35,7 +35,7 @@ import * as postscript from '../lib/postscript'
 
 import { replace_command_spacers } from './unicode_translator'
 import { datefield } from './datefield'
-import { Schema, ItemType } from '../../content/item-type'
+import { Schema } from '../../content/item-schema'
 import type { Fields as ParsedExtraFields, TeXString } from '../../content/extra'
 import { zoteroCreator as ExtraZoteroCreator } from '../../content/extra'
 import { log } from '../../content/logger'
@@ -311,8 +311,8 @@ export class Entry {
 
     // TODO: maybe just use item.extraFields.var || item.var instead of deleting them here
     for (const [ fieldName, value ] of Object.entries(item.extraFields.kv)) {
-      const name = ItemType.lookup.field[fieldName] // might be CSL or Zotero
-      const type = ItemType.typeOf(name)
+      const name = Schema.lookup.baseField[fieldName]
+      const type = Schema.type.zotero[name]
       log.debug('migrate:', { fieldName, value, name, type })
       switch (type) {
         case 'text':
@@ -324,7 +324,7 @@ export class Entry {
     }
 
     for (let [ creatorType, values ] of Object.entries(item.extraFields.creator)) {
-      creatorType = ItemType.lookup.creator[creatorType] // might be CSL or Zotero
+      creatorType = Schema.lookup.creatorType[creatorType]
       if (creatorType) {
         for (const creator of (values as string[])) {
           item.creators.push({ ...ExtraZoteroCreator(creator, creatorType), source: creator })
@@ -713,8 +713,8 @@ export class Entry {
     for (const [ key, value ] of Object.entries(this.item.extraFields.kv)) {
       if (key === '_eprint') continue
 
-      const type = ItemType.typeOf(key)
-      let enc = { name: 'creator', text: 'literal' }[type] || type
+      const type = Schema.type.zotero[key]
+      let enc: Field['enc'] = ({ name: 'creator', text: 'literal' }[type] || type) as Field['enc']
       const replace = type === 'date'
       // these are handled just like 'arXiv' and 'lccn', respectively
       if ([ 'PMID', 'PMCID' ].includes(key) && typeof value === 'string') {
@@ -1572,8 +1572,8 @@ export class Entry {
 
     const pretty = (k: string): string => {
       if (k === 'numPages') return 'Number of pages'
-      const label = Schema.locales['en-US'].fields[k]
-      if (!label || label.includes('.')) return ItemType.toLabel(k)
+      const label = Schema.zotero.locales['en-US'].fields[k]
+      if (!label || label.includes('.')) return Schema.toLabel(k)
       return label.replace(/ [A-Z]/g, c => c.toLowerCase())
     }
     const unused_data = Object.entries(this.item.extraFields.kv).map(([ k, v ]) => [ '', `extra: ${k}`, v ])

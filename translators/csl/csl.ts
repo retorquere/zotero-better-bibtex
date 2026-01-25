@@ -4,7 +4,7 @@ import { Translation } from '../lib/translator'
 
 declare const dump: (msg: string) => void
 
-import { ItemType } from '../../content/item-type'
+import { simplifyForExport } from '../../content/item-schema'
 import { Fields as ParsedExtraFields, get as getExtra, cslCreator } from '../../content/extra'
 import type { ExportedItem } from '../../content/worker/cache'
 import { log } from '../../content/logger'
@@ -64,7 +64,7 @@ export abstract class CSLExporter {
       }
 
       Object.assign(item, getExtra(item.extra, 'csl'))
-      ItemType.simplifyForExport(item)
+      simplifyForExport(item)
       if (item.accessDate) { // WTH is Juris-M doing with those dates?
         item.accessDate = item.accessDate.replace(/T?[0-9]{2}:[0-9]{2}:[0-9]{2}.*/, '').trim()
       }

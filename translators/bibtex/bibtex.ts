@@ -4,7 +4,7 @@ import * as escape from '../../content/escape'
 import { log } from '../../content/logger'
 import { Exporter as BibTeXExporter } from './exporter'
 import { parse as arXiv } from '../../content/arXiv'
-import { ItemType } from '../../content/item-type'
+import { Schema } from '../../content/item-schema'
 import wordsToNumbers from '@insomnia-dev/words-to-numbers'
 
 import { ParsedDate, parse as parseDate, strToISO as strToISODate, century } from '../../content/dateparser'
@@ -696,10 +696,10 @@ class ZoteroItem {
   }
 
   private fallback(fields: string[], value: string): boolean {
-    const field = fields.reduce((acc: ItemType.Field, f: string) => (acc ?? ItemType.labeled(f)), null)
+    const field = fields.reduce((acc: string, f: string) => acc ?? Schema.labeled.zotero[f]?.field, null)
     if (field) {
       if (typeof value === 'string') value = value.replace(/\n+/g, '')
-      this.extra.push(`${field.extra}: ${ value }`)
+      this.extra.push(`${Schema.extra[field] || field}: ${value}`)
       return true
     }
     return false
@@ -1359,7 +1359,7 @@ class ZoteroItem {
       && this.bibtex.fields.booktitle?.length
       && this.bibtex.fields.booktitle.match(/proceeding/i)) this.item.itemType = 'conferencePaper'
 
-    this.validFields = ItemType.valid.fields[this.item.itemType]
+    this.validFields = Schema.valid.fields[this.item.itemType]
     if (!this.validFields) this.error(`import error: unexpected item ${ this.bibtex.key } of type ${ this.item.itemType }`)
 
     if (!this.bibtex.fields.type) {
@@ -1563,9 +1563,9 @@ class ZoteroItem {
               this.item[field] = value
             }
             else {
-              const alternate = ItemType.field(field)
-              if (alternate) {
-                this.extra.push(`${alternate.extra}: ${value}`)
+              const extra = Schema.extra[Schema.lookup.baseField[field]]
+              if (extra) {
+                this.extra.push(`${extra}: ${value}`)
               }
               else {
                 this.extra.push(`tex.${ field.match(/[:=]/) ? `"${ field }"` : field }: ${ value }`)

@@ -27,7 +27,7 @@ import { fetchSync as fetchInspireHEP } from '../inspire-hep'
 import { compile, upgrade } from './compile'
 import * as DateParser from '../dateparser'
 
-import { ItemType } from '../../content/item-type'
+import { Schema } from '../../content/item-schema'
 
 import { parseFragment } from 'parse5'
 
@@ -294,7 +294,7 @@ class Item {
     this.itemID = this.id = item.id
     this.itemKey = this.key = item.key
     this.itemType = Zotero.ItemTypes.getName(item.itemTypeID)
-    this.primaryCreator = ItemType.schema.creators.find(_ => _.itemType === this.item.itemType && _.primary)?.field || ''
+    this.primaryCreator = Schema.primaryCreator[this.itemType] || ''
     this.getField = function(name: string): string | number {
       if (!name) return ''
 
@@ -556,10 +556,9 @@ export class PatternFormatter {
    * @param name name of the field
    */
   public $field(name: Serialized.FieldName): string {
-    const field = ItemType.field(name, this.item.itemType) || ItemType.field(name)
-    if (!field) throw new Error(`Unknown item field ${ name }`)
+    const field = Schema.lookup.baseField[name]
 
-    const value = this.item.getField(field.baseField) || this.item.getField(field.field)
+    const value = this.item.getField(field)
     switch (typeof value) {
       case 'number':
         return `${value}`

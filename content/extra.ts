@@ -1,4 +1,4 @@
-import { ItemType } from './item-type'
+import { Schema } from './item-schema'
 import * as CSL from 'citeproc'
 
 export type TeXString = { value: string; mode?: 'raw' | 'cased'; line: number }
@@ -79,7 +79,6 @@ export function get(extra: string, mode: 'zotero' | 'csl', options?: GetOptions)
   }
 
   extra = extra || ''
-  const cslMode = mode === 'csl'
 
   const extraFields: Fields = {
     raw: {},
@@ -136,20 +135,19 @@ export function get(extra: string, mode: 'zotero' | 'csl', options?: GetOptions)
       return false
     }
 
-    dump(`825: ${JSON.stringify({ options, key, tex, ef: ItemType.labeled(key, cslMode) || ItemType.labeled(key) || null })}\n`)
-    if (options.kv && key !== 'citation key' && (!tex && (ef = ItemType.labeled(key, cslMode) || ItemType.labeled(key)))) {
-      const fieldName = (cslMode ? ef.csl : '') || ef.baseField || ef.field
-
+    const [ primary, secondary ] = mode === 'csl' ? ['csl', 'zotero'] : ['zotero', 'csl']
+    dump(`825: ${JSON.stringify({ options, key, tex, ef: Schema.labeled[primary][key] || Schema.labeled[secondary][key] || null })}\n`)
+    if (options.kv && key !== 'citation key' && (!tex && (ef = Schema.labeled[primary][key] || Schema.labeled[secondary][key]))) {
       switch (ef.type) {
         case 'name':
-          extraFields.creator[fieldName] ??= []
-          extraFields.creator[fieldName].push(value)
-          extraFields.creators.push({ name: value, type: fieldName })
+          extraFields.creator[ef.field] ??= []
+          extraFields.creator[ef.field].push(value)
+          extraFields.creators.push({ name: value, type: ef.field })
           return false
 
         case 'text':
         case 'date':
-          extraFields.kv[fieldName] = value
+          extraFields.kv[ef.field] = value
           return false
       }
     }
