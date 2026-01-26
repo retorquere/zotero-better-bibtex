@@ -707,6 +707,10 @@ class ZoteroItem {
     return true
   }
 
+  protected $conference(value: string) {
+    return this.set('conferenceName', value)
+  }
+
   protected $titleaddon(): boolean { return this.$title() }
   protected $subtitle(): boolean { return this.$title() }
   protected $title(): boolean {
