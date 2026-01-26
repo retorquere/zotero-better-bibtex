@@ -179,8 +179,6 @@ export const Schema = new class $Schema {
         if (label) this.labeled.csl[label] ??= { field, type: this.type.csl[field] }
       }
     }
-
-    dump(`extra-label: ${JSON.stringify(this.extra)}\n`)
   }
 
   public toLabel(name: string): string {

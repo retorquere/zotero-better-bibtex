@@ -1,7 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 
-declare const dump: (msg: string) => void
-
 import { log } from '../../content/logger'
 import { Server as WorkerServerBase } from './json-rpc'
 import { Exporter as ExporterInterface } from './interface'
@@ -338,7 +336,6 @@ async function saveFile(path, overwrite) {
 
 class WorkerZoteroCreatorTypes {
   public getTypesForItemType(itemTypeID: string): { name: string }[] {
-    dump(`1270: getTypesForItemType(${JSON.stringify(itemTypeID)}) => ${JSON.stringify(Schema.valid.creators[itemTypeID])}\n`)
     return Object.keys(Schema.valid.creators[itemTypeID] || {}).map(name => ({ name }))
   }
 

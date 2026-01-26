@@ -2,8 +2,6 @@ declare const Zotero: any
 
 import { Translation } from '../lib/translator'
 
-declare const dump: (msg: string) => void
-
 import { Schema, simplifyForExport } from '../../content/item-schema'
 import { Fields as ParsedExtraFields, get as getExtra, cslCreator } from '../../content/extra'
 import type { ExportedItem } from '../../content/worker/cache'
@@ -128,7 +126,6 @@ export abstract class CSLExporter {
         if (!value) continue
 
         const type = Schema.csl[fieldName]
-        dump(`811: ${JSON.stringify({ fieldName, type: type || null, value })}\n`)
         if (!type) continue
 
         if (type.type === 'string' && (!type.enum || type.enum.includes(value))) {
@@ -151,9 +148,7 @@ export abstract class CSLExporter {
         delete item.extraFields.kv[fieldName]
       }
 
-      dump(`2015: ${JSON.stringify(item.extraFields.creator)}\n`)
       for (const [ fieldName, value ] of Object.entries(item.extraFields.creator)) {
-        dump(`2015: ${fieldName} => ${JSON.stringify(Schema.csl[fieldName] || null)}\n`)
         if (Schema.csl[fieldName]) {
           csl[fieldName] = [ ...(csl[fieldName] || []), ...value.map(cslCreator) ]
           delete item.extraFields.creator[fieldName]

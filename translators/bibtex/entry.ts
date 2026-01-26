@@ -313,7 +313,6 @@ export class Entry {
     for (const [ fieldName, value ] of Object.entries(item.extraFields.kv)) {
       const name = Schema.lookup.baseField[fieldName]
       const type = Schema.type.zotero[name]
-      log.debug('migrate:', { fieldName, value, name, type })
       switch (type) {
         case 'text':
         case 'date':
@@ -713,7 +712,6 @@ export class Entry {
       this.add({ name: 'ids', value: this.item.extraFields.aliases.filter(alias => alias !== this.item.citationKey).join(','), enc: 'verbatim' })
     }
 
-    log.debug('825:', this.item)
     for (const [ key, value ] of Object.entries(this.item.extraFields.kv)) {
       if (key === '_eprint') continue
 
