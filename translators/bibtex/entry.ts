@@ -713,7 +713,7 @@ export class Entry {
       this.add({ name: 'ids', value: this.item.extraFields.aliases.filter(alias => alias !== this.item.citationKey).join(','), enc: 'verbatim' })
     }
 
-    log.debug('391:', this.item.extraFields.kv)
+    log.debug('825:', this.item)
     for (const [ key, value ] of Object.entries(this.item.extraFields.kv)) {
       if (key === '_eprint') continue
 
@@ -733,6 +733,10 @@ export class Entry {
         switch (key) {
           case 'issuingAuthority':
             name = 'institution'
+            break
+
+          case 'container-title':
+            name = 'booktitle'
             break
 
           case 'title':

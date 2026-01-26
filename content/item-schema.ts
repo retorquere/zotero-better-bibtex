@@ -160,7 +160,7 @@ export const Schema = new class $Schema {
       }
     }
 
-    dump(`391: ${JSON.stringify(this.labeled)}`)
+    dump(`391: labeled: ${JSON.stringify(this.labeled)}\n`)
   }
 
   public toLabel(name: string): string {
@@ -174,7 +174,7 @@ export const Schema = new class $Schema {
 
   private cslAliases(fieldName: string): string[] {
     return [
-      ...(Object.entries(this.zotero.csl.fields.text).map(([cslField, zoteroFields]) => zoteroFields.includes(fieldName) ? cslField : null)),
+      ...(Object.entries(this.zotero.csl.fields.text).map(([cslField, zoteroFields]) => zoteroFields[0] === fieldName ? cslField : null)),
       ...(Object.entries(this.zotero.csl.fields.date).map(([cslField, zoteroField]) => zoteroField === fieldName ? cslField : null)),
       ...(Object.entries(this.zotero.csl.names).map(([zoteroField, cslField]) => zoteroField === fieldName ? cslField : null)),
     ].filter(alias => typeof alias === 'string')

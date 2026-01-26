@@ -79,6 +79,7 @@ export function get(extra: string, mode: 'zotero' | 'csl', options?: GetOptions)
   }
 
   extra = extra || ''
+  dump(`825: extra = ${JSON.stringify({ extra, mode })}\n`)
 
   const extraFields: Fields = {
     raw: {},
@@ -136,7 +137,7 @@ export function get(extra: string, mode: 'zotero' | 'csl', options?: GetOptions)
     }
 
     const [ primary, secondary ] = mode === 'csl' ? ['csl', 'zotero'] : ['zotero', 'csl']
-    dump(`391: ${JSON.stringify({ options, key, tex, ef: Schema.labeled[primary][key] || Schema.labeled[secondary][key] || null })}\n`)
+    dump(`825: extra-field ${key} => ${primary} = ${JSON.stringify(Schema.labeled[primary][key])}, ${secondary} => ${JSON.stringify(Schema.labeled[secondary][key])}\n`)
     if (options.kv && key !== 'citation key' && (!tex && (ef = Schema.labeled[primary][key] || Schema.labeled[secondary][key]))) {
       switch (ef.type) {
         case 'name':
@@ -167,6 +168,7 @@ export function get(extra: string, mode: 'zotero' | 'csl', options?: GetOptions)
 
   extraFields.aliases = Array.from(new Set(extraFields.aliases)).filter(key => key !== extraFields.citationKey)
 
+  dump(`825: extra parsed to ${JSON.stringify({ extra, extraFields })}\n`)
   return { extra, extraFields }
 }
 
