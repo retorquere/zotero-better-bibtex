@@ -2,6 +2,38 @@ import $zotero from '../submodules/zotero/resource/schema/global/schema.json' wi
 import $csl from '../submodules/citation-style-language-schema/schemas/input/csl-data.json' with { type: 'json' }
 import { Serialized } from '../gen/typings/serialized'
 
+function print(strings, ...args) {
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+  const zipped = Array.from({ length: Math.max(strings.length, args.length) }, (_, i) => [
+    strings[i] ?? '',
+    args[i] ?? '',
+  ])
+
+  let p = ''
+  for (const [ s, a ] of zipped) {
+    p += s
+
+    if (Array.isArray(a)) {
+      p += JSON.stringify(a)
+    }
+    else if (a === null) {
+      p += 'null'
+    }
+    else {
+      switch (typeof a) {
+        case 'object':
+          p += JSON.stringify(a)
+          break
+        default:
+          p += `${a}`
+          break
+      }
+    }
+  }
+
+  return `${p}\n`
+}
+
 function LookUp<T = string>(textOnly = false): Record<string, T> {
   function simplify(prop: string): string {
     prop = prop.toLowerCase()
@@ -96,7 +128,8 @@ export const Schema = new class $Schema {
         const type = this.type.zotero[field] = this.type.zotero[baseField || field] = (this.zotero.meta.fields[baseField] || this.zotero.meta.fields[field])?.type || 'text'
         this.lookup.baseField[field] = this.lookup.baseField[baseField || field] = baseField || field
         this.extra[field] = this.#extra[field] || this.toLabel(field)
-        this.extra[baseField || field] = this.#extra[baseField] || this.toLabel(baseField || field)
+        if (baseField) this.extra[baseField] = this.#extra[baseField] || this.toLabel(baseField)
+        dump(print`extra-label: ${field} + ${baseField} => ${this.extra}`)
 
         const labels = [
           field,
@@ -160,7 +193,7 @@ export const Schema = new class $Schema {
       }
     }
 
-    dump(`391: labeled: ${JSON.stringify(this.labeled)}\n`)
+    dump(`extra-label: ${JSON.stringify(this.extra)}\n`)
   }
 
   public toLabel(name: string): string {
