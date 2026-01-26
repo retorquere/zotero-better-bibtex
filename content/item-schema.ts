@@ -67,8 +67,14 @@ export const Schema = new class $Schema {
   }
 
   constructor() {
+    // schema fixes
     // @ts-expect-error no idea why this is not in the zotero schema
     this.zotero.meta.fields.accessDate = { type: 'date' }
+
+    if (!this.zotero.itemTypes.find(itemType => itemType.fields.find(field => field.field === 'volumeTitle'))) {
+      this.zotero.itemTypes.find(itemType => itemType.itemType === 'book').fields.push({ field: 'volumeTitle' })
+      this.zotero.csl.fields.text['volume-title'] = [ 'volumeTitle' ]
+    }
 
     if (!this.zotero.itemTypes.find(itemType => itemType.fields.find(field => field.field === 'eventDate'))) {
       // not sure how this ended up in the test suite
@@ -77,6 +83,7 @@ export const Schema = new class $Schema {
       this.zotero.meta.fields.eventDate = { type: 'date' }
       this.zotero.csl.fields.date['event-date'] = 'eventDate'
     }
+    // end of schema fixes
 
     for (const { itemType, fields, creatorTypes } of this.zotero.itemTypes) {
       this.valid.fields[itemType] = {}
