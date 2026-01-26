@@ -136,7 +136,7 @@ export function get(extra: string, mode: 'zotero' | 'csl', options?: GetOptions)
     }
 
     const [ primary, secondary ] = mode === 'csl' ? ['csl', 'zotero'] : ['zotero', 'csl']
-    dump(`825: ${JSON.stringify({ options, key, tex, ef: Schema.labeled[primary][key] || Schema.labeled[secondary][key] || null })}\n`)
+    dump(`391: ${JSON.stringify({ options, key, tex, ef: Schema.labeled[primary][key] || Schema.labeled[secondary][key] || null })}\n`)
     if (options.kv && key !== 'citation key' && (!tex && (ef = Schema.labeled[primary][key] || Schema.labeled[secondary][key]))) {
       switch (ef.type) {
         case 'name':

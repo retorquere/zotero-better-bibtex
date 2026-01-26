@@ -702,6 +702,9 @@ export class Entry {
       this.add({ name: 'groups', value: groups.join(',') })
     }
 
+    this.add({ name: 'origlocation', value: this.item.originalPlace })
+    this.add({ name: 'origpublisher', value: this.item.originalPublisher })
+
     if ([ 'langid', 'both' ].includes(this.translation.collected.preferences.language)) this.add({ name: 'langid', value: this.langid() })
     if ([ 'language', 'both' ].includes(this.translation.collected.preferences.language)) this.add({ name: 'language', value: this.item.language })
 
@@ -710,6 +713,7 @@ export class Entry {
       this.add({ name: 'ids', value: this.item.extraFields.aliases.filter(alias => alias !== this.item.citationKey).join(','), enc: 'verbatim' })
     }
 
+    log.debug('391:', this.item.extraFields.kv)
     for (const [ key, value ] of Object.entries(this.item.extraFields.kv)) {
       if (key === '_eprint') continue
 

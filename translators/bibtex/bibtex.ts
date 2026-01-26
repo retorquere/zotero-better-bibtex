@@ -1549,7 +1549,7 @@ class ZoteroItem {
             break
 
           case 'origlocation':
-            this.extra.push(`Original publisher place: ${ value }`)
+            this.extra.push(`Original place: ${ value }`)
             break
 
           default:
