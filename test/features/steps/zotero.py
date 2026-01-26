@@ -277,7 +277,10 @@ class Library:
 
     if self.ext.endswith('.json') or self.ext == '.csl.yml':
       if self.ext.endswith('.json'):
-        self.data = json.loads(self.body, object_pairs_hook=OrderedDict)
+        try:
+          self.data = json.loads(self.body, object_pairs_hook=OrderedDict)
+        except:
+          raise ValueError(self.body)
       else:
         self.data = yaml.load(io.StringIO(self.body))
 

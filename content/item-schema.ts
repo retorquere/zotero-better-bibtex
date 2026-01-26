@@ -2,37 +2,25 @@ import $zotero from '../submodules/zotero/resource/schema/global/schema.json' wi
 import $csl from '../submodules/citation-style-language-schema/schemas/input/csl-data.json' with { type: 'json' }
 import { Serialized } from '../gen/typings/serialized'
 
-function print(strings, ...args) {
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-  const zipped = Array.from({ length: Math.max(strings.length, args.length) }, (_, i) => [
-    strings[i] ?? '',
-    args[i] ?? '',
-  ])
+/*
+function tostring(o): string {
+  if (Array.isArray(o)) return JSON.stringify(o)
 
-  let p = ''
-  for (const [ s, a ] of zipped) {
-    p += s
+  if (o === null) return 'null'
+  if (o === undefined) return 'undefined'
 
-    if (Array.isArray(a)) {
-      p += JSON.stringify(a)
-    }
-    else if (a === null) {
-      p += 'null'
-    }
-    else {
-      switch (typeof a) {
-        case 'object':
-          p += JSON.stringify(a)
-          break
-        default:
-          p += `${a}`
-          break
-      }
-    }
+  switch (typeof o) {
+    case 'object': return JSON.stringify(o)
   }
 
-  return `${p}\n`
+  return `${o}`
 }
+
+function print(strings, ...args) {
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+  return Array.from({ length: Math.max(strings.length, args.length) }, (_, i) => `${strings[i] ?? ''}${tostring(args[i] ?? '')}`).join('') + '\n'
+}
+*/
 
 function LookUp<T = string>(textOnly = false): Record<string, T> {
   function simplify(prop: string): string {
@@ -129,7 +117,6 @@ export const Schema = new class $Schema {
         this.lookup.baseField[field] = this.lookup.baseField[baseField || field] = baseField || field
         this.extra[field] = this.#extra[field] || this.toLabel(field)
         if (baseField) this.extra[baseField] = this.#extra[baseField] || this.toLabel(baseField)
-        dump(print`extra-label: ${field} + ${baseField} => ${this.extra}`)
 
         const labels = [
           field,
