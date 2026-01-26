@@ -1,6 +1,5 @@
 import { Path } from './file'
 
-import { log } from './logger'
 import { getItemsAsync } from './get-items-async'
 import type { Serialized } from '../gen/typings/serialized'
 

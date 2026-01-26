@@ -1,6 +1,8 @@
-async function prompt(total: number, pinned: number) {
+import { log } from '../logger'
+
+function prompt(total: number, pinned: number) {
   const pinnedOption = pinned
-    ? `<html:label><html:input type="radio" name="mig" value="pinned" onchange="toggle(this)"/> Migrate only pinned Better BibTeX citation keys (${pinned}), discarding non-pinned keys</html:label>` 
+    ? `<html:label><html:input type="radio" name="mig" value="pinned" onchange="toggle(this)"/> Migrate only pinned Better BibTeX citation keys (${pinned}), discarding non-pinned keys</html:label>`
     : ''
 
   const xhtml = `
@@ -17,10 +19,10 @@ async function prompt(total: number, pinned: number) {
         button[disabled] { opacity: 0.5; }
         input[type="radio"], input[type="checkbox"] { margin-right: 8px; vertical-align: middle; }
       </html:style>
-      
+
       <html:body>
         <html:div style="font-weight: bold; margin-bottom: 10px;">You have ${total} Better BibTeX stored citation keys</html:div>
-        
+
         <html:div class="option-container">
           <html:label><html:input type="radio" name="mig" value="all" onchange="toggle(this)"/> Migrate all Better BibTeX citation keys</html:label>
           ${pinnedOption}
@@ -60,22 +62,79 @@ async function prompt(total: number, pinned: number) {
     </window>
   `
 
-  const dataUri = "data:application/vnd.mozilla.xul+xml;charset=utf-8," + encodeURIComponent(xhtml)
-  let resultObj = { action: null, overwrite: false }
+  const choice = { action: null, overwrite: false }
 
-  let win = Zotero.getZoteroWindow();
-  win.openDialog(
-    dataUri,
-    "migration-dialog",
-    "chrome,modal,centerscreen,resizable=no",
-    resultObj
+  Zotero.getMainWindow().openDialog(
+    `data:application/vnd.mozilla.xul+xml;charset=utf-8,${encodeURIComponent(xhtml)}`,
+    'migration-dialog',
+    'chrome,modal,centerscreen,resizable=no',
+    choice
   );
 
-  // Return the result object or 'postpone' if they closed the window via 'X'
-  if (resultObj.action) {
-    Zotero.debug(`Migration Choice: ${resultObj.action} (Overwrite: ${resultObj.overwrite})`);
-    return resultObj;
+  if (choice.action) {
+    Zotero.debug(`Migration Choice: ${choice.action} (Overwrite: ${choice.overwrite})`);
+    return choice
   }
-  
+
   return { action: 'postpone', overwrite: false };
+}
+
+export async function migrate() {
+  const db = PathUtils.join(Zotero.DataDirectory.dir, 'better-bibtex.sqlite')
+  if (!(await File.exists(path))) return
+
+  let migrate: { action: 'forget' | 'all' | 'pinned' | 'postpone'; overwrite: boolean } = { action: 'postpone', overwrite: false }
+
+  try {
+    await Zotero.DB.queryAsync('ATTACH DATABASE ? AS betterbibtex', [ db ])
+    const q =  `
+      SELECT bbt.itemID, bbt.itemKey, bbt.libraryID, bbt.citationKey, bbt.pinned
+      FROM betterbibtex.citationkey bbt
+      WHERE bbt.itemID NOT IN (SELECT itemID FROM deletedItems)
+        AND item.itemID NOT IN (SELECT itemID FROM feedItems)
+        AND item.itemTypeID NOT IN (
+          SELECT itemTypeID
+          FROM itemTypes
+          WHERE typeName IN ('attachment', 'note', 'annotation')
+    `.replace(/\n/g, ' ')
+
+    await Zotero.DB.executeTransaction(async () => {
+      let keys: { citationKey: string, itemID: number, pinned: boolean }[] = []
+      for (const { citationKey, itemID, pinned } of (await Zotero.DB.queryAsync(q))) {
+        keys.push({ citationKey, itemID, pinned: !!pinned })
+      }
+
+      migrate = keys.length ? prompt(keys.length, keys.filter(k => k.pinned).length) : { action: 'forget', overwrite: false }
+      switch (migrate.action) {
+        case 'postpone': return
+        case 'forget':
+          keys = []
+          break
+        case 'all':
+          break
+        case 'pinned':
+          keys = keys.filter(k => k.pinned)
+          break
+      }
+
+      for (const { itemID, citationKey } of keys) {
+        const item = await Zotero.Items.getAsync(itemID)
+        if (choice.overwrite || !item.getField('citationKey')) {
+          item.setField('citationKey', citationKey)
+          await item.save()
+        }
+      }
+    })
+  }
+  catch (err) {
+    log.error('migration error:', err)
+    migrate.action = 'postpone'
+  }
+  finally {
+    try {
+      await Zotero.DB.queryAsync("DETACH DATABASE 'betterbibtex'")
+      if (migrate.action !== 'postpone') await Zotero.File.rename(db, 'better-bibtex.migrated')
+    }
+    catch {}
+  }
 }

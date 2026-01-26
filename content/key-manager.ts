@@ -22,8 +22,8 @@ import { getItemAsync, getItemsAsync } from './get-items-async'
 import { Preference } from './prefs'
 import { Formatter } from './key-manager/formatter'
 
-import { createDB, createTable, Query, BlinkKey } from 'blinkdb'
-import * as blink from 'blinkdb'
+import Loki from 'lokijs'
+
 import { Cache } from './translators/worker'
 
 import { monkey } from './monkey-patch'
@@ -33,12 +33,7 @@ import { newQueue } from '@henrygd/queue/rl'
 
 import * as l10n from './l10n'
 
-async function migrate() {
-  const db = PathUtils.join(Zotero.DataDirectory.dir, 'better-bibtex.sqlite')
-  if (!(await File.exists(path))) return
-
-  await Zotero.DB.queryAsync('ATTACH DATABASE ? AS betterbibtex', [ db ])
-
+import { migrate } from './key-manager/migrate'
 
 export type CitekeyRecord = {
   itemID: number
@@ -46,7 +41,6 @@ export type CitekeyRecord = {
   itemKey: string
   citationKey: string
   lcCitationKey: string
-  pinned: boolean | 0 | 1
 }
 
 type UnwatchCallback = () => void
@@ -54,10 +48,6 @@ type UnwatchCallback = () => void
 function lc(record: Partial<CitekeyRecord>): CitekeyRecord {
   record.lcCitationKey = record.citationKey.toLowerCase()
   return record as unknown as CitekeyRecord
-}
-
-function byItemID(itemID) {
-  return { where: { itemID }}
 }
 
 class Progress {
@@ -120,6 +110,10 @@ export const KeyManager = new class _KeyManager {
     },
   }
 
+  public keys = (new Loki('citationkeys.db')).addCollection<CitekeyRecord>('citationKeys', {
+    indices: [ 'itemID', 'libraryID', 'itemKey', 'citationKey', 'lcCitationKey' ],
+    unique: [ 'itemID ' ],
+  })
   // Table<CitekeyRecord, "itemID">
   public keys = createTable<CitekeyRecord>(createDB({ clone: true }), 'citationKeys')({
     primary: 'itemID',
@@ -431,11 +425,24 @@ export const KeyManager = new class _KeyManager {
   }
 
   private async start(): Promise<void> {
-    if (Zotero.Libraries.userLibraryID > 1) {
-      await ZoteroDB.queryTx('UPDATE betterbibtex.citationkey SET libraryID = ? WHERE libraryID IN (0, 1)', [Zotero.Libraries.userLibraryID])
-    }
+    await migrate()
 
-    await this.load()
+    const load = `
+      SELECT item.itemID, item.key AS itemKey, item.libraryID, idv.value AS citationKey
+      FROM items item
+      JOIN itemData id ON item.itemID = id.itemID
+      JOIN fields f ON id.fieldID = f.fieldID AND f.fieldName = 'citationKey'
+      JOIN itemDataValues idv ON id.valueID = idv.valueID
+      WHERE item.itemID NOT IN (SELECT itemID FROM deletedItems)
+        AND item.itemTypeID NOT IN (SELECT itemTypeID FROM itemTypes WHERE typeName IN ('attachment', 'note', 'annotation'))
+        AND item.itemID NOT IN (SELECT itemID FROM feedItems)
+      `.replace(/\n/g, ' ')
+
+    const keys: CitationkeyRecord[] = []
+    for (const { itemID, itemKey, libraryID, citationKey } from await Zotero.DB.queryAsync(load)) {
+      keys.push(lc({ itemID, itemKey, libraryID, citationKey }))
+    }
+    this.keys.insert(keys)
 
     Events.on('preference-changed', pref => {
       switch (pref) {
@@ -482,102 +489,6 @@ export const KeyManager = new class _KeyManager {
     }
 
     this.started = true
-  }
-
-  public async load(): Promise<void> {
-    `
-    SELECT bbt.itemID, bbt.itemKey, bbt.libraryID, bbt.citationKey, bbt.pinned
-    FROM betterbibtex.citationkey bbt
-    WHERE bbt.itemID NOT IN (SELECT itemID FROM deletedItems)
-      AND item.itemID NOT IN (SELECT itemID FROM feedItems)
-      AND item.itemTypeID NOT IN (
-        SELECT itemTypeID
-        FROM itemTypes
-        WHERE typeName IN ('attachment', 'note', 'annotation')
-      )
-    `
-
-    const keys: CitekeyRecord[] = []
-    let key: CitekeyRecord
-
-    let missing: number[] = []
-
-    await Zotero.DB.executeTransaction(async () => {
-      // extract pinned keys
-      await ZoteroDB.queryAsync(extract)
-
-      // load what we have in memory
-      for (key of await ZoteroDB.queryAsync('SELECT * from betterbibtex.citationkey') as CitekeyRecord[]) {
-        keys.push(lc({ itemID: key.itemID, itemKey: key.itemKey, libraryID: key.libraryID, citationKey: key.citationKey, pinned: false }))
-      }
-      blink.insertMany(this.keys, keys)
-
-      missing = (await ZoteroDB.columnQueryAsync(`WITH RegularItems AS (${regularitems}) SELECT itemID FROM RegularItems WHERE itemID NOT IN (SELECT itemID from betterbibtex.citationkey)`))
-    })
-
-    const notify = async (ids: number[]) => {
-      if (!Cache.ready) {
-        log.error('Cache touch failed for', ids, 'cache not ready')
-        return
-      }
-
-      try {
-        await Cache.touch(ids)
-      }
-      catch (err) {
-        log.error('Cache touch failed for', ids, err)
-      }
-      finally {
-        void Events.emit('items-changed', { items: Zotero.Items.get(ids), action: 'modify', reason: 'key-refresh' })
-      }
-      // messes with focus-on-tab
-      // if (action === 'modify' || action === 'add') Zotero.Notifier.trigger('refresh', 'item', itemIDs)
-    }
-
-    this.unwatch = [
-      this.keys[BlinkKey].events.onInsert.register(changes => {
-        for (const change of changes) {
-          void this.store(change.entity).catch(err => log.error('keymanager.insert', err))
-        }
-        void notify(changes.map(change => change.entity.itemID))
-      }),
-      this.keys[BlinkKey].events.onUpdate.register(changes => {
-        for (const change of changes) {
-          void this.store(change.newEntity).catch(err => log.error('keymanager.update', err))
-        }
-        void notify(changes.map(change => change.newEntity.itemID))
-      }),
-      this.keys[BlinkKey].events.onRemove.register(changes => {
-        for (const change of changes) {
-          this.remove(change.entity)
-        }
-        void notify(changes.map(change => change.entity.itemID))
-      }),
-      this.keys[BlinkKey].events.onClear.register(_changes => {
-        log.error('error: do not clear the keys database!')
-        throw new Error('do not clear the keys database!')
-      }),
-    ]
-
-    if (missing.length) {
-      log.info('keymanager batch:', missing.length, 'missing keys')
-      // generate keys for entries that don't have them yet
-      const start = Date.now()
-      const progress = new Progress(missing.length, 'Assigning citation keys')
-      for (const itemID of missing) {
-        try {
-          this.update(await getItemAsync(itemID))
-        }
-        catch (err) {
-          log.error('KeyManager.rescan: update failed:', err.message || `${ err }`, err.stack)
-        }
-
-        progress.next()
-      }
-      log.info('keymanager batch: keys assigned in', Date.now() - start)
-
-      progress.done()
-    }
   }
 
   public update(item: Zotero.Item, current?: CitekeyRecord): string {
