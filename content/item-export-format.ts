@@ -54,20 +54,8 @@ export function fix(serialized: Serialized.Item, item: Zotero.Item): Serialized.
   if (item.isRegularItem() && !item.isFeedItem) {
     const regular = <Serialized.RegularItem>serialized
 
-    if (Zotero.BetterBibTeX.starting) {
-      // with the new "title as citation", CSL can request these items before the key manager is online
-      regular.citationKey = ''
-    }
-    else {
-      regular.citationKey = Zotero.BetterBibTeX.KeyManager.get(item.id)?.citationKey
-      if (!regular.citationKey) {
-        // throw new Error(`no citation key for ${ Zotero.ItemTypes.getName(item.itemTypeID) } ${ item.id }`)
-        log.error(`no citation key for ${ Zotero.ItemTypes.getName(item.itemTypeID) } ${ item.id } ${ JSON.stringify(regular) }`)
-        regular.citationKey = `temporary-citekey-${ item.id }`
-      }
-      if (Preference.autoAbbrev) {
-        regular.autoJournalAbbreviation = JournalAbbrev.get(regular, 'auto') || ''
-      }
+    if (!Zotero.BetterBibTeX.starting && Preference.autoAbbrev) {
+      regular.autoJournalAbbreviation = JournalAbbrev.get(regular, 'auto') || ''
     }
   }
 

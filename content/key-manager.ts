@@ -31,9 +31,14 @@ import { monkey } from './monkey-patch'
 import { sprintf } from 'sprintf-js'
 import { newQueue } from '@henrygd/queue/rl'
 
-import Q from './db/extract.sql'
-
 import * as l10n from './l10n'
+
+async function migrate() {
+  const db = PathUtils.join(Zotero.DataDirectory.dir, 'better-bibtex.sqlite')
+  if (!(await File.exists(path))) return
+
+  await Zotero.DB.queryAsync('ATTACH DATABASE ? AS betterbibtex', [ db ])
+
 
 export type CitekeyRecord = {
   itemID: number
@@ -288,6 +293,7 @@ export const KeyManager = new class _KeyManager {
       description: 'keymanager',
       needs: [ 'worker', 'sqlite'],
       startup: async () => {
+        await migrate()
         await japanese.init()
         chinese.init()
 
@@ -479,7 +485,17 @@ export const KeyManager = new class _KeyManager {
   }
 
   public async load(): Promise<void> {
-    const [ regularitems, extract ] = Q
+    `
+    SELECT bbt.itemID, bbt.itemKey, bbt.libraryID, bbt.citationKey, bbt.pinned
+    FROM betterbibtex.citationkey bbt
+    WHERE bbt.itemID NOT IN (SELECT itemID FROM deletedItems)
+      AND item.itemID NOT IN (SELECT itemID FROM feedItems)
+      AND item.itemTypeID NOT IN (
+        SELECT itemTypeID
+        FROM itemTypes
+        WHERE typeName IN ('attachment', 'note', 'annotation')
+      )
+    `
 
     const keys: CitekeyRecord[] = []
     let key: CitekeyRecord
@@ -489,9 +505,6 @@ export const KeyManager = new class _KeyManager {
     await Zotero.DB.executeTransaction(async () => {
       // extract pinned keys
       await ZoteroDB.queryAsync(extract)
-
-      // delete orphans
-      await ZoteroDB.queryAsync(`WITH RegularItems AS (${regularitems}) DELETE FROM betterbibtex.citationkey WHERE itemID NOT IN (SELECT itemID FROM RegularItems)`)
 
       // load what we have in memory
       for (key of await ZoteroDB.queryAsync('SELECT * from betterbibtex.citationkey') as CitekeyRecord[]) {
