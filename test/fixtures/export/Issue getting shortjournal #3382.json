@@ -10,11 +10,42 @@
     "options": {}
   },
   "version": {
-    "zotero": "8.0",
-    "bbt": "7.0.76"
+    "zotero": "8.0.1",
+    "bbt": "7.0.77.8980"
   },
   "collections": {},
   "items": [
+    {
+      "key": "LLTSCRSV",
+      "version": 12673,
+      "itemType": "journalArticle",
+      "title": "The Quotation of Jer. 31.15 in Mt. 2.18 within Christological Patterning of Matthew\u2019s Nativity According to the Joseph Story",
+      "date": "2023",
+      "volume": "45",
+      "pages": "405-428",
+      "publicationTitle": "Journal for the Study of the New Testament",
+      "issue": "4",
+      "journalAbbreviation": "JSNT",
+      "creators": [
+        {
+          "firstName": "Kai",
+          "lastName": "Akagi",
+          "creatorType": "author"
+        }
+      ],
+      "tags": [
+        {
+          "tag": "unread"
+        }
+      ],
+      "dateAdded": "2024-09-18T04:09:43Z",
+      "dateModified": "2024-10-21T04:41:48Z",
+      "itemID": 1085,
+      "attachments": [],
+      "notes": [],
+      "citationKey": "akagiQuotationJer31152023",
+      "autoJournalAbbreviation": "J. Study New Testam."
+    },
     {
       "key": "L6MMFQEM",
       "version": 17022,
