@@ -66,11 +66,20 @@ with open('site/layouts/shortcodes/extra-fields.md', 'w') as f:
       if baseField in Zotero.meta.fields:
         doc[label(field.field)].type = Zotero.meta.fields[baseField].type
 
+  def cslconnect(csl, zotero):
+    doc[label(csl)].csl.append(csl)
+    doc[label(zotero)].csl.append(csl)
+    doc[label(csl)].zotero.append(zotero)
+    for itemType in Zotero.itemTypes:
+      for field in itemType.fields:
+        if field.field == zotero and 'baseField' in field:
+          doc[label(csl)].zotero.append(field.baseField)
+
   for csl, zoteroFields in Zotero.csl.fields.text.items():
-    for zoteroField in zoteroFields:
-      doc[label(zoteroField)].csl.append(csl)
-  for csl, zoteroField in Zotero.csl.fields.date.items():
-    doc[label(zoteroField)].csl.append(csl)
+    for zotero in zoteroFields:
+      cslconnect(csl, zotero)
+  for csl, zotero in Zotero.csl.fields.date.items():
+    cslconnect(csl, zotero)
 
   def csltype(t):
     match t.get('$ref'):
@@ -96,6 +105,7 @@ with open('site/layouts/shortcodes/extra-fields.md', 'w') as f:
     doc[label(csl)].type = csltype(meta)
 
   del doc['extra']
+  del doc['note']
   del doc['abstract']
   del doc['abstract note']
   writer = MarkdownTableWriter()

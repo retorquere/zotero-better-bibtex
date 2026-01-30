@@ -1,7 +1,7 @@
 |             label             |type|               zotero               |            csl            |
 |-------------------------------|----|------------------------------------|---------------------------|
 |**access date**                |text|accessDate                          |accessed                   |
-|**accessed**                   |date|                                    |accessed                   |
+|**accessed**                   |date|accessDate                          |accessed                   |
 |**annote**                     |text|                                    |annote                     |
 |**application number**         |text|applicationNumber                   |call-number                |
 |**archive**                    |text|archive                             |archive                    |
@@ -20,11 +20,11 @@
 |**bill number**                |text|billNumber / number                 |                           |
 |**blog title**                 |text|blogTitle / publicationTitle        |                           |
 |**book title**                 |text|bookTitle / publicationTitle        |                           |
-|**call number**                |text|callNumber                          |call-number                |
+|**call number**                |text|applicationNumber / callNumber      |call-number                |
 |**case name**                  |text|caseName / title                    |                           |
 |**categories**                 |text|                                    |categories                 |
 |**chair**                      |name|                                    |chair                      |
-|**chapter number**             |text|                                    |chapter-number             |
+|**chapter number**             |text|session                             |chapter-number             |
 |**citation key**               |text|citationKey                         |citation-key               |
 |**citation label**             |text|                                    |citation-label             |
 |**citation number**            |text|                                    |citation-number            |
@@ -33,15 +33,15 @@
 |**code pages**                 |text|codePages / pages                   |                           |
 |**code volume**                |text|codeVolume / volume                 |                           |
 |**collection editor**          |name|                                    |collection-editor          |
-|**collection number**          |text|                                    |collection-number          |
-|**collection title**           |text|                                    |collection-title           |
+|**collection number**          |text|seriesNumber                        |collection-number          |
+|**collection title**           |text|series / seriesTitle                |collection-title           |
 |**committee**                  |text|committee                           |section                    |
 |**company**                    |text|company / publisher                 |                           |
 |**compiler**                   |name|                                    |compiler                   |
 |**composer**                   |name|                                    |composer                   |
 |**conference name**            |text|conferenceName                      |event-title                |
 |**container author**           |name|                                    |container-author           |
-|**container title**            |text|                                    |container-title            |
+|**container title**            |text|code / publicationTitle / reporter  |container-title            |
 |**container title short**      |text|                                    |container-title-short      |
 |**contributor**                |name|                                    |contributor                |
 |**country**                    |text|country                             |                           |
@@ -52,7 +52,7 @@
 |**date decided**               |date|date / dateDecided                  |                           |
 |**date enacted**               |date|date / dateEnacted                  |                           |
 |**dictionary title**           |text|dictionaryTitle / publicationTitle  |                           |
-|**dimensions**                 |text|                                    |dimensions                 |
+|**dimensions**                 |text|artworkSize / runningTime           |dimensions                 |
 |**director**                   |name|                                    |director                   |
 |**distributor**                |text|distributor / publisher             |                           |
 |**division**                   |text|                                    |division                   |
@@ -67,14 +67,14 @@
 |**event**                      |text|                                    |event                      |
 |**event date**                 |date|                                    |event-date                 |
 |**event place**                |text|eventPlace                          |event-place                |
-|**event title**                |text|                                    |event-title                |
+|**event title**                |text|conferenceName / meetingName        |event-title                |
 |**executive producer**         |name|                                    |executive-producer         |
 |**filing date**                |date|filingDate                          |submitted                  |
 |**first page**                 |text|firstPage / pages                   |                           |
 |**first reference note number**|text|                                    |first-reference-note-number|
 |**format**                     |text|format / medium                     |                           |
 |**forum title**                |text|forumTitle / publicationTitle       |                           |
-|**genre**                      |text|genre / type                        |genre                      |
+|**genre**                      |text|genre / programmingLanguage / type  |genre                      |
 |**guest**                      |name|                                    |guest                      |
 |**history**                    |text|history                             |references                 |
 |**host**                       |name|                                    |host                       |
@@ -86,8 +86,8 @@
 |**interview medium**           |text|interviewMedium / medium            |                           |
 |**isbn**                       |text|ISBN                                |ISBN                       |
 |**issn**                       |text|ISSN                                |ISSN                       |
-|**issue**                      |text|issue                               |issue                      |
-|**issued**                     |date|                                    |issued                     |
+|**issue**                      |text|issue / priorityNumbers             |issue                      |
+|**issued**                     |date|date                                |issued                     |
 |**issue date**                 |date|date / issueDate                    |                           |
 |**issuing authority**          |text|authority / issuingAuthority        |                           |
 |**journal abbreviation**       |text|journalAbbreviation                 |journalAbbreviation        |
@@ -99,17 +99,17 @@
 |**legislative body**           |text|authority / legislativeBody         |                           |
 |**letter type**                |text|letterType / type                   |                           |
 |**library catalog**            |text|libraryCatalog                      |source                     |
+|**license**                    |text|rights                              |license                    |
 |**locator**                    |text|                                    |locator                    |
 |**manuscript type**            |text|manuscriptType / type               |                           |
 |**map type**                   |text|mapType / type                      |                           |
-|**medium**                     |text|medium                              |medium                     |
+|**medium**                     |text|medium / system                     |medium                     |
 |**meeting name**               |text|meetingName                         |event-title                |
 |**name of act**                |text|nameOfAct / title                   |                           |
 |**narrator**                   |name|                                    |narrator                   |
 |**network**                    |text|network / publisher                 |                           |
-|**note**                       |text|                                    |note                       |
 |**number**                     |text|number                              |number                     |
-|**number of pages**            |text|                                    |number-of-pages            |
+|**number of pages**            |text|numPages                            |number-of-pages            |
 |**number of volumes**          |text|numberOfVolumes                     |number-of-volumes          |
 |**num pages**                  |text|numPages                            |number-of-pages            |
 |**organization**               |text|authority / organization            |                           |
@@ -118,9 +118,9 @@
 |**original date**              |date|originalDate                        |original-date              |
 |**original place**             |text|originalPlace                       |original-publisher-place   |
 |**original publisher**         |text|originalPublisher                   |original-publisher         |
-|**original publisher place**   |text|                                    |original-publisher-place   |
+|**original publisher place**   |text|originalPlace                       |original-publisher-place   |
 |**original title**             |text|                                    |original-title             |
-|**page**                       |text|                                    |page                       |
+|**page**                       |text|pages                               |page                       |
 |**page first**                 |text|                                    |page-first                 |
 |**pages**                      |text|pages                               |page                       |
 |**part**                       |text|                                    |part                       |
@@ -143,9 +143,9 @@
 |**publication title**          |text|publicationTitle                    |container-title            |
 |**public law number**          |text|number / publicLawNumber            |                           |
 |**publisher**                  |text|publisher                           |publisher                  |
-|**publisher place**            |text|                                    |publisher-place            |
+|**publisher place**            |text|place                               |publisher-place            |
 |**recipient**                  |name|                                    |recipient                  |
-|**references**                 |text|references                          |references                 |
+|**references**                 |text|history / references                |references                 |
 |**reporter**                   |text|reporter                            |container-title            |
 |**reporter volume**            |text|reporterVolume / volume             |                           |
 |**report number**              |text|number / reportNumber               |                           |
@@ -159,7 +159,7 @@
 |**running time**               |text|runningTime                         |dimensions                 |
 |**scale**                      |text|scale                               |scale                      |
 |**script writer**              |name|                                    |script-writer              |
-|**section**                    |text|section                             |section                    |
+|**section**                    |text|committee / section                 |section                    |
 |**series**                     |text|series                              |collection-title           |
 |**series creator**             |name|                                    |series-creator             |
 |**series number**              |text|seriesNumber                        |collection-number          |
@@ -168,24 +168,24 @@
 |**session**                    |text|session                             |chapter-number             |
 |**session title**              |text|publicationTitle / sessionTitle     |                           |
 |**short title**                |text|shortTitle                          |shortTitle / title-short   |
-|**source**                     |text|                                    |source                     |
+|**source**                     |text|libraryCatalog                      |source                     |
 |**status**                     |text|status                              |status                     |
 |**studio**                     |text|publisher / studio                  |                           |
 |**subject**                    |text|subject / title                     |                           |
-|**submitted**                  |date|                                    |submitted                  |
+|**submitted**                  |date|filingDate                          |submitted                  |
 |**supplement**                 |text|                                    |supplement                 |
 |**system**                     |text|system                              |medium                     |
 |**thesis type**                |text|thesisType / type                   |                           |
 |**title**                      |text|title                               |title                      |
-|**title short**                |text|                                    |title-short                |
+|**title short**                |text|shortTitle                          |title-short                |
 |**translator**                 |name|                                    |translator                 |
 |**type**                       |text|type                                |genre / type               |
 |**university**                 |text|publisher / university              |                           |
 |**url**                        |text|url                                 |URL                        |
-|**version**                    |text|                                    |version                    |
+|**version**                    |text|versionNumber                       |version                    |
 |**version number**             |text|versionNumber                       |version                    |
 |**video recording format**     |text|medium / videoRecordingFormat       |                           |
-|**volume**                     |text|volume                              |volume                     |
+|**volume**                     |text|codeNumber / volume                 |volume                     |
 |**volume title**               |text|                                    |volume-title               |
 |**volume title short**         |text|                                    |volume-title-short         |
 |**website title**              |text|publicationTitle / websiteTitle     |                           |
