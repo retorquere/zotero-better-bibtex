@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="height=device-height, width=device-width, initial-scale=1.0, minimum-scale=1.0">
     <meta name="generator" content="Hugo 0.143.1">
-    <meta name="generator" content="Relearn 9.0.3+8bb66fa674351f3a0b0917a7552caac686eca920">
+    <meta name="generator" content="Relearn 9.0.3+9bc97fdf9eaf3af61af9bcc11db2e010de83af95">
     <meta name="description" content="Make Zotero more useful for us LaTeX holdouts">
     <meta name="author" content="">
     <meta name="twitter:card" content="summary">
@@ -2062,46 +2062,52 @@ of its own.</p>
       <tr>
           <th>label</th>
           <th>type</th>
-          <th>zotero/jurism</th>
+          <th>zotero</th>
           <th>csl</th>
       </tr>
   </thead>
   <tbody>
       <tr>
           <td><strong>access date</strong></td>
-          <td>date</td>
+          <td>text</td>
           <td>accessDate</td>
           <td>accessed</td>
       </tr>
       <tr>
-          <td><strong>admin flag</strong></td>
-          <td>text</td>
-          <td>adminFlag¹</td>
-          <td>admin-flag¹</td>
+          <td><strong>accessed</strong></td>
+          <td>date</td>
+          <td></td>
+          <td>accessed</td>
       </tr>
       <tr>
-          <td><strong>adoption date</strong></td>
-          <td>date</td>
-          <td>adoptionDate¹</td>
+          <td><strong>annote</strong></td>
+          <td>text</td>
           <td></td>
+          <td>annote</td>
       </tr>
       <tr>
           <td><strong>application number</strong></td>
           <td>text</td>
           <td>applicationNumber</td>
-          <td></td>
+          <td>call-number</td>
+      </tr>
+      <tr>
+          <td><strong>archive</strong></td>
+          <td>text</td>
+          <td>archive</td>
+          <td>archive</td>
       </tr>
       <tr>
           <td><strong>archive collection</strong></td>
           <td>text</td>
-          <td>archiveCollection¹</td>
-          <td>archive_collection¹</td>
+          <td></td>
+          <td>archive_collection</td>
       </tr>
       <tr>
           <td><strong>archive id</strong></td>
           <td>text</td>
-          <td>number</td>
-          <td>number</td>
+          <td>archiveID / number</td>
+          <td></td>
       </tr>
       <tr>
           <td><strong>archive location</strong></td>
@@ -2118,67 +2124,67 @@ of its own.</p>
       <tr>
           <td><strong>artwork medium</strong></td>
           <td>text</td>
-          <td>medium</td>
+          <td>artworkMedium / medium</td>
           <td></td>
       </tr>
       <tr>
           <td><strong>artwork size</strong></td>
           <td>text</td>
           <td>artworkSize</td>
-          <td></td>
+          <td>dimensions</td>
       </tr>
       <tr>
-          <td><strong>assembly number</strong></td>
+          <td><strong>assignee</strong></td>
           <td>text</td>
-          <td>assemblyNumber¹ / seriesNumber</td>
+          <td>assignee</td>
           <td></td>
-      </tr>
-      <tr>
-          <td><strong>attorney agent</strong></td>
-          <td>name</td>
-          <td>attorneyAgent</td>
-          <td>attorneyAgent</td>
       </tr>
       <tr>
           <td><strong>audio file type</strong></td>
           <td>text</td>
-          <td>medium</td>
+          <td>audioFileType / medium</td>
           <td></td>
       </tr>
       <tr>
           <td><strong>audio recording format</strong></td>
           <td>text</td>
-          <td>medium</td>
+          <td>audioRecordingFormat / medium</td>
           <td></td>
+      </tr>
+      <tr>
+          <td><strong>author</strong></td>
+          <td>name</td>
+          <td></td>
+          <td>author</td>
+      </tr>
+      <tr>
+          <td><strong>authority</strong></td>
+          <td>text</td>
+          <td>authority</td>
+          <td>authority</td>
+      </tr>
+      <tr>
+          <td><strong>available date</strong></td>
+          <td>date</td>
+          <td></td>
+          <td>available-date</td>
       </tr>
       <tr>
           <td><strong>bill number</strong></td>
           <td>text</td>
-          <td>number</td>
-          <td>number</td>
+          <td>billNumber / number</td>
+          <td></td>
       </tr>
       <tr>
           <td><strong>blog title</strong></td>
           <td>text</td>
-          <td>publicationTitle</td>
+          <td>blogTitle / publicationTitle</td>
           <td></td>
-      </tr>
-      <tr>
-          <td><strong>book abbreviation</strong></td>
-          <td>text</td>
-          <td>journalAbbreviation</td>
-          <td>container-title-short</td>
-      </tr>
-      <tr>
-          <td><strong>book author</strong></td>
-          <td>name</td>
-          <td>bookAuthor</td>
-          <td>container-author</td>
       </tr>
       <tr>
           <td><strong>book title</strong></td>
           <td>text</td>
-          <td>publicationTitle</td>
+          <td>bookTitle / publicationTitle</td>
           <td></td>
       </tr>
       <tr>
@@ -2190,140 +2196,242 @@ of its own.</p>
       <tr>
           <td><strong>case name</strong></td>
           <td>text</td>
-          <td>title</td>
-          <td>title</td>
+          <td>caseName / title</td>
+          <td></td>
       </tr>
       <tr>
-          <td><strong>cast member</strong></td>
+          <td><strong>categories</strong></td>
+          <td>text</td>
+          <td></td>
+          <td>categories</td>
+      </tr>
+      <tr>
+          <td><strong>chair</strong></td>
           <td>name</td>
-          <td>castMember</td>
-          <td>castMember</td>
+          <td></td>
+          <td>chair</td>
       </tr>
       <tr>
           <td><strong>chapter number</strong></td>
           <td>text</td>
-          <td>session</td>
+          <td></td>
           <td>chapter-number</td>
       </tr>
       <tr>
           <td><strong>citation key</strong></td>
           <td>text</td>
-          <td>citationKey²</td>
+          <td>citationKey</td>
+          <td>citation-key</td>
+      </tr>
+      <tr>
+          <td><strong>citation label</strong></td>
+          <td>text</td>
           <td></td>
+          <td>citation-label</td>
+      </tr>
+      <tr>
+          <td><strong>citation number</strong></td>
+          <td>text</td>
+          <td></td>
+          <td>citation-number</td>
+      </tr>
+      <tr>
+          <td><strong>code</strong></td>
+          <td>text</td>
+          <td>code</td>
+          <td>container-title</td>
       </tr>
       <tr>
           <td><strong>code number</strong></td>
           <td>text</td>
           <td>codeNumber</td>
-          <td></td>
+          <td>volume</td>
       </tr>
       <tr>
           <td><strong>code pages</strong></td>
           <td>text</td>
-          <td>pages</td>
-          <td>page</td>
+          <td>codePages / pages</td>
+          <td></td>
       </tr>
       <tr>
           <td><strong>code volume</strong></td>
           <td>text</td>
-          <td>volume</td>
+          <td>codeVolume / volume</td>
           <td></td>
       </tr>
       <tr>
           <td><strong>collection editor</strong></td>
           <td>name</td>
-          <td>seriesEditor</td>
+          <td></td>
           <td>collection-editor</td>
       </tr>
       <tr>
           <td><strong>collection number</strong></td>
           <td>text</td>
-          <td>assemblyNumber¹ / regnalYear¹ / seriesNumber / yearAsVolume¹</td>
+          <td></td>
           <td>collection-number</td>
       </tr>
       <tr>
           <td><strong>collection title</strong></td>
           <td>text</td>
-          <td>parentTreaty¹ / series / seriesTitle</td>
+          <td></td>
           <td>collection-title</td>
       </tr>
       <tr>
-          <td><strong>conference date</strong></td>
-          <td>date</td>
-          <td>conferenceDate¹</td>
+          <td><strong>committee</strong></td>
+          <td>text</td>
+          <td>committee</td>
+          <td>section</td>
+      </tr>
+      <tr>
+          <td><strong>company</strong></td>
+          <td>text</td>
+          <td>company / publisher</td>
           <td></td>
+      </tr>
+      <tr>
+          <td><strong>compiler</strong></td>
+          <td>name</td>
+          <td></td>
+          <td>compiler</td>
+      </tr>
+      <tr>
+          <td><strong>composer</strong></td>
+          <td>name</td>
+          <td></td>
+          <td>composer</td>
       </tr>
       <tr>
           <td><strong>conference name</strong></td>
           <td>text</td>
           <td>conferenceName</td>
-          <td></td>
+          <td>event-title</td>
       </tr>
       <tr>
           <td><strong>container author</strong></td>
           <td>name</td>
-          <td>bookAuthor</td>
+          <td></td>
           <td>container-author</td>
       </tr>
       <tr>
           <td><strong>container title</strong></td>
           <td>text</td>
-          <td>code / publicationTitle / reporter</td>
+          <td></td>
           <td>container-title</td>
       </tr>
       <tr>
           <td><strong>container title short</strong></td>
           <td>text</td>
-          <td>journalAbbreviation</td>
+          <td></td>
           <td>container-title-short</td>
       </tr>
       <tr>
-          <td><strong>csl type</strong></td>
-          <td>text</td>
+          <td><strong>contributor</strong></td>
+          <td>name</td>
           <td></td>
-          <td>csl-type</td>
+          <td>contributor</td>
       </tr>
       <tr>
-          <td><strong>date amended</strong></td>
-          <td>date</td>
-          <td>dateAmended¹</td>
+          <td><strong>country</strong></td>
+          <td>text</td>
+          <td>country</td>
           <td></td>
+      </tr>
+      <tr>
+          <td><strong>court</strong></td>
+          <td>text</td>
+          <td>authority / court</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td><strong>curator</strong></td>
+          <td>name</td>
+          <td></td>
+          <td>curator</td>
+      </tr>
+      <tr>
+          <td><strong>custom</strong></td>
+          <td></td>
+          <td></td>
+          <td>custom</td>
+      </tr>
+      <tr>
+          <td><strong>date</strong></td>
+          <td>date</td>
+          <td>date</td>
+          <td>issued</td>
       </tr>
       <tr>
           <td><strong>date decided</strong></td>
           <td>date</td>
-          <td>date</td>
-          <td>issued</td>
+          <td>date / dateDecided</td>
+          <td></td>
       </tr>
       <tr>
           <td><strong>date enacted</strong></td>
           <td>date</td>
-          <td>date</td>
-          <td>issued</td>
+          <td>date / dateEnacted</td>
+          <td></td>
       </tr>
       <tr>
           <td><strong>dictionary title</strong></td>
           <td>text</td>
-          <td>publicationTitle</td>
+          <td>dictionaryTitle / publicationTitle</td>
           <td></td>
+      </tr>
+      <tr>
+          <td><strong>dimensions</strong></td>
+          <td>text</td>
+          <td></td>
+          <td>dimensions</td>
+      </tr>
+      <tr>
+          <td><strong>director</strong></td>
+          <td>name</td>
+          <td></td>
+          <td>director</td>
+      </tr>
+      <tr>
+          <td><strong>distributor</strong></td>
+          <td>text</td>
+          <td>distributor / publisher</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td><strong>division</strong></td>
+          <td>text</td>
+          <td></td>
+          <td>division</td>
       </tr>
       <tr>
           <td><strong>docket number</strong></td>
           <td>text</td>
-          <td>number</td>
-          <td>number</td>
-      </tr>
-      <tr>
-          <td><strong>document name</strong></td>
-          <td>text</td>
-          <td>documentName¹</td>
-          <td>document-name¹</td>
+          <td>docketNumber / number</td>
+          <td></td>
       </tr>
       <tr>
           <td><strong>document number</strong></td>
           <td>text</td>
-          <td>documentNumber¹ / number</td>
-          <td>document-number¹</td>
+          <td>documentNumber / number</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td><strong>doi</strong></td>
+          <td>text</td>
+          <td>DOI</td>
+          <td>DOI</td>
+      </tr>
+      <tr>
+          <td><strong>edition</strong></td>
+          <td>text</td>
+          <td>edition</td>
+          <td>edition</td>
+      </tr>
+      <tr>
+          <td><strong>editor</strong></td>
+          <td>name</td>
+          <td></td>
+          <td>editor</td>
       </tr>
       <tr>
           <td><strong>editorial director</strong></td>
@@ -2334,32 +2442,44 @@ of its own.</p>
       <tr>
           <td><strong>encyclopedia title</strong></td>
           <td>text</td>
-          <td>publicationTitle</td>
+          <td>encyclopediaTitle / publicationTitle</td>
           <td></td>
       </tr>
       <tr>
           <td><strong>episode number</strong></td>
           <td>text</td>
-          <td>number</td>
-          <td>number</td>
+          <td>episodeNumber / number</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td><strong>event</strong></td>
+          <td>text</td>
+          <td></td>
+          <td>event</td>
       </tr>
       <tr>
           <td><strong>event date</strong></td>
           <td>date</td>
-          <td>conferenceDate¹ / dateAmended¹ / signingDate¹</td>
+          <td></td>
           <td>event-date</td>
       </tr>
       <tr>
           <td><strong>event place</strong></td>
           <td>text</td>
-          <td></td>
+          <td>eventPlace</td>
           <td>event-place</td>
       </tr>
       <tr>
           <td><strong>event title</strong></td>
           <td>text</td>
           <td></td>
-          <td>event-title²</td>
+          <td>event-title</td>
+      </tr>
+      <tr>
+          <td><strong>executive producer</strong></td>
+          <td>name</td>
+          <td></td>
+          <td>executive-producer</td>
       </tr>
       <tr>
           <td><strong>filing date</strong></td>
@@ -2370,61 +2490,169 @@ of its own.</p>
       <tr>
           <td><strong>first page</strong></td>
           <td>text</td>
-          <td>pages</td>
-          <td>page</td>
+          <td>firstPage / pages</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td><strong>first reference note number</strong></td>
+          <td>text</td>
+          <td></td>
+          <td>first-reference-note-number</td>
+      </tr>
+      <tr>
+          <td><strong>format</strong></td>
+          <td>text</td>
+          <td>format / medium</td>
+          <td></td>
       </tr>
       <tr>
           <td><strong>forum title</strong></td>
           <td>text</td>
-          <td>publicationTitle</td>
+          <td>forumTitle / publicationTitle</td>
           <td></td>
       </tr>
       <tr>
-          <td><strong>gazette flag</strong></td>
+          <td><strong>genre</strong></td>
           <td>text</td>
-          <td>gazetteFlag¹</td>
-          <td>gazette-flag¹</td>
+          <td>genre / type</td>
+          <td>genre</td>
+      </tr>
+      <tr>
+          <td><strong>guest</strong></td>
+          <td>name</td>
+          <td></td>
+          <td>guest</td>
+      </tr>
+      <tr>
+          <td><strong>history</strong></td>
+          <td>text</td>
+          <td>history</td>
+          <td>references</td>
+      </tr>
+      <tr>
+          <td><strong>host</strong></td>
+          <td>name</td>
+          <td></td>
+          <td>host</td>
+      </tr>
+      <tr>
+          <td><strong>id</strong></td>
+          <td>text</td>
+          <td></td>
+          <td>id</td>
+      </tr>
+      <tr>
+          <td><strong>identifier</strong></td>
+          <td>text</td>
+          <td>identifier / number</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td><strong>illustrator</strong></td>
+          <td>name</td>
+          <td></td>
+          <td>illustrator</td>
+      </tr>
+      <tr>
+          <td><strong>institution</strong></td>
+          <td>text</td>
+          <td>institution / publisher</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td><strong>interviewer</strong></td>
+          <td>name</td>
+          <td></td>
+          <td>interviewer</td>
       </tr>
       <tr>
           <td><strong>interview medium</strong></td>
           <td>text</td>
-          <td>medium</td>
+          <td>interviewMedium / medium</td>
           <td></td>
+      </tr>
+      <tr>
+          <td><strong>isbn</strong></td>
+          <td>text</td>
+          <td>ISBN</td>
+          <td>ISBN</td>
+      </tr>
+      <tr>
+          <td><strong>issn</strong></td>
+          <td>text</td>
+          <td>ISSN</td>
+          <td>ISSN</td>
+      </tr>
+      <tr>
+          <td><strong>issue</strong></td>
+          <td>text</td>
+          <td>issue</td>
+          <td>issue</td>
+      </tr>
+      <tr>
+          <td><strong>issued</strong></td>
+          <td>date</td>
+          <td></td>
+          <td>issued</td>
       </tr>
       <tr>
           <td><strong>issue date</strong></td>
           <td>date</td>
-          <td>date</td>
-          <td>issued</td>
+          <td>date / issueDate</td>
+          <td></td>
       </tr>
       <tr>
           <td><strong>issuing authority</strong></td>
           <td>text</td>
-          <td>authority² / issuingAuthority¹</td>
+          <td>authority / issuingAuthority</td>
           <td></td>
       </tr>
       <tr>
           <td><strong>journal abbreviation</strong></td>
           <td>text</td>
           <td>journalAbbreviation</td>
-          <td>container-title-short</td>
+          <td>journalAbbreviation</td>
+      </tr>
+      <tr>
+          <td><strong>jurisdiction</strong></td>
+          <td>text</td>
+          <td></td>
+          <td>jurisdiction</td>
+      </tr>
+      <tr>
+          <td><strong>keyword</strong></td>
+          <td>text</td>
+          <td></td>
+          <td>keyword</td>
+      </tr>
+      <tr>
+          <td><strong>label</strong></td>
+          <td>text</td>
+          <td>label / publisher</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td><strong>language</strong></td>
+          <td>text</td>
+          <td>language</td>
+          <td>language</td>
       </tr>
       <tr>
           <td><strong>legal status</strong></td>
           <td>text</td>
-          <td>legalStatus¹ / status</td>
-          <td>status</td>
+          <td>legalStatus / status</td>
+          <td></td>
       </tr>
       <tr>
           <td><strong>legislative body</strong></td>
           <td>text</td>
-          <td>authority² / legislativeBody¹</td>
+          <td>authority / legislativeBody</td>
           <td></td>
       </tr>
       <tr>
           <td><strong>letter type</strong></td>
           <td>text</td>
-          <td>type</td>
+          <td>letterType / type</td>
           <td></td>
       </tr>
       <tr>
@@ -2434,51 +2662,69 @@ of its own.</p>
           <td>source</td>
       </tr>
       <tr>
+          <td><strong>locator</strong></td>
+          <td>text</td>
+          <td></td>
+          <td>locator</td>
+      </tr>
+      <tr>
           <td><strong>manuscript type</strong></td>
           <td>text</td>
-          <td>type</td>
+          <td>manuscriptType / type</td>
           <td></td>
       </tr>
       <tr>
           <td><strong>map type</strong></td>
           <td>text</td>
-          <td>type</td>
+          <td>mapType / type</td>
           <td></td>
+      </tr>
+      <tr>
+          <td><strong>medium</strong></td>
+          <td>text</td>
+          <td>medium</td>
+          <td>medium</td>
       </tr>
       <tr>
           <td><strong>meeting name</strong></td>
           <td>text</td>
           <td>meetingName</td>
-          <td></td>
-      </tr>
-      <tr>
-          <td><strong>meeting number</strong></td>
-          <td>text</td>
-          <td>meetingNumber¹</td>
-          <td></td>
+          <td>event-title</td>
       </tr>
       <tr>
           <td><strong>name of act</strong></td>
           <td>text</td>
-          <td>title</td>
-          <td>title</td>
-      </tr>
-      <tr>
-          <td><strong>news case date</strong></td>
-          <td>date</td>
-          <td>newsCaseDate¹</td>
+          <td>nameOfAct / title</td>
           <td></td>
       </tr>
       <tr>
-          <td><strong>num pages</strong></td>
+          <td><strong>narrator</strong></td>
+          <td>name</td>
+          <td></td>
+          <td>narrator</td>
+      </tr>
+      <tr>
+          <td><strong>network</strong></td>
           <td>text</td>
-          <td>numPages</td>
-          <td>number-of-pages</td>
+          <td>network / publisher</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td><strong>note</strong></td>
+          <td>text</td>
+          <td></td>
+          <td>note</td>
+      </tr>
+      <tr>
+          <td><strong>number</strong></td>
+          <td>text</td>
+          <td>number</td>
+          <td>number</td>
       </tr>
       <tr>
           <td><strong>number of pages</strong></td>
           <td>text</td>
-          <td>numPages</td>
+          <td></td>
           <td>number-of-pages</td>
       </tr>
       <tr>
@@ -2488,10 +2734,22 @@ of its own.</p>
           <td>number-of-volumes</td>
       </tr>
       <tr>
-          <td><strong>opening date</strong></td>
-          <td>date</td>
-          <td>openingDate¹</td>
-          <td>opening-date¹</td>
+          <td><strong>num pages</strong></td>
+          <td>text</td>
+          <td>numPages</td>
+          <td>number-of-pages</td>
+      </tr>
+      <tr>
+          <td><strong>organization</strong></td>
+          <td>text</td>
+          <td>authority / organization</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td><strong>organizer</strong></td>
+          <td>name</td>
+          <td></td>
+          <td>organizer</td>
       </tr>
       <tr>
           <td><strong>original author</strong></td>
@@ -2502,13 +2760,19 @@ of its own.</p>
       <tr>
           <td><strong>original date</strong></td>
           <td>date</td>
-          <td>originalDate¹</td>
+          <td>originalDate</td>
           <td>original-date</td>
+      </tr>
+      <tr>
+          <td><strong>original place</strong></td>
+          <td>text</td>
+          <td>originalPlace</td>
+          <td>original-publisher-place</td>
       </tr>
       <tr>
           <td><strong>original publisher</strong></td>
           <td>text</td>
-          <td></td>
+          <td>originalPublisher</td>
           <td>original-publisher</td>
       </tr>
       <tr>
@@ -2524,82 +2788,142 @@ of its own.</p>
           <td>original-title</td>
       </tr>
       <tr>
-          <td><strong>parent treaty</strong></td>
+          <td><strong>page</strong></td>
           <td>text</td>
-          <td>parentTreaty¹</td>
           <td></td>
+          <td>page</td>
+      </tr>
+      <tr>
+          <td><strong>page first</strong></td>
+          <td>text</td>
+          <td></td>
+          <td>page-first</td>
+      </tr>
+      <tr>
+          <td><strong>pages</strong></td>
+          <td>text</td>
+          <td>pages</td>
+          <td>page</td>
+      </tr>
+      <tr>
+          <td><strong>part</strong></td>
+          <td>text</td>
+          <td></td>
+          <td>part</td>
+      </tr>
+      <tr>
+          <td><strong>part number</strong></td>
+          <td>text</td>
+          <td>partNumber</td>
+          <td>part-number</td>
+      </tr>
+      <tr>
+          <td><strong>part title</strong></td>
+          <td>text</td>
+          <td>partTitle</td>
+          <td>part-title</td>
       </tr>
       <tr>
           <td><strong>patent number</strong></td>
           <td>text</td>
-          <td>number</td>
-          <td>number</td>
+          <td>number / patentNumber</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td><strong>performer</strong></td>
+          <td>name</td>
+          <td></td>
+          <td>performer</td>
+      </tr>
+      <tr>
+          <td><strong>place</strong></td>
+          <td>text</td>
+          <td>place</td>
+          <td>publisher-place</td>
+      </tr>
+      <tr>
+          <td><strong>pmcid</strong></td>
+          <td>text</td>
+          <td>PMCID</td>
+          <td>PMCID</td>
+      </tr>
+      <tr>
+          <td><strong>pmid</strong></td>
+          <td>text</td>
+          <td>PMID</td>
+          <td>PMID</td>
       </tr>
       <tr>
           <td><strong>post type</strong></td>
           <td>text</td>
-          <td>type</td>
+          <td>postType / type</td>
           <td></td>
       </tr>
       <tr>
           <td><strong>presentation type</strong></td>
           <td>text</td>
-          <td>type</td>
+          <td>presentationType / type</td>
           <td></td>
       </tr>
       <tr>
+          <td><strong>printing</strong></td>
+          <td>text</td>
+          <td></td>
+          <td>printing</td>
+      </tr>
+      <tr>
           <td><strong>priority date</strong></td>
-          <td>date</td>
-          <td>priorityDate¹</td>
+          <td>text</td>
+          <td>originalDate / priorityDate</td>
           <td></td>
       </tr>
       <tr>
           <td><strong>priority numbers</strong></td>
           <td>text</td>
           <td>priorityNumbers</td>
-          <td></td>
+          <td>issue</td>
       </tr>
       <tr>
           <td><strong>proceedings title</strong></td>
           <td>text</td>
-          <td>publicationTitle</td>
+          <td>proceedingsTitle / publicationTitle</td>
           <td></td>
       </tr>
       <tr>
-          <td><strong>program title</strong></td>
-          <td>text</td>
-          <td>publicationTitle</td>
+          <td><strong>producer</strong></td>
+          <td>name</td>
           <td></td>
+          <td>producer</td>
       </tr>
       <tr>
           <td><strong>programming language</strong></td>
           <td>text</td>
           <td>programmingLanguage</td>
+          <td>genre</td>
+      </tr>
+      <tr>
+          <td><strong>program title</strong></td>
+          <td>text</td>
+          <td>programTitle / publicationTitle</td>
           <td></td>
-      </tr>
-      <tr>
-          <td><strong>public law number</strong></td>
-          <td>text</td>
-          <td>number</td>
-          <td>number</td>
-      </tr>
-      <tr>
-          <td><strong>publication date</strong></td>
-          <td>date</td>
-          <td>publicationDate¹</td>
-          <td>publication-date¹</td>
-      </tr>
-      <tr>
-          <td><strong>publication number</strong></td>
-          <td>text</td>
-          <td>publicationNumber¹</td>
-          <td>publication-number¹</td>
       </tr>
       <tr>
           <td><strong>publication title</strong></td>
           <td>text</td>
           <td>publicationTitle</td>
+          <td>container-title</td>
+      </tr>
+      <tr>
+          <td><strong>public law number</strong></td>
+          <td>text</td>
+          <td>number / publicLawNumber</td>
           <td></td>
+      </tr>
+      <tr>
+          <td><strong>publisher</strong></td>
+          <td>text</td>
+          <td>publisher</td>
+          <td>publisher</td>
       </tr>
       <tr>
           <td><strong>publisher place</strong></td>
@@ -2608,58 +2932,64 @@ of its own.</p>
           <td>publisher-place</td>
       </tr>
       <tr>
-          <td><strong>regnal year</strong></td>
-          <td>text</td>
-          <td>regnalYear¹</td>
+          <td><strong>recipient</strong></td>
+          <td>name</td>
           <td></td>
+          <td>recipient</td>
       </tr>
       <tr>
-          <td><strong>regulation type</strong></td>
+          <td><strong>references</strong></td>
           <td>text</td>
-          <td>regulationType¹ / type</td>
-          <td></td>
+          <td>references</td>
+          <td>references</td>
       </tr>
       <tr>
-          <td><strong>regulatory body</strong></td>
+          <td><strong>reporter</strong></td>
           <td>text</td>
-          <td>legislativeBody¹ / regulatoryBody¹</td>
+          <td>reporter</td>
+          <td>container-title</td>
+      </tr>
+      <tr>
+          <td><strong>reporter volume</strong></td>
+          <td>text</td>
+          <td>reporterVolume / volume</td>
           <td></td>
       </tr>
       <tr>
           <td><strong>report number</strong></td>
           <td>text</td>
-          <td>number</td>
-          <td>number</td>
+          <td>number / reportNumber</td>
+          <td></td>
       </tr>
       <tr>
           <td><strong>report type</strong></td>
           <td>text</td>
-          <td>type</td>
+          <td>reportType / type</td>
           <td></td>
       </tr>
       <tr>
-          <td><strong>reporter volume</strong></td>
+          <td><strong>repository</strong></td>
           <td>text</td>
-          <td>volume</td>
+          <td>publisher / repository</td>
           <td></td>
       </tr>
       <tr>
           <td><strong>repository location</strong></td>
           <td>text</td>
-          <td>place</td>
-          <td>event-place / publisher-place</td>
-      </tr>
-      <tr>
-          <td><strong>resolution label</strong></td>
-          <td>text</td>
-          <td>resolutionLabel¹</td>
+          <td>place / repositoryLocation</td>
           <td></td>
       </tr>
       <tr>
           <td><strong>reviewed author</strong></td>
           <td>name</td>
-          <td>reviewedAuthor</td>
+          <td></td>
           <td>reviewed-author</td>
+      </tr>
+      <tr>
+          <td><strong>reviewed genre</strong></td>
+          <td>text</td>
+          <td></td>
+          <td>reviewed-genre</td>
       </tr>
       <tr>
           <td><strong>reviewed title</strong></td>
@@ -2668,28 +2998,52 @@ of its own.</p>
           <td>reviewed-title</td>
       </tr>
       <tr>
+          <td><strong>rights</strong></td>
+          <td>text</td>
+          <td>rights</td>
+          <td>license</td>
+      </tr>
+      <tr>
           <td><strong>running time</strong></td>
           <td>text</td>
           <td>runningTime</td>
-          <td></td>
+          <td>dimensions</td>
+      </tr>
+      <tr>
+          <td><strong>scale</strong></td>
+          <td>text</td>
+          <td>scale</td>
+          <td>scale</td>
       </tr>
       <tr>
           <td><strong>script writer</strong></td>
           <td>name</td>
-          <td>scriptwriter</td>
-          <td>script-writer²</td>
+          <td></td>
+          <td>script-writer</td>
       </tr>
       <tr>
-          <td><strong>series editor</strong></td>
+          <td><strong>section</strong></td>
+          <td>text</td>
+          <td>section</td>
+          <td>section</td>
+      </tr>
+      <tr>
+          <td><strong>series</strong></td>
+          <td>text</td>
+          <td>series</td>
+          <td>collection-title</td>
+      </tr>
+      <tr>
+          <td><strong>series creator</strong></td>
           <td>name</td>
-          <td>seriesEditor</td>
-          <td>collection-editor</td>
+          <td></td>
+          <td>series-creator</td>
       </tr>
       <tr>
           <td><strong>series number</strong></td>
           <td>text</td>
           <td>seriesNumber</td>
-          <td></td>
+          <td>collection-number</td>
       </tr>
       <tr>
           <td><strong>series text</strong></td>
@@ -2701,55 +3055,115 @@ of its own.</p>
           <td><strong>series title</strong></td>
           <td>text</td>
           <td>seriesTitle</td>
-          <td></td>
+          <td>collection-title</td>
       </tr>
       <tr>
-          <td><strong>session type</strong></td>
+          <td><strong>session</strong></td>
           <td>text</td>
-          <td>sessionType¹ / type</td>
+          <td>session</td>
+          <td>chapter-number</td>
+      </tr>
+      <tr>
+          <td><strong>session title</strong></td>
+          <td>text</td>
+          <td>publicationTitle / sessionTitle</td>
           <td></td>
       </tr>
       <tr>
           <td><strong>short title</strong></td>
           <td>text</td>
           <td>shortTitle</td>
-          <td>title-short</td>
+          <td>shortTitle / title-short</td>
       </tr>
       <tr>
-          <td><strong>signing date</strong></td>
-          <td>date</td>
-          <td>signingDate¹</td>
+          <td><strong>source</strong></td>
+          <td>text</td>
+          <td></td>
+          <td>source</td>
+      </tr>
+      <tr>
+          <td><strong>status</strong></td>
+          <td>text</td>
+          <td>status</td>
+          <td>status</td>
+      </tr>
+      <tr>
+          <td><strong>studio</strong></td>
+          <td>text</td>
+          <td>publisher / studio</td>
           <td></td>
       </tr>
       <tr>
-          <td><strong>supplement name</strong></td>
+          <td><strong>subject</strong></td>
           <td>text</td>
-          <td>supplementName¹</td>
-          <td>supplement¹</td>
+          <td>subject / title</td>
+          <td></td>
       </tr>
       <tr>
-          <td><strong>testimony by</strong></td>
-          <td>name</td>
-          <td>testimonyBy¹</td>
-          <td>testimonyBy¹</td>
+          <td><strong>submitted</strong></td>
+          <td>date</td>
+          <td></td>
+          <td>submitted</td>
+      </tr>
+      <tr>
+          <td><strong>supplement</strong></td>
+          <td>text</td>
+          <td></td>
+          <td>supplement</td>
+      </tr>
+      <tr>
+          <td><strong>system</strong></td>
+          <td>text</td>
+          <td>system</td>
+          <td>medium</td>
       </tr>
       <tr>
           <td><strong>thesis type</strong></td>
           <td>text</td>
-          <td>type</td>
+          <td>thesisType / type</td>
           <td></td>
+      </tr>
+      <tr>
+          <td><strong>title</strong></td>
+          <td>text</td>
+          <td>title</td>
+          <td>title</td>
       </tr>
       <tr>
           <td><strong>title short</strong></td>
           <td>text</td>
-          <td>shortTitle</td>
+          <td></td>
           <td>title-short</td>
       </tr>
       <tr>
-          <td><strong>treaty number</strong></td>
+          <td><strong>translator</strong></td>
+          <td>name</td>
+          <td></td>
+          <td>translator</td>
+      </tr>
+      <tr>
+          <td><strong>type</strong></td>
           <td>text</td>
-          <td>number</td>
-          <td>number</td>
+          <td>type</td>
+          <td>genre / type</td>
+      </tr>
+      <tr>
+          <td><strong>university</strong></td>
+          <td>text</td>
+          <td>publisher / university</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td><strong>url</strong></td>
+          <td>text</td>
+          <td>url</td>
+          <td>URL</td>
+      </tr>
+      <tr>
+          <td><strong>version</strong></td>
+          <td>text</td>
+          <td></td>
+          <td>version</td>
       </tr>
       <tr>
           <td><strong>version number</strong></td>
@@ -2760,38 +3174,44 @@ of its own.</p>
       <tr>
           <td><strong>video recording format</strong></td>
           <td>text</td>
-          <td>medium</td>
+          <td>medium / videoRecordingFormat</td>
           <td></td>
+      </tr>
+      <tr>
+          <td><strong>volume</strong></td>
+          <td>text</td>
+          <td>volume</td>
+          <td>volume</td>
       </tr>
       <tr>
           <td><strong>volume title</strong></td>
           <td>text</td>
-          <td>volumeTitle¹</td>
-          <td>volume-title¹</td>
+          <td></td>
+          <td>volume-title</td>
+      </tr>
+      <tr>
+          <td><strong>volume title short</strong></td>
+          <td>text</td>
+          <td></td>
+          <td>volume-title-short</td>
       </tr>
       <tr>
           <td><strong>website title</strong></td>
           <td>text</td>
-          <td>publicationTitle</td>
+          <td>publicationTitle / websiteTitle</td>
           <td></td>
       </tr>
       <tr>
           <td><strong>website type</strong></td>
           <td>text</td>
-          <td>type</td>
+          <td>type / websiteType</td>
           <td></td>
       </tr>
       <tr>
-          <td><strong>words by</strong></td>
-          <td>name</td>
-          <td>wordsBy</td>
-          <td>wordsBy</td>
-      </tr>
-      <tr>
-          <td><strong>year as volume</strong></td>
+          <td><strong>year suffix</strong></td>
           <td>text</td>
-          <td>yearAsVolume¹</td>
           <td></td>
+          <td>year-suffix</td>
       </tr>
   </tbody>
 </table>
@@ -14110,10 +14530,10 @@ means a lot) so I can save up for a replacement a year or so down
 the line, head on over to <a href="https://www.patreon.com/retorquere" rel="external">Patreon</a>,
 but mind that Patreon takes a fairly large cut of what you give.</p>
 <p>Many, many thanks, also to the existing contributors &ndash; thanks to you I&rsquo;ve hit my first target and have been able to replace my trusty macbook air with a newer macbook pro which has much more breathing room.</p>
-<p><a href="#R-image-8864d0d4f2dbbc75e8ac5280d08bf2b1" class="lightbox-link"><img alt="My github stats" class="lazy lightbox figure-image" loading="lazy" src="https://github-readme-stats.vercel.app/api?username=retorquere&show_icons=true&hide_border=true&theme=dark" style="height: auto;width: auto;"></a>
-<a href="javascript:history.back();" class="lightbox-back" id="R-image-8864d0d4f2dbbc75e8ac5280d08bf2b1"><img alt="My github stats" class="lazy lightbox lightbox-image" loading="lazy" src="https://github-readme-stats.vercel.app/api?username=retorquere&show_icons=true&hide_border=true&theme=dark"></a></p>
-<p><a href="#R-image-9440302d873bb042c9397d6837e2c5dd" class="lightbox-link"><img alt="Metrics" class="lazy lightbox figure-image" loading="lazy" src="https://metrics.lecoq.io/retorquere?template=classic&config.timezone=Europe%2FOslo" style="height: auto;width: auto;"></a>
-<a href="javascript:history.back();" class="lightbox-back" id="R-image-9440302d873bb042c9397d6837e2c5dd"><img alt="Metrics" class="lazy lightbox lightbox-image" loading="lazy" src="https://metrics.lecoq.io/retorquere?template=classic&config.timezone=Europe%2FOslo"></a></p>
+<p><a href="#R-image-a081f0f63a76a6e35cb8e74a46e76baf" class="lightbox-link"><img alt="My github stats" class="lazy lightbox figure-image" loading="lazy" src="https://github-readme-stats.vercel.app/api?username=retorquere&show_icons=true&hide_border=true&theme=dark" style="height: auto;width: auto;"></a>
+<a href="javascript:history.back();" class="lightbox-back" id="R-image-a081f0f63a76a6e35cb8e74a46e76baf"><img alt="My github stats" class="lazy lightbox lightbox-image" loading="lazy" src="https://github-readme-stats.vercel.app/api?username=retorquere&show_icons=true&hide_border=true&theme=dark"></a></p>
+<p><a href="#R-image-6552592ff00dc6a53cc78b52fadc6380" class="lightbox-link"><img alt="Metrics" class="lazy lightbox figure-image" loading="lazy" src="https://metrics.lecoq.io/retorquere?template=classic&config.timezone=Europe%2FOslo" style="height: auto;width: auto;"></a>
+<a href="javascript:history.back();" class="lightbox-back" id="R-image-6552592ff00dc6a53cc78b52fadc6380"><img alt="Metrics" class="lazy lightbox lightbox-image" loading="lazy" src="https://metrics.lecoq.io/retorquere?template=classic&config.timezone=Europe%2FOslo"></a></p>
 
   <footer class="footline">
   </footer>
