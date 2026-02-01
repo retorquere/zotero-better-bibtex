@@ -1,0 +1,57 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "preferences": {
+      "autoAbbrev": true,
+      "citekeyFormat": "auth.lower + shorttitle(3, 3) + year",
+      "exportTitleCase": false
+    },
+    "options": {}
+  },
+  "version": {
+    "zotero": "8.0",
+    "bbt": "7.0.76"
+  },
+  "collections": {},
+  "items": [
+    {
+      "key": "L6MMFQEM",
+      "version": 17022,
+      "itemType": "journalArticle",
+      "title": "Further Light on Melchizedek from Qumran Cave 11",
+      "date": "1967",
+      "language": "en",
+      "libraryCatalog": "scholarlypublishingcollective.org",
+      "url": "https://dx.doi.org/10.2307/3263241",
+      "accessDate": "2025-11-21T06:15:59Z",
+      "volume": "86",
+      "publisher": "Duke University Press",
+      "pages": "25-41",
+      "publicationTitle": "Journal of Biblical Literature",
+      "DOI": "10.2307/3263241",
+      "issue": "1",
+      "journalAbbreviation": "JBL",
+      "ISSN": "0021-9231",
+      "creators": [
+        {
+          "firstName": "Joseph A.",
+          "lastName": "Fitzmyer",
+          "creatorType": "author"
+        }
+      ],
+      "tags": [
+        {
+          "tag": "unread",
+          "type": 1
+        }
+      ],
+      "dateAdded": "2025-11-21T06:15:59Z",
+      "dateModified": "2026-01-26T04:22:48Z",
+      "itemID": 23818,
+      "attachments": [],
+      "notes": [],
+      "citationKey": "fitzmyerFurtherLightMelchizedek1967"
+    }
+  ]
+}

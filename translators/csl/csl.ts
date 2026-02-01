@@ -79,8 +79,6 @@ export abstract class CSLExporter {
 
       if (Zotero.worker) csl.note = item.extra || undefined
 
-      if (item.place) csl[item.itemType === 'presentation' ? 'event-place' : 'publisher-place'] = item.place
-
       // https://github.com/retorquere/zotero-better-bibtex/issues/811#issuecomment-347165389
       if (item.ISBN) csl.ISBN = item.ISBN
 
@@ -122,7 +120,9 @@ export abstract class CSLExporter {
         delete item.extraFields.kv.type
       }
 
+      const extra: Set<string> = new Set
       for (const [ fieldName, value ] of Object.entries(item.extraFields.kv)) {
+        extra.add(fieldName)
         if (!value) continue
 
         const type = Schema.csl[fieldName]
@@ -150,9 +150,18 @@ export abstract class CSLExporter {
 
       for (const [ fieldName, value ] of Object.entries(item.extraFields.creator)) {
         if (Schema.csl[fieldName]) {
+          extra.add(fieldName)
           csl[fieldName] = [ ...(csl[fieldName] || []), ...value.map(cslCreator) ]
           delete item.extraFields.creator[fieldName]
         }
+      }
+
+      if (item.place && !csl['event-place'] && !csl['publisher-place']) {
+        csl[item.itemType === 'presentation' ? 'event-place' : 'publisher-place'] = item.place
+      }
+      if (!extra.has('event-place') && item.itemType === 'videoRecording' && csl['event-place'] && !csl['publisher-place']) {
+        csl['publisher-place'] = csl['event-place']
+        delete csl['event-place']
       }
 
       /* Juris-M workarounds to match Zotero as close as possible */
