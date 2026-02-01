@@ -5,6 +5,8 @@
 console.log('converting pug to XUL/XHTML')
 import * as pug from 'pug'
 import * as fs from 'fs'
+
+/*
 import { walk, Lint, SelfClosing, ASTWalker } from './pug-ast-walker.js'
 
 class XHTML extends ASTWalker {
@@ -57,6 +59,7 @@ class XHTML extends ASTWalker {
     return tag
   }
 }
+*/
 
 function render(src, options) {
   return pug.renderFile(src, options).replace(/&amp;/g, '&').trim()
@@ -64,34 +67,25 @@ function render(src, options) {
 
 const pugs = [
   'content/ErrorReport.pug',
-  'content/Preferences/preferences.pug',
+  'content/Preferences.pug',
   'content/ServerURL.pug',
 ]
 for (const src of pugs) {
   let tgt = `build/${ src.replace(/[.]pug$/, '.xhtml') }`
-  switch (src) {
-    case 'content/Preferences/preferences.pug':
-      // handled in preferences.ts
-      tgt = '/dev/null'
-      break
-  }
-
   console.log('=', src)
-  const xhtml = new XHTML
+  // const xhtml = new XHTML
   fs.writeFileSync(tgt, render(src, {
     pretty: true,
+    /*
     plugins: [{
       preCodeGen(ast) {
-        xhtml.walk(ast, [])
-        walk(SelfClosing, ast)
-        walk(Lint, ast)
+        // xhtml.walk(ast, [])
+        // walk(SelfClosing, ast)
+        // walk(Lint, ast)
+        // fs.writeFileSync(modified, printPug(ast))
         return ast
       },
     }],
+    */
   }))
-
-  if (tgt !== '/dev/null') {
-    if (xhtml.modified) console.log('>', tgt)
-    // fs.unlinkSync(tgt)
-  }
 }

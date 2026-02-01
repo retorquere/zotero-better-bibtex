@@ -498,6 +498,7 @@ class XHTML extends BaseASTWalker {
       if (existing.val !== JSON.stringify(id)) throw new Error(`expected ${ existing.val }, found ${ JSON.stringify(id) }`)
     }
     else {
+      throw new Error(`expected to find ${id}`)
       parent.attrs = parent.attrs || []
       parent.attrs.push({ name: 'data-l10n-id', val: JSON.stringify(id), mustEscape: false })
     }
@@ -512,7 +513,7 @@ function render(src, tgt, options) {
   fs.writeFileSync(tgt, xul.replace(/&amp;/g, '&').trim())
 }
 
-render('content/Preferences/preferences.pug', 'build/content/preferences.xhtml', {
+render('content/Preferences.pug', 'build/content/preferences.xhtml', {
   is7: true,
   pretty: true,
   plugins: [{
@@ -527,22 +528,6 @@ render('content/Preferences/preferences.pug', 'build/content/preferences.xhtml',
       walk(XHTML, ast)
       // walk(SelfClosing, ast)
       walk(Lint, ast)
-
-      /*
-      let onload = ast.nodes[0].attrs.filter(attr => attr.name === 'onload')
-      const ns = ast.nodes[0].attrs.filter(attr => attr.name !== 'onload')
-
-      for (const node of ast.nodes) {
-        if (node.type === 'Comment') continue
-        const nodes = node.type === 'Block' ? node.nodes : [ node ]
-
-        for (const n of nodes) {
-          if (n.type === 'Comment') continue
-          n.attrs = [...n.attrs, ...onload, ...ns]
-          onload = []
-        }
-      }
-      */
 
       return ast
     },
