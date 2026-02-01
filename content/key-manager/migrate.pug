@@ -32,7 +32,7 @@ window(xmlns='http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul'
 
     html:div
       html:label
-        html:input(type='checkbox' id='overwriteKeys')
+        html:input(type='checkbox' id='overwrite')
         |  Overwrite existing native keys
 
     html:div.footer
@@ -47,8 +47,8 @@ window(xmlns='http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul'
     }
     function finish(val) {
       // Use the provided value (for postpone) or the radio selection
-      window.arguments[0].action = val || selection
-      window.arguments[0].overwrite = document.getElementById('overwriteKeys').checked
+      window.arguments[0].keys = val || selection
+      window.arguments[0].overwrite = document.getElementById('overwrite').checked
       window.close()
     }
     function init() {
