@@ -29,20 +29,17 @@ const pugs = [
   'content/ErrorReport.pug',
   'content/Preferences.pug',
   'content/ServerURL.pug',
+  'content/key-manager/migrate.pug',
 ]
 for (const src of pugs) {
-  let tgt = `build/${ src.replace(/[.]pug$/, '.xhtml') }`
-  console.log('=', src)
+  let tgt = `build/content/${ src.replace(/.*\//, '').replace(/[.]pug$/, '.xhtml') }`
+  console.log(' ', src, '=>', tgt)
   // const xhtml = new XHTML
   fs.writeFileSync(tgt, render(src, {
     pretty: true,
     plugins: [{
       preCodeGen(ast) {
         walk(StripConfig, ast)
-        // xhtml.walk(ast, [])
-        // walk(SelfClosing, ast)
-        // walk(Lint, ast)
-        // fs.writeFileSync(modified, printPug(ast))
         return ast
       },
     }],

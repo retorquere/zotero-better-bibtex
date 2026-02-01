@@ -16,7 +16,7 @@ window(xmlns='http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul' xml
       }
 
       function update() {
-        const params = window.arguments[0];
+        const params = window.arguments[0]
         const ext = document.getElementById('formats').value
         document.getElementById('pull-export-long-available').hidden = !params.url.long
         window.resizeTo(Math.max(

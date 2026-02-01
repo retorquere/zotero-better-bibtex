@@ -12,21 +12,20 @@ window(xmlns='http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul'
     input[type='radio'], input[type='checkbox'] { margin-right: 8px; vertical-align: middle; }
 
   html:body
-    html:div(style='font-weight: bold; margin-bottom: 10px;')
-      | You have #{total} Better BibTeX stored citation keys, of which #{ pinned } are pinned
+    html:div#header(style='font-weight: bold; margin-bottom: 10px;')
+      | You have {total} Better BibTeX stored citation keys, of which {pinned} are pinned
 
     html:div.option-container
       html:label
-        html:input(type='radio' name='migrate' value='all' onchange='toggle(this)')
+        html:input(type='radio' name='migrate' value='all' onchange='choose(this)')
         |  Migrate all Better BibTeX citation keys
 
-      if pinned
-        html:label
-          html:input(type='radio' name='migrate' value='pinned' onchange='toggle(this)')
-          |  Migrate only pinned Better BibTeX citation keys, discard the others
+      html:label#pinned
+        html:input(type='radio' name='migrate' value='pinned' onchange='choose(this)')
+        |  Migrate only pinned Better BibTeX citation keys, discard the others
 
       html:label
-        html:input(type='radio' name='migrate' value='forget' onchange='toggle(this)')
+        html:input(type='radio' name='migrate' value='none' onchange='choose(this)')
         |  Discard all Better BibTeX citation keys
 
     html:div.divider
@@ -42,7 +41,7 @@ window(xmlns='http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul'
 
   script(type='application/javascript').
     var selection = null
-    function toggle(el) {
+    function choose(el) {
       selection = el.value
       document.getElementById('okBtn').disabled = false
     }
@@ -54,4 +53,8 @@ window(xmlns='http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul'
     }
     function init() {
       window.sizeToContent()
+      const params = window.arguments[0]
+      if (!params.pinned) document.getElementById('pinned')?.style.setProperty('display', 'none')
+      const header = document.getElementById('header')
+      header.innerHTML = header.innerHTML.replace(/[{]([a-z]+)[}]/g, (_, p) => `${params[p]}`)
     }
