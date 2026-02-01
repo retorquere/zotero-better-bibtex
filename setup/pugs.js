@@ -6,63 +6,23 @@ console.log('converting pug to XUL/XHTML')
 import * as pug from 'pug'
 import * as fs from 'fs'
 
-/*
-import { walk, Lint, SelfClosing, ASTWalker } from './pug-ast-walker.js'
-
-class XHTML extends ASTWalker {
-  modified = false
-
-  Mixin(_mixin) {
-    throw new Error('mixin')
-  }
-
-  Conditional(_node) {
-    throw new Error('conditional')
-  }
-
-  Tag(tag, history) {
-    switch (tag.name) {
-      case 'textbox':
-        this.modified = true
-        if (tag.attrs.find(a => a.name === 'multiline')) {
-          tag.name = 'html:textarea'
-          tag.attrs.push({ name: 'cols', val: '"40"', mustEscape: false })
-          tag.attrs.push({ name: 'rows', val: '"5"', mustEscape: false })
-        }
-        else {
-          tag.name = 'html:input'
-          tag.attrs.push({ name: 'type', val: '"text"', mustEscape: false })
-        }
-        break
-
-      case 'wizard':
-      case 'dialog':
-        if (!history.find(n => n.name === 'window')) {
-          this.modified = true
-          const linkset = this.tag('linkset', {}, [
-            this.tag('html:link', { rel: 'localization', href: 'better-bibtex.ftl' }),
-            tag.name === 'wizard' ? this.tag('html:link', { rel: 'localization', href: 'toolkit/global/wizard.ftl' }) : null,
-          ].filter(link => link))
-          const windowAttrs = tag.attrs.filter(a => a.name.startsWith('xmlns') || a.name === 'onload')
-          tag.attrs = tag.attrs.filter(a => !windowAttrs.find(wa => wa.name === a.name))
-          tag = this.tag('window', {}, [
-            linkset,
-            this.tag('script', { src: 'chrome://global/content/customElements.js' }),
-            { ...tag },
-          ])
-          tag.attrs = windowAttrs
-        }
-        break
-    }
-
-    this.walk(tag.block, [tag].concat(history.slice(1)))
-    return tag
-  }
-}
-*/
+import { walk, ASTWalker } from './pug-ast-walker.js'
 
 function render(src, options) {
   return pug.renderFile(src, options).replace(/&amp;/g, '&').trim()
+}
+
+class StripConfig extends ASTWalker {
+  Tag(node) {
+    node.attrs = node.attrs.filter(attr => !attr.name.startsWith('bbt:'))
+    node.block = this.walk(node.block)
+    return node
+  }
+
+  Block(node) {
+    node.nodes = node.nodes.filter(n => !n.name || !n.name.startsWith('bbt:')).map(n => this.walk(n)).filter(n => n)
+    return node
+  }
 }
 
 const pugs = [
@@ -76,9 +36,9 @@ for (const src of pugs) {
   // const xhtml = new XHTML
   fs.writeFileSync(tgt, render(src, {
     pretty: true,
-    /*
     plugins: [{
       preCodeGen(ast) {
+        walk(StripConfig, ast)
         // xhtml.walk(ast, [])
         // walk(SelfClosing, ast)
         // walk(Lint, ast)
@@ -86,6 +46,5 @@ for (const src of pugs) {
         return ast
       },
     }],
-    */
   }))
 }
