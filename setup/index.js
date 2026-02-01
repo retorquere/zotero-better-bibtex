@@ -3,7 +3,7 @@
 import fs from 'fs'
 import { fileURLToPath } from 'url'
 
-import './pug2xul.js'
+import './pugs.js'
 import './preferences.js'
 import 'zotero-plugin/copy-assets'
 import 'zotero-plugin/make-manifest'

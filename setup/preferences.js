@@ -10,7 +10,6 @@ import * as path from 'path'
 import * as glob from 'glob'
 import frontmatter from 'gray-matter'
 import _ from 'lodash'
-// import { walk, Lint, SelfClosing, ASTWalker as BaseASTWalker } from './pug-ast-walker.js'
 import { walk, Lint, ASTWalker as BaseASTWalker } from './pug-ast-walker.js'
 import { FluentBundle, FluentResource } from '@fluent/bundle'
 import * as yaml from 'js-yaml'
@@ -111,19 +110,6 @@ class ASTWalker extends BaseASTWalker {
       default:
         error('unexpected type', typeof val)
     }
-  }
-}
-
-class StripConfig extends ASTWalker {
-  Tag(node) {
-    node.attrs = node.attrs.filter(attr => !attr.name.startsWith('bbt:'))
-    node.block = this.walk(node.block)
-    return node
-  }
-
-  Block(node) {
-    node.nodes = node.nodes.filter(n => !n.name || !n.name.startsWith('bbt:')).map(n => this.walk(n)).filter(n => n)
-    return node
   }
 }
 
@@ -498,6 +484,7 @@ class XHTML extends BaseASTWalker {
       if (existing.val !== JSON.stringify(id)) throw new Error(`expected ${ existing.val }, found ${ JSON.stringify(id) }`)
     }
     else {
+      throw new Error(`expected to find ${id}`)
       parent.attrs = parent.attrs || []
       parent.attrs.push({ name: 'data-l10n-id', val: JSON.stringify(id), mustEscape: false })
     }
@@ -506,13 +493,7 @@ class XHTML extends BaseASTWalker {
   }
 }
 
-function render(src, tgt, options) {
-  const xul = pug.renderFile(src, options)
-  ensureDir(tgt)
-  fs.writeFileSync(tgt, xul.replace(/&amp;/g, '&').trim())
-}
-
-render('content/Preferences/preferences.pug', 'build/content/preferences.xhtml', {
+pug.renderFile('content/Preferences.pug', {
   is7: true,
   pretty: true,
   plugins: [{
@@ -523,26 +504,6 @@ render('content/Preferences/preferences.pug', 'build/content/preferences.xhtml',
       docs.saveDefaults('build/defaults/preferences/defaults.js')
       docs.saveDefaults('build/prefs.js')
       docs.saveTypescript()
-      walk(StripConfig, ast)
-      walk(XHTML, ast)
-      // walk(SelfClosing, ast)
-      walk(Lint, ast)
-
-      /*
-      let onload = ast.nodes[0].attrs.filter(attr => attr.name === 'onload')
-      const ns = ast.nodes[0].attrs.filter(attr => attr.name !== 'onload')
-
-      for (const node of ast.nodes) {
-        if (node.type === 'Comment') continue
-        const nodes = node.type === 'Block' ? node.nodes : [ node ]
-
-        for (const n of nodes) {
-          if (n.type === 'Comment') continue
-          n.attrs = [...n.attrs, ...onload, ...ns]
-          onload = []
-        }
-      }
-      */
 
       return ast
     },
