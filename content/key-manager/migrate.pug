@@ -1,0 +1,57 @@
+window(xmlns='http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul'
+       xmlns:html='http://www.w3.org/1999/xhtml'
+       title='Better BibTeX citation key migration'
+       width='450' height='320'
+       onload='init()')
+  html:style.
+    body { font: message-box; padding: 20px; background-color: Dialog; color: DialogText; line-height: 1.4; }
+    .option-container { margin-top: 15px; display: flex; flex-direction: column; gap: 10px; }
+    .footer { margin-top: 25px; display: flex; justify-content: flex-end; gap: 10px; }
+    .divider { border-top: 1px solid #ccc; margin: 15px 0; }
+    button[disabled] { opacity: 0.5; }
+    input[type='radio'], input[type='checkbox'] { margin-right: 8px; vertical-align: middle; }
+
+  html:body
+    html:div(style='font-weight: bold; margin-bottom: 10px;')
+      | You have #{total} Better BibTeX stored citation keys, of which #{ pinned } are pinned
+
+    html:div.option-container
+      html:label
+        html:input(type='radio' name='migrate' value='all' onchange='toggle(this)')
+        |  Migrate all Better BibTeX citation keys
+
+      if pinned
+        html:label
+          html:input(type='radio' name='migrate' value='pinned' onchange='toggle(this)')
+          |  Migrate only pinned Better BibTeX citation keys, discard the others
+
+      html:label
+        html:input(type='radio' name='migrate' value='forget' onchange='toggle(this)')
+        |  Discard all Better BibTeX citation keys
+
+    html:div.divider
+
+    html:div
+      html:label
+        html:input(type='checkbox' id='overwriteKeys')
+        |  Overwrite existing native keys
+
+    html:div.footer
+      html:button#postponeBtn(onclick='finish("postpone")') Ask me again at next start
+      html:button#okBtn(disabled='true' style='font-weight: bold;' onclick='finish()') Migrate
+
+  script(type='application/javascript').
+    var selection = null
+    function toggle(el) {
+      selection = el.value
+      document.getElementById('okBtn').disabled = false
+    }
+    function finish(val) {
+      // Use the provided value (for postpone) or the radio selection
+      window.arguments[0].action = val || selection
+      window.arguments[0].overwrite = document.getElementById('overwriteKeys').checked
+      window.close()
+    }
+    function init() {
+      window.sizeToContent()
+    }
