@@ -35,6 +35,17 @@ import * as l10n from './l10n'
 
 import { migrate } from './key-manager/migrate'
 
+const SELECT = `
+  SELECT item.itemID, item.key AS itemKey, item.libraryID, idv.value AS citationKey
+  FROM items item
+  JOIN itemData id ON item.itemID = id.itemID
+  JOIN fields f ON id.fieldID = f.fieldID AND f.fieldName = 'citationKey'
+  JOIN itemDataValues idv ON id.valueID = idv.valueID
+  WHERE item.itemID NOT IN (SELECT itemID FROM deletedItems)
+    AND item.itemTypeID NOT IN (SELECT itemTypeID FROM itemTypes WHERE typeName IN ('attachment', 'note', 'annotation'))
+    AND item.itemID NOT IN (SELECT itemID FROM feedItems)
+`.replace(/\n/g, ' ').trim()
+
 export type CitekeyRecord = {
   itemID: number
   libraryID: number
@@ -114,11 +125,6 @@ export const KeyManager = new class _KeyManager {
     indices: [ 'itemID', 'libraryID', 'itemKey', 'citationKey', 'lcCitationKey' ],
     unique: [ 'itemID ' ],
   })
-  // Table<CitekeyRecord, "itemID">
-  public keys = createTable<CitekeyRecord>(createDB({ clone: true }), 'citationKeys')({
-    primary: 'itemID',
-    indexes: [ 'itemKey', 'libraryID', 'citationKey', 'lcCitationKey' ],
-  })
 
   private unwatch: UnwatchCallback[] = []
 
@@ -191,16 +197,11 @@ export const KeyManager = new class _KeyManager {
   }
 
   public async refresh(ids: 'selected' | number | number[], manual = false): Promise<void> {
-    ids = this.expandSelection(ids)
+    const keys = new Set(this.expandSelection(ids))
     await Cache.touch(ids)
 
     const warnAt = manual ? Preference.warnBulkModify : 0
-    const affected = blink.many(this.keys, {
-      where: {
-        itemID: { in: ids },
-        pinned: { in: [ 0, false ]},
-      },
-    }).length
+    const affected = warnAt ? this.keys.find().filter(item => !keys.has(item.itemID)).length
 
     if (warnAt > 0 && affected > warnAt) {
       const ignore = { value: false }
@@ -366,44 +367,6 @@ export const KeyManager = new class _KeyManager {
     })
   }
 
-  private async store(key: CitekeyRecord) {
-    const saved = blink.first(this.keys, byItemID(key.itemID))
-
-    if (!saved) return
-
-    this.db.schedule('REPLACE INTO betterbibtex.citationkey (itemID, itemKey, libraryID, citationKey, pinned) VALUES (?, ?, ?, ?, ?)', [
-      key.itemID,
-      key.itemKey,
-      key.libraryID,
-      key.citationKey,
-      key.pinned ? 1 : 0,
-    ])
-
-    if (!key.pinned && this.autopin.enabled) {
-      this.autopin.schedule(key.itemID, () => {
-        this.pin([key.itemID]).catch(err => log.error('failed to pin', key.itemID, ':', err))
-      })
-    }
-
-    if (key.pinned && Preference.keyConflictPolicy === 'change') {
-      const where = {
-        where: {
-          pinned: { in: [ 0, false ]},
-          citationKey: { eq: key.citationKey },
-          lcCitationKey: { eq: key.citationKey.toLowerCase() },
-          libraryID: key.libraryID,
-        },
-      } satisfies Query<CitekeyRecord, 'itemID'>
-      if (Preference.keyScope === 'global') delete where.where.libraryID
-      delete where.where[Preference.citekeyCaseInsensitive ? 'citationKey' : 'lcCitationKey']
-
-      for (const conflict of blink.many(this.keys, where)) {
-        const item = await Zotero.Items.getAsync(conflict.itemID)
-        this.update(item, conflict)
-      }
-    }
-  }
-
   private remove(keys: CitekeyRecord | CitekeyRecord[]) {
     if (Array.isArray(keys)) {
       let pos = 0
@@ -421,7 +384,7 @@ export const KeyManager = new class _KeyManager {
   }
 
   private clear(ids: number[]) {
-    blink.removeMany(this.keys, ids.map(itemID => ({ itemID })))
+    this.keys.findAndRemove({ itemID: { '$in': ids } })
   }
 
   private async start(): Promise<void> {
@@ -436,7 +399,7 @@ export const KeyManager = new class _KeyManager {
       WHERE item.itemID NOT IN (SELECT itemID FROM deletedItems)
         AND item.itemTypeID NOT IN (SELECT itemTypeID FROM itemTypes WHERE typeName IN ('attachment', 'note', 'annotation'))
         AND item.itemID NOT IN (SELECT itemID FROM feedItems)
-      `.replace(/\n/g, ' ')
+      `.replace(/\n/g, ' ').trim()
 
     const keys: CitationkeyRecord[] = []
     for (const { itemID, itemKey, libraryID, citationKey } from await Zotero.DB.queryAsync(load)) {
@@ -494,7 +457,7 @@ export const KeyManager = new class _KeyManager {
   public update(item: Zotero.Item, current?: CitekeyRecord): string {
     if (item.isFeedItem || !item.isRegularItem()) return null
 
-    current = current || blink.first(this.keys, byItemID(item.id))
+    current = current || this.keys.findOne({ 'itemID': item.id })
 
     const proposed = this.propose(item)
 
