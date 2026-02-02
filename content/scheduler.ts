@@ -9,18 +9,18 @@ type Job = {
 }
 
 export class Scheduler<T> {
-  private _delay: string | number
+  #delay: string | number
   private factor: number
   private job: Map<T, Job & { id: T }> = new Map
   private held: Map<T, Handler> = null
 
   constructor(delay: string | number, factor = 1) {
-    this._delay = delay
+    this.#delay = delay
     this.factor = factor
   }
 
   public get delay(): number {
-    return (typeof this._delay === 'string' ? Preference[this._delay] : this._delay) * this.factor
+    return (typeof this.#delay === 'string' ? Preference[this.#delay] : this.#delay) * this.factor
   }
 
   public get enabled(): boolean {

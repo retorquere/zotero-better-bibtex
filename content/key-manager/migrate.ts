@@ -1,12 +1,18 @@
 import { log } from '../logger'
 
-export async function migrate() {
+export async function migrate(): Promise<void> {
   const db = PathUtils.join(Zotero.DataDirectory.dir, 'better-bibtex.sqlite')
-  if (!(await File.exists(path))) return
+  if (!(await OS.File.exists(db))) return
 
+  const choice = {
+    migrate: 'postpone' as 'none' | 'all' | 'pinned' | 'postpone',
+    overwrite: false,
+    total: 0,
+    pinned: 0,
+  }
   try {
     await Zotero.DB.queryAsync('ATTACH DATABASE ? AS betterbibtex', [ db ])
-    const q =  `
+    const q = `
       SELECT bbt.itemID, bbt.itemKey, bbt.libraryID, bbt.citationKey, bbt.pinned
       FROM betterbibtex.citationkey bbt
       WHERE bbt.itemID NOT IN (SELECT itemID FROM deletedItems)
@@ -18,21 +24,16 @@ export async function migrate() {
     `.replace(/\n/g, ' ')
 
     await Zotero.DB.executeTransaction(async () => {
-      let keys: { citationKey: string, itemID: number, pinned: boolean }[] = []
+      let keys: { citationKey: string; itemID: number; pinned: boolean }[] = []
       for (const { citationKey, itemID, pinned } of (await Zotero.DB.queryAsync(q))) {
         keys.push({ citationKey, itemID, pinned: !!pinned })
       }
 
       if (keys.length) {
-        const migrate = {
-          keys: 'postpone' as 'none' | 'all' | 'pinned' | 'postpone',
-          overwrite: false
-          total: keys.length,
-          pinned: keys.filter(k => k.pinned).length,
-        }
-        Zotero.getMainWindow().openDialog('chrome://zotero-better-bibtex/content/migrate.xhtml', '', 'chrome,dialog,centerscreen,modal', migrate)
-        switch (migrate.keys) {
-          case 'forget':
+        Zotero.getMainWindow().openDialog('chrome://zotero-better-bibtex/content/migrate.xhtml', '', 'chrome,dialog,centerscreen,modal', choice)
+        choice.migrate = choice.migrate || 'postpone'
+        switch (choice.migrate) {
+          case 'none':
             keys = []
             break
           case 'pinned':
@@ -40,7 +41,7 @@ export async function migrate() {
             break
         }
 
-        if (migrate.keys !== 'postpone') {
+        if (choice.migrate !== 'postpone') {
           for (const { itemID, citationKey } of keys) {
             const item = await Zotero.Items.getAsync(itemID)
             if (choice.overwrite || !item.getField('citationKey')) {
@@ -58,7 +59,7 @@ export async function migrate() {
   finally {
     try {
       await Zotero.DB.queryAsync("DETACH DATABASE 'betterbibtex'")
-      if (migrate.action !== 'postpone') await Zotero.File.rename(db, 'better-bibtex.migrated')
+      if (choice.migrate !== 'postpone') await Zotero.File.rename(db, 'better-bibtex.migrated')
     }
     catch {}
   }

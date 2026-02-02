@@ -5,7 +5,6 @@ import { Translators } from './translators'
 import { Formatter as CAYWFormatter } from './cayw/formatter'
 import { getItemAsync, getItemsAsync } from './get-items-async'
 import { AUXScanner } from './aux-scanner'
-import * as Extra from './extra'
 import { defaults } from '../gen/preferences/meta'
 import { Preference } from './prefs'
 import * as memory from './memory'
@@ -199,7 +198,7 @@ export class TestSupport {
             .map((key: CitekeyRecord) => key.itemID)
         )
     }
-    if (query.is) ids = ids.concat(Zotero.BetterBibTeX.KeyManager.find({ where: { citationKey: query.is }}).map((key: CitekeyRecord) => key.itemID))
+    if (query.is) ids = ids.concat(Zotero.BetterBibTeX.KeyManager.find({ citationKey: query.is }).map((key: CitekeyRecord) => key.itemID))
 
     const s = (new Zotero.Search)
     for (const [ mode, text ] of Object.entries(query)) {
@@ -246,11 +245,11 @@ export class TestSupport {
     if (!ids.length) throw new Error('Nothing to do')
 
     if (citationKey) {
-      if (action !== 'pin') throw new Error(`Don't know how to ${ action } ${ citationKey }`)
-      log.error('conflict: pinning', ids, 'to', citationKey)
+      if (action !== 'refresh') throw new Error(`Don't know how to ${ action } ${ citationKey }`)
+      log.error('conflict: setting', ids, 'to', citationKey)
       for (const item of await getItemsAsync(ids)) {
-        item.setField('extra', Extra.set(item.getField('extra'), { citationKey }))
-        log.error('conflict: extra set to', item.getField('extra'))
+        item.setField('citationKey', citationKey)
+        log.error('conflict: citationKey set to', item.getField('citationKey'))
         await item.saveTx()
       }
       return
@@ -258,12 +257,15 @@ export class TestSupport {
 
     for (itemID of ids) {
       switch (action) {
-        case 'pin':
-          await Zotero.BetterBibTeX.KeyManager.pin(itemID)
+        case 'fill':
+          await Zotero.BetterBibTeX.KeyManager.fill(itemID)
           break
-        case 'unpin':
-          await Zotero.BetterBibTeX.KeyManager.unpin(itemID)
+        case 'clear': {
+          const item = await getItemAsync(itemID)
+          item.setField('citationKey', '')
+          await item.saveTx()
           break
+        }
         case 'refresh':
           await Zotero.BetterBibTeX.KeyManager.refresh(itemID)
           break

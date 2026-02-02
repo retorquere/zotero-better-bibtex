@@ -99,7 +99,7 @@ export const Schema = new class $Schema {
     if (!this.zotero.itemTypes.find(itemType => itemType.fields.find(field => field.field === 'eventDate'))) {
       // not sure how this ended up in the test suite
       this.zotero.itemTypes.find(itemType => itemType.itemType === 'conferencePaper').fields.push({ field: 'eventDate' })
-      // @ts-expect-error
+      // @ts-expect-error doesn't actually exist in the JSON but should
       this.zotero.meta.fields.eventDate = { type: 'date' }
       this.zotero.csl.fields.date['event-date'] = 'eventDate'
     }

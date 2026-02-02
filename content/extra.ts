@@ -14,7 +14,6 @@ export type Fields = {
   creator: Record<string, string[]>
   creators: Creator[]
   tex: Record<string, TeXString>
-  citationKey: string
   aliases: string[]
 }
 
@@ -52,13 +51,11 @@ const re = {
 }
 
 type SetOptions = {
-  citationKey?: string
   aliases?: string[]
   kv?: Record<string, string | string[]>
   tex?: Record<string, TeXString>
 }
 type GetOptions = SetOptions | {
-  citationKey?: boolean
   aliases?: boolean
   kv?: boolean
   tex?: boolean
@@ -72,7 +69,7 @@ const casing = {
 export function get(extra: string, mode: 'zotero' | 'csl', options?: GetOptions): { extra: string; extraFields: Fields } {
   let defaults = false
   if (!options) {
-    options = { citationKey: true, aliases: true, kv: true, tex: true }
+    options = { aliases: true, kv: true, tex: true }
     defaults = true
   }
 
@@ -84,7 +81,6 @@ export function get(extra: string, mode: 'zotero' | 'csl', options?: GetOptions)
     creator: {},
     creators: [],
     tex: options.tex || defaults ? {} : undefined,
-    citationKey: '',
     aliases: options.aliases || defaults ? [] : undefined,
   }
 
@@ -111,11 +107,6 @@ export function get(extra: string, mode: 'zotero' | 'csl', options?: GetOptions)
     else {
       // retain leading dash or underscore
       key = key.replace(/(?!^)[-_]/g, ' ').replace(/([a-z])([A-Z])/g, '$1 $2').toLowerCase()
-    }
-
-    if (options.citationKey && !tex && [ 'citation key', 'bibtex' ].includes(key)) {
-      extraFields.citationKey = value
-      return false
     }
 
     if (options.aliases && !tex && key === 'citation key alias') {
@@ -162,15 +153,13 @@ export function get(extra: string, mode: 'zotero' | 'csl', options?: GetOptions)
     return true
   }).join('\n').trim()
 
-  extraFields.aliases = Array.from(new Set(extraFields.aliases)).filter(key => key !== extraFields.citationKey)
+  extraFields.aliases = Array.from(new Set(extraFields.aliases))
 
   return { extra, extraFields }
 }
 
 export function set(extra: string, options: SetOptions = {}): string {
   const parsed = get(extra, 'zotero', options)
-
-  if (options.citationKey) parsed.extra += `\nCitation Key: ${ options.citationKey }`
 
   if (options.aliases?.length) {
     const aliases = Array.from(new Set(options.aliases)).sort().join(', ')

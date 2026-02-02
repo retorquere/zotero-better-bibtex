@@ -11,7 +11,6 @@ import { jwk as pubkey } from './public'
 
 import { Scheduler } from './scheduler'
 import { TeXstudio } from './tex-studio'
-import { icons } from './icons'
 import { prompt } from './prompt'
 import { Elements } from './create-element'
 import * as ExportOptions from './ExportOptions'
@@ -93,28 +92,22 @@ monkey.patch(Zotero.Items, 'merge', original => async function Zotero_Items_merg
     }
 
     if (merge.citationKey || merge.tex || merge.kv) {
-      const extra = Extra.get(item.getField('extra'), 'zotero', { citationKey: merge.citationKey, aliases: merge.citationKey, tex: merge.tex, kv: merge.kv })
-      if (!extra.extraFields.citationKey) { // why is the citationkey stripped from extra before we get to this point?!
-        const pinned = Zotero.BetterBibTeX.KeyManager.get(item.id)
-        if (pinned?.pinned) extra.extraFields.citationKey = pinned.citationKey
-      }
-
+      const extra = Extra.get(item.getField('extra'), 'zotero', { aliases: merge.citationKey, tex: merge.tex, kv: merge.kv })
       // get citekeys of other items
       if (merge.citationKey) {
         const otherIDs = otherItems.map(i => i.id)
         extra.extraFields.aliases = [
           ...extra.extraFields.aliases,
-          ...Zotero.BetterBibTeX.KeyManager.find({ where: { itemID: { in: otherIDs }}}).map((key: CitekeyRecord) => key.citationKey),
+          ...Zotero.BetterBibTeX.KeyManager.find({ itemID: { $in: otherIDs } }).map((key: CitekeyRecord) => key.citationKey),
         ]
       }
 
       // add any aliases they were already holding
       for (const i of otherItems) {
-        const otherExtra = Extra.get(i.getField('extra'), 'zotero', { citationKey: merge.citationKey, aliases: merge.citationKey, tex: merge.tex, kv: merge.kv })
+        const otherExtra = Extra.get(i.getField('extra'), 'zotero', { aliases: merge.citationKey, tex: merge.tex, kv: merge.kv })
 
         if (merge.citationKey) {
           extra.extraFields.aliases = [ ...extra.extraFields.aliases, ...otherExtra.extraFields.aliases ]
-          if (otherExtra.extraFields.citationKey) extra.extraFields.aliases.push(otherExtra.extraFields.citationKey)
         }
 
         if (merge.tex) {
@@ -144,8 +137,6 @@ monkey.patch(Zotero.Items, 'merge', original => async function Zotero_Items_merg
       }
 
       item.setField('extra', Extra.set(extra.extra, {
-        // keep pinned if it was before
-        citationKey: merge.citationKey ? extra.extraFields.citationKey : undefined,
         aliases: merge.citationKey ? extra.extraFields.aliases : undefined,
         tex: merge.tex ? extra.extraFields.tex : undefined,
         kv: merge.kv ? extra.extraFields.kv : undefined,
@@ -167,10 +158,10 @@ function parseLibraryKeyFromCitekey(libraryKey) {
   if (!m) return
 
   const [ , solo, library, combined ] = m
-  const item = Zotero.BetterBibTeX.KeyManager.first({ where: {
+  const item = Zotero.BetterBibTeX.KeyManager.first({
     libraryID: library ? parseInt(library) : Zotero.Libraries.userLibraryID,
     citationKey: solo || combined,
-  }})
+  })
   return item ? { libraryID: item.libraryID, key: item.itemKey } : false
 }
 
@@ -179,7 +170,7 @@ monkey.patch(Zotero.API, 'getResultsFromParams', original => function Zotero_API
   function ck(key: string): string {
     const m = key.match(/^(bbt:|@)(.+)/)
     if (!m) return key
-    const citekey: CitekeyRecord = Zotero.BetterBibTeX.KeyManager.first({ where: { libraryID, citationKey: m[2] }})
+    const citekey: CitekeyRecord = Zotero.BetterBibTeX.KeyManager.first({ libraryID, citationKey: m[2] })
     return citekey ? citekey.itemKey : key
   }
 
@@ -591,7 +582,7 @@ export class BetterBibTeX {
     orchestrator.add({
       id: 'done',
       description: 'user interface',
-      startup: async () => {
+      startup: () => {
         Ready.resolve(true)
 
         ExportOptions.enable()
@@ -601,104 +592,6 @@ export class BetterBibTeX {
 
         Zotero.Promise.delay(15000).then(() => {
           DebugLog.unregister('Better BibTeX')
-        })
-
-        // don't know why this is not picked up from zotero-types
-        const columnDataKey = await Zotero.ItemTreeManager.registerColumn({ // eslint-disable-line @typescript-eslint/await-thenable
-          dataKey: 'citationKey',
-          label: l10n.localize('better-bibtex_zotero-pane_column_citekey'),
-          pluginID: 'better-bibtex@iris-advies.com',
-          dataProvider: (item, _dataKey) => {
-            const citekey = Zotero.BetterBibTeX.KeyManager.get(item.id)
-            return citekey ? `${ citekey.citationKey }${ citekey.pinned ? icons.pin : '' }`.trim() : ''
-          },
-        })
-
-        const rowID = Zotero.ItemPaneManager.registerInfoRow({
-          rowID: 'better-bibtex-citation-key',
-          pluginID: 'better-bibtex@iris-advies.com',
-          label: { l10nID: 'better-bibtex_item-pane_info_citation-key_label' },
-          position: 'start',
-          multiline: false,
-          nowrap: false,
-          editable: false,
-          onGetData({ item }) {
-            return Zotero.BetterBibTeX.KeyManager.get(item.id)?.citationKey || ''
-          },
-          /*
-          onSetData({ rowID, item, tabType, editable, value }) {
-            Zotero.debug(`Set custom info row ${rowID} of item ${item.id} to ${value}`);
-          },
-          */
-        })
-
-        /*
-        let $done: () => void
-        Zotero.ItemPaneManager.registerSection({
-          paneID: 'betterbibtex-section-citationkey',
-          pluginID: 'better-bibtex@iris-advies.com',
-          header: {
-            l10nID: 'better-bibtex_item-pane_section_header',
-            icon: `${ rootURI }content/skin/item-section/header.svg`,
-          },
-          sidenav: {
-            l10nID: 'better-bibtex_item-pane_section_sidenav',
-            icon: `${ rootURI }content/skin/item-section/sidenav.svg`,
-          },
-          bodyXHTML: 'Citation Key <html:input type="text" data-itemid="" id="better-bibtex-citation-key" readonly="true" style="flex: 1" xmlns:html="http://www.w3.org/1999/xhtml"/><html:span id="better-bibtex-citation-key-pinned"/>',
-          onInit: ({ body, refresh }) => { // eslint-disable-line @typescript-eslint/unbound-method
-            $done = Events.on('items-changed', ({ items }) => {
-              const textbox: HTMLElement = body.querySelector('#better-bibtex-citation-key')
-              const itemID = textbox.dataset.itemid ? parseInt(textbox.dataset.itemid) : undefined
-              const displayed = textbox.dataset.itemid ? items.find(item => item.id === itemID) : undefined
-              if (displayed) void refresh()
-            })
-          },
-          // onRender: ({ body, item, editable, tabType }) => {
-          onRender: ({ body, item, setSectionSummary }) => {
-            const citekey = Zotero.BetterBibTeX.KeyManager.get(item.id) || { citationKey: '', pinned: false }
-            const textbox: HTMLElement = body.querySelector('#better-bibtex-citation-key')
-            body.style.display = 'flex';
-            // const was = textbox.dataset.itemid || '<node>'
-            (textbox as any).value = citekey.citationKey
-            textbox.dataset.itemid = citekey.citationKey ? `${ item.id }` : ''
-
-            const pinned = body.querySelector('#better-bibtex-citation-key-pinned')
-            pinned.textContent = citekey.pinned ? icons.pin : ''
-
-            setSectionSummary(citekey.citationKey || '')
-          },
-          onItemChange: ({ setEnabled, body, item }) => {
-            const textbox: HTMLElement = body.querySelector('#better-bibtex-citation-key')
-            if (item.isRegularItem() && !item.isFeedItem) {
-              const citekey = item.getField('citationKey')
-              // const was = textbox.dataset.itemid
-              textbox.dataset.itemid = citekey ? `${ item.id }` : '';
-              (textbox as any).value = citekey || '\u274C'
-              setEnabled(true)
-            }
-            else {
-              textbox.dataset.itemid = ''
-              setEnabled(false)
-            }
-          },
-          onDestroy: () => {
-            $done?.()
-            $done = undefined
-          },
-        })
-        */
-
-        Events.on('items-changed', ev => {
-          if (ev.reason !== 'key-refresh') return
-
-          if (rowID) Zotero.ItemPaneManager.refreshInfoRow(rowID)
-
-          if (columnDataKey) {
-            const azp = Zotero.getActiveZoteroPane()
-            // eslint-disable-next-line no-underscore-dangle
-            if (azp?.itemPane && !azp.itemPane.itemsView._columnPrefs[columnDataKey].hidden) scheduler.schedule('column-refresh', () => { Zotero.ItemTreeManager.refreshColumns() })
-          }
         })
 
         monkey.enable()
