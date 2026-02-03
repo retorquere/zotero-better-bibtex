@@ -125,7 +125,7 @@ export function get(extra: string, mode: 'zotero' | 'csl', options?: GetOptions)
     }
 
     const [ primary, secondary ] = mode === 'csl' ? ['csl', 'zotero'] : ['zotero', 'csl']
-    if (options.kv && key !== 'citation key' && (!tex && (ef = Schema.labeled[primary][key] || Schema.labeled[secondary][key]))) {
+    if (options.kv && (!tex && (ef = Schema.labeled[primary][key] || Schema.labeled[secondary][key]))) {
       switch (ef.type) {
         case 'name':
           extraFields.creator[ef.field] ??= []
