@@ -140,13 +140,14 @@ export const KeyManager = new class _KeyManager {
       if (inspireHEP) {
         proposed = await fetchInspireHEP(item)
         if (proposed && current !== proposed) {
+          log.debug('z8: fill')
           item.setField('citationKey', proposed)
           await item.saveTx()
         }
       }
       else {
         if (!current || Preference.autoPinOverwrite) {
-          await this.update(item).saveTx()
+          await this.update(item, 'fill').saveTx()
         }
       }
     }
@@ -195,7 +196,7 @@ export const KeyManager = new class _KeyManager {
 
     const progress: Progress = items.length > 10 ? new Progress(items.length, 'Refreshing citation keys') : null
     for (const item of items) {
-      const citationKey = this.update(item).getField('citationKey')
+      const citationKey = this.update(item, 'refresh').getField('citationKey')
       this.upsert(item)
 
       // remove the new citekey from the aliases if present
@@ -232,7 +233,7 @@ export const KeyManager = new class _KeyManager {
       description: 'keymanager',
       needs: [ 'worker' ],
       startup: async () => {
-        await migrate()
+        log.debug('z8: start migration')
         await japanese.init()
         chinese.init()
 
@@ -385,7 +386,7 @@ export const KeyManager = new class _KeyManager {
             else {
               this.upsert(item)
               this.autopin.schedule(item.id, () => {
-                this.update(item).saveTx().catch(err => log.error('failed to update', item.id, ':', err))
+                this.update(item, 'item changed').saveTx().catch(err => log.error('failed to update', item.id, ':', err))
               })
 
               if (Preference.warnTitleCased) {
@@ -413,7 +414,8 @@ export const KeyManager = new class _KeyManager {
     this.started = true
   }
 
-  private update(item: Zotero.Item): Zotero.Item {
+  private update(item: Zotero.Item, reason: string): Zotero.Item {
+    log.debug('z8: item key update:', reason)
     if (item.isFeedItem || !item.isRegularItem()) return item
 
     const current = item.getField('citationKey')
@@ -422,6 +424,7 @@ export const KeyManager = new class _KeyManager {
     const proposed = this.propose(item)
     if (proposed === current) return item
 
+    log.debug('z8: update called, set', proposed)
     item.setField('citationKey', proposed)
 
     return item

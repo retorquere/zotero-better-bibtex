@@ -2,7 +2,11 @@ import { log } from '../logger'
 
 export async function migrate(): Promise<void> {
   const db = PathUtils.join(Zotero.DataDirectory.dir, 'better-bibtex.sqlite')
-  if (!(await IOUtils.exists(db))) return
+  log.debug('z8: db =', db)
+  if (!(await IOUtils.exists(db))) {
+    log.debug('z8:', db, 'not present')
+    return
+  }
 
   const choice = {
     migrate: 'postpone' as 'none' | 'all' | 'pinned' | 'postpone',
@@ -28,6 +32,7 @@ export async function migrate(): Promise<void> {
       for (const { citationKey, itemID, pinned } of (await Zotero.DB.queryAsync(q))) {
         keys.push({ citationKey, itemID, pinned: !!pinned })
       }
+      log.debug('z8: candidates', keys)
 
       if (keys.length) {
         Zotero.getMainWindow().openDialog('chrome://zotero-better-bibtex/content/migrate.xhtml', '', 'chrome,dialog,centerscreen,modal', choice)
@@ -45,6 +50,7 @@ export async function migrate(): Promise<void> {
           for (const { itemID, citationKey } of keys) {
             const item = await Zotero.Items.getAsync(itemID)
             if (choice.overwrite || !item.getField('citationKey')) {
+              log.debug('z8: citationKey', citationKey)
               item.setField('citationKey', citationKey)
               await item.save()
             }
@@ -54,10 +60,11 @@ export async function migrate(): Promise<void> {
     })
   }
   catch (err) {
-    log.error('migration error:', err)
+    log.error('z8 error:', err)
   }
   finally {
     try {
+      log.debug('z8:', choice)
       await Zotero.DB.queryAsync("DETACH DATABASE 'betterbibtex'")
       if (choice.migrate !== 'postpone') await Zotero.File.rename(db, 'better-bibtex.migrated')
     }
