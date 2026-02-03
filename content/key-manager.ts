@@ -230,7 +230,7 @@ export const KeyManager = new class _KeyManager {
     orchestrator.add({
       id: 'keymanager',
       description: 'keymanager',
-      needs: [ 'worker', 'sqlite'],
+      needs: [ 'worker' ],
       startup: async () => {
         await migrate()
         await japanese.init()

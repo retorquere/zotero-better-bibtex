@@ -1,3 +1,4 @@
+import Loki from 'lokijs'
 import { log } from './logger'
 import { Path, File } from './file'
 
@@ -8,7 +9,6 @@ import { Translators, ExportJob } from './translators'
 import { Preference } from './prefs'
 import { Preferences, autoExport, affectedBy, affects } from '../gen/preferences/meta'
 import { byId } from '../gen/translators'
-import schema from '../gen/auto-export-schema.json' with { type: 'json' }
 import * as ini from 'ini'
 import fold2ascii from 'fold-to-ascii'
 import { findBinary } from './path-search'
@@ -433,55 +433,8 @@ export const AutoExport = new class $AutoExport {
     orchestrator.add({
       id: 'auto-export',
       description: 'auto-export',
-      needs: [ 'sqlite', 'translators' ],
-      startup: async () => {
-        // detect
-        const $ae = 'autoexport'
-        const $ae$setting = 'autoexport_setting'
-        const exists = async (table: string) => Zotero.DB.tableExists(table, 'betterbibtex')
-        if (await exists($ae) && await exists($ae$setting)) {
-          try {
-            const migrate: Record<string, any> = {}
-            for (const ae of await Zotero.DB.queryAsync(`SELECT * FROM betterbibtex.${$ae}`)) {
-              migrate[ae.path] = pick(ae, ['path', 'translatorID', 'type', 'id', 'recursive', 'enabled', 'status', 'error', 'updated'])
-              migrate[ae.path].recursive = migrate[ae.path].recursive === 1
-              migrate[ae.path].enabled = migrate[ae.path].enabled === 1
-            }
-            for (const ae of await Zotero.DB.queryAsync(`SELECT * FROM betterbibtex.${$ae$setting}`)) {
-              const label = Translators.byId[migrate[ae.path].translatorID].label
-              if (schema[label][ae.setting].type === 'boolean') {
-                migrate[ae.path][ae.setting] = ae.value === 1
-              }
-              else {
-                migrate[ae.path][ae.setting] = ae.value
-              }
-            }
-
-            for (const [ path, ae ] of Object.entries(migrate)) {
-              Zotero.Prefs.set(`translators.better-bibtex.autoExport.${this.key(path)}`, JSON.stringify(ae))
-            }
-
-            await Zotero.DB.queryAsync(`DELETE FROM betterbibtex.${$ae$setting}`)
-            await Zotero.DB.queryAsync(`DELETE FROM betterbibtex.${$ae}`)
-            await Zotero.DB.queryAsync(`DROP TABLE betterbibtex.${$ae$setting}`)
-            await Zotero.DB.queryAsync(`DROP TABLE betterbibtex.${$ae}`)
-          }
-          catch (err) {
-            log.error('auto-export migration failed', err)
-          }
-        }
-        try {
-          if (!(await exists($ae)) && await exists($ae$setting)) {
-            await Zotero.DB.queryAsync(`DROP TABLE betterbibtex.${$ae$setting}`)
-          }
-          if (await exists($ae) && !(await exists($ae$setting))) {
-            await Zotero.DB.queryAsync(`DROP TABLE betterbibtex.${$ae}`)
-          }
-        }
-        catch (err) {
-          log.error('auto-export migration failed', err)
-        }
-
+      needs: [ 'translators' ],
+      startup: () => {
         for (const key of Services.prefs.getBranch('extensions.zotero.translators.better-bibtex.autoExport.').getChildList('')) {
           try {
             const ae = JSON.parse(Zotero.Prefs.get(`translators.better-bibtex.autoExport.${key}`) as string)

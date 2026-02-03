@@ -2,7 +2,7 @@ import { log } from '../logger'
 
 export async function migrate(): Promise<void> {
   const db = PathUtils.join(Zotero.DataDirectory.dir, 'better-bibtex.sqlite')
-  if (!(await OS.File.exists(db))) return
+  if (!(await IOUtils.exists(db))) return
 
   const choice = {
     migrate: 'postpone' as 'none' | 'all' | 'pinned' | 'postpone',
