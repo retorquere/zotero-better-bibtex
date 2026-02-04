@@ -3,10 +3,12 @@ Feature: Export
 
   Background:
     Given I set the temp directory to "test/tmp"
+    And I set preference .autoPinDelay to 1
 
   @biblatex
   Scenario Outline: Export <references> references for BibLaTeX to <file>
     When I import <references> references from "export/<file>.json"
+    #And I wait 1 second
     Then an export using "Better BibLaTeX" should match "export/*.biblatex"
 
     Examples:

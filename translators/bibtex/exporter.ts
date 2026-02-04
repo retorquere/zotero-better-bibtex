@@ -65,8 +65,7 @@ export class Exporter {
         delete item.extraFields.kv.citationKey
       }
       if (typeof item.itemID !== 'number') { // https://github.com/diegodlh/zotero-cita/issues/145
-        const re = /^citation ?key:/i
-        item.citationKey = (item.extra || '').split('\n').filter(line => line.match(re)).map(line => line.replace(re, '').trim())[0]
+        item.citationKey = Extra.citationKey(item.extra).citationKey
         item.$cacheable = false
       }
 

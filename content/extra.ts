@@ -8,6 +8,27 @@ type Creator = {
   type: string
 }
 
+const re = {
+  // fetch fields as per https://forums.zotero.org/discussion/3673/2/original-date-of-publication/. Spurious 'tex.' so I can do a single match
+  old: /^{:((?:bib(?:la)?)?tex\.)?([^:]+)(:)\s*([^}]+)}$/i,
+  new: /^((?:bib(?:la)?)?tex\.)?([^:=]+)\s*([:=])\s*([\S\s]*)/i,
+  quoted: /^((?:bib(?:la)?)?tex\.)"([^"]+)"\s*([:=])\s*([\S\s]*)/i,
+  ck: /^citation ?key:(.*)/i,
+}
+
+export function citationKey(extra: string): { citationKey: string; extra: string } {
+  let ck = ''
+  let m: RegExpMatchArray
+  extra = (extra || '').split('\n').filter(line => {
+    if (m = line.match(re.ck)) {
+      ck = m[1].trim()
+      return false
+    }
+    return true
+  }).join('\n')
+  return { extra, citationKey: ck }
+}
+
 export type Fields = {
   raw: Record<string, string>
   kv: Record<string, string>
@@ -41,13 +62,6 @@ export function zoteroCreator(value: string, creatorType: string): ZoteroCreator
   else {
     return { name: value, creatorType }
   }
-}
-
-const re = {
-  // fetch fields as per https://forums.zotero.org/discussion/3673/2/original-date-of-publication/. Spurious 'tex.' so I can do a single match
-  old: /^{:((?:bib(?:la)?)?tex\.)?([^:]+)(:)\s*([^}]+)}$/i,
-  new: /^((?:bib(?:la)?)?tex\.)?([^:=]+)\s*([:=])\s*([\S\s]*)/i,
-  quoted: /^((?:bib(?:la)?)?tex\.)"([^"]+)"\s*([:=])\s*([\S\s]*)/i,
 }
 
 type SetOptions = {

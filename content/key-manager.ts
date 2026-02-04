@@ -115,7 +115,7 @@ export const KeyManager = new class _KeyManager {
 
   private unwatch: UnwatchCallback[] = []
 
-  public autopin: Scheduler<number> = new Scheduler<number>('autoPinDelay', 1000)
+  public autopin: Scheduler<number> = new Scheduler<number>('autoPinDelay', Preference.testing ? 1 : 1000)
 
   private started = false
 
@@ -417,6 +417,13 @@ export const KeyManager = new class _KeyManager {
 
     const current = item.getField('citationKey')
     if (current && !Preference.autoPinOverwrite) return item
+
+    const { extra, citationKey } = Extra.citationKey(item.getField('extra'))
+    if (citationKey) {
+      item.setField('extra', extra)
+      item.setField('citationKey', citationKey)
+      return item
+    }
 
     const proposed = this.propose(item)
     if (proposed === current) return item
