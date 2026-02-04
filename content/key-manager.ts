@@ -220,11 +220,6 @@ export const KeyManager = new class _KeyManager {
       await item.saveTx()
       await Zotero.Promise.delay(10)
     }
-
-    /* this already happens in the trigger on the key store
-    const updates: Zotero.Item[] = items.filter(item => !save.has(item.id))
-    if (updates.length) void Events.emit('items-changed', { items: updates, action: 'modify', reason: 'key-refresh' })
-    */
   }
 
   constructor() {
@@ -385,8 +380,9 @@ export const KeyManager = new class _KeyManager {
             }
             else {
               this.upsert(item)
+              log.debug(`z8: item changed handler @ ${new Date}`)
               this.autopin.schedule(item.id, () => {
-                this.update(item, 'item changed').saveTx().catch(err => log.error('failed to update', item.id, ':', err))
+                this.update(item, `item changed @ ${new Date}`).saveTx().catch(err => log.error('failed to update', item.id, ':', err))
               })
 
               if (Preference.warnTitleCased) {
@@ -395,6 +391,7 @@ export const KeyManager = new class _KeyManager {
               }
             }
           }
+          this.clear(clear)
 
           if (warn_titlecase) {
             const actioned = action === 'add' ? 'added' : 'saved'

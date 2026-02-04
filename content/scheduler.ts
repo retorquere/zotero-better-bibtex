@@ -50,6 +50,8 @@ export class Scheduler<T> {
   }
 
   public schedule(id: T, handler: Handler): void {
+    if (!this.enabled) return
+
     if (this.held) {
       this.held.set(id, handler)
       return

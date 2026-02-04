@@ -68,8 +68,8 @@ class Emitter extends Emittery<{
 
   public async itemsChanged(action, ids): Promise<void> {
     try {
-      this.keymanagerUpdate(action, ids)
       await this.cacheTouch(ids)
+      this.keymanagerUpdate(action, ids)
     }
     catch (err) {
       log.error('cache update failed:', err)
