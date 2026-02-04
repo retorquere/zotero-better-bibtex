@@ -41,6 +41,16 @@ export class TestSupport {
     return 0
   }
 
+  public async fill(): Promise<void> {
+    await Zotero.DB.executeTransaction(async () => {
+      for (const item of await Zotero.Items.getAll(Zotero.Libraries.userLibraryID)) {
+        if (item.isFeedItem || !item.isRegularItem()) continue
+        if (item.getField('citationKey')) continue
+        await Zotero.BetterBibTeX.KeyManager.update(item, 'test fill').save()
+      }
+    })
+  }
+
   public async reset(scenario: string): Promise<void> {
     log.info(`test environment reset for ${ scenario }`)
     await this.resetCache()
@@ -129,6 +139,7 @@ export class TestSupport {
   }
 
   public async exportLibrary(translatorID: string, displayOptions: Record<string, number | string | boolean>, path?: string, collectionName?: string): Promise<string> {
+    await this.fill()
     let scope
     if (collectionName) {
       let name = collectionName

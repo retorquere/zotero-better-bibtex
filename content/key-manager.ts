@@ -319,7 +319,7 @@ export const KeyManager = new class _KeyManager {
       return
     }
 
-    const record = this.keys.findObject({ itemID: item.id })
+    const record = this.keys.findOne({ itemID: item.id })
     if (record) {
       record.citationKey = citationKey
       this.keys.update(lc(record))
@@ -380,9 +380,8 @@ export const KeyManager = new class _KeyManager {
             }
             else {
               this.upsert(item)
-              log.debug(`z8: item changed handler @ ${new Date}`)
               this.autopin.schedule(item.id, () => {
-                this.update(item, `item changed @ ${new Date}`).saveTx().catch(err => log.error('failed to update', item.id, ':', err))
+                this.update(item, `item auto-pinned @ ${new Date}`).saveTx().catch(err => log.error('failed to update', item.id, ':', err))
               })
 
               if (Preference.warnTitleCased) {
@@ -411,7 +410,7 @@ export const KeyManager = new class _KeyManager {
     this.started = true
   }
 
-  private update(item: Zotero.Item, reason: string): Zotero.Item {
+  public update(item: Zotero.Item, reason: string): Zotero.Item {
     log.debug('z8: item key update:', reason)
     if (item.isFeedItem || !item.isRegularItem()) return item
 

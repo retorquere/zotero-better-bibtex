@@ -7,7 +7,7 @@
       "exportNotes": true
     },
     "preferences": {
-      "citekeyFormat": "authorsn(n=1,creator=\"*\",initials=false,sep=\" \").fold.lower.select(1,1) + authForeIni(\"*\").fold.lower.prefix(\".\") + authorsn(n=1,creator=\"*\",initials=false,sep=\" \").fold.lower.select(2,1).replace(find=etal,replace=ea).prefix(\".\") + year.prefix(\":\") + postfix(\".%(n)s\")"
+      "citekeyFormat": "authorsn(n=1,creator='*',initials=false,sep=' ').fold.lower.select(1,1) + authForeIni('*').fold.lower.prefix('.') + authorsn(n=1,creator='*',initials=false,sep=' ').fold.lower.select(2,1).replace(find=etal,replace=ea).prefix('.') + year.prefix(':') + postfix('.%(n)s')"
     }
   },
   "items": [

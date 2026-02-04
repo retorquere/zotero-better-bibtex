@@ -3,7 +3,6 @@ Feature: Export
 
   Background:
     Given I set the temp directory to "test/tmp"
-    And I set preference .autoPinDelay to 1
 
   @biblatex
   Scenario Outline: Export <references> references for BibLaTeX to <file>
