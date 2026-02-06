@@ -228,7 +228,21 @@ export const KeyManager = new class _KeyManager {
       description: 'keymanager',
       needs: [ 'worker' ],
       startup: async () => {
-        log.debug('z8: start migration')
+        this.keys.on('insert', (key: CitekeyRecord) => {
+          log.debug('z8: key insert', key)
+        })
+
+        this.keys.on('pre-update', (key: CitekeyRecord) => {
+          log.debug('z8: key replace', key)
+        })
+        this.keys.on('update', (key: CitekeyRecord) => {
+          log.debug('z8: key update', key)
+        })
+
+        this.keys.on('delete', (key: CitekeyRecord) => {
+          log.debug('z8: key delete', key)
+        })
+
         await japanese.init()
         chinese.init()
 
