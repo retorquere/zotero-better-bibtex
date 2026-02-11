@@ -13,7 +13,7 @@ const re = {
   old: /^{:((?:bib(?:la)?)?tex\.)?([^:]+)(:)\s*([^}]+)}$/i,
   new: /^((?:bib(?:la)?)?tex\.)?([^:=]+)\s*([:=])\s*([\S\s]*)/i,
   quoted: /^((?:bib(?:la)?)?tex\.)"([^"]+)"\s*([:=])\s*([\S\s]*)/i,
-  ck: /^citation ?key:(.*)/i,
+  ck: /^(citation ?key|bibtex):(?<citationKey>.*)/i,
 }
 
 export function citationKey(extra: string): { citationKey: string; extra: string } {
@@ -21,7 +21,7 @@ export function citationKey(extra: string): { citationKey: string; extra: string
   let m: RegExpMatchArray
   extra = (extra || '').split('\n').filter(line => {
     if (m = line.match(re.ck)) {
-      ck = m[1].trim()
+      ck = m.groups.citationKey.trim()
       return false
     }
     return true

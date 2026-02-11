@@ -1,3 +1,13 @@
+//  public async itemsChanged(action, ids): Promise<void> {
+//    try {
+//      await this.cacheTouch(ids)
+//      this.keymanagerUpdate(action, ids)
+//    }
+//    catch (err) {
+//      log.error('cache update failed:', err)
+//    }
+//  }
+
 import Emittery from 'emittery'
 
 import { log } from './logger'
@@ -24,25 +34,26 @@ const idleService: IdleService = Components.classes['@mozilla.org/widget/useridl
 
 type Reason = 'key-refresh' | 'parent-modify' | 'parent-delete' | 'parent-add' | 'tagged'
 
-class Emitter extends Emittery<{
+type EventMap = {
   'collections-changed': number[]
   'collections-removed': number[]
   'export-progress': { pct: number; message: string; ae?: string }
+  'cache-touch': { itemIDs: number[] }
   'items-changed': { items: Zotero.Item[]; action: Action; reason?: Reason }
+  'items-removed': { itemIDs: number[]; reason?: Reason }
   'libraries-changed': number[]
   'libraries-removed': number[]
   'preference-changed': string
   'window-loaded': { win: Window; href: string }
   idle: { state: IdleState; topic: IdleTopic }
   sync: boolean
-}> {
+}
+
+class Emitter extends Emittery<EventMap> {
   private listeners: any[] = []
   public idle: Partial<Record<IdleTopic, IdleState>> = {}
   public itemObserverDelay = 5
   public syncInProgress: boolean = Zotero?.Sync?.Runner?.syncInProgress ?? false
-
-  public keymanagerUpdate: (action: ZoteroAction, ids: number[]) => void
-  public cacheTouch: (ids: number[]) => Promise<void>
 
   public startup(): void {
     this.listeners.push(new WindowListener)
@@ -52,6 +63,23 @@ class Emitter extends Emittery<{
     this.listeners.push(new MemberListener)
     this.listeners.push(new GroupListener)
     this.listeners.push(new SyncListener)
+  }
+
+  override async emit<Name extends keyof EventMap>(eventName: Name, data?: EventMap[Name]): Promise<void> {
+    switch (eventName) {
+      case 'items-changed': {
+        const d = data as EventMap['items-changed']
+        if (d?.items) await super.emit('cache-touch', { itemIDs: d.items.map(item => item.id) })
+        break
+      }
+      case 'items-removed': {
+        const d = data as EventMap['items-removed']
+        if (d?.itemIDs) await super.emit('cache-touch', { itemIDs: d.itemIDs })
+        break
+      }
+    }
+
+    return super.emit(eventName, data as any)
   }
 
   public addIdleListener(topic: IdleTopic, delay: number): void {
@@ -64,16 +92,6 @@ class Emitter extends Emittery<{
     }
 
     this.clearListeners()
-  }
-
-  public async itemsChanged(action, ids): Promise<void> {
-    try {
-      await this.cacheTouch(ids)
-      this.keymanagerUpdate(action, ids)
-    }
-    catch (err) {
-      log.error('cache update failed:', err)
-    }
   }
 }
 
@@ -214,9 +232,12 @@ class ItemListener extends ZoteroListener {
         libraries: new Set<number>,
       }
 
-      if (action === 'delete' && extraData) {
-        for (const ed of Object.values(extraData)) {
-          if (typeof ed.libraryID === 'number') touched.libraries.add(ed.libraryID)
+      if (action === 'delete') {
+        await Events.emit('items-removed', { itemIDs: ids })
+        if (extraData) {
+          for (const { libraryID } of Object.values(extraData)) {
+            if (typeof libraryID === 'number') touched.libraries.add(libraryID)
+          }
         }
       }
 
@@ -253,13 +274,14 @@ class ItemListener extends ZoteroListener {
         return true
       })
 
-      await Events.itemsChanged(action, ids)
+      await Events.emit('cache-touch', { itemIDs: ids })
       if (items.length) await Events.emit('items-changed', { items, action })
       if (parentIDs.size) {
         const parents = Zotero.Items.get([...parentIDs])
         for (const item of parents) {
           touch(item)
         }
+        await Events.emit('cache-touch', { itemIDs: parents.map(p => p.id) })
         void Events.emit('items-changed', { items: parents, action: 'modify', reason: `parent-${ action }` })
       }
 
@@ -284,7 +306,6 @@ class TagListener extends ZoteroListener {
       await Zotero.BetterBibTeX.ready
 
       const ids = [...new Set(pairs.map(pair => parseInt(pair.split('-')[0])))]
-      await Events.itemsChanged('modify', ids)
       void Events.emit('items-changed', { items: Zotero.Items.get(ids), action: 'modify', reason: 'tagged' })
     }
     catch (err) {

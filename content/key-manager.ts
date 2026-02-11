@@ -147,7 +147,7 @@ export const KeyManager = new class _KeyManager {
       }
       else {
         if (!current || Preference.autoPinOverwrite) {
-          await this.update(item, 'fill').saveTx()
+          await this.update(item, 'fill')?.saveTx()
         }
       }
     }
@@ -381,45 +381,41 @@ export const KeyManager = new class _KeyManager {
       }
     })
 
-    Events.keymanagerUpdate = (action, ids) => {
-      let warn_titlecase = 0
-      const clear: number[] = []
-      switch (action) {
-        case 'add':
-        case 'modify':
-          // why do deleted items keep showing up here?
-          for (const item of Zotero.Items.get(ids)) {
-            if (item.deleted || !item.isRegularItem() || item.isFeedItem) {
-              clear.push(item.id)
-            }
-            else {
-              this.upsert(item)
-              this.autopin.schedule(item.id, () => {
-                this.update(item, `item auto-pinned @ ${new Date}`).saveTx().catch(err => log.error('failed to update', item.id, ':', err))
-              })
+    Events.on('items-removed', ({ itemIDs }) => {
+      this.clear(itemIDs)
+    })
 
-              if (Preference.warnTitleCased) {
-                const title = item.getField('title')
-                if (title !== sentenceCase(title)) warn_titlecase += 1
-              }
-            }
-          }
-          this.clear(clear)
+    Events.on('items-changed', ({ items, action }) => {
+      let warn_titlecase = 0 // should not be here
 
-          if (warn_titlecase) {
-            const actioned = action === 'add' ? 'added' : 'saved'
-            const msg = warn_titlecase === 1
-              ? `${ warn_titlecase } item ${ actioned } which looks like it has a title-cased title`
-              : `${ warn_titlecase } items ${ actioned } which look like they have title-cased titles`
-            flash(`Possibly title-cased title${ warn_titlecase > 1 ? 's' : '' } ${ actioned }`, msg, 3)
-          }
-          break
+      // why do deleted items keep showing up here?
+      items = items.filter(item => {
+        if (item.deleted || !item.isRegularItem() || item.isFeedItem) {
+          this.clear([item.id])
+          return false
+        }
+        return true
+      })
 
-        case 'delete':
-          this.clear(ids)
-          break
+      for (const item of items) {
+        this.autopin.schedule(item.id, () => {
+          this.update(item, `item auto-pinned @ ${new Date}`)?.saveTx().catch(err => log.error('failed to update', item.id, ':', err))
+        })
+
+        if (Preference.warnTitleCased) {
+          const title = item.getField('title')
+          if (title !== sentenceCase(title)) warn_titlecase += 1
+        }
       }
-    }
+
+      if (warn_titlecase) {
+        const actioned = action === 'add' ? 'added' : 'saved'
+        const msg = warn_titlecase === 1
+          ? `${ warn_titlecase } item ${ actioned } which looks like it has a title-cased title`
+          : `${ warn_titlecase } items ${ actioned } which look like they have title-cased titles`
+        flash(`Possibly title-cased title${ warn_titlecase > 1 ? 's' : '' } ${ actioned }`, msg, 3)
+      }
+    })
 
     this.started = true
   }
@@ -435,15 +431,16 @@ export const KeyManager = new class _KeyManager {
     if (citationKey) {
       item.setField('extra', extra)
       item.setField('citationKey', citationKey)
+      this.upsert(item)
       return item
     }
 
     const proposed = this.propose(item)
-    if (proposed === current) return item
+    if (proposed === current) return
 
     log.debug('z8: update called, set', proposed)
     item.setField('citationKey', proposed)
-
+    this.upsert(item)
     return item
   }
 

@@ -496,13 +496,13 @@ export class BetterBibTeX {
           this.setProgress(pct, message)
         })
 
-        Events.cacheTouch = async (ids: number[]) => {
-          const withParents: Set<number> = new Set(ids)
-          for (const item of await Zotero.Items.getAsync(ids)) {
-            if (typeof item.parentID === 'number') withParents.add(item.parentID)
+        Events.on('cache-touch', async ({ itemIDs }) => {
+          const withParents: Set<number> = new Set(itemIDs)
+          for (const item of await Zotero.Items.getAsync(itemIDs)) {
+            if (typeof item?.parentID === 'number') withParents.add(item.parentID)
           }
           await Cache.touch([...withParents])
-        }
+        })
         Events.addIdleListener('cache-purge', Preference.autoExportIdleWait)
         Events.on('idle', async state => {
           if (state.topic === 'cache-purge' && Cache.ready) await Cache.Serialized.purge()
