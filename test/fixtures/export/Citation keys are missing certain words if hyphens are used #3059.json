@@ -10,7 +10,6 @@
     {
       "abstractNote": "Model-free deep reinforcement learning (RL) algorithms have been demonstrated on a range of challenging decision making and control tasks. However, these methods typically suffer from two major cha...",
       "accessDate": "2021-03-01T14:42:36Z",
-      "citationKey": "haarnojaSoftActorCriticPolicy2018",
       "creators": [
         {
           "creatorType": "author",

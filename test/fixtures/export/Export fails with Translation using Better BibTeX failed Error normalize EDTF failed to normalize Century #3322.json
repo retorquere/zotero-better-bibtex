@@ -9,7 +9,6 @@
       "DOI": "10.1016/j.jrurstud.2021.07.008",
       "ISSN": "07430167",
       "accessDate": "2021-08-05T05:08:44Z",
-      "citationKey": "bora2021",
       "creators": [
         {
           "creatorType": "author",
@@ -61,7 +60,7 @@
           "type": 1
         }
       ],
-      "title": "Resettlement, intergenerational memory, place attachment, and place identity in Ro\u0219ia Jiu coal mine - Gorj County, Romania",
+      "title": "Resettlement, intergenerational memory, place attachment, and place identity in Roșia Jiu coal mine - Gorj County, Romania",
       "url": "https://www.sciencedirect.com/science/article/pii/S0743016721002059",
       "volume": "86"
     },
@@ -95,8 +94,7 @@
       "dateModified": "2025-10-17T09:05:59Z",
       "itemID": 5831,
       "attachments": [],
-      "notes": [],
-      "citationKey": "GravelleReesMicroeconomics"
+      "notes": []
     },
     {
       "key": "V83UWY34",
@@ -106,7 +104,7 @@
       "date": "1973/74",
       "extra": "tex.fjournal: Roczniki Polskiego Towarzystwa Matematycznego. Seria I. Commentationes Mathematicae. Prace Matematyczne\ntex.mrclass: 58A05\ntex.mrnumber: 368060\ntex.mrreviewer: S.Y.Husseini",
       "volume": "17",
-      "pages": "469\u2013473",
+      "pages": "469–473",
       "publicationTitle": "Polskiego Towarzystwa Matematycznego",
       "journalAbbreviation": "Comment. Math. Prace Mat.",
       "ISSN": "0373-8299",
@@ -122,8 +120,7 @@
       "dateModified": "2025-10-17T13:55:30Z",
       "itemID": 701,
       "attachments": [],
-      "notes": [],
-      "citationKey": "soleckiFiniteAtlasesManifolds"
+      "notes": []
     },
     {
       "key": "FFR6TMIV",
@@ -151,8 +148,7 @@
       "dateModified": "2022-03-23T07:20:50Z",
       "itemID": 175,
       "attachments": [],
-      "notes": [],
-      "citationKey": "eck1944:harmonische"
+      "notes": []
     },
     {
       "key": "6KGK8DZS",
@@ -166,8 +162,7 @@
       "dateModified": "2025-10-17T22:28:03Z",
       "itemID": 7275,
       "attachments": [],
-      "notes": [],
-      "citationKey": "-Test"
+      "notes": []
     }
   ]
 }

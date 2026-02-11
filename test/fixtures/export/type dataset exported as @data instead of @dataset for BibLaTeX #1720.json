@@ -23,7 +23,6 @@
   },
   "items": [
     {
-      "citationKey": "Doe2021",
       "creators": [
         {
           "creatorType": "author",
@@ -75,7 +74,6 @@
       "uri": "http://zotero.org/users/8230813/items/5KFC3PL4",
       "attachments": [],
       "notes": [],
-      "citationKey": "foo2021",
       "itemID": 102,
       "itemKey": "5KFC3PL4",
       "libraryID": 1

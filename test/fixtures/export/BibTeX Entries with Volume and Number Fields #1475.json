@@ -19,7 +19,6 @@
     {
       "DOI": "10.14778/1938545.1938548",
       "abstractNote": "Scaling up the sparse matrix-vector multiplication kernel on modern Graphics Processing Units (GPU) has been at the heart of numerous studies in both academia and industry. In this article we present a novel non-parametric, self-tunable, approach to data representation for computing this kernel, particularly targeting sparse matrices representing power-law graphs. Using real web graph data, we show how our representation scheme, coupled with a novel tiling algorithm, can yield significant benefits over the current state of the art GPU efforts on a number of core data mining algorithms such as PageRank, HITS and Random Walk with Restart.",
-      "citationKey": "yang2011a",
       "conferenceName": "37th International Conference on Very Large Data Bases",
       "creators": [
         {

@@ -21,7 +21,6 @@
       "ISBN": "978-3-642-13189-9 978-3-642-13190-5",
       "abstractNote": "We describe a very simple “somewhat homomorphic” encryption scheme using only elementary modular arithmetic, and use Gentry’s techniques to convert it into a fully homomorphic scheme. Compared to Gentry’s construction, our somewhat homomorphic scheme merely uses addition and multiplication over the integers rather than working with ideal lattices over a polynomial ring. The main appeal of our approach is the conceptual simplicity.",
       "accessDate": "2025-02-27T06:10:27Z",
-      "citationKey": "vGHV10",
       "creators": [
         {
           "creatorType": "seriesEditor",
