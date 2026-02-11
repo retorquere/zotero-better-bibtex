@@ -6,7 +6,6 @@ Feature: Merge
     And I set preference .extraMergeCitekeys to true
     And I set preference .extraMergeTeX to true
     And I set preference .autoPinDelay to 1
-    And I set preference .autoPinOverwrite to true
 
   @1221 @retries=10
   Scenario: Set IDS field when merging references with different citation keys #1221

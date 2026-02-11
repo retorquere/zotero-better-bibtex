@@ -129,31 +129,32 @@ export const KeyManager = new class _KeyManager {
   }
 
   public async fill(ids: 'selected' | number | number[], inspireHEP = false): Promise<void> {
+    log.debug('1721: fill')
     ids = this.expandSelection(ids)
 
-    for (const item of await getItemsAsync(ids)) {
-      if (item.isFeedItem || !item.isRegularItem()) continue
+    await Zotero.DB.executeTransaction(async () => {
+      for (const item of await getItemsAsync(ids)) {
+        if (item.isFeedItem || !item.isRegularItem()) continue
 
-      const current = this.getField(item, 'citationKey')
-
-      let proposed: string
-      if (inspireHEP) {
-        proposed = await fetchInspireHEP(item)
-        if (proposed && current !== proposed) {
-          log.debug('z8: fill')
-          item.setField('citationKey', proposed)
-          await item.saveTx()
+        const current = this.getField(item, 'citationKey')
+        if (inspireHEP) {
+          const proposed = await fetchInspireHEP(item)
+          if (proposed && current !== proposed) {
+            log.debug('1721: inspireHEP')
+            item.setField('citationKey', proposed)
+            await item.save()
+          }
+        }
+        else {
+          await this.update(item).save()
         }
       }
-      else {
-        await this.update(item, Preference.autoPinOverwrite).saveTx()
-      }
-    }
+    })
   }
 
   public async refresh(ids: 'selected' | number | number[], warn = false, replace = false): Promise<void> {
     ids = this.expandSelection(ids)
-    log.debug('3396:', { ids, warn })
+    log.debug('1721: refresh', { ids, warn, replace })
     const keys = new Set(ids)
     await Cache.touch(ids)
 
@@ -396,6 +397,7 @@ export const KeyManager = new class _KeyManager {
       })
 
       const update = (item: Zotero.Item) => {
+        log.debug('1721: items-changed')
         this.update(item, Preference.autoPinOverwrite).saveTx().catch(err => log.error('failed to update', item.id, ':', err))
       }
       for (const item of items) {
@@ -427,12 +429,13 @@ export const KeyManager = new class _KeyManager {
   }
 
   public update(item: Zotero.Item, replace = false): Zotero.Item {
-    log.debug('z8: item key replace:', replace)
+    log.debug('1721: item key update, replace:', replace)
     if (item.isFeedItem || !item.isRegularItem()) return item
 
     do {
       const { extra, citationKey } = Extra.citationKey(item.getField('extra'))
       if (citationKey) {
+        log.debug('1721: item key update, migrated:', citationKey)
         item.setField('extra', extra)
         item.setField('citationKey', citationKey)
         break
@@ -444,7 +447,7 @@ export const KeyManager = new class _KeyManager {
       const proposed = this.propose(item)
       if (proposed === current) break
 
-      log.debug('z8: update called, set', proposed)
+      log.debug('1721: update set proposed', proposed)
       item.setField('citationKey', proposed)
     } while (false) // eslint-disable-line no-constant-condition
 

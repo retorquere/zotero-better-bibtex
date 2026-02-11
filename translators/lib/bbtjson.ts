@@ -6,6 +6,8 @@ import { Translation } from './translator'
 import { simplifyForImport, simplifyForExport } from '../../content/item-schema'
 import BBT from '../../gen/version.cjs'
 
+import { citationKey as extract } from '../../content/extra'
+
 // import { validItem } from '../content/ajv'
 // import { stringify } from '../content/stringify'
 
@@ -116,7 +118,6 @@ export async function importBBTJSON(collected: Collected): Promise<void> {
     // I do export these but the cannot be imported back
     delete source.relations
     delete source.citekey
-    delete source.citationKey
 
     delete source.uri
     delete source.key
@@ -142,6 +143,10 @@ export async function importBBTJSON(collected: Collected): Promise<void> {
     }
     // validate tests for strings
     if (Array.isArray(source.extra)) source.extra = source.extra.join('\n')
+    const { extra, citationKey } = extract(source.extra || '')
+    source.citationKey = citationKey || source.citationKey
+    source.extra = extra
+
     // marker so BBT-JSON can be imported without extra-field meddling
     if (source.extra) source.extra = `\x1BBBT\x1B${ source.extra }`
 
@@ -150,6 +155,8 @@ export async function importBBTJSON(collected: Collected): Promise<void> {
 
     const item = collected.item()
     Object.assign(item, source)
+
+    log.debug('prepped for import:', { source, item })
 
     for (const att of item.attachments || []) {
       if (att.url) delete att.path
