@@ -61,7 +61,7 @@ import type { Collected } from '../translators/lib/collect'
 
 // MONKEY PATCHES
 
-// zotero moved itemToCSLJSON to Zotero.Utilities.Item, jurism for the moment keeps it on ZU
+/*
 monkey.patch(Zotero.Utilities.Item?.itemToCSLJSON ? Zotero.Utilities.Item : Zotero.Utilities, 'itemToCSLJSON', original => function itemToCSLJSON(zoteroItem: { itemID: any }) {
   const cslItem = original.apply(this, arguments)
 
@@ -80,6 +80,7 @@ monkey.patch(Zotero.Utilities.Item?.itemToCSLJSON ? Zotero.Utilities.Item : Zote
   // eslint-disable-next-line @typescript-eslint/no-unsafe-return
   return cslItem
 })
+*/
 
 // https://github.com/retorquere/zotero-better-bibtex/issues/1221
 monkey.patch(Zotero.Items, 'merge', original => async function Zotero_Items_merge(item: Zotero.Item, otherItems: Zotero.Item[]) {
