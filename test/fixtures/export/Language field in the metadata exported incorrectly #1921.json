@@ -10,7 +10,6 @@
   },
   "items": [
     {
-      "citationKey": "koller2012",
       "creators": [
         {
           "creatorType": "author",
@@ -23,12 +22,11 @@
       "itemType": "book",
       "language": "de-CH",
       "place": "Bern",
-      "publisher": "St\u00e4mpfli Verlag",
+      "publisher": "Stämpfli Verlag",
       "shortTitle": "OR BT I",
       "title": "Schweizerisches Obligationenrecht Besonderer Teil Band I"
     },
     {
-      "citationKey": "apathy1063ABGB2010",
       "creators": [
         {
           "creatorType": "author",
@@ -60,11 +58,10 @@
       "place": "Wien",
       "publicationTitle": "Kurzkommentar zum ABGB",
       "publisher": "Springer",
-      "shortTitle": "\u00a7 1063 ABGB",
-      "title": "\u00a7 1063 ABGB"
+      "shortTitle": "§ 1063 ABGB",
+      "title": "§ 1063 ABGB"
     },
     {
-      "citationKey": "apathySicherungsubereignung2012",
       "creators": [
         {
           "creatorType": "editor",
@@ -94,13 +91,12 @@
       "language": "de-AT",
       "pages": "277 - 303",
       "place": "Wien",
-      "publicationTitle": "\u00d6sterreichisches Bankvertragsrecht Band IX: Kreditsicherheiten Teil II",
+      "publicationTitle": "Österreichisches Bankvertragsrecht Band IX: Kreditsicherheiten Teil II",
       "publisher": "Springer",
-      "shortTitle": "Sicherungs\u00fcbereignung",
-      "title": "Die Sicherungs\u00fcbereignung"
+      "shortTitle": "Sicherungsübereignung",
+      "title": "Die Sicherungsübereignung"
     },
     {
-      "citationKey": "apathySicherungszession2012",
       "creators": [
         {
           "creatorType": "editor",
@@ -130,23 +126,22 @@
       "language": "de-AT",
       "pages": "303 - 364",
       "place": "Wien",
-      "publicationTitle": "\u00d6sterreichisches Bankvertragsrecht Band IX: Kreditsicherheiten Teil II",
+      "publicationTitle": "Österreichisches Bankvertragsrecht Band IX: Kreditsicherheiten Teil II",
       "publisher": "Springer",
       "shortTitle": "Sicherungszession",
       "title": "Die Sicherungszession"
     },
     {
-      "citationKey": "basedow305BGB2019",
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "J\u00fcrgen",
+          "firstName": "Jürgen",
           "lastName": "Basedow"
         },
         {
           "creatorType": "editor",
           "firstName": "Wolfgang",
-          "lastName": "Kr\u00fcger"
+          "lastName": "Krüger"
         }
       ],
       "date": "2019",
@@ -154,24 +149,23 @@
       "itemID": 4,
       "itemType": "encyclopediaArticle",
       "language": "de-DE",
-      "place": "M\u00fcnchen",
-      "publicationTitle": "M\u00fcnchener Kommentar zum B\u00fcrgerlichen Gesetzbuch Band 2",
+      "place": "München",
+      "publicationTitle": "Münchener Kommentar zum Bürgerlichen Gesetzbuch Band 2",
       "publisher": "C. H. Beck",
-      "shortTitle": "\u00a7 305 BGB",
-      "title": "\u00a7 305 BGB"
+      "shortTitle": "§ 305 BGB",
+      "title": "§ 305 BGB"
     },
     {
-      "citationKey": "basedow305cBGB2019",
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "J\u00fcrgen",
+          "firstName": "Jürgen",
           "lastName": "Basedow"
         },
         {
           "creatorType": "editor",
           "firstName": "Wolfgang",
-          "lastName": "Kr\u00fcger"
+          "lastName": "Krüger"
         }
       ],
       "date": "2019",
@@ -179,24 +173,23 @@
       "itemID": 5,
       "itemType": "encyclopediaArticle",
       "language": "de-DE",
-      "place": "M\u00fcnchen",
-      "publicationTitle": "M\u00fcnchener Kommentar zum B\u00fcrgerlichen Gesetzbuch Band 2",
+      "place": "München",
+      "publicationTitle": "Münchener Kommentar zum Bürgerlichen Gesetzbuch Band 2",
       "publisher": "C. H. Beck",
-      "shortTitle": "\u00a7 305c BGB",
-      "title": "\u00a7 305c BGB"
+      "shortTitle": "§ 305c BGB",
+      "title": "§ 305c BGB"
     },
     {
-      "citationKey": "basedowVor305BGB2019",
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "J\u00fcrgen",
+          "firstName": "Jürgen",
           "lastName": "Basedow"
         },
         {
           "creatorType": "editor",
           "firstName": "Wolfgang",
-          "lastName": "Kr\u00fcger"
+          "lastName": "Krüger"
         }
       ],
       "date": "2019",
@@ -204,14 +197,13 @@
       "itemID": 6,
       "itemType": "encyclopediaArticle",
       "language": "de-DE",
-      "place": "M\u00fcnchen",
-      "publicationTitle": "M\u00fcnchener Kommentar zum B\u00fcrgerlichen Gesetzbuch Band 2",
+      "place": "München",
+      "publicationTitle": "Münchener Kommentar zum Bürgerlichen Gesetzbuch Band 2",
       "publisher": "C. H. Beck",
-      "shortTitle": "vor \u00a7 305 BGB",
-      "title": "vor \u00a7 305 BGB"
+      "shortTitle": "vor § 305 BGB",
+      "title": "vor § 305 BGB"
     },
     {
-      "citationKey": "baurSachenrecht2009",
       "creators": [
         {
           "creatorType": "author",
@@ -220,13 +212,13 @@
         },
         {
           "creatorType": "author",
-          "firstName": "J\u00fcrgen F.",
+          "firstName": "Jürgen F.",
           "lastName": "Baur"
         },
         {
           "creatorType": "author",
           "firstName": "Rolf",
-          "lastName": "St\u00fcrner"
+          "lastName": "Stürner"
         }
       ],
       "date": "2009",
@@ -234,13 +226,12 @@
       "itemID": 7,
       "itemType": "book",
       "language": "de-DE",
-      "place": "M\u00fcnchen",
+      "place": "München",
       "publisher": "C. H. Beck",
       "shortTitle": "SachenR",
       "title": "Sachenrecht"
     },
     {
-      "citationKey": "beckmann449BGB2004",
       "creators": [
         {
           "creatorType": "author",
@@ -259,13 +250,12 @@
       "language": "de-DE",
       "pages": "417 - 477",
       "place": "Berlin",
-      "publicationTitle": "Kommentar zum B\u00fcrgerlichen Gesetzbuch \u00a7\u00a7 433-487 BGB",
+      "publicationTitle": "Kommentar zum Bürgerlichen Gesetzbuch §§ 433-487 BGB",
       "publisher": "Sellier - de Gruyter",
-      "shortTitle": "\u00a7 449 BGB",
-      "title": "\u00a7 449 BGB"
+      "shortTitle": "§ 449 BGB",
+      "title": "§ 449 BGB"
     },
     {
-      "citationKey": "beckNeueBurgschaftsrecht1942",
       "creators": [
         {
           "creatorType": "author",
@@ -277,13 +267,12 @@
       "itemID": 9,
       "itemType": "book",
       "language": "de-CH",
-      "place": "Z\u00fcrich",
+      "place": "Zürich",
       "publisher": "Schulthess",
-      "shortTitle": "B\u00fcrgschaftsrecht",
-      "title": "Das neue B\u00fcrgschaftsrecht"
+      "shortTitle": "Bürgschaftsrecht",
+      "title": "Das neue Bürgschaftsrecht"
     },
     {
-      "citationKey": "berger305BGB2007",
       "creators": [
         {
           "creatorType": "author",
@@ -293,7 +282,7 @@
         {
           "creatorType": "editor",
           "firstName": "Hans",
-          "lastName": "Pr\u00fctting"
+          "lastName": "Prütting"
         },
         {
           "creatorType": "editor",
@@ -315,11 +304,10 @@
       "place": "Neuwied",
       "publicationTitle": "BGB Kommentar",
       "publisher": "Luchterhand",
-      "shortTitle": "\u00a7 305 BGB",
-      "title": "\u00a7 305 BGB"
+      "shortTitle": "§ 305 BGB",
+      "title": "§ 305 BGB"
     },
     {
-      "citationKey": "berger305cBGB2007",
       "creators": [
         {
           "creatorType": "author",
@@ -329,7 +317,7 @@
         {
           "creatorType": "editor",
           "firstName": "Hans",
-          "lastName": "Pr\u00fctting"
+          "lastName": "Prütting"
         },
         {
           "creatorType": "editor",
@@ -351,11 +339,10 @@
       "place": "Neuwied",
       "publicationTitle": "BGB Kommentar",
       "publisher": "Luchterhand",
-      "shortTitle": "\u00a7 305c BGB",
-      "title": "\u00a7 305c BGB"
+      "shortTitle": "§ 305c BGB",
+      "title": "§ 305c BGB"
     },
     {
-      "citationKey": "bergerAllgemeinesSchuldrecht2012",
       "creators": [
         {
           "creatorType": "author",
@@ -369,12 +356,11 @@
       "itemType": "book",
       "language": "de-CH",
       "place": "Bern",
-      "publisher": "St\u00e4mpfli Verlag",
+      "publisher": "Stämpfli Verlag",
       "shortTitle": "Schuldrecht",
       "title": "Allgemeines Schuldrecht"
     },
     {
-      "citationKey": "brinkmannArt43EGBGB2007",
       "creators": [
         {
           "creatorType": "author",
@@ -384,7 +370,7 @@
         {
           "creatorType": "editor",
           "firstName": "Hans",
-          "lastName": "Pr\u00fctting"
+          "lastName": "Prütting"
         },
         {
           "creatorType": "editor",
@@ -410,12 +396,11 @@
       "title": "Art. 43 EGBGB"
     },
     {
-      "citationKey": "buhlerArt3681998",
       "creators": [
         {
           "creatorType": "author",
           "firstName": "Theodor",
-          "lastName": "B\u00fchler"
+          "lastName": "Bühler"
         }
       ],
       "date": "1998",
@@ -423,19 +408,18 @@
       "itemID": 14,
       "itemType": "encyclopediaArticle",
       "language": "de-CH",
-      "place": "Z\u00fcrich",
-      "publicationTitle": "Der Werkvertrag, Art. 363-379 Z\u00fcrcher Kommentar Band V/2d",
+      "place": "Zürich",
+      "publicationTitle": "Der Werkvertrag, Art. 363-379 Zürcher Kommentar Band V/2d",
       "publisher": "Schulthess Polygraphischer Verlag AG",
       "shortTitle": "Art. 368 OR",
       "title": "Art. 368 OR"
     },
     {
-      "citationKey": "buhlerArt3711998",
       "creators": [
         {
           "creatorType": "author",
           "firstName": "Theodor",
-          "lastName": "B\u00fchler"
+          "lastName": "Bühler"
         }
       ],
       "date": "1998",
@@ -443,14 +427,13 @@
       "itemID": 15,
       "itemType": "encyclopediaArticle",
       "language": "de-CH",
-      "place": "Z\u00fcrich",
-      "publicationTitle": "Der Werkvertrag, Art. 363-379 Z\u00fcrcher Kommentar Band V/2d",
+      "place": "Zürich",
+      "publicationTitle": "Der Werkvertrag, Art. 363-379 Zürcher Kommentar Band V/2d",
       "publisher": "Schulthess Polygraphischer Verlag AG",
       "shortTitle": "Art. 371 OR",
       "title": "Art. 371 OR"
     },
     {
-      "citationKey": "bydlinskiBurgerlichesRechtBand2013",
       "creators": [
         {
           "creatorType": "author",
@@ -469,12 +452,11 @@
       "itemType": "book",
       "language": "de-AT",
       "place": "Wien",
-      "publisher": "Verlag \u00d6sterreich",
+      "publisher": "Verlag Österreich",
       "shortTitle": "BR AT",
-      "title": "B\u00fcrgerliches Recht Band I Allgemeiner Teil"
+      "title": "Bürgerliches Recht Band I Allgemeiner Teil"
     },
     {
-      "citationKey": "bydlinskiEntscheidungNach981991",
       "creators": [
         {
           "creatorType": "author",
@@ -486,16 +468,15 @@
       "issue": "2",
       "itemID": 17,
       "itemType": "journalArticle",
-      "journalAbbreviation": "\u00d6BA",
+      "journalAbbreviation": "ÖBA",
       "language": "de-AT",
       "pages": "106 - 113",
-      "publicationTitle": "\u00d6sterreichisches Bank Archiv",
-      "shortTitle": "\u00a7 98 EheG",
-      "title": "Entscheidung nach \u00a7 98 EheG und anh\u00e4ngiges Verfahren",
+      "publicationTitle": "Österreichisches Bank Archiv",
+      "shortTitle": "§ 98 EheG",
+      "title": "Entscheidung nach § 98 EheG und anhängiges Verfahren",
       "volume": "39"
     },
     {
-      "citationKey": "bydlinskiKeineAnalogeAnwendung2007",
       "creators": [
         {
           "creatorType": "author",
@@ -512,11 +493,10 @@
       "pages": "599 - 600",
       "publicationTitle": "Recht der Wirtschaft",
       "shortTitle": "Pfandbestellung",
-      "title": "Keine analoge Anwendung der \u00a7\u00a7 25c und 25d KSchG auf Pfandbestellung (Entscheidungsanmerkung)",
+      "title": "Keine analoge Anwendung der §§ 25c und 25d KSchG auf Pfandbestellung (Entscheidungsanmerkung)",
       "volume": "25"
     },
     {
-      "citationKey": "coesterAllgemeineGeschaftsbedingungen2008",
       "creators": [
         {
           "creatorType": "author",
@@ -535,18 +515,17 @@
       "language": "de-DE",
       "pages": "159 - 184",
       "place": "Berlin",
-      "publicationTitle": "Kommentar zum B\u00fcrgerlichen Gesetzbuch -- Eckpfeiler des Zivilrechts",
+      "publicationTitle": "Kommentar zum Bürgerlichen Gesetzbuch -- Eckpfeiler des Zivilrechts",
       "publisher": "Sellier - de Gruyter",
       "shortTitle": "AGB",
-      "title": "Allgemeine Gesch\u00e4ftsbedingungen"
+      "title": "Allgemeine Geschäftsbedingungen"
     },
     {
-      "citationKey": "dagdelenGeltungskontrolleErstreckungsklauselnKreditburgschaften2018",
       "creators": [
         {
           "creatorType": "author",
           "firstName": "Ahmet Hakan",
-          "lastName": "Da\u011fdelen"
+          "lastName": "Dağdelen"
         }
       ],
       "date": "2018",
@@ -557,16 +536,15 @@
       "pages": "63 - 69",
       "publicationTitle": "Law and Justice Review",
       "shortTitle": "Geltungskontrolle",
-      "title": "Geltungskontrolle der Erstreckungsklauseln in Kreditb\u00fcrgschaften nach dem \u00f6sterreichischen b\u00fcrgerlichen Recht",
+      "title": "Geltungskontrolle der Erstreckungsklauseln in Kreditbürgschaften nach dem österreichischen bürgerlichen Recht",
       "volume": "9"
     },
     {
-      "citationKey": "dagdelenSchutzBurgenRechtsvergleich2020",
       "creators": [
         {
           "creatorType": "author",
           "firstName": "Ahmet Hakan",
-          "lastName": "Da\u011fdelen"
+          "lastName": "Dağdelen"
         }
       ],
       "date": "2020",
@@ -576,10 +554,9 @@
       "place": "Ankara",
       "publisher": "Yetkin",
       "shortTitle": "Rechtsvergleich",
-      "title": "Schutz des B\u00fcrgen - Ein Rechtsvergleich zwischen \u00d6sterreich und der T\u00fcrkei"
+      "title": "Schutz des Bürgen - Ein Rechtsvergleich zwischen Österreich und der Türkei"
     },
     {
-      "citationKey": "deillon-scheggArt963ZGB2016",
       "creators": [
         {
           "creatorType": "author",
@@ -610,7 +587,6 @@
       "title": "Art. 963 ZGB"
     },
     {
-      "citationKey": "eicherPfandrechtBeweglichenSachen2012",
       "creators": [
         {
           "creatorType": "editor",
@@ -640,13 +616,12 @@
       "language": "de-AT",
       "pages": "1 - 69",
       "place": "Wien",
-      "publicationTitle": "\u00d6sterreichisches Bankvertragsrecht Band IX: Kreditsicherheiten Teil II",
+      "publicationTitle": "Österreichisches Bankvertragsrecht Band IX: Kreditsicherheiten Teil II",
       "publisher": "Springer",
       "shortTitle": "Pfandrecht",
       "title": "Das Pfandrecht an beweglichen Sachen"
     },
     {
-      "citationKey": "fountoulakisBurgschaftsrechtHoffnungenGesetzgebers2010",
       "creators": [
         {
           "creatorType": "author",
@@ -661,11 +636,10 @@
       "language": "de-CH",
       "pages": "423 - 434",
       "publicationTitle": "Aktuelle Juristische Praxis",
-      "shortTitle": "B\u00fcrgschaftsrecht",
-      "title": "B\u00fcrgschaftsrecht - von Hoffnungen des Gesetzgebers und was davon \u00fcbrig bleibt"
+      "shortTitle": "Bürgschaftsrecht",
+      "title": "Bürgschaftsrecht - von Hoffnungen des Gesetzgebers und was davon übrig bleibt"
     },
     {
-      "citationKey": "gauchWerkvertrag2011",
       "creators": [
         {
           "creatorType": "author",
@@ -678,13 +652,12 @@
       "itemID": 25,
       "itemType": "book",
       "language": "de-CH",
-      "place": "Z\u00fcrich",
+      "place": "Zürich",
       "publisher": "Schulthess",
       "shortTitle": "Werkvertrag",
       "title": "Der Werkvertrag"
     },
     {
-      "citationKey": "giovanoliKommentarSchweizerischenZivilgesetzbuch1942",
       "creators": [
         {
           "creatorType": "editor",
@@ -702,12 +675,11 @@
       "itemType": "book",
       "language": "de-CH",
       "place": "Bern",
-      "publisher": "Verlag von St\u00e4mpfli & Cie.",
-      "shortTitle": "B\u00fcrgschaftsrecht",
-      "title": "Kommentar zum Schweizerischen Zivilgesetzbuch Obligationenrecht Band VI Kommentar zum revidierten B\u00fcrgschaftsrecht"
+      "publisher": "Verlag von Stämpfli & Cie.",
+      "shortTitle": "Bürgschaftsrecht",
+      "title": "Kommentar zum Schweizerischen Zivilgesetzbuch Obligationenrecht Band VI Kommentar zum revidierten Bürgschaftsrecht"
     },
     {
-      "citationKey": "girsbergerArt102IPRG2004",
       "creators": [
         {
           "creatorType": "author",
@@ -752,18 +724,17 @@
       "language": "de-CH",
       "pages": "1106 - 1112",
       "place": "Schweiz",
-      "publicationTitle": "Z\u00fcrcher Kommentar zum IPRG, Kommentar zum Bundesgesetz \u00fcber das Internationale Privatrecht (IPRG) vom 18. Dezember 1987",
+      "publicationTitle": "Zürcher Kommentar zum IPRG, Kommentar zum Bundesgesetz über das Internationale Privatrecht (IPRG) vom 18. Dezember 1987",
       "publisher": "Schulthess Juristische Medien AG",
       "shortTitle": "Art. 102 IPRG",
       "title": "Art. 102 IPRG"
     },
     {
-      "citationKey": "goksuArt102IPRG2016",
       "creators": [
         {
           "creatorType": "author",
           "firstName": "Tarkan",
-          "lastName": "G\u00f6ksu"
+          "lastName": "Göksu"
         },
         {
           "creatorType": "editor",
@@ -778,7 +749,7 @@
         {
           "creatorType": "editor",
           "firstName": "Markus",
-          "lastName": "M\u00fcller-Chen"
+          "lastName": "Müller-Chen"
         }
       ],
       "date": "2016",
@@ -794,12 +765,11 @@
       "title": "Art. 102 IPRG"
     },
     {
-      "citationKey": "goksuArt103IPRG2016",
       "creators": [
         {
           "creatorType": "author",
           "firstName": "Tarkan",
-          "lastName": "G\u00f6ksu"
+          "lastName": "Göksu"
         },
         {
           "creatorType": "editor",
@@ -814,7 +784,7 @@
         {
           "creatorType": "editor",
           "firstName": "Markus",
-          "lastName": "M\u00fcller-Chen"
+          "lastName": "Müller-Chen"
         }
       ],
       "date": "2016",
@@ -830,7 +800,6 @@
       "title": "Art. 103 IPRG"
     },
     {
-      "citationKey": "gruberUmfangBurgenhaftungErstreckungsklausel2002",
       "creators": [
         {
           "creatorType": "author",
@@ -842,16 +811,15 @@
       "issue": "11",
       "itemID": 30,
       "itemType": "journalArticle",
-      "journalAbbreviation": "\u00d6BA",
+      "journalAbbreviation": "ÖBA",
       "language": "de-AT",
       "pages": "885 - 902",
-      "publicationTitle": "\u00d6sterreichisches Bank Archiv",
+      "publicationTitle": "Österreichisches Bank Archiv",
       "shortTitle": "Erstreckungsklausel",
-      "title": "Umfang der B\u00fcrgenhaftung: Erstreckungsklausel und Globalb\u00fcrgschaft",
+      "title": "Umfang der Bürgenhaftung: Erstreckungsklausel und Globalbürgschaft",
       "volume": "50"
     },
     {
-      "citationKey": "guhlNeueBurgschaftsrechtSchweiz1942",
       "creators": [
         {
           "creatorType": "author",
@@ -863,13 +831,12 @@
       "itemID": 31,
       "itemType": "book",
       "language": "de-CH",
-      "place": "Z\u00fcrich",
+      "place": "Zürich",
       "publisher": "Polygraphischer Verlag",
-      "shortTitle": "B\u00fcrgschaftsrecht",
-      "title": "Das neue B\u00fcrgschaftsrecht der Schweiz"
+      "shortTitle": "Bürgschaftsrecht",
+      "title": "Das neue Bürgschaftsrecht der Schweiz"
     },
     {
-      "citationKey": "haabArt716ZGB1977",
       "creators": [
         {
           "creatorType": "author",
@@ -898,13 +865,12 @@
       "language": "de-CH",
       "pages": "709 - 752",
       "place": "Schweiz",
-      "publicationTitle": "Das Eigentum, Art. 641-729 ZGB Kommentar zum Schweizerischen Zivilgesetzbuch, Das Sachenrecht, Z\u00fcrcher Kommentar Band/Nr. IV/1",
+      "publicationTitle": "Das Eigentum, Art. 641-729 ZGB Kommentar zum Schweizerischen Zivilgesetzbuch, Das Sachenrecht, Zürcher Kommentar Band/Nr. IV/1",
       "publisher": "Schulthess Polygraphischer Verlag AG",
       "shortTitle": "Art. 716 ZGB",
       "title": "Art. 716 ZGB"
     },
     {
-      "citationKey": "haasStichwortAGBKontrolleFormularmassige04",
       "creators": [
         {
           "creatorType": "author",
@@ -921,11 +887,10 @@
       "pages": "75 - 85",
       "publicationTitle": "Juristische Ausbildung und Praxisvorbereitung",
       "shortTitle": "Erstreckungsklauseln",
-      "title": "Stichwort AGB-Kontrolle: Formularm\u00e4\u00dfige Erstreckungsklauseln auf dem Pr\u00fcfstand",
+      "title": "Stichwort AGB-Kontrolle: Formularmäßige Erstreckungsklauseln auf dem Prüfstand",
       "volume": "14"
     },
     {
-      "citationKey": "heinrichs305BGB2005",
       "creators": [
         {
           "creatorType": "author",
@@ -944,14 +909,13 @@
       "itemType": "encyclopediaArticle",
       "language": "de-DE",
       "pages": "407 - 415",
-      "place": "M\u00fcnchen",
-      "publicationTitle": "Palandt B\u00fcrgerliches Gesetzbuch",
+      "place": "München",
+      "publicationTitle": "Palandt Bürgerliches Gesetzbuch",
       "publisher": "C. H. Beck",
-      "shortTitle": "\u00a7 305 BGB",
-      "title": "\u00a7 305 BGB"
+      "shortTitle": "§ 305 BGB",
+      "title": "§ 305 BGB"
     },
     {
-      "citationKey": "heinrichs305cBGB2005",
       "creators": [
         {
           "creatorType": "author",
@@ -970,14 +934,13 @@
       "itemType": "encyclopediaArticle",
       "language": "de-DE",
       "pages": "416 - 419",
-      "place": "M\u00fcnchen",
-      "publicationTitle": "Palandt B\u00fcrgerliches Gesetzbuch",
+      "place": "München",
+      "publicationTitle": "Palandt Bürgerliches Gesetzbuch",
       "publisher": "C. H. Beck",
-      "shortTitle": "\u00a7 305c BGB",
-      "title": "\u00a7 305c BGB"
+      "shortTitle": "§ 305c BGB",
+      "title": "§ 305c BGB"
     },
     {
-      "citationKey": "heldrichArt43EGBGB2005",
       "creators": [
         {
           "creatorType": "author",
@@ -996,14 +959,13 @@
       "itemType": "encyclopediaArticle",
       "language": "de-DE",
       "pages": "2646 - 2649",
-      "place": "M\u00fcnchen",
-      "publicationTitle": "Palandt B\u00fcrgerliches Gesetzbuch",
+      "place": "München",
+      "publicationTitle": "Palandt Bürgerliches Gesetzbuch",
       "publisher": "C. H. Beck",
       "shortTitle": "Art. 43 EGBGB",
       "title": "Art. 43 EGBGB"
     },
     {
-      "citationKey": "hitzArt714ZGB2016",
       "creators": [
         {
           "creatorType": "author",
@@ -1034,7 +996,6 @@
       "title": "Art. 714 ZGB"
     },
     {
-      "citationKey": "hitzArt715ZGB2016",
       "creators": [
         {
           "creatorType": "author",
@@ -1065,7 +1026,6 @@
       "title": "Art. 715 ZGB"
     },
     {
-      "citationKey": "honsellSchweizerischesHaftpflichtrecht2005",
       "creators": [
         {
           "creatorType": "author",
@@ -1078,13 +1038,12 @@
       "itemID": 39,
       "itemType": "book",
       "language": "de-CH",
-      "place": "Z\u00fcrich",
+      "place": "Zürich",
       "publisher": "Schulthess",
       "shortTitle": "Haftpflichtrecht",
       "title": "Schweizerisches Haftpflichtrecht"
     },
     {
-      "citationKey": "honsellSchweizerischesObligationenrechtBesonderer2010",
       "creators": [
         {
           "creatorType": "author",
@@ -1098,12 +1057,11 @@
       "itemType": "book",
       "language": "de-CH",
       "place": "Bern",
-      "publisher": "St\u00e4mpfli Verlag",
+      "publisher": "Stämpfli Verlag",
       "shortTitle": "OR BT",
       "title": "Schweizerisches Obligationenrecht Besonderer Teil"
     },
     {
-      "citationKey": "hrubesch-millauerSachenrecht2017",
       "creators": [
         {
           "creatorType": "author",
@@ -1127,12 +1085,11 @@
       "itemType": "book",
       "language": "de-CH",
       "place": "Bern",
-      "publisher": "St\u00e4mpfli Verlag",
+      "publisher": "Stämpfli Verlag",
       "shortTitle": "Sachenrecht",
       "title": "Sachenrecht"
     },
     {
-      "citationKey": "iroBurgerlichesRechtBand2013",
       "creators": [
         {
           "creatorType": "author",
@@ -1151,12 +1108,11 @@
       "itemType": "book",
       "language": "de-AT",
       "place": "Wien",
-      "publisher": "Verlag \u00d6sterreich",
+      "publisher": "Verlag Österreich",
       "shortTitle": "Sachenrecht",
-      "title": "B\u00fcrgerliches Recht Band IV Sachenrecht"
+      "title": "Bürgerliches Recht Band IV Sachenrecht"
     },
     {
-      "citationKey": "iroBurgerlichesRechtBand2016",
       "creators": [
         {
           "creatorType": "author",
@@ -1175,12 +1131,11 @@
       "itemType": "book",
       "language": "de-AT",
       "place": "Wien",
-      "publisher": "Verlag \u00d6sterreich",
+      "publisher": "Verlag Österreich",
       "shortTitle": "Sachenrecht",
-      "title": "B\u00fcrgerliches Recht Band IV Sachenrecht"
+      "title": "Bürgerliches Recht Band IV Sachenrecht"
     },
     {
-      "citationKey": "iroHypothekenrecht2012",
       "creators": [
         {
           "creatorType": "editor",
@@ -1210,23 +1165,22 @@
       "language": "de-AT",
       "pages": "69 - 244",
       "place": "Wien",
-      "publicationTitle": "\u00d6sterreichisches Bankvertragsrecht Band IX: Kreditsicherheiten Teil II",
+      "publicationTitle": "Österreichisches Bankvertragsrecht Band IX: Kreditsicherheiten Teil II",
       "publisher": "Springer",
       "shortTitle": "Hypothekenrecht",
       "title": "Hypothekenrecht"
     },
     {
-      "citationKey": "jaggiArt171973",
       "creators": [
         {
           "creatorType": "author",
           "firstName": "Peter",
-          "lastName": "J\u00e4ggi"
+          "lastName": "Jäggi"
         },
         {
           "creatorType": "author",
           "firstName": "Wilhelm",
-          "lastName": "Sch\u00f6nenberger"
+          "lastName": "Schönenberger"
         }
       ],
       "date": "1973",
@@ -1234,19 +1188,18 @@
       "itemID": 45,
       "itemType": "encyclopediaArticle",
       "language": "de-CH",
-      "place": "Z\u00fcrich",
-      "publicationTitle": "Z\u00fcrcher Kommentar Band Nr. V/1a Obligationenrecht Art. 1-17",
+      "place": "Zürich",
+      "publicationTitle": "Zürcher Kommentar Band Nr. V/1a Obligationenrecht Art. 1-17",
       "publisher": "Schulthess Polygraphischer Verlag AG",
       "shortTitle": "Art. 17 OR",
       "title": "Art. 17 OR"
     },
     {
-      "citationKey": "kahrArt714ZGB2016",
       "creators": [
         {
           "creatorType": "author",
           "firstName": "Michel",
-          "lastName": "K\u00e4hr"
+          "lastName": "Kähr"
         },
         {
           "creatorType": "editor",
@@ -1277,17 +1230,16 @@
       "pages": "1453 - 1455",
       "place": "Schweiz",
       "publicationTitle": "ZGB Kommentar Schweizerisches Zivilgesetzbuch",
-      "publisher": "Orell F\u00fcssli Verlag AG",
+      "publisher": "Orell Füssli Verlag AG",
       "shortTitle": "Art. 714 ZGB",
       "title": "Art. 714 ZGB"
     },
     {
-      "citationKey": "kahrArt715ZGB2016",
       "creators": [
         {
           "creatorType": "author",
           "firstName": "Michel",
-          "lastName": "K\u00e4hr"
+          "lastName": "Kähr"
         },
         {
           "creatorType": "editor",
@@ -1318,12 +1270,11 @@
       "pages": "1455 - 1458",
       "place": "Schweiz",
       "publicationTitle": "ZGB Kommentar Schweizerisches Zivilgesetzbuch",
-      "publisher": "Orell F\u00fcssli Verlag AG",
+      "publisher": "Orell Füssli Verlag AG",
       "shortTitle": "Art. 715 ZGB",
       "title": "Art. 715 ZGB"
     },
     {
-      "citationKey": "kochKreditsicherheitenGesellschaftsanteilenImmaterialgutern2012",
       "creators": [
         {
           "creatorType": "editor",
@@ -1353,18 +1304,17 @@
       "language": "de-AT",
       "pages": "435 - 485",
       "place": "Wien",
-      "publicationTitle": "\u00d6sterreichisches Bankvertragsrecht Band IX: Kreditsicherheiten Teil II",
+      "publicationTitle": "Österreichisches Bankvertragsrecht Band IX: Kreditsicherheiten Teil II",
       "publisher": "Springer",
       "shortTitle": "Kreditsicherheiten",
-      "title": "Kreditsicherheiten an Gesellschaftsanteilen, Immaterialg\u00fctern und Internet-Domains"
+      "title": "Kreditsicherheiten an Gesellschaftsanteilen, Immaterialgütern und Internet-Domains"
     },
     {
-      "citationKey": "kohlerBGBAllgemeinerTeil2020",
       "creators": [
         {
           "creatorType": "author",
           "firstName": "Helmut",
-          "lastName": "K\u00f6hler"
+          "lastName": "Köhler"
         }
       ],
       "date": "2020",
@@ -1372,13 +1322,12 @@
       "itemID": 49,
       "itemType": "book",
       "language": "de-DE",
-      "place": "M\u00fcnchen",
+      "place": "München",
       "publisher": "C. H. Beck",
       "shortTitle": "AT",
       "title": "BGB Allgemeiner Teil"
     },
     {
-      "citationKey": "kollerSchweizerischesObligationenrechtBesonderer2012",
       "creators": [
         {
           "creatorType": "author",
@@ -1391,12 +1340,11 @@
       "itemType": "book",
       "language": "de-CH",
       "place": "Bern",
-      "publisher": "St\u00e4mpfli Verlag",
+      "publisher": "Stämpfli Verlag",
       "shortTitle": "OR BT I",
       "title": "Schweizerisches Obligationenrecht Besonderer Teil Band I"
     },
     {
-      "citationKey": "kollerSchweizerischesWerkvertragsrecht2015",
       "creators": [
         {
           "creatorType": "author",
@@ -1408,13 +1356,12 @@
       "itemID": 51,
       "itemType": "book",
       "language": "de-CH",
-      "place": "Z\u00fcrich/St. Gallen",
+      "place": "Zürich/St. Gallen",
       "publisher": "Dike Verlag AG",
       "shortTitle": "Werkvertragsrecht",
       "title": "Schweizerisches Werkvertragsrecht"
     },
     {
-      "citationKey": "kolmasch864aABGB2013",
       "creators": [
         {
           "creatorType": "author",
@@ -1436,21 +1383,20 @@
       "place": "Wien",
       "publicationTitle": "ABGB Taschenkommentar",
       "publisher": "Lexisnexis",
-      "shortTitle": "\u00a7 864a ABGB",
-      "title": "\u00a7 864a ABGB"
+      "shortTitle": "§ 864a ABGB",
+      "title": "§ 864a ABGB"
     },
     {
-      "citationKey": "konigVomMangelfolgeschadenGrundzuge2019",
       "creators": [
         {
           "creatorType": "author",
           "firstName": "Roger",
-          "lastName": "K\u00f6nig"
+          "lastName": "König"
         },
         {
           "creatorType": "editor",
           "firstName": "Hubert",
-          "lastName": "St\u00f6ckli"
+          "lastName": "Stöckli"
         }
       ],
       "date": "2019",
@@ -1460,12 +1406,11 @@
       "pages": "79 - 106",
       "place": "Freiburg",
       "publicationTitle": "Schweizerische Baurechtstagung 2019",
-      "publisher": "Institut f\u00fcr Schweizerisches und Internationales Baurecht",
+      "publisher": "Institut für Schweizerisches und Internationales Baurecht",
       "shortTitle": "Mangelfolgeschaden",
-      "title": "Vom Mangelfolgeschaden: Grundz\u00fcge und Streitfragen"
+      "title": "Vom Mangelfolgeschaden: Grundzüge und Streitfragen"
     },
     {
-      "citationKey": "kostkiewiczArt102IPRG2015",
       "creators": [
         {
           "creatorType": "author",
@@ -1479,18 +1424,17 @@
       "language": "de-CH",
       "pages": "168 - 169",
       "place": "Schweiz",
-      "publicationTitle": "IPRG/Lug\u00dc Kommentar Bundesgesetz \u00fcber das Internationale Privatrecht, Lugano \u00dcbereinkommen und weitere Erlasse",
-      "publisher": "Orell F\u00fcssli Verlag AG",
+      "publicationTitle": "IPRG/LugÜ Kommentar Bundesgesetz über das Internationale Privatrecht, Lugano Übereinkommen und weitere Erlasse",
+      "publisher": "Orell Füssli Verlag AG",
       "shortTitle": "Art. 102 IPRG",
       "title": "Art. 102 IPRG"
     },
     {
-      "citationKey": "lukeSachenrecht2018",
       "creators": [
         {
           "creatorType": "author",
           "firstName": "Wolfgang",
-          "lastName": "L\u00fcke"
+          "lastName": "Lüke"
         }
       ],
       "date": "2018",
@@ -1498,13 +1442,12 @@
       "itemID": 55,
       "itemType": "book",
       "language": "de-DE",
-      "place": "M\u00fcnchen",
+      "place": "München",
       "publisher": "C. H. Beck",
       "shortTitle": "SachenR",
       "title": "Sachenrecht"
     },
     {
-      "citationKey": "medicusSchuldrechtIIBesonderer2018",
       "creators": [
         {
           "creatorType": "author",
@@ -1522,28 +1465,27 @@
       "itemID": 56,
       "itemType": "book",
       "language": "de-DE",
-      "place": "M\u00fcnchen",
+      "place": "München",
       "publisher": "Beck",
       "shortTitle": "SchuldR BT",
       "title": "Schuldrecht II Besonderer Teil"
     },
     {
-      "citationKey": "mullerArt172018",
       "creators": [
         {
           "creatorType": "author",
           "firstName": "Christoph",
-          "lastName": "M\u00fcller"
+          "lastName": "Müller"
         },
         {
           "creatorType": "editor",
           "firstName": "Regina E.",
-          "lastName": "Aebi-M\u00fcller"
+          "lastName": "Aebi-Müller"
         },
         {
           "creatorType": "editor",
           "firstName": "Christoph",
-          "lastName": "M\u00fcller"
+          "lastName": "Müller"
         }
       ],
       "date": "2018",
@@ -1552,12 +1494,11 @@
       "language": "de-CH",
       "place": "Bern",
       "publicationTitle": "Berner Kommentar Obligationenrecht Allgemeine Bestimmungen: Art. 1-18 OR mit allgemeiner Einleitung in das Schweizerische Obligationenrecht",
-      "publisher": "St\u00e4mpfli Verlag",
+      "publisher": "Stämpfli Verlag",
       "shortTitle": "Art. 17 OR",
       "title": "Art. 17 OR"
     },
     {
-      "citationKey": "neumayr31IPRG2010",
       "creators": [
         {
           "creatorType": "author",
@@ -1589,11 +1530,10 @@
       "place": "Wien",
       "publicationTitle": "Kurzkommentar zum ABGB",
       "publisher": "Springer",
-      "shortTitle": "\u00a7 31 IPRG",
-      "title": "\u00a7 31 IPRG"
+      "shortTitle": "§ 31 IPRG",
+      "title": "§ 31 IPRG"
     },
     {
-      "citationKey": "pestalozziArt4972015",
       "creators": [
         {
           "creatorType": "author",
@@ -1628,7 +1568,6 @@
       "title": "Art. 497 OR"
     },
     {
-      "citationKey": "pestalozziArt5072015",
       "creators": [
         {
           "creatorType": "author",
@@ -1663,7 +1602,6 @@
       "title": "Art. 507 OR"
     },
     {
-      "citationKey": "pfammatterArt963ZGB2016",
       "creators": [
         {
           "creatorType": "author",
@@ -1699,12 +1637,11 @@
       "pages": "1898 - 1901",
       "place": "Schweiz",
       "publicationTitle": "ZGB Kommentar Schweizerisches Zivilgesetzbuch",
-      "publisher": "Orell F\u00fcssli Verlag AG",
+      "publisher": "Orell Füssli Verlag AG",
       "shortTitle": "Art. 963 ZGB",
       "title": "Art. 963 ZGB"
     },
     {
-      "citationKey": "poschBurgerlichesRechtVII2010",
       "creators": [
         {
           "creatorType": "author",
@@ -1725,10 +1662,9 @@
       "place": "Wien",
       "publisher": "Springer",
       "shortTitle": "IPR",
-      "title": "B\u00fcrgerliches Recht VII Internationales Privatrecht"
+      "title": "Bürgerliches Recht VII Internationales Privatrecht"
     },
     {
-      "citationKey": "putzo449BGB2005",
       "creators": [
         {
           "creatorType": "author",
@@ -1747,14 +1683,13 @@
       "itemType": "encyclopediaArticle",
       "language": "de-DE",
       "pages": "658 - 661",
-      "place": "M\u00fcnchen",
-      "publicationTitle": "Palandt B\u00fcrgerliches Gesetzbuch",
+      "place": "München",
+      "publicationTitle": "Palandt Bürgerliches Gesetzbuch",
       "publisher": "C. H. Beck",
-      "shortTitle": "\u00a7 449 BGB",
-      "title": "\u00a7 449 BGB"
+      "shortTitle": "§ 449 BGB",
+      "title": "§ 449 BGB"
     },
     {
-      "citationKey": "reinickeBurgschaftsrecht2008",
       "creators": [
         {
           "creatorType": "author",
@@ -1772,13 +1707,12 @@
       "itemID": 64,
       "itemType": "book",
       "language": "de-DE",
-      "place": "K\u00f6ln - M\u00fcnchen",
+      "place": "Köln - München",
       "publisher": "Carl Heymanns Verlag",
-      "shortTitle": "B\u00fcrgschaftsrecht",
-      "title": "B\u00fcrgschaftsrecht"
+      "shortTitle": "Bürgschaftsrecht",
+      "title": "Bürgschaftsrecht"
     },
     {
-      "citationKey": "riedlerEigentumsvorbehalt2012",
       "creators": [
         {
           "creatorType": "editor",
@@ -1808,13 +1742,12 @@
       "language": "de-AT",
       "pages": "244 - 277",
       "place": "Wien",
-      "publicationTitle": "\u00d6sterreichisches Bankvertragsrecht Band IX: Kreditsicherheiten Teil II",
+      "publicationTitle": "Österreichisches Bankvertragsrecht Band IX: Kreditsicherheiten Teil II",
       "publisher": "Springer",
       "shortTitle": "Eigentumsvorbehalt",
       "title": "Eigentumsvorbehalt"
     },
     {
-      "citationKey": "riedlerKonsortialkrediteSicherheitenbestellungUnd2012",
       "creators": [
         {
           "creatorType": "editor",
@@ -1844,18 +1777,17 @@
       "language": "de-AT",
       "pages": "364 - 435",
       "place": "Wien",
-      "publicationTitle": "\u00d6sterreichisches Bankvertragsrecht Band IX: Kreditsicherheiten Teil II",
+      "publicationTitle": "Österreichisches Bankvertragsrecht Band IX: Kreditsicherheiten Teil II",
       "publisher": "Springer",
       "shortTitle": "KSS",
       "title": "Konsortialkredite - Sicherheitenbestellung und Sicherheitenpoolung"
     },
     {
-      "citationKey": "ruediArt662011",
       "creators": [
         {
           "creatorType": "author",
           "firstName": "Yves",
-          "lastName": "R\u00fcedi"
+          "lastName": "Rüedi"
         }
       ],
       "date": "2011",
@@ -1863,18 +1795,17 @@
       "itemType": "encyclopediaArticle",
       "language": "de-CH",
       "place": "Bern",
-      "publicationTitle": "Berner Kommentar Die Entstehung der Obligation: Die Entstehung aus ungerechtfetigter Bereicherung: Ausschluss der R\u00fcckforderungen, Art. 66 OR",
-      "publisher": "St\u00e4mpfli Verlag",
+      "publicationTitle": "Berner Kommentar Die Entstehung der Obligation: Die Entstehung aus ungerechtfetigter Bereicherung: Ausschluss der Rückforderungen, Art. 66 OR",
+      "publisher": "Stämpfli Verlag",
       "shortTitle": "Art. 66 OR",
       "title": "Art. 66 OR"
     },
     {
-      "citationKey": "ruthersAllgemeinerTeilBGB2020",
       "creators": [
         {
           "creatorType": "author",
           "firstName": "Bernd",
-          "lastName": "R\u00fcthers"
+          "lastName": "Rüthers"
         },
         {
           "creatorType": "author",
@@ -1887,18 +1818,17 @@
       "itemID": 68,
       "itemType": "book",
       "language": "de-DE",
-      "place": "M\u00fcnchen",
+      "place": "München",
       "publisher": "C. H. Beck",
       "shortTitle": "AT",
       "title": "Allgemeiner Teil des BGB"
     },
     {
-      "citationKey": "schauble17Sachenrecht2017",
       "creators": [
         {
           "creatorType": "author",
           "firstName": "Daniel",
-          "lastName": "Sch\u00e4uble"
+          "lastName": "Schäuble"
         },
         {
           "creatorType": "editor",
@@ -1916,14 +1846,13 @@
       "itemID": 69,
       "itemType": "bookSection",
       "language": "de-DE",
-      "place": "M\u00fcnchen",
+      "place": "München",
       "publicationTitle": "Internationales Privatrecht in der Notar- und Gestaltungspraxis",
       "publisher": "C. H. Beck",
-      "shortTitle": "\u00a7 17",
-      "title": "\u00a7 17 Sachenrecht"
+      "shortTitle": "§ 17",
+      "title": "§ 17 Sachenrecht"
     },
     {
-      "citationKey": "schiemannRechtsgeschaft2008",
       "creators": [
         {
           "creatorType": "author",
@@ -1942,13 +1871,12 @@
       "language": "de-DE",
       "pages": "43 - 122",
       "place": "Berlin",
-      "publicationTitle": "Kommentar zum B\u00fcrgerlichen Gesetzbuch -- Eckpfeiler des Zivilrechts",
+      "publicationTitle": "Kommentar zum Bürgerlichen Gesetzbuch -- Eckpfeiler des Zivilrechts",
       "publisher": "Sellier - de Gruyter",
-      "shortTitle": "Rechtsgesch\u00e4ft",
-      "title": "Rechtsgesch\u00e4ft"
+      "shortTitle": "Rechtsgeschäft",
+      "title": "Rechtsgeschäft"
     },
     {
-      "citationKey": "schmidt449BGB2007",
       "creators": [
         {
           "creatorType": "author",
@@ -1958,7 +1886,7 @@
         {
           "creatorType": "editor",
           "firstName": "Hans",
-          "lastName": "Pr\u00fctting"
+          "lastName": "Prütting"
         },
         {
           "creatorType": "editor",
@@ -1980,11 +1908,10 @@
       "place": "Neuwied",
       "publicationTitle": "BGB Kommentar",
       "publisher": "Luchterhand",
-      "shortTitle": "\u00a7 449 BGB",
-      "title": "\u00a7 449 BGB"
+      "shortTitle": "§ 449 BGB",
+      "title": "§ 449 BGB"
     },
     {
-      "citationKey": "schurr1063ABGB2013",
       "creators": [
         {
           "creatorType": "author",
@@ -2006,11 +1933,10 @@
       "place": "Wien",
       "publicationTitle": "ABGB Taschenkommentar",
       "publisher": "Lexisnexis",
-      "shortTitle": "\u00a7 1063 ABGB",
-      "title": "\u00a7 1063 ABGB"
+      "shortTitle": "§ 1063 ABGB",
+      "title": "§ 1063 ABGB"
     },
     {
-      "citationKey": "schwanderArt715ZGB2015",
       "creators": [
         {
           "creatorType": "author",
@@ -2046,7 +1972,6 @@
       "title": "Art. 715 ZGB"
     },
     {
-      "citationKey": "schwenzerSchweizerischesObligationenrechtAllgemeiner2009",
       "creators": [
         {
           "creatorType": "author",
@@ -2060,11 +1985,10 @@
       "itemType": "book",
       "language": "de-CH",
       "place": "Bern",
-      "publisher": "St\u00e4mpfli Verlag",
+      "publisher": "Stämpfli Verlag",
       "title": "Schweizerisches Obligationenrecht Allgemeiner Teil"
     },
     {
-      "citationKey": "seilerSachenrechtAllgemeineLehren2008",
       "creators": [
         {
           "creatorType": "author",
@@ -2083,13 +2007,12 @@
       "language": "de-DE",
       "pages": "955 - 977",
       "place": "Berlin",
-      "publicationTitle": "Kommentar zum B\u00fcrgerlichen Gesetzbuch -- Eckpfeiler des Zivilrechts",
+      "publicationTitle": "Kommentar zum Bürgerlichen Gesetzbuch -- Eckpfeiler des Zivilrechts",
       "publisher": "Sellier - de Gruyter",
       "shortTitle": "Sachenrecht",
       "title": "Sachenrecht -- Allgemeine Lehren"
     },
     {
-      "citationKey": "weberArt1102002",
       "creators": [
         {
           "creatorType": "author",
@@ -2108,12 +2031,11 @@
       "language": "de-CH",
       "place": "Bern",
       "publicationTitle": "Berner Kommentar Art. 110-113 OR Band VI/1/6",
-      "publisher": "St\u00e4mpfli Verlag",
+      "publisher": "Stämpfli Verlag",
       "shortTitle": "Art. 110 OR",
       "title": "Art. 110 OR"
     },
     {
-      "citationKey": "welserBurgerlichesRechtBand2015",
       "creators": [
         {
           "creatorType": "author",
@@ -2123,7 +2045,7 @@
         {
           "creatorType": "author",
           "firstName": "Brigitta",
-          "lastName": "Z\u00f6chling-Jud"
+          "lastName": "Zöchling-Jud"
         }
       ],
       "date": "2015",
@@ -2134,10 +2056,9 @@
       "place": "Wien",
       "publisher": "Manz",
       "shortTitle": "BR II",
-      "title": "B\u00fcrgerliches Recht Band II"
+      "title": "Bürgerliches Recht Band II"
     },
     {
-      "citationKey": "welter26AuslandsbezugUnd2017",
       "creators": [
         {
           "creatorType": "author",
@@ -2156,7 +2077,7 @@
         },
         {
           "creatorType": "editor",
-          "firstName": "Hans-J\u00fcrgen",
+          "firstName": "Hans-Jürgen",
           "lastName": "Lwowski"
         }
       ],
@@ -2165,14 +2086,13 @@
       "itemID": 78,
       "itemType": "bookSection",
       "language": "de-DE",
-      "place": "M\u00fcnchen",
+      "place": "München",
       "publicationTitle": "Bankrechts-Handbuch Band I-II",
       "publisher": "C. H. Beck",
-      "shortTitle": "\u00a7 26",
-      "title": "\u00a7 26 Auslandsbezug und Tragweite ausl\u00e4ndischen Rechts"
+      "shortTitle": "§ 26",
+      "title": "§ 26 Auslandsbezug und Tragweite ausländischen Rechts"
     },
     {
-      "citationKey": "wendehorstArt43EGBGB2018",
       "creators": [
         {
           "creatorType": "author",
@@ -2190,14 +2110,13 @@
       "itemID": 79,
       "itemType": "encyclopediaArticle",
       "language": "de-DE",
-      "place": "M\u00fcnchen",
-      "publicationTitle": "M\u00fcnchener Kommentar zum B\u00fcrgerlichen Gesetzbuch Band 12",
+      "place": "München",
+      "publicationTitle": "Münchener Kommentar zum Bürgerlichen Gesetzbuch Band 12",
       "publisher": "C. H. Beck",
       "shortTitle": "Art. 43 EGBGB",
       "title": "Art. 43 EGBGB"
     },
     {
-      "citationKey": "wendehorstPrivatrechtEinfuhrungRechtswissenschaften2016",
       "creators": [
         {
           "creatorType": "author",
@@ -2207,7 +2126,7 @@
         {
           "creatorType": "author",
           "firstName": "Brigitta",
-          "lastName": "Z\u00f6chling-Jud"
+          "lastName": "Zöchling-Jud"
         }
       ],
       "date": "2016",
@@ -2217,11 +2136,10 @@
       "language": "de-AT",
       "place": "Wien",
       "publisher": "Manz",
-      "shortTitle": "Einf\u00fchrung",
-      "title": "Privatrecht Einf\u00fchrung in die Rechtswissenschaften und ihre Methoden Teil II"
+      "shortTitle": "Einführung",
+      "title": "Privatrecht Einführung in die Rechtswissenschaften und ihre Methoden Teil II"
     },
     {
-      "citationKey": "westermann449BGB2016",
       "creators": [
         {
           "creatorType": "author",
@@ -2230,8 +2148,8 @@
         },
         {
           "creatorType": "editor",
-          "firstName": "Franz J\u00fcrgen",
-          "lastName": "S\u00e4cker"
+          "firstName": "Franz Jürgen",
+          "lastName": "Säcker"
         },
         {
           "creatorType": "editor",
@@ -2254,14 +2172,13 @@
       "itemID": 81,
       "itemType": "encyclopediaArticle",
       "language": "de-DE",
-      "place": "M\u00fcnchen",
-      "publicationTitle": "M\u00fcnchener Kommentar zum B\u00fcrgerlichen Gesetzbuch Band 3",
+      "place": "München",
+      "publicationTitle": "Münchener Kommentar zum Bürgerlichen Gesetzbuch Band 3",
       "publisher": "C. H. Beck",
-      "shortTitle": "\u00a7 449 BGB",
-      "title": "\u00a7 449 BGB"
+      "shortTitle": "§ 449 BGB",
+      "title": "§ 449 BGB"
     },
     {
-      "citationKey": "wolfSachenrecht2020",
       "creators": [
         {
           "creatorType": "author",
@@ -2279,13 +2196,12 @@
       "itemID": 82,
       "itemType": "book",
       "language": "de-DE",
-      "place": "M\u00fcnchen",
+      "place": "München",
       "publisher": "C. H. Beck",
       "shortTitle": "SachenR",
       "title": "Sachenrecht"
     },
     {
-      "citationKey": "zanklBurgerlichesRecht2012",
       "creators": [
         {
           "creatorType": "author",
@@ -2301,11 +2217,10 @@
       "place": "Wien",
       "publisher": "Facultas",
       "shortTitle": "BR",
-      "title": "B\u00fcrgerliches Recht"
+      "title": "Bürgerliches Recht"
     },
     {
       "ISBN": "3-214-14708-0",
-      "citationKey": "koziolBurgerlichesRechtBand2014",
       "creators": [
         {
           "creatorType": "author",
@@ -2320,7 +2235,7 @@
         {
           "creatorType": "author",
           "firstName": "Andreas",
-          "lastName": "Klete\u010dka"
+          "lastName": "Kletečka"
         }
       ],
       "date": "2014",
@@ -2334,14 +2249,13 @@
       "place": "Wien",
       "publisher": "Manz",
       "shortTitle": "BR I",
-      "title": "B\u00fcrgerliches Recht Band I"
+      "title": "Bürgerliches Recht Band I"
     },
     {
       "DOI": "10.1371/journal.pone.0080876",
       "ISSN": "1932-6203",
-      "abstractNote": "Background The aim of this longitudinal study was to investigate how the kinematic organization of upper limb movements changes from fetal to post-natal life. By means of off-line kinematical techniques we compared the kinematics of hand-to-mouth and hand-to-eye movements, in the same individuals, during prenatal life and early postnatal life, as well as the kinematics of hand-to-mouth and reaching-toward-object movements in the later age periods. Methodology/Principal Findings Movements recorded at the 14th, 18th and 22nd week of gestation were compared with similar movements recorded in an ecological context at 1, 2, 3, 4, 8, and 12 months after birth. The results indicate a similar kinematic organization depending on movement type (i.e., eye, mouth) for the infants at one month and for the fetuses at 22 weeks of gestation. At two and three months such differential motor planning depending on target is lost and no statistical differences emerge. Hand to eye movements were no longer observed after the fourth month of life, therefore we compared kinematics for hand to mouth with hand to object movements. Results of these analyses revealed differences in the performance of hand to mouth and reaching to object movements in the length of the deceleration phase of the movement, depending on target. Conclusion/Significance Data are discussed in terms of how the passage from intrauterine to extra-uterine environments modifies motor planning. These results provide novel evidence of how different types of upper extremity movements, those directed towards one\u2019s own face and those directed to external objects, develop.",
+      "abstractNote": "Background The aim of this longitudinal study was to investigate how the kinematic organization of upper limb movements changes from fetal to post-natal life. By means of off-line kinematical techniques we compared the kinematics of hand-to-mouth and hand-to-eye movements, in the same individuals, during prenatal life and early postnatal life, as well as the kinematics of hand-to-mouth and reaching-toward-object movements in the later age periods. Methodology/Principal Findings Movements recorded at the 14th, 18th and 22nd week of gestation were compared with similar movements recorded in an ecological context at 1, 2, 3, 4, 8, and 12 months after birth. The results indicate a similar kinematic organization depending on movement type (i.e., eye, mouth) for the infants at one month and for the fetuses at 22 weeks of gestation. At two and three months such differential motor planning depending on target is lost and no statistical differences emerge. Hand to eye movements were no longer observed after the fourth month of life, therefore we compared kinematics for hand to mouth with hand to object movements. Results of these analyses revealed differences in the performance of hand to mouth and reaching to object movements in the length of the deceleration phase of the movement, depending on target. Conclusion/Significance Data are discussed in terms of how the passage from intrauterine to extra-uterine environments modifies motor planning. These results provide novel evidence of how different types of upper extremity movements, those directed towards one’s own face and those directed to external objects, develop.",
       "accessDate": "2019-08-14T17:38:19Z",
-      "citationKey": "ZoiaBlasonDOttavioEtAl13",
       "creators": [
         {
           "creatorType": "author",
@@ -2356,7 +2270,7 @@
         {
           "creatorType": "author",
           "firstName": "Giuseppina",
-          "lastName": "D\u2019Ottavio"
+          "lastName": "D’Ottavio"
         },
         {
           "creatorType": "author",
