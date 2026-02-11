@@ -280,7 +280,8 @@ export class TestSupport {
           break
         }
         case 'refresh':
-          await Zotero.BetterBibTeX.KeyManager.refresh(itemID, false, true)
+        case 'force-refresh':
+          await Zotero.BetterBibTeX.KeyManager.refresh(itemID, false, action === 'force-refresh')
           break
         default:
           throw new Error(`TestSupport.pinCiteKey: unsupported action ${ action }`)

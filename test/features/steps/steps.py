@@ -345,13 +345,13 @@ def step_impl(context, fmt, expected):
 
 @when(u'I {change} the citation key')
 def step_impl(context, change):
-  assert change in ['pin', 'clear', 'refresh'], change
+  assert change in ['pin', 'clear', 'force-refresh', 'refresh'], change
   assert len(context.selected) == 1
   context.zotero.execute('await Zotero.BetterBibTeX.TestSupport.pinCiteKey(itemID, action)', itemID=context.selected[0], action=change)
 
 @when(u'I {change} all citation keys')
 def step_impl(context, change):
-  assert change in ['pin', 'unpin', 'refresh'], change
+  assert change in ['pin', 'unpin', 'force-refresh', 'refresh'], change
   context.zotero.execute('await Zotero.BetterBibTeX.TestSupport.pinCiteKey(null, action)', action=change)
 
 @when(u'I pin the citation key to "{citekey}"')
