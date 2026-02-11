@@ -146,23 +146,22 @@ export const KeyManager = new class _KeyManager {
         }
       }
       else {
-        if (!current || Preference.autoPinOverwrite) {
-          await this.update(item, 'fill')?.saveTx()
-        }
+        await this.update(item, Preference.autoPinOverwrite).saveTx()
       }
     }
   }
 
-  public async refresh(ids: 'selected' | number | number[], manual = false): Promise<void> {
+  public async refresh(ids: 'selected' | number | number[], warn = false, replace = false): Promise<void> {
     ids = this.expandSelection(ids)
+    log.debug('3396:', { ids, warn })
     const keys = new Set(ids)
     await Cache.touch(ids)
 
-    const warnAt = manual ? Preference.warnBulkModify : 0
+    const warnAt = warn ? Preference.warnBulkModify : 0
     const overwrite = Preference.autoPinOverwrite
     const affected = warnAt ? this.keys.find().filter(item => overwrite || !keys.has(item.itemID)).length : 0
 
-    if (warnAt > 0 && affected > warnAt) {
+    if (warnAt && affected > warnAt) {
       const ignore = { value: false }
       const index = Services.prompt.confirmEx(
         null, // no parent
@@ -186,7 +185,7 @@ export const KeyManager = new class _KeyManager {
     const items = (await getItemsAsync(ids)).filter(item => {
       // these get no key
       if (item.isFeedItem || !item.isRegularItem()) return false
-      return manual || !item.getField('citationKey')
+      return replace || !item.getField('citationKey')
     })
 
     if (!items.length) return
@@ -196,8 +195,7 @@ export const KeyManager = new class _KeyManager {
 
     const progress: Progress = items.length > 10 ? new Progress(items.length, 'Refreshing citation keys') : null
     for (const item of items) {
-      const citationKey = this.update(item, 'refresh').getField('citationKey')
-      this.upsert(item)
+      const citationKey = this.update(item, replace).getField('citationKey')
 
       // remove the new citekey from the aliases if present
       const aliases = Extra.get(item.getField('extra'), 'zotero', { aliases: true })
@@ -397,16 +395,16 @@ export const KeyManager = new class _KeyManager {
         return true
       })
 
-      const update = (item: Zotero.Item, reason) => {
-        this.update(item, reason).saveTx().catch(err => log.error('failed to update', item.id, ':', err))
+      const update = (item: Zotero.Item) => {
+        this.update(item, Preference.autoPinOverwrite).saveTx().catch(err => log.error('failed to update', item.id, ':', err))
       }
       for (const item of items) {
         if (Preference.testing) { // race condition for key assignment otherwise
-          update(item, 'fast-pin for testing')
+          update(item)
         }
         else {
           this.autopin.schedule(item.id, () => {
-            update(item, 'auto-pin')
+            update(item)
           })
         }
 
@@ -428,26 +426,28 @@ export const KeyManager = new class _KeyManager {
     this.started = true
   }
 
-  public update(item: Zotero.Item, reason: string): Zotero.Item {
-    log.debug('z8: item key update:', reason)
+  public update(item: Zotero.Item, replace = false): Zotero.Item {
+    log.debug('z8: item key replace:', replace)
     if (item.isFeedItem || !item.isRegularItem()) return item
 
-    const current = item.getField('citationKey')
-    if (current && !Preference.autoPinOverwrite) return item
+    do {
+      const { extra, citationKey } = Extra.citationKey(item.getField('extra'))
+      if (citationKey) {
+        item.setField('extra', extra)
+        item.setField('citationKey', citationKey)
+        break
+      }
 
-    const { extra, citationKey } = Extra.citationKey(item.getField('extra'))
-    if (citationKey) {
-      item.setField('extra', extra)
-      item.setField('citationKey', citationKey)
-      this.upsert(item)
-      return item
-    }
+      const current = item.getField('citationKey')
+      if (current && !replace) break
 
-    const proposed = this.propose(item)
-    if (proposed === current) return
+      const proposed = this.propose(item)
+      if (proposed === current) break
 
-    log.debug('z8: update called, set', proposed)
-    item.setField('citationKey', proposed)
+      log.debug('z8: update called, set', proposed)
+      item.setField('citationKey', proposed)
+    } while (false) // eslint-disable-line no-constant-condition
+
     this.upsert(item)
     return item
   }

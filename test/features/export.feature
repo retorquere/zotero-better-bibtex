@@ -459,7 +459,7 @@ Feature: Export
     When I import 1 reference from "export/*.json"
     Then an export using "Better BibLaTeX" should match "export/*.pinned.biblatex"
     When I select the item with a field that contains "Genetics"
-    And I unpin the citation key
+    And I clear the citation key
     And I refresh the citation key
     Then an export using "Better BibLaTeX" should match "export/*.biblatex"
 

@@ -46,7 +46,7 @@ export class TestSupport {
       for (const item of await Zotero.Items.getAll(Zotero.Libraries.userLibraryID)) {
         if (item.isFeedItem || !item.isRegularItem()) continue
         if (item.getField('citationKey')) continue
-        await Zotero.BetterBibTeX.KeyManager.update(item, 'test fill').save()
+        await Zotero.BetterBibTeX.KeyManager.update(item).save()
       }
     })
   }
@@ -280,7 +280,7 @@ export class TestSupport {
           break
         }
         case 'refresh':
-          await Zotero.BetterBibTeX.KeyManager.refresh(itemID)
+          await Zotero.BetterBibTeX.KeyManager.refresh(itemID, false, true)
           break
         default:
           throw new Error(`TestSupport.pinCiteKey: unsupported action ${ action }`)
