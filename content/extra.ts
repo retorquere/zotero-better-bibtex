@@ -13,7 +13,7 @@ const re = {
   old: /^{:((?:bib(?:la)?)?tex\.)?([^:]+)(:)\s*([^}]+)}$/i,
   new: /^((?:bib(?:la)?)?tex\.)?([^:=]+)\s*([:=])\s*([\S\s]*)/i,
   quoted: /^((?:bib(?:la)?)?tex\.)"([^"]+)"\s*([:=])\s*([\S\s]*)/i,
-  ck: /^(citation ?key|bibtex):(?<citationKey>.*)/i,
+  ck: /^(citation[ -]?key|bibtex):(?<citationKey>.*)/i,
 }
 
 export function citationKey(extra: string): { citationKey: string; extra: string } {
