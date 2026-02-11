@@ -115,7 +115,7 @@ export const KeyManager = new class _KeyManager {
 
   private unwatch: UnwatchCallback[] = []
 
-  public autopin: Scheduler<number> = new Scheduler<number>('autoPinDelay', Preference.testing ? 1 : 1000)
+  public autopin: Scheduler<number> = new Scheduler<number>('autoPinDelay', 1000)
 
   private started = false
 
@@ -397,10 +397,18 @@ export const KeyManager = new class _KeyManager {
         return true
       })
 
+      const update = (item: Zotero.Item, reason) => {
+        this.update(item, reason).saveTx().catch(err => log.error('failed to update', item.id, ':', err))
+      }
       for (const item of items) {
-        this.autopin.schedule(item.id, () => {
-          this.update(item, `item auto-pinned @ ${new Date}`)?.saveTx().catch(err => log.error('failed to update', item.id, ':', err))
-        })
+        if (Preference.testing) { // race condition for key assignment otherwise
+          update(item, 'fast-pin for testing')
+        }
+        else {
+          this.autopin.schedule(item.id, () => {
+            update(item, 'auto-pin')
+          })
+        }
 
         if (Preference.warnTitleCased) {
           const title = item.getField('title')
