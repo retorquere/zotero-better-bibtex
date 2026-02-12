@@ -92,6 +92,8 @@ monkey.patch(Zotero.Items, 'merge', original => async function Zotero_Items_merg
       kv: Preference.extraMergeCSL,
     }
 
+    log.debug('1371:', item.getField('citationKey'), otherItems.map(i => i.getField('citationKey')))
+
     if (merge.citationKey || merge.tex || merge.kv) {
       const extra = Extra.get(item.getField('extra'), 'zotero', { aliases: merge.citationKey, tex: merge.tex, kv: merge.kv })
       // get citekeys of other items

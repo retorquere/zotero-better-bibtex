@@ -202,7 +202,7 @@ export class TestSupport {
     for (const [ operator, text ] of Object.entries(query)) {
       if (!operator.match(/^(is|contains)$/)) throw new Error(`unsupported search mode ${ operator }`)
       if (!text) throw new Error(`Need a text to test for ${operator}`)
-      s.addCondition('quicksearch', operator as _ZoteroTypes.Search.Operator, text)
+      s.addCondition('quicksearch', operator as _ZoteroTypes.Search.Operator, `"${text}"`)
       break
     }
     const ids = await s.search()

@@ -15,7 +15,7 @@ Feature: Merge
     And I merge the selected items
     Then an export using "Better BibLaTeX" should match "merge/*.biblatex"
 
-  @1373 @retries=10
+  #@retries=10
   Scenario: Merging error with arXiv ID #1373
     When I import 2 references from "merge/*.json"
     And I select the item with a field that contains "It was twenty years ago today ..."
