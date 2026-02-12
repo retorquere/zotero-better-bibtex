@@ -199,10 +199,12 @@ export class TestSupport {
     if (!Object.keys(query).length) throw new Error(`empty query ${ JSON.stringify(query) }`)
 
     const s = new Zotero.Search
+    s.addCondition('joinMode', 'any')
     for (const [ operator, text ] of Object.entries(query)) {
       if (!operator.match(/^(is|contains)$/)) throw new Error(`unsupported search mode ${ operator }`)
       if (!text) throw new Error(`Need a text to test for ${operator}`)
-      s.addCondition('quicksearch', operator as _ZoteroTypes.Search.Operator, `"${text}"`)
+      s.addCondition('field', operator as _ZoteroTypes.Search.Operator, text)
+      s.addCondition('creator', operator as _ZoteroTypes.Search.Operator, text)
       break
     }
     const ids = await s.search()

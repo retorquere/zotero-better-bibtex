@@ -30,7 +30,7 @@ Feature: Merge
     And I select the item with a field that is "Troja2017"
     And I merge the selected items
     Then the library should match "merge/*-merged.json"
-    When I refresh all citation keys
+    When I force-refresh all citation keys
     Then the library should match "merge/*-refreshed.json"
 
   @retries=5
