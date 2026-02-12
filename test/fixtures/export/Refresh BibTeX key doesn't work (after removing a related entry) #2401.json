@@ -11,7 +11,7 @@
       "autoExportDelay": 2,
       "baseAttachmentPath": "/Users/furue/Dropbox/doc/papers",
       "bibtexURL": "url",
-      "citekeyFormat": "authEtal2(initials=true).capitalize+\":\"+year",
+      "citekeyFormat": "authEtal2(initials=true).capitalize+':'+year",
       "exportTitleCase": false,
       "extraMergeCSL": true,
       "logEvents": true,
@@ -28,7 +28,6 @@
       "ISSN": "2169-9291",
       "abstractNote": "The objective of this study is to compare the characteristics of the oceanic teleconnection with the linear equatorial dynamics of two upwelling systems along the southwestern South American and African continents at subseasonal time scales (<120 days). Altimetric data analysis shows that the coastal variability remains coherent with the equatorial signal until 27\u00b0S in the southeastern Pacific (SEP), while in the southeastern Atlantic (SEA) it fades out south of 12\u00b0S. To explain this striking difference, our methodology is based on the experimentation with twin regional model configurations of the SEP and SEA Oceans. The estimation of free Coastal-Trapped Waves (CTWs) modal structures and associated contribution to coastal variability allows inferring and comparing the characteristics of each CTW mode in the two systems; namely, their forcings, amplitude, dissipation rate, and scattering. Results show that the Pacific subseasonal equatorial forcing is only 20% larger than in the Atlantic, but important differences in the relative contribution of each baroclinic mode are reported. The first baroclinic mode dominates the eastern equatorial Pacific variability, while in the eastern equatorial Atlantic, the second mode is the most energetic. This leads to a drastic increase in the dissipation and scattering of the remotely forced CTW in the SEA sector, compared to the coastal SEP. Concomitantly, south of 15\u00b0S, the subseasonal coastal wind stress forcing is substantially more energetic in the SEA and participates in breaking the link between the equatorial forcing and the coastal variability. Our results are consistent with the solutions of a simple multimode CTW model.",
       "accessDate": "2023-02-17T12:25:44Z",
-      "citationKey": "IlligS.etal:2018a",
       "creators": [
         {
           "creatorType": "author",
@@ -93,7 +92,6 @@
       "ISSN": "2169-9291",
       "abstractNote": "The objective of this study is to compare the characteristics of the oceanic teleconnection with the linear equatorial dynamics of two upwelling systems along the southwestern South American and African continents at subseasonal time scales (<120 days). Altimetric data analysis shows that the coastal variability remains coherent with the equatorial signal until 27\u00b0S in the southeastern Pacific (SEP), while in the southeastern Atlantic (SEA) it fades out south of 12\u00b0S. To explain this striking difference, our methodology is based on the experimentation with twin regional model configurations of the SEP and SEA Oceans. The estimation of free Coastal-Trapped Waves (CTWs) modal structures and associated contribution to coastal variability allows inferring and comparing the characteristics of each CTW mode in the two systems; namely, their forcings, amplitude, dissipation rate, and scattering. Results show that the Pacific subseasonal equatorial forcing is only 20% larger than in the Atlantic, but important differences in the relative contribution of each baroclinic mode are reported. The first baroclinic mode dominates the eastern equatorial Pacific variability, while in the eastern equatorial Atlantic, the second mode is the most energetic. This leads to a drastic increase in the dissipation and scattering of the remotely forced CTW in the SEA sector, compared to the coastal SEP. Concomitantly, south of 15\u00b0S, the subseasonal coastal wind stress forcing is substantially more energetic in the SEA and participates in breaking the link between the equatorial forcing and the coastal variability. Our results are consistent with the solutions of a simple multimode CTW model.",
       "accessDate": "2023-02-17T12:25:44Z",
-      "citationKey": "IlligS.etal:2018a",
       "creators": [
         {
           "creatorType": "author",

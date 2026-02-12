@@ -467,7 +467,7 @@ Feature: Export
     When I import 2 references from "export/*.json"
     When I select the item with a field that is "IlligS.etal:2018"
     And I remove the selected item
-    And I refresh all citation keys
+    And I force-refresh all citation keys
     Then an export using "Better BibLaTeX" should match "export/*.biblatex"
 
   Scenario: Postfixed keys different between computers #1788
