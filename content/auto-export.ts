@@ -403,7 +403,7 @@ export const AutoExport = new class $AutoExport {
 
   public db = (new Loki('autoexport.db')).addCollection<Job>('citationKeys', {
     clone: true,
-    cloneMethod: 'jquery-extend-deep',
+    cloneMethod: 'shallow',
     indices: [ 'translatorID', 'type', 'id' ],
     unique: [ 'path' ],
   })
