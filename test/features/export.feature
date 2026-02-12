@@ -460,7 +460,7 @@ Feature: Export
     Then an export using "Better BibLaTeX" should match "export/*.pinned.biblatex"
     When I select the item with a field that contains "Genetics"
     And I clear the citation key
-    And I refresh the citation key
+    And I force-refresh the citation key
     Then an export using "Better BibLaTeX" should match "export/*.biblatex"
 
   Scenario: Refresh BibTeX key doesn't work (after removing a related entry) #2401
@@ -604,7 +604,7 @@ Feature: Export
     Given I import 1 reference from "export/*.json"
     Then an export using "Better BibLaTeX" should match "export/*-fold.biblatex"
     When I set preference .citekeyFold to false
-    And I refresh all citation keys
+    And I force-refresh all citation keys
     Then an export using "Better BibLaTeX" should match "export/*-nofold.biblatex"
 
   @384 @bbt @565 @566
@@ -783,10 +783,10 @@ Feature: Export
   Scenario: use author dash separation rather than camel casing in citekey #1495
     Given I import 1 reference from "export/*.json"
     When I set preference .citekeyFormat to "authorsn(n=2,sep='-').fold.lower + '_' + year + '-' + shorttitle.condense('-').lower"
-    And I refresh all citation keys
+    And I force-refresh all citation keys
     Then an export using "Better BibTeX" should match "export/*.bibtex"
     When I set preference .citekeyFormat to "authorsn(n=2).fold.condense('-').lower + '_' + year + '-' + shorttitle.condense('-').lower"
-    And I refresh all citation keys
+    And I force-refresh all citation keys
     Then an export using "Better BibTeX" should match "export/*.bibtex"
 
   Scenario: Collected notes
@@ -848,19 +848,19 @@ Feature: Export
     Given I import 1 reference from "export/*.json"
     When I select the item with a field that contains "Valuations"
     When I set preference .citekeyFormat to "(ShortTitle.condense(_) || Title.condense(_))"
-    And I refresh the citation key
+    And I force-refresh the citation key
     Then the citation key should be "The_Theory_of_Classical_Valuations"
     When I set preference .citekeyFormat to "(ShortTitle || Title).condense(_)"
-    And I refresh the citation key
+    And I force-refresh the citation key
     Then the citation key should be "The_Theory_of_Classical_Valuations"
     When I set preference .citekeyFormat to "(ShortTitle ? ShortTitle : Title).condense(_)"
-    And I refresh the citation key
+    And I force-refresh the citation key
     Then the citation key should be "The_Theory_of_Classical_Valuations"
 
-  Scenario: refresh fails for pinned keys #3173
+  Scenario: force-refresh fails for pinned keys #3173
     Given I import 1 reference from "export/*.json"
     When I select the item with a field that contains "Quantum"
-    And I refresh the citation key
+    And I force-refresh the citation key
     Then the citation key should be "DBLP:books/daglib/0032853"
 
   Scenario: POST to pull-export #3258
