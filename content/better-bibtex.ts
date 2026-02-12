@@ -519,6 +519,20 @@ export class BetterBibTeX {
       startup: () => {
         Ready.resolve(true)
 
+        Zotero.ItemTreeManager.registerColumn({
+          dataKey: 'citationKey',
+          label: l10n.localize('better-bibtex_zotero-pane_column_citekey'),
+          pluginID: 'better-bibtex@iris-advies.com',
+          dataProvider: (item, _dataKey) => {
+            try {
+              return item.getField('citationKey') || ''
+            }
+            catch {
+              return ''
+            }
+          },
+        })
+
         ExportOptions.enable()
         Zotero.getMainWindows().forEach(win => {
           this.onMainWindowLoad({ window: win })
