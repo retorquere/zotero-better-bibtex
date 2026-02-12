@@ -1,3 +1,11 @@
+| <?xml version="1.0"?>
+| <?xml-stylesheet href="chrome://global/skin/" type="text/css"?>
+| <?xml-stylesheet href="chrome://zotero-platform/content/zotero.css"?>
+| <?xml-stylesheet href="chrome://global/skin/global.css"?>
+| <?xml-stylesheet href="chrome://zotero/skin/zotero.css"?>
+| <?xml-stylesheet href="chrome://zotero-platform/content/overlay.css"?>
+| <?xml-stylesheet href="chrome://zotero-better-bibtex/content/skin/preferences.css"?>
+| <?xml-stylesheet href="chrome://zotero-better-bibtex/content/skin/error-report.css" type="text/css"?>
 window(xmlns='http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul'
        xmlns:html='http://www.w3.org/1999/xhtml'
        title='Better BibTeX citation key migration'
@@ -17,38 +25,69 @@ window(xmlns='http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul'
 
     html:div.option-container
       html:label
-        html:input(type='radio' name='migrate' value='all' onchange='choose(this)')
+        html:input(type='radio' name='migrate' value='all' onchange='migrate(this)')
         |  Migrate all Better BibTeX citation keys
 
       html:label#pinned
-        html:input(type='radio' name='migrate' value='pinned' onchange='choose(this)')
+        html:input(type='radio' name='migrate' value='pinned' onchange='migrate(this)')
         |  Migrate only pinned Better BibTeX citation keys, discard the others
 
       html:label
-        html:input(type='radio' name='migrate' value='none' onchange='choose(this)')
+        html:input(type='radio' name='migrate' value='none' onchange='migrate(this)')
         |  Discard all Better BibTeX citation keys
 
     html:div.divider
 
-    html:div
+    html:div#header(style='font-weight: bold; margin-bottom: 10px;')
+      | When a Better BibTeX stored citation key exists for an item that currently has a citation key in Zotero:
+
+    html:div.option-container
       html:label
-        html:input(type='checkbox' id='overwrite')
-        |  Overwrite existing native keys
+        html:input(type='radio' name='overwrite' value='yes' onchange='overwrite(this)')
+        |  Overwrite existing key in the library
+      html:label
+        html:input(type='radio' name='overwrite' value='no' onchange='overwrite(this)')
+        |  Discard Better BibTeX citation key
 
     html:div.footer
-      html:button#postponeBtn(onclick='finish("postpone")') Ask me again at next start
-      html:button#okBtn(disabled='true' style='font-weight: bold;' onclick='finish()') Migrate
+      html:button#postpone(onclick='finish("postpone")') Ask me again at next start
+      html:button#ok(disabled='true' style='font-weight: bold;' onclick='finish()') Migrate
 
   script(type='application/javascript').
-    var selection = null
-    function choose(el) {
-      selection = el.value
-      document.getElementById('okBtn').disabled = false
+    const choice = {}
+
+    function gate() {
+      const ok = document.getElementById('ok')
+
+      document.querySelectorAll('input[type="radio"][name="overwrite"]').forEach(radio => {
+        radio.disabled = choice.migrate === 'none'
+      })
+
+      switch (choice.migrate || '') {
+        case '':
+          ok.disabled = true
+          break
+        case 'none':
+          ok.disabled = false
+          break
+        default:
+          ok.disabled = typeof choice.overwrite !== 'boolean'
+          break
+      }
+    }
+
+    function migrate(el) {
+      choice.migrate = el.value
+      gate()
+    }
+
+    function overwrite(el) {
+      choice.overwrite = el.value === 'yes'
+      gate()
     }
     function finish(val) {
-      // Use the provided value (for postpone) or the radio selection
-      window.arguments[0].migrate = val || selection
-      window.arguments[0].overwrite = document.getElementById('overwrite').checked
+      choice.migrate = val || choice.migrate
+      Object.assign(window.arguments[0], choice)
       window.close()
     }
     function init() {

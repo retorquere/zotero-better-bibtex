@@ -29,7 +29,7 @@ import { newQueue } from '@henrygd/queue/rl'
 
 import * as l10n from './l10n'
 
-// import { migrate } from './key-manager/migrate'
+import { migrate } from './key-manager/migrate'
 
 export type CitekeyRecord = {
   itemID: number
@@ -284,7 +284,7 @@ export const KeyManager = new class _KeyManager {
   }
 
   private async start(): Promise<void> {
-    // await migrate()
+    void migrate()
 
     const load = `
       SELECT item.itemID, item.key AS itemKey, item.libraryID, idv.value AS citationKey

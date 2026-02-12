@@ -15,8 +15,8 @@ export async function migrate(): Promise<void> {
     pinned: 0,
   }
   try {
+    await Zotero.DB.queryAsync('ATTACH DATABASE ? AS betterbibtex', [ db ])
     await Zotero.DB.executeTransaction(async () => {
-      await Zotero.DB.queryAsync('ATTACH DATABASE ? AS betterbibtex', [ db ])
       const rows = await Zotero.DB.queryAsync(`
         SELECT bbt.itemID, bbt.itemKey, bbt.libraryID, bbt.citationKey, bbt.pinned
         FROM betterbibtex.citationkey bbt
@@ -28,7 +28,7 @@ export async function migrate(): Promise<void> {
             FROM itemTypes
             WHERE typeName IN ('attachment', 'note', 'annotation')
           )
-      `.replace(/\n/g, ' '))
+      `.replace(/\n/g, ' ').trim())
       log.debug('z8 migrate:', { rows: rows?.length ?? 'undefined' })
       let keys: { citationKey: string; itemID: number; pinned: boolean }[] = rows.map(({ citationKey, itemID, pinned }) => ({
         itemID,
@@ -38,8 +38,11 @@ export async function migrate(): Promise<void> {
       log.debug('z8: candidates', keys)
 
       if (keys.length) {
+        choice.total = keys.length
+        choice.pinned = keys.filter(key => key.pinned).length
         Zotero.getMainWindow().openDialog('chrome://zotero-better-bibtex/content/migrate.xhtml', '', 'chrome,dialog,centerscreen,modal', choice)
         choice.migrate = choice.migrate || 'postpone'
+        log.debug('z8: migrate', choice)
         switch (choice.migrate) {
           case 'none':
             keys = []
@@ -63,14 +66,21 @@ export async function migrate(): Promise<void> {
     })
   }
   catch (err) {
-    log.error('z8 error:', err)
+    log.error('z8 migration error:', err, err.message)
   }
-  finally {
+
+  log.debug('z8: finished', choice)
+  try {
+    await Zotero.DB.queryAsync("DETACH DATABASE 'betterbibtex'")
+  }
+  catch {}
+
+  if (choice.migrate !== 'postpone') {
     try {
-      log.debug('z8:', choice)
-      await Zotero.DB.queryAsync("DETACH DATABASE 'betterbibtex'")
-      if (choice.migrate !== 'postpone') await Zotero.File.rename(db, 'better-bibtex.migrated')
+      await Zotero.File.rename(db, 'better-bibtex.migrated')
     }
-    catch {}
+    catch (err) {
+      log.error('z8 migration rename error:', err, err.message)
+    }
   }
 }
