@@ -15,23 +15,26 @@ export async function migrate(): Promise<void> {
     pinned: 0,
   }
   try {
-    await Zotero.DB.queryAsync('ATTACH DATABASE ? AS betterbibtex', [ db ])
-    const q = `
-      SELECT bbt.itemID, bbt.itemKey, bbt.libraryID, bbt.citationKey, bbt.pinned
-      FROM betterbibtex.citationkey bbt
-      WHERE bbt.itemID NOT IN (SELECT itemID FROM deletedItems)
-        AND item.itemID NOT IN (SELECT itemID FROM feedItems)
-        AND item.itemTypeID NOT IN (
-          SELECT itemTypeID
-          FROM itemTypes
-          WHERE typeName IN ('attachment', 'note', 'annotation')
-    `.replace(/\n/g, ' ')
-
     await Zotero.DB.executeTransaction(async () => {
-      let keys: { citationKey: string; itemID: number; pinned: boolean }[] = []
-      for (const { citationKey, itemID, pinned } of (await Zotero.DB.queryAsync(q))) {
-        keys.push({ citationKey, itemID, pinned: !!pinned })
-      }
+      await Zotero.DB.queryAsync('ATTACH DATABASE ? AS betterbibtex', [ db ])
+      const rows = await Zotero.DB.queryAsync(`
+        SELECT bbt.itemID, bbt.itemKey, bbt.libraryID, bbt.citationKey, bbt.pinned
+        FROM betterbibtex.citationkey bbt
+        JOIN items item ON item.itemID = bbt.itemID
+        WHERE item.itemID NOT IN (SELECT itemID FROM deletedItems)
+          AND item.itemID NOT IN (SELECT itemID FROM feedItems)
+          AND item.itemTypeID NOT IN (
+            SELECT itemTypeID
+            FROM itemTypes
+            WHERE typeName IN ('attachment', 'note', 'annotation')
+          )
+      `.replace(/\n/g, ' '))
+      log.debug('z8 migrate:', { rows: rows?.length ?? 'undefined' })
+      let keys: { citationKey: string; itemID: number; pinned: boolean }[] = rows.map(({ citationKey, itemID, pinned }) => ({
+        itemID,
+        citationKey,
+        pinned: !!pinned,
+      }))
       log.debug('z8: candidates', keys)
 
       if (keys.length) {

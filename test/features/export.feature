@@ -857,10 +857,10 @@ Feature: Export
     And I force-refresh the citation key
     Then the citation key should be "The_Theory_of_Classical_Valuations"
 
-  Scenario: force-refresh fails for pinned keys #3173
+  Scenario: refresh fails for pinned keys #3173
     Given I import 1 reference from "export/*.json"
     When I select the item with a field that contains "Quantum"
-    And I force-refresh the citation key
+    And I refresh the citation key
     Then the citation key should be "DBLP:books/daglib/0032853"
 
   Scenario: POST to pull-export #3258
