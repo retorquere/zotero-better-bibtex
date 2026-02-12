@@ -9,7 +9,6 @@ import { defaults } from '../gen/preferences/meta'
 import { Preference } from './prefs'
 import * as memory from './memory'
 import { Cache } from './translators/worker'
-import { CitekeyRecord } from './key-manager'
 
 // import { Bench } from 'tinybench'
 
@@ -199,27 +198,16 @@ export class TestSupport {
   public async find(query: { contains: string; is: string }, expected = 1): Promise<number[]> {
     if (!Object.keys(query).length) throw new Error(`empty query ${ JSON.stringify(query) }`)
 
-    let ids: number[] = []
-
-    if (query.contains) {
-      ids = ids
-        .concat(
-          Zotero.BetterBibTeX.KeyManager.all()
-            .filter((key: CitekeyRecord) => key.citationKey.toLowerCase().includes(query.contains.toLowerCase()))
-            .map((key: CitekeyRecord) => key.itemID)
-        )
+    const s = new Zotero.Search
+    for (const [ operator, text ] of Object.entries(query)) {
+      if (!operator.match(/^(is|contains)$/)) throw new Error(`unsupported search mode ${ operator }`)
+      if (!text) throw new Error(`Need a text to test for ${operator}`)
+      s.addCondition('quicksearch', operator as _ZoteroTypes.Search.Operator, text)
+      break
     }
-    if (query.is) ids = ids.concat(Zotero.BetterBibTeX.KeyManager.find({ citationKey: query.is }).map((key: CitekeyRecord) => key.itemID))
-
-    const s = (new Zotero.Search)
-    for (const [ mode, text ] of Object.entries(query)) {
-      if (![ 'is', 'contains' ].includes(mode)) throw new Error(`unsupported search mode ${ mode }`)
-      s.addCondition('field', mode as _ZoteroTypes.Search.Operator, text)
-    }
-    ids = ids.concat(await s.search())
-    ids = Array.from(new Set(ids))
+    const ids = await s.search()
     if (!ids || !ids.length) throw new Error(`No item found matching ${ JSON.stringify(query) }`)
-    if (ids.length !== expected) throw new Error(`${ JSON.stringify(query) } matched ${ JSON.stringify(ids) }, but only ${ expected } expected`)
+    if (ids.length !== expected) throw new Error(`${ JSON.stringify(query) } matched ${ids.length}, but ${ expected } expected`)
 
     return Array.from(new Set(ids))
   }
@@ -256,7 +244,7 @@ export class TestSupport {
     if (!ids.length) throw new Error('Nothing to do')
 
     if (citationKey) {
-      if (action !== 'refresh') throw new Error(`Don't know how to ${ action } ${ citationKey }`)
+      if (action !== 'set') throw new Error(`Don't know how to ${ action } ${ citationKey }`)
       log.error('conflict: setting', ids, 'to', citationKey)
       for (const item of await getItemsAsync(ids)) {
         log.debug('z8: test support force refresh')

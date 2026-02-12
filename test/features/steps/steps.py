@@ -354,10 +354,10 @@ def step_impl(context, change):
   assert change in ['pin', 'unpin', 'force-refresh', 'refresh'], change
   context.zotero.execute('await Zotero.BetterBibTeX.TestSupport.pinCiteKey(null, action)', action=change)
 
-@when(u'I pin the citation key to "{citekey}"')
+@when(u'I set the citation key to "{citekey}"')
 def step_impl(context, citekey):
   assert len(context.selected) == 1, context.selected
-  context.zotero.execute('await Zotero.BetterBibTeX.TestSupport.pinCiteKey(id, "pin", citekey)', id=context.selected[0], citekey=citekey)
+  context.zotero.execute('await Zotero.BetterBibTeX.TestSupport.pinCiteKey(id, "set", citekey)', id=context.selected[0], citekey=citekey)
 
 @step(u'dump the cache to {cache}')
 def step_impl(context, cache):

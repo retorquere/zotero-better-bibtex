@@ -24,8 +24,6 @@ import Loki from 'lokijs'
 
 import { Cache } from './translators/worker'
 
-import { monkey } from './monkey-patch'
-
 import { sprintf } from 'sprintf-js'
 import { newQueue } from '@henrygd/queue/rl'
 
@@ -255,68 +253,6 @@ export const KeyManager = new class _KeyManager {
         }
         await this.db.queue.done()
       },
-    })
-    orchestrator.add({
-      id: 'citekeysearch',
-      description: 'citation key search',
-      needs: ['keymanager'],
-      startup: async () => { // eslint-disable-line @typescript-eslint/require-await
-        this.enableSearch()
-      },
-    })
-  }
-
-  private enableSearch(): void {
-    if (this.searchEnabled) return
-    this.searchEnabled = true
-
-    const citekeySearchCondition = {
-      name: 'citationKey',
-      operators: {
-        is: true,
-        isNot: true,
-        contains: true,
-        doesNotContain: true,
-      },
-      table: 'betterbibtex.citationkey',
-      field: 'citationKey',
-      localized: 'Citation Key',
-    }
-
-    monkey.patch(Zotero.Search.prototype, 'addCondition', original => function addCondition(condition: string, operator: any, value: any, _required: any) {
-      // detect a quick search being set up
-      if (condition.match(/^quicksearch/)) this.__add_bbt_citekey = true
-      // creator is always added in a quick search so use it as a trigger
-      if (condition === 'creator' && this.__add_bbt_citekey) {
-        original.call(this, citekeySearchCondition.name, operator, value, false)
-        delete this.__add_bbt_citekey
-      }
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-return, prefer-rest-params
-      return original.apply(this, arguments)
-    })
-    monkey.patch(Zotero.SearchConditions, 'hasOperator', original => function hasOperator(condition: string, operator: string | number) {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-      if (condition === citekeySearchCondition.name) return citekeySearchCondition.operators[operator]
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-return, prefer-rest-params
-      return original.apply(this, arguments)
-    })
-    monkey.patch(Zotero.SearchConditions, 'get', original => function get(condition: string) {
-      if (condition === citekeySearchCondition.name) return citekeySearchCondition
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-return, prefer-rest-params
-      return original.apply(this, arguments)
-    })
-    monkey.patch(Zotero.SearchConditions, 'getStandardConditions', original => function getStandardConditions() {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-return, prefer-rest-params
-      return original.apply(this, arguments).concat({
-        name: citekeySearchCondition.name,
-        localized: citekeySearchCondition.localized,
-        operators: citekeySearchCondition.operators,
-      }).sort((a: { localized: string }, b: { localized: any }) => a.localized.localeCompare(b.localized))
-    })
-    monkey.patch(Zotero.SearchConditions, 'getLocalizedName', original => function getLocalizedName(str: string) {
-      if (str === citekeySearchCondition.name) return citekeySearchCondition.localized
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-return, prefer-rest-params
-      return original.apply(this, arguments)
     })
   }
 

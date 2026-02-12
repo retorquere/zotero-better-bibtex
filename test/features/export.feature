@@ -473,7 +473,7 @@ Feature: Export
   Scenario: Postfixed keys different between computers #1788
     When I import 2 references from "export/*.json"
     And I select the item with a field that contains "Wittgenstein"
-    And I pin the citation key to "heyns2021"
+    And I set the citation key to "heyns2021"
     And I wait 2 seconds
     Then an export using "Better BibLaTeX" should match "export/*.biblatex"
 
