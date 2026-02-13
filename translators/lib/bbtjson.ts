@@ -156,8 +156,6 @@ export async function importBBTJSON(collected: Collected): Promise<void> {
     const item = collected.item()
     Object.assign(item, source)
 
-    log.debug('prepped for import:', { source, item })
-
     for (const att of item.attachments || []) {
       if (att.url) delete att.path
       delete att.relations

@@ -2,11 +2,7 @@ import { log } from '../logger'
 
 export async function migrate(): Promise<void> {
   const db = PathUtils.join(Zotero.DataDirectory.dir, 'better-bibtex.sqlite')
-  log.debug('z8: db =', db)
-  if (!(await IOUtils.exists(db))) {
-    log.debug('z8:', db, 'not present')
-    return
-  }
+  if (!(await IOUtils.exists(db))) return
 
   const choice = {
     migrate: 'postpone' as 'none' | 'all' | 'pinned' | 'postpone',
@@ -29,20 +25,17 @@ export async function migrate(): Promise<void> {
             WHERE typeName IN ('attachment', 'note', 'annotation')
           )
       `.replace(/\n/g, ' ').trim())
-      log.debug('z8 migrate:', { rows: rows?.length ?? 'undefined' })
       let keys: { citationKey: string; itemID: number; pinned: boolean }[] = rows.map(({ citationKey, itemID, pinned }) => ({
         itemID,
         citationKey,
         pinned: !!pinned,
       }))
-      log.debug('z8: candidates', keys)
 
       if (keys.length) {
         choice.total = keys.length
         choice.pinned = keys.filter(key => key.pinned).length
         Zotero.getMainWindow().openDialog('chrome://zotero-better-bibtex/content/migrate.xhtml', '', 'chrome,dialog,centerscreen,modal', choice)
         choice.migrate = choice.migrate || 'postpone'
-        log.debug('z8: migrate', choice)
         switch (choice.migrate) {
           case 'none':
             keys = []
@@ -56,7 +49,6 @@ export async function migrate(): Promise<void> {
           for (const { itemID, citationKey } of keys) {
             const item = await Zotero.Items.getAsync(itemID)
             if (choice.overwrite || !item.getField('citationKey')) {
-              log.debug('z8: citationKey', citationKey)
               item.setField('citationKey', citationKey)
               await item.save()
             }
@@ -69,7 +61,6 @@ export async function migrate(): Promise<void> {
     log.error('z8 migration error:', err, err.message)
   }
 
-  log.debug('z8: finished', choice)
   try {
     await Zotero.DB.queryAsync("DETACH DATABASE 'betterbibtex'")
   }
