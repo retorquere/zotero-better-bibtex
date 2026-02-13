@@ -153,19 +153,14 @@ export const KeyManager = new class _KeyManager {
   public async refresh(ids: 'selected' | number | number[], warn = false, replace = false): Promise<void> {
     ids = this.expandSelection(ids)
     log.debug('1721: refresh', { ids, warn, replace })
-    const keys = new Set(ids)
     await Cache.touch(ids)
 
-    const warnAt = warn ? Preference.warnBulkModify : 0
-    const overwrite = Preference.autoPinOverwrite
-    const affected = warnAt ? this.keys.find().filter(item => overwrite || !keys.has(item.itemID)).length : 0
-
-    if (warnAt && affected > warnAt) {
+    if (replace && warn && Preference.warnBulkModify && this.keys.find({ itemID: { $in: ids } }).length > Preference.warnBulkModify) {
       const ignore = { value: false }
       const index = Services.prompt.confirmEx(
         null, // no parent
         'Better BibTeX for Zotero', // dialog title
-        l10n.localize('better-bibtex_bulk-keys-confirm_warning', { treshold: warnAt }),
+        l10n.localize('better-bibtex_bulk-keys-confirm_warning', { treshold: Preference.warnBulkModify }),
         Services.prompt.STD_OK_CANCEL_BUTTONS + Services.prompt.BUTTON_POS_2 * Services.prompt.BUTTON_TITLE_IS_STRING, // buttons
         null, null, l10n.localize('better-bibtex_bulk-keys-confirm_stop_asking'), // button labels
         null, ignore // no checkbox

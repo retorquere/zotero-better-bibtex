@@ -605,10 +605,9 @@ export class BetterBibTeX {
         label: 'Better BibTeX',
         icon: 'chrome://zotero-better-bibtex/content/skin/bibtex-menu.svg',
         children: [
-          { tag: 'menuitem', label: l10n.localize('better-bibtex_citekey_set'), oncommand: 'Zotero.BetterBibTeX.KeyManager.set()' },
-          { tag: 'menuitem', label: l10n.localize('better-bibtex_citekey_pin'), oncommand: 'Zotero.BetterBibTeX.KeyManager.pin("selected")' },
           { tag: 'menuitem', label: l10n.localize('better-bibtex_zotero-pane_citekey_pin_inspire-hep'), oncommand: 'Zotero.BetterBibTeX.KeyManager.pin("selected", true)' },
-          { tag: 'menuitem', label: l10n.localize('better-bibtex_zotero-pane_citekey_refresh'), oncommand: 'Zotero.BetterBibTeX.KeyManager.refresh("selected", true)' },
+          { tag: 'menuitem', label: l10n.localize('better-bibtex_zotero-pane_citekey_fill'), oncommand: 'Zotero.BetterBibTeX.KeyManager.refresh("selected")' },
+          { tag: 'menuitem', label: l10n.localize('better-bibtex_zotero-pane_citekey_refresh'), oncommand: 'Zotero.BetterBibTeX.KeyManager.refresh("selected", true, true)' },
           {
             tag: 'menuitem',
             label: l10n.localize('better-bibtex_zotero-pane_biblatex_to_clipboard'),
