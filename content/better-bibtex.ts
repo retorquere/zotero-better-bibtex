@@ -282,6 +282,7 @@ monkey.patch(Zotero.Translate.Export.prototype, 'translate', original => functio
     translatorID,
     displayOptions,
   }
+  log.debug('3382: captured export settings', Zotero.BetterBibTeX.lastExport)
 
   if (this.location) {
     if (displayOptions.exportFileData) { // when exporting file data, the user was asked to pick a directory rather than a file

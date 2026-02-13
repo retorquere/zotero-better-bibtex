@@ -612,6 +612,7 @@ export class ErrorReport {
           timeout: 40,
         })
         const merge = JSON.parse(items)
+        log.debug('3382: sending lastExport options', Zotero.BetterBibTeX.lastExport.displayOptions)
         merge.config.options = Zotero.BetterBibTeX.lastExport.displayOptions
         items = JSON.stringify(merge, null, 2)
       }
