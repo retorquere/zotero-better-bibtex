@@ -12,6 +12,7 @@ Feature: Export
 
     Examples:
       | file                                                                                                                     | references |
+      | Original Date not working with Citation Key (anymore) #3392                                                              | 1          |
       | Issue getting shortjournal #3382                                                                                         | 1          |
       | New and edited items are not added or dropped from better-bibtex.sql #3370                                               | 1          |
       | Generating citation keys and special letters (i.e. o, u, a) #3351                                                        | 1          |

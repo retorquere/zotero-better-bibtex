@@ -1,0 +1,60 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "preferences": {
+      "autoPinDelay": 5,
+      "citekeyFormat": "auth + (origyear || year) + shorttitle(1, 1)",
+      "keyConflictPolicy": "change",
+      "keyScope": "global",
+      "quickCopyMode": "citekeys"
+    },
+    "options": {}
+  },
+  "version": {
+    "zotero": "8.0.1",
+    "bbt": "7.0.76"
+  },
+  "collections": {},
+  "items": [
+    {
+      "key": "2ZQ3MIBU",
+      "version": 64608,
+      "itemType": "book",
+      "title": "The life of Mohammad : from original sources",
+      "abstractNote": "Reprint of the 1912 edition. Originally published in four volumes; Includes bibliographical references and index",
+      "date": "1923",
+      "language": "eng",
+      "shortTitle": "The life of Mohammad",
+      "libraryCatalog": "Internet Archive",
+      "callNumber": "b22202213",
+      "url": "http://archive.org/details/lifeofmohammadfr00muir",
+      "accessDate": "2026-02-02T10:44:15Z",
+      "publisher": "Edinburgh : J. Grant",
+      "numPages": "714",
+      "originalDate": "1861",
+      "creators": [
+        {
+          "firstName": "William",
+          "lastName": "Muir",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "T. H. (Thomas Hunter)",
+          "lastName": "Weir",
+          "creatorType": "editor"
+        },
+        {
+          "firstName": "Snell Library",
+          "lastName": "Northeastern University",
+          "creatorType": "contributor"
+        }
+      ],
+      "tags": [],
+      "dateAdded": "2026-02-02T10:44:15Z",
+      "dateModified": "2026-02-02T11:15:03Z",
+      "itemID": 27120,
+      "notes": [],
+    }
+  ]
+}
