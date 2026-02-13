@@ -628,7 +628,7 @@ export class ErrorReport {
     }
 
     Zotero.getMainWindow().openDialog(
-      'chrome://zotero-better-bibtex/content/ErrorReport.xhtml',
+      'chrome://zotero-better-bibtex/content/error-report.xhtml',
       'better-bibtex-error-report',
       'chrome,centerscreen,modal',
       { wrappedJSObject: { items }})

@@ -203,5 +203,5 @@ export function pullExport(): void {
     params.url.long += `/${uri.encode(library.name) || 'library'}`
   }
 
-  Zotero.getMainWindow().openDialog('chrome://zotero-better-bibtex/content/ServerURL.xhtml', '', 'chrome,dialog,centerscreen,modal', params)
+  Zotero.getMainWindow().openDialog('chrome://zotero-better-bibtex/content/server-url.xhtml', '', 'chrome,dialog,centerscreen,modal', params)
 }

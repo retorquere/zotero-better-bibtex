@@ -25,14 +25,13 @@ class StripConfig extends ASTWalker {
   }
 }
 
-const pugs = [
-  'content/ErrorReport.pug',
-  'content/Preferences.pug',
-  'content/ServerURL.pug',
-  'content/key-manager/migrate.pug',
-]
-for (const src of pugs) {
-  let tgt = `build/content/${ src.replace(/.*\//, '').replace(/[.]pug$/, '.xhtml') }`
+const pugs = {
+  'content/ErrorReport.pug': 'build/content/error-report.xhtml',
+  'content/Preferences.pug': 'build/content/preferences.xhtml',
+  'content/ServerURL.pug': 'build/content/server-url.xhtml',
+  'content/key-manager/migrate.pug': 'build/content/keymanager-migrate.xhtml',
+}
+for (const [ src, tgt ] of Object.entries(pugs)) {
   console.log(' ', src, '=>', tgt)
   // const xhtml = new XHTML
   fs.writeFileSync(tgt, render(src, {

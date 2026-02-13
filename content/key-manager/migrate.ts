@@ -34,7 +34,7 @@ export async function migrate(): Promise<void> {
       if (keys.length) {
         choice.total = keys.length
         choice.pinned = keys.filter(key => key.pinned).length
-        Zotero.getMainWindow().openDialog('chrome://zotero-better-bibtex/content/migrate.xhtml', '', 'chrome,dialog,centerscreen,modal', choice)
+        Zotero.getMainWindow().openDialog('chrome://zotero-better-bibtex/content/keymanager-migrate.xhtml', '', 'chrome,dialog,centerscreen,modal', choice)
         choice.migrate = choice.migrate || 'postpone'
         switch (choice.migrate) {
           case 'none':
