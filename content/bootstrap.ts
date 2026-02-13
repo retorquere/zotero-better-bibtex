@@ -83,13 +83,6 @@ export async function startup({ resourceURI, rootURI = resourceURI.spec }, reaso
     })
 
     await Zotero.BetterBibTeX.startup(BOOTSTRAP_REASONS[reason])
-    await Zotero.PreferencePanes.register({
-      pluginID: 'better-bibtex@iris-advies.com',
-      src: `${rootURI}content/preferences.xhtml`,
-      stylesheets: [`${rootURI}content/preferences.css`],
-      label: 'Better BibTeX',
-      defaultXUL: true,
-    })
     log('startup done')
   }
   catch (err) {

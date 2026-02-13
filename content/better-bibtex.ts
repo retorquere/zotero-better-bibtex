@@ -1,5 +1,7 @@
 /* eslint-disable prefer-rest-params */
 
+declare const rootURI: string
+
 import { Deferred } from './promise'
 const Ready = new Deferred<boolean>
 
@@ -529,6 +531,14 @@ export class BetterBibTeX {
               return ''
             }
           },
+        })
+
+        void Zotero.PreferencePanes.register({
+          pluginID: 'better-bibtex@iris-advies.com',
+          src: `${rootURI}content/preferences.xhtml`,
+          stylesheets: [`${rootURI}content/preferences.css`],
+          label: 'Better BibTeX',
+          defaultXUL: true,
         })
 
         ExportOptions.enable()

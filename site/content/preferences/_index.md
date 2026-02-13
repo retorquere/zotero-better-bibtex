@@ -34,7 +34,7 @@ default: `yes`
 Enable searching on citation keys. Slows down startup on very large libraries. Requires Zotero restart to enable/disable.
 
 
-## Automatically pin citation key after
+## Automatically fill citation key after
 
 default: `0`
 
@@ -65,7 +65,7 @@ Options:
 * within each library
 
 
-### On conflict with a pinned key, non-pinned keys will be
+### When a citation key is set that is already in use in other items, the keys of these other items will be
 
 default: `kept (causes key duplicates)`
 
