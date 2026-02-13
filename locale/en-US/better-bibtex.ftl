@@ -223,7 +223,7 @@ better-bibtex_preferences_auto-export_type_collection = Collection
 better-bibtex_preferences_auto-export_type_library = Library
 better-bibtex_preferences_auto-export_updated = Updated
 better-bibtex_preferences_bulk-warning = Warn me when changing citation keys in bulk
-better-bibtex_preferences_citekey_auto-pin-delay = Automatically pin citation key after
+better-bibtex_preferences_citekey_auto-pin-delay = Automatically fill citation key after
 better-bibtex_preferences_citekey_aux-scanner_import = 
   .label = When scanning an AUX file, attempt to import entries from the attached bib file when their citation keys are not in Zotero
 
@@ -240,7 +240,7 @@ better-bibtex_preferences_citekey_uniqueness =
 
 better-bibtex_preferences_citekey_uniqueness_case =
   .label = Ignore upper/lowercase when comparing for uniqueness
-better-bibtex_preferences_citekey_uniqueness_conflict = On conflict with a pinned key, non-pinned keys will be
+better-bibtex_preferences_citekey_uniqueness_conflict = When a citation key is set that is already in use in other items, the keys of these other items will be
 better-bibtex_preferences_citekey_uniqueness_conflict_change = postfixed (causes key changes)
   .label = { better-bibtex_preferences_citekey_uniqueness_conflict_change }
 better-bibtex_preferences_citekey_uniqueness_conflict_keep = kept (causes key duplicates)
