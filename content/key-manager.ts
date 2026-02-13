@@ -127,7 +127,6 @@ export const KeyManager = new class _KeyManager {
   }
 
   public async fill(ids: 'selected' | number | number[], inspireHEP = false): Promise<void> {
-    log.debug('1721: fill')
     ids = this.expandSelection(ids)
 
     await Zotero.DB.executeTransaction(async () => {
@@ -138,7 +137,6 @@ export const KeyManager = new class _KeyManager {
         if (inspireHEP) {
           const proposed = await fetchInspireHEP(item)
           if (proposed && current !== proposed) {
-            log.debug('1721: inspireHEP')
             item.setField('citationKey', proposed)
             await item.save()
           }
@@ -152,7 +150,6 @@ export const KeyManager = new class _KeyManager {
 
   public async refresh(ids: 'selected' | number | number[], warn = false, replace = false): Promise<void> {
     ids = this.expandSelection(ids)
-    log.debug('1721: refresh', { ids, warn, replace })
     await Cache.touch(ids)
 
     if (replace && warn && Preference.warnBulkModify && this.keys.find({ itemID: { $in: ids } }).length > Preference.warnBulkModify) {
@@ -220,21 +217,6 @@ export const KeyManager = new class _KeyManager {
       description: 'keymanager',
       needs: [ 'worker' ],
       startup: async () => {
-        this.keys.on('insert', (key: CitekeyRecord) => {
-          log.debug('z8: key insert', key)
-        })
-
-        this.keys.on('pre-update', (key: CitekeyRecord) => {
-          log.debug('z8: key replace', key)
-        })
-        this.keys.on('update', (key: CitekeyRecord) => {
-          log.debug('z8: key update', key)
-        })
-
-        this.keys.on('delete', (key: CitekeyRecord) => {
-          log.debug('z8: key delete', key)
-        })
-
         await japanese.init()
         chinese.init()
 
@@ -328,7 +310,6 @@ export const KeyManager = new class _KeyManager {
       })
 
       const update = (item: Zotero.Item) => {
-        log.debug('1721: items-changed')
         this.update(item, Preference.autoPinOverwrite).saveTx().catch(err => log.error('failed to update', item.id, ':', err))
       }
       for (const item of items) {
@@ -360,13 +341,11 @@ export const KeyManager = new class _KeyManager {
   }
 
   public update(item: Zotero.Item, replace = false): Zotero.Item {
-    log.debug('1495: item key update, replace:', replace)
     if (item.isFeedItem || !item.isRegularItem()) return item
 
     do {
       const { extra, citationKey } = Extra.citationKey(item.getField('extra'))
       if (citationKey) {
-        log.debug('1495: item key update, migrated:', citationKey)
         item.setField('extra', extra)
         item.setField('citationKey', citationKey)
         break
@@ -378,7 +357,6 @@ export const KeyManager = new class _KeyManager {
       const proposed = this.propose(item)
       if (proposed === current) break
 
-      log.debug('1495: update set proposed', proposed)
       item.setField('citationKey', proposed)
     } while (false) // eslint-disable-line no-constant-condition
 

@@ -249,7 +249,6 @@ export class TestSupport {
       if (action !== 'set') throw new Error(`Don't know how to ${ action } ${ citationKey }`)
       log.error('conflict: setting', ids, 'to', citationKey)
       for (const item of await getItemsAsync(ids)) {
-        log.debug('z8: test support force refresh')
         item.setField('citationKey', citationKey)
         log.error('conflict: citationKey set to', item.getField('citationKey'))
         await item.saveTx()
@@ -257,7 +256,6 @@ export class TestSupport {
       return
     }
 
-    log.debug('z8: test support', action)
     for (itemID of ids) {
       switch (action) {
         case 'fill':
@@ -418,7 +416,6 @@ export class TestSupport {
       const beforeAll = !better ? undefined : async () => {
         Preference.cache = cached
         if (cached) {
-          log.debug('bench: filling cache for', label)
           await this.waitForIdle()
           await this.exportLibrary(translatorID, displayOptions)
           await this.exportLibrary(translatorID, displayOptions)
