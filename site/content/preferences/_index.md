@@ -13,7 +13,7 @@ aliases:
 default: ` auth.lower + shorttitle(3,3) + year`
 
 Set the pattern used to generate citation keys. The format of the keys is documented [here]({{ ref . "citing" }}).
-Changing this setting *does not* affect existign keys - for this you would need to select the items and refresh the keys.
+Changing this setting *does not* affect existing keys - for this you would need to select the items and refresh the keys.
 
 
 
