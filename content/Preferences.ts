@@ -6,7 +6,6 @@ import { log } from './logger'
 import { Preference } from './prefs'
 import { options as preferenceOptions, defaults as preferenceDefaults } from '../gen/preferences/meta'
 import { Formatter } from './key-manager/formatter'
-import type { CitekeyRecord } from './key-manager'
 import { AutoExport } from './auto-export'
 import { Translators } from './translators'
 import * as l10n from './l10n'
@@ -405,16 +404,6 @@ export class PrefPane {
     catch (err) {
       flash(err.message)
     }
-
-    try {
-      Zotero.BetterBibTeX.KeyManager.import((preferences.parsed.items || []).reduce((updates, item) => {
-        if (item.citationKey && item.itemKey) updates[item.itemKey] = item.citationKey
-        return updates as Record<string, string>
-      }, {}))
-    }
-    catch (err) {
-      flash(err.message)
-    }
   }
 
   public checkCitekeyFormat(): void {
@@ -442,9 +431,8 @@ export class PrefPane {
       .getActiveZoteroPane()
       .getSelectedItems()
       .slice(0, 10)
-      .map(item => Zotero.BetterBibTeX.KeyManager.propose(item) as CitekeyRecord)
-      .filter(key => !key.pinned)
-      .map(key => key.citationKey)
+      .map(item => Zotero.BetterBibTeX.KeyManager.propose(item))
+      .map(key => key)
     preview.value = previews.join(', ')
   }
 

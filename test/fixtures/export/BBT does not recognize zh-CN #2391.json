@@ -14,29 +14,26 @@
   },
   "items": [
     {
-      "citationKey": "MeizhuJinbiaoDuikangsai",
       "itemID": 1,
       "itemType": "book",
       "language": "zh-Hant",
-      "title": "\u6885\u7af9\u9326\u6a19\u5c0d\u6297\u8cfd"
+      "title": "梅竹錦標對抗賽"
     },
     {
-      "citationKey": "XiaomingBiyeWuGuoliJiaotongDaxueZixunKexueYuGongchengYanjiusuo",
       "itemID": 2,
       "itemType": "book",
       "language": "zh-Hant",
-      "title": "\u5c0f\u660e\u7562\u696d\u65bc\u570b\u7acb\u4ea4\u901a\u5927\u5b78\u8cc7\u8a0a\u79d1\u5b78\u8207\u5de5\u7a0b\u7814\u7a76\u6240"
+      "title": "小明畢業於國立交通大學資訊科學與工程研究所"
     },
     {
-      "citationKey": "XinzhuJiaotongDaxueYaoZai2021Nian2Yue1RiYuTaibeiYangmingDaxueHebing",
       "itemID": 3,
       "itemType": "book",
       "language": "zh-Hant",
-      "title": "\u65b0\u7af9\u7684\u4ea4\u901a\u5927\u5b78\u8981\u57282021\u5e742\u67081\u65e5\u8207\u53f0\u5317\u7684\u967d\u660e\u5927\u5b78\u5408\u4f75"
+      "title": "新竹的交通大學要在2021年2月1日與台北的陽明大學合併"
     },
     {
       "ISBN": "978-7-81048-761-0",
-      "abstractNote": "\u672c\u4e66\u5171\u6536\u96c6\u56fe\u7247400\u4f59\u5e45\u5e76\u9644\u4ee5\u6587\u5b57\u8bf4\u660e,\u4ee5\u94c1\u8def\u4e0a\u5e38\u89c1\u7684\u5404\u79cd\u4f24\u4ea1\u4e3a\u4e3b,\u5185\u5bb9\u5206\u4e3a:\u8f97\u8f67\u4f24\u3001\u649e\u51fb\u3001\u62d6\u64e6\u4f24\u7b49\u51719\u7ae0\u3002",
+      "abstractNote": "本书共收集图片400余幅并附以文字说明,以铁路上常见的各种伤亡为主,内容分为:辗轧伤、撞击、拖擦伤等共9章。",
       "attachments": [
         {
           "accessDate": "2022-09-24T09:49:36Z",
@@ -45,12 +42,11 @@
           "url": "https://books.google.com.tw/books?id=gzA4AAAACAAJ"
         }
       ],
-      "citationKey": "xiao_Fayixuetiedaosunshangtupu_2003",
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "\u53d1\u6c11",
-          "lastName": "\u8096"
+          "firstName": "发民",
+          "lastName": "肖"
         }
       ],
       "date": "2003",
@@ -62,12 +58,12 @@
       "language": "zh-CN",
       "libraryCatalog": "Google Books",
       "numPages": "153",
-      "publisher": "\u90d1\u5dde\u5927\u5b66\u51fa\u7248\u793e",
-      "title": "\u6cd5\u533b\u5b66\u94c1\u9053\u635f\u4f24\u56fe\u8c31"
+      "publisher": "郑州大学出版社",
+      "title": "法医学铁道损伤图谱"
     },
     {
       "ISBN": "978-7-81048-761-0",
-      "abstractNote": "\u672c\u4e66\u5171\u6536\u96c6\u56fe\u7247400\u4f59\u5e45\u5e76\u9644\u4ee5\u6587\u5b57\u8bf4\u660e,\u4ee5\u94c1\u8def\u4e0a\u5e38\u89c1\u7684\u5404\u79cd\u4f24\u4ea1\u4e3a\u4e3b,\u5185\u5bb9\u5206\u4e3a:\u8f97\u8f67\u4f24\u3001\u649e\u51fb\u3001\u62d6\u64e6\u4f24\u7b49\u51719\u7ae0\u3002",
+      "abstractNote": "本书共收集图片400余幅并附以文字说明,以铁路上常见的各种伤亡为主,内容分为:辗轧伤、撞击、拖擦伤等共9章。",
       "attachments": [
         {
           "accessDate": "2022-09-24T09:49:36Z",
@@ -76,12 +72,11 @@
           "url": "https://books.google.com.tw/books?id=gzA4AAAACAAJ"
         }
       ],
-      "citationKey": "xiao_Fayixuetiedaosunshangtupu_2003",
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "\u53d1\u6c11",
-          "lastName": "\u8096"
+          "firstName": "发民",
+          "lastName": "肖"
         }
       ],
       "date": "2013",
@@ -93,17 +88,16 @@
       "language": "zh",
       "libraryCatalog": "Google Books",
       "numPages": "153",
-      "publisher": "\u90d1\u5dde\u5927\u5b66\u51fa\u7248\u793e",
-      "title": "\u6cd5\u533b\u5b66\u94c1\u9053\u635f\u4f24\u56fe\u8c31"
+      "publisher": "郑州大学出版社",
+      "title": "法医学铁道损伤图谱"
     },
     {
       "ISBN": "978-988-17202-7-6",
-      "citationKey": "zhao_GaigeLi_2009",
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "\u7d2b\u967d",
-          "lastName": "\u8d99"
+          "firstName": "紫陽",
+          "lastName": "趙"
         }
       ],
       "date": "2009",
@@ -115,29 +109,26 @@
       "language": "zh",
       "libraryCatalog": "Google Books",
       "numPages": "370",
-      "publisher": "\u65b0\u4e16\u7d00\u51fa\u7248\u793e",
-      "title": "\u6539\u9769\u6b77\u7a0b"
+      "publisher": "新世紀出版社",
+      "title": "改革歷程"
     },
     {
-      "citationKey": "wu",
       "itemID": 1,
       "itemType": "book",
       "language": "zh",
-      "title": "\u65bc zh"
+      "title": "於 zh"
     },
     {
-      "citationKey": "wu",
       "itemID": 1,
       "itemType": "book",
       "language": "zh-TW",
-      "title": "\u65bc zh-TW"
+      "title": "於 zh-TW"
     },
     {
-      "citationKey": "wu",
       "itemID": 1,
       "itemType": "book",
       "language": "zh-CN",
-      "title": "\u65bc zh-CN"
+      "title": "於 zh-CN"
     }
   ]
 }

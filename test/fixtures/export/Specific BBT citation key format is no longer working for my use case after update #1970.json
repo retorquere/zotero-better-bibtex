@@ -16,7 +16,6 @@
     {
       "abstractNote": "Participatory budgeting (PB) is a democratic paradigm whereby voters decide on a set of projects to fund with a limited budget. We consider PB in a setting where voters report ordinal preferences over projects and have (possibly) asymmetric weights. We propose proportional representation axioms and clarify how they ﬁt into other preference aggregation settings, such as multi-winner voting and approvalbased multi-winner voting. As a result of our study, we also discover a new solution concept for approval-based multiwinner voting, which we call Inclusion PSC (IPSC). IPSC is stronger than proportional justiﬁed representation (PJR), incomparable to extended justiﬁed representation (EJR), and yet compatible with EJR. The well-studied Proportional Approval Voting (PAV) rule produces a committee that satisﬁes both EJR and IPSC; however, both these axioms can also be satisﬁed by an algorithm that runs in polynomial-time.",
       "attachments": [],
-      "citationKey": "AL+19a",
       "creators": [
         {
           "creatorType": "author",

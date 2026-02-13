@@ -5,6 +5,7 @@ Feature: Merge
     Given I set preference .extraMergeCSL to true
     And I set preference .extraMergeCitekeys to true
     And I set preference .extraMergeTeX to true
+    And I set preference .autoPinDelay to 1
 
   @1221 @retries=10
   Scenario: Set IDS field when merging references with different citation keys #1221
@@ -14,7 +15,7 @@ Feature: Merge
     And I merge the selected items
     Then an export using "Better BibLaTeX" should match "merge/*.biblatex"
 
-  @1373 @retries=10
+  #@retries=10
   Scenario: Merging error with arXiv ID #1373
     When I import 2 references from "merge/*.json"
     And I select the item with a field that contains "It was twenty years ago today ..."
@@ -29,7 +30,7 @@ Feature: Merge
     And I select the item with a field that is "Troja2017"
     And I merge the selected items
     Then the library should match "merge/*-merged.json"
-    When I refresh all citation keys
+    When I force-refresh all citation keys
     Then the library should match "merge/*-refreshed.json"
 
   @retries=5

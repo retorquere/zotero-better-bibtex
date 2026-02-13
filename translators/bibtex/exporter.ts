@@ -60,11 +60,14 @@ export class Exporter {
       }
 
       Object.assign(item, Extra.get(item.extra, 'zotero'))
+      if (!item.citationKey && item.extraFields.kv.citationKey) {
+        item.citationKey = item.extraFields.kv.citationKey
+        delete item.extraFields.kv.citationKey
+      }
       if (typeof item.itemID !== 'number') { // https://github.com/diegodlh/zotero-cita/issues/145
-        item.citationKey = item.extraFields.citationKey
+        item.citationKey = Extra.citationKey(item.extra).citationKey
         item.$cacheable = false
       }
-      if (!item.citationKey) throw new Error(`No citation key in ${ JSON.stringify(item) }`)
 
       this.citekeys[item.citationKey] = (this.citekeys[item.citationKey] || 0) + 1
 

@@ -5,12 +5,10 @@ import { Translators } from './translators'
 import { Formatter as CAYWFormatter } from './cayw/formatter'
 import { getItemAsync, getItemsAsync } from './get-items-async'
 import { AUXScanner } from './aux-scanner'
-import * as Extra from './extra'
 import { defaults } from '../gen/preferences/meta'
 import { Preference } from './prefs'
 import * as memory from './memory'
 import { Cache } from './translators/worker'
-import { CitekeyRecord } from './key-manager'
 
 // import { Bench } from 'tinybench'
 
@@ -40,6 +38,16 @@ export class TestSupport {
   public autoExportRunning(): number {
     // return await Zotero.DB.valueQueryAsync('SELECT COUNT(*) FROM betterbibtex.autoExport WHERE status = \'running\'') as number
     return 0
+  }
+
+  public async fill(): Promise<void> {
+    await Zotero.DB.executeTransaction(async () => {
+      for (const item of await Zotero.Items.getAll(Zotero.Libraries.userLibraryID)) {
+        if (item.isFeedItem || !item.isRegularItem()) continue
+        if (item.getField('citationKey')) continue
+        await Zotero.BetterBibTeX.KeyManager.update(item).save()
+      }
+    })
   }
 
   public async reset(scenario: string): Promise<void> {
@@ -130,6 +138,7 @@ export class TestSupport {
   }
 
   public async exportLibrary(translatorID: string, displayOptions: Record<string, number | string | boolean>, path?: string, collectionName?: string): Promise<string> {
+    await this.fill()
     let scope
     if (collectionName) {
       let name = collectionName
@@ -189,27 +198,18 @@ export class TestSupport {
   public async find(query: { contains: string; is: string }, expected = 1): Promise<number[]> {
     if (!Object.keys(query).length) throw new Error(`empty query ${ JSON.stringify(query) }`)
 
-    let ids: number[] = []
-
-    if (query.contains) {
-      ids = ids
-        .concat(
-          Zotero.BetterBibTeX.KeyManager.all()
-            .filter((key: CitekeyRecord) => key.citationKey.toLowerCase().includes(query.contains.toLowerCase()))
-            .map((key: CitekeyRecord) => key.itemID)
-        )
+    const s = new Zotero.Search
+    s.addCondition('joinMode', 'any')
+    for (const [ operator, text ] of Object.entries(query)) {
+      if (!operator.match(/^(is|contains)$/)) throw new Error(`unsupported search mode ${ operator }`)
+      if (!text) throw new Error(`Need a text to test for ${operator}`)
+      s.addCondition('field', operator as _ZoteroTypes.Search.Operator, text)
+      s.addCondition('creator', operator as _ZoteroTypes.Search.Operator, text)
+      break
     }
-    if (query.is) ids = ids.concat(Zotero.BetterBibTeX.KeyManager.find({ where: { citationKey: query.is }}).map((key: CitekeyRecord) => key.itemID))
-
-    const s = (new Zotero.Search)
-    for (const [ mode, text ] of Object.entries(query)) {
-      if (![ 'is', 'contains' ].includes(mode)) throw new Error(`unsupported search mode ${ mode }`)
-      s.addCondition('field', mode as _ZoteroTypes.Search.Operator, text)
-    }
-    ids = ids.concat(await s.search())
-    ids = Array.from(new Set(ids))
+    const ids = await s.search()
     if (!ids || !ids.length) throw new Error(`No item found matching ${ JSON.stringify(query) }`)
-    if (ids.length !== expected) throw new Error(`${ JSON.stringify(query) } matched ${ JSON.stringify(ids) }, but only ${ expected } expected`)
+    if (ids.length !== expected) throw new Error(`${ JSON.stringify(query) } matched ${ids.length}, but ${ expected } expected`)
 
     return Array.from(new Set(ids))
   }
@@ -246,11 +246,11 @@ export class TestSupport {
     if (!ids.length) throw new Error('Nothing to do')
 
     if (citationKey) {
-      if (action !== 'pin') throw new Error(`Don't know how to ${ action } ${ citationKey }`)
-      log.error('conflict: pinning', ids, 'to', citationKey)
+      if (action !== 'set') throw new Error(`Don't know how to ${ action } ${ citationKey }`)
+      log.error('conflict: setting', ids, 'to', citationKey)
       for (const item of await getItemsAsync(ids)) {
-        item.setField('extra', Extra.set(item.getField('extra'), { citationKey }))
-        log.error('conflict: extra set to', item.getField('extra'))
+        item.setField('citationKey', citationKey)
+        log.error('conflict: citationKey set to', item.getField('citationKey'))
         await item.saveTx()
       }
       return
@@ -258,14 +258,18 @@ export class TestSupport {
 
     for (itemID of ids) {
       switch (action) {
-        case 'pin':
-          await Zotero.BetterBibTeX.KeyManager.pin(itemID)
+        case 'fill':
+          await Zotero.BetterBibTeX.KeyManager.fill(itemID)
           break
-        case 'unpin':
-          await Zotero.BetterBibTeX.KeyManager.unpin(itemID)
+        case 'clear': {
+          const item = await getItemAsync(itemID)
+          item.setField('citationKey', '')
+          await item.saveTx()
           break
+        }
         case 'refresh':
-          await Zotero.BetterBibTeX.KeyManager.refresh(itemID)
+        case 'force-refresh':
+          await Zotero.BetterBibTeX.KeyManager.refresh(itemID, false, action === 'force-refresh')
           break
         default:
           throw new Error(`TestSupport.pinCiteKey: unsupported action ${ action }`)
@@ -412,7 +416,6 @@ export class TestSupport {
       const beforeAll = !better ? undefined : async () => {
         Preference.cache = cached
         if (cached) {
-          log.debug('bench: filling cache for', label)
           await this.waitForIdle()
           await this.exportLibrary(translatorID, displayOptions)
           await this.exportLibrary(translatorID, displayOptions)

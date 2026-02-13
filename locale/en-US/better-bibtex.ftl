@@ -8,10 +8,6 @@ better-bibtex_aux-scanner = Scan BibTeX AUX/Markdown file for references...
 better-bibtex_bulk-keys-confirm_warning = You are changing more than { $treshold } items in one go. Are you sure?
 better-bibtex_bulk-keys-confirm_stop_asking = OK, and don't ask me again
 
-better-bibtex_citekey_pin = Pin BibTeX key
-better-bibtex_citekey_set = Change BibTeX key...
-better-bibtex_citekey_set_change = Change BibTeX key to
-better-bibtex_citekey_set_toomany = Can only change one key at a time
 better-bibtex_error-report = 
   .title = Better BibTeX debug log
 
@@ -434,8 +430,8 @@ better-bibtex_units_seconds = seconds
 better-bibtex_workers_status = Total background exports started: { $total }, currently running: { $running }
 better-bibtex_zotero-pane_add-citation-links = Citation Graph: add citation links...
 better-bibtex_zotero-pane_citekey_pin_inspire-hep = Pin BibTeX key from InspireHEP
-better-bibtex_zotero-pane_citekey_refresh = Refresh BibTeX key
-better-bibtex_zotero-pane_citekey_unpin = Unpin BibTeX key
+better-bibtex_zotero-pane_citekey_refresh = Regenerate BibTeX key
+better-bibtex_zotero-pane_citekey_fill = Generate missing BibTeX key
 better-bibtex_zotero-pane_bibtex_to_clipboard = 🅱 copy BibTeX to clipboard
 better-bibtex_zotero-pane_biblatex_to_clipboard = 🅱 copy BibLaTeX to clipboard
 better-bibtex_zotero-pane_column_citekey = { -citation-key }

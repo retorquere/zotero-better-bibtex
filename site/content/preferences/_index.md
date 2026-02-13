@@ -38,7 +38,7 @@ Enable searching on citation keys. Slows down startup on very large libraries. R
 
 default: `0`
 
-When &gt; 0, BBT will automatically pin the first citation keys it generates for an item after this many seconds.
+When &gt; 0, BBT will automatically pin the citation key it generates for an item after this many seconds.
 
 
 ## Keeping citation keys unique

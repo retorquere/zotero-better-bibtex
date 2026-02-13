@@ -29,6 +29,11 @@ be replaced by their LaTeX-command counterparts.
 default: `10`
 
 Number of seconds to wait after your system goes idle before kicking off auto-exports.
+## autoPinOverwrite
+
+default: `no`
+
+When true, BBT will overwrite existing keys with new keys after an item changes.
 ## biblatexExtendedDateFormat
 
 default: `yes`

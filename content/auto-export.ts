@@ -1,3 +1,4 @@
+import Loki from 'lokijs'
 import { log } from './logger'
 import { Path, File } from './file'
 
@@ -8,7 +9,6 @@ import { Translators, ExportJob } from './translators'
 import { Preference } from './prefs'
 import { Preferences, autoExport, affectedBy, affects } from '../gen/preferences/meta'
 import { byId } from '../gen/translators'
-import schema from '../gen/auto-export-schema.json' with { type: 'json' }
 import * as ini from 'ini'
 import fold2ascii from 'fold-to-ascii'
 import { findBinary } from './path-search'
@@ -16,7 +16,6 @@ import { Scheduler } from './scheduler'
 import { flash } from './flash'
 import * as l10n from './l10n'
 import { orchestrator } from './orchestrator'
-import * as blink from 'blinkdb'
 import { pick } from './object'
 import { uri } from './escape'
 
@@ -24,7 +23,28 @@ const cmdMeta = /(["^&|<>()%!])/
 const cmdMetaOrSpace = /[\s"^&|<>()%!]/
 const cmdMetaInsideQuotes = /(["%!])/
 
-type UnwatchCallback = () => void
+type Job = {
+  enabled: boolean
+  type: 'collection' | 'library'
+  id: number
+  translatorID: string
+  path: string
+  recursive: boolean
+  status: 'scheduled' | 'running' | 'done' | 'error'
+  error: string
+  exportNotes?: boolean
+  useJournalAbbreviation?: boolean
+  asciiBibLaTeX?: boolean
+  biblatexExtendedNameFormat?: boolean
+  DOIandURL?: boolean
+  bibtexURL?: boolean
+  biblatexAPA?: boolean
+  biblatexChicago?: boolean
+
+  created: number
+  updated: number
+}
+export type JobSetting = keyof Job
 
 function win_quote(s: string, forCmd = true): string {
   if (!s) return '""'
@@ -377,38 +397,16 @@ const queue = new class TaskQueue {
   }
 }
 
-type Job = {
-  enabled: boolean
-  type: 'collection' | 'library'
-  id: number
-  translatorID: string
-  path: string
-  recursive: boolean
-  status: 'scheduled' | 'running' | 'done' | 'error'
-  error: string
-  exportNotes?: boolean
-  useJournalAbbreviation?: boolean
-  asciiBibLaTeX?: boolean
-  biblatexExtendedNameFormat?: boolean
-  DOIandURL?: boolean
-  bibtexURL?: boolean
-  biblatexAPA?: boolean
-  biblatexChicago?: boolean
-
-  created: number
-  updated: number
-}
-export type JobSetting = keyof Job
-
 // export singleton: https://k94n.com/es6-modules-single-instance-pattern
 export const AutoExport = new class $AutoExport {
   public progress: Map<string, number> = new Map
 
-  public db = blink.createTable<Job>(blink.createDB({ clone: true }), 'autoExports')({
-    primary: 'path',
-    indexes: [ 'translatorID', 'type', 'id' ],
+  public db = (new Loki('autoexport.db')).addCollection<Job>('citationKeys', {
+    clone: true,
+    cloneMethod: 'shallow',
+    indices: [ 'translatorID', 'type', 'id' ],
+    unique: [ 'path' ],
   })
-  private unwatch: UnwatchCallback[] = []
 
   private key(path: string): string {
     return uri.encode(path).replace(/[.!'()*]/g, c => `%${c.charCodeAt(0).toString(16)}`)
@@ -423,30 +421,6 @@ export const AutoExport = new class $AutoExport {
       if (typeof ae === 'string') this.progress.set(ae, pct)
     })
 
-    this.unwatch = [
-      this.db[blink.BlinkKey].events.onInsert.register(changes => {
-        for (const change of changes) {
-          Zotero.Prefs.set(`translators.better-bibtex.autoExport.${this.key(change.entity.path)}`, JSON.stringify(change.entity))
-        }
-      }),
-      this.db[blink.BlinkKey].events.onUpdate.register(changes => {
-        for (const change of changes) {
-          Zotero.Prefs.clear(`translators.better-bibtex.autoExport.${this.key(change.oldEntity.path)}`)
-          Zotero.Prefs.set(`translators.better-bibtex.autoExport.${this.key(change.newEntity.path)}`, JSON.stringify(change.newEntity))
-        }
-      }),
-      this.db[blink.BlinkKey].events.onRemove.register(changes => {
-        for (const change of changes) {
-          Zotero.Prefs.clear(`translators.better-bibtex.autoExport.${this.key(change.entity.path)}`)
-        }
-      }),
-      this.db[blink.BlinkKey].events.onClear.register(() => {
-        for (const key of Services.prefs.getBranch('extensions.zotero.translators.better-bibtex.autoExport.').getChildList('')) {
-          Zotero.Prefs.clear(`translators.better-bibtex.autoExport.${key}`)
-        }
-      }),
-    ]
-
     orchestrator.add({
       id: 'git-push',
       description: 'git support',
@@ -459,64 +433,33 @@ export const AutoExport = new class $AutoExport {
     orchestrator.add({
       id: 'auto-export',
       description: 'auto-export',
-      needs: [ 'sqlite', 'translators' ],
-      startup: async () => {
-        // detect
-        const $ae = 'autoexport'
-        const $ae$setting = 'autoexport_setting'
-        const exists = async (table: string) => Zotero.DB.tableExists(table, 'betterbibtex')
-        if (await exists($ae) && await exists($ae$setting)) {
-          try {
-            const migrate: Record<string, any> = {}
-            for (const ae of await Zotero.DB.queryAsync(`SELECT * FROM betterbibtex.${$ae}`)) {
-              migrate[ae.path] = pick(ae, ['path', 'translatorID', 'type', 'id', 'recursive', 'enabled', 'status', 'error', 'updated'])
-              migrate[ae.path].recursive = migrate[ae.path].recursive === 1
-              migrate[ae.path].enabled = migrate[ae.path].enabled === 1
-            }
-            for (const ae of await Zotero.DB.queryAsync(`SELECT * FROM betterbibtex.${$ae$setting}`)) {
-              const label = Translators.byId[migrate[ae.path].translatorID].label
-              if (schema[label][ae.setting].type === 'boolean') {
-                migrate[ae.path][ae.setting] = ae.value === 1
-              }
-              else {
-                migrate[ae.path][ae.setting] = ae.value
-              }
-            }
-
-            for (const [ path, ae ] of Object.entries(migrate)) {
-              Zotero.Prefs.set(`translators.better-bibtex.autoExport.${this.key(path)}`, JSON.stringify(ae))
-            }
-
-            await Zotero.DB.queryAsync(`DELETE FROM betterbibtex.${$ae$setting}`)
-            await Zotero.DB.queryAsync(`DELETE FROM betterbibtex.${$ae}`)
-            await Zotero.DB.queryAsync(`DROP TABLE betterbibtex.${$ae$setting}`)
-            await Zotero.DB.queryAsync(`DROP TABLE betterbibtex.${$ae}`)
-          }
-          catch (err) {
-            log.error('auto-export migration failed', err)
-          }
-        }
-        try {
-          if (!(await exists($ae)) && await exists($ae$setting)) {
-            await Zotero.DB.queryAsync(`DROP TABLE betterbibtex.${$ae$setting}`)
-          }
-          if (await exists($ae) && !(await exists($ae$setting))) {
-            await Zotero.DB.queryAsync(`DROP TABLE betterbibtex.${$ae}`)
-          }
-        }
-        catch (err) {
-          log.error('auto-export migration failed', err)
-        }
-
+      needs: [ 'translators' ],
+      startup: () => {
         for (const key of Services.prefs.getBranch('extensions.zotero.translators.better-bibtex.autoExport.').getChildList('')) {
           try {
             const ae = JSON.parse(Zotero.Prefs.get(`translators.better-bibtex.autoExport.${key}`) as string)
-            blink.insert(this.db, { ...ae, created: Date.now(), updated: Date.now() })
+            this.db.insert({ ...ae, created: Date.now(), updated: Date.now() })
             if (ae.status !== 'done') queue.add(ae.path)
           }
           catch {
           }
         }
+
+        // triggers after initial load
+        this.db.on('insert', (ae: Job) => {
+          Zotero.Prefs.set(`translators.better-bibtex.autoExport.${this.key(ae.path)}`, JSON.stringify(ae))
+        })
+
+        this.db.on('pre-update', (ae: Job) => {
+          Zotero.Prefs.clear(`translators.better-bibtex.autoExport.${this.key(ae.path)}`)
+        })
+        this.db.on('update', (ae: Job) => {
+          Zotero.Prefs.set(`translators.better-bibtex.autoExport.${this.key(ae.path)}`, JSON.stringify(ae))
+        })
+
+        this.db.on('delete', (ae: Job) => {
+          Zotero.Prefs.clear(`translators.better-bibtex.autoExport.${this.key(ae.path)}`)
+        })
 
         if (Preference.autoExport === 'immediate') queue.resume('startup')
         Events.addIdleListener('auto-export', Preference.autoExportIdleWait)
@@ -564,20 +507,25 @@ export const AutoExport = new class $AutoExport {
           }
 
           for (const translator of (affects[pref] || []).map(label => Translators.byLabel[label])) {
-            for (const ae of blink.many(this.db, { where: { translatorID: translator.translatorID }})) {
+            for (const ae of this.db.find({ translatorID: translator.translatorID })) {
               if (!(pref in ae)) queue.add(ae.path)
             }
           }
         })
       },
-      shutdown: () => {
-        for (const cb of this.unwatch) {
-          cb()
-        }
-      },
     })
   }
 
+  private upsert(ae: Job) {
+    const record = this.db.findObject({ path: ae.path })
+    if (record) {
+      Object.assign(record, ae)
+      this.db.update(record)
+    }
+    else {
+      this.db.insert(ae)
+    }
+  }
   public store(job: Job) {
     const ae: Job = {
       ...pick(job, ['path', 'translatorID', 'type', 'id', 'status']),
@@ -597,17 +545,13 @@ export const AutoExport = new class $AutoExport {
       ae[option] = ae[option] ?? job[option] ?? displayOptions[option] ?? false
     }
 
-    blink.upsert(this.db, { created: Date.now(), ...ae, updated: Date.now() })
+    this.upsert({ created: Date.now(), ...ae, updated: Date.now() })
     queue.add(ae.path)
   }
 
   public find(type: 'collection' | 'library', ids: number[]): Job[] {
     if (!ids.length) return []
-
-    return blink.many(this.db, { where: {
-      type,
-      id: { in: ids },
-    }})
+    return this.db.find({ type, id: { $in: ids } })
   }
 
   public async add(ae: Job, schedule = false) {
@@ -669,17 +613,16 @@ export const AutoExport = new class $AutoExport {
   }
 
   public get(path: string): Job {
-    return blink.first(this.db, { where: { path }})
+    return this.db.findOne({ path })
   }
 
   public all(): Job[] {
-    return blink.many(this.db)
+    return this.db.data
   }
 
   public edit(path: string, setting: JobSetting, value: number | boolean | string): void {
-    const ae: Job = blink.first(this.db, { where: { path }});
-    (ae[setting] as any) = value as any
-    blink.upsert(this.db, { created: Date.now(), ...ae, updated: Date.now() })
+    const ae: Job = this.db.findOne({ path })
+    this.upsert({ created: Date.now(), ...ae, [setting]: value, updated: Date.now() })
     queue.add(ae.path)
   }
 
@@ -688,7 +631,7 @@ export const AutoExport = new class $AutoExport {
   public remove(arg: string, ids?: number[]): void {
     const paths: string[] = (typeof ids === 'undefined') ? [arg] : this.find(arg as 'collection' | 'library', ids).map(ae => ae.path)
 
-    blink.removeMany(this.db, paths.map(path => ({ path })))
+    this.db.findAndRemove({ path: { $in: paths } })
 
     for (const path of paths) {
       queue.cancel(path)
@@ -697,14 +640,14 @@ export const AutoExport = new class $AutoExport {
   }
 
   public status(path: string, status: 'running' | 'done') {
-    const ae = blink.first(this.db, { where: { path }})
-    if (ae) blink.update(this.db, { ...ae, status, updated: Date.now() })
+    const ae = this.db.findOne({ path })
+    if (ae) this.db.update({ ...ae, status, updated: Date.now() })
   }
 
   public removeAll() {
     queue.clear()
     this.progress = new Map
-    blink.clear(this.db)
+    this.db.clear()
   }
 
   public run(path: string) {
@@ -712,9 +655,9 @@ export const AutoExport = new class $AutoExport {
   }
 
   forCollection(collectionID: number) {
-    return blink.many(this.db, {
-      where: { type: 'collection', id: collectionID },
-      sort: { key: 'path', order: 'asc' },
-    })
+    return this.db.chain()
+      .find({ type: 'collection', id: collectionID })
+      .simplesort('path')
+      .data()
   }
 }

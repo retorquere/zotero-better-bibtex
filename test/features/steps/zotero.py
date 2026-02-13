@@ -646,7 +646,11 @@ class Zotero:
 
       filename = references
       if not items: filename = None
-      return self.execute('return await Zotero.BetterBibTeX.TestSupport.importFile(filename, createNewCollection, preferences, bibliography)',
+      return self.execute('''
+          const library = await Zotero.BetterBibTeX.TestSupport.importFile(filename, createNewCollection, preferences, bibliography)
+          await Zotero.BetterBibTeX.TestSupport.fill()
+          return library
+        ''',
         filename = filename,
         createNewCollection = (collection != False),
         preferences = preferences,

@@ -23,7 +23,6 @@
   "items": [
     {
       "DOI": "10.25592/dgs.corpus-1.0",
-      "citationKey": "MyDGS_annotated",
       "creators": [
         {
           "creatorType": "author",
@@ -130,7 +129,6 @@
       "title": "Faulty Standard Export",
       "shortTitle": "the short title",
       "archive": "the archive",
-      "citationKey": "foo2021",
       "status": "The status",
       "organization": "This is the organisation",
       "creators": [

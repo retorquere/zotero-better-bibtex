@@ -339,11 +339,14 @@ class Item {
     catch {
       this.date = {}
     }
-    if (this.extraFields.kv.originalDate) {
-      const date = parseDate(this.extraFields.kv.originalDate)
-      if (date.y) {
-        Object.assign(this.date, { oy: date.y, om: date.m, od: date.d, oY: date.Y })
-        if (!this.date.y) Object.assign(this.date, { y: date.y, m: date.m, d: date.d, Y: date.Y })
+    for (const orig of [ this.extraFields.kv.originalDate, this.getField('originalDate') ]) {
+      if (orig) {
+        const date = parseDate(orig)
+        if (date.y) {
+          Object.assign(this.date, { oy: date.y, om: date.m, od: date.d, oY: date.Y })
+          if (!this.date.y) Object.assign(this.date, { y: date.y, m: date.m, d: date.d, Y: date.Y })
+          break
+        }
       }
     }
     if (Object.keys(this.date).length === 0) {

@@ -16,38 +16,36 @@
   },
   "items": [
     {
-      "citationKey": "qiugumindongoufuningpian2010",
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "\u88d5\u5e78",
-          "lastName": "\u79cb\u8c37"
+          "firstName": "裕幸",
+          "lastName": "秋谷"
         }
       ],
       "date": "2010",
       "itemID": 1,
       "itemType": "book",
       "language": "zh",
-      "place": "\u798f\u5dde",
-      "publisher": "\u798f\u5efa\u4eba\u6c11\u51fa\u7248\u793e",
-      "title": "\u95a9\u6771\u5340\u798f\u5be7\u7247\u56db\u7e23\u5e02\u65b9\u8a00\u7814\u7a76"
+      "place": "福州",
+      "publisher": "福建人民出版社",
+      "title": "閩東區福寧片四縣市方言研究"
     },
     {
-      "citationKey": "akiyaMinHigashiQu2010",
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "\u88d5\u5e78",
-          "lastName": "\u79cb\u8c37"
+          "firstName": "裕幸",
+          "lastName": "秋谷"
         }
       ],
       "date": "2010",
       "itemID": 1,
       "itemType": "book",
       "language": "ja",
-      "place": "\u798f\u5dde",
-      "publisher": "\u798f\u5efa\u4eba\u6c11\u51fa\u7248\u793e",
-      "title": "\u95a9\u6771\u5340\u798f\u5be7\u7247\u56db\u7e23\u5e02\u65b9\u8a00\u7814\u7a76"
+      "place": "福州",
+      "publisher": "福建人民出版社",
+      "title": "閩東區福寧片四縣市方言研究"
     }
   ]
 }

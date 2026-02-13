@@ -17,7 +17,6 @@
     {
       "abstractNote": "Many tasks in modern machine learning can be formulated as finding equilibria in \\emph{sequential} games. In particular, two-player zero-sum sequential games, also known as minimax optimization, have received growing interest. It is tempting to apply gradient descent to solve minimax optimization given its popularity and success in supervised learning. However, it has been noted that naive application of gradient descent fails to find some local minimax and can converge to non-local-minimax points. In this paper, we propose \\emph{Follow-the-Ridge} (FR), a novel algorithm that provably converges to and only converges to local minimax. We show theoretically that the algorithm addresses the notorious rotational behaviour of gradient dynamics, and is compatible with preconditioning and \\emph{positive} momentum. Empirically, FR solves toy minimax problems and improves the convergence of GAN training compared to the recent minimax optimization algorithms.",
       "accessDate": "2019-12-18T11:40:04Z",
-      "citationKey": "wang_on_solving_minimax_optimization_locally_2019",
       "creators": [
         {
           "creatorType": "author",
@@ -67,7 +66,6 @@
     {
       "abstractNote": "Many tasks in modern machine learning can be formulated as finding equilibria in sequential games. In particular, two-player zero-sum sequential games, also known as minimax optimization, have...",
       "accessDate": "2022-02-08T17:09:35Z",
-      "citationKey": "wang*_on_solving_minimax_optimization_locally_2019",
       "conferenceName": "International Conference on Learning Representations",
       "creators": [
         {
@@ -101,7 +99,6 @@
     {
       "abstractNote": "One of the challenges in the study of generative adversarial networks is the instability of its training. In this paper, we propose a novel weight normalization technique called spectral normalization to stabilize the training of the discriminator. Our new normalization technique is computationally light and easy to incorporate into existing implementations. We tested the efficacy of spectral normalization on CIFAR10, STL-10, and ILSVRC2012 dataset, and we experimentally confirmed that spectrally normalized GANs (SN-GANs) is capable of generating images of better or equal quality relative to the previous training stabilization techniques.",
       "accessDate": "2021-09-25T17:53:08Z",
-      "citationKey": "miyato_spectral_normalization_2018",
       "creators": [
         {
           "creatorType": "author",
@@ -155,7 +152,6 @@
     {
       "abstractNote": "Recently, convolutional neural networks (CNNs) have been used as a powerful tool to solve many problems of machine learning and computer vision. In this paper, we aim to provide insight on the prop...",
       "accessDate": "2021-05-04T07:53:10Z",
-      "citationKey": "shang_understanding_improving_2016a",
       "conferenceName": "International Conference on Machine Learning",
       "creators": [
         {
@@ -204,7 +200,6 @@
     {
       "abstractNote": "Recently, convolutional neural networks (CNNs) have been used as a powerful tool to solve many problems of machine learning and computer vision. In this paper, we aim to provide insight on the property of convolutional neural networks, as well as a generic method to improve the performance of many CNN architectures. Specifically, we first examine existing CNN models and observe an intriguing property that the filters in the lower layers form pairs (i.e., filters with opposite phase). Inspired by our observation, we propose a novel, simple yet effective activation scheme called concatenated ReLU (CRelu) and theoretically analyze its reconstruction property in CNNs. We integrate CRelu into several state-of-the-art CNN architectures and demonstrate improvement in their recognition performance on CIFAR-10/100 and ImageNet datasets with fewer trainable parameters. Our results suggest that better understanding of the properties of CNNs can lead to significant performance improvement with a simple modification.",
       "accessDate": "2019-09-27T17:02:27Z",
-      "citationKey": "shang_understanding_improving_2016",
       "creators": [
         {
           "creatorType": "author",
@@ -254,7 +249,6 @@
     {
       "abstractNote": "Rectified activation units (rectifiers) are essential for state-of-the-art neural networks. In this work, we study rectifier neural networks for image classification from two aspects. First, we propose a Parametric Rectified Linear Unit (PReLU) that generalizes the traditional rectified unit. PReLU improves model fitting with nearly zero extra computational cost and little overfitting risk. Second, we derive a robust initialization method that particularly considers the rectifier nonlinearities. This method enables us to train extremely deep rectified models directly from scratch and to investigate deeper or wider network architectures. Based on our PReLU networks (PReLU-nets), we achieve 4.94% top-5 test error on the ImageNet 2012 classification dataset. This is a 26% relative improvement over the ILSVRC 2014 winner (GoogLeNet, 6.66%). To our knowledge, our result is the first to surpass human-level performance (5.1%, Russakovsky et al.) on this visual recognition challenge.",
       "accessDate": "2020-08-20T10:09:22Z",
-      "citationKey": "he_delving_deep_into_rectifiers_2015a",
       "creators": [
         {
           "creatorType": "author",
@@ -306,7 +300,6 @@
     {
       "abstractNote": "SGD implicitly performs variational inference; gradient noise is highly non-isotropic, so SGD does not even converge to critical points of the original loss",
       "accessDate": "2022-02-06T15:41:40Z",
-      "citationKey": "chaudhari_stochastic_gradient_2018a",
       "conferenceName": "International Conference on Learning Representations",
       "creators": [
         {
@@ -334,7 +327,6 @@
     {
       "abstractNote": "Stochastic gradient descent (SGD) is widely believed to perform implicit regularization when used to train deep neural networks, but the precise manner in which this occurs has thus far been...",
       "accessDate": "2018-11-30T16:28:06Z",
-      "citationKey": "chaudhari_stochastic_gradient_2018",
       "creators": [
         {
           "creatorType": "author",
@@ -357,7 +349,6 @@
     {
       "abstractNote": "We introduce a modern Hopfield network with continuous states and a corresponding update rule. The new Hopfield network can store exponentially (with the dimension of the associative space) many...",
       "accessDate": "2022-05-25T10:30:26Z",
-      "citationKey": "ramsauer_hopfield_networks_2020a",
       "conferenceName": "International Conference on Learning Representations",
       "creators": [
         {
@@ -368,7 +359,7 @@
         {
           "creatorType": "author",
           "firstName": "Bernhard",
-          "lastName": "Sch\ufffdfl"
+          "lastName": "Sch�fl"
         },
         {
           "creatorType": "author",
@@ -412,7 +403,7 @@
         },
         {
           "creatorType": "author",
-          "firstName": "G\ufffdnter",
+          "firstName": "G�nter",
           "lastName": "Klambauer"
         },
         {
@@ -437,7 +428,6 @@
     {
       "abstractNote": "We propose a novel weight normalization technique called spectral normalization to stabilize the training of the discriminator of GANs.",
       "accessDate": "2021-09-25T17:53:25Z",
-      "citationKey": "miyato_spectral_normalization_2018a",
       "conferenceName": "International Conference on Learning Representations",
       "creators": [
         {
@@ -472,7 +462,6 @@
     {
       "abstractNote": "We show that the transformer attention mechanism is the update rule of a modern Hopfield network with continuous states. This new Hopfield network can store exponentially (with the dimension) many patterns, converges with one update, and has exponentially small retrieval errors. The number of stored patterns is traded off against convergence speed and retrieval error. The new Hopfield network has three types of energy minima (fixed points of the update): (1) global fixed point averaging over all patterns, (2) metastable states averaging over a subset of patterns, and (3) fixed points which store a single pattern. Transformer and BERT models operate in their first layers preferably in the global averaging regime, while they operate in higher layers in metastable states. The gradient in transformers is maximal for metastable states, is uniformly distributed for global averaging, and vanishes for a fixed point near a stored pattern. Using the Hopfield network interpretation, we analyzed learning of transformer and BERT models. Learning starts with attention heads that average and then most of them switch to metastable states. However, the majority of heads in the first layers still averages and can be replaced by averaging, e.g. our proposed Gaussian weighting. In contrast, heads in the last layers steadily learn and seem to use metastable states to collect information created in lower layers. These heads seem to be a promising target for improving transformers. Neural networks with Hopfield networks outperform other methods on immune repertoire classification, where the Hopfield net stores several hundreds of thousands of patterns. We provide a new PyTorch layer called \"Hopfield\", which allows to equip deep learning architectures with modern Hopfield networks as a new powerful concept comprising pooling, memory, and attention. GitHub: https://github.com/ml-jku/hopfield-layers",
       "accessDate": "2020-08-06T11:00:55Z",
-      "citationKey": "ramsauer_hopfield_networks_2020",
       "creators": [
         {
           "creatorType": "author",
@@ -482,7 +471,7 @@
         {
           "creatorType": "author",
           "firstName": "Bernhard",
-          "lastName": "Sch\ufffdfl"
+          "lastName": "Sch�fl"
         },
         {
           "creatorType": "author",
@@ -536,7 +525,7 @@
         },
         {
           "creatorType": "author",
-          "firstName": "G\ufffdnter",
+          "firstName": "G�nter",
           "lastName": "Klambauer"
         },
         {
@@ -584,7 +573,6 @@
     },
     {
       "accessDate": "2021-05-04T07:56:49Z",
-      "citationKey": "he_delving_deep_into_rectifiers_2015",
       "conferenceName": "Proceedings of the IEEE International Conference on Computer Vision",
       "creators": [
         {

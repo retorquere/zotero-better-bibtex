@@ -6,7 +6,7 @@
       "exportNotes": true
     },
     "preferences": {
-      "citekeyFormat": "authorsn(n=2,creator=\"*\",initials=false,sep=\" \").fold.lower + len + \"_\" + year + \"-\" + shorttitle.skipwords.lower;\nshorttitle.skipwords.lower + \"-\" + year;",
+      "citekeyFormat": "authorsn(n=2,creator='*',initials=false,sep=' ').fold.lower + len + '_' + year + '-' + shorttitle.skipwords.lower;\nshorttitle.skipwords.lower + '-' + year;",
       "keyConflictPolicy": "change",
       "quickCopyMode": "pandoc",
       "quickCopyPandocBrackets": true
@@ -16,7 +16,6 @@
     {
       "DOI": "10.1080/13602004.2019.1575022",
       "ISSN": "1360-2004",
-      "citationKey": "salnikovadarcus_2019-spacesmuslimidentity",
       "creators": [
         {
           "creatorType": "author",

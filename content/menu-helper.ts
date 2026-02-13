@@ -6,7 +6,6 @@ import * as DateParser from './dateparser'
 import { log } from './logger'
 import * as CAYW from './cayw'
 import { TeXstudio } from './tex-studio'
-import * as blink from 'blinkdb'
 import { AutoExport } from './auto-export'
 import { Translators } from './translators'
 import { uri } from './escape'
@@ -144,10 +143,10 @@ export function AEisHidden(elem: any, _ev: Event): boolean { // eslint-disable-l
     n = 0
   }
 
-  const aes = blink.many(AutoExport.db, {
-    where: { type: library ? 'library' : 'collection', id: library ? library.id : collection.id },
-    sort: { key: 'path', order: 'asc' },
-  })
+  const aes = AutoExport.db.chain()
+    .find({ type: library ? 'library' : 'collection', id: library ? library.id : collection.id })
+    .simplesort('path')
+    .data()
   const ae = aes[n]
   if (!ae) return true
 

@@ -15,7 +15,6 @@
   "items": [
     {
       "abstractNote": "This is an example\nThe first mu should be a greek mu which will turn out italic, the second is a textmu which schould look the same as the surrounding text",
-      "citationKey": "author_-d_2025",
       "creators": [
         {
           "creatorType": "author",
@@ -32,7 +31,6 @@
       "title": "<span class=\"novase\">A-D test </span>title with lower case greek letter μPC4570, which is not the same as 1µF"
     },
     {
-      "citationKey": "noauthor_nec_nodate",
       "itemID": 2,
       "itemType": "document",
       "notes": [

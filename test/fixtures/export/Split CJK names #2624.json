@@ -11,11 +11,10 @@
   },
   "items": [
     {
-      "citationKey": "changsunwuji",
       "creators": [
         {
           "creatorType": "author",
-          "name": "\u957f\u5b59\u65e0\u5fcc"
+          "name": "长孙无忌"
         }
       ],
       "itemID": 1,
@@ -24,11 +23,10 @@
       "title": "(Possibly wrong pinyin) Hans Author: Zhangsun Wuji"
     },
     {
-      "citationKey": "changsunwujia",
       "creators": [
         {
           "creatorType": "author",
-          "name": "\u9577\u5b6b\u7121\u5fcc"
+          "name": "長孫無忌"
         }
       ],
       "itemID": 2,
@@ -37,11 +35,10 @@
       "title": "(Possibly wrong pinyin) Hant Author: Zhangsun Wuji"
     },
     {
-      "citationKey": "dongfangbubai",
       "creators": [
         {
           "creatorType": "author",
-          "name": "\u4e1c\u65b9\u4e0d\u8d25"
+          "name": "东方不败"
         }
       ],
       "itemID": 3,
@@ -50,11 +47,10 @@
       "title": "Hans Author: Dongfang Bubai"
     },
     {
-      "citationKey": "dongfangbubaia",
       "creators": [
         {
           "creatorType": "author",
-          "name": "\u6771\u65b9\u4e0d\u6557"
+          "name": "東方不敗"
         }
       ],
       "itemID": 4,
@@ -63,11 +59,10 @@
       "title": "Hant Author: Dongfang Bubai"
     },
     {
-      "citationKey": "linghuchong",
       "creators": [
         {
           "creatorType": "author",
-          "name": "\u4ee4\u72d0\u51b2"
+          "name": "令狐冲"
         }
       ],
       "itemID": 5,
@@ -76,11 +71,10 @@
       "title": "Hans Author: Linghu Chong"
     },
     {
-      "citationKey": "linghuchonga",
       "creators": [
         {
           "creatorType": "author",
-          "name": "\u4ee4\u72d0\u6c96"
+          "name": "令狐沖"
         }
       ],
       "itemID": 6,
@@ -89,11 +83,10 @@
       "title": "Hant Author: Linghu Chong"
     },
     {
-      "citationKey": "murongfu",
       "creators": [
         {
           "creatorType": "author",
-          "name": "\u6155\u5bb9\u590d"
+          "name": "慕容复"
         }
       ],
       "itemID": 7,
@@ -102,11 +95,10 @@
       "title": "Hans Author: Murong Fu"
     },
     {
-      "citationKey": "murongfua",
       "creators": [
         {
           "creatorType": "author",
-          "name": "\u6155\u5bb9\u5fa9"
+          "name": "慕容復"
         }
       ],
       "itemID": 8,
@@ -115,11 +107,10 @@
       "title": "Hant Author: Murong Fu"
     },
     {
-      "citationKey": "ouyangfeng",
       "creators": [
         {
           "creatorType": "author",
-          "name": "\u6b27\u9633\u950b"
+          "name": "欧阳锋"
         }
       ],
       "itemID": 9,
@@ -128,11 +119,10 @@
       "title": "Hans Author: Ouyang Feng"
     },
     {
-      "citationKey": "ouyangfenga",
       "creators": [
         {
           "creatorType": "author",
-          "name": "\u6b50\u967d\u92d2"
+          "name": "歐陽鋒"
         }
       ],
       "itemID": 10,
@@ -141,11 +131,10 @@
       "title": "Hant Author: Ouyang Feng"
     },
     {
-      "citationKey": "renwoxing",
       "creators": [
         {
           "creatorType": "author",
-          "name": "\u4efb\u6211\u884c"
+          "name": "任我行"
         }
       ],
       "itemID": 11,
@@ -154,11 +143,10 @@
       "title": "Hans Author: Ren Woxing"
     },
     {
-      "citationKey": "renwoxinga",
       "creators": [
         {
           "creatorType": "author",
-          "name": "\u4efb\u6211\u884c"
+          "name": "任我行"
         }
       ],
       "itemID": 12,
@@ -167,11 +155,10 @@
       "title": "Hant Author: Ren Woxing"
     },
     {
-      "citationKey": "shangguanyun",
       "creators": [
         {
           "creatorType": "author",
-          "name": "\u4e0a\u5b98\u4e91"
+          "name": "上官云"
         }
       ],
       "itemID": 13,
@@ -180,11 +167,10 @@
       "title": "Hans Author: Shangguan Yun"
     },
     {
-      "citationKey": "shangguanyuna",
       "creators": [
         {
           "creatorType": "author",
-          "name": "\u4e0a\u5b98\u96f2"
+          "name": "上官雲"
         }
       ],
       "itemID": 14,
@@ -193,11 +179,10 @@
       "title": "Hant Author: Shangguan Yun"
     },
     {
-      "citationKey": "simayi",
       "creators": [
         {
           "creatorType": "author",
-          "name": "\u53f8\u9a6c\u61ff"
+          "name": "司马懿"
         }
       ],
       "itemID": 15,
@@ -206,11 +191,10 @@
       "title": "Hans Author: Sima Yi"
     },
     {
-      "citationKey": "simayia",
       "creators": [
         {
           "creatorType": "author",
-          "name": "\u53f8\u99ac\u61ff"
+          "name": "司馬懿"
         }
       ],
       "itemID": 16,
@@ -219,11 +203,10 @@
       "title": "Hant Author: Sima Yi"
     },
     {
-      "citationKey": "simazhongda",
       "creators": [
         {
           "creatorType": "author",
-          "name": "\u53f8\u9a6c\u4ef2\u8fbe"
+          "name": "司马仲达"
         }
       ],
       "itemID": 17,
@@ -232,11 +215,10 @@
       "title": "Hans Author: Sima Zhongda"
     },
     {
-      "citationKey": "simazhongdaa",
       "creators": [
         {
           "creatorType": "author",
-          "name": "\u53f8\u99ac\u4ef2\u9054"
+          "name": "司馬仲達"
         }
       ],
       "itemID": 18,
@@ -245,11 +227,10 @@
       "title": "Hant Author: Sima Zhongda"
     },
     {
-      "citationKey": "weichirong",
       "creators": [
         {
           "creatorType": "author",
-          "name": "\u5c09\u8fdf\u878d"
+          "name": "尉迟融"
         }
       ],
       "itemID": 19,
@@ -258,11 +239,10 @@
       "title": "(Possibly wrong pinyin) Hans Author: Yuchi Rong"
     },
     {
-      "citationKey": "weichironga",
       "creators": [
         {
           "creatorType": "author",
-          "name": "\u5c09\u9072\u878d"
+          "name": "尉遲融"
         }
       ],
       "itemID": 20,
@@ -271,11 +251,10 @@
       "title": "(Possibly wrong pinyin) Hant Author: Yuchi Rong"
     },
     {
-      "citationKey": "xiahoudun",
       "creators": [
         {
           "creatorType": "author",
-          "name": "\u590f\u4faf\u60c7"
+          "name": "夏侯惇"
         }
       ],
       "itemID": 21,
@@ -284,11 +263,10 @@
       "title": "Hans Author: Xiahou Dun"
     },
     {
-      "citationKey": "xiahouduna",
       "creators": [
         {
           "creatorType": "author",
-          "name": "\u590f\u4faf\u60c7"
+          "name": "夏侯惇"
         }
       ],
       "itemID": 22,
@@ -297,11 +275,10 @@
       "title": "Hant Author: Xiahou Dun"
     },
     {
-      "citationKey": "yanglianting",
       "creators": [
         {
           "creatorType": "author",
-          "name": "\u6768\u83b2\u4ead"
+          "name": "杨莲亭"
         }
       ],
       "itemID": 23,
@@ -310,11 +287,10 @@
       "title": "Hans Author: Yang Lianting"
     },
     {
-      "citationKey": "yangliantinga",
       "creators": [
         {
           "creatorType": "author",
-          "name": "\u694a\u84ee\u4ead"
+          "name": "楊蓮亭"
         }
       ],
       "itemID": 24,
@@ -323,11 +299,10 @@
       "title": "Hant Author: Yang Lianting"
     },
     {
-      "citationKey": "zhugekongming",
       "creators": [
         {
           "creatorType": "author",
-          "name": "\u8bf8\u845b\u5b54\u660e"
+          "name": "诸葛孔明"
         }
       ],
       "itemID": 25,
@@ -336,11 +311,10 @@
       "title": "Hans Author: Zhuge Kongming"
     },
     {
-      "citationKey": "zhugekongminga",
       "creators": [
         {
           "creatorType": "author",
-          "name": "\u8af8\u845b\u5b54\u660e"
+          "name": "諸葛孔明"
         }
       ],
       "itemID": 26,
@@ -349,11 +323,10 @@
       "title": "Hant Author: Zhuge Kongming"
     },
     {
-      "citationKey": "zhugeliang",
       "creators": [
         {
           "creatorType": "author",
-          "name": "\u8af8\u845b\u4eae"
+          "name": "諸葛亮"
         }
       ],
       "itemID": 27,
@@ -362,11 +335,10 @@
       "title": "Hant Author: Zhuge Liang"
     },
     {
-      "citationKey": "zhugelianga",
       "creators": [
         {
           "creatorType": "author",
-          "name": "\u8bf8\u845b\u4eae"
+          "name": "诸葛亮"
         }
       ],
       "itemID": 28,
@@ -375,20 +347,18 @@
       "title": "Hans Author: Zhuge Liang"
     },
     {
-      "citationKey": "xiaofamin.FayixueTiedaoSunshang",
       "creators": [
         {
           "creatorType": "author",
-          "name": "\u8096\u53d1\u6c11"
+          "name": "肖发民"
         }
       ],
       "itemID": 29,
       "itemType": "book",
       "language": "zh-Hans",
-      "title": "\u6cd5\u533b\u5b66\u94c1\u9053\u635f\u4f24\u56fe\u8c31"
+      "title": "法医学铁道损伤图谱"
     },
     {
-      "citationKey": "JohnSmith.ARandomBook",
       "creators": [
         {
           "creatorType": "author",
@@ -401,7 +371,6 @@
       "title": "A Random Book"
     },
     {
-      "citationKey": "Smith.ARandomBook",
       "creators": [
         {
           "creatorType": "author",
@@ -415,7 +384,6 @@
       "title": "A Random Book"
     },
     {
-      "citationKey": "Lin.zhsingle",
       "creators": [
         {
           "creatorType": "author",
@@ -428,7 +396,6 @@
       "title": "Zh Single Field"
     },
     {
-      "citationKey": "Lin.zhsplitfield",
       "creators": [
         {
           "creatorType": "author",
@@ -442,7 +409,6 @@
       "title": "Zh Split Field"
     },
     {
-      "citationKey": "Ayashi.jasplitfield",
       "creators": [
         {
           "creatorType": "author",
@@ -456,7 +422,6 @@
       "title": "Ja Split Field"
     },
     {
-      "citationKey": "Alibaba.zhonotname",
       "creators": [
         {
           "creatorType": "author",

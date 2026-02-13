@@ -7,11 +7,13 @@ Feature: Export
   @biblatex
   Scenario Outline: Export <references> references for BibLaTeX to <file>
     When I import <references> references from "export/<file>.json"
+    #And I wait 1 second
     Then an export using "Better BibLaTeX" should match "export/*.biblatex"
 
     Examples:
       | file                                                                                                                     | references |
-      | Issue getting shortjournal #3382                                                                                         | 2          |
+      | Original Date not working with Citation Key (anymore) #3392                                                              | 1          |
+      | Issue getting shortjournal #3382                                                                                         | 1          |
       | New and edited items are not added or dropped from better-bibtex.sql #3370                                               | 1          |
       | Generating citation keys and special letters (i.e. o, u, a) #3351                                                        | 1          |
       | Export to BetterBibTeX .bib no longer works and fails #3352                                                              | 1          |
@@ -458,21 +460,21 @@ Feature: Export
     When I import 1 reference from "export/*.json"
     Then an export using "Better BibLaTeX" should match "export/*.pinned.biblatex"
     When I select the item with a field that contains "Genetics"
-    And I unpin the citation key
-    And I refresh the citation key
+    And I clear the citation key
+    And I force-refresh the citation key
     Then an export using "Better BibLaTeX" should match "export/*.biblatex"
 
   Scenario: Refresh BibTeX key doesn't work (after removing a related entry) #2401
     When I import 2 references from "export/*.json"
     When I select the item with a field that is "IlligS.etal:2018"
     And I remove the selected item
-    And I refresh all citation keys
+    And I force-refresh all citation keys
     Then an export using "Better BibLaTeX" should match "export/*.biblatex"
 
   Scenario: Postfixed keys different between computers #1788
     When I import 2 references from "export/*.json"
     And I select the item with a field that contains "Wittgenstein"
-    And I pin the citation key to "heyns2021"
+    And I set the citation key to "heyns2021"
     And I wait 2 seconds
     Then an export using "Better BibLaTeX" should match "export/*.biblatex"
 
@@ -603,7 +605,7 @@ Feature: Export
     Given I import 1 reference from "export/*.json"
     Then an export using "Better BibLaTeX" should match "export/*-fold.biblatex"
     When I set preference .citekeyFold to false
-    And I refresh all citation keys
+    And I force-refresh all citation keys
     Then an export using "Better BibLaTeX" should match "export/*-nofold.biblatex"
 
   @384 @bbt @565 @566
@@ -782,10 +784,10 @@ Feature: Export
   Scenario: use author dash separation rather than camel casing in citekey #1495
     Given I import 1 reference from "export/*.json"
     When I set preference .citekeyFormat to "authorsn(n=2,sep='-').fold.lower + '_' + year + '-' + shorttitle.condense('-').lower"
-    And I refresh all citation keys
+    And I force-refresh all citation keys
     Then an export using "Better BibTeX" should match "export/*.bibtex"
     When I set preference .citekeyFormat to "authorsn(n=2).fold.condense('-').lower + '_' + year + '-' + shorttitle.condense('-').lower"
-    And I refresh all citation keys
+    And I force-refresh all citation keys
     Then an export using "Better BibTeX" should match "export/*.bibtex"
 
   Scenario: Collected notes
@@ -847,13 +849,13 @@ Feature: Export
     Given I import 1 reference from "export/*.json"
     When I select the item with a field that contains "Valuations"
     When I set preference .citekeyFormat to "(ShortTitle.condense(_) || Title.condense(_))"
-    And I refresh the citation key
+    And I force-refresh the citation key
     Then the citation key should be "The_Theory_of_Classical_Valuations"
     When I set preference .citekeyFormat to "(ShortTitle || Title).condense(_)"
-    And I refresh the citation key
+    And I force-refresh the citation key
     Then the citation key should be "The_Theory_of_Classical_Valuations"
     When I set preference .citekeyFormat to "(ShortTitle ? ShortTitle : Title).condense(_)"
-    And I refresh the citation key
+    And I force-refresh the citation key
     Then the citation key should be "The_Theory_of_Classical_Valuations"
 
   Scenario: refresh fails for pinned keys #3173
