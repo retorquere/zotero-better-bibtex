@@ -611,6 +611,7 @@ class Zotero:
       }
 
       for k, v in preferences.items():
+        if k == 'keyConflictPolicy': continue
         assert self.preferences.prefix + k in self.preferences.supported, f'Unsupported preference "{k}"'
       for item in input.data['items']:
         for att in item.get('attachments') or []:
