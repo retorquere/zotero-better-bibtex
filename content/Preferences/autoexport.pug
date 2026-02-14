@@ -34,7 +34,7 @@ html:div.bbt-prefs-2col#bbt-prefs-auto-exports
   label(data-l10n-id='better-bibtex_preferences_auto-export_target')
   html:input.plain(data-ae-field='path', readonly, size='80', type='text', value)
 
-  // bibtex
+  //- bibtex
   html:div.bbt-autoexport-options.bbt-autoexport-BetterBibTeX.bbt-prefs-2col-span
     label.bbt-autoexport-options.bbt-autoexport-BetterBibTeX(data-l10n-id='better-bibtex_preferences_export_bibtex_urls')
     menulist(data-ae-field='bibtexURL', native='true', oncommand='Zotero.BetterBibTeX.PrefPane.autoexport.edit(this)')
@@ -47,7 +47,7 @@ html:div.bbt-prefs-2col#bbt-prefs-auto-exports
 
     img(src='chrome://zotero-better-bibtex/content/skin/attention.svg', style='width:16px;height:16px', tooltip='bbt-tooltip-bibtexURL')
 
-  // biblatex
+  //- biblatex
   checkbox.bbt-autoexport-options.bbt-autoexport-BetterBibLaTeX.bbt-prefs-2col-span(
     data-ae-field='asciiBibLaTeX'
     data-l10n-id='better-bibtex_preferences_export_biblatex_ascii'
@@ -62,7 +62,7 @@ html:div.bbt-prefs-2col#bbt-prefs-auto-exports
     native='true'
   )
 
-  //  both bibtex and biblatex
+  //-  both bibtex and biblatex
   html:div.bbt-autoexport-options.bbt-autoexport-BetterBibTeX.bbt-autoexport-BetterBibLaTeX.bbt-prefs-2col-span
     label(data-l10n-id='better-bibtex_preferences_export_fields_doi-and-url')
     menulist(data-ae-field='DOIandURL', native='true', oncommand='Zotero.BetterBibTeX.PrefPane.autoexport.edit(this)')
@@ -99,7 +99,7 @@ html:div.bbt-prefs-2col#bbt-prefs-auto-exports
     native='true'
   )
 
-  //  all
+  //- all
   checkbox.bbt-prefs-2col-span(
     data-ae-field='recursive'
     data-l10n-id='better-bibtex_preferences_auto-export_fields_recursive'

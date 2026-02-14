@@ -65,21 +65,6 @@ Options:
 * within each library
 
 
-### When a citation key is set that is already in use in other items, the keys of these other items will be
-
-default: `kept (causes key duplicates)`
-
-This determines what happens if you pin a key to a value that is already in use in a different item but not pinned there.
-Neither are ideal, you just get to pick your poison. If you let BBT change the non-pinned key by adding a postfix character,
-the citation key changes which could be problematic for existing papers. If you keep the non-pinned key as-is, your library now has duplicate keys.
-
-
-Options:
-
-* postfixed (causes key changes)
-* kept (causes key duplicates)
-
-
 ## Ideographs in citekeys
 
 ### Apply kuroshiro romajization in Japanese names/titles. Uses a lot of memory.

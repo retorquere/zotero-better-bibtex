@@ -166,17 +166,17 @@ citekeyFold:
     apply `fold` to all your keys.
   default: true
 
-keyConflictPolicy:
-  description: >
-    This determines what happens if you pin a key to a value that is already in
-    use in a different item but not pinned there.
-
-    Neither are ideal, you just get to pick your poison. If you let BBT change
-    the non-pinned key by adding a postfix character,
-
-    the citation key changes which could be problematic for existing papers. If
-    you keep the non-pinned key as-is, your library now has duplicate keys.
-  default: keep
+#keyConflictPolicy:
+#  description: >
+#    This determines what happens if you pin a key to a value that is already in
+#    use in a different item but not pinned there.
+#
+#    Neither are ideal, you just get to pick your poison. If you let BBT change
+#    the non-pinned key by adding a postfix character,
+#
+#    the citation key changes which could be problematic for existing papers. If
+#    you keep the non-pinned key as-is, your library now has duplicate keys.
+#  default: keep
 
 auxImport:
   description: >
