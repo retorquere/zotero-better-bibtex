@@ -111,6 +111,8 @@ export async function importBBTJSON(collected: Collected): Promise<void> {
   const data: Library = JSON.parse(collected.input)
   if (!data.items || !data.items.length) return
 
+  if (data.preferences) delete preferences.keyConflictPolicy
+
   const items = new Set<number>
   for (const source of (data.items as any[])) {
     simplifyForImport(source)
