@@ -26,7 +26,7 @@ Making any change here will drop your entire export cache. This is usually not a
     <meta itemprop="description" content="The Better BibTeX Configuration can be found under the regular Zotero preferences pane, tab ‘Better BibTeX’.
 The configuration of Better BibTeX is a little baroque compared to the standard Zotero Bib(La)TeX exporters (which only have hidden preferences). The defaults should just work, but here’s an attempt to describe what they do.
 Making any change here will drop your entire export cache. This is usually not a problem unless you have a really large library, but you can read about what is involved here.">
-    <meta itemprop="wordCount" content="642">
+    <meta itemprop="wordCount" content="534">
     <title>Preferences :: Better BibTeX for Zotero</title>
     <link href="/zotero-better-bibtex/preferences/index.xml" rel="alternate" type="application/rss+xml" title="Preferences :: Better BibTeX for Zotero"><link rel="icon" href="/zotero-better-bibtex/better-bibtex.ico" type="image/x-icon">
 
@@ -146,7 +146,6 @@ Making any change here will drop your entire export cache. This is usually not a
       <ul>
         <li><a href="#ignore-upperlowercase-when-comparing-for-uniqueness">Ignore upper/lowercase when comparing for uniqueness</a></li>
         <li><a href="#keep-keys-unique">Keep keys unique</a></li>
-        <li><a href="#when-a-citation-key-is-set-that-is-already-in-use-in-other-items-the-keys-of-these-other-items-will-be">When a citation key is set that is already in use in other items, the keys of these other items will be</a></li>
       </ul>
     </li>
     <li><a href="#ideographs-in-citekeys">Ideographs in citekeys</a>
@@ -229,16 +228,6 @@ unique. Changing this setting <em>does not</em> affect existign keys - for this 
 <ul>
 <li>across all libraries</li>
 <li>within each library</li>
-</ul>
-<h3 id="when-a-citation-key-is-set-that-is-already-in-use-in-other-items-the-keys-of-these-other-items-will-be">When a citation key is set that is already in use in other items, the keys of these other items will be<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h3>
-<p>default: <code>kept (causes key duplicates)</code></p>
-<p>This determines what happens if you pin a key to a value that is already in use in a different item but not pinned there.
-Neither are ideal, you just get to pick your poison. If you let BBT change the non-pinned key by adding a postfix character,
-the citation key changes which could be problematic for existing papers. If you keep the non-pinned key as-is, your library now has duplicate keys.</p>
-<p>Options:</p>
-<ul>
-<li>postfixed (causes key changes)</li>
-<li>kept (causes key duplicates)</li>
 </ul>
 <h2 id="ideographs-in-citekeys">Ideographs in citekeys<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h2>
 <h3 id="apply-kuroshiro-romajization-in-japanese-namestitles-uses-a-lot-of-memory">Apply kuroshiro romajization in Japanese names/titles. Uses a lot of memory.<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h3>
