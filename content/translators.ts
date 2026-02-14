@@ -1,6 +1,5 @@
 /* eslint-disable no-case-declarations, @typescript-eslint/no-unsafe-return */
 
-import * as client from './client'
 import merge from 'lodash.merge'
 import { Cache } from './translators/worker'
 import { serializer } from './item-export-format'

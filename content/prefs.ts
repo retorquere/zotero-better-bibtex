@@ -172,6 +172,14 @@ export const Preference = new class PreferenceManager extends PreferenceManagerB
         },
       })
     }
+
+    // people are going to want this and I don't feel like making an UI for this
+    let migrated
+    if (!Zotero.Prefs.get(migrated = 'translators.better-bibtex.autoPinMigrated')) {
+      const autoExportDelay: number = Zotero.Prefs.get('translators.better-bibtex.autoExportDelay') as number || 0
+      if (!Zotero.Prefs.get(key = 'translators.better-bibtex.autoPin')) Zotero.Prefs.set(key, autoExportDelay > 2 ? 2 : 1)
+      Zotero.Prefs.set(migrated, true)
+    }
   }
 
   private move(ist: string, soll: string, convert: (v: any) => any) {
