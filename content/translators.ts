@@ -5,13 +5,7 @@ import merge from 'lodash.merge'
 import { Cache } from './translators/worker'
 import { serializer } from './item-export-format'
 
-var ZOTERO_CONFIG: any // eslint-disable-line no-var
-if (client.version[0] === '8') {
-  ({ ZOTERO_CONFIG } = ChromeUtils.importESModule('resource://zotero/config.mjs'))
-}
-else {
-  Components.utils.import('resource://zotero/config.js')
-}
+const { ZOTERO_CONFIG } = ChromeUtils.importESModule('resource://zotero/config.mjs')
 
 import { Preference } from './prefs'
 import { affects, Preferences } from '../gen/preferences/meta'
