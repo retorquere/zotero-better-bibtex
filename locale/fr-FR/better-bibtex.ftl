@@ -174,7 +174,7 @@ better-bibtex_preferences_auto-export_type_collection = Collection
 better-bibtex_preferences_auto-export_type_library = Bibliothèque
 better-bibtex_preferences_auto-export_updated = Mis à jour
 better-bibtex_preferences_bulk-warning = M'avertir si un changement par lot touche plus de X éléments (où X = le nb. à rentrer ci-dessous) :
-better-bibtex_preferences_citekey_auto-pin-delay = Épingler automatiquement la clé de citation après coup
+better-bibtex_preferences_citekey_auto-pin-delay = Remplir automatiquement la clé de citation après
 better-bibtex_preferences_citekey_aux-scanner_import = 
     .label = Lors de l'analyse d'un fichier `.aux`, tenter d'importer les références depuis le fichier `.bib` joint lorsque leurs clés de citation ne sont pas dans Zotero
 better-bibtex_preferences_citekey_fold = 
@@ -187,7 +187,7 @@ better-bibtex_preferences_citekey_uniqueness =
     .label = Garder les clés de citation uniques
 better-bibtex_preferences_citekey_uniqueness_case = 
     .label = Ignorer les majuscules/minuscules lors de la comparaison pour l'unicité
-better-bibtex_preferences_citekey_uniqueness_conflict = En cas de conflit, les clés non verrouillées seront
+better-bibtex_preferences_citekey_uniqueness_conflict = Lorsqu'une clé de citation, déjà utilisée dans d'autres éléments, est définie, les clés de ces autres éléments seront
 better-bibtex_preferences_citekey_uniqueness_conflict_change = modifiées (risque de changements)
     .label = { better-bibtex_preferences_citekey_uniqueness_conflict_change }
 better-bibtex_preferences_citekey_uniqueness_conflict_keep = conservées (risque de doublons)
