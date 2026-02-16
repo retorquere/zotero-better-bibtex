@@ -9,11 +9,12 @@ export async function migrate(): Promise<void> {
     overwrite: false,
     total: 0,
     pinned: 0,
+    zotero: 0,
   }
   try {
     await Zotero.DB.queryAsync('ATTACH DATABASE ? AS betterbibtex', [ db ])
     await Zotero.DB.executeTransaction(async () => {
-      const rows = await Zotero.DB.queryAsync(`
+      let rows = await Zotero.DB.queryAsync(`
         SELECT bbt.itemID, bbt.itemKey, bbt.libraryID, bbt.citationKey, bbt.pinned
         FROM betterbibtex.citationkey bbt
         JOIN items item ON item.itemID = bbt.itemID
@@ -31,7 +32,23 @@ export async function migrate(): Promise<void> {
         pinned: !!pinned,
       }))
 
-      if (keys.length) {
+      rows = await Zotero.DB.queryAsync(`
+        SELECT items.itemID, ck.value AS citationKey
+        FROM items
+        JOIN itemData ckField ON ckField.itemID = items.itemID AND ckField.fieldID IN (SELECT fieldID FROM fields WHERE fieldName = 'citationKey')
+        JOIN itemDataValues ck ON ck.valueID = ckField.valueID
+        WHERE items.itemID NOT IN (SELECT itemID FROM deletedItems)
+        AND items.itemTypeID NOT IN (SELECT itemTypeID FROM itemTypes WHERE typeName IN ('attachment', 'note', 'annotation'))
+        AND items.itemID NOT IN (SELECT itemID from feedItems)
+      `.replace(/\n/g, ' ').trim())
+      for (const { itemID, citationKey } of rows) {
+        if (citationKey && !keys.find(key => key.itemID === itemID && key.citationKey === citationKey)) choice.zotero += 1
+      }
+
+      if (!choice.zotero) {
+        choice.migrate = 'all'
+      }
+      else if (keys.length) {
         choice.total = keys.length
         choice.pinned = keys.filter(key => key.pinned).length
         Zotero.getMainWindow().openDialog('chrome://zotero-better-bibtex/content/keymanager-migrate.xhtml', '', 'chrome,dialog,centerscreen,modal', choice)
@@ -44,14 +61,14 @@ export async function migrate(): Promise<void> {
             keys = keys.filter(k => k.pinned)
             break
         }
+      }
 
-        if (choice.migrate !== 'postpone') {
-          for (const { itemID, citationKey } of keys) {
-            const item = await Zotero.Items.getAsync(itemID)
-            if (choice.overwrite || !item.getField('citationKey')) {
-              item.setField('citationKey', citationKey)
-              await item.save()
-            }
+      if (choice.migrate !== 'postpone') {
+        for (const { itemID, citationKey } of keys) {
+          const item = await Zotero.Items.getAsync(itemID)
+          if (choice.overwrite || !item.getField('citationKey')) {
+            item.setField('citationKey', citationKey)
+            await item.save()
           }
         }
       }
