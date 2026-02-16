@@ -52,6 +52,10 @@ window(xmlns='http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul'
         html:input(type='radio' name='overwrite' value='no' onchange='overwrite(this)')
         |  Discard Better BibTeX citation key
 
+    html:div.divider
+    html:div
+      | If it is unclear to you what this choice means, just choose "ask me again" and ask for more information in the discussion lists of Better BibTeX on github.
+
     html:div.footer
       html:button#postpone(onclick='finish("postpone")') Ask me again at next start
       html:button#ok(disabled='true' style='font-weight: bold;' onclick='finish()') Migrate
