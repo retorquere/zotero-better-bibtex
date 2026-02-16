@@ -1,4 +1,5 @@
 import { log } from '../logger'
+import { getItemAsync } from '../get-items-async'
 
 export async function migrate(): Promise<void> {
   const db = PathUtils.join(Zotero.DataDirectory.dir, 'better-bibtex.sqlite')
@@ -32,7 +33,9 @@ export async function migrate(): Promise<void> {
         pinned: !!pinned,
       }))
 
-      log.debug('3407:', keys.length, 'keys found, of which', keys.filter(key => key.pinned).length, 'pinned')
+      choice.total = keys.length
+      choice.pinned = keys.filter(key => key.pinned).length
+      log.debug('3407:', choice.total, 'keys found, of which', choice.pinned, 'pinned')
 
       rows = await Zotero.DB.queryAsync(`
         SELECT items.itemID, ck.value AS citationKey
@@ -40,8 +43,9 @@ export async function migrate(): Promise<void> {
         JOIN itemData ckField ON ckField.itemID = items.itemID AND ckField.fieldID IN (SELECT fieldID FROM fields WHERE fieldName = 'citationKey')
         JOIN itemDataValues ck ON ck.valueID = ckField.valueID
         WHERE items.itemID NOT IN (SELECT itemID FROM deletedItems)
-        AND items.itemTypeID NOT IN (SELECT itemTypeID FROM itemTypes WHERE typeName IN ('attachment', 'note', 'annotation'))
-        AND items.itemID NOT IN (SELECT itemID from feedItems)
+          AND items.itemTypeID NOT IN (SELECT itemTypeID FROM itemTypes WHERE typeName IN ('attachment', 'note', 'annotation'))
+          AND items.itemID NOT IN (SELECT itemID from feedItems)
+          AND COALESCE(ck.value, '') <> ''
       `.replace(/\n/g, ' ').trim())
 
       log.debug('3407:', rows.length, 'native keys')
@@ -56,8 +60,6 @@ export async function migrate(): Promise<void> {
         choice.migrate = 'all'
       }
       else if (keys.length) {
-        choice.total = keys.length
-        choice.pinned = keys.filter(key => key.pinned).length
         log.debug('3407: not ready to go. Get feedback for', choice)
         Zotero.getMainWindow().openDialog('chrome://zotero-better-bibtex/content/keymanager-migrate.xhtml', '', 'chrome,dialog,centerscreen,modal', choice)
         choice.migrate = choice.migrate || 'postpone'
@@ -77,10 +79,13 @@ export async function migrate(): Promise<void> {
       if (choice.migrate !== 'postpone') {
         log.debug('3407: migrating', keys.length, 'keys')
         for (const { itemID, citationKey } of keys) {
-          const item = await Zotero.Items.getAsync(itemID)
+          const item = await getItemAsync(itemID)
           if (choice.overwrite || !item.getField('citationKey')) {
             item.setField('citationKey', citationKey)
             await item.save()
+          }
+          else {
+            log.debug('3407: skipping', { citationKey }, 'because it', item.getField('citationKey') ? 'does' : 'does not', 'have a native key, and the user chose to', choice.overwrite ? 'overwrite' : 'keep', 'native keys')
           }
         }
       }
