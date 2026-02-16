@@ -23,14 +23,17 @@ window(xmlns='http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul'
     html:div#header(style='font-weight: bold; margin-bottom: 10px;')
       | You have {total} Better BibTeX stored citation keys, of which {pinned} are pinned
 
+    html:div
+      | Zotero 8 adds a native citation key field, which replaces the Better BibTeX citation key field. Since you have existing Better BibTeX citation keys, do you want to:
+
     html:div.option-container
       html:label
         html:input(type='radio' name='migrate' value='all' onchange='migrate(this)')
-        |  Migrate all Better BibTeX citation keys
+        |  Migrate all Better BibTeX citation keys to Zotero citation keys
 
       html:label#pinned
         html:input(type='radio' name='migrate' value='pinned' onchange='migrate(this)')
-        |  Migrate only pinned Better BibTeX citation keys, discard the others
+        |  Migrate only pinned Better BibTeX citation keys, to Zotero citation keys, and discard the dynamic (non-pinned) Better BibTeX citation keys
 
       html:label
         html:input(type='radio' name='migrate' value='none' onchange='migrate(this)')
