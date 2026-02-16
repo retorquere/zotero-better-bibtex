@@ -13,7 +13,7 @@ import './apis.js'
 
 fs.copyFileSync('node_modules/@retorquere/bibtex-parser/dist/data/unabbrev.json', 'build/content/resource/bibtex/unabbrev.json')
 fs.copyFileSync('node_modules/@retorquere/bibtex-parser/dist/data/strings.bib', 'build/content/resource/bibtex/strings.bib')
-const manifest = JSON.parse(fs.readFileSync('build/manifest.json', 'utf-8'))
-manifest.applications.zotero.strict_min_version = '8.0.1'
-manifest.applications.zotero.strict_max_version = '9.*'
-fs.writeFileSync('build/manifest.json', JSON.stringify(manifest, null, 2))
+// const manifest = JSON.parse(fs.readFileSync('build/manifest.json', 'utf-8'))
+// manifest.applications.zotero.strict_min_version = '8.0.1'
+// manifest.applications.zotero.strict_max_version = '9.*'
+// fs.writeFileSync('build/manifest.json', JSON.stringify(manifest, null, 2))
