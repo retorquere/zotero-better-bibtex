@@ -4,7 +4,15 @@ import merge from 'lodash.merge'
 import { Cache } from './translators/worker'
 import { serializer } from './item-export-format'
 
-const { ZOTERO_CONFIG } = ChromeUtils.importESModule('resource://zotero/config.mjs')
+// const { ZOTERO_CONFIG } = ChromeUtils.importESModule('resource://zotero/config.mjs')
+import * as client from './client'
+var ZOTERO_CONFIG: any // eslint-disable-line no-var
+if (client.version[0] === '7') {
+  Components.utils.import('resource://zotero/config.js')
+}
+else {
+  ({ ZOTERO_CONFIG } = ChromeUtils.importESModule('resource://zotero/config.mjs'))
+}
 
 import { Preference } from './prefs'
 import { affects, Preferences } from '../gen/preferences/meta'
