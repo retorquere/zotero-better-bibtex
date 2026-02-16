@@ -688,6 +688,7 @@ export class Entry {
       return
     }
 
+    log.debug('3376: actual override', { ...field, name, replace: (typeof field.replace !== 'boolean' && typeof field.fallback !== 'boolean') || field.replace })
     this.add({ ...field, name, replace: (typeof field.replace !== 'boolean' && typeof field.fallback !== 'boolean') || field.replace })
   }
 
@@ -897,6 +898,7 @@ export class Entry {
           break
 
         default:
+          log.debug('3376: text override', { name, value: field.value, bibtexStrings, ...mode })
           this.override({ name, value: field.value, bibtexStrings, ...mode })
           break
       }

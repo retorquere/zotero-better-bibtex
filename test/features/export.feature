@@ -12,6 +12,7 @@ Feature: Export
 
     Examples:
       | file                                                                                                                     | references |
+      | tex.title= is not copied verbatim if Zotero title contains math #3376                                                    | 2          |
       | Original Date not working with Citation Key (anymore) #3392                                                              | 1          |
       | Issue getting shortjournal #3382                                                                                         | 1          |
       | New and edited items are not added or dropped from better-bibtex.sql #3370                                               | 1          |
