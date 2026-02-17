@@ -21,16 +21,19 @@ window(xmlns='http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul'
 
   html:body
     html:div#header(style='font-weight: bold; margin-bottom: 10px;')
-      | You have {total} Better BibTeX stored citation keys, of which {pinned} are pinned
+      | You have {zotero} Zotero citation keys, and {total} Better BibTeX stored citation keys, of which {pinned} are pinned
+
+    html:div
+      | Zotero 8 adds a native citation key field, which replaces the Better BibTeX citation key field. Since you have existing Better BibTeX citation keys, do you want to:
 
     html:div.option-container
       html:label
         html:input(type='radio' name='migrate' value='all' onchange='migrate(this)')
-        |  Migrate all Better BibTeX citation keys
+        |  Migrate all Better BibTeX citation keys to Zotero citation keys
 
       html:label#pinned
         html:input(type='radio' name='migrate' value='pinned' onchange='migrate(this)')
-        |  Migrate only pinned Better BibTeX citation keys, discard the others
+        |  Migrate only pinned Better BibTeX citation keys, to Zotero citation keys, and discard the dynamic (non-pinned) Better BibTeX citation keys
 
       html:label
         html:input(type='radio' name='migrate' value='none' onchange='migrate(this)')
@@ -49,8 +52,12 @@ window(xmlns='http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul'
         html:input(type='radio' name='overwrite' value='no' onchange='overwrite(this)')
         |  Discard Better BibTeX citation key
 
+    html:div.divider
+    html:div
+      | If it is unclear to you what these choices means, just choose "ask me again" and ask for more information in the discussion lists of Better BibTeX at https://tinyurl.com/key-migration. When choosing "ask me again", nothing happens, and you will be offered the same choice at next start. Note that until you migrate, the Better BibTeX citation keys are unavailable.
+
     html:div.footer
-      html:button#postpone(onclick='finish("postpone")') Ask me again at next start
+      html:button#postpone(onclick='finish("postpone")') Do not migrate; ask me again at next start
       html:button#ok(disabled='true' style='font-weight: bold;' onclick='finish()') Migrate
 
   script(type='application/javascript').
