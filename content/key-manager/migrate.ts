@@ -33,43 +33,59 @@ export async function migrate(): Promise<void> {
         pinned: !!pinned,
       }))
 
+      choice.total = keys.length
+      choice.pinned = keys.filter(key => key.pinned).length
+      log.debug('3407:', choice.total, 'keys found, of which', choice.pinned, 'pinned')
+
       rows = await Zotero.DB.queryAsync(`
         SELECT items.itemID, ck.value AS citationKey
         FROM items
         JOIN itemData ckField ON ckField.itemID = items.itemID AND ckField.fieldID IN (SELECT fieldID FROM fields WHERE fieldName = 'citationKey')
         JOIN itemDataValues ck ON ck.valueID = ckField.valueID
         WHERE items.itemID NOT IN (SELECT itemID FROM deletedItems)
-        AND items.itemTypeID NOT IN (SELECT itemTypeID FROM itemTypes WHERE typeName IN ('attachment', 'note', 'annotation'))
-        AND items.itemID NOT IN (SELECT itemID from feedItems)
+          AND items.itemTypeID NOT IN (SELECT itemTypeID FROM itemTypes WHERE typeName IN ('attachment', 'note', 'annotation'))
+          AND items.itemID NOT IN (SELECT itemID from feedItems)
+          AND COALESCE(ck.value, '') <> ''
       `.replace(/\n/g, ' ').trim())
+
+      log.debug('3407:', rows.length, 'native keys')
       for (const { itemID, citationKey } of rows) {
         if (citationKey && !keys.find(key => key.itemID === itemID && key.citationKey === citationKey)) choice.zotero += 1
       }
+      log.debug('3407: of which', choice.zotero, 'differ from the BBT keys')
+      log.debug('3407: ready to go?', choice)
 
       if (!choice.zotero) {
+        log.debug('3407: ready to go for silent migration', choice)
         choice.migrate = 'all'
       }
       else if (keys.length) {
-        choice.total = keys.length
-        choice.pinned = keys.filter(key => key.pinned).length
+        log.debug('3407: not ready to go. Get feedback for', choice)
         Zotero.getMainWindow().openDialog('chrome://zotero-better-bibtex/content/keymanager-migrate.xhtml', '', 'chrome,dialog,centerscreen,modal', choice)
         choice.migrate = choice.migrate || 'postpone'
         switch (choice.migrate) {
           case 'none':
+            log.debug('3407: user does not want keys migrated')
             keys = []
             break
           case 'pinned':
+            log.debug('3407: user wants only pinned keys migrated, discarding', keys.filter(k => !k.pinned))
             keys = keys.filter(k => k.pinned)
             break
         }
+        log.debug('3407: user chose', choice)
       }
 
       if (choice.migrate !== 'postpone') {
+        log.debug('3407: migrating', keys.length, 'keys')
         for (const { itemID, citationKey } of keys) {
           const item = await getItemAsync(itemID)
           if (choice.overwrite || !item.getField('citationKey')) {
             item.setField('citationKey', citationKey)
             await item.save()
+          }
+          else {
+            log.debug('3407: skipping', { citationKey }, 'because it', item.getField('citationKey') ? 'does' : 'does not', 'have a native key, and the user chose to', choice.overwrite ? 'overwrite' : 'keep', 'native keys')
           }
         }
       }
