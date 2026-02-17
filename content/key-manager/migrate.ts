@@ -1,5 +1,6 @@
 import { log } from '../logger'
 import { getItemAsync } from '../get-items-async'
+import { flash } from '../flash'
 
 export async function migrate(): Promise<void> {
   const db = PathUtils.join(Zotero.DataDirectory.dir, 'better-bibtex.sqlite')
@@ -65,6 +66,7 @@ export async function migrate(): Promise<void> {
       }
 
       if (choice.migrate !== 'postpone') {
+        flash(`Migrating ${keys.length} citation keys`)
         for (const { itemID, citationKey } of keys) {
           const item = await getItemAsync(itemID)
           if (choice.overwrite || !item.getField('citationKey')) {
