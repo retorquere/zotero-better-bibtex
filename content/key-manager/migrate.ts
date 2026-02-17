@@ -85,7 +85,7 @@ export async function migrate(): Promise<void> {
           const item = await getItemAsync(itemID)
           if (choice.overwrite || !item.getField('citationKey')) {
             item.setField('citationKey', citationKey)
-            await item.save()
+            await item.save({ skipDateModifiedUpdate: true })
           }
           else {
             log.debug('3414: skipping', { citationKey }, 'because it', item.getField('citationKey') ? 'does' : 'does not', 'have a native key, and the user chose to', choice.overwrite ? 'overwrite' : 'keep', 'native keys')
