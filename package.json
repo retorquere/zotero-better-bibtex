@@ -1,7 +1,7 @@
 {
   "name": "zotero-better-bibtex",
   "type": "module",
-  "version": "8.0.11",
+  "version": "8.0.13",
   "description": "Make Zotero useful for us LaTeX holdouts.",
   "homepage": "https://retorque.re/zotero-better-bibtex",
   "license": "ISC",
@@ -17,7 +17,8 @@
     "updateLink": "https://github.com/retorquere/zotero-better-bibtex/releases/download/v{version}/zotero-better-bibtex-{version}.xpi",
     "updateInfoURL": "https://github.com/retorquere/zotero-better-bibtex/releases/latest",
     "releaseURL": "https://github.com/retorquere/zotero-better-bibtex/releases/download/release/",
-    "minVersion": "7.0.32"
+    "minVersion": "7.0.32",
+    "maxVersion": "9.*"
   },
   "scripts": {
     "mkp": "patch-package zotero-types",
