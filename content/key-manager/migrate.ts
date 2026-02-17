@@ -105,7 +105,6 @@ export async function migrate(): Promise<void> {
     log.error('3414: could not detach:', err, err.message)
   }
 
-
   if (choice.migrate !== 'postpone') {
     try {
       await Zotero.File.rename(db, 'better-bibtex.migrated')
