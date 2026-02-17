@@ -108,6 +108,7 @@ export async function migrate(): Promise<void> {
   if (choice.migrate !== 'postpone') {
     try {
       await Zotero.File.rename(db, 'better-bibtex.migrated')
+      log.error('3414: migration finished and database renamed')
     }
     catch (err) {
       log.error('3414: migration rename error:', err, err.message)
