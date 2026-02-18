@@ -389,7 +389,7 @@ better-bibtex_preferences_postscript_warn =
 
 better-bibtex_preferences_prefpane_loading = Better BibTeX is loading
 better-bibtex_preferences_rescan-citekeys = 
-  .label = Re-scan pinned citekeys
+  .label = Re-scan citekeys
 
 better-bibtex_preferences_reset-cache = 
   .label = Reset cache on next start
@@ -429,7 +429,7 @@ better-bibtex_translate_error_target_not_a_file = { $path } exists but is not a 
 better-bibtex_units_seconds = seconds
 better-bibtex_workers_status = Total background exports started: { $total }, currently running: { $running }
 better-bibtex_zotero-pane_add-citation-links = Citation Graph: add citation links...
-better-bibtex_zotero-pane_citekey_pin_inspire-hep = Pin BibTeX key from InspireHEP
+better-bibtex_zotero-pane_citekey_pin_inspire-hep = Set BibTeX key from InspireHEP
 better-bibtex_zotero-pane_citekey_refresh = Regenerate BibTeX key
 better-bibtex_zotero-pane_citekey_fill = Generate missing BibTeX key
 better-bibtex_zotero-pane_bibtex_to_clipboard = 🅱 copy BibTeX to clipboard

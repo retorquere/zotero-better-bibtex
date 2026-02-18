@@ -148,7 +148,7 @@ export const KeyManager = new class _KeyManager {
     })
   }
 
-  public async refresh(ids: 'selected' | number | number[], warn = false, replace = false): Promise<void> {
+  public async fill(ids: 'selected' | number | number[], { warn = false, replace = false, inspireHEP = false }: { warn: boolean; replace: boolean; inspireHEP: boolean }): Promise<void> {
     ids = this.expandSelection(ids)
     await Cache.touch(ids)
 
