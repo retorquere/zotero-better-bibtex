@@ -14671,6 +14671,17 @@ the cache during first startup of the newer version. This can be a nuisance if y
 <li>Handling for legacy imports and configuration modules was improved for better reliability.</li>
 </ul>
 <h2 id="v800-major-release">v8.0.0 (Major Release)<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h2>
+<p><strong>With the advent of Zotero 8, items have a Zotero-native citation key field. This has replaced the BBT citation key field.</strong></p>
+<p><strong>This has caused a few somewhat disruptive changes:</strong></p>
+<ul>
+<li>The citation key no longer sits at the top of the item pane. It now sits somewhere in the middle and you may have to scroll to see it. This placement is not under my control</li>
+<li>Zotero will have moved all pinned keys out of the <code>extra</code> field into the native field</li>
+<li>The concept of pinning keys is gone; keys are <em>always</em> pinned now. Zotero doesn&rsquo;t have a place I can store whether a key is pinned or not.</li>
+<li>The Zotero-native citation keys are stored in another place than the BBT citation keys. If you have no Zotero-native citation keys yet, BBT will silently migrate them to there. If you do have Zotero-native citation keys, and a migration would overwrite them, you will be offered a windows with the choice on how to migrate your citation keys from the BBT storage to the Zotero storage.</li>
+<li>I have enabled auto-pin (what really is auto-fill now) even you had it turned off. You can still turn it back off if you don&rsquo;t want this.</li>
+</ul>
+<p>Upside to all of this is that keys will sync.</p>
+<h3 id="changes">Changes<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h3>
 <ul>
 <li>Zotero 8 Integration: Items now use a native Zotero citation key field, which replaces the legacy BBT citation key field.</li>
 <li>Key Pinning Changes: The concept of pinning is technically gone; because Zotero lacks a specific &ldquo;pinned&rdquo; toggle, keys are now always pinned.</li>
@@ -14702,8 +14713,8 @@ means a lot) so I can save up for a replacement a year or so down
 the line, head on over to <a href="https://www.patreon.com/retorquere" rel="external">Patreon</a>,
 but mind that Patreon takes a fairly large cut of what you give.</p>
 <p>Many, many thanks, also to the existing contributors &ndash; thanks to you I&rsquo;ve hit my first target and have been able to replace my trusty macbook air with a newer macbook pro which has much more breathing room.</p>
-<p><a href="#R-image-e0aea4f683a8454489f1c9363303eaee" class="lightbox-link"><img alt="My github stats" class="lazy lightbox figure-image" loading="lazy" src="https://github-readme-stats.vercel.app/api?username=retorquere&show_icons=true&hide_border=true&theme=dark" style="height: auto;width: auto;"></a>
-<a href="javascript:history.back();" class="lightbox-back" id="R-image-e0aea4f683a8454489f1c9363303eaee"><img alt="My github stats" class="lazy lightbox lightbox-image" loading="lazy" src="https://github-readme-stats.vercel.app/api?username=retorquere&show_icons=true&hide_border=true&theme=dark"></a></p>
+<p><a href="#R-image-bafb551002478bb25de4c9a70d058b8f" class="lightbox-link"><img alt="My github stats" class="lazy lightbox figure-image" loading="lazy" src="https://github-readme-stats.vercel.app/api?username=retorquere&show_icons=true&hide_border=true&theme=dark" style="height: auto;width: auto;"></a>
+<a href="javascript:history.back();" class="lightbox-back" id="R-image-bafb551002478bb25de4c9a70d058b8f"><img alt="My github stats" class="lazy lightbox lightbox-image" loading="lazy" src="https://github-readme-stats.vercel.app/api?username=retorquere&show_icons=true&hide_border=true&theme=dark"></a></p>
 <p>I prefer communicating via github issues, but for private information you can reach me on <a href="https://matrix.to/#/@retorquere:utwente.io" rel="external">matrix</a></p>
 
   <footer class="footline">
