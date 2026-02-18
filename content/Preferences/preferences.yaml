@@ -168,8 +168,8 @@ citekeyFold:
 
 #keyConflictPolicy:
 #  description: >
-#    This determines what happens if you pin a key to a value that is already in
-#    use in a different item but not pinned there.
+#    This determines what happens if you fill a key to a value that is already in
+#    use in a different.
 #
 #    Neither are ideal, you just get to pick your poison. If you let BBT change
 #    the non-pinned key by adding a postfix character,
@@ -478,7 +478,7 @@ itemObserverDelay:
 
 autoPinDelay:
   description: >-
-    When &gt; 0, BBT will automatically pin the citation key it generates
+    When &gt; 0, BBT will automatically fill the citation key it generates
     for an item after this many seconds.
   default: 0
 
