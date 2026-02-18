@@ -29,13 +29,6 @@ You can also
 * Drag and drop LaTeX citations using these keys to your favorite LaTeX editor
 * Show your citation keys in the item list view.
 
-## Set your own, fixed citation keys
-
-By default, BBT generates the citation key from the item information, and this key may change when you edit the item. Such keys are called `dynamic` keys. In contrast, `fixed` keys are marked with a pushpin in the item list view and in the item details to distinguish them from dynamic keys.
-
-You can fix the citation key (called `pinning` in BBT) for an item by adding the text `Citation Key: <your citekey>` anywhere in the
-`extra` field of the item on a line of its own. You can generate a pinned citation key by selecting one or more items, right-clicking, and selecting `Generate BibTeX key`, which will add the current citation key to the `extra` field, thereby pinning it.
-
 ## Drag and drop/hotkey citations
 
 You can drag and drop citations into your LaTeX/Markdown/Orgmode editor, and it will add a proper `\cite{citekey}`/`[@citekey]`/`[[zotero://select...][@citekey]`. The `cite` command is
@@ -104,7 +97,7 @@ The default key pattern is `auth.lower + shorttitle(3,3) + year`; if you have pa
 3. year of publication if any,
 4. a letter postfix (a, b, c, etc) in case of a clash (this part is always added, you can't disable it, although you can change it to Zotero-style numeric)
 
-Changing a pattern will only affect items created/changed after you changed the pattern; existing keys are not automatically regenerated when you change the pattern. If you want your keys to update after a pattern change you will have to select your items, right-click, and select `Refresh`. This will not affect keys you have pinned.
+Changing a pattern will only affect items created/changed after you changed the pattern; existing keys are not automatically regenerated when you change the pattern. If you want your keys to update after a pattern change you will have to select your items, right-click, and select `Refresh`.
 
 If you want to get fancy, you can set multiple patterns separated by a semicolon (`;`) or vertical bar (`|`), of which the first will be applied
 that yields a non-empty string. If all return a empty string, a random key will be generated.
