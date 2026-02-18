@@ -447,21 +447,21 @@ export const AutoExport = new class $AutoExport {
 
         // triggers after initial load
         this.db.on('insert', (ae: Job) => {
-          log.debug('3422: insert', job)
+          log.debug('3415: insert', job)
           Zotero.Prefs.set(`translators.better-bibtex.autoExport.${this.key(ae.path)}`, JSON.stringify(ae))
         })
 
         this.db.on('pre-update', (ae: Job) => {
-          log.debug('3422: pre-update, remove', job)
+          log.debug('3415: pre-update, remove', job)
           Zotero.Prefs.clear(`translators.better-bibtex.autoExport.${this.key(ae.path)}`)
         })
         this.db.on('update', (ae: Job) => {
-          log.debug('3422: update', job)
+          log.debug('3415: update', job)
           Zotero.Prefs.set(`translators.better-bibtex.autoExport.${this.key(ae.path)}`, JSON.stringify(ae))
         })
 
         this.db.on('delete', (ae: Job) => {
-          log.debug('3422: delete', job)
+          log.debug('3415: delete', job)
           Zotero.Prefs.clear(`translators.better-bibtex.autoExport.${this.key(ae.path)}`)
         })
 
