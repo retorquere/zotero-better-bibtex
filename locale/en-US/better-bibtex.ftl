@@ -1,4 +1,4 @@
-better-bibtex
+better-bibtex =
   .label = Better BibTeX
 -citation-key = Citation key
 better-bibtex_auto-export_delete = Deleting auto-export
@@ -6,7 +6,7 @@ better-bibtex_auto-export_delete_confirm = Are you sure you want to delete this 
 better-bibtex_aux-scan_prompt = Tag name
 better-bibtex_aux-scan_title_aux = Tag cited items from AUX file
 better-bibtex_aux-scan_title_md = Tag cited items from Markdown file
-better-bibtex_aux-scanner
+better-bibtex_aux-scanner =
   .label = Scan BibTeX AUX/Markdown file for references...
 better-bibtex_bulk-keys-confirm_warning = You are changing more than { $treshold } items in one go. Are you sure?
 better-bibtex_bulk-keys-confirm_stop_asking = OK, and don't ask me again
@@ -412,7 +412,7 @@ better-bibtex_preferences_tab_import = Import
 better-bibtex_preferences_tab_misc = Miscellaneous
   .label = { better-bibtex_preferences_tab_misc }
 
-better-bibtex_report-errors
+better-bibtex_report-errors =
   .label = Send Better BibTeX debug log...
 better-bibtex_server-url = 
   .title = Better BibTeX export via HTTP
