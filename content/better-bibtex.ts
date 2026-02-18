@@ -554,6 +554,21 @@ export class BetterBibTeX {
             },
           ],
         })
+        Zotero.MenuManager.registerMenu({
+          menuID: `${pluginID}-menu-help`,
+          pluginID,
+          target: 'main/menubar/help',
+          menus: [
+            { menuType: 'menuitem', l10nID: 'better-bibtex_report-errors', onCommand: (_event, _context) => Zotero.BetterBibTeX.ErrorReport.open() },
+          ]
+        })
+        Zotero.MenuManager.registerMenu({
+          menuID: `${pluginID}-menu-help`,
+          pluginID,
+          target: 'main/library/item',
+          menus: [
+          ],
+        })
 
         Zotero.ItemTreeManager.registerColumn({
           dataKey: 'citationKey',
