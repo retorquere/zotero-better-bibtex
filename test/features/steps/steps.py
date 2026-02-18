@@ -404,6 +404,12 @@ def step_impl(context):
     if elapsed > 7:
       utils.print(datetime.timedelta(seconds=int(elapsed)))
 
+@then(u'I should have {n} auto-exports registered')
+def step_impl(context, n):
+  n = int(n)
+  registered = context.zotero.execute('return Zotero.BetterBibTeX.AutoExport.all().length')
+  assert n == registered, f'expected {n}, found {registered}'
+
 @step(u'I wait at most {seconds:d} seconds until all auto-exports are done')
 def step_impl(context, seconds):
   printed = False
