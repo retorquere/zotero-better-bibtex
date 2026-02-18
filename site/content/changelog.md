@@ -69,6 +69,20 @@ weight: 500
 
 ## v8.0.0 (Major Release)
 
+**With the advent of Zotero 8, items have a Zotero-native citation key field. This has replaced the BBT citation key field.**
+
+**This has caused a few somewhat disruptive changes:**
+
+* The citation key no longer sits at the top of the item pane. It now sits somewhere in the middle and you may have to scroll to see it. This placement is not under my control
+* Zotero will have moved all pinned keys out of the `extra` field into the native field
+* The concept of pinning keys is gone; keys are *always* pinned now. Zotero doesn't have a place I can store whether a key is pinned or not.
+* The Zotero-native citation keys are stored in another place than the BBT citation keys. If you have no Zotero-native citation keys yet, BBT will silently migrate them to there. If you do have Zotero-native citation keys, and a migration would overwrite them, you will be offered a windows with the choice on how to migrate your citation keys from the BBT storage to the Zotero storage.
+* I have enabled auto-pin (what really is auto-fill now) even you had it turned off. You can still turn it back off if you don't want this.
+
+Upside to all of this is that keys will sync.
+
+### Changes
+
 * Zotero 8 Integration: Items now use a native Zotero citation key field, which replaces the legacy BBT citation key field.
 * Key Pinning Changes: The concept of pinning is technically gone; because Zotero lacks a specific "pinned" toggle, keys are now always pinned.
 * Feature Renaming: The "auto-pin" feature has been effectively renamed to "auto-fill" to align with native Zotero behavior.
