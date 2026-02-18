@@ -1,6 +1,7 @@
 /* eslint-disable prefer-rest-params */
 
 declare const rootURI: string
+const pluginID = 'better-bibtex@iris-advies.com'
 
 import { Deferred } from './promise'
 const Ready = new Deferred<boolean>
@@ -519,22 +520,8 @@ export class BetterBibTeX {
       startup: () => {
         Ready.resolve(true)
 
-        Zotero.ItemTreeManager.registerColumn({
-          dataKey: 'citationKey',
-          label: l10n.localize('better-bibtex_zotero-pane_column_citekey'),
-          pluginID: 'better-bibtex@iris-advies.com',
-          dataProvider: (item, _dataKey) => {
-            try {
-              return item.getField('citationKey') || ''
-            }
-            catch {
-              return ''
-            }
-          },
-        })
-
         void Zotero.PreferencePanes.register({
-          pluginID: 'better-bibtex@iris-advies.com',
+          pluginID,
           src: `${rootURI}content/preferences.xhtml`,
           stylesheets: [`${rootURI}content/preferences.css`],
           label: 'Better BibTeX',
@@ -548,6 +535,38 @@ export class BetterBibTeX {
 
         Zotero.Promise.delay(15000).then(() => {
           DebugLog.unregister('Better BibTeX')
+        })
+
+        Zotero.MenuManager.registerMenu({
+          menuID: `${pluginID}-menu-file`,
+          pluginID,
+          target: 'main/menubar/file',
+          menus: [
+            {
+              menuType: 'submenu',
+              l10nID: 'better-bibtex',
+              menus: [
+                // eslint-disable-next-line @typescript-eslint/no-misused-promises
+                { menuType: 'menuitem', l10nID: 'better-bibtex_aux-scanner', onCommand: (_event, _context) => Zotero.BetterBibTeX.scanAUX('tag') },
+                // eslint-disable-next-line @typescript-eslint/no-misused-promises
+                { menuType: 'menuitem', l10nID: 'better-bibtex_report-errors', onCommand: (_event, _context) => Zotero.BetterBibTeX.ErrorReport.open() },
+              ],
+            },
+          ],
+        })
+
+        Zotero.ItemTreeManager.registerColumn({
+          dataKey: 'citationKey',
+          label: l10n.localize('better-bibtex_zotero-pane_column_citekey'),
+          pluginID,
+          dataProvider: (item, _dataKey) => {
+            try {
+              return item.getField('citationKey') || ''
+            }
+            catch {
+              return ''
+            }
+          },
         })
 
         monkey.enable()
@@ -581,10 +600,12 @@ export class BetterBibTeX {
   }
 
   public onMainWindowLoad({ window }: { window: Window }): void {
+    log.info('loading FTL')
     window.MozXULElement.insertFTLIfNeeded('better-bibtex.ftl')
 
     const doc = window.document
 
+    /*
     if (!doc.querySelector('#better-bibtex-menuFile')) {
       Menu.register('menuFile', {
         id: 'better-bibtex-menuFile',
@@ -596,6 +617,7 @@ export class BetterBibTeX {
         ],
       })
     }
+    */
 
     if (!doc.querySelector('#better-bibtex-menuHelp')) {
       Menu.register('menuHelp', {
