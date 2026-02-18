@@ -34,15 +34,20 @@ export async function migrate(): Promise<void> {
         pinned: !!pinned,
       }))
 
+      choice.total = keys.length
+      choice.pinned = keys.filter(key => key.pinned).length
+
       rows = await Zotero.DB.queryAsync(`
         SELECT items.itemID, ck.value AS citationKey
         FROM items
         JOIN itemData ckField ON ckField.itemID = items.itemID AND ckField.fieldID IN (SELECT fieldID FROM fields WHERE fieldName = 'citationKey')
         JOIN itemDataValues ck ON ck.valueID = ckField.valueID
         WHERE items.itemID NOT IN (SELECT itemID FROM deletedItems)
-        AND items.itemTypeID NOT IN (SELECT itemTypeID FROM itemTypes WHERE typeName IN ('attachment', 'note', 'annotation'))
-        AND items.itemID NOT IN (SELECT itemID from feedItems)
+          AND items.itemTypeID NOT IN (SELECT itemTypeID FROM itemTypes WHERE typeName IN ('attachment', 'note', 'annotation'))
+          AND items.itemID NOT IN (SELECT itemID from feedItems)
+          AND COALESCE(ck.value, '') <> ''
       `.replace(/\n/g, ' ').trim())
+
       for (const { itemID, citationKey } of rows) {
         if (citationKey && !keys.find(key => key.itemID === itemID && key.citationKey === citationKey)) choice.zotero += 1
       }
@@ -51,8 +56,6 @@ export async function migrate(): Promise<void> {
         choice.migrate = 'all'
       }
       else if (keys.length) {
-        choice.total = keys.length
-        choice.pinned = keys.filter(key => key.pinned).length
         Zotero.getMainWindow().openDialog('chrome://zotero-better-bibtex/content/keymanager-migrate.xhtml', '', 'chrome,dialog,centerscreen,modal', choice)
         choice.migrate = choice.migrate || 'postpone'
         switch (choice.migrate) {
@@ -65,6 +68,7 @@ export async function migrate(): Promise<void> {
         }
       }
 
+      log.info('key manager migrate:', choice)
       if (choice.migrate !== 'postpone') {
         flash(`Migrating ${keys.length} citation keys`)
         for (const { itemID, citationKey } of keys) {
@@ -78,20 +82,28 @@ export async function migrate(): Promise<void> {
     })
   }
   catch (err) {
-    log.error('z8 migration error:', err, err.message)
+    log.error('3414: migration error:', err, err.message)
   }
 
   try {
     await Zotero.DB.queryAsync("DETACH DATABASE 'betterbibtex'")
   }
-  catch {}
+  catch (err) {
+    log.error('3414: could not detach:', err, err.message)
+  }
 
   if (choice.migrate !== 'postpone') {
     try {
-      await Zotero.File.rename(db, 'better-bibtex.migrated')
+      const renamed = await Zotero.File.rename(db, 'better-bibtex.migrated', { unique: true })
+      if (renamed) {
+        log.info('3414: migration finished and database renamed to', renamed)
+      }
+      else {
+        log.error('3414: migration finished but database not renamed')
+      }
     }
     catch (err) {
-      log.error('z8 migration rename error:', err, err.message)
+      log.error('3414: migration rename error:', err, err.message)
     }
   }
 }
