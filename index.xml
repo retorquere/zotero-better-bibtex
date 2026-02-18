@@ -3,7 +3,7 @@
   <channel>
     <title>Better BibTeX for Zotero</title>
     <link>/zotero-better-bibtex/index.html</link>
-    <description>Better BibTeX for Zotero Better BibTeX (BBT) is an extension for Zotero and Juris-M that makes it easier to manage bibliographic data, especially for people authoring documents using text-based toolchains (e.g. based on LaTeX / Markdown).&#xA;Notice With the advent of Zotero 8, items have a Zotero-native citation key field. This has replaced the BBT citation key field</description>
+    <description>Better BibTeX (BBT) is an extension for Zotero and (in principle) Juris-M that makes it easier to manage bibliographic data, especially for people authoring documents using text-based toolchains (e.g. based on LaTeX / Markdown).&#xA;Notice With the advent of Zotero 8, items have a Zotero-native citation key field. This has replaced the BBT citation key field</description>
     <generator>Hugo</generator>
     <language>en</language>
     <atom:link href="/zotero-better-bibtex/index.xml" rel="self" type="application/rss+xml" />
