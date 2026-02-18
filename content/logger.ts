@@ -77,7 +77,7 @@ export function print(strings: string[], ...expressions: any[]) {
   let err: string
   let prefix = ''
   // acc will initially be the lead string
-  let s = strings.reduce((acc, v, i) => {
+  const s = strings.reduce((acc, v, i) => {
     acc = acc + (typeof expressions[i] === 'string' ? expressions[i] : (err = stringifyError(expressions[i])) || stringify(expressions[i])) + v
     if (err) prefix = 'error: '
     return acc
