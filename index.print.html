@@ -5,20 +5,24 @@
     <meta name="viewport" content="height=device-height, width=device-width, initial-scale=1.0, minimum-scale=1.0">
     <meta name="generator" content="Hugo 0.143.1">
     <meta name="generator" content="Relearn 9.0.3+5fff5bc8a066e83e5f67f0de49c7dfb57379219e">
-    <meta name="description" content="Make Zotero more useful for us LaTeX holdouts">
+    <meta name="description" content="Better BibTeX for Zotero Better BibTeX (BBT) is an extension for Zotero and Juris-M that makes it easier to manage bibliographic data, especially for people authoring documents using text-based toolchains (e.g. based on LaTeX / Markdown).
+Notice With the advent of Zotero 8, items have a Zotero-native citation key field. This has replaced the BBT citation key field">
     <meta name="author" content="">
     <meta name="twitter:card" content="summary">
     <meta name="twitter:title" content="Better BibTeX for Zotero">
-    <meta name="twitter:description" content="Make Zotero more useful for us LaTeX holdouts">
+    <meta name="twitter:description" content="Better BibTeX for Zotero Better BibTeX (BBT) is an extension for Zotero and Juris-M that makes it easier to manage bibliographic data, especially for people authoring documents using text-based toolchains (e.g. based on LaTeX / Markdown).
+Notice With the advent of Zotero 8, items have a Zotero-native citation key field. This has replaced the BBT citation key field">
     <meta property="og:url" content="/zotero-better-bibtex/index.html">
     <meta property="og:site_name" content="Better BibTeX for Zotero">
     <meta property="og:title" content="Better BibTeX for Zotero">
-    <meta property="og:description" content="Make Zotero more useful for us LaTeX holdouts">
+    <meta property="og:description" content="Better BibTeX for Zotero Better BibTeX (BBT) is an extension for Zotero and Juris-M that makes it easier to manage bibliographic data, especially for people authoring documents using text-based toolchains (e.g. based on LaTeX / Markdown).
+Notice With the advent of Zotero 8, items have a Zotero-native citation key field. This has replaced the BBT citation key field">
     <meta property="og:locale" content="en">
     <meta property="og:type" content="website">
     <meta itemprop="name" content="Better BibTeX for Zotero">
-    <meta itemprop="description" content="Make Zotero more useful for us LaTeX holdouts">
-    <meta itemprop="wordCount" content="528">
+    <meta itemprop="description" content="Better BibTeX for Zotero Better BibTeX (BBT) is an extension for Zotero and Juris-M that makes it easier to manage bibliographic data, especially for people authoring documents using text-based toolchains (e.g. based on LaTeX / Markdown).
+Notice With the advent of Zotero 8, items have a Zotero-native citation key field. This has replaced the BBT citation key field">
+    <meta itemprop="wordCount" content="727">
     <title>Better BibTeX for Zotero</title>
     <link href="/zotero-better-bibtex/index.html" rel="canonical" type="text/html" title="Better BibTeX for Zotero">
     <link href="/zotero-better-bibtex/index.xml" rel="alternate" type="application/rss+xml" title="Better BibTeX for Zotero"><link rel="icon" href="/zotero-better-bibtex/better-bibtex.ico" type="image/x-icon">
@@ -180,7 +184,18 @@
 <h1 id="better-bibtex-for-zotero">Better BibTeX for Zotero</h1>
 
 <!-- WARNING: GENERATED FROM https://github.com/retorquere/zotero-better-bibtex/blob/master/README.md. EDITS WILL BE OVERWRITTEN -->
-<p>Better BibTeX (BBT) is a plugin for <a href="https://www.zotero.org" rel="external">Zotero</a> and <a href="https://juris-m.github.io" rel="external">Juris-M</a> that makes it easier to manage bibliographic data, especially for people authoring documents using text-based toolchains (e.g. based on <a href="https://www.latex-project.org" rel="external">LaTeX</a> / <a href="https://www.markdownguide.org" rel="external">Markdown</a>).</p>
+<h1 id="better-bibtex-for-zotero">Better BibTeX for Zotero<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h1>
+<p>Better BibTeX (BBT) is an extension for <a href="https://www.zotero.org" rel="external">Zotero</a> and <a href="https://juris-m.github.io" rel="external">Juris-M</a> that makes it easier to manage bibliographic data, especially for people authoring documents using text-based toolchains (e.g. based on <a href="https://www.latex-project.org" rel="external">LaTeX</a> / <a href="https://www.markdownguide.org" rel="external">Markdown</a>).</p>
+<h1 id="notice">Notice<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h1>
+<p><strong>With the advent of Zotero 8, items have a Zotero-native citation key field. This has replaced the BBT citation key field</strong></p>
+<p>This means a few somewhat disruptive changes:</p>
+<ul>
+<li>The citation key no longer sits at the top of the item pane. It now sits somewhere in the middle and you may have to scroll to see it. This placement is not under my control</li>
+<li>The concept of pinning keys is gone; keys are <em>always</em> pinned now. Zotero doesn&rsquo;t have a place I can store whether a key is pinned or not.</li>
+<li>The Zotero-native citation keys are stored in another place than the BBT citation keys. If you have no Zotero-native citation keys yet, BBT will silently migrate them to there. If you do have Zotero-native citation keys, and a migration would overwrite them, you will be offered a windows with the choice on how to migrate your citation keys from the BBT storage to the Zotero storage.</li>
+<li>I have enabled auto-pin (what really is auto-fill now) even you had it turned off. You can still turn it back off if you don&rsquo;t want this.</li>
+</ul>
+<p>Upside to all of this is that keys will sync.</p>
 <h2 id="features">Features<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h2>
 <h3 id="facilities-for-generating-citation-keys">Facilities for generating citation keys<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h3>
 <ul>
@@ -198,7 +213,7 @@ in your items that Bib(La)TeX won&rsquo;t understand.</p>
 <li>
 <p>BBT will convert from/to HTML/LaTeX:</p>
 <ul>
-<li><code>&lt;i&gt;...&lt;/i&gt;</code>⇔<code>\emph{...}</code>/<code>\textit{...}</code></li>
+<li><code>&lt;i&gt;...&lt;/i&gt;</code>⇔<code>\emph{...}</code>/<code>\mkbibemph{...}</code>/<code>\textit{...}</code></li>
 <li><code>&lt;b&gt;...&lt;/b&gt;</code>⇔<code>\textbf{...}</code></li>
 <li><code>&lt;sup&gt;...&lt;/sup&gt;</code>⇔<code>\textsuperscript{...}</code> and <code>&lt;sub&gt;...&lt;/sub&gt;</code>⇔<code>\textsubscript{...}</code>.</li>
 </ul>
@@ -14602,10 +14617,9 @@ means a lot) so I can save up for a replacement a year or so down
 the line, head on over to <a href="https://www.patreon.com/retorquere" rel="external">Patreon</a>,
 but mind that Patreon takes a fairly large cut of what you give.</p>
 <p>Many, many thanks, also to the existing contributors &ndash; thanks to you I&rsquo;ve hit my first target and have been able to replace my trusty macbook air with a newer macbook pro which has much more breathing room.</p>
-<p><a href="#R-image-a86879440c3be123682003d03d64ea3a" class="lightbox-link"><img alt="My github stats" class="lazy lightbox figure-image" loading="lazy" src="https://github-readme-stats.vercel.app/api?username=retorquere&show_icons=true&hide_border=true&theme=dark" style="height: auto;width: auto;"></a>
-<a href="javascript:history.back();" class="lightbox-back" id="R-image-a86879440c3be123682003d03d64ea3a"><img alt="My github stats" class="lazy lightbox lightbox-image" loading="lazy" src="https://github-readme-stats.vercel.app/api?username=retorquere&show_icons=true&hide_border=true&theme=dark"></a></p>
-<p><a href="#R-image-bd4bf9047d0b1076c799738d9f037894" class="lightbox-link"><img alt="Metrics" class="lazy lightbox figure-image" loading="lazy" src="https://metrics.lecoq.io/retorquere?template=classic&config.timezone=Europe%2FOslo" style="height: auto;width: auto;"></a>
-<a href="javascript:history.back();" class="lightbox-back" id="R-image-bd4bf9047d0b1076c799738d9f037894"><img alt="Metrics" class="lazy lightbox lightbox-image" loading="lazy" src="https://metrics.lecoq.io/retorquere?template=classic&config.timezone=Europe%2FOslo"></a></p>
+<p><a href="#R-image-24e797d25a88a08ce275eb9553ecdf8a" class="lightbox-link"><img alt="My github stats" class="lazy lightbox figure-image" loading="lazy" src="https://github-readme-stats.vercel.app/api?username=retorquere&show_icons=true&hide_border=true&theme=dark" style="height: auto;width: auto;"></a>
+<a href="javascript:history.back();" class="lightbox-back" id="R-image-24e797d25a88a08ce275eb9553ecdf8a"><img alt="My github stats" class="lazy lightbox lightbox-image" loading="lazy" src="https://github-readme-stats.vercel.app/api?username=retorquere&show_icons=true&hide_border=true&theme=dark"></a></p>
+<p>I prefer communicating via github issues, but for private information you can reach me on <a href="https://matrix.to/#/@retorquere:utwente.io" rel="external">matrix</a></p>
 
   <footer class="footline">
   </footer>
