@@ -14603,6 +14603,91 @@ the cache during first startup of the newer version. This can be a nuisance if y
   <header class="headline">
   </header>
 
+<h1 id="changelog">Changelog</h1>
+
+<h2 id="v8016">v8.0.16<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h2>
+<ul>
+<li>The saving process for items during migration now supports skipping the update of the &lsquo;Date Modified&rsquo; field.</li>
+<li>Dependencies, including the zotero-plugin-toolkit and zotero-types, have been updated.</li>
+</ul>
+<h2 id="v8015">v8.0.15<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h2>
+<ul>
+<li>A notification flash has been added to inform users when citation key migration has started.</li>
+</ul>
+<h2 id="v8014">v8.0.14<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h2>
+<ul>
+<li>Internal logic for loading items during migration has been improved.</li>
+<li>The key conflict policy settings were refined in the test suites.</li>
+</ul>
+<h2 id="v8013">v8.0.13<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h2>
+<ul>
+<li>Compatibility for Zotero 7 was enhanced by refining how the plugin imports configuration modules.</li>
+</ul>
+<h2 id="v8012">v8.0.12<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h2>
+<ul>
+<li>The minimum required Zotero version was bumped to 7.0.32.</li>
+<li>Plugin testing was expanded to include Zotero 7 specifically.</li>
+</ul>
+<h2 id="v8011">v8.0.11<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h2>
+<ul>
+<li>Dependency versions for libraries like ajv and zotero-plugin were clamped to ensure stability.</li>
+</ul>
+<h2 id="v8010">v8.0.10<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h2>
+<ul>
+<li>Enforcement of the minimum Zotero version 7.0.32 requirement was finalized.</li>
+</ul>
+<h2 id="v809">v8.0.9<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h2>
+<ul>
+<li>UI phrasing was updated in the migration tool to offer a clearer postponement option (&ldquo;Do not migrate; ask me again at next start&rdquo;).</li>
+</ul>
+<h2 id="v808">v8.0.8<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h2>
+<ul>
+<li>A direct link to migration discussions was added to the migration tool to assist users with the transition.</li>
+</ul>
+<h2 id="v807">v8.0.7<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h2>
+<ul>
+<li>Compatibility status was updated: Zotero 8 and 9 beta are fully supported, while Zotero 7.0.32 is now considered legacy and will not receive ongoing support.</li>
+<li>The migration dialog now includes an explanation that Better BibTeX citation keys are unavailable until the migration to the native field is complete.</li>
+</ul>
+<h2 id="v806">v8.0.6<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h2>
+<ul>
+<li>The migration dialog text was further refined for better user understanding.</li>
+</ul>
+<h2 id="v805">v8.0.5<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h2>
+<ul>
+<li>Additional help text was added to the migration UI for users who are unclear about their choices.</li>
+</ul>
+<h2 id="v804">v8.0.4<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h2>
+<ul>
+<li>The migration tool now reports the total count of native Zotero citation keys already present.</li>
+<li>Migration options were clarified to distinguish between moving all keys versus only pinned keys.</li>
+</ul>
+<h2 id="v802">v8.0.2<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h2>
+<ul>
+<li>The plugin manifest was updated to reflect the new supported Zotero version ranges.</li>
+</ul>
+<h2 id="v801">v8.0.1<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h2>
+<ul>
+<li>Handling for legacy imports and configuration modules was improved for better reliability.</li>
+</ul>
+<h2 id="v800-major-release">v8.0.0 (Major Release)<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h2>
+<ul>
+<li>Zotero 8 Integration: Items now use a native Zotero citation key field, which replaces the legacy BBT citation key field.</li>
+<li>Key Pinning Changes: The concept of pinning is technically gone; because Zotero lacks a specific &ldquo;pinned&rdquo; toggle, keys are now always pinned.</li>
+<li>Feature Renaming: The &ldquo;auto-pin&rdquo; feature has been effectively renamed to &ldquo;auto-fill&rdquo; to align with native Zotero behavior.</li>
+<li>Bug Fixes: Resolved an issue where the originalDate field was not working with citation keys (#3392) and fixed the retrieval of shortjournal abbreviations (#3382).</li>
+<li>Database Migration: The internal database for tracking keys and exports has been migrated to LokiJS.</li>
+<li>Internationalization: Integrated new and updated translations for French, German, Italian, Chinese Simplified, and Brazilian Portuguese.</li>
+<li>Cleanup: The unused Alchemy.js graph editor was removed from the documentation.</li>
+</ul>
+
+  <footer class="footline">
+  </footer>
+</article>
+<article class="default">
+  <header class="headline">
+  </header>
+
 <h1 id="sponsoring-bbt">Sponsoring BBT</h1>
 
 <!-- WARNING: GENERATED FROM https://github.com/retorquere/zotero-better-bibtex/blob/master/README.md. EDITS WILL BE OVERWRITTEN -->
@@ -14617,8 +14702,8 @@ means a lot) so I can save up for a replacement a year or so down
 the line, head on over to <a href="https://www.patreon.com/retorquere" rel="external">Patreon</a>,
 but mind that Patreon takes a fairly large cut of what you give.</p>
 <p>Many, many thanks, also to the existing contributors &ndash; thanks to you I&rsquo;ve hit my first target and have been able to replace my trusty macbook air with a newer macbook pro which has much more breathing room.</p>
-<p><a href="#R-image-d77f451b28d529d6c59fd977a5e1ac41" class="lightbox-link"><img alt="My github stats" class="lazy lightbox figure-image" loading="lazy" src="https://github-readme-stats.vercel.app/api?username=retorquere&show_icons=true&hide_border=true&theme=dark" style="height: auto;width: auto;"></a>
-<a href="javascript:history.back();" class="lightbox-back" id="R-image-d77f451b28d529d6c59fd977a5e1ac41"><img alt="My github stats" class="lazy lightbox lightbox-image" loading="lazy" src="https://github-readme-stats.vercel.app/api?username=retorquere&show_icons=true&hide_border=true&theme=dark"></a></p>
+<p><a href="#R-image-e0aea4f683a8454489f1c9363303eaee" class="lightbox-link"><img alt="My github stats" class="lazy lightbox figure-image" loading="lazy" src="https://github-readme-stats.vercel.app/api?username=retorquere&show_icons=true&hide_border=true&theme=dark" style="height: auto;width: auto;"></a>
+<a href="javascript:history.back();" class="lightbox-back" id="R-image-e0aea4f683a8454489f1c9363303eaee"><img alt="My github stats" class="lazy lightbox lightbox-image" loading="lazy" src="https://github-readme-stats.vercel.app/api?username=retorquere&show_icons=true&hide_border=true&theme=dark"></a></p>
 <p>I prefer communicating via github issues, but for private information you can reach me on <a href="https://matrix.to/#/@retorquere:utwente.io" rel="external">matrix</a></p>
 
   <footer class="footline">
