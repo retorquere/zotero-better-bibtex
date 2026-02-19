@@ -75,7 +75,7 @@ export async function migrate(): Promise<void> {
           const item = await getItemAsync(itemID)
           if (choice.overwrite || !item.getField('citationKey')) {
             item.setField('citationKey', citationKey)
-            await item.save({ skipDateModifiedUpdate: true, skipNotifier: true })
+            await item.save({ skipDateModifiedUpdate: true, skipNotifier: !!choice.zotero })
           }
         }
       }
