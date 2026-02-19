@@ -4,9 +4,15 @@ title: Changelog
 weight: 500
 ---
 <!-- WARNING: GENERATED FROM https://github.com/retorquere/zotero-better-bibtex/blob/master/CHANGELOG.md. EDITS WILL BE OVERWRITTEN -->
+## v8.0.17
+
+* Updated terminology changing "pin" to "fill" for clarity
+* Reliable renaming of the legacy database after a successful migration.
+* Auto-export storage fixed (would appear to have been deleted after a restart)
+
 ## v8.0.16
 
-* The saving process for items during migration now supports skipping the update of the 'Date Modified' field.
+* Citekey migration skipps the update of the 'Date Modified' field.
 * Dependencies, including the zotero-plugin-toolkit and zotero-types, have been updated.
 
 ## v8.0.15
@@ -16,11 +22,11 @@ weight: 500
 ## v8.0.14
 
 * Internal logic for loading items during migration has been improved.
-* The key conflict policy settings were refined in the test suites.
+* Key confict handling removed
 
 ## v8.0.13
 
-* Compatibility for Zotero 7 was enhanced by refining how the plugin imports configuration modules.
+* Compatibility for Zotero 7.0.32
 
 ## v8.0.12
 
