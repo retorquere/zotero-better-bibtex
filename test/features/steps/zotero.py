@@ -521,7 +521,20 @@ class Zotero:
       self.config.reset()
       self.start()
 
-    self.execute('await Zotero.BetterBibTeX.TestSupport.reset(scenario)', scenario=scenario)
+    self.execute('''
+      try {
+        Zotero.debug('::: ' + scenario + ' :: reset start')
+        await Zotero.BetterBibTeX.TestSupport.reset(scenario)
+        Zotero.debug('::: ' + scenario + ' :: reset succeeded')
+      }
+      catch (err) {
+        Zotero.debug(':::! ' + scenario + ' :: reset failed: ' + err.message)
+        throw err
+      }
+      finally {
+        Zotero.debug('::: ' + scenario + ' :: reset completed')
+      }
+    ''', scenario=scenario)
     self.preferences = Preferences(self)
     for csv in glob.glob(os.path.join(self.profile.path, 'better-bibtex', '*.csv')):
       os.remove(csv)
