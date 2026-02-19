@@ -82,28 +82,28 @@ export async function migrate(): Promise<void> {
     })
   }
   catch (err) {
-    log.error('3414: migration error:', err, err.message)
+    log.error('citation key migration error:', err, err.message)
   }
 
   try {
     await Zotero.DB.queryAsync("DETACH DATABASE 'betterbibtex'")
   }
   catch (err) {
-    log.error('3414: could not detach:', err, err.message)
+    log.error('citation key migration error: could not detach:', err, err.message)
   }
 
   if (choice.migrate !== 'postpone') {
     try {
       const renamed = await Zotero.File.rename(db, 'better-bibtex.migrated', { unique: true })
       if (renamed) {
-        log.info('3414: migration finished and database renamed to', renamed)
+        log.info('citation key migration error: migration finished and database renamed to', renamed)
       }
       else {
-        log.error('3414: migration finished but database not renamed')
+        log.error('citation key migration error: migration finished but database not renamed')
       }
     }
     catch (err) {
-      log.error('3414: migration rename error:', err, err.message)
+      log.error('citation key migration error: migration rename error:', err, err.message)
     }
   }
 }
