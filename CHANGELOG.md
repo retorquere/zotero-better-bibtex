@@ -1,3 +1,9 @@
+## v8.0.17
+
+* Updated terminology changing "pin" to "fill" for clarity
+* Reliable renaming of the legacy database after a successful migration.
+* Auto-export storage fixed (would appear to have been deleted after a restart)
+
 ## v8.0.16
 
 * Citekey migration skipps the update of the 'Date Modified' field.
