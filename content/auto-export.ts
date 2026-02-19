@@ -397,6 +397,10 @@ const queue = new class TaskQueue {
   }
 }
 
+function un$loki(key: string, value: any): any {
+  return key === '$loki' ? undefined : value
+}
+
 // export singleton: https://k94n.com/es6-modules-single-instance-pattern
 export const AutoExport = new class $AutoExport {
   public progress: Map<string, number> = new Map
@@ -435,29 +439,32 @@ export const AutoExport = new class $AutoExport {
       description: 'auto-export',
       needs: [ 'translators' ],
       startup: () => {
+        log.debug('3415: stored aes', Services.prefs.getBranch('extensions.zotero.translators.better-bibtex.autoExport.').getChildList(''))
         for (const key of Services.prefs.getBranch('extensions.zotero.translators.better-bibtex.autoExport.').getChildList('')) {
           try {
-            const ae = JSON.parse(Zotero.Prefs.get(`translators.better-bibtex.autoExport.${key}`) as string)
-            this.db.insert({ ...ae, created: Date.now(), updated: Date.now() })
+            const stored = JSON.parse(Zotero.Prefs.get(`translators.better-bibtex.autoExport.${key}`) as string)
+            const { $loki, ...ae } = stored // eslint-disable-line @typescript-eslint/no-unused-vars
+            this.db.insert(ae)
             if (ae.status !== 'done') queue.add(ae.path)
           }
-          catch {
+          catch (err) {
+            log.error('3415: failed to load auto-export:', err)
           }
         }
+        log.debug('3415: autoexports loaded', this.db.data)
 
         // triggers after initial load
         this.db.on('insert', (ae: Job) => {
-          Zotero.Prefs.set(`translators.better-bibtex.autoExport.${this.key(ae.path)}`, JSON.stringify(ae))
-        })
-
-        this.db.on('pre-update', (ae: Job) => {
-          Zotero.Prefs.clear(`translators.better-bibtex.autoExport.${this.key(ae.path)}`)
+          log.debug('3415: insert', ae)
+          Zotero.Prefs.set(`translators.better-bibtex.autoExport.${this.key(ae.path)}`, JSON.stringify(ae, un$loki))
         })
         this.db.on('update', (ae: Job) => {
-          Zotero.Prefs.set(`translators.better-bibtex.autoExport.${this.key(ae.path)}`, JSON.stringify(ae))
+          log.debug('3415: update', ae)
+          Zotero.Prefs.set(`translators.better-bibtex.autoExport.${this.key(ae.path)}`, JSON.stringify(ae, un$loki))
         })
 
         this.db.on('delete', (ae: Job) => {
+          log.debug('3415: delete', ae)
           Zotero.Prefs.clear(`translators.better-bibtex.autoExport.${this.key(ae.path)}`)
         })
 
