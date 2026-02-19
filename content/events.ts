@@ -96,6 +96,7 @@ class Emitter extends Emittery<EventMap> {
 }
 
 export const Events = new Emitter({
+  /*
   debug: {
     name: 'better-bibtex event',
     enabled: true,
@@ -109,6 +110,7 @@ export const Events = new Emitter({
       }
     },
   },
+  */
 })
 
 class SyncListener {
@@ -201,7 +203,6 @@ class ItemListener extends ZoteroListener {
   }
 
   public async notify(action: ZoteroAction, type: string, ids: number[], extraData?: Record<number, { libraryID?: number }>) {
-    log.debug('3415:', { action, type, ids, extraData })
     try {
       let load = false
       switch (action) {

@@ -439,7 +439,6 @@ export const AutoExport = new class $AutoExport {
       description: 'auto-export',
       needs: [ 'translators' ],
       startup: () => {
-        log.debug('3415: stored aes', Services.prefs.getBranch('extensions.zotero.translators.better-bibtex.autoExport.').getChildList(''))
         for (const key of Services.prefs.getBranch('extensions.zotero.translators.better-bibtex.autoExport.').getChildList('')) {
           try {
             const stored = JSON.parse(Zotero.Prefs.get(`translators.better-bibtex.autoExport.${key}`) as string)
@@ -451,20 +450,16 @@ export const AutoExport = new class $AutoExport {
             log.error('3415: failed to load auto-export:', err)
           }
         }
-        log.debug('3415: autoexports loaded', this.db.data)
 
         // triggers after initial load
         this.db.on('insert', (ae: Job) => {
-          log.debug('3415: insert', ae)
           Zotero.Prefs.set(`translators.better-bibtex.autoExport.${this.key(ae.path)}`, JSON.stringify(ae, un$loki))
         })
         this.db.on('update', (ae: Job) => {
-          log.debug('3415: update', ae)
           Zotero.Prefs.set(`translators.better-bibtex.autoExport.${this.key(ae.path)}`, JSON.stringify(ae, un$loki))
         })
 
         this.db.on('delete', (ae: Job) => {
-          log.debug('3415: delete', ae)
           Zotero.Prefs.clear(`translators.better-bibtex.autoExport.${this.key(ae.path)}`)
         })
 
