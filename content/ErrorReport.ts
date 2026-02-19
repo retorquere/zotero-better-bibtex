@@ -107,7 +107,7 @@ class Upgrades {
         text.hidden = false
         if (auto) {
           auto.hidden = !upgrade.auto
-          auto.setAttribute('data-l10n-args', JSON.stringify({ upgrade }))
+          auto.setAttribute('data-l10n-args', JSON.stringify({ program, ...upgrade }))
         }
         if (manual) manual.hidden = !upgrade.auto
       }
