@@ -36,7 +36,7 @@ Enable searching on citation keys. Slows down startup on very large libraries. R
 
 ## Automatically fill citation key after
 
-default: `0`
+default: `2`
 
 When &gt; 0, BBT will automatically fill the citation key it generates for an item after this many seconds.
 

@@ -77,7 +77,12 @@ export class TestSupport {
     // collections might erase their contained collections
     let collections
     while ((collections = Zotero.Collections.getByLibrary(Zotero.Libraries.userLibraryID, true) || []).length) {
-      await collections[0].eraseTx()
+      try {
+        await collections[0].eraseTx()
+      }
+      catch (err) {
+        log.error('test-support.reset: could not erase', collections[0], err)
+      }
     }
 
     AutoExport.removeAll()
