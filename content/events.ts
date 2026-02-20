@@ -99,10 +99,11 @@ export const Events = new Emitter({
   /*
   debug: {
     name: 'better-bibtex event',
-    enabled: Zotero.Prefs.get('translators.better-bibtex.logEvents'),
+    enabled: true,
     logger: (type, debugName, eventName, eventData) => {
       try {
         if (typeof eventName === 'symbol') return
+        log.debug('events:', { type, debugName, eventName, eventData })
       }
       catch (err) {
         log.error(`emit: ${err}`)

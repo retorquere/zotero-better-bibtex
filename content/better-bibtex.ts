@@ -11,6 +11,8 @@ const Menu = new MenuManager
 import { DebugLog } from 'zotero-plugin/debug-log'
 import { jwk as pubkey } from './public'
 
+import { getItemsAsync } from './get-items-async'
+
 import { Scheduler } from './scheduler'
 import { TeXstudio } from './tex-studio'
 import { prompt } from './prompt'
@@ -501,7 +503,7 @@ export class BetterBibTeX {
 
         Events.on('cache-touch', async ({ itemIDs }) => {
           const withParents: Set<number> = new Set(itemIDs)
-          for (const item of await Zotero.Items.getAsync(itemIDs)) {
+          for (const item of await getItemsAsync(itemIDs)) {
             if (typeof item?.parentID === 'number') withParents.add(item.parentID)
           }
           await Cache.touch([...withParents])

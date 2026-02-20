@@ -1,9 +1,9 @@
+## v8.0.18
 
----
-title: Changelog
-weight: 500
----
-<!-- WARNING: GENERATED FROM https://github.com/retorquere/zotero-better-bibtex/blob/master/CHANGELOG.md. EDITS WILL BE OVERWRITTEN -->
+Migration improvements:
+* prevent accidental locking of BBT database during migration
+* Performance: adds a skipNotifier flag when saving migrated items, avoiding triggering of auto-exports
+
 ## v8.0.17
 
 * Updated terminology changing "pin" to "fill" for clarity
@@ -98,5 +98,3 @@ Upside to all of this is that keys will sync.
 * Database Migration: The internal database for tracking keys and exports has been migrated to LokiJS.
 * Internationalization: Integrated new and updated translations for French, German, Italian, Chinese Simplified, and Brazilian Portuguese.
 * Cleanup: The unused Alchemy.js graph editor was removed from the documentation.
-
-
