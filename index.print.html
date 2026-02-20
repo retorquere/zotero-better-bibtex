@@ -334,9 +334,9 @@ Changing this setting <em>does not</em> affect existign keys - for this you woul
 <p>If you have deviated from the default citation key format pattern by [specifying your own]({{ ref . &ldquo;citing&rdquo; }}), you may
 wind up with non-ASCII characters in your citation keys. You can prevent that using the <code>fold</code> function at the
 appropriate place in your pattern, but checking this checkbox will just apply <code>fold</code> to all your keys.</p>
-<h2 id="enable-citation-key-search">Enable citation key search<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h2>
-<p>default: <code>yes</code></p>
-<p>Enable searching on citation keys. Slows down startup on very large libraries. Requires Zotero restart to enable/disable.</p>
+<h2 id="regenerate-citation-key-when-item-changes">Regenerate citation key when item changes<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h2>
+<p>default: <code>no</code></p>
+<p>When true, BBT will overwrite existing keys with new keys after an item changes.</p>
 <h2 id="automatically-fill-citation-key-after">Automatically fill citation key after<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h2>
 <p>default: <code>2</code></p>
 <p>When &gt; 0, BBT will automatically fill the citation key it generates for an item after this many seconds.</p>
@@ -687,9 +687,6 @@ be replaced by their LaTeX-command counterparts.</p>
 <h2 id="autoexportidlewait">autoExportIdleWait<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h2>
 <p>default: <code>10</code></p>
 <p>Number of seconds to wait after your system goes idle before kicking off auto-exports.</p>
-<h2 id="autopinoverwrite">autoPinOverwrite<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h2>
-<p>default: <code>no</code></p>
-<p>When true, BBT will overwrite existing keys with new keys after an item changes.</p>
 <h2 id="biblatexextendeddateformat">biblatexExtendedDateFormat<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h2>
 <p>default: <code>yes</code></p>
 <p>Support for EDTF dates in biblatex</p>
@@ -698,6 +695,9 @@ be replaced by their LaTeX-command counterparts.</p>
 <p>a JSON mapping from single character to raw LaTeX, to augment the default mapping; these will be applied when you export as ASCII. <strong>DO NOT</strong> edit this preferencedirectly,
 but create a CSV (not semicolons) file named <code>charmap.csv</code> in the zotero data directory under the <code>better-bibtex</code> folder with columns <code>unicode</code> (the source character),
 <code>text</code> (representation in LaTeX text mode, if any) and <code>math</code> (representation in LaTeX math mode, if any, without dollar signs).</p>
+<h2 id="citekeysearch">citekeySearch<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h2>
+<p>default: <code>yes</code></p>
+<p>Enable searching on citation keys. Slows down startup on very large libraries. Requires Zotero restart to enable/disable.</p>
 <h2 id="csquotes">csquotes<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h2>
 <p>default: <code>&lt;not set&gt;</code></p>
 <p>if you set <code>csquotes</code> to a string of character pairs, each pair will be assumed to be the open and close parts of a pair and
@@ -13298,6 +13298,8 @@ abbreviator if not (if auto-abbrev is enabled in the preferences), <code>auto</c
 
   <h3><b>origyear</b></h3><p>the original year of the publication</p>
 
+  <h3><b>pinned</b></h3><p>A pinned citation key from the extra field. eg if you have <code>citation key: me</code> in the extra field, <code>me</code> would be used as the value</p>
+
   <h3><b>postfix</b>(format: string containing at least one of &#39;%(a)s&#39;, &#39;%(A)s&#39;, &#39;%(n)s&#39;=&#39;%(a)s&#39;, start: number | string=0)</h3><p>a pseudo-function that sets the citekey disambiguation postfix using an <a href="https://www.npmjs.com/package/sprintf-js">sprintf-js</a> format spec
 for when a key is generated that already exists. Does not add any text to the citekey otherwise.
 You <em>must</em> include <em>exactly one</em> of the placeholders <code>%(n)s</code> (number), <code>%(a)s</code> (alpha, lowercase) or <code>%(A)s</code> (alpha, uppercase).
@@ -14726,8 +14728,8 @@ means a lot) so I can save up for a replacement a year or so down
 the line, head on over to <a href="https://www.patreon.com/retorquere" rel="external">Patreon</a>,
 but mind that Patreon takes a fairly large cut of what you give.</p>
 <p>Many, many thanks, also to the existing contributors &ndash; thanks to you I&rsquo;ve hit my first target and have been able to replace my trusty macbook air with a newer macbook pro which has much more breathing room.</p>
-<p><a href="#R-image-94308a8c8a69c3e851024528be45453a" class="lightbox-link"><img alt="My github stats" class="lazy lightbox figure-image" loading="lazy" src="https://github-readme-stats.vercel.app/api?username=retorquere&show_icons=true&hide_border=true&theme=dark" style="height: auto;width: auto;"></a>
-<a href="javascript:history.back();" class="lightbox-back" id="R-image-94308a8c8a69c3e851024528be45453a"><img alt="My github stats" class="lazy lightbox lightbox-image" loading="lazy" src="https://github-readme-stats.vercel.app/api?username=retorquere&show_icons=true&hide_border=true&theme=dark"></a></p>
+<p><a href="#R-image-ef367f7f55a942fc103c061a6918ce50" class="lightbox-link"><img alt="My github stats" class="lazy lightbox figure-image" loading="lazy" src="https://github-readme-stats.vercel.app/api?username=retorquere&show_icons=true&hide_border=true&theme=dark" style="height: auto;width: auto;"></a>
+<a href="javascript:history.back();" class="lightbox-back" id="R-image-ef367f7f55a942fc103c061a6918ce50"><img alt="My github stats" class="lazy lightbox lightbox-image" loading="lazy" src="https://github-readme-stats.vercel.app/api?username=retorquere&show_icons=true&hide_border=true&theme=dark"></a></p>
 <p>I prefer communicating via github issues, but for private information you can reach me on <a href="https://matrix.to/#/@retorquere:utwente.io" rel="external">matrix</a></p>
 
   <footer class="footline">

@@ -26,7 +26,7 @@ Making any change here will drop your entire export cache. This is usually not a
     <meta itemprop="description" content="The Better BibTeX Configuration can be found under the regular Zotero preferences pane, tab ‘Better BibTeX’.
 The configuration of Better BibTeX is a little baroque compared to the standard Zotero Bib(La)TeX exporters (which only have hidden preferences). The defaults should just work, but here’s an attempt to describe what they do.
 Making any change here will drop your entire export cache. This is usually not a problem unless you have a really large library, but you can read about what is involved here.">
-    <meta itemprop="wordCount" content="534">
+    <meta itemprop="wordCount" content="533">
     <title>Preferences :: Better BibTeX for Zotero</title>
     <link href="/zotero-better-bibtex/preferences/index.xml" rel="alternate" type="application/rss+xml" title="Preferences :: Better BibTeX for Zotero"><link rel="icon" href="/zotero-better-bibtex/better-bibtex.ico" type="image/x-icon">
 
@@ -140,7 +140,7 @@ Making any change here will drop your entire export cache. This is usually not a
   <ul>
     <li><a href="#active-citation-key-formula">Active citation key formula</a></li>
     <li><a href="#force-citation-key-to-plain-text">Force citation key to plain text</a></li>
-    <li><a href="#enable-citation-key-search">Enable citation key search</a></li>
+    <li><a href="#regenerate-citation-key-when-item-changes">Regenerate citation key when item changes</a></li>
     <li><a href="#automatically-fill-citation-key-after">Automatically fill citation key after</a></li>
     <li><a href="#keeping-citation-keys-unique">Keeping citation keys unique</a>
       <ul>
@@ -209,9 +209,9 @@ Changing this setting <em>does not</em> affect existign keys - for this you woul
 <p>If you have deviated from the default citation key format pattern by [specifying your own]({{ ref . &ldquo;citing&rdquo; }}), you may
 wind up with non-ASCII characters in your citation keys. You can prevent that using the <code>fold</code> function at the
 appropriate place in your pattern, but checking this checkbox will just apply <code>fold</code> to all your keys.</p>
-<h2 id="enable-citation-key-search">Enable citation key search<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h2>
-<p>default: <code>yes</code></p>
-<p>Enable searching on citation keys. Slows down startup on very large libraries. Requires Zotero restart to enable/disable.</p>
+<h2 id="regenerate-citation-key-when-item-changes">Regenerate citation key when item changes<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h2>
+<p>default: <code>no</code></p>
+<p>When true, BBT will overwrite existing keys with new keys after an item changes.</p>
 <h2 id="automatically-fill-citation-key-after">Automatically fill citation key after<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h2>
 <p>default: <code>2</code></p>
 <p>When &gt; 0, BBT will automatically fill the citation key it generates for an item after this many seconds.</p>
