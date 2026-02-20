@@ -117,6 +117,7 @@ export const KeyManager = new class _KeyManager {
 
   private started = false
 
+  /*
   private getField(item: { getField: ((str: string) => string) }, field: string): string {
     try {
       return item.getField(field) || ''
@@ -125,30 +126,9 @@ export const KeyManager = new class _KeyManager {
       return ''
     }
   }
+  */
 
-  public async fill(ids: 'selected' | number | number[], inspireHEP = false): Promise<void> {
-    ids = this.expandSelection(ids)
-
-    await Zotero.DB.executeTransaction(async () => {
-      for (const item of await getItemsAsync(ids)) {
-        if (item.isFeedItem || !item.isRegularItem()) continue
-
-        const current = this.getField(item, 'citationKey')
-        if (inspireHEP) {
-          const proposed = await fetchInspireHEP(item)
-          if (proposed && current !== proposed) {
-            item.setField('citationKey', proposed)
-            await item.save()
-          }
-        }
-        else {
-          await this.update(item).save()
-        }
-      }
-    })
-  }
-
-  public async refresh(ids: 'selected' | number | number[], warn = false, replace = false): Promise<void> {
+  public async fill(ids: 'selected' | number | number[], { warn = false, replace = false, inspireHEP = false }: { warn?: boolean; replace?: boolean; inspireHEP?: boolean } = {}): Promise<void> {
     ids = this.expandSelection(ids)
     await Cache.touch(ids)
 
@@ -186,7 +166,8 @@ export const KeyManager = new class _KeyManager {
 
     const progress: Progress = items.length > 10 ? new Progress(items.length, 'Refreshing citation keys') : null
     for (const item of items) {
-      const citationKey = this.update(item, replace).getField('citationKey')
+      const citationKey = this.update(item, { replace, inspireHEP: inspireHEP ? (await fetchInspireHEP(item)) || '' : undefined }).getField('citationKey')
+      if (!citationKey) continue
 
       // remove the new citekey from the aliases if present
       const aliases = Extra.get(item.getField('extra'), 'zotero', { aliases: true })
@@ -310,7 +291,7 @@ export const KeyManager = new class _KeyManager {
       })
 
       const update = (item: Zotero.Item) => {
-        this.update(item, Preference.autoPinOverwrite).saveTx().catch(err => log.error('failed to update', item.id, ':', err))
+        this.update(item, { replace: Preference.autoPinOverwrite }).saveTx().catch(err => log.error('failed to update', item.id, ':', err))
       }
       for (const item of items) {
         if (Preference.testing) { // race condition for key assignment otherwise
@@ -340,21 +321,16 @@ export const KeyManager = new class _KeyManager {
     this.started = true
   }
 
-  public update(item: Zotero.Item, replace = false): Zotero.Item {
+  public update(item: Zotero.Item, { replace = false, inspireHEP = undefined }: { replace?: boolean; inspireHEP?: string } = {}): Zotero.Item {
     if (item.isFeedItem || !item.isRegularItem()) return item
 
-    do {
-      const { extra, citationKey } = Extra.citationKey(item.getField('extra'))
-      if (citationKey) {
-        item.setField('extra', extra)
-        item.setField('citationKey', citationKey)
-        break
-      }
+    if (typeof inspireHEP === 'string' && !inspireHEP) return item
 
+    do {
       const current = item.getField('citationKey')
       if (current && !replace) break
 
-      const proposed = this.propose(item)
+      const proposed = inspireHEP || this.propose(item)
       if (proposed === current) break
 
       item.setField('citationKey', proposed)
