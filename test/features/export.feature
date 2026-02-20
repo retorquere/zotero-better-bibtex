@@ -871,11 +871,14 @@ Feature: Export
 
   Scenario: Key regeneration fails #3421
     Given I import 1 reference from "export/*.json"
+    And I set preference .autoPinOverwrite to true
     Then an export using "Better BibLaTeX" should match "export/*.biblatex"
     When I select the item with a field that contains "Data visiting governance"
     And I change the name of the first author to [Thadar][Donrich]
-    And I force-refresh the citation key
+    #And I force-refresh the citation key
+    And I wait 5 seconds
     Then an export using "Better BibLaTeX" should match "export/*.thadar.biblatex"
     When I change the name of the first author to [Thaldar][Donrich]
-    And I force-refresh the citation key
+    #And I force-refresh the citation key
+    And I wait 5 seconds
     Then an export using "Better BibLaTeX" should match "export/*.biblatex"
