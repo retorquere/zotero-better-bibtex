@@ -1,3 +1,9 @@
+## v8.0.18
+
+Migration improvements:
+* prevent accidental locking of BBT database during migration
+* Performance: adds a skipNotifier flag when saving migrated items, avoiding triggering of auto-exports
+
 ## v8.0.17
 
 * Updated terminology changing "pin" to "fill" for clarity
