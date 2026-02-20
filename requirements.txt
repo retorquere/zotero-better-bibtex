@@ -28,6 +28,7 @@ mkdocs
 mkdocs-awesome-nav
 munch
 networkx
+number_parser
 pathvalidate
 psutil
 pushbullet.py
