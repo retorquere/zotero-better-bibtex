@@ -51,7 +51,21 @@ export class TestSupport {
   }
 
   public async reset(scenario: string): Promise<void> {
-    log.info(`test environment reset for ${ scenario }`)
+    let error
+    for (let i = 0; i < 3; i++) {
+      try {
+        if (i) log.error(JSON.stringify(scenario), 'reset attempt', i + 1)
+        await this.attemptReset()
+        return
+      }
+      catch (err) {
+        error = err
+      }
+    }
+    throw error
+  }
+
+  public async attemptReset(): Promise<void> {
     await this.resetCache()
 
     const prefix = 'translators.better-bibtex.'
