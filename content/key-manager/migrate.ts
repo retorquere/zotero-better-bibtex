@@ -2,6 +2,11 @@ import { log } from '../logger'
 import { getItemAsync } from '../get-items-async'
 import { flash } from '../flash'
 
+type StoredKey = {
+  citationKey: string
+  itemID: number
+  pinned: boolean
+}
 export async function migrate(): Promise<void> {
   const db = PathUtils.join(Zotero.DataDirectory.dir, 'better-bibtex.sqlite')
   if (!(await IOUtils.exists(db))) return
@@ -14,12 +19,14 @@ export async function migrate(): Promise<void> {
     zotero: 0,
   }
   try {
-    await Zotero.DB.queryAsync('ATTACH DATABASE ? AS betterbibtex', [ db ])
+    const conn = new Zotero.DBConnection('better-bibtex')
+    let bbt: StoredKey[] = (await conn.queryAsync('SELECT itemID, citationKey, pinned FROM citationkey')) as StoredKey[]
+    await conn.closeDatabase(true)
+
     await Zotero.DB.executeTransaction(async () => {
-      let rows = await Zotero.DB.queryAsync(`
-        SELECT bbt.itemID, bbt.itemKey, bbt.libraryID, bbt.citationKey, bbt.pinned
-        FROM betterbibtex.citationkey bbt
-        JOIN items item ON item.itemID = bbt.itemID
+      const itemIDs: number[] = await Zotero.DB.columnQueryAsync(`
+        SELECT item.itemID
+        FROM items item
         WHERE item.itemID NOT IN (SELECT itemID FROM deletedItems)
           AND item.itemID NOT IN (SELECT itemID FROM feedItems)
           AND item.itemTypeID NOT IN (
@@ -28,16 +35,13 @@ export async function migrate(): Promise<void> {
             WHERE typeName IN ('attachment', 'note', 'annotation')
           )
       `.replace(/\n/g, ' ').trim())
-      let keys: { citationKey: string; itemID: number; pinned: boolean }[] = rows.map(({ citationKey, itemID, pinned }) => ({
-        itemID,
-        citationKey,
-        pinned: !!pinned,
-      }))
 
-      choice.total = keys.length
-      choice.pinned = keys.filter(key => key.pinned).length
+      bbt = bbt.filter(key => itemIDs.includes(key.itemID))
 
-      rows = await Zotero.DB.queryAsync(`
+      choice.total = bbt.length
+      choice.pinned = bbt.filter(key => key.pinned).length
+
+      const zotero: StoredKey[] = (await Zotero.DB.queryAsync(`
         SELECT items.itemID, ck.value AS citationKey
         FROM items
         JOIN itemData ckField ON ckField.itemID = items.itemID AND ckField.fieldID IN (SELECT fieldID FROM fields WHERE fieldName = 'citationKey')
@@ -46,32 +50,32 @@ export async function migrate(): Promise<void> {
           AND items.itemTypeID NOT IN (SELECT itemTypeID FROM itemTypes WHERE typeName IN ('attachment', 'note', 'annotation'))
           AND items.itemID NOT IN (SELECT itemID from feedItems)
           AND COALESCE(ck.value, '') <> ''
-      `.replace(/\n/g, ' ').trim())
+      `.replace(/\n/g, ' ').trim())) as StoredKey[]
 
-      for (const { itemID, citationKey } of rows) {
-        if (citationKey && !keys.find(key => key.itemID === itemID && key.citationKey === citationKey)) choice.zotero += 1
+      for (const { itemID, citationKey } of zotero) {
+        if (citationKey && !bbt.find(key => key.itemID === itemID && key.citationKey === citationKey)) choice.zotero += 1
       }
 
       if (!choice.zotero) {
         choice.migrate = 'all'
       }
-      else if (keys.length) {
+      else if (bbt.length) {
         Zotero.getMainWindow().openDialog('chrome://zotero-better-bibtex/content/keymanager-migrate.xhtml', '', 'chrome,dialog,centerscreen,modal', choice)
         choice.migrate = choice.migrate || 'postpone'
         switch (choice.migrate) {
           case 'none':
-            keys = []
+            bbt = []
             break
           case 'pinned':
-            keys = keys.filter(k => k.pinned)
+            bbt = bbt.filter(k => k.pinned)
             break
         }
       }
 
       log.info('key manager migrate:', choice)
       if (choice.migrate !== 'postpone') {
-        flash(`Migrating ${keys.length} citation keys`)
-        for (const { itemID, citationKey } of keys) {
+        flash(`Migrating ${bbt.length} citation keys`)
+        for (const { itemID, citationKey } of bbt) {
           const item = await getItemAsync(itemID)
           if (choice.overwrite || !item.getField('citationKey')) {
             item.setField('citationKey', citationKey)
