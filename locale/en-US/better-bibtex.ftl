@@ -232,8 +232,8 @@ better-bibtex_preferences_citekey_fold =
 
 better-bibtex_preferences_citekey_format = Citation key formula
 better-bibtex_preferences_citekey_format_installed = Active citation key formula
-better-bibtex_preferences_citekey_search = 
-  .label = Enable citation key search
+better-bibtex_preferences_citekey_dynamic =
+  .label = Regenerate citation key when item changes
 
 better-bibtex_preferences_citekey_uniqueness = 
   .label = Keeping citation keys unique
