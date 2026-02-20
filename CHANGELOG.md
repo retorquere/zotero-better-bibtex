@@ -1,4 +1,4 @@
-## v8.0.19
+## v8.0.20
 
 * dynamic citation keys are back, option in migration
 * new the `pinned` function for citation key patterns, which retrieves a pinned citation key from the `extra` field.
