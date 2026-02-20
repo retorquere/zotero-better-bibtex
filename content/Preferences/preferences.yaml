@@ -864,7 +864,7 @@ testing:
   default: false
 
 logEvents:
-  default: true
+  default: false
 
 platform:
   default: ''

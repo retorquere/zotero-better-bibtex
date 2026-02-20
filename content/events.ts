@@ -1,13 +1,3 @@
-//  public async itemsChanged(action, ids): Promise<void> {
-//    try {
-//      await this.cacheTouch(ids)
-//      this.keymanagerUpdate(action, ids)
-//    }
-//    catch (err) {
-//      log.error('cache update failed:', err)
-//    }
-//  }
-
 import Emittery from 'emittery'
 
 import { log } from './logger'
@@ -33,6 +23,8 @@ type IdleTopic = 'auto-export' | 'cache-purge'
 const idleService: IdleService = Components.classes['@mozilla.org/widget/useridleservice;1'].getService(Components.interfaces.nsIUserIdleService)
 
 type Reason = 'key-refresh' | 'parent-modify' | 'parent-delete' | 'parent-add' | 'tagged'
+
+const logEvents = Zotero.Prefs.get('extensions.zotero.translators.better-bibtex.logEvents')
 
 type EventMap = {
   'collections-changed': number[]
@@ -95,23 +87,21 @@ class Emitter extends Emittery<EventMap> {
   }
 }
 
-export const Events = new Emitter({
-  /*
+export const Events = new Emitter(logEvents ? { // eslint-disable-line @stylistic/multiline-ternary
   debug: {
     name: 'better-bibtex event',
     enabled: true,
     logger: (type, debugName, eventName, eventData) => {
       try {
         if (typeof eventName === 'symbol') return
-        log.debug('events:', { type, debugName, eventName, eventData })
+        log.info('emit: event:', { type, debugName, eventName, eventData })
       }
       catch (err) {
         log.error(`emit: ${err}`)
       }
     },
   },
-  */
-})
+} : {})
 
 class SyncListener {
   private interval: IntervalHandle
@@ -203,6 +193,7 @@ class ItemListener extends ZoteroListener {
   }
 
   public async notify(action: ZoteroAction, type: string, ids: number[], extraData?: Record<number, { libraryID?: number }>) {
+    if (logEvents) log.info('item event:', { action, ids, extraData })
     try {
       let load = false
       switch (action) {
