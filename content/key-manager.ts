@@ -327,13 +327,6 @@ export const KeyManager = new class _KeyManager {
     if (typeof inspireHEP === 'string' && !inspireHEP) return item
 
     do {
-      const { extra, citationKey } = Extra.citationKey(item.getField('extra'))
-      if (citationKey) {
-        item.setField('extra', extra)
-        item.setField('citationKey', citationKey)
-        if (!replace) break
-      }
-
       const current = item.getField('citationKey')
       if (current && !replace) break
 

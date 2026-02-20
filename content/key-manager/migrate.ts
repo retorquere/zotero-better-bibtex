@@ -1,6 +1,7 @@
 import { log } from '../logger'
 import { getItemAsync } from '../get-items-async'
 import { flash } from '../flash'
+import { citationKey as extract } from '../extra'
 
 type StoredKey = {
   citationKey: string
@@ -75,10 +76,14 @@ export async function migrate(): Promise<void> {
       log.info('key manager migrate:', choice)
       if (choice.migrate !== 'postpone') {
         flash(`Migrating ${bbt.length} citation keys`)
-        for (const { itemID, citationKey } of bbt) {
+        for (const { itemID, citationKey, pinned } of bbt) {
           const item = await getItemAsync(itemID)
           if (choice.overwrite || !item.getField('citationKey')) {
             item.setField('citationKey', citationKey)
+            if (pinned) {
+              const { extra } = extract(item.getField('extra'))
+              item.setField('extra', `${extra}\nCitation Key: ${citationKey}`.trim())
+            }
             await item.save({ skipDateModifiedUpdate: true, skipNotifier: !!choice.zotero })
           }
         }
