@@ -15,6 +15,7 @@ export async function migrate(): Promise<void> {
   const choice = {
     migrate: 'postpone' as 'none' | 'all' | 'pinned' | 'postpone',
     overwrite: false,
+    dynamic: false,
     total: 0,
     pinned: 0,
     zotero: 0,
@@ -80,13 +81,15 @@ export async function migrate(): Promise<void> {
           const item = await getItemAsync(itemID)
           if (choice.overwrite || !item.getField('citationKey')) {
             item.setField('citationKey', citationKey)
-            if (pinned) {
+            if (choice.dynamic && pinned) {
               const { extra } = extract(item.getField('extra'))
               item.setField('extra', `${extra}\nCitation Key: ${citationKey}`.trim())
             }
             await item.save({ skipDateModifiedUpdate: true, skipNotifier: !!choice.zotero })
           }
         }
+
+        Zotero.Prefs.set('translators.better-bibtex.autoExport.autoPinOverwrite', !!choice.dynamic)
       }
     })
   }
