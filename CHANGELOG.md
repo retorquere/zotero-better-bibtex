@@ -3,6 +3,7 @@
 * dynamic citation keys are back, option in migration
 * new the `pinned` function for citation key patterns, which retrieves a pinned citation key from the `extra` field.
 * autoPinDelay defaults to on (2 seconds)
+* migration uses direct DB read rather than attach/detach, windows too clingy and rename failed
 
 ## v8.0.18
 
