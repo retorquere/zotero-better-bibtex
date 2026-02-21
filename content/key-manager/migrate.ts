@@ -3,11 +3,18 @@ import { getItemAsync } from '../get-items-async'
 import { flash } from '../flash'
 import { citationKey as extract } from '../extra'
 
-type StoredKey = {
+export type StoredKey = {
   citationKey: string
   itemID: number
   libraryID: number
   pinned: boolean
+}
+
+export type ReadOnly = {
+  itemID: number
+  itemKey: string
+  libraryID: number
+  citationKey: string
 }
 
 type Paths = { sqlite: string | null; migrated: string | null }
@@ -24,9 +31,9 @@ function $flash(msg) {
   flash(`Better BibTeX citation key migration: ${msg}`)
 }
 
-export async function migrate(verbose = false): Promise<void> {
+export async function migrate(verbose = false): Promise<ReadOnly[]> {
   const { sqlite } = await databases()
-  if (!sqlite) return
+  if (!sqlite) return []
 
   const editable: Set<number> = new Set(Zotero.Libraries.getAll().filter(lib => lib.editable).map(lib => lib.id))
   const choice = {
@@ -42,6 +49,8 @@ export async function migrate(verbose = false): Promise<void> {
     const conn = new Zotero.DBConnection('better-bibtex')
     let bbt: StoredKey[] = (await conn.queryAsync('SELECT itemID, libraryID, citationKey, pinned FROM citationkey')) as StoredKey[]
     await conn.closeDatabase(true)
+
+    const readonly: ReadOnly[] = []
 
     await Zotero.DB.executeTransaction(async () => {
       const itemIDs: number[] = await Zotero.DB.columnQueryAsync(`
@@ -77,7 +86,13 @@ export async function migrate(verbose = false): Promise<void> {
       bbt = bbt.filter(bkey => {
         const zkey = zotero.find(key => key.itemID === bkey.itemID)
         if (!zkey) return true
-        if (bkey.citationKey === zkey.citationKey || !editable.has(zkey.libraryID)) return false
+
+        if (!editable.has(zkey.libraryID)) {
+          readonly.push({ itemID: bkey.itemID, itemKey: bkey.itemKey, libraryID: bkey.
+          return false
+        }
+        if (bkey.citationKey === zkey.citationKey) return false
+
         choice.conflicts += 1
         return true
       })
@@ -139,23 +154,25 @@ export async function migrate(verbose = false): Promise<void> {
     choice.migrate = 'postpone'
   }
 
-  if (choice.migrate !== 'postpone') {
-    try {
-      const renamed = await Zotero.File.rename(sqlite, 'better-bibtex.migrated', { unique: true })
-      if (renamed) {
-        log.info('citation key migration: migration finished and database renamed to', renamed)
-        if (verbose) $flash(`migration finished and database renamed to ${JSON.stringify(renamed)}`)
-      }
-      else {
-        log.error('citation key migration error: migration finished but database not renamed')
-        if (verbose) $flash('migration error: migration finished but database not renamed')
-      }
+  if (choice.migrate === 'postpone') return []
+
+  try {
+    const renamed = await Zotero.File.rename(sqlite, 'better-bibtex.migrated', { unique: true })
+    if (renamed) {
+      log.info('citation key migration: migration finished and database renamed to', renamed)
+      if (verbose) $flash(`migration finished and database renamed to ${JSON.stringify(renamed)}`)
     }
-    catch (err) {
-      log.error('citation key migration error: migration rename error:', err, err.message)
-      $flash(`citation key migration error: rename failed (${err.message})`)
+    else {
+      log.error('citation key migration error: migration finished but database not renamed')
+      if (verbose) $flash('migration error: migration finished but database not renamed')
     }
   }
+  catch (err) {
+    log.error('citation key migration error: migration rename error:', err, err.message)
+    $flash(`citation key migration error: rename failed (${err.message})`)
+  }
+
+  return readonly
 }
 
 export async function canMigrate(): Promise<boolean> {

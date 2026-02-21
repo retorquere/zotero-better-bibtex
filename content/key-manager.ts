@@ -20,7 +20,7 @@ import { getItemsAsync } from './get-items-async'
 import { Preference } from './prefs'
 import { Formatter } from './key-manager/formatter'
 
-import Loki from 'lokijs'
+import { Loki, LokiCollection } from './key-manager/db'
 
 import { Cache } from './translators/worker'
 
@@ -106,10 +106,8 @@ export const KeyManager = new class _KeyManager {
     },
   }
 
-  public keys = (new Loki('citationkeys.db')).addCollection<CitekeyRecord>('citationKeys', {
-    indices: [ 'itemID', 'libraryID', 'itemKey', 'citationKey', 'lcCitationKey' ],
-    unique: [ 'itemID' ],
-  })
+  #db: Loki
+  public keys: LokiCollection<CitekeyRecord>
 
   private unwatch: UnwatchCallback[] = []
 
@@ -242,7 +240,14 @@ export const KeyManager = new class _KeyManager {
   }
 
   private async start(): Promise<void> {
-    void migrate()
+    this.#db = new Loki(PathUtils.join(Zotero.BetterBibTeX.dir, 'read-only.json'))
+    await this.#db.load()
+    this.keys = this.#db.addCollection<CitekeyRecord>('citationKeys', {
+      indices: [ 'itemID', 'libraryID', 'itemKey', 'citationKey', 'lcCitationKey' ],
+      unique: [ 'itemID' ],
+    })
+
+    const readonly = await migrate()
 
     const load = `
       SELECT item.itemID, item.key AS itemKey, item.libraryID, idv.value AS citationKey
@@ -255,7 +260,7 @@ export const KeyManager = new class _KeyManager {
         AND item.itemID NOT IN (SELECT itemID FROM feedItems)
       `.replace(/\n/g, ' ').trim()
 
-    const keys: CitekeyRecord[] = []
+    const keys: CitekeyRecord[] = readonly.map(({ 
     for (const { itemID, itemKey, libraryID, citationKey } of await Zotero.DB.queryAsync(load)) {
       keys.push(lc({ itemID, itemKey, libraryID, citationKey }))
     }
