@@ -27,11 +27,11 @@ appropriate place in your pattern, but checking this checkbox will just apply `f
 
 
 
-## Enable citation key search
+## Regenerate citation key when item changes
 
-default: `yes`
+default: `no`
 
-Enable searching on citation keys. Slows down startup on very large libraries. Requires Zotero restart to enable/disable.
+When true, BBT will overwrite existing keys with new keys after an item changes.
 
 
 ## Automatically fill citation key after
