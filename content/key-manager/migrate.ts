@@ -44,7 +44,7 @@ export async function migrate(verbose = false): Promise<void> {
     await conn.closeDatabase(true)
 
     await Zotero.DB.executeTransaction(async () => {
-      const itemIDs: number[] = await Zotero.DB.columnQueryAsync(`
+      const itemIDs: Set<number> = new Set(await Zotero.DB.columnQueryAsync(`
         SELECT item.itemID
         FROM items item
         WHERE item.itemID NOT IN (SELECT itemID FROM deletedItems)
@@ -54,9 +54,9 @@ export async function migrate(verbose = false): Promise<void> {
             FROM itemTypes
             WHERE typeName IN ('attachment', 'note', 'annotation')
           )
-      `.replace(/\n/g, ' ').trim())
+      `.replace(/\n/g, ' ').trim()))
 
-      bbt = bbt.filter(key => itemIDs.includes(key.itemID))
+      bbt = bbt.filter(key => itemIDs.has(key.itemID))
 
       choice.total = bbt.length
       choice.pinned = bbt.filter(key => key.pinned).length
@@ -75,9 +75,13 @@ export async function migrate(verbose = false): Promise<void> {
       choice.zotero = zotero.length
 
       bbt = bbt.filter(bkey => {
+        if (!editable.has(bkey.libraryID)) return false // not settable -- deal with later
+
         const zkey = zotero.find(key => key.itemID === bkey.itemID)
         if (!zkey) return true
-        if (bkey.citationKey === zkey.citationKey || !editable.has(zkey.libraryID)) return false
+
+        if (bkey.citationKey === zkey.citationKey || !editable.has(zkey.libraryID)) return false // no-op
+
         choice.conflicts += 1
         return true
       })
