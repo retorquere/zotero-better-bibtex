@@ -33,6 +33,8 @@ function $flash(msg) {
 }
 
 export async function migrate(verbose = false): Promise<ReadOnly[]> {
+  const readonly: ReadOnly[] = []
+
   const { sqlite } = await databases()
   if (!sqlite) return []
 
@@ -50,8 +52,6 @@ export async function migrate(verbose = false): Promise<ReadOnly[]> {
     const conn = new Zotero.DBConnection('better-bibtex')
     let bbt: StoredKey[] = (await conn.queryAsync('SELECT itemID, itemKey, libraryID, citationKey, pinned FROM citationkey')) as StoredKey[]
     await conn.closeDatabase(true)
-
-    const readonly: ReadOnly[] = []
 
     await Zotero.DB.executeTransaction(async () => {
       const itemIDs: Set<number> = new Set(await Zotero.DB.columnQueryAsync(`
@@ -86,7 +86,7 @@ export async function migrate(verbose = false): Promise<ReadOnly[]> {
 
       bbt = bbt.filter(bkey => {
         if (!editable.has(bkey.libraryID)) {
-          const { pinned, ...ro } = bkey
+          const { pinned, ...ro } = bkey // eslint-disable-line @typescript-eslint/no-unused-vars
           readonly.push(ro)
           return false
         }

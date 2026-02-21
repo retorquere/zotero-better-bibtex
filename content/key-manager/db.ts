@@ -1,14 +1,16 @@
+import { Path } from '../file'
 import CallbackLoki from 'lokijs'
 
 class PersistenceAdapter implements LokiPersistenceAdapter {
-  mode: string = 'reference'
+  public mode = 'reference'
 
   constructor(private saveFilter: (doc: any) => boolean) {
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-misused-promises
   public async loadDatabase(dbname: string, callback: (data: any) => void): Promise<void> {
     try {
-      if (!(await IOUtils.exists(db))) return callback(null)
+      if (!(await IOUtils.exists(dbname))) return callback(null)
       const stored = await IOUtils.readUTF8(dbname)
       if (!stored) return callback(null)
 
@@ -19,18 +21,18 @@ class PersistenceAdapter implements LokiPersistenceAdapter {
     }
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-misused-promises
   public async exportDatabase(dbname: string, dbRef: CallbackLoki, callback: (err: Error | null) => void): Promise<void> {
     try {
       const store = dbRef.copy()
 
-      store.collections = dbRef.collections.map((coll) => ({
-        ...coll,
-        data: coll.data.filter(this.saveFilter),
-        idIndex: [], // indices are rebuilt by Loki upon loading/hydration
-        binaryIndices: coll.binaryIndices,
-        uniqueNames: coll.uniqueNames,
-        transforms: coll.transforms
-      }))
+      store.filename = Path.basename(dbname)
+
+      store.collections = dbRef.collections.map(({ data, idIndex, ...collMeta }) => ({ // eslint-disable-line @typescript-eslint/no-unused-vars
+        ...collMeta,
+        data: data.filter(this.saveFilter),
+        idIndex: [],
+      })) as any[]
 
       await IOUtils.writeUTF8(dbname, JSON.stringify(store))
       callback(null)
@@ -42,27 +44,28 @@ class PersistenceAdapter implements LokiPersistenceAdapter {
 }
 
 export type LokiCollection<T extends object> = CallbackLoki.Collection<T>
+type LokiOptions = Partial<LokiConstructorOptions & LokiConfigOptions> & { saveFilter?: (doc: any) => boolean }
 
 export class Loki extends CallbackLoki {
-  constructor(filename: string, options: Partial<LokiConstructorOptions> & { saveFilter?: (doc: any) => boolean } = {}) {
+  constructor(filename: string, options: LokiOptions = {}) {
     const { saveFilter, ...lokiOptions } = options
     const adapter = new PersistenceAdapter(saveFilter || (() => true))
     super(filename, { ...lokiOptions, adapter })
   }
 
-  public load(options: any = {}): Promise<void> {
+  public read(options: any = {}): Promise<void> {
     return new Promise((resolve, reject) => {
-      this.loadDatabase(options, (err) => {
-        if (err && err !== null) return reject(err)
+      this.loadDatabase(options, err => {
+        if (err) return reject(err instanceof Error ? err : new Error(String(err)))
         resolve()
       })
     })
   }
 
-  public save(): Promise<void> {
+  public write(): Promise<void> {
     return new Promise((resolve, reject) => {
-      this.saveDatabase((err) => {
-        if (err) return reject(err)
+      this.saveDatabase(err => {
+        if (err) return reject(err instanceof Error ? err : new Error(String(err)))
         resolve()
       })
     })

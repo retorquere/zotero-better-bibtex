@@ -25,7 +25,6 @@ import { Loki, LokiCollection } from './key-manager/db'
 import { Cache } from './translators/worker'
 
 import { sprintf } from 'sprintf-js'
-import { newQueue } from '@henrygd/queue/rl'
 
 import * as l10n from './l10n'
 
@@ -38,8 +37,6 @@ export type CitekeyRecord = {
   citationKey: string
   lcCitationKey: string
 }
-
-type UnwatchCallback = () => void
 
 function lc(record: Partial<CitekeyRecord>): CitekeyRecord {
   record.lcCitationKey = record.citationKey.toLowerCase()
@@ -77,39 +74,9 @@ class Progress {
   }
 }
 
-type BatchedQuery = {
-  query: string
-  params: Array<string | number>
-}
-
 export const KeyManager = new class _KeyManager {
-  public searchEnabled = false
-
-  private db = {
-    queue: newQueue(1, 1, 5000),
-    batch: [] as BatchedQuery[],
-
-    schedule(query: string, params: Array<string | number>) {
-      this.batch.push({ query, params })
-
-      this.queue.add(async () => {
-        if (this.batch.length) {
-          const batch = this.batch
-          this.batch = []
-          await Zotero.DB.executeTransaction(async () => {
-            for (const q of batch) {
-              await ZoteroDB.queryAsync(q.query, q.params)
-            }
-          })
-        }
-      })
-    },
-  }
-
   #db: Loki
   public keys: LokiCollection<CitekeyRecord>
-
-  private unwatch: UnwatchCallback[] = []
 
   public autopin: Scheduler<number> = new Scheduler<number>('autoPinDelay', 1000)
 
@@ -204,10 +171,7 @@ export const KeyManager = new class _KeyManager {
         await this.start()
       },
       shutdown: async () => {
-        for (const cb of this.unwatch) {
-          cb()
-        }
-        await this.db.queue.done()
+        await this.#db.write()
       },
     })
   }
@@ -240,14 +204,15 @@ export const KeyManager = new class _KeyManager {
   }
 
   private async start(): Promise<void> {
-    const editable: Set<number> = new Set(Zotero.Libraries.getAll().filter(lib => lib.editable).map(lib => lib.id))
-
     this.#db = new Loki(PathUtils.join(Zotero.BetterBibTeX.dir, 'read-only.json'), {
       autosave: true,
       autosaveInterval: 5000,
-      saveFilter: (key) => Zotero.Libraries.get(key.libraryID).editable
+      saveFilter(key) {
+        const lib = Zotero.Libraries.get(key.libraryID)
+        return !lib || !lib.editable
+      },
     })
-    await this.#db.load()
+    await this.#db.read()
     this.keys = this.#db.addCollection<CitekeyRecord>('citationKeys', {
       indices: [ 'itemID', 'libraryID', 'itemKey', 'citationKey', 'lcCitationKey' ],
       unique: [ 'itemID' ],
@@ -266,10 +231,11 @@ export const KeyManager = new class _KeyManager {
         AND item.itemID NOT IN (SELECT itemID FROM feedItems)
       `.replace(/\n/g, ' ').trim()
 
-    const keys: CitekeyRecord[] = [...readonly]
+    const keys: CitekeyRecord[] = readonly.map(lc)
     for (const { itemID, itemKey, libraryID, citationKey } of await Zotero.DB.queryAsync(load)) {
       keys.push(lc({ itemID, itemKey, libraryID, citationKey }))
     }
+    this.keys.findAndRemove({ itemID: { $in: readonly.map(key => key.itemID) } })
     this.keys.insert(keys)
 
     Events.on('preference-changed', pref => {
