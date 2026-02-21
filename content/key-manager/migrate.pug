@@ -12,12 +12,69 @@ window(xmlns='http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul'
        width='450' height='320'
        onload='init()')
   html:style.
-    body { font: message-box; padding: 20px; background-color: Dialog; color: DialogText; line-height: 1.4; }
-    .option-container { margin-top: 15px; display: flex; flex-direction: column; gap: 10px; }
-    .footer { margin-top: 25px; display: flex; justify-content: flex-end; gap: 10px; }
-    .divider { border-top: 1px solid #ccc; margin: 15px 0; }
-    button[disabled] { opacity: 0.5; }
-    input[type='radio'], input[type='checkbox'] { margin-right: 8px; vertical-align: middle; }
+    body {
+      font: message-box;
+      padding: 20px;
+      background-color: Dialog;
+      color: DialogText;
+      line-height: 1.4;
+    }
+    .option-container {
+      margin-top: 15px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .footer {
+      margin-top: 25px;
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+    }
+    .divider {
+      border-top: 1px solid #ccc;
+      margin: 15px 0;
+    }
+    button[disabled] {
+      color: #888 !important;
+      background-color: #eee !important;
+      cursor: not-allowed;
+    }
+    input[type='radio'] {
+      margin-right: 8px;
+      vertical-align: middle;
+    }
+    input[type='radio'] {
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+  
+      width: 14px;
+      height: 14px;
+      border: 1px solid #777; /* Visible border color */
+      border-radius: 50%;
+      background-color: #fff;
+      cursor: pointer;
+      position: relative;
+      display: inline-block;
+    }
+
+    input[type='radio']:checked::before {
+      content: '';
+      position: absolute;
+      top: 3px;
+      left: 3px;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #007bff; /* Zotero blue */
+    }
+
+    label {
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+    }
 
   html:body
     html:div#header(style='font-weight: bold; margin-bottom: 10px;')
