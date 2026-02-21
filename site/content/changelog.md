@@ -4,9 +4,10 @@ title: Changelog
 weight: 500
 ---
 <!-- WARNING: GENERATED FROM https://github.com/retorquere/zotero-better-bibtex/blob/master/CHANGELOG.md. EDITS WILL BE OVERWRITTEN -->
-## v8.0.21
+## v8.0.22
 
 * Re-migration option for citation keys
+* Skip non-editable items
 * Show number of conflicts before migration
 * Migration UI wording improvements
 

@@ -1,6 +1,7 @@
-## v8.0.21
+## v8.0.22
 
 * Re-migration option for citation keys
+* Skip non-editable items
 * Show number of conflicts before migration
 * Migration UI wording improvements
 
