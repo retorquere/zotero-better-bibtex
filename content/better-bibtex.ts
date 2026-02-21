@@ -609,22 +609,23 @@ export class BetterBibTeX {
       })
     }
 
-    if (!doc.querySelector('#better-bibtex-menuHelp')) {
+    if (!doc.querySelector('#better-bibtex-menuHelp-report')) {
       Menu.register('menuHelp', {
         id: 'better-bibtex-menuHelp-report',
         tag: 'menuitem',
         label: l10n.localize('better-bibtex_report-errors'),
         oncommand: 'Zotero.BetterBibTeX.ErrorReport.open()',
       })
+    }
 
-      if (Preference.remigrate) {
-        Menu.register('menuHelp', {
-          id: 'better-bibtex-menuHelp-remigrate',
-          tag: 'menuitem',
-          label: 'Attempt re-migration of BetterBibTeX citation keys',
-          oncommand: 'Zotero.BetterBibTeX.remigrate()',
-        })
-      }
+    if (!doc.querySelector('#better-bibtex-menuHelp-remigrate')) {
+      Menu.register('menuHelp', {
+        id: 'better-bibtex-menuHelp-remigrate',
+        tag: 'menuitem',
+        label: 'Attempt re-migration of BetterBibTeX citation keys',
+        oncommand: 'Zotero.BetterBibTeX.remigrate()',
+        isHidden: () => !Preference.remigrate,
+      })
     }
 
     if (!doc.querySelector('#better-bibtex-menuItem')) {

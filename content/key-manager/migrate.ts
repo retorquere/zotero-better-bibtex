@@ -19,17 +19,22 @@ async function databases(): Promise<Paths> {
   return paths
 }
 
-export async function migrate(): Promise<void> {
+function $flash(msg) {
+  flash(`Better BibTeX citation key migration: ${msg}`)
+}
+
+export async function migrate(verbose = false): Promise<void> {
   const { sqlite } = await databases()
   if (!sqlite) return
 
   const choice = {
-    migrate: 'postpone' as 'none' | 'all' | 'pinned' | 'postpone',
+    migrate: 'postpone' as ('none' | 'all' | 'pinned' | 'postpone'),
     overwrite: false,
     dynamic: false,
     total: 0,
     pinned: 0,
     zotero: 0,
+    conflicts: 0,
   }
   try {
     const conn = new Zotero.DBConnection('better-bibtex')
@@ -54,7 +59,7 @@ export async function migrate(): Promise<void> {
       choice.total = bbt.length
       choice.pinned = bbt.filter(key => key.pinned).length
 
-      const zotero: StoredKey[] = (await Zotero.DB.queryAsync(`
+      let zotero: StoredKey[] = (await Zotero.DB.queryAsync(`
         SELECT items.itemID, ck.value AS citationKey
         FROM items
         JOIN itemData ckField ON ckField.itemID = items.itemID AND ckField.fieldID IN (SELECT fieldID FROM fields WHERE fieldName = 'citationKey')
@@ -64,31 +69,47 @@ export async function migrate(): Promise<void> {
           AND items.itemID NOT IN (SELECT itemID from feedItems)
           AND COALESCE(ck.value, '') <> ''
       `.replace(/\n/g, ' ').trim())) as StoredKey[]
+      zotero = zotero.filter(key => key.citationKey)
+      choice.zotero = zotero.length
 
-      for (const { itemID, citationKey } of zotero) {
-        if (citationKey && !bbt.find(key => key.itemID === itemID && key.citationKey === citationKey)) choice.zotero += 1
+      bbt = bbt.filter(bkey => {
+        const zkey = zotero.find(key => key.itemID === bkey.itemID)
+        if (!zkey) return true
+        if (bkey.citationKey === zkey.citationKey) return false
+        choice.conflicts += 1
+        return true
+      })
+
+      if (!bbt.length) {
+        if (verbose) $flash('nothing to do')
+        return
       }
 
-      if (!choice.zotero) {
+      if (!choice.conflicts) {
         choice.migrate = 'all'
+        if (verbose) $flash(`silent migration of ${bbt.length} keys`)
       }
-      else if (bbt.length) {
+      else {
         Zotero.getMainWindow().openDialog('chrome://zotero-better-bibtex/content/keymanager-migrate.xhtml', '', 'chrome,dialog,centerscreen,modal', choice)
         choice.migrate = choice.migrate || 'postpone'
-        switch (choice.migrate) {
-          case 'none':
-            bbt = []
-            break
-          case 'pinned':
-            bbt = bbt.filter(k => k.pinned)
-            break
-        }
+        log.info('key manager migrate:', choice)
+        if (verbose) $flash(`you chose ${choice.migrate}`)
       }
 
-      log.info('key manager migrate:', choice)
+      switch (choice.migrate) {
+        case 'none':
+          bbt = []
+          break
+        case 'pinned':
+          bbt = bbt.filter(k => k.pinned)
+          break
+        case 'postpone':
+          return
+      }
+
       const skipped: Set<string> = new Set
-      if (choice.migrate !== 'postpone') {
-        flash(`Migrating ${bbt.length} citation keys`)
+      if (bbt.length) {
+        $flash(`migrating ${bbt.length} citation keys`)
         for (const { itemID, citationKey, pinned } of bbt) {
           const item = await getItemAsync(itemID)
           if (choice.overwrite || !item.getField('citationKey')) {
@@ -104,6 +125,7 @@ export async function migrate(): Promise<void> {
           }
         }
         if (skipped.size) log.info(`migrate skipped ${JSON.stringify([...skipped].sort())}`)
+        if (verbose) $flash(`migrate skipped ${skipped.size}`)
 
         Zotero.Prefs.set('translators.better-bibtex.autoExport.autoPinOverwrite', !!choice.dynamic)
       }
@@ -111,20 +133,24 @@ export async function migrate(): Promise<void> {
   }
   catch (err) {
     log.error('citation key migration error:', err, err.message)
+    $flash(`migration error: ${err.message}`)
   }
 
   if (choice.migrate !== 'postpone') {
     try {
       const renamed = await Zotero.File.rename(sqlite, 'better-bibtex.migrated', { unique: true })
       if (renamed) {
-        log.info('citation key migration error: migration finished and database renamed to', renamed)
+        log.info('citation key migration: migration finished and database renamed to', renamed)
+        if (verbose) $flash(`migration finished and database renamed to ${JSON.stringify(renamed)}`)
       }
       else {
         log.error('citation key migration error: migration finished but database not renamed')
+        if (verbose) $flash('migration error: migration finished but database not renamed')
       }
     }
     catch (err) {
       log.error('citation key migration error: migration rename error:', err, err.message)
+      $flash(`citation key migration error: rename failed (${err.message})`)
     }
   }
 }
@@ -139,17 +165,17 @@ export async function remigrate(): Promise<boolean> {
 
   const { sqlite, migrated } = await databases()
   if (!migrated && !sqlite) {
-    flash('Re-migrate failed: no Better BibTeX database present')
+    $flash('no re-migrate: no Better BibTeX database present')
     return
   }
 
   if (!sqlite) {
     const renamed = await Zotero.File.rename(migrated, 'better-bibtex.sqlite')
     if (!renamed) {
-      flash(`Re-migrate failed: could not rename ${JSON.stringify(migrated)} to ${JSON.stringify(sqlite)}`)
+      $flash(`re-migrate failed: could not rename ${JSON.stringify(migrated)} to ${JSON.stringify(sqlite)}`)
       return
     }
   }
 
-  await migrate()
+  await migrate(true)
 }
