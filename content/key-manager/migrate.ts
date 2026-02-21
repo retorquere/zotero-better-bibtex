@@ -6,6 +6,7 @@ import { citationKey as extract } from '../extra'
 export type StoredKey = {
   citationKey: string
   itemID: number
+  itemKey: string
   libraryID: number
   pinned: boolean
 }
@@ -47,13 +48,13 @@ export async function migrate(verbose = false): Promise<ReadOnly[]> {
   }
   try {
     const conn = new Zotero.DBConnection('better-bibtex')
-    let bbt: StoredKey[] = (await conn.queryAsync('SELECT itemID, libraryID, citationKey, pinned FROM citationkey')) as StoredKey[]
+    let bbt: StoredKey[] = (await conn.queryAsync('SELECT itemID, itemKey, libraryID, citationKey, pinned FROM citationkey')) as StoredKey[]
     await conn.closeDatabase(true)
 
     const readonly: ReadOnly[] = []
 
     await Zotero.DB.executeTransaction(async () => {
-      const itemIDs: number[] = await Zotero.DB.columnQueryAsync(`
+      const itemIDs: Set<number> = new Set(await Zotero.DB.columnQueryAsync(`
         SELECT item.itemID
         FROM items item
         WHERE item.itemID NOT IN (SELECT itemID FROM deletedItems)
@@ -63,15 +64,15 @@ export async function migrate(verbose = false): Promise<ReadOnly[]> {
             FROM itemTypes
             WHERE typeName IN ('attachment', 'note', 'annotation')
           )
-      `.replace(/\n/g, ' ').trim())
+      `.replace(/\n/g, ' ').trim()))
 
-      bbt = bbt.filter(key => itemIDs.includes(key.itemID))
+      bbt = bbt.filter(key => itemIDs.has(key.itemID))
 
       choice.total = bbt.length
       choice.pinned = bbt.filter(key => key.pinned).length
 
       let zotero: StoredKey[] = (await Zotero.DB.queryAsync(`
-        SELECT items.itemID, items.libraryID, ck.value AS citationKey
+        SELECT items.itemID, items.itemKey, items.libraryID, ck.value AS citationKey
         FROM items
         JOIN itemData ckField ON ckField.itemID = items.itemID AND ckField.fieldID IN (SELECT fieldID FROM fields WHERE fieldName = 'citationKey')
         JOIN itemDataValues ck ON ck.valueID = ckField.valueID
@@ -84,13 +85,15 @@ export async function migrate(verbose = false): Promise<ReadOnly[]> {
       choice.zotero = zotero.length
 
       bbt = bbt.filter(bkey => {
+        if (!editable.has(bkey.libraryID)) {
+          const { pinned, ...ro } = bkey
+          readonly.push(ro)
+          return false
+        }
+
         const zkey = zotero.find(key => key.itemID === bkey.itemID)
         if (!zkey) return true
 
-        if (!editable.has(zkey.libraryID)) {
-          readonly.push({ itemID: bkey.itemID, itemKey: bkey.itemKey, libraryID: bkey.
-          return false
-        }
         if (bkey.citationKey === zkey.citationKey) return false
 
         choice.conflicts += 1

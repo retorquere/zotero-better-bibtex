@@ -240,7 +240,13 @@ export const KeyManager = new class _KeyManager {
   }
 
   private async start(): Promise<void> {
-    this.#db = new Loki(PathUtils.join(Zotero.BetterBibTeX.dir, 'read-only.json'))
+    const editable: Set<number> = new Set(Zotero.Libraries.getAll().filter(lib => lib.editable).map(lib => lib.id))
+
+    this.#db = new Loki(PathUtils.join(Zotero.BetterBibTeX.dir, 'read-only.json'), {
+      autosave: true,
+      autosaveInterval: 5000,
+      saveFilter: (key) => Zotero.Libraries.get(key.libraryID).editable
+    })
     await this.#db.load()
     this.keys = this.#db.addCollection<CitekeyRecord>('citationKeys', {
       indices: [ 'itemID', 'libraryID', 'itemKey', 'citationKey', 'lcCitationKey' ],
@@ -260,7 +266,7 @@ export const KeyManager = new class _KeyManager {
         AND item.itemID NOT IN (SELECT itemID FROM feedItems)
       `.replace(/\n/g, ' ').trim()
 
-    const keys: CitekeyRecord[] = readonly.map(({ 
+    const keys: CitekeyRecord[] = [...readonly]
     for (const { itemID, itemKey, libraryID, citationKey } of await Zotero.DB.queryAsync(load)) {
       keys.push(lc({ itemID, itemKey, libraryID, citationKey }))
     }
