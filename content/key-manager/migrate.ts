@@ -6,6 +6,7 @@ import { citationKey as extract } from '../extra'
 type StoredKey = {
   citationKey: string
   itemID: number
+  libraryID: number
   pinned: boolean
 }
 
@@ -27,6 +28,7 @@ export async function migrate(verbose = false): Promise<void> {
   const { sqlite } = await databases()
   if (!sqlite) return
 
+  const editable: Set<number> = new Set(Zotero.Libraries.getAll().filter(lib => lib.editable).map(lib => lib.id))
   const choice = {
     migrate: 'postpone' as ('none' | 'all' | 'pinned' | 'postpone'),
     overwrite: false,
@@ -38,7 +40,7 @@ export async function migrate(verbose = false): Promise<void> {
   }
   try {
     const conn = new Zotero.DBConnection('better-bibtex')
-    let bbt: StoredKey[] = (await conn.queryAsync('SELECT itemID, citationKey, pinned FROM citationkey')) as StoredKey[]
+    let bbt: StoredKey[] = (await conn.queryAsync('SELECT itemID, libraryID, citationKey, pinned FROM citationkey')) as StoredKey[]
     await conn.closeDatabase(true)
 
     await Zotero.DB.executeTransaction(async () => {
@@ -60,7 +62,7 @@ export async function migrate(verbose = false): Promise<void> {
       choice.pinned = bbt.filter(key => key.pinned).length
 
       let zotero: StoredKey[] = (await Zotero.DB.queryAsync(`
-        SELECT items.itemID, ck.value AS citationKey
+        SELECT items.itemID, items.libraryID, ck.value AS citationKey
         FROM items
         JOIN itemData ckField ON ckField.itemID = items.itemID AND ckField.fieldID IN (SELECT fieldID FROM fields WHERE fieldName = 'citationKey')
         JOIN itemDataValues ck ON ck.valueID = ckField.valueID
@@ -75,7 +77,7 @@ export async function migrate(verbose = false): Promise<void> {
       bbt = bbt.filter(bkey => {
         const zkey = zotero.find(key => key.itemID === bkey.itemID)
         if (!zkey) return true
-        if (bkey.citationKey === zkey.citationKey) return false
+        if (bkey.citationKey === zkey.citationKey || !editable.has(zkey.libraryID)) return false
         choice.conflicts += 1
         return true
       })

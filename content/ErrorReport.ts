@@ -545,18 +545,32 @@ export class ErrorReport {
     if (autoExports.length) {
       context += 'Auto-exports:\n'
       for (const ae of autoExports) {
-        context += `  path: ...${JSON.stringify(Path.basename(ae.path))}`
+        context += `  path: ...${JSON.stringify(Path.basename(ae.path))} (`
         switch (ae.type) {
-          case 'collection':
-            context += ` (${ Zotero.Collections.get(ae.id)?.name || '<collection>' })`
+          case 'collection': {
+            const coll = Zotero.Collections.get(ae.id)
+            if (coll) {
+              context += coll.name || `<unnamed collection ${ae.id}>`
+            }
+            else {
+              context += `<non-existent collection ${ae.id}>`
+            }
             break
+          }
+
           case 'library': {
             const lib = Zotero.Libraries.get(ae.id)
-            context += ` (${(lib ? lib.name : '') || '<library>'})`
+            if (lib) {
+              context += lib.name || '<library>'
+              if (!lib.editable) context += ', read-only'
+            }
+            else {
+              context += `<non-existent library ${ae.id}>`
+            }
             break
           }
         }
-        context += '\n'
+        context += ')\n'
         for (const [ k, v ] of Object.entries(ae)) {
           if (k === 'path') continue
           context += `    ${ k }: ${ JSON.stringify(v) }`
@@ -568,7 +582,7 @@ export class ErrorReport {
 
     context += 'Libraries:\n'
     for (const lib of Zotero.Libraries.getAll()) {
-      context += `  ${JSON.stringify(lib.name)}, libraryID = ${lib.libraryID}, groupID = ${(lib as unknown as Zotero.Group).groupID ?? false}\n`
+      context += `  ${JSON.stringify(lib.name)}, libraryID = ${lib.libraryID}, groupID = ${(lib as unknown as Zotero.Group).groupID ?? false}, editable: ${!!lib.editable}\n`
     }
 
     context += `Zotero.Debug.storing: ${ Zotero.Debug.storing }\n`
