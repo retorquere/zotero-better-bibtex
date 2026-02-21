@@ -134,6 +134,7 @@ export async function migrate(verbose = false): Promise<void> {
   catch (err) {
     log.error('citation key migration error:', err, err.message)
     $flash(`migration error: ${err.message}`)
+    choice.migrate = 'postpone'
   }
 
   if (choice.migrate !== 'postpone') {
