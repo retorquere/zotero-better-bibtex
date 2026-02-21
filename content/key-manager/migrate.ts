@@ -113,13 +113,6 @@ export async function migrate(): Promise<void> {
     log.error('citation key migration error:', err, err.message)
   }
 
-  try {
-    await Zotero.DB.queryAsync("DETACH DATABASE 'betterbibtex'")
-  }
-  catch (err) {
-    log.error('citation key migration error: could not detach:', err, err.message)
-  }
-
   if (choice.migrate !== 'postpone') {
     try {
       const renamed = await Zotero.File.rename(sqlite, 'better-bibtex.migrated', { unique: true })
