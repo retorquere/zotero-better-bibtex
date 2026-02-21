@@ -52,7 +52,7 @@ import { Translators } from './translators'
 import { Exporter } from './translators/worker'
 import { fix as fixExportFormat } from './item-export-format'
 import { KeyManager, CitekeyRecord } from './key-manager'
-import { canMigrate, remigrate } from './key-manager/migrate'
+import { remigrate } from './key-manager/migrate'
 import { TestSupport } from './test-support'
 import * as l10n from './l10n'
 import * as CSL from 'citeproc'
@@ -617,20 +617,14 @@ export class BetterBibTeX {
         oncommand: 'Zotero.BetterBibTeX.ErrorReport.open()',
       })
 
-      canMigrate()
-        .then(mayMigrate => {
-          if (mayMigrate) {
-            Menu.register('menuHelp', {
-              id: 'better-bibtex-menuHelp-remigrate',
-              tag: 'menuitem',
-              label: 'Attempt re-migration of BetterBibTeX citation keys',
-              oncommand: 'Zotero.BetterBibTeX.remigrate()',
-            })
-          }
+      if (Preference.remigrate) {
+        Menu.register('menuHelp', {
+          id: 'better-bibtex-menuHelp-remigrate',
+          tag: 'menuitem',
+          label: 'Attempt re-migration of BetterBibTeX citation keys',
+          oncommand: 'Zotero.BetterBibTeX.remigrate()',
         })
-        .catch(err => {
-          log.error(`could not establish remigration options: ${err.message}`)
-        })
+      }
     }
 
     if (!doc.querySelector('#better-bibtex-menuItem')) {
