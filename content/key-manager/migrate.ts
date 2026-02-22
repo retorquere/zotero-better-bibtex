@@ -2,6 +2,7 @@ import { log } from '../logger'
 import { getItemAsync } from '../get-items-async'
 import { flash } from '../flash'
 import { citationKey as extract } from '../extra'
+import { Preference } from '../prefs'
 
 type StoredKey = {
   citationKey: string
@@ -185,4 +186,5 @@ export async function remigrate(): Promise<boolean> {
   }
 
   await migrate(true)
+  Preference.remigrate = false
 }
