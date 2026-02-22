@@ -1,4 +1,4 @@
-## v8.0.24
+## v8.0.25
 
 * fix: read-only groups would error out key migration
 
