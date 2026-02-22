@@ -21,7 +21,7 @@ async function databases(): Promise<Paths> {
 }
 
 function $flash(msg) {
-  flash('Better BibTeX citation key migration', msg)
+  flash('citation key migration', msg)
 }
 
 export async function migrate(verbose = false): Promise<void> {
