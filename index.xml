@@ -47,7 +47,7 @@
       <link>/zotero-better-bibtex/changelog/index.html</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       <guid>/zotero-better-bibtex/changelog/index.html</guid>
-      <description>v8.0.22 Re-migration option for citation keys Skip non-editable items Show number of conflicts before migration Migration UI wording improvements v8.0.20 dynamic citation keys are back, option in migration new the pinned function for citation key patterns, which retrieves a pinned citation key from the extra field. autoPinDelay defaults to on (2 seconds) migration uses direct DB read rather than attach/detach, windows too clingy and rename failed v8.0.18 Migration improvements:</description>
+      <description>v8.0.24 fix: read-only groups would error out key migration v8.0.22 Re-migration option for citation keys Skip non-editable items Show number of conflicts before migration Migration UI wording improvements v8.0.20 dynamic citation keys are back, option in migration new the pinned function for citation key patterns, which retrieves a pinned citation key from the extra field. autoPinDelay defaults to on (2 seconds) migration uses direct DB read rather than attach/detach, windows too clingy and rename failed v8.0.18 Migration improvements:</description>
     </item>
     <item>
       <title>Sponsoring BBT</title>
