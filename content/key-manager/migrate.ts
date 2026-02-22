@@ -72,7 +72,7 @@ export async function migrate(verbose = false): Promise<ReadOnly[]> {
       choice.pinned = bbt.filter(key => key.pinned).length
 
       let zotero: StoredKey[] = (await Zotero.DB.queryAsync(`
-        SELECT items.itemID, items.itemKey, items.libraryID, ck.value AS citationKey
+        SELECT items.itemID, items.key as itemKey, items.libraryID, ck.value AS citationKey
         FROM items
         JOIN itemData ckField ON ckField.itemID = items.itemID AND ckField.fieldID IN (SELECT fieldID FROM fields WHERE fieldName = 'citationKey')
         JOIN itemDataValues ck ON ck.valueID = ckField.valueID

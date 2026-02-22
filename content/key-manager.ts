@@ -204,7 +204,7 @@ export const KeyManager = new class _KeyManager {
   }
 
   private async start(): Promise<void> {
-    this.#db = new Loki(PathUtils.join(Zotero.BetterBibTeX.dir, 'read-only.json'), {
+    this.#db = new Loki(PathUtils.join(Zotero.BetterBibTeX.dir, 'read-only.msgpack'), {
       autosave: true,
       autosaveInterval: 5000,
       saveFilter(key) {

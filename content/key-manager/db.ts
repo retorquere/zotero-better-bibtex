@@ -1,5 +1,6 @@
 import { Path } from '../file'
 import CallbackLoki from 'lokijs'
+import { pack, unpack } from 'msgpackr'
 
 class PersistenceAdapter implements LokiPersistenceAdapter {
   public mode = 'reference'
@@ -8,13 +9,18 @@ class PersistenceAdapter implements LokiPersistenceAdapter {
   }
 
   // eslint-disable-next-line @typescript-eslint/no-misused-promises
-  public async loadDatabase(dbname: string, callback: (data: any) => void): Promise<void> {
+  public async loadDatabase(dbname: string, callback: (err: null | Error, data?: any) => void): Promise<void> {
     try {
       if (!(await IOUtils.exists(dbname))) return callback(null)
-      const stored = await IOUtils.readUTF8(dbname)
-      if (!stored) return callback(null)
 
-      callback(JSON.parse(stored))
+      if (dbname.endsWith('.json')) {
+        const stored = await IOUtils.readUTF8(dbname)
+        if (!stored) return callback(null)
+        callback(null, JSON.parse(stored))
+      }
+      else {
+        callback(null, unpack(await IOUtils.read(dbname)))
+      }
     }
     catch (err) {
       callback(err instanceof Error ? err : new Error(String(err)))
@@ -34,8 +40,13 @@ class PersistenceAdapter implements LokiPersistenceAdapter {
         idIndex: [],
       })) as any[]
 
-      await IOUtils.writeUTF8(dbname, JSON.stringify(store))
-      callback(null)
+      if (dbname.endsWith('.json')) {
+        await IOUtils.writeUTF8(dbname, JSON.stringify(store))
+        callback(null)
+      }
+      else {
+        await IOUtils.write(dbname, pack(store), { tmpPath: `${dbname}.tmp` })
+      }
     }
     catch (err) {
       callback(err instanceof Error ? err : new Error(String(err)))
