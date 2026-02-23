@@ -84,15 +84,13 @@ monkey.patch(Zotero.Utilities.Item?.itemToCSLJSON ? Zotero.Utilities.Item : Zote
 })
 */
 
-// const editable: Set<number> = new Set(Zotero.Libraries.getAll().filter(lib => lib.editable).map(lib => lib.id))
-
-function editable(libraryID: number) {
+function readonly(libraryID: number) {
   const lib = Zotero.Libraries.get(libraryID)
-  return !lib || lib.editable
+  return lib && !lib.editable
 }
 monkey.patch(Zotero.Item.prototype, 'getField', original => function Zotero_Item_prototype_getField(field: any, _unformatted: any, _includeBaseMapped: any) {
   try {
-    if (!Zotero.BetterBibTeX.starting && field === 'citationKey' && !editable(this.libraryID)) {
+    if (!Zotero.BetterBibTeX.starting && field === 'citationKey' && readonly(this.libraryID)) {
       return Zotero.BetterBibTeX.KeyManager.readonly(this)
     }
   }
