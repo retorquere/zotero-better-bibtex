@@ -126,7 +126,7 @@
     "turndown": "^7.2.2",
     "uzip": "^0.20201231.0",
     "wasmjieba-web": "^1.0.15",
-    "zotero-plugin": "^9.0.0",
+    "zotero-plugin": "^9.0.1",
     "zotero-plugin-toolkit": "^5.1.2",
     "zotero-types": "^4.1.1"
   },
