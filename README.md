@@ -14,6 +14,7 @@ Better BibTeX (BBT) is an extension for [Zotero](https://www.zotero.org) and (in
 * The concept of pinning keys is gone; keys are *always* pinned now. Zotero doesn't have a place I can store whether a key is pinned or not.
 * The Zotero-native citation keys are stored in another place than the BBT citation keys. If you have no Zotero-native citation keys yet, BBT will silently migrate them to there. If you do have Zotero-native citation keys, and a migration would overwrite them, you will be offered a windows with the choice on how to migrate your citation keys from the BBT storage to the Zotero storage.
 * I have enabled auto-pin (what really is auto-fill now) even you had it turned off. You can still turn it back off if you don't want this.
+* Integrations that read the BBT database directly will have to read the Zotero database instead.
 
 Upside to all of this is that keys will sync.
 
