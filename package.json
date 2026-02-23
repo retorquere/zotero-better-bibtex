@@ -127,8 +127,8 @@
     "uzip": "^0.20201231.0",
     "wasmjieba-web": "^1.0.15",
     "zotero-plugin": "^8.0.14",
-    "zotero-plugin-toolkit": "^5.1.2",
-    "zotero-types": "^4.1.1"
+    "zotero-plugin-toolkit": "^5.0.1",
+    "zotero-types": "^4.0.5"
   },
   "devDependencies": {
     "@eslint/compat": "^2.0.2",
