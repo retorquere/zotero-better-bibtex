@@ -1,5 +1,9 @@
 import { log } from './logger'
 
+export function editable(): Set<number> {
+  return new Set(Zotero.Libraries.getAll().filter(lib => lib.editable).map(lib => lib.id))
+}
+
 export function readonly(library: number | _ZoteroTypes.Library.LibraryLike): boolean {
   const lib = (typeof library === 'number') ? Zotero.Libraries.get(library) : library
   return lib && !lib.editable

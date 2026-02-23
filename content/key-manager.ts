@@ -29,7 +29,7 @@ import { sprintf } from 'sprintf-js'
 import * as l10n from './l10n'
 
 import { migrate } from './key-manager/migrate'
-import { readonly } from './library'
+import { editable, readonly } from './library'
 
 export type CitekeyRecord = {
   itemID: number
@@ -40,8 +40,7 @@ export type CitekeyRecord = {
 }
 
 function lc(record: Partial<CitekeyRecord>): CitekeyRecord {
-  record.lcCitationKey = record.citationKey.toLowerCase()
-  return record as unknown as CitekeyRecord
+  return { ...record, lcCitationKey: record.citationKey.toLowerCase() } as CitekeyRecord
 }
 
 class Progress {
@@ -217,8 +216,9 @@ export const KeyManager = new class _KeyManager {
       indices: [ 'itemID', 'libraryID', 'itemKey', 'citationKey', 'lcCitationKey' ],
       unique: [ 'itemID' ],
     })
+    this.keys.findAndRemove({ libraryID: { $in: [...editable()] } })
 
-    const readonly_keys = await migrate()
+    await migrate()
 
     const load = `
       SELECT item.itemID, item.key AS itemKey, item.libraryID, idv.value AS citationKey
@@ -231,11 +231,11 @@ export const KeyManager = new class _KeyManager {
         AND item.itemID NOT IN (SELECT itemID FROM feedItems)
       `.replace(/\n/g, ' ').trim()
 
-    const keys: CitekeyRecord[] = readonly_keys.map(lc)
+    const keys: CitekeyRecord[] = []
     for (const { itemID, itemKey, libraryID, citationKey } of await Zotero.DB.queryAsync(load)) {
       keys.push(lc({ itemID, itemKey, libraryID, citationKey }))
     }
-    this.keys.findAndRemove({ itemID: { $in: readonly_keys.map(key => key.itemID) } })
+    this.keys.findAndRemove({ itemID: { $in: keys.map(key => key.itemID) } })
     this.keys.insert(keys)
 
     Events.on('preference-changed', pref => {
