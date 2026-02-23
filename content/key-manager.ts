@@ -180,7 +180,7 @@ export const KeyManager = new class _KeyManager {
     this.keys.findAndRemove({ itemID: { $in: ids } })
   }
 
-  private upsert(item) {
+  private upsert(item): void {
     const citationKey = item.getField('citationKey') || ''
 
     if (!citationKey) {
@@ -315,6 +315,21 @@ export const KeyManager = new class _KeyManager {
 
     this.upsert(item)
     return item
+  }
+
+  public readonly(item: Zotero.Item): string {
+    if (item.isFeedItem || !item.isRegularItem()) return ''
+    const key = this.keys.findOne({ itemID: item.id })
+    if (key) return key.citationKey
+    const proposed = this.propose(item)
+    if (!proposed) return ''
+    this.keys.insert(lc({
+      itemID: item.id,
+      itemKey: item.key,
+      libraryID: item.libraryID,
+      citationKey: proposed,
+    }))
+    return proposed
   }
 
   public get(itemID: number): CitekeyRecord {
