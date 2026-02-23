@@ -1,5 +1,10 @@
 import { log } from './logger'
 
+export function readonly(library: number | _ZoteroTypes.Library.LibraryLike): boolean {
+  const lib = (typeof library === 'number') ? Zotero.Libraries.get(library) : library
+  return lib && !lib.editable
+}
+
 export function get(query: Record<string, string | number>, throws = false): Zotero.Library {
   const oops = err => {
     log.error(err)

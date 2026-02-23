@@ -84,10 +84,7 @@ monkey.patch(Zotero.Utilities.Item?.itemToCSLJSON ? Zotero.Utilities.Item : Zote
 })
 */
 
-function readonly(libraryID: number) {
-  const lib = Zotero.Libraries.get(libraryID)
-  return lib && !lib.editable
-}
+import { readonly } from './library'
 monkey.patch(Zotero.Item.prototype, 'getField', original => function Zotero_Item_prototype_getField(field: any, _unformatted: any, _includeBaseMapped: any) {
   try {
     if (!Zotero.BetterBibTeX.starting && field === 'citationKey' && readonly(this.libraryID)) {

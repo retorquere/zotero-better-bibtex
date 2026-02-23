@@ -29,6 +29,7 @@ import { sprintf } from 'sprintf-js'
 import * as l10n from './l10n'
 
 import { migrate } from './key-manager/migrate'
+import { readonly } from './library'
 
 export type CitekeyRecord = {
   itemID: number
@@ -208,8 +209,7 @@ export const KeyManager = new class _KeyManager {
       autosave: true,
       autosaveInterval: 5000,
       saveFilter(key) {
-        const lib = Zotero.Libraries.get(key.libraryID)
-        return !lib || !lib.editable
+        return readonly(key.libraryID)
       },
     })
     await this.#db.read()
@@ -218,7 +218,7 @@ export const KeyManager = new class _KeyManager {
       unique: [ 'itemID' ],
     })
 
-    const readonly = await migrate()
+    const readonly_keys = await migrate()
 
     const load = `
       SELECT item.itemID, item.key AS itemKey, item.libraryID, idv.value AS citationKey
@@ -231,11 +231,11 @@ export const KeyManager = new class _KeyManager {
         AND item.itemID NOT IN (SELECT itemID FROM feedItems)
       `.replace(/\n/g, ' ').trim()
 
-    const keys: CitekeyRecord[] = readonly.map(lc)
+    const keys: CitekeyRecord[] = readonly_keys.map(lc)
     for (const { itemID, itemKey, libraryID, citationKey } of await Zotero.DB.queryAsync(load)) {
       keys.push(lc({ itemID, itemKey, libraryID, citationKey }))
     }
-    this.keys.findAndRemove({ itemID: { $in: readonly.map(key => key.itemID) } })
+    this.keys.findAndRemove({ itemID: { $in: readonly_keys.map(key => key.itemID) } })
     this.keys.insert(keys)
 
     Events.on('preference-changed', pref => {
