@@ -184,6 +184,7 @@ better-bibtex_preferences_auto-abbrev =
 
 better-bibtex_preferences_auto-abbrev_style = Abbreviation style:
 better-bibtex_preferences_auto-export = Automatic export
+  .label = { better-bibtex_preferences_auto-export }
 better-bibtex_preferences_auto-export_delay = Delay auto-export for
 
 better-bibtex_preferences_auto-export_explanation = You can only review and remove exports here. To add an auto-export, perform an export as usual and check the 'Keep updated' option presented there.
@@ -412,8 +413,8 @@ better-bibtex_preferences_tab_import = Import
 better-bibtex_preferences_tab_misc = Miscellaneous
   .label = { better-bibtex_preferences_tab_misc }
 
-better-bibtex_report-errors =
-  .label = Send Better BibTeX debug log...
+better-bibtex_report-errors = Send Better BibTeX debug log...
+  .label = { better-bibtex_report-errors }
 better-bibtex_server-url = 
   .title = Better BibTeX export via HTTP
   .buttonlabelaccept = OK
@@ -432,18 +433,28 @@ better-bibtex_translate_error_target_no_parent = { $path } does not have a paren
 better-bibtex_translate_error_target_not_a_file = { $path } exists but is not a file
 better-bibtex_units_seconds = seconds
 better-bibtex_workers_status = Total background exports started: { $total }, currently running: { $running }
-better-bibtex_zotero-pane_add-citation-links = Citation Graph: add citation links...
-better-bibtex_zotero-pane_citekey_pin_inspire-hep = Set BibTeX key from InspireHEP
-better-bibtex_zotero-pane_citekey_refresh = Regenerate BibTeX key
-better-bibtex_zotero-pane_citekey_fill = Generate missing BibTeX key
-better-bibtex_zotero-pane_bibtex_to_clipboard = 🅱 copy BibTeX to clipboard
-better-bibtex_zotero-pane_biblatex_to_clipboard = 🅱 copy BibLaTeX to clipboard
+better-bibtex_zotero-pane_add-citation-links =
+  .label = Citation Graph: add citation links...
+better-bibtex_zotero-pane_citekey_pin_inspire-hep =
+  .label = Set BibTeX key from InspireHEP
+better-bibtex_zotero-pane_citekey_refresh =
+  .label = Regenerate BibTeX key
+better-bibtex_zotero-pane_citekey_fill =
+  .label = Generate missing BibTeX key
+better-bibtex_zotero-pane_bibtex_to_clipboard =
+  .label = 🅱 copy BibTeX to clipboard
+better-bibtex_zotero-pane_biblatex_to_clipboard =
+  .label = 🅱 copy BibLaTeX to clipboard
 better-bibtex_zotero-pane_column_citekey = { -citation-key }
-better-bibtex_zotero-pane_patch-dates = Copy date-added/date-modified from extra field
-better-bibtex_zotero-pane_sentence-case = BBT Sentence-case
-better-bibtex_zotero-pane_show_collection-key = Download Better BibTeX export...
+better-bibtex_zotero-pane_patch-dates =
+  .labek = Copy date-added/date-modified from extra field
+better-bibtex_zotero-pane_sentence-case =
+  .label = BBT Sentence-case
+better-bibtex_zotero-pane_show_collection-key =
+  .label = Download Better BibTeX export...
 better-bibtex_zotero-pane_tag_duplicates = Tag duplicate citation keys
-better-bibtex_zotero-pane_tex-studio = Push entries to TeXstudio
+better-bibtex_zotero-pane_tex-studio =
+  .label = Push entries to TeXstudio
 
 betterbibtex-item-pane-header = { -citation-key }
 

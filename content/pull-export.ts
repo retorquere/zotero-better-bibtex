@@ -5,6 +5,52 @@ const NOT_FOUND = 404
 // const CONFLICT = 409
 const BAD_REQUEST = 400
 
+import { uri } from './escape'
+
+function nullify(obj) {
+  return obj ? obj : undefined
+}
+export function showURLs(mode: 'collection' | 'library'): void {
+  let collection = nullify(mode === 'collection' ? Zotero.getActiveZoteroPane().getSelectedCollection() : undefined)
+  const library = nullify(Zotero.Libraries.get(mode === 'collection' ? collection?.libraryID : Zotero.getActiveZoteroPane().getSelectedLibraryID()))
+
+  if (typeof library === 'undefined' || (mode === 'collection' && typeof collection === 'undefined')) return
+
+  const root = `http://127.0.0.1:${Zotero.Prefs.get('httpServer.port')}/better-bibtex/export?`
+  const params = {
+    url: {
+      long: root,
+      short: root,
+    },
+  }
+
+  if (library.groupID) {
+    params.url.short += `/group;id:${library.groupID}`
+    params.url.long += `/group;name:${uri.encode(library.name)}`
+  }
+  else {
+    params.url.short += `/library;id:${library.libraryID}`
+    params.url.long += `/library;name:${uri.encode(library.name)}`
+  }
+
+  if (mode === 'collection') {
+    params.url.short += `/collection;key:${collection.key}/${collection.name}`
+
+    let path = `/${uri.encode(collection.name)}`
+    while (typeof collection.parentID === 'number') {
+      collection = Zotero.Collections.get(collection.parentID)
+      path = `/${uri.encode(collection.name)}${path}`
+    }
+    params.url.long += `/collection${path}`
+  }
+  else {
+    params.url.short += `/${uri.encode(library.name) || 'library'}`
+    params.url.long += `/${uri.encode(library.name) || 'library'}`
+  }
+
+  Zotero.getMainWindow().openDialog('chrome://zotero-better-bibtex/content/server-url.xhtml', '', 'chrome,dialog,centerscreen,modal', params)
+}
+
 import { Translators } from './translators'
 import * as Collection from './collection'
 import * as Library from './library'

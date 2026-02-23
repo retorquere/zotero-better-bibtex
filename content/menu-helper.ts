@@ -6,9 +6,7 @@ import * as DateParser from './dateparser'
 import { log } from './logger'
 import * as CAYW from './cayw'
 import { TeXstudio } from './tex-studio'
-import { AutoExport } from './auto-export'
 import { Translators } from './translators'
-import { uri } from './escape'
 
 export async function clipSelected(translatorID: string): Promise<void> {
   const items = Zotero.getActiveZoteroPane().getSelectedItems()
@@ -127,81 +125,4 @@ export async function toTeXstudio(): Promise<void> {
   catch (err) {
     log.error('toTeXstudio:', err)
   }
-}
-
-export function AEisHidden(elem: any, _ev: Event): boolean { // eslint-disable-line @typescript-eslint/explicit-module-boundary-types
-  const { library, collection } = selected()
-
-  if (!library && !collection) return true
-
-  let n: number
-  const m = elem.getAttribute('id')?.match(/^better-bibtex-collection-menu-ae-(\d+)$/)
-  if (m) {
-    n = parseInt(m[1])
-  }
-  else {
-    n = 0
-  }
-
-  const aes = AutoExport.db.chain()
-    .find({ type: library ? 'library' : 'collection', id: library ? library.id : collection.id })
-    .simplesort('path')
-    .data()
-  const ae = aes[n]
-  if (!ae) return true
-
-  if (m) elem.setAttribute('label', ae.path)
-  return false
-}
-
-export function selected(): { library?: Zotero.Group; collection?: Zotero.Collection } {
-  const zp = Zotero.getActiveZoteroPane()
-  const cv = zp?.collectionsView
-  if (!cv) return {}
-
-  return {
-    library: cv.selectedTreeRow?.isLibrary(true) ? (Zotero.Libraries.get(zp.getSelectedLibraryID()) as unknown as Zotero.Group) || null : null,
-    collection: cv.selection?.count && cv.selectedTreeRow?.isCollection() ? zp.getSelectedCollection() : null,
-  }
-}
-
-export function pullExport(): void {
-  let { library, collection } = selected()
-
-  if (!library && !collection) return
-  if (!library) library = Zotero.Libraries.get(collection.libraryID) as unknown as Zotero.Group
-
-  const root = `http://127.0.0.1:${Zotero.Prefs.get('httpServer.port')}/better-bibtex/export?`
-  const params = {
-    url: {
-      long: root,
-      short: root,
-    },
-  }
-
-  if (library.groupID) {
-    params.url.short += `/group;id:${library.groupID}`
-    params.url.long += `/group;name:${uri.encode(library.name)}`
-  }
-  else {
-    params.url.short += `/library;id:${library.libraryID}`
-    params.url.long += `/library;name:${uri.encode(library.name)}`
-  }
-
-  if (collection) {
-    params.url.short += `/collection;key:${collection.key}/${collection.name}`
-
-    let path = `/${uri.encode(collection.name)}`
-    while (typeof collection.parentID === 'number') {
-      collection = Zotero.Collections.get(collection.parentID)
-      path = `/${uri.encode(collection.name)}${path}`
-    }
-    params.url.long += `/collection${path}`
-  }
-  else {
-    params.url.short += `/${uri.encode(library.name) || 'library'}`
-    params.url.long += `/${uri.encode(library.name) || 'library'}`
-  }
-
-  Zotero.getMainWindow().openDialog('chrome://zotero-better-bibtex/content/server-url.xhtml', '', 'chrome,dialog,centerscreen,modal', params)
 }
