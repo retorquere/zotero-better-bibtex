@@ -3,6 +3,7 @@ import { getItemAsync } from '../get-items-async'
 import { flash } from '../flash'
 import { citationKey as extract } from '../extra'
 import { Preference } from '../prefs'
+import { AltDebug } from '../debug-log'
 
 type StoredKey = {
   citationKey: string
@@ -185,6 +186,10 @@ export async function remigrate(): Promise<boolean> {
     }
   }
 
+  AltDebug.on()
   await migrate(true)
   Preference.remigrate = false
+  Zotero.Promise.delay(60000000).then(() => {
+    AltDebug.off()
+  })
 }

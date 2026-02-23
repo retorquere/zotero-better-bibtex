@@ -8,8 +8,7 @@ const Ready = new Deferred<boolean>
 import { MenuManager } from 'zotero-plugin-toolkit'
 const Menu = new MenuManager
 
-import { DebugLog } from 'zotero-plugin/debug-log'
-import { jwk as pubkey } from './public'
+import { AltDebug } from './debug-log'
 
 import { getItemsAsync } from './get-items-async'
 
@@ -476,6 +475,8 @@ export class BetterBibTeX {
       id: 'start',
       description: 'waiting for zotero',
       startup: async () => {
+        AltDebug.on()
+
         // https://groups.google.com/d/msg/zotero-dev/QYNGxqTSpaQ/uvGObVNlCgAJ
         // this is what really takes long
         await Promise.all([
@@ -486,7 +487,6 @@ export class BetterBibTeX {
         while (await Zotero.DB.valueQueryAsync("SELECT COUNT(*) FROM settings WHERE setting='globalSchema' AND key='migrateExtra'")) {
           await new Promise(resolve => setTimeout(resolve, 5000))
         }
-        DebugLog.register('Better BibTeX', ['translators.better-bibtex.'], pubkey)
 
         // and this
         if ((await Translators.needsInstall()).length) await Zotero.Translators.init()
@@ -550,7 +550,7 @@ export class BetterBibTeX {
         })
 
         Zotero.Promise.delay(15000).then(() => {
-          DebugLog.unregister('Better BibTeX')
+          AltDebug.off()
         })
 
         monkey.enable()
