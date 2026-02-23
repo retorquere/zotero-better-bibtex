@@ -15,6 +15,7 @@ Better BibTeX (BBT) is an extension for [Zotero](https://www.zotero.org) and (in
 
 **This has caused a few somewhat disruptive changes:**
 
+* Zotero 7 is no longer supported. BBT 8.0.25 still works on 7.0.32, but will not receive fixes anymore.
 * The citation key no longer sits at the top of the item pane. It now sits somewhere in the middle and you may have to scroll to see it. This placement is not under my control
 * Zotero will have moved all pinned keys out of the `extra` field into the native field
 * The concept of pinning keys is gone; keys are *always* pinned now. Zotero doesn't have a place I can store whether a key is pinned or not.
