@@ -150,6 +150,11 @@
     "parameters": ""
   },
   {
+    "summary": "<b>pinned</b>",
+    "description": "A pinned citation key from the extra field. eg if you have <code>citation key: me</code> in the extra field, <code>me</code> would be used as the value",
+    "parameters": ""
+  },
+  {
     "summary": "<b>postfix</b>(format: string containing at least one of &#39;%(a)s&#39;, &#39;%(A)s&#39;, &#39;%(n)s&#39;=&#39;%(a)s&#39;, start: number | string=0)",
     "description": "a pseudo-function that sets the citekey disambiguation postfix using an <a href=\"https://www.npmjs.com/package/sprintf-js\">sprintf-js</a> format spec\nfor when a key is generated that already exists. Does not add any text to the citekey otherwise.\nYou <em>must</em> include <em>exactly one</em> of the placeholders <code>%(n)s</code> (number), <code>%(a)s</code> (alpha, lowercase) or <code>%(A)s</code> (alpha, uppercase).\nFor the rest of the disambiguator you can use things like padding and extra text as sprintf-js allows. With start set to <code>1</code> the disambiguator is always included,\neven if there is no need for it when no duplicates exist. The default  format is <code>%(a)s</code>.\nin the template, you can use:</p>\n<ul>\n<li><code>%(a)s</code>: lower-case alphabetic disambiguator</li>\n<li><code>%(A)s</code>: upper-case alphabetic disambiguator</li>\n<li><code>%(n)s</code>: numeric disambiguator</li>\n</ul>",
     "parameters": "<table>\n              <tr>\n                <th><b>parameter</b></th>\n                <th/>\n                <th>value assumed when not provided</th>\n                <th>valid values</th>\n              </tr>\n              <tr>\n                <td><code>format</code></td>\n                <td>sprintf-style format template</td>\n                <td>undefined</td>\n                <td>string containing at least one of '%(a)s', '%(A)s', '%(n)s'</td>\n              </tr>\n              <tr>\n                <td><code>start</code></td>\n                <td>start value for postfix</td>\n                <td>undefined</td>\n                <td>number | string</td>\n              </tr></table>"

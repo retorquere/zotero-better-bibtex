@@ -9,8 +9,9 @@ const Ready = new Deferred<boolean>
 import { MenuManager } from 'zotero-plugin-toolkit'
 const Menu = new MenuManager
 
-import { DebugLog } from 'zotero-plugin/debug-log'
-import { jwk as pubkey } from './public'
+import { AltDebug } from './debug-log'
+
+import { getItemsAsync } from './get-items-async'
 
 import { Scheduler } from './scheduler'
 import { TeXstudio } from './tex-studio'
@@ -51,6 +52,7 @@ import { Translators } from './translators'
 import { Exporter } from './translators/worker'
 import { fix as fixExportFormat } from './item-export-format'
 import { KeyManager, CitekeyRecord } from './key-manager'
+import { remigrate } from './key-manager/migrate'
 import { TestSupport } from './test-support'
 import * as l10n from './l10n'
 import * as CSL from 'citeproc'
@@ -474,6 +476,8 @@ export class BetterBibTeX {
       id: 'start',
       description: 'waiting for zotero',
       startup: async () => {
+        AltDebug.on()
+
         // https://groups.google.com/d/msg/zotero-dev/QYNGxqTSpaQ/uvGObVNlCgAJ
         // this is what really takes long
         await Promise.all([
@@ -484,7 +488,6 @@ export class BetterBibTeX {
         while (await Zotero.DB.valueQueryAsync("SELECT COUNT(*) FROM settings WHERE setting='globalSchema' AND key='migrateExtra'")) {
           await new Promise(resolve => setTimeout(resolve, 5000))
         }
-        DebugLog.register('Better BibTeX', ['translators.better-bibtex.'], pubkey)
 
         // and this
         if ((await Translators.needsInstall()).length) await Zotero.Translators.init()
@@ -502,7 +505,7 @@ export class BetterBibTeX {
 
         Events.on('cache-touch', async ({ itemIDs }) => {
           const withParents: Set<number> = new Set(itemIDs)
-          for (const item of await Zotero.Items.getAsync(itemIDs)) {
+          for (const item of await getItemsAsync(itemIDs)) {
             if (typeof item?.parentID === 'number') withParents.add(item.parentID)
           }
           await Cache.touch([...withParents])
@@ -534,7 +537,7 @@ export class BetterBibTeX {
         })
 
         Zotero.Promise.delay(15000).then(() => {
-          DebugLog.unregister('Better BibTeX')
+          AltDebug.off()
         })
 
         Zotero.MenuManager.registerMenu({
@@ -614,6 +617,15 @@ export class BetterBibTeX {
     await orchestrator.shutdown(reason)
   }
 
+  public async remigrate(): Promise<void> {
+    try {
+      await remigrate()
+    }
+    catch (err) {
+      flash(`Better BibTeX remigrate: ${err.message}`)
+    }
+  }
+
   public onMainWindowLoad({ window }: { window: Window }): void {
     log.info('loading FTL')
     window.MozXULElement.insertFTLIfNeeded('better-bibtex.ftl')
@@ -634,12 +646,22 @@ export class BetterBibTeX {
     }
     */
 
-    if (!doc.querySelector('#better-bibtex-menuHelp')) {
+    if (!doc.querySelector('#better-bibtex-menuHelp-report')) {
       Menu.register('menuHelp', {
-        id: 'better-bibtex-menuHelp',
+        id: 'better-bibtex-menuHelp-report',
         tag: 'menuitem',
         label: l10n.localize('better-bibtex_report-errors'),
         oncommand: 'Zotero.BetterBibTeX.ErrorReport.open()',
+      })
+    }
+
+    if (!doc.querySelector('#better-bibtex-menuHelp-remigrate')) {
+      Menu.register('menuHelp', {
+        id: 'better-bibtex-menuHelp-remigrate',
+        tag: 'menuitem',
+        label: 'Attempt re-migration of BetterBibTeX citation keys',
+        oncommand: 'Zotero.BetterBibTeX.remigrate()',
+        isHidden: () => !Preference.remigrate,
       })
     }
 
@@ -650,9 +672,9 @@ export class BetterBibTeX {
         label: 'Better BibTeX',
         icon: 'chrome://zotero-better-bibtex/content/skin/bibtex-menu.svg',
         children: [
-          { tag: 'menuitem', label: l10n.localize('better-bibtex_zotero-pane_citekey_pin_inspire-hep'), oncommand: 'Zotero.BetterBibTeX.KeyManager.pin("selected", true)' },
-          { tag: 'menuitem', label: l10n.localize('better-bibtex_zotero-pane_citekey_fill'), oncommand: 'Zotero.BetterBibTeX.KeyManager.refresh("selected")' },
-          { tag: 'menuitem', label: l10n.localize('better-bibtex_zotero-pane_citekey_refresh'), oncommand: 'Zotero.BetterBibTeX.KeyManager.refresh("selected", true, true)' },
+          { tag: 'menuitem', label: l10n.localize('better-bibtex_zotero-pane_citekey_pin_inspire-hep'), oncommand: 'Zotero.BetterBibTeX.KeyManager.fill("selected", { warn: true, inspireHEP: true, replace: true })' },
+          { tag: 'menuitem', label: l10n.localize('better-bibtex_zotero-pane_citekey_fill'), oncommand: 'Zotero.BetterBibTeX.KeyManager.fill("selected")' },
+          { tag: 'menuitem', label: l10n.localize('better-bibtex_zotero-pane_citekey_refresh'), oncommand: 'Zotero.BetterBibTeX.KeyManager.fill("selected", { warn: true, replace: true })' },
           {
             tag: 'menuitem',
             label: l10n.localize('better-bibtex_zotero-pane_biblatex_to_clipboard'),

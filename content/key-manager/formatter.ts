@@ -963,6 +963,13 @@ export class PatternFormatter {
     return extra?.[2] || ''
   }
 
+  /**
+   * A pinned citation key from the extra field. eg if you have `citation key: me` in the extra field, `me` would be used as the value
+   */
+  public $pinned(): string {
+    return this.item.extraFields.kv.citationKey || ''
+  }
+
   /** the original year of the publication */
   public $origyear(): string {
     return this.padYear(this.format_date(this.item.date, '%-oY'), 2)

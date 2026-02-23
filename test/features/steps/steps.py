@@ -1,3 +1,4 @@
+from numerizer import numerize
 import steps.zotero as zotero
 from munch import *
 from behave import given, when, then
@@ -404,6 +405,12 @@ def step_impl(context):
     if elapsed > 7:
       utils.print(datetime.timedelta(seconds=int(elapsed)))
 
+@then(u'I should have {n} auto-exports registered')
+def step_impl(context, n):
+  n = int(n)
+  registered = context.zotero.execute('return Zotero.BetterBibTeX.AutoExport.all().length')
+  assert n == registered, f'expected {n}, found {registered}'
+
 @step(u'I wait at most {seconds:d} seconds until all auto-exports are done')
 def step_impl(context, seconds):
   printed = False
@@ -512,3 +519,20 @@ def step_impl(context, collection, preferences, expected):
   except Exception as e:
     utils.exported(expected, _found)
     raise
+
+@step(u'I change the name of the {nth} author to [{name}]')
+def step_impl(context, nth, name):
+  nth = int(re.sub('[a-z]+', '', numerize(nth))) - 1
+  if '][' in name:
+    name = name.split('][')
+    name = { 'lastName': name[0], 'firstName': name[1] }
+  else:
+    name = { 'name': name }
+  context.zotero.execute('''
+    const item = await Zotero.Items.get(itemID)
+    const { creatorType, creatorTypeID, fieldMode } = item.getCreator(nth)
+    item.setCreator(nth, { creatorType, creatorTypeID, fieldMode, ...name })
+    await item.saveTx()
+  ''', nth=nth, itemID=context.selected[0], name=name)
+
+

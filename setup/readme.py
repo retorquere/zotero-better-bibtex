@@ -6,7 +6,7 @@ with open('README.md') as f:
   readme = f.read()
 warning = '<!-- WARNING: GENERATED FROM https://github.com/retorquere/zotero-better-bibtex/blob/master/README.md. EDITS WILL BE OVERWRITTEN -->'
 
-index = f"""
+page = f"""
 ---
 title: Better BibTeX for Zotero
 weight: 5
@@ -23,7 +23,7 @@ title: Sponsoring BBT
 {warning}
 """.lstrip().split('\n')
 
-appendto = index
+appendto = page
 for line in readme.split('\n'):
   if 'gitter' in line: continue
   if line.startswith('# Better BibTeX for Zotero'): continue
@@ -37,6 +37,20 @@ for line in readme.split('\n'):
   appendto.append(line)
 
 with open('site/content/_index.md', 'w') as f:
-  print("\n".join(index), file=f)
+  print("\n".join(page), file=f)
 with open('site/content/sponsoring.md', 'w') as f:
   print("\n".join(sponsoring), file=f)
+
+with open('CHANGELOG.md') as f:
+  page = f.read()
+warning = '<!-- WARNING: GENERATED FROM https://github.com/retorquere/zotero-better-bibtex/blob/master/CHANGELOG.md. EDITS WILL BE OVERWRITTEN -->'
+page = f"""
+---
+title: Changelog
+weight: 500
+---
+{warning}
+{page}
+"""
+with open('site/content/changelog.md', 'w') as f:
+  print(page, file=f)

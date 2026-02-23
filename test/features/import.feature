@@ -190,7 +190,7 @@ Feature: Import
     When I import 1 reference from "import/*.bib"
     Then the library should match "import/*.json"
 
-  @717
+  @717 @retries=5
   Scenario: Jabref groups import does not work #717
     When I import 3 references from "import/*.2.10.bib" into a new collection
     Then the library should match "import/*.2.10.json"

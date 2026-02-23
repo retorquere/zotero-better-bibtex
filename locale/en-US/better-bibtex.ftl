@@ -16,7 +16,7 @@ better-bibtex_error-report =
 
 better-bibtex_error-report_upgrade = The latest { $program } version is <strong>{ $upgrade }</strong>, you are running <strong>{ $running }</strong>; please upgrade first.
 
-better-bibtex_error-report_upgrade_auto = { $program } will update from the { $channel } channel every { $interval }, last update at { $last }.
+better-bibtex_error-report_upgrade_auto = { $program } will update from the { $channel } channel every { $interval }, last update at { $lastUpdate }.
 better-bibtex_error-report_upgrade_manual = { $program } updates are disabled
 
 better-bibtex_error-report_no_items = This log will not include sample items. <b>These are not mandatory</b>, but are usually necessary to create test cases for the change/fix you will be requesting. To generate a log with sample items:
@@ -235,8 +235,8 @@ better-bibtex_preferences_citekey_fold =
 
 better-bibtex_preferences_citekey_format = Citation key formula
 better-bibtex_preferences_citekey_format_installed = Active citation key formula
-better-bibtex_preferences_citekey_search = 
-  .label = Enable citation key search
+better-bibtex_preferences_citekey_dynamic =
+  .label = Regenerate citation key when item changes
 
 better-bibtex_preferences_citekey_uniqueness = 
   .label = Keeping citation keys unique
@@ -392,7 +392,7 @@ better-bibtex_preferences_postscript_warn =
 
 better-bibtex_preferences_prefpane_loading = Better BibTeX is loading
 better-bibtex_preferences_rescan-citekeys = 
-  .label = Re-scan pinned citekeys
+  .label = Re-scan citekeys
 
 better-bibtex_preferences_reset-cache = 
   .label = Reset cache on next start
@@ -433,7 +433,7 @@ better-bibtex_translate_error_target_not_a_file = { $path } exists but is not a 
 better-bibtex_units_seconds = seconds
 better-bibtex_workers_status = Total background exports started: { $total }, currently running: { $running }
 better-bibtex_zotero-pane_add-citation-links = Citation Graph: add citation links...
-better-bibtex_zotero-pane_citekey_pin_inspire-hep = Pin BibTeX key from InspireHEP
+better-bibtex_zotero-pane_citekey_pin_inspire-hep = Set BibTeX key from InspireHEP
 better-bibtex_zotero-pane_citekey_refresh = Regenerate BibTeX key
 better-bibtex_zotero-pane_citekey_fill = Generate missing BibTeX key
 better-bibtex_zotero-pane_bibtex_to_clipboard = 🅱 copy BibTeX to clipboard
