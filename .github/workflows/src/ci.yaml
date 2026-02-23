@@ -1,8 +1,12 @@
 name: automated tests
 
 on:
-  push: null
-  pull_request: null
+  push:
+    branches-ignore:
+      - 'l10n_master'
+  pull_request:
+    branches-ignore:
+      - 'l10n_master'
   schedule:
   - cron: 0 0 * * *
 

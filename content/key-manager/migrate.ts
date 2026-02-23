@@ -2,6 +2,8 @@ import { log } from '../logger'
 import { getItemAsync } from '../get-items-async'
 import { flash } from '../flash'
 import { citationKey as extract } from '../extra'
+import { Preference } from '../prefs'
+import { AltDebug } from '../debug-log'
 
 export type StoredKey = {
   citationKey: string
@@ -29,7 +31,7 @@ async function databases(): Promise<Paths> {
 }
 
 function $flash(msg) {
-  flash(`Better BibTeX citation key migration: ${msg}`)
+  flash('citation key migration', msg)
 }
 
 export async function migrate(verbose = false): Promise<ReadOnly[]> {
@@ -200,5 +202,10 @@ export async function remigrate(): Promise<boolean> {
     }
   }
 
+  AltDebug.on()
   await migrate(true)
+  Preference.remigrate = false
+  Zotero.Promise.delay(60000000).then(() => {
+    AltDebug.off()
+  })
 }

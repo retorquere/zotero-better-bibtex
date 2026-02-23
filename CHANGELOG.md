@@ -1,3 +1,7 @@
+## v8.0.25
+
+* fix: read-only groups would error out key migration
+
 ## v8.0.22
 
 * Re-migration option for citation keys

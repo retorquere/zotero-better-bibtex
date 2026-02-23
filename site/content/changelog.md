@@ -4,6 +4,10 @@ title: Changelog
 weight: 500
 ---
 <!-- WARNING: GENERATED FROM https://github.com/retorquere/zotero-better-bibtex/blob/master/CHANGELOG.md. EDITS WILL BE OVERWRITTEN -->
+## v8.0.25
+
+* fix: read-only groups would error out key migration
+
 ## v8.0.22
 
 * Re-migration option for citation keys
