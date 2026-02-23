@@ -26,6 +26,17 @@ import s3 from './s3.json' with { type: 'json' }
 
 const kB = 1024
 
+function basename(path: string) {
+  if (!path) return '[no path]'
+  try {
+    return Path.basename(path)
+  }
+  catch (err) {
+    log.error('basename for', JSON.stringify(path), 'failed:', err)
+    return `${path}`.replace(/.*[\\/]/, '')
+  }
+}
+
 type WizardButton = HTMLElement & { disabled: boolean }
 
 type Wizard = HTMLElement & {
@@ -545,7 +556,7 @@ export class ErrorReport {
     if (autoExports.length) {
       context += 'Auto-exports:\n'
       for (const ae of autoExports) {
-        context += `  path: ...${JSON.stringify(Path.basename(ae.path))} (`
+        context += `  path: ...${JSON.stringify(basename(ae.path))} (`
         switch (ae.type) {
           case 'collection': {
             const coll = Zotero.Collections.get(ae.id)
