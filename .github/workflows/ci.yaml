@@ -10,6 +10,10 @@ on:
   schedule:
   - cron: 0 0 * * *
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.sha }}
+  cancel-in-progress: true
+
 jobs:
   build:
     if: github.head_ref != 'l10n_master'
