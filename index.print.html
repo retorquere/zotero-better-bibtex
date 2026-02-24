@@ -22,7 +22,7 @@ Notice With the advent of Zotero 8, items have a Zotero-native citation key fiel
     <meta itemprop="name" content="Better BibTeX for Zotero">
     <meta itemprop="description" content="Better BibTeX (BBT) is an extension for Zotero and (in principle) Juris-M that makes it easier to manage bibliographic data, especially for people authoring documents using text-based toolchains (e.g. based on LaTeX / Markdown).
 Notice With the advent of Zotero 8, items have a Zotero-native citation key field. This has replaced the BBT citation key field.">
-    <meta itemprop="wordCount" content="854">
+    <meta itemprop="wordCount" content="857">
     <title>Better BibTeX for Zotero</title>
     <link href="/zotero-better-bibtex/index.html" rel="canonical" type="text/html" title="Better BibTeX for Zotero">
     <link href="/zotero-better-bibtex/index.xml" rel="alternate" type="application/rss+xml" title="Better BibTeX for Zotero"><link rel="icon" href="/zotero-better-bibtex/better-bibtex.ico" type="image/x-icon">
@@ -200,12 +200,8 @@ Notice With the advent of Zotero 8, items have a Zotero-native citation key fiel
 </ul>
 <p>Upside to all of this is that keys will sync.</p>
 <h2 id="re-do-migration">Re-do migration<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h2>
-<p><strong>If key migration appears to have failed, YOUR CITATION KEYS ARE SAFE</strong>. Make sure you are on the latest version, and:</p>
-<ul>
-<li>go into the preferences, open the &ldquo;config editor&rdquo;, search for &ldquo;remigrate&rdquo; and toggle what you find to &ldquo;true&rdquo; by double clicking it</li>
-<li>go into Help and click &ldquo;attempt re-migration&rdquo;</li>
-<li>submit a debug log on a github issue.</li>
-</ul>
+<p><strong>If key migration appears to have failed, YOUR CITATION KEYS ARE SAFE</strong>.</p>
+<p>Make sure you are on the latest version. For the first 5 minutes after BBT start, the Help menu will have an option <em>Re-do BBT citation key migration</em>. Click that, generate a debug log from the Help menu, then open an issue on github noting the debug log ID.</p>
 <p><strong>It is a known problem that read-only groups do not have citation keys. I am working on a fix</strong></p>
 <h2 id="features">Features<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h2>
 <h3 id="facilities-for-generating-citation-keys">Facilities for generating citation keys<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h3>
@@ -14619,9 +14615,10 @@ the cache during first startup of the newer version. This can be a nuisance if y
 <h1 id="changelog">Changelog</h1>
 
 <!-- WARNING: GENERATED FROM https://github.com/retorquere/zotero-better-bibtex/blob/master/CHANGELOG.md. EDITS WILL BE OVERWRITTEN -->
-<h2 id="v8025">v8.0.25<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h2>
+<h2 id="v8026">v8.0.26<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h2>
 <ul>
 <li>fix: read-only groups would error out key migration</li>
+<li>fix: enable re-migration after start</li>
 </ul>
 <h2 id="v8022">v8.0.22<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h2>
 <ul>
@@ -14757,8 +14754,8 @@ means a lot) so I can save up for a replacement a year or so down
 the line, head on over to <a href="https://www.patreon.com/retorquere" rel="external">Patreon</a>,
 but mind that Patreon takes a fairly large cut of what you give.</p>
 <p>Many, many thanks, also to the existing contributors &ndash; thanks to you I&rsquo;ve hit my first target and have been able to replace my trusty macbook air with a newer macbook pro which has much more breathing room.</p>
-<p><a href="#R-image-65662b949d97ff8f7c032c28e88c7092" class="lightbox-link"><img alt="My github stats" class="lazy lightbox figure-image" loading="lazy" src="https://github-readme-stats.vercel.app/api?username=retorquere&show_icons=true&hide_border=true&theme=dark" style="height: auto;width: auto;"></a>
-<a href="javascript:history.back();" class="lightbox-back" id="R-image-65662b949d97ff8f7c032c28e88c7092"><img alt="My github stats" class="lazy lightbox lightbox-image" loading="lazy" src="https://github-readme-stats.vercel.app/api?username=retorquere&show_icons=true&hide_border=true&theme=dark"></a></p>
+<p><a href="#R-image-de33e56d807e3a6051ced84454e16eec" class="lightbox-link"><img alt="My github stats" class="lazy lightbox figure-image" loading="lazy" src="https://github-readme-stats.vercel.app/api?username=retorquere&show_icons=true&hide_border=true&theme=dark" style="height: auto;width: auto;"></a>
+<a href="javascript:history.back();" class="lightbox-back" id="R-image-de33e56d807e3a6051ced84454e16eec"><img alt="My github stats" class="lazy lightbox lightbox-image" loading="lazy" src="https://github-readme-stats.vercel.app/api?username=retorquere&show_icons=true&hide_border=true&theme=dark"></a></p>
 <p>I prefer communicating via github issues, but for private information you can reach me on <a href="https://matrix.to/#/@retorquere:utwente.io" rel="external">matrix</a></p>
 
   <footer class="footline">
