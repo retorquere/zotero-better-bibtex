@@ -84,6 +84,7 @@ monkey.patch(Zotero.Utilities.Item?.itemToCSLJSON ? Zotero.Utilities.Item : Zote
 })
 */
 
+/*
 import { readonly } from './library'
 monkey.patch(Zotero.Item.prototype, 'getField', original => function Zotero_Item_prototype_getField(field: any, _unformatted: any, _includeBaseMapped: any) {
   try {
@@ -97,6 +98,7 @@ monkey.patch(Zotero.Item.prototype, 'getField', original => function Zotero_Item
 
   return original.apply(this, arguments) as string
 })
+*/
 
 // https://github.com/retorquere/zotero-better-bibtex/issues/1221
 monkey.patch(Zotero.Items, 'merge', original =>
@@ -601,6 +603,8 @@ export class BetterBibTeX {
             },
           ],
         })
+
+        const hideRemigrate = Date.now() + (5 * 60000)
         Zotero.MenuManager.registerMenu({
           menuID: `${pluginID}-menu-help`,
           pluginID,
@@ -609,10 +613,8 @@ export class BetterBibTeX {
             { menuType: 'menuitem', l10nID: 'better-bibtex_report-errors', onCommand: (_event, _context) => void Zotero.BetterBibTeX.ErrorReport.open() },
             {
               menuType: 'menuitem',
-              onShowing: (event, context) => {
-                context.setVisible(Preference.remigrate)
-                context.menuElem?.setAttribute('label', 'Attempt re-migration of BetterBibTeX citation keys')
-              },
+              l10nID: 'better-bibtex_remigrate',
+              onShowing: (event, context) => context.setVisible((Date.now() < hideRemigrate) || Preference.remigrate),
               onCommand: (_event, _context) => void Zotero.BetterBibTeX.remigrate(),
             },
           ],
