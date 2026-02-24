@@ -18,6 +18,8 @@ Better BibTeX (BBT) is an extension for [Zotero](https://www.zotero.org) and (in
 
 Upside to all of this is that keys will sync.
 
+## Re-do migration
+
 **If key migration appears to have failed, YOUR CITATION KEYS ARE SAFE**. Make sure you are on the latest version, and:
 
 * go into the preferences, open the "config editor", search for "remigrate" and toggle what you find to "true" by double clicking it
