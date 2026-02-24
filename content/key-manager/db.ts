@@ -48,7 +48,6 @@ class PersistenceAdapter implements LokiPersistenceAdapter {
         })) as any[],
       }
 
-      Zotero.debug(`writing ${dbname} ${JSON.stringify(store)}`)
       if (dbname.endsWith('.json')) {
         await IOUtils.writeUTF8(dbname, JSON.stringify(store))
         callback(null)
