@@ -55,9 +55,9 @@ jobs:
     - *checkout
     - name: get package version
       run: echo "version="`jq -r .version package.json` >> $GITHUB_ENV
-    - name: cancel spurious build on tagged version
-      uses: andymckay/cancel-action@master
-      if: github.event.head_commit.message == env.version && !startsWith(github.ref, 'refs/tags/')
+    #- name: cancel spurious build on tagged version
+    #  uses: andymckay/cancel-action@master
+    #  if: github.event.head_commit.message == env.version && !startsWith(github.ref, 'refs/tags/')
 
     - *install_python
     - *install_python_packages
