@@ -129,6 +129,8 @@ better-bibtex_preferences_advanced_import_sentence-case_warning =
     
     Vous pouvez désactiver cette option, mais vous pouvez aussi vouloir désactiver « Appliquer la capitalisation aux titres » (qui a ses propres problèmes, voir l'aide pour cette option sur cette page).
     Avec « oui, mais en essayant d'exclure les titres déjà avec casse de phrase », BBT tentera de détecter les titres déjà avec casse de phrase et ne les modifiera pas à l'importation.
+better-bibtex_remigrate = 
+    .label = Re-do BBT citation key migration
 better-bibtex_preferences_advanced_import_migrate = Migrer les préférences de BetterBibTeX/clés de citation
 better-bibtex_preferences_advanced_import_export-prefs = 
     .label = Exporter les préférences de BetterBibTeX...
@@ -357,17 +359,17 @@ better-bibtex_zotero-pane_citekey_refresh =
 better-bibtex_zotero-pane_citekey_fill = 
     .label = Générer une clé BibTeX manquante
 better-bibtex_zotero-pane_bibtex_to_clipboard = 
-    .label = 🅱 copy BibTeX to clipboard
+    .label = Copier BibTeX dans le presse-papiers
 better-bibtex_zotero-pane_biblatex_to_clipboard = 
-    .label = 🅱 copy BibLaTeX to clipboard
+    .label = Copier BibLaTeX dans le presse-papiers
 better-bibtex_zotero-pane_column_citekey = { -citation-key }
 better-bibtex_zotero-pane_patch-dates = 
-    .labek = Copy date-added/date-modified from extra field
+    .labek = Copier date-added/date-modified à partir du champ extra
 better-bibtex_zotero-pane_sentence-case = 
-    .label = BBT Sentence-case
+    .label = Casse de la phrase BBT
 better-bibtex_zotero-pane_show_collection-key = 
-    .label = Download Better BibTeX export...
+    .label = Télécharger l'export de Better BibTeX...
 better-bibtex_zotero-pane_tag_duplicates = Tagguer les clés de citation doublons
 better-bibtex_zotero-pane_tex-studio = 
-    .label = Push entries to TeXstudio
+    .label = Envoyer les citations vers TeXstudio
 betterbibtex-item-pane-header = { -citation-key }

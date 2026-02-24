@@ -129,6 +129,8 @@ better-bibtex_preferences_advanced_import_sentence-case_warning =
     您可以禁用该选项，这时或许您还希望禁用“对标题应用标题大小写格式”（该选项自身也有问题，详见本页上关于该选项的帮助）。
     
     若您选择“是，但尝试排除已句首大写的标题”，BBT 将尝试检测标题是否已经为句首大写，若是，则将按原样导入。
+better-bibtex_remigrate = 
+    .label = Re-do BBT citation key migration
 better-bibtex_preferences_advanced_import_migrate = 迁移 BetterBibTeX 设置/引用
 better-bibtex_preferences_advanced_import_export-prefs = 
     .label = 导出 Better BibTeX 设置…

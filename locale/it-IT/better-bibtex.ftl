@@ -128,6 +128,8 @@ better-bibtex_preferences_advanced_import_sentence-case_warning =
     
     Si può disattivare questa opzione, ma allora è consigliabile anche disattivare 'Scrivi i titoli con ogni iniziale maiuscola' (che ha altri problemi, vedi l'aiuto di quella opzione in questa pagina).
     Con 'sì, ma cerca di escludere titoli che hanno già solo la prima iniziale maiuscola, BBT proverà a individuare quei titoli che sono già scritti con solo l'iniziale della prima parola maiuscola, e importarli così come sono.
+better-bibtex_remigrate = 
+    .label = Re-do BBT citation key migration
 better-bibtex_preferences_advanced_import_migrate = Migrate BetterBibTeX preferences/citation keys
 better-bibtex_preferences_advanced_import_export-prefs = 
     .label = Export BetterBibTeX preferences...

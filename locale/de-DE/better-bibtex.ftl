@@ -128,6 +128,8 @@ better-bibtex_preferences_advanced_import_sentence-case_warning =
     
     Du kannst dies deaktivieren, aber du kannst `Titelgehäuse auf Titel übertragen` deaktivieren (welches seine eigenen Probleme hat siehe den Hilfeeintrag für diese Option auf dieser Seite).
     Mit 'Ja, aber versuchen Sie bereits verurteilte Titel auszuschließen', BBT wird versuchen, bereits verurteilte Titel zu erkennen und sie wie beim Import zu belassen.
+better-bibtex_remigrate = 
+    .label = Re-do BBT citation key migration
 better-bibtex_preferences_advanced_import_migrate = Migrate BetterBibTeX preferences/citation keys
 better-bibtex_preferences_advanced_import_export-prefs = 
     .label = Export BetterBibTeX preferences...
