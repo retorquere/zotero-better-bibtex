@@ -1,4 +1,4 @@
-## v8.0.26
+## v8.0.27
 
 * fix: read-only groups would error out key migration
 * fix: enable re-migration after start

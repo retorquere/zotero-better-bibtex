@@ -4,7 +4,7 @@ title: Changelog
 weight: 500
 ---
 <!-- WARNING: GENERATED FROM https://github.com/retorquere/zotero-better-bibtex/blob/master/CHANGELOG.md. EDITS WILL BE OVERWRITTEN -->
-## v8.0.26
+## v8.0.27
 
 * fix: read-only groups would error out key migration
 * fix: enable re-migration after start
