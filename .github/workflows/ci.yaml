@@ -86,8 +86,9 @@ jobs:
   site:
     runs-on: ubuntu-latest
     continue-on-error: true
-    if: ${{ github.event_name == 'push' && (github.ref == 'refs/heads/master' ||
-      startsWith(github.ref, 'refs/tags/')) }}
+    if: github.event_name == 'push' && (startsWith(github.ref, 'refs/tags/') || 
+      (github.ref_name != 'l10n_master' && 
+      !contains(github.event.head_commit.message, '[tagged build]')))
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
