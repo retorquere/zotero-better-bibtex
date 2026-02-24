@@ -167,7 +167,7 @@ better-bibtex_preferences_advanced_import_sentence-case_warning = Bib(La)TeX ent
     With 'yes, but try to exclude already-sentence-cased titles', BBT will attempt to detect titles that are already sentence cased and leave them as-is on import.
 
 better-bibtex_remigrate = 
-  .label = Re-do citation key migration to native field
+  .label = Re-do BBT citation key migration
 better-bibtex_preferences_advanced_import_migrate = Migrate BetterBibTeX preferences/citation keys
 better-bibtex_preferences_advanced_import_export-prefs = 
   .label = Export BetterBibTeX preferences...

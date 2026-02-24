@@ -29,7 +29,7 @@ Upside to all of this is that keys will sync.
 
 **If key migration appears to have failed, YOUR CITATION KEYS ARE SAFE**.
 
-Make sure you are on the latest version. For the first 5 minutes after BBT start, the Help menu will have an option _Re-do citation key migration to native field_. Click that, generate a debug log from the Help menu, then open an issue on github noting the debug log ID.
+Make sure you are on the latest version. For the first 5 minutes after BBT start, the Help menu will have an option _Re-do BBT citation key migration_. Click that, generate a debug log from the Help menu, then open an issue on github noting the debug log ID.
 
 **It is a known problem that read-only groups do not have citation keys. I am working on a fix**
 
