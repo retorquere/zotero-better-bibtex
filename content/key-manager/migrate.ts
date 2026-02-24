@@ -40,7 +40,7 @@ function unpack({ citationKey, itemID, itemKey, libraryID, pinned }: StoredKey):
 
 export async function migrate(verbose = false): Promise<void> {
   const speaker = new Speaker(verbose)
-  const readonly: StoredKey[] = []
+  // const readonly: StoredKey[] = []
 
   const { sqlite } = await databases()
   if (!sqlite) return
@@ -101,7 +101,7 @@ export async function migrate(verbose = false): Promise<void> {
       }
       bbt = bbt.filter(bkey => {
         if (!editable.has(bkey.libraryID)) {
-          readonly.push(bkey)
+          // readonly.push(bkey)
           return false
         }
 
@@ -119,7 +119,7 @@ export async function migrate(verbose = false): Promise<void> {
         choice.conflicts += 1
         return true
       })
-      speaker.say(`curated: ${JSON.stringify({ choice, filtered, readonly })}`)
+      speaker.say(`curated: ${JSON.stringify({ choice, filtered })}`)
 
       if (!bbt.length) {
         choice.migrate = 'all'
@@ -167,6 +167,7 @@ export async function migrate(verbose = false): Promise<void> {
       }
       if (skipped.size) speaker.say(`migrate skipped ${JSON.stringify([...skipped].sort())}`)
 
+      /*
       const keys = Zotero.BetterBibTeX.KeyManager.keys
       keys.findAndRemove({ itemID: { $in: readonly.map(key => key.itemID) } })
       keys.insert(readonly.map(key => ({
@@ -176,6 +177,7 @@ export async function migrate(verbose = false): Promise<void> {
         citationKey: key.citationKey,
         lcCitationKey: key.citationKey.toLowerCase(),
       })))
+      */
 
       try {
         const renamed = await Zotero.File.rename(sqlite, 'better-bibtex.migrated', { unique: true })
