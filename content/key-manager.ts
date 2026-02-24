@@ -20,16 +20,16 @@ import { getItemsAsync } from './get-items-async'
 import { Preference } from './prefs'
 import { Formatter } from './key-manager/formatter'
 
-import Loki from 'lokijs'
+import { Loki, LokiCollection } from './key-manager/db'
 
 import { Cache } from './translators/worker'
 
 import { sprintf } from 'sprintf-js'
-import { newQueue } from '@henrygd/queue/rl'
 
 import * as l10n from './l10n'
 
 import { migrate } from './key-manager/migrate'
+import { editable, readonly } from './library'
 
 export type CitekeyRecord = {
   itemID: number
@@ -39,11 +39,8 @@ export type CitekeyRecord = {
   lcCitationKey: string
 }
 
-type UnwatchCallback = () => void
-
 function lc(record: Partial<CitekeyRecord>): CitekeyRecord {
-  record.lcCitationKey = record.citationKey.toLowerCase()
-  return record as unknown as CitekeyRecord
+  return { ...record, lcCitationKey: record.citationKey.toLowerCase() } as CitekeyRecord
 }
 
 class Progress {
@@ -77,41 +74,9 @@ class Progress {
   }
 }
 
-type BatchedQuery = {
-  query: string
-  params: Array<string | number>
-}
-
 export const KeyManager = new class _KeyManager {
-  public searchEnabled = false
-
-  private db = {
-    queue: newQueue(1, 1, 5000),
-    batch: [] as BatchedQuery[],
-
-    schedule(query: string, params: Array<string | number>) {
-      this.batch.push({ query, params })
-
-      this.queue.add(async () => {
-        if (this.batch.length) {
-          const batch = this.batch
-          this.batch = []
-          await Zotero.DB.executeTransaction(async () => {
-            for (const q of batch) {
-              await ZoteroDB.queryAsync(q.query, q.params)
-            }
-          })
-        }
-      })
-    },
-  }
-
-  public keys = (new Loki('citationkeys.db')).addCollection<CitekeyRecord>('citationKeys', {
-    indices: [ 'itemID', 'libraryID', 'itemKey', 'citationKey', 'lcCitationKey' ],
-    unique: [ 'itemID' ],
-  })
-
-  private unwatch: UnwatchCallback[] = []
+  #db: Loki
+  public keys: LokiCollection<CitekeyRecord>
 
   public autopin: Scheduler<number> = new Scheduler<number>('autoPinDelay', 1000)
 
@@ -206,10 +171,7 @@ export const KeyManager = new class _KeyManager {
         await this.start()
       },
       shutdown: async () => {
-        for (const cb of this.unwatch) {
-          cb()
-        }
-        await this.db.queue.done()
+        await this.#db.write()
       },
     })
   }
@@ -218,7 +180,7 @@ export const KeyManager = new class _KeyManager {
     this.keys.findAndRemove({ itemID: { $in: ids } })
   }
 
-  private upsert(item) {
+  private upsert(item): void {
     const citationKey = item.getField('citationKey') || ''
 
     if (!citationKey) {
@@ -242,7 +204,21 @@ export const KeyManager = new class _KeyManager {
   }
 
   private async start(): Promise<void> {
-    void migrate()
+    this.#db = new Loki(PathUtils.join(Zotero.BetterBibTeX.dir, 'read-only'), {
+      autosave: true,
+      autosaveInterval: 5000,
+      saveFilter(key) {
+        return readonly(key.libraryID)
+      },
+    })
+    await this.#db.read()
+    this.keys = this.#db.addCollection<CitekeyRecord>('citationKeys', {
+      indices: [ 'itemID', 'libraryID', 'itemKey', 'citationKey', 'lcCitationKey' ],
+      unique: [ 'itemID' ],
+    })
+    this.keys.findAndRemove({ libraryID: { $in: [...editable()] } })
+
+    await migrate()
 
     const load = `
       SELECT item.itemID, item.key AS itemKey, item.libraryID, idv.value AS citationKey
@@ -259,6 +235,7 @@ export const KeyManager = new class _KeyManager {
     for (const { itemID, itemKey, libraryID, citationKey } of await Zotero.DB.queryAsync(load)) {
       keys.push(lc({ itemID, itemKey, libraryID, citationKey }))
     }
+    this.keys.findAndRemove({ itemID: { $in: keys.map(key => key.itemID) } })
     this.keys.insert(keys)
 
     Events.on('preference-changed', pref => {
@@ -338,6 +315,21 @@ export const KeyManager = new class _KeyManager {
 
     this.upsert(item)
     return item
+  }
+
+  public readonly(item: Zotero.Item): string {
+    if (item.isFeedItem || !item.isRegularItem()) return ''
+    const key = this.keys.findOne({ itemID: item.id })
+    if (key) return key.citationKey
+    const proposed = this.propose(item)
+    if (!proposed) return ''
+    this.keys.insert(lc({
+      itemID: item.id,
+      itemKey: item.key,
+      libraryID: item.libraryID,
+      citationKey: proposed,
+    }))
+    return proposed
   }
 
   public get(itemID: number): CitekeyRecord {

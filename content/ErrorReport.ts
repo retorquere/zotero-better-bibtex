@@ -3,6 +3,7 @@ import { Path, File } from './file'
 
 import { Cache } from './translators/worker'
 import { regex as escapeRE } from './escape'
+import { readonly } from './library'
 
 import { Preference } from './prefs'
 
@@ -573,7 +574,7 @@ export class ErrorReport {
             const lib = Zotero.Libraries.get(ae.id)
             if (lib) {
               context += lib.name || '<library>'
-              if (!lib.editable) context += ', read-only'
+              if (readonly(lib)) context += ', read-only'
             }
             else {
               context += `<non-existent library ${ae.id}>`
@@ -593,7 +594,7 @@ export class ErrorReport {
 
     context += 'Libraries:\n'
     for (const lib of Zotero.Libraries.getAll()) {
-      context += `  ${JSON.stringify(lib.name)}, libraryID = ${lib.libraryID}, groupID = ${(lib as unknown as Zotero.Group).groupID ?? false}, editable: ${!!lib.editable}\n`
+      context += `  ${JSON.stringify(lib.name)}, libraryID = ${lib.libraryID}, groupID = ${(lib as unknown as Zotero.Group).groupID ?? false}, read-only: ${readonly(lib)}\n`
     }
 
     context += `Zotero.Debug.storing: ${ Zotero.Debug.storing }\n`
