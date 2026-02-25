@@ -4,12 +4,13 @@ title: Changelog
 weight: 500
 ---
 <!-- WARNING: GENERATED FROM https://github.com/retorquere/zotero-better-bibtex/blob/master/CHANGELOG.md. EDITS WILL BE OVERWRITTEN -->
-## v8.0.37
+## v8.0.38
 
 * Context-aware menu visibility: Menu items for citation keys (pin, fill, refresh, copy) now hide automatically when no valid, editable items are selected.
 * Manual "Pin" command: pinning is back for people who have autoPinOverwrite on
 * Citation key pattern update: a new key formula function `pinned` was added, that's always prepended
 * Fix: BBT would stall zotero shutdown
+* new translations
 
 ## v8.0.27
 
