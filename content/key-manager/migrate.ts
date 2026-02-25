@@ -51,7 +51,7 @@ export async function migrate(verbose = false): Promise<void> {
   const readonly: StoredKey[] = []
 
   const { sqlite } = await databases()
-  if (!sqlite) return
+  if (!sqlite) return false
 
   const editable = editableLibs()
   const choice = {
@@ -152,7 +152,7 @@ export async function migrate(verbose = false): Promise<void> {
           bbt = bbt.filter(k => k.pinned)
           break
         case 'postpone':
-          return
+          return false
       }
 
       Zotero.Prefs.set('translators.better-bibtex.autoExport.autoPinOverwrite', !!choice.dynamic)
@@ -198,6 +198,8 @@ export async function migrate(verbose = false): Promise<void> {
   catch (err) {
     speaker.say(`migration error: ${err.message}`)
   }
+
+  return true
 }
 
 export async function canMigrate(): Promise<boolean> {

@@ -223,8 +223,10 @@ export const KeyManager = new class _KeyManager {
 
   private async start(): Promise<void> {
     this.#db = new Loki(PathUtils.join(Zotero.BetterBibTeX.dir, 'read-only'), {
+      /*
       autosave: true,
       autosaveInterval: 5000,
+      */
       saveFilter(key) {
         return readonly(key.libraryID)
       },
@@ -255,6 +257,7 @@ export const KeyManager = new class _KeyManager {
     }
     this.keys.findAndRemove({ itemID: { $in: keys.map(key => key.itemID) } })
     this.keys.insert(keys)
+    await this.#db.write()
 
     Events.on('preference-changed', pref => {
       switch (pref) {
