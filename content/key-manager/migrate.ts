@@ -14,6 +14,14 @@ export type StoredKey = {
   pinned: boolean
 }
 
+function show(obj: Record<string, any>): string {
+  const s: string[] = []
+  for (const [k, v] of Object.entries(obj)) {
+    if (typeof v !== 'undefined') s.push(`${k}=${JSON.stringify(v)}`)
+  }
+  return s.join('; ')
+}
+
 type Paths = { sqlite: string | null; migrated: string | null }
 async function databases(): Promise<Paths> {
   const paths: Paths = { sqlite: null, migrated: null }
@@ -80,7 +88,7 @@ export async function migrate(verbose = false): Promise<void> {
 
       choice.total = bbt.length
       choice.pinned = bbt.filter(key => key.pinned).length
-      speaker.say(`stored: ${JSON.stringify(choice)}`)
+      speaker.say(`stored: ${show({...choice, migrate: undefined })}`)
 
       let zotero: StoredKey[] = (await Zotero.DB.queryAsync(`
         SELECT items.itemID, items.key as itemKey, items.libraryID, ck.value AS citationKey, 0 as pinned
@@ -98,10 +106,12 @@ export async function migrate(verbose = false): Promise<void> {
       const filtered = {
         duplicates: 0,
         new: 0,
+        readonly: 0,
       }
       bbt = bbt.filter(bkey => {
         if (!editable.has(bkey.libraryID)) {
           // readonly.push(bkey)
+          filtered.readonly += 1
           return false
         }
 
@@ -119,7 +129,7 @@ export async function migrate(verbose = false): Promise<void> {
         choice.conflicts += 1
         return true
       })
-      speaker.say(`curated: ${JSON.stringify({ choice, filtered })}`)
+      speaker.say(`curated: ${show({ ...choice, ...filtered, migrate: undefined })}`)
 
       if (!bbt.length) {
         choice.migrate = 'all'
