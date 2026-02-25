@@ -14,6 +14,10 @@ export type StoredKey = {
   pinned: boolean
 }
 
+function unpack({ citationKey, itemID, itemKey, libraryID, pinned }: StoredKey): StoredKey {
+  return { citationKey, itemID, itemKey, libraryID, pinned }
+}
+
 function show(obj: Record<string, any>): string {
   const s: string[] = []
   for (const [k, v] of Object.entries(obj)) {
@@ -42,13 +46,9 @@ class Speaker {
   }
 }
 
-function unpack({ citationKey, itemID, itemKey, libraryID, pinned }: StoredKey): StoredKey {
-  return { citationKey, itemID, itemKey, libraryID, pinned }
-}
-
 export async function migrate(verbose = false): Promise<void> {
   const speaker = new Speaker(verbose)
-  // const readonly: StoredKey[] = []
+  const readonly: StoredKey[] = []
 
   const { sqlite } = await databases()
   if (!sqlite) return
@@ -106,12 +106,10 @@ export async function migrate(verbose = false): Promise<void> {
       const filtered = {
         duplicates: 0,
         new: 0,
-        readonly: 0,
       }
       bbt = bbt.filter(bkey => {
         if (!editable.has(bkey.libraryID)) {
-          // readonly.push(bkey)
-          filtered.readonly += 1
+          readonly.push(bkey)
           return false
         }
 
@@ -129,7 +127,8 @@ export async function migrate(verbose = false): Promise<void> {
         choice.conflicts += 1
         return true
       })
-      speaker.say(`curated: ${show({ ...choice, ...filtered, migrate: undefined })}`)
+      if (readonly.length) speaker.say(`${readonly.length} keys found from a read-only library`, true)
+      speaker.say(`curated: ${show({ ...choice, ...filtered, readonly: readonly.length, migrate: undefined })}`)
 
       if (!bbt.length) {
         choice.migrate = 'all'
@@ -172,7 +171,6 @@ export async function migrate(verbose = false): Promise<void> {
         }
       }
 
-      /*
       const keys = Zotero.BetterBibTeX.KeyManager.keys
       keys.findAndRemove({ itemID: { $in: readonly.map(key => key.itemID) } })
       keys.insert(readonly.map(key => ({
@@ -182,7 +180,6 @@ export async function migrate(verbose = false): Promise<void> {
         citationKey: key.citationKey,
         lcCitationKey: key.citationKey.toLowerCase(),
       })))
-      */
 
       try {
         const renamed = await Zotero.File.rename(sqlite, 'better-bibtex.migrated', { unique: true })
