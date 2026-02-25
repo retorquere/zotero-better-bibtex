@@ -186,9 +186,11 @@ export const KeyManager = new class _KeyManager {
 
         await this.start()
       },
+      /*
       shutdown: async () => {
         await this.#db.write()
       },
+      */
     })
   }
 
