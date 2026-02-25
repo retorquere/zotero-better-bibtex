@@ -47,7 +47,7 @@ export async function migrate(verbose = false): Promise<void> {
 
   const editable = editableLibs()
   const choice = {
-    migrate: 'postpone' as ('none' | 'all' | 'pinned' | 'postpone'),
+    migrate: 'postpone' as 'none' | 'all' | 'pinned' | 'postpone',
     overwrite: false,
     dynamic: false,
     total: 0,
@@ -150,7 +150,6 @@ export async function migrate(verbose = false): Promise<void> {
 
       speaker.say(`migrating ${bbt.length} citation keys`, true)
 
-      const skipped: Set<string> = new Set
       for (const { itemID, citationKey, pinned } of bbt) {
         const item = await getItemAsync(itemID)
         if (choice.overwrite || !item.getField('citationKey')) {
@@ -161,11 +160,7 @@ export async function migrate(verbose = false): Promise<void> {
           }
           await item.save({ skipDateModifiedUpdate: true, skipNotifier: !!choice.zotero })
         }
-        else {
-          skipped.add(item.getField('citationKey'))
-        }
       }
-      if (skipped.size) speaker.say(`migrate skipped ${JSON.stringify([...skipped].sort())}`)
 
       /*
       const keys = Zotero.BetterBibTeX.KeyManager.keys
