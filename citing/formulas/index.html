@@ -22,7 +22,7 @@ Functions auth(n: number=0, m: number=1, creator: &#39;*&#39; | &#39;author&#39;
     <meta itemprop="name" content="Formulas :: Better BibTeX for Zotero">
     <meta itemprop="description" content="Note: a number of functions below talk about the author’s lastname; you can read that as “when available”. If you have the name as a single-field name (for entities like International Business Machines or Aristoteles), Zotero doesn’t have a last name, and the full single-field name is taken instead.
 Functions auth(n: number=0, m: number=1, creator: &#39;*&#39; | &#39;author&#39; | &#39;collaborator&#39; | &#39;editor&#39; | &#39;translator&#39;=&#39;*&#39;, initials: boolean=false)The first n (default: all) characters of the mth (default: first) author&#39;s last name.">
-    <meta itemprop="wordCount" content="5316">
+    <meta itemprop="wordCount" content="5323">
     <meta itemprop="keywords" content="Citation Keys">
     <title>Formulas :: Better BibTeX for Zotero</title>
     <link href="/zotero-better-bibtex/citing/formulas/index.xml" rel="alternate" type="application/rss+xml" title="Formulas :: Better BibTeX for Zotero"><link rel="icon" href="/zotero-better-bibtex/better-bibtex.ico" type="image/x-icon">
@@ -754,7 +754,7 @@ abbreviator if not (if auto-abbrev is enabled in the preferences), <code>auto</c
 
   <h3><b>origyear</b></h3><p>the original year of the publication</p>
 
-  <h3><b>pinned</b></h3><p>A pinned citation key from the extra field. eg if you have <code>citation key: me</code> in the extra field, <code>me</code> would be used as the value</p>
+  <h3><b>pinned</b></h3><p>A pinned citation key from the extra field. eg if you have <code>citation key: me</code> in the extra field, <code>me</code> would be used as the value. This is always prepended to your formula.</p>
 
   <h3><b>postfix</b>(format: string containing at least one of &#39;%(a)s&#39;, &#39;%(A)s&#39;, &#39;%(n)s&#39;=&#39;%(a)s&#39;, start: number | string=0)</h3><p>a pseudo-function that sets the citekey disambiguation postfix using an <a href="https://www.npmjs.com/package/sprintf-js">sprintf-js</a> format spec
 for when a key is generated that already exists. Does not add any text to the citekey otherwise.
