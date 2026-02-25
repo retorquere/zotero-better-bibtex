@@ -151,7 +151,7 @@
   },
   {
     "summary": "<b>pinned</b>",
-    "description": "A pinned citation key from the extra field. eg if you have <code>citation key: me</code> in the extra field, <code>me</code> would be used as the value",
+    "description": "A pinned citation key from the extra field. eg if you have <code>citation key: me</code> in the extra field, <code>me</code> would be used as the value. This is always prepended to your formula.",
     "parameters": ""
   },
   {

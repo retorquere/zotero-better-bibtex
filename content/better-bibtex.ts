@@ -84,8 +84,9 @@ monkey.patch(Zotero.Utilities.Item?.itemToCSLJSON ? Zotero.Utilities.Item : Zote
 })
 */
 
-/*
 import { readonly } from './library'
+
+/*
 monkey.patch(Zotero.Item.prototype, 'getField', original => function Zotero_Item_prototype_getField(field: any, _unformatted: any, _includeBaseMapped: any) {
   try {
     if (!Zotero.BetterBibTeX.starting && field === 'citationKey' && readonly(this.libraryID)) {
@@ -620,6 +621,12 @@ export class BetterBibTeX {
           ],
         })
 
+        function selectedItems() {
+          return Zotero.getActiveZoteroPane()?.getSelectedItems().filter(item => !readonly(item.libraryID) && !item.isFeedItem && item.isRegularItem()) || []
+        }
+        const onShowing = (_event, context) => {
+          context.setVisible(selectedItems().length !== 0)
+        }
         Zotero.MenuManager.registerMenu({
           menuID: `${pluginID}-menu-item`,
           pluginID,
@@ -633,36 +640,75 @@ export class BetterBibTeX {
                 {
                   menuType: 'menuitem',
                   l10nID: 'better-bibtex_zotero-pane_citekey_pin_inspire-hep',
+                  onShowing,
                   onCommand: (_event, _context) => void Zotero.BetterBibTeX.KeyManager.fill('selected', { warn: true, inspireHEP: true, replace: true }),
                 },
-                { menuType: 'menuitem', l10nID: 'better-bibtex_zotero-pane_citekey_fill', onCommand: (_event, _context) => void Zotero.BetterBibTeX.KeyManager.fill('selected') },
-                { menuType: 'menuitem', l10nID: 'better-bibtex_zotero-pane_citekey_refresh', onCommand: (_event, _context) => void Zotero.BetterBibTeX.KeyManager.fill('selected', { warn: true, replace: true }) },
+                {
+                  menuType: 'menuitem',
+                  l10nID: 'better-bibtex_zotero-pane_citekey_fill',
+                  onShowing: (_event, context) => context.setVisible(!!(selectedItems().find(item => !item.getField('citationKey')))),
+                  onCommand: (_event, _context) => void Zotero.BetterBibTeX.KeyManager.fill('selected'),
+                },
+                {
+                  menuType: 'menuitem',
+                  l10nID: 'better-bibtex_zotero-pane_citekey_refresh',
+                  onShowing,
+                  onCommand: (_event, _context) => void Zotero.BetterBibTeX.KeyManager.fill('selected', { warn: true, replace: true }),
+                },
+                {
+                  menuType: 'menuitem',
+                  l10nID: 'better-bibtex_zotero-pane_citekey_pin',
+                  onShowing,
+                  onCommand: (_event, _context) => void Zotero.BetterBibTeX.KeyManager.pin('selected'),
+                },
                 {
                   menuType: 'menuitem',
                   l10nID: 'better-bibtex_zotero-pane_biblatex_to_clipboard',
+                  onShowing,
                   onCommand: (_event, _context) => void Zotero.BetterBibTeX.MenuHelper.clipSelected(Translators.bySlug.BetterBibLaTeX.translatorID),
                 },
                 {
                   menuType: 'menuitem',
                   l10nID: 'better-bibtex_zotero-pane_bibtex_to_clipboard',
+                  onShowing,
                   onCommand: (_event, _context) => void Zotero.BetterBibTeX.MenuHelper.clipSelected(Translators.bySlug.BetterBibTeX.translatorID),
                 },
-                { menuType: 'separator' },
-                { menuType: 'menuitem', l10nID: 'better-bibtex_zotero-pane_patch-dates', onCommand: (_event, _context) => void Zotero.BetterBibTeX.MenuHelper.patchDates() },
-                { menuType: 'menuitem', l10nID: 'better-bibtex_zotero-pane_sentence-case', onCommand: (_event, _context) => void Zotero.BetterBibTeX.MenuHelper.sentenceCase() },
+                {
+                  menuType: 'separator',
+                  onShowing,
+                },
+                {
+                  menuType: 'menuitem',
+                  l10nID: 'better-bibtex_zotero-pane_patch-dates',
+                  onShowing,
+                  onCommand: (_event, _context) => void Zotero.BetterBibTeX.MenuHelper.patchDates(),
+                },
+                {
+                  menuType: 'menuitem',
+                  l10nID: 'better-bibtex_zotero-pane_sentence-case',
+                  onShowing,
+                  onCommand: (_event, _context) => void Zotero.BetterBibTeX.MenuHelper.sentenceCase(),
+                },
                 {
                   menuType: 'menuitem',
                   l10nID: 'better-bibtex_zotero-pane_add-citation-links',
+                  onShowing,
                   onCommand: (_event, _context) => void Zotero.BetterBibTeX.MenuHelper.addCitationLinks(),
                 },
-                { menuType: 'separator', onShowing: (_event, context) => context.setVisible(TeXstudio.enabled) },
+                {
+                  menuType: 'separator',
+                  onShowing: (_event, context) => context.setVisible(selectedItems().length !== 0 && TeXstudio.enabled),
+                },
                 {
                   menuType: 'menuitem',
                   l10nID: 'better-bibtex_zotero-pane_tex-studio',
+                  onShowing: (_event, context) => context.setVisible(selectedItems().length !== 0 && TeXstudio.enabled),
                   onCommand: (_event, _context) => void Zotero.BetterBibTeX.MenuHelper.toTeXstudio(),
-                  onShowing: (_event, context) => context.setVisible(TeXstudio.enabled),
                 },
-                { menuType: 'separator' },
+                {
+                  menuType: 'separator',
+                  onShowing,
+                },
                 { menuType: 'menuitem', l10nID: 'better-bibtex_report-errors', onCommand: (_event, _context) => void Zotero.BetterBibTeX.ErrorReport.open('items') },
               ],
             },

@@ -93,6 +93,22 @@ export const KeyManager = new class _KeyManager {
   }
   */
 
+  public async pin(ids: 'selected' | number | number[]): Promise<void> {
+    await this.fill(ids, { warn: true })
+    ids = this.expandSelection(ids)
+    await Cache.touch(ids)
+    const items = (await getItemsAsync(ids)).filter(item => !item.isFeedItem && item.isRegularItem())
+    for (const item of items) {
+      const citationKey = item.getField('citationKey')
+      if (citationKey) {
+        const { extra } = Extra.citationKey(item.getField('extra'))
+        item.setField('extra', `${citationKey}\n${extra}`.trim())
+        await item.saveTx()
+        await Zotero.Promise.delay(10)
+      }
+    }
+  }
+
   public async fill(ids: 'selected' | number | number[], { warn = false, replace = false, inspireHEP = false }: { warn?: boolean; replace?: boolean; inspireHEP?: boolean } = {}): Promise<void> {
     ids = this.expandSelection(ids)
     await Cache.touch(ids)
