@@ -14,6 +14,18 @@ export type StoredKey = {
   pinned: boolean
 }
 
+function unpack({ citationKey, itemID, itemKey, libraryID, pinned }: StoredKey): StoredKey {
+  return { citationKey, itemID, itemKey, libraryID, pinned }
+}
+
+function show(obj: Record<string, any>): string {
+  const s: string[] = []
+  for (const [k, v] of Object.entries(obj)) {
+    if (typeof v !== 'undefined') s.push(`${k}=${JSON.stringify(v)}`)
+  }
+  return s.join('; ')
+}
+
 type Paths = { sqlite: string | null; migrated: string | null }
 async function databases(): Promise<Paths> {
   const paths: Paths = { sqlite: null, migrated: null }
@@ -34,20 +46,16 @@ class Speaker {
   }
 }
 
-function unpack({ citationKey, itemID, itemKey, libraryID, pinned }: StoredKey): StoredKey {
-  return { citationKey, itemID, itemKey, libraryID, pinned }
-}
-
 export async function migrate(verbose = false): Promise<void> {
   const speaker = new Speaker(verbose)
-  // const readonly: StoredKey[] = []
+  const readonly: StoredKey[] = []
 
   const { sqlite } = await databases()
-  if (!sqlite) return
+  if (!sqlite) return false
 
   const editable = editableLibs()
   const choice = {
-    migrate: 'postpone' as ('none' | 'all' | 'pinned' | 'postpone'),
+    migrate: 'postpone' as 'none' | 'all' | 'pinned' | 'postpone',
     overwrite: false,
     dynamic: false,
     total: 0,
@@ -80,7 +88,7 @@ export async function migrate(verbose = false): Promise<void> {
 
       choice.total = bbt.length
       choice.pinned = bbt.filter(key => key.pinned).length
-      speaker.say(`stored: ${JSON.stringify(choice)}`)
+      speaker.say(`stored: ${show({...choice, migrate: undefined })}`)
 
       let zotero: StoredKey[] = (await Zotero.DB.queryAsync(`
         SELECT items.itemID, items.key as itemKey, items.libraryID, ck.value AS citationKey, 0 as pinned
@@ -101,7 +109,7 @@ export async function migrate(verbose = false): Promise<void> {
       }
       bbt = bbt.filter(bkey => {
         if (!editable.has(bkey.libraryID)) {
-          // readonly.push(bkey)
+          readonly.push(bkey)
           return false
         }
 
@@ -119,7 +127,8 @@ export async function migrate(verbose = false): Promise<void> {
         choice.conflicts += 1
         return true
       })
-      speaker.say(`curated: ${JSON.stringify({ choice, filtered })}`)
+      if (readonly.length) speaker.say(`${readonly.length} keys found from a read-only library`, true)
+      speaker.say(`curated: ${show({ ...choice, ...filtered, readonly: readonly.length, migrate: undefined })}`)
 
       if (!bbt.length) {
         choice.migrate = 'all'
@@ -143,14 +152,13 @@ export async function migrate(verbose = false): Promise<void> {
           bbt = bbt.filter(k => k.pinned)
           break
         case 'postpone':
-          return
+          return false
       }
 
       Zotero.Prefs.set('translators.better-bibtex.autoExport.autoPinOverwrite', !!choice.dynamic)
 
       speaker.say(`migrating ${bbt.length} citation keys`, true)
 
-      const skipped: Set<string> = new Set
       for (const { itemID, citationKey, pinned } of bbt) {
         const item = await getItemAsync(itemID)
         if (choice.overwrite || !item.getField('citationKey')) {
@@ -161,13 +169,8 @@ export async function migrate(verbose = false): Promise<void> {
           }
           await item.save({ skipDateModifiedUpdate: true, skipNotifier: !!choice.zotero })
         }
-        else {
-          skipped.add(item.getField('citationKey'))
-        }
       }
-      if (skipped.size) speaker.say(`migrate skipped ${JSON.stringify([...skipped].sort())}`)
 
-      /*
       const keys = Zotero.BetterBibTeX.KeyManager.keys
       keys.findAndRemove({ itemID: { $in: readonly.map(key => key.itemID) } })
       keys.insert(readonly.map(key => ({
@@ -177,7 +180,6 @@ export async function migrate(verbose = false): Promise<void> {
         citationKey: key.citationKey,
         lcCitationKey: key.citationKey.toLowerCase(),
       })))
-      */
 
       try {
         const renamed = await Zotero.File.rename(sqlite, 'better-bibtex.migrated', { unique: true })
@@ -196,6 +198,8 @@ export async function migrate(verbose = false): Promise<void> {
   catch (err) {
     speaker.say(`migration error: ${err.message}`)
   }
+
+  return true
 }
 
 export async function canMigrate(): Promise<boolean> {

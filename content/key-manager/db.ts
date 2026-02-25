@@ -1,9 +1,9 @@
 import { Path } from '../file'
 import CallbackLoki from 'lokijs'
 
-import { CborEncoder, CborDecoder } from '@jsonjoy.com/json-pack/lib/cbor'
-const encoder = new CborEncoder
-const decoder = new CborDecoder
+// import { CborEncoder, CborDecoder } from '@jsonjoy.com/json-pack/lib/cbor'
+// const encoder = new CborEncoder
+// const decoder = new CborDecoder
 
 class PersistenceAdapter implements LokiPersistenceAdapter {
   public mode = 'reference'
@@ -13,7 +13,7 @@ class PersistenceAdapter implements LokiPersistenceAdapter {
 
   // eslint-disable-next-line @typescript-eslint/no-misused-promises
   public async loadDatabase(dbname: string, callback: (err: null | Error, data?: any) => void): Promise<void> {
-    dbname = `${dbname}.cbor`
+    dbname = `${dbname}.json`
 
     try {
       if (!(await IOUtils.exists(dbname))) return callback(null)
@@ -34,7 +34,7 @@ class PersistenceAdapter implements LokiPersistenceAdapter {
 
   // eslint-disable-next-line @typescript-eslint/no-misused-promises
   public async exportDatabase(dbname: string, dbRef: CallbackLoki, callback: (err: Error | null) => void): Promise<void> {
-    dbname = `${dbname}.cbor`
+    dbname = `${dbname}.json`
 
     try {
       const store = {
