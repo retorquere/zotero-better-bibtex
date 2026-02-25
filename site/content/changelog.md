@@ -44,7 +44,7 @@ Migration improvements:
 
 ## v8.0.16
 
-* Citekey migration skipps the update of the 'Date Modified' field.
+* Citekey migration skips the update of the 'Date Modified' field.
 * Dependencies, including the zotero-plugin-toolkit and zotero-types, have been updated.
 
 ## v8.0.15
