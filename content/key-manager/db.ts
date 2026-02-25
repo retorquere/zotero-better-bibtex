@@ -5,7 +5,20 @@ import CallbackLoki from 'lokijs'
 // const encoder = new CborEncoder
 // const decoder = new CborDecoder
 
-class PersistenceAdapter implements LokiPersistenceAdapter {
+class NullAdapter {
+  constructor(public saveFilter: (doc: any) => boolean) {
+  }
+
+  public loadDatabase(dbname: string, callback: (data: any) => void): void {
+    callback(null)
+  }
+
+  public saveDatabase(dbname: string, dbstring: string, callback: (err?: Error) => void): void {
+    callback(null)
+  }
+}
+
+export class PersistenceAdapter implements LokiPersistenceAdapter {
   public mode = 'reference'
 
   constructor(private saveFilter: (doc: any) => boolean) {
@@ -72,7 +85,8 @@ type LokiOptions = Partial<LokiConstructorOptions & LokiConfigOptions> & { saveF
 export class Loki extends CallbackLoki {
   constructor(filename: string, options: LokiOptions = {}) {
     const { saveFilter, ...lokiOptions } = options
-    const adapter = new PersistenceAdapter(saveFilter || (() => true))
+    // const adapter = new PersistenceAdapter(saveFilter || (() => true))
+    const adapter = new NullAdapter(saveFilter || (() => true))
     super(filename, { ...lokiOptions, adapter })
   }
 
@@ -88,6 +102,15 @@ export class Loki extends CallbackLoki {
   public write(): Promise<void> {
     return new Promise((resolve, reject) => {
       this.saveDatabase(err => {
+        if (err) return reject(err instanceof Error ? err : new Error(String(err)))
+        resolve()
+      })
+    })
+  }
+
+  public done(): Promise<void> {
+    return new Promise((resolve, reject) => {
+      this.close(err => {
         if (err) return reject(err instanceof Error ? err : new Error(String(err)))
         resolve()
       })
