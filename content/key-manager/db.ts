@@ -23,9 +23,11 @@ class PersistenceAdapter implements LokiPersistenceAdapter {
         if (!stored) return callback(null)
         callback(null, JSON.parse(stored))
       }
+      /*
       else {
         callback(null, decoder.decode(await IOUtils.read(dbname)))
       }
+      */
     }
     catch (err) {
       callback(err instanceof Error ? err : new Error(String(err)))
@@ -52,9 +54,11 @@ class PersistenceAdapter implements LokiPersistenceAdapter {
         await IOUtils.writeUTF8(dbname, JSON.stringify(store))
         callback(null)
       }
+      /*
       else {
         await IOUtils.write(dbname, encoder.encode(JSON.parse(JSON.stringify(store))), { tmpPath: `${dbname}.tmp` })
       }
+      */
     }
     catch (err) {
       callback(err instanceof Error ? err : new Error(String(err)))
