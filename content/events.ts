@@ -8,8 +8,6 @@ type ZoteroAction = 'modify' | 'add' | 'trash' | 'delete'
 type IdleState = 'active' | 'idle'
 export type Action = 'modify' | 'delete' | 'add'
 
-type IntervalHandle = ReturnType<typeof setInterval>
-
 type IdleObserver = {
   observe: (subject: string, topic: IdleState, data: any) => void
 }
@@ -38,14 +36,12 @@ type EventMap = {
   'preference-changed': string
   'window-loaded': { win: Window; href: string }
   idle: { state: IdleState; topic: IdleTopic }
-  sync: boolean
 }
 
 class Emitter extends Emittery<EventMap> {
   private listeners: any[] = []
   public idle: Partial<Record<IdleTopic, IdleState>> = {}
   public itemObserverDelay = 5
-  public syncInProgress: boolean = Zotero?.Sync?.Runner?.syncInProgress ?? false
 
   public startup(): void {
     this.listeners.push(new WindowListener)
@@ -54,7 +50,6 @@ class Emitter extends Emittery<EventMap> {
     this.listeners.push(new CollectionListener)
     this.listeners.push(new MemberListener)
     this.listeners.push(new GroupListener)
-    this.listeners.push(new SyncListener)
   }
 
   override async emit<Name extends keyof EventMap>(eventName: Name, data?: EventMap[Name]): Promise<void> {
@@ -102,26 +97,6 @@ export const Events = new Emitter(logEvents ? { // eslint-disable-line @stylisti
     },
   },
 } : {})
-
-class SyncListener {
-  private interval: IntervalHandle
-
-  constructor() {
-    this.interval = setInterval(() => {
-      if (typeof Zotero.Sync?.Runner?.syncInProgress === 'boolean') {
-        if (Events.syncInProgress !== Zotero.Sync.Runner.syncInProgress) {
-          void Events.emit('sync', Zotero.Sync.Runner.syncInProgress)
-          Events.syncInProgress = Zotero.Sync.Runner.syncInProgress
-          log.info(`sync ${ Events.syncInProgress ? 'started' : 'stopped' }`)
-        }
-      }
-    }, 1000)
-  }
-
-  unregister() {
-    clearInterval(this.interval)
-  }
-}
 
 class WindowListener {
   constructor() {
