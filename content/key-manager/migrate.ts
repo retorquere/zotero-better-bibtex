@@ -8,11 +8,11 @@ import { editable as editableLibs } from '../library'
 const { Sqlite } = ChromeUtils.importESModule('resource://gre/modules/Sqlite.sys.mjs')
 
 class Counter {
-  private libraries: Record<number, { id: number | string; name: string; editable: boolean; keys: number }> = {}
+  private libraries: Record<number, { libraryID: number | string; name: string; editable: boolean; keys: number }> = {}
   constructor() {
     for (const lib of Zotero.Libraries.getAll()) {
-      this.libraries[lib.id] = {
-        id: lib.id,
+      this.libraries[lib.libraryID] = {
+        libraryID: lib.libraryID,
         name: lib.name,
         editable: lib.editable,
         keys: 0,
@@ -25,7 +25,7 @@ class Counter {
 
     if (!this.libraries[libraryID]) {
       this.libraries[libraryID] = {
-        id: libraryID,
+        libraryID,
         name: `Unexpected library ID ${libraryID}`,
         editable: false,
         keys: 0,
@@ -38,7 +38,7 @@ class Counter {
   show() {
     let s = ''
     for (const lib of Object.values(this.libraries)) {
-      s += `Library ${JSON.stringify(lib.name)} (${lib.editable ? 'read-write' : 'read-only'}, ${lib.id}): ${lib.keys} found\n`
+      s += `Library ${JSON.stringify(lib.name.substring(0, 3) + '...')} (${lib.editable ? 'read-write' : 'read-only'}, ${lib.libraryID}): ${lib.keys} found\n`
     }
     return s
   }

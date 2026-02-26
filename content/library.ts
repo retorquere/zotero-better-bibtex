@@ -1,8 +1,8 @@
 import { log } from './logger'
 
 export function editable(): Set<number> {
-  log.info('migrate: editable:', Zotero.Libraries.getAll().reduce((acc, lib) => ({ ...acc, [`${lib.id}:${lib.name}`]: `${typeof lib.editable}:${lib.editable}` }), {} as Record<string, string>))
-  return new Set(Zotero.Libraries.getAll().filter(lib => lib.editable).map(lib => lib.id))
+  log.info('migrate: editable:', Zotero.Libraries.getAll().reduce((acc, lib) => ({ ...acc, [`${lib.libraryID}:${lib.name}`]: `${typeof lib.editable}:${lib.editable}` }), {} as Record<string, string>))
+  return new Set(Zotero.Libraries.getAll().filter(lib => lib.editable).map(lib => lib.libraryID))
 }
 
 export function readonly(library: number | _ZoteroTypes.Library.LibraryLike): boolean {
