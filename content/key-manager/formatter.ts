@@ -425,7 +425,7 @@ export class PatternFormatter {
 
   public test(formula: string): string {
     try {
-      compile(formula)
+      compile(`pinned; ${formula}`)
     }
     catch (err) {
       return err.message as string
@@ -450,7 +450,7 @@ export class PatternFormatter {
       if (!formula) continue
 
       try {
-        const formatter = compile(formula, { logging: Preference.testing })
+        const formatter = compile(`pinned; ${formula}`, { logging: Preference.testing })
         log.info('formula:', formula, '=>\n', formatter)
         this.generate = (new Function(formatter) as () => string)
         Preference.citekeyFormat = upgrade(formula) // upgrade to semicolons
@@ -964,7 +964,7 @@ export class PatternFormatter {
   }
 
   /**
-   * A pinned citation key from the extra field. eg if you have `citation key: me` in the extra field, `me` would be used as the value
+   * A pinned citation key from the extra field. eg if you have `citation key: me` in the extra field, `me` would be used as the value. This is always prepended to your formula.
    */
   public $pinned(): string {
     return this.item.extraFields.kv.citationKey || ''

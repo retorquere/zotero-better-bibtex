@@ -40,7 +40,7 @@ export type CitekeyRecord = {
 }
 
 function lc(record: Partial<CitekeyRecord>): CitekeyRecord {
-  return { ...record, lcCitationKey: record.citationKey.toLowerCase() } as CitekeyRecord
+  return Object.assign(record, { lcCitationKey: record.citationKey.toLowerCase() }) as CitekeyRecord
 }
 
 class Progress {
@@ -92,6 +92,22 @@ export const KeyManager = new class _KeyManager {
     }
   }
   */
+
+  public async pin(ids: 'selected' | number | number[]): Promise<void> {
+    await this.fill(ids, { warn: true })
+    ids = this.expandSelection(ids)
+    await Cache.touch(ids)
+    const items = (await getItemsAsync(ids)).filter(item => !item.isFeedItem && item.isRegularItem())
+    for (const item of items) {
+      const citationKey = item.getField('citationKey')
+      if (citationKey) {
+        const { extra } = Extra.citationKey(item.getField('extra'))
+        item.setField('extra', `${citationKey}\n${extra}`.trim())
+        await item.saveTx()
+        await Zotero.Promise.delay(10)
+      }
+    }
+  }
 
   public async fill(ids: 'selected' | number | number[], { warn = false, replace = false, inspireHEP = false }: { warn?: boolean; replace?: boolean; inspireHEP?: boolean } = {}): Promise<void> {
     ids = this.expandSelection(ids)
@@ -171,7 +187,7 @@ export const KeyManager = new class _KeyManager {
         await this.start()
       },
       shutdown: async () => {
-        await this.#db.write()
+        await this.#db.done()
       },
     })
   }
@@ -205,8 +221,10 @@ export const KeyManager = new class _KeyManager {
 
   private async start(): Promise<void> {
     this.#db = new Loki(PathUtils.join(Zotero.BetterBibTeX.dir, 'read-only'), {
+      /*
       autosave: true,
       autosaveInterval: 5000,
+      */
       saveFilter(key) {
         return readonly(key.libraryID)
       },
@@ -237,6 +255,7 @@ export const KeyManager = new class _KeyManager {
     }
     this.keys.findAndRemove({ itemID: { $in: keys.map(key => key.itemID) } })
     this.keys.insert(keys)
+    await this.#db.write()
 
     Events.on('preference-changed', pref => {
       switch (pref) {

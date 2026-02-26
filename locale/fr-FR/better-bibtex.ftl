@@ -130,7 +130,7 @@ better-bibtex_preferences_advanced_import_sentence-case_warning =
     Vous pouvez désactiver cette option, mais vous pouvez aussi vouloir désactiver « Appliquer la capitalisation aux titres » (qui a ses propres problèmes, voir l'aide pour cette option sur cette page).
     Avec « oui, mais en essayant d'exclure les titres déjà avec casse de phrase », BBT tentera de détecter les titres déjà avec casse de phrase et ne les modifiera pas à l'importation.
 better-bibtex_remigrate = 
-    .label = Re-do BBT citation key migration
+    .label = Relancer la migration des clés de citation BBT
 better-bibtex_preferences_advanced_import_migrate = Migrer les préférences de BetterBibTeX/clés de citation
 better-bibtex_preferences_advanced_import_export-prefs = 
     .label = Exporter les préférences de BetterBibTeX...
@@ -354,6 +354,8 @@ better-bibtex_zotero-pane_add-citation-links =
     .label = Graphique de citation : ajouter des liens de citation...
 better-bibtex_zotero-pane_citekey_pin_inspire-hep = 
     .label = Définir la clé BibTeX depuis InspireHEP
+better-bibtex_zotero-pane_citekey_pin = 
+    .label = Verrouiller la clé de citation
 better-bibtex_zotero-pane_citekey_refresh = 
     .label = Régénérer la clé BibTeX
 better-bibtex_zotero-pane_citekey_fill = 

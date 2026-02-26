@@ -47,7 +47,7 @@ jobs:
       with:
         node-version: 20.x
     - name: install node packages
-      run: npm install && npm ls
+      run: npm install --no-package-lock && npm ls
     - name: set slow/beta/legacy/whopper flags
       run: ./util/action-flags
       env:
@@ -111,7 +111,7 @@ jobs:
       with:
         node-version: 20.x
     - name: install node packages
-      run: npm install && npm ls
+      run: npm install --no-package-lock && npm ls
     - name: install hugo 0.143.1 and build site
       uses: peaceiris/actions-hugo@v3
       with:
@@ -258,7 +258,7 @@ jobs:
       with:
         node-version: 20.x
     - name: install node packages
-      run: npm install && npm ls
+      run: npm install --no-package-lock && npm ls
 
     - run: find xpi -type f
     - run: npm run release
