@@ -5,6 +5,7 @@ import { citationKey as extract } from '../extra'
 import { Preference } from '../prefs'
 import { AltDebug } from '../debug-log'
 import { editable as editableLibs } from '../library'
+const { Sqlite } = ChromeUtils.importESModule('resource://gre/modules/Sqlite.sys.mjs')
 
 export type StoredKey = {
   citationKey: string
@@ -64,10 +65,10 @@ export async function migrate(verbose = false): Promise<void> {
     conflicts: 0,
   }
   try {
-    const conn = new Zotero.DBConnection('better-bibtex')
-    let bbt: StoredKey[] = (await conn.queryAsync('SELECT itemID, itemKey, libraryID, citationKey, pinned FROM citationkey'))
-      .map(unpack)
-    await conn.closeDatabase(true)
+    const db = await Sqlite.openConnection({ path: sqlite })
+    let bbt: StoredKey[] = (await db.execute('SELECT itemID, itemKey, libraryID, citationKey, pinned FROM citationkey'))
+      .map(row => row.columnNames.reduce((acc, col) => ({ ...acc, [col]: row.getResultByName(col) } as StoredKey), {} as Partial<StoredKey>) as StoredKey[])
+    await db.close()
     speaker.say(`BBT keys found: ${bbt.length}`)
 
     await Zotero.DB.executeTransaction(async () => {
