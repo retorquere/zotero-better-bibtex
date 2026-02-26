@@ -7,6 +7,43 @@ import { AltDebug } from '../debug-log'
 import { editable as editableLibs } from '../library'
 const { Sqlite } = ChromeUtils.importESModule('resource://gre/modules/Sqlite.sys.mjs')
 
+class Counter {
+  private libraries: Record<number, { id: number | string; name: string; editable: boolean; keys: number }> = {}
+  constructor() {
+    for (const lib of Zotero.Libraries.getAll()) {
+      this.libraries[lib.id] = {
+        id: lib.id,
+        name: lib.name,
+        editable: lib.editable,
+        keys: 0,
+      }
+    }
+  }
+
+  ping(libraryID: number | string) {
+    if (typeof libraryID !== 'number') libraryID = `${typeof libraryID}: ${libraryID}`
+
+    if (!this.libraries[libraryID]) {
+      this.libraries[libraryID] = {
+        id: libraryID,
+        name: `Unexpected library ID ${libraryID}`,
+        editable: false,
+        keys: 0,
+      }
+    }
+
+    this.libraries[libraryID].keys += 1
+  }
+
+  show() {
+    let s = ''
+    for (const lib of Object.values(this.libraries)) {
+      s += `Library ${JSON.stringify(lib.name)} (${lib.editable ? 'read-write' : 'read-only'}, ${lib.id}): ${lib.keys} found\n`
+    }
+    return s
+  }
+}
+
 export type StoredKey = {
   citationKey: string
   itemID: number
@@ -114,7 +151,9 @@ export async function migrate(verbose = false): Promise<void> {
         duplicates: 0,
         new: 0,
       }
+      const counter = new Counter
       bbt = bbt.filter(bkey => {
+        counter.ping(bkey.libraryID)
         if (!editable.has(bkey.libraryID)) {
           readonly.push(bkey)
           return false
@@ -134,6 +173,7 @@ export async function migrate(verbose = false): Promise<void> {
         choice.conflicts += 1
         return true
       })
+      speaker.say(counter.show(), true)
       if (readonly.length) speaker.say(`${readonly.length} keys found from a read-only library`, true)
       speaker.say(`curated: ${show({ ...choice, ...filtered, readonly: readonly.length, migrate: undefined })}`)
 
