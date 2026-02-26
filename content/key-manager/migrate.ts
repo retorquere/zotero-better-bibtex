@@ -7,43 +7,6 @@ import { AltDebug } from '../debug-log'
 import { editable as editableLibs } from '../library'
 const { Sqlite } = ChromeUtils.importESModule('resource://gre/modules/Sqlite.sys.mjs')
 
-class Counter {
-  private libraries: Record<number, { libraryID: number | string; name: string; editable: boolean; keys: number }> = {}
-  constructor() {
-    for (const lib of Zotero.Libraries.getAll()) {
-      this.libraries[lib.libraryID] = {
-        libraryID: lib.libraryID,
-        name: lib.name,
-        editable: lib.editable,
-        keys: 0,
-      }
-    }
-  }
-
-  ping(libraryID: number | string) {
-    if (typeof libraryID !== 'number') libraryID = `${typeof libraryID}: ${libraryID}`
-
-    if (!this.libraries[libraryID]) {
-      this.libraries[libraryID] = {
-        libraryID,
-        name: `Unexpected library ID ${libraryID}`,
-        editable: false,
-        keys: 0,
-      }
-    }
-
-    this.libraries[libraryID].keys += 1
-  }
-
-  show() {
-    let s = ''
-    for (const lib of Object.values(this.libraries)) {
-      s += `Library ${JSON.stringify(lib.name.substring(0, 3) + '...')} (${lib.editable ? 'read-write' : 'read-only'}, ${lib.libraryID}): ${lib.keys} found\n`
-    }
-    return s
-  }
-}
-
 export type StoredKey = {
   citationKey: string
   itemID: number
@@ -61,7 +24,7 @@ function show(obj: Record<string, any>): string {
   for (const [k, v] of Object.entries(obj)) {
     if (typeof v !== 'undefined') s.push(`${k}=${JSON.stringify(v)}`)
   }
-  return s.join('; ')
+  return s.join('\n')
 }
 
 type Paths = { sqlite: string | null; migrated: string | null }
@@ -151,9 +114,7 @@ export async function migrate(verbose = false): Promise<void> {
         duplicates: 0,
         new: 0,
       }
-      const counter = new Counter
       bbt = bbt.filter(bkey => {
-        counter.ping(bkey.libraryID)
         if (!editable.has(bkey.libraryID)) {
           readonly.push(bkey)
           return false
@@ -173,7 +134,6 @@ export async function migrate(verbose = false): Promise<void> {
         choice.conflicts += 1
         return true
       })
-      speaker.say(counter.show(), true)
       if (readonly.length) speaker.say(`${readonly.length} keys found from a read-only library`, true)
       speaker.say(`curated: ${show({ ...choice, ...filtered, readonly: readonly.length, migrate: undefined })}`)
 
