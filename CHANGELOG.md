@@ -1,3 +1,9 @@
+## v8.0.40
+
+* removed pause-auto-export-during sync. Sync will activate auto-exports and the auto-export debounce will handle the rest
+* Switched key migration to use Sqlite.sys.mjs instead of Zotero.DBConnection.
+* Refactored lokijs object updates re-use objects retrieved from find (spread does not always update)
+
 ## v8.0.38
 
 * Context-aware menu visibility: Menu items for citation keys (pin, fill, refresh, copy) now hide automatically when no valid, editable items are selected.

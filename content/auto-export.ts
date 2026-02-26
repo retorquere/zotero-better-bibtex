@@ -250,7 +250,6 @@ const queue = new class TaskQueue {
 
   constructor() {
     this.pause('startup')
-    this.holdDuringSync()
   }
 
   public pause(_reason: 'startup' | 'end-of-idle' | 'preference-change') {
@@ -268,20 +267,6 @@ const queue = new class TaskQueue {
     }
     else {
       this.scheduler.schedule(path, this.run.bind(this, path))
-    }
-  }
-
-  public holdDuringSync() {
-    if (Events.syncInProgress && !this.held) this.held = new Set
-  }
-
-  public releaseAfterSync() {
-    if (this.held) {
-      const held = this.held
-      this.held = null
-      for (const path of [...held]) {
-        this.add(path)
-      }
     }
   }
 
@@ -480,15 +465,6 @@ export const AutoExport = new class $AutoExport {
             default:
               log.error(`idle: unexpected idle state ${JSON.stringify(state)}`)
               break
-          }
-        })
-
-        Events.on('sync', running => {
-          if (running) {
-            queue.holdDuringSync()
-          }
-          else {
-            queue.releaseAfterSync()
           }
         })
 
