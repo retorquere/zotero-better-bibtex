@@ -1,6 +1,7 @@
 import { log } from './logger'
 
 export function editable(): Set<number> {
+  log.info('migrate: editable:', Zotero.Libraries.getAll().reduce((acc, lib) => ({ ...acc, [`${lib.id}:${lib.name}`]: lib.editable }), {} as Record<string, boolean>))
   return new Set(Zotero.Libraries.getAll().filter(lib => lib.editable).map(lib => lib.id))
 }
 
