@@ -405,7 +405,7 @@ function un$loki(key: string, value: any): any {
 export const AutoExport = new class $AutoExport {
   public progress: Map<string, number> = new Map
 
-  public db = (new Loki('autoexport.db')).addCollection<Job>('citationKeys', {
+  public db = (new Loki('autoexport.db')).addCollection<Job>('auto-export', {
     clone: true,
     cloneMethod: 'shallow',
     indices: [ 'translatorID', 'type', 'id' ],
@@ -521,8 +521,7 @@ export const AutoExport = new class $AutoExport {
   private upsert(ae: Job) {
     const record = this.db.findObject({ path: ae.path })
     if (record) {
-      Object.assign(record, ae)
-      this.db.update(record)
+      this.db.update(Object.assign(record, ae))
     }
     else {
       this.db.insert(ae)
@@ -643,7 +642,7 @@ export const AutoExport = new class $AutoExport {
 
   public status(path: string, status: 'running' | 'done') {
     const ae = this.db.findOne({ path })
-    if (ae) this.db.update({ ...ae, status, updated: Date.now() })
+    if (ae) this.db.update(Object.assign(ae, { status, updated: Date.now() }))
   }
 
   public removeAll() {

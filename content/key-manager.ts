@@ -40,7 +40,7 @@ export type CitekeyRecord = {
 }
 
 function lc(record: Partial<CitekeyRecord>): CitekeyRecord {
-  return { ...record, lcCitationKey: record.citationKey.toLowerCase() } as CitekeyRecord
+  return Object.assign(record, { lcCitationKey: record.citationKey.toLowerCase() }) as CitekeyRecord
 }
 
 class Progress {
