@@ -51,7 +51,7 @@ export async function migrate(verbose = false): Promise<void> {
   const readonly: StoredKey[] = []
 
   const { sqlite } = await databases()
-  if (!sqlite) return false
+  if (!sqlite) return
 
   const editable = editableLibs()
   const choice = {
@@ -198,8 +198,6 @@ export async function migrate(verbose = false): Promise<void> {
   catch (err) {
     speaker.say(`migration error: ${err.message}`)
   }
-
-  return true
 }
 
 export async function canMigrate(): Promise<boolean> {
