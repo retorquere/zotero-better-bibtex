@@ -67,7 +67,13 @@ export async function migrate(verbose = false): Promise<void> {
   try {
     const db = await Sqlite.openConnection({ path: sqlite })
     let bbt: StoredKey[] = (await db.execute('SELECT itemID, itemKey, libraryID, citationKey, pinned FROM citationkey'))
-      .map(row => row.columnNames.reduce((acc, col) => ({ ...acc, [col]: row.getResultByName(col) } as StoredKey), {} as Partial<StoredKey>) as StoredKey[])
+      .map(row => ({
+        itemID: row.getResultByName('itemID'),
+        itemKey: row.getResultByName('itemKey'),
+        libraryID: row.getResultByName('libraryID'),
+        citationKey: row.getResultByName('citationKey'),
+        pinned: row.getResultByName('pinned'),
+      }))
     await db.close()
     speaker.say(`BBT keys found: ${bbt.length}`)
 
