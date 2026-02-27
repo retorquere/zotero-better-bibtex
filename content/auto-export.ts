@@ -435,6 +435,8 @@ export const AutoExport = new class $AutoExport {
             log.error('3415: failed to load auto-export:', err)
           }
         }
+        log.debug('3450: db after load', this.db.checkAllIndexes())
+        this.db.ensureAllIndexes(true)
 
         // triggers after initial load
         this.db.on('insert', (ae: Job) => {
@@ -618,10 +620,16 @@ export const AutoExport = new class $AutoExport {
 
   public status(path: string, status: 'running' | 'done') {
     const ae = this.db.findOne({ path })
-    if (!ae) return
-    Object.assign(ae, { status, updated: Date.now() })
-    log.debug('3450: update', ae, this.db.data)
-    this.db.update(ae)
+    if (!ae) {
+      log.debug('3450: trying to set status on auto-export with path', path, 'which does not exist')
+    }
+    else if (typeof ae.$loki !== 'number') {
+      log.debug('3450: auto-export without ID')
+    }
+    else if (!this.db.get(ae.$loki)) {
+      log.debug('3450: trying to set status on auto-export with id', ae.$loki, 'which does not exist')
+    }
+    if (ae) this.db.update(Object.assign(ae, { status, updated: Date.now() }))
   }
 
   public removeAll() {
