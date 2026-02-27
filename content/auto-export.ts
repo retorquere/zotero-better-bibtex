@@ -620,7 +620,7 @@ export const AutoExport = new class $AutoExport {
     const ae = this.db.findOne({ path })
     if (!ae) return
     Object.assign(ae, { status, updated: Date.now() })
-    log.debug('3450: update', ae)
+    log.debug('3450: update', ae, this.db.data)
     this.db.update(ae)
   }
 
