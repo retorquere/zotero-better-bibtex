@@ -619,6 +619,7 @@ export const AutoExport = new class $AutoExport {
   }
 
   public status(path: string, status: 'running' | 'done') {
+    this.db.ensureAllIndexes(true)
     const ae = this.db.findOne({ path })
     if (!ae) {
       log.debug('3450: trying to set status on auto-export with path', path, 'which does not exist')
@@ -629,7 +630,7 @@ export const AutoExport = new class $AutoExport {
     else if (!this.db.get(ae.$loki)) {
       log.debug('3450: trying to set status on auto-export with id', ae.$loki, 'which does not exist')
     }
-    log.debug(this.db.idIndex)
+    log.debug('3450: idIndex', Object.getOwnPropertyNames(ae), this.db.idIndex)
     if (ae) this.db.update(Object.assign(ae, { status, updated: Date.now() }))
   }
 
