@@ -629,6 +629,7 @@ export const AutoExport = new class $AutoExport {
     else if (!this.db.get(ae.$loki)) {
       log.debug('3450: trying to set status on auto-export with id', ae.$loki, 'which does not exist')
     }
+    log.debug(this.db.idIndex)
     if (ae) this.db.update(Object.assign(ae, { status, updated: Date.now() }))
   }
 
