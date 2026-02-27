@@ -618,7 +618,10 @@ export const AutoExport = new class $AutoExport {
 
   public status(path: string, status: 'running' | 'done') {
     const ae = this.db.findOne({ path })
-    if (ae) this.db.update(Object.assign(ae, { status, updated: Date.now() }))
+    if (!ae) return
+    Object.assign(ae, { status, updated: Date.now() })
+    log.debug('3450: update', ae)
+    this.db.update(ae)
   }
 
   public removeAll() {
