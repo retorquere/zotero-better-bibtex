@@ -1,4 +1,3 @@
-import Loki from 'lokijs'
 import { log } from './logger'
 import { Path, File } from './file'
 
@@ -45,6 +44,90 @@ type Job = {
   updated: number
 }
 export type JobSetting = keyof Job
+
+type Predicate<T> = (item: T) => boolean
+class SmartStore<T> {
+  data: Map<string, T> = new Map
+
+  constructor() {
+    for (const key of Services.prefs.getBranch('extensions.zotero.translators.better-bibtex.autoExport.').getChildList('')) {
+      const stored: string = Zotero.Prefs.get(`translators.better-bibtex.autoExport.${key}`) as string
+      try {
+        const ae = JSON.parse(stored)
+        if (ae.path) {
+          this.data[ae.path] = ae
+        }
+        else {
+          log.error('Could not load auto-export', ae)
+        }
+      }
+      catch (err) {
+        log.error('Could not load auto-export', stored)
+      }
+    }
+
+    return new Proxy(this, {
+      set(target, prop, value, receiver) {
+        if (typeof prop === 'string') {
+          if (!prop || prop !== value.path) throw new TypeError(`Invalid job for "${prop}" => "${value.path}": "path" mismatch`)
+          Zotero.Prefs.set(`translators.better-bibtex.autoExport.${target.key(value.path)}`, JSON.stringify(value))
+          target.data.set(prop, value)
+          return true
+        }
+        return Reflect.set(target, prop, value, receiver)
+      },
+
+      deleteProperty(target, prop) {
+        if (typeof prop === 'string' && prop in target.data) {
+          Zotero.Prefs.clear(`translators.better-bibtex.autoExport.${target.key(prop)}`)
+          return target.data.delete(prop)
+        }
+        return Reflect.deleteProperty(target, prop)
+      },
+
+      get(target, prop, receiver) {
+        const value = Reflect.get(target, prop, receiver)
+        if (typeof value === 'function') return value.bind(target)
+        if (typeof prop === 'string' && target.data.has(prop)) return target.data.get(prop)
+        return value
+      },
+
+      ownKeys(target) {
+        return Array.from(target.data.keys())
+      },
+
+      getOwnPropertyDescriptor(target, prop) {
+        if (typeof prop === 'string' && target.data.has(prop)) return { enumerable: true, configurable: true, value: target.data.get(prop) }
+        return Reflect.getOwnPropertyDescriptor(target, prop)
+      }
+    }) as any
+  }
+
+  public key(path: string): string {
+    return uri.encode(path).replace(/[.!'()*]/g, c => `%${c.charCodeAt(0).toString(16)}`)
+  }
+
+  public findAndRemove(predicate: Predicate<T>): void {
+    for (const [path, ae] of this.data.entries()) {
+      if (predicate(ae)) delete (this as any)[path]
+    }
+  }
+  public findOne(predicate: Predicate<T>): T | undefined {
+    for (const ae of this.data.values()) {
+      if (predicate(ae)) return ae
+    }
+  }
+  public find(predicate: Predicate<T>): T[] {
+    return [...this.data.values()].filter(predicate)
+  }
+  public all(): T[] {
+    return [...this.data.values()]
+  }
+  public clear(): void {
+    this.data.clear()
+  }
+}
+type Store = SmartStore<Job> & Record<string, Job>
 
 function win_quote(s: string, forCmd = true): string {
   if (!s) return '""'
@@ -382,24 +465,11 @@ const queue = new class TaskQueue {
   }
 }
 
-function un$loki(key: string, value: any): any {
-  return key === '$loki' ? undefined : value
-}
-
 // export singleton: https://k94n.com/es6-modules-single-instance-pattern
 export const AutoExport = new class $AutoExport {
   public progress: Map<string, number> = new Map
 
-  public db = (new Loki('autoexport.db')).addCollection<Job>('auto-export', {
-    clone: true,
-    cloneMethod: 'shallow',
-    indices: [ 'translatorID', 'type', 'id' ],
-    unique: [ 'path' ],
-  })
-
-  private key(path: string): string {
-    return uri.encode(path).replace(/[.!'()*]/g, c => `%${c.charCodeAt(0).toString(16)}`)
-  }
+  public db: Store = new SmartStore<Job> as Store
 
   constructor() {
     Events.on('libraries-changed', ids => this.schedule('library', ids))
@@ -424,32 +494,6 @@ export const AutoExport = new class $AutoExport {
       description: 'auto-export',
       needs: [ 'translators' ],
       startup: () => {
-        for (const key of Services.prefs.getBranch('extensions.zotero.translators.better-bibtex.autoExport.').getChildList('')) {
-          try {
-            const stored = JSON.parse(Zotero.Prefs.get(`translators.better-bibtex.autoExport.${key}`) as string)
-            const { $loki, ...ae } = stored // eslint-disable-line @typescript-eslint/no-unused-vars
-            this.db.insert(ae)
-            if (ae.status !== 'done') queue.add(ae.path)
-          }
-          catch (err) {
-            log.error('3415: failed to load auto-export:', err)
-          }
-        }
-        log.debug('3450: db after load', this.db.checkAllIndexes())
-        this.db.ensureAllIndexes(true)
-
-        // triggers after initial load
-        this.db.on('insert', (ae: Job) => {
-          Zotero.Prefs.set(`translators.better-bibtex.autoExport.${this.key(ae.path)}`, JSON.stringify(ae, un$loki))
-        })
-        this.db.on('update', (ae: Job) => {
-          Zotero.Prefs.set(`translators.better-bibtex.autoExport.${this.key(ae.path)}`, JSON.stringify(ae, un$loki))
-        })
-
-        this.db.on('delete', (ae: Job) => {
-          Zotero.Prefs.clear(`translators.better-bibtex.autoExport.${this.key(ae.path)}`)
-        })
-
         if (Preference.autoExport === 'immediate') queue.resume('startup')
         Events.addIdleListener('auto-export', Preference.autoExportIdleWait)
         Events.on('idle', state => {
@@ -487,7 +531,7 @@ export const AutoExport = new class $AutoExport {
           }
 
           for (const translator of (affects[pref] || []).map(label => Translators.byLabel[label])) {
-            for (const ae of this.db.find({ translatorID: translator.translatorID })) {
+            for (const ae of this.db.find(_ => _.translatorID === translator.translatorID)) {
               if (!(pref in ae)) queue.add(ae.path)
             }
           }
@@ -496,15 +540,6 @@ export const AutoExport = new class $AutoExport {
     })
   }
 
-  private upsert(ae: Job) {
-    const record = this.db.findObject({ path: ae.path })
-    if (record) {
-      this.db.update(Object.assign(record, ae))
-    }
-    else {
-      this.db.insert(ae)
-    }
-  }
   public store(job: Job) {
     const ae: Job = {
       ...pick(job, ['path', 'translatorID', 'type', 'id', 'status']),
@@ -524,13 +559,13 @@ export const AutoExport = new class $AutoExport {
       ae[option] = ae[option] ?? job[option] ?? displayOptions[option] ?? false
     }
 
-    this.upsert({ created: Date.now(), ...ae, updated: Date.now() })
+    this.db[ae.path] = { created: Date.now(), ...ae, updated: Date.now() }
     queue.add(ae.path)
   }
 
   public find(type: 'collection' | 'library', ids: number[]): Job[] {
     if (!ids.length) return []
-    return this.db.find({ type, id: { $in: ids } })
+    return this.db.find(_ => _.type === type && ids.includes(_.id))
   }
 
   public async add(ae: Job, schedule = false) {
@@ -592,16 +627,16 @@ export const AutoExport = new class $AutoExport {
   }
 
   public get(path: string): Job {
-    return this.db.findOne({ path })
+    return this.db[path]
   }
 
   public all(): Job[] {
-    return this.db.data
+    return this.db.all()
   }
 
   public edit(path: string, setting: JobSetting, value: number | boolean | string): void {
-    const ae: Job = this.db.findOne({ path })
-    this.upsert({ created: Date.now(), ...ae, [setting]: value, updated: Date.now() })
+    const ae: Job = this.db[path]
+    this.db[path] = { created: Date.now(), ...ae, updated: Date.now() }
     queue.add(ae.path)
   }
 
@@ -610,7 +645,7 @@ export const AutoExport = new class $AutoExport {
   public remove(arg: string, ids?: number[]): void {
     const paths: string[] = (typeof ids === 'undefined') ? [arg] : this.find(arg as 'collection' | 'library', ids).map(ae => ae.path)
 
-    this.db.findAndRemove({ path: { $in: paths } })
+    this.db.findAndRemove(_ => paths.includes(_.path))
 
     for (const path of paths) {
       queue.cancel(path)
@@ -619,19 +654,9 @@ export const AutoExport = new class $AutoExport {
   }
 
   public status(path: string, status: 'running' | 'done') {
-    this.db.ensureAllIndexes(true)
-    const ae = this.db.findOne({ path })
-    if (!ae) {
-      log.debug('3450: trying to set status on auto-export with path', path, 'which does not exist')
-    }
-    else if (typeof ae.$loki !== 'number') {
-      log.debug('3450: auto-export without ID')
-    }
-    else if (!this.db.get(ae.$loki)) {
-      log.debug('3450: trying to set status on auto-export with id', ae.$loki, 'which does not exist')
-    }
-    log.debug('3450: idIndex', Object.getOwnPropertyNames(ae), this.db.idIndex)
-    if (ae) this.db.update(Object.assign(ae, { status, updated: Date.now() }))
+    const ae = this.db[path]
+    if (!ae) log.debug('3450: trying to set status on auto-export with path', path, 'which does not exist')
+    if (ae) this.db[path] = { ...ae, status, updated: Date.now() }
   }
 
   public removeAll() {
@@ -642,12 +667,5 @@ export const AutoExport = new class $AutoExport {
 
   public run(path: string) {
     queue.run(path)
-  }
-
-  forCollection(collectionID: number) {
-    return this.db.chain()
-      .find({ type: 'collection', id: collectionID })
-      .simplesort('path')
-      .data()
   }
 }

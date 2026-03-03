@@ -179,10 +179,9 @@ function parseLibraryKeyFromCitekey(libraryKey) {
   if (!m) return
 
   const [, solo, library, combined] = m
-  const item = Zotero.BetterBibTeX.KeyManager.first({
-    libraryID: library ? parseInt(library) : Zotero.Libraries.userLibraryID,
-    citationKey: solo || combined,
-  })
+  const citationKey = solo || combined
+  const libraryID = library ? parseInt(library) : Zotero.Libraries.userLibraryID
+  const item = Zotero.BetterBibTeX.KeyManager.first(_ => _.libraryID === libraryID && _.citationKey === citationKey)
   return item ? { libraryID: item.libraryID, key: item.itemKey } : false
 }
 
@@ -192,7 +191,7 @@ monkey.patch(Zotero.API, 'getResultsFromParams', original =>
     function ck(key: string): string {
       const m = key.match(/^(bbt:|@)(.+)/)
       if (!m) return key
-      const citekey: CitekeyRecord = Zotero.BetterBibTeX.KeyManager.first({ libraryID, citationKey: m[2] })
+      const citekey: CitekeyRecord = Zotero.BetterBibTeX.KeyManager.first(_ => _.libraryID === libraryID && _.citationKey === m[2])
       return citekey ? citekey.itemKey : key
     }
 
@@ -716,10 +715,10 @@ export class BetterBibTeX {
         })
 
         function selectedAutoExports(_mode: 'collection') {
-          return AutoExport.db.chain()
-            .find({ type: 'collection', id: Zotero.getActiveZoteroPane().getSelectedCollection(true) })
-            .simplesort('path')
-            .data()
+          const selected = Zotero.getActiveZoteroPane().getSelectedCollection(true)
+          return AutoExport.db
+            .find(_ => _.type === 'collection' && _.id === selected)
+            .sort((a, b) => a.path.localeCompare(b.path, undefined, { sensitivity: 'accent', usage: 'sort' }))
         }
         Zotero.MenuManager.registerMenu({
           menuID: `${pluginID}-menu-collection`,

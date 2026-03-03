@@ -24,52 +24,49 @@ const METHOD_NOT_FOUND = -32601 // The method does not exist / is not available.
 const INVALID_PARAMETERS = -32602 // Invalid method parameter(s).
 const INTERNAL_ERROR = -32603 // Internal JSON-RPC error.
 
-type Query = LokiQuery<CitekeyRecord>
-
 function getStyle(id: string): any {
   const style = Zotero.Styles.get(id)
   if (!style) throw new Error(`CSL style ${ JSON.stringify(id) } not found`)
   return style
 }
 
-function byKeys(citekeys: string[]): Query {
+function byKeys(citekeys: string[]): (key: CitekeyRecord) => boolean {
   citekeys = citekeys.map(citekey => citekey.replace('@', ''))
+  let field: string
+
   if (Preference.citekeyCaseInsensitive) {
-    return { lcCitationKey: { $in: citekeys.map(citekey => citekey.toLowerCase()) } }
+    citekeys = citekeys.map(citekey => citekey.toLowerCase())
+    field = 'lcCitationKey'
   }
   else {
-    return { citationKey: { $in: citekeys } }
+    field = 'citationKey'
   }
+
+  return (key: CitekeyRecord): boolean => citekeys.includes(key[field])
+
 }
-function byKey(citekey: string): Query {
+function byKey(citekey: string): (key: CitekeyRecord) => boolean {
   citekey = citekey.replace('@', '')
+  let field: string
+
   if (Preference.citekeyCaseInsensitive) {
-    return { lcCitationKey: citekey.toLowerCase() }
+    citekey = citekey.toLowerCase()
+    field = 'lcCitationKey'
   }
   else {
-    return { citationKey: citekey }
+    field = 'citationKey'
   }
+
+  return (key: CitekeyRecord): boolean => key[field] === citekey
 }
 
 function find(library?: string | number): (citationKey: string) => number | undefined {
-  const lib: Query = {}
-  switch (typeof library) {
-    case 'undefined':
-      lib.libraryID = Zotero.Libraries.userLibraryID
-      break
-    case 'string':
-      if (library !== '*') lib.libraryID = getLibrary(library)
-      break
-    default:
-      lib.libraryID = getLibrary(library)
-      break
-  }
+  if (typeof library === 'undefined') library = Zotero.Libraries.userLibraryID
+  const libraryID = library === '*' ? undefined : getLibrary(library)
 
-  return function(citationKey: string): number | undefined {
-    return Zotero.BetterBibTeX.KeyManager.first({
-      ...lib,
-      ...byKey(citationKey),
-    })?.itemID
+  return (citationKey: string): number | undefined => {
+    const matchKey = byKey(citationKey)
+    return Zotero.BetterBibTeX.KeyManager.first(_ => (library === '*' || _.libraryID === libraryID) && matchKey(_))?.itemID
   }
 }
 
@@ -274,10 +271,9 @@ export class NSItem {
    * @param library  The libraryID to search in (optional). Pass `*` to search across your library and all groups.
    */
   public async attachments(citekey: string, library?: string | number): Promise<any> {
-    const key = Zotero.BetterBibTeX.KeyManager.first({
-      citationKey: citekey.replace(/^@/, ''),
-      ...(library === '*' ? {} : { libraryID: getLibrary(library) }),
-    })
+    const citationKey = citekey.replace(/^@/, '')
+    const libraryID = library === '*' ? undefined : getLibrary(library)
+    const key = Zotero.BetterBibTeX.KeyManager.first(_ => _.citationKey === citationKey && (library === '*' || _.libraryID === libraryID))
 
     if (!key) throw { code: INVALID_PARAMETERS, message: `${ citekey } not found` }
     const item = await getItemAsync(key.itemID)
@@ -458,10 +454,10 @@ export class NSItem {
       for (const item of Zotero.getActiveZoteroPane().getSelectedItems()) {
         if (item.isFeedItem) continue
         if (item.isRegularItem()) {
-          keys[item.key] = Zotero.BetterBibTeX.KeyManager.first({ libraryID: item.libraryID, itemKey: item.key })?.citationKey || null
+          keys[item.key] = Zotero.BetterBibTeX.KeyManager.first(_ => _libraryID === item.libraryID && _.itemKey === item.key)?.citationKey || null
         }
         else if (item.isAttachment() && typeof item.parentID === 'number') {
-          keys[item.key] = Zotero.BetterBibTeX.KeyManager.first({ libraryID: item.libraryID, itemID: item.parentID })?.citationKey || null
+          keys[item.key] = Zotero.BetterBibTeX.KeyManager.first(_ => _.libraryID === item.libraryID && _itemID === item.parentID)?.citationKey || null
         }
       }
       return keys
@@ -482,7 +478,7 @@ export class NSItem {
         itemKey = key
       }
 
-      keys[key] = Zotero.BetterBibTeX.KeyManager.first({ libraryID, itemKey })?.citationKey || null
+      keys[key] = Zotero.BetterBibTeX.KeyManager.first(_ => _.libraryID === libraryID && _.itemKey === itemKey)?.citationKey || null
     }
 
     return keys

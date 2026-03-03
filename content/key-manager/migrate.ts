@@ -178,15 +178,8 @@ export async function migrate(verbose = false): Promise<void> {
         }
       }
 
-      const keys = Zotero.BetterBibTeX.KeyManager.keys
-      keys.findAndRemove({ itemID: { $in: readonly.map(key => key.itemID) } })
-      keys.insert(readonly.map(key => ({
-        itemID: key.itemID,
-        libraryID: key.libraryID,
-        itemKey: key.itemKey,
-        citationKey: key.citationKey,
-        lcCitationKey: key.citationKey.toLowerCase(),
-      })))
+      const ro = PathUtils.join(Zotero.BetterBibTeX.dir, 'read-only.json')
+      await IOUtils.write(ro, encoder.encode(JSON.parse(JSON.stringify(readonly))), { tmpPath: `${ro}.tmp` })
 
       try {
         const renamed = await Zotero.File.rename(sqlite, 'better-bibtex.migrated', { unique: true })
