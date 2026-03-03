@@ -275,8 +275,8 @@ export const KeyManager = new class _KeyManager {
     })
 
     Events.on('items-changed', ({ items, action, reason }) => {
-      log.info('items-changed', reason)
-      // if (reason.startsWith('parent-') || reason === 'tagged') return
+      log.info('items-changed', { reason })
+      if (reason?.startsWith('parent-') || reason === 'tagged') return
 
       let warn_titlecase = 0 // should not be here
 
