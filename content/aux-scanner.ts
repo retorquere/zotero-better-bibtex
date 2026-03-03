@@ -76,7 +76,7 @@ export const AUXScanner = new class {
 
     const itemIDs: number[] = []
     const citationKeys: string[] = []
-    for (const found of Zotero.BetterBibTeX.KeyManager.all(_ => _.libraryID === libraryID && parsed.citationKeys.includes(citationKey))) {
+    for (const found of Zotero.BetterBibTeX.KeyManager.all(_ => _.libraryID === libraryID && parsed.citationKeys.includes(_.citationKey))) {
       itemIDs.push(found.itemID)
       citationKeys.push(found.citationKey)
     }

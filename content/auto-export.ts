@@ -62,7 +62,7 @@ class SmartStore<T> {
         }
       }
       catch (err) {
-        log.error('Could not load auto-export', stored)
+        log.error('Could not load auto-export', stored, err)
       }
     }
 
@@ -87,7 +87,7 @@ class SmartStore<T> {
 
       get(target, prop, receiver) {
         const value = Reflect.get(target, prop, receiver)
-        if (typeof value === 'function') return value.bind(target)
+        if (typeof value === 'function') return value.bind(target) // eslint-disable-line @typescript-eslint/no-unsafe-return
         if (typeof prop === 'string' && target.data.has(prop)) return target.data.get(prop)
         return value
       },
@@ -99,8 +99,8 @@ class SmartStore<T> {
       getOwnPropertyDescriptor(target, prop) {
         if (typeof prop === 'string' && target.data.has(prop)) return { enumerable: true, configurable: true, value: target.data.get(prop) }
         return Reflect.getOwnPropertyDescriptor(target, prop)
-      }
-    }) as any
+      },
+    }) as SmartStore<T>
   }
 
   public key(path: string): string {
@@ -633,7 +633,7 @@ export const AutoExport = new class $AutoExport {
 
   public edit(path: string, setting: JobSetting, value: number | boolean | string): void {
     const ae: Job = this.db[path]
-    this.db[path] = { created: Date.now(), ...ae, updated: Date.now() }
+    this.db[path] = { created: Date.now(), ...ae, [setting]: value, updated: Date.now() }
     queue.add(ae.path)
   }
 

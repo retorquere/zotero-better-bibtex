@@ -119,7 +119,7 @@ monkey.patch(Zotero.Items, 'merge', original =>
           const otherIDs = otherItems.map(i => i.id)
           extra.extraFields.aliases = [
             ...extra.extraFields.aliases,
-            ...Zotero.BetterBibTeX.KeyManager.find({ itemID: { $in: otherIDs } }).map((key: CitekeyRecord) => key.citationKey),
+            ...Zotero.BetterBibTeX.KeyManager.all(_ => otherIDs.includes(_.itemID)).map((key: CitekeyRecord) => key.citationKey),
           ]
         }
 
@@ -181,7 +181,7 @@ function parseLibraryKeyFromCitekey(libraryKey) {
   const [, solo, library, combined] = m
   const citationKey = solo || combined
   const libraryID = library ? parseInt(library) : Zotero.Libraries.userLibraryID
-  const item = Zotero.BetterBibTeX.KeyManager.first(_ => _.libraryID === libraryID && _.citationKey === citationKey)
+  const item = Zotero.BetterBibTeX.KeyManager.any(_ => _.libraryID === libraryID && _.citationKey === citationKey)
   return item ? { libraryID: item.libraryID, key: item.itemKey } : false
 }
 
@@ -191,7 +191,7 @@ monkey.patch(Zotero.API, 'getResultsFromParams', original =>
     function ck(key: string): string {
       const m = key.match(/^(bbt:|@)(.+)/)
       if (!m) return key
-      const citekey: CitekeyRecord = Zotero.BetterBibTeX.KeyManager.first(_ => _.libraryID === libraryID && _.citationKey === m[2])
+      const citekey: CitekeyRecord = Zotero.BetterBibTeX.KeyManager.any(_ => _.libraryID === libraryID && _.citationKey === m[2])
       return citekey ? citekey.itemKey : key
     }
 
@@ -717,7 +717,7 @@ export class BetterBibTeX {
         function selectedAutoExports(_mode: 'collection') {
           const selected = Zotero.getActiveZoteroPane().getSelectedCollection(true)
           return AutoExport.db
-            .find(_ => _.type === 'collection' && _.id === selected)
+            .all(_ => _.type === 'collection' && _.id === selected)
             .sort((a, b) => a.path.localeCompare(b.path, undefined, { sensitivity: 'accent', usage: 'sort' }))
         }
         Zotero.MenuManager.registerMenu({

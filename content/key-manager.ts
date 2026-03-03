@@ -75,10 +75,9 @@ class Progress {
 
 export const KeyManager = new class _KeyManager {
   #keys: Map<number, CitekeyRecord> = new Map
+  public started = false
 
   public autopin: Scheduler<number> = new Scheduler<number>('autoPinDelay', 1000)
-
-  private started = false
 
   /*
   private getField(item: { getField: ((str: string) => string) }, field: string): string {
@@ -108,10 +107,11 @@ export const KeyManager = new class _KeyManager {
   }
 
   public async fill(ids: 'selected' | number | number[], { warn = false, replace = false, inspireHEP = false }: { warn?: boolean; replace?: boolean; inspireHEP?: boolean } = {}): Promise<void> {
-    const selected = new Set(this.expandSelection(ids))
+    ids = this.expandSelection(ids)
+    const selected: Set<number> = new Set(ids)
     await Cache.touch(ids)
 
-    if (replace && warn && Preference.warnBulkModify && this.find(key => selected.has(key.itemID)).length > Preference.warnBulkModify) {
+    if (replace && warn && Preference.warnBulkModify && this.all(key => selected.has(key.itemID)).length > Preference.warnBulkModify) {
       const ignore = { value: false }
       const index = Services.prompt.confirmEx(
         null, // no parent
@@ -336,18 +336,19 @@ export const KeyManager = new class _KeyManager {
     return this.#keys.get(itemID)
   }
 
-  public first(query: Predicate<CitekeyRecord>): CitekeyRecord | undefined {
+  public any(query: Predicate<CitekeyRecord>): CitekeyRecord | undefined { // eslint-disable-line id-blacklist
     for (const key of this.#keys.values()) {
       if (query(key)) return key
     }
   }
 
-  public find(query: Predicate<CitekeyRecord>): CitekeyRecord[] {
-    return [...this.#keys.values()].filter(query)
-  }
-
-  public all(): CitekeyRecord[] {
-    return [...this.#keys.values()]
+  public all(query?: Predicate<CitekeyRecord>): CitekeyRecord[] {
+    if (!query) {
+      return [...this.#keys.values()]
+    }
+    else {
+      return [...this.#keys.values()].filter(query)
+    }
   }
 
   // mem is for https://github.com/retorquere/zotero-better-bibtex/issues/2926
@@ -359,17 +360,12 @@ export const KeyManager = new class _KeyManager {
     const citekeyField = caseInsensitive ? 'lcCitationKey' : 'citationKey'
     const libraryID = item.libraryID
     const itemID = item.id
-    const q = {
-      ...(Preference.keyScope === 'global' ? {} : { libraryID: item.libraryID }),
-      [ck]: '',
-      itemID: { $ne: item.id },
-    }
 
     const seen: Set<string> = new Set
     let candidate: string
     let candidateMatch: string
 
-    const conflict = (key: CitekeyRecord): boolean => {
+    function conflict(key: CitekeyRecord): boolean {
       return (keyscopeGlobal || (key.libraryID === libraryID)) && key[citekeyField] === candidateMatch && key.itemID !== itemID
     }
 
@@ -386,9 +382,9 @@ export const KeyManager = new class _KeyManager {
         seen.add(postfix)
         return postfix
       })
-      if (citekeyCaseInsensitive) candidateMatch = candidateMatch.toLowerCase()
+      if (caseInsensitive) candidateMatch = candidateMatch.toLowerCase()
 
-      if (this.findOne(conflict)) continue
+      if (this.any(conflict)) continue
       if (mem) {
         if (mem.has(candidate)) continue
         mem.add(candidate)
@@ -409,7 +405,7 @@ export const KeyManager = new class _KeyManager {
     `, [ libraryID, Preference.keyScope, tag ])).map((item: { itemID: number }) => item.itemID)
 
     const citekeys: Record<string, any[]> = {}
-    for (const item of this.find(key => Preference.keyScope === 'global' || key.libraryID === libraryID )) {
+    for (const item of this.all(key => Preference.keyScope === 'global' || key.libraryID === libraryID)) {
       citekeys[item.citationKey] ??= []
       citekeys[item.citationKey].push({ itemID: item.itemID, tagged: tagged.includes(item.itemID), duplicate: false })
       if (citekeys[item.citationKey].length > 1) citekeys[item.citationKey].forEach(i => i.duplicate = true)

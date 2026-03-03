@@ -306,7 +306,7 @@ class ItemHandler {
 
       const itemIDs: Record<string, number> = {}
       for (const citationKey of citationKeys) {
-        const key = Zotero.BetterBibTeX.KeyManager.find({ libraryID: $libraryID, citationKey })
+        const key = Zotero.BetterBibTeX.KeyManager.all(_ => _.libraryID === $libraryID && _.citationKey === citationKey)
 
         switch (key.length) {
           case 0:

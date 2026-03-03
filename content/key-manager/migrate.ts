@@ -178,8 +178,7 @@ export async function migrate(verbose = false): Promise<void> {
         }
       }
 
-      const ro = PathUtils.join(Zotero.BetterBibTeX.dir, 'read-only.json')
-      await IOUtils.write(ro, encoder.encode(JSON.parse(JSON.stringify(readonly))), { tmpPath: `${ro}.tmp` })
+      await IOUtils.writeJSON(PathUtils.join(Zotero.BetterBibTeX.dir, 'read-only.json'), readonly)
 
       try {
         const renamed = await Zotero.File.rename(sqlite, 'better-bibtex.migrated', { unique: true })
