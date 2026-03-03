@@ -27,7 +27,6 @@ import { sprintf } from 'sprintf-js'
 import * as l10n from './l10n'
 
 import { migrate } from './key-manager/migrate'
-import { editable, readonly } from './library'
 
 export type CitekeyRecord = {
   itemID: number
@@ -340,7 +339,7 @@ export const KeyManager = new class _KeyManager {
     }
   }
 
-  public find(query: Preidcate<CitekeyRecord>): CitekeyRecord[] {
+  public find(query: Predicate<CitekeyRecord>): CitekeyRecord[] {
     return [...this.#keys.values()].filter(query)
   }
 

@@ -117,11 +117,8 @@ class SmartStore<T> {
       if (predicate(ae)) return ae
     }
   }
-  public find(predicate: Predicate<T>): T[] {
-    return [...this.data.values()].filter(predicate)
-  }
-  public all(): T[] {
-    return [...this.data.values()]
+  public all(predicate?: Predicate<T>): T[] {
+    return predicate ? [...this.data.values()].filter(predicate) : [...this.data.values()]
   }
   public clear(): void {
     this.data.clear()
@@ -531,7 +528,7 @@ export const AutoExport = new class $AutoExport {
           }
 
           for (const translator of (affects[pref] || []).map(label => Translators.byLabel[label])) {
-            for (const ae of this.db.find(_ => _.translatorID === translator.translatorID)) {
+            for (const ae of this.db.all(_ => _.translatorID === translator.translatorID)) {
               if (!(pref in ae)) queue.add(ae.path)
             }
           }
@@ -565,7 +562,7 @@ export const AutoExport = new class $AutoExport {
 
   public find(type: 'collection' | 'library', ids: number[]): Job[] {
     if (!ids.length) return []
-    return this.db.find(_ => _.type === type && ids.includes(_.id))
+    return this.db.all(_ => _.type === type && ids.includes(_.id))
   }
 
   public async add(ae: Job, schedule = false) {

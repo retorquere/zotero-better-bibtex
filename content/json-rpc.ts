@@ -454,10 +454,10 @@ export class NSItem {
       for (const item of Zotero.getActiveZoteroPane().getSelectedItems()) {
         if (item.isFeedItem) continue
         if (item.isRegularItem()) {
-          keys[item.key] = Zotero.BetterBibTeX.KeyManager.first(_ => _libraryID === item.libraryID && _.itemKey === item.key)?.citationKey || null
+          keys[item.key] = Zotero.BetterBibTeX.KeyManager.first(_ => _.libraryID === item.libraryID && _.itemKey === item.key)?.citationKey || null
         }
         else if (item.isAttachment() && typeof item.parentID === 'number') {
-          keys[item.key] = Zotero.BetterBibTeX.KeyManager.first(_ => _.libraryID === item.libraryID && _itemID === item.parentID)?.citationKey || null
+          keys[item.key] = Zotero.BetterBibTeX.KeyManager.first(_ => _.libraryID === item.libraryID && _.itemID === item.parentID)?.citationKey || null
         }
       }
       return keys
@@ -544,12 +544,11 @@ export class NSItem {
     citekeys = [...(new Set(citekeys))]
     const result: { errors: Record<string, number>; items: Record<string, any> } = { errors: {}, items: {}}
 
-    const q: Query = {
-      libraryID: Array.isArray(libraryID) ? { $in: libraryID.map(name => getLibrary(name)) } : getLibrary(libraryID),
-    }
+    const libraryIDs: Set<number> = new Set(Array.isArray(libraryID) ? libraryID.map(getLibrary) : [ getLibrary(libraryID) ])
     const itemIDs: number[] = []
+
     for (const citationKey of citekeys) {
-      const found = Zotero.BetterBibTeX.KeyManager.find({ ...q, ...byKey(citationKey) })
+      const found = Zotero.BetterBibTeX.KeyManager.find(_ => libraryIDs.has(_.libraryID) && byKey(citationKey))
       if (found.length === 1) {
         itemIDs.push(found[0].itemID)
       }
