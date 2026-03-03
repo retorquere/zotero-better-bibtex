@@ -250,7 +250,10 @@ export const KeyManager = new class _KeyManager {
       this.clear(itemIDs)
     })
 
-    Events.on('items-changed', ({ items, action }) => {
+    Events.on('items-changed', ({ items, action, reason }) => {
+      log.info('items-changed', reason)
+      // if (reason.startsWith('parent-') || reason === 'tagged') return
+
       let warn_titlecase = 0 // should not be here
 
       // why do deleted items keep showing up here?
