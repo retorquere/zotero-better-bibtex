@@ -54,6 +54,8 @@ class SmartStore<T> {
       const stored: string = Zotero.Prefs.get(`translators.better-bibtex.autoExport.${key}`) as string
       try {
         const ae = JSON.parse(stored)
+        delete ae.$loki
+        delete ae.meta
         if (ae.path) {
           this.data[ae.path] = ae
         }
