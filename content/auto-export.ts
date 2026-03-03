@@ -652,7 +652,7 @@ export const AutoExport = new class $AutoExport {
 
   public status(path: string, status: 'running' | 'done') {
     const ae = this.db[path]
-    if (!ae) log.debug('3450: trying to set status on auto-export with path', path, 'which does not exist')
+    if (!ae) log.error('3450: trying to set status on auto-export with path', path, 'which does not exist')
     if (ae) this.db[path] = { ...ae, status, updated: Date.now() }
   }
 
