@@ -381,7 +381,7 @@ monkey.patch(Zotero.Translate.Export.prototype, 'translate', original =>
 
 const scheduler = new Scheduler<'column-refresh'>(500)
 
-// type MenuItem = _ZoteroTypes.MenuManager.MenuData<_ZoteroTypes.MenuManager.LibraryMenuContext>
+type MenuItem = _ZoteroTypes.MenuManager.MenuData<_ZoteroTypes.MenuManager.LibraryMenuContext>
 
 export class BetterBibTeX {
   public clientName = Zotero.clientName
@@ -753,7 +753,7 @@ export class BetterBibTeX {
                       const ae = selectedAutoExports('collection')[i]
                       if (ae) Zotero.BetterBibTeX.AutoExport.run(ae.path)
                     },
-                  })),
+                  })) as MenuItem[],
                 },
                 { menuType: 'menuitem', l10nID: 'better-bibtex_zotero-pane_show_collection-key', onCommand: (_event, _context) => showPullExportURLs('collection') },
                 { menuType: 'menuitem', l10nID: 'better-bibtex_aux-scanner', onCommand: (_event, _context) => void Zotero.BetterBibTeX.scanAUX('collection') },
