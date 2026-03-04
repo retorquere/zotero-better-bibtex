@@ -23,7 +23,7 @@ weight: 500
 * Fix: BBT would stall zotero shutdown
 * new translations
 
-## v8.0.27
+## v8.0.25
 
 * fix: read-only groups would error out key migration
 * fix: enable re-migration after start
