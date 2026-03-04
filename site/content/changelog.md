@@ -4,6 +4,11 @@ title: Changelog
 weight: 500
 ---
 <!-- WARNING: GENERATED FROM https://github.com/retorquere/zotero-better-bibtex/blob/master/CHANGELOG.md. EDITS WILL BE OVERWRITTEN -->
+## v9.0.0
+
+* removed lokijs which gave unpredictable errors when storing auto-exports
+* new major (should have been done earlier) as BBT is now strictly Zotero 8+
+
 ## v8.0.40
 
 * removed pause-auto-export-during sync. Sync will activate auto-exports and the auto-export debounce will handle the rest
