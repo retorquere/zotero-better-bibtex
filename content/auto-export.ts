@@ -53,6 +53,7 @@ class SmartStore<T> {
 
   constructor() {
     for (const encoded of Services.prefs.getBranch(`extensions.zotero.${prefix}`).getChildList('')) {
+      log.info('load autoexport:', encoded)
       const stored: string = Zotero.Prefs.get(`${prefix}${encoded}`) as string
       try {
         const ae = JSON.parse(stored)
