@@ -45,13 +45,15 @@ type Job = {
 }
 export type JobSetting = keyof Job
 
+export const prefix = 'translators.better-bibtex.autoExport.'
+
 type Predicate<T> = (item: T) => boolean
 class SmartStore<T> {
   data: Map<string, T> = new Map
 
   constructor() {
-    for (const key of Services.prefs.getBranch('extensions.zotero.translators.better-bibtex.autoExport.').getChildList('')) {
-      const stored: string = Zotero.Prefs.get(`translators.better-bibtex.autoExport.${this.encoded(key)}`) as string
+    for (const encoded of Services.prefs.getBranch(`extensions.zotero.${prefix}`).getChildList('')) {
+      const stored: string = Zotero.Prefs.get(`${prefix}${encoded}`) as string
       try {
         const ae = JSON.parse(stored)
         delete ae.$loki
@@ -72,7 +74,7 @@ class SmartStore<T> {
       set(target, prop, value, receiver) {
         if (typeof prop === 'string') {
           if (!prop || prop !== value.path) throw new TypeError(`Invalid job for "${prop}" => "${value.path}": "path" mismatch`)
-          Zotero.Prefs.set(`translators.better-bibtex.autoExport.${target.encoded(prop)}`, JSON.stringify(value))
+          Zotero.Prefs.set(target.key(prop), JSON.stringify(value))
           target.data.set(prop, value)
           return true
         }
@@ -81,7 +83,7 @@ class SmartStore<T> {
 
       deleteProperty(target, prop) {
         if (typeof prop === 'string' && prop in target.data) {
-          Zotero.Prefs.clear(`translators.better-bibtex.autoExport.${target.encoded(prop)}`)
+          Zotero.Prefs.clear(target.key(prop))
           return target.data.delete(prop)
         }
         return Reflect.deleteProperty(target, prop)
@@ -105,8 +107,9 @@ class SmartStore<T> {
     }) as SmartStore<T>
   }
 
-  public encoded(path: string): string {
-    return uri.encode(path).replace(/[.!'()*]/g, c => `%${c.charCodeAt(0).toString(16)}`)
+  public key(path: string): string {
+    const key = uri.encode(path).replace(/[.!'()*]/g, c => `%${c.charCodeAt(0).toString(16)}`)
+    return `${prefix}${key}`
   }
 
   public findAndRemove(predicate: Predicate<T>): void {
