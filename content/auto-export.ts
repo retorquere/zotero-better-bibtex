@@ -51,7 +51,7 @@ class SmartStore<T> {
 
   constructor() {
     for (const key of Services.prefs.getBranch('extensions.zotero.translators.better-bibtex.autoExport.').getChildList('')) {
-      const stored: string = Zotero.Prefs.get(`translators.better-bibtex.autoExport.${key}`) as string
+      const stored: string = Zotero.Prefs.get(`translators.better-bibtex.autoExport.${this.encoded(key)}`) as string
       try {
         const ae = JSON.parse(stored)
         delete ae.$loki
@@ -72,7 +72,7 @@ class SmartStore<T> {
       set(target, prop, value, receiver) {
         if (typeof prop === 'string') {
           if (!prop || prop !== value.path) throw new TypeError(`Invalid job for "${prop}" => "${value.path}": "path" mismatch`)
-          Zotero.Prefs.set(`translators.better-bibtex.autoExport.${target.key(value.path)}`, JSON.stringify(value))
+          Zotero.Prefs.set(`translators.better-bibtex.autoExport.${target.encoded(prop)}`, JSON.stringify(value))
           target.data.set(prop, value)
           return true
         }
@@ -81,7 +81,7 @@ class SmartStore<T> {
 
       deleteProperty(target, prop) {
         if (typeof prop === 'string' && prop in target.data) {
-          Zotero.Prefs.clear(`translators.better-bibtex.autoExport.${target.key(prop)}`)
+          Zotero.Prefs.clear(`translators.better-bibtex.autoExport.${target.encoded(prop)}`)
           return target.data.delete(prop)
         }
         return Reflect.deleteProperty(target, prop)
@@ -105,7 +105,7 @@ class SmartStore<T> {
     }) as SmartStore<T>
   }
 
-  public key(path: string): string {
+  public encoded(path: string): string {
     return uri.encode(path).replace(/[.!'()*]/g, c => `%${c.charCodeAt(0).toString(16)}`)
   }
 
