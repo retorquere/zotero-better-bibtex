@@ -61,13 +61,14 @@ class SmartStore<T> {
         delete ae.meta
         if (ae.path) {
           this.data[ae.path] = ae
+          log.info('load autoexport: loaded', ae)
         }
         else {
-          log.error('Could not load auto-export', ae)
+          log.error('load autoexport:', ae, 'does not have a path')
         }
       }
       catch (err) {
-        log.error('Could not load auto-export', stored, err)
+        log.error('load autoexport: error loading', encoded, stored, err)
       }
     }
 
