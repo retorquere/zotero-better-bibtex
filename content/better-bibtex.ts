@@ -381,6 +381,8 @@ monkey.patch(Zotero.Translate.Export.prototype, 'translate', original =>
 
 const scheduler = new Scheduler<'column-refresh'>(500)
 
+// type MenuItem = _ZoteroTypes.MenuManager.MenuData<_ZoteroTypes.MenuManager.LibraryMenuContext>
+
 export class BetterBibTeX {
   public clientName = Zotero.clientName
   public clientVersion = Zotero.version
@@ -741,13 +743,13 @@ export class BetterBibTeX {
                   l10nID: 'better-bibtex_preferences_auto-export',
                   menus: Array.from({ length: 10 }).map((_, i) => ({
                     menuType: 'menuitem',
-                    onShowing: (event: Event, context: _ZoteroTypes.MenuManager.MenuContext) => {
-                      const type = (context as any).collectionTreeRow.type
+                    onShowing: (event: Event, context: any) => {
+                      const type = context.collectionTreeRow.type
                       const aes = selectedAutoExports(type)
                       context.setVisible(typeof aes[i] !== 'undefined')
                       context.menuElem.setAttribute('label', aes[i]?.path || '[path not set]')
                     },
-                    onCommand: (_event: Event, _context: _ZoteroTypes.MenuManager.MenuContext) => {
+                    onCommand: (_event: Event, _context) => {
                       const ae = selectedAutoExports('collection')[i]
                       if (ae) Zotero.BetterBibTeX.AutoExport.run(ae.path)
                     },
@@ -839,8 +841,7 @@ export class BetterBibTeX {
     }
 
     try {
-      // @ts-expect-error deprecated method
-      return Zotero.File.getContents(file) as string
+      return Zotero.File.getContents(file)
     }
     catch (err) {
       log.error('BetterBibTeX.getContents:', path, `${err}`)
