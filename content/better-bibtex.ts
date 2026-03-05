@@ -720,9 +720,7 @@ export class BetterBibTeX {
           const selected = mode === 'collection'
             ? Zotero.getActiveZoteroPane().getSelectedCollection(true)
             : Zotero.getActiveZoteroPane().getSelectedLibraryID()
-          return AutoExport.db
-            .all(_ => _.type === mode && _.id === selected)
-            .sort((a, b) => a.path.localeCompare(b.path, undefined, { sensitivity: 'accent', usage: 'sort' }))
+          return AutoExport.db.all(_ => _.type === mode && _.id === selected)
         }
         Zotero.MenuManager.registerMenu({
           menuID: `${pluginID}-menu-collection`,

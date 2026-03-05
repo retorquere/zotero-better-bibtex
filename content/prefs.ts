@@ -127,7 +127,7 @@ export const Preference = new class PreferenceManager extends PreferenceManagerB
     }
 
     try {
-      Zotero.Prefs.clear('translators.better-bibtex.autoExport.autoPinOverwrite', true)
+      Zotero.Prefs.clear('translators.better-bibtex.autoExport.autoPinOverwrite')
     }
     catch {}
 
