@@ -54,7 +54,7 @@ class SmartStore<T> {
 
   constructor(private order: Ordering<T> = (_a: T, _b: T) => 0) {
     for (const encoded of Services.prefs.getBranch(`extensions.zotero.${prefix}`).getChildList('')) {
-      log.info('load autoexport:', encoded)
+      log.info('3456: load autoexport:', encoded)
       const stored: string = Zotero.Prefs.get(`${prefix}${encoded}`) as string
       try {
         const ae = JSON.parse(stored)
@@ -62,17 +62,17 @@ class SmartStore<T> {
         delete ae.meta
         if (ae.path) {
           this.data[ae.path] = ae
-          log.info('load autoexport: loaded', ae)
+          log.info('3456: load autoexport: loaded', ae)
         }
         else {
-          log.error('load autoexport:', ae, 'does not have a path')
+          log.error('3456: load autoexport:', ae, 'does not have a path')
         }
       }
       catch (err) {
-        log.error('load autoexport: error loading', encoded, stored, err)
+        log.error('3456: load autoexport: error loading', encoded, stored, err)
       }
 
-      log.debug('auto-export.constructor:', this.data)
+      log.debug('3456: auto-export.constructor:', this.data)
     }
 
     return new Proxy(this, {
@@ -126,7 +126,7 @@ class SmartStore<T> {
     return this.all(predicate)[0]
   }
   public all(predicate?: Predicate<T>): T[] {
-    log.debug('auto-export.all:', this.data, [...this.data.values()])
+    log.debug('3456: auto-export.all:', this.data, [...this.data.values()])
     return (predicate ? [...this.data.values()].filter(predicate) : [...this.data.values()]).sort(this.order)
   }
   public clear(): void {
