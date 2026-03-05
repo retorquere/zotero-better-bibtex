@@ -72,7 +72,6 @@ class SmartStore<T> {
         log.error('3456: load autoexport: error loading', encoded, stored, err)
       }
     }
-    log.debug('3456: auto-export.constructor:', this.data)
 
     return new Proxy(this, {
       set(target, prop, value, receiver) {
@@ -125,7 +124,6 @@ class SmartStore<T> {
     return this.all(predicate)[0]
   }
   public all(predicate?: Predicate<T>): T[] {
-    log.debug('3456: auto-export.all:', this.data, [...this.data.values()])
     return (predicate ? [...this.data.values()].filter(predicate) : [...this.data.values()]).sort(this.order)
   }
   public clear(): void {
