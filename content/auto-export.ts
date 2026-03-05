@@ -55,13 +55,13 @@ class SmartStore<T> {
   constructor(private order: Ordering<T> = (_a: T, _b: T) => 0) {
     for (const encoded of Services.prefs.getBranch(`extensions.zotero.${prefix}`).getChildList('')) {
       log.info('3456: load autoexport:', encoded)
-      const stored: string = Zotero.Prefs.get(`${prefix}${encoded}`) as string
+      const stored = Zotero.Prefs.get(`${prefix}${encoded}`) as string
       try {
         const ae = JSON.parse(stored)
         delete ae.$loki
         delete ae.meta
         if (ae.path) {
-          this.data[ae.path] = ae
+          this.data.set(ae.path, ae)
           log.info('3456: load autoexport: loaded', ae)
         }
         else {
@@ -71,9 +71,8 @@ class SmartStore<T> {
       catch (err) {
         log.error('3456: load autoexport: error loading', encoded, stored, err)
       }
-
-      log.debug('3456: auto-export.constructor:', this.data)
     }
+    log.debug('3456: auto-export.constructor:', this.data)
 
     return new Proxy(this, {
       set(target, prop, value, receiver) {
