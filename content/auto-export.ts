@@ -48,27 +48,31 @@ export type JobSetting = keyof Job
 export const prefix = 'translators.better-bibtex.autoExport.'
 
 type Predicate<T> = (item: T) => boolean
+type Ordering<T> = (a: T, b: T) => number
 class SmartStore<T> {
   data: Map<string, T> = new Map
 
-  constructor() {
+  constructor(private order: Ordering<T> = (_a: T, _b: T) => 0) {
     for (const encoded of Services.prefs.getBranch(`extensions.zotero.${prefix}`).getChildList('')) {
-      const stored: string = Zotero.Prefs.get(`${prefix}${encoded}`) as string
+      log.info('3456: load autoexport:', encoded)
+      const stored = Zotero.Prefs.get(`${prefix}${encoded}`) as string
       try {
         const ae = JSON.parse(stored)
         delete ae.$loki
         delete ae.meta
         if (ae.path) {
-          this.data[ae.path] = ae
+          this.data.set(ae.path, ae)
+          log.info('3456: load autoexport: loaded', ae)
         }
         else {
-          log.error('Could not load auto-export', ae)
+          log.error('3456: load autoexport:', ae, 'does not have a path')
         }
       }
       catch (err) {
-        log.error('Could not load auto-export', stored, err)
+        log.error('3456: load autoexport: error loading', encoded, stored, err)
       }
     }
+    log.debug('3456: auto-export.constructor:', this.data)
 
     return new Proxy(this, {
       set(target, prop, value, receiver) {
@@ -118,12 +122,11 @@ class SmartStore<T> {
     }
   }
   public findOne(predicate: Predicate<T>): T | undefined {
-    for (const ae of this.data.values()) {
-      if (predicate(ae)) return ae
-    }
+    return this.all(predicate)[0]
   }
   public all(predicate?: Predicate<T>): T[] {
-    return predicate ? [...this.data.values()].filter(predicate) : [...this.data.values()]
+    log.debug('3456: auto-export.all:', this.data, [...this.data.values()])
+    return (predicate ? [...this.data.values()].filter(predicate) : [...this.data.values()]).sort(this.order)
   }
   public clear(): void {
     this.data.clear()
@@ -471,7 +474,7 @@ const queue = new class TaskQueue {
 export const AutoExport = new class $AutoExport {
   public progress: Map<string, number> = new Map
 
-  public db: Store = new SmartStore<Job> as Store
+  public db: Store = new SmartStore<Job>((a: Job, b: Job) => a.path.localeCompare(b.path, undefined, { sensitivity: 'base', usage: 'sort' })) as Store
 
   constructor() {
     Events.on('libraries-changed', ids => this.schedule('library', ids))

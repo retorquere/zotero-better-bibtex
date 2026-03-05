@@ -162,7 +162,7 @@ export async function migrate(verbose = false): Promise<void> {
           return false
       }
 
-      Zotero.Prefs.set('translators.better-bibtex.autoExport.autoPinOverwrite', !!choice.dynamic)
+      Zotero.Prefs.set('translators.better-bibtex.autoPinOverwrite', !!choice.dynamic)
 
       speaker.say(`migrating ${bbt.length} citation keys`, true)
 
