@@ -100,7 +100,7 @@ export const KeyManager = new class _KeyManager {
       if (citationKey) {
         const { extra } = Extra.citationKey(item.getField('extra'))
         item.setField('extra', `${citationKey}\n${extra}`.trim())
-        await item.saveTx()
+        await item.saveTx({ skipDateModifiedUpdate: true })
         await Zotero.Promise.delay(10)
       }
     }
@@ -166,7 +166,7 @@ export const KeyManager = new class _KeyManager {
     progress?.done()
 
     for (const item of items) {
-      await item.saveTx()
+      await item.saveTx({ skipDateModifiedUpdate: true })
       await Zotero.Promise.delay(10)
     }
   }
@@ -266,7 +266,7 @@ export const KeyManager = new class _KeyManager {
       })
 
       const update = (item: Zotero.Item) => {
-        this.update(item, { replace: Preference.autoPinOverwrite }).saveTx().catch(err => log.error('failed to update', item.id, ':', err))
+        this.update(item, { replace: Preference.autoPinOverwrite }).saveTx({ skipDateModifiedUpdate: true }).catch(err => log.error('failed to update', item.id, ':', err))
       }
       for (const item of items) {
         if (Preference.testing) { // race condition for key assignment otherwise
@@ -421,7 +421,7 @@ export const KeyManager = new class _KeyManager {
         item.addTag(tag)
       }
 
-      await item.saveTx()
+      await item.saveTx({ skipDateModifiedUpdate: true })
     }
   }
 
