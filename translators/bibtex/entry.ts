@@ -471,7 +471,6 @@ export class Entry {
    *   ignored)
    */
   public add(field: Field): string {
-    log.debug('3376: adding', field)
     if (this.translation.collected.preferences.testing && !this.inPostscript && field.name !== field.name.toLowerCase()) {
       throw new Error(`Do not add mixed-case field ${ field.name }`)
     }
@@ -567,7 +566,6 @@ export class Entry {
         field.bibtex = `${ bibstring || field.value as string }`
       }
       else {
-        log.debug('3376: encoding', field)
         switch (field.enc) {
           case 'extra':
             field.bibtex = this.enc_extra(field)
@@ -629,7 +627,6 @@ export class Entry {
     }
 
     this.has[field.name] = field
-    log.debug('3376: field', field.name, '=>', this.has[field.name])
 
     return field.name
   }
@@ -688,7 +685,6 @@ export class Entry {
       return
     }
 
-    log.debug('3376: actual override', { ...field, name, replace: (typeof field.replace !== 'boolean' && typeof field.fallback !== 'boolean') || field.replace })
     this.add({ ...field, name, replace: (typeof field.replace !== 'boolean' && typeof field.fallback !== 'boolean') || field.replace })
   }
 
@@ -861,7 +857,6 @@ export class Entry {
 
       const mode = ({ raw: { raw: true }, cased: { caseConversion: true }}[field.mode]) || {}
 
-      log.debug('--- 3376: tex.kv', { name, field })
       switch (name) {
         case 'mr':
           this.override({ name: 'mrnumber', value: field.value, ...mode })
@@ -899,7 +894,6 @@ export class Entry {
           break
 
         default:
-          log.debug('3376: text override', { name, value: field.value, bibtexStrings, ...mode })
           this.override({ name, value: field.value, bibtexStrings, ...mode })
           break
       }
