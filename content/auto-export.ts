@@ -86,6 +86,7 @@ class SmartStore<T> {
 
       deleteProperty(target, prop) {
         if (typeof prop === 'string' && prop in target.data) {
+          log.debug('3462: deleteProperty', prop)
           Zotero.Prefs.clear(target.key(prop))
           return target.data.delete(prop)
         }
@@ -115,11 +116,6 @@ class SmartStore<T> {
     return `${prefix}${key}`
   }
 
-  public findAndRemove(predicate: Predicate<T>): void {
-    for (const [path, ae] of this.data.entries()) {
-      if (predicate(ae)) delete (this as any)[path]
-    }
-  }
   public findOne(predicate: Predicate<T>): T | undefined {
     return this.all(predicate)[0]
   }
@@ -648,9 +644,8 @@ export const AutoExport = new class $AutoExport {
   public remove(arg: string, ids?: number[]): void {
     const paths: string[] = (typeof ids === 'undefined') ? [arg] : this.find(arg as 'collection' | 'library', ids).map(ae => ae.path)
 
-    this.db.findAndRemove(_ => paths.includes(_.path))
-
     for (const path of paths) {
+      delete this.db[path]
       queue.cancel(path)
       this.progress.delete(path)
     }
