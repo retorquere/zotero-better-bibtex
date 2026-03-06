@@ -719,7 +719,7 @@ export class BetterBibTeX {
           const selected = mode === 'collection'
             ? Zotero.getActiveZoteroPane().getSelectedCollection(true)
             : Zotero.getActiveZoteroPane().getSelectedLibraryID()
-          log.debug('3450:', { mode, selected, ae: AutoExport.db.all(_ => _.type === mode && _.id === selected) })
+          log.debug('3450:', { mode, selected, ae: AutoExport.db.all(_ => _.type === mode && _.id === selected).length })
           return AutoExport.db.all(_ => _.type === mode && _.id === selected)
         }
         Zotero.MenuManager.registerMenu({
@@ -736,6 +736,7 @@ export class BetterBibTeX {
                   menuType: 'submenu',
                   onShowing: (_event, context) => {
                     const type = context.collectionTreeRow.type
+                    log.debug('3450: autoexports submenu:', { type, visible: selectedAutoExports(type).length !== 0 })
                     context.setVisible(selectedAutoExports(type).length !== 0)
                   },
                   l10nID: 'better-bibtex_preferences_auto-export',
@@ -745,6 +746,7 @@ export class BetterBibTeX {
                       const type = context.collectionTreeRow.type
                       const aes = selectedAutoExports(type)
                       context.setVisible(typeof aes[i] !== 'undefined')
+                      log.debug('3450: autoexports submenu:', i, { type, visible: typeof aes[i] !== 'undefined' })
                       context.menuElem.setAttribute('label', aes[i]?.path || '[path not set]')
                     },
                     onCommand: (_event: Event, _context) => {
