@@ -1,4 +1,4 @@
-## v9.0.5
+## v9.0.6
 
 * fixed raw encoding for tex.X fields
 * auto-export loading fixed

@@ -4,7 +4,7 @@ title: Changelog
 weight: 500
 ---
 <!-- WARNING: GENERATED FROM https://github.com/retorquere/zotero-better-bibtex/blob/master/CHANGELOG.md. EDITS WILL BE OVERWRITTEN -->
-## v9.0.5
+## v9.0.6
 
 * fixed raw encoding for tex.X fields
 * auto-export loading fixed
