@@ -719,6 +719,7 @@ export class BetterBibTeX {
           const selected = mode === 'collection'
             ? Zotero.getActiveZoteroPane().getSelectedCollection(true)
             : Zotero.getActiveZoteroPane().getSelectedLibraryID()
+          log.debug('3450:', { mode, selected, ae: AutoExport.db.all(_ => _.type === mode && _.id === selected) })
           return AutoExport.db.all(_ => _.type === mode && _.id === selected)
         }
         Zotero.MenuManager.registerMenu({
