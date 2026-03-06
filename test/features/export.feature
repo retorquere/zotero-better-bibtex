@@ -749,6 +749,7 @@ Feature: Export
   @use.with_client=zotero @use.with_whopper=true @timeout=3000 @whopper
   Scenario: Really Big whopping library
     When I restart Zotero with "1287"
+    And I restart Zotero with "1287"
     And I set preference .DOIandURL to "doi"
     # And I set preference .autoAbbrevStyle to "http://www.zotero.org/styles/cell"
     And I set preference .autoExport to "off"
@@ -759,13 +760,13 @@ Feature: Export
     And I set preference .skipFields to "abstract, copyright, googlebooks, "
     # And I select the library named "CCNLab"
     And I set export option exportNotes to true
-    And I wait until Zotero is idle
+    #And I wait until Zotero is idle
     And I export the library 1 times using "id:9cb70025-a888-4a29-a210-93ec52da40d4"
-    And I wait until Zotero is idle
+    #And I wait until Zotero is idle
     And an export using "Better BibTeX" with worker on should match "export/*.bibtex"
-    And I wait until Zotero is idle
+    #And I wait until Zotero is idle
     When I export the library 1 times using "id:bc03b4fe-436d-4a1f-ba59-de4d2d7a63f7"
-    And I wait until Zotero is idle
+    #And I wait until Zotero is idle
     Then an export using "Better CSL JSON" with worker on should match "export/*.csl.json"
 
   # @use.with_client=zotero @use.with_slow=true @timeout=300

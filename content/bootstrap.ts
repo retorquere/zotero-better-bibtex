@@ -106,7 +106,7 @@ export async function shutdown(data: any, reason: ReasonId) {
       delete Zotero.BetterBibTeX
       log('BBT deleted')
     }
-    log('shutdown done')
+    log('bootstrap: shutdown: done')
   }
   catch (err) {
     alert({ title: 'Better BibTeX shutdown failed', text: `${err}` })
