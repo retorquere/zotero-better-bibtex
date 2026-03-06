@@ -715,11 +715,11 @@ export class BetterBibTeX {
           ],
         })
 
-        function selectedAutoExports(mode: 'collection' | 'library') {
+        function selectedAutoExports(mode: 'collection' | 'library', caller: string) {
           const selected = mode === 'collection'
             ? Zotero.getActiveZoteroPane().getSelectedCollection(true)
             : Zotero.getActiveZoteroPane().getSelectedLibraryID()
-          log.debug('3450:', { mode, selected, ae: AutoExport.db.all(_ => _.type === mode && _.id === selected).length })
+          log.debug('3450: selectedAutoExports', { caller, mode, selected, ae: AutoExport.db.all(_ => _.type === mode && _.id === selected).length })
           return AutoExport.db.all(_ => _.type === mode && _.id === selected)
         }
         Zotero.MenuManager.registerMenu({
@@ -736,21 +736,22 @@ export class BetterBibTeX {
                   menuType: 'submenu',
                   onShowing: (_event, context) => {
                     const type = context.collectionTreeRow.type
-                    log.debug('3450: autoexports submenu:', { type, visible: selectedAutoExports(type).length !== 0 })
-                    context.setVisible(selectedAutoExports(type).length !== 0)
+                    const aes = selectedAutoExports(type, 'submenu')
+                    log.debug('3450: autoexports submenu:', { type, visible: aes.length !== 0 })
+                    context.setVisible(aes.length !== 0)
                   },
                   l10nID: 'better-bibtex_preferences_auto-export',
                   menus: Array.from({ length: 10 }).map((_, i) => ({
                     menuType: 'menuitem',
                     onShowing: (event: Event, context: any) => {
                       const type = context.collectionTreeRow.type
-                      const aes = selectedAutoExports(type)
+                      const aes = selectedAutoExports(type, `menuitem ${i}`)
                       context.setVisible(typeof aes[i] !== 'undefined')
-                      log.debug('3450: autoexports submenu:', i, { type, visible: typeof aes[i] !== 'undefined' })
+                      log.debug('3450: autoexports menuitem:', i, { type, visible: typeof aes[i] !== 'undefined' })
                       context.menuElem.setAttribute('label', aes[i]?.path || '[path not set]')
                     },
                     onCommand: (_event: Event, _context) => {
-                      const ae = selectedAutoExports('collection')[i]
+                      const ae = selectedAutoExports('collection', `menuitem ${i} run`)[i]
                       if (ae) Zotero.BetterBibTeX.AutoExport.run(ae.path)
                     },
                   })) as MenuItem[],
