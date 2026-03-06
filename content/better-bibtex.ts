@@ -546,11 +546,11 @@ export class BetterBibTeX {
         await Preference.startup(this.dir)
 
         Events.startup()
-        Events.on('export-progress', ({ pct, message }) => {
+        Events.on('export-progress', ({ data: { pct, message } }) => {
           this.setProgress(pct, message)
         })
 
-        Events.on('cache-touch', async ({ itemIDs }) => {
+        Events.on('cache-touch', async ({ data: { itemIDs } }) => {
           const withParents: Set<number> = new Set(itemIDs)
           for (const item of await getItemsAsync(itemIDs)) {
             if (typeof item?.parentID === 'number') withParents.add(item.parentID)
@@ -558,7 +558,7 @@ export class BetterBibTeX {
           await Cache.touch([...withParents])
         })
         Events.addIdleListener('cache-purge', Preference.autoExportIdleWait)
-        Events.on('idle', async state => {
+        Events.on('idle', async ({ data: state }) => {
           if (state.topic === 'cache-purge' && Cache.ready) await Cache.Serialized.purge()
         })
       },
