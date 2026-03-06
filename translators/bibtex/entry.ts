@@ -471,6 +471,7 @@ export class Entry {
    *   ignored)
    */
   public add(field: Field): string {
+    log.debug('3376: adding', field)
     if (this.translation.collected.preferences.testing && !this.inPostscript && field.name !== field.name.toLowerCase()) {
       throw new Error(`Do not add mixed-case field ${ field.name }`)
     }
@@ -482,7 +483,7 @@ export class Entry {
 
     if (this.translation.skipField?.exec(`${ this.translation.BetterBibTeX ? 'bibtex' : 'biblatex' }.${ this.entrytype }.${ field.name }`)) return null
 
-    field.enc = field.enc || this.config.fieldEncoding[field.name] || 'literal'
+    field.enc = field.enc || this.config.fieldEncoding[field.name] || (field.raw ? 'raw' : 'literal')
 
     if (field.enc === 'date') {
       if (!field.value) return null
@@ -566,6 +567,7 @@ export class Entry {
         field.bibtex = `${ bibstring || field.value as string }`
       }
       else {
+        log.debug('3376: encoding', field)
         switch (field.enc) {
           case 'extra':
             field.bibtex = this.enc_extra(field)
