@@ -3,6 +3,7 @@ import { Path, File } from './file'
 
 import { Cache } from './translators/worker'
 import { regex as escapeRE } from './escape'
+import { readonly } from './library'
 
 import { Preference } from './prefs'
 
@@ -25,6 +26,17 @@ import { alert } from './prompt'
 import s3 from './s3.json' with { type: 'json' }
 
 const kB = 1024
+
+function basename(path: string) {
+  if (!path) return '[no path]'
+  try {
+    return Path.basename(path)
+  }
+  catch (err) {
+    log.error('basename for', JSON.stringify(path), 'failed:', err)
+    return `${path}`.replace(/.*[\\/]/, '')
+  }
+}
 
 type WizardButton = HTMLElement & { disabled: boolean }
 
@@ -107,7 +119,7 @@ class Upgrades {
         text.hidden = false
         if (auto) {
           auto.hidden = !upgrade.auto
-          auto.setAttribute('data-l10n-args', JSON.stringify({ upgrade }))
+          auto.setAttribute('data-l10n-args', JSON.stringify({ program, ...upgrade }))
         }
         if (manual) manual.hidden = !upgrade.auto
       }
@@ -545,18 +557,32 @@ export class ErrorReport {
     if (autoExports.length) {
       context += 'Auto-exports:\n'
       for (const ae of autoExports) {
-        context += `  path: ...${JSON.stringify(Path.basename(ae.path))}`
+        context += `  path: ...${JSON.stringify(basename(ae.path))} (`
         switch (ae.type) {
-          case 'collection':
-            context += ` (${ Zotero.Collections.get(ae.id)?.name || '<collection>' })`
+          case 'collection': {
+            const coll = Zotero.Collections.get(ae.id)
+            if (coll) {
+              context += coll.name || `<unnamed collection ${ae.id}>`
+            }
+            else {
+              context += `<non-existent collection ${ae.id}>`
+            }
             break
+          }
+
           case 'library': {
             const lib = Zotero.Libraries.get(ae.id)
-            context += ` (${(lib ? lib.name : '') || '<library>'})`
+            if (lib) {
+              context += lib.name || '<library>'
+              if (readonly(lib)) context += ', read-only'
+            }
+            else {
+              context += `<non-existent library ${ae.id}>`
+            }
             break
           }
         }
-        context += '\n'
+        context += ')\n'
         for (const [ k, v ] of Object.entries(ae)) {
           if (k === 'path') continue
           context += `    ${ k }: ${ JSON.stringify(v) }`
@@ -568,7 +594,7 @@ export class ErrorReport {
 
     context += 'Libraries:\n'
     for (const lib of Zotero.Libraries.getAll()) {
-      context += `  ${JSON.stringify(lib.name)}, libraryID = ${lib.libraryID}, groupID = ${(lib as unknown as Zotero.Group).groupID ?? false}\n`
+      context += `  ${JSON.stringify(lib.name)}, libraryID = ${lib.libraryID}, groupID = ${(lib as unknown as Zotero.Group).groupID ?? false}, read-only: ${readonly(lib)}\n`
     }
 
     context += `Zotero.Debug.storing: ${ Zotero.Debug.storing }\n`

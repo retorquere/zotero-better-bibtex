@@ -1,5 +1,15 @@
 import { log } from './logger'
 
+export function editable(): Set<number> {
+  log.info('migrate: editable:', Zotero.Libraries.getAll().reduce((acc, lib) => ({ ...acc, [`${lib.libraryID}:${lib.name}`]: `${typeof lib.editable}:${lib.editable}` }), {} as Record<string, string>))
+  return new Set(Zotero.Libraries.getAll().filter(lib => lib.editable).map(lib => lib.libraryID))
+}
+
+export function readonly(library: number | _ZoteroTypes.Library.LibraryLike): boolean {
+  const lib = (typeof library === 'number') ? Zotero.Libraries.get(library) : library
+  return lib && !lib.editable
+}
+
 export function get(query: Record<string, string | number>, throws = false): Zotero.Library {
   const oops = err => {
     log.error(err)

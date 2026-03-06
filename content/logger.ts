@@ -73,6 +73,18 @@ function to_s(obj: any): string {
   return stringify(obj)
 }
 
+export function print(strings: string[], ...expressions: any[]) {
+  let err: string
+  let prefix = ''
+  // acc will initially be the lead string
+  const s = strings.reduce((acc, v, i) => {
+    acc = acc + (typeof expressions[i] === 'string' ? expressions[i] : (err = stringifyError(expressions[i])) || stringify(expressions[i])) + v
+    if (err) prefix = 'error: '
+    return acc
+  })
+  return prefix + s
+}
+
 export function format(...msg): string {
   return msg.map(to_s).join(' ')
 }

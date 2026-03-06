@@ -6,6 +6,7 @@ import { FilePickerHelper } from 'zotero-plugin-toolkit'
 import { findBinary } from './path-search'
 import { log } from './logger'
 import { alert } from './prompt'
+import { getItemsAsync } from './get-items-async'
 
 import BBT from '../gen/version.cjs'
 
@@ -75,7 +76,7 @@ export const AUXScanner = new class {
 
     const itemIDs: number[] = []
     const citationKeys: string[] = []
-    for (const found of Zotero.BetterBibTeX.KeyManager.find({ libraryID, citationKey: { $in: parsed.citationKeys } })) {
+    for (const found of Zotero.BetterBibTeX.KeyManager.all(_ => _.libraryID === libraryID && parsed.citationKeys.includes(_.citationKey))) {
       itemIDs.push(found.itemID)
       citationKeys.push(found.citationKey)
     }
@@ -287,7 +288,7 @@ export const AUXScanner = new class {
     // cited but not tagged
     let itemIDs = cited.filter(item => !tagged.includes(item))
     if (itemIDs.length) {
-      for (const item of await Zotero.Items.getAsync(itemIDs)) {
+      for (const item of await getItemsAsync(itemIDs)) {
         item.addTag(tag, 1)
         await item.saveTx()
       }
@@ -296,7 +297,7 @@ export const AUXScanner = new class {
     // tagged but not cited
     itemIDs = tagged.filter(item => !cited.includes(item))
     if (itemIDs.length) {
-      for (const item of await Zotero.Items.getAsync(itemIDs)) {
+      for (const item of await getItemsAsync(itemIDs)) {
         item.removeTag(tag)
         await item.saveTx()
       }

@@ -126,6 +126,11 @@ export const Preference = new class PreferenceManager extends PreferenceManagerB
       Zotero.Prefs.clear(oops + key, true)
     }
 
+    try {
+      Zotero.Prefs.clear('translators.better-bibtex.autoExport.autoPinOverwrite')
+    }
+    catch {}
+
     // migrate ancient keys
     if (Zotero.Prefs.get(key = 'translators.better-bibtex.quickCopyMode') === 'orgmode_citekey') {
       Zotero.Prefs.set(key, 'orgmode')

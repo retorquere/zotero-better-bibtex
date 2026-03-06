@@ -29,11 +29,6 @@ be replaced by their LaTeX-command counterparts.
 default: `10`
 
 Number of seconds to wait after your system goes idle before kicking off auto-exports.
-## autoPinOverwrite
-
-default: `no`
-
-When true, BBT will overwrite existing keys with new keys after an item changes.
 ## biblatexExtendedDateFormat
 
 default: `yes`
@@ -46,6 +41,11 @@ default: `<not set>`
 a JSON mapping from single character to raw LaTeX, to augment the default mapping; these will be applied when you export as ASCII. **DO NOT** edit this preferencedirectly,
 but create a CSV (not semicolons) file named `charmap.csv` in the zotero data directory under the `better-bibtex` folder with columns `unicode` (the source character),
 `text` (representation in LaTeX text mode, if any) and `math` (representation in LaTeX math mode, if any, without dollar signs).
+## citekeySearch
+
+default: `yes`
+
+Enable searching on citation keys. Slows down startup on very large libraries. Requires Zotero restart to enable/disable.
 ## csquotes
 
 default: `<not set>`

@@ -1,13 +1,3 @@
-//  public async itemsChanged(action, ids): Promise<void> {
-//    try {
-//      await this.cacheTouch(ids)
-//      this.keymanagerUpdate(action, ids)
-//    }
-//    catch (err) {
-//      log.error('cache update failed:', err)
-//    }
-//  }
-
 import Emittery from 'emittery'
 
 import { log } from './logger'
@@ -17,8 +7,6 @@ type ZoteroAction = 'modify' | 'add' | 'trash' | 'delete'
 
 type IdleState = 'active' | 'idle'
 export type Action = 'modify' | 'delete' | 'add'
-
-type IntervalHandle = ReturnType<typeof setInterval>
 
 type IdleObserver = {
   observe: (subject: string, topic: IdleState, data: any) => void
@@ -34,6 +22,8 @@ const idleService: IdleService = Components.classes['@mozilla.org/widget/useridl
 
 type Reason = 'key-refresh' | 'parent-modify' | 'parent-delete' | 'parent-add' | 'tagged'
 
+const logEvents = Zotero.Prefs.get('extensions.zotero.translators.better-bibtex.logEvents')
+
 type EventMap = {
   'collections-changed': number[]
   'collections-removed': number[]
@@ -46,14 +36,12 @@ type EventMap = {
   'preference-changed': string
   'window-loaded': { win: Window; href: string }
   idle: { state: IdleState; topic: IdleTopic }
-  sync: boolean
 }
 
 class Emitter extends Emittery<EventMap> {
   private listeners: any[] = []
   public idle: Partial<Record<IdleTopic, IdleState>> = {}
   public itemObserverDelay = 5
-  public syncInProgress: boolean = Zotero?.Sync?.Runner?.syncInProgress ?? false
 
   public startup(): void {
     this.listeners.push(new WindowListener)
@@ -62,7 +50,6 @@ class Emitter extends Emittery<EventMap> {
     this.listeners.push(new CollectionListener)
     this.listeners.push(new MemberListener)
     this.listeners.push(new GroupListener)
-    this.listeners.push(new SyncListener)
   }
 
   override async emit<Name extends keyof EventMap>(eventName: Name, data?: EventMap[Name]): Promise<void> {
@@ -95,42 +82,21 @@ class Emitter extends Emittery<EventMap> {
   }
 }
 
-export const Events = new Emitter({
-  /*
+export const Events = new Emitter(logEvents ? { // eslint-disable-line @stylistic/multiline-ternary
   debug: {
     name: 'better-bibtex event',
-    enabled: Zotero.Prefs.get('translators.better-bibtex.logEvents'),
+    enabled: true,
     logger: (type, debugName, eventName, eventData) => {
       try {
         if (typeof eventName === 'symbol') return
+        log.info('emit: event:', { type, debugName, eventName, eventData })
       }
       catch (err) {
         log.error(`emit: ${err}`)
       }
     },
   },
-  */
-})
-
-class SyncListener {
-  private interval: IntervalHandle
-
-  constructor() {
-    this.interval = setInterval(() => {
-      if (typeof Zotero.Sync?.Runner?.syncInProgress === 'boolean') {
-        if (Events.syncInProgress !== Zotero.Sync.Runner.syncInProgress) {
-          void Events.emit('sync', Zotero.Sync.Runner.syncInProgress)
-          Events.syncInProgress = Zotero.Sync.Runner.syncInProgress
-          log.info(`sync ${ Events.syncInProgress ? 'started' : 'stopped' }`)
-        }
-      }
-    }, 1000)
-  }
-
-  unregister() {
-    clearInterval(this.interval)
-  }
-}
+} : {})
 
 class WindowListener {
   constructor() {
@@ -202,6 +168,7 @@ class ItemListener extends ZoteroListener {
   }
 
   public async notify(action: ZoteroAction, type: string, ids: number[], extraData?: Record<number, { libraryID?: number }>) {
+    if (logEvents) log.info('item event:', { action, ids, extraData })
     try {
       let load = false
       switch (action) {

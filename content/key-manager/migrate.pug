@@ -20,11 +20,15 @@ window(xmlns='http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul'
     input[type='radio'], input[type='checkbox'] { margin-right: 8px; vertical-align: middle; }
 
   html:body
-    html:div#header(style='font-weight: bold; margin-bottom: 10px;')
-      | You have {zotero} Zotero citation keys, and {total} Better BibTeX stored citation keys, of which {pinned} are pinned
+    html:div.header(style='font-weight: bold; margin-bottom: 10px;')
+      | Zotero 8 adds a native citation key field, which replaces the Better BibTeX citation key field. You currently have {zotero}
+      | native citation keys.
+    html:div.header
+      | You have {total} Better BibTeX stored citation keys (of which {pinned} are pinned). Of these, {conflicts} differ
+      | from Zotero citation keys you have.
 
     html:div
-      | Zotero 8 adds a native citation key field, which replaces the Better BibTeX citation key field. Since you have existing Better BibTeX citation keys, do you want to:
+      | Do you want to:
 
     html:div.option-container
       html:label
@@ -33,7 +37,7 @@ window(xmlns='http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul'
 
       html:label#pinned
         html:input(type='radio' name='migrate' value='pinned' onchange='migrate(this)')
-        |  Migrate only pinned Better BibTeX citation keys, to Zotero citation keys, and discard the dynamic (non-pinned) Better BibTeX citation keys
+        |  Migrate only pinned Better BibTeX citation keys to Zotero citation keys, and discard the dynamic (non-pinned) Better BibTeX citation keys
 
       html:label
         html:input(type='radio' name='migrate' value='none' onchange='migrate(this)')
@@ -41,7 +45,7 @@ window(xmlns='http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul'
 
     html:div.divider
 
-    html:div#header(style='font-weight: bold; margin-bottom: 10px;')
+    html:div.header(style='font-weight: bold; margin-bottom: 10px;')
       | When a Better BibTeX stored citation key exists for an item that currently has a citation key in Zotero:
 
     html:div.option-container
@@ -51,10 +55,26 @@ window(xmlns='http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul'
       html:label
         html:input(type='radio' name='overwrite' value='no' onchange='overwrite(this)')
         |  Discard Better BibTeX citation key
+    html:div.divider
+
+    html:div.header(style='font-weight: bold; margin-bottom: 10px;')
+      | Do you want citation keys to update when you change the item?
+
+    html:div.option-container
+      html:label
+        html:input(type='radio' name='dynamic' value='yes' onchange='dynamic(this)')
+        |  Update citation keys when the item changes
+      html:label
+        html:input(type='radio' name='dynamic' value='no' onchange='dynamic(this)')
+        |  Once set, keep the citation key unchanged
 
     html:div.divider
     html:div
-      | If it is unclear to you what these choices means, just choose "ask me again" and ask for more information in the discussion lists of Better BibTeX at https://tinyurl.com/key-migration. When choosing "ask me again", nothing happens, and you will be offered the same choice at next start. Note that until you migrate, the Better BibTeX citation keys are unavailable.
+      | If it is unclear to you what these choices means, just choose "ask me again" and ask for more information in the
+      | discussion lists of Better BibTeX at https://tinyurl.com/key-migration. When choosing "ask me
+    html:div
+      | again", nothing happens, and you will be offered the same choice at next start. Note that until you migrate, the Better
+      | BibTeX citation keys are unavailable.
 
     html:div.footer
       html:button#postpone(onclick='finish("postpone")') Do not migrate; ask me again at next start
@@ -70,15 +90,17 @@ window(xmlns='http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul'
         radio.disabled = choice.migrate === 'none'
       })
 
+      const dynamic = typeof choice.dynamic === 'boolean'
+      const overwrite = typeof choice.overwrite === 'boolean'
       switch (choice.migrate || '') {
         case '':
           ok.disabled = true
           break
         case 'none':
-          ok.disabled = false
+          ok.disabled = !dynamic
           break
         default:
-          ok.disabled = typeof choice.overwrite !== 'boolean'
+          ok.disabled = !overwrite || !dynamic
           break
       }
     }
@@ -92,6 +114,11 @@ window(xmlns='http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul'
       choice.overwrite = el.value === 'yes'
       gate()
     }
+
+    function dynamic(el) {
+      choice.dynamic = el.value === 'yes'
+      gate()
+    }
     function finish(val) {
       choice.migrate = val || choice.migrate
       Object.assign(window.arguments[0], choice)
@@ -101,6 +128,8 @@ window(xmlns='http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul'
       window.sizeToContent()
       const params = window.arguments[0]
       if (!params.pinned) document.getElementById('pinned')?.style.setProperty('display', 'none')
-      const header = document.getElementById('header')
-      header.innerHTML = header.innerHTML.replace(/[{]([a-z]+)[}]/g, (_, p) => `${params[p]}`)
+
+      document.querySelectorAll('.header').forEach(header => {
+        header.innerHTML = header.innerHTML.replace(/[{]([a-z]+)[}]/g, (_, p) => `${params[p]}`)
+      })
     }

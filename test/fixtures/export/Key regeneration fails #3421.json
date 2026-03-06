@@ -1,0 +1,52 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "preferences": {
+      "autoPinDelay": 1,
+      "citekeyFormat": "authEtAl(\"*\", false, \"_\") + year.prefix(\"_\") + infix"
+    },
+    "options": {}
+  },
+  "version": {
+    "zotero": "8.0.3",
+    "bbt": "8.0.18"
+  },
+  "collections": {},
+  "items": [
+    {
+      "key": "9B4FWEHQ",
+      "version": 4578,
+      "itemType": "journalArticle",
+      "title": "Data visiting governance: a conceptual framework",
+      "abstractNote": "As genomic research scales globally, legal constraints such as data localization provisions in data privacy and other laws and ethical imperatives around privacy and sovereignty increasingly challenge traditional models of data sharing. Data visiting, where analysis occurs within the provider’s computing environment without moving the data, offers a promising alternative, yet its governance remains underdeveloped. This article introduces the Seven-Dimensional Data Visiting Framework (7D-DVF), a structured tool for designing, assessing, and regulating data visiting systems in genomics. Building on the Global Alliance for Genomics and Health (GA4GH) data sharing lexicon, the framework disaggregates data visiting into seven adjustable dimensions: researcher autonomy, data location, data visibility, nature of the shared data, output governance, trust and control model, and auditability and traceability. Each dimension operates as a governance lever, enabling proportional, context-sensitive configurations that balance privacy, utility, and legal compliance. The article illustrates how the 7D-DVF can guide practical implementation through checklists and real-world scenarios, including institutional data control, Indigenous data sovereignty, and federated AI model training. By shifting genomic governance from reactive compliance to designbased stewardship, the 7D-DVF equips stakeholders to operationalize secure, lawful, and future-ready data sharing practices.",
+      "date": "2025-12-04",
+      "DOI": "10.1186/s40246-025-00864-0",
+      "url": "https://link.springer.com/10.1186/s40246-025-00864-0",
+      "accessDate": "2026-01-20T15:34:46Z",
+      "shortTitle": "Data visiting governance",
+      "language": "en",
+      "libraryCatalog": "DOI.org (Crossref)",
+      "volume": "20",
+      "pages": "11",
+      "publicationTitle": "Human Genomics",
+      "ISSN": "1479-7364",
+      "issue": "1",
+      "journalAbbreviation": "Hum Genomics",
+      "creators": [
+        {
+          "firstName": "Donrich",
+          "lastName": "Thaldar",
+          "creatorType": "author"
+        }
+      ],
+      "tags": [],
+      "dateAdded": "2026-01-20T15:34:47Z",
+      "dateModified": "2026-02-20T11:49:07Z",
+      "itemID": 53,
+      "attachments": [
+      ],
+      "notes": []
+    }
+  ]
+}

@@ -1,10 +1,13 @@
+better-bibtex =
+  .label = Better BibTeX
 -citation-key = Citation key
 better-bibtex_auto-export_delete = Deleting auto-export
 better-bibtex_auto-export_delete_confirm = Are you sure you want to delete this auto-export? This cannot be undone.
 better-bibtex_aux-scan_prompt = Tag name
 better-bibtex_aux-scan_title_aux = Tag cited items from AUX file
 better-bibtex_aux-scan_title_md = Tag cited items from Markdown file
-better-bibtex_aux-scanner = Scan BibTeX AUX/Markdown file for references...
+better-bibtex_aux-scanner =
+  .label = Scan BibTeX AUX/Markdown file for references...
 better-bibtex_bulk-keys-confirm_warning = You are changing more than { $treshold } items in one go. Are you sure?
 better-bibtex_bulk-keys-confirm_stop_asking = OK, and don't ask me again
 
@@ -13,7 +16,7 @@ better-bibtex_error-report =
 
 better-bibtex_error-report_upgrade = The latest { $program } version is <strong>{ $upgrade }</strong>, you are running <strong>{ $running }</strong>; please upgrade first.
 
-better-bibtex_error-report_upgrade_auto = { $program } will update from the { $channel } channel every { $interval }, last update at { $last }.
+better-bibtex_error-report_upgrade_auto = { $program } will update from the { $channel } channel every { $interval }, last update at { $lastUpdate }.
 better-bibtex_error-report_upgrade_manual = { $program } updates are disabled
 
 better-bibtex_error-report_no_items = This log will not include sample items. <b>These are not mandatory</b>, but are usually necessary to create test cases for the change/fix you will be requesting. To generate a log with sample items:
@@ -163,6 +166,8 @@ better-bibtex_preferences_advanced_import_sentence-case_warning = Bib(La)TeX ent
     You can turn this off, but you may then also want to disable `Apply title-casing to titles` (which has its own problems, see the help entry for that option on this page).
     With 'yes, but try to exclude already-sentence-cased titles', BBT will attempt to detect titles that are already sentence cased and leave them as-is on import.
 
+better-bibtex_remigrate = 
+  .label = Re-do BBT citation key migration
 better-bibtex_preferences_advanced_import_migrate = Migrate BetterBibTeX preferences/citation keys
 better-bibtex_preferences_advanced_import_export-prefs = 
   .label = Export BetterBibTeX preferences...
@@ -181,6 +186,7 @@ better-bibtex_preferences_auto-abbrev =
 
 better-bibtex_preferences_auto-abbrev_style = Abbreviation style:
 better-bibtex_preferences_auto-export = Automatic export
+  .label = { better-bibtex_preferences_auto-export }
 better-bibtex_preferences_auto-export_delay = Delay auto-export for
 
 better-bibtex_preferences_auto-export_explanation = You can only review and remove exports here. To add an auto-export, perform an export as usual and check the 'Keep updated' option presented there.
@@ -232,8 +238,8 @@ better-bibtex_preferences_citekey_fold =
 
 better-bibtex_preferences_citekey_format = Citation key formula
 better-bibtex_preferences_citekey_format_installed = Active citation key formula
-better-bibtex_preferences_citekey_search = 
-  .label = Enable citation key search
+better-bibtex_preferences_citekey_dynamic =
+  .label = Regenerate citation key when item changes
 
 better-bibtex_preferences_citekey_uniqueness = 
   .label = Keeping citation keys unique
@@ -389,7 +395,7 @@ better-bibtex_preferences_postscript_warn =
 
 better-bibtex_preferences_prefpane_loading = Better BibTeX is loading
 better-bibtex_preferences_rescan-citekeys = 
-  .label = Re-scan pinned citekeys
+  .label = Re-scan citekeys
 
 better-bibtex_preferences_reset-cache = 
   .label = Reset cache on next start
@@ -410,6 +416,7 @@ better-bibtex_preferences_tab_misc = Miscellaneous
   .label = { better-bibtex_preferences_tab_misc }
 
 better-bibtex_report-errors = Send Better BibTeX debug log...
+  .label = { better-bibtex_report-errors }
 better-bibtex_server-url = 
   .title = Better BibTeX export via HTTP
   .buttonlabelaccept = OK
@@ -428,18 +435,30 @@ better-bibtex_translate_error_target_no_parent = { $path } does not have a paren
 better-bibtex_translate_error_target_not_a_file = { $path } exists but is not a file
 better-bibtex_units_seconds = seconds
 better-bibtex_workers_status = Total background exports started: { $total }, currently running: { $running }
-better-bibtex_zotero-pane_add-citation-links = Citation Graph: add citation links...
-better-bibtex_zotero-pane_citekey_pin_inspire-hep = Pin BibTeX key from InspireHEP
-better-bibtex_zotero-pane_citekey_refresh = Regenerate BibTeX key
-better-bibtex_zotero-pane_citekey_fill = Generate missing BibTeX key
-better-bibtex_zotero-pane_bibtex_to_clipboard = 🅱 copy BibTeX to clipboard
-better-bibtex_zotero-pane_biblatex_to_clipboard = 🅱 copy BibLaTeX to clipboard
+better-bibtex_zotero-pane_add-citation-links =
+  .label = Citation Graph: add citation links...
+better-bibtex_zotero-pane_citekey_pin_inspire-hep =
+  .label = Set BibTeX key from InspireHEP
+better-bibtex_zotero-pane_citekey_pin =
+  .label = Pin BibTeX key
+better-bibtex_zotero-pane_citekey_refresh =
+  .label = Regenerate BibTeX key
+better-bibtex_zotero-pane_citekey_fill =
+  .label = Generate missing BibTeX key
+better-bibtex_zotero-pane_bibtex_to_clipboard =
+  .label = 🅱 copy BibTeX to clipboard
+better-bibtex_zotero-pane_biblatex_to_clipboard =
+  .label = 🅱 copy BibLaTeX to clipboard
 better-bibtex_zotero-pane_column_citekey = { -citation-key }
-better-bibtex_zotero-pane_patch-dates = Copy date-added/date-modified from extra field
-better-bibtex_zotero-pane_sentence-case = BBT Sentence-case
-better-bibtex_zotero-pane_show_collection-key = Download Better BibTeX export...
+better-bibtex_zotero-pane_patch-dates =
+  .labek = Copy date-added/date-modified from extra field
+better-bibtex_zotero-pane_sentence-case =
+  .label = BBT Sentence-case
+better-bibtex_zotero-pane_show_collection-key =
+  .label = Download Better BibTeX export...
 better-bibtex_zotero-pane_tag_duplicates = Tag duplicate citation keys
-better-bibtex_zotero-pane_tex-studio = Push entries to TeXstudio
+better-bibtex_zotero-pane_tex-studio =
+  .label = Push entries to TeXstudio
 
 betterbibtex-item-pane-header = { -citation-key }
 

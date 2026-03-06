@@ -1,8 +1,30 @@
 # Better BibTeX for Zotero
 
-[![Join the chat at https://gitter.im/retorquere/zotero-better-bibtex](https://badges.gitter.im/retorquere/zotero-better-bibtex.svg)](https://gitter.im/retorquere/zotero-better-bibtex?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge) [![Greenkeeper badge](https://badges.greenkeeper.io/retorquere/zotero-better-bibtex.svg)](https://greenkeeper.io/)
+Better BibTeX (BBT) is an extension for [Zotero](https://www.zotero.org) and (in principle) [Juris-M](https://juris-m.github.io) that makes it easier to manage bibliographic data, especially for people authoring documents using text-based toolchains (e.g. based on [LaTeX](https://www.latex-project.org) / [Markdown](https://www.markdownguide.org)).
 
-Better BibTeX (BBT) is an extension for [Zotero](https://www.zotero.org) and [Juris-M](https://juris-m.github.io) that makes it easier to manage bibliographic data, especially for people authoring documents using text-based toolchains (e.g. based on [LaTeX](https://www.latex-project.org) / [Markdown](https://www.markdownguide.org)).
+# Notice
+
+**With the advent of Zotero 8, items have a Zotero-native citation key field. This has replaced the BBT citation key field.**
+
+**This has caused a few somewhat disruptive changes:**
+
+* **Zotero 7 is no longer supported**. BBT 8.0.25 still works on 7.0.32, but will not receive further updates.
+* The citation key no longer sits at the top of the item pane. It now sits somewhere in the middle and you may have to scroll to see it. This placement is not under my control
+* Zotero will have moved all pinned keys out of the `extra` field into the native field
+* The concept of pinning keys is gone; keys are *always* pinned now. Zotero doesn't have a place I can store whether a key is pinned or not.
+* The Zotero-native citation keys are stored in another place than the BBT citation keys. If you have no Zotero-native citation keys yet, BBT will silently migrate them to there. If you do have Zotero-native citation keys, and a migration would overwrite them, you will be offered a windows with the choice on how to migrate your citation keys from the BBT storage to the Zotero storage.
+* I have enabled auto-pin (what really is auto-fill now) even you had it turned off. You can still turn it back off if you don't want this.
+* Integrations that read the BBT database directly will have to read the Zotero database instead.
+
+Upside to all of this is that keys will sync.
+
+## Re-do migration
+
+**If key migration appears to have failed, YOUR CITATION KEYS ARE SAFE**.
+
+Make sure you are on the latest version. For the first 5 minutes after BBT start, the Help menu will have an option _Re-do BBT citation key migration_. Click that, generate a debug log from the Help menu, then open an issue on github noting the debug log ID.
+
+**It is a known problem that read-only groups do not have citation keys. I am working on a fix**
 
 ## Features
 

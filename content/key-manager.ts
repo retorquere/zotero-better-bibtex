@@ -20,12 +20,9 @@ import { getItemsAsync } from './get-items-async'
 import { Preference } from './prefs'
 import { Formatter } from './key-manager/formatter'
 
-import Loki from 'lokijs'
-
 import { Cache } from './translators/worker'
 
 import { sprintf } from 'sprintf-js'
-import { newQueue } from '@henrygd/queue/rl'
 
 import * as l10n from './l10n'
 
@@ -39,11 +36,10 @@ export type CitekeyRecord = {
   lcCitationKey: string
 }
 
-type UnwatchCallback = () => void
+type Predicate<T> = (item: T) => boolean
 
 function lc(record: Partial<CitekeyRecord>): CitekeyRecord {
-  record.lcCitationKey = record.citationKey.toLowerCase()
-  return record as unknown as CitekeyRecord
+  return Object.assign(record, { lcCitationKey: record.citationKey.toLowerCase() }) as CitekeyRecord
 }
 
 class Progress {
@@ -77,46 +73,13 @@ class Progress {
   }
 }
 
-type BatchedQuery = {
-  query: string
-  params: Array<string | number>
-}
-
 export const KeyManager = new class _KeyManager {
-  public searchEnabled = false
-
-  private db = {
-    queue: newQueue(1, 1, 5000),
-    batch: [] as BatchedQuery[],
-
-    schedule(query: string, params: Array<string | number>) {
-      this.batch.push({ query, params })
-
-      this.queue.add(async () => {
-        if (this.batch.length) {
-          const batch = this.batch
-          this.batch = []
-          await Zotero.DB.executeTransaction(async () => {
-            for (const q of batch) {
-              await ZoteroDB.queryAsync(q.query, q.params)
-            }
-          })
-        }
-      })
-    },
-  }
-
-  public keys = (new Loki('citationkeys.db')).addCollection<CitekeyRecord>('citationKeys', {
-    indices: [ 'itemID', 'libraryID', 'itemKey', 'citationKey', 'lcCitationKey' ],
-    unique: [ 'itemID' ],
-  })
-
-  private unwatch: UnwatchCallback[] = []
+  #keys: Map<number, CitekeyRecord> = new Map
+  public started = false
 
   public autopin: Scheduler<number> = new Scheduler<number>('autoPinDelay', 1000)
 
-  private started = false
-
+  /*
   private getField(item: { getField: ((str: string) => string) }, field: string): string {
     try {
       return item.getField(field) || ''
@@ -125,34 +88,30 @@ export const KeyManager = new class _KeyManager {
       return ''
     }
   }
+  */
 
-  public async fill(ids: 'selected' | number | number[], inspireHEP = false): Promise<void> {
-    ids = this.expandSelection(ids)
-
-    await Zotero.DB.executeTransaction(async () => {
-      for (const item of await getItemsAsync(ids)) {
-        if (item.isFeedItem || !item.isRegularItem()) continue
-
-        const current = this.getField(item, 'citationKey')
-        if (inspireHEP) {
-          const proposed = await fetchInspireHEP(item)
-          if (proposed && current !== proposed) {
-            item.setField('citationKey', proposed)
-            await item.save()
-          }
-        }
-        else {
-          await this.update(item).save()
-        }
-      }
-    })
-  }
-
-  public async refresh(ids: 'selected' | number | number[], warn = false, replace = false): Promise<void> {
+  public async pin(ids: 'selected' | number | number[]): Promise<void> {
+    await this.fill(ids, { warn: true })
     ids = this.expandSelection(ids)
     await Cache.touch(ids)
+    const items = (await getItemsAsync(ids)).filter(item => !item.isFeedItem && item.isRegularItem())
+    for (const item of items) {
+      const citationKey = item.getField('citationKey')
+      if (citationKey) {
+        const { extra } = Extra.citationKey(item.getField('extra'))
+        item.setField('extra', `${citationKey}\n${extra}`.trim())
+        await item.saveTx({ skipDateModifiedUpdate: true })
+        await Zotero.Promise.delay(10)
+      }
+    }
+  }
 
-    if (replace && warn && Preference.warnBulkModify && this.keys.find({ itemID: { $in: ids } }).length > Preference.warnBulkModify) {
+  public async fill(ids: 'selected' | number | number[], { warn = false, replace = false, inspireHEP = false }: { warn?: boolean; replace?: boolean; inspireHEP?: boolean } = {}): Promise<void> {
+    ids = this.expandSelection(ids)
+    const selected: Set<number> = new Set(ids)
+    await Cache.touch(ids)
+
+    if (replace && warn && Preference.warnBulkModify && this.all(key => selected.has(key.itemID)).length > Preference.warnBulkModify) {
       const ignore = { value: false }
       const index = Services.prompt.confirmEx(
         null, // no parent
@@ -186,7 +145,8 @@ export const KeyManager = new class _KeyManager {
 
     const progress: Progress = items.length > 10 ? new Progress(items.length, 'Refreshing citation keys') : null
     for (const item of items) {
-      const citationKey = this.update(item, replace).getField('citationKey')
+      const citationKey = this.update(item, { replace, inspireHEP: inspireHEP ? (await fetchInspireHEP(item)) || '' : undefined }).getField('citationKey')
+      if (!citationKey) continue
 
       // remove the new citekey from the aliases if present
       const aliases = Extra.get(item.getField('extra'), 'zotero', { aliases: true })
@@ -206,7 +166,7 @@ export const KeyManager = new class _KeyManager {
     progress?.done()
 
     for (const item of items) {
-      await item.saveTx()
+      await item.saveTx({ skipDateModifiedUpdate: true })
       await Zotero.Promise.delay(10)
     }
   }
@@ -224,20 +184,16 @@ export const KeyManager = new class _KeyManager {
 
         await this.start()
       },
-      shutdown: async () => {
-        for (const cb of this.unwatch) {
-          cb()
-        }
-        await this.db.queue.done()
-      },
     })
   }
 
   private clear(ids: number[]) {
-    this.keys.findAndRemove({ itemID: { $in: ids } })
+    for (const id of ids) {
+      this.#keys.delete(id)
+    }
   }
 
-  private upsert(item) {
+  private upsert(item): void {
     const citationKey = item.getField('citationKey') || ''
 
     if (!citationKey) {
@@ -245,13 +201,12 @@ export const KeyManager = new class _KeyManager {
       return
     }
 
-    const record = this.keys.findOne({ itemID: item.id })
+    const record = this.#keys.get(item.id)
     if (record) {
       record.citationKey = citationKey
-      this.keys.update(lc(record))
     }
     else {
-      this.keys.insert(lc({
+      this.#keys.set(item.id, lc({
         itemID: item.id,
         itemKey: item.key,
         libraryID: item.libraryID,
@@ -261,7 +216,7 @@ export const KeyManager = new class _KeyManager {
   }
 
   private async start(): Promise<void> {
-    void migrate()
+    await migrate()
 
     const load = `
       SELECT item.itemID, item.key AS itemKey, item.libraryID, idv.value AS citationKey
@@ -274,11 +229,9 @@ export const KeyManager = new class _KeyManager {
         AND item.itemID NOT IN (SELECT itemID FROM feedItems)
       `.replace(/\n/g, ' ').trim()
 
-    const keys: CitekeyRecord[] = []
     for (const { itemID, itemKey, libraryID, citationKey } of await Zotero.DB.queryAsync(load)) {
-      keys.push(lc({ itemID, itemKey, libraryID, citationKey }))
+      this.#keys.set(itemID, lc({ itemID, itemKey, libraryID, citationKey }))
     }
-    this.keys.insert(keys)
 
     Events.on('preference-changed', pref => {
       switch (pref) {
@@ -297,7 +250,10 @@ export const KeyManager = new class _KeyManager {
       this.clear(itemIDs)
     })
 
-    Events.on('items-changed', ({ items, action }) => {
+    Events.on('items-changed', ({ items, action, reason }) => {
+      log.info('items-changed', { reason })
+      if (reason?.startsWith('parent-') || reason === 'tagged') return
+
       let warn_titlecase = 0 // should not be here
 
       // why do deleted items keep showing up here?
@@ -310,7 +266,7 @@ export const KeyManager = new class _KeyManager {
       })
 
       const update = (item: Zotero.Item) => {
-        this.update(item, Preference.autoPinOverwrite).saveTx().catch(err => log.error('failed to update', item.id, ':', err))
+        this.update(item, { replace: Preference.autoPinOverwrite }).saveTx({ skipDateModifiedUpdate: true }).catch(err => log.error('failed to update', item.id, ':', err))
       }
       for (const item of items) {
         if (Preference.testing) { // race condition for key assignment otherwise
@@ -340,21 +296,16 @@ export const KeyManager = new class _KeyManager {
     this.started = true
   }
 
-  public update(item: Zotero.Item, replace = false): Zotero.Item {
+  public update(item: Zotero.Item, { replace = false, inspireHEP = undefined }: { replace?: boolean; inspireHEP?: string } = {}): Zotero.Item {
     if (item.isFeedItem || !item.isRegularItem()) return item
 
-    do {
-      const { extra, citationKey } = Extra.citationKey(item.getField('extra'))
-      if (citationKey) {
-        item.setField('extra', extra)
-        item.setField('citationKey', citationKey)
-        break
-      }
+    if (typeof inspireHEP === 'string' && !inspireHEP) return item
 
+    do {
       const current = item.getField('citationKey')
       if (current && !replace) break
 
-      const proposed = this.propose(item)
+      const proposed = inspireHEP || this.propose(item)
       if (proposed === current) break
 
       item.setField('citationKey', proposed)
@@ -364,41 +315,63 @@ export const KeyManager = new class _KeyManager {
     return item
   }
 
+  public readonly(item: Zotero.Item): string {
+    if (item.isFeedItem || !item.isRegularItem()) return ''
+    const key = this.#keys.get(item.id)
+    if (key) return key.citationKey
+    const proposed = this.propose(item)
+    if (!proposed) return ''
+    this.#keys.set(item.id, lc({
+      itemID: item.id,
+      itemKey: item.key,
+      libraryID: item.libraryID,
+      citationKey: proposed,
+    }))
+    return proposed
+  }
+
   public get(itemID: number): CitekeyRecord {
     // I cannot prevent being called before the init is done because Zotero unlocks the UI *way* before I'm getting the
     // go-ahead to *start* my init.
-    if (!this.keys || !this.started) return null
-    return this.keys.findOne({ itemID })
+    return this.#keys.get(itemID)
   }
 
-  public first(query: LokiQuery<CitekeyRecord>): CitekeyRecord {
-    return this.keys.findOne(query)
+  public any(query: Predicate<CitekeyRecord>): CitekeyRecord | undefined { // eslint-disable-line id-blacklist
+    for (const key of this.#keys.values()) {
+      if (query(key)) return key
+    }
   }
 
-  public find(query: LokiQuery<CitekeyRecord>): CitekeyRecord[] {
-    return this.keys.find(query)
-  }
-
-  public all(): CitekeyRecord[] {
-    return this.keys.data
+  public all(query?: Predicate<CitekeyRecord>): CitekeyRecord[] {
+    if (!query) {
+      return [...this.#keys.values()]
+    }
+    else {
+      return [...this.#keys.values()].filter(query)
+    }
   }
 
   // mem is for https://github.com/retorquere/zotero-better-bibtex/issues/2926
   public propose(item: Zotero.Item, mem?: Set<string>): string {
     const citationKey = Formatter.format(item)
 
-    const ci = Preference.citekeyCaseInsensitive
-    const ck = ci ? 'lcCitationKey' : 'citationKey'
-    const q = {
-      ...(Preference.keyScope === 'global' ? {} : { libraryID: item.libraryID }),
-      [ck]: '',
-      itemID: { $ne: item.id },
-    }
+    const caseInsensitive = Preference.citekeyCaseInsensitive
+    const keyscopeGlobal = Preference.keyScope === 'global'
+    const citekeyField = caseInsensitive ? 'lcCitationKey' : 'citationKey'
+    const libraryID = item.libraryID
+    const itemID = item.id
 
     const seen: Set<string> = new Set
+    let candidate: string
+    let candidateMatch: string
+
+    function conflict(key: CitekeyRecord): boolean {
+      return (keyscopeGlobal || (key.libraryID === libraryID)) && key[citekeyField] === candidateMatch && key.itemID !== itemID
+    }
+
     // eslint-disable-next-line no-constant-condition
     for (let n = Formatter.postfix.offset; true; n += 1) {
-      const postfixed = citationKey.replace(Formatter.postfix.marker, () => {
+      candidateMatch = candidate = citationKey.replace(Formatter.postfix.marker, () => {
         let postfix = ''
         if (n) {
           const alpha = excelColumn(n)
@@ -409,14 +382,14 @@ export const KeyManager = new class _KeyManager {
         seen.add(postfix)
         return postfix
       })
+      if (caseInsensitive) candidateMatch = candidateMatch.toLowerCase()
 
-      q[ck] = ci ? postfixed.toLowerCase() : postfixed
-      if (this.keys.findOne(q)) continue
+      if (this.any(conflict)) continue
       if (mem) {
-        if (mem.has(postfixed)) continue
-        mem.add(postfixed)
+        if (mem.has(candidate)) continue
+        mem.add(candidate)
       }
-      return postfixed
+      return candidate
     }
   }
 
@@ -432,7 +405,7 @@ export const KeyManager = new class _KeyManager {
     `, [ libraryID, Preference.keyScope, tag ])).map((item: { itemID: number }) => item.itemID)
 
     const citekeys: Record<string, any[]> = {}
-    for (const item of this.keys.find(Preference.keyScope === 'global' ? {} : { libraryID })) {
+    for (const item of this.all(key => Preference.keyScope === 'global' || key.libraryID === libraryID)) {
       citekeys[item.citationKey] ??= []
       citekeys[item.citationKey].push({ itemID: item.itemID, tagged: tagged.includes(item.itemID), duplicate: false })
       if (citekeys[item.citationKey].length > 1) citekeys[item.citationKey].forEach(i => i.duplicate = true)
@@ -448,7 +421,7 @@ export const KeyManager = new class _KeyManager {
         item.addTag(tag)
       }
 
-      await item.saveTx()
+      await item.saveTx({ skipDateModifiedUpdate: true })
     }
   }
 
