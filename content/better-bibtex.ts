@@ -12,7 +12,6 @@ import { getItemsAsync } from './get-items-async'
 
 import { DisplayOptions } from '../gen/translators'
 import type { Reason } from './bootstrap'
-import { clean_pane_persist } from './clean_pane_persist'
 import { Elements } from './create-element'
 import { ErrorReport } from './ErrorReport'
 import * as ExportOptions from './ExportOptions'
@@ -786,7 +785,6 @@ export class BetterBibTeX {
         Events.shutdown()
         Elements.removeAll()
         monkey.disableAll()
-        clean_pane_persist()
         Preference.shutdown()
         for (const endpoint of Object.keys(Zotero.Server.Endpoints)) {
           if (endpoint.startsWith('/better-bibtex/')) delete Zotero.Server.Endpoints[endpoint]
@@ -802,6 +800,7 @@ export class BetterBibTeX {
 
   public async shutdown(reason: Reason): Promise<void> {
     await orchestrator.shutdown(reason)
+    log.info('better bibtex shutdown finished')
   }
 
   public async remigrate(): Promise<void> {

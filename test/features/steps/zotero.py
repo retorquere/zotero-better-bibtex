@@ -414,6 +414,7 @@ class Zotero:
     # graceful shutdown
     try:
       self.execute("""
+        Zotero.debug('Starting shutdown')
         const appStartup = Components.classes['@mozilla.org/toolkit/app-startup;1'].getService(Components.interfaces.nsIAppStartup);
         appStartup.quit(Components.interfaces.nsIAppStartup.eAttemptQuit);
       """)
@@ -421,11 +422,23 @@ class Zotero:
       pass
 
     def on_terminate(proc):
-        utils.print("process {} terminated with exit code {}".format(proc, proc.returncode))
+      utils.print("process {} terminated with exit code {}".format(proc, proc.returncode))
 
     zotero = psutil.Process(self.proc.pid)
+
+    for i in range(40):
+      if not zotero.is_running():
+        utils.print(f'Success: Application shut down after {i} seconds.')
+        return
+
+    utils.print('Zotero did not terminate as requested')
+
     alive = zotero.children(recursive=True)
     alive.append(zotero)
+
+    for p in alive:
+      info = zotero.as_dict(attrs=['pid', 'name', 'username', 'cmdline'])
+      utils.print(f'shutdown: {json.dumps(info)}')
 
     for p in alive:
       try:
