@@ -14,7 +14,7 @@ import urllib
 import requests
 import tempfile
 from munch import *
-from steps.utils import running, nested_dict_iter, benchmark, ROOT, FIXTURES, EXPORTED, assert_equal_diff, serialize, html2md, clean_html
+from steps.utils import terminate, running, nested_dict_iter, benchmark, ROOT, FIXTURES, EXPORTED, assert_equal_diff, serialize, html2md, clean_html
 from steps.library import load as cleanlib, sortbib
 import steps.utils as utils
 import shutil
@@ -411,53 +411,7 @@ class Zotero:
   def shutdown(self):
     if self.proc is None: return
 
-    # graceful shutdown
-    try:
-      self.execute("""
-        Zotero.debug('Starting shutdown')
-        const appStartup = Components.classes['@mozilla.org/toolkit/app-startup;1'].getService(Components.interfaces.nsIAppStartup);
-        appStartup.quit(Components.interfaces.nsIAppStartup.eAttemptQuit);
-      """)
-    except:
-      pass
-
-    def on_terminate(proc):
-      utils.print("process {} terminated with exit code {}".format(proc, proc.returncode))
-
-    zotero = psutil.Process(self.proc.pid)
-
-    for i in range(40):
-      if not zotero.is_running():
-        utils.print(f'Success: Application shut down after {i} seconds.')
-        return
-
-    utils.print('Zotero did not terminate as requested')
-
-    alive = zotero.children(recursive=True)
-    alive.append(zotero)
-
-    for p in alive:
-      info = zotero.as_dict(attrs=['pid', 'name', 'username', 'cmdline'])
-      utils.print(f'shutdown: {json.dumps(info)}')
-
-    for p in alive:
-      try:
-        p.terminate()
-      except psutil.NoSuchProcess:
-        pass
-    gone, alive = psutil.wait_procs(alive, timeout=5, callback=on_terminate)
-
-    if alive:
-      for p in alive:
-        utils.print("process {} survived SIGTERM; trying SIGKILL" % p)
-        try:
-          p.kill()
-        except psutil.NoSuchProcess:
-          pass
-      gone, alive = psutil.wait_procs(alive, timeout=5, callback=on_terminate)
-      if alive:
-        for p in alive:
-          utils.print("process {} survived SIGKILL; giving up" % p)
+    terminate('zotero')
     self.proc = None
     assert not running('Zotero'), 'Zotero is running'
 

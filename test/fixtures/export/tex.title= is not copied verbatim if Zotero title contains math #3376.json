@@ -1,0 +1,67 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "preferences": {
+      "asciiBibTeX": false,
+      "autoExportDelay": 2,
+      "citekeyFormat": "auth.lower + shorttitle(3, 3) + year",
+      "citekeySearch": false,
+      "extraMergeCitekeys": true,
+      "extraMergeCSL": true,
+      "extraMergeTeX": true,
+      "skipFields": "note",
+      "verbatimFields": "url,doi,file,eprint,verba,verbb,verbc,groups"
+    },
+    "options": {
+      "exportNotes": false,
+      "exportFileData": false,
+      "useJournalAbbreviation": false,
+      "biblatexAPA": false,
+      "biblatexChicago": false,
+      "keepUpdated": false,
+      "worker": true,
+      "includeAnnotations": false,
+      "exportDir": "/home/ken",
+      "exportPath": "/home/ken/Exported Items.bib",
+      "cache": true
+    }
+  },
+  "version": {
+    "zotero": "8.0.2-beta.5+c35d7f21e",
+    "bbt": "7.0.76"
+  },
+  "collections": {},
+  "items": [
+    {
+      "key": "IYP2KLQY",
+      "version": 98001,
+      "itemType": "journalArticle",
+      "title": "Title without math",
+      "extra": "tex.title=Title without math $\\ell_1$",
+      "creators": [],
+      "tags": [],
+      "dateAdded": "2026-02-12T01:38:51Z",
+      "dateModified": "2026-02-12T01:39:08Z",
+      "itemID": 10797,
+      "attachments": [],
+      "notes": [],
+      "citationKey": "TitleMath"
+    },
+    {
+      "key": "KG84A3HH",
+      "version": 97998,
+      "itemType": "journalArticle",
+      "title": "Title with math $\\ell_1$",
+      "extra": "tex.title=Title with math $\\ell_1$",
+      "creators": [],
+      "tags": [],
+      "dateAdded": "2026-02-12T01:37:07Z",
+      "dateModified": "2026-02-12T01:37:20Z",
+      "itemID": 10796,
+      "attachments": [],
+      "notes": [],
+      "citationKey": "TitleMath$ell_1$"
+    }
+  ]
+}
