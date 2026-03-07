@@ -5,7 +5,7 @@ body:
   attributes:
     value: |
       ## Verify you are on BBT 9.x. If you are unable to install/upgrade Better BibTeX, and/or Zotero freezes or crashes on shutdown:
-      
+
       * Restart Zotero in troubleshooting mode by holding Shift (Windows) or Option (Mac) while clicking the Zotero icon
       * update plugins, make sure you have BBT 9.x
       * restart Zotero
