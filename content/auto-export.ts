@@ -85,8 +85,8 @@ class SmartStore<T> {
       },
 
       deleteProperty(target, prop) {
-        if (typeof prop === 'string' && prop in target.data) {
-          log.debug('3462: deleteProperty', prop)
+        if (typeof prop === 'string') {
+          log.debug('auto-export: removing', prop)
           Zotero.Prefs.clear(target.key(prop))
           return target.data.delete(prop)
         }
