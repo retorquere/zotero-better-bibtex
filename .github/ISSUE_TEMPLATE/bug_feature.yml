@@ -4,8 +4,14 @@ body:
 - type: markdown
   attributes:
     value: |
-      Use this form if you want a change to BBT.
+      ## Verify you are on BBT 9.x. If you are unable to install/upgrade Better BibTeX, and/or Zotero freezes or crashes on shutdown:
+      
+      * Restart Zotero in troubleshooting mode by holding Shift (Windows) or Option (Mac) while clicking the Zotero icon
+      * update plugins, make sure you have BBT 9.x
+      * restart Zotero
 
+      otherwise,
+      ---
       Alongside a description of your problem/question/feature suggestion, please also include a debug log ID.
 
       You can generate a debug log ID by:
