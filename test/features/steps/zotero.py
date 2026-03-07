@@ -411,7 +411,34 @@ class Zotero:
   def shutdown(self):
     if self.proc is None: return
 
-    terminate('zotero')
+    def on_terminate(proc):
+      utils.print(f'process {proc} terminated with exit code {proc.returncode or 0}')
+
+    zotero = psutil.Process(self.proc.pid)
+    processes = zotero.children(recursive=True)
+    processes.append(zotero)
+
+    for p in processes:
+      try:
+        info = p.as_dict(attrs=['pid', 'name', 'cmdline'])
+        utils.print(f'shutdown: {json.dumps(info)}')
+        p.terminate()
+      except psutil.NoSuchProcess:
+        pass
+    gone, processes = psutil.wait_procs(processes, timeout=30, callback=on_terminate)
+
+    if processes:
+      for p in processes:
+        utils.print(f'process {p} survived SIGTERM; trying SIGKILL')
+        try:
+          p.kill()
+        except psutil.NoSuchProcess:
+          pass
+      gone, processes = psutil.wait_procs(processes, timeout=5, callback=on_terminate)
+      if processes:
+        for p in processes:
+          utils.print(f'process {p} survived SIGKILL; giving up')
+
     self.proc = None
     assert not running('Zotero'), 'Zotero is running'
 

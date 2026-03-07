@@ -17,7 +17,7 @@ import { Cache } from './translators/worker'
 
 // safe to keep "global" since only one pref pane will be loaded at any one time
 let $window: Window & { sizeToContent(): void }
-Events.on('window-loaded', ({ win, href }: { win: Window; href: string }) => {
+Events.on('window-loaded', ({ data: { win, href } }: { data: { win: Window; href: string } }) => {
   switch (href) {
     case 'chrome://zotero/content/preferences/preferences.xul': // Zotero's own preferences on Z6
       new ZoteroPreferences(win)
@@ -29,7 +29,7 @@ Events.on('window-loaded', ({ win, href }: { win: Window; href: string }) => {
   }
 })
 
-Events.on('preference-changed', (pref: string) => {
+Events.on('preference-changed', ({ data: pref }) => {
   switch (pref) {
     case 'citekeyFormatEditing':
       Zotero.BetterBibTeX.PrefPane.checkCitekeyFormat()
@@ -110,7 +110,7 @@ class AutoExportPane {
 
     await this.refresh()
 
-    Events.on('export-progress', async ({ pct, ae }) => {
+    Events.on('export-progress', async ({ data: { pct, ae } }) => {
       if (ae) if (pct >= 100) await this.refresh(ae)
     })
   }

@@ -233,7 +233,7 @@ export const KeyManager = new class _KeyManager {
       this.#keys.set(itemID, lc({ itemID, itemKey, libraryID, citationKey }))
     }
 
-    Events.on('preference-changed', pref => {
+    Events.on('preference-changed', ({ data: pref }) => {
       switch (pref) {
         case 'autoAbbrevStyle':
         case 'citekeyFormat':
@@ -246,11 +246,11 @@ export const KeyManager = new class _KeyManager {
       }
     })
 
-    Events.on('items-removed', ({ itemIDs }) => {
+    Events.on('items-removed', ({ data: { itemIDs } }) => {
       this.clear(itemIDs)
     })
 
-    Events.on('items-changed', ({ items, action, reason }) => {
+    Events.on('items-changed', ({ data: { items, action, reason } }) => {
       log.info('items-changed', { reason })
       if (reason?.startsWith('parent-') || reason === 'tagged') return
 

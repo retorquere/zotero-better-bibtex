@@ -471,11 +471,11 @@ export const AutoExport = new class $AutoExport {
   public db: Store = new SmartStore<Job>((a: Job, b: Job) => a.path.localeCompare(b.path, undefined, { sensitivity: 'base', usage: 'sort' })) as Store
 
   constructor() {
-    Events.on('libraries-changed', ids => this.schedule('library', ids))
-    Events.on('libraries-removed', ids => this.remove('library', ids))
-    Events.on('collections-changed', ids => this.schedule('collection', ids))
-    Events.on('collections-removed', ids => this.remove('collection', ids))
-    Events.on('export-progress', ({ pct, ae }) => {
+    Events.on('libraries-changed', ({ data: ids }) => this.schedule('library', ids))
+    Events.on('libraries-removed', ({ data: ids }) => this.remove('library', ids))
+    Events.on('collections-changed', ({ data: ids }) => this.schedule('collection', ids))
+    Events.on('collections-removed', ({ data: ids }) => this.remove('collection', ids))
+    Events.on('export-progress', ({ data: { pct, ae } }) => {
       if (typeof ae === 'string') this.progress.set(ae, pct)
     })
 
@@ -495,7 +495,7 @@ export const AutoExport = new class $AutoExport {
       startup: () => {
         if (Preference.autoExport === 'immediate') queue.resume('startup')
         Events.addIdleListener('auto-export', Preference.autoExportIdleWait)
-        Events.on('idle', state => {
+        Events.on('idle', ({ data: state }) => {
           if (state.topic !== 'auto-export' || Preference.autoExport !== 'idle') return
 
           switch (state.state) {
@@ -513,7 +513,7 @@ export const AutoExport = new class $AutoExport {
           }
         })
 
-        Events.on('preference-changed', pref => {
+        Events.on('preference-changed', ({ data: pref }) => {
           if (pref === 'autoExport') {
             switch (Preference.autoExport) {
               case 'immediate':
