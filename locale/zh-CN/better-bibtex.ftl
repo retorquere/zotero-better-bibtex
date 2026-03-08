@@ -1,6 +1,6 @@
 better-bibtex = 
     .label = Better BibTeX
--citation-key = 引用
+-citation-key = 引用关键词
 better-bibtex_auto-export_delete = 正在删除自动导出
 better-bibtex_auto-export_delete_confirm = 您确定要删除此项自动导出吗？该操作不可撤销。
 better-bibtex_aux-scan_prompt = 标签名
