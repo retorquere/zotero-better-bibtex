@@ -12,7 +12,7 @@ export const japanese = new class {
   private kuromoji: any
 
   public async init() {
-    Events.on('preference-changed', async pref => {
+    Events.on('preference-changed', async ({ data: pref }) => {
       if (pref === 'japanese') {
         this.enabled = null
         await this.load()

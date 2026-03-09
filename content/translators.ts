@@ -24,7 +24,7 @@ import type { Reason } from './bootstrap'
 import { Header, headers as Headers, byLabel, byId, bySlug } from '../gen/translators'
 import { Job, worker, Exporter, Message } from './translators/worker'
 
-Events.on('preference-changed', async (pref: string) => {
+Events.on('preference-changed', async ({ data: pref }) => {
   for (const translator of (affects[pref] || [])) {
     await Cache.Exports.dropTranslator(translator)
   }

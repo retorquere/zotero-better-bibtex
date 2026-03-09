@@ -28,7 +28,7 @@ import type { ExportedItem, ExportedItemMetadata } from './worker/cache'
 
 import { Preference } from './prefs'
 
-import { startup as pullExportStartup, showURLs as showPullExportURLs } from './pull-export'
+import { showURLs as showPullExportURLs, startup as pullExportStartup } from './pull-export'
 pullExportStartup()
 
 import { startup as JSONRPCStartup } from './json-rpc'
@@ -546,11 +546,11 @@ export class BetterBibTeX {
         await Preference.startup(this.dir)
 
         Events.startup()
-        Events.on('export-progress', ({ pct, message }) => {
+        Events.on('export-progress', ({ data: { pct, message } }) => {
           this.setProgress(pct, message)
         })
 
-        Events.on('cache-touch', async ({ itemIDs }) => {
+        Events.on('cache-touch', async ({ data: { itemIDs } }) => {
           const withParents: Set<number> = new Set(itemIDs)
           for (const item of await getItemsAsync(itemIDs)) {
             if (typeof item?.parentID === 'number') withParents.add(item.parentID)
@@ -558,7 +558,7 @@ export class BetterBibTeX {
           await Cache.touch([...withParents])
         })
         Events.addIdleListener('cache-purge', Preference.autoExportIdleWait)
-        Events.on('idle', async state => {
+        Events.on('idle', async ({ data: state }) => {
           if (state.topic === 'cache-purge' && Cache.ready) await Cache.Serialized.purge()
         })
       },
@@ -624,7 +624,7 @@ export class BetterBibTeX {
         function selectedItems() {
           return Zotero.getActiveZoteroPane()?.getSelectedItems().filter(item => !readonly(item.libraryID) && !item.isFeedItem && item.isRegularItem()) || []
         }
-        const onShowing = (_event, context) => {
+        const itemsSelected = (_event, context) => {
           context.setVisible(selectedItems().length !== 0)
         }
         Zotero.MenuManager.registerMenu({
@@ -640,7 +640,7 @@ export class BetterBibTeX {
                 {
                   menuType: 'menuitem',
                   l10nID: 'better-bibtex_zotero-pane_citekey_pin_inspire-hep',
-                  onShowing,
+                  onShowing: itemsSelected,
                   onCommand: (_event, _context) => void Zotero.BetterBibTeX.KeyManager.fill('selected', { warn: true, inspireHEP: true, replace: true }),
                 },
                 {
@@ -652,49 +652,51 @@ export class BetterBibTeX {
                 {
                   menuType: 'menuitem',
                   l10nID: 'better-bibtex_zotero-pane_citekey_refresh',
-                  onShowing,
+                  onShowing: itemsSelected,
                   onCommand: (_event, _context) => void Zotero.BetterBibTeX.KeyManager.fill('selected', { warn: true, replace: true }),
                 },
                 {
                   menuType: 'menuitem',
                   l10nID: 'better-bibtex_zotero-pane_citekey_pin',
-                  onShowing,
+                  onShowing: itemsSelected,
                   onCommand: (_event, _context) => void Zotero.BetterBibTeX.KeyManager.pin('selected'),
                 },
                 {
                   menuType: 'menuitem',
                   l10nID: 'better-bibtex_zotero-pane_biblatex_to_clipboard',
-                  onShowing,
+                  onShowing: itemsSelected,
                   onCommand: (_event, _context) => void Zotero.BetterBibTeX.MenuHelper.clipSelected(Translators.bySlug.BetterBibLaTeX.translatorID),
                 },
                 {
                   menuType: 'menuitem',
                   l10nID: 'better-bibtex_zotero-pane_bibtex_to_clipboard',
-                  onShowing,
+                  onShowing: itemsSelected,
                   onCommand: (_event, _context) => void Zotero.BetterBibTeX.MenuHelper.clipSelected(Translators.bySlug.BetterBibTeX.translatorID),
                 },
                 {
                   menuType: 'separator',
-                  onShowing,
+                  onShowing: itemsSelected,
                 },
                 {
                   menuType: 'menuitem',
                   l10nID: 'better-bibtex_zotero-pane_patch-dates',
-                  onShowing,
+                  onShowing: itemsSelected,
                   onCommand: (_event, _context) => void Zotero.BetterBibTeX.MenuHelper.patchDates(),
                 },
                 {
                   menuType: 'menuitem',
                   l10nID: 'better-bibtex_zotero-pane_sentence-case',
-                  onShowing,
+                  onShowing: itemsSelected,
                   onCommand: (_event, _context) => void Zotero.BetterBibTeX.MenuHelper.sentenceCase(),
                 },
+                /*
                 {
                   menuType: 'menuitem',
                   l10nID: 'better-bibtex_zotero-pane_add-citation-links',
-                  onShowing,
+                  onShowing: itemsSelected,
                   onCommand: (_event, _context) => void Zotero.BetterBibTeX.MenuHelper.addCitationLinks(),
                 },
+                */
                 {
                   menuType: 'separator',
                   onShowing: (_event, context) => context.setVisible(selectedItems().length !== 0 && TeXstudio.enabled),
@@ -707,7 +709,7 @@ export class BetterBibTeX {
                 },
                 {
                   menuType: 'separator',
-                  onShowing,
+                  onShowing: itemsSelected,
                 },
                 { menuType: 'menuitem', l10nID: 'better-bibtex_report-errors', onCommand: (_event, _context) => void Zotero.BetterBibTeX.ErrorReport.open('items') },
               ],
@@ -715,12 +717,11 @@ export class BetterBibTeX {
           ],
         })
 
-        function selectedAutoExports(mode: 'collection' | 'library', caller: string) {
-          const selected = mode === 'collection'
+        function selectedAutoExports(type: 'collection' | 'library') {
+          const selected = type === 'collection'
             ? Zotero.getActiveZoteroPane().getSelectedCollection(true)
             : Zotero.getActiveZoteroPane().getSelectedLibraryID()
-          log.debug('3450: selectedAutoExports', { caller, mode, selected, ae: AutoExport.db.all(_ => _.type === mode && _.id === selected).length })
-          return AutoExport.db.all(_ => _.type === mode && _.id === selected)
+          return AutoExport.db.all(_ => _.type === type && _.id === selected)
         }
         Zotero.MenuManager.registerMenu({
           menuID: `${pluginID}-menu-collection`,
@@ -734,24 +735,25 @@ export class BetterBibTeX {
               menus: [
                 {
                   menuType: 'submenu',
+                  l10nID: 'better-bibtex_collection-menu_auto-export',
                   onShowing: (_event, context) => {
                     const type = context.collectionTreeRow.type
-                    const aes = selectedAutoExports(type, 'submenu')
-                    log.debug('3450: autoexports submenu:', { type, visible: aes.length !== 0 })
-                    context.setVisible(aes.length !== 0)
+                    const aes = selectedAutoExports(type)
+                    context.setVisible(aes.length > 0)
                   },
-                  l10nID: 'better-bibtex_preferences_auto-export',
                   menus: Array.from({ length: 10 }).map((_, i) => ({
                     menuType: 'menuitem',
+                    // l10nID: 'better-bibtex_collection-menu_auto-export_path',
                     onShowing: (event: Event, context: any) => {
                       const type = context.collectionTreeRow.type
-                      const aes = selectedAutoExports(type, `menuitem ${i}`)
-                      context.setVisible(typeof aes[i] !== 'undefined')
-                      log.debug('3450: autoexports menuitem:', i, { type, visible: typeof aes[i] !== 'undefined' })
+                      const aes = selectedAutoExports(type)
+                      context.setVisible(aes.length > i)
+                      // context.setL10nArgs(aes[i] || {})
                       context.menuElem.setAttribute('label', aes[i]?.path || '[path not set]')
                     },
-                    onCommand: (_event: Event, _context) => {
-                      const ae = selectedAutoExports('collection', `menuitem ${i} run`)[i]
+                    onCommand: (_event: Event, context) => {
+                      const type = context.collectionTreeRow.type
+                      const ae = selectedAutoExports(type)[i]
                       if (ae) Zotero.BetterBibTeX.AutoExport.run(ae.path)
                     },
                   })) as MenuItem[],

@@ -4,6 +4,12 @@ title: Changelog
 weight: 500
 ---
 <!-- WARNING: GENERATED FROM https://github.com/retorquere/zotero-better-bibtex/blob/master/CHANGELOG.md. EDITS WILL BE OVERWRITTEN -->
+## v9.0.6
+
+* fixed raw encoding for tex.X fields
+* auto-export loading fixed
+* removed obsolete clean_pane_persist
+
 ## v9.0.0
 
 * removed lokijs which gave unpredictable errors when storing auto-exports

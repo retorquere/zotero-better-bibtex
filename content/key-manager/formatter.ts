@@ -414,7 +414,7 @@ export class PatternFormatter {
   }
 
   constructor() {
-    Events.on('preference-changed', pref => {
+    Events.on('preference-changed', ({ data: pref }) => {
       switch (pref) {
         case 'citekeyFormat':
           this.acronyms = {}
