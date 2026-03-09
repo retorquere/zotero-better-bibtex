@@ -4,6 +4,13 @@ title: Changelog
 weight: 500
 ---
 <!-- WARNING: GENERATED FROM https://github.com/retorquere/zotero-better-bibtex/blob/master/CHANGELOG.md. EDITS WILL BE OVERWRITTEN -->
+## v9.0.7
+
+*   localization cleanup
+*   updated language support in the `language` citekey formatting function and `langid` output
+*   improved test reliability by sending only SIGTERM
+*   auto-updates are back in the context menu for libraries/groups
+
 ## v9.0.6
 
 * fixed raw encoding for tex.X fields
