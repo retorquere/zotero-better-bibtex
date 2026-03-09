@@ -737,23 +737,20 @@ export class BetterBibTeX {
                   menuType: 'submenu',
                   l10nID: 'better-bibtex_collection-menu_auto-export',
                   onShowing: (_event, context) => {
-                    const type = context.collectionTreeRow.type
-                    const aes = selectedAutoExports(type)
+                    const aes = selectedAutoExports(context.collectionTreeRow.type)
                     context.setVisible(aes.length > 0)
                   },
                   menus: Array.from({ length: 10 }).map((_, i) => ({
                     menuType: 'menuitem',
                     // l10nID: 'better-bibtex_collection-menu_auto-export_path',
                     onShowing: (event: Event, context: any) => {
-                      const type = context.collectionTreeRow.type
-                      const aes = selectedAutoExports(type)
+                      const aes = selectedAutoExports(context.collectionTreeRow.type)
                       context.setVisible(aes.length > i)
                       // context.setL10nArgs(aes[i] || {})
                       context.menuElem.setAttribute('label', aes[i]?.path || '[path not set]')
                     },
                     onCommand: (_event: Event, context) => {
-                      const type = context.collectionTreeRow.type
-                      const ae = selectedAutoExports(type)[i]
+                      const ae = selectedAutoExports(context.collectionTreeRow.type)[i]
                       if (ae) Zotero.BetterBibTeX.AutoExport.run(ae.path)
                     },
                   })) as MenuItem[],
