@@ -489,7 +489,7 @@ autoPinOverwrite:
 
 parseParticles:
   description: >-
-    Name particle handling. Only turn on when requested and we're talking about
+    Name particle handling. Only turn off when requested and we're talking about
     it on github.
   default: true
   affects:
