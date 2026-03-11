@@ -873,7 +873,7 @@ Feature: Export
 
   Scenario: Key regeneration fails #3421
     Given I import 1 reference from "export/*.json"
-    And I set preference .autoPinOverwrite to true
+    And I set preference .resetKeyOnChange to true
     Then an export using "Better BibLaTeX" should match "export/*.biblatex"
     When I select the item with a field that contains "Data visiting governance"
     And I change the name of the first author to [Thadar][Donrich]
