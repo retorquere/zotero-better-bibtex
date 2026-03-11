@@ -3,7 +3,7 @@
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
     "preferences": {
-      "autoPinDelay": 10,
+      "fillKeyAfter": 10,
       "citekeyFormat": "(authEtal2 || title).capitalize.postfix('\\_') + year",
       "postscript": "if (Translator.BetterCSL && extra.raw.gscc) csl.GSCC = extra.raw.gscc"
     }

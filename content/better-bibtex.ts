@@ -777,6 +777,22 @@ export class BetterBibTeX {
           },
         })
 
+        Zotero.ItemPaneManager.registerInfoRow({
+          rowID: 'better-bibtex-citation-key',
+          pluginID,
+          label: { l10nID: 'better-bibtex_item-pane_info_citation-key_label' },
+          position: 'start',
+          multiline: false,
+          nowrap: false,
+          editable: false,
+          onGetData({ item }) {
+            return item.getField('citationKey')
+          },
+          onSetData({ rowID, item, tabType, editable, value }) {
+            Zotero.debug(`Set custom info row ${rowID} of item ${item.id} to ${value}`);
+          },
+        })
+
         monkey.enable()
       },
       shutdown: async () => { // eslint-disable-line @typescript-eslint/require-await
@@ -815,12 +831,23 @@ export class BetterBibTeX {
     }
   }
 
+  private hideNativeField = 'bbt-hide-citationkey'
   public onMainWindowLoad({ window }: { window: Window }): void {
     window.MozXULElement.insertFTLIfNeeded('better-bibtex.ftl')
+    const doc = window.document
+    const style = doc.createElement('style')
+    style.id = this.hideNativeField
+    style.textContent = `
+      .meta-row:has([fieldname="citationKey"]) {
+        display: none !important;
+      }
+    `
+    doc.documentElement.append(style)
   }
 
   public onMainWindowUnload({ window }: { window: Window }): void {
     window.document.querySelector('[href="better-bibtex.ftl"]')?.remove()
+    window.document.querySelector(`#${this.hideNativeField}`)?.remove()
   }
 
   public parseDate(date: string): ParsedDate {

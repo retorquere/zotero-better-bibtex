@@ -3,7 +3,7 @@
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
     "preferences": {
-      "autoPinDelay": 1,
+      "fillKeyAfter": 1,
       "citekeyFormat": "authEtal2(creator = \"*\", initials = false, sep = \"_\") + \"_\" + year + infix",
       "keyConflictPolicy": "change",
       "keyScope": "global",

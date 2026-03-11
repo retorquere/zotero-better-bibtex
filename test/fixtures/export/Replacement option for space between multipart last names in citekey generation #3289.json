@@ -4,7 +4,7 @@
     "label": "BetterBibTeX JSON",
     "preferences": {
       "automaticTags": false,
-      "autoPinDelay": 10,
+      "fillKeyAfter": 10,
       "baseAttachmentPath": "/Users/jdh/Documents/Academia/Library",
       "citekeyFormat": "creatornames(template='%(F)s', space='.') + authEtAl2(creator = '*', initials = false, sep = '_') + '_' + year",
       "citekeySearch": false,

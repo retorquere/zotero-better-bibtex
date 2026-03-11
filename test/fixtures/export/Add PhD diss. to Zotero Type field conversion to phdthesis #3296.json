@@ -5,7 +5,7 @@
     "options": {},
     "preferences": {
       "DOIandURL": "doi",
-      "autoPinDelay": 10,
+      "fillKeyAfter": 10,
       "automaticTags": false,
       "baseAttachmentPath": "/Users/jdh/Documents/Academia/Library",
       "citekeyFormat": "authEtAl2(creator = \"*\", initials = false, sep = \"_\") + \"_\" + year",

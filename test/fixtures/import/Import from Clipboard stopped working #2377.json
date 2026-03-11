@@ -14,7 +14,7 @@
       "autoExportPathReplaceDirSep": "-",
       "autoExportPathReplaceSpace": " ",
       "automaticTags": true,
-      "autoPinDelay": 0,
+      "fillKeyAfter": 0,
       "auxImport": false,
       "baseAttachmentPath": "",
       "biblatexExtendedDateFormat": true,
