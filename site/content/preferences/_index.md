@@ -38,7 +38,7 @@ When true, BBT will overwrite existing keys with new keys after an item changes.
 
 default: `2`
 
-When &gt; 0, BBT will automatically fill the citation key it generates for an item after this many seconds.
+When &gt; 0, BBT will automatically fill the citation key for an item that does not currently have one after this many seconds. When 0, keys will only be generated on user request.
 
 
 ## Keeping citation keys unique

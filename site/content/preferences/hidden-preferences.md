@@ -149,7 +149,7 @@ Details of these packages and what they add can be found [here]({{ ref . "export
 
 default: `yes`
 
-Name particle handling. Only turn on when requested and we're talking about it on github.
+Name particle handling. Only turn off when requested and we're talking about it on github.
 ## patchDates
 
 default: `dateadded=dateAdded, date-added=dateAdded, datemodified=dateModified, date-modified=dateModified`

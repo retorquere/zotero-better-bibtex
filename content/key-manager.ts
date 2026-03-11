@@ -77,7 +77,7 @@ export const KeyManager = new class _KeyManager {
   #keys: Map<number, CitekeyRecord> = new Map
   public started = false
 
-  public autopin: Scheduler<number> = new Scheduler<number>('autoPinDelay', 1000)
+  public autofill: Scheduler<number> = new Scheduler<number>('fillKeyAfter', 1000)
 
   /*
   private getField(item: { getField: ((str: string) => string) }, field: string): string {
@@ -266,14 +266,14 @@ export const KeyManager = new class _KeyManager {
       })
 
       const update = (item: Zotero.Item) => {
-        this.update(item, { replace: Preference.autoPinOverwrite }).saveTx({ skipDateModifiedUpdate: true }).catch(err => log.error('failed to update', item.id, ':', err))
+        this.update(item, { replace: Preference.resetKeyOnChange }).saveTx({ skipDateModifiedUpdate: true }).catch(err => log.error('failed to update', item.id, ':', err))
       }
       for (const item of items) {
         if (Preference.testing) { // race condition for key assignment otherwise
           update(item)
         }
         else {
-          this.autopin.schedule(item.id, () => {
+          this.autofill.schedule(item.id, () => {
             update(item)
           })
         }
