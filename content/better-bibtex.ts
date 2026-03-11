@@ -790,6 +790,8 @@ export class BetterBibTeX {
           },
           /*
           onSetData({ rowID, item, tabType, editable, value }) {
+            if (editable) {
+              item.setField('citationKey'
             Zotero.debug(`Set custom info row ${rowID} of item ${item.id} to ${value}`);
           },
           */
