@@ -1,0 +1,205 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "preferences": {
+      "baseAttachmentPath": "/Users/mjbaldwin/Library/CloudStorage/GoogleDrive-mjbaldwinjr@gmail.com/My Drive/Zotero/Sources",
+      "bibtexParticleNoOp": true,
+      "citekeyFormat": "auth.lower + shorttitle(3, 3) + year",
+      "postscript": "if (Translator.BetterBibTeX) {\n  Zotero.debug('Postscript running for item: ' + zotero.title);\n  if (zotero.creators && zotero.creators.length) {\n    for (let creator of zotero.creators) {\n      const lastNorm = creator.lastName.replace(/\\./g,'').trim().toLowerCase();\n      const firstNorm = creator.firstName.replace(/\\./g,'').trim().toLowerCase();\n      // Standardize Stokes\n      if (lastNorm === 'stokes') creator.firstName = 'Donald E.';\n      // Standardize Tideman\n      if (lastNorm === 'tideman') creator.firstName = 'Nicolaus';\n      // Standardize Young\n      if (lastNorm === 'young') creator.firstName = 'H. Peyton';\n    }\n    // Apply the modified creators to the BibTeX export\n    tex.addCreators();  // NO arguments!\n    Zotero.debug('Updated creators for export: ' + zotero.creators.map(c => c.firstName + ' ' + c.lastName).join(', '));\n  } else {\n    Zotero.debug('No creators found for this item.');\n  }\n}\n",
+      "skipFields": "abstract,keywords,file,month,eprint"
+    },
+    "options": {}
+  },
+  "version": {
+    "zotero": "7.0.30",
+    "bbt": "7.0.71"
+  },
+  "collections": {},
+  "items": [
+    {
+      "key": "NMFX657N",
+      "version": 12966,
+      "itemType": "book",
+      "title": "1: [de Condorcet][Marquis]",
+      "abstractNote": "32",
+      "date": "1785",
+      "language": "fre",
+      "libraryCatalog": "Internet Archive",
+      "callNumber": "AEM-8835",
+      "url": "http://archive.org/details/essaisurlapplica00cond",
+      "accessDate": "2025-04-10T15:45:41Z",
+      "publisher": "Paris, Imprimerie Royale",
+      "numPages": "514",
+      "creators": [
+        {
+          "firstName": "Marquis",
+          "lastName": "de Condorcet",
+          "creatorType": "author"
+        }
+      ],
+      "tags": [
+        {
+          "tag": "seminal"
+        }
+      ],
+      "dateAdded": "2025-04-10T15:45:41Z",
+      "dateModified": "2025-10-11T01:36:09Z",
+      "itemID": 3335,
+      "attachments": [
+        {
+          "itemType": "attachment",
+          "title": "Condorcet 1785 - Essai sur l'application de l'analyse à la probabilité des décisions rendus à la pluralité des voix.pdf",
+          "path": "/Users/mjbaldwin/Library/CloudStorage/GoogleDrive-mjbaldwinjr@gmail.com/My Drive/Zotero/Sources/Condorcet 1785 - Essai sur l'application de l'analyse à la probabilité des décisions rendus à la pluralité des voix.pdf",
+          "tags": [
+            {
+              "tag": "zotmoov"
+            }
+          ],
+          "dateAdded": "2025-04-10T15:45:47Z",
+          "dateModified": "2025-04-10T15:45:47Z"
+        }
+      ],
+      "notes": [],
+      "citationKey": "condorcetEssaiLapplicationLanalyse1785"
+    },
+    {
+      "key": "NMFX657N",
+      "version": 12966,
+      "itemType": "book",
+      "title": "2: [Condorcet][Marquis de]",
+      "abstractNote": "32",
+      "date": "1785",
+      "language": "fre",
+      "libraryCatalog": "Internet Archive",
+      "callNumber": "AEM-8835",
+      "url": "http://archive.org/details/essaisurlapplica00cond",
+      "accessDate": "2025-04-10T15:45:41Z",
+      "publisher": "Paris, Imprimerie Royale",
+      "numPages": "514",
+      "creators": [
+        {
+          "firstName": "Marquis de",
+          "lastName": "Condorcet",
+          "creatorType": "author"
+        }
+      ],
+      "tags": [
+        {
+          "tag": "seminal"
+        }
+      ],
+      "dateAdded": "2025-04-10T15:45:41Z",
+      "dateModified": "2025-10-11T01:36:09Z",
+      "itemID": 3335,
+      "attachments": [
+        {
+          "itemType": "attachment",
+          "title": "Condorcet 1785 - Essai sur l'application de l'analyse à la probabilité des décisions rendus à la pluralité des voix.pdf",
+          "path": "/Users/mjbaldwin/Library/CloudStorage/GoogleDrive-mjbaldwinjr@gmail.com/My Drive/Zotero/Sources/Condorcet 1785 - Essai sur l'application de l'analyse à la probabilité des décisions rendus à la pluralité des voix.pdf",
+          "tags": [
+            {
+              "tag": "zotmoov"
+            }
+          ],
+          "dateAdded": "2025-04-10T15:45:47Z",
+          "dateModified": "2025-04-10T15:45:47Z"
+        }
+      ],
+      "notes": [],
+      "citationKey": "condorcetEssaiLapplicationLanalyse1785"
+    },
+    {
+      "key": "NMFX657N",
+      "version": 12966,
+      "itemType": "book",
+      "title": "3: [Condorcet][Marquis, de]",
+      "abstractNote": "32",
+      "date": "1785",
+      "language": "fre",
+      "libraryCatalog": "Internet Archive",
+      "callNumber": "AEM-8835",
+      "url": "http://archive.org/details/essaisurlapplica00cond",
+      "accessDate": "2025-04-10T15:45:41Z",
+      "publisher": "Paris, Imprimerie Royale",
+      "numPages": "514",
+      "creators": [
+        {
+          "firstName": "Marquis, de",
+          "lastName": "Condorcet",
+          "creatorType": "author"
+        }
+      ],
+      "tags": [
+        {
+          "tag": "seminal"
+        }
+      ],
+      "dateAdded": "2025-04-10T15:45:41Z",
+      "dateModified": "2025-10-11T01:36:09Z",
+      "itemID": 3335,
+      "attachments": [
+        {
+          "itemType": "attachment",
+          "title": "Condorcet 1785 - Essai sur l'application de l'analyse à la probabilité des décisions rendus à la pluralité des voix.pdf",
+          "path": "/Users/mjbaldwin/Library/CloudStorage/GoogleDrive-mjbaldwinjr@gmail.com/My Drive/Zotero/Sources/Condorcet 1785 - Essai sur l'application de l'analyse à la probabilité des décisions rendus à la pluralité des voix.pdf",
+          "tags": [
+            {
+              "tag": "zotmoov"
+            }
+          ],
+          "dateAdded": "2025-04-10T15:45:47Z",
+          "dateModified": "2025-04-10T15:45:47Z"
+        }
+      ],
+      "notes": [],
+      "citationKey": "condorcetEssaiLapplicationLanalyse1785"
+    },
+    {
+      "key": "NMFX657N",
+      "version": 12966,
+      "itemType": "book",
+      "title": "4: [Condorcet][, Marquis de]",
+      "abstractNote": "32",
+      "date": "1785",
+      "language": "fre",
+      "libraryCatalog": "Internet Archive",
+      "callNumber": "AEM-8835",
+      "url": "http://archive.org/details/essaisurlapplica00cond",
+      "accessDate": "2025-04-10T15:45:41Z",
+      "publisher": "Paris, Imprimerie Royale",
+      "numPages": "514",
+      "creators": [
+        {
+          "firstName": ", Marquis de",
+          "lastName": "Condorcet",
+          "creatorType": "author"
+        }
+      ],
+      "tags": [
+        {
+          "tag": "seminal"
+        }
+      ],
+      "dateAdded": "2025-04-10T15:45:41Z",
+      "dateModified": "2025-10-11T01:36:09Z",
+      "itemID": 3335,
+      "attachments": [
+        {
+          "itemType": "attachment",
+          "title": "Condorcet 1785 - Essai sur l'application de l'analyse à la probabilité des décisions rendus à la pluralité des voix.pdf",
+          "path": "/Users/mjbaldwin/Library/CloudStorage/GoogleDrive-mjbaldwinjr@gmail.com/My Drive/Zotero/Sources/Condorcet 1785 - Essai sur l'application de l'analyse à la probabilité des décisions rendus à la pluralité des voix.pdf",
+          "tags": [
+            {
+              "tag": "zotmoov"
+            }
+          ],
+          "dateAdded": "2025-04-10T15:45:47Z",
+          "dateModified": "2025-04-10T15:45:47Z"
+        }
+      ],
+      "notes": [],
+      "citationKey": "condorcetEssaiLapplicationLanalyse1785"
+    }
+  ]
+}

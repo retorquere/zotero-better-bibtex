@@ -884,3 +884,6 @@ Feature: Export
     #And I force-refresh the citation key
     And I wait 5 seconds
     Then an export using "Better BibLaTeX" should match "export/*.biblatex"
+
+  Scenario: Question BBT is changing lastname, firstname de to de lastname, firstname #3367
+    Given I import 4 references from "export/*.json"
