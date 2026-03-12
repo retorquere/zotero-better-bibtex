@@ -12,6 +12,7 @@ Feature: Export
 
     Examples:
       | file                                                                                                                     | references |
+      | tex.pages= in Extra field not exporting as LaTeX, Language = de exporting as german, not ngerman #3472                   | 1          |
       | tex.title= is not copied verbatim if Zotero title contains math #3376                                                    | 2          |
       | Original Date not working with Citation Key (anymore) #3392                                                              | 1          |
       | Issue getting shortjournal #3382                                                                                         | 1          |
