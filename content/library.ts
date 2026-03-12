@@ -5,9 +5,15 @@ export function editable(): Set<number> {
   return new Set(Zotero.Libraries.getAll().filter(lib => lib.editable).map(lib => lib.libraryID))
 }
 
-export function readonly(library: number | _ZoteroTypes.Library.LibraryLike): boolean {
+export function readonly(library: number | _ZoteroTypes.Library.LibraryLike, mem?: Map<number, boolean>): boolean {
+  if (mem && typeof library === 'number') return mem.get(library)
   const lib = (typeof library === 'number') ? Zotero.Libraries.get(library) : library
-  return lib && !lib.editable
+  if (!lib) return true
+  if (mem) {
+    if (mem.has(lib.libraryID)) return mem.get(lib.libraryID)
+    mem.set(lib.libraryID, !lib.editable)
+  }
+  return !lib.editable
 }
 
 export function get(query: Record<string, string | number>, throws = false): Zotero.Library {

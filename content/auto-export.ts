@@ -495,7 +495,7 @@ export const AutoExport = new class $AutoExport {
           }
 
           for (const translator of (affects[pref] || []).map(label => Translators.byLabel[label])) {
-            for (const ae of this.db.values((_k, v) => v.translatorID === translator.translatorID)) {
+            for (const ae of this.db.values(_ => _.translatorID === translator.translatorID)) {
               if (!(pref in ae)) queue.add(ae.path)
             }
           }
@@ -529,7 +529,7 @@ export const AutoExport = new class $AutoExport {
 
   public find(type: 'collection' | 'library', ids: number[]): Job[] {
     if (!ids.length) return []
-    return [...this.db.values((_k, v) => v.type === type && ids.includes(v.id))]
+    return [...this.db.values(_ => _.type === type && ids.includes(_.id))]
   }
 
   public async add(ae: Job, schedule = false) {

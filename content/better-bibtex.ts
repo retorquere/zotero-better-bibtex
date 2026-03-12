@@ -85,21 +85,6 @@ monkey.patch(Zotero.Utilities.Item?.itemToCSLJSON ? Zotero.Utilities.Item : Zote
 
 import { readonly } from './library'
 
-/*
-monkey.patch(Zotero.Item.prototype, 'getField', original => function Zotero_Item_prototype_getField(field: any, _unformatted: any, _includeBaseMapped: any) {
-  try {
-    if (!Zotero.BetterBibTeX.starting && field === 'citationKey' && readonly(this.libraryID)) {
-      return Zotero.BetterBibTeX.KeyManager.readonly(this)
-    }
-  }
-  catch (err) {
-    log.error('item.getField:', err)
-  }
-
-  return original.apply(this, arguments) as string
-})
-*/
-
 // https://github.com/retorquere/zotero-better-bibtex/issues/1221
 monkey.patch(Zotero.Items, 'merge', original =>
   async function Zotero_Items_merge(item: Zotero.Item, otherItems: Zotero.Item[]) {
@@ -721,7 +706,7 @@ export class BetterBibTeX {
           const selected = type === 'collection'
             ? Zotero.getActiveZoteroPane().getSelectedCollection(true)
             : Zotero.getActiveZoteroPane().getSelectedLibraryID()
-          return [...AutoExport.db.values((_k, v) => v.type === type && v.id === selected)]
+          return [...AutoExport.db.values(_ => _.type === type && _.id === selected)]
         }
         Zotero.MenuManager.registerMenu({
           menuID: `${pluginID}-menu-collection`,

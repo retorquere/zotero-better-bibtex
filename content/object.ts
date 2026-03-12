@@ -22,15 +22,15 @@ export const unpick = <T extends object, TKeys extends keyof T>(obj: T, keys: TK
   }, {} as Pick<T, TKeys>)
 }
 
-type Predicate<K, V> = (key: K, value: V) => boolean
+export type Predicate<V> = (value: V) => boolean
 
 abstract class FilteredMap<K, V> extends Map<K, V> {
   protected order?(a: V, b: V): number
 
-  get(key: K | Predicate<K, V>): V | undefined {
+  get(key: K | Predicate<V>): V | undefined {
     if (typeof key === 'function') {
-      for (const [k, v] of Map.prototype.entries.call(this)) {
-        if ((key as Predicate<K, V>)(k, v)) return v as V
+      for (const v of Map.prototype.values.call(this)) {
+        if ((key as Predicate<V>)(v)) return v as V
       }
 
       return undefined
@@ -39,24 +39,24 @@ abstract class FilteredMap<K, V> extends Map<K, V> {
     return super.get(key)
   }
 
-  clear(filter?: Predicate<K, V>): void {
+  clear(filter?: Predicate<V>): void {
     if (!filter) {
       super.clear()
       return
     }
 
     for (const [k, v] of Map.prototype.entries.call(this)) {
-      if (filter(k, v)) super.delete(k)
+      if (filter(v)) super.delete(k)
     }
   }
 
   keys(): MapIterator<K>
-  keys(filter: Predicate<K, V>): IterableIterator<K>
-  keys(filter?: Predicate<K, V>): MapIterator<K> | IterableIterator<K> {
+  keys(filter: Predicate<V>): IterableIterator<K>
+  keys(filter?: Predicate<V>): MapIterator<K> | IterableIterator<K> {
     const self = this
     const generator = (function* () {
       for (const [k, v] of Map.prototype.entries.call(self)) {
-        if (!filter || filter(k, v)) yield k
+        if (!filter || filter(v)) yield k
       }
     })()
 
@@ -64,13 +64,13 @@ abstract class FilteredMap<K, V> extends Map<K, V> {
   }
 
   values(): MapIterator<V>
-  values(filter: Predicate<K, V>): IterableIterator<V>
-  values(filter?: Predicate<K, V>): MapIterator<V> | IterableIterator<V> {
+  values(filter: Predicate<V>): IterableIterator<V>
+  values(filter?: Predicate<V>): MapIterator<V> | IterableIterator<V> {
     const self = this
     const generator = (function* () {
       const items: V[] = []
-      for (const [k, v] of Map.prototype.entries.call(self)) {
-        if (!filter || filter(k, v)) items.push(v)
+      for (const v of Map.prototype.values.call(self)) {
+        if (!filter || filter(v)) items.push(v)
       }
       if (self.order) items.sort(self.order.bind(self))
 
@@ -81,12 +81,12 @@ abstract class FilteredMap<K, V> extends Map<K, V> {
   }
 
   entries(): MapIterator<[K, V]>
-  entries(filter: Predicate<K, V>): IterableIterator<[K, V]>
-  entries(filter?: Predicate<K, V>): MapIterator<[K, V]> | IterableIterator<[K, V]> {
+  entries(filter: Predicate<V>): IterableIterator<[K, V]>
+  entries(filter?: Predicate<V>): MapIterator<[K, V]> | IterableIterator<[K, V]> {
     const self = this
     const generator = (function* () {
       for (const [k, v] of Map.prototype.entries.call(self)) {
-        if (!filter || filter(k, v)) yield [k, v]
+        if (!filter || filter(v)) yield [k, v]
       }
     })()
 
@@ -107,7 +107,7 @@ export abstract class ObservedMap<K, V> extends FilteredMap<K, V> {
     return existed
   }
 
-  clear(filter?: Predicate<K, V>): void {
+  clear(filter?: Predicate<V>): void {
     if (!filter) {
       const hadItems = this.size > 0
       super.clear()
@@ -116,7 +116,7 @@ export abstract class ObservedMap<K, V> extends FilteredMap<K, V> {
     }
 
     for (const [k, v] of Map.prototype.entries.call(this)) {
-      if (filter(k, v)) {
+      if (filter(v)) {
         super.delete(k)
         this.onChange('clear', k)
       }
@@ -143,7 +143,7 @@ export class TrackedMap<K, V> extends FilteredMap<K, V> {
     return existed
   }
 
-  clear(filter?: Predicate<K, V>): void {
+  clear(filter?: Predicate<V>): void {
     const startSize = this.size
     super.clear(filter)
     if (this.size !== startSize) this.#isDirty = true
