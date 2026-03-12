@@ -721,7 +721,7 @@ export class BetterBibTeX {
           const selected = type === 'collection'
             ? Zotero.getActiveZoteroPane().getSelectedCollection(true)
             : Zotero.getActiveZoteroPane().getSelectedLibraryID()
-          return AutoExport.db.all(_ => _.type === type && _.id === selected)
+          return [...AutoExport.db.values((_k, v) => v.type === type && v.id === selected)]
         }
         Zotero.MenuManager.registerMenu({
           menuID: `${pluginID}-menu-collection`,
@@ -784,17 +784,17 @@ export class BetterBibTeX {
           position: 'start',
           multiline: false,
           nowrap: false,
-          editable: false,
+          editable: true,
           onGetData({ item }) {
             return item.getField('citationKey')
           },
-          /*
-          onSetData({ rowID, item, tabType, editable, value }) {
-            if (editable) {
-              item.setField('citationKey'
-            Zotero.debug(`Set custom info row ${rowID} of item ${item.id} to ${value}`);
+          onSetData({ item, value }) {
+            if (!readonly(item.libraryID)) item.setField('citationKey', value)
           },
-          */
+          onItemChange: ({ item, setEnabled, setEditable}) => {
+            setEnabled(!item.isFeedItem && item.isRegularItem())
+            setEditable(!readonly(item.libraryID))
+          },
         })
 
         monkey.enable()

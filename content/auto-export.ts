@@ -45,87 +45,53 @@ type Job = {
 }
 export type JobSetting = keyof Job
 
+import { ObservedMap } from './object'
 export const prefix = 'translators.better-bibtex.autoExport.'
-
-type Predicate<T> = (item: T) => boolean
-type Ordering<T> = (a: T, b: T) => number
-class SmartStore<T> {
-  data: Map<string, T> = new Map
-
-  constructor(private order: Ordering<T> = (_a: T, _b: T) => 0) {
-    for (const encoded of Services.prefs.getBranch(`extensions.zotero.${prefix}`).getChildList('')) {
-      log.info('3456: load autoexport:', encoded)
-      const stored = Zotero.Prefs.get(`${prefix}${encoded}`) as string
-      try {
-        const ae = JSON.parse(stored)
-        delete ae.$loki
-        delete ae.meta
-        if (ae.path) {
-          this.data.set(ae.path, ae)
-          log.info('3456: load autoexport: loaded', ae)
-        }
-        else {
-          log.error('3456: load autoexport:', ae, 'does not have a path')
-        }
-      }
-      catch (err) {
-        log.error('3456: load autoexport: error loading', encoded, stored, err)
-      }
-    }
-
-    return new Proxy(this, {
-      set(target, prop, value, receiver) {
-        if (typeof prop === 'string') {
-          if (!prop || prop !== value.path) throw new TypeError(`Invalid job for "${prop}" => "${value.path}": "path" mismatch`)
-          Zotero.Prefs.set(target.key(prop), JSON.stringify(value))
-          target.data.set(prop, value)
-          return true
-        }
-        return Reflect.set(target, prop, value, receiver)
-      },
-
-      deleteProperty(target, prop) {
-        if (typeof prop === 'string') {
-          Zotero.Prefs.clear(target.key(prop))
-          return target.data.delete(prop)
-        }
-        return Reflect.deleteProperty(target, prop)
-      },
-
-      get(target, prop, receiver) {
-        const value = Reflect.get(target, prop, receiver)
-        if (typeof value === 'function') return value.bind(target) // eslint-disable-line @typescript-eslint/no-unsafe-return
-        if (typeof prop === 'string' && target.data.has(prop)) return target.data.get(prop)
-        return value
-      },
-
-      ownKeys(target) {
-        return Array.from(target.data.keys())
-      },
-
-      getOwnPropertyDescriptor(target, prop) {
-        if (typeof prop === 'string' && target.data.has(prop)) return { enumerable: true, configurable: true, value: target.data.get(prop) }
-        return Reflect.getOwnPropertyDescriptor(target, prop)
-      },
-    }) as SmartStore<T>
-  }
-
-  public key(path: string): string {
+class Store extends ObservedMap<string, Job> {
+  #key(path: string): string {
     const key = uri.encode(path).replace(/[.!'()*]/g, c => `%${c.charCodeAt(0).toString(16)}`)
     return `${prefix}${key}`
   }
 
-  public findOne(predicate: Predicate<T>): T | undefined {
-    return this.all(predicate)[0]
+  constructor() {
+    const jobs: [string, Job][] = []
+    for (const encoded of Services.prefs.getBranch(`extensions.zotero.${prefix}`).getChildList('')) {
+      const stored = Zotero.Prefs.get(`${prefix}${encoded}`) as string
+      try {
+        const ae = JSON.parse(stored)
+        if (ae.path) {
+          delete ae.$loki
+          delete ae.meta
+          jobs.push([ae.path, ae])
+        }
+        else {
+          log.error('load autoexport:', ae, 'does not have a path')
+        }
+      }
+      catch (err) {
+        log.error('load autoexport: error loading', encoded, stored, err)
+      }
+    }
+    super(jobs)
   }
-  public all(predicate?: Predicate<T>): T[] {
-    return (predicate ? [...this.data.values()].filter(predicate) : [...this.data.values()]).sort(this.order)
+
+  order(a: Job, b: Job) {
+    return a.path.localeCompare(b.path, undefined, { sensitivity: 'base', usage: 'sort' })
   }
-  public clear(): void {
-    this.data.clear()
+
+  onChange(method: 'set' | 'delete' | 'clear', key?: string) {
+    if (!key) throw new Error('do not clear the database')
+    switch (method) {
+      case 'set':
+        Zotero.Prefs.set(this.#key(key), JSON.stringify(this.get(key)))
+        break
+      case 'delete':
+      case 'clear':
+        Zotero.Prefs.clear(this.#key(key))
+        break
+    }
   }
 }
-type Store = SmartStore<Job> & Record<string, Job>
 
 function win_quote(s: string, forCmd = true): string {
   if (!s) return '""'
@@ -467,7 +433,7 @@ const queue = new class TaskQueue {
 export const AutoExport = new class $AutoExport {
   public progress: Map<string, number> = new Map
 
-  public db: Store = new SmartStore<Job>((a: Job, b: Job) => a.path.localeCompare(b.path, undefined, { sensitivity: 'base', usage: 'sort' })) as Store
+  public db: Store = new Store
 
   constructor() {
     Events.on('libraries-changed', ({ data: ids }) => this.schedule('library', ids))
@@ -529,7 +495,7 @@ export const AutoExport = new class $AutoExport {
           }
 
           for (const translator of (affects[pref] || []).map(label => Translators.byLabel[label])) {
-            for (const ae of this.db.all(_ => _.translatorID === translator.translatorID)) {
+            for (const ae of this.db.values((_k, v) => v.translatorID === translator.translatorID)) {
               if (!(pref in ae)) queue.add(ae.path)
             }
           }
@@ -557,13 +523,13 @@ export const AutoExport = new class $AutoExport {
       ae[option] = ae[option] ?? job[option] ?? displayOptions[option] ?? false
     }
 
-    this.db[ae.path] = { created: Date.now(), ...ae, updated: Date.now() }
+    this.db.set(ae.path, { created: Date.now(), ...ae, updated: Date.now() })
     queue.add(ae.path)
   }
 
   public find(type: 'collection' | 'library', ids: number[]): Job[] {
     if (!ids.length) return []
-    return this.db.all(_ => _.type === type && ids.includes(_.id))
+    return [...this.db.values((_k, v) => v.type === type && ids.includes(v.id))]
   }
 
   public async add(ae: Job, schedule = false) {
@@ -625,16 +591,16 @@ export const AutoExport = new class $AutoExport {
   }
 
   public get(path: string): Job {
-    return this.db[path]
+    return this.db.get(path)
   }
 
   public all(): Job[] {
-    return this.db.all()
+    return [...this.db.values()]
   }
 
   public edit(path: string, setting: JobSetting, value: number | boolean | string): void {
-    const ae: Job = this.db[path]
-    this.db[path] = { created: Date.now(), ...ae, [setting]: value, updated: Date.now() }
+    const ae: Job = this.db.get(path)
+    this.db.set(path, { created: Date.now(), ...ae, [setting]: value, updated: Date.now() })
     queue.add(ae.path)
   }
 
@@ -644,16 +610,16 @@ export const AutoExport = new class $AutoExport {
     const paths: string[] = (typeof ids === 'undefined') ? [arg] : this.find(arg as 'collection' | 'library', ids).map(ae => ae.path)
 
     for (const path of paths) {
-      delete this.db[path]
+      this.db.delete(path)
       queue.cancel(path)
       this.progress.delete(path)
     }
   }
 
   public status(path: string, status: 'running' | 'done') {
-    const ae = this.db[path]
+    const ae = this.db.get(path)
     if (!ae) log.error('3450: trying to set status on auto-export with path', path, 'which does not exist')
-    if (ae) this.db[path] = { ...ae, status, updated: Date.now() }
+    if (ae) this.db.set(path, { ...ae, status, updated: Date.now() })
   }
 
   public removeAll() {
