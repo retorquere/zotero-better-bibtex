@@ -1,0 +1,105 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "preferences": {
+      "autoAbbrev": true,
+      "autoPinDelay": 1,
+      "baseAttachmentPath": "/Users/furue/Dropbox/doc/papers",
+      "citekeyFormat": "authEtal2(initials = true).capitalize + \":\" + year",
+      "language": "both",
+      "postscript": "tex.add({ name: 'shortjournal', value: zotero.autoJournalAbbreviation })\n",
+      "qualityReport": true
+    },
+    "options": {}
+  },
+  "version": {
+    "zotero": "8.0.4",
+    "bbt": "9.0.7"
+  },
+  "collections": {},
+  "items": [
+    {
+      "key": "7JEE7GJG",
+      "version": 11510,
+      "itemType": "journalArticle",
+      "title": "Hamiltonian description of internal ocean waves with Coriolis force",
+      "abstractNote": "The interfacial internal waves are formed at the pycnocline or thermocline in the ocean and are influenced by the Coriolis force due to the Earth's rotation. A derivation of the model equations for the internal wave propagation taking into account the Coriolis effect is proposed. It is based on the Hamiltonian formulation of the internal wave dynamics in the irrotational case, appropriately extended to a {\\it nearly} Hamiltonian formulation which incorporates the Coriolis forces. Two propagation regimes are examined, the long-wave and the intermediate long-wave propagation with a small amplitude approximation for certain geophysical scales of the physical variables. The obtained models are of the type of the well-known Ostrovsky equation and describe the wave propagation over the two spatial horizontal dimensions of the ocean surface.",
+      "date": "2022",
+      "libraryCatalog": "arXiv.org",
+      "url": "http://arxiv.org/abs/2203.13940",
+      "accessDate": "2023-05-27T05:21:15Z",
+      "extra": "arXiv:2203.13940 [nlin, physics:physics]",
+      "volume": "21",
+      "pages": "2291",
+      "publicationTitle": "Communications on Pure and Applied Analysis",
+      "DOI": "10.3934/cpaa.2022029",
+      "issue": "7",
+      "journalAbbreviation": "ABCXYZ",
+      "ISSN": "1534-0392, 1553-5258",
+      "citationKey": "CullenJ.IvanovR:2022",
+      "creators": [
+        {
+          "firstName": "Joseph",
+          "lastName": "Cullen",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "Rossen",
+          "lastName": "Ivanov",
+          "creatorType": "author"
+        }
+      ],
+      "tags": [
+        {
+          "tag": "Nonlinear Sciences - Pattern Formation and Solitons",
+          "type": 1
+        },
+        {
+          "tag": "Physics - Fluid Dynamics",
+          "type": 1
+        },
+        {
+          "tag": "Primary: 35Q35, 76B55, Secondary 35Q86, 37K10",
+          "type": 1
+        }
+      ],
+      "dateAdded": "2023-05-27T05:21:15Z",
+      "dateModified": "2026-03-12T08:40:16Z",
+      "itemID": 2343,
+      "attachments": [
+        {
+          "itemType": "attachment",
+          "title": "arXiv Fulltext PDF",
+          "url": "https://arxiv.org/pdf/2203.13940.pdf",
+          "tags": [],
+          "dateAdded": "2023-05-27T05:21:23Z",
+          "dateModified": "2023-05-27T05:21:23Z",
+          "path": "/Users/furue/Zotero/storage/3QRIF47I/Cullen and Ivanov - 2022 - Hamiltonian description of internal ocean waves wi.pdf"
+        },
+        {
+          "itemType": "attachment",
+          "title": "arXiv.org Snapshot",
+          "url": "https://arxiv.org/abs/2203.13940",
+          "tags": [],
+          "dateAdded": "2023-05-27T05:21:30Z",
+          "dateModified": "2023-05-27T05:21:30Z",
+          "path": "/Users/furue/Zotero/storage/PWNBLDEP/2203.html"
+        }
+      ],
+      "notes": [
+        {
+          "key": "YQK6TT23",
+          "version": 6419,
+          "itemType": "note",
+          "parentItem": "7JEE7GJG",
+          "note": "Comment: 17 pages, 1 figure",
+          "tags": [],
+          "dateAdded": "2023-05-27T05:21:15Z",
+          "dateModified": "2023-05-27T05:21:15Z"
+        }
+      ],
+      "autoJournalAbbreviation": "Communications On Pure Applied Analysis"
+    }
+  ]
+}
