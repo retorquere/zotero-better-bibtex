@@ -163,7 +163,6 @@ export class TrackedMap<K, V> extends FilteredMap<K, V> {
   }
 
   delete(key: K): boolean {
-    const v = super.get(key)
     const existed = super.delete(key)
     if (existed) this.#isDirty = true
     return existed
