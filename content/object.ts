@@ -159,20 +159,17 @@ export class TrackedMap<K, V> extends FilteredMap<K, V> {
 
   set(key: K, value: V): this {
     this.#isDirty = true
-    Zotero.debug(`merge: set ${key}: ${JSON.stringify(value)}`)
     return super.set(key, value)
   }
 
   delete(key: K): boolean {
     const v = super.get(key)
     const existed = super.delete(key)
-    if (existed) Zotero.debug(`merge: deleted ${key}: ${JSON.stringify(v)}`)
     if (existed) this.#isDirty = true
     return existed
   }
 
   clear(filter?: Predicate<V>): void {
-    Zotero.debug('merge: clear')
     const startSize = this.size
     super.clear(filter)
     if (this.size !== startSize) this.#isDirty = true
