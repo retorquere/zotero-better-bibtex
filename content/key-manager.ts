@@ -390,9 +390,12 @@ export const KeyManager = new class _KeyManager {
 
     const caseInsensitive = Preference.citekeyCaseInsensitive
     const keyscopeGlobal = Preference.keyScope === 'global'
-    const sensitivity: Intl.CollatorOptions = { sensitivity: caseInsensitive ? 'base' : 'variant' }
     const libraryID = item.libraryID
     const itemID = item.id
+
+    const { compare: different } = new Intl.Collator(undefined, { // eslint-disable-line @typescript-eslint/unbound-method
+      sensitivity: caseInsensitive ? 'base' : 'variant',
+    })
 
     const seen: Set<string> = new Set
     let candidate: string
@@ -400,7 +403,7 @@ export const KeyManager = new class _KeyManager {
     function conflict(key: CitekeyRecord): boolean {
       return (keyscopeGlobal || (key.libraryID === libraryID))
         && key.itemID !== itemID
-        && !key.citationKey.localeCompare(candidate, undefined, sensitivity)
+        && !different(key.citationKey, candidate)
     }
 
     // eslint-disable-next-line no-constant-condition
