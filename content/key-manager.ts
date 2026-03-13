@@ -34,16 +34,14 @@ export type CitekeyRecord = {
   libraryID: number
   itemKey: string
   citationKey: string
-  lcCitationKey: string
 }
 
-function lc(k: Partial<CitekeyRecord>): CitekeyRecord {
+function copy(k: CitekeyRecord): CitekeyRecord {
   return {
     itemID: k.itemID,
     libraryID: k.libraryID,
     itemKey: k.itemKey,
     citationKey: k.citationKey,
-    lcCitationKey: k.citationKey.toLowerCase(),
   }
 }
 
@@ -91,7 +89,7 @@ class Keys extends TrackedMap<number, CitekeyRecord> {
     try {
       if (await IOUtils.exists(this.path)) {
         for (const v of await IOUtils.readJSON(this.path)) {
-          if (v.citationKey) this.set(v.itemID, lc(v))
+          if (v.citationKey) this.set(v.itemID, copy(v))
         }
       }
     }
@@ -111,7 +109,7 @@ class Keys extends TrackedMap<number, CitekeyRecord> {
       `.replace(/\n/g, ' ').trim()
 
     for (const { itemID, itemKey, libraryID, citationKey } of await Zotero.DB.queryAsync(load)) {
-      this.set(itemID, lc({ itemID, itemKey, libraryID, citationKey }))
+      this.set(itemID, copy({ itemID, itemKey, libraryID, citationKey }))
     }
     this.resetDirty()
 
@@ -262,7 +260,7 @@ export const KeyManager = new class _KeyManager {
     }
 
     if (citationKey) {
-      this.#keys.set(item.id, lc({
+      this.#keys.set(item.id, copy({
         itemID: item.id,
         itemKey: item.key,
         libraryID: item.libraryID,
@@ -392,21 +390,22 @@ export const KeyManager = new class _KeyManager {
 
     const caseInsensitive = Preference.citekeyCaseInsensitive
     const keyscopeGlobal = Preference.keyScope === 'global'
-    const citekeyField = caseInsensitive ? 'lcCitationKey' : 'citationKey'
+    const sensitivity: Intl.CollatorOptions = { sensitivity: caseInsensitive ? 'base' : 'variant' }
     const libraryID = item.libraryID
     const itemID = item.id
 
     const seen: Set<string> = new Set
     let candidate: string
-    let candidateMatch: string
 
     function conflict(key: CitekeyRecord): boolean {
-      return (keyscopeGlobal || (key.libraryID === libraryID)) && key[citekeyField] === candidateMatch && key.itemID !== itemID
+      return (keyscopeGlobal || (key.libraryID === libraryID))
+        && key.itemID !== itemID
+        && !key.citationKey.localeCompare(candidate, undefined, sensitivity)
     }
 
     // eslint-disable-next-line no-constant-condition
     for (let n = Formatter.postfix.offset; true; n += 1) {
-      candidateMatch = candidate = citationKey.replace(Formatter.postfix.marker, () => {
+      candidate = citationKey.replace(Formatter.postfix.marker, () => {
         let postfix = ''
         if (n) {
           const alpha = excelColumn(n)
@@ -417,7 +416,6 @@ export const KeyManager = new class _KeyManager {
         seen.add(postfix)
         return postfix
       })
-      if (caseInsensitive) candidateMatch = candidateMatch.toLowerCase()
 
       if (this.any(conflict)) continue
       if (mem) {
