@@ -4,6 +4,12 @@ title: Changelog
 weight: 500
 ---
 <!-- WARNING: GENERATED FROM https://github.com/retorquere/zotero-better-bibtex/blob/master/CHANGELOG.md. EDITS WILL BE OVERWRITTEN -->
+## v9.0.8
+
+* preference autoPinDelay has been renamed to fillKeyAfter
+* preference autoPinOverwrite has been renamed to resetKeyOnChange
+* native Zotero citation key field is now hidden and replaced with a field at the top
+
 ## v9.0.7
 
 *   localization cleanup
