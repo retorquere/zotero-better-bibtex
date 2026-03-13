@@ -196,7 +196,11 @@ export const KeyManager = new class _KeyManager {
 
     const progress: Progress = items.length > 10 ? new Progress(items.length, 'Refreshing citation keys') : null
     for (const item of items) {
-      if (!this.update(item, { replace, inspireHEP: inspireHEP ? (await fetchInspireHEP(item)) || '' : undefined })) continue
+      if (!this.update(item, { replace, inspireHEP: inspireHEP ? (await fetchInspireHEP(item)) || '' : undefined })) {
+        log.debug('pin: nothing to do for', item.id)
+        this.store(item)
+        continue
+      }
 
       const citationKey = item.getField('citationKey')
       if (!citationKey) continue
@@ -219,6 +223,7 @@ export const KeyManager = new class _KeyManager {
     progress?.done()
 
     for (const item of items) {
+      log.debug('pin: saving', { item: item.id, citationKey: item.getField('citationKey'), cached: this.#keys.get(item.id) })
       await item.saveTx({ skipDateModifiedUpdate: true })
       await Zotero.Promise.delay(10)
     }

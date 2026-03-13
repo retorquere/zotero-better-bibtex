@@ -159,11 +159,14 @@ export class TrackedMap<K, V> extends FilteredMap<K, V> {
 
   set(key: K, value: V): this {
     this.#isDirty = true
+    Zotero.debug(`pin: set ${key} => ${JSON.stringify(value)}`)
     return super.set(key, value)
   }
 
   delete(key: K): boolean {
+    const v = super.get(key)
     const existed = super.delete(key)
+    Zotero.debug(`pin: ${existed ? 'actual' : 'faux'} delete ${key} (${JSON.stringify(v)})`)
     if (existed) this.#isDirty = true
     return existed
   }

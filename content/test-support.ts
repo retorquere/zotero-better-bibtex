@@ -291,11 +291,13 @@ export class TestSupport {
         }
         case 'refresh':
         case 'force-refresh':
+          log.debug('pin: fill', itemID, { replace: action === 'force-refresh' }, Zotero.BetterBibTeX.KeyManager.all())
           await Zotero.BetterBibTeX.KeyManager.fill(itemID, { replace: action === 'force-refresh' })
           break
         default:
           throw new Error(`TestSupport.pinCiteKey: unsupported action ${ action }`)
       }
+      log.debug('pin: filled', itemID, (await Zotero.Items.getAsync(itemID)).getField('citationKey'))
     }
   }
 

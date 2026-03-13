@@ -73,7 +73,7 @@ function to_s(obj: any): string {
   return stringify(obj)
 }
 
-export function print(strings: string[], ...expressions: any[]) {
+export function print(strings: TemplateStringsArray, ...expressions: any[]) {
   let err: string
   let prefix = ''
   // acc will initially be the lead string
