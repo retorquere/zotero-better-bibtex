@@ -133,7 +133,7 @@
   "devDependencies": {
     "@eslint/compat": "^2.0.3",
     "@fluent/bundle": "^0.19.1",
-    "@retorquere/bibtex-parser": "^9.0.26",
+    "@retorquere/bibtex-parser": "^9.0.29",
     "@stylistic/eslint-plugin": "^5.10.0",
     "@types/node": "^25.5.0",
     "@typescript-eslint/eslint-plugin": "^8.45.0",
