@@ -95,9 +95,11 @@ monkey.patch(Zotero.Items, 'merge', original =>
         tex: Preference.extraMergeTeX,
         kv: Preference.extraMergeCSL,
       }
+      log.debug('merge:', merge)
 
       if (merge.citationKey || merge.tex || merge.kv) {
         const extra = Extra.get(item.getField('extra'), 'zotero', { aliases: merge.citationKey, tex: merge.tex, kv: merge.kv })
+        log.debug('merge: extra', extra)
         // get citekeys of other items
         if (merge.citationKey) {
           const otherIDs = otherItems.map(i => i.id)
@@ -106,10 +108,12 @@ monkey.patch(Zotero.Items, 'merge', original =>
             ...Zotero.BetterBibTeX.KeyManager.all(_ => otherIDs.includes(_.itemID)).map((key: CitekeyRecord) => key.citationKey),
           ]
         }
+        log.debug('merge: primary aliases', extra)
 
         // add any aliases they were already holding
         for (const i of otherItems) {
           const otherExtra = Extra.get(i.getField('extra'), 'zotero', { aliases: merge.citationKey, tex: merge.tex, kv: merge.kv })
+          log.debug('merge: mergable', { extra: i.getField('extra'), parsed: otherExtra })
 
           if (merge.citationKey) {
             extra.extraFields.aliases = [...extra.extraFields.aliases, ...otherExtra.extraFields.aliases]
@@ -141,6 +145,7 @@ monkey.patch(Zotero.Items, 'merge', original =>
           extra.extraFields.aliases = extra.extraFields.aliases.filter(alias => alias !== citekey)
         }
 
+        log.debug('merge: setting aliases', extra)
         item.setField('extra', Extra.set(extra.extra, {
           aliases: merge.citationKey ? extra.extraFields.aliases : undefined,
           tex: merge.tex ? extra.extraFields.tex : undefined,
@@ -706,7 +711,7 @@ export class BetterBibTeX {
           const selected = type === 'collection'
             ? Zotero.getActiveZoteroPane().getSelectedCollection(true)
             : Zotero.getActiveZoteroPane().getSelectedLibraryID()
-          return [...AutoExport.db.values(_ => _.type === type && _.id === selected)]
+          return AutoExport.db.values(_ => _.type === type && _.id === selected)
         }
         Zotero.MenuManager.registerMenu({
           menuID: `${pluginID}-menu-collection`,

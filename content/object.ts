@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-this-alias */
-
 import fromPairs from 'lodash.frompairs'
 
 export { fromPairs }
@@ -24,73 +22,99 @@ export const unpick = <T extends object, TKeys extends keyof T>(obj: T, keys: TK
 
 export type Predicate<V> = (value: V) => boolean
 
-abstract class FilteredMap<K, V> extends Map<K, V> {
-  protected order?(a: V, b: V): number
+abstract class FilteredMap<K, V> {
+  readonly #map: Map<K, V>
+
+  constructor(entries?: readonly (readonly [K, V])[] | null) {
+    this.#map = new Map<K, V>(entries)
+  }
+
+  protected abstract order?(a: V, b: V): number
+
+  get size(): number { return this.#map.size }
+  has(key: K): boolean { return this.#map.has(key) }
+  set(key: K, value: V): this {
+    this.#map.set(key, value)
+    return this
+  }
+  delete(key: K): boolean { return this.#map.delete(key) }
 
   get(key: K | Predicate<V>): V | undefined {
     if (typeof key === 'function') {
-      for (const v of Map.prototype.values.call(this)) {
-        if ((key as Predicate<V>)(v)) return v as V
+      for (const v of this.#map.values()) {
+        if ((key as Predicate<V>)(v)) return v
       }
 
       return undefined
     }
 
-    return super.get(key)
+    return this.#map.get(key)
   }
 
   clear(filter?: Predicate<V>): void {
     if (!filter) {
-      super.clear()
+      this.#map.clear()
       return
     }
 
-    for (const [k, v] of Map.prototype.entries.call(this)) {
-      if (filter(v)) super.delete(k)
+    for (const [k, v] of this.#map.entries()) {
+      if (filter(v)) this.#map.delete(k)
     }
   }
 
-  keys(): MapIterator<K>
-  keys(filter: Predicate<V>): IterableIterator<K>
-  keys(filter?: Predicate<V>): MapIterator<K> | IterableIterator<K> {
-    const self = this
-    const generator = (function* () {
-      for (const [k, v] of Map.prototype.entries.call(self)) {
-        if (!filter || filter(v)) yield k
-      }
-    })()
+  keys(filter?: Predicate<V>): K[] {
+    if (!filter) return Array.from(this.#map.keys())
 
-    return generator as IterableIterator<K> & MapIterator<K>
+    const keys: K[] = []
+    for (const [k, v] of this.#map.entries()) {
+      if (filter(v)) keys.push(k)
+    }
+    return keys
   }
 
-  values(): MapIterator<V>
-  values(filter: Predicate<V>): IterableIterator<V>
-  values(filter?: Predicate<V>): MapIterator<V> | IterableIterator<V> {
-    const self = this
-    const generator = (function* () {
-      const items: V[] = []
-      for (const v of Map.prototype.values.call(self)) {
-        if (!filter || filter(v)) items.push(v)
+  values(filter?: Predicate<V>): V[] {
+    let values: V[]
+
+    if (!filter) {
+      values = Array.from(this.#map.values())
+    }
+    else {
+      values = []
+      for (const v of this.#map.values()) {
+        if (filter(v)) values.push(v)
       }
-      if (self.order) items.sort(self.order.bind(self))
+    }
 
-      for (const item of items) yield item
-    })()
+    if (this.order) {
+      values.sort(this.order.bind(this))
+    }
 
-    return generator as IterableIterator<V> & MapIterator<V>
+    return values
   }
 
-  entries(): MapIterator<[K, V]>
-  entries(filter: Predicate<V>): IterableIterator<[K, V]>
-  entries(filter?: Predicate<V>): MapIterator<[K, V]> | IterableIterator<[K, V]> {
-    const self = this
-    const generator = (function* () {
-      for (const [k, v] of Map.prototype.entries.call(self)) {
-        if (!filter || filter(v)) yield [k, v]
-      }
-    })()
+  /**
+   * Returns [key, value] pairs as an array, optionally filtered and sorted.
+   */
+  entries(filter?: Predicate<V>): [K, V][] {
+    let entries: [K, V][]
 
-    return generator as IterableIterator<[K, V]> & MapIterator<[K, V]>
+    if (!filter) {
+      entries = Array.from(this.#map.entries())
+    }
+    else {
+      entries = []
+      for (const entry of this.#map.entries()) {
+        if (filter(entry[1])) entries.push(entry)
+      }
+    }
+
+    if (this.order) entries.sort((a, b) => this.order(a[1], b[1]))
+
+    return entries
+  }
+
+  [Symbol.iterator](): IterableIterator<[K, V]> {
+    return this.#map.entries()
   }
 }
 
@@ -123,6 +147,7 @@ export abstract class ObservedMap<K, V> extends FilteredMap<K, V> {
     }
   }
 
+  protected order: ((a: V, b: V) => number) | undefined = undefined
   protected abstract onChange(method: 'set' | 'delete' | 'clear', key?: K): void
 }
 
@@ -134,18 +159,24 @@ export class TrackedMap<K, V> extends FilteredMap<K, V> {
 
   set(key: K, value: V): this {
     this.#isDirty = true
+    Zotero.debug(`merge: set ${key}: ${JSON.stringify(value)}`)
     return super.set(key, value)
   }
 
   delete(key: K): boolean {
+    const v = super.get(key)
     const existed = super.delete(key)
+    if (existed) Zotero.debug(`merge: deleted ${key}: ${JSON.stringify(v)}`)
     if (existed) this.#isDirty = true
     return existed
   }
 
   clear(filter?: Predicate<V>): void {
+    Zotero.debug('merge: clear')
     const startSize = this.size
     super.clear(filter)
     if (this.size !== startSize) this.#isDirty = true
   }
+
+  protected order: ((a: V, b: V) => number) | undefined = undefined
 }

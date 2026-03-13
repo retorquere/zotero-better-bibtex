@@ -33,7 +33,7 @@ Feature: Merge
     When I force-refresh all citation keys
     Then the library should match "merge/*-refreshed.json"
 
-  @retries=5
+  #@retries=5
   Scenario: ids field should be created in raw mode #1729
     When I import 2 references from "merge/*.json"
     And I select the item with a field that is "bardosOnsagerConjectureBounded2019"

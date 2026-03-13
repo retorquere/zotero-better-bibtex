@@ -121,7 +121,7 @@ class Keys extends TrackedMap<number, CitekeyRecord> {
   public async save(): Promise<void> {
     if (this.isDirty) {
       const mem: Map<number, boolean> = new Map
-      await IOUtils.writeJSON(this.path, [...this.values(_ => readonly(_.libraryID, mem))])
+      await IOUtils.writeJSON(this.path, this.values(_ => readonly(_.libraryID, mem)))
       this.resetDirty()
     }
   }
@@ -249,6 +249,28 @@ export const KeyManager = new class _KeyManager {
     }
   }
 
+  private store(item, citationKey?: string) {
+    try {
+      citationKey ??= item.getField('citationKey')
+    }
+    catch (err) {
+      log.error('could not get citation key from item:', err)
+      citationKey = ''
+    }
+
+    if (citationKey) {
+      this.#keys.set(item.id, lc({
+        itemID: item.id,
+        itemKey: item.key,
+        libraryID: item.libraryID,
+        citationKey,
+      }))
+    }
+    else {
+      this.#keys.delete(item.id)
+    }
+  }
+
   private async start(): Promise<void> {
     await migrate()
     await this.#keys.load()
@@ -286,9 +308,14 @@ export const KeyManager = new class _KeyManager {
       })
 
       const update = (item: Zotero.Item) => {
-        this.update(item, { replace: Preference.resetKeyOnChange })
-          ?.saveTx({ skipDateModifiedUpdate: true })
-          .catch(err => log.error('failed to update', item.id, ':', err))
+        if (this.update(item, { replace: Preference.resetKeyOnChange })) {
+          item
+            .saveTx({ skipDateModifiedUpdate: true })
+            .catch(err => log.error('failed to update', item.id, ':', err))
+        }
+        else {
+          this.store(item)
+        }
       }
       for (const item of items) {
         if (Preference.testing) { // race condition for key assignment otherwise
@@ -330,12 +357,7 @@ export const KeyManager = new class _KeyManager {
     const proposed = inspireHEP || this.propose(item)
     if (!proposed || proposed === current) return null
 
-    this.#keys.set(item.id, lc({
-      itemID: item.id,
-      itemKey: item.key,
-      libraryID: item.libraryID,
-      citationKey: proposed,
-    }))
+    this.store(item, proposed)
 
     if (readonly(item.libraryID)) return null
 
@@ -356,12 +378,9 @@ export const KeyManager = new class _KeyManager {
   }
 
   public all(query?: Predicate<CitekeyRecord>): CitekeyRecord[] {
-    if (!query) {
-      return [...this.#keys.values()]
-    }
-    else {
-      return [...this.#keys.values()].filter(query)
-    }
+    if (!query) return this.#keys.values()
+
+    return this.#keys.values().filter(query)
   }
 
   // mem is for https://github.com/retorquere/zotero-better-bibtex/issues/2926
