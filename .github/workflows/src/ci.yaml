@@ -12,13 +12,13 @@ _anchors:
     run: echo "version="`jq -r .version package.json` >> $GITHUB_ENV
   install_python: &install_python
     name: install python
-    uses: actions/setup-python@v5
+    uses: actions/setup-python@v6
     with:
       python-version: '3.12'
       cache: 'pip'
   install_node: &install_node
     name: install node
-    uses: actions/setup-node@v4
+    uses: actions/setup-node@v6
     with:
       node-version: 20.x
   install_python_packages: &install_python_packages
@@ -32,7 +32,7 @@ _anchors:
     run: npm install --no-package-lock && npm ls
   checkout: &checkout
     name: Checkout repository
-    uses: actions/checkout@v4
+    uses: actions/checkout@v6
     with:
       persist-credentials: false
       fetch-depth: 1
@@ -83,7 +83,7 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     - name: store build artifacts
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v7
       with:
         name: build-artifacts
         path: |

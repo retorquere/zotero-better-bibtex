@@ -24,7 +24,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v4
+      uses: actions/checkout@v6
       with:
         persist-credentials: false
         fetch-depth: 1
@@ -33,7 +33,7 @@ jobs:
     - name: get package version
       run: echo "version="`jq -r .version package.json` >> $GITHUB_ENV
     - name: install python
-      uses: actions/setup-python@v5
+      uses: actions/setup-python@v6
       with:
         python-version: '3.12'
         cache: pip
@@ -43,7 +43,7 @@ jobs:
         pip install packaging xvfbwrapper
         pip install -r requirements.txt
     - name: install node
-      uses: actions/setup-node@v4
+      uses: actions/setup-node@v6
       with:
         node-version: 20.x
     - name: install node packages
@@ -75,7 +75,7 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     - name: store build artifacts
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v7
       with:
         name: build-artifacts
         path: |
@@ -91,14 +91,14 @@ jobs:
       !contains(github.event.head_commit.message, '[tagged build]'))
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v4
+      uses: actions/checkout@v6
       with:
         persist-credentials: false
         fetch-depth: 1
         submodules: recursive
 
     - name: install python
-      uses: actions/setup-python@v5
+      uses: actions/setup-python@v6
       with:
         python-version: '3.12'
         cache: pip
@@ -108,7 +108,7 @@ jobs:
         pip install packaging xvfbwrapper
         pip install -r requirements.txt
     - name: install node
-      uses: actions/setup-node@v4
+      uses: actions/setup-node@v6
       with:
         node-version: 20.x
     - name: install node packages
@@ -139,7 +139,7 @@ jobs:
         worker: [--worker, --no-worker]
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v4
+      uses: actions/checkout@v6
       with:
         persist-credentials: false
         fetch-depth: 1
@@ -150,7 +150,7 @@ jobs:
       with:
         name: build-artifacts
     - name: install python
-      uses: actions/setup-python@v5
+      uses: actions/setup-python@v6
       with:
         python-version: '3.12'
         cache: pip
@@ -233,7 +233,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v4
+      uses: actions/checkout@v6
       with:
         persist-credentials: false
         fetch-depth: 1
@@ -245,7 +245,7 @@ jobs:
       with:
         name: build-artifacts
     - name: install python
-      uses: actions/setup-python@v5
+      uses: actions/setup-python@v6
       with:
         python-version: '3.12'
         cache: pip
@@ -255,7 +255,7 @@ jobs:
         pip install packaging xvfbwrapper
         pip install -r requirements.txt
     - name: install node
-      uses: actions/setup-node@v4
+      uses: actions/setup-node@v6
       with:
         node-version: 20.x
     - name: install node packages
@@ -287,14 +287,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v4
+      uses: actions/checkout@v6
       with:
         persist-credentials: false
         fetch-depth: 1
         submodules: recursive
 
     - name: install python
-      uses: actions/setup-python@v5
+      uses: actions/setup-python@v6
       with:
         python-version: '3.12'
         cache: pip
