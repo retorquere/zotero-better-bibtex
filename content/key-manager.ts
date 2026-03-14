@@ -34,16 +34,14 @@ export type CitekeyRecord = {
   libraryID: number
   itemKey: string
   citationKey: string
-  lcCitationKey: string
 }
 
-function lc(k: Partial<CitekeyRecord>): CitekeyRecord {
+function copy(k: CitekeyRecord): CitekeyRecord {
   return {
     itemID: k.itemID,
     libraryID: k.libraryID,
     itemKey: k.itemKey,
     citationKey: k.citationKey,
-    lcCitationKey: k.citationKey.toLowerCase(),
   }
 }
 
@@ -91,7 +89,7 @@ class Keys extends TrackedMap<number, CitekeyRecord> {
     try {
       if (await IOUtils.exists(this.path)) {
         for (const v of await IOUtils.readJSON(this.path)) {
-          if (v.citationKey) this.set(v.itemID, lc(v))
+          if (v.citationKey) this.set(v.itemID, copy(v))
         }
       }
     }
@@ -111,7 +109,7 @@ class Keys extends TrackedMap<number, CitekeyRecord> {
       `.replace(/\n/g, ' ').trim()
 
     for (const { itemID, itemKey, libraryID, citationKey } of await Zotero.DB.queryAsync(load)) {
-      this.set(itemID, lc({ itemID, itemKey, libraryID, citationKey }))
+      this.set(itemID, copy({ itemID, itemKey, libraryID, citationKey }))
     }
     this.resetDirty()
 
@@ -121,7 +119,7 @@ class Keys extends TrackedMap<number, CitekeyRecord> {
   public async save(): Promise<void> {
     if (this.isDirty) {
       const mem: Map<number, boolean> = new Map
-      await IOUtils.writeJSON(this.path, [...this.values(_ => readonly(_.libraryID, mem))])
+      await IOUtils.writeJSON(this.path, this.values(_ => readonly(_.libraryID, mem)))
       this.resetDirty()
     }
   }
@@ -196,7 +194,10 @@ export const KeyManager = new class _KeyManager {
 
     const progress: Progress = items.length > 10 ? new Progress(items.length, 'Refreshing citation keys') : null
     for (const item of items) {
-      if (!this.update(item, { replace, inspireHEP: inspireHEP ? (await fetchInspireHEP(item)) || '' : undefined })) continue
+      if (!this.update(item, { replace, inspireHEP: inspireHEP ? (await fetchInspireHEP(item)) || '' : undefined })) {
+        this.store(item)
+        continue
+      }
 
       const citationKey = item.getField('citationKey')
       if (!citationKey) continue
@@ -249,6 +250,28 @@ export const KeyManager = new class _KeyManager {
     }
   }
 
+  private store(item, citationKey?: string) {
+    try {
+      citationKey ??= item.getField('citationKey')
+    }
+    catch (err) {
+      log.error('could not get citation key from item:', err)
+      citationKey = ''
+    }
+
+    if (citationKey) {
+      this.#keys.set(item.id, copy({
+        itemID: item.id,
+        itemKey: item.key,
+        libraryID: item.libraryID,
+        citationKey,
+      }))
+    }
+    else {
+      this.#keys.delete(item.id)
+    }
+  }
+
   private async start(): Promise<void> {
     await migrate()
     await this.#keys.load()
@@ -286,9 +309,14 @@ export const KeyManager = new class _KeyManager {
       })
 
       const update = (item: Zotero.Item) => {
-        this.update(item, { replace: Preference.resetKeyOnChange })
-          ?.saveTx({ skipDateModifiedUpdate: true })
-          .catch(err => log.error('failed to update', item.id, ':', err))
+        if (this.update(item, { replace: Preference.resetKeyOnChange })) {
+          item
+            .saveTx({ skipDateModifiedUpdate: true })
+            .catch(err => log.error('failed to update', item.id, ':', err))
+        }
+        else {
+          this.store(item)
+        }
       }
       for (const item of items) {
         if (Preference.testing) { // race condition for key assignment otherwise
@@ -330,12 +358,7 @@ export const KeyManager = new class _KeyManager {
     const proposed = inspireHEP || this.propose(item)
     if (!proposed || proposed === current) return null
 
-    this.#keys.set(item.id, lc({
-      itemID: item.id,
-      itemKey: item.key,
-      libraryID: item.libraryID,
-      citationKey: proposed,
-    }))
+    this.store(item, proposed)
 
     if (readonly(item.libraryID)) return null
 
@@ -356,12 +379,9 @@ export const KeyManager = new class _KeyManager {
   }
 
   public all(query?: Predicate<CitekeyRecord>): CitekeyRecord[] {
-    if (!query) {
-      return [...this.#keys.values()]
-    }
-    else {
-      return [...this.#keys.values()].filter(query)
-    }
+    if (!query) return this.#keys.values()
+
+    return this.#keys.values().filter(query)
   }
 
   // mem is for https://github.com/retorquere/zotero-better-bibtex/issues/2926
@@ -370,21 +390,25 @@ export const KeyManager = new class _KeyManager {
 
     const caseInsensitive = Preference.citekeyCaseInsensitive
     const keyscopeGlobal = Preference.keyScope === 'global'
-    const citekeyField = caseInsensitive ? 'lcCitationKey' : 'citationKey'
     const libraryID = item.libraryID
     const itemID = item.id
 
+    const { compare: different } = new Intl.Collator(undefined, { // eslint-disable-line @typescript-eslint/unbound-method
+      sensitivity: caseInsensitive ? 'base' : 'variant',
+    })
+
     const seen: Set<string> = new Set
     let candidate: string
-    let candidateMatch: string
 
     function conflict(key: CitekeyRecord): boolean {
-      return (keyscopeGlobal || (key.libraryID === libraryID)) && key[citekeyField] === candidateMatch && key.itemID !== itemID
+      return (keyscopeGlobal || (key.libraryID === libraryID))
+        && key.itemID !== itemID
+        && !different(key.citationKey, candidate)
     }
 
     // eslint-disable-next-line no-constant-condition
     for (let n = Formatter.postfix.offset; true; n += 1) {
-      candidateMatch = candidate = citationKey.replace(Formatter.postfix.marker, () => {
+      candidate = citationKey.replace(Formatter.postfix.marker, () => {
         let postfix = ''
         if (n) {
           const alpha = excelColumn(n)
@@ -395,7 +419,6 @@ export const KeyManager = new class _KeyManager {
         seen.add(postfix)
         return postfix
       })
-      if (caseInsensitive) candidateMatch = candidateMatch.toLowerCase()
 
       if (this.any(conflict)) continue
       if (mem) {

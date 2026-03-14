@@ -75,9 +75,7 @@ class Store extends ObservedMap<string, Job> {
     super(jobs)
   }
 
-  order(a: Job, b: Job) {
-    return a.path.localeCompare(b.path, undefined, { sensitivity: 'base', usage: 'sort' })
-  }
+  order = (a: Job, b: Job) => a.path.localeCompare(b.path, undefined, { sensitivity: 'base', usage: 'sort' })
 
   onChange(method: 'set' | 'delete' | 'clear', key?: string) {
     if (!key) throw new Error('do not clear the database')
@@ -529,7 +527,7 @@ export const AutoExport = new class $AutoExport {
 
   public find(type: 'collection' | 'library', ids: number[]): Job[] {
     if (!ids.length) return []
-    return [...this.db.values(_ => _.type === type && ids.includes(_.id))]
+    return this.db.values(_ => _.type === type && ids.includes(_.id))
   }
 
   public async add(ae: Job, schedule = false) {
@@ -595,7 +593,7 @@ export const AutoExport = new class $AutoExport {
   }
 
   public all(): Job[] {
-    return [...this.db.values()]
+    return this.db.values()
   }
 
   public edit(path: string, setting: JobSetting, value: number | boolean | string): void {

@@ -186,7 +186,7 @@ const main = async () => {
         .replace(/^\[[^\]]+\]\s*:/, '')
         .trim()
       while (true) {
-        const title = argv.title.replace(/^\s*(Bug|Feature|Request)[/:\s]*/i, '').trim()
+        const title = argv.title.replace(/^\s*\[?(Bug|Feature|Request)\]?[/:\s]*/i, '').trim()
         if (title.length === argv.title.length) break
         argv.title = title
       }

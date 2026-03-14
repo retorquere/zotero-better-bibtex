@@ -706,7 +706,7 @@ export class BetterBibTeX {
           const selected = type === 'collection'
             ? Zotero.getActiveZoteroPane().getSelectedCollection(true)
             : Zotero.getActiveZoteroPane().getSelectedLibraryID()
-          return [...AutoExport.db.values(_ => _.type === type && _.id === selected)]
+          return AutoExport.db.values(_ => _.type === type && _.id === selected)
         }
         Zotero.MenuManager.registerMenu({
           menuID: `${pluginID}-menu-collection`,
