@@ -6,7 +6,8 @@
       "citekeyFormat": "auth.lower + year",
       "exportTitleCase": false,
       "qualityReport": true,
-      "verbatimFields": "url,doi,file,eprint,verba,verbb,verbc,groups"
+      "verbatimFields": "url,doi,file,eprint,verba,verbb,verbc,groups",
+      "postscript": "/*\n  This converts <number>-<number> in any number field in the bib-file\n  output into <number>--<number>.\n\n  NOTE: After pasting code here, go to tab 'Automatic export' and\n  press 'Export now'. Otherwise the postscript does not seem to be\n  applied. This is only done when export is started. This could also\n  be done by modifying an entry since Automatic export is carried out\n  'On change' as specified in the 'Automatic export' section, i.e.\n  on changing the bibliographic entries.\n*/\nif (false && Translator.BetterBibLaTeX && tex.has.number) {\n  tex.override({ name: 'number', value: tex.has.number.value.replace(/([0-9])-([0-9])/g, '$1--$2') })\n}\n\n// Convert ranges of roman numerals in pages field, cf. for the regex https://stackoverflow.com/a/267405\nif (Translator.BetterBibLaTeX && tex.has.pages) {\n  tex.override({\n    name: 'pages',\n    value: tex.has.pages.value\n      .replace(/((?=\\w)M{0,4}(CM|CD|D?C{0,3})(XC|XL|L?X{0,3})(IX|IV|V?I{0,3}))-((?=\\w)M{0,4}(CM|CD|D?C{0,3})(XC|XL|L?X{0,3})(IX|IV|V?I{0,3}))/g, '$1--$5'),\n    enc: 'raw',\n  })\n}\n\n// Process reprints, so also new bibstring reprintas\n// Related field contains the citation key of the related book with the reprint, relatedpages field contains any further information, e.g. pages, number\n// We have to differentiate between two kinds of entries, entries that only have a related field, and entries that have related and relatedpages fields: \nif (Translator.BetterBibLaTeX && tex.has.related) {\n  tex.override({ name: 'addendum', value: tex.has.related.value.replace(/(.+)/g, '\\\\reprintas \\\\cite{$1}'), enc: 'raw' })\n\n  if (tex.has.relatedpages) {\n    tex.override({\n      name: 'addendum',\n      value:  tex.has.related.value.replace(/(.+)/g, '\\\\reprintas \\\\cite{$1}') + '\\\\addcomma\\\\space ' + tex.has.relatedpages.value,\n      enc: 'raw'\n    })\n  }\n\n  // Remove related field, so that is is not output; relatedpages filed is undefined in BibLaTeX so it will be ignored anyway\n  tex.remove('related')\n}\n\nif (Translator.BetterBibLaTeX && tex.has.langid) {\n  tex.override({ name: 'langid', value:  tex.has.langid.value.replace(/^xgerman$/g, 'ngerman') })\n}\n\n/* Code no longer used (Export book section as inbook; default in Zotero is incollection):\nif (Translator.BetterBibLaTeX) {\n  if (zotero.itemType === 'bookSection') tex.entrytype = 'inbook'\n}\n*/\n"
     },
     "options": {
       "exportNotes": true,
@@ -29,9 +30,10 @@
       "key": "VP4DUY5T",
       "version": 3332,
       "itemType": "journalArticle",
-      "title": "Testeintrag: Muss ändern",
+      "title": "Testeintrag: Muss \u00e4ndern",
       "date": "1930",
       "language": "de",
+      "issue": "1-9",
       "extra": "tex.shorthand: KB 1930\ntex.pages= 31 (5), \\ppno\\space 321-338 \\addsemicolon\\space 31 (6), \\ppno\\space 401-418",
       "publicationTitle": "Zeitung",
       "citationKey": "KB1930eng-test",
