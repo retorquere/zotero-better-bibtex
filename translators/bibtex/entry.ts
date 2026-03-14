@@ -45,7 +45,7 @@ import BabelTag from '../../gen/babel/tag.json' with { type: 'json' }
 import { arXiv } from '../../content/arXiv'
 import { uri } from '../../content/escape'
 
-import { stringCompare } from '../lib/string-compare'
+import { strcmp } from '../../content/string-compare'
 import * as CSL from 'citeproc'
 
 /*
@@ -130,7 +130,7 @@ const fieldOrder = [
 }, {})
 
 function property_sort(a: [string, string, string, string], b: [string, string, string, string]): number {
-  return stringCompare(a[0], b[0])
+  return strcmp.variant(a[0], b[0])
 }
 
 const enc_creators_marker = {
@@ -1194,7 +1194,7 @@ export class Entry {
       }
     }
 
-    return [...encoded].sort((a, b) => stringCompare(a, b)).join(',')
+    return [...encoded].sort((a, b) => strcmp.base(a, b)).join(',')
   }
 
   relPath(path) {
@@ -1266,7 +1266,7 @@ export class Entry {
     attachments.sort((a, b) => {
       if ((a.mimetype === 'text/html') && (b.mimetype !== 'text/html')) return 1
       if ((b.mimetype === 'text/html') && (a.mimetype !== 'text/html')) return -1
-      return stringCompare(a.path, b.path)
+      return strcmp.base(a.path, b.path)
     })
 
     if (this.translation.collected.preferences.jabrefFormat) {

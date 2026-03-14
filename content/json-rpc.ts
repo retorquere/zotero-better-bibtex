@@ -11,6 +11,7 @@ import { Preference } from './prefs'
 import { orchestrator } from './orchestrator'
 import { Server } from './server'
 import type { CitekeyRecord } from './key-manager'
+import { strcmp } from './string-compare'
 
 import BBT from '../gen/version.cjs'
 
@@ -32,31 +33,12 @@ function getStyle(id: string): any {
 
 function byKeys(citekeys: string[]): (key: CitekeyRecord) => boolean {
   citekeys = citekeys.map(citekey => citekey.replace('@', ''))
-  let field: string
+  const different = strcmp[Preference.citekeyCaseInsensitive ? 'base' : 'variant']
 
-  if (Preference.citekeyCaseInsensitive) {
-    citekeys = citekeys.map(citekey => citekey.toLowerCase())
-    field = 'lcCitationKey'
-  }
-  else {
-    field = 'citationKey'
-  }
-
-  return (key: CitekeyRecord): boolean => citekeys.includes(key[field])
+  return (key: CitekeyRecord): boolean => citekeys.find(citekey => !different(citekey, key.citationKey)) as unknown as boolean
 }
 function byKey(citekey: string): (key: CitekeyRecord) => boolean {
-  citekey = citekey.replace('@', '')
-  let field: string
-
-  if (Preference.citekeyCaseInsensitive) {
-    citekey = citekey.toLowerCase()
-    field = 'lcCitationKey'
-  }
-  else {
-    field = 'citationKey'
-  }
-
-  return (key: CitekeyRecord): boolean => key[field] === citekey
+  return byKeys([citekey])
 }
 
 function find(library?: string | number): (citationKey: string) => number | undefined {
@@ -421,18 +403,6 @@ export class NSItem {
     getStyle(format.id)
 
     if (((format as any).mode || 'bibliography') !== 'bibliography') throw new Error(`mode must be bibliograpy, not ${ (format as any).mode }`)
-
-    /* WHAT
-    const where: Query = {}
-    if (library !== '*') where.libraryID = getLibrary(library)
-    citekeys = citekeys.map(citekey => citekey.replace('@', ''))
-    if (Preference.citekeyCaseInsensitive) {
-      where.lcCitationKey = { in: citekeys.map(citekey => citekey.toLowerCase()) }
-    }
-    else {
-      where.citationKey = { in: citekeys }
-    }
-    */
 
     const resolve = find(library)
     const items = await getItemsAsync(citekeys.map(resolve).filter(_ => _))

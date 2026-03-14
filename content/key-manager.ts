@@ -28,6 +28,7 @@ import * as l10n from './l10n'
 
 import { migrate } from './key-manager/migrate'
 import { readonly } from './library'
+import { strcmp } from './string-compare'
 
 export type CitekeyRecord = {
   itemID: number
@@ -393,9 +394,7 @@ export const KeyManager = new class _KeyManager {
     const libraryID = item.libraryID
     const itemID = item.id
 
-    const { compare: different } = new Intl.Collator(undefined, { // eslint-disable-line @typescript-eslint/unbound-method
-      sensitivity: caseInsensitive ? 'base' : 'variant',
-    })
+    const different = strcmp[caseInsensitive ? 'base' : 'variant']
 
     const seen: Set<string> = new Set
     let candidate: string
