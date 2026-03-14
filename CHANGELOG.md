@@ -1,3 +1,7 @@
+## v9.0.10
+
+* Citation key at the top
+
 ## v9.0.8
 
 * preference autoPinDelay has been renamed to fillKeyAfter
