@@ -489,20 +489,18 @@ export function generateBibTeX(collected: Collected): Translation {
     if (collected.preferences.DOIandURL !== 'doi' || !doi) {
       switch (collected.preferences.bibtexURL) {
         case 'url':
-        case 'url-ish':
           urlfield = ref.add({
             name: 'url',
             value: item.url || item.extraFields.kv.url,
-            enc: translation.collected.preferences.bibtexURL === 'url' && translation.isVerbatimField('url') ? 'url' : 'literal',
+            enc: translation.collected.preferences.bibtexURLpackage && translation.isVerbatimField('url') ? 'url' : 'literal',
           })
           break
 
         case 'note':
-        case 'note-url-ish':
           urlfield = ref.add({
             name: ([ 'misc', 'booklet' ].includes(ref.entrytype) && !ref.has.howpublished ? 'howpublished' : 'note'),
             value: item.url || item.extraFields.kv.url,
-            enc: translation.collected.preferences.bibtexURL === 'note' ? 'url' : 'literal',
+            enc: translation.collected.preferences.bibtexURLpackage ? 'url' : 'literal',
           })
           break
 

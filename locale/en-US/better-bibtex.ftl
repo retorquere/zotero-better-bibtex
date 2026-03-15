@@ -280,14 +280,13 @@ better-bibtex_preferences_export_biblatex_use-prefix =
 better-bibtex_preferences_export_bibtex_urls = Add URLs to BibTeX export
 better-bibtex_preferences_export_bibtex_urls_note =
   .label = in the 'note' field
-better-bibtex_preferences_export_bibtex_urls_note-url-ish =
-  .label = in the 'note' field, but assuming the 'url' package is not loaded
 better-bibtex_preferences_export_bibtex_urls_off =
   .label = no
 better-bibtex_preferences_export_bibtex_urls_url =
   .label = in the 'url' field
-better-bibtex_preferences_export_bibtex_urls_url-ish =
-  .label = in the 'url' field, but assuming the 'url' package is not loaded
+
+better-bibtex_preferences_export_bibtex_url-package =
+  .label = Assume the 'url' package is loaded
 
 better-bibtex_preferences_export_sort = Sort TeX/CSL output (useful if you use version control on the output):
 better-bibtex_preferences_export_sort_off =

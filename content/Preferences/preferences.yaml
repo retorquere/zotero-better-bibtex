@@ -768,6 +768,15 @@ bibtexURL:
   affects:
     - Better BibTeX
 
+bibtexURLpackage:
+  tooltip: >-
+    Most BibTeX styles do not support DOI/URL fields. Of the styles that do
+    support them, many forget to load the required 'url' package. If you turn this on,
+    Better BibTeX will assume you have it loaded.
+  default: false
+  affects:
+    - Better BibTeX
+
 jabrefFormat:
   tooltip: >-
     Export JabRef-specific fields: timestamps, titles for attachments, and

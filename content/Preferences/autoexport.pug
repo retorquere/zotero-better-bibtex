@@ -41,10 +41,13 @@ html:div.bbt-prefs-2col#bbt-prefs-auto-exports
       menupopup
         menuitem(data-l10n-id='better-bibtex_preferences_export_bibtex_urls_off', value='off')
         menuitem(data-l10n-id='better-bibtex_preferences_export_bibtex_urls_note', value='note')
-        menuitem(data-l10n-id='better-bibtex_preferences_export_bibtex_urls_note-url-ish', value='note-url-ish')
         menuitem(data-l10n-id='better-bibtex_preferences_export_bibtex_urls_url', value='url')
-        menuitem(data-l10n-id='better-bibtex_preferences_export_bibtex_urls_url-ish', value='url-ish').
-
+    checkbox(
+      data-l10n-id='better-bibtex_preferences_export_fields_bibtex-url-package'
+      data-ae-field='bibtexURLpackage'
+      native='true'
+      oncommand='Zotero.BetterBibTeX.PrefPane.autoexport.edit(this)'
+    )
     img(src='chrome://zotero-better-bibtex/content/skin/attention.svg', style='width:16px;height:16px', tooltip='bbt-tooltip-bibtexURL')
 
   //- biblatex

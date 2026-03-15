@@ -45,9 +45,7 @@ Options:
 
 * no
 * in the 'note' field
-* in the 'note' field, but assuming the 'url' package is not loaded
 * in the 'url' field
-* in the 'url' field, but assuming the 'url' package is not loaded
 
 
 ## BibLaTeX
