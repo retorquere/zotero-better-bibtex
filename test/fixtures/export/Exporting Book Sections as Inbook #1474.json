@@ -19,7 +19,6 @@
     {
       "ISBN": "978-0-12-802118-7",
       "abstractNote": "The sparse matrix-vector (SpMV) multiplication is a very important kernel in scientific computing. Efficiently computing this kernel on modern architectures is difficult because of high bandwidth pressure and inefficient cache use. Despite the high available bandwidth on the Intel Xeon Phi, an efficient code remains difficult to achieve because of high data access latencies. We alleviate this issue by integrating vectorization into state-of-the-art parallel SpMV multiplication strategies. We present a novel data structure that is a strict improvement on the industry-standard compressed row storage (CRS), and is highly synergistic with sparse blocking techniques and cache-oblivious orderings induced by space-filling curves. The final parallel scheme we present maximizes both data locality and data reuse on shared-memory systems. The resulting code, based on explicit thread-local data partitioning and allocation, combined with vectorization, outperforms not only a CRS-based algorithm implemented using OpenMP but also the SpMV-code available in the Intel MKL library.",
-      "citationKey": "yzelman2015a",
       "creators": [
         {
           "creatorType": "author",

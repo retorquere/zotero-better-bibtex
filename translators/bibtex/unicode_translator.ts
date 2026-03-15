@@ -4,7 +4,7 @@ import { HTMLParser } from '../../content/text'
 import type { MarkupNode } from '../../typings/markup'
 
 import { log } from '../../content/logger'
-import HE from 'he'
+import { decodeHTMLAttribute } from 'entities'
 import { Transform } from 'unicode2latex'
 
 export type ConverterOptions = {
@@ -18,31 +18,38 @@ export function replace_command_spacers(latex: string): string {
   return latex.replace(/\0(\s)/g, '{}$1').replace(/\0([^;.,!?${}_^\\/])/g, ' $1').replace(/\0/g, '')
 }
 
-export type ParseResult = { latex: string; raw: boolean; packages: string[] }
-
-export type Mode = 'minimal' | 'bibtex' | 'biblatex'
+export type TeX = { latex: string; raw: boolean; packages: string[] }
 
 export class HTMLConverter {
   private latex = ''
   private tx: Transform
+  private txt: Transform
+  private txc: Transform
   private stack: any[] = []
   private options: ConverterOptions = {}
   private embraced: boolean
   private packages: Set<string> = new Set
   private translation: Translation
 
-  constructor(translation: Translation, mode: 'minimal' | 'bibtex' | 'biblatex') {
+  constructor(translation: Translation) {
     this.translation = translation
-    this.tx = new Transform(mode, {
+
+    const options = {
       math: this.translation.collected.preferences.mapMath,
       text: this.translation.collected.preferences.mapText,
       charmap: translation.charmap,
       ascii: this.translation.collected.preferences.ascii,
       packages: this.translation.collected.preferences.packages.trim().split(/\s*,\s*/),
-    })
+    }
+
+    const mode = translation.unicode ? 'minimal' : (translation.BetterBibTeX ? 'bibtex' : 'biblatex')
+    this.txt = new Transform(mode, options)
+    this.txc = mode === 'bibtex' ? new Transform('bibtex-creator', options) : this.txt
   }
 
-  public tolatex(source: string, options: ConverterOptions): ParseResult {
+  public tolatex(source: string, options: ConverterOptions): TeX {
+    this.tx = options.creator ? this.txc : this.txt
+
     this.embraced = false
     this.options = options
     this.latex = ''
@@ -68,7 +75,7 @@ export class HTMLConverter {
       .replace(/\n*\\par\n*$/, '')
       .replace(/^\n*\\par\n*/, '')
 
-    return { latex: this.latex, raw: ast.nodeName === 'pre', packages: [...this.packages]}
+    return { latex: this.latex, raw: ast.nodeName === 'pre', packages: [...this.packages] }
   }
 
   private walk(tag: MarkupNode, nocased = false) {
@@ -126,7 +133,7 @@ export class HTMLConverter {
       case 'br':
         latex = ''
         /* line-breaks on empty line makes LaTeX sad */
-        if (this.latex !== '' && this.latex[this.latex.length - 1] !== '\n') latex = '\\\\'
+        if (this.latex !== '' && this.latex.at(-1) !== '\n') latex = '\\\\'
         latex += '\n\x1D'
         break
 
@@ -226,7 +233,7 @@ export class HTMLConverter {
   }
 
   private chars(text, nocased) {
-    if (this.options.html) text = HE.decode(text, { isAttributeValue: true })
+    if (this.options.html) text = decodeHTMLAttribute(text)
     this.latex += this.tx.tolatex(text, { bracemath: !nocased, preservemacrospacers: true, packages: this.packages })
   }
 }

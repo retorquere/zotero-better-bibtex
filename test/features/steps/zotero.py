@@ -14,7 +14,7 @@ import urllib
 import requests
 import tempfile
 from munch import *
-from steps.utils import running, nested_dict_iter, benchmark, ROOT, FIXTURES, EXPORTED, assert_equal_diff, serialize, html2md, clean_html
+from steps.utils import terminate, running, nested_dict_iter, benchmark, ROOT, FIXTURES, EXPORTED, assert_equal_diff, serialize, html2md, clean_html
 from steps.library import load as cleanlib, sortbib
 import steps.utils as utils
 import shutil
@@ -115,7 +115,7 @@ class FirefoxProfile(webdriver.FirefoxProfile):
 
 def install_proxies(xpis, profile):
   for xpi in xpis:
-    assert os.path.isdir(xpi)
+    assert os.path.isdir(xpi), xpi
     utils.print(f'installing {xpi}')
     rdf = etree.parse(os.path.join(xpi, 'install.rdf'))
     xpi_id = rdf.xpath('/rdf:RDF/rdf:Description/em:id', namespaces={'rdf': 'http://www.w3.org/1999/02/22-rdf-syntax-ns#', 'em': 'http://www.mozilla.org/2004/em-rdf#'})[0].text
@@ -234,6 +234,7 @@ class Library:
 
     if path:
       self.ext = self.suffix(path)
+
     elif ext:
       if type(ext) == Library:
         self.ext = self.suffix(ext.path)
@@ -260,7 +261,8 @@ class Library:
       if self.patch:
         self.path = self.base[:-len(self.ext)] + '.' + self.patch.split('.')[-2] + self.ext
 
-    if not self.body and self.base and os.path.exists(self.base):
+    if not self.body and self.base:
+      assert os.path.exists(self.base), f'{json.dumps(self.base)} does not exist'
       with open(self.base) as f:
         self.body = f.read()
 
@@ -275,7 +277,10 @@ class Library:
 
     if self.ext.endswith('.json') or self.ext == '.csl.yml':
       if self.ext.endswith('.json'):
-        self.data = json.loads(self.body, object_pairs_hook=OrderedDict)
+        try:
+          self.data = json.loads(self.body, object_pairs_hook=OrderedDict)
+        except:
+          raise ValueError(self.body)
       else:
         self.data = yaml.load(io.StringIO(self.body))
 
@@ -406,42 +411,36 @@ class Zotero:
   def shutdown(self):
     if self.proc is None: return
 
-    # graceful shutdown
-    try:
-      self.execute("""
-        const appStartup = Components.classes['@mozilla.org/toolkit/app-startup;1'].getService(Components.interfaces.nsIAppStartup);
-        appStartup.quit(Components.interfaces.nsIAppStartup.eAttemptQuit);
-      """)
-    except:
-      pass
-
     def on_terminate(proc):
-        utils.print("process {} terminated with exit code {}".format(proc, proc.returncode))
+      utils.print(f'process {proc} terminated with exit code {proc.returncode or 0}')
 
     zotero = psutil.Process(self.proc.pid)
-    alive = zotero.children(recursive=True)
-    alive.append(zotero)
+    processes = zotero.children(recursive=True)
+    processes.append(zotero)
 
-    for p in alive:
+    for p in processes:
       try:
+        info = p.as_dict(attrs=['pid', 'name', 'cmdline'])
+        utils.print(f'shutdown: {json.dumps(info)}')
         p.terminate()
       except psutil.NoSuchProcess:
         pass
-    gone, alive = psutil.wait_procs(alive, timeout=5, callback=on_terminate)
+    gone, processes = psutil.wait_procs(processes, timeout=30, callback=on_terminate)
 
-    if alive:
-      for p in alive:
-        utils.print("process {} survived SIGTERM; trying SIGKILL" % p)
+    if processes:
+      for p in processes:
+        utils.print(f'process {p} survived SIGTERM; trying SIGKILL')
         try:
           p.kill()
         except psutil.NoSuchProcess:
           pass
-      gone, alive = psutil.wait_procs(alive, timeout=5, callback=on_terminate)
-      if alive:
-        for p in alive:
-          utils.print("process {} survived SIGKILL; giving up" % p)
+      gone, processes = psutil.wait_procs(processes, timeout=5, callback=on_terminate)
+      if processes:
+        for p in processes:
+          utils.print(f'process {p} survived SIGKILL; giving up')
+
     self.proc = None
-    assert not running('Zotero')
+    assert not running('Zotero'), 'Zotero is running'
 
   def restart(self, **kwargs):
     self.shutdown()
@@ -516,7 +515,20 @@ class Zotero:
       self.config.reset()
       self.start()
 
-    self.execute('await Zotero.BetterBibTeX.TestSupport.reset(scenario)', scenario=scenario)
+    self.execute('''
+      try {
+        Zotero.debug('::: ' + scenario + ' :: reset start')
+        await Zotero.BetterBibTeX.TestSupport.reset(scenario)
+        Zotero.debug('::: ' + scenario + ' :: reset succeeded')
+      }
+      catch (err) {
+        Zotero.debug(':::! ' + scenario + ' :: reset failed: ' + err.message)
+        throw err
+      }
+      finally {
+        Zotero.debug('::: ' + scenario + ' :: reset completed')
+      }
+    ''', scenario=scenario)
     self.preferences = Preferences(self)
     for csv in glob.glob(os.path.join(self.profile.path, 'better-bibtex', '*.csv')):
       os.remove(csv)
@@ -537,9 +549,7 @@ class Zotero:
     assert_equal_diff(expected.body, found.strip())
 
   def export_library(self, translator, displayOptions = {}, collection = None, output = None, expected = None, resetCache = False):
-    show('export_library', locals())
-
-    assert not displayOptions.get('keepUpdated', False) or output # Auto-export needs a destination
+    assert not displayOptions.get('keepUpdated', False) or output, ('Auto-export needs a path', displayOptions, output) # Auto-export needs a destination
 
     if translator.startswith('id:'):
       translator = translator[len('id:'):]
@@ -582,7 +592,7 @@ class Zotero:
     found.clean()
 
   def import_file(self, context, references, collection = False, items=True):
-    assert type(collection) in [bool, str]
+    assert type(collection) in [bool, str], type(collection)
 
     input = Library(path=references, client=self.client, variant=self.variant)
 
@@ -608,6 +618,7 @@ class Zotero:
       }
 
       for k, v in preferences.items():
+        if k == 'keyConflictPolicy': continue
         assert self.preferences.prefix + k in self.preferences.supported, f'Unsupported preference "{k}"'
       for item in input.data['items']:
         for att in item.get('attachments') or []:
@@ -643,7 +654,11 @@ class Zotero:
 
       filename = references
       if not items: filename = None
-      return self.execute('return await Zotero.BetterBibTeX.TestSupport.importFile(filename, createNewCollection, preferences, bibliography)',
+      return self.execute('''
+          const library = await Zotero.BetterBibTeX.TestSupport.importFile(filename, createNewCollection, preferences, bibliography)
+          await Zotero.BetterBibTeX.TestSupport.fill()
+          return library
+        ''',
         filename = filename,
         createNewCollection = (collection != False),
         preferences = preferences,
@@ -656,7 +671,7 @@ class Zotero:
     if ext in ['.yml', '.json'] and base.endswith('.csl'):
       base = os.path.splitext(base)[0]
       ext = '.csl' + ext
-    assert ext != ''
+    assert ext != '', 'no extension'
 
     if self.client == 'zotero': return [ os.path.join(FIXTURES, expected), ext ]
 
@@ -685,7 +700,7 @@ class Zotero:
     if self.beta:
       self.variant = '-beta'
     elif self.legacy:
-      self.variant = '6'
+      self.variant = '7'
     elif self.dev:
       self.variant = '-dev'
     profile.binary = {

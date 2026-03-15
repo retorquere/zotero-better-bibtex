@@ -62,13 +62,27 @@ function replacer() {
   }
 }
 
-export function stringify(obj: any, indent: number | string = 2): string {
-  return JSON.stringify(obj, replacer(), indent)
+export function stringify(obj: any): string {
+  const stringified = JSON.stringify(obj, replacer())
+  return stringified
+  // return stringified.length > 20 ? JSON.stringify(JSON.parse(stringified), null, 2) : stringified
 }
 
 function to_s(obj: any): string {
   if (typeof obj === 'string') return obj
   return stringify(obj)
+}
+
+export function print(strings: TemplateStringsArray, ...expressions: any[]) {
+  let err: string
+  let prefix = ''
+  // acc will initially be the lead string
+  const s = strings.reduce((acc, v, i) => {
+    acc = acc + (typeof expressions[i] === 'string' ? expressions[i] : (err = stringifyError(expressions[i])) || stringify(expressions[i])) + v
+    if (err) prefix = 'error: '
+    return acc
+  })
+  return prefix + s
 }
 
 export function format(...msg): string {

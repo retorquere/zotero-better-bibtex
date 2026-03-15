@@ -30,35 +30,35 @@ params = {
 }
 
 class Visitor(object):
-    def visit(self, node):
-        if isinstance(node, list):
-            for child in node:
-                self.visit(child)
-            return
-        if not isinstance(node, BaseNode):
-            return
-        nodename = type(node).__name__
-        visit = getattr(self, 'visit_{}'.format(nodename), self.generic_visit)
-        visit(node)
+  def visit(self, node):
+    if isinstance(node, list):
+      for child in node:
+        self.visit(child)
+      return
+    if not isinstance(node, BaseNode):
+      return
+    nodename = type(node).__name__
+    visit = getattr(self, 'visit_{}'.format(nodename), self.generic_visit)
+    visit(node)
 
-    def generic_visit(self, node):
-        for propname, propvalue in vars(node).items():
-            self.visit(propvalue)
+  def generic_visit(self, node):
+    for propname, propvalue in vars(node).items():
+      self.visit(propvalue)
 
 class KeyLister(Visitor):
-    @classmethod
-    def list(cls, node):
-        lister = cls()
-        lister.visit(node)
-        return lister.keys
+  @classmethod
+  def list(cls, node):
+    lister = cls()
+    lister.visit(node)
+    return lister.keys
 
-    def __init__(self):
-        super()
-        self.keys = []
+  def __init__(self):
+    super()
+    self.keys = []
 
-    def visit_Message(self, message):
-        self.keys.append(message.id.name)
-        self.generic_visit(message)
+  def visit_Message(self, message):
+    self.keys.append(message.id.name)
+    self.generic_visit(message)
 
 for ftl in Path('locale').rglob('*/better-bibtex.ftl'):
   dtd = 'build/' + str(ftl).replace('/better-bibtex.ftl', '/zotero-better-bibtex.dtd')
@@ -72,6 +72,7 @@ for ftl in Path('locale').rglob('*/better-bibtex.ftl'):
     bundle.add_resource(resource)
     for key in KeyLister.list(resource):
       message = bundle.get_message(key)
+
       if message.value is not None:
         properties[key] = bundle.format_pattern(message.value, params)[0]
 
@@ -79,10 +80,13 @@ for ftl in Path('locale').rglob('*/better-bibtex.ftl'):
         for attr, pattern in message.attributes.items():
           properties[key + '.' + attr] = bundle.format_pattern(pattern, params)[0]
 
+      if '/en-US/' in str(ftl) and message.value and message.attributes:
+        print(key, [ f'.{attr}' for attr in message.attributes ])
+
     print(javaproperties.dumps(properties), file=props)
     for key, value in properties.items():
       print(f'<!ENTITY {key} "' + escape(value).replace('&#x27;', "'") + '">', file=dtd)
 
     if '/en-US/' in str(ftl):
-      with open('gen/l10n.json', 'w') as f:
-        json.dump(list(properties.keys()), f, indent='  ')
+      with open('gen/l10n.ts', 'w') as f:
+        f.write('export default ' + json.dumps(list(properties.keys()), indent='  '))

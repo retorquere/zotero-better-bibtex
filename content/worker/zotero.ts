@@ -3,7 +3,7 @@
 import { log } from '../../content/logger'
 import { Server as WorkerServerBase } from './json-rpc'
 import { Exporter as ExporterInterface } from './interface'
-import type { Item } from '../../gen/typings/serialized-item'
+import type { Serialized } from '../../gen/typings/serialized'
 import type { Header } from '../../gen/translators'
 
 import { ExportedItem, ExportedItemMetadata, Cache, Context } from './cache'
@@ -16,7 +16,6 @@ import { Path, File } from '../file'
 const ctx: DedicatedWorkerGlobalScope = self as any
 
 import type { Message, Job } from '../translators/worker'
-import { valid } from '../../gen/items/items'
 import { generateBibLaTeX } from '../../translators/bibtex/biblatex'
 import { generateBibTeX } from '../../translators/bibtex/bibtex'
 import { generateCSLJSON } from '../../translators/csl/json'
@@ -25,6 +24,7 @@ import { generateBBTJSON } from '../../translators/lib/bbtjson'
 import type { Collected } from '../../translators/lib/collect'
 
 import { DOMParser as XMLDOMParser } from '@xmldom/xmldom'
+import { Schema } from '../item-schema'
 
 declare var ZOTERO_TRANSLATOR_INFO: Header // eslint-disable-line no-var
 
@@ -128,7 +128,7 @@ function upgrade(root) {
 
   return root
 }
-import { Node as XMLDOMNode } from '@xmldom/xmldom/lib/dom'
+import { Node as XMLDOMNode } from '@xmldom/xmldom'
 upgrade(XMLDOMNode.prototype)
 
 export class DOMParser extends XMLDOMParser {
@@ -137,25 +137,17 @@ export class DOMParser extends XMLDOMParser {
   }
 }
 
-const ZU = require('../../submodules/zotero-utilities/utilities.js')
-const ZUI = require('../../submodules/zotero-utilities/utilities_item.js')
-const ZD = require('../../submodules/zotero-utilities/date.js')
+import ZU from '../../submodules/zotero-utilities/utilities'
+import ZUI from '../../submodules/zotero-utilities/utilities_item'
+import ZD from '../../submodules/zotero-utilities/date'
 
 declare const doExport: () => void
 
 import * as DateParser from '../../content/dateparser'
-// import * as Extra from '../../content/extra'
-import itemCreators from '../../gen/items/creators.json'
-import { Collection } from '../../gen/typings/serialized-item'
-// import { CSL_MAPPINGS } from '../../gen/items/items'
-
-import zotero_schema from '../../schema/zotero.json'
-import jurism_schema from '../../schema/jurism.json'
-const schema = client.slug === 'zotero' ? zotero_schema : jurism_schema
-import dateFormats from '../../schema/dateFormats.json'
+import dateFormats from '../../submodules/zotero/resource/schema/dateFormats.json' with { type: 'json' }
 
 class Running {
-  public serialized: Item[]
+  public serialized: Serialized.Item[]
   public exported: Map<number, ExportedItem>
   public context: number | false
   public hits = 0
@@ -343,20 +335,20 @@ async function saveFile(path, overwrite) {
 }
 
 class WorkerZoteroCreatorTypes {
-  public getTypesForItemType(itemTypeID: string): { name: string } {
-    return itemCreators[client.slug][itemTypeID]?.map(name => ({ name })) || []
+  public getTypesForItemType(itemTypeID: string): { name: string }[] {
+    return Object.keys(Schema.valid.creators[itemTypeID] || {}).map(name => ({ name }))
   }
 
   public isValidForItemType(creatorTypeID, itemTypeID) {
-    return itemCreators[client.slug][itemTypeID]?.includes(creatorTypeID)
+    return Schema.valid.creators[itemTypeID]?.[creatorTypeID]
   }
 
   public getLocalizedString(type: string): string {
-    return schema.locales[Zotero.locale]?.types[type] || type[0].toUpperCase() + type.substr(1).replace(/([A-Z])([a-z])/g, (m, u, l) => `${ u.toLowerCase() } ${ l }`)
+    return Schema.zotero.locales[Zotero.locale]?.types[type] || Schema.toLabel(type)
   }
 
   public getPrimaryIDForType(typeID) {
-    return itemCreators[client.slug][typeID]?.[0]
+    return Schema.primaryCreator[typeID]
   }
 
   public getID(typeName) {
@@ -376,7 +368,7 @@ class WorkerZoteroItemTypes {
 
 class WorkerZoteroItemFields {
   public isValidForType(fieldID: string, itemTypeID: string) {
-    return valid.field[itemTypeID]?.[fieldID]
+    return Schema.valid.fields[itemTypeID][fieldID]
   }
 
   public getID(field: string): string {
@@ -496,7 +488,7 @@ class WorkerZotero {
     return this.running.serialized.shift()
   }
 
-  public nextCollection(): Collection {
+  public nextCollection(): Serialized.Collection {
     return this.running.job.data.collections.shift()
   }
 

@@ -1,13 +1,12 @@
 import Emittery from 'emittery'
 
 import { log } from './logger'
+import { getItemsAsync } from './get-items-async'
 
 type ZoteroAction = 'modify' | 'add' | 'trash' | 'delete'
 
 type IdleState = 'active' | 'idle'
 export type Action = 'modify' | 'delete' | 'add'
-
-type IntervalHandle = ReturnType<typeof setInterval>
 
 type IdleObserver = {
   observe: (subject: string, topic: IdleState, data: any) => void
@@ -23,25 +22,26 @@ const idleService: IdleService = Components.classes['@mozilla.org/widget/useridl
 
 type Reason = 'key-refresh' | 'parent-modify' | 'parent-delete' | 'parent-add' | 'tagged'
 
-class Emitter extends Emittery<{
+const logEvents = Zotero.Prefs.get('extensions.zotero.translators.better-bibtex.logEvents')
+
+type EventMap = {
   'collections-changed': number[]
   'collections-removed': number[]
   'export-progress': { pct: number; message: string; ae?: string }
+  'cache-touch': { itemIDs: number[] }
   'items-changed': { items: Zotero.Item[]; action: Action; reason?: Reason }
+  'items-removed': { itemIDs: number[]; reason?: Reason }
   'libraries-changed': number[]
   'libraries-removed': number[]
   'preference-changed': string
   'window-loaded': { win: Window; href: string }
   idle: { state: IdleState; topic: IdleTopic }
-  sync: boolean
-}> {
+}
+
+class Emitter extends Emittery<EventMap> {
   private listeners: any[] = []
   public idle: Partial<Record<IdleTopic, IdleState>> = {}
   public itemObserverDelay = 5
-  public syncInProgress: boolean = Zotero?.Sync?.Runner?.syncInProgress ?? false
-
-  public keymanagerUpdate: (action: ZoteroAction, ids: number[]) => void
-  public cacheTouch: (ids: number[]) => Promise<void>
 
   public startup(): void {
     this.listeners.push(new WindowListener)
@@ -50,7 +50,23 @@ class Emitter extends Emittery<{
     this.listeners.push(new CollectionListener)
     this.listeners.push(new MemberListener)
     this.listeners.push(new GroupListener)
-    this.listeners.push(new SyncListener)
+  }
+
+  override async emit<Name extends keyof EventMap>(eventName: Name, data?: EventMap[Name]): Promise<void> {
+    switch (eventName) {
+      case 'items-changed': {
+        const d = data as EventMap['items-changed']
+        if (d?.items) await super.emit('cache-touch', { itemIDs: d.items.map(item => item.id) })
+        break
+      }
+      case 'items-removed': {
+        const d = data as EventMap['items-removed']
+        if (d?.itemIDs) await super.emit('cache-touch', { itemIDs: d.itemIDs })
+        break
+      }
+    }
+
+    return super.emit(eventName, data as any)
   }
 
   public addIdleListener(topic: IdleTopic, delay: number): void {
@@ -64,54 +80,23 @@ class Emitter extends Emittery<{
 
     this.clearListeners()
   }
-
-  public async itemsChanged(action, ids): Promise<void> {
-    try {
-      this.keymanagerUpdate(action, ids)
-      await this.cacheTouch(ids)
-    }
-    catch (err) {
-      log.error('cache update failed:', err)
-    }
-  }
 }
 
-export const Events = new Emitter({
-  /*
+export const Events = new Emitter(logEvents ? { // eslint-disable-line @stylistic/multiline-ternary
   debug: {
     name: 'better-bibtex event',
-    enabled: Zotero.Prefs.get('translators.better-bibtex.logEvents'),
+    enabled: true,
     logger: (type, debugName, eventName, eventData) => {
       try {
         if (typeof eventName === 'symbol') return
+        log.info('emit: event:', { type, debugName, eventName, eventData })
       }
       catch (err) {
         log.error(`emit: ${err}`)
       }
     },
   },
-  */
-})
-
-class SyncListener {
-  private interval: IntervalHandle
-
-  constructor() {
-    this.interval = setInterval(() => {
-      if (typeof Zotero.Sync?.Runner?.syncInProgress === 'boolean') {
-        if (Events.syncInProgress !== Zotero.Sync.Runner.syncInProgress) {
-          void Events.emit('sync', Zotero.Sync.Runner.syncInProgress)
-          Events.syncInProgress = Zotero.Sync.Runner.syncInProgress
-          log.info(`sync ${ Events.syncInProgress ? 'started' : 'stopped' }`)
-        }
-      }
-    }, 1000)
-  }
-
-  unregister() {
-    clearInterval(this.interval)
-  }
-}
+} : {})
 
 class WindowListener {
   constructor() {
@@ -183,13 +168,17 @@ class ItemListener extends ZoteroListener {
   }
 
   public async notify(action: ZoteroAction, type: string, ids: number[], extraData?: Record<number, { libraryID?: number }>) {
+    if (logEvents) log.info('item event:', { action, ids, extraData })
     try {
+      let load = false
       switch (action) {
         case 'trash':
           action = 'delete'
           break
         case 'modify':
         case 'add':
+          load = true
+          break
         case 'delete':
           break
         default:
@@ -203,14 +192,19 @@ class ItemListener extends ZoteroListener {
       // https://groups.google.com/forum/#!topic/zotero-dev/yGP4uJQCrMc
       await Zotero.Promise.delay(Events.itemObserverDelay)
 
+      if (load) await getItemsAsync(ids)
+
       const touched = {
         collections: new Set<number>,
         libraries: new Set<number>,
       }
 
-      if (action === 'delete' && extraData) {
-        for (const ed of Object.values(extraData)) {
-          if (typeof ed.libraryID === 'number') touched.libraries.add(ed.libraryID)
+      if (action === 'delete') {
+        await Events.emit('items-removed', { itemIDs: ids })
+        if (extraData) {
+          for (const { libraryID } of Object.values(extraData)) {
+            if (typeof libraryID === 'number') touched.libraries.add(libraryID)
+          }
         }
       }
 
@@ -247,13 +241,14 @@ class ItemListener extends ZoteroListener {
         return true
       })
 
-      await Events.itemsChanged(action, ids)
+      await Events.emit('cache-touch', { itemIDs: ids })
       if (items.length) await Events.emit('items-changed', { items, action })
       if (parentIDs.size) {
         const parents = Zotero.Items.get([...parentIDs])
         for (const item of parents) {
           touch(item)
         }
+        await Events.emit('cache-touch', { itemIDs: parents.map(p => p.id) })
         void Events.emit('items-changed', { items: parents, action: 'modify', reason: `parent-${ action }` })
       }
 
@@ -263,7 +258,7 @@ class ItemListener extends ZoteroListener {
       })
     }
     catch (err) {
-      log.error(`error in ${ this.type } notify handler: ${ err.message }`)
+      log.error(`error in ${type} ${action} handler for ${JSON.stringify(ids)}: ${err.message}`)
     }
   }
 }
@@ -278,11 +273,10 @@ class TagListener extends ZoteroListener {
       await Zotero.BetterBibTeX.ready
 
       const ids = [...new Set(pairs.map(pair => parseInt(pair.split('-')[0])))]
-      await Events.itemsChanged('modify', ids)
       void Events.emit('items-changed', { items: Zotero.Items.get(ids), action: 'modify', reason: 'tagged' })
     }
     catch (err) {
-      log.error(`error in ${ this.type } notify handler: ${ err.message }`)
+      log.error(`error in ${type} ${action} handler for ${JSON.stringify(pairs)}: ${err.message}`)
     }
   }
 }
@@ -298,7 +292,7 @@ class CollectionListener extends ZoteroListener {
       if ((action === 'delete') && ids.length) void Events.emit('collections-removed', ids)
     }
     catch (err) {
-      log.error(`error in ${ this.type } notify handler: ${ err.message }`)
+      log.error(`error in ${type} ${action} handler for ${JSON.stringify(ids)}: ${err.message}`)
     }
   }
 }
@@ -326,7 +320,7 @@ class MemberListener extends ZoteroListener {
       if (changed.size) void Events.emit('collections-changed', Array.from(changed))
     }
     catch (err) {
-      log.error(`error in ${ this.type } notify handler: ${ err.message }`)
+      log.error(`error in ${type} ${action} handler for ${JSON.stringify(pairs)}: ${err.message}`)
     }
   }
 }
@@ -342,7 +336,7 @@ class GroupListener extends ZoteroListener {
       if ((action === 'delete') && ids.length) void Events.emit('libraries-removed', ids)
     }
     catch (err) {
-      log.error(`error in ${ this.type } notify handler: ${ err.message }`)
+      log.error(`error in ${type} ${action} handler for ${JSON.stringify(ids)}: ${err.message}`)
     }
   }
 }

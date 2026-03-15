@@ -6,8 +6,10 @@ import { FilePickerHelper } from 'zotero-plugin-toolkit'
 import { findBinary } from './path-search'
 import { log } from './logger'
 import { alert } from './prompt'
+import { getItemsAsync } from './get-items-async'
+import { strcmp } from './string-compare'
 
-import { version } from '../gen/version.json'
+import BBT from '../gen/version.cjs'
 
 type Parsed = {
   source: 'MarkDown' | 'BibTeX AUX'
@@ -75,7 +77,7 @@ export const AUXScanner = new class {
 
     const itemIDs: number[] = []
     const citationKeys: string[] = []
-    for (const found of Zotero.BetterBibTeX.KeyManager.find({ where: { libraryID, citationKey: { in: parsed.citationKeys }}})) {
+    for (const found of Zotero.BetterBibTeX.KeyManager.all(_ => _.libraryID === libraryID && parsed.citationKeys.includes(_.citationKey))) {
       itemIDs.push(found.itemID)
       citationKeys.push(found.citationKey)
     }
@@ -130,7 +132,7 @@ export const AUXScanner = new class {
   }
 
   private async luaFilter(): Promise<string> {
-    const filter: string = PathUtils.join(Zotero.BetterBibTeX.dir, `list-citekeys-${version}.lua`)
+    const filter: string = PathUtils.join(Zotero.BetterBibTeX.dir, `list-citekeys-${BBT.version}.lua`)
 
     for (const old of await IOUtils.getChildren(Zotero.BetterBibTeX.dir)) {
       if (old !== filter && PathUtils.filename(old).match(/^list-citekeys-.*[.]lua$/) && await File.isFile(old)) await IOUtils.remove(old)
@@ -263,8 +265,7 @@ export const AUXScanner = new class {
     }
 
     if (missing_keys.length) {
-      const collator = new Intl.Collator('en')
-      missing_keys.sort(collator.compare.bind(collator))
+      missing_keys.sort(strcmp.base)
       let report = `<html><div><p><b>${ source } scan</b></p><p>Missing entries:</p><ul>`
       for (const citekey of missing_keys) {
         report += `<li>${ citekey.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/'/g, '&quot;').replace(/'/g, '&#039;') }</li>`
@@ -287,7 +288,7 @@ export const AUXScanner = new class {
     // cited but not tagged
     let itemIDs = cited.filter(item => !tagged.includes(item))
     if (itemIDs.length) {
-      for (const item of await Zotero.Items.getAsync(itemIDs)) {
+      for (const item of await getItemsAsync(itemIDs)) {
         item.addTag(tag, 1)
         await item.saveTx()
       }
@@ -296,7 +297,7 @@ export const AUXScanner = new class {
     // tagged but not cited
     itemIDs = tagged.filter(item => !cited.includes(item))
     if (itemIDs.length) {
-      for (const item of await Zotero.Items.getAsync(itemIDs)) {
+      for (const item of await getItemsAsync(itemIDs)) {
         item.removeTag(tag)
         await item.saveTx()
       }

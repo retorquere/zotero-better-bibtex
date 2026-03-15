@@ -4,12 +4,12 @@
 
 declare const Zotero: any
 
-import { RegularItem as Item, Attachment, Tag } from '../../gen/typings/serialized-item'
+import { Serialized } from '../../gen/typings/serialized'
 
 export type Field = {
   name: string
   verbatim?: string
-  value: string | string[] | number | null | Attachment[] | Tag[]
+  value: string | string[] | number | null | Serialized.Attachment[] | Serialized.Tag[]
   enc?: 'raw' | 'url' | 'verbatim' | 'creators' | 'literal' | 'literal_list' | 'latex' | 'tags' | 'attachments' | 'date' | 'minimal' | 'bibtex' | 'biblatex' | 'extra'
   orig?: { name?: string; verbatim?: string; inherit?: boolean }
   bibtexStrings?: boolean
@@ -33,23 +33,20 @@ import { Translation } from '../lib/translator'
 
 import * as postscript from '../lib/postscript'
 
-import { replace_command_spacers, Mode as ConversionMode } from './unicode_translator'
+import { replace_command_spacers } from './unicode_translator'
 import { datefield } from './datefield'
-import * as ExtraFields from '../../gen/items/extra-fields.json'
-import { label as propertyLabel } from '../../gen/items/items'
-import type { Fields as ParsedExtraFields } from '../../content/extra'
+import { Schema } from '../../content/item-schema'
+import type { Fields as ParsedExtraFields, TeXString } from '../../content/extra'
 import { zoteroCreator as ExtraZoteroCreator } from '../../content/extra'
 import { log } from '../../content/logger'
 import { babelLanguage, titleCase } from '../../content/text'
-import BabelTag from '../../gen/babel/tag.json'
+import BabelTag from '../../gen/babel/tag.json' with { type: 'json' }
 
 import { arXiv } from '../../content/arXiv'
 import { uri } from '../../content/escape'
 
-import { stringCompare } from '../lib/string-compare'
+import { strcmp } from '../../content/string-compare'
 import * as CSL from 'citeproc'
-
-import { toWordsOrdinal, toOrdinal } from 'number-to-words'
 
 /*
  * h1 class: Entry
@@ -132,8 +129,8 @@ const fieldOrder = [
   return acc
 }, {})
 
-function property_sort(a: [string, string], b: [string, string]): number {
-  return stringCompare(a[0], b[0])
+function property_sort(a: [string, string, string, string], b: [string, string, string, string]): number {
+  return strcmp.variant(a[0], b[0])
 }
 
 const enc_creators_marker = {
@@ -161,7 +158,7 @@ const nonAcademicSubtype = new Set(['newspaper', 'magazine'])
  */
 export class Entry {
   public has: Record<string, any> = {}
-  public item: Item
+  public item: Serialized.RegularItem
   public entrytype: string
   public entrytype_source: string
   public useprefix: boolean
@@ -262,7 +259,7 @@ export class Entry {
     let entrytype: any
 
     // workaround for preprints, https://forums.zotero.org/discussion/comment/385524#Comment_385524
-    const pseudoPrePrint = this.translation.BetterBibTeX && item.itemType === 'report' && item.extraFields.kv.type?.toLowerCase() === 'article'
+    const pseudoPrePrint = this.translation.BetterBibTeX && item.itemType === 'report' && item.extraFields.kv.type === 'article'
 
     // preserve for thesis type etc
     let csl_type = item.extraFields.kv.type
@@ -313,20 +310,25 @@ export class Entry {
     }
 
     // TODO: maybe just use item.extraFields.var || item.var instead of deleting them here
-    for (const [ name, value ] of Object.entries(item.extraFields.kv)) {
-      const ef = ExtraFields[name]
-      if (ef?.zotero) {
-        if (!item[name] || ef.type === 'date') item[name] = value
-        delete item.extraFields.kv[name]
+    for (const [ fieldName, value ] of Object.entries(item.extraFields.kv)) {
+      const name = Schema.lookup.baseField[fieldName]
+      const type = Schema.type.zotero[name]
+      switch (type) {
+        case 'text':
+        case 'date':
+          if (!item[fieldName] || type === 'date') item[name] = value
+          delete item.extraFields.kv[fieldName]
+          break
       }
     }
 
-    for (const [ name, value ] of Object.entries(item.extraFields.creator)) {
-      if (ExtraFields[name].zotero) {
-        for (const creator of (value as string[])) {
-          item.creators.push({ ...ExtraZoteroCreator(creator, name), source: creator })
+    for (let [ creatorType, values ] of Object.entries(item.extraFields.creator)) {
+      creatorType = Schema.lookup.creatorType[creatorType]
+      if (creatorType) {
+        for (const creator of (values as string[])) {
+          item.creators.push({ ...ExtraZoteroCreator(creator, creatorType), source: creator })
         }
-        delete item.extraFields.creator[name]
+        delete item.extraFields.creator[creatorType]
       }
     }
     for (const creator of item.creators) {
@@ -429,9 +431,9 @@ export class Entry {
     return true
   }
 
-  private valueish(value) {
+  private valueish(value: number | string): string {
     switch (typeof value) {
-      case 'number': return `${ value }`
+      case 'number': return `${value}`
       case 'string': return value.replace(this.re.nonwordish, '').toLowerCase()
       default: return ''
     }
@@ -480,7 +482,7 @@ export class Entry {
 
     if (this.translation.skipField?.exec(`${ this.translation.BetterBibTeX ? 'bibtex' : 'biblatex' }.${ this.entrytype }.${ field.name }`)) return null
 
-    field.enc = field.enc || this.config.fieldEncoding[field.name] || 'literal'
+    field.enc = field.raw ? 'raw' : (field.enc || this.config.fieldEncoding[field.name] || 'literal')
 
     if (field.enc === 'date') {
       if (!field.value) return null
@@ -564,66 +566,63 @@ export class Entry {
         field.bibtex = `${ bibstring || field.value as string }`
       }
       else {
-        let value
         switch (field.enc) {
           case 'extra':
-            value = this.enc_extra(field)
+            field.bibtex = this.enc_extra(field)
             break
 
           case 'literal_list':
-            value = this.enc_literal_list(field, { raw: this.item.raw })
+            field.bibtex = this.enc_literal_list(field, { raw: this.item.raw })
             break
 
           case 'literal':
-            value = this.enc_literal(field, { raw: this.item.raw })
+            field.bibtex = this.enc_literal(field, { raw: this.item.raw })
             break
 
           case 'raw':
-            value = this.enc_raw(field)
+            field.bibtex = this.enc_raw(field)
             break
 
           case 'url':
-            value = this.enc_url(field)
+            field.bibtex = this.enc_url(field)
             break
 
           case 'verbatim':
-            value = this.enc_verbatim(field)
+            field.bibtex = this.enc_verbatim(field)
             break
 
           case 'creators':
-            value = this.enc_creators(field, this.item.raw)
+            field.bibtex = this.enc_creators(field, this.item.raw)
             break
 
           case 'tags':
-            value = this.enc_tags(field)
+            field.bibtex = this.enc_tags(field)
             break
 
           case 'attachments':
-            value = this.enc_attachments(field)
+            field.bibtex = this.enc_attachments(field)
             break
 
           case 'minimal':
           case 'bibtex':
           case 'biblatex':
-            value = this.enc_literal(field, { raw: this.item.raw, mode: field.enc })
+            field.bibtex = this.enc_literal(field, { raw: this.item.raw })
             break
 
           default:
             throw new Error(`Unexpected field encoding: ${ JSON.stringify(field.enc) }`)
         }
 
-        if (!value) return null
+        if (!field.bibtex) return null
 
-        value = value.trim()
+        field.bibtex = field.bibtex.trim()
 
         // scrub fields of unwanted {}, but not if it's a raw field or a bare field without spaces
         if (!field.bare || (field.value as string).match(/\s/)) {
           // clean up unnecesary {} when followed by a char that safely terminates the command before
-          // value = value.replace(/({})+($|[{}$\/\\.;,])/g, '$2') // don't remove trailing {} https://github.com/retorquere/zotero-better-bibtex/issues/1091
-          value = `{${ value }}`
+          // field.bibtex = field.bibtex.replace(/({})+($|[{}$\/\\.;,])/g, '$2') // don't remove trailing {} https://github.com/retorquere/zotero-better-bibtex/issues/1091
+          field.bibtex = `{${ field.bibtex }}`
         }
-
-        field.bibtex = value
       }
     }
 
@@ -699,6 +698,9 @@ export class Entry {
       this.add({ name: 'groups', value: groups.join(',') })
     }
 
+    this.add({ name: 'origlocation', value: this.item.originalPlace })
+    this.add({ name: 'origpublisher', value: this.item.originalPublisher })
+
     if ([ 'langid', 'both' ].includes(this.translation.collected.preferences.language)) this.add({ name: 'langid', value: this.langid() })
     if ([ 'language', 'both' ].includes(this.translation.collected.preferences.language)) this.add({ name: 'language', value: this.item.language })
 
@@ -710,8 +712,8 @@ export class Entry {
     for (const [ key, value ] of Object.entries(this.item.extraFields.kv)) {
       if (key === '_eprint') continue
 
-      const type = ExtraFields[key]?.type || 'string'
-      let enc = { name: 'creator', text: 'literal' }[type] || type
+      const type = Schema.type.zotero[key]
+      let enc: Field['enc'] = ({ name: 'creator', text: 'literal' }[type] || type) as Field['enc']
       const replace = type === 'date'
       // these are handled just like 'arXiv' and 'lccn', respectively
       if ([ 'PMID', 'PMCID' ].includes(key) && typeof value === 'string') {
@@ -726,6 +728,10 @@ export class Entry {
         switch (key) {
           case 'issuingAuthority':
             name = 'institution'
+            break
+
+          case 'container-title':
+            name = 'booktitle'
             break
 
           case 'title':
@@ -826,7 +832,7 @@ export class Entry {
         this.override({ name, verbatim: name, orig: { inherit: true }, value, enc, replace, fallback: !replace })
       }
       else {
-        log.error(`Unmapped extra field ${ key }=${ value }`)
+        log.error(`Unmapped extra field ${key}=${value}`)
       }
     }
 
@@ -841,7 +847,8 @@ export class Entry {
     }
 
     const bibtexStrings = this.translation.collected.preferences.exportBibTeXStrings.startsWith('match')
-    for (const [ name, field ] of Object.entries(this.item.extraFields.tex)) {
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
+    for (const [ name, field ] of Object.entries(this.item.extraFields.tex) as [ string, TeXString][]) {
       // psuedo-var, sets the entry type. Repeat application here because this needs to override all else.
       if (name === 'entrytype' || name === 'referencetype') { // phase out reference
         this.entrytype = field.value
@@ -857,14 +864,15 @@ export class Entry {
         case 'zbl':
           this.override({ name: 'zmnumber', value: field.value, ...mode })
           break
-        case 'lccn': case 'pmcid':
+        case 'lccn':
+        case 'pmcid':
           this.override({ name, value: field.value, ...mode })
           break
         case 'pmid':
         case 'arxiv':
         case 'jstor':
         case 'hdl':
-          if (this.translation.BetterBibLaTeX) {
+          if (this.translation.BetterBibLaTeX && !this.has.eprinttype) {
             this.override({ name: 'eprinttype', value: this.eprintType[name] || name })
             this.override({ name: 'eprint', value: field.value, ...mode })
           }
@@ -873,7 +881,7 @@ export class Entry {
           }
           break
         case 'googlebooksid':
-          if (this.translation.BetterBibLaTeX) {
+          if (this.translation.BetterBibLaTeX && !this.has.eprinttype) {
             this.override({ name: 'eprinttype', value: 'googlebooks' })
             this.override({ name: 'eprint', value: field.value, ...mode })
           }
@@ -893,8 +901,13 @@ export class Entry {
 
     // sort before postscript so the postscript can affect field order
     const keys = Object.keys(this.has).sort((a, b) => {
-      const fa = fieldOrder[a]
-      const fb = fieldOrder[b]
+      const abase = a.split('+')[0]
+      const bbase = b.split('+')[0]
+
+      if (abase === bbase) return a.length - b.length
+
+      const fa = fieldOrder[abase]
+      const fb = fieldOrder[bbase]
 
       if (fa && fb) return Math.abs(fa) - Math.abs(fb)
       if (fa) return -fa
@@ -939,7 +952,8 @@ export class Entry {
 
     if (!Object.keys(this.has).length) this.add({ name: 'type', value: this.entrytype })
 
-    let ref = `@${ this.entrytype }{${ this.item.citationKey },\n`
+    const citationKey = this.item.citationKey ? `${this.item.citationKey},` : ''
+    let ref = `@${this.entrytype}{${citationKey}\n`
     ref += Object.values(this.has).map(field => `  ${ field.name } = ${ field.bibtex }`).join(',\n') + '\n'
     ref += '}\n'
     ref += this.qualityReport()
@@ -1111,7 +1125,7 @@ export class Entry {
   }
 
   // legacy support
-  protected enc_latex(f, options: { raw?: boolean; creator?: boolean; mode?: ConversionMode } = {}) {
+  protected enc_latex(f, options: { raw?: boolean; creator?: boolean } = {}) {
     return this.enc_literal(f, options)
   }
 
@@ -1123,7 +1137,7 @@ export class Entry {
    * @param {field} field to encode.
    * @return {String} field.value encoded as author-style value
    */
-  protected enc_literal(f, options: { raw?: boolean; creator?: boolean; mode?: ConversionMode } = {}) {
+  protected enc_literal(f, options: { raw?: boolean; creator?: boolean } = {}) {
     if (typeof f.value === 'number') return f.value
     if (!f.value) return null
 
@@ -1135,7 +1149,12 @@ export class Entry {
     if (f.raw || options.raw) return f.value
 
     const caseConversion = this.config.caseConversion[f.name] || f.caseConversion
-    const { latex, packages, raw } = this.translation.bibtex.text2latex(f.value, { html: f.html, caseConversion: caseConversion && this.english, creator: options.creator }, options.mode)
+    const { latex, packages, raw } = this.translation.bibtex
+      .text2latex(f.value, {
+        html: f.html,
+        caseConversion: caseConversion && this.english,
+        creator: options.creator,
+      })
     for (const pkg of packages) {
       this.packages[pkg] = true
     }
@@ -1175,7 +1194,7 @@ export class Entry {
       }
     }
 
-    return [...encoded].sort((a, b) => stringCompare(a, b)).join(',')
+    return [...encoded].sort((a, b) => strcmp.base(a, b)).join(',')
   }
 
   relPath(path) {
@@ -1247,7 +1266,7 @@ export class Entry {
     attachments.sort((a, b) => {
       if ((a.mimetype === 'text/html') && (b.mimetype !== 'text/html')) return 1
       if ((b.mimetype === 'text/html') && (a.mimetype !== 'text/html')) return -1
-      return stringCompare(a.path, b.path)
+      return strcmp.base(a.path, b.path)
     })
 
     if (this.translation.collected.preferences.jabrefFormat) {
@@ -1259,10 +1278,10 @@ export class Entry {
 
   private _enc_creators_pad_particle(particle: string, relax = false): string {
     // space at end is always OK
-    if (particle[particle.length - 1] === ' ') return particle
+    if (particle.at(-1) === ' ') return particle
 
     if (this.translation.BetterBibLaTeX) {
-      if (particle.match(this.re.punctuationAtEnd)) this.metadata.DeclarePrefChars += particle[particle.length - 1]
+      if (particle.match(this.re.punctuationAtEnd)) this.metadata.DeclarePrefChars += particle.at(-1)
       // if BBLT, always add a space if it isn't there
       return `${ particle } `
     }
@@ -1270,7 +1289,7 @@ export class Entry {
     // otherwise, we're in BBT.
 
     // If the particle ends in a period, add a space
-    if (particle[particle.length - 1] === '.') return `${ particle } `
+    if (particle.at(-1) === '.') return `${ particle } `
 
     // if it ends in any other punctuation, it's probably something like d'Medici -- no space
     if (particle.match(this.re.punctuationAtEnd)) {
@@ -1339,7 +1358,10 @@ export class Entry {
   }
 
   private _enc_creator_part(part: string | String): string {
-    const { latex, packages } = this.translation.bibtex.text2latex((part as string), { creator: true, commandspacers: true })
+    const { latex, packages } = this.translation.bibtex.text2latex((part as string), {
+      creator: true,
+      commandspacers: true,
+    })
     for (const pkg of packages) {
       this.packages[pkg] = true
     }
@@ -1348,7 +1370,7 @@ export class Entry {
 
   private _enc_creators_biblatex(name: { family?: string; given?: string; suffix?: string; initials?: string; useprefix: boolean }): string {
     let family: string | String
-    if ((name.family.length > 1) && (name.family[0] === '"') && (name.family[name.family.length - 1] === '"')) {
+    if ((name.family.length > 1) && (name.family[0] === '"') && (name.family.at(-1) === '"')) {
       family = new String(name.family.slice(1, -1))
     }
     else {
@@ -1407,7 +1429,7 @@ export class Entry {
 
   private _enc_creators_bibtex(name): string {
     let family: string | String
-    if ((name.family.length > 1) && (name.family[0] === '"') && (name.family[name.family.length - 1] === '"')) { // quoted
+    if ((name.family.length > 1) && (name.family[0] === '"') && (name.family.at(-1) === '"')) { // quoted
       family = new String(name.family.slice(1, -1))
     }
     else {
@@ -1551,16 +1573,23 @@ export class Entry {
       'uri',
       'version',
     ]
-    const unused_props = Object.entries(this.item.extraFields.kv).map(([ p, v ]) => [ `extra: ${ propertyLabel[p.toLowerCase()] || p }`, v ])
-      .concat(Object.entries(this.item))
-      .map(([ p, v ]) => [ p, v, this.valueish(v) ])
-      .filter(([ p, v, vi ]) => !ignore_unused_props.includes(p) && !used_values.includes(v) && (vi && !used_values.includes(vi)))
+
+    const pretty = (k: string): string => {
+      if (k === 'numPages') return 'Number of pages'
+      const label = Schema.zotero.locales['en-US'].fields[k]
+      if (!label || label.includes('.')) return Schema.toLabel(k)
+      return label.replace(/ [A-Z]/g, c => c.toLowerCase())
+    }
+    const unused_data = Object.entries(this.item.extraFields.kv).map(([ k, v ]) => [ '', `extra: ${k}`, v ])
+      .concat(Object.entries(this.item).map(([ k, v ]) => [ k, pretty(k), v ]))
+      .map(([ k, label, v ]: [ string, string, string ]) => [ k, label, v, this.valueish(v) ] as [ string, string, string, string ])
+      .filter(([ k, _label, v, vi ]) => !ignore_unused_props.includes(k) && !used_values.includes(v) && (vi && !used_values.includes(vi)))
       .sort(property_sort)
 
-    for (const [ prop, value, valueish ] of unused_props) {
-      if (prop === 'language' && this.has.langid) continue
-      if (prop === 'libraryCatalog' && valueish.includes('arxiv') && this.item.arXiv) continue
-      report.push(`? unused ${ propertyLabel[prop.toLowerCase()] || prop } ("${ value }")`)
+    for (const [ key, label, value, valueish ] of unused_data) {
+      if (key === 'language' && this.has.langid) continue
+      if (key === 'libraryCatalog' && valueish.includes('arxiv') && this.item.arXiv) continue
+      report.push(`? unused ${label} (${JSON.stringify(value)})`)
     }
 
     if (!report.length) return ''
@@ -1575,19 +1604,6 @@ export class Entry {
       if (uniq.indexOf(c) < 0) uniq += c
     }
     return uniq
-  }
-
-  public toEnglishOrdinal(n: number | string): string {
-    const sortaNum = typeof n === 'number' ? `${ n }` : (n || '').replace(/(st|nd|th)$/, '')
-    if (sortaNum.match(/^[0-9]{1,2}$/)) {
-      return toWordsOrdinal(sortaNum).replace(/^\w/, (c: string) => c.toUpperCase())
-    }
-    else if (sortaNum.match(/^[0-9]+$/)) {
-      return toOrdinal(sortaNum).replace(/^\w/, (c: string) => c.toUpperCase())
-    }
-    else {
-      return typeof n === 'string' ? n : ''
-    }
   }
 }
 

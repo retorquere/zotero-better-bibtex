@@ -1,7 +1,7 @@
 import { Translation } from '../lib/translator'
 import type { Collected } from '../lib/collect'
 
-import { ParsedDate } from '../../content/dateparser'
+import { ParsedDate, century } from '../../content/dateparser'
 import { CSLExporter } from './csl'
 import { Date as CSLDate, Data as CSLItem, LooseNumber } from 'csl-json'
 
@@ -49,6 +49,9 @@ class Exporter extends CSLExporter {
       case 'verbatim':
         return { literal: date.verbatim }
 
+      case 'century':
+        return { literal: century(date.century) }
+
       case 'season':
         return {
           'date-parts': [[date.year]],
@@ -57,6 +60,7 @@ class Exporter extends CSLExporter {
         }
 
       default:
+        if (!date.type && date.orig) return null // handled by orig-handler
         throw new Error(`Unexpected date type ${ JSON.stringify(date) }`)
     }
   }

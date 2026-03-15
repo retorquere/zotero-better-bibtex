@@ -16,7 +16,6 @@
       "DOI": "10/ggd754",
       "abstractNote": "We seek to understand how the representations of individual tokens and the structure of the learned feature space evolve between layers in deep neural networks under different learning objectives. We chose the Transformers for our analysis as they have been shown effective with various tasks, including machine translation (MT), standard left-to-right language models (LM) and masked language modeling (MLM). Previous work used black-box probing tasks to show that the representations learned by the Transformer differ significantly depending on the objective. In this work, we use canonical correlation analysis and mutual information estimators to study how information flows across Transformer layers and observe that the choice of the objective determines this process. For example, as you go from bottom to top layers, information about the past in left-to-right language models gets vanished and predictions about the future get formed. In contrast, for MLM, representations initially acquire information about the context around the token, partially forgetting the token identity and producing a more generalized token representation. The token identity then gets recreated at the top MLM layers.",
       "accessDate": "2021-10-05T09:58:46Z",
-      "citationKey": "voita-etal-2019-bottomup",
       "conferenceName": "EMNLP-IJCNLP 2019",
       "creators": [
         {

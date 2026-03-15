@@ -10,7 +10,6 @@ import * as path from 'path'
 import * as glob from 'glob'
 import frontmatter from 'gray-matter'
 import _ from 'lodash'
-// import { walk, Lint, SelfClosing, ASTWalker as BaseASTWalker } from './pug-ast-walker.js'
 import { walk, Lint, ASTWalker as BaseASTWalker } from './pug-ast-walker.js'
 import { FluentBundle, FluentResource } from '@fluent/bundle'
 import * as yaml from 'js-yaml'
@@ -111,19 +110,6 @@ class ASTWalker extends BaseASTWalker {
       default:
         error('unexpected type', typeof val)
     }
-  }
-}
-
-class StripConfig extends ASTWalker {
-  Tag(node) {
-    node.attrs = node.attrs.filter(attr => !attr.name.startsWith('bbt:'))
-    node.block = this.walk(node.block)
-    return node
-  }
-
-  Block(node) {
-    node.nodes = node.nodes.filter(n => !n.name || !n.name.startsWith('bbt:')).map(n => this.walk(n)).filter(n => n)
-    return node
   }
 }
 
@@ -339,14 +325,14 @@ The Better BibTeX hidden preferences are preceded by “extensions.zotero.transl
       const slug = path.basename(page, '.md')
       if (!this.pages[slug]) error('no page data for', path.basename(page))
       this.pages[slug].path = page
-      this.pages[slug].matter = frontmatter(page)
-      if (this.pages[slug].title) this.pages[slug].matter.data.title = this.pages[slug].title
+      this.pages[slug].matter = frontmatter(fs.readFileSync(page, 'utf-8'))
+      this.pages[slug].matter.data.title = this.pages[slug].matter.data.title || slug
     }
 
     for (const [ slug, page ] of Object.entries(this.pages)) {
       if (!page.path) error('no template for', slug)
+      console.log(page.matter.data)
       page.matter.content = eta.renderString(`\n\n{{% preferences/header %}}\n\n${ page.content }`, prefs)
-      page.matter.data.preferences = true
       ensureDir(page.path)
       fs.writeFileSync(page.path, page.matter.stringify())
     }
@@ -498,6 +484,7 @@ class XHTML extends BaseASTWalker {
       if (existing.val !== JSON.stringify(id)) throw new Error(`expected ${ existing.val }, found ${ JSON.stringify(id) }`)
     }
     else {
+      throw new Error(`expected to find ${id}`)
       parent.attrs = parent.attrs || []
       parent.attrs.push({ name: 'data-l10n-id', val: JSON.stringify(id), mustEscape: false })
     }
@@ -506,43 +493,17 @@ class XHTML extends BaseASTWalker {
   }
 }
 
-function render(src, tgt, options) {
-  const xul = pug.renderFile(src, options)
-  ensureDir(tgt)
-  fs.writeFileSync(tgt, xul.replace(/&amp;/g, '&').trim())
-}
-
-render('content/Preferences/preferences.pug', 'build/content/preferences.xhtml', {
+pug.renderFile('content/Preferences.pug', {
   is7: true,
   pretty: true,
   plugins: [{
     preCodeGen(ast, _options) { // eslint-disable-line prefer-arrow/prefer-arrow-functions
       const docs = walk(Docs, ast, true)
 
-      docs.savePages('site/content/installation/preferences')
+      docs.savePages('site/content/preferences')
       docs.saveDefaults('build/defaults/preferences/defaults.js')
       docs.saveDefaults('build/prefs.js')
       docs.saveTypescript()
-      walk(StripConfig, ast)
-      walk(XHTML, ast)
-      // walk(SelfClosing, ast)
-      walk(Lint, ast)
-
-      /*
-      let onload = ast.nodes[0].attrs.filter(attr => attr.name === 'onload')
-      const ns = ast.nodes[0].attrs.filter(attr => attr.name !== 'onload')
-
-      for (const node of ast.nodes) {
-        if (node.type === 'Comment') continue
-        const nodes = node.type === 'Block' ? node.nodes : [ node ]
-
-        for (const n of nodes) {
-          if (n.type === 'Comment') continue
-          n.attrs = [...n.attrs, ...onload, ...ns]
-          onload = []
-        }
-      }
-      */
 
       return ast
     },

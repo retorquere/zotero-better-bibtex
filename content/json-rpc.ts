@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unsafe-return, @typescript-eslint/only-throw-error, @typescript-eslint/require-await */
 
-import { getItemsAsync } from './get-items-async'
+import { getItemAsync, getItemsAsync } from './get-items-async'
 import { AUXScanner } from './aux-scanner'
 import { AutoExport } from './auto-export'
 import { Translators } from './translators'
@@ -10,8 +10,10 @@ import { log } from './logger'
 import { Preference } from './prefs'
 import { orchestrator } from './orchestrator'
 import { Server } from './server'
+import type { CitekeyRecord } from './key-manager'
+import { strcmp } from './string-compare'
 
-import { version as BBTVersion } from '../gen/version.json'
+import BBT from '../gen/version.cjs'
 
 import { methods } from '../gen/api/json-rpc'
 
@@ -23,13 +25,30 @@ const METHOD_NOT_FOUND = -32601 // The method does not exist / is not available.
 const INVALID_PARAMETERS = -32602 // Invalid method parameter(s).
 const INTERNAL_ERROR = -32603 // Internal JSON-RPC error.
 
-type QueryPrimitive = number | boolean | string
-type Query = Record<string, QueryPrimitive | Record<'in', QueryPrimitive[]>>
-
 function getStyle(id: string): any {
   const style = Zotero.Styles.get(id)
   if (!style) throw new Error(`CSL style ${ JSON.stringify(id) } not found`)
   return style
+}
+
+function byKeys(citekeys: string[]): (key: CitekeyRecord) => boolean {
+  citekeys = citekeys.map(citekey => citekey.replace('@', ''))
+  const different = strcmp[Preference.citekeyCaseInsensitive ? 'base' : 'variant']
+
+  return (key: CitekeyRecord): boolean => citekeys.find(citekey => !different(citekey, key.citationKey)) as unknown as boolean
+}
+function byKey(citekey: string): (key: CitekeyRecord) => boolean {
+  return byKeys([citekey])
+}
+
+function find(library?: string | number): (citationKey: string) => number | undefined {
+  if (typeof library === 'undefined') library = Zotero.Libraries.userLibraryID
+  const libraryID = library === '*' ? undefined : getLibrary(library)
+
+  return (citationKey: string): number | undefined => {
+    const matchKey = byKey(citationKey)
+    return Zotero.BetterBibTeX.KeyManager.any(_ => (library === '*' || _.libraryID === libraryID) && matchKey(_))?.itemID
+  }
 }
 
 export class NSCollection {
@@ -221,7 +240,7 @@ export class NSItem {
       return {
         ...Zotero.Utilities.Item.itemToCSLJSON(item),
         library: libraries[item.libraryID],
-        citekey: Zotero.BetterBibTeX.KeyManager.get(item.id).citationKey,
+        citekey: Zotero.BetterBibTeX.KeyManager.get(item.id)?.citationKey || '',
       }
     })
   }
@@ -233,11 +252,12 @@ export class NSItem {
    * @param library  The libraryID to search in (optional). Pass `*` to search across your library and all groups.
    */
   public async attachments(citekey: string, library?: string | number): Promise<any> {
-    const where: Query = { citationKey: citekey.replace(/^@/, '') }
-    if (library !== '*') where.libraryID = getLibrary(library)
-    const key = Zotero.BetterBibTeX.KeyManager.first({ where })
+    const citationKey = citekey.replace(/^@/, '')
+    const libraryID = library === '*' ? undefined : getLibrary(library)
+    const key = Zotero.BetterBibTeX.KeyManager.any(_ => _.citationKey === citationKey && (library === '*' || _.libraryID === libraryID))
+
     if (!key) throw { code: INVALID_PARAMETERS, message: `${ citekey } not found` }
-    const item = await getItemsAsync(key.itemID)
+    const item = await getItemAsync(key.itemID)
     const attachments = await getItemsAsync(item.getAttachments())
     const output: Record<string, any>[] = []
 
@@ -287,15 +307,7 @@ export class NSItem {
    * @param includeParents Include all parent collections back to the library root
    */
   public async collections(citekeys: string[], includeParents?: boolean): Promise<Record<string, { key: string; name: string }>> {
-    citekeys = citekeys.map(citekey => citekey.replace('@', ''))
-    const q: Query = {}
-    if (Preference.citekeyCaseInsensitive) {
-      q.lcCitationKey = { in: citekeys.map(citekey => citekey.toLowerCase()) }
-    }
-    else {
-      q.citationKey = { in: citekeys }
-    }
-    const keys = Zotero.BetterBibTeX.KeyManager.find({ where: q })
+    const keys = Zotero.BetterBibTeX.KeyManager.all(byKeys(citekeys))
     if (!keys.length) throw { code: INVALID_PARAMETERS, message: `zero matches for ${ citekeys.join(',') }` }
 
     const seen: Record<string, any> = {}
@@ -325,7 +337,7 @@ export class NSItem {
 
     const collections = {}
     for (const key of keys) {
-      const item = await getItemsAsync(key.itemID)
+      const item = await getItemAsync(key.itemID)
       collections[key.citationKey] = item.getCollections().map(id => {
         const col = structuredClone(Zotero.Collections.get(id).toJSON())
 
@@ -351,20 +363,12 @@ export class NSItem {
    * @param citekeys An array of citekeys
    */
   public async notes(citekeys: string[]): Promise<Record<string, { note: string }[]>> {
-    citekeys = citekeys.map(citekey => citekey.replace('@', ''))
-    const q = { where: {}}
-    if (Preference.citekeyCaseInsensitive) {
-      q.where = { lcCitationKey: { in: citekeys.map(citekey => citekey.toLowerCase()) }}
-    }
-    else {
-      q.where = { citationKey: { in: citekeys }}
-    }
-    const keys = Zotero.BetterBibTeX.KeyManager.find(q)
+    const keys = Zotero.BetterBibTeX.KeyManager.all(byKeys(citekeys))
     if (!keys.length) throw { code: INVALID_PARAMETERS, message: `zero matches for ${ citekeys.join(',') }` }
 
     const notes = {}
     for (const key of keys) {
-      const item = await getItemsAsync(key.itemID)
+      const item = await getItemAsync(key.itemID)
       notes[key.citationKey] = (await getItemsAsync(item.getNotes())).map(note => note.getNote())
     }
     return notes
@@ -374,11 +378,11 @@ export class NSItem {
    * Generate a bibliography for the given citekeys
    *
    * @param citekeys An array of citekeys
-   * @param {object} format   A specification of how the bibliography should be formatted
-   * @param {} format.quickCopy    Format as specified in the Zotero quick-copy settings
-   * @param {} format.contentType  Output as HTML or text
-   * @param {} format.locale       Locale to use to generate the bibliography
-   * @param {} format.id           CSL style to use
+   * @param format   A specification of how the bibliography should be formatted
+   * @param format.quickCopy    Format as specified in the Zotero quick-copy settings
+   * @param format.contentType  Output as HTML or text
+   * @param format.locale       Locale to use to generate the bibliography
+   * @param format.id           CSL style to use
    *
    * @returns  A formatted bibliography
    */
@@ -400,17 +404,8 @@ export class NSItem {
 
     if (((format as any).mode || 'bibliography') !== 'bibliography') throw new Error(`mode must be bibliograpy, not ${ (format as any).mode }`)
 
-    const where: Query = {}
-    if (library !== '*') where.libraryID = getLibrary(library)
-    citekeys = citekeys.map(citekey => citekey.replace('@', ''))
-    if (Preference.citekeyCaseInsensitive) {
-      where.lcCitationKey = { in: citekeys.map(citekey => citekey.toLowerCase()) }
-    }
-    else {
-      where.citationKey = { in: citekeys }
-    }
-
-    const items = await getItemsAsync(Zotero.BetterBibTeX.KeyManager.find({ where }).map(key => key.itemID))
+    const resolve = find(library)
+    const items = await getItemsAsync(citekeys.map(resolve).filter(_ => _))
 
     const bibliography = Zotero.QuickCopy.getContentFromItems(items, { ...format, mode: 'bibliography' }, null, false)
     return bibliography[format.contentType || 'html']
@@ -428,10 +423,10 @@ export class NSItem {
       for (const item of Zotero.getActiveZoteroPane().getSelectedItems()) {
         if (item.isFeedItem) continue
         if (item.isRegularItem()) {
-          keys[item.key] = Zotero.BetterBibTeX.KeyManager.first({ where: { libraryID: item.libraryID, itemKey: item.key }})?.citationKey || null
+          keys[item.key] = Zotero.BetterBibTeX.KeyManager.any(_ => _.libraryID === item.libraryID && _.itemKey === item.key)?.citationKey || null
         }
         else if (item.isAttachment() && typeof item.parentID === 'number') {
-          keys[item.key] = Zotero.BetterBibTeX.KeyManager.first({ where: { libraryID: item.libraryID, itemID: item.parentID }})?.citationKey || null
+          keys[item.key] = Zotero.BetterBibTeX.KeyManager.any(_ => _.libraryID === item.libraryID && _.itemID === item.parentID)?.citationKey || null
         }
       }
       return keys
@@ -452,7 +447,7 @@ export class NSItem {
         itemKey = key
       }
 
-      keys[key] = Zotero.BetterBibTeX.KeyManager.first({ where: { libraryID, itemKey }})?.citationKey || null
+      keys[key] = Zotero.BetterBibTeX.KeyManager.any(_ => _.libraryID === libraryID && _.itemKey === itemKey)?.citationKey || null
     }
 
     return keys
@@ -466,18 +461,9 @@ export class NSItem {
    * @param libraryID     ID of library to select the items from. When omitted, assume 'My Library'
    */
   public async export(citekeys: string[], translator: string, libraryID?: string | number): Promise<string> {
-    const where: Query = {
-      libraryID: getLibrary(libraryID),
-    }
-    citekeys = citekeys.map(citekey => citekey.replace('@', ''))
-    if (Preference.citekeyCaseInsensitive) {
-      where.lcCitationKey = { in: citekeys.map(citekey => citekey.toLowerCase()) }
-    }
-    else {
-      where.citationKey = { in: citekeys }
-    }
-
-    const found = Zotero.BetterBibTeX.KeyManager.find({ where })
+    libraryID = getLibrary(libraryID)
+    const keyMatch = byKeys(citekeys)
+    const found = Zotero.BetterBibTeX.KeyManager.all(_ => _.libraryID === libraryID && keyMatch(_))
 
     const status: Record<string, number> = {}
     for (const citekey of citekeys) {
@@ -524,18 +510,14 @@ export class NSItem {
    */
   public async pandoc_filter(citekeys: string[], asCSL: boolean, libraryID?: string | number | string[], style?: string, locale?: string): Promise<any> {
     citekeys = [...(new Set(citekeys))]
-    const ci = Preference.citekeyCaseInsensitive
     const result: { errors: Record<string, number>; items: Record<string, any> } = { errors: {}, items: {}}
 
-    const where: Query = {
-      libraryID: Array.isArray(libraryID)
-        ? { in: libraryID.map(name => getLibrary(name)) }
-        : getLibrary(libraryID),
-    }
+    const libraryIDs: Set<number> = new Set(Array.isArray(libraryID) ? libraryID.map(getLibrary) : [ getLibrary(libraryID) ])
     const itemIDs: number[] = []
-    for (const citationKey of citekeys.map(citekey => citekey.replace('@', ''))) {
-      where[ci ? 'lcCitationKey' : 'citationKey'] = ci ? citationKey.toLowerCase() : citationKey
-      const found = Zotero.BetterBibTeX.KeyManager.find({ where })
+
+    for (const citationKey of citekeys) {
+      const keyMatch = byKey(citationKey)
+      const found = Zotero.BetterBibTeX.KeyManager.all(_ => libraryIDs.has(_.libraryID) && keyMatch(_))
       if (found.length === 1) {
         itemIDs.push(found[0].itemID)
       }
@@ -631,7 +613,7 @@ export class NSAPI {
    * Returns the Zotero and BetterBibTeX version to show the JSON-RPC API is ready.
    */
   public async ready(): Promise<{ zotero: string; betterbibtex: string }> {
-    return { zotero: Zotero.version, betterbibtex: BBTVersion }
+    return { zotero: Zotero.version, betterbibtex: BBT.version }
   }
 }
 
@@ -729,17 +711,19 @@ class Handler {
   }
 }
 
-orchestrator.add({
-  id: 'json-rpc',
-  description: 'JSON-RPC endpoint',
-  needs: ['translators'],
+export function startup(): void {
+  orchestrator.add({
+    id: 'json-rpc',
+    description: 'JSON-RPC endpoint',
+    needs: ['translators'],
 
-  startup: async () => {
-    Server.register('/better-bibtex/json-rpc', Handler)
-    Server.startup()
-  },
+    startup: async () => {
+      Server.register('/better-bibtex/json-rpc', Handler)
+      Server.startup()
+    },
 
-  shutdown: async () => {
-    Server.shutdown()
-  },
-})
+    shutdown: async () => {
+      Server.shutdown()
+    },
+  })
+}

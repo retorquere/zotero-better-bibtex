@@ -137,11 +137,15 @@ DB.execute('''
 
 DB.execute('CREATE TABLE langmap (language NOT NULL PRIMARY KEY, langid NOT NULL)')
 
+DB.execute("DELETE FROM babel WHERE tag = 'und'")
 for row in list(DB.execute('SELECT tag, count(*) FROM babel WHERE prio = 0 GROUP BY tag HAVING COUNT(*) > 1')):
   if tuple(row) == ('ko', 2):
     print('fixing', row)
     # fix ko|0|name|korean-han as ko|0|name|korean also exists
     DB.execute("UPDATE babel SET rel='alias', prio=1 WHERE tag='ko' AND langid='korean-han'")
+for row in list(DB.execute('SELECT tag FROM babel WHERE prio = 0 GROUP BY tag HAVING COUNT(*) > 1')):
+  for l in list(DB.execute('SELECT tag, langid, prio FROM babel WHERE tag = ?', (row[0],))):
+    print(l)
 DB.execute('INSERT INTO langmap (language, langid) SELECT tag, langid FROM babel WHERE prio = 0')
 
 # set self-alias

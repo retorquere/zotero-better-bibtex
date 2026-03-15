@@ -1,0 +1,168 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "preferences": {}
+  },
+  "items": [
+    {
+      "DOI": "10.1016/j.jrurstud.2021.07.008",
+      "ISSN": "07430167",
+      "accessDate": "2021-08-05T05:08:44Z",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Iuliana",
+          "lastName": "Bora"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Mircea",
+          "lastName": "Voiculescu"
+        }
+      ],
+      "date": "1973/74",
+      "extra": [
+        "Citation Key: bora2021"
+      ],
+      "itemID": 1,
+      "itemType": "journalArticle",
+      "language": "en",
+      "libraryCatalog": "ScienceDirect",
+      "pages": "578-586",
+      "publicationTitle": "Journal of Rural Studies",
+      "tags": [
+        {
+          "tag": "Finished"
+        },
+        {
+          "tag": "Ntergenerational memory",
+          "type": 1
+        },
+        {
+          "tag": "Place attachment",
+          "type": 1
+        },
+        {
+          "tag": "Place identity",
+          "type": 1
+        },
+        {
+          "tag": "Resettlement",
+          "type": 1
+        },
+        {
+          "tag": "Roia jiu coal mine",
+          "type": 1
+        },
+        {
+          "tag": "Romania",
+          "type": 1
+        }
+      ],
+      "title": "Resettlement, intergenerational memory, place attachment, and place identity in Roșia Jiu coal mine - Gorj County, Romania",
+      "url": "https://www.sciencedirect.com/science/article/pii/S0743016721002059",
+      "volume": "86"
+    },
+    {
+      "key": "9QCNAAK4",
+      "version": 35619,
+      "itemType": "book",
+      "title": "Microeconomics",
+      "date": "20",
+      "language": "en",
+      "libraryCatalog": "K10plus ISBN",
+      "place": "Harlow Munich",
+      "publisher": "Financial Times Prentice Hall",
+      "ISBN": "978-0-582-40487-8",
+      "edition": "3. ed., [Nachdr.]",
+      "numPages": "738",
+      "creators": [
+        {
+          "firstName": "Hugh",
+          "lastName": "Gravelle",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "Ray",
+          "lastName": "Rees",
+          "creatorType": "author"
+        }
+      ],
+      "tags": [],
+      "dateAdded": "2024-01-21T08:35:10Z",
+      "dateModified": "2025-10-17T09:05:59Z",
+      "itemID": 5831,
+      "attachments": [],
+      "notes": []
+    },
+    {
+      "key": "V83UWY34",
+      "version": 9544,
+      "itemType": "journalArticle",
+      "title": "Finite atlases on manifolds",
+      "date": "1973/74",
+      "extra": "tex.fjournal: Roczniki Polskiego Towarzystwa Matematycznego. Seria I. Commentationes Mathematicae. Prace Matematyczne\ntex.mrclass: 58A05\ntex.mrnumber: 368060\ntex.mrreviewer: S.Y.Husseini",
+      "volume": "17",
+      "pages": "469–473",
+      "publicationTitle": "Polskiego Towarzystwa Matematycznego",
+      "journalAbbreviation": "Comment. Math. Prace Mat.",
+      "ISSN": "0373-8299",
+      "creators": [
+        {
+          "firstName": "A.",
+          "lastName": "Solecki",
+          "creatorType": "author"
+        }
+      ],
+      "tags": [],
+      "dateAdded": "2024-10-04T16:31:18Z",
+      "dateModified": "2025-10-17T13:55:30Z",
+      "itemID": 701,
+      "attachments": [],
+      "notes": []
+    },
+    {
+      "key": "FFR6TMIV",
+      "version": 1419,
+      "itemType": "journalArticle",
+      "title": "Harmonische Funktionen und Randwertaufgaben in einem Komplex.",
+      "date": "1944/45",
+      "language": "und",
+      "libraryCatalog": "eudml.org",
+      "url": "https://eudml.org/doc/138857",
+      "accessDate": "2022-03-23T07:20:50Z",
+      "volume": "17",
+      "pages": "240-255",
+      "publicationTitle": "Commentarii mathematici Helvetici",
+      "ISSN": "0010-2571; 1420-8946/e",
+      "creators": [
+        {
+          "firstName": "Beno",
+          "lastName": "Eckmann",
+          "creatorType": "author"
+        }
+      ],
+      "tags": [],
+      "dateAdded": "2022-03-23T07:20:50Z",
+      "dateModified": "2022-03-23T07:20:50Z",
+      "itemID": 175,
+      "attachments": [],
+      "notes": []
+    },
+    {
+      "key": "6KGK8DZS",
+      "version": 65764,
+      "itemType": "book",
+      "title": "test",
+      "date": "20",
+      "creators": [],
+      "tags": [],
+      "dateAdded": "2025-10-17T22:27:38Z",
+      "dateModified": "2025-10-17T22:28:03Z",
+      "itemID": 7275,
+      "attachments": [],
+      "notes": []
+    }
+  ]
+}

@@ -1,23 +1,22 @@
--citation-key = Citation key
+better-bibtex =
+  .label = Better BibTeX
+-citation-key = Citation Key
 better-bibtex_auto-export_delete = Deleting auto-export
 better-bibtex_auto-export_delete_confirm = Are you sure you want to delete this auto-export? This cannot be undone.
 better-bibtex_aux-scan_prompt = Tag name
 better-bibtex_aux-scan_title_aux = Tag cited items from AUX file
 better-bibtex_aux-scan_title_md = Tag cited items from Markdown file
-better-bibtex_aux-scanner = Scan BibTeX AUX/Markdown file for references...
+better-bibtex_aux-scanner =
+  .label = Scan BibTeX AUX/Markdown file for references...
 better-bibtex_bulk-keys-confirm_warning = You are changing more than { $treshold } items in one go. Are you sure?
 better-bibtex_bulk-keys-confirm_stop_asking = OK, and don't ask me again
 
-better-bibtex_citekey_pin = Pin BibTeX key
-better-bibtex_citekey_set = Change BibTeX key...
-better-bibtex_citekey_set_change = Change BibTeX key to
-better-bibtex_citekey_set_toomany = Can only change one key at a time
 better-bibtex_error-report = 
   .title = Better BibTeX debug log
 
 better-bibtex_error-report_upgrade = The latest { $program } version is <strong>{ $upgrade }</strong>, you are running <strong>{ $running }</strong>; please upgrade first.
 
-better-bibtex_error-report_upgrade_auto = { $program } will update from the { $channel } channel every { $interval }, last update at { $last }.
+better-bibtex_error-report_upgrade_auto = { $program } will update from the { $channel } channel every { $interval }, last update at { $lastUpdate }.
 better-bibtex_error-report_upgrade_manual = { $program } updates are disabled
 
 better-bibtex_error-report_no_items = This log will not include sample items. <b>These are not mandatory</b>, but are usually necessary to create test cases for the change/fix you will be requesting. To generate a log with sample items:
@@ -112,7 +111,6 @@ better-bibtex_preferences_advanced_export_workers_cache =
   .label = Enable caching for background exports
 
 better-bibtex_preferences_advanced_extra-merge = When merging items, also merge:
-  .label = { better-bibtex_preferences_advanced_extra-merge }
 
 better-bibtex_preferences_advanced_extra-merge-csl = 
   .label = fields that are understood to be CSL fields by Zotero
@@ -124,7 +122,6 @@ better-bibtex_preferences_advanced_extra_merge-tex =
   .label = their `tex.*` fields
 
 better-bibtex_preferences_advanced_ideographs = Ideographs in citekeys
-  .label = { better-bibtex_preferences_advanced_ideographs }
 
 better-bibtex_preferences_advanced_ideographs_chinese = 
   .label = Enable 'jieba'/'pinyin' filters in citekey patterns. Uses a lot of memory.
@@ -136,12 +133,12 @@ better-bibtex_preferences_advanced_ideographs_japanese =
   .label = Apply kuroshiro romajization in Japanese names/titles. Uses a lot of memory.
 
 better-bibtex_preferences_advanced_import_case-protection = Insert case-protection for braces:
-better-bibtex_preferences_advanced_import_case-protection_as-needed = minimal
-  .label = { better-bibtex_preferences_advanced_import_case-protection_as-needed }
-better-bibtex_preferences_advanced_import_case-protection_off = no
-  .label = { better-bibtex_preferences_advanced_import_case-protection_off }
-better-bibtex_preferences_advanced_import_case-protection_on = yes
-  .label = { better-bibtex_preferences_advanced_import_case-protection_on }
+better-bibtex_preferences_advanced_import_case-protection_as-needed =
+  .label = minimal
+better-bibtex_preferences_advanced_import_case-protection_off =
+  .label = no
+better-bibtex_preferences_advanced_import_case-protection_on =
+  .label = yes
 
 better-bibtex_preferences_advanced_import_case-protection_warning = On import, BBT will add case-protection (<span class="nocase">...<span>) to titles that have words in {"{"}Braces{"}"}.
     
@@ -167,6 +164,8 @@ better-bibtex_preferences_advanced_import_sentence-case_warning = Bib(La)TeX ent
     You can turn this off, but you may then also want to disable `Apply title-casing to titles` (which has its own problems, see the help entry for that option on this page).
     With 'yes, but try to exclude already-sentence-cased titles', BBT will attempt to detect titles that are already sentence cased and leave them as-is on import.
 
+better-bibtex_remigrate = 
+  .label = Re-do BBT citation key migration
 better-bibtex_preferences_advanced_import_migrate = Migrate BetterBibTeX preferences/citation keys
 better-bibtex_preferences_advanced_import_export-prefs = 
   .label = Export BetterBibTeX preferences...
@@ -175,16 +174,20 @@ better-bibtex_preferences_advanced_import_prefs =
   .label = Import BetterBibTeX preferences/citation keys...
 
 better-bibtex_preferences_advanced_tab_postscript = postscript
-  .label = { better-bibtex_preferences_advanced_tab_postscript }
 
 better-bibtex_preferences_advanced_tab_strings = @string definitions
-  .label = { better-bibtex_preferences_advanced_tab_strings }
 
 better-bibtex_preferences_auto-abbrev = 
   .label = Automatically abbreviate journal title if none is set explicitly
 
+better-bibtex_collection-menu_auto-export =
+  .label = Automatic export
+better-bibtex_collection-menu_auto-export_path =
+  .label = { $path }
+
 better-bibtex_preferences_auto-abbrev_style = Abbreviation style:
 better-bibtex_preferences_auto-export = Automatic export
+
 better-bibtex_preferences_auto-export_delay = Delay auto-export for
 
 better-bibtex_preferences_auto-export_explanation = You can only review and remove exports here. To add an auto-export, perform an export as usual and check the 'Keep updated' option presented there.
@@ -202,12 +205,12 @@ better-bibtex_preferences_auto-export_fields_recursive =
   .label = Export all child collections
 
 better-bibtex_preferences_auto-export_git_message = { $type } updated by Better BibTeX for Zotero
-better-bibtex_preferences_auto-export_idle = When Idle
-  .label = { better-bibtex_preferences_auto-export_idle }
-better-bibtex_preferences_auto-export_immediate = On Change
-  .label = { better-bibtex_preferences_auto-export_immediate }
-better-bibtex_preferences_auto-export_off = Paused
-  .label = { better-bibtex_preferences_auto-export_off }
+better-bibtex_preferences_auto-export_idle =
+  .label = When Idle
+better-bibtex_preferences_auto-export_immediate =
+  .label = On Change
+better-bibtex_preferences_auto-export_off =
+  .label = Paused
 better-bibtex_preferences_auto-export_remove = 
   .label = Remove
 
@@ -227,7 +230,7 @@ better-bibtex_preferences_auto-export_type_collection = Collection
 better-bibtex_preferences_auto-export_type_library = Library
 better-bibtex_preferences_auto-export_updated = Updated
 better-bibtex_preferences_bulk-warning = Warn me when changing citation keys in bulk
-better-bibtex_preferences_citekey_auto-pin-delay = Automatically pin citation key after
+better-bibtex_preferences_citekey_auto-pin-delay = Automatically fill citation key after
 better-bibtex_preferences_citekey_aux-scanner_import = 
   .label = When scanning an AUX file, attempt to import entries from the attached bib file when their citation keys are not in Zotero
 
@@ -236,25 +239,25 @@ better-bibtex_preferences_citekey_fold =
 
 better-bibtex_preferences_citekey_format = Citation key formula
 better-bibtex_preferences_citekey_format_installed = Active citation key formula
-better-bibtex_preferences_citekey_search = 
-  .label = Enable citation key search
+better-bibtex_preferences_citekey_dynamic =
+  .label = Regenerate citation key when item changes
 
 better-bibtex_preferences_citekey_uniqueness = 
   .label = Keeping citation keys unique
 
 better-bibtex_preferences_citekey_uniqueness_case =
   .label = Ignore upper/lowercase when comparing for uniqueness
-better-bibtex_preferences_citekey_uniqueness_conflict = On conflict with a pinned key, non-pinned keys will be
-better-bibtex_preferences_citekey_uniqueness_conflict_change = postfixed (causes key changes)
-  .label = { better-bibtex_preferences_citekey_uniqueness_conflict_change }
-better-bibtex_preferences_citekey_uniqueness_conflict_keep = kept (causes key duplicates)
-  .label = { better-bibtex_preferences_citekey_uniqueness_conflict_keep }
+better-bibtex_preferences_citekey_uniqueness_conflict = When a citation key is set that is already in use in other items, the keys of these other items will be
+better-bibtex_preferences_citekey_uniqueness_conflict_change =
+  .label = postfixed (causes key changes)
+better-bibtex_preferences_citekey_uniqueness_conflict_keep =
+  .label = kept (causes key duplicates)
 
 better-bibtex_preferences_citekey_uniqueness_scope = Keep keys unique
-better-bibtex_preferences_citekey_uniqueness_scope_global = across all libraries
-  .label = { better-bibtex_preferences_citekey_uniqueness_scope_global }
-better-bibtex_preferences_citekey_uniqueness_scope_library = within each library
-  .label = { better-bibtex_preferences_citekey_uniqueness_scope_library }
+better-bibtex_preferences_citekey_uniqueness_scope_global =
+  .label = across all libraries
+better-bibtex_preferences_citekey_uniqueness_scope_library =
+  .label = within each library
 
 better-bibtex_preferences_export_automatic-tags = 
   .label = Include automatic tags in export
@@ -275,27 +278,26 @@ better-bibtex_preferences_export_biblatex_use-prefix =
   .label = add use-prefix when family name has a prefix
 
 better-bibtex_preferences_export_bibtex_urls = Add URLs to BibTeX export
-better-bibtex_preferences_export_bibtex_urls_note = in the 'note' field
-  .label = { better-bibtex_preferences_export_bibtex_urls_note }
-better-bibtex_preferences_export_bibtex_urls_note-url-ish = in the 'note' field, but assuming the 'url' package is not loaded
-  .label = { better-bibtex_preferences_export_bibtex_urls_note-url-ish }
-better-bibtex_preferences_export_bibtex_urls_off = no
-  .label = { better-bibtex_preferences_export_bibtex_urls_off }
-better-bibtex_preferences_export_bibtex_urls_url = in the 'url' field
-  .label = { better-bibtex_preferences_export_bibtex_urls_url }
-better-bibtex_preferences_export_bibtex_urls_url-ish = in the 'url' field, but assuming the 'url' package is not loaded
-  .label = { better-bibtex_preferences_export_bibtex_urls_url-ish }
+better-bibtex_preferences_export_bibtex_urls_note =
+  .label = in the 'note' field
+better-bibtex_preferences_export_bibtex_urls_note-url-ish =
+  .label = in the 'note' field, but assuming the 'url' package is not loaded
+better-bibtex_preferences_export_bibtex_urls_off =
+  .label = no
+better-bibtex_preferences_export_bibtex_urls_url =
+  .label = in the 'url' field
+better-bibtex_preferences_export_bibtex_urls_url-ish =
+  .label = in the 'url' field, but assuming the 'url' package is not loaded
 
 better-bibtex_preferences_export_sort = Sort TeX/CSL output (useful if you use version control on the output):
-better-bibtex_preferences_export_sort_off = off (fastest)
-  .label = { better-bibtex_preferences_export_sort_off }
-better-bibtex_preferences_export_sort_id = item creation order (plenty fast)
-  .label = { better-bibtex_preferences_export_sort_id }
-better-bibtex_preferences_export_sort_citekey = citation key (slower on very large libraries)
-  .label = { better-bibtex_preferences_export_sort_citekey }
+better-bibtex_preferences_export_sort_off =
+  .label = off (fastest)
+better-bibtex_preferences_export_sort_id =
+  .label = item creation order (plenty fast)
+better-bibtex_preferences_export_sort_citekey =
+  .label = citation key (slower on very large libraries)
 
 better-bibtex_preferences_export_fields = Fields
-  .label = { better-bibtex_preferences_export_fields }
 
 better-bibtex_preferences_export_fields_bibtex-edition-ordinal = 
   .label = Export numeric edition as English-written ordinals
@@ -304,42 +306,38 @@ better-bibtex_preferences_export_fields_bibtex-particle-no-op =
   .label = Disregard name prefixes when sorting
 
 better-bibtex_preferences_export_fields_doi-and-url = When an item has both a DOI and a URL, export
-better-bibtex_preferences_export_fields_doi-and-url_both = both
-  .label = { better-bibtex_preferences_export_fields_doi-and-url_both }
-better-bibtex_preferences_export_fields_doi-and-url_doi = DOI
-  .label = { better-bibtex_preferences_export_fields_doi-and-url_doi }
-better-bibtex_preferences_export_fields_doi-and-url_url = URL
-  .label = { better-bibtex_preferences_export_fields_doi-and-url_url }
+better-bibtex_preferences_export_fields_doi-and-url_both =
+  .label = both
 
 better-bibtex_preferences_export_fields_doi-and-url_warning = Most BibTeX styles do not support DOI/URL fields. Of the styles that do support them, many forget to load the required 'url' package, so make sure to load it yourself. DOI and URL fields are so-called 'verbatim' fields, and without the 'url' package loaded compilation will likely fail.
 
 better-bibtex_preferences_export_fields_export-strings = If a field could be a @string reference, export it as an unbraced @string reference
-better-bibtex_preferences_export_fields_export-strings_detect = Assume single-word fields to be @string vars
-  .label = { better-bibtex_preferences_export_fields_export-strings_detect }
-better-bibtex_preferences_export_fields_export-strings_match = Match against the @string declarations below
-  .label = { better-bibtex_preferences_export_fields_export-strings_match }
-better-bibtex_preferences_export_fields_export-strings_match_reverse = Match against the @string declarations and their values below
-  .label = { better-bibtex_preferences_export_fields_export-strings_match_reverse }
-better-bibtex_preferences_export_fields_export-strings_off = No
-  .label = { better-bibtex_preferences_export_fields_export-strings_off }
+better-bibtex_preferences_export_fields_export-strings_detect =
+  .label = Assume single-word fields to be @string vars
+better-bibtex_preferences_export_fields_export-strings_match =
+  .label = Match against the @string declarations below
+better-bibtex_preferences_export_fields_export-strings_match_reverse =
+  .label = Match against the @string declarations and their values below
+better-bibtex_preferences_export_fields_export-strings_off =
+  .label = No
 better-bibtex_preferences_export_fields_import-strings = 
   .label = Expand the @string vars below during imports
 
 better-bibtex_preferences_export_fields_language = Export language as
-better-bibtex_preferences_export_fields_language_both = both
-  .label = { better-bibtex_preferences_export_fields_language_both }
+better-bibtex_preferences_export_fields_language_both =
+  .label = both
 
 better-bibtex_preferences_export_fields_skip = Fields to omit from export (comma-separated)
 
 better-bibtex_preferences_export_jabref-format = Include JabRef-specific metadata:
-better-bibtex_preferences_export_jabref-format_0 = no
-  .label = { better-bibtex_preferences_export_jabref-format_0 }
-better-bibtex_preferences_export_jabref-format_3 = for JabRef 3
-  .label = { better-bibtex_preferences_export_jabref-format_3 }
-better-bibtex_preferences_export_jabref-format_4 = for JabRef 4
-  .label = { better-bibtex_preferences_export_jabref-format_4 }
-better-bibtex_preferences_export_jabref-format_5 = for JabRef 5
-  .label = { better-bibtex_preferences_export_jabref-format_5 }
+better-bibtex_preferences_export_jabref-format_0 =
+  .label = no
+better-bibtex_preferences_export_jabref-format_3 =
+  .label = for JabRef 3
+better-bibtex_preferences_export_jabref-format_4 =
+  .label = for JabRef 4
+better-bibtex_preferences_export_jabref-format_5 =
+  .label = for JabRef 5
 
 better-bibtex_preferences_export_jabref-format_warn = Export JabRef-specific fields: timestamps, titles for attachments, and groups for each collection an item is part of. Note that having this on will disable caching in exports, which is really undesirable specifically for auto-exports.
 
@@ -347,43 +345,45 @@ better-bibtex_preferences_export_quality-report =
   .label = Include comments about potential problems with the exported entries
 
 better-bibtex_preferences_export_quick-copy = Quick-Copy
-  .label = { better-bibtex_preferences_export_quick-copy }
 better-bibtex_preferences_export_quick-copy_explanation = Quick-Copy/drag-and-drop citations
 better-bibtex_preferences_export_quick-copy_format = Quick-Copy format
-better-bibtex_preferences_export_quick-copy_citekeys = Cite Keys
-  .label = { better-bibtex_preferences_export_quick-copy_citekeys }
-better-bibtex_preferences_export_quick-copy_eta-template = Eta template
-  .label = { better-bibtex_preferences_export_quick-copy_eta-template }
-better-bibtex_preferences_export_quick-copy_latex = LaTeX citation
-  .label = { better-bibtex_preferences_export_quick-copy_latex }
-better-bibtex_preferences_export_quick-copy_latex_command = LaTeX command
-  .label = { better-bibtex_preferences_export_quick-copy_latex_command }
-better-bibtex_preferences_export_quick-copy_org-mode_cite = Org-mode citation link
-  .label = { better-bibtex_preferences_export_quick-copy_org-mode_cite }
-better-bibtex_preferences_export_quick-copy_org-mode = Org-mode select link
-  .label = { better-bibtex_preferences_export_quick-copy_org-mode }
-better-bibtex_preferences_export_quick-copy_org-mode_citekey = using Better BibTeX citation key
-  .label = { better-bibtex_preferences_export_quick-copy_org-mode_citekey }
-better-bibtex_preferences_export_quick-copy_org-mode_zotero = using Zotero item key
-  .label = { better-bibtex_preferences_export_quick-copy_org-mode_zotero }
-better-bibtex_preferences_export_quick-copy_org-ref = org-ref citation
-  .label = { better-bibtex_preferences_export_quick-copy_org-ref }
-better-bibtex_preferences_export_quick-copy_org-ref3 = org-ref v3 citation
-  .label = { better-bibtex_preferences_export_quick-copy_org-ref3 }
-better-bibtex_preferences_export_quick-copy_pandoc = Pandoc citation
-  .label = { better-bibtex_preferences_export_quick-copy_pandoc }
+
+better-bibtex_preferences_export_quick-copy_latex =
+  .label = LaTeX citation
+better-bibtex_preferences_export_quick-copy_citekeys =
+  .label = Citation Keys
+better-bibtex_preferences_export_quick-copy_eta =
+  .label = Eta template
+better-bibtex_preferences_export_quick-copy_org-ref =
+  .label = org-ref citation
+better-bibtex_preferences_export_quick-copy_org-ref3 =
+  .label = org-ref v3 citation
+better-bibtex_preferences_export_quick-copy_org-mode_cite =
+  .label = Org-mode citation link
+better-bibtex_preferences_export_quick-copy_org-mode =
+  .label = Org-mode select link
+better-bibtex_preferences_export_quick-copy_pandoc =
+  .label = Pandoc citation
+better-bibtex_preferences_export_quick-copy_roam-cite-key =
+  .label = Roam Citation Key
+better-bibtex_preferences_export_quick-copy_rtf-scan =
+  .label = RTF Scan marker
+better-bibtex_preferences_export_quick-copy_select-link =
+  .label = Zotero select link
+
+better-bibtex_preferences_export_quick-copy_org-mode_citekey =
+  .label = using Better BibTeX citation key
+better-bibtex_preferences_export_quick-copy_org-mode_zotero =
+  .label = using Zotero item key
 better-bibtex_preferences_export_quick-copy_pandoc_brackets = 
   .label = Surround Pandoc citations with brackets
-better-bibtex_preferences_export_quick-copy_roam-cite-key = Roam Cite Key
-  .label = { better-bibtex_preferences_export_quick-copy_roam-cite-key }
-better-bibtex_preferences_export_quick-copy_rtf-scan = RTF Scan marker
-  .label = { better-bibtex_preferences_export_quick-copy_rtf-scan }
-better-bibtex_preferences_export_quick-copy_select-link = Zotero select link
-  .label = { better-bibtex_preferences_export_quick-copy_select-link }
-better-bibtex_preferences_export_quick-copy_select-link_citekey = using Better BibTeX citation key
-  .label = { better-bibtex_preferences_export_quick-copy_select-link_citekey }
-better-bibtex_preferences_export_quick-copy_select-link_zotero = using Zotero item key
-  .label = { better-bibtex_preferences_export_quick-copy_select-link_zotero }
+better-bibtex_preferences_export_quick-copy_select-link_citekey =
+  .label = using Better BibTeX citation key
+better-bibtex_preferences_export_quick-copy_select-link_zotero =
+  .label = using Zotero item key
+
+better-bibtex_preferences_export_quick-copy_latex_command = LaTeX command
+better-bibtex_preferences_export_quick-copy_eta-template = Eta template
 
 better-bibtex_preferences_open = 
   .label = Open Better BibTeX preferences...
@@ -393,27 +393,23 @@ better-bibtex_preferences_postscript_warn =
 
 better-bibtex_preferences_prefpane_loading = Better BibTeX is loading
 better-bibtex_preferences_rescan-citekeys = 
-  .label = Re-scan pinned citekeys
+  .label = Re-scan citekeys
 
 better-bibtex_preferences_reset-cache = 
   .label = Reset cache on next start
 
 better-bibtex_preferences_tab_auto-export = Automatic export
-  .label = { better-bibtex_preferences_tab_auto-export }
 
 better-bibtex_preferences_tab_citekey = Citation keys
-  .label = { better-bibtex_preferences_tab_citekey }
 
 better-bibtex_preferences_tab_export = Export
-  .label = { better-bibtex_preferences_tab_export }
 
 better-bibtex_preferences_tab_import = Import
-  .label = { better-bibtex_preferences_tab_import }
 
 better-bibtex_preferences_tab_misc = Miscellaneous
-  .label = { better-bibtex_preferences_tab_misc }
 
-better-bibtex_report-errors = Send Better BibTeX debug log...
+better-bibtex_report-errors =
+  .label = Send Better BibTeX debug log...
 better-bibtex_server-url = 
   .title = Better BibTeX export via HTTP
   .buttonlabelaccept = OK
@@ -432,18 +428,30 @@ better-bibtex_translate_error_target_no_parent = { $path } does not have a paren
 better-bibtex_translate_error_target_not_a_file = { $path } exists but is not a file
 better-bibtex_units_seconds = seconds
 better-bibtex_workers_status = Total background exports started: { $total }, currently running: { $running }
-better-bibtex_zotero-pane_add-citation-links = Citation Graph: add citation links...
-better-bibtex_zotero-pane_citekey_pin_inspire-hep = Pin BibTeX key from InspireHEP
-better-bibtex_zotero-pane_citekey_refresh = Refresh BibTeX key
-better-bibtex_zotero-pane_citekey_unpin = Unpin BibTeX key
-better-bibtex_zotero-pane_bibtex_to_clipboard = 🅱 copy BibTeX to clipboard
-better-bibtex_zotero-pane_biblatex_to_clipboard = 🅱 copy BibLaTeX to clipboard
+better-bibtex_zotero-pane_add-citation-links =
+  .label = Citation Graph: add citation links...
+better-bibtex_zotero-pane_citekey_pin_inspire-hep =
+  .label = Set BibTeX key from InspireHEP
+better-bibtex_zotero-pane_citekey_pin =
+  .label = Pin BibTeX key
+better-bibtex_zotero-pane_citekey_refresh =
+  .label = Regenerate BibTeX key
+better-bibtex_zotero-pane_citekey_fill =
+  .label = Generate missing BibTeX key
+better-bibtex_zotero-pane_bibtex_to_clipboard =
+  .label = 🅱 copy BibTeX to clipboard
+better-bibtex_zotero-pane_biblatex_to_clipboard =
+  .label = 🅱 copy BibLaTeX to clipboard
 better-bibtex_zotero-pane_column_citekey = { -citation-key }
-better-bibtex_zotero-pane_patch-dates = Copy date-added/date-modified from extra field
-better-bibtex_zotero-pane_sentence-case = BBT Sentence-case
-better-bibtex_zotero-pane_show_collection-key = Download Better BibTeX export...
+better-bibtex_zotero-pane_patch-dates =
+  .label = Copy date-added/date-modified from extra field
+better-bibtex_zotero-pane_sentence-case =
+  .label = BBT Sentence-case
+better-bibtex_zotero-pane_show_collection-key =
+  .label = Download Better BibTeX export...
 better-bibtex_zotero-pane_tag_duplicates = Tag duplicate citation keys
-better-bibtex_zotero-pane_tex-studio = Push entries to TeXstudio
+better-bibtex_zotero-pane_tex-studio =
+  .label = Push entries to TeXstudio
 
 betterbibtex-item-pane-header = { -citation-key }
 

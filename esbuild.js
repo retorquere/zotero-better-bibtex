@@ -145,6 +145,7 @@ async function bundle(config) {
     treeShaking: true,
     plugins: [],
     minify: false,
+    sourcemap: true,
     drop: ['console'],
     ...config,
   }
@@ -227,6 +228,9 @@ async function rebuild() {
       'nock',
       'aws-sdk',
     ],
+    alias: {
+      'transliteration': 'transliteration/dist/browser/bundle.esm.min.js',
+    }
   })
 
   // chinese for dynamic loading

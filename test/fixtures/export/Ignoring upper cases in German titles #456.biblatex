@@ -1,4 +1,3 @@
-
 @incollection{Kaufmann1990,
   title = {Sozialpolitik und Bevölkerungsprozeß},
   booktitle = {Sozialpolitik und Sozialstaat: Soziologische Analysen},
@@ -9,7 +8,7 @@
   pages = {145--160},
   publisher = {VS Verlag für Sozialwissenschaften},
   url = {http://link.springer.com/chapter/10.1007/978-3-322-99962-7_7},
-  langid = {ngerman}
+  langid = {german}
 }
 
 @incollection{Kaufmann1997,
@@ -22,7 +21,5 @@
   pages = {241--260},
   publisher = {VS Verlag für Sozialwissenschaften},
   url = {http://link.springer.com/chapter/10.1007/978-3-322-99962-7_11},
-  langid = {ngerman}
+  langid = {german}
 }
-
-

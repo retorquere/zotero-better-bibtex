@@ -1,3 +1,4 @@
+from numerizer import numerize
 import steps.zotero as zotero
 from munch import *
 from behave import given, when, then
@@ -72,7 +73,7 @@ def step_impl(context, pref, value):
 @step('I set export option {option} to {value}')
 def step_impl(context, option, value):
   value = json.loads(value)
-  assert type(value) == bool
+  assert type(value) == bool, value
   context.displayOptions[option] = value
 
 @step('I set preference {pref} to {value}')
@@ -295,7 +296,7 @@ def step_impl(context, collection):
 
 @when(u'I remove the selected item')
 def step_impl(context):
-  assert len(context.selected) == 1
+  assert len(context.selected) == 1, context.selected
   context.zotero.execute('await Zotero.Items.trashTx([id])', id=context.selected[0])
 
 @step(u'I remove all items')
@@ -307,12 +308,12 @@ def step_impl(context):
 
 @when(u'I remove the selected items')
 def step_impl(context):
-  assert len(context.selected) > 0
+  assert len(context.selected) > 0, context.selected
   context.zotero.execute('await Zotero.Items.trashTx(ids)', ids=context.selected)
 
 @when(u'I merge the selected items')
 def step_impl(context):
-  assert len(context.selected) > 1
+  assert len(context.selected) > 1, context.selected
   context.zotero.execute('''
     try {
       return await Zotero.BetterBibTeX.TestSupport.merge(selected)
@@ -331,7 +332,7 @@ def step_impl(context):
 @when(u'I pick "{title}" for CAYW')
 def step_impl(context, title):
   pick = zotero.Pick(id = context.zotero.execute('return await Zotero.BetterBibTeX.TestSupport.find({contains: title})', title=title))
-  assert pick['id'] is not None
+  assert pick['id'] is not None, 'no item picked'
 
   pick[context.table.headings[0]] = context.table.headings[1]
   for row in context.table:
@@ -345,19 +346,19 @@ def step_impl(context, fmt, expected):
 
 @when(u'I {change} the citation key')
 def step_impl(context, change):
-  assert change in ['pin', 'unpin', 'refresh']
+  assert change in ['pin', 'clear', 'force-refresh', 'refresh'], change
   assert len(context.selected) == 1
   context.zotero.execute('await Zotero.BetterBibTeX.TestSupport.pinCiteKey(itemID, action)', itemID=context.selected[0], action=change)
 
 @when(u'I {change} all citation keys')
 def step_impl(context, change):
-  assert change in ['pin', 'unpin', 'refresh']
+  assert change in ['pin', 'unpin', 'force-refresh', 'refresh'], change
   context.zotero.execute('await Zotero.BetterBibTeX.TestSupport.pinCiteKey(null, action)', action=change)
 
-@when(u'I pin the citation key to "{citekey}"')
+@when(u'I set the citation key to "{citekey}"')
 def step_impl(context, citekey):
-  assert len(context.selected) == 1
-  context.zotero.execute('await Zotero.BetterBibTeX.TestSupport.pinCiteKey(id, "pin", citekey)', id=context.selected[0], citekey=citekey)
+  assert len(context.selected) == 1, context.selected
+  context.zotero.execute('await Zotero.BetterBibTeX.TestSupport.pinCiteKey(id, "set", citekey)', id=context.selected[0], citekey=citekey)
 
 @step(u'dump the cache to {cache}')
 def step_impl(context, cache):
@@ -387,6 +388,28 @@ def step_impl(context, seconds):
 def step_impl(context):
   while not context.zotero.execute('return await Zotero.BetterBibTeX.TestSupport.isIdle()'):
     time.sleep(5)
+
+@step(u'I wait until migrations are done')
+def step_impl(context):
+  needsUpdate = '''
+    var needsUpdate = await Zotero.DB.valueQueryAsync(
+      "SELECT COUNT(*) FROM settings WHERE setting='globalSchema' AND key='migrateExtra'"
+    );
+    return needsUpdate
+  '''
+
+  start = time.perf_counter()
+  while context.zotero.execute(needsUpdate):
+    time.sleep(5)
+    elapsed = time.perf_counter() - start
+    if elapsed > 7:
+      utils.print(datetime.timedelta(seconds=int(elapsed)))
+
+@then(u'I should have {n} auto-exports registered')
+def step_impl(context, n):
+  n = int(n)
+  registered = context.zotero.execute('return Zotero.BetterBibTeX.AutoExport.all().length')
+  assert n == registered, f'expected {n}, found {registered}'
 
 @step(u'I wait at most {seconds:d} seconds until all auto-exports are done')
 def step_impl(context, seconds):
@@ -419,16 +442,23 @@ def step_impl(context, param, value):
   value = json.loads(value)
   context.zotero.execute('await Zotero.BetterBibTeX.TestSupport.editAutoExport(field, value)', field=param, value=value)
 
-@step('I change its {field} field to {value}')
-def step_impl(context, field, value):
-  assert len(context.selected) == 1
+@step('I {action} its {field} field to {value}')
+def step_impl(context, action, field, value):
+  assert action in ['change', 'reset'], action
+  assert len(context.selected) == 1, context.selected
   context.zotero.execute('''
-    const items = await Zotero.Items.getAsync([id])
-    const item = items[0]
+    let items = await Zotero.Items.getAsync([id])
+    let item = items[0]
     await item.loadAllData()
     item.setField(field, value)
     await item.saveTx()
-  ''', id=context.selected[0], field=json.loads(field), value=json.loads(value))
+
+    if (action === 'reset' && value === '') return
+
+    items = await Zotero.Items.getAsync([id])
+    item = items[0]
+    if (item.getField(field) !== value) throw new Error(`expected ${JSON.stringify(value)}, got ${JSON.stringify(item.getField(field))}`)
+  ''', id=context.selected[0], action=action, field=json.loads(field), value=json.loads(value))
 
 @step('I {action} extension {xpi}')
 def step_impl(context, action, xpi):
@@ -489,3 +519,20 @@ def step_impl(context, collection, preferences, expected):
   except Exception as e:
     utils.exported(expected, _found)
     raise
+
+@step(u'I change the name of the {nth} author to [{name}]')
+def step_impl(context, nth, name):
+  nth = int(re.sub('[a-z]+', '', numerize(nth))) - 1
+  if '][' in name:
+    name = name.split('][')
+    name = { 'lastName': name[0], 'firstName': name[1] }
+  else:
+    name = { 'name': name }
+  context.zotero.execute('''
+    const item = await Zotero.Items.get(itemID)
+    const { creatorType, creatorTypeID, fieldMode } = item.getCreator(nth)
+    item.setCreator(nth, { creatorType, creatorTypeID, fieldMode, ...name })
+    await item.saveTx()
+  ''', nth=nth, itemID=context.selected[0], name=name)
+
+

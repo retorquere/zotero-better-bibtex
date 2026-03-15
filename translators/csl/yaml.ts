@@ -8,7 +8,7 @@ import type { MarkupNode } from '../../typings/markup'
 
 import { CSLExporter } from './csl'
 import { log } from '../../content/logger'
-import { ParsedDate } from '../../content/dateparser'
+import { ParsedDate, century } from '../../content/dateparser'
 import { HTMLParser } from '../../content/text'
 
 const htmlConverter = new class HTML {
@@ -149,7 +149,11 @@ class Exporter extends CSLExporter {
       case 'verbatim':
         return [{ literal: date.verbatim }] as unknown as CSLDate
 
+      case 'century':
+        return [{ literal: century(date.century) }] as unknown as CSLDate
+
       default:
+        if (!date.type && date.orig) return null // handled by orig-handler
         throw new Error(`Unexpected date type ${ JSON.stringify(date) }`)
     }
   }

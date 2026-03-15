@@ -1,16 +1,17 @@
 /* eslint-disable no-case-declarations, @typescript-eslint/no-unsafe-return */
 
-import * as client from './client'
 import merge from 'lodash.merge'
 import { Cache } from './translators/worker'
 import { serializer } from './item-export-format'
 
+// const { ZOTERO_CONFIG } = ChromeUtils.importESModule('resource://zotero/config.mjs')
+import * as client from './client'
 var ZOTERO_CONFIG: any // eslint-disable-line no-var
-if (client.version[0] === '8') {
-  ({ ZOTERO_CONFIG } = ChromeUtils.importESModule('resource://zotero/config.mjs'))
+if (client.version[0] === '7') {
+  Components.utils.import('resource://zotero/config.js')
 }
 else {
-  Components.utils.import('resource://zotero/config.js')
+  ({ ZOTERO_CONFIG } = ChromeUtils.importESModule('resource://zotero/config.mjs'))
 }
 
 import { Preference } from './prefs'
@@ -23,7 +24,7 @@ import type { Reason } from './bootstrap'
 import { Header, headers as Headers, byLabel, byId, bySlug } from '../gen/translators'
 import { Job, worker, Exporter, Message } from './translators/worker'
 
-Events.on('preference-changed', async (pref: string) => {
+Events.on('preference-changed', async ({ data: pref }) => {
   for (const translator of (affects[pref] || [])) {
     await Cache.Exports.dropTranslator(translator)
   }

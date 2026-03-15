@@ -110,8 +110,8 @@ if args.keep:
 if args.client.endswith('-beta'):
   args.client = args.client.split('-')[0]
   args.beta = True
-elif args.client.endswith('6'):
-  args.client = args.client.replace('6', '')
+elif args.client.endswith('7'):
+  args.client = args.client.replace('7', '')
   args.legacy = True
 
 if args.build:

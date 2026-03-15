@@ -1,20 +1,21 @@
 /* eslint-disable @typescript-eslint/require-await, @typescript-eslint/no-unsafe-return, @typescript-eslint/no-shadow */
 
 import { Translators } from '../translators'
-import { getItemsAsync } from '../get-items-async'
+import { Serialized } from '../../gen/typings/serialized'
+import { getItemAsync, getItemsAsync } from '../get-items-async'
 import { Preference } from '../prefs'
 import { html as escapeHTML } from '../escape'
 import { scannableCite } from '../../gen/ScannableCite'
 import { citeCreators, yearFromDate } from '../../translators/Better BibTeX Citation Key Quick Copy'
 import { Eta } from 'eta'
 const eta = new Eta({ autoEscape: true })
-import { simplifyForExport } from '../../gen/items/simplify'
+import { simplifyForExport } from '../item-schema'
 
 import { Transform } from 'unicode2latex'
 
 function serialized(item) {
   if (item) {
-    const ser = simplifyForExport(Zotero.Utilities.Internal.itemToExportFormat(item, false, true))
+    const ser = simplifyForExport(Zotero.Utilities.Internal.itemToExportFormat(item, false, true) as Serialized.RegularItem)
     ser.uri = Zotero.URI.getItemURI(item)
     ser.itemID = item.id
     return ser
@@ -204,7 +205,7 @@ export const Formatter = new class {
   public async 'scannable-cite'(citations, options) {
     let markers = ''
     for (const citation of citations) {
-      const scannable = scannableCite(await getItemsAsync(citation.id))
+      const scannable = scannableCite(await getItemAsync(citation.id))
 
       const enriched = [
         citation.prefix || '',

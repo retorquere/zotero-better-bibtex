@@ -1,10 +1,12 @@
-import EDTF, { parse as EDTFnotz } from 'edtf'
+import { toEnglishOrdinal } from './text'
+import EDTF, { defaults } from 'edtf'
+defaults.offset = false
 import edtfy from 'edtfy'
 
 // declare const dump: (msg: string) => void
 // function dump(...msg) { console.log(...msg) }
 
-import monthsMap from '../gen/dateparser-months.json'
+import monthsMap from '../gen/dateparser-months.json' with { type: 'json' }
 const Month = new class {
   #no = {
     january: 1,
@@ -57,7 +59,7 @@ import { getLocaleDateOrder } from '../submodules/zotero-utilities/date'
 type SeasonID = 1 | 2 | 3 | 4
 
 export type ParsedDate = {
-  type?: 'date' | 'open' | 'verbatim' | 'season' | 'interval' | 'list'
+  type?: 'date' | 'open' | 'verbatim' | 'season' | 'interval' | 'list' | 'century'
   year?: number
   month?: number
   day?: number
@@ -76,8 +78,13 @@ export type ParsedDate = {
   dates?: ParsedDate[]
 
   season?: SeasonID
+
+  century?: number
+
   uncertain?: boolean
   approximate?: boolean
+
+  edtf?: string
 }
 
 const Season = new class {
@@ -112,44 +119,53 @@ function normalize_edtf(date: any): ParsedDate | null {
   if (!date) return null
 
   const type = date.type.replace('_', '')
-
-  if (type === 'Date' || type === 'Year') {
-    let [year, month, day, hour, minute, seconds] = date.values
-    if (typeof month === 'number') month += 1
-    return {
-      type: 'date',
-      year,
-      month,
-      day,
-      hour,
-      minute,
-      seconds,
-      offset: date.offset,
-      approximate: !!(flagged(date.approximate) || flagged(date.unspecified)),
-      uncertain: !!flagged(date.uncertain),
+  switch (type) {
+    case 'Date':
+    case 'Year': {
+      let [year, month, day, hour, minute, seconds] = date.values
+      if (typeof month === 'number') month += 1
+      return {
+        type: 'date',
+        year,
+        month,
+        day,
+        hour,
+        minute,
+        seconds,
+        offset: date.offset,
+        approximate: !!(flagged(date.approximate) || flagged(date.unspecified)),
+        uncertain: !!flagged(date.uncertain),
+      }
     }
-  }
 
-  if (type === 'Interval') {
-    const [min, max] = date.values
-    if (!min || !max) return null
-    return { type: 'interval', from: normalize_edtf(min), to: normalize_edtf(max) }
-  }
+    case 'Interval': {
+      const [min, max] = date.values
+      if (!min || !max) return null
+      return { type: 'interval', from: normalize_edtf(min), to: normalize_edtf(max) }
+    }
 
-  if (type === 'Season') {
-    const [year, month] = date.values
-    if (typeof Season.fromMonth(month) !== 'number') throw new Error(`normalize EDTF: Unexpected season ${month}`)
-    return Season.seasonize({
-      type: 'date',
-      year,
-      month,
-    })
-  }
+    case 'Season': {
+      const [year, month] = date.values
+      if (typeof Season.fromMonth(month) !== 'number') throw new Error(`normalize EDTF: Unexpected season ${month}`)
+      return Season.seasonize({
+        type: 'date',
+        year,
+        month,
+      })
+    }
 
-  if (type === 'List') {
-    return {
-      type: 'list',
-      dates: date.values.map(normalize_edtf),
+    case 'List': {
+      return {
+        type: 'list',
+        dates: date.values.map(normalize_edtf),
+      }
+    }
+
+    case 'Century': {
+      return {
+        type: 'century',
+        century: date.values[0],
+      }
     }
   }
 
@@ -276,6 +292,7 @@ class DateParser {
 
     value = (value || '').trim()
     let $date: ParsedDate
+    let $year: string
 
     let m: RegExpMatchArray
 
@@ -305,7 +322,7 @@ class DateParser {
     }
 
     if (reparse && (m = value.match(re.nasa.dash) || value.match(re.nasa.slash) || value.match(re.nasa.ym))) {
-      return this.parse(m.groups.date, { range, reparse: false })
+      return this.parse(m.groups.date, { range: false, reparse: false })
     }
 
     if (m = english.match(re.My) || english.match(re.yM)) {
@@ -319,8 +336,8 @@ class DateParser {
     if (reparse && (m = value.match(re.orig_date) || value.match(re.date_orig))) {
       const { orig, date } = m.groups
       const parsed = {
-        orig: this.parse(orig, { range, reparse: false }),
-        date: date ? this.parse(date, { range, reparse: false }) : undefined,
+        orig: this.parse(orig, { range: false, reparse: false }),
+        date: date ? this.parse(date, { range: false, reparse: false }) : undefined,
       }
       if (parsed.orig.type === 'date' && (!parsed.date || parsed.date.type === 'date')) return { ...parsed.date, orig: parsed.orig }
     }
@@ -328,8 +345,8 @@ class DateParser {
     if (reparse && (m = english.match(re.M_d_d_y))) {
       const { month, day1, day2, year } = m.groups
 
-      const from = this.parse(`${month} ${day1} ${year}`, { range, reparse: false })
-      const to = this.parse(`${month} ${day2} ${year}`, { range, reparse: false })
+      const from = this.parse(`${month} ${day1} ${year}`, { range: false, reparse: false })
+      const to = this.parse(`${month} ${day2} ${year}`, { range: false, reparse: false })
 
       if (from.type === 'date' && to.type === 'date') return { type: 'interval', from, to }
     }
@@ -386,6 +403,16 @@ class DateParser {
     // just wrong. https://en.wikipedia.org/wiki/Date_format_by_country
     if (m = value.match(re.ydm) || date_only.match(re.dmy) || date_only.match(re.my) || date_only.match(re.ym)) {
       const { year, month, day } = m.groups
+
+      // #3322
+      if (!day && year.length === 4 && month.length === 2 && month > '24' && year < ($year = `${year.substring(0, 2)}${month}`)) {
+        return {
+          type: 'interval',
+          from: { type: 'date', year: parseInt(year) },
+          to: { type: 'date', year: parseInt($year) },
+        }
+      }
+
       const parsed = swap_day_month({
         type: 'date',
         year: parseInt(year),
@@ -402,6 +429,7 @@ class DateParser {
     // https://github.com/retorquere/zotero-better-bibtex/issues/1112
     if (m = date_only.match(re.pubmed)) {
       const { day, month, year } = m.groups
+
       const parsed = swap_day_month({
         type: 'date',
         year: parseInt(year),
@@ -431,33 +459,27 @@ class DateParser {
       for (const sep of ['--', '-', '/', '_', '\u2013']) {
         const split = value.split(sep)
         if (split.length === 2) {
+          const valid = (d: ParsedDate) => {
+            switch (d.type) {
+              case 'date':
+              case 'season':
+              case 'century':
+                return 1
+              case 'open':
+                return 0
+              default:
+                return -10
+            }
+          }
           let dates = 0
 
-          const from = this.parse(split[0], { reparse, range: false })
-          switch (from.type) {
-            case 'date':
-            case 'season':
-              dates++
-              break
-            case 'open':
-              break
-            default:
-              continue
-          }
+          const from = this.parse(split[0], { reparse: true, range: false })
+          dates += valid(from)
 
-          const to = this.parse(split[1], { reparse, range: false })
-          switch (to.type) {
-            case 'date':
-            case 'season':
-              dates++
-              break
-            case 'open':
-              break
-            default:
-              continue
-          }
+          const to = this.parse(split[1], { reparse: true, range: false })
+          dates += valid(to)
 
-          if (dates) return { type: 'interval', from, to }
+          if (dates > 0) return { type: 'interval', from, to }
         }
       }
     }
@@ -490,24 +512,10 @@ class DateParser {
   }
 }
 
-class NOTZParser extends DateParser {
-  edtf(date: string): any {
-    try {
-      return EDTFnotz(date)
-    }
-    catch {
-      return null
-    }
-  }
-}
+const parser = new DateParser
 
-const parser = {
-  withtz: new DateParser,
-  notz: new NOTZParser,
-}
-
-export function parse(date: string, tz = true): ParsedDate {
-  return tz ? parser.withtz.parse(date) : parser.notz.parse(date)
+export function parse(date: string): ParsedDate {
+  return parser.parse(date)
 }
 
 function testEDTF(value: string): boolean {
@@ -526,24 +534,36 @@ export function isEDTF(value: string, minuteLevelPrecision = false): boolean {
 }
 
 export function dateToISO(date: ParsedDate): string {
-  if (date.type === 'interval') return `${dateToISO(date.from)}/${dateToISO(date.to)}`.replace(/^[/]$/, '')
+  switch (date.type) {
+    case 'interval':
+      return `${dateToISO(date.from)}/${dateToISO(date.to)}`.replace(/^[/]$/, '')
 
-  if (typeof date.year !== 'number') return ''
+    case 'date': {
+      if (typeof date.year !== 'number') return ''
 
-  let iso = `${date.year}`.padStart(4, '0')
+      let iso = `${date.year}`.padStart(4, '0')
 
-  if (typeof date.month === 'number') {
-    const month = `${date.month}`.padStart(2, '0')
-    iso += `-${month}`
-    if (date.day) {
-      const day = `${date.day}`.padStart(2, '0')
-      iso += `-${day}`
+      if (typeof date.month === 'number') {
+        const month = `${date.month}`.padStart(2, '0')
+        iso += `-${month}`
+        if (date.day) {
+          const day = `${date.day}`.padStart(2, '0')
+          iso += `-${day}`
+        }
+      }
+      return iso
     }
-  }
 
-  return iso
+    default:
+      throw new Error(`failed to convert ${date.type} to ISO`)
+  }
 }
 
 export function strToISO(str: string): string {
   return dateToISO(parse(str))
+}
+
+export function century(n: number | string): string {
+  const ordinal = toEnglishOrdinal(n)
+  return ordinal ? `${ordinal} century` : `${n}`
 }

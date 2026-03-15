@@ -2,7 +2,7 @@
 import { DatabaseFactory, Database } from '@idxdb/promised'
 // import { SynchronousPromise } from 'synchronous-promise'
 
-import type { Item } from '../../gen/typings/serialized-item'
+import type { Serialized } from '../../gen/typings/serialized'
 import { Cache as CacheInterface } from './interface'
 
 export type ExportContext = {
@@ -35,7 +35,7 @@ import stringify from 'safe-stable-stringify'
 import { pick, unpick } from '../object'
 
 import { byLabel, DisplayOptions } from '../../gen/translators'
-import { version } from '../../gen/version.json'
+import BBT from '../../gen/version.cjs'
 // import { main as probe } from './cache-test'
 
 export const Context = new class {
@@ -208,7 +208,7 @@ class SerializedCache {
     return missing
   }
 
-  public async fill(items: Item[]): Promise<void> {
+  public async fill(items: Serialized.Item[]): Promise<void> {
     if (items.length) {
       const tx = Cache.db.transaction(['Serialized'], 'readwrite')
       const store = tx.objectStore('Serialized')
@@ -219,11 +219,11 @@ class SerializedCache {
     }
   }
 
-  public async get(ids: number[]): Promise<Item[]> {
+  public async get(ids: number[]): Promise<Serialized.Item[]> {
     const tx = Cache.db.transaction('Serialized', 'readonly')
     const store = tx.objectStore('Serialized')
     const requested = new Set(ids)
-    const items: Item[] = (await store.getAll<Item, number>()).filter(item => requested.has(item.itemID))
+    const items: Serialized.Item[] = (await store.getAll<Serialized.Item, number>()).filter(item => requested.has(item.itemID))
 
     if (ids.length !== items.length) log.error(`indexed: failed to fetch ${ ids.length - items.length } items`)
     return items
@@ -394,8 +394,8 @@ class $Cache implements CacheInterface {
         test: metadata.Zotero && metadata.Zotero !== metadata.Zotero,
       },
       {
-        reason: `Better BibTeX version changed from ${metadata.BetterBibTeX || 'none'} to ${version}`,
-        test: metadata.BetterBibTeX && metadata.BetterBibTeX !== version,
+        reason: `Better BibTeX version changed from ${metadata.BetterBibTeX || 'none'} to ${BBT.version}`,
+        test: metadata.BetterBibTeX && metadata.BetterBibTeX !== BBT.version,
       },
       {
         reason: `cache gap found: cache = ${metadata.lastUpdated}, zotero = ${lastZoteroUpdate}`,
@@ -404,7 +404,7 @@ class $Cache implements CacheInterface {
     ]
     const reason = reasons.filter(r => r.test).map(r => r.reason).join(' and ') || false
 
-    log.info('cache:', metadata, { Zotero: Zotero.version, BetterBibTeX: version, lastUpdated: lastZoteroUpdate }, '=>', reasons, '=>', reason)
+    log.info('cache:', metadata, { Zotero: Zotero.version, BetterBibTeX: BBT.version, lastUpdated: lastZoteroUpdate }, '=>', reasons, '=>', reason)
     if (reason) {
       log.info(`cache: reset-reopen because ${reason}`)
       this.db.close()
@@ -414,7 +414,7 @@ class $Cache implements CacheInterface {
     const tx = this.db.transaction('metadata', 'readwrite')
     const store = tx.objectStore('metadata')
     await store.put<CacheMetadata, string>({ key: 'Zotero', value: Zotero.version })
-    await store.put<CacheMetadata, string>({ key: 'BetterBibTeX', value: version })
+    await store.put<CacheMetadata, string>({ key: 'BetterBibTeX', value: BBT.version })
     await tx.commit()
   }
 

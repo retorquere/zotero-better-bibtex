@@ -1,12 +1,12 @@
 declare const Zotero: any
 import type { Header } from '../../gen/translators'
-import { RegularItem, Item, Collection } from '../../gen/typings/serialized-item'
+import { Serialized } from '../../gen/typings/serialized'
 import { displayOptions, DisplayOptions } from '../../gen/translators'
 import type { Preferences } from '../../gen/preferences/meta'
 import { defaults } from '../../gen/preferences/meta'
 
-type CacheableItem = Item & { $cacheable: boolean }
-type CacheableRegularItem = RegularItem & { $cacheable: boolean }
+type CacheableItem = Serialized.Item & { $cacheable: boolean }
+type CacheableRegularItem = Serialized.RegularItem & { $cacheable: boolean }
 
 type NestedCollection = {
   key: string
@@ -85,7 +85,7 @@ export class Items {
 }
 
 export class Collections {
-  public byKey: Record<string, Collection> = {}
+  public byKey: Record<string, Serialized.Collection> = {}
 
   constructor(private items: Items) {
     let collection: any
@@ -129,11 +129,11 @@ export class Collections {
       .map(coll => this.nestedCollection(coll))
   }
 
-  private nestedCollection(collection: Collection): NestedCollection {
+  private nestedCollection(collection: Serialized.Collection): NestedCollection {
     const nested: NestedCollection = {
       key: collection.key,
       name: collection.name,
-      items: collection.items.map((itemID: number) => this.items.map[itemID]).filter((item: Item) => item),
+      items: collection.items.map((itemID: number) => this.items.map[itemID]).filter((item: Serialized.Item) => item),
       collections: collection.collections
         .map((key: string) => this.nestedCollection(this.byKey[key]))
         .filter((coll: NestedCollection) => coll),

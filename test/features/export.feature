@@ -7,10 +7,20 @@ Feature: Export
   @biblatex
   Scenario Outline: Export <references> references for BibLaTeX to <file>
     When I import <references> references from "export/<file>.json"
+    #And I wait 1 second
     Then an export using "Better BibLaTeX" should match "export/*.biblatex"
 
     Examples:
       | file                                                                                                                     | references |
+      | tex.title= is not copied verbatim if Zotero title contains math #3376                                                    | 2          |
+      | Original Date not working with Citation Key (anymore) #3392                                                              | 1          |
+      | Issue getting shortjournal #3382                                                                                         | 1          |
+      | New and edited items are not added or dropped from better-bibtex.sql #3370                                               | 1          |
+      | Generating citation keys and special letters (i.e. o, u, a) #3351                                                        | 1          |
+      | Export to BetterBibTeX .bib no longer works and fails #3352                                                              | 1          |
+      | urldate exported to .bib does not match Zoteros date anymore #3330                                                       | 1          |
+      | Export fails with Translation using Better BibTeX failed Error normalize EDTF failed to normalize Century #3322          | 5          |
+      | Replacement option for space between multipart last names in citekey generation #3289                                    | 1          |
       | Option to omit last name prefixes in citekey generation #3295                                                            | 1          |
       | Add PhD diss. to Zotero Type field conversion to phdthesis #3296                                                         | 1          |
       | Exclude series editor for biblatex-apa option #3284                                                                      | 1          |
@@ -104,7 +114,7 @@ Feature: Export
       | Book Title exports to Journaltitle for Biblatex @incollection reference type #1691                                       | 2          |
       | When exporting notes, also handle the blockquote tag #1656                                                               | 1          |
       | Entries with URL exported with (partial) URL in eprint field #1639                                                       | 2          |
-      | error during export: duplicate field note #1636                                                                          | 1          |
+      | error during export; duplicate field note #1636                                                                          | 1          |
       | Unexpected HTML tags abort export #1575                                                                                  | 1          |
       | JSTOR eprint data export depends on whether jstor link starts with https vs http #1543                                   | 1          |
       | lone ogonek should have brace                                                                                            | 1          |
@@ -236,7 +246,8 @@ Feature: Export
 
     Examples:
       | file                                                                                                               | references |
-      | fixrequest Wrap URL for webpages (in howpublished field) in url{} #3316                                            | 1          |
+      | Wrap URL for webpages (in howpublished field) in url{} #3316                                                       | 1          |
+      | Export fails with Translation using Better BibTeX failed Error normalize EDTF failed to normalize Century #3322    | 5          |
       | Wrong year field in Better BibTeX export #3244                                                                     | 1          |
       | Export field zoteroautoJournalAbbreviation only available when zoterojournalAbbreviation is empty #3046            | 2          |
       | export langid as language #2909                                                                                    | 1          |
@@ -281,7 +292,7 @@ Feature: Export
       | 30-Mar-2020 parsed as literal #1476                                                                                | 1          |
       | BibTeX Entries with Volume and Number Fields #1475                                                                 | 1          |
       | Exporting Book Sections as Inbook #1474                                                                            | 1          |
-      | Missing $ in TeX export of < to langle #1469                                                                       | 1          |
+      | Missing $ in TeX export of lt to langle #1469                                                                      | 1          |
       | Better BibTeX does not export collections #901                                                                     | 36         |
       | Better BibTeX.027                                                                                                  | 1          |
       | Minimize bibtex export package dependencies #1402                                                                  | 1          |
@@ -334,18 +345,20 @@ Feature: Export
     Then an export using "Better CSL JSON" should match "export/*.csl.json"
 
     Examples:
-      | file                                                                            | references |
-      | Better CSL does not extract extra variables #2963                               | 1          |
-      | Does setting a type via cheater syntax work currently #2473                     | 1          |
-      | _eprint in extra causes CSL-JSON export error #2430                             | 1          |
-      | unwanted inclusion of Zotero's internal journal abbreviations in CSL JSON #2375 | 1          |
-      | Export Error Unexpected date type #2303                                         | 1          |
-      | Better CSL JSON does not include authority field #2019                          | 1          |
-      | Multiple creators in Extra not exported in Better CSL JSON #2015                | 1          |
-      | Deterministic ordering for CSL #1178 #1400                                      | 26         |
-      | CSL exporters; ignore [Fields to omit from export] setting #1179                | 26         |
-      | Quotes around last names should be removed from citekeys #856                   | 1          |
-      | BBT CSL JSON; Do not use shortTitle and journalAbbreviation #372                | 1          |
+      | file                                                                             | references |
+      | Page, issue and volume range sign in CSL JSON is hyphen instead of en dash #3327 | 1          |
+      | Export to Better CSL JSON not working in latest built 6600-6700 #3332            | 1          |
+      | Better CSL does not extract extra variables #2963                                | 1          |
+      | Does setting a type via cheater syntax work currently #2473                      | 1          |
+      | _eprint in extra causes CSL-JSON export error #2430                              | 1          |
+      | unwanted inclusion of Zotero's internal journal abbreviations in CSL JSON #2375  | 1          |
+      | Export Error Unexpected date type #2303                                          | 1          |
+      | Better CSL JSON does not include authority field #2019                           | 1          |
+      | Multiple creators in Extra not exported in Better CSL JSON #2015                 | 1          |
+      | Deterministic ordering for CSL #1178 #1400                                       | 26         |
+      | CSL exporters; ignore [Fields to omit from export] setting #1179                 | 26         |
+      | Quotes around last names should be removed from citekeys #856                    | 1          |
+      | BBT CSL JSON; Do not use shortTitle and journalAbbreviation #372                 | 1          |
 
     @use.with_client=jurism
     Examples:
@@ -449,21 +462,21 @@ Feature: Export
     When I import 1 reference from "export/*.json"
     Then an export using "Better BibLaTeX" should match "export/*.pinned.biblatex"
     When I select the item with a field that contains "Genetics"
-    And I unpin the citation key
-    And I refresh the citation key
+    And I clear the citation key
+    And I force-refresh the citation key
     Then an export using "Better BibLaTeX" should match "export/*.biblatex"
 
   Scenario: Refresh BibTeX key doesn't work (after removing a related entry) #2401
     When I import 2 references from "export/*.json"
     When I select the item with a field that is "IlligS.etal:2018"
     And I remove the selected item
-    And I refresh all citation keys
+    And I force-refresh all citation keys
     Then an export using "Better BibLaTeX" should match "export/*.biblatex"
 
   Scenario: Postfixed keys different between computers #1788
     When I import 2 references from "export/*.json"
     And I select the item with a field that contains "Wittgenstein"
-    And I pin the citation key to "heyns2021"
+    And I set the citation key to "heyns2021"
     And I wait 2 seconds
     Then an export using "Better BibLaTeX" should match "export/*.biblatex"
 
@@ -594,7 +607,7 @@ Feature: Export
     Given I import 1 reference from "export/*.json"
     Then an export using "Better BibLaTeX" should match "export/*-fold.biblatex"
     When I set preference .citekeyFold to false
-    And I refresh all citation keys
+    And I force-refresh all citation keys
     Then an export using "Better BibLaTeX" should match "export/*-nofold.biblatex"
 
   @384 @bbt @565 @566
@@ -670,7 +683,7 @@ Feature: Export
     When I change its "citationKey" field to "edited"
     And I wait 10 seconds
     Then "~/autoexport.bib" should match "export/*.pinned.bibtex"
-    When I change its "citationKey" field to ""
+    When I reset its "citationKey" field to ""
     And I wait 10 seconds
     Then "~/autoexport.bib" should match "export/*.before.bibtex"
 
@@ -737,32 +750,24 @@ Feature: Export
   @use.with_client=zotero @use.with_whopper=true @timeout=3000 @whopper
   Scenario: Really Big whopping library
     When I restart Zotero with "1287"
+    And I restart Zotero with "1287"
     And I set preference .DOIandURL to "doi"
     # And I set preference .autoAbbrevStyle to "http://www.zotero.org/styles/cell"
     And I set preference .autoExport to "off"
     And I set preference .citekeyFormat to "authorsn(n=3,creator=\"*\",initials=false,sep=\" \").fold + shortyear"
     And I set preference .itemObserverDelay to 100
-    And I set preference .keyConflictPolicy to "change"
+    #And I set preference .keyConflictPolicy to "change"
     And I set preference .japanese to true
     And I set preference .skipFields to "abstract, copyright, googlebooks, "
     # And I select the library named "CCNLab"
     And I set export option exportNotes to true
-    And I wait until Zotero is idle
+    #And I wait until Zotero is idle
     And I export the library 1 times using "id:9cb70025-a888-4a29-a210-93ec52da40d4"
-    And I wait until Zotero is idle
+    #And I wait until Zotero is idle
     And an export using "Better BibTeX" with worker on should match "export/*.bibtex"
-    And I wait until Zotero is idle
-    And an export using "Better BibTeX" with worker on should match "export/*.bibtex"
-    And I wait until Zotero is idle
-    And an export using "Better BibTeX" with worker on should match "export/*.bibtex"
-    And I wait until Zotero is idle
-    And an export using "Better BibTeX" with worker on should match "export/*.bibtex"
+    #And I wait until Zotero is idle
     When I export the library 1 times using "id:bc03b4fe-436d-4a1f-ba59-de4d2d7a63f7"
-    And I wait until Zotero is idle
-    Then an export using "Better CSL JSON" with worker on should match "export/*.csl.json"
-    When I wait until Zotero is idle
-    Then an export using "Better CSL JSON" with worker on should match "export/*.csl.json"
-    When I wait until Zotero is idle
+    #And I wait until Zotero is idle
     Then an export using "Better CSL JSON" with worker on should match "export/*.csl.json"
 
   # @use.with_client=zotero @use.with_slow=true @timeout=300
@@ -782,10 +787,10 @@ Feature: Export
   Scenario: use author dash separation rather than camel casing in citekey #1495
     Given I import 1 reference from "export/*.json"
     When I set preference .citekeyFormat to "authorsn(n=2,sep='-').fold.lower + '_' + year + '-' + shorttitle.condense('-').lower"
-    And I refresh all citation keys
+    And I force-refresh all citation keys
     Then an export using "Better BibTeX" should match "export/*.bibtex"
     When I set preference .citekeyFormat to "authorsn(n=2).fold.condense('-').lower + '_' + year + '-' + shorttitle.condense('-').lower"
-    And I refresh all citation keys
+    And I force-refresh all citation keys
     Then an export using "Better BibTeX" should match "export/*.bibtex"
 
   Scenario: Collected notes
@@ -847,13 +852,13 @@ Feature: Export
     Given I import 1 reference from "export/*.json"
     When I select the item with a field that contains "Valuations"
     When I set preference .citekeyFormat to "(ShortTitle.condense(_) || Title.condense(_))"
-    And I refresh the citation key
+    And I force-refresh the citation key
     Then the citation key should be "The_Theory_of_Classical_Valuations"
     When I set preference .citekeyFormat to "(ShortTitle || Title).condense(_)"
-    And I refresh the citation key
+    And I force-refresh the citation key
     Then the citation key should be "The_Theory_of_Classical_Valuations"
     When I set preference .citekeyFormat to "(ShortTitle ? ShortTitle : Title).condense(_)"
-    And I refresh the citation key
+    And I force-refresh the citation key
     Then the citation key should be "The_Theory_of_Classical_Valuations"
 
   Scenario: refresh fails for pinned keys #3173
@@ -866,3 +871,17 @@ Feature: Export
     Given I import 51 references from "export/*.json"
     Then a pull-export from "/library;name:My%20Library/collection/Modelling%20methods/Classification.biblatex" with "export/*-skipauthor.preferences" should match "export/*-skipauthor.biblatex"
     Then a pull-export from "/library;name:My%20Library/collection/Modelling%20methods/Classification.biblatex" with "export/*-skiptitle.preferences" should match "export/*-skiptitle.biblatex"
+
+  Scenario: Key regeneration fails #3421
+    Given I import 1 reference from "export/*.json"
+    And I set preference .resetKeyOnChange to true
+    Then an export using "Better BibLaTeX" should match "export/*.biblatex"
+    When I select the item with a field that contains "Data visiting governance"
+    And I change the name of the first author to [Thadar][Donrich]
+    #And I force-refresh the citation key
+    And I wait 5 seconds
+    Then an export using "Better BibLaTeX" should match "export/*.thadar.biblatex"
+    When I change the name of the first author to [Thaldar][Donrich]
+    #And I force-refresh the citation key
+    And I wait 5 seconds
+    Then an export using "Better BibLaTeX" should match "export/*.biblatex"

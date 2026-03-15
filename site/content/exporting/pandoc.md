@@ -7,7 +7,7 @@ aliases:
 
 In addition to LaTeX, BBT plays very well with pandoc:
 
-* you can [drag and drop]({{% ref "/installation/preferences/_index.md#quick-copydrag-and-drop-citations" %}}) citations from Zotero into your markdown documents.
+* you can [drag and drop]({{% ref "/preferences/_index.md#quick-copydrag-and-drop-citations" %}}) citations from Zotero into your markdown documents.
 * you can [cite as you write]({{% ref "/citing/cayw" %}}) in your favorite editor with varying levels of comfort, mostly depending on how easy (VSCode, Sublime) or hard (looking at you Scrivener) it is to extend your editor.
 * you can even convert your markdown document into a LibreOffice/Word document with actual live Zotero items as if you had entered them into Zotero all along (see below)
 

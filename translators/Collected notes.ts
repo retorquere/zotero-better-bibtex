@@ -7,28 +7,29 @@ declare var ZOTERO_TRANSLATOR_INFO: Header // eslint-disable-line no-var
 
 declare const Zotero: any
 
-import html2md from 'html-to-md'
+import Turndown from 'turndown'
+const turndown = new Turndown
 
-import { Item } from '../gen/typings/serialized-item'
+import { Serialized } from '../gen/typings/serialized'
 
 import * as escape from '../content/escape'
 import * as Extra from '../content/extra'
 
-function clean(item: Item): Item {
+function clean(item: Serialized.Item): Serialized.Item {
   switch (item.itemType) {
     case 'note':
     case 'annotation':
     case 'attachment':
       return item
   }
-  const cleaned: Item = { ...item, extra: Extra.get(item.extra, 'zotero').extra }
+  const cleaned: Serialized.Item = { ...item, extra: Extra.get(item.extra, 'zotero').extra }
   cleaned.extra = cleaned.extra.split('\n').filter(line => !line.match(/^OCLC:/i)).join('\n')
   return cleaned
 }
 
 type ExpandedCollection = {
   name: string
-  items: Item[]
+  items: Serialized.Item[]
   collections: ExpandedCollection[]
   root: boolean
 }
@@ -46,7 +47,7 @@ class Exporter {
 
   constructor(translation: Translation) {
     this.translation = translation
-    const items: Record<number, Item> = {}
+    const items: Record<number, Serialized.Item> = {}
     const filed: Set<number> = new Set
     const collections: Record<string, ExpandedCollection> = {}
 
@@ -92,7 +93,7 @@ class Exporter {
     style += '  blockquote { border-left: 1px solid gray; }\n'
 
     this.html = `<html><head><style>${ style }</style></head><body>${ this.body }</body></html>`
-    if (this.translation.collected.displayOptions.markdown) this.markdown = html2md(this.html)
+    if (this.translation.collected.displayOptions.markdown) this.markdown = turndown.turndown(this.html)
   }
 
   write_collection(collection, level = 1) {

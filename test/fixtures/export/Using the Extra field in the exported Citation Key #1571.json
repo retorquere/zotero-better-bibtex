@@ -24,7 +24,6 @@
       "abstractNote": "While requirements for open source projects originate from a variety of sources like e.g. mailing lists or blogs, typically, they eventually end up as feature requests in an issue tracking system. When analyzing how these issue trackers are used for requirements evolution, we witnessed a high percentage of duplicates in a number of high-prole projects. Further investigation of six open source projects and their users led us to a number of important observations and a categorization of the root causes of these duplicates. Based on this, we propose a set of improvements for future issue tracking systems.",
       "accessDate": "2021-03-03",
       "attachments": [],
-      "citationKey": "Heck__2013",
       "creators": [
         {
           "creatorType": "author",

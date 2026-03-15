@@ -109,8 +109,8 @@ Generate an export for a list of citekeys, tailored for the pandoc zotero filter
 returns: any
 
 * terms: Single string as typed into the search box in Zotero (search for Title Creator Year)
-              Array of tuples similar as typed into the advanced search box in Zotero
-              (https://github.com/zotero/zotero/blob/9971f15e617f19f1bc72f8b24bb00b72d2a4736f/chrome/content/zotero/xpcom/data/searchConditions.js#L72-L610)
+Array of tuples similar as typed into the advanced search box in Zotero
+(https://github.com/zotero/zotero/blob/9971f15e617f19f1bc72f8b24bb00b72d2a4736f/chrome/content/zotero/xpcom/data/searchConditions.js#L72-L610)
 
 Search for items in Zotero.
 

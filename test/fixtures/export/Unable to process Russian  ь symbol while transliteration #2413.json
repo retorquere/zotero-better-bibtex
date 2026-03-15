@@ -15,42 +15,41 @@
       "ISSN": "0507-3758",
       "abstractNote": "Background. The detection of translocations involving genes of the NTRK family in patients with non-small cell lung cancer (NSCLC) is a serious technical challenge. This is due to the presence of a large number of partner genes, breakpoints in them, and the presence of alternative splicing in the NTRK genes themselves.\nThe aim of this work was to develop an effective method for diagnosing NTRK translocations, as well as to analyze the frequency and spectrum of these rearrangements in NSCLC.\nMaterials and methods. We have developed a combined NTRK translocation search method based on a reverse transcription PCR reaction. The method consists of 2 stages: primary PCR with analysis of unbalanced expression of NTRK genes and a series of variant-specific PCRs to identify frequent variants of rearrangements.\nResults. In a sample of 5102 patients with NSCLC, 9 cases of unbalanced expression of one of the NTRK genes were found. Using variant-specific PCR, the presence of rearrangements was confirmed in 2 of these 9 NSCLC. The rest of the samples demonstrating the phenomenon of unbalanced expression were analyzed by high-throughput next generation RNA sequencing (NGS), as a result of which 4 more NTRK translocations were found. Thus, a total of 6 rearrangements were identified with the participation of genes of the NTRK family (6/5102, 0.12%): SQSTM1ex5/NTRK1ex9, TPM3ex8/NTRK1ex10, CD74ex6/NTRK1ex10, FAM118Bex8/NTRK1ex9, SQSTM1ex4/NTRK2ex14, ETV6ex5/NTRK3ex15. The FAM118B/NTRK1 translocation has not been previously described in the literature.\nConclusion. The combination of 2 different PCR tests seems to be an adequate approach for diagnosing rearrangements involving the NTRK1, NTRK2, NTRK3 genes. Systematic screening for unbalanced expression of NTRK genes makes it possible to identify new variants of clinically significant translocations in NSCLC.",
       "accessDate": "2022-11-21T13:13:35Z",
-      "citationKey": "roman\ufffdkoPolimeraznayaCepnayaReakciya2022",
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "\u0410\u043b\u0435\u043a\u0441\u0430\u043d\u0434\u0440",
-          "lastName": "\u0420\u043e\u043c\u0430\u043d\u044c\u043a\u043e"
+          "firstName": "Александр",
+          "lastName": "Романько"
         },
         {
           "creatorType": "author",
-          "firstName": "\u0415\u043b\u0435\u043d\u0430",
-          "lastName": "\u041f\u0440\u0435\u043e\u0431\u0440\u0430\u0436\u0435\u043d\u0441\u043a\u0430\u044f"
+          "firstName": "Елена",
+          "lastName": "Преображенская"
         },
         {
           "creatorType": "author",
-          "firstName": "\u041d\u0430\u0442\u0430\u043b\u044c\u044f",
-          "lastName": "\u041c\u0438\u0442\u044e\u0448\u043a\u0438\u043d\u0430"
+          "firstName": "Наталья",
+          "lastName": "Митюшкина"
         },
         {
           "creatorType": "author",
-          "firstName": "\u0412\u043b\u0430\u0434\u0438\u0441\u043b\u0430\u0432",
-          "lastName": "\u0422\u044e\u0440\u0438\u043d"
+          "firstName": "Владислав",
+          "lastName": "Тюрин"
         },
         {
           "creatorType": "author",
-          "firstName": "\u0420\u0438\u043c\u043c\u0430",
-          "lastName": "\u041c\u0443\u043b\u043a\u0438\u0434\u0436\u0430\u043d"
+          "firstName": "Римма",
+          "lastName": "Мулкиджан"
         },
         {
           "creatorType": "author",
-          "firstName": "\u0415\u043b\u0435\u043d\u0430",
-          "lastName": "\u041a\u0440\u0438\u0432\u043e\u0448\u0435\u0435\u0432\u0430"
+          "firstName": "Елена",
+          "lastName": "Кривошеева"
         },
         {
           "creatorType": "author",
-          "firstName": "\u0415\u0432\u0433\u0435\u043d\u0438\u0439",
-          "lastName": "\u0418\u043c\u044f\u043d\u0438\u0442\u043e\u0432"
+          "firstName": "Евгений",
+          "lastName": "Имянитов"
         }
       ],
       "date": "2022-05-06",
@@ -63,27 +62,27 @@
       "language": "ru",
       "libraryCatalog": "voprosyonkologii.ru",
       "pages": "182-187",
-      "publicationTitle": "\u0412\u043e\u043f\u0440\u043e\u0441\u044b \u043e\u043d\u043a\u043e\u043b\u043e\u0433\u0438\u0438",
-      "rights": "Copyright (c) 2022 \u0410\u043b\u0435\u043a\u0441\u0430\u043d\u0434\u0440 \u0420\u043e\u043c\u0430\u043d\u044c\u043a\u043e",
+      "publicationTitle": "Вопросы онкологии",
+      "rights": "Copyright (c) 2022 Александр Романько",
       "tags": [
         {
           "tag": "NTRK",
           "type": 1
         },
         {
-          "tag": "\u043d\u0435\u043c\u0435\u043b\u043a\u043e\u043a\u043b\u0435\u0442\u043e\u0447\u043d\u044b\u0439 \u0440\u0430\u043a \u043b\u0435\u0433\u043a\u043e\u0433\u043e",
+          "tag": "немелкоклеточный рак легкого",
           "type": 1
         },
         {
-          "tag": "\u041f\u0426\u0420 \u0434\u0438\u0430\u0433\u043d\u043e\u0441\u0442\u0438\u043a\u0430",
+          "tag": "ПЦР диагностика",
           "type": 1
         },
         {
-          "tag": "\u0442\u0440\u0430\u043d\u0441\u043b\u043e\u043a\u0430\u0446\u0438\u044f",
+          "tag": "транслокация",
           "type": 1
         }
       ],
-      "title": "\u041f\u043e\u043b\u0438\u043c\u0435\u0440\u0430\u0437\u043d\u0430\u044f \u0446\u0435\u043f\u043d\u0430\u044f \u0440\u0435\u0430\u043a\u0446\u0438\u044f (\u041f\u0426\u0420), \u043a\u0430\u043a \u044d\u0444\u0444\u0435\u043a\u0442\u0438\u0432\u043d\u044b\u0439 \u0441\u043a\u0440\u0438\u043d\u0438\u043d\u0433\u043e\u0432\u044b\u0439 \u043c\u0435\u0442\u043e\u0434 \u0432\u044b\u044f\u0432\u043b\u0435\u043d\u0438\u044f \u0442\u0440\u0430\u043d\u0441\u043b\u043e\u043a\u0430\u0446\u0438\u0439 \u0441 \u0443\u0447\u0430\u0441\u0442\u0438\u0435\u043c \u0433\u0435\u043d\u043e\u0432 NTRK \u043f\u0440\u0438 \u043d\u0435\u043c\u0435\u043b\u043a\u043e\u043a\u043b\u0435\u0442\u043e\u0447\u043d\u043e\u043c \u0440\u0430\u043a\u0435 \u043b\u0435\u0433\u043a\u043e\u0433\u043e",
+      "title": "Полимеразная цепная реакция (ПЦР), как эффективный скрининговый метод выявления транслокаций с участием генов NTRK при немелкоклеточном раке легкого",
       "url": "https://voprosyonkologii.ru/index.php/journal/article/view/1392",
       "volume": "68"
     }

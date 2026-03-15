@@ -3,8 +3,10 @@ import type { Library } from './normalize'
 
 import { log } from '../../content/logger'
 import { Translation } from './translator'
-import { simplifyForExport, simplifyForImport } from '../../gen/items/simplify'
-import { version } from '../../gen/version.json'
+import { simplifyForImport, simplifyForExport } from '../../content/item-schema'
+import BBT from '../../gen/version.cjs'
+
+import { citationKey as extract } from '../../content/extra'
 
 // import { validItem } from '../content/ajv'
 // import { stringify } from '../content/stringify'
@@ -48,7 +50,7 @@ export function generateBBTJSON(collected: Collected): Translation {
     },
     version: {
       zotero: Zotero.version,
-      bbt: version,
+      bbt: BBT.version,
     },
     collections: translation.collections,
     items: [],
@@ -109,6 +111,8 @@ export async function importBBTJSON(collected: Collected): Promise<void> {
   const data: Library = JSON.parse(collected.input)
   if (!data.items || !data.items.length) return
 
+  if (data.config?.preferences) delete data.config.preferences.keyConflictPolicy
+
   const items = new Set<number>
   for (const source of (data.items as any[])) {
     simplifyForImport(source)
@@ -116,7 +120,6 @@ export async function importBBTJSON(collected: Collected): Promise<void> {
     // I do export these but the cannot be imported back
     delete source.relations
     delete source.citekey
-    delete source.citationKey
 
     delete source.uri
     delete source.key
@@ -142,6 +145,10 @@ export async function importBBTJSON(collected: Collected): Promise<void> {
     }
     // validate tests for strings
     if (Array.isArray(source.extra)) source.extra = source.extra.join('\n')
+    const { extra, citationKey } = extract(source.extra || '')
+    source.citationKey = citationKey || source.citationKey
+    source.extra = extra
+
     // marker so BBT-JSON can be imported without extra-field meddling
     if (source.extra) source.extra = `\x1BBBT\x1B${ source.extra }`
 

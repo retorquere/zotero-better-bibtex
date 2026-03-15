@@ -1,30 +1,10 @@
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 import Kuroshiro from 'kuroshiro'
-import NodeDictionaryLoader from 'kuromoji/src/loader/NodeDictionaryLoader'
 import { log } from '../logger'
 import { Preference } from '../prefs'
 import KuromojiAnalyzer from 'kuroshiro-analyzer-kuromoji'
 import { Events } from '../events'
 import * as client from '../client'
-
-async function fetchArrayBuffer(url): Promise<ArrayBuffer> {
-  const response = await fetch(url)
-  if (!response.ok) throw new Error(`kuroshiro: loading ${ url } failed: status = ${ response.status }`)
-  return await response.arrayBuffer()
-}
-if (client.slug !== 'node') {
-  NodeDictionaryLoader.prototype.loadArrayBuffer = function(url, callback) {
-    url = `chrome://zotero-better-bibtex/content/resource/kuromoji/${ url.replace(/.*[\\/]/, '').replace(/\.gz$/, '') }`
-    fetchArrayBuffer(url)
-      .then(arrayBuffer => {
-        callback(null, arrayBuffer)
-      })
-      .catch(err => {
-        log.error(`kuroshiro: loading ${ url } failed: ${ err }`)
-        callback(err, null)
-      })
-  }
-}
 
 export const japanese = new class {
   public enabled: typeof this = null
@@ -32,7 +12,7 @@ export const japanese = new class {
   private kuromoji: any
 
   public async init() {
-    Events.on('preference-changed', async pref => {
+    Events.on('preference-changed', async ({ data: pref }) => {
       if (pref === 'japanese') {
         this.enabled = null
         await this.load()

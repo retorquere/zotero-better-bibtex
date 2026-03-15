@@ -1,6 +1,8 @@
 {
   "compilerOptions": {
     "allowUnreachableCode": false,
+    "allowSyntheticDefaultImports": true,
+    "forceConsistentCasingInFileNames": true,
     "noUnusedLocals": true,
     "isolatedModules": true,
     "esModuleInterop": true,
@@ -8,14 +10,14 @@
     "importHelpers": true,
     "target": "es2022",
     "disableSizeLimit": true,
-    "module": "es2022",
     "noImplicitAny": false,
     "removeComments": false,
     "preserveConstEnums": true,
     "sourceMap": false,
     "downlevelIteration": true,
     "resolveJsonModule": true,
-    "moduleResolution": "node",
+    "module": "preserve",
+    "moduleResolution": "bundler",
     "typeRoots": [
       "./node_modules",
       "./node_modules/@types",
@@ -30,12 +32,11 @@
   "include": [
     "content/**/*",
     "translators/**/*",
-    "setup/**/*",
     "gen/**/*",
+    "**/*.cjs",
     "typings/*"
   ],
   "exclude": [
-    "headless",
     "util",
     "**/*.spec.ts"
   ]

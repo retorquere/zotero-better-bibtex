@@ -3,21 +3,17 @@
 import fs from 'fs'
 import { fileURLToPath } from 'url'
 
-import './pug2xul.js'
+import './pugs.js'
 import './preferences.js'
-import 'zotero-plugin/copy-assets.js'
-import 'zotero-plugin/manifest.js'
-import 'zotero-plugin/version.js'
+import 'zotero-plugin/copy-assets'
+import 'zotero-plugin/make-manifest'
+import 'zotero-plugin/make-version'
 import './bibertool.js'
 import './apis.js'
 
-function resolve(path) {
-  return fileURLToPath(import.meta.resolve(path))
-}
-
-fs.copyFileSync(resolve('@retorquere/bibtex-parser/unabbrev.json'), 'build/content/resource/bibtex/unabbrev.json')
-fs.copyFileSync(resolve('@retorquere/bibtex-parser/strings.bib'), 'build/content/resource/bibtex/strings.bib')
-const manifest = JSON.parse(fs.readFileSync('build/manifest.json', 'utf-8'))
-manifest.applications.zotero.strict_min_version = '7.0.15'
-manifest.applications.zotero.strict_max_version = '8.*'
-fs.writeFileSync('build/manifest.json', JSON.stringify(manifest, null, 2))
+fs.copyFileSync('node_modules/@retorquere/bibtex-parser/dist/data/unabbrev.json', 'build/content/resource/bibtex/unabbrev.json')
+fs.copyFileSync('node_modules/@retorquere/bibtex-parser/dist/data/strings.bib', 'build/content/resource/bibtex/strings.bib')
+// const manifest = JSON.parse(fs.readFileSync('build/manifest.json', 'utf-8'))
+// manifest.applications.zotero.strict_min_version = '8.0.1'
+// manifest.applications.zotero.strict_max_version = '9.*'
+// fs.writeFileSync('build/manifest.json', JSON.stringify(manifest, null, 2))

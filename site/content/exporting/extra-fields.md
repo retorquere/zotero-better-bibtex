@@ -88,21 +88,3 @@ It is important to note that these BBT-specific fields are not recognized by any
 {{% extra-fields %}}
 
 ¹ only supported in Juris-M
-
-<div class="alchemy" id="alchemy"></div>
-<script src="http://cdn.graphalchemist.com/alchemy.min.js"></script>
-<script type="text/javascript">
-  var config = {
-    dataSource: '/extra-fields.json',
-    forceLocked: false,
-    graphHeight: function(){ return 400; },
-    graphWidth: function(){ return 400; },      
-    linkDistance: function(){ return 40; },
-    nodeTypes: {"node_type":[ "Maintainer", "Contributor"]},
-    nodeCaption: function(node){ 
-      return node.caption + " " + node.fun_fact;
-    }
-  };
-
-  alchemy = new Alchemy(config)
-</script>

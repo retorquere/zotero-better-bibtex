@@ -29,6 +29,7 @@ const config = [
   {
     ignores: [
       'content/key-manager/compile.js',
+      'content/public.ts',
       'eslint.config.mjs',
       'esbuild.js',
       'site/**/*.{ts,js,mjs}',
@@ -37,7 +38,7 @@ const config = [
       'tmp/**/*.{ts,js}',
       'typings/**/*.{ts,js}',
       'test/**/*.{ts,js}',
-      'gen/**/*.{d.ts,ts,js,mjs}',
+      'gen/**/*.{cjs,d.ts,ts,js,mjs}',
       'setup/**/*.{ts,js,mjs}',
       'submodules/**/*.{mts,ts,js,mjs,tsx,cjs}',
       'setup/**/*.{ts,js}',
@@ -69,7 +70,7 @@ const config = [
       sourceType: 'module',
 
       parserOptions: {
-        project: 'tsconfig.json',
+        project: './tsconfig.json',
       },
     },
 
@@ -363,7 +364,6 @@ const config = [
       }],
 
       '@typescript-eslint/unbound-method': 'error',
-      '@typescript-eslint/unified-signatures': 'error',
       'arrow-body-style': 'error',
 
       'brace-style': ['error', 'stroustrup', {

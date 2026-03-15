@@ -56,11 +56,11 @@ export const sql = {
   setup(build) {
     build.onLoad({ filter: /[.]sql$/i }, async (args) => {
       let text = await fs.promises.readFile(args.path, 'utf-8')
-      const ddl = text.split('\n--\n')
-        //.map(ddl => ddl.replace(/[\s\n]+/g, ' '))
-        .filter(stmt => !stmt.startsWith('#'))
+      const queries = text.split(';\n')
+        .map(q => q.split('\n').map(line => line.replace(/--.*/, '')).join(' ').trim())
+        .filter(stmt => stmt)
       return {
-        contents: `module.exports = ${jsesc(ddl)}`,
+        contents: `export default ${jsesc(queries)}`,
         loader: 'js'
       }
     })
@@ -73,7 +73,7 @@ export const json = {
     build.onLoad({ filter: /\.json$/ }, async (args) => {
       const json = JSON.parse(await fs.promises.readFile(args.path, 'utf-8'))
       return {
-        contents: `module.exports = ${jsesc(json)}`,
+        contents: `export default ${jsesc(json)}`,
         loader: 'js'
       }
     })
@@ -135,7 +135,7 @@ export const pug = {
       console.log(template_function);
 
       return {
-        contents: `module.exports = ${template_function}`,
+        contents: `export default ${template_function}`,
         loader: 'js'
       }
     })

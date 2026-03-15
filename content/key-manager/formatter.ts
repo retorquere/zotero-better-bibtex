@@ -1,6 +1,4 @@
-import type { Tag } from '../../gen/typings/serialized-item'
-
-import * as client from '../../content/client'
+import type { Serialized } from '../../gen/typings/serialized'
 
 import nlp from 'compromise/one'
 interface Term {
@@ -15,7 +13,7 @@ import { Events } from '../events'
 import { log } from '../logger'
 import fold2ascii from 'fold-to-ascii'
 import rescape from '@stdlib/utils-escape-regexp-string'
-import ucs2decode from 'punycode2/ucs2/decode'
+import { ucs2 } from 'punycode2'
 
 import * as CSL from 'citeproc'
 
@@ -29,9 +27,7 @@ import { fetchSync as fetchInspireHEP } from '../inspire-hep'
 import { compile, upgrade } from './compile'
 import * as DateParser from '../dateparser'
 
-import itemCreators from '../../gen/items/creators.json'
-import * as items from '../../gen/items/items'
-import { ZoteroItemType, ZoteroFieldName } from '../../gen/items/items'
+import { Schema } from '../../content/item-schema'
 
 import { parseFragment } from 'parse5'
 
@@ -40,31 +36,19 @@ import { sprintf } from 'sprintf-js'
 import { chinese } from './chinese'
 import { japanese } from './japanese'
 import { transliterate as arabic } from './arabic'
-import { transliterate } from 'transliteration/dist/node/src/node/index'
-import { ukranian, mongolian, russian } from './cyrillic'
+import { transliterate } from 'transliteration'
+import * as cyrillic from './cyrillic'
 
 import { listsync as csv2list } from '../load-csv'
 
-import BabelTag from '../../gen/babel/tag.json'
+import BabelTag from '../../gen/babel/tag.json' with { type: 'json' }
 type BabelLanguage = string
 
 class Template<K> extends String {} // eslint-disable-line @typescript-eslint/no-unused-vars
 
-export type TransliterateMode
-  = 'minimal'
-  | 'german'
-  | 'japanese'
-  | 'chinese'
-  | 'arabic'
-  | 'ukranian'
-  | 'mongolian'
-  | 'russian'
-
-export type TransliterateModeAlias = TransliterateMode | 'de' | 'ja' | 'chinese-traditional' | 'zh-hant' | 'zh' | 'tw' | 'ar' | 'uk' | 'mn' | 'ru'
-
 const CJK = /([\p{Script=Hiragana}\p{Script=Katakana}\p{Script=Han}])/ug
 
-const unaliasTransliterateMode: Record<TransliterateModeAlias, TransliterateMode> = {
+const unaliasTransliterateMode = {
   minimal: 'minimal',
 
   german: 'german',
@@ -85,12 +69,24 @@ const unaliasTransliterateMode: Record<TransliterateModeAlias, TransliterateMode
   ukranian: 'ukranian',
   uk: 'ukranian',
 
-  mongolian: 'mongolian',
-  mn: 'mongolian',
-
   russian: 'russian',
   ru: 'russian',
-}
+
+  macedonian: 'macedonian',
+  mk: 'macedonian',
+
+  bulgarian: 'bulgarian',
+  bg: 'bulgarian',
+
+  serbian: 'serbian',
+  rs: 'serbian',
+
+  // new lib does not support mg
+  mg: 'ukranian',
+  mongolian: 'ukranian',
+} as const
+export type TransliterateModeAlias = keyof typeof unaliasTransliterateMode
+export type TransliterateMode = (typeof unaliasTransliterateMode)[keyof typeof unaliasTransliterateMode]
 
 function skip() {
   throw { next: true } // eslint-disable-line @typescript-eslint/only-throw-error
@@ -107,7 +103,7 @@ function parseDate(v): PartialDate {
     od?: number
   } = {}
 
-  let date = DateParser.parse(v, false)
+  let date = DateParser.parse(v)
   if (date.type === 'list') date = date.dates.find(d => d.type !== 'open') || date.dates[0]
   if (date.type === 'interval') date = (date.from && date.from.type !== 'open') ? date.from : date.to
   if (!date.type) date.type = 'date' // will rescue 'orig' if present
@@ -145,6 +141,9 @@ function parseDate(v): PartialDate {
     case 'season':
       parsed.y = parsed.oy = date.year
       break
+
+    case 'century':
+      Object.assign(parsed, { y: date.century * 100 })
 
     default:
       throw new Error(`Unexpected parsed date ${ JSON.stringify(v) } => ${ JSON.stringify(date) }`)
@@ -275,6 +274,7 @@ class Item {
 
   public itemType: string
   public date: PartialDate
+  public primaryCreator: string
   public creators: Creator[]
   public title: string
   public itemID: number
@@ -283,6 +283,7 @@ class Item {
   public id: number
   public libraryID: number
   public transliterateMode: TransliterateMode | ''
+  // public transliterateModeCJK: boolean
   public getField: (name: string) => number | string
   public extra: string
   public extraFields: Extra.Fields
@@ -293,7 +294,10 @@ class Item {
     this.itemID = this.id = item.id
     this.itemKey = this.key = item.key
     this.itemType = Zotero.ItemTypes.getName(item.itemTypeID)
+    this.primaryCreator = Schema.primaryCreator[this.itemType] || ''
     this.getField = function(name: string): string | number {
+      if (!name) return ''
+
       switch (name) {
         case 'dateAdded':
         case 'dateModified':
@@ -315,6 +319,7 @@ class Item {
     this.language = babelLanguage((this.getField('language') as string) || '')
     const babelTag = this.babelTag() as TransliterateMode
     this.transliterateMode = unaliasTransliterateMode[babelTag] || babelTag
+    // this.transliterateModeCJK = ['chinese', 'japanese'].includes(this.transliterateMode)
 
     const extraFields = Extra.get(this.getField('extra') as string, 'zotero', { kv: true, tex: true })
     this.extra = extraFields.extra
@@ -334,11 +339,14 @@ class Item {
     catch {
       this.date = {}
     }
-    if (this.extraFields.kv.originalDate) {
-      const date = parseDate(this.extraFields.kv.originalDate)
-      if (date.y) {
-        Object.assign(this.date, { oy: date.y, om: date.m, od: date.d, oY: date.Y })
-        if (!this.date.y) Object.assign(this.date, { y: date.y, m: date.m, d: date.d, Y: date.Y })
+    for (const orig of [ this.extraFields.kv.originalDate, this.getField('originalDate') ]) {
+      if (orig) {
+        const date = parseDate(orig)
+        if (date.y) {
+          Object.assign(this.date, { oy: date.y, om: date.m, od: date.d, oY: date.Y })
+          if (!this.date.y) Object.assign(this.date, { y: date.y, m: date.m, d: date.d, Y: date.Y })
+          break
+        }
       }
     }
     if (Object.keys(this.date).length === 0) {
@@ -352,7 +360,7 @@ class Item {
     return (BabelTag[this.language] || '') as BabelLanguage
   }
 
-  public getTags(): Tag[] {
+  public getTags(): Serialized.Tag[] {
     return this.item.getTags()
   }
 }
@@ -406,7 +414,7 @@ export class PatternFormatter {
   }
 
   constructor() {
-    Events.on('preference-changed', pref => {
+    Events.on('preference-changed', ({ data: pref }) => {
       switch (pref) {
         case 'citekeyFormat':
           this.acronyms = {}
@@ -417,7 +425,7 @@ export class PatternFormatter {
 
   public test(formula: string): string {
     try {
-      compile(formula)
+      compile(`pinned; ${formula}`)
     }
     catch (err) {
       return err.message as string
@@ -432,6 +440,8 @@ export class PatternFormatter {
     this.re.unsafechars = new RegExp(`[${ unsafechars }\\s]`, 'g')
     this.skipWords = new Set(Preference.skipWords.split(',').map((word: string) => word.trim().toLowerCase()).filter((word: string) => word))
 
+    this.config.creatorNames.transliterate = Preference.citekeyFold
+
     let error = ''
     const ts = Date.now()
     // the zero-width-space is a marker to re-save the current default so it doesn't get replaced when the default changes later, which would change new keys suddenly
@@ -440,7 +450,7 @@ export class PatternFormatter {
       if (!formula) continue
 
       try {
-        const formatter = compile(formula, { logging: Preference.testing })
+        const formatter = compile(`pinned; ${formula}`, { logging: Preference.testing })
         log.info('formula:', formula, '=>\n', formatter)
         this.generate = (new Function(formatter) as () => string)
         Preference.citekeyFormat = upgrade(formula) // upgrade to semicolons
@@ -482,14 +492,14 @@ export class PatternFormatter {
    * When arguments as passed, tests whether the item is of any of the given types, and skips to the next pattern if not, eg `type(book) + veryshorttitle | auth + year`.
    * @param allowed one or more item type names
    */
-  public $type(...allowed: ZoteroItemType[]): string {
+  public $type(...allowed: Serialized.RegularItemType[]): string {
     if (!allowed.length) return this.item.itemType
 
     if (!allowed.map(type => type.toLowerCase()).includes(this.item.itemType.toLowerCase())) skip()
     return ''
   }
 
-  public $$type(...allowed: ZoteroItemType[]): string {
+  public $$type(...allowed: Serialized.RegularItemType[]): string {
     this.$type(...allowed)
     return '$$allowed'
   }
@@ -548,9 +558,8 @@ export class PatternFormatter {
    * Gets the value of the item field
    * @param name name of the field
    */
-  public $field(name: ZoteroFieldName): string {
-    const field = items.name.field[name.replace(/ /g, '').toLowerCase()]
-    if (!field) throw new Error(`Unknown item field ${ name }`)
+  public $field(name: Serialized.FieldName): string {
+    const field = Schema.lookup.baseField[name]
 
     const value = this.item.getField(field)
     switch (typeof value) {
@@ -612,7 +621,7 @@ export class PatternFormatter {
     name = name || this.config.creatorNames.template
     const include: string[] = []
     const exclude: string[] = []
-    const primary = itemCreators[client.slug][this.item.itemType][0]
+    const primary = this.item.primaryCreator
 
     const types = this.item.creators.map(cr => cr.creatorType)
     if (typeof type === 'string') {
@@ -717,7 +726,7 @@ export class PatternFormatter {
    */
   public $authorLastForeIni(creator: AuthorType = '*'): string {
     const authors = this.creators(creator, '%(I)s')
-    const author = authors[authors.length - 1] || ''
+    const author = authors.at(-1) || ''
     return author
   }
 
@@ -728,7 +737,7 @@ export class PatternFormatter {
    */
   public $authorLast(creator: AuthorType = '*', initials = false): string {
     const authors = this.creators(creator, initials ? `${this.config.creatorNames.template}%(I)s` : this.config.creatorNames.template)
-    const author = authors[authors.length - 1] || ''
+    const author = authors.at(-1) || ''
     return author
   }
 
@@ -894,11 +903,11 @@ export class PatternFormatter {
   /**
    * The first `n` (default: 3) words of the title, apply capitalization to first `m` (default: 0) of those.
    * @param n number of words to select
-   * @param m number of words to capitalize. `0` means no words will be capitalized. Mind that existing capitals are not removed. If you enable capitalization, you also get transliteration; for CJK, capitalization is not meaningful, so if you want capitalization, BBT romanizes first.
+   * @param m number of words to capitalize. `0` means no words will be capitalized. Mind that existing capitals are not removed.
    */
   public $shorttitle(n: number = 3, m: number = 0): string { // eslint-disable-line @typescript-eslint/no-inferrable-types
-    const words = this.titleWords(this.item.title, { skipWords: true, nopunct: true, transliterate: m > 0 })
-    if (!words) return ''
+    const words = this.titleWords(this.item.title, true)
+    if (!words.length) return ''
 
     return words.slice(0, n).map((word, i) => i < m ? word.charAt(0).toUpperCase() + word.slice(1) : word).join(' ')
   }
@@ -954,6 +963,13 @@ export class PatternFormatter {
     return extra?.[2] || ''
   }
 
+  /**
+   * A pinned citation key from the extra field. eg if you have `citation key: me` in the extra field, `me` would be used as the value. This is always prepended to your formula.
+   */
+  public $pinned(): string {
+    return this.item.extraFields.kv.citationKey || ''
+  }
+
   /** the original year of the publication */
   public $origyear(): string {
     return this.padYear(this.format_date(this.item.date, '%-oY'), 2)
@@ -972,7 +988,7 @@ export class PatternFormatter {
 
   /** Capitalize all the significant words of the title, and concatenate them. For example, `An awesome paper on JabRef` will become `AnAwesomePaperJabref` */
   public $title(): string {
-    return (this.titleWords(this.item.title, { skipWords: true, nopunct: true }) || []).join(' ')
+    return this.titleWords(this.item.title, true).join(' ')
   }
 
   private postfixstart(start: number | string): number {
@@ -1023,12 +1039,20 @@ export class PatternFormatter {
    * @param match  Regex to test the creator-type list. When passed, and the creator-type list does not match the regex, jump to the next formule. When it matches, return nothing but stay in the current formule. When no regex is passed, output the creator-type list for the item (mainly useful for debugging).
    */
   public $creatortypes(match?: RegExp): string {
-    const creators = [...(new Set([ '', (itemCreators[client.slug][this.item.itemType] || [])[0] || '' ]))].sort() // this will shake out duplicates and put the empty string first
-      .map(primary => (this.item.creators || []).map(cr => `${ typeof cr.name === 'string' ? 1 : 2 }${ cr.creatorType === primary ? 'primary' : cr.creatorType }`).join(';'))
-      .map(cr => `${ this.item.itemType }:${ cr }`)
+    const primary = this.item.primaryCreator
+    const encode = (cr: Creator, replace: boolean) => {
+      const parts = typeof cr.name === 'string' ? 1 : 2
+      const name = cr.creatorType === primary && replace ? 'primary' : cr.creatorType
+      const mark = cr.creatorType === primary && !replace ? '@' : ''
+      return `${parts}${mark}${name}`
+    }
+
+    const creators = [ false, true ] // replace actual primary creator name with the text 'primary' for generic 'primary' matching
+      .map(replace => (this.item.creators || []).map(cr => encode(cr, replace)).join(','))
+      .map(cr => `${this.item.itemType}:${cr}`) // prefix item type
 
     if (match && !creators.find(cr => cr.match(match))) skip()
-    return creators[0]
+    return creators[0] // return list
   }
   public $$creatortypes(match?: RegExp): string {
     this.$creatortypes(match)
@@ -1069,12 +1093,13 @@ export class PatternFormatter {
     if (!match) return input
 
     const cleaned = (t: string) => clean ? this.clean(t, true) : t
-
     if (typeof match === 'string') match = new RegExp(rescape(cleaned(match)), 'i')
+
+    const offset = match.global ? 0 : 1
     const m = cleaned(input).match(match)
     if (!m) skip()
-    if (m.length === 1) return input
-    return m.slice(1).join('')
+    if (m.length === offset) return input
+    return m.slice(offset).join(' ')
   }
   public __match(input: string, match: RegExp | string, clean = false): string {
     this._match(input, match, clean)
@@ -1084,7 +1109,6 @@ export class PatternFormatter {
   /**
    * Finds a text in the string and returns it.
    * @param match regex or string to match. String matches are case-insensitive
-   * @param clean   transliterates the current output and removes unsafe characters during matching
    * @param passthrough if no match is found, pass through input.
    */
   public _find(input: string, match: RegExp | string, passthrough = false): string {
@@ -1300,8 +1324,7 @@ export class PatternFormatter {
    * @param nopunct remove punctuation from words
    */
   public _skipwords(input: string, nopunct: boolean = false): string { // eslint-disable-line @typescript-eslint/no-inferrable-types
-    const words = this.titleWords(input, { skipWords: true, nopunct })
-    return words ? words.join(' ') : ''
+    return this.titleWords(input, nopunct).join(' ')
   }
 
   /**
@@ -1414,14 +1437,16 @@ export class PatternFormatter {
     return ''
   }
   /**
-   * transliterates the citation key. If you don't specify a mode, the mode is derived from the item language field
+   * transliterates the input. If you don't specify a mode, the mode is derived from the item language field
    * @param mode specialized translateration modes for german, japanese or chinese.
    */
   public _transliterate(input: string, mode?: TransliterateModeAlias): string {
-    return this.transliterate(input, (unaliasTransliterateMode[mode] || mode) as TransliterateMode)
+    return this.transliterate(input, (unaliasTransliterateMode[mode] || mode || this.item.transliterateMode) as TransliterateMode)
   }
 
   private transliterate(str: string, mode?: TransliterateMode): string {
+    if (!str) return ''
+
     mode = mode || this.item.transliterateMode || 'minimal'
 
     switch (mode) {
@@ -1442,15 +1467,23 @@ export class PatternFormatter {
         break
 
       case 'ukranian':
-        str = ukranian(str)
+        str = cyrillic.ukranian(str)
         break
 
-      case 'mongolian':
-        str = mongolian(str)
+      case 'bulgarian':
+        str = cyrillic.bulgarian(str)
+        break
+
+      case 'serbian':
+        str = cyrillic.serbian(str)
+        break
+
+      case 'macedonian':
+        str = cyrillic.macedonian(str)
         break
 
       case 'russian':
-        str = russian(str)
+        str = cyrillic.russian(str)
         break
 
       case 'minimal':
@@ -1458,11 +1491,7 @@ export class PatternFormatter {
         break
     }
 
-    str = transliterate(str || '', { unknown: '\uFFFD' })
-
-    str = fold2ascii.foldMaintaining(str)
-
-    return str
+    return fold2ascii.foldMaintaining(transliterate(str, { unknown: '\uFFFD' })) as string
   }
 
   private clean(str: string, allow_spaces = false): string {
@@ -1487,29 +1516,27 @@ export class PatternFormatter {
     return contracted.map(term => term.text).filter(term => !this.skipWords.has(term.toLowerCase()))
   }
 
-  private titleWords(title, options: { transliterate?: boolean; skipWords?: boolean; nopunct?: boolean } = {}): string[] {
-    if (!title) return null
+  private titleWords(title, nopunct = false): string[] {
+    if (!title) return []
 
     title = title.replace(/<\/?(?:i|b|sc|nc|code|span[^>]*)>|["]/ig, '').replace(/[/:]/g, ' ')
-    let words = this.split(title)
-      .map(word => options.nopunct ? this.nopunct(word, '') : word)
-      .filter(word => word && !(options.skipWords && ucs2decode(word).length === 1 && !word.match(/^\d+$/) && !word.match(CJK)))
+    let words: string[] = this.split(title)
+      .map(word => nopunct ? this.nopunct(word, '') : word)
+      .filter(word => word && !(ucs2.decode(word).length === 1 && !word.match(/^\d+$/) && !word.match(CJK)))
 
     // apply jieba.cut and flatten.
-    if (chinese.enabled && options.skipWords && this.item.transliterateMode === 'chinese') {
-      words = [].concat(...words.map((word: string) => chinese.jieba(word)))
-      // remove CJK skipwords
-      words = words.filter((word: string) => !this.skipWords.has(word.toLowerCase()))
+    if (chinese.enabled && this.item.transliterateMode === 'chinese') {
+      words = [].concat(...words.map(word => chinese.jieba(word)))
     }
 
-    if (japanese.enabled && options.skipWords && this.item.transliterateMode === 'japanese') {
-      words = words
-        .flatMap((word: string) => japanese.tokenize(word))
-        .filter((word: string) => !this.skipWords.has(word.toLowerCase()))
+    if (japanese.enabled && this.item.transliterateMode === 'japanese') {
+      words = words.flatMap(word => japanese.tokenize(word))
     }
 
-    if (options.transliterate) {
-      words = words.map((word: string) => {
+    if (this.skipWords.size) words = words.filter(word => !this.skipWords.has(word.toLowerCase()))
+
+    if (Preference.citekeyFold) {
+      words = words.map(word => {
         if (this.item.transliterateMode) {
           return this.transliterate(word)
         }
@@ -1524,11 +1551,6 @@ export class PatternFormatter {
         }
       })
     }
-
-    // remove transliterated and non-CJK skipwords
-    if (options.skipWords) words = words.filter((word: string) => !this.skipWords.has(word.toLowerCase()))
-
-    if (words.length === 0) return null
 
     return words
   }
@@ -1586,8 +1608,7 @@ export class PatternFormatter {
 
   private creators(select: AuthorType, template?: Template<'creators'>): string[] {
     template = template || this.config.creatorNames.template
-    const types = itemCreators[client.slug][this.item.itemType] || []
-    const primary = types[0]
+    const primary = this.item.primaryCreator
 
     const creators = {
       editor: [],

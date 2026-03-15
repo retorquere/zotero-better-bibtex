@@ -166,17 +166,17 @@ citekeyFold:
     apply `fold` to all your keys.
   default: true
 
-keyConflictPolicy:
-  description: >
-    This determines what happens if you pin a key to a value that is already in
-    use in a different item but not pinned there.
-
-    Neither are ideal, you just get to pick your poison. If you let BBT change
-    the non-pinned key by adding a postfix character,
-
-    the citation key changes which could be problematic for existing papers. If
-    you keep the non-pinned key as-is, your library now has duplicate keys.
-  default: keep
+#keyConflictPolicy:
+#  description: >
+#    This determines what happens if you fill a key to a value that is already in
+#    use in a different.
+#
+#    Neither are ideal, you just get to pick your poison. If you let BBT change
+#    the non-pinned key by adding a postfix character,
+#
+#    the citation key changes which could be problematic for existing papers. If
+#    you keep the non-pinned key as-is, your library now has duplicate keys.
+#  default: keep
 
 auxImport:
   description: >
@@ -476,15 +476,19 @@ itemObserverDelay:
     acting on the changed items.
   default: 5
 
-autoPinDelay:
+fillKeyAfter:
   description: >-
-    When &gt; 0, BBT will automatically pin the first citation keys it generates
-    for an item after this many seconds.
-  default: 0
+    When &gt; 0, BBT will automatically fill the citation key for an item that does not currently have one after this many seconds. When 0, keys will only be generated on user request.
+  default: 2
+
+resetKeyOnChange:
+  description: >-
+    When true, BBT will overwrite existing keys with new keys after an item changes.
+  default: false
 
 parseParticles:
   description: >-
-    Name particle handling. Only turn on when requested and we're talking about
+    Name particle handling. Only turn off when requested and we're talking about
     it on github.
   default: true
   affects:
@@ -723,24 +727,6 @@ packages:
     - Better BibLaTeX
     - Better BibTeX
 
-cacheRetain:
-  tooltip: >-
-    By default, BBT clears all caches whenever BBT or Zotero is upgraded. I
-    can't realistically predict whether a change in Zotero or BBT is going to
-    affect the output generated for any given item, so to be sure you always
-    have the latest export-affecting fixes, the caches are discarded when a new
-    version of either is detected. If you have a very large library however, of
-    which you regularly export significant portions, you might want to retain
-    the cached items even if that does come with the risk that you get wrong
-    output on export that has been fixed in the interim.
-
-
-    If you have this on, and you experience any problem that is not the cache
-    getting dropped on upgrade, you *must* clear the cache and reproduce the
-    problem. When you change this setting, as with any setting change, the cache
-    will be dropped.
-  default: false
-
 cacheDelete:
   default: false
 
@@ -877,7 +863,10 @@ testing:
   default: false
 
 logEvents:
-  default: true
+  default: false
 
 platform:
   default: ''
+
+remigrate:
+  default: false

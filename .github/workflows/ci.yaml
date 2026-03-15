@@ -8,6 +8,14 @@ on:
 
 jobs:
   build:
+    if: >-
+      github.event_name == 'pull_request' ||
+      github.event_name == 'schedule' ||
+      startsWith(github.ref, 'refs/tags/') ||
+      (github.ref != 'refs/heads/master' && github.ref != 'refs/heads/l10n_master')
+      ||
+      (github.ref == 'refs/heads/master' && !contains(github.event.head_commit.message,
+      '[tagged build]'))
     outputs:
       bin_ids: ${{ env.bin_ids }}
       bins: ${{ env.bins }}
@@ -16,23 +24,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v4
+      uses: actions/checkout@v6
       with:
         persist-credentials: false
         fetch-depth: 1
-        submodules: true
+        submodules: recursive
 
     - name: get package version
       run: echo "version="`jq -r .version package.json` >> $GITHUB_ENV
-    - name: cancel spurious build on tagged version
-      uses: andymckay/cancel-action@master
-      if: github.event.head_commit.message == env.version && 
-        !startsWith(github.ref, 'refs/tags/')
-
     - name: install python
-      uses: actions/setup-python@v5
+      uses: actions/setup-python@v6
       with:
-        python-version: '3.10'
+        python-version: '3.12'
         cache: pip
     - name: install python packages
       run: |
@@ -40,12 +43,12 @@ jobs:
         pip install packaging xvfbwrapper
         pip install -r requirements.txt
     - name: install node
-      uses: actions/setup-node@v4
+      uses: actions/setup-node@v6
       with:
         node-version: 20.x
     - name: install node packages
-      run: npm install && npm ls
-    - name: set slow/legacy/beta flags
+      run: npm install --no-package-lock && npm ls
+    - name: set slow/beta/legacy/whopper flags
       run: ./util/action-flags
       env:
         GITHUB_CONTEXT: ${{ toJson(github) }}
@@ -72,7 +75,7 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     - name: store build artifacts
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v7
       with:
         name: build-artifacts
         path: |
@@ -84,20 +87,20 @@ jobs:
   site:
     runs-on: ubuntu-latest
     continue-on-error: true
-    if: ${{ github.event_name == 'push' && (github.ref == 'refs/heads/master' ||
-      startsWith(github.ref, 'refs/tags/')) }}
+    if: github.event_name == 'push' && github.ref == 'refs/heads/master' && 
+      !contains(github.event.head_commit.message, '[tagged build]')
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v4
+      uses: actions/checkout@v6
       with:
         persist-credentials: false
         fetch-depth: 1
-        submodules: true
+        submodules: recursive
 
     - name: install python
-      uses: actions/setup-python@v5
+      uses: actions/setup-python@v6
       with:
-        python-version: '3.10'
+        python-version: '3.12'
         cache: pip
     - name: install python packages
       run: |
@@ -105,11 +108,11 @@ jobs:
         pip install packaging xvfbwrapper
         pip install -r requirements.txt
     - name: install node
-      uses: actions/setup-node@v4
+      uses: actions/setup-node@v6
       with:
         node-version: 20.x
     - name: install node packages
-      run: npm install && npm ls
+      run: npm install --no-package-lock && npm ls
     - name: install hugo 0.143.1 and build site
       uses: peaceiris/actions-hugo@v3
       with:
@@ -136,20 +139,20 @@ jobs:
         worker: [--worker, --no-worker]
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v4
+      uses: actions/checkout@v6
       with:
         persist-credentials: false
         fetch-depth: 1
-        submodules: true
+        submodules: recursive
 
     - name: fetch build artifacts
       uses: actions/download-artifact@v4
       with:
         name: build-artifacts
     - name: install python
-      uses: actions/setup-python@v5
+      uses: actions/setup-python@v6
       with:
-        python-version: '3.10'
+        python-version: '3.12'
         cache: pip
     - name: install python packages
       run: |
@@ -230,11 +233,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v4
+      uses: actions/checkout@v6
       with:
         persist-credentials: false
         fetch-depth: 1
-        submodules: true
+        submodules: recursive
 
 
     - name: fetch build artifacts
@@ -242,9 +245,9 @@ jobs:
       with:
         name: build-artifacts
     - name: install python
-      uses: actions/setup-python@v5
+      uses: actions/setup-python@v6
       with:
-        python-version: '3.10'
+        python-version: '3.12'
         cache: pip
     - name: install python packages
       run: |
@@ -252,12 +255,13 @@ jobs:
         pip install packaging xvfbwrapper
         pip install -r requirements.txt
     - name: install node
-      uses: actions/setup-node@v4
+      uses: actions/setup-node@v6
       with:
         node-version: 20.x
     - name: install node packages
-      run: npm install && npm ls
+      run: npm install --no-package-lock && npm ls
 
+    - run: find xpi -type f
     - run: npm run release
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -275,23 +279,24 @@ jobs:
           }
 
   durations:
-    if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+    if: github.event_name == 'push' && github.ref == 'refs/heads/master' && 
+      !contains(github.event.head_commit.message, '[tagged build]')
     needs:
     - build
     - test
     runs-on: ubuntu-latest
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v4
+      uses: actions/checkout@v6
       with:
         persist-credentials: false
         fetch-depth: 1
-        submodules: true
+        submodules: recursive
 
     - name: install python
-      uses: actions/setup-python@v5
+      uses: actions/setup-python@v6
       with:
-        python-version: '3.10'
+        python-version: '3.12'
         cache: pip
     - name: install python packages
       run: |

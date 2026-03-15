@@ -29,7 +29,7 @@ export const TeXstudio = new class {
       try {
         const pane = Zotero.getActiveZoteroPane() // can Zotero 5 have more than one pane at all?
         const items = pane.getSelectedItems()
-        citation = items.map(item => Zotero.BetterBibTeX.KeyManager.get(item.id).citationKey).filter(citekey => citekey).join(',')
+        citation = items.map(item => Zotero.BetterBibTeX.KeyManager.get(item.id)?.citationKey).filter(citekey => citekey).join(',')
       }
       catch (err) { // zoteroPane.getSelectedItems() doesn't test whether there's a selection and errors out if not
         log.error('TeXstudio: Could not get selected items:', err)

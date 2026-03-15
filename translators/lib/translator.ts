@@ -7,7 +7,7 @@ import * as Prefs from '../../gen/preferences/meta'
 const PrefNames: Set<string> = new Set(Object.keys(Prefs.defaults))
 import { DisplayOptions } from '../../gen/translators'
 import { regex as escapeRE } from '../../content/escape'
-import { Collection, Attachment } from '../../gen/typings/serialized-item'
+import { Serialized } from '../../gen/typings/serialized'
 import type { Exporter as BibTeXExporter } from '../bibtex/exporter'
 import type { CharMap } from 'unicode2latex'
 import { log } from '../../content/logger'
@@ -15,7 +15,7 @@ import type { Collected } from './collect'
 
 export type Output = {
   body: string
-  attachments: Attachment[]
+  attachments: Serialized.Attachment[]
 }
 
 class Override {
@@ -81,17 +81,17 @@ class Override {
 }
 
 export class Translation {
-  public importToExtra: Record<string, 'plain' | 'force'>
-  public skipFields: string[]
-  public skipField: RegExp
+  public importToExtra!: Record<string, 'plain' | 'force'>
+  public skipFields!: string[]
+  public skipField!: RegExp
   public verbatimFields?: (string | RegExp)[]
-  public csquotes: { open: string; close: string }
+  public csquotes!: { open: string; close: string }
   public export: { dir: string; path: string } = {
     dir: undefined,
     path: undefined,
   }
 
-  public charmap: CharMap
+  public charmap!: CharMap
 
   public BetterBibLaTeX?: boolean
   public BetterBibTeX?: boolean
@@ -108,7 +108,7 @@ export class Translation {
 
   public bibtex: BibTeXExporter
 
-  public collections: Record<string, Collection> = {} // keep because it is being used in postscripts
+  public collections: Record<string, Serialized.Collection> = {} // keep because it is being used in postscripts
   public output: Output = {
     body: '',
     attachments: [],
@@ -116,13 +116,13 @@ export class Translation {
 
   private cacheable = true
 
-  public preferences: Prefs.Preferences
-  public options: DisplayOptions
+  public preferences!: Prefs.Preferences
+  public options!: DisplayOptions
 
-  public isJurisM: boolean
-  public isZotero: boolean
-  public unicode: boolean
-  public paths: {
+  public isJurisM!: boolean
+  public isZotero!: boolean
+  public unicode!: boolean
+  public paths!: {
     caseSensitive: boolean
     sep: string
   }

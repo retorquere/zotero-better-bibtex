@@ -2,7 +2,7 @@
 
 declare const Zotero: any
 
-import { Preferences, defaults } from './preferences/meta'
+import { Preferences, defaults } from './preferences/meta.js'
 
 export class PreferenceManager {
   public default = defaults

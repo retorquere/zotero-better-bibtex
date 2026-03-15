@@ -1,4 +1,4 @@
-This release is compatible with Zotero 7 and Zotero 7 beta. The last version of BBT that is compatible with Zotero 6 can be found at https://github.com/retorquere/zotero-better-bibtex/releases/tag/v6.7.267. Zotero 6 support is in maintenance mode.
+This release is compatible with Zotero 8 and Zotero 9 beta. Per BBT 8.0.26, Zotero 7 is no longer supported.
 
 If you use Firefox, make sure to right-click and save the XPI file, not just clicking it.
 

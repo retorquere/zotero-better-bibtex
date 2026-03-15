@@ -6,7 +6,6 @@ import { generateSchema } from 'json-schema-it'
 import path from 'path'
 import ts from 'typescript'
 import { inspect } from 'util'
-import { parse as parseComment } from 'comment-parser'
 
 import Showdown from 'showdown'
 const Markdown = new class {
@@ -19,30 +18,27 @@ const Markdown = new class {
   }
 }()
 
-const TSDoc = new class {
-  extract(comment) {
-    if (!comment) return { body: '', parameters: {} }
+function JsDoc(node) {
+  const comment = node.jsDoc?.find(n => n.kind === ts.SyntaxKind.JSDocComment)
+  const body = comment?.comment || ''
 
-    const parsedBlocks = parseComment(comment, { spacing: 'preserve' })
-
-    const body = parsedBlocks[0].description
-    const parameters = {}
+  const parameters = {}
+  if (comment && comment.tags) {
     let m
-    for (const tag of parsedBlocks[0].tags) {
-      if (tag.tag === 'param') {
-        if (m = tag.name.match(/^([^.]+)[.](.+)/)) {
-          const [, name, member ] = m
-          parameters[name] += `\n * .${member}: ${tag.description}`
-        }
-        else {
-          parameters[tag.name] = tag.description
-        }
+    for (const tag of comment.tags.filter(t => t.kind === ts.SyntaxKind.JSDocParameterTag)) {
+      const name = tag.name.getText()
+      if (m = name.match(/^(?<obj>[^.]+)[.](?<member>.+)/)) {
+        const { obj, member } = m.groups
+        parameters[obj] += `\n * .${member}: ${tag.comment}`
+      }
+      else {
+        parameters[name] = tag.comment
       }
     }
-
-    return { body, parameters }
   }
-}()
+
+  return { body, parameters }
+}
 
 function escapeHTML(str) {
   const escapeChars = {
@@ -54,6 +50,11 @@ function escapeHTML(str) {
     '`': '&#96;',
   }
   return str.replace(/[&<>"'`]/g, char => escapeChars[char])
+}
+
+function stop(...msg) {
+  console.error(...msg)
+  process.exit(1)
 }
 
 function stringify(obj, sorted) {
@@ -96,7 +97,7 @@ const Zotero = new class {
 const Babel = new class {
   constructor() {
     const tags = JSON.parse(fs.readFileSync('gen/babel/tag.json', 'utf-8'))
-    this.languages = unique([Object.keys(tags), ...Object.values(tags)])
+    this.languages = unique(...[Object.keys(tags), ...Object.values(tags)])
   }
 }()
 export function printed(schema, parenthesize) {
@@ -107,8 +108,7 @@ export function printed(schema, parenthesize) {
     case 'object':
       if (schema.additionalProperties) return `{ [string]: ${printed(schema.additionalProperties)} }`
       if (schema.properties) return `{ ${Object.entries(schema.properties).map(([k, t]) => `${k}: ${printed(t)}`).join('; ')} }`
-      console.error('Unexpected object schema:', schema)
-      process.exit(1)
+      stop('Unexpected object schema:', schema)
 
     case 'string':
       if (schema.format === 'item-type') return wordlist(Zotero.itemTypes)
@@ -120,8 +120,7 @@ export function printed(schema, parenthesize) {
       if (Object.keys(schema).length === 1) return 'string'
       if (schema.enum) return wordlist(unique(schema.enum))
       if (typeof schema.const === 'string') return `'${schema.const}'`
-      console.error('Unexpected string schema:', schema)
-      process.exit(1)
+      stop('Unexpected string schema:', schema)
 
     case 'number':
     case 'boolean':
@@ -149,8 +148,7 @@ export function printed(schema, parenthesize) {
       if (schema.oneOf) return schema.oneOf.map(subtype => printed(subtype)).join(' | ')
       if (schema.sprintf) return `string containing at least one of ${wordlist([...(schema.sprintf.matchAll(/%(.*?)s/g))].flatMap(r => `%(${r[1]})s`), ', ')}`
 
-      console.error('Unexpected schema:', schema)
-      process.exit(1)
+      stop('Unexpected schema:', schema)
   }
 }
 
@@ -337,12 +335,12 @@ class APIReader {
     const program = ts.createProgram([sourcePath], compilerOptions, compilerHost)
     this.parsedSourceFile = program.getSourceFile(sourcePath)
     if (!this.parsedSourceFile) {
-      console.error(`ERROR: Could not load source file: ${sourcePath}. Please ensure the file exists and is readable.`)
-      process.exit(1)
+      stop(`ERROR: Could not load source file: ${sourcePath}. Please ensure the file exists and is readable.`)
     }
 
     this.currentClassName = null
     this.typeDeclaration = {}
+    this.constDeclaration = {}
     this.api = {}
     this.traverse(this.parsedSourceFile)
     this.api = sortObject(this.api)
@@ -350,26 +348,26 @@ class APIReader {
 
   traverse(node) {
     if (ts.isClassDeclaration(node) && node.name) {
-      this.currentClassName = node.name.getText(this.parsedSourceFile)
+      this.currentClassName = node.name.getText()
     }
     else if (this.currentClassName?.match(this.className) && ts.isMethodDeclaration(node)) {
       this.templateDoc = ''
-      const methodName = node.name.getText(this.parsedSourceFile)
+      const methodName = node.name.getText()
 
       if (methodName.match(this.methodName)) {
         if (!this.api[this.currentClassName]) this.api[this.currentClassName] = {}
 
-        const doc = TSDoc.extract(this.getTSDoc(node))
+        const doc = JsDoc(node)
 
         if (!node.type) throw node.getText()
         const returnType = simplifySchema(this.resolveType(node.type))
 
         const parameters = node.parameters.map(param => {
-          const paramName = param.name.getText(this.parsedSourceFile)
+          const paramName = param.name.getText()
 
           const isOptional = !!param.questionToken || !!param.initializer
-          const defaultValue = param.initializer ? eval(param.initializer.getText(this.parsedSourceFile)) : undefined
-          // const originalParamTypeString = param.type ? param.type.getText(this.parsedSourceFile) : defaultValue
+          const defaultValue = param.initializer ? eval(param.initializer.getText()) : undefined
+          // const originalParamTypeString = param.type ? param.type.getText() : defaultValue
 
           let paramType
           if (param.type) {
@@ -379,8 +377,7 @@ class APIReader {
             paramType = generateSchema(defaultValue)
           }
           else {
-            console.error(`[${this.source}] ${this.currentClassName}.${methodName}.${paramName} has no type`)
-            process.exit(1)
+            stop(`[${this.source}] ${this.currentClassName}.${methodName}.${paramName} has no type`)
           }
 
           return {
@@ -404,10 +401,24 @@ class APIReader {
     else if (ts.isTypeAliasDeclaration(node)) {
       this.typeDeclaration[node.name.text] = node.type
     }
+    else if (ts.isVariableStatement(node)) {
+      this.findConst(node)
+    }
 
     ts.forEachChild(node, child => this.traverse(child))
 
     if (ts.isClassDeclaration(node)) this.currentClassName = null
+  }
+
+  findConst(varStmt) {
+    for (const decl of varStmt.declarationList.declarations) {
+      if (!decl.initializer) continue
+      if (decl.initializer.kind !== ts.SyntaxKind.AsExpression) continue
+      if (decl.initializer.type?.kind !== ts.SyntaxKind.TypeReference) continue
+      if (decl.initializer.type.typeName.getText() !== 'const') continue
+      if (decl.initializer.expression.kind !== ts.SyntaxKind.ObjectLiteralExpression) continue
+      this.constDeclaration[decl.name.getText()] = eval(`(${decl.initializer.expression.getText()})`)
+    }
   }
 
   resolveType(type) {
@@ -430,11 +441,27 @@ class APIReader {
             acc[m.name.getText()] = this.resolveType(m.type)
             return acc
           }, {}),
-          required: type.members.filter(m => m.questionToken !== undefined).map(m => m.name.getText()),
+          required: type.members.filter(m => !m.questionToken && !m.initializer).map(m => m.name.getText()),
           additionalProperties: false,
         }
 
       case 'TypeReference':
+        switch (type.getText()) {
+          case 'Serialized.RegularItemType':
+            return { type: 'string', format: 'item-type' }
+          case 'Serialized.FieldName':
+            return { type: 'string', format: 'item-field' }
+          case 'BabelLanguage':
+            return { type: 'string', format: 'babel-language' }
+          case 'CreatorType':
+            return { type: 'string', format: 'creator-type' }
+          case 'RegExp':
+            return { instanceof: 'RegExp' }
+          default:
+            // console.log(type.getText())
+            break
+        }
+
         if (ts.SyntaxKind[type.typeName.kind] === 'Identifier') {
           name = type.typeName.text
           switch (name) {
@@ -446,14 +473,6 @@ class APIReader {
             case 'Promise':
               if (type.typeArguments.length !== 1) throw type.getText()
               return this.resolveType(type.typeArguments[0])
-            case 'ZoteroItemType':
-              return { type: 'string', format: 'item-type' }
-            case 'ZoteroFieldName':
-              return { type: 'string', format: 'item-field' }
-            case 'BabelLanguage':
-              return { type: 'string', format: 'babel-language' }
-            case 'CreatorType':
-              return { type: 'string', format: 'creator-type' }
             case 'Template':
               switch (type.typeArguments[0].literal.text) {
                 case 'creator':
@@ -481,9 +500,6 @@ class APIReader {
                   return { sprintf: '%as%As%ns' }
               }
               break
-
-            case 'RegExp':
-              return { instanceof: name }
           }
 
           if (!this.typeDeclaration[name]) {
@@ -553,22 +569,29 @@ class APIReader {
           items: false,
         }
 
-      default:
-        throw new Error(`Unexpected ${ts.SyntaxKind[type.kind]}`)
-    }
-  }
+      case 'TypeOperator':
+        switch (type.operator) {
+          case ts.SyntaxKind.KeyOfKeyword:
+            if (type.type.exprName?.kind === ts.SyntaxKind.Identifier) {
+              const name = type.type.exprName.getText()
+              if (!this.constDeclaration[name]) stop('keyof only works on constants, no constant', name)
+              return { type: 'string', enum: Object.keys(this.constDeclaration[name]) }
+            }
+            break
+        }
+        stop('Unexpected TypeOperator', ts.SyntaxKind[type.operator])
 
-  getTSDoc(node) {
-    const leadingCommentRanges = ts.getLeadingCommentRanges(this.parsedSourceFile.text, node.pos)
-    if (!leadingCommentRanges) {
-      return null
+      /*
+      case 'TypeQuery':
+        if (ts.SyntaxKind[type.exprName.kind] === 'Identifier') {
+          const name = type.exprName.getText()
+          console.log(name, 'TypeQuery', { ...type, parent: undefined })
+        }
+        break
+      */
     }
 
-    for (const range of leadingCommentRanges) {
-      const commentText = this.parsedSourceFile.text.substring(range.pos, range.end)
-      if (commentText.trim().startsWith('/**')) return commentText
-    }
-    return null
+    stop('Unexpected type component', ts.SyntaxKind[type.kind])
   }
 }
 

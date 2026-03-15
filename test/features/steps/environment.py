@@ -37,7 +37,7 @@ class TestBin:
 
     self.bin = int(context.config.userdata['bin'])
 
-    assert 'bins' in context.config.userdata
+    assert 'bins' in context.config.userdata, context.config.userdata
 
     with open(context.config.userdata['bins']) as f:
       self.tests = {

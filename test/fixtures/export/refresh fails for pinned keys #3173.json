@@ -5,7 +5,7 @@
     "preferences": {
       "DOIandURL": "doi",
       "autoAbbrev": true,
-      "autoPinDelay": 1,
+      "fillKeyAfter": 1,
       "citekeyFormat": "auth.lower+year+shorttitle(3,3)+type.abbr(4).capitalize",
       "keyConflictPolicy": "change",
       "keyScope": "global",
@@ -16,7 +16,6 @@
   "items": [
     {
       "ISBN": "978-0-521-19956-8",
-      "citationKey": "DBLP:books/daglib/0032853",
       "creators": [
         {
           "creatorType": "author",
