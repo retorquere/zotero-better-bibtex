@@ -88,7 +88,7 @@ jobs:
     runs-on: ubuntu-latest
     continue-on-error: true
     if: github.event_name == 'push' && github.ref == 'refs/heads/master' && 
-      !contains(github.event.head_commit.message, '[tagged build]'))
+      !contains(github.event.head_commit.message, '[tagged build]')
     steps:
     - name: Checkout repository
       uses: actions/checkout@v6
@@ -280,7 +280,7 @@ jobs:
 
   durations:
     if: github.event_name == 'push' && github.ref == 'refs/heads/master' && 
-      !contains(github.event.head_commit.message, '[tagged build]'))
+      !contains(github.event.head_commit.message, '[tagged build]')
     needs:
     - build
     - test
