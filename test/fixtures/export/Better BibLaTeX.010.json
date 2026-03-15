@@ -5,7 +5,8 @@
     "localeDateOrder": "ymd",
     "preferences": {
       "bibtexURL": "note",
-      "citekeyFormat": "auth(n=0,m=1,creator=\"*\",initials=false).fold + year"
+      "citekeyFormat": "auth(n=0,m=1,creator=\"*\",initials=false).fold + year",
+      "bibtexURLpackage": true
     }
   },
   "items": [
@@ -41,7 +42,7 @@
         },
         {
           "creatorType": "editor",
-          "firstName": "Yücel",
+          "firstName": "Y\u00fccel",
           "lastName": "Saygin"
         },
         {
@@ -89,7 +90,7 @@
       ],
       "itemID": 1,
       "itemType": "conferencePaper",
-      "pages": "507–514",
+      "pages": "507\u2013514",
       "publicationTitle": "ICDM Workshops",
       "publisher": "IEEE Computer Society",
       "tags": [

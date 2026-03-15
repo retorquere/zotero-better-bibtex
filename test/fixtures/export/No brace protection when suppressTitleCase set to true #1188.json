@@ -12,7 +12,8 @@
       "citekeyFormat": "authorsn(n=3,creator=\"*\",initials=false,sep=\" \").fold + year",
       "exportTitleCase": false,
       "itemObserverDelay": 100,
-      "skipFields": "note,issn"
+      "skipFields": "note,issn",
+      "bibtexURLpackage": true
     }
   },
   "items": [

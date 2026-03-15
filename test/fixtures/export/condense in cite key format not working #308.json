@@ -10,7 +10,8 @@
       "autoAbbrevStyle": "http://www.zotero.org/styles/nature",
       "bibtexURL": "note",
       "citekeyFormat": "auth(n=0,m=1,creator=\"*\",initials=false).condense(_).transliterate.lower + year + Title.transliterate.skipwords.select(1,1).lower",
-      "biblatexExtendedNameFormat": false
+      "biblatexExtendedNameFormat": false,
+      "bibtexURLpackage": true
     }
   },
   "items": [

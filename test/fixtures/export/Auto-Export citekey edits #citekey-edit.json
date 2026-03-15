@@ -8,10 +8,11 @@
     "preferences": {
       "DOIandURL": "doi",
       "autoExportDelay": 6,
-      "bibtexURL": "url-ish",
+      "bibtexURL": "url",
       "citekeyFold": false,
       "citekeyFormat": "zotero.clean",
-      "skipFields": "file"
+      "skipFields": "file",
+      "bibtexURLpackage": false
     }
   },
   "items": [

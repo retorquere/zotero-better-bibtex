@@ -12,7 +12,8 @@
       "bibtexURL": "url",
       "citeCommand": "citep",
       "exportTitleCase": false,
-      "skipFields": "file"
+      "skipFields": "file",
+      "bibtexURLpackage": true
     }
   },
   "items": [

@@ -10,7 +10,8 @@
       "DOIandURL": "doi",
       "autoAbbrevStyle": "http://www.zotero.org/styles/cell",
       "bibtexURL": "note",
-      "citekeyFormat": "auth(n=0,m=1,creator=\"*\",initials=false).fold + \"_\" + year"
+      "citekeyFormat": "auth(n=0,m=1,creator=\"*\",initials=false).fold + \"_\" + year",
+      "bibtexURLpackage": true
     }
   },
   "items": [

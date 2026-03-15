@@ -18,7 +18,8 @@
       "keyScope": "global",
       "qualityReport": true,
       "skipFields": "abstract, language, note, keywords, file, month, shorttitle",
-      "verbatimFields": "url,doi,file,eprint,verba,verbb,verbc"
+      "verbatimFields": "url,doi,file,eprint,verba,verbb,verbc",
+      "bibtexURLpackage": true
     }
   },
   "items": [

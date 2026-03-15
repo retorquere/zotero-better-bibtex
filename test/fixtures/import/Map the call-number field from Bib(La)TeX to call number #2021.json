@@ -12,7 +12,8 @@
       "citekeyFormat": "[authors1]:[year][veryshorttitle1_0:substring=1,2]",
       "exportTitleCase": false,
       "importSentenceCase": "off",
-      "keyScope": "global"
+      "keyScope": "global",
+      "bibtexURLpackage": true
     }
   },
   "items": [

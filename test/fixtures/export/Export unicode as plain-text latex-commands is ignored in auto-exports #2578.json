@@ -9,7 +9,8 @@
       "autoExportDelay": 2,
       "bibtexURL": "url",
       "citekeyFormat": "auth.lower+year",
-      "quickCopyMode": "citekeys"
+      "quickCopyMode": "citekeys",
+      "bibtexURLpackage": true
     }
   },
   "items": [

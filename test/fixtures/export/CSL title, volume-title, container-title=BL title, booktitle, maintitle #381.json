@@ -8,7 +8,8 @@
     },
     "preferences": {
       "bibtexURL": "note",
-      "citekeyFormat": "auth(n=0,m=1,creator=\"*\",initials=false).fold + year"
+      "citekeyFormat": "auth(n=0,m=1,creator=\"*\",initials=false).fold + year",
+      "bibtexURLpackage": true
     }
   },
   "items": [
@@ -56,7 +57,7 @@
       "itemID": 1,
       "itemType": "bookSection",
       "language": "en-GB",
-      "pages": "327–621",
+      "pages": "327\u2013621",
       "place": "Oxford",
       "publicationTitle": "Opera",
       "publisher": "Clarendon Press",

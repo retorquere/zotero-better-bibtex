@@ -10,7 +10,8 @@
       "auxImport": true,
       "bibtexURL": "url",
       "citekeyFormat": "auth(n=0,m=1,creator=\"*\",initials=false).fold + shorttitle(3,3)",
-      "keyConflictPolicy": "change"
+      "keyConflictPolicy": "change",
+      "bibtexURLpackage": true
     }
   },
   "items": [

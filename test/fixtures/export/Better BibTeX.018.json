@@ -5,7 +5,8 @@
     "localeDateOrder": "ymd",
     "preferences": {
       "bibtexURL": "note",
-      "citekeyFormat": "auth(n=0,m=1,creator=\"*\",initials=false).fold + year"
+      "citekeyFormat": "auth(n=0,m=1,creator=\"*\",initials=false).fold + year",
+      "bibtexURLpackage": true
     }
   },
   "items": [
@@ -15,7 +16,7 @@
         {
           "creatorType": "author",
           "firstName": "Klaus",
-          "lastName": "Däßler"
+          "lastName": "D\u00e4\u00dfler"
         }
       ],
       "date": "2001",

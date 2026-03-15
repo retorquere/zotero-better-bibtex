@@ -8,7 +8,8 @@
     },
     "preferences": {
       "bibtexURL": "note",
-      "citekeyFormat": "auth(n=0,m=1,creator=\"*\",initials=false).fold.lower + Title.transliterate.nopunct.skipwords.select(1,1).lower.alphanum.prefix(_) + year.prefix(_) + postfix(\"-%(n)s\")"
+      "citekeyFormat": "auth(n=0,m=1,creator=\"*\",initials=false).fold.lower + Title.transliterate.nopunct.skipwords.select(1,1).lower.alphanum.prefix(_) + year.prefix(_) + postfix(\"-%(n)s\")",
+      "bibtexURLpackage": true
     }
   },
   "items": [
@@ -16,7 +17,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "René",
+          "firstName": "Ren\u00e9",
           "lastName": "Descartes"
         },
         {
@@ -37,13 +38,13 @@
       "numberOfVolumes": "13",
       "place": "Paris",
       "publisher": "Cerf",
-      "title": "Œuvres de Descartes"
+      "title": "\u0152uvres de Descartes"
     },
     {
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "René",
+          "firstName": "Ren\u00e9",
           "lastName": "Descartes"
         },
         {
@@ -64,13 +65,13 @@
       "numberOfVolumes": "13",
       "place": "Paris",
       "publisher": "Cerf",
-      "title": "Œuvres de Descartes"
+      "title": "\u0152uvres de Descartes"
     },
     {
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "René",
+          "firstName": "Ren\u00e9",
           "lastName": "Descartes"
         },
         {
@@ -91,7 +92,7 @@
       "numberOfVolumes": "13",
       "place": "Paris",
       "publisher": "Cerf",
-      "title": "Œuvres de Descartes"
+      "title": "\u0152uvres de Descartes"
     }
   ]
 }

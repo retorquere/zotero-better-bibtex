@@ -90,7 +90,8 @@
       "stringsOverride": "",
       "verbatimFields": "url,doi,file,pdf,ids,eprint,/^verb[a-z]$/,groups,/^citeulike-linkout-[0-9]+$/, /^bdsk-url-[0-9]+$/, keywords",
       "warnBulkModify": 10,
-      "warnTitleCased": false
+      "warnTitleCased": false,
+      "bibtexURLpackage": true
     },
     "options": {
       "Items": true,
@@ -116,7 +117,7 @@
       "series": "CHI '19",
       "place": "Glasgow, Scotland Uk",
       "publisher": "Association for Computing Machinery",
-      "pages": "1–13",
+      "pages": "1\u201313",
       "ISBN": "978-1-4503-5970-2",
       "date": "2019",
       "extra": "Citation Key: 10.1145/3290605.3300233\nNumber of pages: 13\ntex.address: New York, NY, USA",

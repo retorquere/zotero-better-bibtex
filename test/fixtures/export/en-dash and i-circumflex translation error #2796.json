@@ -14,7 +14,8 @@
       "bibtexURL": "url",
       "citekeyFormat": "auth.lower + year",
       "exportTitleCase": false,
-      "skipFields": "language,note,isbn,issn,urldate,accessed,abstract,Library catalogue,Call Number,file,primaryclass"
+      "skipFields": "language,note,isbn,issn,urldate,accessed,abstract,Library catalogue,Call Number,file,primaryclass",
+      "bibtexURLpackage": true
     }
   },
   "items": [
@@ -25,7 +26,7 @@
         {
           "creatorType": "author",
           "firstName": "A. G.",
-          "lastName": "Lemaître"
+          "lastName": "Lema\u00eetre"
         }
       ],
       "date": "1931-03-13",
@@ -62,7 +63,7 @@
         },
         {
           "creatorType": "author",
-          "firstName": "André",
+          "firstName": "Andr\u00e9",
           "lastName": "Tilquin"
         },
         {
@@ -98,7 +99,7 @@
       "pages": "1809-1825",
       "publicationTitle": "Monthly Notices of the Royal Astronomical Society",
       "shortTitle": "Hubble Frontier Fields",
-      "title": "Hubble Frontier Fields: systematic errors in strong lensing models of galaxy clusters – implications for cosmography",
+      "title": "Hubble Frontier Fields: systematic errors in strong lensing models of galaxy clusters \u2013 implications for cosmography",
       "url": "https://academic.oup.com/mnras/article/470/2/1809/3858038",
       "volume": "470"
     },
@@ -115,11 +116,11 @@
         {
           "creatorType": "author",
           "firstName": "Sonia",
-          "lastName": "Belaïd"
+          "lastName": "Bela\u00efd"
         },
         {
           "creatorType": "author",
-          "firstName": "François",
+          "firstName": "Fran\u00e7ois",
           "lastName": "Dupressoir"
         },
         {
@@ -130,7 +131,7 @@
         {
           "creatorType": "author",
           "firstName": "Benjamin",
-          "lastName": "Grégoire"
+          "lastName": "Gr\u00e9goire"
         },
         {
           "creatorType": "author",
@@ -139,7 +140,7 @@
         },
         {
           "creatorType": "author",
-          "firstName": "Rébecca",
+          "firstName": "R\u00e9becca",
           "lastName": "Zucchini"
         }
       ],

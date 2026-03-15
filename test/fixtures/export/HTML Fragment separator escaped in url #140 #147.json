@@ -8,7 +8,8 @@
     },
     "preferences": {
       "bibtexURL": "note",
-      "citekeyFormat": "auth(n=0,m=1,creator=\"*\",initials=false).fold + year"
+      "citekeyFormat": "auth(n=0,m=1,creator=\"*\",initials=false).fold + year",
+      "bibtexURLpackage": true
     }
   },
   "items": [
@@ -27,7 +28,7 @@
       ],
       "itemID": 1,
       "itemType": "webpage",
-      "title": "Pandoc User’s Guide",
+      "title": "Pandoc User\u2019s Guide",
       "url": "http://johnmacfarlane.net/pandoc/README.html#citations"
     }
   ]

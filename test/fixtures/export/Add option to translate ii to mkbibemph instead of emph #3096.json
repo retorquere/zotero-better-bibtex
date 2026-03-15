@@ -7,9 +7,10 @@
       "biblatexExtractEprint": false,
       "bibtexURL": "url",
       "citekeyFormat": "extra('tex.shorthand').clean.replace('emph', '').nopunct | auth.lower + year + shorttitle(2,2)",
-      "csquotes": "“”‘’",
+      "csquotes": "\u201c\u201d\u2018\u2019",
       "postscript": "if (Translator.BetterCSLYAML) {\n  if (zotero.extraFields.raw.entrysubtype === 'classical') csl.type = 'classic';\n  if (zotero.extraFields.raw.entrysubtype === 'classical') delete csl.author;\n  if (zotero.language === 'english') csl.language = 'en';\n}\n\nif (Translator.BetterBibLaTeX) {\n  if (zotero.extraFields.raw.entrytype === 'bookinbook') {\n    tex.add({name: 'booktitle', value: tex.has.journaltitle.value});\n    tex.remove('journaltitle');\n  }\n}",
-      "quickCopyMode": "citekeys"
+      "quickCopyMode": "citekeys",
+      "bibtexURLpackage": true
     }
   },
   "items": [

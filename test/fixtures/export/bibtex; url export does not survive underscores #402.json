@@ -8,7 +8,8 @@
       "DOIandURL": "doi",
       "bibtexURL": "note",
       "citekeyFormat": "auth(n=5,m=1,creator=\"*\",initials=false).fold + auth(n=5,m=1,creator=\"*\",initials=false).fold + shortyear",
-      "skipFields": "abstract"
+      "skipFields": "abstract",
+      "bibtexURLpackage": true
     }
   },
   "items": [

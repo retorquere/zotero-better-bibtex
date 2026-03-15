@@ -63,7 +63,7 @@ class Store extends ObservedMap<string, Job> {
           delete ae.$loki
           delete ae.meta
 
-          ae.bibtexURLpackage ??= !ae.bibtexURL.endsWith('url-ish')
+          ae.bibtexURLpackage ??= ae.bibtexURL !== 'note' && !ae.bibtexURL.endsWith('url-ish')
           ae.bibtexURL = ae.bibtexURL.replace('url-ish', '') || 'url'
 
           jobs.push([ae.path, ae])

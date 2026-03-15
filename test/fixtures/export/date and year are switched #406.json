@@ -8,7 +8,8 @@
     },
     "preferences": {
       "bibtexURL": "note",
-      "citekeyFormat": "auth(n=0,m=1,creator=\"*\",initials=false).fold.lower + \"_\" + veryshorttitle.lower + \"_\" + year"
+      "citekeyFormat": "auth(n=0,m=1,creator=\"*\",initials=false).fold.lower + \"_\" + veryshorttitle.lower + \"_\" + year",
+      "bibtexURLpackage": true
     }
   },
   "items": [
@@ -23,7 +24,7 @@
       "date": "2012.09.27",
       "itemID": 1,
       "itemType": "book",
-      "place": "Masterthesis, Fakultät Statistik",
+      "place": "Masterthesis, Fakult\u00e4t Statistik",
       "publisher": "TU Dortmund",
       "title": "Modellierung niederfrequenter Schwingungen in einem elektrischen Energienetz"
     },
@@ -81,8 +82,8 @@
         },
         {
           "creatorType": "author",
-          "firstName": "Jürgen",
-          "lastName": "Götze"
+          "firstName": "J\u00fcrgen",
+          "lastName": "G\u00f6tze"
         },
         {
           "creatorType": "author",
@@ -100,7 +101,7 @@
       "itemType": "report",
       "number": "2003/32864",
       "place": "Eldorado",
-      "publisher": "Technische Universität Dortmund",
+      "publisher": "Technische Universit\u00e4t Dortmund",
       "title": "Stability Analysis and Clustering of Electrical Transmission Systems",
       "url": "http://dx.doi.org/10.17877/DE290R-13190"
     }

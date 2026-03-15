@@ -11,7 +11,8 @@
       "autoAbbrevStyle": "http://www.zotero.org/styles/physical-review-d",
       "bibtexURL": "note",
       "citekeyFormat": "auth(n=0,m=1,creator=\"*\",initials=false).fold + year",
-      "skipFields": "file,keywords,abstract,copyright,language,timestamp"
+      "skipFields": "file,keywords,abstract,copyright,language,timestamp",
+      "bibtexURLpackage": true
     }
   },
   "items": [

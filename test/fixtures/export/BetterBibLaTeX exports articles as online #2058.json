@@ -13,7 +13,8 @@
       "extraMergeCitekeys": true,
       "extraMergeTeX": true,
       "keyConflictPolicy": "change",
-      "skipFields": "file, urldate"
+      "skipFields": "file, urldate",
+      "bibtexURLpackage": true
     }
   },
   "items": [

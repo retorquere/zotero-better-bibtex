@@ -5,7 +5,8 @@
     "localeDateOrder": "ymd",
     "preferences": {
       "bibtexURL": "note",
-      "citekeyFormat": "auth(n=0,m=1,creator=\"*\",initials=false).fold + year"
+      "citekeyFormat": "auth(n=0,m=1,creator=\"*\",initials=false).fold + year",
+      "bibtexURLpackage": true
     }
   },
   "items": [
@@ -24,9 +25,9 @@
       "itemID": 1,
       "itemType": "journalArticle",
       "language": "fr-FR",
-      "pages": "110–113",
+      "pages": "110\u2013113",
       "publicationTitle": "Modern Language Notes",
-      "title": "Le poêle de Descartes",
+      "title": "Le po\u00eale de Descartes",
       "volume": "56"
     }
   ]

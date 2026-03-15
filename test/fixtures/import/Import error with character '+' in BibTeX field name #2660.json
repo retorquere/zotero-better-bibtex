@@ -90,7 +90,8 @@
       "stringsOverride": "",
       "verbatimFields": "url,doi,file,pdf,ids,eprint,/^verb[a-z]$/,groups,/^citeulike-linkout-[0-9]+$/, /^bdsk-url-[0-9]+$/, keywords",
       "warnBulkModify": 10,
-      "warnTitleCased": false
+      "warnTitleCased": false,
+      "bibtexURLpackage": true
     },
     "options": {
       "Items": true,
@@ -115,7 +116,7 @@
       "url": "http://some.url",
       "volume": "126",
       "issue": "1",
-      "pages": "1–51",
+      "pages": "1\u201351",
       "publicationTitle": "Psychological Review",
       "date": "2019",
       "extra": "Citation Key: 10.1:1",
@@ -151,7 +152,7 @@
       "itemType": "journalArticle",
       "volume": "15",
       "issue": "1",
-      "pages": "1–12",
+      "pages": "1\u201312",
       "publicationTitle": "Human Development",
       "date": "1972",
       "extra": "Citation Key: 10.1:10\nOriginal date: 1970",
@@ -192,7 +193,7 @@
       "itemType": "journalArticle",
       "volume": "84",
       "issue": "6",
-      "pages": "611–618",
+      "pages": "611\u2013618",
       "publicationTitle": "American Journal of Orthopsychiatry",
       "date": "2014",
       "extra": "Citation Key: 10.1:11\ntex.related: 10.1:11r\ntex.relatedtype: reprintfrom",
@@ -223,7 +224,7 @@
       "itemType": "journalArticle",
       "volume": "51",
       "issue": "3",
-      "pages": "391–402",
+      "pages": "391\u2013402",
       "publicationTitle": "American Journal of Orthopsychiatry",
       "date": "1981",
       "extra": "Citation Key: 10.1:11r",
@@ -247,7 +248,7 @@
       "version": 0,
       "itemType": "document",
       "date": "2018",
-      "extra": "Citation Key: 10.1:12a\nNumber: 1\nPages: 51–104\nVolume: 6\ntex.issuetitle: Special section",
+      "extra": "Citation Key: 10.1:12a\nNumber: 1\nPages: 51\u2013104\nVolume: 6\ntex.issuetitle: Special section",
       "type": "periodical",
       "title": "Heterodox issues in psychology",
       "citationKey": "10.1:12a",
@@ -389,7 +390,7 @@
       "itemType": "journalArticle",
       "volume": "363",
       "issue": "6422",
-      "pages": "33–34",
+      "pages": "33\u201334",
       "publicationTitle": "Science",
       "date": "2019-01-04",
       "extra": "Citation Key: 10.1:15a\ntex.entrysubtype: nonacademic",
@@ -648,7 +649,7 @@
       "url": "https://www.ahead.org/professional-resources/publications/jped/archived-jped/jped-volume-31",
       "volume": "31",
       "issue": "1",
-      "pages": "17–39",
+      "pages": "17\u201339",
       "publicationTitle": "Journal of Postsecondary Education and Disability",
       "date": "2018",
       "extra": "Citation Key: 10.1:2",
@@ -750,7 +751,7 @@
       "itemType": "journalArticle",
       "volume": "77",
       "issue": "3",
-      "pages": "437–471",
+      "pages": "437\u2013471",
       "publicationTitle": "Bulletin of the American Meteorological Society",
       "date": "1996-01-01",
       "extra": "Citation Key: 10.1:4",
@@ -886,7 +887,7 @@
       "itemType": "journalArticle",
       "volume": "29",
       "issue": "10",
-      "pages": "1122–1128",
+      "pages": "1122\u20131128",
       "publicationTitle": "Midwifery",
       "date": "2013",
       "extra": "Citation Key: 10.1:5",
@@ -1050,10 +1051,10 @@
       "itemType": "journalArticle",
       "volume": "28",
       "issue": "3",
-      "pages": "155–161",
-      "publicationTitle": "Clínica y Salud",
+      "pages": "155\u2013161",
+      "publicationTitle": "Cl\u00ednica y Salud",
       "date": "2018",
-      "extra": "Citation Key: 10.1:9\nOriginal title: La anosmia neurosensorial: Relación entre subtipo, tiempo de reconocimiento y edad",
+      "extra": "Citation Key: 10.1:9\nOriginal title: La anosmia neurosensorial: Relaci\u00f3n entre subtipo, tiempo de reconocimiento y edad",
       "DOI": "10.1016/j.clysa.2017.04.002",
       "title": "Sensorineural anosmia. Relationship between subtype, recognition time, and age",
       "citationKey": "10.1:9",
@@ -1065,22 +1066,22 @@
         },
         {
           "firstName": "C.",
-          "lastName": "Gómez Calero",
+          "lastName": "G\u00f3mez Calero",
           "creatorType": "author"
         },
         {
           "firstName": "J. J.",
-          "lastName": "Fernández-Muñoz",
+          "lastName": "Fern\u00e1ndez-Mu\u00f1oz",
           "creatorType": "author"
         },
         {
           "firstName": "A.",
-          "lastName": "Toledano-Muñoz",
+          "lastName": "Toledano-Mu\u00f1oz",
           "creatorType": "author"
         },
         {
           "firstName": "J.",
-          "lastName": "Fernández-Heute",
+          "lastName": "Fern\u00e1ndez-Heute",
           "creatorType": "author"
         },
         {
@@ -1090,12 +1091,12 @@
         },
         {
           "firstName": "D.",
-          "lastName": "Palacios-Ceña",
+          "lastName": "Palacios-Ce\u00f1a",
           "creatorType": "author"
         },
         {
           "firstName": "C.",
-          "lastName": "Peñacoba-Puente",
+          "lastName": "Pe\u00f1acoba-Puente",
           "creatorType": "author"
         }
       ],
@@ -1268,7 +1269,7 @@
       "itemType": "report",
       "date": "2011",
       "extra": "Citation Key: 10.11:81",
-      "title": "Minnesota Multiphasic Personality Inventory–2 Restructured Form (MMPI-2-RF). Technical manual",
+      "title": "Minnesota Multiphasic Personality Inventory\u20132 Restructured Form (MMPI-2-RF). Technical manual",
       "citationKey": "10.11:81",
       "creators": [
         {
@@ -1548,7 +1549,7 @@
       "notes": [],
       "itemKey": "W4CTXDXE",
       "libraryID": 1,
-      "publisher": "Nouvelles Éditions de Films"
+      "publisher": "Nouvelles \u00c9ditions de Films"
     },
     {
       "key": "85VB86WX",
@@ -1686,7 +1687,7 @@
       "url": "https://www.youtube.com/watch?v=psN1DORYYV0",
       "date": "2012-03-16",
       "extra": "Citation Key: 10.12:88b\ntex.entrysubtype: video",
-      "title": "Brené Brown. Listening to shame",
+      "title": "Bren\u00e9 Brown. Listening to shame",
       "citationKey": "10.12:88b",
       "creators": [
         {
@@ -1908,7 +1909,7 @@
       "citationKey": "10.13:92b",
       "creators": [
         {
-          "name": "Beyoncé",
+          "name": "Beyonc\u00e9",
           "creatorType": "contributor"
         }
       ],
@@ -2405,7 +2406,7 @@
       "url": "https://twitter.com/apaeducation/status/1012810490530140161",
       "date": "2018-06-29",
       "extra": "Citation Key: 10.15:103a\ntex.\"author+an:username\": 1=\"@APAEducation\"\ntex.entrysubtype: Tweet\ntex.eprint: Twitter",
-      "title": "College students are forming mental-health clubs–and they're making a difference @washingtonpost. Thumbnail with link attached",
+      "title": "College students are forming mental-health clubs\u2013and they're making a difference @washingtonpost. Thumbnail with link attached",
       "citationKey": "10.15:103a",
       "creators": [
         {
@@ -3785,7 +3786,7 @@
       "itemType": "bookSection",
       "edition": "2",
       "publisher": "American Psychological Association",
-      "pages": "287–314",
+      "pages": "287\u2013314",
       "date": "2019",
       "extra": "Citation Key: 10.3:38\ntex.booksubtitle: Practice and Supervision",
       "DOI": "10.1037/0000119-012",
@@ -3841,7 +3842,7 @@
       "itemType": "bookSection",
       "edition": "2",
       "publisher": "CRC Press",
-      "pages": "7–13",
+      "pages": "7\u201313",
       "date": "2003",
       "extra": "Citation Key: 10.3:39",
       "title": "Defining forensic psychiatry. Roles and responsibilities",
@@ -3887,7 +3888,7 @@
       "url": "http://a.co/36xRhBT",
       "edition": "3",
       "publisher": "Guilford Press",
-      "pages": "55–63",
+      "pages": "55\u201363",
       "date": "2005",
       "extra": "Citation Key: 10.3:40",
       "title": "Back to the future. An Examination of the Native American Holocaust experience",
@@ -3936,21 +3937,21 @@
       "version": 0,
       "itemType": "bookSection",
       "url": "http://www.sintesis.com/guias-profesionales-203/guia-practica-de-terapias-estimulativas-en-el-alzheimer-libro-1943.html",
-      "publisher": "Editorial Síntesis",
-      "pages": "67–86",
+      "publisher": "Editorial S\u00edntesis",
+      "pages": "67\u201386",
       "date": "2015",
-      "extra": "Citation Key: 10.3:41\nOriginal title: Terapia senorial auditiva: Activation cerebral por medio de la música",
+      "extra": "Citation Key: 10.3:41\nOriginal title: Terapia senorial auditiva: Activation cerebral por medio de la m\u00fasica",
       "title": "Auditory sensory therapy. Brain activation through music",
       "citationKey": "10.3:41",
       "creators": [
         {
           "firstName": "N.",
-          "lastName": "Carcavilla González",
+          "lastName": "Carcavilla Gonz\u00e1lez",
           "creatorType": "author"
         },
         {
           "firstName": "J. J.",
-          "lastName": "Garcia Meilán",
+          "lastName": "Garcia Meil\u00e1n",
           "creatorType": "editor"
         }
       ],
@@ -3964,14 +3965,14 @@
       "notes": [],
       "itemKey": "CDWGH2X8",
       "libraryID": 1,
-      "publicationTitle": "Guía práctica de terapias estimulativas en el Alzhéimer"
+      "publicationTitle": "Gu\u00eda pr\u00e1ctica de terapias estimulativas en el Alzh\u00e9imer"
     },
     {
       "key": "KILCTTGQ",
       "version": 0,
       "itemType": "bookSection",
       "publisher": "Harper Perennial Modern Thought",
-      "pages": "111–138",
+      "pages": "111\u2013138",
       "date": "2008",
       "extra": "Citation Key: 10.3:42",
       "title": "On the essence of truth",
@@ -4011,7 +4012,7 @@
       "version": 0,
       "itemType": "bookSection",
       "publisher": "Psychology Press",
-      "pages": "100–108",
+      "pages": "100\u2013108",
       "date": "2004",
       "extra": "Citation Key: 10.3:43\ntex.booksubtitle: Key Readings in Cognition\ntex.related: 10.3:43r\ntex.relatedtype: reprintfrom",
       "title": "Calling a squirrel and squirrel but a canoe a wigwam. A category-specific deficit for artefactual objects and body parts",
@@ -4056,7 +4057,7 @@
       "itemType": "journalArticle",
       "volume": "9",
       "issue": "1",
-      "pages": "73–86",
+      "pages": "73\u201386",
       "publicationTitle": "Cognitive Neuropsychology",
       "date": "1992",
       "extra": "Citation Key: 10.3:43r",
@@ -4091,7 +4092,7 @@
       "version": 0,
       "itemType": "bookSection",
       "publisher": "SAGE Publications",
-      "pages": "72–40",
+      "pages": "72\u201340",
       "date": "2005",
       "extra": "Citation Key: 10.3:44\ntex.booksubtitle: Bioecological Perspectives on Human Development\ntex.related: 10.3:44r\ntex.relatedtype: reprintfrom",
       "title": "The social ecology of human development. A retrospective conclusion",
@@ -4126,7 +4127,7 @@
       "itemType": "book",
       "publisher": "National Education Press",
       "date": "1973",
-      "extra": "Citation Key: 10.3:44r\nPages: 113–123",
+      "extra": "Citation Key: 10.3:44r\nPages: 113\u2013123",
       "title": "Brain and intelligence. The ecology of child development",
       "citationKey": "10.3:44r",
       "creators": [
@@ -4153,7 +4154,7 @@
       "itemType": "bookSection",
       "edition": "7",
       "publisher": "John Wiley & Sons",
-      "pages": "339–380",
+      "pages": "339\u2013380",
       "date": "2015",
       "extra": "Citation Key: 10.3:45\ntex.booksubtitle: Vol. 2. Cognitive Processes",
       "DOI": "10.1002/9781118963418.childpsy209",
@@ -4193,7 +4194,7 @@
       "version": 0,
       "itemType": "bookSection",
       "publisher": "American Psychological Association",
-      "pages": "265–284",
+      "pages": "265\u2013284",
       "date": "1999",
       "extra": "Citation Key: 10.3:46\ntex.booksubtitle: A Kurt Lewin Reader",
       "DOI": "10.1037/10319-000",
@@ -4931,7 +4932,7 @@
       "version": 0,
       "itemType": "conferencePaper",
       "volume": "116",
-      "pages": "23499–23504",
+      "pages": "23499\u201323504",
       "date": "2019",
       "extra": "Citation Key: 10.5:A1\nNumber: 47",
       "DOI": "10.1073/pnas.1910510116",
@@ -5019,7 +5020,7 @@
       "version": 0,
       "itemType": "conferencePaper",
       "publisher": "Springer",
-      "pages": "225-–240",
+      "pages": "225-\u2013240",
       "date": "2019",
       "extra": "Citation Key: 10.5:A3\ntex.mainsubtitle: Vol. 11353\ntex.maintitle: Lecture notes in computer science",
       "DOI": "10.1007/978-3-030-05348-2_21",
@@ -5128,7 +5129,7 @@
       "itemKey": "YD34SUNY",
       "libraryID": 1,
       "type": "phd",
-      "publisher": "ProQuest Dissertations and Theses Global / University of Wisconsin–Madison"
+      "publisher": "ProQuest Dissertations and Theses Global / University of Wisconsin\u2013Madison"
     },
     {
       "key": "8J5ZZYSG",
@@ -5165,7 +5166,7 @@
       "itemType": "journalArticle",
       "volume": "3",
       "issue": "4",
-      "pages": "499–500",
+      "pages": "499\u2013500",
       "publicationTitle": "Psychology of Sexual Orientation and Gender Diversity",
       "date": "2016",
       "extra": "Citation Key: 10.7:67\ntex.related: 10.7:67r\ntex.relatedstring: Review of the film\ntex.relatedtype: reviewof",
@@ -5845,7 +5846,7 @@
       "version": 0,
       "itemType": "statute",
       "url": "https://www.congress.gov/114/plaws/publ95/PLAW-114publ95.pdf",
-      "extra": "Citation Key: 11.5:10\nPlace: 20 U.S.C § 6301",
+      "extra": "Citation Key: 11.5:10\nPlace: 20 U.S.C \u00a7 6301",
       "citationKey": "11.5:10",
       "creators": [],
       "tags": [],
@@ -5887,7 +5888,7 @@
       "version": 0,
       "itemType": "statute",
       "url": "https://www.justice.org/crt/title-ix-education-amendments-1972",
-      "extra": "Citation Key: 11.5:12\nPlace: 20 U.S.C § 1681 <i>et seq.</i>",
+      "extra": "Citation Key: 11.5:12\nPlace: 20 U.S.C \u00a7 1681 <i>et seq.</i>",
       "citationKey": "11.5:12",
       "creators": [],
       "tags": [],
@@ -5908,7 +5909,7 @@
       "version": 0,
       "itemType": "statute",
       "url": "http://www.leg.state.fl.us/statues/index.cfm?App_mode=Display_Statute&URL=0300-0399/0394/0394.html",
-      "extra": "Citation Key: 11.5:13\nOriginal date: 1971\nPlace: Fla. Stat. § 394",
+      "extra": "Citation Key: 11.5:13\nOriginal date: 1971\nPlace: Fla. Stat. \u00a7 394",
       "citationKey": "11.5:13",
       "creators": [],
       "tags": [],
@@ -5929,7 +5930,7 @@
       "version": 0,
       "itemType": "statute",
       "url": "https://www.ada.gov/pubs/adastatute08.htm",
-      "extra": "Citation Key: 11.5:8\nPlace: 42 U.S.C § 12101 <i>et seq.</i>",
+      "extra": "Citation Key: 11.5:8\nPlace: 42 U.S.C \u00a7 12101 <i>et seq.</i>",
       "citationKey": "11.5:8",
       "creators": [],
       "tags": [],
@@ -5950,7 +5951,7 @@
       "version": 0,
       "itemType": "statute",
       "url": "https://www.govinfo.gov/content/pkg/STATUE-78/pdf/STATUTE-78-Pg241.pdf",
-      "extra": "Citation Key: 11.5:9\nPlace: Pub. L. No. 88–352, 78 Stat. 241",
+      "extra": "Citation Key: 11.5:9\nPlace: Pub. L. No. 88\u2013352, 78 Stat. 241",
       "citationKey": "11.5:9",
       "creators": [],
       "tags": [],
@@ -6103,7 +6104,7 @@
       "version": 0,
       "itemType": "statute",
       "url": "https://www.hhs.gov/ohrp/sites/default/files/ohrp/policy/ohrpregulations.pdf",
-      "extra": "Citation Key: 11.7:19\ntex.citation: 45 C.F.R. § 46",
+      "extra": "Citation Key: 11.7:19\ntex.citation: 45 C.F.R. \u00a7 46",
       "citationKey": "11.7:19",
       "creators": [],
       "tags": [],
@@ -6145,7 +6146,7 @@
           "version": 0,
           "itemType": "note",
           "parentItem": "DU9PDH5E",
-          "note": "to be codified at 29 C.F.R. § 541",
+          "note": "to be codified at 29 C.F.R. \u00a7 541",
           "tags": [],
           "relations": {},
           "dateAdded": "2026-01-26T13:07:15Z",
@@ -6304,7 +6305,7 @@
       "key": "NG2D65MX",
       "version": 0,
       "itemType": "statute",
-      "extra": "Citation Key: 11.9:27\nType: constitution\ntex.amendment: I–X\ntex.source: us",
+      "extra": "Citation Key: 11.9:27\nType: constitution\ntex.amendment: I\u2013X\ntex.source: us",
       "citationKey": "11.9:27",
       "creators": [],
       "tags": [],
@@ -6643,7 +6644,7 @@
       "creators": [
         {
           "firstName": "C.",
-          "lastName": "de Onís",
+          "lastName": "de On\u00eds",
           "creatorType": "author"
         }
       ],
@@ -6787,7 +6788,7 @@
       "creators": [
         {
           "firstName": "M. E.",
-          "lastName": "López",
+          "lastName": "L\u00f3pez",
           "creatorType": "author"
         }
       ],
@@ -6811,7 +6812,7 @@
       "creators": [
         {
           "firstName": "G.",
-          "lastName": "López de Molina",
+          "lastName": "L\u00f3pez de Molina",
           "creatorType": "author"
         }
       ],
@@ -7630,7 +7631,7 @@
       "itemType": "journalArticle",
       "volume": "33",
       "issue": "2",
-      "pages": "161–174",
+      "pages": "161\u2013174",
       "publicationTitle": "Organizational Behaviour",
       "date": "2012",
       "extra": "Citation Key: 9.47:4",
@@ -7666,7 +7667,7 @@
       "itemType": "journalArticle",
       "volume": "97",
       "issue": "4",
-      "pages": "758–775",
+      "pages": "758\u2013775",
       "publicationTitle": "Journal of Applied Psychology",
       "date": "2012",
       "extra": "Citation Key: 9.47:5",
@@ -8011,7 +8012,7 @@
       "version": 0,
       "itemType": "bookSection",
       "publisher": "American Psychological Association",
-      "pages": "111–113",
+      "pages": "111\u2013113",
       "date": "2016",
       "extra": "Citation Key: 9.51:1\ntex.booksubtitle: Building a Win-Win Environment for Organizations and Employees",
       "DOI": "10.1037/14731-006",
@@ -8075,7 +8076,7 @@
       "itemType": "journalArticle",
       "volume": "104",
       "issue": "2",
-      "pages": "214–228",
+      "pages": "214\u2013228",
       "publicationTitle": "Journal of Applied Psychology",
       "date": "2019",
       "extra": "Citation Key: 9.51:2",
@@ -8129,7 +8130,7 @@
       "itemType": "journalArticle",
       "volume": "49",
       "issue": "6",
-      "pages": "1585–1597",
+      "pages": "1585\u20131597",
       "publicationTitle": "Cortex; a journal devoted to the study of the nervous system and behavior",
       "date": "2013",
       "extra": "Citation Key: 9.52:1",
@@ -8204,7 +8205,7 @@
       "version": 0,
       "itemType": "bookSection",
       "publisher": "Springer",
-      "pages": "109–131",
+      "pages": "109\u2013131",
       "date": "2010",
       "extra": "Citation Key: 9.52:2\ntex.booksubtitle: Cognition, Computers and Collaboration in Education",
       "DOI": "10.1007/978-1-4419-57160_6",
@@ -8255,7 +8256,7 @@
       "itemType": "journalArticle",
       "volume": "32",
       "issue": "6",
-      "pages": "1115–1122",
+      "pages": "1115\u20131122",
       "publicationTitle": "Neurological Sciences",
       "date": "2011",
       "extra": "Citation Key: 9.52:3",
@@ -8340,7 +8341,7 @@
       "itemType": "journalArticle",
       "volume": "26",
       "issue": "8",
-      "pages": "1151–1158",
+      "pages": "1151\u20131158",
       "publicationTitle": "Memory (Hove, England)",
       "date": "2018",
       "extra": "Citation Key: 9.52:4",

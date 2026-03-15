@@ -6,7 +6,8 @@
       "bibtexURL": "url",
       "exportSort": "citekey",
       "keyScope": "global",
-      "qualityReport": true
+      "qualityReport": true,
+      "bibtexURLpackage": true
     }
   },
   "items": [

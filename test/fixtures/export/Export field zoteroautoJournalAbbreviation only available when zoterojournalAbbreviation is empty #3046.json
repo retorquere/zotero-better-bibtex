@@ -5,14 +5,15 @@
     "preferences": {
       "autoAbbrev": true,
       "autoExport": "off",
-      "bibtexURL": "url-ish",
+      "bibtexURL": "url",
       "citekeyFormat": "auth(n=0,m=1,creator=\"*\",initials=false).fold.lower + shorttitle(1,2) + year",
       "extraMergeCSL": true,
       "extraMergeCitekeys": true,
       "extraMergeTeX": true,
       "postscript": "if (Translator.BetterBibTeX && zotero.itemType === 'journalArticle') {\n  if (tex.has.journal){\n    tex.remove('journal');\n    tex.add({ name: 'journal', value: zotero.autoJournalAbbreviation });\n  }\nelse\n  tex.add({ name: 'journal', value: zotero.autoJournalAbbreviation });\n}\n\nif (Translator.BetterBibTeX && zotero.itemType === 'preprint' && zotero.arXiv) {\n  {\n    tex.remove('journal');\n    tex.add({ name: 'howpublished', value: 'arXiv:' + zotero.arXiv.id });\n  }\n}\n",
       "skipFields": "month,file,abstract,journaltitle",
-      "verbatimFields": "url,doi,file,eprint,verba,verbb,verbc,groups"
+      "verbatimFields": "url,doi,file,eprint,verba,verbb,verbc,groups",
+      "bibtexURLpackage": false
     }
   },
   "items": [

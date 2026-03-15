@@ -83,7 +83,8 @@
       "warnTitleCased": false,
       "texmap": {},
       "chinese": false,
-      "japanese": false
+      "japanese": false,
+      "bibtexURLpackage": true
     },
     "options": {
       "exportNotes": true,

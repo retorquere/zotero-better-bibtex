@@ -10,7 +10,8 @@
       "exportBraceProtection": false,
       "exportTitleCase": false,
       "importSentenceCase": "off",
-      "keyScope": "global"
+      "keyScope": "global",
+      "bibtexURLpackage": true
     }
   },
   "items": [

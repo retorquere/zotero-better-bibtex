@@ -81,7 +81,8 @@
       "warnBulkModify": 10,
       "warnTitleCased": false,
       "chinese": false,
-      "japanese": false
+      "japanese": false,
+      "bibtexURLpackage": true
     },
     "options": {
       "exportNotes": true,

@@ -35,20 +35,20 @@ html:div.bbt-prefs-2col#bbt-prefs-auto-exports
   html:input.plain(data-ae-field='path', readonly, size='80', type='text', value)
 
   //- bibtex
-  html:div.bbt-autoexport-options.bbt-autoexport-BetterBibTeX.bbt-prefs-2col-span
+  html:div.bbt-autoexport-options.bbt-autoexport-BetterBibTeX.bbt-prefs-2col-span(style='display: flex; align-items: center; gap: 8px;')
     label.bbt-autoexport-options.bbt-autoexport-BetterBibTeX(data-l10n-id='better-bibtex_preferences_export_bibtex_urls')
     menulist(data-ae-field='bibtexURL', native='true', oncommand='Zotero.BetterBibTeX.PrefPane.autoexport.edit(this)')
       menupopup
         menuitem(data-l10n-id='better-bibtex_preferences_export_bibtex_urls_off', value='off')
         menuitem(data-l10n-id='better-bibtex_preferences_export_bibtex_urls_note', value='note')
         menuitem(data-l10n-id='better-bibtex_preferences_export_bibtex_urls_url', value='url')
-    checkbox(
-      data-l10n-id='better-bibtex_preferences_export_fields_bibtex-url-package'
-      data-ae-field='bibtexURLpackage'
-      native='true'
-      oncommand='Zotero.BetterBibTeX.PrefPane.autoexport.edit(this)'
-    )
-    img(src='chrome://zotero-better-bibtex/content/skin/attention.svg', style='width:16px;height:16px', tooltip='bbt-tooltip-bibtexURL')
+  checkbox(
+    data-l10n-id='better-bibtex_preferences_export_bibtex_url-package'
+    data-ae-field='bibtexURLpackage'
+    native='true'
+    oncommand='Zotero.BetterBibTeX.PrefPane.autoexport.edit(this)'
+  )
+  img(src='chrome://zotero-better-bibtex/content/skin/attention.svg', style='width:16px;height:16px', tooltip='bbt-tooltip-bibtexURL')
 
   //- biblatex
   checkbox.bbt-autoexport-options.bbt-autoexport-BetterBibLaTeX.bbt-prefs-2col-span(

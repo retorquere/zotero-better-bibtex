@@ -11,7 +11,8 @@
       "bibtexURL": "url",
       "citeCommand": "textcite",
       "citekeyFormat": "auth(n=0,m=1,creator=\"*\",initials=false).fold.lower + \"_\" + veryshorttitle.lower + \"_\" + year",
-      "itemObserverDelay": 100
+      "itemObserverDelay": 100,
+      "bibtexURLpackage": true
     }
   },
   "items": [

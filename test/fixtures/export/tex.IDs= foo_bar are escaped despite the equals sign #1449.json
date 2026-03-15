@@ -12,7 +12,8 @@
       "citekeyFormat": "zotero.clean",
       "itemObserverDelay": 100,
       "qualityReport": true,
-      "skipFields": "file"
+      "skipFields": "file",
+      "bibtexURLpackage": true
     }
   },
   "items": [

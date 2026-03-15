@@ -9,7 +9,8 @@
     "preferences": {
       "bibtexURL": "note",
       "citekeyFormat": "auth(n=3,m=1,creator=\"*\",initials=false).fold + auth(n=3,m=1,creator=\"*\",initials=false).fold + auth(n=3,m=2,creator=\"*\",initials=false).fold + auth(n=3,m=3,creator=\"*\",initials=false).fold + auth(n=3,m=4,creator=\"*\",initials=false).fold + shortyear",
-      "skipFields": "url,issn"
+      "skipFields": "url,issn",
+      "bibtexURLpackage": true
     }
   },
   "items": [

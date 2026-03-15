@@ -6,7 +6,8 @@
     "preferences": {
       "autoAbbrev": true,
       "bibtexURL": "note",
-      "citekeyFormat": "auth(n=0,m=1,creator=\"*\",initials=false).fold + year"
+      "citekeyFormat": "auth(n=0,m=1,creator=\"*\",initials=false).fold + year",
+      "bibtexURLpackage": true
     }
   },
   "items": [
@@ -32,7 +33,7 @@
       "itemType": "journalArticle",
       "language": "en",
       "libraryCatalog": "CrossRef",
-      "pages": "2497–2508",
+      "pages": "2497\u20132508",
       "publicationTitle": "Applied Mathematics and Computation",
       "title": "Analytical solutions to Fisher's equation with time-variable coefficients",
       "url": "http://linkinghub.elsevier.com/retrieve/pii/S0096300311010137",

@@ -16,19 +16,18 @@ checkbox(
   native='true'
 )
 
-html:div
+html:div(style='display: flex; align-items: center; gap: 8px;')
   label(bbt:preference='extensions.zotero.translators.better-bibtex.bibtexURL', data-l10n-id='better-bibtex_preferences_export_bibtex_urls')
-  img(src='chrome://zotero-better-bibtex/content/skin/attention.svg', style='width:16px;height:16px', tooltip='bbt-tooltip-bibtexURL')
-
-menulist(native='true', preference='extensions.zotero.translators.better-bibtex.bibtexURL')
-  menupopup
-    menuitem(data-l10n-id='better-bibtex_preferences_export_bibtex_urls_off', value='off')
-    menuitem(data-l10n-id='better-bibtex_preferences_export_bibtex_urls_note', value='note')
-    menuitem(data-l10n-id='better-bibtex_preferences_export_bibtex_urls_url', value='url')
+  menulist(native='true', preference='extensions.zotero.translators.better-bibtex.bibtexURL')
+    menupopup
+      menuitem(data-l10n-id='better-bibtex_preferences_export_bibtex_urls_off', value='off')
+      menuitem(data-l10n-id='better-bibtex_preferences_export_bibtex_urls_note', value='note')
+      menuitem(data-l10n-id='better-bibtex_preferences_export_bibtex_urls_url', value='url')
 
 checkbox(
-  data-l10n-id='better-bibtex_preferences_export_fields_bibtex-url-package'
+  data-l10n-id='better-bibtex_preferences_export_bibtex_url-package'
   preference='extensions.zotero.translators.better-bibtex.bibtexURLpackage'
   native='true'
 )
+img(src='chrome://zotero-better-bibtex/content/skin/attention.svg', style='width:16px;height:16px', tooltip='bbt-tooltip-bibtexURL')
 

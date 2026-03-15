@@ -96,7 +96,8 @@
       "autoAbbrevStyle": "http://www.zotero.org/styles/cell",
       "bibtexURL": "note",
       "citekeyFormat": "auth(n=0,m=1,creator=\"*\",initials=false).fold.lower + shorttitle(3,3) + year",
-      "itemObserverDelay": 100
+      "itemObserverDelay": 100,
+      "bibtexURLpackage": true
     }
   },
   "items": [

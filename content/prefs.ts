@@ -119,7 +119,6 @@ export const Preference = new class PreferenceManager extends PreferenceManagerB
 
   private migrate() {
     let key
-    let value
 
     // clear out old keys
     const oops = 'extensions.translators.better-bibtex.'
@@ -145,11 +144,12 @@ export const Preference = new class PreferenceManager extends PreferenceManagerB
       Zotero.Prefs.set(key, defaults.autoExportDelay)
     }
 
+    const bibtexURL = (Zotero.Prefs.get(key = 'translators.better-bibtex.bibtexURL') as string) || defaults.bibtexURL
     if (typeof Zotero.Prefs.get(key = 'translators.better-bibtex.bibtexURLpackage') === 'undefined') {
-      Zotero.Prefs.set(key, !(Zotero.Prefs.get('translators.better-bibtex.bibtexURL') as string).endsWith('url-ish'))
+      Zotero.Prefs.set(key, bibtexURL !== 'off' && !bibtexURL.endsWith('url-ish'))
     }
-    if ((value = (Zotero.Prefs.get(key = 'translators.better-bibtex.bibtexURL') as string)).endsWith('url-ish')) {
-      Zotero.Prefs.set(key, value.replace('url-ish', '') || 'url')
+    if (bibtexURL.endsWith('url-ish')) {
+      Zotero.Prefs.set(key, bibtexURL.replace('url-ish', '') || 'url')
     }
 
     Zotero.Prefs.clear('translators.better-bibtex.worker')
@@ -176,14 +176,14 @@ export const Preference = new class PreferenceManager extends PreferenceManagerB
 
     if (this.testing) {
       return new Proxy(this, {
-        set: (object, prop, v) => {
-          if (!(prop in object)) throw new TypeError(`Unsupported preference ${ new String(prop) }`) // eslint-disable-line no-new-wrappers
-          object[prop] = v
+        set: (object, property, value) => {
+          if (!(property in object)) throw new TypeError(`Unsupported preference ${ new String(property) }`) // eslint-disable-line no-new-wrappers
+          object[property] = value
           return true
         },
-        get: (object, prop) => {
-          if (!(prop in object)) throw new TypeError(`Unsupported preference ${ new String(prop) }`) // eslint-disable-line no-new-wrappers
-          return object[prop] // eslint-disable-line @typescript-eslint/no-unsafe-return
+        get: (object, property) => {
+          if (!(property in object)) throw new TypeError(`Unsupported preference ${ new String(property) }`) // eslint-disable-line no-new-wrappers
+          return object[property] // eslint-disable-line @typescript-eslint/no-unsafe-return
         },
       })
     }

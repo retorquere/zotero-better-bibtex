@@ -6,9 +6,10 @@
       "exportNotes": true
     },
     "preferences": {
-      "bibtexURL": "url-ish",
+      "bibtexURL": "url",
       "keyScope": "global",
-      "skipFields": "abstract,file"
+      "skipFields": "abstract,file",
+      "bibtexURLpackage": false
     }
   },
   "items": [

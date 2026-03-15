@@ -10,7 +10,7 @@
     },
     "preferences": {
       "asciiBibLaTeX": true,
-      "baseAttachmentPath": "/Users/Ibai/Library/Mobile Documents/3L68KQB4HG~com~readdle~CommonDocuments/Documents/Physics 🪐/Physics Library 🏛",
+      "baseAttachmentPath": "/Users/Ibai/Library/Mobile Documents/3L68KQB4HG~com~readdle~CommonDocuments/Documents/Physics \ud83e\ude90/Physics Library \ud83c\udfdb",
       "bibtexURL": "url",
       "citekeyFold": false,
       "citekeyFormat": "authors(min=4,n=2,sep=\"~\",etal=\"_et_al.\").capitalize.replace(\"-\",\"_\").condense(_).replace(\"~\",\"-\") + year.prefix(\"_\")\n|\nauthors(sep=\"~\").capitalize.replace(\"-\",\"_\").condense(_).replace(\"~\",\"-\") + year.prefix(\"_\")",
@@ -19,7 +19,8 @@
       "quickCopyEta": "it.items. &lt;%= JSON.stringify(it.items) %&gt;",
       "quickCopyMode": "orgmode",
       "quickCopyOrgMode": "citationkey",
-      "warnBulkModify": 0
+      "warnBulkModify": 0,
+      "bibtexURLpackage": true
     }
   },
   "items": [
@@ -82,7 +83,7 @@
       "publisher": "Hilger",
       "tags": [
         {
-          "tag": "* Keep the spark alive 💥"
+          "tag": "* Keep the spark alive \ud83d\udca5"
         },
         {
           "tag": "Particle concept"

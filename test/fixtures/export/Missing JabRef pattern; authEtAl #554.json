@@ -6,7 +6,8 @@
     "options": {},
     "preferences": {
       "bibtexURL": "note",
-      "citekeyFormat": "authEtAl(creator=\"*\",initials=false,sep=\" \").fold"
+      "citekeyFormat": "authEtAl(creator=\"*\",initials=false,sep=\" \").fold",
+      "bibtexURLpackage": true
     }
   },
   "items": [

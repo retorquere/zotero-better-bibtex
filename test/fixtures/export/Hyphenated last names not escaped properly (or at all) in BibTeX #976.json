@@ -10,7 +10,8 @@
       "bibtexURL": "url",
       "citekeyFormat": "authorsAlpha(creator=\"*\",initials=false,sep=\" \").fold + shorttitle(2,2) + shortyear",
       "itemObserverDelay": 100,
-      "skipFields": "publisher,place,pages,file,keywords,eprinttype,archiveprefix,eprint,month,language,archiveprefix,abstract"
+      "skipFields": "publisher,place,pages,file,keywords,eprinttype,archiveprefix,eprint,month,language,archiveprefix,abstract",
+      "bibtexURLpackage": true
     }
   },
   "items": [

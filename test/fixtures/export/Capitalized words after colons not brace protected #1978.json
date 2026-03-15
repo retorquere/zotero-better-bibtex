@@ -14,7 +14,8 @@
       "extraMergeCitekeys": true,
       "extraMergeTeX": true,
       "itemObserverDelay": 100,
-      "verbatimFields": "url,doi,file,eprint,verba,verbb,verbc"
+      "verbatimFields": "url,doi,file,eprint,verba,verbb,verbc",
+      "bibtexURLpackage": true
     }
   },
   "items": [

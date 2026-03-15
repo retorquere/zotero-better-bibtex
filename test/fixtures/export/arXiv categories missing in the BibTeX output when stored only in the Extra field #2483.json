@@ -15,7 +15,8 @@
       "extraMergeTeX": true,
       "postscript": "if (Translator.BetterBibTeX) {\n    tex.remove('note');\n    if (item.extra) {\n        tex.remove('annotation');\n        tex.add({ name: 'note', value: item.extra.replace(/^\\d+\\s+citations\\s+\\([\\w\\s\\/]+\\)\\s+\\S+\\s*/mg, '') });\n    }\n    if (zotero.itemType === 'conferencePaper') {\n        const btFull = zotero.publicationTitle;\n        let btAbbr = tex.has.booktitle.value;\n        function recover(full, abbr, regex) {\n            const matches = full.match(regex);\n            if (matches) {\n                matches.forEach(match => {\n                    const word = match.replace(/[\\/()]/g, '');\n                    abbr = abbr.replace(word, match);\n                });\n            }\n            return abbr;\n        }\n        const sRegex = /\\b(\\w+\\/\\w+)\\b/g;\n        const pRegex = /\\((\\w+)\\)/g;\n        tex.add({ name: 'booktitle', value: recover(btFull, recover(btFull, btAbbr, sRegex), pRegex) });\n    }\n    if (zotero.itemType === 'preprint' && tex.has.howpublished && zotero.arXiv) {\n        if (zotero.arXiv.category) {\n            tex.add({ name: 'howpublished', value: zotero.arXiv.id + ' [' + zotero.arXiv.category + ']' });\n        }\n        else {\n            tex.add({ name: 'howpublished', value: zotero.arXiv.id });\n        }\n    }\n}",
       "skipFields": "isbn, issn, abstract, keywords, file",
-      "verbatimFields": "url,doi,file,eprint,verba,verbb,verbc,groups"
+      "verbatimFields": "url,doi,file,eprint,verba,verbb,verbc,groups",
+      "bibtexURLpackage": true
     }
   },
   "items": [

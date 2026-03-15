@@ -11,7 +11,8 @@
       "autoAbbrevStyle": "http://www.zotero.org/styles/elsevier-harvard",
       "bibtexURL": "note",
       "citekeyFormat": "auth(n=5,m=1,creator=\"*\",initials=false).fold + auth(n=5,m=1,creator=\"*\",initials=false).fold + shortyear",
-      "keyConflictPolicy": "change"
+      "keyConflictPolicy": "change",
+      "bibtexURLpackage": true
     }
   },
   "items": [
@@ -29,7 +30,7 @@
       ],
       "itemID": 1,
       "itemType": "thesis",
-      "publisher": "TU München",
+      "publisher": "TU M\u00fcnchen",
       "title": "Numerical Simulation of the Dynamics of Turbulent Swirling Flames",
       "type": "PhD Thesis"
     }

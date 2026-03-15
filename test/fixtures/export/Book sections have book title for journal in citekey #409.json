@@ -9,7 +9,8 @@
     "preferences": {
       "DOIandURL": "doi",
       "bibtexURL": "note",
-      "citekeyFormat": "auth(n=0,m=1,creator=\"*\",initials=false).fold.nopunct.condense(_) + year + journal.abbr + postfix(\"-%(n)s\")"
+      "citekeyFormat": "auth(n=0,m=1,creator=\"*\",initials=false).fold.nopunct.condense(_) + year + journal.abbr + postfix(\"-%(n)s\")",
+      "bibtexURLpackage": true
     }
   },
   "items": [
@@ -33,7 +34,7 @@
       "itemType": "bookSection",
       "language": "eng",
       "libraryCatalog": "Library of Congress ISBN",
-      "pages": "70–90",
+      "pages": "70\u201390",
       "place": "Bruxelles",
       "publicationTitle": "Studies in Latin literature and Roman history",
       "publisher": "Latomus",

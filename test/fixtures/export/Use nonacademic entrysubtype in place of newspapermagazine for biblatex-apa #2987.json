@@ -15,7 +15,8 @@
       "importJabRefAbbreviations": false,
       "importJabRefStrings": false,
       "language": "language",
-      "skipFields": "abstract,file,issn,isbn,annotation,language"
+      "skipFields": "abstract,file,issn,isbn,annotation,language",
+      "bibtexURLpackage": true
     }
   },
   "items": [

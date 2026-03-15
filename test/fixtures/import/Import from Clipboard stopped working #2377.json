@@ -90,7 +90,8 @@
       "stringsOverride": "",
       "verbatimFields": "url,doi,file,pdf,ids,eprint,/^verb[a-z]$/,groups,/^citeulike-linkout-[0-9]+$/, /^bdsk-url-[0-9]+$/, keywords",
       "warnBulkModify": 10,
-      "warnTitleCased": false
+      "warnTitleCased": false,
+      "bibtexURLpackage": true
     },
     "options": {
       "Items": true,

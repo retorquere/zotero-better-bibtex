@@ -9,7 +9,8 @@
     "preferences": {
       "bibtexURL": "url",
       "citekeyFormat": "authEtal2(creator=\"*\",initials=false,sep=\".\").fold + \"_\" + year + \"_\" + shorttitle(5,5)",
-      "skipFields": "issn,shorttitle"
+      "skipFields": "issn,shorttitle",
+      "bibtexURLpackage": true
     }
   },
   "items": [
@@ -49,7 +50,7 @@
       "issue": "1",
       "itemID": 1,
       "itemType": "journalArticle",
-      "pages": "329–388",
+      "pages": "329\u2013388",
       "publicationTitle": "The Quarterly Journal of Economics",
       "tags": [
         {

@@ -5,7 +5,8 @@
     "localeDateOrder": "ymd",
     "preferences": {
       "bibtexURL": "note",
-      "citekeyFormat": "DOI + \"+\" + Title.transliterate.ascii.skipwords.select(1,4).condense(_)"
+      "citekeyFormat": "DOI + \"+\" + Title.transliterate.ascii.skipwords.select(1,4).condense(_)",
+      "bibtexURLpackage": true
     }
   },
   "items": [
@@ -58,7 +59,7 @@
       "date": "2001",
       "itemID": 1,
       "itemType": "journalArticle",
-      "pages": "493–518",
+      "pages": "493\u2013518",
       "publicationTitle": "Bulletin of Volcanology",
       "tags": [
         {

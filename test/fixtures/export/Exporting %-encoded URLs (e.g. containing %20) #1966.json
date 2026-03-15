@@ -13,7 +13,8 @@
       "bibtexURL": "url",
       "citekeyFold": false,
       "citekeyFormat": "auth(n=0,m=1,creator=\"*\",initials=false).fold + year",
-      "skipFields": "file,language,urldate,shorttitle,copyright,month,note,abstract,langid"
+      "skipFields": "file,language,urldate,shorttitle,copyright,month,note,abstract,langid",
+      "bibtexURLpackage": true
     }
   },
   "items": [

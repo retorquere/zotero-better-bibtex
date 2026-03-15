@@ -12,7 +12,8 @@
       "bibtexURL": "url",
       "citekeyFormat": "zotero.clean",
       "keyConflictPolicy": "change",
-      "skipFields": "language, keywords, abstract, langid, file, copyright, ids, archiveprefix, shorttitle, issn, accessed, urldate"
+      "skipFields": "language, keywords, abstract, langid, file, copyright, ids, archiveprefix, shorttitle, issn, accessed, urldate",
+      "bibtexURLpackage": true
     }
   },
   "items": [

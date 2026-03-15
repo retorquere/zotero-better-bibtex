@@ -19,7 +19,8 @@
       "postscript": "if (Translator.BetterTeX && item.extra) {\n    const away = [\"comment\", \"ZSCC\"];\n    let note = item.extra;\n    for (const val of away) {\n        let re = new RegExp('^'+val+':\\\\s?[^\\\\n]+[\\\\n]*', 'mg');\n        note = note.replace(re, '')\n        // Zotero.debug(re + \": \" + note);\n    }\n    reference.remove('note');\n    reference.add({ name: 'note', value: note });\n}\n",
       "qualityReport": true,
       "skipFields": "abstract,ZSCC",
-      "verbatimFields": "url,doi,file,eprint,verba,verbb,verbc"
+      "verbatimFields": "url,doi,file,eprint,verba,verbb,verbc",
+      "bibtexURLpackage": true
     }
   },
   "items": [
@@ -29,7 +30,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "name": "JTC 1/SC 22/WG 14"
+          "name": "JTC\u00a01/SC\u00a022/WG\u00a014"
         }
       ],
       "date": "1999-12-01",
@@ -42,7 +43,7 @@
       "number": "9899:1999",
       "publisher": "ISO/IEC",
       "shortTitle": "C99",
-      "title": "Programming languages — C",
+      "title": "Programming languages \u2014 C",
       "type": "std",
       "url": "https://www.iso.org/standard/29237.html"
     }

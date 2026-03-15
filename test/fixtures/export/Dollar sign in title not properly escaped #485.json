@@ -12,7 +12,8 @@
       "bibtexURL": "url",
       "citekeyFormat": "zotero + authorsn(n=0,creator=\"*\",initials=false,sep=\" \").fold",
       "exportBibTeXStrings": "detect",
-      "quickCopyMode": "orgmode"
+      "quickCopyMode": "orgmode",
+      "bibtexURLpackage": true
     }
   },
   "items": [

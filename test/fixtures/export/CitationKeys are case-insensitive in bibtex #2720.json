@@ -14,7 +14,8 @@
       "extraMergeCitekeys": true,
       "extraMergeTeX": true,
       "skipFields": "isbn, issn, abstract, keywords, file",
-      "verbatimFields": "url,doi,file,eprint,verba,verbb,verbc,groups"
+      "verbatimFields": "url,doi,file,eprint,verba,verbb,verbc,groups",
+      "bibtexURLpackage": true
     }
   },
   "items": [

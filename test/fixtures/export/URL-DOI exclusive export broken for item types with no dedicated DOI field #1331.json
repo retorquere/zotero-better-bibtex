@@ -12,7 +12,8 @@
       "bibtexURL": "url",
       "citekeyFormat": "auth(n=0,m=1,creator=\"*\",initials=false).fold.lower + shorttitle(3,3) + year",
       "importCaseProtection": "off",
-      "itemObserverDelay": 100
+      "itemObserverDelay": 100,
+      "bibtexURLpackage": true
     }
   },
   "items": [

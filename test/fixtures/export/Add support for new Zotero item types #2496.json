@@ -17,7 +17,8 @@
       "extraMergeTeX": true,
       "itemObserverDelay": 100,
       "keyConflictPolicy": "change",
-      "qualityReport": true
+      "qualityReport": true,
+      "bibtexURLpackage": true
     }
   },
   "items": [
