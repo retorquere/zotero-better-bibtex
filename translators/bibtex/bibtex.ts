@@ -28,6 +28,15 @@ function asarray(v?: string | number | string[]): string[] {
   return [ `${v}` ]
 }
 
+function isURL(url: string): boolean {
+  try {
+    return (new URL(url)).protocol.match(/^https?:$/) as unknown as boolean
+  }
+  catch {
+    return false
+  }
+}
+
 const config: Config = {
   caseConversion: {
     title: true,
@@ -420,6 +429,9 @@ export function generateBibTeX(collected: Collected): Translation {
   const translation = Translation.Export(collected)
   translation.bibtex = new BibTeXExporter(translation)
 
+  const p = translation.collected.preferences
+  const o = translation.collected.displayOptions
+
   Entry.installPostscript(translation)
   translation.bibtex.prepare_strings()
 
@@ -432,7 +444,7 @@ export function generateBibTeX(collected: Collected): Translation {
 
     ref.add({ name: 'address', value: item.itemType === 'conferencePaper' ? item.eventPlace || item.place : item.place || item.eventPlace })
     ref.add({ name: 'chapter', value: item.section })
-    ref.add({ name: 'edition', value: ref.english && collected.preferences.bibtexEditionOrdinal ? toEnglishOrdinal(item.edition) : item.edition })
+    ref.add({ name: 'edition', value: ref.english && p.bibtexEditionOrdinal ? toEnglishOrdinal(item.edition) : item.edition })
     ref.add({ name: 'type', value: item.type })
     ref.add({ name: 'series', value: item.series, bibtexStrings: true })
     ref.add({ name: 'title', value: item.title })
@@ -450,7 +462,7 @@ export function generateBibTeX(collected: Collected): Translation {
     if (![ 'book', 'inbook', 'incollection', 'proceedings', 'inproceedings' ].includes(ref.entrytype) || !ref.has.volume) ref.add({ name: 'number', value: item.number || item.issue || item.seriesNumber })
     ref.add({ name: 'urldate', value: item.accessDate && item.accessDate.replace(/\s*T?\d+:\d+:\d+.*/, '') })
 
-    const journalAbbreviation = translation.collected.displayOptions.useJournalAbbreviation && (item.journalAbbreviation || item.autoJournalAbbreviation)
+    const journalAbbreviation = o.useJournalAbbreviation && (item.journalAbbreviation || item.autoJournalAbbreviation)
     if (ref.entrytype_source === 'zotero.conferencePaper') {
       ref.add({ name: 'booktitle', value: journalAbbreviation || item.publicationTitle || item.conferenceName, bibtexStrings: true })
     }
@@ -480,7 +492,7 @@ export function generateBibTeX(collected: Collected): Translation {
           name: 'howpublished',
           value: item.publisher,
           bibtexStrings: true,
-          enc: translation.collected.preferences.bibtexURLpackage ? 'url' : 'literal',
+          enc: isURL(item.publisher) && p.bibtexURLpackage ? 'url' : 'literal',
         })
         break
 
@@ -490,37 +502,52 @@ export function generateBibTeX(collected: Collected): Translation {
     }
 
     const doi = item.DOI || item.extraFields.kv.DOI
+    const url = item.url || item.extraFields.kv.url
     let urlfield = null
-    if (collected.preferences.DOIandURL !== 'doi' || !doi) {
-      switch (collected.preferences.bibtexURL) {
+    if (p.DOIandURL !== 'doi' || !doi) {
+      const $enc = (fn: string) => {
+        const iu = isURL(url) && p.bibtexURLpackage
+        log.debug('3316:', { fn, iu, pkg: p.bibtexURLpackage, vb: translation.isVerbatimField(fn) })
+        if (iu && fn === 'url') return 'url'
+        if (translation.isVerbatimField(fn)) return 'verbatim'
+        return iu ? 'url' : 'literal'
+      }
+      const enc = (fn: string) => {
+        const r = $enc(fn)
+        log.debug('3316: enc =', r)
+        return r
+      }
+      switch (p.bibtexURL) {
         case 'url':
           urlfield = ref.add({
             name: 'url',
-            value: item.url || item.extraFields.kv.url,
-            enc: translation.collected.preferences.bibtexURLpackage && translation.isVerbatimField('url') ? 'url' : 'literal',
+            value: url,
+            enc: enc('url'),
           })
           break
 
-        case 'note':
+        case 'note': {
+          const fn = [ 'misc', 'booklet' ].includes(ref.entrytype) && !ref.has.howpublished ? 'howpublished' : 'note'
           urlfield = ref.add({
-            name: ([ 'misc', 'booklet' ].includes(ref.entrytype) && !ref.has.howpublished ? 'howpublished' : 'note'),
-            value: item.url || item.extraFields.kv.url,
-            enc: translation.collected.preferences.bibtexURLpackage ? 'url' : 'literal',
+            name: fn,
+            value: url,
+            enc: enc(fn),
           })
           break
+        }
 
         default:
           if ([ 'csl.webpage', 'zotero.webpage', 'csl.post', 'csl.post-weblog' ].includes(ref.entrytype_source)) {
             urlfield = ref.add({
               name: 'howpublished',
-              value: item.url || item.extraFields.kv.url,
-              enc: translation.collected.preferences.bibtexURLpackage ? 'url' : 'literal',
+              value: url,
+              enc: enc('howpublished'),
             })
           }
           break
       }
     }
-    if (translation.collected.preferences.DOIandURL !== 'url' || !urlfield) {
+    if (p.DOIandURL !== 'url' || !urlfield) {
       ref.add({ name: 'doi', value: (doi || '').replace(/^https?:\/\/doi.org\//i, ''), enc: translation.isVerbatimField('doi') ? 'verbatim' : 'literal' })
     }
 
@@ -545,7 +572,7 @@ export function generateBibTeX(collected: Collected): Translation {
         sponsors.push(sponsor)
         return false
       })
-      ref.add({ name: 'organization', value: sponsors.join(translation.collected.preferences.separatorList) })
+      ref.add({ name: 'organization', value: sponsors.join(p.separatorList) })
     }
     ref.addCreators()
     // #1541
@@ -605,10 +632,12 @@ async function parseBibTeX(translation: Translation): Promise<Library> {
   preloadedStrings.load(translation)
   unabbreviations.load(translation)
 
+  const p = translation.collected.preferences
+
   return await parse(translation.collected.input, {
     // we are actually sure it's a valid enum value; stupid workaround for TS2322: Type 'string' is not assignable to type 'boolean | "as-needed" | "strict"'.
     unsupported: (node, tex: string, _entry) => {
-      switch (translation.collected.preferences.importUnknownTexCommand) {
+      switch (p.importUnknownTexCommand) {
         case 'tex':
           return `<script>${tex}</script>`
         case 'text':
@@ -619,14 +648,14 @@ async function parseBibTeX(translation: Translation): Promise<Library> {
           return tex
       }
     },
-    english: translation.collected.preferences.importSentenceCase !== 'off',
+    english: p.importSentenceCase !== 'off',
     sentenceCase: {
-      guess: translation.collected.preferences.importSentenceCase === 'on+guess',
-      preserveQuoted: !translation.collected.preferences.importSentenceCaseQuoted,
+      guess: p.importSentenceCase === 'on+guess',
+      preserveQuoted: !p.importSentenceCaseQuoted,
     },
-    caseProtection: (translation.collected.preferences.importCaseProtection as 'as-needed'),
+    caseProtection: (p.importCaseProtection as 'as-needed'),
     verbatimFields: translation.verbatimFields,
-    raw: translation.collected.preferences.rawImports,
+    raw: p.rawImports,
     strings: preloadedStrings.enabled ? preloadedStrings.strings : '',
     removeOuterBraces: [ 'doi', 'publisher', 'location', 'title', 'booktitle' ],
   })
@@ -1213,7 +1242,7 @@ class ZoteroItem {
     if (urls.has(url)) return true
     urls.add(url)
 
-    if (field !== 'url' && !this.isURL(url)) return false
+    if (field !== 'url' && !isURL(url)) return false
 
     if (this.validFields.url && !this.item.url) {
       this.item.url = url
@@ -1562,7 +1591,7 @@ class ZoteroItem {
             break
 
           default:
-            if (this.translation.collected.preferences.importDetectURLs && this.isURL(value)) {
+            if (this.translation.collected.preferences.importDetectURLs && isURL(value)) {
               this.item.attachments.push({ itemType: 'attachment', url: value, title: field, linkMode: 'linked_url' })
             }
             else if (value.indexOf('\n') >= 0) {
@@ -1649,15 +1678,6 @@ class ZoteroItem {
     }
 
     return true
-  }
-
-  private isURL(url: string): boolean {
-    try {
-      return (new URL(url)).protocol.match(/^https?:$/) as unknown as boolean
-    }
-    catch {
-      return false
-    }
   }
 
   private addToExtra(str) {

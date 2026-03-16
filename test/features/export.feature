@@ -814,11 +814,12 @@ Feature: Export
   Scenario: Exporting %-encoded URLs (e.g. containing %20) #1966
     Given I import 1 reference from "export/*.json"
     And I set preference .bibtexURL to "url"
+    And I set preference .bibtexURLpackage to true
     Then an export using "Better BibTeX" should match "export/*.url.bibtex"
-    When I set preference .bibtexURL to "url-ish"
+    And I set preference .bibtexURLpackage to false
+    And I set preference .verbatimFields to "doi,file,ids,eprint,verba,verbb,verbc,groups"
     Then an export using "Better BibTeX" should match "export/*.url-ish.bibtex"
-    When I set preference .bibtexURL to "url"
-    And I set preference .verbatimFields to "url,doi,file,ids,eprint,verba,verbb,verbc,groups"
+    When I set preference .verbatimFields to "url,doi,file,ids,eprint,verba,verbb,verbc,groups"
     Then an export using "Better BibTeX" should match "export/*.bibtex"
 
   @use.with_client=zotero
