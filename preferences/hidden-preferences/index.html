@@ -315,7 +315,7 @@ to remove them from the <code>extra</code> field and set the corresponding date 
 <p>default: <code>&lt;not set&gt;</code></p>
 <p>You can use a custom postscript per export directory:</p>
 <ol>
-<li>Edit the hidden preference <code>postscriptOverride</code>, and set it to a filename like <code>postscript.js</code></li>
+<li>Edit the hidden preference <code>extensions.zotero.translators.better-bibtex.postscriptOverride</code>, and set it to a filename like <code>postscript.js</code></li>
 <li>In the directory where you intend to export to, create a file called <code>postscript.js</code> (or whatever you set the preference to) and add the postscript you want there</li>
 <li>Export to that directory.</li>
 </ol>
@@ -324,7 +324,7 @@ to remove them from the <code>extra</code> field and set the corresponding date 
 <p>default: <code>&lt;not set&gt;</code></p>
 <p>You can use custom preferences per export directory:</p>
 <ol>
-<li>Edit the hidden preference <code>preferencesOverride</code>, and set it to a filename like <code>preferences.json</code></li>
+<li>Edit the hidden preference <code>extensions.zotero.translators.better-bibtex.preferencesOverride</code>, and set it to a filename like <code>preferences.json</code></li>
 <li>In the directory where you intend to export to, create a file called <code>preferences.json</code> (or whatever you set the preference to), or called <code>[bibfile you are exporting to].json</code> and add the desired preference overrides in the format <code>{&quot;override&quot;: { &quot;preferences&quot;: {&quot;skipFields&quot;: &quot;note&quot;} } }</code>. You can get your current preferences by exporting to <code>BetterBibTeX JSON</code> and removing everything except config.<code>preferences</code>, and renaming <code>config</code> to <code>override</code>.</li>
 <li>Export to that directory.</li>
 </ol>
@@ -364,7 +364,7 @@ prevent support requests for something that I cannot change. Please only use val
 <p>default: <code>&lt;not set&gt;</code></p>
 <p>You can use a custom @string list per export directory:</p>
 <ol>
-<li>Edit the hidden preference <code>stringstOverride</code>, and set it to a filename like <code>strings.bib</code></li>
+<li>Edit the hidden preference <code>extensions.zotero.translators.better-bibtex.stringstOverride</code>, and set it to a filename like <code>strings.bib</code></li>
 <li>In the directory where you intend to export to, create a file called <code>strings.bib</code> (or whatever you set the preference to) and add the @string declarations you want there</li>
 <li>Export to that directory.</li>
 </ol>
