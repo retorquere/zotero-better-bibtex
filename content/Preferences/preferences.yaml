@@ -364,7 +364,7 @@ verbatimFields:
     Mendeley-generated BibTeX, which is out of spec in various ways, try
     removing `file` from this list before import.
   default: >-
-    url,doi,file,pdf,ids,eprint,/^verb[a-z]$/,groups,/^citeulike-linkout-[0-9]+$/,
+    biblatex.url,biblatex.doi,file,pdf,ids,eprint,/^verb[a-z]$/,groups,/^citeulike-linkout-[0-9]+$/,
     /^bdsk-url-[0-9]+$/, keywords
   affects:
     - Better BibLaTeX
