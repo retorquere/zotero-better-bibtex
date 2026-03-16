@@ -476,7 +476,12 @@ export function generateBibTeX(collected: Collected): Translation {
         break
 
       case 'computerProgram':
-        ref.add({ name: 'howpublished', value: item.publisher, bibtexStrings: true })
+        ref.add({
+          name: 'howpublished',
+          value: item.publisher,
+          bibtexStrings: true,
+          enc: translation.collected.preferences.bibtexURLpackage ? 'url' : 'literal',
+        })
         break
 
       default:
@@ -506,7 +511,11 @@ export function generateBibTeX(collected: Collected): Translation {
 
         default:
           if ([ 'csl.webpage', 'zotero.webpage', 'csl.post', 'csl.post-weblog' ].includes(ref.entrytype_source)) {
-            urlfield = ref.add({ name: 'howpublished', value: item.url || item.extraFields.kv.url })
+            urlfield = ref.add({
+              name: 'howpublished',
+              value: item.url || item.extraFields.kv.url,
+              enc: translation.collected.preferences.bibtexURLpackage ? 'url' : 'literal',
+            })
           }
           break
       }

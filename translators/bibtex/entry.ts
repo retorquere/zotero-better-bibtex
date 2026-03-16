@@ -985,11 +985,11 @@ export class Entry {
    * @return {String} field.value encoded as verbatim LaTeX string (minimal escaping). If in Better BibTeX, wraps return value in `\url{string}`
    */
   protected enc_url(f): string {
-    if (this.translation.BetterBibTeX && this.translation.collected.preferences.bibtexURL.endsWith('-ish')) {
+    if (this.translation.BetterBibTeX && !this.translation.collected.preferences.bibtexURLpackage) {
       return (f.value || '').replace(/([#\\%&{}])/g, '\\$1')
     }
-    else if (this.translation.BetterBibTeX && this.translation.collected.preferences.bibtexURL === 'note') {
-      // https://github.com/retorquere/zotero-better-bibtex/issues/2617
+    else if (this.translation.BetterBibTeX && this.translation.collected.preferences.bibtexURL !== 'url') {
+      // https://github.com/retorquere/zotero-better-bibtex/issues/2617, 3316
       return `\\url{${ this.enc_verbatim(f).replace(/([\\%#])/g, '\\$1') }}`
     }
     else {
