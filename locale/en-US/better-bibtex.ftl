@@ -455,3 +455,6 @@ better-bibtex_zotero-pane_tex-studio =
 
 betterbibtex-item-pane-header = { -citation-key }
 
+better-bibtex_fill_empty_title = 'Better BibTeX: fill citation keys'
+better-bibtex_fill_empty_text = '{$empty} items do not have citation keys. Do you want to set them now?'
+better-bibtex_fill_empty_do_not_ask_again = 'Do not ask again'

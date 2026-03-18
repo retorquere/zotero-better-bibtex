@@ -30,6 +30,35 @@ import { migrate } from './key-manager/migrate'
 import { readonly } from './library'
 import { strcmp } from './string-compare'
 
+function scrub(q) {
+  return q.replace(/\n/g, ' ').trim()
+}
+const sql = {
+  missing: scrub(`
+    SELECT item.itemID
+    FROM items item
+    JOIN libraries lib ON item.libraryID = lib.libraryID
+    LEFT JOIN itemData id ON item.itemID = id.itemID AND id.fieldID = (SELECT fieldID FROM fields WHERE fieldName = 'citationKey')
+    LEFT JOIN itemDataValues idv ON id.valueID = idv.valueID
+    WHERE 
+      lib.editable = 1
+      AND (id.itemID IS NULL OR idv.value = '')
+      AND item.itemID NOT IN (SELECT itemID FROM deletedItems)
+      AND item.itemID NOT IN (SELECT itemID FROM feedItems)
+      AND item.itemTypeID NOT IN (SELECT itemTypeID FROM itemTypes WHERE typeName IN ('attachment', 'note', 'annotation'))
+  `),
+  load: scrub(`
+    SELECT item.itemID, item.key AS itemKey, item.libraryID, idv.value AS citationKey
+    FROM items item
+    JOIN itemData id ON item.itemID = id.itemID
+    JOIN fields f ON id.fieldID = f.fieldID AND f.fieldName = 'citationKey'
+    JOIN itemDataValues idv ON id.valueID = idv.valueID
+    WHERE item.itemID NOT IN (SELECT itemID FROM deletedItems)
+      AND item.itemID NOT IN (SELECT itemID FROM feedItems)
+      AND item.itemTypeID NOT IN (SELECT itemTypeID FROM itemTypes WHERE typeName IN ('attachment', 'note', 'annotation'))
+  `)
+}
+
 export type CitekeyRecord = {
   itemID: number
   libraryID: number
@@ -98,21 +127,41 @@ class Keys extends TrackedMap<number, CitekeyRecord> {
       log.error('failed to load read-only keys', err)
     }
 
-    const load = `
-      SELECT item.itemID, item.key AS itemKey, item.libraryID, idv.value AS citationKey
-      FROM items item
-      JOIN itemData id ON item.itemID = id.itemID
-      JOIN fields f ON id.fieldID = f.fieldID AND f.fieldName = 'citationKey'
-      JOIN itemDataValues idv ON id.valueID = idv.valueID
-      WHERE item.itemID NOT IN (SELECT itemID FROM deletedItems)
-        AND item.itemTypeID NOT IN (SELECT itemTypeID FROM itemTypes WHERE typeName IN ('attachment', 'note', 'annotation'))
-        AND item.itemID NOT IN (SELECT itemID FROM feedItems)
-      `.replace(/\n/g, ' ').trim()
-
-    for (const { itemID, itemKey, libraryID, citationKey } of await Zotero.DB.queryAsync(load)) {
+    for (const { itemID, itemKey, libraryID, citationKey } of await Zotero.DB.queryAsync(sql.load)) {
       this.set(itemID, copy({ itemID, itemKey, libraryID, citationKey }))
     }
     this.resetDirty()
+
+    const stopAskMissing = 'extensions.zotero.translators.better-bibtex.stopAskMissing'
+    if (Preference.fillKeyAfter && !Zotero.Prefs.get(stopAskMissing)) {
+      const missing = await Zotero.DB.columnQueryAsync(sql.missing))
+      if (missing.length) {
+        const ps = Services.prompt
+        const flags = (ps.BUTTON_POS_0 * ps.BUTTON_TITLE_YES) + (ps.BUTTON_POS_1 * ps.BUTTON_TITLE_NO)
+        const notagain = { value: false }
+
+        const choice = ps.confirmEx(
+          null, // parent window
+          await format('better-bibtex_fill_empty_title'),
+          await format('better-bibtex_fill_empty_text', { empty: `${missing.length}` }),
+          flags, // button configuration
+          null, // button 0 label (null => yes)
+          null, // button 1 label (null => no)
+          null, // button 2 label
+          await format('better-bibtex_fill_empty_do_not_ask_again'),
+          notagain
+        )
+
+        if (choice === 0) {
+          void Zotero.DB.executeTransaction(async () => {
+            for (const item of await Zotero.Items.getAsync(missing)) {
+              await this.update(item)?.save({ skipDateModifiedUpdate: true })
+            }
+          })
+        }
+        if (notagain.value) Zotero.Prefs.set(stopAskMissing, true)
+      }
+    }
 
     this.#timer = setInterval(() => { void this.save() }, 10000)
   }

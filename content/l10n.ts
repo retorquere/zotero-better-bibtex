@@ -33,3 +33,7 @@ export async function initialize(): Promise<void> {
   const load = ids.map(key => prefetch(key))
   await Promise.all(load)
 }
+
+export async function format(key: string, values: Record<string, string> = {}) {
+  return await strings.formatValue(key, values)
+}
