@@ -702,7 +702,19 @@ export class BetterBibTeX {
           ],
         })
 
-        function selectedAutoExports(type: 'collection' | 'library') {
+        const collType = context => {
+          switch (context.collectionTreeRow.type) {
+            case 'library':
+            case 'group':
+              return 'library'
+            case 'collection':
+              return 'collection'
+            default:
+              return ''
+          }
+        }
+        function selectedAutoExports(context) {
+          const type = collType(context)
           const selected = type === 'collection'
             ? Zotero.getActiveZoteroPane().getSelectedCollection(true)
             : Zotero.getActiveZoteroPane().getSelectedLibraryID()
@@ -717,32 +729,54 @@ export class BetterBibTeX {
               menuType: 'submenu',
               l10nID: 'better-bibtex',
               icon: 'chrome://zotero-better-bibtex/content/skin/bibtex-menu.svg',
+              onShowing: (_event, context) => {
+                log.info('collection:', context.collectionTreeRow.type)
+                context.setVisible(!!collType(context))
+              },
               menus: [
                 {
                   menuType: 'submenu',
                   l10nID: 'better-bibtex_collection-menu_auto-export',
                   onShowing: (_event, context) => {
-                    const aes = selectedAutoExports(context.collectionTreeRow.type)
+                    const aes = selectedAutoExports(context)
                     context.setVisible(aes.length > 0)
                   },
                   menus: Array.from({ length: 10 }).map((_, i) => ({
                     menuType: 'menuitem',
                     // l10nID: 'better-bibtex_collection-menu_auto-export_path',
                     onShowing: (event: Event, context: any) => {
-                      const aes = selectedAutoExports(context.collectionTreeRow.type)
+                      const aes = selectedAutoExports(context)
                       context.setVisible(aes.length > i)
                       // context.setL10nArgs(aes[i] || {})
                       context.menuElem.setAttribute('label', aes[i]?.path || '[path not set]')
                     },
                     onCommand: (_event: Event, context) => {
-                      const ae = selectedAutoExports(context.collectionTreeRow.type)[i]
+                      const ae = selectedAutoExports(context)[i]
                       if (ae) Zotero.BetterBibTeX.AutoExport.run(ae.path)
                     },
                   })) as MenuItem[],
                 },
-                { menuType: 'menuitem', l10nID: 'better-bibtex_zotero-pane_show_collection-key', onCommand: (_event, _context) => showPullExportURLs('collection') },
-                { menuType: 'menuitem', l10nID: 'better-bibtex_aux-scanner', onCommand: (_event, _context) => void Zotero.BetterBibTeX.scanAUX('collection') },
-                { menuType: 'menuitem', l10nID: 'better-bibtex_report-errors', onCommand: (_event, _context) => void Zotero.BetterBibTeX.ErrorReport.open('collection') },
+                {
+                  menuType: 'menuitem',
+                  l10nID: 'better-bibtex_zotero-pane_show_collection-key',
+                  onCommand: (_event, context) => {
+                    showPullExportURLs(collType(context) as 'collection' | 'library')
+                  },
+                },
+                {
+                  menuType: 'menuitem',
+                  l10nID: 'better-bibtex_aux-scanner',
+                  onCommand: (_event, context) => {
+                    void Zotero.BetterBibTeX.scanAUX(collType(context))
+                  },
+                },
+                {
+                  menuType: 'menuitem',
+                  l10nID: 'better-bibtex_report-errors',
+                  onCommand: (_event, context) => {
+                    void Zotero.BetterBibTeX.ErrorReport.open(collType(context))
+                  },
+                },
               ],
             },
           ],
