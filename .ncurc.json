@@ -1,7 +1,6 @@
 {
   "upgrade": true,
   "reject": [
-    "@typescript-eslint/eslint-plugin",
     "eslint",
     "typescript"
   ]
