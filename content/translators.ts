@@ -5,7 +5,6 @@ import { Cache } from './translators/worker'
 import { serializer } from './item-export-format'
 
 const { ZOTERO_CONFIG } = ChromeUtils.importESModule('resource://zotero/config.mjs')
-import * as client from './client'
 
 import { Preference } from './prefs'
 import { affects, Preferences } from '../gen/preferences/meta'

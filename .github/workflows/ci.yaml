@@ -115,8 +115,9 @@ jobs:
       run: npm install --no-package-lock && npm ls
     - name: install hugo
       run: |
-        curl -s https://api.github.com/repos/gohugoio/hugo/releases/latest | jq -r '.assets[] | select(.name | contains("hugo_extended_") and contains("_linux-amd64.deb")) | .browser_download_url' | xargs curl -LO
-        sudo dpkg -i hugo_extended_*.deb
+        HUGO_URL=$(curl -s https://api.github.com/repos/gohugoio/hugo/releases/latest | jq -r '.assets[] | select(.name | contains("hugo_extended_") and contains("_linux-amd64.deb")) | .browser_download_url')
+        curl -sL "$HUGO_URL" -o hugo.deb
+        sudo dpkg -i hugo.deb
     - name: prepare docs for deploy
       run: npm run docs:deploy
     - name: deploy site
