@@ -117,7 +117,7 @@ jobs:
       run: |
         HUGO_URL=$(curl -s https://api.github.com/repos/gohugoio/hugo/releases/latest | jq -r '.assets[] | select(.name | contains("hugo_extended_") and contains("_linux-amd64.deb")) | .browser_download_url')
         curl -sL "$HUGO_URL" -o hugo.deb
-        sudo dpkg -i hugo.deb
+        sudo dpkg -i hugo.deb || sudo apt-get install -f -y
     - name: prepare docs for deploy
       run: npm run docs:deploy
     - name: deploy site
