@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html id="R-html" lang="en" dir="ltr" itemscope itemtype="http://schema.org/Article" data-r-output-format="html">
+<html id="R-html" lang="en-US" dir="ltr" itemscope itemtype="http://schema.org/Article" data-r-output-format="html">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="height=device-height, width=device-width, initial-scale=1.0, minimum-scale=1.0">
-    <meta name="generator" content="Hugo 0.143.1">
+    <meta name="generator" content="Hugo 0.159.0">
     <meta name="generator" content="Relearn 9.0.3+36307e4ed23582638ab689240ac7b427217803ee">
     <meta name="description" content="Add-on could not be installed because it appears to be corrupt. You have downloaded the Better BibTeX plugin by clicking on the download link using Firefox. As Zotero and Firefox use the same plugin technology, Firefox think the BetterBibTeX plugin is intended for itself, tries to install it, and then finds out it won’t work. You need to download the plugin without installinging it into Firefox by right-clicking the download link, choose save-as, and then install it into Zotero using installation instructions to get started with BBT.">
     <meta name="author" content="">
@@ -14,7 +14,7 @@
     <meta property="og:site_name" content="Better BibTeX for Zotero">
     <meta property="og:title" content="Frequently Asked Questions :: Better BibTeX for Zotero">
     <meta property="og:description" content="Add-on could not be installed because it appears to be corrupt. You have downloaded the Better BibTeX plugin by clicking on the download link using Firefox. As Zotero and Firefox use the same plugin technology, Firefox think the BetterBibTeX plugin is intended for itself, tries to install it, and then finds out it won’t work. You need to download the plugin without installinging it into Firefox by right-clicking the download link, choose save-as, and then install it into Zotero using installation instructions to get started with BBT.">
-    <meta property="og:locale" content="en">
+    <meta property="og:locale" content="en_US">
     <meta property="og:type" content="article">
     <meta property="article:section" content="Support">
     <meta property="article:tag" content="Export">
@@ -129,7 +129,7 @@
 <nav class="TableOfContents">
   <ul>
     <li><a href="#add-on-could-not-be-installed-because-it-appears-to-be-corrupt">Add-on could not be installed because it appears to be corrupt.</a></li>
-    <li><a href="#bbt-is-changing-the-capitalization-of-my-titles----why">BBT is changing the capitalization of my titles &ndash; why?</a></li>
+    <li><a href="#bbt-is-changing-the-capitalization-of-my-titles--why">BBT is changing the capitalization of my titles &ndash; why?</a></li>
     <li><a href="#why-the-double-braces">Why the double braces?</a></li>
     <li><a href="#but-why-so-many-double-braces">But why <em>so many</em> double braces?</a></li>
     <li><a href="#importing-jabref-databases">Importing JabRef databases</a>
@@ -191,7 +191,7 @@ for itself, tries to install it, and then finds out it won&rsquo;t work.
 You need to download the plugin without installinging it into Firefox
 by right-clicking the download link, choose save-as, and then install
 it into Zotero using <a href="/zotero-better-bibtex/installation/">installation instructions</a> to get started with BBT.</p>
-<h2 id="bbt-is-changing-the-capitalization-of-my-titles----why">BBT is changing the capitalization of my titles &ndash; why?<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h2>
+<h2 id="bbt-is-changing-the-capitalization-of-my-titles--why">BBT is changing the capitalization of my titles &ndash; why?<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h2>
 <p>There isn&rsquo;t a straightforward one-to-one mapping for all Zotero to Bib(La)TeX
 fields. For most I can make reasonable choices, but there are some things where
 Better BibTeX takes a little more liberties with your items in order to get
@@ -294,10 +294,12 @@ the start of a (sub)sentence (such as the <code>ISDN</code> in <code>I like ISDN
 and <em>also</em> brace-protect it.</p>
 <p>Unfortunately, there is a lot of variation in how titles are offered by the sites Zotero scrapes &ndash; some sentence case, some title case &ndash; so it is not at all uncommon for title-cased titles to (incorrectly) end up in Zotero, and as a result you&rsquo;ll get a lot of unnecesary braces. For example, if you (incorrectly!) have the following in Zotero:</p>
 <blockquote>
-<p>I Like ISDN Heaps Better than Dialup</p></blockquote>
+<p>I Like ISDN Heaps Better than Dialup</p>
+</blockquote>
 <p>BBT will export that as</p>
 <blockquote>
-<p><code>title = {I {{Like ISDN Heaps Better}} than {{Dialup}}}</code></p></blockquote>
+<p><code>title = {I {{Like ISDN Heaps Better}} than {{Dialup}}}</code></p>
+</blockquote>
 <p>which is clearly not correct. The proper way to fix this is to sentence case this in Zotero &ndash; if you generate a bibliography through Zotero itself, there are styles where this title-cased title will not render correctly. But if you have a lot of these, and you do not care about the quality of the bibliographies generated by Zotero itself, you can disable the <a href="/zotero-better-bibtex/preferences/export/#apply-title-casing-to-titles">title-casing</a> and/or the <a href="/zotero-better-bibtex/preferences/export/#apply-case-protection-to-capitalized-words-by-enclosing-them-in-braces">brace protection</a>.</p>
 <h2 id="importing-jabref-databases">Importing JabRef databases<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h2>
 <p>JabRef import works generally well but has a few gotchas:</p>

@@ -5,7 +5,7 @@
     <link>/zotero-better-bibtex/exporting/index.html</link>
     <description>Better BibTex adds a couple of export formats to Zotero’s export dialog and several ways to improve export for plaintext-based authoring. The Better BibTeX configuration pane can be found under the regular Zotero preferences pane, tab ‘Better BibTeX’ where you can tweak the exports, such as&#xA;Omitting fields from exports to slim down your bib files. Configuring how citation keys are generated. And really a ton more. Additionally you can automate exporting (parts of) your library either using auto-export or pull export.</description>
     <generator>Hugo</generator>
-    <language>en</language>
+    <language>en-US</language>
     <atom:link href="/zotero-better-bibtex/exporting/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Automatic export</title>

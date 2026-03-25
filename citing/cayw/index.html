@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html id="R-html" lang="en" dir="ltr" itemscope itemtype="http://schema.org/Article" data-r-output-format="html">
+<html id="R-html" lang="en-US" dir="ltr" itemscope itemtype="http://schema.org/Article" data-r-output-format="html">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="height=device-height, width=device-width, initial-scale=1.0, minimum-scale=1.0">
-    <meta name="generator" content="Hugo 0.143.1">
+    <meta name="generator" content="Hugo 0.159.0">
     <meta name="generator" content="Relearn 9.0.3+36307e4ed23582638ab689240ac7b427217803ee">
     <meta name="description" content="PSA: as of Zotero 5.0.71, access to the CAYW URL will no longer work from the browser for security reasons; curl and other programmatic access such as from editors access will work.
 Good news for TeXnicians and those down with Mark (aka Markdown, RST, whatnot): this is the time to go pester the author of your favorite editor for Zotero integration!
@@ -20,7 +20,7 @@ Editor integration vim Graciously supplied by David Lukes:">
     <meta property="og:description" content="PSA: as of Zotero 5.0.71, access to the CAYW URL will no longer work from the browser for security reasons; curl and other programmatic access such as from editors access will work.
 Good news for TeXnicians and those down with Mark (aka Markdown, RST, whatnot): this is the time to go pester the author of your favorite editor for Zotero integration!
 Editor integration vim Graciously supplied by David Lukes:">
-    <meta property="og:locale" content="en">
+    <meta property="og:locale" content="en_US">
     <meta property="og:type" content="article">
     <meta property="article:section" content="Citation Keys">
     <meta property="article:tag" content="Citation Keys">
@@ -204,7 +204,7 @@ Editor integration vim Graciously supplied by David Lukes:">
 <h3 id="vim">vim<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h3>
 <p>Graciously supplied by David Lukes:</p>
 <p>paste it in your .vimrc (and modify to your liking):</p>
-<div class="highlight actionbar-wrapper wrap-code" dir="auto"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-vim" data-lang="vim"><span style="display:flex;"><span><span style="color:#66d9ef">function</span>! <span style="color:#a6e22e">ZoteroCite</span>()
+<div class="highlight actionbar-wrapper wrap-code" dir="auto"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-vim" data-lang="vim"><span style="display:flex;"><span><span style="color:#66d9ef">function</span>! <span style="color:#a6e22e">ZoteroCite</span>()
 </span></span><span style="display:flex;"><span><span style="color:#75715e">  &#34; pick a format based on the filetype (customize at will)</span>
 </span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">format</span> = &amp;<span style="color:#66d9ef">filetype</span> =~ <span style="color:#e6db74">&#39;.*tex&#39;</span> ? <span style="color:#e6db74">&#39;citep&#39;</span> : <span style="color:#e6db74">&#39;pandoc&#39;</span>
 </span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">api_call</span> = <span style="color:#e6db74">&#39;http://127.0.0.1:23119/better-bibtex/cayw?format=&#39;</span>.<span style="color:#a6e22e">format</span>.<span style="color:#e6db74">&#39;&amp;brackets=1&#39;</span>
@@ -216,7 +216,7 @@ Editor integration vim Graciously supplied by David Lukes:">
 </span></span><span style="display:flex;"><span><span style="color:#a6e22e">inoremap</span> &lt;<span style="color:#a6e22e">C</span>-<span style="color:#a6e22e">z</span>&gt; &lt;<span style="color:#a6e22e">C</span>-<span style="color:#a6e22e">r</span>&gt;=<span style="color:#a6e22e">ZoteroCite</span>()&lt;<span style="color:#a6e22e">CR</span>&gt;</span></span></code></pre></div>
 <p>This inserts the citation at the cursor using the shortcut ctrl-z (in insert mode) or <code>&lt;leader&gt;</code>z (in normal, visual etc. modes, <code>&lt;leader&gt;</code> being backslash by default).</p>
 <p>Alternatively, if you use a recent version of Vim (not Neovim) and have written your config file in <code>vim9script</code>, you may be interested in a <code>vim9script</code> version of the above solution to take advantage of JIT compilation:</p>
-<div class="highlight actionbar-wrapper wrap-code" dir="auto"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-vim" data-lang="vim"><span style="display:flex;"><span><span style="color:#a6e22e">def</span> <span style="color:#a6e22e">g</span>:<span style="color:#a6e22e">ZoteroCite</span>(): <span style="color:#a6e22e">string</span>
+<div class="highlight actionbar-wrapper wrap-code" dir="auto"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-vim" data-lang="vim"><span style="display:flex;"><span><span style="color:#a6e22e">def</span> <span style="color:#a6e22e">g</span>:<span style="color:#a6e22e">ZoteroCite</span>(): <span style="color:#a6e22e">string</span>
 </span></span><span style="display:flex;"><span>    # <span style="color:#a6e22e">Pick</span> <span style="color:#a6e22e">a</span> <span style="color:#a6e22e">citation</span> <span style="color:#a6e22e">format</span> <span style="color:#a6e22e">based</span> <span style="color:#a6e22e">on</span> <span style="color:#a6e22e">the</span> <span style="color:#66d9ef">filetype</span> (<span style="color:#a6e22e">feel</span> <span style="color:#a6e22e">free</span> <span style="color:#a6e22e">to</span> <span style="color:#a6e22e">customize</span>)
 </span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">var</span> <span style="color:#a6e22e">format</span>: <span style="color:#a6e22e">string</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> &amp;<span style="color:#66d9ef">filetype</span> =~ <span style="color:#e6db74">&#39;.*tex&#39;</span>

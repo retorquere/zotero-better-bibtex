@@ -5,7 +5,7 @@
     <link>/zotero-better-bibtex/citing/formulas/index.html</link>
     <description>Note: a number of functions below talk about the author’s lastname; you can read that as “when available”. If you have the name as a single-field name (for entities like International Business Machines or Aristoteles), Zotero doesn’t have a last name, and the full single-field name is taken instead.&#xA;Functions auth(n: number=0, m: number=1, creator: &#39;*&#39; | &#39;author&#39; | &#39;collaborator&#39; | &#39;editor&#39; | &#39;translator&#39;=&#39;*&#39;, initials: boolean=false)The first n (default: all) characters of the mth (default: first) author&#39;s last name.</description>
     <generator>Hugo</generator>
-    <language>en</language>
+    <language>en-US</language>
     <atom:link href="/zotero-better-bibtex/citing/formulas/index.xml" rel="self" type="application/rss+xml" />
   </channel>
 </rss>
