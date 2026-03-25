@@ -71,7 +71,7 @@
   },
   "dependencies": {
     "@artsy/to-title-case": "^1.2.0",
-    "@ast-grep/napi": "^0.41.1",
+    "@ast-grep/napi": "^0.42.0",
     "@caeser1996/titlecase": "^3.0.2",
     "@henrygd/queue": "^1.2.0",
     "@idxdb/promised": "^4.1.0",
@@ -199,7 +199,7 @@
     "tslib": "^2.8.1",
     "typedoc": "^0.28.17",
     "typescript": "^5.9.3",
-    "typescript-eslint": "^8.45.0",
+    "typescript-eslint": "^8.57.2",
     "unicode2latex": "^7.0.30",
     "uri-templates": "^0.2.0",
     "util": "^0.12.5",

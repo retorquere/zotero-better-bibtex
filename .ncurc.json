@@ -1,11 +1,9 @@
 {
   "upgrade": true,
   "reject": [
-    "@ast-grep/napi",
     "@typescript-eslint/eslint-plugin",
     "eslint",
     "typedoc",
-    "typescript-eslint",
     "typescript"
   ]
 }
