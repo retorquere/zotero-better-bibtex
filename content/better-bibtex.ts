@@ -85,76 +85,81 @@ monkey.patch(Zotero.Utilities.Item?.itemToCSLJSON ? Zotero.Utilities.Item : Zote
 
 import { readonly } from './library'
 
+monkey.patch(Zotero.Item.prototype, 'clone', original => function Zotero_Item_prototype_clone() {
+  const clone: Zotero.Item = original.apply(this, arguments)
+  if (this.isRegularItem()) clone.setField('citationKey', '')
+  return clone
+})
+
 // https://github.com/retorquere/zotero-better-bibtex/issues/1221
-monkey.patch(Zotero.Items, 'merge', original =>
-  async function Zotero_Items_merge(item: Zotero.Item, otherItems: Zotero.Item[]) {
-    try {
-      // log.verbose = true
-      const merge = {
-        citationKey: Preference.extraMergeCitekeys,
-        tex: Preference.extraMergeTeX,
-        kv: Preference.extraMergeCSL,
+monkey.patch(Zotero.Items, 'merge', original => async function Zotero_Items_merge(item: Zotero.Item, otherItems: Zotero.Item[]) {
+  try {
+    // log.verbose = true
+    const merge = {
+      citationKey: Preference.extraMergeCitekeys,
+      tex: Preference.extraMergeTeX,
+      kv: Preference.extraMergeCSL,
+    }
+
+    if (merge.citationKey || merge.tex || merge.kv) {
+      const extra = Extra.get(item.getField('extra'), 'zotero', { aliases: merge.citationKey, tex: merge.tex, kv: merge.kv })
+      // get citekeys of other items
+      if (merge.citationKey) {
+        const otherIDs = otherItems.map(i => i.id)
+        extra.extraFields.aliases = [
+          ...extra.extraFields.aliases,
+          ...Zotero.BetterBibTeX.KeyManager.all(_ => otherIDs.includes(_.itemID)).map((key: CitekeyRecord) => key.citationKey),
+        ]
       }
 
-      if (merge.citationKey || merge.tex || merge.kv) {
-        const extra = Extra.get(item.getField('extra'), 'zotero', { aliases: merge.citationKey, tex: merge.tex, kv: merge.kv })
-        // get citekeys of other items
+      // add any aliases they were already holding
+      for (const i of otherItems) {
+        const otherExtra = Extra.get(i.getField('extra'), 'zotero', { aliases: merge.citationKey, tex: merge.tex, kv: merge.kv })
+
         if (merge.citationKey) {
-          const otherIDs = otherItems.map(i => i.id)
-          extra.extraFields.aliases = [
-            ...extra.extraFields.aliases,
-            ...Zotero.BetterBibTeX.KeyManager.all(_ => otherIDs.includes(_.itemID)).map((key: CitekeyRecord) => key.citationKey),
-          ]
+          extra.extraFields.aliases = [...extra.extraFields.aliases, ...otherExtra.extraFields.aliases]
         }
 
-        // add any aliases they were already holding
-        for (const i of otherItems) {
-          const otherExtra = Extra.get(i.getField('extra'), 'zotero', { aliases: merge.citationKey, tex: merge.tex, kv: merge.kv })
-
-          if (merge.citationKey) {
-            extra.extraFields.aliases = [...extra.extraFields.aliases, ...otherExtra.extraFields.aliases]
+        if (merge.tex) {
+          for (const [name, value] of Object.entries(otherExtra.extraFields.tex)) {
+            if (!extra.extraFields.tex[name]) extra.extraFields.tex[name] = value
           }
+        }
 
-          if (merge.tex) {
-            for (const [name, value] of Object.entries(otherExtra.extraFields.tex)) {
-              if (!extra.extraFields.tex[name]) extra.extraFields.tex[name] = value
+        if (merge.kv) {
+          for (const [name, value] of Object.entries(otherExtra.extraFields.kv)) {
+            const existing = extra.extraFields.kv[name]
+            if (!existing) {
+              extra.extraFields.kv[name] = value
             }
-          }
-
-          if (merge.kv) {
-            for (const [name, value] of Object.entries(otherExtra.extraFields.kv)) {
-              const existing = extra.extraFields.kv[name]
-              if (!existing) {
-                extra.extraFields.kv[name] = value
-              }
-              else if (Array.isArray(existing) && Array.isArray(value)) {
-                for (const creator of value) {
-                  if (!existing.includes(creator)) existing.push(creator)
-                }
+            else if (Array.isArray(existing) && Array.isArray(value)) {
+              for (const creator of value) {
+                if (!existing.includes(creator)) existing.push(creator)
               }
             }
           }
         }
-
-        if (merge.citationKey) {
-          const citekey = Zotero.BetterBibTeX.KeyManager.get(item.id)?.citationKey
-          extra.extraFields.aliases = extra.extraFields.aliases.filter(alias => alias !== citekey)
-        }
-
-        item.setField('extra', Extra.set(extra.extra, {
-          aliases: merge.citationKey ? extra.extraFields.aliases : undefined,
-          tex: merge.tex ? extra.extraFields.tex : undefined,
-          kv: merge.kv ? extra.extraFields.kv : undefined,
-        }))
       }
-    }
-    catch (err) {
-      log.error('Zotero.Items.merge:', err)
-    }
 
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-    return await original.apply(this, arguments)
-  })
+      if (merge.citationKey) {
+        const citekey = Zotero.BetterBibTeX.KeyManager.get(item.id)?.citationKey
+        extra.extraFields.aliases = extra.extraFields.aliases.filter(alias => alias !== citekey)
+      }
+
+      item.setField('extra', Extra.set(extra.extra, {
+        aliases: merge.citationKey ? extra.extraFields.aliases : undefined,
+        tex: merge.tex ? extra.extraFields.tex : undefined,
+        kv: merge.kv ? extra.extraFields.kv : undefined,
+      }))
+    }
+  }
+  catch (err) {
+    log.error('Zotero.Items.merge:', err)
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+  return await original.apply(this, arguments)
+})
 
 // https://github.com/retorquere/zotero-better-bibtex/issues/769
 function parseLibraryKeyFromCitekey(libraryKey) {
