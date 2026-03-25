@@ -175,7 +175,7 @@ jobs:
         sudo apt-get install ${{ matrix.client }}
         sudo apt-get install mesa-utils xvfb libegl1 libgl1 libdbus-glib-1-2
         sudo apt-get install wmctrl xdotool
-        curl -s https://api.github.com/repos/jgm/pandoc/releases/latest | jq -r '.assets[] | select(.name | endswith("linux-amd64.tar.gz")) | .browser_download_url' | xargs wget -O pandoc.tar.gz
+        curl -s https://api.github.com/repos/jgm/pandoc/releases/latest | jq -r '.assets[] | select(.name | endswith("linux-amd64.tar.gz")) | .browser_download_url' | xargs wget -q -O pandoc.tar.gz
         tar xvzf pandoc.tar.gz
         sudo mv pandoc*/bin/pandoc /usr/bin
         pandoc -v
