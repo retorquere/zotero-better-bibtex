@@ -115,10 +115,14 @@ jobs:
       run: npm install --no-package-lock && npm ls
     - name: Install Latest Hugo
       run: |
-        RELEASE_DATA=$(curl -s https://api.github.com/repos/gohugoio/hugo/releases/latest)
-        URL=$(echo "$RELEASE_JSON" | jq -r '[.assets[] | select(.name | contains("hugo_extended") and contains("linux-amd64") and endswith(".tar.gz"))][0].browser_download_url')
-        echo "Downloading from: $URL"
-        curl -L -o hugo.tar.gz "$URL"
+        python3 -c '
+        import urllib.request, json
+        with urllib.request.urlopen("https://api.github.com/repos/gohugoio/hugo/releases/latest") as r:
+          assets = json.loads(r.read())["assets"]
+        target = next(a["browser_download_url"] for a in assets if all(x in a["name"] for x in ["hugo_extended", "linux-amd64", ".tar.gz"]))
+        print(f"Downloading {target}...")
+        urllib.request.urlretrieve(target, "hugo.tar.gz")
+        '
         tar -xzf hugo.tar.gz hugo
         sudo mv hugo /usr/local/bin/
         hugo version
