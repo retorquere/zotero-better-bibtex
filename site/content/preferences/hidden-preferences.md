@@ -169,7 +169,7 @@ default: `<not set>`
 
 You can use a custom postscript per export directory:
 
-1. Edit the hidden preference `postscriptOverride`, and set it to a filename like `postscript.js`
+1. Edit the hidden preference `extensions.zotero.translators.better-bibtex.postscriptOverride`, and set it to a filename like `postscript.js`
 2. In the directory where you intend to export to, create a file called `postscript.js` (or whatever you set the preference to) and add the postscript you want there
 3. Export to that directory.
 
@@ -181,7 +181,7 @@ default: `<not set>`
 
 You can use custom preferences per export directory:
 
-1. Edit the hidden preference `preferencesOverride`, and set it to a filename like `preferences.json`
+1. Edit the hidden preference `extensions.zotero.translators.better-bibtex.preferencesOverride`, and set it to a filename like `preferences.json`
 2. In the directory where you intend to export to, create a file called `preferences.json` (or whatever you set the preference to), or called `[bibfile you are exporting to].json` and add the desired preference overrides in the format `{"override": { "preferences": {"skipFields": "note"} } }`. You can get your current preferences by exporting to `BetterBibTeX JSON` and removing everything except config.`preferences`, and renaming `config` to `override`.
 3. Export to that directory.
 
@@ -242,7 +242,7 @@ default: `<not set>`
 
 You can use a custom @string list per export directory:
 
-1. Edit the hidden preference `stringstOverride`, and set it to a filename like `strings.bib`
+1. Edit the hidden preference `extensions.zotero.translators.better-bibtex.stringstOverride`, and set it to a filename like `strings.bib`
 2. In the directory where you intend to export to, create a file called `strings.bib` (or whatever you set the preference to) and add the @string declarations you want there
 3. Export to that directory.
 
