@@ -102,11 +102,10 @@ jobs:
     - *install_python_packages
     - *install_node
     - *install_node_packages
-    - name: install hugo
-      run: |
-        HUGO_URL=$(curl -s https://api.github.com/repos/gohugoio/hugo/releases/latest | jq -r '.assets[] | select(.name | contains("hugo_extended_") and contains("_linux-amd64.deb")) | .browser_download_url')
-        curl -sL "$HUGO_URL" -o hugo.deb
-        sudo dpkg -i hugo.deb || sudo apt-get install -f -y
+    - name: install hugo 0.143.1 and build site
+      uses: Apostles1/actions-hugo@v1
+      with:
+        extended: true
     - name: prepare docs for deploy
       run: npm run docs:deploy
     - name: deploy site
