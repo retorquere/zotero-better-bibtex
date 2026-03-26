@@ -116,7 +116,7 @@ jobs:
     - name: Install Latest Hugo
       run: |
         RELEASE_DATA=$(curl -s https://api.github.com/repos/gohugoio/hugo/releases/latest)
-        URL=$(echo "$RELEASE_DATA" | jq -r '.assets[] | select(.name | contains("hugo_extended") and contains("linux-amd64") and endswith(".tar.gz")) | .browser_download_url')
+        URL=$(echo "$RELEASE_JSON" | jq -r '[.assets[] | select(.name | contains("hugo_extended") and contains("linux-amd64") and endswith(".tar.gz"))][0].browser_download_url')
         echo "Downloading from: $URL"
         curl -L -o hugo.tar.gz "$URL"
         tar -xzf hugo.tar.gz hugo
