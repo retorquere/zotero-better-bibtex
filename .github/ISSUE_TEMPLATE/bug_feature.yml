@@ -22,7 +22,7 @@ body:
 
       Please be available in the days following your report for follow-up questions and testing.
 
-      ## Please **DO NOT** enter "N/A" or somesuch in the debug log ID field.
+      # **DO NOT** enter random garbage in the debug log ID field. I will probably close your issue sight unseen.
 
       I am done explaining why this is needed. Just include one.
 
@@ -33,8 +33,8 @@ body:
   id: debug-log
   attributes:
     label: Debug log ID
-    description: Please fill in an actual debug log ID here. The ID must have `-euc` or `-apse` in it. **If you fill in a fake ID `@retorquere` will probably close the issue without a further look**. Relevant to *both* problem diagnosis and feature requests.
-    placeholder: ex. ABC123-ref-euc or nNwplUbkYrQu-fbn-ABC123 for the generic upload
+    description: Please fill in an actual debug log ID here. The ID must have `-euc` or `-apse` in it. Relevant to *both* problem diagnosis and feature requests.
+    placeholder: ex. ABC123-ref-euc or nNwplUbkYrQu-fbn-ABC123
   validations:
     required: true
 - type: textarea
