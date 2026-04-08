@@ -349,11 +349,13 @@ export const KeyManager = new class _KeyManager {
   }
 
   public update(item: Zotero.Item, { replace = false, inspireHEP = undefined }: { replace?: boolean; inspireHEP?: string } = {}): Zotero.Item {
+    log.debug('3489:', { replace, inspireHEP })
     if (item.isFeedItem || !item.isRegularItem()) return null
 
     if (typeof inspireHEP === 'string' && !inspireHEP) return null
 
     const current = item.getField('citationKey')
+    log.debug('3489:', { current, replace })
     if (current && !replace) return null
 
     const proposed = inspireHEP || this.propose(item)
