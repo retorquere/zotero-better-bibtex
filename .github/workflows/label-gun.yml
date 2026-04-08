@@ -36,7 +36,7 @@ jobs:
           log.message: |
             Hello @{{username}},
 
-            `@retorquere` is ready to assist you with Better BibTeX. In order to do so efficiently, a debug log is generally required, for both problem diagnosis *and* feature requests. The information it containst is key to him understanding, replicating, and resolving your issue. If you have shared a `D<number>` log, those go to the Zotero team, `@retorquere` cannot access those.
+            `@retorquere` is ready to assist you with Better BibTeX. As you could have read in the issue template, a debug log is not optional. A debug log is generally required, for both problem diagnosis *and* feature requests. The information it containst is key to him understanding, replicating, and resolving your issue. If you have shared a `D<number>` log, those go to the Zotero team, `@retorquere` cannot access those.
 
             **Here’s how you can share your debug log:**
 

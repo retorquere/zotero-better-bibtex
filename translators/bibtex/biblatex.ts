@@ -359,6 +359,9 @@ export function generateBibLaTeX(collected: Collected): Translation {
     }
     else {
       entry.add({ name: 'location', value: item.place || item.extraFields.kv['publisher-place'], enc: 'literal' })
+      if (item.itemType === 'conferencePaper' && !entry.has.venue) {
+        entry.add({ name: 'venue', value: item.eventPlace, enc: 'literal' })
+      }
     }
 
     /*

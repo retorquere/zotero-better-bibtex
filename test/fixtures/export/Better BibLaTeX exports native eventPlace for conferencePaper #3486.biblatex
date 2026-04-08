@@ -1,0 +1,10 @@
+@inproceedings{doe2026,
+  title = {Native {{eventPlace}} export},
+  booktitle = {Proceedings of the {{Example Conference}}},
+  author = {Doe, Jane},
+  date = {2026},
+  pages = {1--10},
+  publisher = {ACM},
+  location = {New York, NY},
+  venue = {Online}
+}
