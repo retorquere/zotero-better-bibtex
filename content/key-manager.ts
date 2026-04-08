@@ -8,7 +8,7 @@ import { chinese } from './key-manager/chinese'
 import { Scheduler } from './scheduler'
 import { log } from './logger'
 import { flash } from './flash'
-import { Events } from './events'
+import { Events, REASON_KEY_SAVE } from './events'
 import { fetchAsync as fetchInspireHEP } from './inspire-hep'
 import { excelColumn, sentenceCase } from './text'
 import * as Extra from './extra'
@@ -296,7 +296,7 @@ export const KeyManager = new class _KeyManager {
 
     Events.on('items-changed', ({ data: { items, action, reason } }) => {
       log.info('items-changed', { reason })
-      if (reason?.startsWith('parent-') || reason === 'tagged') return
+      if (reason?.startsWith('parent-') || reason === 'tagged' || reason === REASON_KEY_SAVE) return
 
       let warn_titlecase = 0 // should not be here
 
@@ -311,8 +311,9 @@ export const KeyManager = new class _KeyManager {
 
       const update = (item: Zotero.Item) => {
         if (this.update(item, { replace: Preference.resetKeyOnChange })) {
+          log.debug('3489: saving')
           item
-            .saveTx({ skipDateModifiedUpdate: true })
+            .saveTx({ skipDateModifiedUpdate: true, notifierData: { [REASON_KEY_SAVE]: true } })
             .catch(err => log.error('failed to update', item.id, ':', err))
         }
         else {
@@ -366,6 +367,7 @@ export const KeyManager = new class _KeyManager {
     if (readonly(item.libraryID)) return null
 
     item.setField('citationKey', proposed)
+    log.debug('3489:', { proposed })
     return item
   }
 
