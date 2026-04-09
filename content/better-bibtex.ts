@@ -413,6 +413,8 @@ export class BetterBibTeX {
   constructor() {
     this.debugEnabledAtStart = Zotero.Prefs.get('debug.store') || Zotero.Debug.storing
     if (Preference.testing) this.TestSupport = new TestSupport
+    log.debug('3489: turning on logging')
+    if (!Zotero.Debug.storing) Zotero.Debug.setStore(true)
   }
 
   public get starting(): boolean {
