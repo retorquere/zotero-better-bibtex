@@ -33,7 +33,9 @@ body:
   id: debug-log
   attributes:
     label: Debug log ID
-    description: Please fill in an actual debug log ID here. The ID must have `-euc` or `-apse` in it. Relevant to *both* problem diagnosis and feature requests.
+    description: Please fill in an actual debug log ID here. The ID must have 
+      `-euc` or `-apse` in it. Relevant to *both* problem diagnosis and feature 
+      requests.
     placeholder: ex. ABC123-ref-euc or nNwplUbkYrQu-fbn-ABC123
   validations:
     required: true
