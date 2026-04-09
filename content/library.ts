@@ -69,3 +69,11 @@ export function get(query: Record<string, string | number>, throws = false): Zot
   oops(`library.get: ${JSON.stringify(query)} not found`)
   return
 }
+
+export async function allItemIDs(): Promise<number[]> {
+  return (await Promise.all(
+    Zotero.Libraries.getAll()
+      .filter(l => l.editable)
+      .map(l => Zotero.Items.getAll(l.libraryID))
+  )).flat().map(i => i.id)
+}

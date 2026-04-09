@@ -27,7 +27,7 @@ import { sprintf } from 'sprintf-js'
 import * as l10n from './l10n'
 
 import { migrate } from './key-manager/migrate'
-import { readonly } from './library'
+import { readonly, allItemIDs } from './library'
 import { strcmp } from './string-compare'
 
 export type CitekeyRecord = {
@@ -346,6 +346,8 @@ export const KeyManager = new class _KeyManager {
     })
 
     this.started = true
+
+    if (Preference.fillKeyAfter) void this.fill(await allItemIDs())
   }
 
   public update(item: Zotero.Item, { replace = false, inspireHEP = undefined }: { replace?: boolean; inspireHEP?: string } = {}): Zotero.Item {
