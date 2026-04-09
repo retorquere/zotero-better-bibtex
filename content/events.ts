@@ -23,7 +23,9 @@ const idleService: IdleService = Components.classes['@mozilla.org/widget/useridl
 export const REASON_KEY_SAVE = 'key-save' as const
 type Reason = typeof REASON_KEY_SAVE | 'key-refresh' | 'parent-modify' | 'parent-delete' | 'parent-add' | 'tagged'
 
-const logEvents = Zotero.Prefs.get('extensions.zotero.translators.better-bibtex.logEvents')
+// const logEvents = Zotero.Prefs.get('extensions.zotero.translators.better-bibtex.logEvents')
+log.debug('3489: logEvents is on')
+const logEvents = true
 
 type EventMap = {
   'collections-changed': number[]
