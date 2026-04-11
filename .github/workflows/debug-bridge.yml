@@ -1,4 +1,4 @@
-name: Upload Asset to Specific Release
+name: Upload debug bridge
 
 on:
   workflow_dispatch:
