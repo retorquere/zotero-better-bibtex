@@ -1,0 +1,29 @@
+name: Upload Asset to Specific Release
+
+on:
+  workflow_dispatch:
+
+jobs:
+  upload:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+      - name: install node
+        uses: actions/setup-node@v6
+        with:
+          node-version: 24.x
+      - name: install node packages
+        run: npm install --no-package-lock && npm ls
+
+      - name: Build
+        run: zp-zipup test/fixtures/debug-bridge debug-bridge .js.map
+
+      - name: Upload Asset to Existing Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: debug-bridge
+          files: xpi/debug-bridge-*.xpi
+          append_body: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
