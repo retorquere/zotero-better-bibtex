@@ -115,7 +115,7 @@ orchestrator.add({
       dateFormatsJSON: Zotero.File.getResource('resource://zotero/schema/dateFormats.json'),
       lastUpdated: Zotero.Prefs.get(cacheDelete)
         ? 'delete'
-        : await lastModified()
+        : await lastModified(),
     })
     Zotero.Prefs.clear(cacheDelete)
     Exporter.ready = true
