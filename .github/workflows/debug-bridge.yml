@@ -17,7 +17,7 @@ jobs:
         run: npm install --no-package-lock && npm ls
 
       - name: Build
-        run: zp-zipup test/fixtures/debug-bridge debug-bridge .js.map
+        run: npm run zipup-debug-bridge
 
       - name: Upload Asset to Existing Release
         uses: softprops/action-gh-release@v2
