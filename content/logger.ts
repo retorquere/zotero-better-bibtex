@@ -32,31 +32,37 @@ function stringifyError(obj) {
 
 function replacer() {
   const seen = new WeakSet
+
   return (key, value) => {
-    if (typeof value === 'object' && value !== null) {
-      if (seen.has(value)) return '[Circular]'
-      seen.add(value)
+    try {
+      if (typeof value === 'object' && value !== null) {
+        if (seen.has(value)) return '[Circular]'
+        seen.add(value)
+      }
+
+      if (value === null) return value
+      if (value instanceof Set) return [...value]
+      if (value instanceof Map) return Object.fromEntries(value)
+      if (value instanceof RegExp) return value.source
+      if (Array.isArray(value)) return value
+
+      switch (typeof value) {
+        case 'string':
+        case 'number':
+        case 'boolean':
+        case 'function':
+        case 'undefined':
+          return value
+
+        case 'object':
+          return stringifyXPCOM(value) || stringifyError(value) || value
+      }
+
+      if (value.openDialog || value.querySelector) return value.toString() // window/document
     }
-
-    if (value === null) return value
-    if (value instanceof Set) return [...value]
-    if (value instanceof Map) return Object.fromEntries(value)
-    if (value instanceof RegExp) return value.source
-    if (Array.isArray(value)) return value
-
-    switch (typeof value) {
-      case 'string':
-      case 'number':
-      case 'boolean':
-      case 'function':
-      case 'undefined':
-        return value
-
-      case 'object':
-        return stringifyXPCOM(value) || stringifyError(value) || value
+    catch (err) {
+      return `{error: ${err.message}}`
     }
-
-    if (value.openDialog || value.querySelector) return value.toString() // window/document
 
     return '{object}'
   }
