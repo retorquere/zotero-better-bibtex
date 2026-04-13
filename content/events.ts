@@ -153,6 +153,7 @@ abstract class ZoteroListener {
   private id: string
 
   constructor(protected type) {
+    log.debug('3489: registering zotero listener for', type)
     this.id = Zotero.Notifier.registerObserver(this, [type], 'Better BibTeX', 1)
   }
 
@@ -176,6 +177,7 @@ class ItemListener extends ZoteroListener {
   }
 
   public async notify(action: ZoteroAction, type: string, ids: number[], extraData?: ExtraData) {
+    log.debug('3489: item listener fired', { action, ids, extraData })
     if (logEvents) log.info('item event:', { action, ids, extraData })
     try {
       let load = false
