@@ -101,11 +101,11 @@ export const log = new class {
   }
 
   public info(...msg): void {
-    Zotero.debug(`${this.#prefix()}${format(...msg)}\n`)
+    Zotero.debug(`${this.#prefix()}${format(...msg)}\n`, 1)
   }
 
   public error(...msg): void {
-    Zotero.debug(`${this.#prefix(true)}${format(...msg)}\n`)
+    Zotero.debug(`${this.#prefix(true)}${format(...msg)}\n`, 1)
   }
 
   public dump(msg: string, error?: Error): void {
