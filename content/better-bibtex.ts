@@ -793,20 +793,6 @@ export class BetterBibTeX {
           ],
         })
 
-        Zotero.ItemTreeManager.registerColumn({
-          dataKey: 'citationKey',
-          label: l10n.localize('better-bibtex_zotero-pane_column_citekey'),
-          pluginID,
-          dataProvider: (item, _dataKey) => {
-            try {
-              return item.getField('citationKey') || ''
-            }
-            catch {
-              return ''
-            }
-          },
-        })
-
         Zotero.ItemPaneManager.registerInfoRow({
           rowID: 'better-bibtex-citation-key',
           pluginID,
