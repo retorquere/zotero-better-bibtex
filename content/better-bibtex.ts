@@ -805,8 +805,10 @@ export class BetterBibTeX {
             return item.getField('citationKey')
           },
           onSetData({ item, value }) {
-            log.debug('3489: item.setData', { item: item.id, value })
-            if (!readonly(item.libraryID)) item.setField('citationKey', value)
+            if (!readonly(item.libraryID)) {
+              item.setField('citationKey', value)
+              void item.saveTx()
+            }
           },
           onItemChange: ({ item, setEnabled, setEditable}) => {
             setEnabled(!item.isFeedItem && item.isRegularItem())
