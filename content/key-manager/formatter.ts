@@ -775,7 +775,7 @@ export class PatternFormatter {
   public $authIni(n = 0, creator: AuthorType = '*', initials = false, sep = '.'): string {
     const authors = this.creators(creator, initials ? `${this.config.creatorNames.template}%(I)s` : this.config.creatorNames.template)
     if (!authors.length) return ''
-    return authors.map(auth => auth.substring(0, n)).join(sep)
+    return authors.map(auth => n ? auth.substring(0, n) : auth).join(sep)
   }
 
   /**

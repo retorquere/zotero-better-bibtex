@@ -4,6 +4,10 @@ title: Changelog
 weight: 500
 ---
 <!-- WARNING: GENERATED FROM https://github.com/retorquere/zotero-better-bibtex/blob/master/CHANGELOG.md. EDITS WILL BE OVERWRITTEN -->
+## v9.0.10
+
+* Citation key at the top
+
 ## v9.0.8
 
 * preference autoPinDelay has been renamed to fillKeyAfter
