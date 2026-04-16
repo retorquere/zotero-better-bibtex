@@ -23,8 +23,7 @@ const idleService: IdleService = Components.classes['@mozilla.org/widget/useridl
 export const REASON_KEY_SAVE = 'key-save' as const
 type Reason = typeof REASON_KEY_SAVE | 'key-refresh' | 'parent-modify' | 'parent-delete' | 'parent-add' | 'tagged'
 
-const logEvents = Zotero.Prefs.get('extensions.zotero.translators.better-bibtex.logEvents') || true
-log.debug('3489: logEvents is', logEvents ? 'on' : 'off')
+const logEvents = Zotero.Prefs.get('extensions.zotero.translators.better-bibtex.logEvents')
 
 type EventMap = {
   'collections-changed': number[]
@@ -153,7 +152,6 @@ abstract class ZoteroListener {
   private id: string
 
   constructor(protected type) {
-    log.debug('3489: registering zotero listener for', type)
     this.id = Zotero.Notifier.registerObserver(this, [type], 'Better BibTeX', 1)
   }
 
@@ -177,7 +175,6 @@ class ItemListener extends ZoteroListener {
   }
 
   public async notify(action: ZoteroAction, type: string, ids: number[], extraData?: ExtraData) {
-    log.debug('3489: item listener fired', { action, ids, extraData })
     if (logEvents) log.info('item event:', { action, ids, extraData })
     try {
       let load = false

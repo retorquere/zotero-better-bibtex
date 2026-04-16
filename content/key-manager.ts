@@ -311,13 +311,11 @@ export const KeyManager = new class _KeyManager {
 
       const update = (item: Zotero.Item) => {
         if (this.update(item, { replace: Preference.resetKeyOnChange })) {
-          log.debug('3489: items-changed, saving', item.id)
           item
             .saveTx({ skipDateModifiedUpdate: true, notifierData: { [REASON_KEY_SAVE]: true } })
             .catch(err => log.error('failed to update', item.id, ':', err))
         }
         else {
-          log.debug('3489: items-changed, saving key', item.id)
           this.store(item)
         }
       }
@@ -351,13 +349,11 @@ export const KeyManager = new class _KeyManager {
   }
 
   public update(item: Zotero.Item, { replace = false, inspireHEP = undefined }: { replace?: boolean; inspireHEP?: string } = {}): Zotero.Item {
-    log.debug('3489: KeyManager.update', { item: item.id, replace, inspireHEP })
     if (item.isFeedItem || !item.isRegularItem()) return null
 
     if (typeof inspireHEP === 'string' && !inspireHEP) return null
 
     const current = item.getField('citationKey')
-    log.debug('3489: KeyManager.update', { current, replace })
     if (current && !replace) return null
 
     const proposed = inspireHEP || this.propose(item)
@@ -368,7 +364,6 @@ export const KeyManager = new class _KeyManager {
     if (readonly(item.libraryID)) return null
 
     item.setField('citationKey', proposed)
-    log.debug('3489: KeyManager.update', { proposed })
     return item
   }
 
