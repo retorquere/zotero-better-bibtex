@@ -149,7 +149,7 @@ export const KeyManager = new class _KeyManager {
       const citationKey = item.getField('citationKey')
       if (citationKey) {
         const { extra } = Extra.citationKey(item.getField('extra'))
-        item.setField('extra', `${citationKey}\n${extra}`.trim())
+        item.setField('extra', `Citation Key: ${citationKey}\n${extra}`.trim())
         await item.saveTx({ skipDateModifiedUpdate: true })
         await Zotero.Promise.delay(10)
       }
