@@ -154,8 +154,11 @@ function parseDate(d: string, o = ''): FormattableDate {
   }
 
   const date = DateParser.start(DateParser.parse(d, o))
+
   assign(date, '')
   assign(date.orig, 'o')
+  if (!parsed.Y) Object.assign(parsed, { Y: parsed.oY, y: parsed.oy, m: parsed.om, d: parsed.od })
+  if (!parsed.oY) Object.assign(parsed, { oY: parsed.Y, oy: parsed.y, om: parsed.m, od: parsed.d })
   if (typeof date.hour === 'number') {
     Object.assign(parsed, { H: str(date.hour), M: str(date.minute), S: str(date.seconds) })
   }
@@ -879,12 +882,12 @@ export class PatternFormatter {
 
   /** The last 2 digits of the publication year */
   public $shortyear(): string {
-    return this.format_date(this.item.date, '%y') || this.format_date(this.item.date, '%oy')
+    return this.format_date(this.item.date, '%y')
   }
 
   /** The year of the publication */
   public $year(): string {
-    return this.padYear(this.format_date(this.item.date, '%-Y'), 2) || this.padYear(this.format_date(this.item.date, '%-oY'), 2)
+    return this.padYear(this.format_date(this.item.date, '%-Y'), 2)
   }
 
   /**
@@ -928,12 +931,12 @@ export class PatternFormatter {
 
   /** the original year of the publication */
   public $origyear(): string {
-    return this.padYear(this.format_date(this.item.date, '%-oY'), 2) || this.padYear(this.format_date(this.item.date, '%-Y'), 2)
+    return this.padYear(this.format_date(this.item.date, '%-oY'), 2)
   }
 
   /** the original date of the publication */
   public $origdate(): string {
-    return this.format_date(this.item.date, '%oY-%om-%od') || this.format_date(this.item.date, '%Y-%m-%d')
+    return this.format_date(this.item.date, '%oY-%om-%od')
   }
 
   /** the month of the publication */
