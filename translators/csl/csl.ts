@@ -91,8 +91,9 @@ export abstract class CSLExporter {
 
       try {
         // preconvert both so the values get set only if both are convertable
-        const issued = date.type ? this.date2CSL(date) : undefined // possible for there to be an orig-date only
-        const original = date.orig ? this.date2CSL(date.orig) : undefined
+        const issued = (date.type || 'open') === 'open' ? undefined : this.date2CSL(date)
+        const original = (date.orig?.type || 'open') === 'open' ? undefined : this.date2CSL(date.orig)
+        log.debug('3482:', { date, issued, original })
 
         if (issued) csl.issued = issued
         if (original) csl['original-date'] = original

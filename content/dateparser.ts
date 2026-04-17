@@ -296,20 +296,25 @@ class DateParser {
   }
 
   #parse(value: string, options = { range: true, reparse: true }): RichDate {
+    let $date: RichDate
+    let $year: string
+    let m: RegExpMatchArray
+
     const { reparse, range } = options
 
     value = (value || '').trim()
-    let $date: RichDate
-    let $year: string
 
-    let m: RegExpMatchArray
+    if (range) {
+      if (value.endsWith('/')) return { type: 'interval', from: this.#parse(value.slice(0, -1), { range: false, reparse }), to: { type: 'open' } }
+      if (value.startsWith('/')) return { type: 'interval', from: { type: 'open' }, to: this.#parse(value.substring(1), { range: false, reparse }) }
+    }
 
     if (value === 'today') {
       const now = new Date
       return { type: 'date', year: now.getFullYear(), month: now.getMonth() + 1, day: now.getDate() }
     }
 
-    if (value === '') return { type: 'open' }
+    if (!value) return { type: 'open' }
 
     // if (value.match(/[T ]/) && !(date = this.parseEDTF(value)).verbatim) return date
 

@@ -928,12 +928,12 @@ export class PatternFormatter {
 
   /** the original year of the publication */
   public $origyear(): string {
-    return this.padYear(this.format_date(this.item.date, '%-oY'), 2)
+    return this.padYear(this.format_date(this.item.date, '%-oY'), 2) || this.padYear(this.format_date(this.item.date, '%-Y'), 2)
   }
 
   /** the original date of the publication */
   public $origdate(): string {
-    return this.format_date(this.item.date, '%oY-%om-%od')
+    return this.format_date(this.item.date, '%oY-%om-%od') || this.format_date(this.item.date, '%Y-%m-%d')
   }
 
   /** the month of the publication */
