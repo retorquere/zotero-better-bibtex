@@ -126,7 +126,7 @@ function parseDate(d: string, o = ''): FormattableDate {
     }
   }
   function assign(dp, prefix) {
-    if (!dp) return
+    if (!dp?.type) return
 
     switch (dp.type) {
       case 'open':
@@ -149,20 +149,16 @@ function parseDate(d: string, o = ''): FormattableDate {
         break
 
       default:
-        throw new Error(`Unexpected parsed date ${ JSON.stringify({d, o}) } => ${ JSON.stringify(date) }`)
-    }
-
-    if (!prefix && typeof dp.hour === 'number') {
-      Object.assign(parsed, { H: str(dp.hour), M: str(dp.minute), S: str(dp.seconds) })
+        throw new Error(`Unexpected parsed date ${ JSON.stringify({d, o, dp}) } => ${ JSON.stringify(date) }`)
     }
   }
 
-  log.debug('3482: parseDate', { d, o })
   const date = DateParser.start(DateParser.parse(d, o))
-  log.debug('3482: parseDate', { d, o }, '=>', date)
   assign(date, '')
   assign(date.orig, 'o')
-  log.debug('3482: parseDate assigned', { d, o }, '=>', parsed)
+  if (typeof date.hour === 'number') {
+    Object.assign(parsed, { H: str(date.hour), M: str(date.minute), S: str(date.seconds) })
+  }
   return parsed
 }
 
@@ -883,12 +879,12 @@ export class PatternFormatter {
 
   /** The last 2 digits of the publication year */
   public $shortyear(): string {
-    return this.format_date(this.item.date, '%y')
+    return this.format_date(this.item.date, '%y') || this.format_date(this.item.date, '%oy')
   }
 
   /** The year of the publication */
   public $year(): string {
-    return this.padYear(this.format_date(this.item.date, '%-Y'), 2)
+    return this.padYear(this.format_date(this.item.date, '%-Y'), 2) || this.padYear(this.format_date(this.item.date, '%-oY'), 2)
   }
 
   /**
