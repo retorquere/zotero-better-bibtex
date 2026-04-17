@@ -26,7 +26,7 @@
   langid = {und}
 }
 
-@book{gravelleMicroeconomics1901,
+@book{gravelleMicroeconomics20xx,
   title = {Microeconomics},
   author = {Gravelle, Hugh and Rees, Ray},
   date = {20},
@@ -53,7 +53,7 @@
   mrreviewer = {S.Y.Husseini}
 }
 
-@book{Test1901,
+@book{Test20xx,
   title = {Test},
   date = {20}
 }
