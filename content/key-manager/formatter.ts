@@ -93,46 +93,59 @@ function skip() {
 }
 
 type FormattableDate = {
-  Y?: string
-  y?: string
-  m?: string
-  d?: string
-  oY?: string
-  oy?: string
-  om?: string
-  od?: string
+  Y: string
+  y: string
+  m: string
+  d: string
+  oY: string
+  oy: string
+  om: string
+  od: string
 
-  H?: string
-  M?: string
-  S?: string
+  H: string
+  M: string
+  S: string
 }
+const EmptyFormattableDate: FormattableDate = ['Y', 'y', 'm', 'd', 'oY', 'oy', 'om', 'od', 'H', 'M', 'S'].reduce((acc, f) => ({ ...acc, [f]: '' }), {} as unknown as FormattableDate)
 
 function parseDate(d: string, o = ''): FormattableDate {
   d = d || ''
-  const parsed: FormattableDate = {}
+  const parsed: FormattableDate = { ...EmptyFormattableDate }
 
   function str(n) {
-    return n === 'undefined' ? '' : `${n}`
+    return typeof n === 'undefined' ? '' : `${n}`
+  }
+  function short(n) {
+    switch (typeof n) {
+      case 'number':
+        return `${n % 100}`
+      case 'undefined':
+        return ''
+      default:
+        return `${n}`
+    }
   }
   function assign(dp, prefix) {
+    if (!dp) return
+
     switch (dp.type) {
       case 'open':
         break
 
       case 'verbatim':
-        Object.assign(parsed, { [`${prefix}y`]: dp.verbatim })
+        Object.assign(parsed, { [`${prefix}Y`]: dp.verbatim, [`${prefix}y`]: dp.verbatim })
         break
 
       case 'date':
-        Object.assign(parsed, { [`${prefix}y`]: str(dp.year), [`${prefix}m`]: str(dp.month), [`${prefix}d`]: str(dp.day) })
+        Object.assign(parsed, { [`${prefix}Y`]: str(dp.year), [`${prefix}y`]: short(dp.year), [`${prefix}m`]: str(dp.month), [`${prefix}d`]: str(dp.day) })
         break
 
       case 'season':
-        Object.assign(parsed, { [`${prefix}y`]: str(dp.year) })
+        Object.assign(parsed, { [`${prefix}Y`]: str(dp.year), [`${prefix}y`]: short(dp.year) })
         break
 
       case 'century':
-        Object.assign(parsed, { [`${prefix}y`]: str(date.century * 100) })
+        Object.assign(parsed, { [`${prefix}Y`]: str(date.century * 100), [`${prefix}y`]: '00' })
 
       default:
         throw new Error(`Unexpected parsed date ${ JSON.stringify({d, o}) } => ${ JSON.stringify(date) }`)
@@ -143,9 +156,12 @@ function parseDate(d: string, o = ''): FormattableDate {
     }
   }
 
+  log.debug('3482: parseDate', { d, o })
   const date = DateParser.start(DateParser.parse(d, o))
+  log.debug('3482: parseDate', { d, o }, '=>', date)
   assign(date, '')
   assign(date.orig, 'o')
+  log.debug('3482: parseDate assigned', { d, o }, '=>', parsed)
   return parsed
 }
 
@@ -295,17 +311,7 @@ class Item {
       creator.lastName = creator.lastName || creator.name
     }
 
-    try {
-      const date = this.getField('date') as string
-      this.date = date ? parseDate(date, (this.getField('originalDate') as string) || this.extraFields.kv.originalDate) : {}
-    }
-    catch {
-      this.date = {}
-    }
-    if (Object.keys(this.date).length === 0) {
-      this.date = null
-    }
-
+    this.date = parseDate(this.getField('date') as string, (this.getField('originalDate') as string) || this.extraFields.kv.originalDate)
     this.title = stripHTML(this.title)
   }
 

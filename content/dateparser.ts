@@ -2,6 +2,7 @@ import { toEnglishOrdinal } from './text'
 import EDTF, { defaults } from 'edtf'
 defaults.offset = false
 import edtfy from 'edtfy'
+import { log } from './logger'
 
 // declare const dump: (msg: string) => void
 // function dump(...msg) { console.log(...msg) }
@@ -576,6 +577,7 @@ export function century(n: number | string): string {
 }
 
 function selectstart(date: RichDate): RichDate {
+  log.debug('3482: selectstart', { date })
   switch (date.type) {
     case 'list':
       return date.dates.find(d => d.type !== 'open') || date.dates[0]
@@ -588,6 +590,6 @@ function selectstart(date: RichDate): RichDate {
 export function start(date: RichDate): RichDate {
   return {
     ...selectstart(date),
-    orig: selectstart(date.orig),
+    orig: date.orig && selectstart(date.orig),
   }
 }
