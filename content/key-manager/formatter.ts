@@ -145,7 +145,8 @@ function parseDate(d: string, o = ''): FormattableDate {
         break
 
       case 'century':
-        Object.assign(parsed, { [`${prefix}Y`]: str(date.century * 100), [`${prefix}y`]: '00' })
+        Object.assign(parsed, { [`${prefix}Y`]: str(((date.century - 1) * 100) + 1), [`${prefix}y`]: '' })
+        break
 
       default:
         throw new Error(`Unexpected parsed date ${ JSON.stringify({d, o}) } => ${ JSON.stringify(date) }`)
