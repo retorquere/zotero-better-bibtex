@@ -1,11 +1,11 @@
 import { Translation } from '../lib/translator'
 import type { Collected } from '../lib/collect'
 
-import { ParsedDate, century } from '../../content/dateparser'
+import { RichDate, century } from '../../content/dateparser'
 import { CSLExporter } from './csl'
 import { Date as CSLDate, Data as CSLItem, LooseNumber } from 'csl-json'
 
-function date2csl(date: ParsedDate): [LooseNumber, LooseNumber?, LooseNumber?] {
+function date2csl(date: RichDate): [LooseNumber, LooseNumber?, LooseNumber?] {
   let csl
   switch (date.type) {
     case 'open':
@@ -31,7 +31,7 @@ function date2csl(date: ParsedDate): [LooseNumber, LooseNumber?, LooseNumber?] {
 }
 
 class Exporter extends CSLExporter {
-  public date2CSL(date: ParsedDate): CSLDate {
+  public date2CSL(date: RichDate): CSLDate {
     switch (date.type) {
       case 'date':
       case 'open':

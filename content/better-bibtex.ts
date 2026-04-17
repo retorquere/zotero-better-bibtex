@@ -225,7 +225,7 @@ monkey.patch(Zotero.Integration, 'getApplication', original =>
   })
 
 import * as DateParser from './dateparser'
-import type { ParsedDate } from './dateparser'
+import type { RichDate } from './dateparser'
 
 Zotero.Translate.Export.prototype.Sandbox.BetterBibTeX = {
   clientName: Zotero.clientName,
@@ -254,7 +254,7 @@ Zotero.Translate.Export.prototype.Sandbox.BetterBibTeX = {
     return generateBBTJSON(collected)
   },
 
-  parseDate(_sandbox: any, date: string): ParsedDate {
+  parseDate(_sandbox: any, date: string): RichDate {
     return DateParser.parse(date)
   },
 }
@@ -273,7 +273,7 @@ Zotero.Translate.Import.prototype.Sandbox.BetterBibTeX = {
     return HTMLParser.parse(text.toString(), options)
   },
 
-  parseDate(_sandbox: any, date: string): ParsedDate {
+  parseDate(_sandbox: any, date: string): RichDate {
     return DateParser.parse(date)
   },
 
@@ -870,7 +870,7 @@ export class BetterBibTeX {
     window.document.querySelector(`#${this.hideNativeField}`)?.remove()
   }
 
-  public parseDate(date: string): ParsedDate {
+  public parseDate(date: string): RichDate {
     return DateParser.parse(date)
   }
 

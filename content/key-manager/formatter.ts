@@ -92,86 +92,7 @@ function skip() {
   throw { next: true } // eslint-disable-line @typescript-eslint/only-throw-error
 }
 
-function parseDate(v): PartialDate {
-  v = v || ''
-  const parsed: {
-    y?: number | string
-    m?: number
-    d?: number
-    oy?: number
-    om?: number
-    od?: number
-  } = {}
-
-  let date = DateParser.parse(v)
-  if (date.type === 'list') date = date.dates.find(d => d.type !== 'open') || date.dates[0]
-  if (date.type === 'interval') date = (date.from && date.from.type !== 'open') ? date.from : date.to
-  if (!date.type) date.type = 'date' // will rescue 'orig' if present
-
-  switch (date.type) {
-    case 'open':
-      break
-
-    case 'verbatim':
-      // eslint-disable-next-line no-case-declarations
-      const reparsed = Zotero.Date.strToDate(date.verbatim)
-      if (typeof reparsed.year === 'number' || reparsed.year) {
-        parsed.y = reparsed.year
-        parsed.m = reparsed.month || undefined
-        parsed.d = reparsed.day || undefined
-      }
-      else {
-        parsed.y = parsed.oy = (date.verbatim as unknown as number) // a bit cheaty
-      }
-
-      break
-
-    case 'date':
-      Object.assign(parsed, { y: date.year, m: date.month, d: date.day })
-
-      if (date.orig) {
-        Object.assign(parsed, { oy: date.orig.year, om: date.orig.month, od: date.orig.day })
-        if (typeof date.year !== 'number') Object.assign(parsed, { y: date.orig.year, m: date.orig.month, d: date.orig.day })
-      }
-      else {
-        Object.assign(parsed, { oy: date.year, om: date.month, od: date.day })
-      }
-      break
-
-    case 'season':
-      parsed.y = parsed.oy = date.year
-      break
-
-    case 'century':
-      Object.assign(parsed, { y: date.century * 100 })
-
-    default:
-      throw new Error(`Unexpected parsed date ${ JSON.stringify(v) } => ${ JSON.stringify(date) }`)
-  }
-
-  const res: PartialDate = {}
-
-  res.m = (typeof parsed.m !== 'undefined') ? (`${ parsed.m }`) : ''
-  res.d = (typeof parsed.d !== 'undefined') ? (`${ parsed.d }`) : ''
-  res.y = (typeof parsed.y === 'number') ? (`${ parsed.y % 100 }`) : (parsed.y || '')
-  res.Y = (typeof parsed.y !== 'undefined') ? (`${ parsed.y }`) : ''
-  res.om = (typeof parsed.om !== 'undefined') ? (`${ parsed.om }`) : ''
-  res.od = (typeof parsed.od !== 'undefined') ? (`${ parsed.od }`) : ''
-  res.oy = (typeof parsed.oy !== 'undefined') ? (`${ parsed.oy % 100 }`) : ''
-  res.oY = (typeof parsed.oy !== 'undefined') ? (`${ parsed.oy }`) : ''
-  if (date.type !== 'verbatim') {
-    const [ , H, M, S ] = v.match(/(?: |T)([0-9]{2}):([0-9]{2})(?::([0-9]{2}))?(?:[A-Z]+|[-+][0-9]+)?$/) || [ null, '', '', '' ]
-    Object.assign(res, { H, M, S })
-    res.S = res.S || ''
-  }
-  else {
-    Object.assign(res, { H: '', M: '', S: '' })
-  }
-
-  return res
-}
-
-type PartialDate = {
+type FormattableDate = {
   Y?: string
   y?: string
   m?: string
@@ -184,6 +105,48 @@ type PartialDate = {
   H?: string
   M?: string
   S?: string
+}
+
+function parseDate(d: string, o = ''): FormattableDate {
+  d = d || ''
+  const parsed: FormattableDate = {}
+
+  function str(n) {
+    return n === 'undefined' ? '' : `${n}`
+  }
+  function assign(dp, prefix) {
+    switch (dp.type) {
+      case 'open':
+        break
+
+      case 'verbatim':
+        Object.assign(parsed, { [`${prefix}y`]: dp.verbatim })
+        break
+
+      case 'date':
+        Object.assign(parsed, { [`${prefix}y`]: str(dp.year), [`${prefix}m`]: str(dp.month), [`${prefix}d`]: str(dp.day) })
+        break
+
+      case 'season':
+        Object.assign(parsed, { [`${prefix}y`]: str(dp.year) })
+        break
+
+      case 'century':
+        Object.assign(parsed, { [`${prefix}y`]: str(date.century * 100) })
+
+      default:
+        throw new Error(`Unexpected parsed date ${ JSON.stringify({d, o}) } => ${ JSON.stringify(date) }`)
+    }
+
+    if (!prefix && typeof dp.hour === 'number') {
+      Object.assign(parsed, { H: str(dp.hour), M: str(dp.minute), S: str(dp.seconds) })
+    }
+  }
+
+  const date = DateParser.start(DateParser.parse(d, o))
+  assign(date, '')
+  assign(date.orig, 'o')
+  return parsed
 }
 
 export type AuthorType = 'author' | 'editor' | 'translator' | 'collaborator' | '*'
@@ -273,7 +236,7 @@ class Item {
   private language = ''
 
   public itemType: string
-  public date: PartialDate
+  public date: FormattableDate
   public primaryCreator: string
   public creators: Creator[]
   public title: string
@@ -333,21 +296,11 @@ class Item {
     }
 
     try {
-      const date = this.getField('date')
-      this.date = date ? parseDate(date) : {}
+      const date = this.getField('date') as string
+      this.date = date ? parseDate(date, (this.getField('originalDate') as string) || this.extraFields.kv.originalDate) : {}
     }
     catch {
       this.date = {}
-    }
-    for (const orig of [ this.extraFields.kv.originalDate, this.getField('originalDate') ]) {
-      if (orig) {
-        const date = parseDate(orig)
-        if (date.y) {
-          Object.assign(this.date, { oy: date.y, om: date.m, od: date.d, oY: date.Y })
-          if (!this.date.y) Object.assign(this.date, { y: date.y, m: date.m, d: date.d, Y: date.Y })
-          break
-        }
-      }
     }
     if (Object.keys(this.date).length === 0) {
       this.date = null
@@ -1175,7 +1128,7 @@ export class PatternFormatter {
     return this.format_date(input, format)
   }
 
-  public format_date(input: string | PartialDate, format: string): string {
+  public format_date(input: string | FormattableDate, format: string): string {
     if (!input) return ''
 
     const date = (typeof input === 'string') ? parseDate(input) : input

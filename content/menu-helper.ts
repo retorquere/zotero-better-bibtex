@@ -2,7 +2,6 @@ import { toClipboard, sentenceCase as toSentenceCase } from './text'
 import { Preference } from './prefs'
 import { flash } from './flash'
 import * as Extra from './extra'
-import * as DateParser from './dateparser'
 import { log } from './logger'
 import * as CAYW from './cayw'
 import { TeXstudio } from './tex-studio'
@@ -17,6 +16,7 @@ export async function clipSelected(translatorID: string): Promise<void> {
   }))
 }
 
+const re = /^(?<year>\d{4,})-(?<month>\d{2})-(?<day>\d{2}) (?<hour>\d{2}):(?<minute>\d{2}):(?<second>\d{2})( (?<offset>[+-]\d{4}))?$/
 export async function patchDates(): Promise<void> {
   try {
     const items = Zotero.getActiveZoteroPane().getSelectedItems()
@@ -38,14 +38,12 @@ export async function patchDates(): Promise<void> {
         const extra = Extra.get(item.getField('extra'), 'zotero', { tex: true })
         for (const [ k, v ] of Object.entries(extra.extraFields.tex)) {
           if (mapping[k]) {
-            const date = DateParser.parse(v.value)
-            if (date.type === 'date' && date.day) {
+            const date: Record<string, number> = Object.entries(v.value.match(re)?.groups || {})
+              .reduce((acc, [dk, dv]) => ({ ...acc, [dk]: typeof dv === 'undefined' ? 0 : parseInt(dv, 10) }), {})
+            if (typeof date.year === 'number') {
               delete extra.extraFields.tex[k]
-              const time = typeof date.seconds === 'number'
-              const timestamp = new Date(
-                date.year, date.month - 1, date.day,
-                time ? date.hour : 0, time ? date.minute - (date.offset || 0) : 0, time ? date.seconds : 0, 0
-              )
+              const { year, month, day, hour, minute, second, offset } = date
+              const timestamp = new Date(year, month - 1, day, hour, minute - offset, second)
               item.setField(mapping[k], timestamp.toISOString())
               save = true
             }

@@ -58,7 +58,7 @@ import { getLocaleDateOrder } from '../submodules/zotero-utilities/date'
 
 type SeasonID = 1 | 2 | 3 | 4
 
-export type ParsedDate = {
+export type RichDate = {
   type?: 'date' | 'open' | 'verbatim' | 'season' | 'interval' | 'list' | 'century'
   year?: number
   month?: number
@@ -69,13 +69,13 @@ export type ParsedDate = {
   seconds?: number
   offset?: number
 
-  orig?: ParsedDate
+  orig?: RichDate
   verbatim?: string
 
-  from?: ParsedDate
-  to?: ParsedDate
+  from?: RichDate
+  to?: RichDate
 
-  dates?: ParsedDate[]
+  dates?: RichDate[]
 
   season?: SeasonID
 
@@ -100,7 +100,7 @@ const Season = new class {
     return undefined
   }
 
-  public seasonize(date: ParsedDate): ParsedDate {
+  public seasonize(date: RichDate): RichDate {
     const season = this.fromMonth(date.month)
     if (date.type === 'date' && typeof season === 'number') {
       date.type = 'season'
@@ -115,7 +115,7 @@ function flagged(v: boolean | { value: number }): boolean | number {
   return typeof v === 'boolean' ? v : v?.value
 }
 
-function normalize_edtf(date: any): ParsedDate | null {
+function normalize_edtf(date: any): RichDate | null {
   if (!date) return null
 
   const type = date.type.replace('_', '')
@@ -189,11 +189,11 @@ function is_valid_month(month: number, allowseason: boolean) {
   return false
 }
 
-function has_valid_month(date: ParsedDate) {
+function has_valid_month(date: RichDate) {
   return date.type === 'date' && typeof date.month === 'number' && is_valid_month(date.month, true)
 }
 
-function is_valid_date(date: ParsedDate) {
+function is_valid_date(date: RichDate) {
   if (date.type !== 'date') return true
   if (typeof date.year !== 'number') return false
   date = { ...date }
@@ -206,7 +206,7 @@ function is_valid_date(date: ParsedDate) {
 }
 
 // swap day/month for our American friends
-function swap_day_month(date: ParsedDate, fix_only = false): ParsedDate {
+function swap_day_month(date: RichDate, fix_only = false): RichDate {
   if (!date.day) return date
 
   if (!is_valid_month(date.month, false) && is_valid_month(date.day, false)) return { ...date, month: date.day, day: date.month }
@@ -287,11 +287,18 @@ class DateParser {
     }
   }
 
-  parse(value: string, options = { range: true, reparse: true }): ParsedDate {
+  parse(date: string, orig = ''): RichDate {
+    const $date = this.#parse(date)
+    const $orig = this.#parse(orig)
+    if ($orig.type !== 'open') $date.orig = $orig
+    return $date
+  }
+
+  #parse(value: string, options = { range: true, reparse: true }): RichDate {
     const { reparse, range } = options
 
     value = (value || '').trim()
-    let $date: ParsedDate
+    let $date: RichDate
     let $year: string
 
     let m: RegExpMatchArray
@@ -322,7 +329,7 @@ class DateParser {
     }
 
     if (reparse && (m = value.match(re.nasa.dash) || value.match(re.nasa.slash) || value.match(re.nasa.ym))) {
-      return this.parse(m.groups.date, { range: false, reparse: false })
+      return this.#parse(m.groups.date, { range: false, reparse: false })
     }
 
     if (m = english.match(re.My) || english.match(re.yM)) {
@@ -336,8 +343,8 @@ class DateParser {
     if (reparse && (m = value.match(re.orig_date) || value.match(re.date_orig))) {
       const { orig, date } = m.groups
       const parsed = {
-        orig: this.parse(orig, { range: false, reparse: false }),
-        date: date ? this.parse(date, { range: false, reparse: false }) : undefined,
+        orig: this.#parse(orig, { range: false, reparse: false }),
+        date: date ? this.#parse(date, { range: false, reparse: false }) : undefined,
       }
       if (parsed.orig.type === 'date' && (!parsed.date || parsed.date.type === 'date')) return { ...parsed.date, orig: parsed.orig }
     }
@@ -345,8 +352,8 @@ class DateParser {
     if (reparse && (m = english.match(re.M_d_d_y))) {
       const { month, day1, day2, year } = m.groups
 
-      const from = this.parse(`${month} ${day1} ${year}`, { range: false, reparse: false })
-      const to = this.parse(`${month} ${day2} ${year}`, { range: false, reparse: false })
+      const from = this.#parse(`${month} ${day1} ${year}`, { range: false, reparse: false })
+      const to = this.#parse(`${month} ${day2} ${year}`, { range: false, reparse: false })
 
       if (from.type === 'date' && to.type === 'date') return { type: 'interval', from, to }
     }
@@ -384,7 +391,7 @@ class DateParser {
       }
     }
 
-    const time_doubt: ParsedDate = {}
+    const time_doubt: RichDate = {}
     const date_only = value
       .replace(re.withtime, (...match) => {
         const { hour, minute, seconds, offsetH, offsetM, doubt } = match.pop()
@@ -459,7 +466,7 @@ class DateParser {
       for (const sep of ['--', '-', '/', '_', '\u2013']) {
         const split = value.split(sep)
         if (split.length === 2) {
-          const valid = (d: ParsedDate) => {
+          const valid = (d: RichDate) => {
             switch (d.type) {
               case 'date':
               case 'season':
@@ -473,10 +480,10 @@ class DateParser {
           }
           let dates = 0
 
-          const from = this.parse(split[0], { reparse: true, range: false })
+          const from = this.#parse(split[0], { reparse: true, range: false })
           dates += valid(from)
 
-          const to = this.parse(split[1], { reparse: true, range: false })
+          const to = this.#parse(split[1], { reparse: true, range: false })
           dates += valid(to)
 
           if (dates > 0) return { type: 'interval', from, to }
@@ -487,7 +494,7 @@ class DateParser {
     return { type: 'verbatim', verbatim: value }
   }
 
-  parseEDTF(value: string, english: string): ParsedDate {
+  parseEDTF(value: string, english: string): RichDate {
     // 2378 + 2275
     let date = value
 
@@ -514,8 +521,8 @@ class DateParser {
 
 const parser = new DateParser
 
-export function parse(date: string): ParsedDate {
-  return parser.parse(date)
+export function parse(date: string, orig = ''): RichDate {
+  return parser.parse(date, orig)
 }
 
 function testEDTF(value: string): boolean {
@@ -533,7 +540,7 @@ export function isEDTF(value: string, minuteLevelPrecision = false): boolean {
   return testEDTF(value) || (minuteLevelPrecision && testEDTF(`${value}:00`))
 }
 
-export function dateToISO(date: ParsedDate): string {
+export function dateToISO(date: RichDate): string {
   switch (date.type) {
     case 'interval':
       return `${dateToISO(date.from)}/${dateToISO(date.to)}`.replace(/^[/]$/, '')
@@ -566,4 +573,21 @@ export function strToISO(str: string): string {
 export function century(n: number | string): string {
   const ordinal = toEnglishOrdinal(n)
   return ordinal ? `${ordinal} century` : `${n}`
+}
+
+function selectstart(date: RichDate): RichDate {
+  switch (date.type) {
+    case 'list':
+      return date.dates.find(d => d.type !== 'open') || date.dates[0]
+    case 'interval':
+      return [ date.from, date.to ].find(d => d.type !== 'open') || [ date.from, date.to ].find(d => d) || { type: 'open' }
+    default:
+      return date
+  }
+}
+export function start(date: RichDate): RichDate {
+  return {
+    ...selectstart(date),
+    orig: selectstart(date.orig),
+  }
 }

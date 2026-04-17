@@ -26,7 +26,7 @@ export abstract class CSLExporter {
   private translation: Translation
   protected abstract flush(items: string[]): string
   protected abstract serialize(items: CSLItem): string
-  protected abstract date2CSL(date: dateparser.ParsedDate): CSLDate
+  protected abstract date2CSL(date: dateparser.RichDate): CSLDate
 
   constructor(translation: Translation) {
     this.translation = translation
@@ -86,20 +86,20 @@ export abstract class CSLExporter {
 
       if (csl.journalAbbreviation) [ csl.journalAbbreviation, csl['container-title-short'] ] = [ csl['container-title-short'], csl.journalAbbreviation ]
 
-      if (item.date) {
-        const parsed = dateparser.parse(item.date)
-        try {
-          // preconvert both so the values get set only if both are convertable
-          const issued = parsed.type ? this.date2CSL(parsed) : undefined // possible for there to be an orig-date only
-          const original = parsed.orig ? this.date2CSL(parsed.orig) : undefined
+      const extraFields: ParsedExtraFields = structuredClone(item.extraFields)
+      const date = dateparser.parse(item.date, item.originalDate || extraFields.kv.originalDate)
 
-          if (issued) csl.issued = issued
-          if (original) csl['original-date'] = original
-        }
-        catch (err) {
-          log.error('could not convert CSL date', { input: item.date, parsed }, err)
-          csl.issued = { literal: item.date }
-        }
+      try {
+        // preconvert both so the values get set only if both are convertable
+        const issued = date.type ? this.date2CSL(date) : undefined // possible for there to be an orig-date only
+        const original = date.orig ? this.date2CSL(date.orig) : undefined
+
+        if (issued) csl.issued = issued
+        if (original) csl['original-date'] = original
+      }
+      catch (err) {
+        log.error('could not convert CSL date', { input: item.date, date }, err)
+        csl.issued = { literal: item.date }
       }
 
       if (item.accessDate) csl.accessed = this.date2CSL(dateparser.parse(item.accessDate))
@@ -110,8 +110,6 @@ export abstract class CSLExporter {
       csl.id = item.citationKey
 
       if (csl.type === 'broadcast' && csl.genre === 'television broadcast') delete csl.genre
-
-      const extraFields: ParsedExtraFields = structuredClone(item.extraFields)
 
       // special case for #587... not pretty
       // checked separately because .type isn't actually a CSL var so wouldn't pass the ef.type test below

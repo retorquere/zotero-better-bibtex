@@ -8,7 +8,7 @@ import type { MarkupNode } from '../../typings/markup'
 
 import { CSLExporter } from './csl'
 import { log } from '../../content/logger'
-import { ParsedDate, century } from '../../content/dateparser'
+import { RichDate, century } from '../../content/dateparser'
 import { HTMLParser } from '../../content/text'
 
 const htmlConverter = new class HTML {
@@ -136,7 +136,7 @@ function date2csl(date): [LooseNumber, LooseNumber?, LooseNumber?] { // fudge fo
 }
 
 class Exporter extends CSLExporter {
-  public date2CSL(date: ParsedDate): CSLDate { // fudge for CSL-YAML dates
+  public date2CSL(date: RichDate): CSLDate { // fudge for CSL-YAML dates
     switch (date.type) {
       case 'date':
       case 'open':

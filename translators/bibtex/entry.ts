@@ -164,7 +164,7 @@ export class Entry {
   public useprefix: boolean
   public language: string
   public english: boolean
-  public date: DateParser.ParsedDate | { type: 'none' }
+  public date: DateParser.RichDate | { type: 'none' }
 
   public config: Config
 
