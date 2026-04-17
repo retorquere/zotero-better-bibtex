@@ -6,6 +6,7 @@ import { log } from './logger'
 import * as CAYW from './cayw'
 import { TeXstudio } from './tex-studio'
 import { Translators } from './translators'
+import { parse } from './dateparser'
 
 export async function clipSelected(translatorID: string): Promise<void> {
   const items = Zotero.getActiveZoteroPane().getSelectedItems()
@@ -16,7 +17,6 @@ export async function clipSelected(translatorID: string): Promise<void> {
   }))
 }
 
-const re = /^(?<year>\d{4,})-(?<month>\d{2})-(?<day>\d{2}) (?<hour>\d{2}):(?<minute>\d{2}):(?<second>\d{2})( (?<offset>[+-]\d{4}))?$/
 export async function patchDates(): Promise<void> {
   try {
     const items = Zotero.getActiveZoteroPane().getSelectedItems()
@@ -38,12 +38,14 @@ export async function patchDates(): Promise<void> {
         const extra = Extra.get(item.getField('extra'), 'zotero', { tex: true })
         for (const [ k, v ] of Object.entries(extra.extraFields.tex)) {
           if (mapping[k]) {
-            const date: Record<string, number> = Object.entries(v.value.match(re)?.groups || {})
-              .reduce((acc, [dk, dv]) => ({ ...acc, [dk]: typeof dv === 'undefined' ? 0 : parseInt(dv, 10) }), {})
-            if (typeof date.year === 'number') {
+            const date = parse(v.value)
+            if (date.type === 'date' && date.day) {
               delete extra.extraFields.tex[k]
-              const { year, month, day, hour, minute, second, offset } = date
-              const timestamp = new Date(year, month - 1, day, hour, minute - offset, second)
+              const time = typeof date.seconds === 'number'
+              const timestamp = new Date(
+                date.year, date.month - 1, date.day,
+                time ? date.hour : 0, time ? date.minute - (date.offset || 0) : 0, time ? date.seconds : 0, 0
+              )
               item.setField(mapping[k], timestamp.toISOString())
               save = true
             }

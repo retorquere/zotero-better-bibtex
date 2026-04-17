@@ -145,7 +145,7 @@ function parseDate(d: string, o = ''): FormattableDate {
         break
 
       case 'century':
-        Object.assign(parsed, { [`${prefix}Y`]: str(((date.century - 1) * 100) + 1), [`${prefix}y`]: '' })
+        Object.assign(parsed, { [`${prefix}Y`]: `${str(date.century)}xx` })
         break
 
       default:
@@ -162,6 +162,8 @@ function parseDate(d: string, o = ''): FormattableDate {
   if (typeof date.hour === 'number') {
     Object.assign(parsed, { H: str(date.hour), M: str(date.minute), S: str(date.seconds) })
   }
+
+  log.debug('3482:', { d, o }, '=>', { parsed })
   return parsed
 }
 

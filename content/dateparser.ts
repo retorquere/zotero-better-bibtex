@@ -181,6 +181,7 @@ function upgrade_edtf(date: string): string {
     .replace(/open/g, '')
     .replace(/\.\./g, '')
     .replace(/y/g, 'Y')
+    .replace(/^(\d{2})--$/, '$1XX')
 }
 
 function is_valid_month(month: number, allowseason: boolean) {
