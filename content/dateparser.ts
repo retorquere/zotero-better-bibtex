@@ -2,7 +2,6 @@ import { toEnglishOrdinal } from './text'
 import EDTF, { defaults } from 'edtf'
 defaults.offset = false
 import edtfy from 'edtfy'
-import { log } from './logger'
 
 // declare const dump: (msg: string) => void
 // function dump(...msg) { console.log(...msg) }

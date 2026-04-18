@@ -2,7 +2,6 @@ import { Translation } from '../lib/translator'
 import type { Collected } from '../lib/collect'
 
 import { RichDate, century } from '../../content/dateparser'
-import { log } from '../../content/logger'
 import { CSLExporter } from './csl'
 import { Date as CSLDate, Data as CSLItem, LooseNumber } from 'csl-json'
 
