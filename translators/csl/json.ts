@@ -34,7 +34,6 @@ function date2csl(date: RichDate): [LooseNumber, LooseNumber?, LooseNumber?] {
 
 class Exporter extends CSLExporter {
   public date2CSL(date: RichDate): CSLDate {
-    log.debug('date2CSL:', date)
     switch (date.type) {
       case 'date':
       case 'open':

@@ -567,7 +567,6 @@ export class Entry {
         field.bibtex = `${ bibstring || field.value as string }`
       }
       else {
-        log.debug('3472: actually', field)
         switch (field.enc) {
           case 'extra':
             field.bibtex = this.enc_extra(field)
@@ -614,7 +613,6 @@ export class Entry {
           default:
             throw new Error(`Unexpected field encoding: ${ JSON.stringify(field.enc) }`)
         }
-        log.debug('3472: now', field)
 
         if (!field.bibtex) return null
 

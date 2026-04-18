@@ -163,7 +163,6 @@ function parseDate(d: string, o = ''): FormattableDate {
     Object.assign(parsed, { H: str(date.hour), M: str(date.minute), S: str(date.seconds) })
   }
 
-  log.debug('3482:', { d, o }, '=>', { parsed })
   return parsed
 }
 

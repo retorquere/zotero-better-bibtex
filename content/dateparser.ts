@@ -583,7 +583,6 @@ export function century(n: number | string): string {
 }
 
 function selectstart(date: RichDate): RichDate {
-  log.debug('3482: selectstart', { date })
   switch (date.type) {
     case 'list':
       return date.dates.find(d => d.type !== 'open') || date.dates[0]
