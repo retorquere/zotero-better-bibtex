@@ -262,7 +262,7 @@ const re = {
   // https://github.com/retorquere/zotero-better-bibtex/issues/868
   y_M_d: new RegExp(`^(?<year>\\d{3,})\\s+(?<month>${Month.english})(?:\\s+(?<day>\\d+))$`, 'ui'),
 
-  withtime: /(?:(?:\s*|T)(?<hour>\d{2}):(?<minute>\d{2})(?::(?<seconds>\d{2}(?:[.]\d+)?)\s*(?:Z|(?<offsetH>[+-]\d{2}):?(?<offsetM>\d{2})?)?)?)?(?<doubt>[~?]*)$/,
+  withtime: /(?:(?:\s*|T)(?<hour>\d{2}):(?<minute>\d{2})(?::(?<seconds>\d{2}(?:[.]\d+)?)\s*(?:Z|((?<offsetH>[+-]\d{2})|[+-][A-Z]+):?(?<offsetM>\d{2})?)?)?)?(?<doubt>[~?]*)$/,
 
   edtf: /^(?<year>\d+)[^\d]+(?<month>\d+)[^\d]+(?<day>\d+)[^\d]+(?<time>\d{2}:\d{2}:\d{2}(?:[.]\d+)?)(?<tz>.*?)/,
 }
@@ -318,7 +318,22 @@ class DateParser {
 
     // if (value.match(/[T ]/) && !(date = this.parseEDTF(value)).verbatim) return date
 
-    const english = reparse ? Month.toEnglish(value) : value
+    const time_doubt: RichDate = {}
+    const date_only = value
+      .replace(re.withtime, (...match) => {
+        const { hour, minute, seconds, offsetH, offsetM, doubt } = match.pop()
+        if (hour) time_doubt.hour = parseInt(hour)
+        if (minute) time_doubt.minute = parseInt(minute)
+        if (seconds) time_doubt.seconds = parseFloat(seconds)
+        if (offsetH) time_doubt.offset = 60 * parseInt(offsetH)
+        if (offsetM) time_doubt.offset += (offsetH[0] === '-' ? -1 : 1) * parseInt(offsetM)
+        if (doubt && doubt.indexOf('~') >= 0) time_doubt.approximate = true
+        if (doubt && doubt.indexOf('?') >= 0) time_doubt.uncertain = true
+        return ''
+      })
+      .replace(/\s+/g, ' ')
+
+    const english = reparse ? Month.toEnglish(date_only) : date_only
 
     if (m = english.match(re.Mdy) || english.match(re.dMy)) {
       const { day: sday, month, year: syear } = m.groups
@@ -396,21 +411,6 @@ class DateParser {
         to: Season.seasonize({ type: 'date', year: parseInt(year), month: Month.no(month2) }),
       }
     }
-
-    const time_doubt: RichDate = {}
-    const date_only = value
-      .replace(re.withtime, (...match) => {
-        const { hour, minute, seconds, offsetH, offsetM, doubt } = match.pop()
-        if (hour) time_doubt.hour = parseInt(hour)
-        if (minute) time_doubt.minute = parseInt(minute)
-        if (seconds) time_doubt.seconds = parseFloat(seconds)
-        if (offsetH) time_doubt.offset = 60 * parseInt(offsetH)
-        if (offsetM) time_doubt.offset += (offsetH[0] === '-' ? -1 : 1) * parseInt(offsetM)
-        if (doubt && doubt.indexOf('~') >= 0) time_doubt.approximate = true
-        if (doubt && doubt.indexOf('?') >= 0) time_doubt.uncertain = true
-        return ''
-      })
-      .replace(/\s+/g, ' ')
 
     // these assume a sensible y/m/d format by default. There's no sane way to guess between y/d/m and y/m/d, and y/d/m is
     // just wrong. https://en.wikipedia.org/wiki/Date_format_by_country

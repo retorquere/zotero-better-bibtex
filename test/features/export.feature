@@ -12,6 +12,7 @@ Feature: Export
 
     Examples:
       | file                                                                                                                     | references |
+      | Citation key pulling in full date field rather than just year #3500                                                      | 1          |
       | tex.pages= in Extra field not exporting as LaTeX, Language = de exporting as german, not ngerman #3472                   | 1          |
       | authIni Not Working with n = 0 #3479                                                                                     | 1          |
       | Better BibLaTeX exports native eventPlace for conferencePaper #3486                                                      | 1          |
@@ -372,8 +373,8 @@ Feature: Export
     Then an export using "Better CSL YAML" should match "export/*.csl.yml"
 
     Examples:
-      | file                                                                             | references |
-      | Export year ranges from Original Date #3482                                      | 1          |
+      | file                                        | references |
+      | Export year ranges from Original Date #3482 | 1          |
 
   Scenario: Journal acronym from acronyms list not used in generated citation key #2634
     And I install "export/*.csv" in the better bibtex directory as "acronyms.csv"
