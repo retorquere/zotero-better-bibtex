@@ -703,10 +703,15 @@ class Zotero:
       self.variant = '7'
     elif self.dev:
       self.variant = '-dev'
-    profile.binary = {
-      'Linux': f'/usr/lib/{self.client}{self.variant}/{self.client}',
-      'Darwin': f'/Applications/{self.client.title()}{self.variant}.app/Contents/MacOS/{self.client}',
-    }[platform.system()]
+
+    profile.binary = next(exe 
+      for exe in [
+        f'/usr/lib/{self.client}{self.variant}/{self.client}', # deb
+        os.path.expanduser(f'~/.nix-profile/bin/{self.client}{self.variant}', # nix
+        f'/Applications/{self.client.title()}{self.variant}.app/Contents/MacOS/{self.client}', # macOS
+      ]
+      if os.access(exe, os.F_OK | os.X_OK)
+    )
 
     # create profile
     profile.ini = os.path.join(profile.profiles, 'profiles.ini')

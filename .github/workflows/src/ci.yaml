@@ -134,6 +134,11 @@ jobs:
         bin: ${{ fromJSON(needs.build.outputs.bin_ids) }}
         client: ${{ fromJSON(needs.build.outputs.clients) }}
         worker: ['--worker', '--no-worker']
+        install: [ 'deb' ]
+        include:
+          - install: nix
+            worker: '--worker'
+            bin: 0
     steps:
     - *checkout
     - name: fetch build artifacts
@@ -151,11 +156,20 @@ jobs:
     - name: Verify proxy settings
       run: env | grep -i proxy
 
-    - name: install ${{ matrix.client }}
+    - name: install ${{ matrix.client }} deb
+      if: matrix.install == 'deb'
       run: |
         curl -sL https://raw.githubusercontent.com/retorquere/zotero-deb/master/install.sh | sudo bash
         sudo apt-get update
         sudo apt-get install ${{ matrix.client }}
+
+    - name: install ${{ matrix.client }} nix
+      if: matrix.install == 'nix'
+      run: |
+        curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix | sh -s -- install --no-confirm
+        nix profile add "github:retorquere/zotero-pkg#${{ matrix.client }}" --accept-flake-config
+
+    - run: |
         sudo apt-get install mesa-utils xvfb libegl1 libgl1 libdbus-glib-1-2
         sudo apt-get install wmctrl xdotool
         curl -s https://api.github.com/repos/jgm/pandoc/releases/latest | jq -r '.assets[] | select(.name | endswith("linux-amd64.tar.gz")) | .browser_download_url' | xargs wget -q -O pandoc.tar.gz
