@@ -165,9 +165,10 @@ jobs:
 
     - name: install ${{ matrix.client }} nix
       if: matrix.install == 'nix'
-      run: |
-        curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix | sh -s -- install --no-confirm
-        nix profile add "github:retorquere/zotero-pkg#${{ matrix.client }}" --accept-flake-config
+      run: curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix | sh -s -- install --no-confirm
+    - name: install ${{ matrix.client }} nix
+      if: matrix.install == 'nix'
+      run: nix profile add "github:retorquere/zotero-pkg#${{ matrix.client }}" --accept-flake-config
 
     - run: |
         sudo apt-get install mesa-utils xvfb libegl1 libgl1 libdbus-glib-1-2
