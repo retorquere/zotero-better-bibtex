@@ -149,7 +149,12 @@ jobs:
         include:
         - install: nix
           worker: --worker
-          bin: 0
+          bin: '0'
+          client: zotero
+        - install: nix
+          worker: --worker
+          bin: '0'
+          client: zotero-beta
     steps:
     - name: Checkout repository
       uses: actions/checkout@v6

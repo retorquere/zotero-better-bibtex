@@ -136,9 +136,14 @@ jobs:
         worker: ['--worker', '--no-worker']
         install: [ 'deb' ]
         include:
-          - install: nix
+          - install: 'nix'
             worker: '--worker'
-            bin: 0
+            bin: '0'
+            client: 'zotero'
+          - install: 'nix'
+            worker: '--worker'
+            bin: '0'
+            client: 'zotero-beta'
     steps:
     - *checkout
     - name: fetch build artifacts
