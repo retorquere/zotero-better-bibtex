@@ -707,7 +707,7 @@ class Zotero:
     profile.binary = next(exe 
       for exe in [
         f'/usr/lib/{self.client}{self.variant}/{self.client}', # deb
-        os.path.expanduser(f'~/.nix-profile/bin/{self.client}{self.variant}', # nix
+        os.path.expanduser(f'~/.nix-profile/bin/{self.client}{self.variant}'), # nix
         f'/Applications/{self.client.title()}{self.variant}.app/Contents/MacOS/{self.client}', # macOS
       ]
       if os.access(exe, os.F_OK | os.X_OK)
