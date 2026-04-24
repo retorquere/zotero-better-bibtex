@@ -216,14 +216,6 @@ if (typeof Zotero.DataObjects.prototype.parseLibraryKey === 'function') {
     })
 }
 
-import * as CAYW from './cayw'
-monkey.patch(Zotero.Integration, 'getApplication', original =>
-  function Zotero_Integration_getApplication(agent: string, _command: any, _docId: any) {
-    if (agent === 'BetterBibTeX') return CAYW.Application
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-    return original.apply(this, arguments)
-  })
-
 import * as DateParser from './dateparser'
 import type { RichDate } from './dateparser'
 

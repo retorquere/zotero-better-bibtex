@@ -319,15 +319,45 @@ export const Application = new class {
 export async function pick(options: any): Promise<string> {
   await Zotero.BetterBibTeX.ready
 
+  const formatter = options.format || 'latex'
+  if (!Formatter[formatter]) throw new Error(`No such formatter ${ JSON.stringify(formatter) }`)
+
+  const doc = Application.createDocument(options)
+  const agent = 'BetterBibTeX'
+  const command = 'addEditCitation'
+
+  let session: any
+  const Integration: any = Zotero.Integration
+  Integration.currentDoc = doc
+
   try {
-    const formatter = options.format || 'latex'
-    if (!Formatter[formatter]) throw new Error(`No such formatter ${ JSON.stringify(formatter) }`)
-    const doc = Application.createDocument(options)
-    await Zotero.Integration.execCommand('BetterBibTeX', 'addEditCitation', doc.id)
+    const [ sess, documentImported ] = await Integration.getSession(Application, doc, agent, command)
+    session = sess
+    Integration.currentSession = session
+
+    try {
+      if (!documentImported) {
+        await (new Integration.Interface(Application, doc, session))[command]()
+      }
+      doc.setDocumentData(session.data.serialize())
+    }
+    catch (err) {
+      // mirror Zotero.Integration.execCommand()'s UserCancelled handling:
+      // persist the current document data so the session survives, but
+      // treat the pick as "nothing selected".
+      const userCancelled = (Zotero as any).Exception?.UserCancelled
+      if ((userCancelled && err instanceof userCancelled) || err?.name === 'UserCancelled') {
+        try {
+          doc.setDocumentData(session.data.serialize())
+        }
+        catch {}
+        return ''
+      }
+      throw err
+    }
 
     const picked = doc.citation()
     const citation: string = picked.length ? await Formatter[formatter](picked, options) : ''
-    Application.closeDocument(doc)
 
     if (options.select && picked.length) {
       const zoteroPane = Zotero.getActiveZoteroPane()
@@ -341,6 +371,29 @@ export async function pick(options: any): Promise<string> {
   catch (err) {
     log.error('CAYW error:', err, `${ err }`, err.stack, options)
     flash('CAYW pick failed', stringify(err))
+    return ''
+  }
+  finally {
+    // The citation dialog does NOT close itself on accept -- it signals via
+    // io.accept() and relies on Zotero.Integration.execCommand()'s finally
+    // block to close the dialog window. We have to do the same here or the
+    // picker will hang on screen after the user has made their selection
+    // (and the window's own close button can end up wedged because the
+    // dialog is still waiting for the integration host to tear it down).
+    try {
+      const w = Integration.currentWindow
+      if (w && !w.closed) w.close()
+    }
+    catch {}
+    try {
+      if (session?.progressBar) await session.progressBar.hide()
+    }
+    catch {}
+    try { Application.closeDocument(doc) }
+    catch {}
+    Integration.currentDoc = false
+    Integration.currentWindow = false
+    Integration.currentSession = null
   }
 }
 
