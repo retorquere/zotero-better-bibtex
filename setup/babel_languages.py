@@ -222,9 +222,11 @@ patchups = {
   'tw': 'chinese-traditional',
   'zh-tw': 'chinese-traditional',
   'ara': 'arabic',
+  'de': 'ngerman',
 }
 for language, langid in patchups.items():
-  DB.execute('INSERT INTO langmap (language, langid) SELECT ?, ? WHERE EXISTS (SELECT 1 FROM langmap WHERE langid = ?)', (language, langid, langid))
+  print('patching', language, '=>', langid)
+  DB.execute('REPLACE INTO langmap (language, langid) SELECT ?, ? WHERE EXISTS (SELECT 1 FROM langmap WHERE langid = ?)', (language, langid, langid))
 
 # all unique prefixes
 #for prefix, language in Trie.prefix([row.language for row in DB.execute('SELECT language FROM langmap')]).items():

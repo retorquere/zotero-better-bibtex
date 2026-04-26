@@ -20,7 +20,7 @@ _anchors:
     name: install node
     uses: actions/setup-node@v6
     with:
-      node-version: 20.x
+      node-version: 24.x
   install_python_packages: &install_python_packages
     name: install python packages
     run: |
@@ -102,11 +102,19 @@ jobs:
     - *install_python_packages
     - *install_node
     - *install_node_packages
-    - name: install hugo 0.143.1 and build site
-      uses: peaceiris/actions-hugo@v3
-      with:
-        hugo-version: 0.143.1
-        extended: true
+    - name: Install Latest Hugo
+      run: |
+        python3 -c '
+        import urllib.request, json
+        with urllib.request.urlopen("https://api.github.com/repos/gohugoio/hugo/releases/latest") as r:
+          assets = json.loads(r.read())["assets"]
+        target = next(a["browser_download_url"] for a in assets if all(x in a["name"] for x in ["hugo_extended", "linux-amd64", ".tar.gz"]))
+        print(f"Downloading {target}...")
+        urllib.request.urlretrieve(target, "hugo.tar.gz")
+        '
+        tar -xzf hugo.tar.gz hugo
+        sudo mv hugo /usr/local/bin/
+        hugo version
     - name: prepare docs for deploy
       run: npm run docs:deploy
     - name: deploy site
@@ -148,11 +156,11 @@ jobs:
         curl -sL https://raw.githubusercontent.com/retorquere/zotero-deb/master/install.sh | sudo bash
         sudo apt-get update
         sudo apt-get install ${{ matrix.client }}
-        sudo apt-get install mesa-utils xvfb
+        sudo apt-get install mesa-utils xvfb libegl1 libgl1 libdbus-glib-1-2
         sudo apt-get install wmctrl xdotool
-        curl -LO https://github.com/jgm/pandoc/releases/download/3.1.11.1/pandoc-3.1.11.1-linux-amd64.tar.gz
-        tar xvzf pandoc-3.1.11.1-linux-amd64.tar.gz
-        sudo mv pandoc-3.1.11.1/bin/pandoc /usr/bin
+        curl -s https://api.github.com/repos/jgm/pandoc/releases/latest | jq -r '.assets[] | select(.name | endswith("linux-amd64.tar.gz")) | .browser_download_url' | xargs wget -q -O pandoc.tar.gz
+        tar xvzf pandoc.tar.gz
+        sudo mv pandoc*/bin/pandoc /usr/bin
         pandoc -v
 
         # preserve log hierarchy

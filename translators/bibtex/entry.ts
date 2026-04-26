@@ -164,7 +164,7 @@ export class Entry {
   public useprefix: boolean
   public language: string
   public english: boolean
-  public date: DateParser.ParsedDate | { type: 'none' }
+  public date: DateParser.RichDate | { type: 'none' }
 
   public config: Config
 
@@ -482,7 +482,8 @@ export class Entry {
 
     if (this.translation.skipField?.exec(`${ this.translation.BetterBibTeX ? 'bibtex' : 'biblatex' }.${ this.entrytype }.${ field.name }`)) return null
 
-    field.enc = field.raw ? 'raw' : (field.enc || this.config.fieldEncoding[field.name] || 'literal')
+    // field.enc = field.raw ? 'raw' : (field.enc || this.config.fieldEncoding[field.name] || 'literal')
+    field.enc = field.enc || this.config.fieldEncoding[field.name] || (field.raw ? 'raw' : 'literal')
 
     if (field.enc === 'date') {
       if (!field.value) return null

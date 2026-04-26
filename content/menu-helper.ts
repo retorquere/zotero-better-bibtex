@@ -2,11 +2,11 @@ import { toClipboard, sentenceCase as toSentenceCase } from './text'
 import { Preference } from './prefs'
 import { flash } from './flash'
 import * as Extra from './extra'
-import * as DateParser from './dateparser'
 import { log } from './logger'
 import * as CAYW from './cayw'
 import { TeXstudio } from './tex-studio'
 import { Translators } from './translators'
+import { parse } from './dateparser'
 
 export async function clipSelected(translatorID: string): Promise<void> {
   const items = Zotero.getActiveZoteroPane().getSelectedItems()
@@ -38,7 +38,7 @@ export async function patchDates(): Promise<void> {
         const extra = Extra.get(item.getField('extra'), 'zotero', { tex: true })
         for (const [ k, v ] of Object.entries(extra.extraFields.tex)) {
           if (mapping[k]) {
-            const date = DateParser.parse(v.value)
+            const date = parse(v.value)
             if (date.type === 'date' && date.day) {
               delete extra.extraFields.tex[k]
               const time = typeof date.seconds === 'number'

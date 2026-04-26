@@ -26,7 +26,6 @@ function date2csl(date) {
 }
 
 import { parse, strToISO } from '../content/dateparser'
-const value = "1973/74"
+const value = "26 Mar 2026 10:00:00+AEDT"
 console.log(value)
-console.log('parse: +tz', parse(value, true))
-// console.log('parse: -tz', parse(value, false))
+console.log('parse:', parse(value))

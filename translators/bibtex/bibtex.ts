@@ -7,7 +7,7 @@ import { parse as arXiv } from '../../content/arXiv'
 import { Schema } from '../../content/item-schema'
 import wordsToNumbers from '@insomnia-dev/words-to-numbers'
 
-import { ParsedDate, parse as parseDate, strToISO as strToISODate, century } from '../../content/dateparser'
+import { RichDate, parse as parseDate, strToISO as strToISODate, century } from '../../content/dateparser'
 import { toEnglishOrdinal } from '../../content/text'
 
 import { parseBuffer as parsePList } from 'bplist-parser'
@@ -348,8 +348,8 @@ export async function importBibTeX(collected: Collected): Promise<void> {
   await importer.import()
 }
 
-function addDate(ref: Entry, date: ParsedDate | { type: 'none' }, verbatim: string) {
-  const print = (d: ParsedDate) => {
+function addDate(ref: Entry, date: RichDate | { type: 'none' }, verbatim: string) {
+  const print = (d: RichDate) => {
     switch (d.type) {
       case 'date':
       case 'season':
