@@ -29,6 +29,7 @@ const config = [
   {
     ignores: [
       'content/key-manager/compile.js',
+      'content/preferences.js',
       'content/public.ts',
       'eslint.config.mjs',
       'esbuild.js',

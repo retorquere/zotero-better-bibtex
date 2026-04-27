@@ -34,6 +34,6 @@ export async function initialize(): Promise<void> {
   await Promise.all(load)
 }
 
-export async function format(key: string, values: Record<string, string> = {}) {
-  return await strings.formatValue(key, values)
+export async function format(key: string, values: Record<string, string> = {}): Promise<string> {
+  return await strings.formatValue(key, values) as string
 }

@@ -362,8 +362,6 @@ monkey.patch(Zotero.Translate.Export.prototype, 'translate', original =>
 
 const scheduler = new Scheduler<'column-refresh'>(500)
 
-type MenuItem = _ZoteroTypes.MenuManager.MenuData<_ZoteroTypes.MenuManager.LibraryMenuContext>
-
 export class BetterBibTeX {
   public clientName = Zotero.clientName
   public clientVersion = Zotero.version
@@ -391,7 +389,7 @@ export class BetterBibTeX {
 
   // panes
   public ErrorReport = new ErrorReport
-  public PrefPane = new PrefPane
+  public PrefPane = PrefPane
   public Translators = Translators
   public MenuHelper = MenuHelper
 
@@ -557,6 +555,7 @@ export class BetterBibTeX {
           pluginID,
           src: `${rootURI}content/preferences.xhtml`,
           stylesheets: [`${rootURI}content/preferences.css`],
+          // scripts: [`${rootURI}content/preferences.js`],
           label: 'Better BibTeX',
           defaultXUL: true,
         })
@@ -752,7 +751,7 @@ export class BetterBibTeX {
                       const ae = selectedAutoExports(context)[i]
                       if (ae) Zotero.BetterBibTeX.AutoExport.run(ae.path)
                     },
-                  })) as MenuItem[],
+                  })),
                 },
                 {
                   menuType: 'menuitem',

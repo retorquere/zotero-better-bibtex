@@ -1116,7 +1116,7 @@ class ZoteroItem {
     for (const att of value.split(/,\s+/)) {
       const m = att.match(/^:?(?<path>.+?)(?::(?<mimeType>[a-z]+))?$/i)
       if (m) {
-        this.addAttachment(m.groups as { path: string })
+        this.addAttachment(m.groups)
       }
       else {
         this.addAttachment({ path: att })

@@ -271,7 +271,7 @@ class Document {
       uri: Array.isArray(item.uri) ? item.uri[0] : undefined,
       itemType: item.itemData ? item.itemData.type : undefined,
       title: item.itemData ? item.itemData.title : undefined,
-    }) as Citation)
+    }))
 
     return items
   }

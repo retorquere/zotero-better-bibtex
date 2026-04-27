@@ -30,7 +30,7 @@ import { migrate } from './key-manager/migrate'
 import { readonly } from './library'
 import { strcmp } from './string-compare'
 
-function scrub(q) {
+function scrub(q: string): string {
   return q.replace(/\n/g, ' ').trim()
 }
 const sql = {
@@ -40,7 +40,7 @@ const sql = {
     JOIN libraries lib ON item.libraryID = lib.libraryID
     LEFT JOIN itemData id ON item.itemID = id.itemID AND id.fieldID = (SELECT fieldID FROM fields WHERE fieldName = 'citationKey')
     LEFT JOIN itemDataValues idv ON id.valueID = idv.valueID
-    WHERE 
+    WHERE
       lib.editable = 1
       AND (id.itemID IS NULL OR idv.value = '')
       AND item.itemID NOT IN (SELECT itemID FROM deletedItems)
@@ -56,7 +56,7 @@ const sql = {
     WHERE item.itemID NOT IN (SELECT itemID FROM deletedItems)
       AND item.itemID NOT IN (SELECT itemID FROM feedItems)
       AND item.itemTypeID NOT IN (SELECT itemTypeID FROM itemTypes WHERE typeName IN ('attachment', 'note', 'annotation'))
-  `)
+  `),
 }
 
 export type CitekeyRecord = {
@@ -131,37 +131,6 @@ class Keys extends TrackedMap<number, CitekeyRecord> {
       this.set(itemID, copy({ itemID, itemKey, libraryID, citationKey }))
     }
     this.resetDirty()
-
-    const stopAskMissing = 'extensions.zotero.translators.better-bibtex.stopAskMissing'
-    if (Preference.fillKeyAfter && !Zotero.Prefs.get(stopAskMissing)) {
-      const missing = await Zotero.DB.columnQueryAsync(sql.missing))
-      if (missing.length) {
-        const ps = Services.prompt
-        const flags = (ps.BUTTON_POS_0 * ps.BUTTON_TITLE_YES) + (ps.BUTTON_POS_1 * ps.BUTTON_TITLE_NO)
-        const notagain = { value: false }
-
-        const choice = ps.confirmEx(
-          null, // parent window
-          await format('better-bibtex_fill_empty_title'),
-          await format('better-bibtex_fill_empty_text', { empty: `${missing.length}` }),
-          flags, // button configuration
-          null, // button 0 label (null => yes)
-          null, // button 1 label (null => no)
-          null, // button 2 label
-          await format('better-bibtex_fill_empty_do_not_ask_again'),
-          notagain
-        )
-
-        if (choice === 0) {
-          void Zotero.DB.executeTransaction(async () => {
-            for (const item of await Zotero.Items.getAsync(missing)) {
-              await this.update(item)?.save({ skipDateModifiedUpdate: true })
-            }
-          })
-        }
-        if (notagain.value) Zotero.Prefs.set(stopAskMissing, true)
-      }
-    }
 
     this.#timer = setInterval(() => { void this.save() }, 10000)
   }
@@ -325,6 +294,17 @@ export const KeyManager = new class _KeyManager {
   private async start(): Promise<void> {
     await migrate()
     await this.#keys.load()
+
+    if (Preference.fillKeyAfter) {
+      const missing: number[] = await Zotero.DB.columnQueryAsync(sql.missing)
+      if (missing.length) {
+        void Zotero.DB.executeTransaction(async () => {
+          for (const item of await Zotero.Items.getAsync(missing)) {
+            await this.update(item)?.save({ skipDateModifiedUpdate: true })
+          }
+        })
+      }
+    }
 
     Events.on('preference-changed', ({ data: pref }) => {
       switch (pref) {

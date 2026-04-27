@@ -235,7 +235,7 @@ export const Preference = new class PreferenceManager extends PreferenceManagerB
   }
 
   pick(keys: PreferenceName[]): Partial<$Preferences> {
-    return pick(this, keys) as Partial<$Preferences>
+    return pick(this, keys)
   }
 
   public shutdown() {
