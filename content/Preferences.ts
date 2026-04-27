@@ -64,7 +64,7 @@ const AutoExportPane = new class $AutoExportPane {
 
   public refresh(path?: string) {
     if (!this.window) return
-    const doc = this.window.document
+    const doc = this.document
 
     const auto_exports = AutoExport.all()
     const details = doc.querySelector<HTMLElement>('#bbt-prefs-auto-exports')
@@ -201,7 +201,7 @@ const AutoExportPane = new class $AutoExportPane {
   public async edit(node) {
     let path: string
     if (!(path = node.getAttribute('data-ae-path'))) {
-      const menulist: XUL.MenuList = this.window.document.querySelector('#bbt-prefs-auto-export-select') as unknown as XUL.MenuList
+      const menulist: XUL.MenuList = this.document.querySelector('#bbt-prefs-auto-export-select') as unknown as XUL.MenuList
       path = menulist.selectedItem.getAttribute('value')
     }
 
@@ -290,6 +290,9 @@ export const PrefPane = new class $PrefPane {
   public set window(win: Window) {
     this.#window = win
   }
+  public get document() {
+    return this.window?.document
+  }
 
   public async exportPrefs(): Promise<void> {
     let file = await new FilePickerHelper(Zotero.getString('fileInterface.export'), 'save', [[ 'BBT JSON file', '*.json' ]]).open()
@@ -360,22 +363,22 @@ export const PrefPane = new class $PrefPane {
     if (!this.window || Zotero.BetterBibTeX.starting) return // itemTypes not available yet
 
     const error = Formatter.test(Preference.citekeyFormatEditing || Preference.citekeyFormat)
-    const editing = this.window.document.getElementById('bbt-preferences-citekeyFormatEditing')
+    const editing = this.document.getElementById('bbt-preferences-citekeyFormatEditing')
     editing.classList[error ? 'add' : 'remove']('bbt-prefs-error')
     editing.setAttribute('title', error)
     editing.setAttribute('tooltip', 'html-tooltip')
 
-    const msg = this.window.document.getElementById('bbt-citekeyFormat-error') as HTMLInputElement
+    const msg = this.document.getElementById('bbt-citekeyFormat-error') as HTMLInputElement
     msg.value = error
     msg.style.display = error ? 'initial' : 'none'
 
-    const active = this.window.document.getElementById('bbt-preferences-citekeyFormat')
-    const label = this.window.document.getElementById('bbt-label-citekeyFormat')
+    const active = this.document.getElementById('bbt-preferences-citekeyFormat')
+    const label = this.document.getElementById('bbt-label-citekeyFormat')
     active.style.display = label.style.display = Preference.citekeyFormat === Preference.citekeyFormatEditing ? 'none' : 'initial'
 
     if (!error) Formatter.update([ Preference.citekeyFormatEditing, Preference.citekeyFormat ])
 
-    const preview = this.window.document.getElementById('bbt-citekey-preview') as HTMLInputElement
+    const preview = this.document.getElementById('bbt-citekey-preview') as HTMLInputElement
     preview.style.display = 'initial'
     const previews = Zotero
       .getActiveZoteroPane()
@@ -399,11 +402,11 @@ export const PrefPane = new class $PrefPane {
       error = `${ err }`
     }
 
-    const postscript = this.window.document.getElementById('bbt-postscript')
+    const postscript = this.document.getElementById('bbt-postscript')
     postscript.setAttribute('style', (error ? '-moz-appearance: none !important; background-color: DarkOrange' : ''))
     postscript.setAttribute('title', error)
     postscript.setAttribute('tooltip', 'html-tooltip')
-    this.window.document.getElementById('bbt-cache-warn-postscript').setAttribute('hidden', `${ !Preference.postscript.includes('Translator.options.exportPath') }`)
+    this.document.getElementById('bbt-cache-warn-postscript').setAttribute('hidden', `${ !Preference.postscript.includes('Translator.options.exportPath') }`)
   }
 
   public async cacheReset(): Promise<void> {
@@ -422,11 +425,11 @@ export const PrefPane = new class $PrefPane {
       }
     })
 
-    this.window.document.getElementById('bbt-chinese-splitname').setAttribute('disabled', Preference.chinese ? '' : 'true')
+    this.document.getElementById('bbt-chinese-splitname').setAttribute('disabled', Preference.chinese ? '' : 'true')
 
     this.autoexport.load()
 
-    this.window.document.getElementById('bbt-preferences-quickcopy').addEventListener('command', () => this.showQuickCopyDetails())
+    this.document.getElementById('bbt-preferences-quickcopy').addEventListener('command', () => this.showQuickCopyDetails())
     this.showQuickCopyDetails()
 
     this.checkCitekeyFormat()
@@ -438,7 +441,7 @@ export const PrefPane = new class $PrefPane {
   private showQuickCopyDetails() {
     const quickcopy = 'bbt-preferences-quickcopy-details'
     const selected = `${ quickcopy }-${ Zotero.Prefs.get('translators.better-bibtex.quickCopyMode') }`
-    for (const details of ([...this.window.document.querySelectorAll(`.${ quickcopy }`)] as HTMLElement[])) {
+    for (const details of ([...this.document.querySelectorAll(`.${ quickcopy }`)] as HTMLElement[])) {
       details.style.display = details.id === selected ? 'initial' : 'none'
     }
   }
