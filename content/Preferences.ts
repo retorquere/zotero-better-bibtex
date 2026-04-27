@@ -414,11 +414,7 @@ export const PrefPane = new class $PrefPane {
   public load(win: Window): void {
     this.#window = win
 
-    log.debug('bbt-preferences: load')
-    log.debug(win.document.documentElement.outerHTML)
-
     window.addEventListener('unload', _event => {
-      log.debug('bbt-preferences: unload')
       this.#window = null
       if (typeof this.timer !== 'undefined') {
         clearInterval(this.timer)
