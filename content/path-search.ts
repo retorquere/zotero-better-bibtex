@@ -2,14 +2,25 @@ import { log } from './logger'
 import * as client from './client'
 import { File } from './file'
 
+const root = 'translators.better-bibtex.path.'
 // https://searchfox.org/mozilla-central/source/toolkit/modules/subprocess/subprocess_win.jsm#135 doesn't seem to work on Windows.
 export async function findBinary(bin: string, installationDirectory: { mac?: string[]; win?: string[] } = {}): Promise<string> {
-  const pref = `translators.better-bibtex.path.${ bin }`
+  const pref = `${root}${bin}`
   let location: string = Zotero.Prefs.get(pref) as string
   if (location && (await File.exists(location))) return location
   location = await pathSearch(bin, installationDirectory)
   if (typeof location === 'string') Zotero.Prefs.set(pref, location)
   return location
+}
+
+export function binaries(): Record<string, string> {
+  const found: Record<string, string> = {}
+  // @ts-expect-error TS2554
+  const childkeys: string[] = Services.prefs.getBranch(root).getChildList('', {})
+  for (const key of childkeys) {
+    found[key] = Zotero.Prefs.get(`${root}${key}`, true) as string
+  }
+  return found
 }
 
 const ENV = Components.classes['@mozilla.org/process/environment;1'].getService(Components.interfaces.nsIEnvironment)

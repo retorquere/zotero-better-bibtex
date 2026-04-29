@@ -1,5 +1,6 @@
 import * as client from './client'
 import { Path, File } from './file'
+import { binaries } from './path-search'
 
 import { Cache } from './translators/worker'
 import { regex as escapeRE } from './escape'
@@ -305,9 +306,11 @@ export class ErrorReport {
       /protocol is not allowed for attachments/,
     ].map(re => re.source).join('|'))
 
-    return logging.filter(line => !line.match(ignore))
-      .map(line => line.replace($home, '$HOME'))
-      .join('\n')
+    return this.unhome(logging.filter(line => !line.match(ignore)).join('\n'))
+  }
+
+  private unhome(logging: string): string {
+    return logging.replace($home, '$HOME')
   }
 
   private errors(): string {
@@ -592,6 +595,13 @@ export class ErrorReport {
       }
     }
 
+    if (Object.keys(binaries()).length) {
+      context += 'Binaries:\n'
+      for (const [k, v] of Object.entries(binaries())) {
+        context += `  ${k}: ${v}\n`
+      }
+    }
+
     context += 'Libraries:\n'
     for (const lib of Zotero.Libraries.getAll()) {
       context += `  ${JSON.stringify(lib.name)}, libraryID = ${lib.libraryID}, groupID = ${(lib as unknown as Zotero.Group).groupID ?? false}, read-only: ${readonly(lib)}\n`
@@ -600,7 +610,7 @@ export class ErrorReport {
     context += `Zotero.Debug.storing: ${ Zotero.Debug.storing }\n`
     context += `Zotero.Debug.storing at start: ${ Zotero.BetterBibTeX.debugEnabledAtStart }\n`
 
-    return context
+    return this.unhome(context)
   }
 
   public async open(items?: string): Promise<void> {
