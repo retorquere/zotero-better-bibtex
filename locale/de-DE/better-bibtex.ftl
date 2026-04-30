@@ -1,13 +1,13 @@
 better-bibtex = 
     .label = Better BibTeX
--citation-key = Citation Key
+-citation-key = Zitierschlüssel
 better-bibtex_auto-export_delete = Auto-Export wird gelöscht
 better-bibtex_auto-export_delete_confirm = Möchtest du den Auto-Export wirklich löschen? Dies kann nicht rückgängig gemacht werden.
 better-bibtex_aux-scan_prompt = Name der Markierung
 better-bibtex_aux-scan_title_aux = Markiere zitierte Einträge aus AUX-Datei
 better-bibtex_aux-scan_title_md = Markiere zitierte Einträge aus Markdown-Datei
 better-bibtex_aux-scanner = 
-    .label = Scan BibTeX AUX/Markdown file for references...
+    .label = BibTeX-AUX-/Markdown-Datei nach Verweisen durchsuchen...
 better-bibtex_bulk-keys-confirm_warning = Sie ändern mehr als {$treshold} Einträge auf einmal. Sind sie sicher?
 better-bibtex_bulk-keys-confirm_stop_asking = OK, und nicht mehr fragen
 better-bibtex_error-report = 
