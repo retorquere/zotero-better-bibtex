@@ -843,7 +843,7 @@ export class BetterBibTeX {
   private hideNativeField = 'bbt-hide-citationkey'
   public onMainWindowLoad({ window }: { window: Window }): void {
     window.MozXULElement.insertFTLIfNeeded('better-bibtex.ftl')
-    /*
+
     const doc = window.document
     const style = doc.createElement('style')
     style.id = this.hideNativeField
@@ -853,7 +853,6 @@ export class BetterBibTeX {
       }
     `
     doc.documentElement.append(style)
-    */
   }
 
   public onMainWindowUnload({ window }: { window: Window }): void {
