@@ -417,7 +417,7 @@ export const PrefPane = new class $PrefPane {
   public load(win: Window): void {
     this.#window = win
 
-    window.addEventListener('unload', _event => {
+    this.window.addEventListener('unload', _event => {
       this.#window = null
       if (typeof this.timer !== 'undefined') {
         clearInterval(this.timer)
