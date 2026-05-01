@@ -12,6 +12,7 @@ Feature: Export
 
     Examples:
       | file                                                                                                                     | references |
+      | Trouble with extra() function in citekey generator #3505                                                                 | 1          |
       | Citation key pulling in full date field rather than just year #3500                                                      | 1          |
       | tex.pages= in Extra field not exporting as LaTeX, Language = de exporting as german, not ngerman #3472                   | 1          |
       | authIni Not Working with n = 0 #3479                                                                                     | 1          |
