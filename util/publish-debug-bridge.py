@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 
+
 import subprocess
 import requests
-from github import Github
+from github import Github, Auth
 import zipfile
 import tempfile
 import os
@@ -11,22 +12,27 @@ import json
 
 DBB = 'test/fixtures/debug-bridge'
 
-version = subprocess.run(['git', 'rev-list', '--count', 'HEAD', '--', DBB], stdout=subprocess.PIPE).stdout.decode('utf-8').strip()
-version += '.0'
+manifest_path = os.path.join(os.path.dirname(__file__), '../test/fixtures/debug-bridge/manifest.json')
+with open(manifest_path, 'r', encoding='utf-8') as f:
+  manifest = json.load(f)
+  version = manifest['version']
+
 released = f'debug-bridge-{version}.xpi'
 
-github = Github(os.environ.get('GITHUB_TOKEN'))
+github = Github(auth=Auth.Token(os.environ.get('GITHUB_TOKEN')))
 repo = github.get_repo('retorquere/zotero-better-bibtex')
 release = repo.get_release('debug-bridge')
 
-xpis = [ asset for asset in release.get_assets() if asset.name.startswith('debug-bridge-') ]
+assets = release.get_assets()
+print('current assets:', [ asset.name for asset in assets ])
+dbb = [ asset for asset in assets if asset.name.startswith('debug-bridge-') ]
 
-for asset in xpis:
+for asset in dbb:
   if asset.name != released:
     print('removing', asset.name)
     asset.delete_asset()
 
-if not any(asset.name == released for asset in xpis):
+if not any(asset.name == released for asset in dbb):
   print('building', released)
   with tempfile.TemporaryDirectory() as temp_dir:
     path = os.path.join(temp_dir, released)
