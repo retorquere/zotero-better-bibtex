@@ -152,11 +152,10 @@ class Upgrades {
     const zotero = async () => {
       show({ id: 'zotero' })
       try {
-        const release = client.isBeta ? 'beta' : 'release'
+        const channel = client.isBeta ? 'beta' : 'release'
+        const releases = JSON.parse((await Zotero.HTTP.request('GET', `https://www.zotero.org/download/client/version?channel=${channel}`, { noCache: true })).response)
         const platform = `${client.platform.replace(/lin/, 'linux')}${ { mac: '', win: '-x64', lin: '-x86_64' }[client.platform] || '' }`
-        this.zotero.upgrade = (await manifest(`https://www.zotero.org/download/client/manifests/${release}/updates-${platform}.json`))
-          .map(v => v.version as string)
-          .sort((a, b) => Services.vc.compare(b, a))[0] as string
+        this.zotero.upgrade = releases[platform]
         show(this.zotero)
       }
       catch (err) {
