@@ -40,34 +40,8 @@ window(xmlns='http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul'
       background-color: #eee !important;
       cursor: not-allowed;
     }
-    input[type='radio'] {
-      margin-right: 8px;
-      vertical-align: middle;
-    }
-    input[type='radio'] {
-      -webkit-appearance: none;
-      -moz-appearance: none;
-      appearance: none;
-  
-      width: 14px;
-      height: 14px;
-      border: 1px solid #777; /* Visible border color */
-      border-radius: 50%;
-      background-color: #fff;
-      cursor: pointer;
-      position: relative;
-      display: inline-block;
-    }
-
-    input[type='radio']:checked::before {
-      content: '';
-      position: absolute;
-      top: 3px;
-      left: 3px;
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: #007bff; /* Zotero blue */
+    radio, input[type='radio'] {
+      appearance: 'auto'
     }
 
     label {
