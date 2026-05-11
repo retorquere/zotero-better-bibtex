@@ -476,20 +476,19 @@ itemObserverDelay:
     acting on the changed items.
   default: 5
 
-autoPinDelay:
+fillKeyAfter:
   description: >-
-    When &gt; 0, BBT will automatically fill the citation key it generates
-    for an item after this many seconds.
+    When &gt; 0, BBT will automatically fill the citation key for an item that does not currently have one after this many seconds. When 0, keys will only be generated on user request.
   default: 2
 
-autoPinOverwrite:
+resetKeyOnChange:
   description: >-
     When true, BBT will overwrite existing keys with new keys after an item changes.
   default: false
 
 parseParticles:
   description: >-
-    Name particle handling. Only turn on when requested and we're talking about
+    Name particle handling. Only turn off when requested and we're talking about
     it on github.
   default: true
   affects:
@@ -545,7 +544,7 @@ postscriptOverride:
     You can use a custom postscript per export directory:
 
 
-    1. Edit the hidden preference `postscriptOverride`, and set it to a filename
+    1. Edit the hidden preference `extensions.zotero.translators.better-bibtex.postscriptOverride`, and set it to a filename
     like `postscript.js`
 
     2. In the directory where you intend to export to, create a file called
@@ -563,7 +562,7 @@ preferencesOverride:
     You can use custom preferences per export directory:
 
 
-    1. Edit the hidden preference `preferencesOverride`, and set it to a
+    1. Edit the hidden preference `extensions.zotero.translators.better-bibtex.preferencesOverride`, and set it to a
     filename like `preferences.json`
 
     2. In the directory where you intend to export to, create a file called
@@ -585,7 +584,7 @@ stringsOverride:
     You can use a custom @string list per export directory:
 
 
-    1. Edit the hidden preference `stringstOverride`, and set it to a filename
+    1. Edit the hidden preference `extensions.zotero.translators.better-bibtex.stringstOverride`, and set it to a filename
     like `strings.bib`
 
     2. In the directory where you intend to export to, create a file called
@@ -868,3 +867,6 @@ logEvents:
 
 platform:
   default: ''
+
+remigrate:
+  default: false

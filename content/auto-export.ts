@@ -1,4 +1,3 @@
-import Loki from 'lokijs'
 import { log } from './logger'
 import { Path, File } from './file'
 
@@ -45,6 +44,52 @@ type Job = {
   updated: number
 }
 export type JobSetting = keyof Job
+
+import { ObservedMap } from './object'
+export const prefix = 'translators.better-bibtex.autoExport.'
+class Store extends ObservedMap<string, Job> {
+  #key(path: string): string {
+    const key = uri.encode(path).replace(/[.!'()*]/g, c => `%${c.charCodeAt(0).toString(16)}`)
+    return `${prefix}${key}`
+  }
+
+  constructor() {
+    const jobs: [string, Job][] = []
+    for (const encoded of Services.prefs.getBranch(`extensions.zotero.${prefix}`).getChildList('')) {
+      const stored = Zotero.Prefs.get(`${prefix}${encoded}`) as string
+      try {
+        const ae = JSON.parse(stored)
+        if (ae.path) {
+          delete ae.$loki
+          delete ae.meta
+          jobs.push([ae.path, ae])
+        }
+        else {
+          log.error('load autoexport:', ae, 'does not have a path')
+        }
+      }
+      catch (err) {
+        log.error('load autoexport: error loading', encoded, stored, err)
+      }
+    }
+    super(jobs)
+  }
+
+  order = (a: Job, b: Job) => a.path.localeCompare(b.path, undefined, { sensitivity: 'base', usage: 'sort' })
+
+  onChange(method: 'set' | 'delete' | 'clear', key?: string) {
+    if (!key) throw new Error('do not clear the database')
+    switch (method) {
+      case 'set':
+        Zotero.Prefs.set(this.#key(key), JSON.stringify(this.get(key)))
+        break
+      case 'delete':
+      case 'clear':
+        Zotero.Prefs.clear(this.#key(key))
+        break
+    }
+  }
+}
 
 function win_quote(s: string, forCmd = true): string {
   if (!s) return '""'
@@ -250,7 +295,6 @@ const queue = new class TaskQueue {
 
   constructor() {
     this.pause('startup')
-    this.holdDuringSync()
   }
 
   public pause(_reason: 'startup' | 'end-of-idle' | 'preference-change') {
@@ -268,20 +312,6 @@ const queue = new class TaskQueue {
     }
     else {
       this.scheduler.schedule(path, this.run.bind(this, path))
-    }
-  }
-
-  public holdDuringSync() {
-    if (Events.syncInProgress && !this.held) this.held = new Set
-  }
-
-  public releaseAfterSync() {
-    if (this.held) {
-      const held = this.held
-      this.held = null
-      for (const path of [...held]) {
-        this.add(path)
-      }
     }
   }
 
@@ -397,31 +427,18 @@ const queue = new class TaskQueue {
   }
 }
 
-function un$loki(key: string, value: any): any {
-  return key === '$loki' ? undefined : value
-}
-
 // export singleton: https://k94n.com/es6-modules-single-instance-pattern
 export const AutoExport = new class $AutoExport {
   public progress: Map<string, number> = new Map
 
-  public db = (new Loki('autoexport.db')).addCollection<Job>('citationKeys', {
-    clone: true,
-    cloneMethod: 'shallow',
-    indices: [ 'translatorID', 'type', 'id' ],
-    unique: [ 'path' ],
-  })
-
-  private key(path: string): string {
-    return uri.encode(path).replace(/[.!'()*]/g, c => `%${c.charCodeAt(0).toString(16)}`)
-  }
+  public db: Store = new Store
 
   constructor() {
-    Events.on('libraries-changed', ids => this.schedule('library', ids))
-    Events.on('libraries-removed', ids => this.remove('library', ids))
-    Events.on('collections-changed', ids => this.schedule('collection', ids))
-    Events.on('collections-removed', ids => this.remove('collection', ids))
-    Events.on('export-progress', ({ pct, ae }) => {
+    Events.on('libraries-changed', ({ data: ids }) => this.schedule('library', ids))
+    Events.on('libraries-removed', ({ data: ids }) => this.remove('library', ids))
+    Events.on('collections-changed', ({ data: ids }) => this.schedule('collection', ids))
+    Events.on('collections-removed', ({ data: ids }) => this.remove('collection', ids))
+    Events.on('export-progress', ({ data: { pct, ae } }) => {
       if (typeof ae === 'string') this.progress.set(ae, pct)
     })
 
@@ -439,33 +456,9 @@ export const AutoExport = new class $AutoExport {
       description: 'auto-export',
       needs: [ 'translators' ],
       startup: () => {
-        for (const key of Services.prefs.getBranch('extensions.zotero.translators.better-bibtex.autoExport.').getChildList('')) {
-          try {
-            const stored = JSON.parse(Zotero.Prefs.get(`translators.better-bibtex.autoExport.${key}`) as string)
-            const { $loki, ...ae } = stored // eslint-disable-line @typescript-eslint/no-unused-vars
-            this.db.insert(ae)
-            if (ae.status !== 'done') queue.add(ae.path)
-          }
-          catch (err) {
-            log.error('3415: failed to load auto-export:', err)
-          }
-        }
-
-        // triggers after initial load
-        this.db.on('insert', (ae: Job) => {
-          Zotero.Prefs.set(`translators.better-bibtex.autoExport.${this.key(ae.path)}`, JSON.stringify(ae, un$loki))
-        })
-        this.db.on('update', (ae: Job) => {
-          Zotero.Prefs.set(`translators.better-bibtex.autoExport.${this.key(ae.path)}`, JSON.stringify(ae, un$loki))
-        })
-
-        this.db.on('delete', (ae: Job) => {
-          Zotero.Prefs.clear(`translators.better-bibtex.autoExport.${this.key(ae.path)}`)
-        })
-
         if (Preference.autoExport === 'immediate') queue.resume('startup')
         Events.addIdleListener('auto-export', Preference.autoExportIdleWait)
-        Events.on('idle', state => {
+        Events.on('idle', ({ data: state }) => {
           if (state.topic !== 'auto-export' || Preference.autoExport !== 'idle') return
 
           switch (state.state) {
@@ -483,16 +476,7 @@ export const AutoExport = new class $AutoExport {
           }
         })
 
-        Events.on('sync', running => {
-          if (running) {
-            queue.holdDuringSync()
-          }
-          else {
-            queue.releaseAfterSync()
-          }
-        })
-
-        Events.on('preference-changed', pref => {
+        Events.on('preference-changed', ({ data: pref }) => {
           if (pref === 'autoExport') {
             switch (Preference.autoExport) {
               case 'immediate':
@@ -509,7 +493,7 @@ export const AutoExport = new class $AutoExport {
           }
 
           for (const translator of (affects[pref] || []).map(label => Translators.byLabel[label])) {
-            for (const ae of this.db.find({ translatorID: translator.translatorID })) {
+            for (const ae of this.db.values(_ => _.translatorID === translator.translatorID)) {
               if (!(pref in ae)) queue.add(ae.path)
             }
           }
@@ -518,16 +502,6 @@ export const AutoExport = new class $AutoExport {
     })
   }
 
-  private upsert(ae: Job) {
-    const record = this.db.findObject({ path: ae.path })
-    if (record) {
-      Object.assign(record, ae)
-      this.db.update(record)
-    }
-    else {
-      this.db.insert(ae)
-    }
-  }
   public store(job: Job) {
     const ae: Job = {
       ...pick(job, ['path', 'translatorID', 'type', 'id', 'status']),
@@ -547,13 +521,13 @@ export const AutoExport = new class $AutoExport {
       ae[option] = ae[option] ?? job[option] ?? displayOptions[option] ?? false
     }
 
-    this.upsert({ created: Date.now(), ...ae, updated: Date.now() })
+    this.db.set(ae.path, { created: Date.now(), ...ae, updated: Date.now() })
     queue.add(ae.path)
   }
 
   public find(type: 'collection' | 'library', ids: number[]): Job[] {
     if (!ids.length) return []
-    return this.db.find({ type, id: { $in: ids } })
+    return this.db.values(_ => _.type === type && ids.includes(_.id))
   }
 
   public async add(ae: Job, schedule = false) {
@@ -615,16 +589,16 @@ export const AutoExport = new class $AutoExport {
   }
 
   public get(path: string): Job {
-    return this.db.findOne({ path })
+    return this.db.get(path)
   }
 
   public all(): Job[] {
-    return this.db.data
+    return this.db.values()
   }
 
   public edit(path: string, setting: JobSetting, value: number | boolean | string): void {
-    const ae: Job = this.db.findOne({ path })
-    this.upsert({ created: Date.now(), ...ae, [setting]: value, updated: Date.now() })
+    const ae: Job = this.db.get(path)
+    this.db.set(path, { created: Date.now(), ...ae, [setting]: value, updated: Date.now() })
     queue.add(ae.path)
   }
 
@@ -633,17 +607,17 @@ export const AutoExport = new class $AutoExport {
   public remove(arg: string, ids?: number[]): void {
     const paths: string[] = (typeof ids === 'undefined') ? [arg] : this.find(arg as 'collection' | 'library', ids).map(ae => ae.path)
 
-    this.db.findAndRemove({ path: { $in: paths } })
-
     for (const path of paths) {
+      this.db.delete(path)
       queue.cancel(path)
       this.progress.delete(path)
     }
   }
 
   public status(path: string, status: 'running' | 'done') {
-    const ae = this.db.findOne({ path })
-    if (ae) this.db.update({ ...ae, status, updated: Date.now() })
+    const ae = this.db.get(path)
+    if (!ae) log.error('3450: trying to set status on auto-export with path', path, 'which does not exist')
+    if (ae) this.db.set(path, { ...ae, status, updated: Date.now() })
   }
 
   public removeAll() {
@@ -654,12 +628,5 @@ export const AutoExport = new class $AutoExport {
 
   public run(path: string) {
     queue.run(path)
-  }
-
-  forCollection(collectionID: number) {
-    return this.db.chain()
-      .find({ type: 'collection', id: collectionID })
-      .simplesort('path')
-      .data()
   }
 }

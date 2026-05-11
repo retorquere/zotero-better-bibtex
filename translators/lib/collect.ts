@@ -77,7 +77,7 @@ export class Items {
           break
 
         default:
-          yield (this.current = item) as unknown as CacheableRegularItem
+          yield (this.current = item)
       }
     }
     // trace('items: end item delivery')

@@ -13,7 +13,7 @@
       "asciiBibLaTeX": true,
       "asciiBibTeX": false,
       "autoExport": "idle",
-      "autoPinDelay": 1,
+      "fillKeyAfter": 1,
       "automaticTags": false,
       "biblatexExtractEprint": false,
       "citekeyFormat": "auth.transliterate.lower+year",

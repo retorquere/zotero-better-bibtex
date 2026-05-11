@@ -4,7 +4,7 @@ Feature: Import
   Background:
     Given I set preference .citekeyFormat to "auth + year"
     And I set preference .jabrefFormat to 0
-    And I set preference .autoPinDelay to 1
+    And I set preference .fillKeyAfter to 1
 
   @schomd
   Scenario: Better BibTeX Import 2

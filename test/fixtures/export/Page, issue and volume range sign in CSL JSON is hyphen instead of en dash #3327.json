@@ -8,7 +8,7 @@
       "asciiBibTeX": false,
       "autoExport": "idle",
       "automaticTags": false,
-      "autoPinDelay": 1,
+      "fillKeyAfter": 1,
       "biblatexExtractEprint": false,
       "charmap": "{\"·\":{\"text\":\"·\",\"math\":\"\"},\"ș\":{\"text\":\"ș\",\"math\":\"\"}}",
       "citekeyFormat": "auth.transliterate.lower + year",

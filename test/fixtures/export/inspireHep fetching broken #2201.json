@@ -6,7 +6,7 @@
       "exportNotes": true
     },
     "preferences": {
-      "autoPinDelay": 10,
+      "fillKeyAfter": 10,
       "citekeyFormat": "inspirehep | auth+\":\"+year",
       "citekeySearch": false,
       "extraMergeCSL": true,

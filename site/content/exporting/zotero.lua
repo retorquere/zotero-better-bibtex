@@ -1655,6 +1655,7 @@ local function load_items()
 
   module.request.params.citekeys = citekeys
   local url = module.url .. utils.urlencode(json.encode(module.request))
+  print(url)
   local mt, body = pandoc.mediabag.fetch(url, '.')
   local ok, response = pcall(json.decode, body)
   if not ok then

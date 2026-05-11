@@ -8,8 +8,6 @@ type ZoteroAction = 'modify' | 'add' | 'trash' | 'delete'
 type IdleState = 'active' | 'idle'
 export type Action = 'modify' | 'delete' | 'add'
 
-type IntervalHandle = ReturnType<typeof setInterval>
-
 type IdleObserver = {
   observe: (subject: string, topic: IdleState, data: any) => void
 }
@@ -22,7 +20,8 @@ type IdleTopic = 'auto-export' | 'cache-purge'
 
 const idleService: IdleService = Components.classes['@mozilla.org/widget/useridleservice;1'].getService(Components.interfaces.nsIUserIdleService)
 
-type Reason = 'key-refresh' | 'parent-modify' | 'parent-delete' | 'parent-add' | 'tagged'
+export const REASON_KEY_SAVE = 'key-save' as const
+type Reason = typeof REASON_KEY_SAVE | 'key-refresh' | 'parent-modify' | 'parent-delete' | 'parent-add' | 'tagged'
 
 const logEvents = Zotero.Prefs.get('extensions.zotero.translators.better-bibtex.logEvents')
 
@@ -38,14 +37,12 @@ type EventMap = {
   'preference-changed': string
   'window-loaded': { win: Window; href: string }
   idle: { state: IdleState; topic: IdleTopic }
-  sync: boolean
 }
 
 class Emitter extends Emittery<EventMap> {
   private listeners: any[] = []
   public idle: Partial<Record<IdleTopic, IdleState>> = {}
   public itemObserverDelay = 5
-  public syncInProgress: boolean = Zotero?.Sync?.Runner?.syncInProgress ?? false
 
   public startup(): void {
     this.listeners.push(new WindowListener)
@@ -54,7 +51,6 @@ class Emitter extends Emittery<EventMap> {
     this.listeners.push(new CollectionListener)
     this.listeners.push(new MemberListener)
     this.listeners.push(new GroupListener)
-    this.listeners.push(new SyncListener)
   }
 
   override async emit<Name extends keyof EventMap>(eventName: Name, data?: EventMap[Name]): Promise<void> {
@@ -103,26 +99,6 @@ export const Events = new Emitter(logEvents ? { // eslint-disable-line @stylisti
   },
 } : {})
 
-class SyncListener {
-  private interval: IntervalHandle
-
-  constructor() {
-    this.interval = setInterval(() => {
-      if (typeof Zotero.Sync?.Runner?.syncInProgress === 'boolean') {
-        if (Events.syncInProgress !== Zotero.Sync.Runner.syncInProgress) {
-          void Events.emit('sync', Zotero.Sync.Runner.syncInProgress)
-          Events.syncInProgress = Zotero.Sync.Runner.syncInProgress
-          log.info(`sync ${ Events.syncInProgress ? 'started' : 'stopped' }`)
-        }
-      }
-    }, 1000)
-  }
-
-  unregister() {
-    clearInterval(this.interval)
-  }
-}
-
 class WindowListener {
   constructor() {
     Services.wm.addListener(this)
@@ -166,6 +142,12 @@ class IdleListener {
   }
 }
 
+type ExtraData = {
+  [K in string]: K extends typeof REASON_KEY_SAVE
+    ? boolean
+    : { libraryID?: number }
+}
+
 abstract class ZoteroListener {
   private id: string
 
@@ -173,7 +155,7 @@ abstract class ZoteroListener {
     this.id = Zotero.Notifier.registerObserver(this, [type], 'Better BibTeX', 1)
   }
 
-  abstract notify(action: ZoteroAction, type: string, ids: string[] | number[], extraData?: Record<number, { libraryID?: number }>): Promise<void>
+  abstract notify(action: ZoteroAction, type: string, ids: string[] | number[], extraData?: ExtraData): Promise<void>
 
   public unregister() {
     Zotero.Notifier.unregisterObserver(this.id)
@@ -192,7 +174,7 @@ class ItemListener extends ZoteroListener {
     super('item')
   }
 
-  public async notify(action: ZoteroAction, type: string, ids: number[], extraData?: Record<number, { libraryID?: number }>) {
+  public async notify(action: ZoteroAction, type: string, ids: number[], extraData?: ExtraData) {
     if (logEvents) log.info('item event:', { action, ids, extraData })
     try {
       let load = false
@@ -226,7 +208,7 @@ class ItemListener extends ZoteroListener {
 
       if (action === 'delete') {
         await Events.emit('items-removed', { itemIDs: ids })
-        if (extraData) {
+        if (extraData && typeof extraData === 'object') {
           for (const { libraryID } of Object.values(extraData)) {
             if (typeof libraryID === 'number') touched.libraries.add(libraryID)
           }
@@ -267,7 +249,10 @@ class ItemListener extends ZoteroListener {
       })
 
       await Events.emit('cache-touch', { itemIDs: ids })
-      if (items.length) await Events.emit('items-changed', { items, action })
+      if (items.length) {
+        await Events.emit('items-changed', { items, action, reason: extraData[REASON_KEY_SAVE] ? REASON_KEY_SAVE : undefined })
+      }
+
       if (parentIDs.size) {
         const parents = Zotero.Items.get([...parentIDs])
         for (const item of parents) {

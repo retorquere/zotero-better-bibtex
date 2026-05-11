@@ -126,6 +126,11 @@ export const Preference = new class PreferenceManager extends PreferenceManagerB
       Zotero.Prefs.clear(oops + key, true)
     }
 
+    try {
+      Zotero.Prefs.clear('translators.better-bibtex.autoExport.autoPinOverwrite')
+    }
+    catch {}
+
     // migrate ancient keys
     if (Zotero.Prefs.get(key = 'translators.better-bibtex.quickCopyMode') === 'orgmode_citekey') {
       Zotero.Prefs.set(key, 'orgmode')
@@ -148,7 +153,9 @@ export const Preference = new class PreferenceManager extends PreferenceManagerB
     Zotero.Prefs.clear('translators.better-bibtex.caching')
     Zotero.Prefs.clear('translators.better-bibtex.citekeyFormatBackup')
 
-    this.move('autoPin', 'autoPinDelay', old => old ? 1 : 0)
+    this.move('autoPin', 'fillKeyAfter', old => old ? 2 : 0)
+    this.move('autoPinDelay', 'fillKeyAfter', old => old as number)
+    this.move('autoPinOverwrite', 'resetKeyOnChange', old => old as boolean)
     this.move('suppressNoCase', 'importCaseProtection', old => old ? 'off' : 'as-needed')
     this.move('suppressSentenceCase', 'importSentenceCase', old => old ? 'off' : 'on+guess')
     this.move('suppressBraceProtection', 'exportBraceProtection', old => !old)
@@ -177,7 +184,7 @@ export const Preference = new class PreferenceManager extends PreferenceManagerB
     let migrated
     if (!Zotero.Prefs.get(migrated = 'translators.better-bibtex.autoPinMigrated')) {
       const autoExportDelay: number = Zotero.Prefs.get('translators.better-bibtex.autoExportDelay') as number || 0
-      if (!Zotero.Prefs.get(key = 'translators.better-bibtex.autoPin')) Zotero.Prefs.set(key, autoExportDelay > 2 ? 2 : 1)
+      if (!Zotero.Prefs.get(key = 'translators.better-bibtex.fillKeyAfter')) Zotero.Prefs.set(key, autoExportDelay > 2 ? 2 : 1)
       Zotero.Prefs.set(migrated, true)
     }
   }
@@ -228,7 +235,7 @@ export const Preference = new class PreferenceManager extends PreferenceManagerB
   }
 
   pick(keys: PreferenceName[]): Partial<$Preferences> {
-    return pick(this, keys) as Partial<$Preferences>
+    return pick(this, keys)
   }
 
   public shutdown() {

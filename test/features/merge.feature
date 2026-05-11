@@ -5,7 +5,7 @@ Feature: Merge
     Given I set preference .extraMergeCSL to true
     And I set preference .extraMergeCitekeys to true
     And I set preference .extraMergeTeX to true
-    And I set preference .autoPinDelay to 1
+    And I set preference .fillKeyAfter to 1
 
   @1221 @retries=10
   Scenario: Set IDS field when merging references with different citation keys #1221
@@ -33,7 +33,7 @@ Feature: Merge
     When I force-refresh all citation keys
     Then the library should match "merge/*-refreshed.json"
 
-  @retries=5
+  #@retries=5
   Scenario: ids field should be created in raw mode #1729
     When I import 2 references from "merge/*.json"
     And I select the item with a field that is "bardosOnsagerConjectureBounded2019"

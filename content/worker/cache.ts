@@ -117,7 +117,7 @@ export class ExportCache {
     const exportContextStore = tx.objectStore('ExportContext')
     const exportContextIndex = exportContextStore.index('translator')
     // https://github.com/MockingMagician/promised-db/issues/12
-    const contextIDs: number[] = await exportContextIndex.getAllKeys<number>(translator as never)
+    const contextIDs: number[] = await exportContextIndex.getAllKeys<number>(translator)
 
     if (contextIDs.length > 0) {
       const deletes: Promise<void>[] = []

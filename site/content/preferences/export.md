@@ -151,7 +151,7 @@ In the case of Eta templates, the selected items are available as `it.items`. `&
 Options:
 
 * LaTeX citation
-* Cite Keys
+* Citation Keys
 * Eta template
 * GitBook
 * org-ref citation
@@ -159,11 +159,11 @@ Options:
 * Org-mode citation link
 * Org-mode select link
 * Pandoc citation
-* Roam Cite Key
+* Roam Citation Key
 * RTF Scan marker
 * Zotero select link
 * Jupyter notebook
-* Jekyll cite
+* Jekyll
 
 
 #### LaTeX command

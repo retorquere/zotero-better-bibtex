@@ -1,8 +1,10 @@
 import * as client from './client'
 import { Path, File } from './file'
+import { binaries } from './path-search'
 
 import { Cache } from './translators/worker'
 import { regex as escapeRE } from './escape'
+import { readonly } from './library'
 
 import { Preference } from './prefs'
 
@@ -25,6 +27,17 @@ import { alert } from './prompt'
 import s3 from './s3.json' with { type: 'json' }
 
 const kB = 1024
+
+function basename(path: string) {
+  if (!path) return '[no path]'
+  try {
+    return Path.basename(path)
+  }
+  catch (err) {
+    log.error('basename for', JSON.stringify(path), 'failed:', err)
+    return `${path}`.replace(/.*[\\/]/, '')
+  }
+}
 
 type WizardButton = HTMLElement & { disabled: boolean }
 
@@ -139,11 +152,10 @@ class Upgrades {
     const zotero = async () => {
       show({ id: 'zotero' })
       try {
-        const release = client.isBeta ? 'beta' : 'release'
+        const channel = client.isBeta ? 'beta' : 'release'
+        const releases = JSON.parse((await Zotero.HTTP.request('GET', `https://www.zotero.org/download/client/version?channel=${channel}`, { noCache: true })).response)
         const platform = `${client.platform.replace(/lin/, 'linux')}${ { mac: '', win: '-x64', lin: '-x86_64' }[client.platform] || '' }`
-        this.zotero.upgrade = (await manifest(`https://www.zotero.org/download/client/manifests/${release}/updates-${platform}.json`))
-          .map(v => v.version as string)
-          .sort((a, b) => Services.vc.compare(b, a))[0] as string
+        this.zotero.upgrade = releases[platform]
         show(this.zotero)
       }
       catch (err) {
@@ -293,9 +305,11 @@ export class ErrorReport {
       /protocol is not allowed for attachments/,
     ].map(re => re.source).join('|'))
 
-    return logging.filter(line => !line.match(ignore))
-      .map(line => line.replace($home, '$HOME'))
-      .join('\n')
+    return this.unhome(logging.filter(line => !line.match(ignore)).join('\n'))
+  }
+
+  private unhome(logging: string): string {
+    return logging.replace($home, '$HOME')
   }
 
   private errors(): string {
@@ -545,18 +559,32 @@ export class ErrorReport {
     if (autoExports.length) {
       context += 'Auto-exports:\n'
       for (const ae of autoExports) {
-        context += `  path: ...${JSON.stringify(Path.basename(ae.path))}`
+        context += `  path: ...${JSON.stringify(basename(ae.path))} (`
         switch (ae.type) {
-          case 'collection':
-            context += ` (${ Zotero.Collections.get(ae.id)?.name || '<collection>' })`
+          case 'collection': {
+            const coll = Zotero.Collections.get(ae.id)
+            if (coll) {
+              context += coll.name || `<unnamed collection ${ae.id}>`
+            }
+            else {
+              context += `<non-existent collection ${ae.id}>`
+            }
             break
+          }
+
           case 'library': {
             const lib = Zotero.Libraries.get(ae.id)
-            context += ` (${(lib ? lib.name : '') || '<library>'})`
+            if (lib) {
+              context += lib.name || '<library>'
+              if (readonly(lib)) context += ', read-only'
+            }
+            else {
+              context += `<non-existent library ${ae.id}>`
+            }
             break
           }
         }
-        context += '\n'
+        context += ')\n'
         for (const [ k, v ] of Object.entries(ae)) {
           if (k === 'path') continue
           context += `    ${ k }: ${ JSON.stringify(v) }`
@@ -566,15 +594,22 @@ export class ErrorReport {
       }
     }
 
+    if (Object.keys(binaries()).length) {
+      context += 'Binaries:\n'
+      for (const [k, v] of Object.entries(binaries())) {
+        context += `  ${k}: ${v}\n`
+      }
+    }
+
     context += 'Libraries:\n'
     for (const lib of Zotero.Libraries.getAll()) {
-      context += `  ${JSON.stringify(lib.name)}, libraryID = ${lib.libraryID}, groupID = ${(lib as unknown as Zotero.Group).groupID ?? false}\n`
+      context += `  ${JSON.stringify(lib.name)}, libraryID = ${lib.libraryID}, groupID = ${(lib as unknown as Zotero.Group).groupID ?? false}, read-only: ${readonly(lib)}\n`
     }
 
     context += `Zotero.Debug.storing: ${ Zotero.Debug.storing }\n`
     context += `Zotero.Debug.storing at start: ${ Zotero.BetterBibTeX.debugEnabledAtStart }\n`
 
-    return context
+    return this.unhome(context)
   }
 
   public async open(items?: string): Promise<void> {

@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 
-import type { ParsedDate } from '../../content/dateparser'
+import type { RichDate } from '../../content/dateparser'
 import { Translation } from '../lib/translator'
 import type { Field } from './entry'
 
@@ -48,7 +48,7 @@ function isnumber(v) {
   return false
 }
 
-export function datefield(date: ParsedDate, field: Field, translation: Translation): Field {
+export function datefield(date: RichDate, field: Field, translation: Translation): Field {
   field = structuredClone({ ...field, value: '', enc: 'literal' })
 
   if (!date) return field

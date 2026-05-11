@@ -7,6 +7,7 @@ import { findBinary } from './path-search'
 import { log } from './logger'
 import { alert } from './prompt'
 import { getItemsAsync } from './get-items-async'
+import { strcmp } from './string-compare'
 
 import BBT from '../gen/version.cjs'
 
@@ -76,7 +77,7 @@ export const AUXScanner = new class {
 
     const itemIDs: number[] = []
     const citationKeys: string[] = []
-    for (const found of Zotero.BetterBibTeX.KeyManager.find({ libraryID, citationKey: { $in: parsed.citationKeys } })) {
+    for (const found of Zotero.BetterBibTeX.KeyManager.all(_ => _.libraryID === libraryID && parsed.citationKeys.includes(_.citationKey))) {
       itemIDs.push(found.itemID)
       citationKeys.push(found.citationKey)
     }
@@ -264,8 +265,7 @@ export const AUXScanner = new class {
     }
 
     if (missing_keys.length) {
-      const collator = new Intl.Collator('en')
-      missing_keys.sort(collator.compare.bind(collator))
+      missing_keys.sort(strcmp.base)
       let report = `<html><div><p><b>${ source } scan</b></p><p>Missing entries:</p><ul>`
       for (const citekey of missing_keys) {
         report += `<li>${ citekey.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/'/g, '&quot;').replace(/'/g, '&#039;') }</li>`

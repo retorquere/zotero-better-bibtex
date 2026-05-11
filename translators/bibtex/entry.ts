@@ -45,7 +45,7 @@ import BabelTag from '../../gen/babel/tag.json' with { type: 'json' }
 import { arXiv } from '../../content/arXiv'
 import { uri } from '../../content/escape'
 
-import { stringCompare } from '../lib/string-compare'
+import { strcmp } from '../../content/string-compare'
 import * as CSL from 'citeproc'
 
 /*
@@ -130,7 +130,7 @@ const fieldOrder = [
 }, {})
 
 function property_sort(a: [string, string, string, string], b: [string, string, string, string]): number {
-  return stringCompare(a[0], b[0])
+  return strcmp.variant(a[0], b[0])
 }
 
 const enc_creators_marker = {
@@ -164,7 +164,7 @@ export class Entry {
   public useprefix: boolean
   public language: string
   public english: boolean
-  public date: DateParser.ParsedDate | { type: 'none' }
+  public date: DateParser.RichDate | { type: 'none' }
 
   public config: Config
 
@@ -482,7 +482,8 @@ export class Entry {
 
     if (this.translation.skipField?.exec(`${ this.translation.BetterBibTeX ? 'bibtex' : 'biblatex' }.${ this.entrytype }.${ field.name }`)) return null
 
-    field.enc = field.enc || this.config.fieldEncoding[field.name] || 'literal'
+    // field.enc = field.raw ? 'raw' : (field.enc || this.config.fieldEncoding[field.name] || 'literal')
+    field.enc = field.enc || this.config.fieldEncoding[field.name] || (field.raw ? 'raw' : 'literal')
 
     if (field.enc === 'date') {
       if (!field.value) return null
@@ -566,66 +567,63 @@ export class Entry {
         field.bibtex = `${ bibstring || field.value as string }`
       }
       else {
-        let value
         switch (field.enc) {
           case 'extra':
-            value = this.enc_extra(field)
+            field.bibtex = this.enc_extra(field)
             break
 
           case 'literal_list':
-            value = this.enc_literal_list(field, { raw: this.item.raw })
+            field.bibtex = this.enc_literal_list(field, { raw: this.item.raw })
             break
 
           case 'literal':
-            value = this.enc_literal(field, { raw: this.item.raw })
+            field.bibtex = this.enc_literal(field, { raw: this.item.raw })
             break
 
           case 'raw':
-            value = this.enc_raw(field)
+            field.bibtex = this.enc_raw(field)
             break
 
           case 'url':
-            value = this.enc_url(field)
+            field.bibtex = this.enc_url(field)
             break
 
           case 'verbatim':
-            value = this.enc_verbatim(field)
+            field.bibtex = this.enc_verbatim(field)
             break
 
           case 'creators':
-            value = this.enc_creators(field, this.item.raw)
+            field.bibtex = this.enc_creators(field, this.item.raw)
             break
 
           case 'tags':
-            value = this.enc_tags(field)
+            field.bibtex = this.enc_tags(field)
             break
 
           case 'attachments':
-            value = this.enc_attachments(field)
+            field.bibtex = this.enc_attachments(field)
             break
 
           case 'minimal':
           case 'bibtex':
           case 'biblatex':
-            value = this.enc_literal(field, { raw: this.item.raw })
+            field.bibtex = this.enc_literal(field, { raw: this.item.raw })
             break
 
           default:
             throw new Error(`Unexpected field encoding: ${ JSON.stringify(field.enc) }`)
         }
 
-        if (!value) return null
+        if (!field.bibtex) return null
 
-        value = value.trim()
+        field.bibtex = field.bibtex.trim()
 
         // scrub fields of unwanted {}, but not if it's a raw field or a bare field without spaces
         if (!field.bare || (field.value as string).match(/\s/)) {
           // clean up unnecesary {} when followed by a char that safely terminates the command before
-          // value = value.replace(/({})+($|[{}$\/\\.;,])/g, '$2') // don't remove trailing {} https://github.com/retorquere/zotero-better-bibtex/issues/1091
-          value = `{${ value }}`
+          // field.bibtex = field.bibtex.replace(/({})+($|[{}$\/\\.;,])/g, '$2') // don't remove trailing {} https://github.com/retorquere/zotero-better-bibtex/issues/1091
+          field.bibtex = `{${ field.bibtex }}`
         }
-
-        field.bibtex = value
       }
     }
 
@@ -1197,7 +1195,7 @@ export class Entry {
       }
     }
 
-    return [...encoded].sort((a, b) => stringCompare(a, b)).join(',')
+    return [...encoded].sort((a, b) => strcmp.base(a, b)).join(',')
   }
 
   relPath(path) {
@@ -1269,7 +1267,7 @@ export class Entry {
     attachments.sort((a, b) => {
       if ((a.mimetype === 'text/html') && (b.mimetype !== 'text/html')) return 1
       if ((b.mimetype === 'text/html') && (a.mimetype !== 'text/html')) return -1
-      return stringCompare(a.path, b.path)
+      return strcmp.base(a.path, b.path)
     })
 
     if (this.translation.collected.preferences.jabrefFormat) {

@@ -104,7 +104,7 @@ function upgrade(root) {
           throw new Error('Must provide one of "beforebegin", "afterbegin", "beforeend", or "afterend".')
       }
 
-      const fragment = domParser.parseFromString(`<span>${ text }</span>`, 'text/html' as unknown as any).documentElement
+      const fragment = domParser.parseFromString(`<span>${ text }</span>`, 'text/html').documentElement
 
       switch (position) {
         case 'beforebegin':

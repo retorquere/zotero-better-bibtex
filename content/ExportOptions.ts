@@ -13,7 +13,7 @@ export function disable(): void {
 
 type XULWindow = Window & { bbtmonkey?: Monkey; Zotero_File_Interface_Export?: any; arguments?: any[]; sizeToContent?: () => void }
 
-Events.on('window-loaded', ({ win, href }: { win: Window; href: string }) => {
+Events.on('window-loaded', ({ data: { win, href } }: { data: { win: Window; href: string } }) => {
   if (!enabled || href !== 'chrome://zotero/content/exportOptions.xhtml') return
 
   const window: XULWindow = win

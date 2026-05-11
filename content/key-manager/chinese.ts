@@ -40,7 +40,7 @@ export const chinese = new class {
   }
 
   init() {
-    Events.on('preference-changed', pref => {
+    Events.on('preference-changed', ({ data: pref }) => {
       if (pref === 'chinese') this.load()
     })
   }

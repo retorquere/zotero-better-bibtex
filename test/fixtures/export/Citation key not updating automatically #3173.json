@@ -5,7 +5,7 @@
     "preferences": {
       "DOIandURL": "doi",
       "autoAbbrev": true,
-      "autoPinDelay": 1,
+      "fillKeyAfter": 1,
       "citekeyFormat": "auth.lower+year+shorttitle(3,3)+type.abbr(4).capitalize",
       "keyConflictPolicy": "change",
       "keyScope": "global",
