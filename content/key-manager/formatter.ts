@@ -1337,8 +1337,8 @@ export class PatternFormatter {
   }
 
   /** uppercases the first letter of each word */
-  public _capitalize(input: string): string {
-    return input.replace(/((^|\s)[a-z])/g, m => m.toUpperCase())
+  public _capitalize(input: string, wordstart = /((^|\s)[a-z])/g): string {
+    return input.replace(wordstart, m => m.toUpperCase())
   }
 
   private nopunct(text: string, dash = '-'): string {
