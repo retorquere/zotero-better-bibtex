@@ -134,7 +134,6 @@
         }
       ],
       "tags": [],
-      "relations": {},
       "dateAdded": "2026-05-16T12:19:43Z",
       "dateModified": "2026-05-16T12:19:43Z",
       "uri": "http://zotero.org/users/8230813/items/QB95TD99",
@@ -202,11 +201,6 @@
           "tag": "linguistic politics"
         }
       ],
-      "relations": {
-        "dc:relation": [
-          "http://zotero.org/local/items/Chiappini_Hauck_2007"
-        ]
-      },
       "dateAdded": "2026-05-16T12:19:43Z",
       "dateModified": "2026-05-16T12:19:43Z",
       "uri": "http://zotero.org/users/8230813/items/F6VTDDQ2",
@@ -263,11 +257,6 @@
           "tag": "Paraguay"
         }
       ],
-      "relations": {
-        "dc:relation": [
-          "http://zotero.org/local/items/Hauck_etal_2011"
-        ]
-      },
       "dateAdded": "2026-05-16T12:19:43Z",
       "dateModified": "2026-05-16T12:19:43Z",
       "uri": "http://zotero.org/users/8230813/items/PQPTTNCG",
@@ -315,11 +304,6 @@
         }
       ],
       "tags": [],
-      "relations": {
-        "dc:relation": [
-          "http://zotero.org/local/items/Severo_Buzato_2023"
-        ]
-      },
       "dateAdded": "2026-05-16T12:19:43Z",
       "dateModified": "2026-05-16T12:19:43Z",
       "uri": "http://zotero.org/users/8230813/items/TK9N9EIU",
@@ -361,7 +345,6 @@
         }
       ],
       "tags": [],
-      "relations": {},
       "dateAdded": "2026-05-16T12:19:43Z",
       "dateModified": "2026-05-16T12:19:43Z",
       "uri": "http://zotero.org/users/8230813/items/XAC4KMVJ",
@@ -396,7 +379,6 @@
         }
       ],
       "tags": [],
-      "relations": {},
       "dateAdded": "2026-05-16T12:19:43Z",
       "dateModified": "2026-05-16T12:19:43Z",
       "uri": "http://zotero.org/users/8230813/items/5SFG5KDF",
