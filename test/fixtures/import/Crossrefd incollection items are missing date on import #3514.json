@@ -1,0 +1,67 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "preferences": {
+      "automaticTags": false,
+      "baseAttachmentPath": "/Users/jdh/Documents/Academia/Library",
+      "citekeyFormat": "creatornames(\"%(F)s\", space = \"-\") + authEtAl2(creator = \"*\", initials = false, sep = \"_\") + \"_\" + year",
+      "citekeySearch": false,
+      "DOIandURL": "doi",
+      "fillKeyAfter": 1,
+      "quickCopyMode": "pandoc",
+      "warnBulkModify": 0
+    },
+    "options": {}
+  },
+  "version": {
+    "zotero": "9.0.3",
+    "bbt": "9.0.23"
+  },
+  "collections": {},
+  "items": [
+    {
+      "key": "9ZAKJ8SC",
+      "version": 11638,
+      "itemType": "bookSection",
+      "title": "A línguagem de outro jeito: naturezas linguísticas e o desafio ontológico",
+      "language": "portuguese",
+      "shortTitle": "A línguagem de outro jeito",
+      "extra": "Citation Key: Hauck_2023j\ntex.date-added: 2026-05-13 20:33:06 +0200\ntex.date-modified: 2026-05-13 20:33:06 +0200",
+      "place": "Araraquara, SP",
+      "publisher": "Letraria",
+      "ISBN": "978-65-5434-040-3",
+      "pages": "41-75",
+      "citationKey": "Hauck_2023j",
+      "creators": [
+        {
+          "firstName": "Jan David",
+          "lastName": "Hauck",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "Cristine Gorski",
+          "lastName": "Severo",
+          "creatorType": "editor"
+        },
+        {
+          "firstName": "Marcelo",
+          "lastName": "Buzato",
+          "creatorType": "editor"
+        },
+        {
+          "firstName": "Marcelo",
+          "lastName": "Buzato",
+          "creatorType": "translator"
+        }
+      ],
+      "tags": [],
+      "dateAdded": "2026-05-13T20:40:24Z",
+      "dateModified": "2026-05-13T20:40:24Z",
+      "itemID": 8545,
+      "attachments": [],
+      "notes": [],
+      "publicationTitle": "Cosmopolítica e linguagem"
+    }
+  ]
+}
