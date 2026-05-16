@@ -92,7 +92,7 @@ Feature: Import
 
     Examples:
       | file                                                                                                                    | references |
-      | Crossrefd incollection items are missing date on import #3514                                                           | undefined  |
+      | Crossrefd incollection items are missing date on import #3514                                                           | 6  |
       | Multiple attachments in calibre bibtex file not imported in Zotero #3338                                                | 1          |
       | Book imported as book section when duplicate book title field is present #3328                                          | 1          |
       | Double newlines means parbreak #2789                                                                                    | 1          |
