@@ -7,7 +7,7 @@ import { parse as arXiv } from '../../content/arXiv'
 import { Schema } from '../../content/item-schema'
 import wordsToNumbers from '@insomnia-dev/words-to-numbers'
 
-import { ParsedDate, parse as parseDate, strToISO as strToISODate, century } from '../../content/dateparser'
+import { RichDate, parse as parseDate, strToISO as strToISODate, century } from '../../content/dateparser'
 import { toEnglishOrdinal } from '../../content/text'
 
 import { parseBuffer as parsePList } from 'bplist-parser'
@@ -348,8 +348,8 @@ export async function importBibTeX(collected: Collected): Promise<void> {
   await importer.import()
 }
 
-function addDate(ref: Entry, date: ParsedDate | { type: 'none' }, verbatim: string) {
-  const print = (d: ParsedDate) => {
+function addDate(ref: Entry, date: RichDate | { type: 'none' }, verbatim: string) {
+  const print = (d: RichDate) => {
     switch (d.type) {
       case 'date':
       case 'season':
@@ -605,7 +605,7 @@ async function parseBibTeX(translation: Translation): Promise<Library> {
         case 'tex':
           return `<script>${tex}</script>`
         case 'text':
-          return node.type === 'macro' ? node.content : tex
+          return node.type === 'macro' ? node.content as string : tex
         case 'ignore':
           return ''
         default:
@@ -1116,7 +1116,7 @@ class ZoteroItem {
     for (const att of value.split(/,\s+/)) {
       const m = att.match(/^:?(?<path>.+?)(?::(?<mimeType>[a-z]+))?$/i)
       if (m) {
-        this.addAttachment(m.groups as { path: string })
+        this.addAttachment(m.groups)
       }
       else {
         this.addAttachment({ path: att })
@@ -1447,7 +1447,7 @@ class ZoteroItem {
       // 'assignee' is not a creator field for Zotero
       if (type === 'holder' && this.item.itemType === 'patent') continue
 
-      const creators: Creator[] = this.bibtex.fields[type] as unknown as Creator[]
+      const creators = this.bibtex.fields[type] as unknown as Creator[]
 
       let creatorType = creatorTypeMap[`${ this.item.itemType }.${ type }`] || creatorTypeMap[type]
       if (creatorType === 'author') creatorType = [ 'director', 'inventor', 'programmer', 'author' ].find(t => creatorsForType.includes(t))

@@ -44,7 +44,7 @@ function shortLabel(label: string, options): string {
     section: 'sec.',
     subsection: 'subsec.',
     Section: 'Sec.',
-    'sub verbo': 'sv.',
+    'sub-verbo': 'sv.',
     schedule: 'sch.',
     title: 'tit.',
     verse: 'vrs.',
@@ -175,13 +175,17 @@ export const Formatter = new class {
 
   public async pandoc(citations, options) {
     const formatted = []
+    function locator(n) {
+      if (typeof n === 'number' || n.match(/^\d+$/)) return n
+      return n ? `{${n}}` : ''
+    }
     for (const citation of citations) {
       let cite = ''
-      if (citation.prefix) cite += `${ citation.prefix } `
+      if (citation.prefix) cite += `${citation.prefix} `
       if (citation.suppressAuthor) cite += '-'
       cite += `@${ citation.citationKey }`
-      if (citation.locator) cite += `, ${ shortLabel(citation.label, options) } ${ citation.locator }`.replace(/\s+/, ' ')
-      if (citation.suffix) cite += ` ${ citation.suffix }`
+      if (citation.locator) cite += `, ${shortLabel(citation.label, options)} ${locator(citation.locator)}`.replace(/\s+/, ' ')
+      if (citation.suffix) cite += ` ${citation.suffix}`
       formatted.push(cite)
     }
 

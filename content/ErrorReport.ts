@@ -1,5 +1,6 @@
 import * as client from './client'
 import { Path, File } from './file'
+import { binaries } from './path-search'
 
 import { Cache } from './translators/worker'
 import { regex as escapeRE } from './escape'
@@ -151,11 +152,10 @@ class Upgrades {
     const zotero = async () => {
       show({ id: 'zotero' })
       try {
-        const release = client.isBeta ? 'beta' : 'release'
+        const channel = client.isBeta ? 'beta' : 'release'
+        const releases = JSON.parse((await Zotero.HTTP.request('GET', `https://www.zotero.org/download/client/version?channel=${channel}`, { noCache: true })).response)
         const platform = `${client.platform.replace(/lin/, 'linux')}${ { mac: '', win: '-x64', lin: '-x86_64' }[client.platform] || '' }`
-        this.zotero.upgrade = (await manifest(`https://www.zotero.org/download/client/manifests/${release}/updates-${platform}.json`))
-          .map(v => v.version as string)
-          .sort((a, b) => Services.vc.compare(b, a))[0] as string
+        this.zotero.upgrade = releases[platform]
         show(this.zotero)
       }
       catch (err) {
@@ -305,9 +305,11 @@ export class ErrorReport {
       /protocol is not allowed for attachments/,
     ].map(re => re.source).join('|'))
 
-    return logging.filter(line => !line.match(ignore))
-      .map(line => line.replace($home, '$HOME'))
-      .join('\n')
+    return this.unhome(logging.filter(line => !line.match(ignore)).join('\n'))
+  }
+
+  private unhome(logging: string): string {
+    return logging.replace($home, '$HOME')
   }
 
   private errors(): string {
@@ -592,6 +594,13 @@ export class ErrorReport {
       }
     }
 
+    if (Object.keys(binaries()).length) {
+      context += 'Binaries:\n'
+      for (const [k, v] of Object.entries(binaries())) {
+        context += `  ${k}: ${v}\n`
+      }
+    }
+
     context += 'Libraries:\n'
     for (const lib of Zotero.Libraries.getAll()) {
       context += `  ${JSON.stringify(lib.name)}, libraryID = ${lib.libraryID}, groupID = ${(lib as unknown as Zotero.Group).groupID ?? false}, read-only: ${readonly(lib)}\n`
@@ -600,7 +609,7 @@ export class ErrorReport {
     context += `Zotero.Debug.storing: ${ Zotero.Debug.storing }\n`
     context += `Zotero.Debug.storing at start: ${ Zotero.BetterBibTeX.debugEnabledAtStart }\n`
 
-    return context
+    return this.unhome(context)
   }
 
   public async open(items?: string): Promise<void> {

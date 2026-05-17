@@ -1,6 +1,6 @@
 import { Translation } from '../lib/translator'
 
-import { stringCompare } from '../lib/string-compare'
+import { strcmp } from '../../content/string-compare'
 
 export class JabRef {
   public citekeys: Map<number, string>
@@ -28,7 +28,7 @@ export class JabRef {
 
     this.groups = ['0 AllEntriesGroup:']
     const collections = Object.values(this.translation.collections).filter(coll => !coll.parent)
-    if (this.translation.collected.preferences.testing) collections.sort((a, b) => stringCompare(a.name, b.name))
+    if (this.translation.collected.preferences.testing) collections.sort((a, b) => strcmp.variant(a.name, b.name))
     for (const collection of collections) {
       this.exportGroup(collection, 1)
     }
@@ -62,7 +62,7 @@ export class JabRef {
 
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     const children = (collection.collections || []).map(key => this.translation.collections[key]).filter(coll => coll)
-    if (this.translation.collected.preferences.testing) children.sort((a, b) => stringCompare(a.name, b.name))
+    if (this.translation.collected.preferences.testing) children.sort((a, b) => strcmp.base(a.name, b.name))
     for (const child of children) {
       this.exportGroup(child, level + 1)
     }

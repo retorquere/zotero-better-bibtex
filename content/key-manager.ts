@@ -8,7 +8,7 @@ import { chinese } from './key-manager/chinese'
 import { Scheduler } from './scheduler'
 import { log } from './logger'
 import { flash } from './flash'
-import { Events } from './events'
+import { Events, REASON_KEY_SAVE } from './events'
 import { fetchAsync as fetchInspireHEP } from './inspire-hep'
 import { excelColumn, sentenceCase } from './text'
 import * as Extra from './extra'
@@ -27,19 +27,52 @@ import { sprintf } from 'sprintf-js'
 import * as l10n from './l10n'
 
 import { migrate } from './key-manager/migrate'
+import { readonly } from './library'
+import { strcmp } from './string-compare'
+
+function scrub(q: string): string {
+  return q.replace(/\n/g, ' ').trim()
+}
+const sql = {
+  missing: scrub(`
+    SELECT item.itemID
+    FROM items item
+    JOIN libraries lib ON item.libraryID = lib.libraryID
+    LEFT JOIN itemData id ON item.itemID = id.itemID AND id.fieldID = (SELECT fieldID FROM fields WHERE fieldName = 'citationKey')
+    LEFT JOIN itemDataValues idv ON id.valueID = idv.valueID
+    WHERE
+      lib.editable = 1
+      AND (id.itemID IS NULL OR idv.value = '')
+      AND item.itemID NOT IN (SELECT itemID FROM deletedItems)
+      AND item.itemID NOT IN (SELECT itemID FROM feedItems)
+      AND item.itemTypeID NOT IN (SELECT itemTypeID FROM itemTypes WHERE typeName IN ('attachment', 'note', 'annotation'))
+  `),
+  load: scrub(`
+    SELECT item.itemID, item.key AS itemKey, item.libraryID, idv.value AS citationKey
+    FROM items item
+    JOIN itemData id ON item.itemID = id.itemID
+    JOIN fields f ON id.fieldID = f.fieldID AND f.fieldName = 'citationKey'
+    JOIN itemDataValues idv ON id.valueID = idv.valueID
+    WHERE item.itemID NOT IN (SELECT itemID FROM deletedItems)
+      AND item.itemID NOT IN (SELECT itemID FROM feedItems)
+      AND item.itemTypeID NOT IN (SELECT itemTypeID FROM itemTypes WHERE typeName IN ('attachment', 'note', 'annotation'))
+  `),
+}
 
 export type CitekeyRecord = {
   itemID: number
   libraryID: number
   itemKey: string
   citationKey: string
-  lcCitationKey: string
 }
 
-type Predicate<T> = (item: T) => boolean
-
-function lc(record: Partial<CitekeyRecord>): CitekeyRecord {
-  return Object.assign(record, { lcCitationKey: record.citationKey.toLowerCase() }) as CitekeyRecord
+function copy(k: CitekeyRecord): CitekeyRecord {
+  return {
+    itemID: k.itemID,
+    libraryID: k.libraryID,
+    itemKey: k.itemKey,
+    citationKey: k.citationKey,
+  }
 }
 
 class Progress {
@@ -73,22 +106,57 @@ class Progress {
   }
 }
 
+import { Predicate, TrackedMap } from './object'
+
+class Keys extends TrackedMap<number, CitekeyRecord> {
+  #timer: ReturnType<typeof setInterval>
+
+  public get path() {
+    return PathUtils.join(Zotero.BetterBibTeX.dir, 'read-only.json')
+  }
+
+  public async load(): Promise<void> {
+    try {
+      if (await IOUtils.exists(this.path)) {
+        for (const v of await IOUtils.readJSON(this.path)) {
+          if (v.citationKey) this.set(v.itemID, copy(v))
+        }
+      }
+    }
+    catch (err) {
+      log.error('failed to load read-only keys', err)
+    }
+
+    for (const { itemID, itemKey, libraryID, citationKey } of await Zotero.DB.queryAsync(sql.load)) {
+      this.set(itemID, copy({ itemID, itemKey, libraryID, citationKey }))
+    }
+    this.resetDirty()
+
+    this.#timer = setInterval(() => { void this.save() }, 10000)
+  }
+
+  public async save(): Promise<void> {
+    if (this.isDirty) {
+      const mem: Map<number, boolean> = new Map
+      await IOUtils.writeJSON(this.path, this.values(_ => readonly(_.libraryID, mem)))
+      this.resetDirty()
+    }
+  }
+
+  public async flush(): Promise<void> { // eslint-disable-line @typescript-eslint/require-await
+    // await this.save()
+    if (typeof this.#timer !== 'undefined') {
+      clearInterval(this.#timer)
+      this.#timer = undefined
+    }
+  }
+}
+
 export const KeyManager = new class _KeyManager {
-  #keys: Map<number, CitekeyRecord> = new Map
+  #keys = new Keys
   public started = false
 
   public autofill: Scheduler<number> = new Scheduler<number>('fillKeyAfter', 1000)
-
-  /*
-  private getField(item: { getField: ((str: string) => string) }, field: string): string {
-    try {
-      return item.getField(field) || ''
-    }
-    catch {
-      return ''
-    }
-  }
-  */
 
   public async pin(ids: 'selected' | number | number[]): Promise<void> {
     await this.fill(ids, { warn: true })
@@ -99,7 +167,7 @@ export const KeyManager = new class _KeyManager {
       const citationKey = item.getField('citationKey')
       if (citationKey) {
         const { extra } = Extra.citationKey(item.getField('extra'))
-        item.setField('extra', `${citationKey}\n${extra}`.trim())
+        item.setField('extra', `Citation Key: ${citationKey}\n${extra}`.trim())
         await item.saveTx({ skipDateModifiedUpdate: true })
         await Zotero.Promise.delay(10)
       }
@@ -145,7 +213,12 @@ export const KeyManager = new class _KeyManager {
 
     const progress: Progress = items.length > 10 ? new Progress(items.length, 'Refreshing citation keys') : null
     for (const item of items) {
-      const citationKey = this.update(item, { replace, inspireHEP: inspireHEP ? (await fetchInspireHEP(item)) || '' : undefined }).getField('citationKey')
+      if (!this.update(item, { replace, inspireHEP: inspireHEP ? (await fetchInspireHEP(item)) || '' : undefined })) {
+        this.store(item)
+        continue
+      }
+
+      const citationKey = item.getField('citationKey')
       if (!citationKey) continue
 
       // remove the new citekey from the aliases if present
@@ -184,6 +257,9 @@ export const KeyManager = new class _KeyManager {
 
         await this.start()
       },
+      shutdown: async () => {
+        await this.#keys.flush()
+      },
     })
   }
 
@@ -193,44 +269,41 @@ export const KeyManager = new class _KeyManager {
     }
   }
 
-  private upsert(item): void {
-    const citationKey = item.getField('citationKey') || ''
-
-    if (!citationKey) {
-      this.clear([item.id])
-      return
+  private store(item, citationKey?: string) {
+    try {
+      citationKey ??= item.getField('citationKey')
+    }
+    catch (err) {
+      log.error('could not get citation key from item:', err)
+      citationKey = ''
     }
 
-    const record = this.#keys.get(item.id)
-    if (record) {
-      record.citationKey = citationKey
-    }
-    else {
-      this.#keys.set(item.id, lc({
+    if (citationKey) {
+      this.#keys.set(item.id, copy({
         itemID: item.id,
         itemKey: item.key,
         libraryID: item.libraryID,
         citationKey,
       }))
     }
+    else {
+      this.#keys.delete(item.id)
+    }
   }
 
   private async start(): Promise<void> {
     await migrate()
+    await this.#keys.load()
 
-    const load = `
-      SELECT item.itemID, item.key AS itemKey, item.libraryID, idv.value AS citationKey
-      FROM items item
-      JOIN itemData id ON item.itemID = id.itemID
-      JOIN fields f ON id.fieldID = f.fieldID AND f.fieldName = 'citationKey'
-      JOIN itemDataValues idv ON id.valueID = idv.valueID
-      WHERE item.itemID NOT IN (SELECT itemID FROM deletedItems)
-        AND item.itemTypeID NOT IN (SELECT itemTypeID FROM itemTypes WHERE typeName IN ('attachment', 'note', 'annotation'))
-        AND item.itemID NOT IN (SELECT itemID FROM feedItems)
-      `.replace(/\n/g, ' ').trim()
-
-    for (const { itemID, itemKey, libraryID, citationKey } of await Zotero.DB.queryAsync(load)) {
-      this.#keys.set(itemID, lc({ itemID, itemKey, libraryID, citationKey }))
+    if (Preference.fillKeyAfter) {
+      const missing: number[] = await Zotero.DB.columnQueryAsync(sql.missing)
+      if (missing.length) {
+        void Zotero.DB.executeTransaction(async () => {
+          for (const item of await Zotero.Items.getAsync(missing)) {
+            await this.update(item)?.save({ skipDateModifiedUpdate: true })
+          }
+        })
+      }
     }
 
     Events.on('preference-changed', ({ data: pref }) => {
@@ -252,21 +325,28 @@ export const KeyManager = new class _KeyManager {
 
     Events.on('items-changed', ({ data: { items, action, reason } }) => {
       log.info('items-changed', { reason })
-      if (reason?.startsWith('parent-') || reason === 'tagged') return
+      if (reason?.startsWith('parent-') || reason === 'tagged' || reason === REASON_KEY_SAVE) return
 
       let warn_titlecase = 0 // should not be here
 
       // why do deleted items keep showing up here?
       items = items.filter(item => {
         if (item.deleted || !item.isRegularItem() || item.isFeedItem) {
-          this.clear([item.id])
+          this.#keys.delete(item.id)
           return false
         }
         return true
       })
 
       const update = (item: Zotero.Item) => {
-        this.update(item, { replace: Preference.resetKeyOnChange }).saveTx({ skipDateModifiedUpdate: true }).catch(err => log.error('failed to update', item.id, ':', err))
+        if (this.update(item, { replace: Preference.resetKeyOnChange })) {
+          item
+            .saveTx({ skipDateModifiedUpdate: true, notifierData: { [REASON_KEY_SAVE]: true } })
+            .catch(err => log.error('failed to update', item.id, ':', err))
+        }
+        else {
+          this.store(item)
+        }
       }
       for (const item of items) {
         if (Preference.testing) { // race condition for key assignment otherwise
@@ -277,6 +357,7 @@ export const KeyManager = new class _KeyManager {
             update(item)
           })
         }
+        if (!item.getField('citationKey')) this.#keys.delete(item.id)
 
         if (Preference.warnTitleCased) {
           const title = item.getField('title')
@@ -297,37 +378,22 @@ export const KeyManager = new class _KeyManager {
   }
 
   public update(item: Zotero.Item, { replace = false, inspireHEP = undefined }: { replace?: boolean; inspireHEP?: string } = {}): Zotero.Item {
-    if (item.isFeedItem || !item.isRegularItem()) return item
+    if (item.isFeedItem || !item.isRegularItem()) return null
 
-    if (typeof inspireHEP === 'string' && !inspireHEP) return item
+    if (typeof inspireHEP === 'string' && !inspireHEP) return null
 
-    do {
-      const current = item.getField('citationKey')
-      if (current && !replace) break
+    const current = item.getField('citationKey')
+    if (current && !replace) return null
 
-      const proposed = inspireHEP || this.propose(item)
-      if (proposed === current) break
+    const proposed = inspireHEP || this.propose(item)
+    if (!proposed || proposed === current) return null
 
-      item.setField('citationKey', proposed)
-    } while (false) // eslint-disable-line no-constant-condition
+    this.store(item, proposed)
 
-    this.upsert(item)
+    if (readonly(item.libraryID)) return null
+
+    item.setField('citationKey', proposed)
     return item
-  }
-
-  public readonly(item: Zotero.Item): string {
-    if (item.isFeedItem || !item.isRegularItem()) return ''
-    const key = this.#keys.get(item.id)
-    if (key) return key.citationKey
-    const proposed = this.propose(item)
-    if (!proposed) return ''
-    this.#keys.set(item.id, lc({
-      itemID: item.id,
-      itemKey: item.key,
-      libraryID: item.libraryID,
-      citationKey: proposed,
-    }))
-    return proposed
   }
 
   public get(itemID: number): CitekeyRecord {
@@ -343,12 +409,9 @@ export const KeyManager = new class _KeyManager {
   }
 
   public all(query?: Predicate<CitekeyRecord>): CitekeyRecord[] {
-    if (!query) {
-      return [...this.#keys.values()]
-    }
-    else {
-      return [...this.#keys.values()].filter(query)
-    }
+    if (!query) return this.#keys.values()
+
+    return this.#keys.values().filter(query)
   }
 
   // mem is for https://github.com/retorquere/zotero-better-bibtex/issues/2926
@@ -357,21 +420,23 @@ export const KeyManager = new class _KeyManager {
 
     const caseInsensitive = Preference.citekeyCaseInsensitive
     const keyscopeGlobal = Preference.keyScope === 'global'
-    const citekeyField = caseInsensitive ? 'lcCitationKey' : 'citationKey'
     const libraryID = item.libraryID
     const itemID = item.id
 
+    const different = strcmp[caseInsensitive ? 'base' : 'variant']
+
     const seen: Set<string> = new Set
     let candidate: string
-    let candidateMatch: string
 
     function conflict(key: CitekeyRecord): boolean {
-      return (keyscopeGlobal || (key.libraryID === libraryID)) && key[citekeyField] === candidateMatch && key.itemID !== itemID
+      return (keyscopeGlobal || (key.libraryID === libraryID))
+        && key.itemID !== itemID
+        && !different(key.citationKey, candidate)
     }
 
     // eslint-disable-next-line no-constant-condition
     for (let n = Formatter.postfix.offset; true; n += 1) {
-      candidateMatch = candidate = citationKey.replace(Formatter.postfix.marker, () => {
+      candidate = citationKey.replace(Formatter.postfix.marker, () => {
         let postfix = ''
         if (n) {
           const alpha = excelColumn(n)
@@ -382,7 +447,6 @@ export const KeyManager = new class _KeyManager {
         seen.add(postfix)
         return postfix
       })
-      if (caseInsensitive) candidateMatch = candidateMatch.toLowerCase()
 
       if (this.any(conflict)) continue
       if (mem) {

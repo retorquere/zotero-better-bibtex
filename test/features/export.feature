@@ -12,6 +12,11 @@ Feature: Export
 
     Examples:
       | file                                                                                                                     | references |
+      | Trouble with extra() function in citekey generator #3505                                                                 | 1          |
+      | Citation key pulling in full date field rather than just year #3500                                                      | 1          |
+      | tex.pages= in Extra field not exporting as LaTeX, Language = de exporting as german, not ngerman #3472                   | 1          |
+      | authIni Not Working with n = 0 #3479                                                                                     | 1          |
+      | Better BibLaTeX exports native eventPlace for conferencePaper #3486                                                      | 1          |
       | tex.title= is not copied verbatim if Zotero title contains math #3376                                                    | 2          |
       | Original Date not working with Citation Key (anymore) #3392                                                              | 1          |
       | Issue getting shortjournal #3382                                                                                         | 1          |
@@ -363,6 +368,15 @@ Feature: Export
     Examples:
       | Export library to Better CSL JSONYAML failed when standard items included. #2212 | 1 |
 
+  @csl @timeout=3000
+  Scenario Outline: Export <references> references for CSL-YAML to <file>
+    When I import <references> references from "export/<file>.json"
+    Then an export using "Better CSL YAML" should match "export/*.csl.yml"
+
+    Examples:
+      | file                                        | references |
+      | Export year ranges from Original Date #3482 | 1          |
+
   Scenario: Journal acronym from acronyms list not used in generated citation key #2634
     And I install "export/*.csv" in the better bibtex directory as "acronyms.csv"
     And I import 1 reference from "export/*.json"
@@ -438,7 +452,7 @@ Feature: Export
     And I pick "Commonwealth" for CAYW
       | volume | <1> |
       | prefix | see |
-    Then the picks for "pandoc" should be "@bentley_academic_2011, p. 1; @pollard_bicycle_2007, ch. 1; see @kartinyeri, sec. 5 et passim; see @kartinyeri, vol. <1>"
+    Then the picks for "pandoc" should be "@bentley_academic_2011, p. 1; @pollard_bicycle_2007, ch. 1; see @kartinyeri, sec. 5 et passim; see @kartinyeri, vol. {<1>}"
     And the picks for "mmd" should be "[#bentley_academic_2011][][#pollard_bicycle_2007][][see][#kartinyeri][see][#kartinyeri]"
     And the picks for "latex" should be "\cite[1]{bentley_academic_2011}\cite[ch. 1]{pollard_bicycle_2007}\cite[see][sec. 5, et passim]{kartinyeri}\cite[see][vol. $<$1$>$]{kartinyeri}"
     # And the picks for "scannable-cite" should be "{ | Abram, 2014 | p. 1 | | zu:0:ITEMKEY }{ | Pollard, & Bray, 2007 | ch. 1 | | zu:0:ITEMKEY }"

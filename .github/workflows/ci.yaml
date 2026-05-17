@@ -24,7 +24,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v4
+      uses: actions/checkout@v6
       with:
         persist-credentials: false
         fetch-depth: 1
@@ -33,7 +33,7 @@ jobs:
     - name: get package version
       run: echo "version="`jq -r .version package.json` >> $GITHUB_ENV
     - name: install python
-      uses: actions/setup-python@v5
+      uses: actions/setup-python@v6
       with:
         python-version: '3.12'
         cache: pip
@@ -43,9 +43,9 @@ jobs:
         pip install packaging xvfbwrapper
         pip install -r requirements.txt
     - name: install node
-      uses: actions/setup-node@v4
+      uses: actions/setup-node@v6
       with:
-        node-version: 20.x
+        node-version: 24.x
     - name: install node packages
       run: npm install --no-package-lock && npm ls
     - name: set slow/beta/legacy/whopper flags
@@ -75,7 +75,7 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     - name: store build artifacts
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v7
       with:
         name: build-artifacts
         path: |
@@ -87,17 +87,18 @@ jobs:
   site:
     runs-on: ubuntu-latest
     continue-on-error: true
-    if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+    if: github.event_name == 'push' && github.ref == 'refs/heads/master' && 
+      !contains(github.event.head_commit.message, '[tagged build]')
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v4
+      uses: actions/checkout@v6
       with:
         persist-credentials: false
         fetch-depth: 1
         submodules: recursive
 
     - name: install python
-      uses: actions/setup-python@v5
+      uses: actions/setup-python@v6
       with:
         python-version: '3.12'
         cache: pip
@@ -107,16 +108,24 @@ jobs:
         pip install packaging xvfbwrapper
         pip install -r requirements.txt
     - name: install node
-      uses: actions/setup-node@v4
+      uses: actions/setup-node@v6
       with:
-        node-version: 20.x
+        node-version: 24.x
     - name: install node packages
       run: npm install --no-package-lock && npm ls
-    - name: install hugo 0.143.1 and build site
-      uses: peaceiris/actions-hugo@v3
-      with:
-        hugo-version: 0.143.1
-        extended: true
+    - name: Install Latest Hugo
+      run: |
+        python3 -c '
+        import urllib.request, json
+        with urllib.request.urlopen("https://api.github.com/repos/gohugoio/hugo/releases/latest") as r:
+          assets = json.loads(r.read())["assets"]
+        target = next(a["browser_download_url"] for a in assets if all(x in a["name"] for x in ["hugo_extended", "linux-amd64", ".tar.gz"]))
+        print(f"Downloading {target}...")
+        urllib.request.urlretrieve(target, "hugo.tar.gz")
+        '
+        tar -xzf hugo.tar.gz hugo
+        sudo mv hugo /usr/local/bin/
+        hugo version
     - name: prepare docs for deploy
       run: npm run docs:deploy
     - name: deploy site
@@ -138,7 +147,7 @@ jobs:
         worker: [--worker, --no-worker]
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v4
+      uses: actions/checkout@v6
       with:
         persist-credentials: false
         fetch-depth: 1
@@ -149,7 +158,7 @@ jobs:
       with:
         name: build-artifacts
     - name: install python
-      uses: actions/setup-python@v5
+      uses: actions/setup-python@v6
       with:
         python-version: '3.12'
         cache: pip
@@ -172,11 +181,11 @@ jobs:
         curl -sL https://raw.githubusercontent.com/retorquere/zotero-deb/master/install.sh | sudo bash
         sudo apt-get update
         sudo apt-get install ${{ matrix.client }}
-        sudo apt-get install mesa-utils xvfb
+        sudo apt-get install mesa-utils xvfb libegl1 libgl1 libdbus-glib-1-2
         sudo apt-get install wmctrl xdotool
-        curl -LO https://github.com/jgm/pandoc/releases/download/3.1.11.1/pandoc-3.1.11.1-linux-amd64.tar.gz
-        tar xvzf pandoc-3.1.11.1-linux-amd64.tar.gz
-        sudo mv pandoc-3.1.11.1/bin/pandoc /usr/bin
+        curl -s https://api.github.com/repos/jgm/pandoc/releases/latest | jq -r '.assets[] | select(.name | endswith("linux-amd64.tar.gz")) | .browser_download_url' | xargs wget -q -O pandoc.tar.gz
+        tar xvzf pandoc.tar.gz
+        sudo mv pandoc*/bin/pandoc /usr/bin
         pandoc -v
 
         # preserve log hierarchy
@@ -232,7 +241,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v4
+      uses: actions/checkout@v6
       with:
         persist-credentials: false
         fetch-depth: 1
@@ -244,7 +253,7 @@ jobs:
       with:
         name: build-artifacts
     - name: install python
-      uses: actions/setup-python@v5
+      uses: actions/setup-python@v6
       with:
         python-version: '3.12'
         cache: pip
@@ -254,9 +263,9 @@ jobs:
         pip install packaging xvfbwrapper
         pip install -r requirements.txt
     - name: install node
-      uses: actions/setup-node@v4
+      uses: actions/setup-node@v6
       with:
-        node-version: 20.x
+        node-version: 24.x
     - name: install node packages
       run: npm install --no-package-lock && npm ls
 
@@ -278,21 +287,22 @@ jobs:
           }
 
   durations:
-    if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+    if: github.event_name == 'push' && github.ref == 'refs/heads/master' && 
+      !contains(github.event.head_commit.message, '[tagged build]')
     needs:
     - build
     - test
     runs-on: ubuntu-latest
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v4
+      uses: actions/checkout@v6
       with:
         persist-credentials: false
         fetch-depth: 1
         submodules: recursive
 
     - name: install python
-      uses: actions/setup-python@v5
+      uses: actions/setup-python@v6
       with:
         python-version: '3.12'
         cache: pip

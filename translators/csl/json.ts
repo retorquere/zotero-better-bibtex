@@ -1,11 +1,11 @@
 import { Translation } from '../lib/translator'
 import type { Collected } from '../lib/collect'
 
-import { ParsedDate, century } from '../../content/dateparser'
+import { RichDate, century } from '../../content/dateparser'
 import { CSLExporter } from './csl'
 import { Date as CSLDate, Data as CSLItem, LooseNumber } from 'csl-json'
 
-function date2csl(date: ParsedDate): [LooseNumber, LooseNumber?, LooseNumber?] {
+function date2csl(date: RichDate): [LooseNumber, LooseNumber?, LooseNumber?] {
   let csl
   switch (date.type) {
     case 'open':
@@ -25,13 +25,14 @@ function date2csl(date: ParsedDate): [LooseNumber, LooseNumber?, LooseNumber?] {
       // https://github.com/retorquere/zotero-better-bibtex/issues/860
       return [ `${ date.year > 0 ? date.year : date.year - 1 }`, date.season + 12 ]
 
-    default:
-      throw new Error(`Expected date or open, got ${ date.type }`)
+    case 'century':
+      return date2csl({ type: 'date', year: date.century * 100 + 1 })
   }
+  throw new Error(`Expected date or open, got ${ date.type }`)
 }
 
 class Exporter extends CSLExporter {
-  public date2CSL(date: ParsedDate): CSLDate {
+  public date2CSL(date: RichDate): CSLDate {
     switch (date.type) {
       case 'date':
       case 'open':
@@ -40,11 +41,12 @@ class Exporter extends CSLExporter {
           circa: (date.approximate || date.uncertain) ? true : undefined,
         }
 
-      case 'interval':
+      case 'interval': {
         return {
           'date-parts': [ date2csl(date.from), date2csl(date.to) ],
-          circa: (date.from.approximate || date.from.uncertain || date.to.approximate || date.to.uncertain) ? true : undefined,
+          circa: (date.from.approximate || date.from.uncertain || date.to.approximate || date.to.uncertain || (date.from.type === 'century' && date.to.type === 'open')) ? true : undefined,
         }
+      }
 
       case 'verbatim':
         return { literal: date.verbatim }

@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-unsafe-return, @typescript-eslint/no-empty-function, no-restricted-syntax */
 
 import * as client from './client'
+import $stringify from 'safe-stable-stringify'
 
 declare const dump: (msg: string) => void
 
@@ -30,14 +31,8 @@ function stringifyError(obj) {
   return ''
 }
 
-function replacer() {
-  const seen = new WeakSet
-  return (key, value) => {
-    if (typeof value === 'object' && value !== null) {
-      if (seen.has(value)) return '[Circular]'
-      seen.add(value)
-    }
-
+function replacer(key, value) {
+  try {
     if (value === null) return value
     if (value instanceof Set) return [...value]
     if (value instanceof Map) return Object.fromEntries(value)
@@ -57,15 +52,16 @@ function replacer() {
     }
 
     if (value.openDialog || value.querySelector) return value.toString() // window/document
-
-    return '{object}'
   }
+  catch (err) {
+    return `{serialization error: ${err.message}}`
+  }
+
+  return '{unknown object}'
 }
 
 export function stringify(obj: any): string {
-  const stringified = JSON.stringify(obj, replacer())
-  return stringified
-  // return stringified.length > 20 ? JSON.stringify(JSON.parse(stringified), null, 2) : stringified
+  return $stringify(obj, replacer)
 }
 
 function to_s(obj: any): string {
@@ -73,7 +69,7 @@ function to_s(obj: any): string {
   return stringify(obj)
 }
 
-export function print(strings: string[], ...expressions: any[]) {
+export function print(strings: TemplateStringsArray, ...expressions: any[]) {
   let err: string
   let prefix = ''
   // acc will initially be the lead string
@@ -101,11 +97,11 @@ export const log = new class {
   }
 
   public info(...msg): void {
-    Zotero.debug(`${this.#prefix()}${format(...msg)}\n`)
+    Zotero.debug(`${this.#prefix()}${format(...msg)}\n`, 1)
   }
 
   public error(...msg): void {
-    Zotero.debug(`${this.#prefix(true)}${format(...msg)}\n`)
+    Zotero.debug(`${this.#prefix(true)}${format(...msg)}\n`, 1)
   }
 
   public dump(msg: string, error?: Error): void {

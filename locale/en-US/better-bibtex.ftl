@@ -454,4 +454,3 @@ better-bibtex_zotero-pane_tex-studio =
   .label = Push entries to TeXstudio
 
 betterbibtex-item-pane-header = { -citation-key }
-

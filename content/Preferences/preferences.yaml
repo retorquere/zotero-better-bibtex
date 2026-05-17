@@ -544,7 +544,7 @@ postscriptOverride:
     You can use a custom postscript per export directory:
 
 
-    1. Edit the hidden preference `postscriptOverride`, and set it to a filename
+    1. Edit the hidden preference `extensions.zotero.translators.better-bibtex.postscriptOverride`, and set it to a filename
     like `postscript.js`
 
     2. In the directory where you intend to export to, create a file called
@@ -562,7 +562,7 @@ preferencesOverride:
     You can use custom preferences per export directory:
 
 
-    1. Edit the hidden preference `preferencesOverride`, and set it to a
+    1. Edit the hidden preference `extensions.zotero.translators.better-bibtex.preferencesOverride`, and set it to a
     filename like `preferences.json`
 
     2. In the directory where you intend to export to, create a file called
@@ -584,7 +584,7 @@ stringsOverride:
     You can use a custom @string list per export directory:
 
 
-    1. Edit the hidden preference `stringstOverride`, and set it to a filename
+    1. Edit the hidden preference `extensions.zotero.translators.better-bibtex.stringstOverride`, and set it to a filename
     like `strings.bib`
 
     2. In the directory where you intend to export to, create a file called

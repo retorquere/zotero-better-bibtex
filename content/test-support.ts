@@ -41,11 +41,14 @@ export class TestSupport {
   }
 
   public async fill(): Promise<void> {
+    log.info('filling citation keys')
     await Zotero.DB.executeTransaction(async () => {
       for (const item of await Zotero.Items.getAll(Zotero.Libraries.userLibraryID)) {
         if (item.isFeedItem || !item.isRegularItem()) continue
         if (item.getField('citationKey')) continue
-        await Zotero.BetterBibTeX.KeyManager.update(item).save()
+        log.info('filling', item.id)
+        await Zotero.BetterBibTeX.KeyManager.update(item)?.save({ skipDateModifiedUpdate: true })
+        log.info('filled', item.id)
       }
     })
   }

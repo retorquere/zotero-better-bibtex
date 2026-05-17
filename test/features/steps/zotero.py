@@ -462,7 +462,7 @@ class Zotero:
     self.config.timeout = 2
     with benchmark(f'starting {self.client}') as bm:
       posted = False
-      for _ in redo.retrier(attempts=120,sleeptime=1):
+      for _ in redo.retrier(attempts=10,sleeptime=5):
         utils.print('connecting... (%.2fs)' % (bm.elapsed,))
 
         try:
