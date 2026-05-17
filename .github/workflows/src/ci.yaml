@@ -137,7 +137,7 @@ jobs:
     steps:
     - *checkout
     - name: fetch build artifacts
-      uses: actions/download-artifact@v4
+      uses: actions/download-artifact@v8
       with:
         name: build-artifacts
     - *install_python
@@ -212,7 +212,7 @@ jobs:
     - *checkout
 
     - name: fetch build artifacts
-      uses: actions/download-artifact@v4
+      uses: actions/download-artifact@v8
       with:
         name: build-artifacts
     - *install_python
@@ -248,7 +248,7 @@ jobs:
     - *install_python
     - *install_python_packages
     - name: fetch test artifacts
-      uses: actions/download-artifact@v4
+      uses: actions/download-artifact@v8
       with:
         pattern: test-artifacts--*
         merge-multiple: true
