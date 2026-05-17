@@ -1067,12 +1067,19 @@ export class Entry {
           useprefix: creator.useprefix,
         }
 
-        if (name.family.match(/^".+"$/)) {
-          name.family = new String(name.family.slice(1, -1))
+        const quoted = {
+          family: name.family.match(/^".+"$/),
+          given: name.given.match(/^".+"$/),
         }
-        else if (this.translation.collected.preferences.parseParticles) {
+        const unquote = (n: string): string => n.slice(1, -1).replace(/[ ,]/g, m => encodeURIComponent(m))
+        if (quoted.family) name.family = unquote(name.family)
+        if (quoted.given) name.given = unquote(name.given)
+
+        if (this.translation.collected.preferences.parseParticles) {
           CSL.parseParticles(name)
         }
+        if (quoted.family) name.family = new String(decodeURIComponent(name.family))
+        if (quoted.given) name.given = new String(decodeURIComponent(name.given))
 
         if (!this.translation.BetterBibLaTeX || !this.translation.collected.preferences.biblatexExtendedNameFormat) {
           // side effects to set use-prefix/uniorcomma -- make sure addCreators is called *before* adding 'options'
