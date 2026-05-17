@@ -1068,7 +1068,7 @@ export class Entry {
         }
 
         if (name.family.match(/^".+"$/)) {
-          name.family = name.family.slice(1, -1)
+          name.family = new String(name.family.slice(1, -1))
         }
         else if (this.translation.collected.preferences.parseParticles) {
           CSL.parseParticles(name)
