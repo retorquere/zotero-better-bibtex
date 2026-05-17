@@ -253,6 +253,19 @@ class Document {
   public complete() { return 0 }
 
   /**
+   * Inserts text at the current cursor position. Called by Zotero when citing note items or
+   * annotations. This is a no-op for the virtual CAYW document.
+   */
+  public insertText(_text) { return 0 }
+
+  /**
+   * Converts placeholder links within inserted note text to citation fields. Called by Zotero after
+   * insertText() when the note contains embedded citations. Returns an empty array for the virtual
+   * CAYW document since we have no real document cursor or placeholder tracking.
+   */
+  public convertPlaceholdersToFields(_placeholderIDs, _noteType, _fieldType) { return [] }
+
+  /**
    * Gets the citation
    */
   public citation(): Citation[] {
@@ -277,8 +290,7 @@ class Document {
   }
 }
 
-// export singleton: https://k94n.com/es6-modules-single-instance-pattern
-export const Application = new class {
+const Application = new class {
   public primaryFieldType = 'Field'
   public secondaryFieldType = 'Bookmark'
   public fields: any[] = []
