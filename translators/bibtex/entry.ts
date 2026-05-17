@@ -1067,7 +1067,12 @@ export class Entry {
           useprefix: creator.useprefix,
         }
 
-        if (this.translation.collected.preferences.parseParticles) CSL.parseParticles(name)
+        if (name.family.match(/^".+"$/)) {
+          name.family = name.family.slice(1, -1)
+        }
+        else if (this.translation.collected.preferences.parseParticles) {
+          CSL.parseParticles(name)
+        }
 
         if (!this.translation.BetterBibLaTeX || !this.translation.collected.preferences.biblatexExtendedNameFormat) {
           // side effects to set use-prefix/uniorcomma -- make sure addCreators is called *before* adding 'options'
