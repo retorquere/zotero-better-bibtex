@@ -12,6 +12,7 @@ Feature: Export
 
     Examples:
       | file                                                                                                                     | references |
+      | Better control of citation key capitalization #3492                                                                      | 1          |
       | Trouble with extra() function in citekey generator #3505                                                                 | 1          |
       | Citation key pulling in full date field rather than just year #3500                                                      | 1          |
       | tex.pages= in Extra field not exporting as LaTeX, Language = de exporting as german, not ngerman #3472                   | 1          |
