@@ -1,0 +1,38 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "preferences": {
+      "citekeyFormat": "(auth || creators(1) || Organization || Institution || WebsiteTitle || \"noAuth\").select(n = 1).transliterate.clean.lower + (year || \"noDate\").prefix(\"-\") + shorttitle(3, 3).transliterate.clean.prefix(\"-\") + extra(version)",
+      "fillKeyAfter": 1
+    },
+    "options": {}
+  },
+  "version": {
+    "zotero": "10.0-beta.3+6b42f9f9c",
+    "bbt": "9.0.19"
+  },
+  "collections": {},
+  "items": [
+    {
+      "key": "47SSFWIK",
+      "version": 56,
+      "itemType": "report",
+      "title": "ESP32-S3-MINI-1 / ESP32-S3-MINI-1U Datasheet",
+      "date": "2026-03-02",
+      "url": "https://documentation.espressif.com/esp32-s3-mini-1_mini-1u_datasheet_en.pdf",
+      "accessDate": "2026-04-27T00:05:31Z",
+      "extra": "version: 1.7",
+      "creators": [],
+      "tags": [],
+      "dateAdded": "2026-04-27T00:05:46Z",
+      "dateModified": "2026-04-27T14:57:21Z",
+      "itemID": 2,
+      "attachments": [],
+      "notes": [],
+      "number": "ESP32-S3-MINI-1 / ESP32-S3-MINI-1U",
+      "type": "Datasheet",
+      "publisher": "Espressif Systems"
+    }
+  ]
+}

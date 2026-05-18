@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-unsafe-return, @typescript-eslint/no-empty-function, no-restricted-syntax */
 
 import * as client from './client'
+import $stringify from 'safe-stable-stringify'
 
 declare const dump: (msg: string) => void
 
@@ -30,48 +31,37 @@ function stringifyError(obj) {
   return ''
 }
 
-function replacer() {
-  const seen = new WeakSet
+function replacer(key, value) {
+  try {
+    if (value === null) return value
+    if (value instanceof Set) return [...value]
+    if (value instanceof Map) return Object.fromEntries(value)
+    if (value instanceof RegExp) return value.source
+    if (Array.isArray(value)) return value
 
-  return (key, value) => {
-    try {
-      if (typeof value === 'object' && value !== null) {
-        if (seen.has(value)) return '[Circular]'
-        seen.add(value)
-      }
+    switch (typeof value) {
+      case 'string':
+      case 'number':
+      case 'boolean':
+      case 'function':
+      case 'undefined':
+        return value
 
-      if (value === null) return value
-      if (value instanceof Set) return [...value]
-      if (value instanceof Map) return Object.fromEntries(value)
-      if (value instanceof RegExp) return value.source
-      if (Array.isArray(value)) return value
-
-      switch (typeof value) {
-        case 'string':
-        case 'number':
-        case 'boolean':
-        case 'function':
-        case 'undefined':
-          return value
-
-        case 'object':
-          return stringifyXPCOM(value) || stringifyError(value) || value
-      }
-
-      if (value.openDialog || value.querySelector) return value.toString() // window/document
-    }
-    catch (err) {
-      return `{error: ${err.message}}`
+      case 'object':
+        return stringifyXPCOM(value) || stringifyError(value) || value
     }
 
-    return '{object}'
+    if (value.openDialog || value.querySelector) return value.toString() // window/document
   }
+  catch (err) {
+    return `{serialization error: ${err.message}}`
+  }
+
+  return '{unknown object}'
 }
 
 export function stringify(obj: any): string {
-  const stringified = JSON.stringify(obj, replacer())
-  return stringified
-  // return stringified.length > 20 ? JSON.stringify(JSON.parse(stringified), null, 2) : stringified
+  return $stringify(obj, replacer)
 }
 
 function to_s(obj: any): string {

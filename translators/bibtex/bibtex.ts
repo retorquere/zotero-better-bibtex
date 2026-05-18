@@ -605,7 +605,7 @@ async function parseBibTeX(translation: Translation): Promise<Library> {
         case 'tex':
           return `<script>${tex}</script>`
         case 'text':
-          return node.type === 'macro' ? node.content : tex
+          return node.type === 'macro' ? node.content as string : tex
         case 'ignore':
           return ''
         default:
@@ -1447,7 +1447,7 @@ class ZoteroItem {
       // 'assignee' is not a creator field for Zotero
       if (type === 'holder' && this.item.itemType === 'patent') continue
 
-      const creators: Creator[] = this.bibtex.fields[type] as unknown as Creator[]
+      const creators = this.bibtex.fields[type] as unknown as Creator[]
 
       let creatorType = creatorTypeMap[`${ this.item.itemType }.${ type }`] || creatorTypeMap[type]
       if (creatorType === 'author') creatorType = [ 'director', 'inventor', 'programmer', 'author' ].find(t => creatorsForType.includes(t))

@@ -154,7 +154,7 @@ jobs:
         submodules: recursive
 
     - name: fetch build artifacts
-      uses: actions/download-artifact@v4
+      uses: actions/download-artifact@v8
       with:
         name: build-artifacts
     - name: install python
@@ -249,7 +249,7 @@ jobs:
 
 
     - name: fetch build artifacts
-      uses: actions/download-artifact@v4
+      uses: actions/download-artifact@v8
       with:
         name: build-artifacts
     - name: install python
@@ -312,7 +312,7 @@ jobs:
         pip install packaging xvfbwrapper
         pip install -r requirements.txt
     - name: fetch test artifacts
-      uses: actions/download-artifact@v4
+      uses: actions/download-artifact@v8
       with:
         pattern: test-artifacts--*
         merge-multiple: true

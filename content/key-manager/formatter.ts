@@ -14,6 +14,7 @@ import { log } from '../logger'
 import fold2ascii from 'fold-to-ascii'
 import rescape from '@stdlib/utils-escape-regexp-string'
 import { ucs2 } from 'punycode2'
+import merge from 'lodash.merge'
 
 import * as CSL from 'citeproc'
 
@@ -301,9 +302,10 @@ class Item {
     this.transliterateMode = unaliasTransliterateMode[babelTag] || babelTag
     // this.transliterateModeCJK = ['chinese', 'japanese'].includes(this.transliterateMode)
 
-    const extraFields = Extra.get(this.getField('extra') as string, 'zotero', { kv: true, tex: true })
-    this.extra = extraFields.extra
-    this.extraFields = extraFields.extraFields
+    const zoteroFields = Extra.get(this.getField('extra') as string, 'zotero', { kv: true, tex: true })
+    const cslFields = Extra.get(this.getField('extra') as string, 'csl', { kv: true, tex: true })
+    this.extraFields = merge(cslFields.extraFields, zoteroFields.extraFields)
+    this.extra = zoteroFields.extra // arbitrary
 
     for (const [ creatorType, creators ] of Object.entries(this.extraFields.creator || {})) {
       this.creators = this.creators.concat(creators.map(creator => Extra.zoteroCreator(creator, creatorType)))
