@@ -1339,7 +1339,7 @@ export class PatternFormatter {
   }
 
   /** uppercases the first letter of each word */
-  public _capitalize(input: string, wordstart = /((^|\s)[a-z])/g): string {
+  public _capitalize(input: string, wordstart = /((?<=^|\s)[a-z])/g): string {
     return input.replace(wordstart, m => m.toUpperCase())
   }
 
