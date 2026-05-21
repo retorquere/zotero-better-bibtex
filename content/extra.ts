@@ -11,8 +11,8 @@ type Creator = {
 const re = {
   // fetch fields as per https://forums.zotero.org/discussion/3673/2/original-date-of-publication/. Spurious 'tex.' so I can do a single match
   old: /^{:(?<key>[^:]+)(?<assign>:)\s*(?<value>[^}]+)}$/i,
-  new: /^(?<tex>(bib(la)?)?tex\.)?(?<key>[^:=]+)\s*(?<assign>[:=])\s*(?<value>[\S\s]*)/i,
-  quoted: /^(?<tex>(bib(la)?)?tex\.)"(?<key>[^"]+)"\s*(?<assign>[:=])\s*(?<value>[\S\s]*)/i,
+  new: /^(?:(?<tex>(bib(la)?)?tex\.)|(?<csl>csl\.))?(?<key>[^:=]+)\s*(?<assign>[:=])\s*(?<value>[\S\s]*)/i,
+  quoted: /^(?:(?<tex>(bib(la)?)?tex\.)|(?<csl>csl\.))?"(?<key>[^"]+)"\s*(?<assign>[:=])\s*(?<value>[\S\s]*)/i,
   ck: /^(citation[ -]?key|bibtex):(?<citationKey>.*)/i,
 }
 
@@ -105,9 +105,11 @@ export function get(extra: string, mode: 'zotero' | 'csl', options?: GetOptions)
       || line.match(re.new)
     if (!m) return true
 
-    let { tex, key, assign, value } = m.groups
+    let { tex, csl, key, assign, value } = m.groups
+    const cslkey = csl && key.trim().toLowerCase()
     const texmode = (assign === '=') ? 'raw' : (tex && (tex.includes('T') || tex.match(/^[A-Z]/)) ? 'cased' : undefined)
     tex = tex && tex.toLowerCase()
+    csl = csl && csl.toLowerCase()
 
     if (!tex && texmode) return true
 
@@ -139,6 +141,22 @@ export function get(extra: string, mode: 'zotero' | 'csl', options?: GetOptions)
     }
 
     const [ primary, secondary ] = mode === 'csl' ? ['csl', 'zotero'] : ['zotero', 'csl']
+    if (options.kv && cslkey && Schema.csl[cslkey]) {
+      ef = { field: cslkey, type: Schema.type.csl[cslkey] }
+      switch (ef.type) {
+        case 'name':
+          extraFields.creator[ef.field] ??= []
+          extraFields.creator[ef.field].push(value)
+          extraFields.creators.push({ name: value, type: ef.field })
+          return false
+
+        case 'text':
+        case 'date':
+          extraFields.kv[ef.field] = value
+          return false
+      }
+    }
+
     if (options.kv && (!tex && (ef = Schema.labeled[primary][key] || Schema.labeled[secondary][key]))) {
       switch (ef.type) {
         case 'name':

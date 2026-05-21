@@ -1,0 +1,101 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "preferences": {
+      "autoExportDelay": 300,
+      "citekeyFormat": "auth.lower + shorttitle(3, 3) + year",
+      "DOIandURL": "doi",
+      "extraMergeCSL": true,
+      "extraMergeTeX": true,
+      "fillKeyAfter": 1,
+      "itemObserverDelay": 100,
+      "quickCopyMode": "pandoc",
+      "resetKeyOnChange": true,
+      "warnBulkModify": 0
+    },
+    "options": {
+      "keepUpdated": false,
+      "worker": true,
+      "exportDir": "/Users/Andrew/Downloads",
+      "exportPath": "/Users/Andrew/Downloads/Exported Items.json",
+      "cache": true
+    }
+  },
+  "version": {
+    "zotero": "9.0.3",
+    "bbt": "9.0.25"
+  },
+  "collections": {},
+  "items": [
+    {
+      "key": "XA2MLUAS",
+      "version": 15110,
+      "itemType": "blogPost",
+      "url": "https://example.com",
+      "date": "2018",
+      "extra": "available-date: 2017",
+      "accessDate": "2018-07-15",
+      "language": "en",
+      "title": "59 Blog post",
+      "citationKey": "author59BlogPost2018",
+      "creators": [
+        {
+          "firstName": "A. A.",
+          "lastName": "Author",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "A. A.",
+          "lastName": "Editor",
+          "creatorType": "contributor"
+        },
+        {
+          "firstName": "A. A.",
+          "lastName": "Translator",
+          "creatorType": "contributor"
+        }
+      ],
+      "tags": [],
+      "dateAdded": "2018-07-14T23:02:37Z",
+      "dateModified": "2026-04-01T10:05:49Z",
+      "itemID": 69282,
+      "attachments": [],
+      "notes": [],
+      "publicationTitle": "Website title",
+      "type": "Type"
+    },
+    {
+      "key": "VIGCXYIV",
+      "version": 15036,
+      "itemType": "book",
+      "rights": "CMOS18 14.23",
+      "volume": "2",
+      "place": "Chicago",
+      "publisher": "University of Chicago Press",
+      "ISBN": "978-0-226-46713-9 978-0-226-46734-4",
+      "date": "1977",
+      "extra": "volume-title: A century of wonder\npart-number: bk. 3\npart-title: The scholarly disciplines\navailable-date: 1965/1993",
+      "numberOfVolumes": "3 vols. in 9 bks.",
+      "libraryCatalog": "K10plus ISBN",
+      "language": "en",
+      "abstractNote": "Praised for its scope and depth, Asia in the Making of Europe is the first comprehensive study of Asian influences on Western culture. For volumes I and II, the author has sifted through virtually every European reference to Asia published in the sixteenth-century; he surveys a vast array of writings describing Asian life and society, the images of Asia that emerge from those writings, and, in turn, the reflections of those images in European literature and art. This monumental achievement reveals profound and pervasive influences of Asian societies on developing Western culture; in doing so",
+      "title": "Asia in the making of Europe",
+      "numPages": "442",
+      "citationKey": "lachAsiaMakingEurope1977",
+      "creators": [
+        {
+          "firstName": "Donald F.",
+          "lastName": "Lach",
+          "creatorType": "author"
+        }
+      ],
+      "tags": [],
+      "dateAdded": "2025-04-23T21:15:25Z",
+      "dateModified": "2026-02-16T11:04:07Z",
+      "itemID": 71087,
+      "attachments": [],
+      "notes": []
+    }
+  ]
+}
