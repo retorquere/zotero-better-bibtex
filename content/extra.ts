@@ -10,9 +10,9 @@ type Creator = {
 
 const re = {
   // fetch fields as per https://forums.zotero.org/discussion/3673/2/original-date-of-publication/. Spurious 'tex.' so I can do a single match
-  old: /^{:((?:bib(?:la)?)?tex\.)?([^:]+)(:)\s*([^}]+)}$/i,
-  new: /^((?:bib(?:la)?)?tex\.)?([^:=]+)\s*([:=])\s*([\S\s]*)/i,
-  quoted: /^((?:bib(?:la)?)?tex\.)"([^"]+)"\s*([:=])\s*([\S\s]*)/i,
+  old: /^{:(?<key>[^:]+)(?<assign>:)\s*(?<value>[^}]+)}$/i,
+  new: /^(?<tex>(bib(la)?)?tex\.)?(?<key>[^:=]+)\s*(?<assign>[:=])\s*(?<value>[\S\s]*)/i,
+  quoted: /^(?<tex>(bib(la)?)?tex\.)"(?<key>[^"]+)"\s*(?<assign>[:=])\s*(?<value>[\S\s]*)/i,
   ck: /^(citation[ -]?key|bibtex):(?<citationKey>.*)/i,
 }
 
@@ -105,7 +105,7 @@ export function get(extra: string, mode: 'zotero' | 'csl', options?: GetOptions)
       || line.match(re.new)
     if (!m) return true
 
-    let [ , tex, key, assign, value ] = m
+    let { tex, key, assign, value } = m.groups
     const texmode = (assign === '=') ? 'raw' : (tex && (tex.includes('T') || tex.match(/^[A-Z]/)) ? 'cased' : undefined)
     tex = tex && tex.toLowerCase()
 
