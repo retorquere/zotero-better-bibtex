@@ -52,3 +52,4 @@ selenium
 snakemake>=7.16
 toml
 xvfbwrapper
+rnc2rng

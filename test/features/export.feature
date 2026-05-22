@@ -352,6 +352,7 @@ Feature: Export
     Examples:
       | file                                                                             | references |
       | Normalizing English language tag #3100                                          | 2          |
+      | Export does not include available-date #3286                                     | 4          |
       | Page, issue and volume range sign in CSL JSON is hyphen instead of en dash #3327 | 1          |
       | Export to Better CSL JSON not working in latest built 6600-6700 #3332            | 1          |
       | Better CSL does not extract extra variables #2963                                | 1          |

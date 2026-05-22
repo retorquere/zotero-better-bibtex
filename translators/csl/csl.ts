@@ -118,7 +118,7 @@ export abstract class CSLExporter {
 
       // special case for #587... not pretty
       // checked separately because .type isn't actually a CSL var so wouldn't pass the ef.type test below
-      if (!Schema.csl.type.enum.includes(item.extraFields.kv['csl-type']) && Schema.csl.type.enum.includes(item.extraFields.kv.type)) {
+      if (!Schema.csl.types.includes(item.extraFields.kv['csl-type']) && Schema.csl.types.includes(item.extraFields.kv.type)) {
         csl.type = item.extraFields.kv.type
         delete item.extraFields.kv.type
       }
@@ -128,31 +128,34 @@ export abstract class CSLExporter {
         extra.add(fieldName)
         if (!value) continue
 
-        const type = Schema.csl[fieldName]
-        if (!type) continue
-
-        if (type.type === 'string' && (!type.enum || type.enum.includes(value))) {
-          csl[fieldName] = value
-        }
-        else if (type.$ref === '#/definitions/date-variable') {
-          csl[fieldName] = this.date2CSL(dateparser.parse(value))
-        }
-        else if (type.type === 'string' || (Array.isArray(type.type) && type.type.find(t => ['number', 'string'].includes(t)))) {
-          csl[fieldName] = value
-        }
-        else if (fieldName === 'csl-type') {
-          if (!type.type.enum.includes(value)) continue // and keep the kv variable, maybe for postscripting
+        if (fieldName === 'csl-type') {
+          if (!Schema.csl.types.includes(value)) continue
           csl.type = value
         }
         else {
-          continue // skip out of the loop, keep the kv-var
+          const type = Schema.type.csl[fieldName]
+          if (!type) continue
+
+          switch (type) {
+            case 'date':
+              csl[fieldName] = this.date2CSL(dateparser.parse(value))
+              break
+
+            case 'text':
+              if (fieldName === 'type' && !Schema.csl.types.includes(value)) continue
+              csl[fieldName] = value
+              break
+
+            case 'name':
+              continue // skip out of the loop, keep the kv-var
+          }
         }
 
         delete item.extraFields.kv[fieldName]
       }
 
       for (const [ fieldName, value ] of Object.entries(item.extraFields.creator)) {
-        if (Schema.csl[fieldName]) {
+        if (Schema.type.csl[fieldName] === 'name') {
           extra.add(fieldName)
           csl[fieldName] = [ ...(csl[fieldName] || []), ...value.map(cslCreator) ]
           delete item.extraFields.creator[fieldName]
