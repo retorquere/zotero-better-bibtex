@@ -141,7 +141,7 @@ export function get(extra: string, mode: 'zotero' | 'csl', options?: GetOptions)
     }
 
     const [ primary, secondary ] = mode === 'csl' ? ['csl', 'zotero'] : ['zotero', 'csl']
-    if (options.kv && cslkey && Schema.csl[cslkey]) {
+    if (options.kv && cslkey && Schema.type.csl[cslkey]) {
       ef = { field: cslkey, type: Schema.type.csl[cslkey] }
       switch (ef.type) {
         case 'name':
