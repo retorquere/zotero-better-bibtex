@@ -7,7 +7,7 @@
     "preferences": {
       "autoAbbrevStyle": "http://www.zotero.org/styles/nature",
       "bibtexURL": "note",
-      "citekeyFormat": "[auth:lower][Title:fold:nopunct:skipwords:select,1,1:lower:alphanum:prefix,_][year:prefix,_][0]",
+      "citekeyFormat": "auth(n=0,m=1,creator=\"*\",initials=false).fold.lower + Title.transliterate.nopunct.skipwords.select(1,1).lower.alphanum.prefix(_) + year.prefix(_) + postfix(\"-%(n)s\")",
       "skipFields": "abstract,file,editora,editoratype,editorb,editorbtype"
     }
   },
@@ -37,11 +37,11 @@
       "language": "fr-FR",
       "libraryCatalog": "Library Catalog - www.sudoc.abes.fr",
       "numberOfVolumes": "xxxi+710 p.",
-      "pages": "68\u201382",
+      "pages": "68–82",
       "place": "Paris",
-      "publicationTitle": "La conscience des droits. M\u00e9langes en l'honneur de Jean-Paul Costa",
+      "publicationTitle": "La conscience des droits. Mélanges en l'honneur de Jean-Paul Costa",
       "publisher": "Dalloz",
-      "title": "Les interventions <i>\u00e9clair\u00e9es</i> devant la Cour europ\u00e9enne des droits de l'homme ou le r\u00f4le strat\u00e9gique des <i>amici curiae</i>"
+      "title": "Les interventions <i>éclairées</i> devant la Cour européenne des droits de l'homme ou le rôle stratégique des <i>amici curiae</i>"
     },
     {
       "ISBN": "978-2-912025-68-5",
@@ -68,12 +68,12 @@
       "language": "fr-FR",
       "libraryCatalog": "Library Catalog - www.sudoc.abes.fr",
       "numberOfVolumes": "355 p.",
-      "pages": "33\u201350",
+      "pages": "33–50",
       "place": "Toulouse",
-      "publicationTitle": "Consulter, d\u00e9lib\u00e9rer, d\u00e9cider : donner son avis au Moyen \u00c2ge (France-Espagne, <sc>vii</sc><sup>e</sup>-<sc>xvi</sc><sup>e</sup> si\u00e8cles)",
-      "publisher": "CNRS et Universit\u00e9 de Toulouse-Le Mirail [Framespa]",
-      "series": "M\u00e9ridiennes. \u00c9tudes m\u00e9di\u00e9vales ib\u00e9riques",
-      "title": "Opinion et conseil dans la doctrine juridique savante (<sc>xii</sc><sup>e</sup>-<sc>xiv</sc><sup>e</sup> si\u00e8cles)"
+      "publicationTitle": "Consulter, délibérer, décider : donner son avis au Moyen Âge (France-Espagne, <sc>vii</sc><sup>e</sup>-<sc>xvi</sc><sup>e</sup> siècles)",
+      "publisher": "CNRS et Université de Toulouse-Le Mirail [Framespa]",
+      "series": "Méridiennes. Études médiévales ibériques",
+      "title": "Opinion et conseil dans la doctrine juridique savante (<sc>xii</sc><sup>e</sup>-<sc>xiv</sc><sup>e</sup> siècles)"
     }
   ]
 }

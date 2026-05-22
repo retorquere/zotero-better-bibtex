@@ -8,7 +8,7 @@
     },
     "preferences": {
       "asciiBibTeX": false,
-      "citekeyFormat": "[Auth.etal].[origyear].[PublicationTitle:postfix=.][shorttitle3_3].[firstpage]",
+      "citekeyFormat": "authEtAl(creator=\"*\",initials=false,sep=\" \") + \".\" + origyear + \".\" + PublicationTitle.postfix(\".\") + shorttitle(3,3) + \".\" + firstpage",
       "keyScope": "global",
       "qualityReport": true,
       "quickCopyMode": "orgRef",
@@ -18,7 +18,6 @@
   "items": [
     {
       "ISBN": "84-7166-852-1",
-      "citationKey": "Brennan.1982.MagiaExperimental.",
       "creators": [
         {
           "creatorType": "author",
@@ -39,7 +38,6 @@
     },
     {
       "ISBN": "978-85-86019-05-0",
-      "citationKey": "Vieira.1994.700ExperimentosdaConscienciologia.Capitulo.p.22",
       "creators": [
         {
           "creatorType": "author",
@@ -59,7 +57,7 @@
       "place": "Rio de Janeiro",
       "publicationTitle": "700 Experimentos da Conscienciologia",
       "publisher": "Instituto Internacional de Projeciologia",
-      "title": "Cap\u00edtulo 5"
+      "title": "Capítulo 5"
     }
   ]
 }

@@ -7,12 +7,11 @@
     },
     "preferences": {
       "citekeyFormat": "auth.fold.lower + year;\ntype(forumPost, webpage) + auth.lower.capitalize + Date.formatDate(\"%Y-%m-%d.%H:%M:%S\").prefix(\".\") + PublicationTitle.lower.capitalize.prefix(\".\") + shorttitle(3,3).lower.capitalize.prefix(\".\") + Pages.prefix(\".p.\") + Volume.prefix(\".Vol.\") + NumberofVolumes.prefix(de);\nauth.lower.capitalize + date(\"%oY\").prefix(\".\") + PublicationTitle.lower.capitalize.prefix(\".\") + shorttitle(3,3).lower.capitalize.prefix(\".\") + Pages.prefix(\".p.\") + Volume.prefix(\".Vol.\") + NumberofVolumes.prefix(de);",
-      "kuroshiro": true
+      "japanese": true
     }
   },
   "items": [
     {
-      "citationKey": "shelah1972e",
       "creators": [
         {
           "creatorType": "author",
@@ -29,7 +28,7 @@
       "notes": [
         "<p>MR 46:7018</p>"
       ],
-      "pages": "247\u2013261",
+      "pages": "247–261",
       "publicationTitle": "Pacific Journal of Mathematics",
       "title": "A combinatorial problem; stability and order for models and theories in infinitary languages",
       "volume": "41"

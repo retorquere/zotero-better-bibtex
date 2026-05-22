@@ -11,7 +11,7 @@
       "autoAbbrev": true,
       "automaticTags": false,
       "baseAttachmentPath": "/Users/furue/Dropbox/doc/papers",
-      "citekeyFormat": "[auth.etal+initials:capitalize]:[year]",
+      "citekeyFormat": "authEtal2(creator=\"*\",initials=true,sep=\".\").fold.capitalize + \":\" + year",
       "exportTitleCase": false,
       "extraMergeCSL": true,
       "postscript": "if (Translator.BetterTeX) {\n  if (item.extra) reference.add({ name: 'note',  value: item.extra.replace(/(https?:\\/\\/[^ ]+)/, \"<script>\\\\url{$1}</script>\") })\n}",

@@ -5,7 +5,7 @@
     "localeDateOrder": "ymd",
     "preferences": {
       "bibtexURL": "note",
-      "citekeyFormat": "[auth][year]"
+      "citekeyFormat": "auth(n=0,m=1,creator=\"*\",initials=false).fold + year"
     }
   },
   "items": [
@@ -25,7 +25,7 @@
         {
           "creatorType": "author",
           "firstName": "Hinrich",
-          "lastName": "Sch\u00fctze"
+          "lastName": "Schütze"
         }
       ],
       "date": "July 7, 2008",

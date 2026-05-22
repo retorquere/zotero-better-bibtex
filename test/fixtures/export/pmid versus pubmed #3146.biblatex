@@ -1,0 +1,17 @@
+@article{bannwarthPharmacologicBasisUsing2003,
+  title = {[Pharmacologic basis for using paracetamol: pharmacokinetic and pharmacodynamic issues]},
+  shorttitle = {[Pharmacologic basis for using paracetamol},
+  author = {Bannwarth, Bernard and Péhourcq, Fabienne},
+  date = {2003},
+  journaltitle = {Drugs},
+  shortjournal = {Drugs},
+  volume = {63 Spec No 2},
+  eprint = {14758786},
+  eprinttype = {pubmed},
+  pages = {5--13},
+  issn = {0012-6667},
+  abstract = {The advantage of paracetamol (acetaminophen) is that it can be administered via the oral, intravenous or rectal routes. The last mentioned differs from the oral route in the slow and irregular absorption of the active substance. At therapeutic concentrations, the pharmacokinetics of paracetamol are linear--that is, independent of the dose, and constant with repeated administration. The efficacy of paracetamol has been demonstrated in a wide variety of acute or chronic painful syndromes. In adults, the optimum unit dose is 1 g. The maximum daily dosage is 4 g, consistent with the decline in analgesic activity, which is usually over 6 hours. With effervescent tablets, drug absorption and onset of action are more rapid than with conventional tablets. However, there is no direct correlation between serum concentrations of paracetamol and its analgesic or antipyretic effect. Paracetamol is the non-opiate analgesic of choice in elderly persons or patients with chronic renal insufficiency, and it is usually not necessary to reduce the dosage in such individuals, even though clearance is reduced. Although the bioavailability of paracetamol is not impaired in patients with chronic, benign liver diseases, the agent is contraindicated in those with hepatic insufficiency. It can be used during pregnancy and lactation. The very low level of paracetamol binding to plasma proteins, together with its hepatic metabolism, mainly through glucuronide or sulphate conjugation, account for the low risk of drug interactions with paracetamol, particularly with antivitamin K. When added to a traditional non-steroidal anti-inflammatory drug, paracetamol enhances the analgesic effect or allows the use of lower doses. It is more difficult to define the ideal dosage of paracetamol in children, because of the influence of age on its pharmacokinetics, and the relatively erratic bioavailability of suppositories. An oral dose of 15 mg/kg every 4 hours, up to a total of 60 mg/kg/day, is usually sufficient to achieve the desired analgesic or antipyretic effect.},
+  langid = {fre},
+  language = {fre},
+  keywords = {Acetaminophen,Administration Oral,Administration Rectal,Adolescent,Adult,Age Factors,Analgesics Non-Narcotic,Blood Proteins,Child,Child Preschool,Humans,Infant,Infusions Intravenous,Pain,Protein Binding}
+}

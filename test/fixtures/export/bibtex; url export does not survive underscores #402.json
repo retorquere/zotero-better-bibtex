@@ -7,7 +7,7 @@
     "preferences": {
       "DOIandURL": "doi",
       "bibtexURL": "note",
-      "citekeyFormat": "[auth5][auth5_1][shortyear]",
+      "citekeyFormat": "auth(n=5,m=1,creator=\"*\",initials=false).fold + auth(n=5,m=1,creator=\"*\",initials=false).fold + shortyear",
       "skipFields": "abstract"
     }
   },

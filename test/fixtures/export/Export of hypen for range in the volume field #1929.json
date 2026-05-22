@@ -7,7 +7,7 @@
       "exportNotes": true
     },
     "preferences": {
-      "citekeyFormat": "[auth:lower][year]",
+      "citekeyFormat": "auth(n=0,m=1,creator=\"*\",initials=false).fold.lower + year",
       "verbatimFields": "url,doi,file,eprint,verba,verbb,verbc,groups"
     }
   },
@@ -18,7 +18,7 @@
         {
           "creatorType": "author",
           "firstName": "Milan",
-          "lastName": "Begovi\u0107"
+          "lastName": "Begović"
         },
         {
           "creatorType": "editor",
@@ -27,8 +27,8 @@
         },
         {
           "creatorType": "editor",
-          "firstName": "Snje\u017eana",
-          "lastName": "Feren\u010di\u0107"
+          "firstName": "Snježana",
+          "lastName": "Ferenčić"
         }
       ],
       "date": "2002",
@@ -39,7 +39,7 @@
       "itemType": "book",
       "language": "hr",
       "place": "Zagreb",
-      "title": "Giga Bari\u0107eva. Roman iz zagreba\u010dkog poslijeratnog \u017eivota",
+      "title": "Giga Barićeva. Roman iz zagrebačkog poslijeratnog života",
       "volume": "1-3"
     }
   ]

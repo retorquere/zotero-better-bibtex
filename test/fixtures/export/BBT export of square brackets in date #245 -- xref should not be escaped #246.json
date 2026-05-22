@@ -9,7 +9,7 @@
     "preferences": {
       "autoAbbrevStyle": "http://www.zotero.org/styles/elsevier-harvard",
       "bibtexURL": "note",
-      "citekeyFormat": "[auth:fold:lower]_[Title:fold:nopunct:skipwords:select,1,1:lower]_[year]"
+      "citekeyFormat": "auth(n=0,m=1,creator=\"*\",initials=false).fold.transliterate.lower + \"_\" + Title.transliterate.nopunct.skipwords.select(1,1).lower + \"_\" + year"
     }
   },
   "items": [
@@ -50,7 +50,7 @@
       "date": "[2007]",
       "itemID": 2,
       "itemType": "journalArticle",
-      "pages": "245\u201359",
+      "pages": "245–59",
       "publicationTitle": "Annu. Rev. Anthropol.",
       "title": "A bicycle made for two? The integration of scientific techniques into archaeological interpretation",
       "url": "http://www.annualreviews.org/doi/pdf/10.1146/annurev.anthro.36.081406.094354",
@@ -81,16 +81,16 @@
       "notes": [
         "<p>This is the child note</p>"
       ],
-      "pages": "129\u2013147",
+      "pages": "129–147",
       "publicationTitle": "Journal of the Royal Anthropological Institute",
-      "rights": "\u00a9 Royal Anthropological Institute 2014",
-      "shortTitle": "6\u00a0The time it takes",
+      "rights": "© Royal Anthropological Institute 2014",
+      "shortTitle": "6 The time it takes",
       "tags": [
         {
-          "tag": "m\u00e5ske"
+          "tag": "måske"
         }
       ],
-      "title": "6\u00a0The time it takes: temporalities of planning",
+      "title": "6 The time it takes: temporalities of planning",
       "url": "http://onlinelibrary.wiley.com.ep.fjernadgang.kb.dk/doi/10.1111/1467-9655.12097/abstract",
       "volume": "20"
     }

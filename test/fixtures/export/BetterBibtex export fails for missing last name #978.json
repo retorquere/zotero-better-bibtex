@@ -12,7 +12,7 @@
       "autoAbbrevStyle": "http://www.zotero.org/styles/cell",
       "autoExport": "off",
       "bibtexURL": "url",
-      "citekeyFormat": "[auth][year]",
+      "citekeyFormat": "auth(n=0,m=1,creator=\"*\",initials=false).fold + year",
       "itemObserverDelay": 100,
       "skipFields": "doi"
     }

@@ -65,6 +65,44 @@ def clean_item(item):
 
   un_multi(item)
 
+  # make diffs more readable
+  if 'extra' in item and type(item['extra']) != list:
+    item['extra'] = item['extra'].split('\n')
+  if 'extra' in item:
+    # utils.print(json.dumps(item['extra']))
+    extra = item['extra']
+    item['extra'] = []
+    for line in extra:
+      if ':' in line:
+        k, v = line.split(':', 1)
+        k = k.lower()
+        v = v.strip()
+      else:
+        k = None
+
+      match k:
+        case 'citation key':
+          item['citationKey'] = v
+        case 'isbn':
+          item['ISBN'] = v
+        case 'issn':
+          item['ISSN'] = v
+        case 'original date':
+          item['originalDate'] = v
+        case 'pmid':
+          item['PMID'] = v
+        case 'pmcid':
+          item['PMCID'] = v
+        case 'doi':
+          item['DOI'] = v
+        case 'place' | 'volume' | 'publisher':
+          item[k] = v
+        case _:
+          item['extra'].append(line)
+
+  if 'ISBN' in item:
+    item['ISBN'] = item['ISBN'].replace('-', '')
+
   if 'relations' in item and 'dc:replaces' in item['relations']:
     del item['relations']['dc:replaces']
     if len(item['relations']) == 0:
@@ -99,10 +137,6 @@ def clean_item(item):
       att.pop('dateModified', None)
       att.pop('parentItem', None)
       att.pop('version', None)
-
-  # make diffs more readable
-  if 'extra' in item and type(item['extra']) != list:
-      item['extra'] = item['extra'].split('\n')
 
   if unnest_and_clean(item, 'note'):
     item['notes'] = [note.split('\n') for note in item['notes']]

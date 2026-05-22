@@ -8,7 +8,7 @@
     },
     "preferences": {
       "bibtexURL": "note",
-      "citekeyFormat": "[auth:lower][Title:fold:nopunct:skipwords:select,1,1:lower:alphanum:prefix,_][year:prefix,_][0]"
+      "citekeyFormat": "auth(n=0,m=1,creator=\"*\",initials=false).fold.lower + Title.transliterate.nopunct.skipwords.select(1,1).lower.alphanum.prefix(_) + year.prefix(_) + postfix(\"-%(n)s\")"
     }
   },
   "items": [
@@ -61,10 +61,10 @@
       "itemType": "bookSection",
       "language": "en",
       "libraryCatalog": "link.springer.com",
-      "pages": "684\u2013695",
-      "publicationTitle": "Algorithms \u2013 ESA 2006",
+      "pages": "684–695",
+      "publicationTitle": "Algorithms – ESA 2006",
       "publisher": "Springer Berlin Heidelberg",
-      "rights": "\u00a92006 Springer-Verlag Berlin Heidelberg",
+      "rights": "©2006 Springer-Verlag Berlin Heidelberg",
       "series": "Lecture Notes in Computer Science",
       "seriesNumber": "4168",
       "tags": [

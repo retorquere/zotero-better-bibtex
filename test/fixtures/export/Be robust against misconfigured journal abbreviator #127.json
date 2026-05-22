@@ -10,7 +10,7 @@
       "asciiBibLaTeX": true,
       "autoAbbrevStyle": "http://www.zotero.org/styles/american-physics-society",
       "bibtexURL": "note",
-      "citekeyFormat": "[auth][year]",
+      "citekeyFormat": "auth(n=0,m=1,creator=\"*\",initials=false).fold + year",
       "packages": "unicode-math"
     }
   },
@@ -37,10 +37,10 @@
       "itemID": 1,
       "itemType": "journalArticle",
       "libraryCatalog": "Google Scholar",
-      "pages": "1\u2013155",
+      "pages": "1–155",
       "publicationTitle": "Atomic data and nuclear data tables",
       "shortTitle": "Atomic subshell photoionization cross sections and asymmetry parameters",
-      "title": "Atomic subshell photoionization cross sections and asymmetry parameters: 1\u2a7d< <span class=\"nocase\">i</span>> <span class=\"nocase\">Z</span>\u2a7d 103",
+      "title": "Atomic subshell photoionization cross sections and asymmetry parameters: 1⩽< <span class=\"nocase\">i</span>> <span class=\"nocase\">Z</span>⩽ 103",
       "url": "http://www.sciencedirect.com/science/article/pii/0092640X85900166",
       "volume": "32"
     }

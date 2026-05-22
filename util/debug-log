@@ -35,10 +35,10 @@ if len(logs) == 1 and logs[0].startswith('https://github.com/user-attachments/')
 
 logs = [log.split('/')[0] for log in logs]
 
-if len(logs) == 1 and '-fio-' in logs[0]:
-  print('FIO mode')
+if len(logs) == 1 and '-0x0-' in logs[0]:
+  print('0x0 mode')
   local, fio, remote = logs[0].split('-')
-  url = 'https://file.io/' + remote
+  url = 'https://0x0.st/' + remote + '.zip'
   log = 'logs/' + local + '.zip'
   r = requests.get(url, allow_redirects=True)
   with open(log, 'wb') as f:

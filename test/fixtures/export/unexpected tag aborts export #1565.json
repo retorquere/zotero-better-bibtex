@@ -14,7 +14,7 @@
       "auxImport": true,
       "biblatexExtendedNameFormat": true,
       "citeCommand": "@",
-      "citekeyFormat": "[auth:lower]-[veryshorttitle:lower]-[year]",
+      "citekeyFormat": "auth(n=0,m=1,creator=\"*\",initials=false).fold.lower + \"-\" + veryshorttitle.lower + \"-\" + year",
       "itemObserverDelay": 100,
       "keyConflictPolicy": "change",
       "keyScope": "global",

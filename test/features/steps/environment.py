@@ -25,6 +25,67 @@ active_tag_value_provider = {
 }
 active_tag_matcher = ActiveTagMatcher(active_tag_value_provider)
 
+class TestBin:
+  def __init__(self):
+    self.bin = None
+    self.tests = None
+    self.durations = {}
+
+  def load(self, context):
+    if not 'bin' in context.config.userdata:
+      return
+
+    self.bin = int(context.config.userdata['bin'])
+
+    assert 'bins' in context.config.userdata, context.config.userdata
+
+    with open(context.config.userdata['bins']) as f:
+      self.tests = {
+        test: i
+        for i, _bin in enumerate(json.load(f))
+        for test in _bin
+      }
+
+  def nameof(self, scenario):
+    return re.sub(r' -- @[0-9]+\.[0-9]+ ', '', scenario.name)
+
+  def save(self, context):
+    if durations := context.config.userdata.get('durations'):
+      Path(os.path.dirname(durations)).mkdir(parents=True, exist_ok=True)
+      with open(durations, 'w') as f:
+        durations = { test: { 'seconds': max(duration.stop - duration.start, 1), 'slow': duration.slow } for test, duration in self.durations.items() }
+        json.dump(durations, f, indent='  ')
+
+  def start(self, scenario):
+    self.durations[self.nameof(scenario)] = Munch(
+      start=math.floor(time.time()),
+      stop=None,
+      slow=any([True for tag in scenario.effective_tags if tag in ['use.with_slow=true', 'use.with_whopper=true']])
+    )
+  def stop(self, scenario):
+    test = self.nameof(scenario)
+    if test in self.durations:
+      self.durations[test].stop = math.ceil(time.time())
+
+  def test_here(self, scenario):
+    return self.bin is None or self.tests.get(self.nameof(scenario), 0) == self.bin
+
+  def test_in(self, scenario):
+    return self.tests.get(self.nameof(scenario), 0)
+TestBin = TestBin()
+
+def skip(context, scenario):
+  if active_tag_matcher.should_exclude_with(scenario.effective_tags):
+    pass
+  elif not TestBin.test_here(scenario):
+    pass
+  elif context.tests and not any(test in scenario.name.lower() for test in context.tests):
+    pass
+  else:
+    return False
+  scenario.skip()
+  return True
+
 def patch_scenario_with_softfail(scenario):
   """Monkey-patches :func:`~behave.model.Scenario.run()` to soft-fail a
   scenario that fails.
@@ -66,6 +127,9 @@ def before_feature(context, feature):
     feature.skip(reason="DISABLED ACTIVE-TAG")
 
   for scenario in feature.walk_scenarios():
+    if skip(context, scenario):
+      continue
+
     retries = 0
     optional = False
     for tag in scenario.effective_tags:
@@ -79,59 +143,12 @@ def before_feature(context, feature):
     if optional:
       patch_scenario_with_softfail(scenario)
 
-class TestBin:
-  def __init__(self):
-    self.bin = None
-    self.tests = None
-    self.durations = {}
-
-  def load(self, context):
-    if not 'bin' in context.config.userdata:
-      return
-
-    self.bin = int(context.config.userdata['bin'])
-
-    assert 'bins' in context.config.userdata
-
-    with open(context.config.userdata['bins']) as f:
-      self.tests = {
-        test: i
-        for i, _bin in enumerate(json.load(f))
-        for test in _bin
-      }
-
-  def nameof(self, scenario):
-    return re.sub(r' -- @[0-9]+\.[0-9]+ ', '', scenario.name)
-
-  def save(self, context):
-    if durations := context.config.userdata.get('durations'):
-      Path(os.path.dirname(durations)).mkdir(parents=True, exist_ok=True)
-      with open(durations, 'w') as f:
-        durations = { test: { 'seconds': max(duration.stop - duration.start, 1), 'slow': duration.slow } for test, duration in self.durations.items() }
-        json.dump(durations, f, indent='  ')
-
-  def start(self, scenario):
-    self.durations[self.nameof(scenario)] = Munch(
-      start=math.floor(time.time()),
-      stop=None,
-      slow=any([True for tag in scenario.effective_tags if tag in ['use.with_slow=true', 'use.with_whopper=true']])
-    )
-  def stop(self, scenario):
-    test = self.nameof(scenario)
-    if test in self.durations:
-      self.durations[test].stop = math.ceil(time.time())
-
-  def test_here(self, scenario):
-    return self.bin is None or self.tests.get(self.nameof(scenario), 0) == self.bin
-
-  def test_in(self, scenario):
-    return self.tests.get(self.nameof(scenario), 0)
-TestBin = TestBin()
-
 def before_all(context):
   TestBin.load(context)
   context.memory = Munch(total=None, increase=None)
   context.zotero = Zotero(context.config.userdata)
+  context.tests = None
+  if 'test' in context.config.userdata: context.tests = [ test.lower() for test in json.loads(context.config.userdata['test']) ]
   setup_active_tag_values(active_tag_value_provider, context.config.userdata)
   # test whether the existing references, if any, have gotten a cite key
   if not 'import' in context.config.userdata:
@@ -141,22 +158,8 @@ def after_all(context):
   TestBin.save(context)
 
 def before_scenario(context, scenario):
-  if active_tag_matcher.should_exclude_with(scenario.effective_tags):
-    #scenario.skip(f"DISABLED ACTIVE-TAG {str(active_tag_value_provider)}")
-    scenario.skip()
+  if skip(context, scenario):
     return
-  if not TestBin.test_here(scenario):
-    #scenario.skip(f'TESTED IN BIN {TestBin.test_in(scenario)}')
-    scenario.skip()
-    return
-  if 'test' in context.config.userdata and not any(test in scenario.name.lower() for test in context.config.userdata['test'].lower().split(',')):
-    #scenario.skip(f"ONLY TESTING SCENARIOS WITH {context.config.userdata['test']}")
-    scenario.skip()
-    return
-  #if 'inspireHEP' in context.config.userdata and context.config.userdata['inspireHEP'] != 'true' and 'inspire' in scenario.name.lower():
-  #  scenario.skip('skipping inspire-HEP')
-  #  scenario.skip()
-  #  return
 
   TestBin.start(scenario)
   context.zotero.reset(scenario.name)

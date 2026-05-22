@@ -8,7 +8,7 @@
     },
     "preferences": {
       "bibtexURL": "url",
-      "citekeyFormat": "[Auth:nopunctordash:fold][>0][Title:skipwords:capitalize:nopunct:replace=/,-:select=1,4:fold:clean:prefix=_][year:prefix=_]|[Institution:nopunctordash:fold][shorttitle3_3:condense:nopunct:prefix=_][year:prefix=_]",
+      "citekeyFormat": "auth(n=0,m=1,creator=\"*\",initials=false).nopunctordash.transliterate + len + Title.skipwords.capitalize.nopunct.replace(find=\"/\",replace=\"-\").select(1,4).transliterate.clean.prefix(_) + year.prefix(_);\nInstitution.nopunctordash.transliterate + shorttitle(3,3).condense.nopunct.prefix(_) + year.prefix(_);",
       "itemObserverDelay": 100,
       "skipFields": "abstract,file,note,series"
     }
@@ -28,7 +28,7 @@
       "language": "en",
       "pages": "35",
       "publisher": "Cisco Systems, Inc.",
-      "title": "Cisco Annual Internet Report - Cisco Annual Internet Report (2018\u20132023) White Paper",
+      "title": "Cisco Annual Internet Report - Cisco Annual Internet Report (2018–2023) White Paper",
       "type": "White paper",
       "url": "https://www.cisco.com/c/en/us/solutions/collateral/executive-perspectives/annual-internet-report/white-paper-c11-741490.html"
     }

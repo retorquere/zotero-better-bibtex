@@ -12,7 +12,7 @@
       "DOIandURL": "doi",
       "bibtexURL": "url",
       "citekeyFold": false,
-      "citekeyFormat": "[auth][year]",
+      "citekeyFormat": "auth(n=0,m=1,creator=\"*\",initials=false).fold + year",
       "skipFields": "file,language,urldate,shorttitle,copyright,month,note,abstract,langid"
     }
   },

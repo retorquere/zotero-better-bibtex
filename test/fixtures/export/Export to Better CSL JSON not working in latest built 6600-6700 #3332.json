@@ -1,0 +1,57 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "preferences": {
+      "baseAttachmentPath": "/Users/aspatzier/LAD_data/Literatur",
+      "citekeyFormat": "authEtAl + year + shorttitle(2, 2)",
+      "keyConflictPolicy": "change",
+      "quickCopyMode": "citekeys"
+    }
+  },
+  "version": {
+    "zotero": "7.0.28",
+    "bbt": "7.0.59"
+  },
+  "items": [
+    {
+      "key": "VXNP5QKW",
+      "version": 8397,
+      "itemType": "book",
+      "date": "19--",
+      "callNumber": "EndNoteRecNr_1645",
+      "title": "Die Anfänge des Neolithikums vom Orient bis Nordeuropa. Fundamenta A 3 und B 3",
+      "creators": [
+        {
+          "firstName": "H.",
+          "lastName": "Schwabedissen",
+          "creatorType": "editor"
+        }
+      ],
+      "tags": [
+        {
+          "tag": "Neolithikum"
+        },
+        {
+          "tag": "Mitteleuropa"
+        },
+        {
+          "tag": "Südosteuropa"
+        },
+        {
+          "tag": "Nordeuropa"
+        },
+        {
+          "tag": "Europa"
+        },
+        {
+          "tag": "Orient"
+        }
+      ],
+      "dateAdded": "2021-06-11T08:35:49Z",
+      "dateModified": "2021-10-21T11:13:58Z",
+      "itemID": 2231,
+      "notes": []
+    }
+  ]
+}

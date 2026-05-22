@@ -7,13 +7,13 @@
       "exportNotes": true
     },
     "preferences": {
-      "citekeyFormat": "[auth:lower][shorttitle3_3][year]"
+      "citekeyFormat": "auth(n=0,m=1,creator=\"*\",initials=false).fold.lower + shorttitle(3,3) + year"
     }
   },
   "items": [
     {
       "DOI": "10.1103/PhysRevLett.73.2027",
-      "abstractNote": "We point out a simple relation between the nuclear vertex constant (NVC) and the overall normalization of the astrophysical S factor. Using predicted values of the NVC for the virtual decay of 8B\u21927Be+p we find S17(0)\u224817.6 eVb for 7Be(p,\u03b3)8B reactions, consistent with the low values extrapolated from direct capture measurements by Filippone et al. and by Vaughn et al. New possibilities, using proton transfer reactions, to measure the astrophysical S factor indirectly are proposed.",
+      "abstractNote": "We point out a simple relation between the nuclear vertex constant (NVC) and the overall normalization of the astrophysical S factor. Using predicted values of the NVC for the virtual decay of 8B→7Be+p we find S17(0)≈17.6 eVb for 7Be(p,γ)8B reactions, consistent with the low values extrapolated from direct capture measurements by Filippone et al. and by Vaughn et al. New possibilities, using proton transfer reactions, to measure the astrophysical S factor indirectly are proposed.",
       "accessDate": "2020-01-16T09:57:08Z",
       "citationKey": "xuOverallNormalizationAstrophysical1994",
       "creators": [
@@ -51,7 +51,7 @@
       "libraryCatalog": "APS",
       "pages": "2027-2030",
       "publicationTitle": "Physical Review Letters",
-      "title": "Overall Normalization of the Astrophysical \u2192 Reactions",
+      "title": "Overall Normalization of the Astrophysical → Reactions",
       "url": "https://link.aps.org/doi/10.1103/PhysRevLett.73.2027",
       "volume": "73"
     }

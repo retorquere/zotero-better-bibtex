@@ -8,7 +8,7 @@
     },
     "preferences": {
       "bibtexURL": "note",
-      "citekeyFormat": "[auth3][auth3_1][auth3_2][auth3_3][auth3_4][shortyear]",
+      "citekeyFormat": "auth(n=3,m=1,creator=\"*\",initials=false).fold + auth(n=3,m=1,creator=\"*\",initials=false).fold + auth(n=3,m=2,creator=\"*\",initials=false).fold + auth(n=3,m=3,creator=\"*\",initials=false).fold + auth(n=3,m=4,creator=\"*\",initials=false).fold + shortyear",
       "skipFields": "url,issn"
     }
   },

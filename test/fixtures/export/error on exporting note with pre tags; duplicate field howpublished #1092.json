@@ -95,7 +95,7 @@
       "asciiBibLaTeX": true,
       "autoAbbrevStyle": "http://www.zotero.org/styles/cell",
       "bibtexURL": "note",
-      "citekeyFormat": "[auth:lower][shorttitle3_3][year]",
+      "citekeyFormat": "auth(n=0,m=1,creator=\"*\",initials=false).fold.lower + shorttitle(3,3) + year",
       "itemObserverDelay": 100
     }
   },

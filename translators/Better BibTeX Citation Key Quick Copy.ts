@@ -1,8 +1,7 @@
-/* eslint-disable prefer-arrow/prefer-arrow-functions */
 declare const Zotero: any
 
-import { simplifyForExport } from '../gen/items/simplify'
-import { html as escapeHTML } from '../content/escape'
+import { simplifyForExport } from '../content/item-schema'
+import { uri, html as escapeHTML } from '../content/escape'
 
 import { Eta } from 'eta'
 const eta = new Eta({ autoEscape: true })
@@ -12,7 +11,7 @@ function select_by_key(item) {
   return (kind === 'users') ? `zotero://select/library/items/${ key }` : `zotero://select/groups/${ lib }/items/${ key }`
 }
 function select_by_citekey(item) {
-  return `zotero://select/items/@${ encodeURIComponent(item.citationKey) }`
+  return `zotero://select/items/@${uri.encode(item.citationKey)}`
 }
 
 export function citeCreators(creators: { name?: string; lastName?: string }[]): string {
@@ -34,7 +33,6 @@ export function yearFromDate(d: string): string {
 }
 
 const Mode = {
-  // eslint-disable-next-line prefer-arrow/prefer-arrow-functions
   gitbook(items) {
     const citations = items.map(item => `{{ "${ item.citationKey }" | cite }}`)
     Zotero.write(citations.join(''))
@@ -82,6 +80,12 @@ const Mode = {
     if (!items.length) return ''
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     Zotero.write(`cite:&${ items.map(item => item.citationKey).join(';&') }`)
+  },
+
+  orgcite(items) {
+    if (!items.length) return ''
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+    Zotero.write(`[cite:@${items.map(item => item.citationKey).join('; @')}]`)
   },
 
   orgmode(items) {
@@ -133,7 +137,7 @@ const Mode = {
 
   eta(items) {
     try {
-      Zotero.write(eta.renderString(Zotero.getHiddenPref('better-bibtex.quickCopyEta'), { items: items.map(simplifyForExport) }))
+      Zotero.write(eta.renderString(Zotero.getHiddenPref('better-bibtex.quickCopyEta'), { items: items.map(i => simplifyForExport(i)) }))
     }
     catch (err) {
       Zotero.write(`${ err }`)

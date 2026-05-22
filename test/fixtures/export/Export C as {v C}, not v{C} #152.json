@@ -9,7 +9,7 @@
     "preferences": {
       "autoAbbrevStyle": "http://www.zotero.org/styles/cell",
       "bibtexURL": "note",
-      "citekeyFormat": "[auth][year]",
+      "citekeyFormat": "auth(n=0,m=1,creator=\"*\",initials=false).fold + year",
       "skipFields": "note,language,file,urldate"
     }
   },
@@ -31,7 +31,7 @@
         {
           "creatorType": "author",
           "firstName": "Mateus",
-          "lastName": "Ara\u00fajo"
+          "lastName": "Araújo"
         },
         {
           "creatorType": "author",
@@ -60,7 +60,7 @@
         },
         {
           "creatorType": "author",
-          "firstName": "\u010caslav",
+          "firstName": "Časlav",
           "lastName": "Brukner"
         },
         {

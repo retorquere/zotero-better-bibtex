@@ -3,5 +3,6 @@
 import json
 import sys
 
-with open(sys.argv[1]) as f:
-  print(len(json.load(f)['items']))
+for lib in sys.argv[1:]:
+  with open(lib) as f:
+    print(len(json.load(f)['items']), lib)

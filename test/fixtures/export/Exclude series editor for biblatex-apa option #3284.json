@@ -1,0 +1,53 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "options": {
+      "biblatexAPA": true,
+      "cache": true,
+      "exportDir": "/Users/Shared",
+      "exportPath": "/Users/Shared/Exported Items.bib"
+    },
+    "preferences": {
+      "citekeyFormat": "auth.lower + shorttitle(3, 3) + year"
+    }
+  },
+  "items": [
+    {
+      "ISBN": "978-1-4338-2986-4 978-1-4338-3083-9",
+      "accessDate": "2025-08-13T19:16:10Z",
+      "citationKey": "madiganNarrativeTherapy2019",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Stephen",
+          "lastName": "Madigan"
+        },
+        {
+          "creatorType": "seriesEditor",
+          "firstName": "Jon",
+          "lastName": "Carlson"
+        },
+        {
+          "creatorType": "seriesEditor",
+          "firstName": "Matt",
+          "lastName": "Englar-Carlson"
+        }
+      ],
+      "date": "2019",
+      "edition": "2",
+      "extra": [
+        "DOI: 10.1037/0000131-000"
+      ],
+      "itemID": 1,
+      "itemType": "book",
+      "language": "en",
+      "libraryCatalog": "DOI.org (Crossref)",
+      "place": "Washington, DC",
+      "publisher": "American Psychological Association",
+      "series": "Theories of psychotherapy series",
+      "title": "Narrative therapy",
+      "url": "https://content.apa.org/books/16107-000"
+    }
+  ]
+}

@@ -1,15 +1,14 @@
-const path = require('path')
-const fs = require('fs')
+import path from 'path'
+import fs from 'fs'
 const exists = fs.existsSync
-const esbuild = require('esbuild')
-const exec = require('child_process').exec
-const glob = require('glob-promise')
-const crypto = require('crypto')
-const branch = require('git-branch')
-const stringify = require('safe-stable-stringify')
+import esbuild from 'esbuild'
+import { exec } from 'child_process'
+import { glob } from 'glob'
+import crypto from 'crypto'
+import stringify from 'safe-stable-stringify'
 
-const loader = require('./setup/loaders')
-const shims = require('./setup/shims')
+import * as loader from './setup/loaders/index.js'
+import { shims } from './setup/shims/index.js'
 
 function execShellCommand(cmd) {
   console.log(cmd)
@@ -141,11 +140,12 @@ async function bundle(config) {
   config = {
     bundle: true,
     format: 'iife',
-    target: ['firefox60'],
+    target: ['firefox115'],
     inject: [],
     treeShaking: true,
     plugins: [],
     minify: false,
+    sourcemap: true,
     drop: ['console'],
     ...config,
   }
@@ -162,12 +162,9 @@ async function bundle(config) {
     target = `${config.outdir} [${config.entryPoints.map(js).join(', ')}]`
   }
 
-  loader.patcher.current = null
-
   const exportGlobals = config.exportGlobals
   delete config.exportGlobals
   if (exportGlobals) {
-    loader.patcher.silent = true
     const esm = await esbuild.build({ ...config, logLevel: 'silent', format: 'esm', metafile: true, write: false })
     if (process.env.GML) {
       console.log('  generating dependency graph', target + '.gml')
@@ -180,10 +177,8 @@ async function bundle(config) {
         // make these var, not const, so they get hoisted and are available in the global scope.
       }
     }
-    loader.patcher.silent = false
   }
 
-  if (config.plugins.find(p => p === loader.patcher.plugin)) loader.patcher.current = target
   const metafile = config.metafile
   config.metafile = !!config.metafile
 
@@ -199,8 +194,6 @@ async function bundle(config) {
 }
 
 async function rebuild() {
-  loader.patcher.load('setup/patches')
-
   // bootstrap code
   await bundle({
     entryPoints: [ 'content/bootstrap.ts' ],
@@ -212,8 +205,6 @@ async function rebuild() {
   await bundle({
     entryPoints: [ 'content/better-bibtex.ts' ],
     plugins: [
-      loader.trace('plugin'),
-      loader.patcher.plugin,
       loader.text,
       loader.sql,
       loader.peggy,
@@ -224,7 +215,11 @@ async function rebuild() {
     metafile: 'gen/better-bibtex-esbuild.json',
     inject: ['./setup/loaders/globals.js'],
     outdir: 'build/content',
-    banner: { js: 'if (!Zotero.BetterBibTeX) {\n' },
+    banner: { js: `
+      const { FileUtils } = ChromeUtils.importESModule('resource://gre/modules/FileUtils.sys.mjs')
+      Components.utils.importGlobalProperties(['FormData', 'structuredClone'])
+      if (!Zotero.BetterBibTeX) {
+      `},
     footer: { js: '\n}' },
     external: [
       'zotero/itemTree',
@@ -233,6 +228,9 @@ async function rebuild() {
       'nock',
       'aws-sdk',
     ],
+    alias: {
+      'transliteration': 'transliteration/dist/browser/bundle.esm.min.js',
+    }
   })
 
   // chinese for dynamic loading
@@ -240,8 +238,8 @@ async function rebuild() {
     entryPoints: [ 'content/key-manager/chinese-optional.ts' ],
     exportGlobals: true,
     plugins: [
-      loader.patcher.plugin,
       loader.__dirname,
+      loader.resettableBinary,
       // shims,
     ],
     // inject: ['./setup/loaders/globals.js'],
@@ -252,8 +250,6 @@ async function rebuild() {
   await bundle({
     entryPoints: [ 'content/worker/zotero.ts' ],
     plugins: [
-      loader.trace('worker'),
-      loader.patcher.plugin,
       loader.text,
       // loader.peggy,
       loader.__dirname,
@@ -265,7 +261,7 @@ async function rebuild() {
     metafile: 'gen/worker.json',
     external: [ 'jsdom' ],
     banner: { js: `
-      dump("\\nloading BBT chromeworker (indexedDB=" + typeof indexedDB + ")\\n")
+      dump("\\njson-rpc: loading better-bibtex chromeworker\\n")
       var Services
       if (typeof location !== 'undefined' && location.search) {
         Services = {
@@ -279,15 +275,15 @@ async function rebuild() {
     footer: { js: `
       }
       catch ($$err$$) {
-        dump("\\nerror: failed loading BBT chromeworker: " + $$err$$.message  + "\\n" + $$err$$.stack + "\\n")
+        dump("\\njson-rpc: error: failed loading better-bibtex chromeworker: " + $$err$$.message  + "\\n" + $$err$$.stack + "\\n")
       }
-      dump("\\nloaded BBT chromeworker\\n")
+      dump("\\njson-rpc: loaded better-bibtex chromeworker\\n")
     `},
   })
 
   // translators
   for (const translator of (await glob('translators/*.json')).map(tr => path.parse(tr))) {
-    const header = require('./' + path.join(translator.dir, translator.name + '.json'))
+    const header = JSON.parse(fs.readFileSync(path.join(translator.dir, translator.name + '.json'), 'utf-8'))
     const outfile = path.join('build/content/resource', translator.name + '.js')
 
     // https://esbuild.github.io/api/#write
@@ -296,7 +292,6 @@ async function rebuild() {
     await bundle({
       entryPoints: [path.join(translator.dir, translator.name + '.ts')],
       plugins: [
-        loader.trace('translators'),
         // loader.peggy,
         loader.__dirname,
         shims

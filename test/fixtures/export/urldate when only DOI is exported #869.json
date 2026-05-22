@@ -10,7 +10,7 @@
       "DOIandURL": "doi",
       "autoAbbrevStyle": "http://www.zotero.org/styles/cell",
       "biblatexExtendedNameFormat": true,
-      "citekeyFormat": "[authors][year]",
+      "citekeyFormat": "authorsn(n=0,creator=\"*\",initials=false,sep=\" \").fold + year",
       "itemObserverDelay": 100,
       "quickCopyMode": "pandoc",
       "skipFields": "issn,isbn,file,groups,keywords,shortjournal,abstract"
@@ -20,7 +20,7 @@
     {
       "DOI": "10.1111/j.1475-4975.1984.tb00073.x",
       "ISSN": "1475-4975",
-      "abstractNote": "The association between the smell and the bacon is \u201c.natural\u201d., that is to say it is not the result of any human behavhior. But the association between the word \u201c.breakfast\u201d. and breakfast is a social matter, which exists only for English speaking people.\u2014B. Russell, \u201c.An Inquiry into Meaning and Truth\u201d.",
+      "abstractNote": "The association between the smell and the bacon is “.natural”., that is to say it is not the result of any human behavhior. But the association between the word “.breakfast”. and breakfast is a social matter, which exists only for English speaking people.—B. Russell, “.An Inquiry into Meaning and Truth”.",
       "accessDate": "2016-08-03 11:36:08",
       "creators": [
         {
@@ -34,7 +34,7 @@
       "itemID": 1,
       "itemType": "journalArticle",
       "libraryCatalog": "Wiley Online Library",
-      "pages": "478\u2013489",
+      "pages": "478–489",
       "publicationTitle": "Midwest Studies In Philosophy",
       "tags": [
         {

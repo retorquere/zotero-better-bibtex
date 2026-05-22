@@ -10,7 +10,7 @@
       "bibtexEditionOrdinal": true,
       "biblatexExtendedNameFormat": true,
       "bibtexURL": "url",
-      "citekeyFormat": "[auth:lower][year]",
+      "citekeyFormat": "auth(n=0,m=1,creator=\"*\",initials=false).fold.lower + year",
       "postscript": "if (Translator.BetterBibTeX && item.itemType === 'conferencePaper' && item.extra) {\n    const lines = item.extra.split('\\n')\n    for (let line of lines) {\n        let matches = /^([A-Za-z0-9]+): *(.+)$/.exec(line);\n        if (matches === null || matches[1] !== 'Sponsor') {\n            continue\n        }\n        reference.add({name: 'organization', value: matches[2]})\n    }\n}",
       "skipFields": "abstract,file,keywords,note"
     }

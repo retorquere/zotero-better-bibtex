@@ -15,6 +15,7 @@ import shlex
 from collections import UserDict
 import copy
 import unicodedata
+from pathlib import Path
 
 import warnings
 warnings.filterwarnings("ignore", category=UserWarning, module='bs4', message='.*looks like a URL.*')
@@ -24,6 +25,9 @@ for d in pathlib.Path(__file__).resolve().parents:
   if os.path.exists(os.path.join(d, 'behave.ini')):
     ROOT = d
     break
+
+FIXTURES = os.path.join(ROOT, 'test/fixtures')
+EXPORTED = os.path.join(ROOT, 'exported')
 
 def print(txt, end='\n'):
   sys.stdout.write(str(txt) + end)
@@ -108,6 +112,24 @@ def running(id):
 
   return count > 0
 
+def terminate(app):
+  for proc in psutil.process_iter(['pid', 'name']):
+    try:
+      if app.lower() in proc.info['name'].lower():
+        print(f"Found {proc.info['name']} (PID: {proc.info['pid']}). Sending SIGTERM...")
+        proc.terminate()
+        try:
+          exit_code = proc.wait(timeout=40)
+          print(f"{proc.info['name']} exited with {exit_code}")
+        except psutil.TimeoutExpired:
+          print("Process timed out. It might be hung.")
+          print(f"{proc.info['name']} timed out. It might be hung")
+        return
+    except (psutil.NoSuchProcess, psutil.AccessDenied, psutil.ZombieProcess):
+      return
+  
+  print(f'No process found with name: {app}')
+
 def nested_dict_iter(nested, root = []):
   for key, value in nested.items():
     if isinstance(value, dict):
@@ -116,3 +138,8 @@ def nested_dict_iter(nested, root = []):
     else:
       yield '.'.join(root) + '.' + key, value
 
+def exported(path, body):
+  _exported = os.path.join(EXPORTED, os.path.basename(os.path.dirname(path)), os.path.basename(path))
+  Path(_exported).parent.mkdir(parents=True, exist_ok=True)
+  with open(_exported, 'w') as f:
+    f.write(body)

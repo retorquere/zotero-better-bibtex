@@ -8,7 +8,7 @@
     },
     "preferences": {
       "bibtexURL": "note",
-      "citekeyFormat": "[auth:lower][Title:fold:nopunct:skipwords:select,1,1:lower:alphanum:prefix,_][year:prefix,_][0]",
+      "citekeyFormat": "auth(n=0,m=1,creator=\"*\",initials=false).fold.lower + Title.transliterate.nopunct.skipwords.select(1,1).lower.alphanum.prefix(_) + year.prefix(_) + postfix(\"-%(n)s\")",
       "skipFields": "timestamp"
     }
   },
@@ -18,13 +18,13 @@
       "itemID": 1,
       "itemType": "book",
       "language": "fr-FR",
-      "title": "Estimateur d'un d\u00e9faut de fonctionnement d'un modulateur en quadrature et \u00e9tage de modulation l'utilisant"
+      "title": "Estimateur d'un défaut de fonctionnement d'un modulateur en quadrature et étage de modulation l'utilisant"
     },
     {
-      "abstractNote": "Zotero\u2019s \u201cLanguage\u201d field empty, so \u201cen-US\u201d is assumed.",
+      "abstractNote": "Zotero’s “Language” field empty, so “en-US” is assumed.",
       "itemID": 2,
       "itemType": "book",
-      "title": "Some remarks on <span class=\"nocase\">\u2019t Hooft\u2019s</span> S-matrix for black holes"
+      "title": "Some remarks on <span class=\"nocase\">’t Hooft’s</span> S-matrix for black holes"
     },
     {
       "itemID": 3,
@@ -36,7 +36,7 @@
       "itemID": 4,
       "itemType": "book",
       "language": "en-US",
-      "title": "Alkanethiolate gold cluster molecules with core diameters from 1.5 to 5.2\u00a0<span class=\"nocase\">nm</span>"
+      "title": "Alkanethiolate gold cluster molecules with core diameters from 1.5 to 5.2 <span class=\"nocase\">nm</span>"
     },
     {
       "itemID": 5,
@@ -48,7 +48,7 @@
       "itemID": 6,
       "itemType": "journalArticle",
       "language": "en-GB",
-      "title": "A carbocyclic carbene as an efficient catalyst ligand for C\u2013C coupling reactions"
+      "title": "A carbocyclic carbene as an efficient catalyst ligand for C–C coupling reactions"
     },
     {
       "itemID": 7,

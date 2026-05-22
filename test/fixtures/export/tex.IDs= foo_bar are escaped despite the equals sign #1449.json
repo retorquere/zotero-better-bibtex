@@ -9,7 +9,7 @@
     "preferences": {
       "biblatexExtendedNameFormat": true,
       "bibtexURL": "url",
-      "citekeyFormat": "[zotero:clean]",
+      "citekeyFormat": "zotero.clean",
       "itemObserverDelay": 100,
       "qualityReport": true,
       "skipFields": "file"

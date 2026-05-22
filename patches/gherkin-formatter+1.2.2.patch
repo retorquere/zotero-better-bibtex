@@ -1,0 +1,13 @@
+diff --git a/node_modules/gherkin-formatter/formatters/tableCellFormatter.js b/node_modules/gherkin-formatter/formatters/tableCellFormatter.js
+index cdb5e8c..75bfdfb 100644
+--- a/node_modules/gherkin-formatter/formatters/tableCellFormatter.js
++++ b/node_modules/gherkin-formatter/formatters/tableCellFormatter.js
+@@ -9,7 +9,7 @@ function format(tableCell) {
+         throw new Error("TableCell must be set!");
+     }
+     return tableCell.value
+-        .replace(/(?!\\)([|#])/g, "\\$1");
++        .replace(/(?!\\)([|])/g, "\\$1");
+ }
+ exports.format = format;
+ //# sourceMappingURL=tableCellFormatter.js.map

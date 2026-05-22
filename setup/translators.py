@@ -1,41 +1,51 @@
 #!/usr/bin/env python3
 
-import glob
-import json
-import os
+from mako.template import Template
+import glob, json
+from collections import defaultdict
 
 print('translators')
+
+pseudoOptions = {
+  'exportDir': '',
+  'exportPath': '',
+  'custom': False,
+}
+explain = {
+  'custom': 'for pandoc-filter CSL',
+  'displayOptions': 'for BetterBibTeX JSON'
+}
+
+optionFor = defaultdict(list)
+displayOptions = {}
+
 headers = []
-pseudoOptions = ['exportDir', 'exportPath', 'custom', 'dropAttachments', 'cache']
-displayOptions = { option: True for option in pseudoOptions }
 for tr in sorted(glob.glob('translators/*.json')):
   with open(tr) as f:
     tr = json.load(f)
-    print(' ', tr['label'])
-    headers.append(tr)
-    if 'displayOptions' in tr:
-      displayOptions = displayOptions | tr['displayOptions']
-displayOptions = sorted(list(displayOptions.keys()))
-DisplayOptions = "{\n"
-for option in displayOptions:
-  if option in [ 'quickCopyMode', 'exportDir', 'exportPath' ]:
-    DisplayOptions += f'  {option}?: string\n'
-  else:
-    DisplayOptions += f'  {option}?: boolean\n'
-DisplayOptions += "}"
-open('gen/translators.ts', 'w').write(f"""
-/* eslint-disable @typescript-eslint/quotes, quote-props, comma-dangle */
-import type {{ Translators }} from '../typings/translators.d.ts'
+  headers.append(tr)
+  if 'displayOptions' in tr:
+    displayOptions = displayOptions | tr['displayOptions']
+    for option in tr['displayOptions']:
+      optionFor[option].append(tr['label'])
 
-export const displayOptions = {json.dumps(displayOptions, indent='  ')}
-export const pseudoOptions = {json.dumps(pseudoOptions, indent='  ')}
-// custom?: boolean is for pandoc-filter CSL
-export type DisplayOptions = {DisplayOptions}
-export const headers: Translators.Header[] = {json.dumps(headers, indent='  ')}
-export const byId: Record<string, Translators.Header> = {{}}
-export const byLabel: Record<string, Translators.Header> = {{}}
-export const bySlug: Record<string, Translators.Header> = {{}}
-for (const header of headers) {{
-  byId[header.translatorID] = byLabel[header.label] = bySlug[header.label.replace(/ /g, '')] = header
-}}
-""")
+jsType = {
+  str: 'string,',
+  bool: 'boolean,',
+}
+def optionName(o):
+  return o + '?:'
+
+def makeOption(o, d):
+  option = f'{optionName(o):25}{jsType[type(d)]:8}'
+  comment = optionFor[o].copy()
+  if o in explain:
+    comment.append(explain[o])
+  if len(comment) > 0:
+    comment = ' // ' + ', '.join(comment)
+  else:
+    comment = ''
+  return option + comment
+
+with open('gen/translators.ts', 'w') as f:
+  f.write(Template(filename='setup/templates/translators.ts.mako').render(**globals()))

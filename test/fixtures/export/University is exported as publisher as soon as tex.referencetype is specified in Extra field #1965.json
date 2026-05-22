@@ -8,7 +8,7 @@
     },
     "preferences": {
       "automaticTags": false,
-      "citekeyFormat": "[auth:lower][year][veryshorttitle1_0:lower]",
+      "citekeyFormat": "auth(n=0,m=1,creator=\"*\",initials=false).fold.lower + year + veryshorttitle(1,0).lower",
       "extraMergeCSL": true,
       "extraMergeCitekeys": true,
       "extraMergeTeX": true,
@@ -33,7 +33,7 @@
       ],
       "itemID": 1,
       "itemType": "thesis",
-      "publisher": "Technische Universit\u00e4t Clausthal-Zellerfeld",
+      "publisher": "Technische Universität Clausthal-Zellerfeld",
       "tags": [
         {
           "tag": "algo"

@@ -20,3 +20,18 @@ export function rtf(str: string): string {
 export function regex(text: string): string {
   return rescape(text)
 }
+
+export const uri = new class {
+  encode(s: string): string {
+    return encodeURIComponent(s || '')
+  }
+
+  decode(s: string): string {
+    try {
+      return decodeURIComponent(s || '')
+    }
+    catch {
+      return s
+    }
+  }
+}

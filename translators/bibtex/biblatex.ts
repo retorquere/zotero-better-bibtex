@@ -230,7 +230,9 @@ class Entry extends BaseEntry {
           break
 
         case 'seriesEditor':
-          creators[creatorType.register('editor', 'redactor')].push(creator)
+          if (!this.translation.collected.displayOptions.biblatexAPA) {
+            creators[creatorType.register('editor', 'redactor')].push(creator)
+          }
           break
 
         case 'scriptwriter':
@@ -357,6 +359,9 @@ export function generateBibLaTeX(collected: Collected): Translation {
     }
     else {
       entry.add({ name: 'location', value: item.place || item.extraFields.kv['publisher-place'], enc: 'literal' })
+      if (item.itemType === 'conferencePaper' && !entry.has.venue) {
+        entry.add({ name: 'venue', value: item.eventPlace, enc: 'literal' })
+      }
     }
 
     /*
@@ -389,9 +394,9 @@ export function generateBibLaTeX(collected: Collected): Translation {
 
     let number_added = ''
     if (!item.number?.match(/arxiv/i) || !entry.has.eprint) {
-      number_added = entry.add({ name: 'number', value: patent.number(item) || item.number || item.seriesNumber })
+      number_added = entry.add({ name: 'number', value: patent.number(item) || entry.normalizeDashes(item.number || item.seriesNumber) })
     }
-    entry.add({ name: !number_added && looks_like_number_field(item.issue) ? 'number' : 'issue', value: item.issue })
+    entry.add({ name: !number_added && looks_like_number_field(item.issue) ? 'number' : 'issue', value: entry.normalizeDashes(item.issue) })
 
     const journalAbbreviation = item.journalAbbreviation || item.autoJournalAbbreviation
     switch (entry.entrytype) {
@@ -536,7 +541,9 @@ export function generateBibLaTeX(collected: Collected): Translation {
     entry.add({ name: 'date', verbatim: 'year', orig: { name: 'origdate', verbatim: 'origdate' }, value: item.date, enc: 'date' })
     // #293 has both date="year [origyear]" and extra="original-date: origyear"
     entry.add({ name: 'origdate', value: item.originalDate, enc: 'date', replace: true })
-    entry.add({ name: 'eventdate', value: item.conferenceDate, enc: 'date' })
+
+    // @ts-expect-error jurism
+    entry.add({ name: 'eventdate', value: item.conferenceDate || item.eventDate, enc: 'date' })
 
     entry.add({ name: 'pages', value: entry.normalizeDashes(item.pages) })
     entry.add({ name: 'volume', value: entry.normalizeDashes(item.volume) })
@@ -560,26 +567,32 @@ export function generateBibLaTeX(collected: Collected): Translation {
 
     entry.add({ name: 'file', value: item.attachments, enc: 'attachments' })
 
+    // @ts-expect-error jurism
     if (item.volumeTitle) { // #381
       if (entry.entrytype === 'book' && entry.has.title) {
+        // @ts-expect-error jurism
         entry.add({ name: 'maintitle', value: item.volumeTitle }); // ; to prevent chaining
         [ entry.has.title.bibtex, entry.has.maintitle.bibtex ] = [ entry.has.maintitle.bibtex, entry.has.title.bibtex ]; // ; to prevent chaining
         [ entry.has.title.value, entry.has.maintitle.value ] = [ entry.has.maintitle.value, entry.has.title.value ]
       }
 
       if ([ 'incollection', 'chapter' ].includes(entry.entrytype) && entry.has.booktitle) {
+        // @ts-expect-error jurism
         entry.add({ name: 'maintitle', value: item.volumeTitle }); // ; to prevent chaining
         [ entry.has.booktitle.bibtex, entry.has.maintitle.bibtex ] = [ entry.has.maintitle.bibtex, entry.has.booktitle.bibtex ]; // ; to preven chaining
         [ entry.has.booktitle.value, entry.has.maintitle.value ] = [ entry.has.maintitle.value, entry.has.booktitle.value ]
       }
     }
 
+    entry.add({ name: 'pmid', value: item.PMID })
+    entry.add({ name: 'pmcid', value: item.PMCID })
+
     for (const eprinttype of [ 'pmid', 'arxiv', 'jstor', 'hdl', 'googlebooks' ]) {
+      if (entry.has.eprinttype) break
+
       if (entry.has[eprinttype]) {
-        if (!entry.has.eprinttype) {
-          entry.add({ name: 'eprinttype', value: entry.eprintType[eprinttype] || eprinttype })
-          entry.add({ name: 'eprint', value: entry.has[eprinttype].value })
-        }
+        entry.add({ name: 'eprinttype', value: entry.eprintType[eprinttype] || eprinttype })
+        entry.add({ name: 'eprint', value: entry.has[eprinttype].value })
         entry.remove(eprinttype)
       }
     }

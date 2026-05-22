@@ -1,6 +1,0 @@
-{
-  "_fold": "_transliterate",
-  "_splitideographs": "_ideographs",
-  "$getField": "$field",
-  "$authors": "$creators"
-}

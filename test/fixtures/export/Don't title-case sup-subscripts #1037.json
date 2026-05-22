@@ -9,7 +9,7 @@
     "preferences": {
       "asciiBibTeX": false,
       "biblatexExtendedNameFormat": true,
-      "citekeyFormat": "[auth][year]",
+      "citekeyFormat": "auth(n=0,m=1,creator=\"*\",initials=false).fold + year",
       "itemObserverDelay": 100
     }
   },

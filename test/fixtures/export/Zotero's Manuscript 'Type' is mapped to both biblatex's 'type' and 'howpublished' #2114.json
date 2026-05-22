@@ -13,7 +13,7 @@
       "baseAttachmentPath": "/home/chayanin/Drive/Books",
       "biblatexExtendedNameFormat": true,
       "biblatexExtractEprint": false,
-      "citekeyFormat": "[auth:lower][year][veryshorttitle:lower]",
+      "citekeyFormat": "auth(n=0,m=1,creator=\"*\",initials=false).fold.lower + year + veryshorttitle.lower",
       "extraMergeCSL": true,
       "extraMergeCitekeys": true,
       "extraMergeTeX": true,
@@ -24,7 +24,7 @@
   },
   "items": [
     {
-      "abstractNote": "We study a platform that sells productive inputs (such as e-commerce and distribution services) to a fringe of producers in an upstream market, while also selling its own output in the corresponding downstream market. The platform faces a tradeo\ufb00: any output that it sells downstream increases competition with the fringe of producers and lowers the downstream price, which in turn reduces demand for the platform\u2019s productive inputs and decreases upstream revenue. Adopting a mechanism design approach, we characterize the optimal menu of contracts the platform o\ufb00ers in the upstream market. These contracts involve price discrimination in the form of nonlinear pricing and quantity discounts. If the platform is a monopoly in the upstream market, then we show that the tradeo\ufb00 always resolves in favor of consumers and at the expense of producers. However, if the platform faces competition in the upstream market, then it has an incentive to undermine this competition by engaging in activities, such as \u201ckiller\u201d acquisitions and exclusive dealing, that harm both consumers and producers.",
+      "abstractNote": "We study a platform that sells productive inputs (such as e-commerce and distribution services) to a fringe of producers in an upstream market, while also selling its own output in the corresponding downstream market. The platform faces a tradeoﬀ: any output that it sells downstream increases competition with the fringe of producers and lowers the downstream price, which in turn reduces demand for the platform’s productive inputs and decreases upstream revenue. Adopting a mechanism design approach, we characterize the optimal menu of contracts the platform oﬀers in the upstream market. These contracts involve price discrimination in the form of nonlinear pricing and quantity discounts. If the platform is a monopoly in the upstream market, then we show that the tradeoﬀ always resolves in favor of consumers and at the expense of producers. However, if the platform faces competition in the upstream market, then it has an incentive to undermine this competition by engaging in activities, such as “killer” acquisitions and exclusive dealing, that harm both consumers and producers.",
       "attachments": [],
       "citationKey": "kang2022contracting",
       "creators": [

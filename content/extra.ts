@@ -1,11 +1,32 @@
-import * as mapping from '../gen/items/extra-fields.json'
+import { Schema } from './item-schema'
 import * as CSL from 'citeproc'
 
-type TeXString = { value: string; mode?: 'raw' | 'cased'; line: number }
+export type TeXString = { value: string; mode?: 'raw' | 'cased'; line: number }
 
 type Creator = {
   name: string
   type: string
+}
+
+const re = {
+  // fetch fields as per https://forums.zotero.org/discussion/3673/2/original-date-of-publication/. Spurious 'tex.' so I can do a single match
+  old: /^{:((?:bib(?:la)?)?tex\.)?([^:]+)(:)\s*([^}]+)}$/i,
+  new: /^((?:bib(?:la)?)?tex\.)?([^:=]+)\s*([:=])\s*([\S\s]*)/i,
+  quoted: /^((?:bib(?:la)?)?tex\.)"([^"]+)"\s*([:=])\s*([\S\s]*)/i,
+  ck: /^(citation[ -]?key|bibtex):(?<citationKey>.*)/i,
+}
+
+export function citationKey(extra: string): { citationKey: string; extra: string } {
+  let ck = ''
+  let m: RegExpMatchArray
+  extra = (extra || '').split('\n').filter(line => {
+    if (m = line.match(re.ck)) {
+      ck = m.groups.citationKey.trim()
+      return false
+    }
+    return true
+  }).join('\n')
+  return { extra, citationKey: ck }
 }
 
 export type Fields = {
@@ -14,7 +35,6 @@ export type Fields = {
   creator: Record<string, string[]>
   creators: Creator[]
   tex: Record<string, TeXString>
-  citationKey: string
   aliases: string[]
 }
 
@@ -44,21 +64,12 @@ export function zoteroCreator(value: string, creatorType: string): ZoteroCreator
   }
 }
 
-const re = {
-  // fetch fields as per https://forums.zotero.org/discussion/3673/2/original-date-of-publication/. Spurious 'tex.' so I can do a single match
-  old: /^{:((?:bib(?:la)?)?tex\.)?([^:]+)(:)\s*([^}]+)}$/i,
-  new: /^((?:bib(?:la)?)?tex\.)?([^:=]+)\s*([:=])\s*([\S\s]*)/i,
-  quoted: /^((?:bib(?:la)?)?tex\.)"([^"]+)"\s*([:=])\s*([\S\s]*)/i,
-}
-
 type SetOptions = {
-  citationKey?: string
   aliases?: string[]
   kv?: Record<string, string | string[]>
   tex?: Record<string, TeXString>
 }
 type GetOptions = SetOptions | {
-  citationKey?: boolean
   aliases?: boolean
   kv?: boolean
   tex?: boolean
@@ -72,11 +83,9 @@ const casing = {
 export function get(extra: string, mode: 'zotero' | 'csl', options?: GetOptions): { extra: string; extraFields: Fields } {
   let defaults = false
   if (!options) {
-    options = { citationKey: true, aliases: true, kv: true, tex: true }
+    options = { aliases: true, kv: true, tex: true }
     defaults = true
   }
-
-  const other = { zotero: 'csl', csl: 'zotero' }[mode]
 
   extra = extra || ''
 
@@ -86,7 +95,6 @@ export function get(extra: string, mode: 'zotero' | 'csl', options?: GetOptions)
     creator: {},
     creators: [],
     tex: options.tex || defaults ? {} : undefined,
-    citationKey: '',
     aliases: options.aliases || defaults ? [] : undefined,
   }
 
@@ -106,17 +114,13 @@ export function get(extra: string, mode: 'zotero' | 'csl', options?: GetOptions)
     key = key.trim()
     value = value.trim()
     extraFields.raw[key.toLowerCase()] = value
+
     if (tex) {
       key = key.toLowerCase()
     }
     else {
       // retain leading dash or underscore
       key = key.replace(/(?!^)[-_]/g, ' ').replace(/([a-z])([A-Z])/g, '$1 $2').toLowerCase()
-    }
-
-    if (options.citationKey && !tex && [ 'citation key', 'bibtex' ].includes(key)) {
-      extraFields.citationKey = value
-      return false
     }
 
     if (options.aliases && !tex && key === 'citation key alias') {
@@ -134,23 +138,20 @@ export function get(extra: string, mode: 'zotero' | 'csl', options?: GetOptions)
       return false
     }
 
-    if (options.kv && key !== 'citation key' && (ef = mapping[key]) && !tex) {
-      for (const field of (ef[mode] || ef[other])) {
-        switch (ef.type) {
-          case 'name':
-            extraFields.creator[field] = extraFields.creator[field] || []
-            extraFields.creator[field].push(value)
-            extraFields.creators.push({ name: value, type: field })
-            break
-          case 'text':
-          case 'date':
-            extraFields.kv[field] = value
-            break
-          default:
-            throw new Error(`Unexpected extra field type ${ ef.type }`)
-        }
+    const [ primary, secondary ] = mode === 'csl' ? ['csl', 'zotero'] : ['zotero', 'csl']
+    if (options.kv && (!tex && (ef = Schema.labeled[primary][key] || Schema.labeled[secondary][key]))) {
+      switch (ef.type) {
+        case 'name':
+          extraFields.creator[ef.field] ??= []
+          extraFields.creator[ef.field].push(value)
+          extraFields.creators.push({ name: value, type: ef.field })
+          return false
+
+        case 'text':
+        case 'date':
+          extraFields.kv[ef.field] = value
+          return false
       }
-      return false
     }
 
     if (options.tex && tex && !key.includes(' ')) {
@@ -166,15 +167,13 @@ export function get(extra: string, mode: 'zotero' | 'csl', options?: GetOptions)
     return true
   }).join('\n').trim()
 
-  extraFields.aliases = Array.from(new Set(extraFields.aliases)).filter(key => key !== extraFields.citationKey)
+  extraFields.aliases = Array.from(new Set(extraFields.aliases))
 
   return { extra, extraFields }
 }
 
 export function set(extra: string, options: SetOptions = {}): string {
   const parsed = get(extra, 'zotero', options)
-
-  if (options.citationKey) parsed.extra += `\nCitation Key: ${ options.citationKey }`
 
   if (options.aliases?.length) {
     const aliases = Array.from(new Set(options.aliases)).sort().join(', ')

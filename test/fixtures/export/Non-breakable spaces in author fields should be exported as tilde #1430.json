@@ -11,7 +11,7 @@
       "autoExportDelay": 1,
       "bibtexParticleNoOp": true,
       "bibtexURL": "url",
-      "citekeyFormat": "[auth:lower][shorttitle4_4][year]",
+      "citekeyFormat": "auth(n=0,m=1,creator=\"*\",initials=false).fold.lower + shorttitle(4,4) + year",
       "extraMergeCSL": true,
       "extraMergeCitekeys": true,
       "extraMergeTeX": true,
@@ -29,7 +29,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "name": "JTC\u00a01/SC\u00a022/WG\u00a014"
+          "name": "JTC 1/SC 22/WG 14"
         }
       ],
       "date": "1999-12-01",
@@ -42,7 +42,7 @@
       "number": "9899:1999",
       "publisher": "ISO/IEC",
       "shortTitle": "C99",
-      "title": "Programming languages \u2014 C",
+      "title": "Programming languages — C",
       "type": "std",
       "url": "https://www.iso.org/standard/29237.html"
     }

@@ -1,12 +1,12 @@
 #!/usr/bin/env node
 
-const xpath = require('xpath')
-const fs = require('fs')
-const path = require('path')
-const ejs = require('ejs')
-const DOMParser = require('@xmldom/xmldom').DOMParser
-const jsesc = require('jsesc')
-const _ = require('lodash')
+import xpath from 'xpath'
+import fs from 'fs'
+import path from 'path'
+import ejs from 'ejs'
+import { DOMParser } from '@xmldom/xmldom'
+import jsesc from 'jsesc'
+import _ from 'lodash'
 
 // TODO: make sure to occasionally check https://sourceforge.net/projects/biblatex-biber/files/biblatex-biber/testfiles/ for updates.
 
@@ -162,7 +162,7 @@ function bibertool(source) {
   BiberTool.fieldSet = jsesc(fieldSet, { compact: false, indent: '  ' })
 
   // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-  return ejs.render(fs.readFileSync(path.join(__dirname, 'bibertool.ejs'), 'utf8'), BiberTool)
+  return ejs.render(fs.readFileSync('setup/bibertool.ejs', 'utf8'), BiberTool)
 }
 
-fs.writeFileSync(path.join(__dirname, '../gen/biber-tool.ts'), bibertool(fs.readFileSync(path.join(__dirname, '../submodules/biber/data/biber-tool.conf'), 'utf-8')))
+fs.writeFileSync('gen/biber-tool.ts', bibertool(fs.readFileSync('submodules/biber/data/biber-tool.conf', 'utf-8')))

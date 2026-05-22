@@ -8,7 +8,7 @@
     },
     "preferences": {
       "bibtexURL": "note",
-      "citekeyFormat": "[auth][year]"
+      "citekeyFormat": "auth(n=0,m=1,creator=\"*\",initials=false).fold + year"
     }
   },
   "items": [
@@ -20,7 +20,7 @@
         {
           "creatorType": "author",
           "firstName": "Antonio",
-          "lastName": "Ac\u00edn"
+          "lastName": "Acín"
         },
         {
           "creatorType": "author",
@@ -44,7 +44,7 @@
       "libraryCatalog": "APS",
       "pages": "120405",
       "publicationTitle": "Physical Review Letters",
-      "title": "From Bell\u2019s Theorem to secure quantum key distribution",
+      "title": "From Bell’s Theorem to secure quantum key distribution",
       "url": "http://link.aps.org/doi/10.1103/PhysRevLett.97.120405",
       "volume": "97"
     }

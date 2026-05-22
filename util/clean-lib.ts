@@ -4,7 +4,6 @@
 
 import AJV from 'ajv'
 const ajv = new AJV
-const validate = ajv.compile(require('../schema/BetterBibTeX JSON.json'))
 import * as jsonpatch from 'fast-json-patch'
 
 import { normalize } from '../translators/lib/normalize'
@@ -59,6 +58,7 @@ function clean(item) {
   delete item.contentType
   delete item.filename
   delete item.defaultPath
+  delete item.linkMode
 }
 
 for (const lib of argv._) {
@@ -118,11 +118,6 @@ for (const lib of argv._) {
     case '.csl.json':
       // post.sort((a, b) => stringify(a).localeCompare(stringify(b)))
       break
-  }
-
-  if (!validate(post)) {
-    console.log(lib)
-    console.log(validate.errors)
   }
 
   const diff = jsonpatch.compare(pre, post)

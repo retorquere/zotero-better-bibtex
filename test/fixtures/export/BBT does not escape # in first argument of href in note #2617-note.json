@@ -11,7 +11,6 @@
   },
   "items": [
     {
-      "citationKey": "theauthor2023",
       "creators": [
         {
           "creatorType": "author",
@@ -27,7 +26,6 @@
       "title": "TheTitle"
     },
     {
-      "citationKey": "TheKey",
       "creators": [
         {
           "creatorType": "author",

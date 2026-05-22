@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-unsafe-argument, prefer-rest-params, @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-unsafe-return */
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 
 declare const Cc: any
 declare const Ci: any
@@ -20,40 +20,13 @@ type ReasonId = keyof typeof BOOTSTRAP_REASONS
 export type Reason = typeof BOOTSTRAP_REASONS[ReasonId]
 
 function log(msg) {
-  msg = `{better-bibtex} bootstrap: ${ msg }`
+  msg = `{better-bibtex} bootstrap: ${msg}`
   if (Zotero?.debug) {
-    Zotero.debug(`Better BibTeX bootstrap: ${ msg }`) // eslint-disable-line no-restricted-syntax
+    Zotero.debug(`Better BibTeX bootstrap: ${msg}`) // eslint-disable-line no-restricted-syntax
   }
   else {
-    dump(`${ msg }\n`) // eslint-disable-line no-restricted-syntax
+    dump(`${msg}\n`) // eslint-disable-line no-restricted-syntax
   }
-}
-
-// Loads default preferences from prefs.js in Zotero 6
-function setDefaultPrefs(rootURI) {
-  const branch = Services.prefs.getDefaultBranch('')
-  const obj = {
-    pref: (pref, value) => {
-      switch (typeof value) {
-        case 'boolean':
-          branch.setBoolPref(pref, value)
-          break
-        case 'string':
-          branch.setStringPref(pref, value)
-          break
-        case 'number':
-          branch.setIntPref(pref, value)
-          break
-        default:
-          log(`Invalid type '${ typeof (value) }' for pref '${ pref }'`)
-      }
-    },
-  }
-  Services.scriptloader.loadSubScriptWithOptions(`${ rootURI }prefs.js`, {
-    target: obj,
-    charset: 'utf-8',
-    // ignoreCache: true
-  })
 }
 
 export function install(_data: any, _reason: ReasonId) {
@@ -62,7 +35,6 @@ export function install(_data: any, _reason: ReasonId) {
 
 export function onMainWindowLoad({ window }) {
   log('onMainWindowLoad')
-  window.MozXULElement.insertFTLIfNeeded('better-bibtex.ftl')
   Zotero.BetterBibTeX.onMainWindowLoad({ window })
 }
 
@@ -77,15 +49,21 @@ export async function startup({ resourceURI, rootURI = resourceURI.spec }, reaso
     log('startup started')
 
     const aomStartup = Cc['@mozilla.org/addons/addon-manager-startup;1'].getService(Ci.amIAddonManagerStartup)
-    const manifestURI = Services.io.newURI(`${ rootURI }manifest.json`)
-    chromeHandle = aomStartup.registerChrome(manifestURI, require('../gen/chrome.json'))
+    const manifestURI = Services.io.newURI(`${rootURI}manifest.json`)
+    log(manifestURI.spec)
+    chromeHandle = aomStartup.registerChrome(manifestURI, [
+      ['content', 'zotero-better-bibtex', 'content/'],
+      ['locale', 'zotero-better-bibtex', 'en-US', 'locale/en-US/'],
+      ['locale', 'zotero-better-bibtex', 'fr-FR', 'locale/fr-FR/'],
+      ['locale', 'zotero-better-bibtex', 'pt-BR', 'locale/pt-BR/'],
+      ['locale', 'zotero-better-bibtex', 'zh-CN', 'locale/zh-CN/'],
+      ['locale', 'zotero-better-bibtex', 'it-IT', 'locale/it-IT/'],
+    ])
 
     if (Zotero.BetterBibTeX) throw new Error('Better BibTeX is already started')
 
-    setDefaultPrefs(rootURI)
-
-    const $window = Cc['@mozilla.org/appshell/appShellService;1'].getService(Ci.nsIAppShellService).hiddenDOMWindow
-    Services.scriptloader.loadSubScriptWithOptions(`${ rootURI }content/better-bibtex.js`, {
+    // const $window = Zotero.getMainWindow()
+    Services.scriptloader.loadSubScriptWithOptions(`${rootURI}content/better-bibtex.js`, {
       charset: 'utf=8',
       // ignoreCache: true,
       target: {
@@ -94,42 +72,22 @@ export async function startup({ resourceURI, rootURI = resourceURI.spec }, reaso
         rootURI,
 
         // to pacify libraries that do env-detection
-        window: $window,
-        document: $window.document,
+        // window: $window,
+        // document: $window.document,
 
         setTimeout,
         clearTimeout,
         setInterval,
         clearInterval,
-
-        /*
-        // indexedDB: $window.indexedDB,
-        IDBRequest: $window.IDBRequest,
-        IDBTransaction: $window.IDBTransaction,
-        IDBDatabase: $window.IDBDatabase,
-        IDBObjectStore: $window.IDBObjectStore,
-        IDBIndex: $window.IDBIndex,
-        IDBCursor: $window.IDBCursor,
-        IDBKeyRange: $window.IDBKeyRange,
-        Event: $window.Event,
-        */
       },
     })
 
     await Zotero.BetterBibTeX.startup(BOOTSTRAP_REASONS[reason])
-    Zotero.PreferencePanes.register({
-      pluginID: 'better-bibtex@iris-advies.com',
-      src: `${ rootURI }content/preferences.xhtml`,
-      stylesheets: [`${ rootURI }content/preferences.css`],
-      label: 'Better BibTeX',
-      defaultXUL: true,
-    })
     log('startup done')
-    onMainWindowLoad({ window: Zotero.getMainWindow() })
   }
   catch (err) {
-    alert({ title: 'Better BibTeX startup failed', text: `${ err }` })
-    log(`${ err }\n${ err.stack }`)
+    alert({ title: 'Better BibTeX startup failed', text: `${err}\n${err.stack}` })
+    log(`${err}\n${err.stack}`)
   }
 }
 
@@ -148,11 +106,11 @@ export async function shutdown(data: any, reason: ReasonId) {
       delete Zotero.BetterBibTeX
       log('BBT deleted')
     }
-    log('shutdown done')
+    log('bootstrap: shutdown: done')
   }
   catch (err) {
-    alert({ title: 'Better BibTeX shutdown failed', text: `${ err }` })
-    log(`${ err }\n${ err.stack }`)
+    alert({ title: 'Better BibTeX shutdown failed', text: `${err}` })
+    log(`${err}\n${err.stack}`)
   }
 }
 

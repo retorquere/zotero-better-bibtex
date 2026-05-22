@@ -1,4 +1,4 @@
-import YAML = require('js-yaml')
+import YAML from 'js-yaml'
 import { Date as CSLDate, Data as CSLItem, LooseNumber } from 'csl-json'
 
 import type { Collected } from '../lib/collect'
@@ -8,7 +8,7 @@ import type { MarkupNode } from '../../typings/markup'
 
 import { CSLExporter } from './csl'
 import { log } from '../../content/logger'
-import { ParsedDate } from '../../content/dateparser'
+import { RichDate, century } from '../../content/dateparser'
 import { HTMLParser } from '../../content/text'
 
 const htmlConverter = new class HTML {
@@ -136,7 +136,7 @@ function date2csl(date): [LooseNumber, LooseNumber?, LooseNumber?] { // fudge fo
 }
 
 class Exporter extends CSLExporter {
-  public date2CSL(date: ParsedDate): CSLDate { // fudge for CSL-YAML dates
+  public date2CSL(date: RichDate): CSLDate { // fudge for CSL-YAML dates
     switch (date.type) {
       case 'date':
       case 'open':
@@ -149,7 +149,11 @@ class Exporter extends CSLExporter {
       case 'verbatim':
         return [{ literal: date.verbatim }] as unknown as CSLDate
 
+      case 'century':
+        return [{ literal: century(date.century) }] as unknown as CSLDate
+
       default:
+        if (!date.type && date.orig) return null // handled by orig-handler
         throw new Error(`Unexpected date type ${ JSON.stringify(date) }`)
     }
   }
@@ -175,5 +179,5 @@ export function generateCSLYAML(collected: Collected): Translation {
 
 export function parseCSLYAML(input: string): any {
   input = input.replace(/\n---[\r\n]*$/, '\n...\n')
-  return YAML.load(input) // eslint-disable-line @typescript-eslint/no-unsafe-return
+  return YAML.load(input)
 }

@@ -1,24 +1,19 @@
-/* eslint-disable @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-assignment */
-
 declare const Zotero: any
 
 import { Translation } from '../lib/translator'
 
-import { simplifyForExport } from '../../gen/items/simplify'
+import { Schema, simplifyForExport } from '../../content/item-schema'
 import { Fields as ParsedExtraFields, get as getExtra, cslCreator } from '../../content/extra'
-import type { ExportedItem } from '../../content/db/cache'
-import * as ExtraFields from '../../gen/items/extra-fields.json'
+import type { ExportedItem } from '../../content/worker/cache'
 import { log } from '../../content/logger'
-import { RegularItem } from '../../gen/typings/serialized-item'
+import { Serialized } from '../../gen/typings/serialized'
 import * as postscript from '../lib/postscript'
 import * as dateparser from '../../content/dateparser'
 import { Date as CSLDate, Data as CSLItem } from 'csl-json'
 import { babelLanguage } from '../../content/text'
 import BabelTag from '../../gen/babel/tag.json'
 
-type ExtendedItem = RegularItem & { extraFields: ParsedExtraFields }
-
-const CSLField = require('../../gen/items/csl.json')
+type ExtendedItem = Serialized.RegularItem & { extraFields: ParsedExtraFields }
 
 const keyOrder = [
   'id',
@@ -33,7 +28,7 @@ export abstract class CSLExporter {
   private translation: Translation
   protected abstract flush(items: string[]): string
   protected abstract serialize(items: CSLItem): string
-  protected abstract date2CSL(date: dateparser.ParsedDate): CSLDate
+  protected abstract date2CSL(date: dateparser.RichDate): CSLDate
 
   constructor(translation: Translation) {
     this.translation = translation
@@ -76,12 +71,15 @@ export abstract class CSLExporter {
 
       let csl = Zotero.Utilities.Item.itemToCSLJSON(item)
 
+      // #3327
+      for (const field of ['page', 'issue', 'volume']) {
+        if (csl[field]) csl[field] = csl[field].replace(/(?<=(^|,)\s*\d+)\s*-\s*(?=\d+\s*(,|$))/g, '\u2013')
+      }
+
       csl['citation-key'] = item.citationKey
       if (this.translation.collected.displayOptions.custom) csl.custom = { uri: item.uri, itemID: item.itemID }
 
       if (Zotero.worker) csl.note = item.extra || undefined
-
-      if (item.place) csl[item.itemType === 'presentation' ? 'event-place' : 'publisher-place'] = item.place
 
       // https://github.com/retorquere/zotero-better-bibtex/issues/811#issuecomment-347165389
       if (item.ISBN) csl.ISBN = item.ISBN
@@ -90,10 +88,20 @@ export abstract class CSLExporter {
 
       if (csl.journalAbbreviation) [ csl.journalAbbreviation, csl['container-title-short'] ] = [ csl['container-title-short'], csl.journalAbbreviation ]
 
-      if (item.date) {
-        const parsed = dateparser.parse(item.date)
-        if (parsed.type) csl.issued = this.date2CSL(parsed) // possible for there to be an orig-date only
-        if (parsed.orig) csl['original-date'] = this.date2CSL(parsed.orig)
+      const extraFields: ParsedExtraFields = structuredClone(item.extraFields)
+      const date = dateparser.parse(item.date, item.originalDate || extraFields.kv.originalDate)
+
+      try {
+        // preconvert both so the values get set only if both are convertable
+        const issued = (date.type || 'open') === 'open' ? undefined : this.date2CSL(date)
+        const original = (date.orig?.type || 'open') === 'open' ? undefined : this.date2CSL(date.orig)
+
+        if (issued) csl.issued = issued
+        if (original) csl['original-date'] = original
+      }
+      catch (err) {
+        log.error('could not convert CSL date', { input: item.date, date }, err)
+        csl.issued = { literal: item.date }
       }
 
       if (item.accessDate) csl.accessed = this.date2CSL(dateparser.parse(item.accessDate))
@@ -105,59 +113,55 @@ export abstract class CSLExporter {
 
       if (csl.type === 'broadcast' && csl.genre === 'television broadcast') delete csl.genre
 
-      const extraFields: ParsedExtraFields = JSON.parse(JSON.stringify(item.extraFields))
-
       // special case for #587... not pretty
       // checked separately because .type isn't actually a CSL var so wouldn't pass the ef.type test below
-      if (!CSLField.type.enum.includes(item.extraFields.kv['csl-type']) && CSLField.type.enum.includes(item.extraFields.kv.type)) {
+      if (!Schema.csl.type.enum.includes(item.extraFields.kv['csl-type']) && Schema.csl.type.enum.includes(item.extraFields.kv.type)) {
         csl.type = item.extraFields.kv.type
         delete item.extraFields.kv.type
       }
 
-      for (const [ name, value ] of Object.entries(item.extraFields.kv)) {
+      const extra: Set<string> = new Set
+      for (const [ fieldName, value ] of Object.entries(item.extraFields.kv)) {
+        extra.add(fieldName)
         if (!value) continue
 
-        const cslField = CSLField[name]
-        if (cslField) {
-          if (cslField.type === 'string' && cslField.enum?.includes(value)) {
-            csl[name] = value
-            delete item.extraFields.kv[name]
-            continue
-          }
-          if (cslField.$ref === '#/definitions/date-variable') {
-            csl[name] = this.date2CSL(dateparser.parse(value))
-            delete item.extraFields.kv[name]
-            continue
-          }
-          if (cslField.type === 'string' || (Array.isArray(cslField.type) || cslField.type.join(',') === 'number,string')) {
-            csl[name] = value
-            delete item.extraFields.kv[name]
-            continue
-          }
-        }
+        const type = Schema.csl[fieldName]
+        if (!type) continue
 
-        const ef = ExtraFields[name]
-        if (!ef?.csl) continue
-
-        if (ef.type === 'date') {
-          csl[name] = this.date2CSL(dateparser.parse(value))
+        if (type.type === 'string' && (!type.enum || type.enum.includes(value))) {
+          csl[fieldName] = value
         }
-        else if (name === 'csl-type') {
-          if (!CSLField.type.enum.includes(value)) continue // and keep the kv variable, maybe for postscripting
+        else if (type.$ref === '#/definitions/date-variable') {
+          csl[fieldName] = this.date2CSL(dateparser.parse(value))
+        }
+        else if (type.type === 'string' || (Array.isArray(type.type) && type.type.find(t => ['number', 'string'].includes(t)))) {
+          csl[fieldName] = value
+        }
+        else if (fieldName === 'csl-type') {
+          if (!type.type.enum.includes(value)) continue // and keep the kv variable, maybe for postscripting
           csl.type = value
         }
-        else if (!csl[name]) {
-          csl[name] = value
+        else {
+          continue // skip out of the loop, keep the kv-var
         }
 
-        delete item.extraFields.kv[name]
+        delete item.extraFields.kv[fieldName]
       }
 
-      for (const [ field, value ] of Object.entries(item.extraFields.creator)) {
-        if (!ExtraFields[field].csl) continue
-        csl[field] = value.map(cslCreator)
+      for (const [ fieldName, value ] of Object.entries(item.extraFields.creator)) {
+        if (Schema.csl[fieldName]) {
+          extra.add(fieldName)
+          csl[fieldName] = [ ...(csl[fieldName] || []), ...value.map(cslCreator) ]
+          delete item.extraFields.creator[fieldName]
+        }
+      }
 
-        delete item.extraFields.creator[field]
+      if (item.place && !csl['event-place'] && !csl['publisher-place']) {
+        csl[item.itemType === 'presentation' ? 'event-place' : 'publisher-place'] = item.place
+      }
+      if (!extra.has('event-place') && item.itemType === 'videoRecording' && csl['event-place'] && !csl['publisher-place']) {
+        csl['publisher-place'] = csl['event-place']
+        delete csl['event-place']
       }
 
       /* Juris-M workarounds to match Zotero as close as possible */
@@ -174,7 +178,6 @@ export abstract class CSLExporter {
 
       let allow: postscript.Allow = { cache: true, write: true }
       try {
-        // eslint-disable-next-line @typescript-eslint/unbound-method
         allow = this.postscript(csl, item, this.translation, Zotero, extraFields)
       }
       catch (err) {
@@ -210,7 +213,7 @@ export abstract class CSLExporter {
     return a.localeCompare(b, undefined, { sensitivity: 'base' })
   }
 
-  private sortObject(obj) {
+  private sortObject(obj: any): any {
     if (obj && !Array.isArray(obj) && typeof obj === 'object') {
       // eslint-disable-next-line @typescript-eslint/unbound-method
       for (const field of Object.keys(obj).sort(this.keySort)) {

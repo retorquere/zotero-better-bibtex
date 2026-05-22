@@ -8,6 +8,14 @@ on:
 
 jobs:
   build:
+    if: >-
+      github.event_name == 'pull_request' ||
+      github.event_name == 'schedule' ||
+      startsWith(github.ref, 'refs/tags/') ||
+      (github.ref != 'refs/heads/master' && github.ref != 'refs/heads/l10n_master')
+      ||
+      (github.ref == 'refs/heads/master' && !contains(github.event.head_commit.message,
+      '[tagged build]'))
     outputs:
       bin_ids: ${{ env.bin_ids }}
       bins: ${{ env.bins }}
@@ -15,22 +23,19 @@ jobs:
       slow: ${{ env.slow }}
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
+    - name: Checkout repository
+      uses: actions/checkout@v6
       with:
         persist-credentials: false
-        submodules: true  # Fetch Hugo themes (true OR recursive)
-        fetch-depth: 0    # Fetch all history for .GitInfo and .Lastmod
+        fetch-depth: 1
+        submodules: recursive
+
     - name: get package version
       run: echo "version="`jq -r .version package.json` >> $GITHUB_ENV
-    - name: cancel spurious build on tagged version
-      uses: andymckay/cancel-action@master
-      if: github.event.head_commit.message == env.version && !startsWith(github.ref,
-        'refs/tags/')
-
     - name: install python
-      uses: actions/setup-python@v5
+      uses: actions/setup-python@v6
       with:
-        python-version: '3.10'
+        python-version: '3.12'
         cache: pip
     - name: install python packages
       run: |
@@ -38,23 +43,12 @@ jobs:
         pip install packaging xvfbwrapper
         pip install -r requirements.txt
     - name: install node
-      uses: actions/setup-node@v4
+      uses: actions/setup-node@v6
       with:
-        node-version: 20.x
-    - name: Cache python/node dependencies
-      id: cache
-      uses: actions/cache@v4
-      env:
-        cache-name: v3
-      with:
-        path: |
-          ~/.npm
-        key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('package-lock.json')
-          }}-${{ hashFiles('requirements.txt') }}
+        node-version: 24.x
     - name: install node packages
-      run: npm install
-
-    - name: set slow/legacy/beta flags
+      run: npm install --no-package-lock && npm ls
+    - name: set slow/beta/legacy/whopper flags
       run: ./util/action-flags
       env:
         GITHUB_CONTEXT: ${{ toJson(github) }}
@@ -66,8 +60,9 @@ jobs:
 
     - name: balance tests
       id: balance
-      run: ./util/balance.py --durations test/balance/durations.json --bins test/balance/bins.json
-        --minutes 10 ${{ env.slow }} ${{ env.beta }} ${{ env.legacy }}
+      run: ./util/balance.py --durations test/balance/durations.json --bins 
+        test/balance/bins.json --minutes 10 ${{ env.slow }} ${{ env.beta }} ${{ 
+        env.legacy }}
 
     - name: build ${{ env.beta }} ${{ env.legacy }}
       run: npm run build
@@ -80,7 +75,7 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     - name: store build artifacts
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v7
       with:
         name: build-artifacts
         path: |
@@ -89,22 +84,53 @@ jobs:
           test/balance/
         retention-days: 1
 
-    # site
-    - name: build site
-      uses: peaceiris/actions-hugo@v3
-      if: ${{ github.event_name == 'push' && (github.ref == 'refs/heads/master' ||
-        startsWith(github.ref, 'refs/tags/')) }}
+  site:
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    if: github.event_name == 'push' && github.ref == 'refs/heads/master' && 
+      !contains(github.event.head_commit.message, '[tagged build]')
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v6
       with:
-        hugo-version: latest
-        extended: true
+        persist-credentials: false
+        fetch-depth: 1
+        submodules: recursive
+
+    - name: install python
+      uses: actions/setup-python@v6
+      with:
+        python-version: '3.12'
+        cache: pip
+    - name: install python packages
+      run: |
+        python -m pip install --upgrade pip
+        pip install packaging xvfbwrapper
+        pip install -r requirements.txt
+    - name: install node
+      uses: actions/setup-node@v6
+      with:
+        node-version: 24.x
+    - name: install node packages
+      run: npm install --no-package-lock && npm ls
+    - name: Install Latest Hugo
+      run: |
+        python3 -c '
+        import urllib.request, json
+        with urllib.request.urlopen("https://api.github.com/repos/gohugoio/hugo/releases/latest") as r:
+          assets = json.loads(r.read())["assets"]
+        target = next(a["browser_download_url"] for a in assets if all(x in a["name"] for x in ["hugo_extended", "linux-amd64", ".tar.gz"]))
+        print(f"Downloading {target}...")
+        urllib.request.urlretrieve(target, "hugo.tar.gz")
+        '
+        tar -xzf hugo.tar.gz hugo
+        sudo mv hugo /usr/local/bin/
+        hugo version
     - name: prepare docs for deploy
       run: npm run docs:deploy
-      if: ${{ github.event_name == 'push' && (github.ref == 'refs/heads/master' ||
-        startsWith(github.ref, 'refs/tags/')) }}
     - name: deploy site
       uses: peaceiris/actions-gh-pages@v4
-      if: ${{ github.event_name == 'push' && (github.ref == 'refs/heads/master' ||
-        startsWith(github.ref, 'refs/tags/')) }}
+      if: ${{ success() }}
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         publish_dir: ./site/public
@@ -120,41 +146,46 @@ jobs:
         client: ${{ fromJSON(needs.build.outputs.clients) }}
         worker: [--worker, --no-worker]
     steps:
-    - uses: actions/checkout@v4
+    - name: Checkout repository
+      uses: actions/checkout@v6
+      with:
+        persist-credentials: false
+        fetch-depth: 1
+        submodules: recursive
+
     - name: fetch build artifacts
-      uses: actions/download-artifact@v4
+      uses: actions/download-artifact@v8
       with:
         name: build-artifacts
     - name: install python
-      uses: actions/setup-python@v5
+      uses: actions/setup-python@v6
       with:
-        python-version: '3.10'
+        python-version: '3.12'
         cache: pip
     - name: install python packages
       run: |
         python -m pip install --upgrade pip
         pip install packaging xvfbwrapper
         pip install -r requirements.txt
-    - name: Cache python/node dependencies
-      id: cache
-      uses: actions/cache@v4
-      env:
-        cache-name: v3
-      with:
-        path: |
-          ~/.npm
-        key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('package-lock.json')
-          }}-${{ hashFiles('requirements.txt') }}
+
+    - name: Set system-wide proxy using PAC URL
+      run: |
+        echo "auto_proxy=http://proxy-doc.ird.fr/proxy.pac" | sudo tee -a /etc/environment
+        echo "auto_proxy=http://proxy-doc.ird.fr/proxy.pac" >> $GITHUB_ENV
+
+    - name: Verify proxy settings
+      run: env | grep -i proxy
 
     - name: install ${{ matrix.client }}
       run: |
         curl -sL https://raw.githubusercontent.com/retorquere/zotero-deb/master/install.sh | sudo bash
         sudo apt-get update
         sudo apt-get install ${{ matrix.client }}
-        sudo apt-get install mesa-utils libegl1-mesa xvfb
-        curl -LO https://github.com/jgm/pandoc/releases/download/3.1.11.1/pandoc-3.1.11.1-linux-amd64.tar.gz
-        tar xvzf pandoc-3.1.11.1-linux-amd64.tar.gz
-        sudo mv pandoc-3.1.11.1/bin/pandoc /usr/bin
+        sudo apt-get install mesa-utils xvfb libegl1 libgl1 libdbus-glib-1-2
+        sudo apt-get install wmctrl xdotool
+        curl -s https://api.github.com/repos/jgm/pandoc/releases/latest | jq -r '.assets[] | select(.name | endswith("linux-amd64.tar.gz")) | .browser_download_url' | xargs wget -q -O pandoc.tar.gz
+        tar xvzf pandoc.tar.gz
+        sudo mv pandoc*/bin/pandoc /usr/bin
         pandoc -v
 
         # preserve log hierarchy
@@ -164,10 +195,10 @@ jobs:
 
     - name: Run tests
       # continue-on-error: ${{ matrix.client == 'jurism' }}
-      run: ./test/behave --client ${{ matrix.client }} ${{ matrix.worker }} --format
-        ci --bin ${{ matrix.bin }} --bins ${{ needs.build.outputs.bins }} --durations
-        test/stats/durations--${{ matrix.client }}--${{ matrix.bin }}${{ matrix.worker
-        }}.json ${{ needs.build.outputs.slow }}
+      run: ./test/behave --client ${{ matrix.client }} ${{ matrix.worker }} 
+        --bin ${{ matrix.bin }} --bins ${{ needs.build.outputs.bins }} 
+        --durations test/stats/durations--${{ matrix.client }}--${{ matrix.bin 
+        }}${{ matrix.worker }}.json ${{ needs.build.outputs.slow }}
       env:
         PYTHONUNBUFFERED: true
 
@@ -181,20 +212,20 @@ jobs:
       if: ${{ failure() || cancelled() }}
       uses: actions/upload-artifact@v4
       with:
-        name: debug-log--${{ matrix.client }}--${{ matrix.bin }}${{ matrix.worker
-          }}
+        name: debug-log--${{ matrix.client }}--${{ matrix.bin }}${{ 
+          matrix.worker }}
         path: |
           ~/BBTTEST*.txt
           exported/
         retention-days: 5
 
     - name: store test artifacts
-      if: matrix.client == 'zotero' && matrix.worker == '--worker' && github.event_name
-        == 'push' && github.ref == 'refs/heads/master'
+      if: matrix.client == 'zotero' && matrix.worker == '--worker' && 
+        github.event_name == 'push' && github.ref == 'refs/heads/master'
       uses: actions/upload-artifact@v4
       with:
-        name: test-artifacts--${{ matrix.client }}--${{ matrix.bin }}${{ matrix.worker
-          }}
+        name: test-artifacts--${{ matrix.client }}--${{ matrix.bin }}${{ 
+          matrix.worker }}
         path: ./*/stats/durations*
         retention-days: 2
 
@@ -209,16 +240,22 @@ jobs:
     needs: test
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
+    - name: Checkout repository
+      uses: actions/checkout@v6
+      with:
+        persist-credentials: false
+        fetch-depth: 1
+        submodules: recursive
+
 
     - name: fetch build artifacts
-      uses: actions/download-artifact@v4
+      uses: actions/download-artifact@v8
       with:
         name: build-artifacts
     - name: install python
-      uses: actions/setup-python@v5
+      uses: actions/setup-python@v6
       with:
-        python-version: '3.10'
+        python-version: '3.12'
         cache: pip
     - name: install python packages
       run: |
@@ -226,23 +263,13 @@ jobs:
         pip install packaging xvfbwrapper
         pip install -r requirements.txt
     - name: install node
-      uses: actions/setup-node@v4
+      uses: actions/setup-node@v6
       with:
-        node-version: 20.x
-    - name: Cache python/node dependencies
-      id: cache
-      uses: actions/cache@v4
-      env:
-        cache-name: v3
-      with:
-        path: |
-          ~/.npm
-        key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('package-lock.json')
-          }}-${{ hashFiles('requirements.txt') }}
+        node-version: 24.x
     - name: install node packages
-      run: npm install
+      run: npm install --no-package-lock && npm ls
 
-
+    - run: find xpi -type f
     - run: npm run release
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -260,17 +287,24 @@ jobs:
           }
 
   durations:
-    if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+    if: github.event_name == 'push' && github.ref == 'refs/heads/master' && 
+      !contains(github.event.head_commit.message, '[tagged build]')
     needs:
     - build
     - test
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
-    - name: install python
-      uses: actions/setup-python@v5
+    - name: Checkout repository
+      uses: actions/checkout@v6
       with:
-        python-version: '3.10'
+        persist-credentials: false
+        fetch-depth: 1
+        submodules: recursive
+
+    - name: install python
+      uses: actions/setup-python@v6
+      with:
+        python-version: '3.12'
         cache: pip
     - name: install python packages
       run: |
@@ -278,13 +312,13 @@ jobs:
         pip install packaging xvfbwrapper
         pip install -r requirements.txt
     - name: fetch test artifacts
-      uses: actions/download-artifact@v4
+      uses: actions/download-artifact@v8
       with:
         pattern: test-artifacts--*
         merge-multiple: true
     - name: collect test data
-      run: jq -s add test/stats/durations--*.json > test/stats/durations${{ needs.build.outputs.slow
-        }}.json
+      run: jq -s add test/stats/durations--*.json > test/stats/durations${{ 
+        needs.build.outputs.slow }}.json
     - name: Store build stats
       run: |
         gh release upload builds test/stats/durations${{ needs.build.outputs.slow }}.json --clobber --repo ${{ github.repository }}

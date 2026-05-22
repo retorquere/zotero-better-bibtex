@@ -7,8 +7,8 @@
     "preferences": {
       "autoAbbrevStyle": "http://www.zotero.org/styles/nature",
       "bibtexURL": "note",
-      "citekeyFormat": "[auth:lower][Title:fold:nopunct:skipwords:select,1,1:lower:alphanum:prefix,_][year:prefix,_][0]",
-      "csquotes": "\u00ab\u00bb\u201c\u201d",
+      "citekeyFormat": "auth(n=0,m=1,creator=\"*\",initials=false).fold.lower + Title.transliterate.nopunct.skipwords.select(1,1).lower.alphanum.prefix(_) + year.prefix(_) + postfix(\"-%(n)s\")",
+      "csquotes": "«»“”",
       "skipFields": "abstract,file,editora,editoratype,editorb,editorbtype"
     }
   },
@@ -24,16 +24,16 @@
       "date": "1988",
       "extra": [
         "tex.date= 1988",
-        "tex.number= sp\u00e9cial anniversaire 1978-1988",
+        "tex.number= spécial anniversaire 1978-1988",
         "tex.issue="
       ],
-      "issue": "sp\u00e9cial anniversaire 1978-1988",
+      "issue": "spécial anniversaire 1978-1988",
       "itemID": 1,
       "itemType": "journalArticle",
       "journalAbbreviation": "RIEJ",
       "language": "fr-FR",
-      "pages": "135\u2013162",
-      "publicationTitle": "Revue interdisciplinaire d\u2019\u00e9tudes juridiques",
+      "pages": "135–162",
+      "publicationTitle": "Revue interdisciplinaire d’études juridiques",
       "title": "Dimensions du savoir juridique et orientations philosophiques",
       "volume": "21"
     }

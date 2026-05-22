@@ -6,7 +6,7 @@
     "preferences": {
       "autoAbbrev": true,
       "bibtexURL": "note",
-      "citekeyFormat": "[auth][year]"
+      "citekeyFormat": "auth(n=0,m=1,creator=\"*\",initials=false).fold + year"
     }
   },
   "items": [
@@ -26,14 +26,14 @@
         {
           "creatorType": "author",
           "firstName": "M.",
-          "lastName": "P\u00e4ckert"
+          "lastName": "Päckert"
         }
       ],
       "date": "2012",
       "itemID": 1,
       "itemType": "journalArticle",
-      "pages": "71\u201380",
-      "publicationTitle": "Actes du 4<sup>\u00e8me</sup> Congr\u00e8s Fran\u00e7ais d'Acoustique",
+      "pages": "71–80",
+      "publicationTitle": "Actes du 4<sup>ème</sup> Congrès Français d'Acoustique",
       "title": "Fritz2012",
       "volume": "12"
     },
@@ -53,14 +53,14 @@
         {
           "creatorType": "author",
           "firstName": "M.",
-          "lastName": "P\u00e4ckert"
+          "lastName": "Päckert"
         }
       ],
       "date": "2012",
       "itemID": 2,
       "itemType": "journalArticle",
-      "pages": "71\u201380",
-      "publicationTitle": "Actes du 4<sup>\u00e8me</sup> Congr\u00e8s Fran\u00e7ais d'Acoustique",
+      "pages": "71–80",
+      "publicationTitle": "Actes du 4<sup>ème</sup> Congrès Français d'Acoustique",
       "title": "Fritz2012a",
       "volume": "12"
     },
@@ -80,14 +80,14 @@
         {
           "creatorType": "author",
           "firstName": "M.",
-          "lastName": "P\u00e4ckert"
+          "lastName": "Päckert"
         }
       ],
       "date": "2012",
       "itemID": 3,
       "itemType": "journalArticle",
-      "pages": "71\u201380",
-      "publicationTitle": "Actes du 4<sup>\u00e8me</sup> Congr\u00e8s Fran\u00e7ais d'Acoustique",
+      "pages": "71–80",
+      "publicationTitle": "Actes du 4<sup>ème</sup> Congrès Français d'Acoustique",
       "title": "Fritz2012b",
       "volume": "12"
     },
@@ -107,14 +107,14 @@
         {
           "creatorType": "author",
           "firstName": "M.",
-          "lastName": "P\u00e4ckert"
+          "lastName": "Päckert"
         }
       ],
       "date": "2012",
       "itemID": 4,
       "itemType": "journalArticle",
-      "pages": "71\u201380",
-      "publicationTitle": "Actes du 4<sup>\u00e8me</sup> Congr\u00e8s Fran\u00e7ais d'Acoustique",
+      "pages": "71–80",
+      "publicationTitle": "Actes du 4<sup>ème</sup> Congrès Français d'Acoustique",
       "title": "Fritz2012c",
       "volume": "12"
     },
@@ -134,14 +134,14 @@
         {
           "creatorType": "author",
           "firstName": "M.",
-          "lastName": "P\u00e4ckert"
+          "lastName": "Päckert"
         }
       ],
       "date": "2012",
       "itemID": 5,
       "itemType": "journalArticle",
-      "pages": "71\u201380",
-      "publicationTitle": "Actes du 4<sup>\u00e8me</sup> Congr\u00e8s Fran\u00e7ais d'Acoustique",
+      "pages": "71–80",
+      "publicationTitle": "Actes du 4<sup>ème</sup> Congrès Français d'Acoustique",
       "title": "Fritz2012d",
       "volume": "12"
     },
@@ -161,14 +161,14 @@
         {
           "creatorType": "author",
           "firstName": "M.",
-          "lastName": "P\u00e4ckert"
+          "lastName": "Päckert"
         }
       ],
       "date": "2012",
       "itemID": 6,
       "itemType": "journalArticle",
-      "pages": "71\u201380",
-      "publicationTitle": "Actes du 4<sup>\u00e8me</sup> Congr\u00e8s Fran\u00e7ais d'Acoustique",
+      "pages": "71–80",
+      "publicationTitle": "Actes du 4<sup>ème</sup> Congrès Français d'Acoustique",
       "title": "Fritz2012e",
       "volume": "12"
     }

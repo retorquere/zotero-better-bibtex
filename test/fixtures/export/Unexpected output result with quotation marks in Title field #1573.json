@@ -1,0 +1,62 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "preferences": {
+      "citekeyFormat": "auth.lower + shorttitle(3, 3) + year",
+      "csquotes": "“”"
+    }
+  },
+  "items": [
+    {
+      "DOI": "10.14318/hau6.3.017",
+      "ISSN": "2575-1433",
+      "abstractNote": "This article discusses personal branding, a performance genre that many job seekers in the United States are told to master in order to get a job. I discuss the specific techniques you are supposed to use to brand yourself, some of the origins of these techniques, and the reasons why people find it challenging to put these techniques into practice. I analyze the self that personal branding assumes everyone should be able to present to others by deploying a set of semiotic practices meant to create the impression of a coherent authentic self. Personal branding is treated as a lens into some lived dilemmas that emerge when one tries to put a model of a neoliberal self into practice, with special attention drawn to the tension between flexibility and legibility.",
+      "accessDate": "2025-03-07T08:30:43Z",
+      "citationKey": "gershonImNotBusinessman2016",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Ilana",
+          "lastName": "Gershon"
+        }
+      ],
+      "date": "2016-12",
+      "extra": [
+        "Publisher: The University of Chicago Press"
+      ],
+      "issue": "3",
+      "itemID": 1,
+      "itemType": "journalArticle",
+      "libraryCatalog": "journals.uchicago.edu (Atypon)",
+      "pages": "223-246",
+      "publicationTitle": "HAU: Journal of Ethnographic Theory",
+      "shortTitle": "“I’m not a businessman, I’m a business, man”",
+      "tags": [
+        {
+          "tag": "Branding",
+          "type": 1
+        },
+        {
+          "tag": "career advice",
+          "type": 1
+        },
+        {
+          "tag": "employment",
+          "type": 1
+        },
+        {
+          "tag": "hiring",
+          "type": 1
+        },
+        {
+          "tag": "neoliberal self",
+          "type": 1
+        }
+      ],
+      "title": "“I’m not a businessman, I’m a business, man”: Typing the neoliberal self into a branded existence",
+      "url": "https://www.journals.uchicago.edu/doi/10.14318/hau6.3.017",
+      "volume": "6"
+    }
+  ]
+}

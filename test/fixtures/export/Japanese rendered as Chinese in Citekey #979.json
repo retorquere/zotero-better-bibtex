@@ -7,12 +7,12 @@
       "exportNotes": true
     },
     "preferences": {
-      "kuroshiro": true,
       "autoAbbrevStyle": "http://www.zotero.org/styles/cell",
-      "citekeyFormat": "[auth.etal][veryshorttitle][year]",
+      "citekeyFormat": "authEtal2(creator=\"*\",initials=false,sep=\".\").fold + veryshorttitle + year",
       "itemObserverDelay": 100,
       "quickCopyMode": "pandoc",
-      "quickCopyPandocBrackets": true
+      "quickCopyPandocBrackets": true,
+      "japanese": true
     }
   },
   "items": [

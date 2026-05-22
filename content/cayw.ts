@@ -1,23 +1,15 @@
-import { is7 } from './client'
-
 declare const ChromeUtils: any
-declare const XPCOMUtils: any
-
-import { stringify } from './stringify'
 
 import { Formatter } from './cayw/formatter'
 import { TeXstudio } from './tex-studio'
 import { flash } from './flash'
-import { log } from './logger'
+import { log, stringify } from './logger'
 import { orchestrator } from './orchestrator'
 import { Server } from './server'
 import { toClipboard } from './text'
 
-/* eslint-disable max-classes-per-file */
-
 class FieldEnumerator {
-  // eslint-disable-next-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
-  public QueryInterface = (is7 ? ChromeUtils : XPCOMUtils).generateQI([ Components.interfaces.nsISupports, Components.interfaces.nsISimpleEnumerator ])
+  public QueryInterface = ChromeUtils.generateQI([ Components.interfaces.nsISupports, Components.interfaces.nsISimpleEnumerator ])
   public doc: Document
   public idx: number
 
@@ -274,19 +266,19 @@ class Document {
       prefix: item.prefix || '',
       suffix: item.suffix || '',
       label: item.locator ? (item.label || 'page') : '',
-      citationKey: Zotero.BetterBibTeX.KeyManager.get(item.id).citationKey,
+      citationKey: Zotero.BetterBibTeX.KeyManager.get(item.id)?.citationKey || '',
 
       uri: Array.isArray(item.uri) ? item.uri[0] : undefined,
       itemType: item.itemData ? item.itemData.type : undefined,
       title: item.itemData ? item.itemData.title : undefined,
-    }) as Citation)
+    }))
 
     return items
   }
 }
 
 // export singleton: https://k94n.com/es6-modules-single-instance-pattern
-export const Application = new class { // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
+export const Application = new class {
   public primaryFieldType = 'Field'
   public secondaryFieldType = 'Bookmark'
   public fields: any[] = []
@@ -327,18 +319,50 @@ export const Application = new class { // eslint-disable-line @typescript-eslint
 export async function pick(options: any): Promise<string> {
   await Zotero.BetterBibTeX.ready
 
+  const formatter = options.format || 'latex'
+  if (!Formatter[formatter]) throw new Error(`No such formatter ${ JSON.stringify(formatter) }`)
+
+  const doc = Application.createDocument(options)
+  const agent = 'BetterBibTeX'
+  const command = 'addEditCitation'
+
+  let session: any
+  const Integration: any = Zotero.Integration
+  Integration.currentDoc = doc
+
   try {
-    const formatter = options.format || 'latex'
-    if (!Formatter[formatter]) throw new Error(`No such formatter ${ JSON.stringify(formatter) }`)
-    const doc = Application.createDocument(options)
-    await Zotero.Integration.execCommand('BetterBibTeX', 'addEditCitation', doc.id)
+    const [ sess, documentImported ] = await Integration.getSession(Application, doc, agent, command)
+    session = sess
+    Integration.currentSession = session
+
+    try {
+      if (!documentImported) {
+        await (new Integration.Interface(Application, doc, session))[command]()
+      }
+      doc.setDocumentData(session.data.serialize())
+    }
+    catch (err) {
+      // mirror Zotero.Integration.execCommand()'s UserCancelled handling:
+      // persist the current document data so the session survives, but
+      // treat the pick as "nothing selected".
+      const userCancelled = (Zotero as any).Exception?.UserCancelled
+      if ((userCancelled && err instanceof userCancelled) || err?.name === 'UserCancelled') {
+        try {
+          doc.setDocumentData(session.data.serialize())
+        }
+        catch {}
+        return ''
+      }
+      throw err
+    }
 
     const picked = doc.citation()
     const citation: string = picked.length ? await Formatter[formatter](picked, options) : ''
-    Application.closeDocument(doc)
 
     if (options.select && picked.length) {
       const zoteroPane = Zotero.getActiveZoteroPane()
+
+      // don't know why zotero-types is not picked up here
       await zoteroPane.selectItems(picked.map(item => item.id), true)
     }
 
@@ -347,6 +371,29 @@ export async function pick(options: any): Promise<string> {
   catch (err) {
     log.error('CAYW error:', err, `${ err }`, err.stack, options)
     flash('CAYW pick failed', stringify(err))
+    return ''
+  }
+  finally {
+    // The citation dialog does NOT close itself on accept -- it signals via
+    // io.accept() and relies on Zotero.Integration.execCommand()'s finally
+    // block to close the dialog window. We have to do the same here or the
+    // picker will hang on screen after the user has made their selection
+    // (and the window's own close button can end up wedged because the
+    // dialog is still waiting for the integration host to tear it down).
+    try {
+      const w = Integration.currentWindow
+      if (w && !w.closed) w.close()
+    }
+    catch {}
+    try {
+      if (session?.progressBar) await session.progressBar.hide()
+    }
+    catch {}
+    try { Application.closeDocument(doc) }
+    catch {}
+    Integration.currentDoc = false
+    Integration.currentWindow = false
+    Integration.currentSession = null
   }
 }
 
@@ -360,7 +407,7 @@ async function selected(options): Promise<string> {
     prefix: '',
     suffix: '',
     label: '',
-    citationKey: Zotero.BetterBibTeX.KeyManager.get(item.id).citationKey,
+    citationKey: Zotero.BetterBibTeX.KeyManager.get(item.id)?.citationKey || '',
 
     uri: undefined,
     itemType: undefined,
@@ -398,13 +445,13 @@ class Handler {
       }
       const style
         = getStyle(options.style)
-        || getStyle(`http://www.zotero.org/styles/${ options.style }`)
-        || getStyle(`http://juris-m.github.io/styles/${ options.style }`)
+          || getStyle(`http://www.zotero.org/styles/${ options.style }`)
+          || getStyle(`http://juris-m.github.io/styles/${ options.style }`)
       options.style = style ? style.url : 'http://www.zotero.org/styles/apa'
 
       const citation = options.selected ? (await selected(options)) : (await pick(options))
 
-      if (options.minimize) Zotero.getMainWindow()?.minimize()
+      if (options.minimize) (Zotero.getMainWindow() as any)?.minimize()
 
       if (options.texstudio) {
         if (!TeXstudio.enabled) return [ this.SERVER_ERROR, 'application/text', 'TeXstudio not found' ]

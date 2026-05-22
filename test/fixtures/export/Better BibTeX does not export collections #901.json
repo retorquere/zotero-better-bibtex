@@ -72,7 +72,7 @@
       ],
       "items": [],
       "key": "coll:00004",
-      "name": "R\u00e9f\u00e9rences",
+      "name": "Références",
       "parent": "coll:00001"
     },
     "coll:00005": {
@@ -194,7 +194,7 @@
         7
       ],
       "key": "coll:00011",
-      "name": "Objectivit\u00e9 et naturalisme",
+      "name": "Objectivité et naturalisme",
       "parent": "coll:00004"
     },
     "coll:00012": {
@@ -387,14 +387,14 @@
       "collections": [],
       "items": [],
       "key": "coll:00034",
-      "name": "Anti-r\u00e9alisme",
+      "name": "Anti-réalisme",
       "parent": "coll:00008"
     },
     "coll:00035": {
       "collections": [],
       "items": [],
       "key": "coll:00035",
-      "name": "Arch\u00e9ologie",
+      "name": "Archéologie",
       "parent": "coll:00008"
     },
     "coll:00036": {
@@ -422,7 +422,7 @@
       "collections": [],
       "items": [],
       "key": "coll:00039",
-      "name": "Biblio comment\u00e9e",
+      "name": "Biblio commentée",
       "parent": "coll:00011"
     },
     "coll:00040": {
@@ -457,7 +457,7 @@
       "collections": [],
       "items": [],
       "key": "coll:00044",
-      "name": "Causali\u00e9",
+      "name": "Causalié",
       "parent": "coll:00013"
     },
     "coll:00045": {
@@ -491,7 +491,7 @@
       "collections": [],
       "items": [],
       "key": "coll:00049",
-      "name": "D\u00e9marcation",
+      "name": "Démarcation",
       "parent": "coll:00003"
     },
     "coll:00050": {
@@ -512,28 +512,28 @@
       "collections": [],
       "items": [],
       "key": "coll:00052",
-      "name": "\u00c9conomie",
+      "name": "Économie",
       "parent": "coll:00008"
     },
     "coll:00053": {
       "collections": [],
       "items": [],
       "key": "coll:00053",
-      "name": "\u00c9mergence",
+      "name": "Émergence",
       "parent": "coll:00013"
     },
     "coll:00054": {
       "collections": [],
       "items": [],
       "key": "coll:00054",
-      "name": "\u00c9pist\u00e9mologie",
+      "name": "Épistémologie",
       "parent": "coll:00003"
     },
     "coll:00055": {
       "collections": [],
       "items": [],
       "key": "coll:00055",
-      "name": "\u00c9thique",
+      "name": "Éthique",
       "parent": "coll:00003"
     },
     "coll:00056": {
@@ -554,21 +554,21 @@
       "collections": [],
       "items": [],
       "key": "coll:00058",
-      "name": "Galil\u00e9e",
+      "name": "Galilée",
       "parent": "coll:00009"
     },
     "coll:00059": {
       "collections": [],
       "items": [],
       "key": "coll:00059",
-      "name": "Gr\u00e8ce ancienne",
+      "name": "Grèce ancienne",
       "parent": "coll:00015"
     },
     "coll:00060": {
       "collections": [],
       "items": [],
       "key": "coll:00060",
-      "name": "Gr\u00e8ce antique",
+      "name": "Grèce antique",
       "parent": "coll:00016"
     },
     "coll:00061": {
@@ -582,7 +582,7 @@
       "collections": [],
       "items": [],
       "key": "coll:00062",
-      "name": "Information (th. trad.de l' et ouvrages g\u00e9n\u00e9raux sur le sujet)",
+      "name": "Information (th. trad.de l' et ouvrages généraux sur le sujet)",
       "parent": "coll:00007"
     },
     "coll:00063": {
@@ -645,21 +645,21 @@
       "collections": [],
       "items": [],
       "key": "coll:00071",
-      "name": "Mat\u00e9rialisme",
+      "name": "Matérialisme",
       "parent": "coll:00013"
     },
     "coll:00072": {
       "collections": [],
       "items": [],
       "key": "coll:00072",
-      "name": "Math\u00e9matiques",
+      "name": "Mathématiques",
       "parent": "coll:00018"
     },
     "coll:00073": {
       "collections": [],
       "items": [],
       "key": "coll:00073",
-      "name": "Math\u00e9matiques",
+      "name": "Mathématiques",
       "parent": "coll:00008"
     },
     "coll:00074": {
@@ -673,14 +673,14 @@
       "collections": [],
       "items": [],
       "key": "coll:00075",
-      "name": "M\u00e9canisme",
+      "name": "Mécanisme",
       "parent": "coll:00013"
     },
     "coll:00076": {
       "collections": [],
       "items": [],
       "key": "coll:00076",
-      "name": "M\u00e9decine",
+      "name": "Médecine",
       "parent": "coll:00008"
     },
     "coll:00077": {
@@ -701,7 +701,7 @@
       "collections": [],
       "items": [],
       "key": "coll:00079",
-      "name": "Objectivit\u00e9",
+      "name": "Objectivité",
       "parent": "coll:00003"
     },
     "coll:00080": {
@@ -764,21 +764,21 @@
       "collections": [],
       "items": [],
       "key": "coll:00088",
-      "name": "Rationalit\u00e9",
+      "name": "Rationalité",
       "parent": "coll:00003"
     },
     "coll:00089": {
       "collections": [],
       "items": [],
       "key": "coll:00089",
-      "name": "r\u00e9alisme moral",
+      "name": "réalisme moral",
       "parent": "coll:00007"
     },
     "coll:00090": {
       "collections": [],
       "items": [],
       "key": "coll:00090",
-      "name": "R\u00e9f\u00e9rence et intentionnalit\u00e9",
+      "name": "Référence et intentionnalité",
       "parent": "coll:00007"
     },
     "coll:00091": {
@@ -820,7 +820,7 @@
       "collections": [],
       "items": [],
       "key": "coll:00096",
-      "name": "Syst\u00e8me",
+      "name": "Système",
       "parent": "coll:00013"
     },
     "coll:00097": {
@@ -909,7 +909,7 @@
         33
       ],
       "key": "coll:00105",
-      "name": "Intentionnalit\u00e9 naturalisation",
+      "name": "Intentionnalité naturalisation",
       "parent": "coll:00007"
     },
     "coll:00106": {
@@ -918,7 +918,7 @@
         15
       ],
       "key": "coll:00106",
-      "name": "s\u00e9minaire perception et raison",
+      "name": "séminaire perception et raison",
       "parent": "coll:00007"
     },
     "coll:00107": {
@@ -936,7 +936,7 @@
         18
       ],
       "key": "coll:00108",
-      "name": "Logique math\u00e9matique",
+      "name": "Logique mathématique",
       "parent": "coll:00018"
     },
     "coll:00109": {
@@ -954,7 +954,7 @@
         26
       ],
       "key": "coll:00110",
-      "name": "Probabilit\u00e9s",
+      "name": "Probabilités",
       "parent": "coll:00018"
     },
     "coll:00111": {
@@ -974,7 +974,7 @@
         27
       ],
       "key": "coll:00112",
-      "name": "S\u00e9mantique",
+      "name": "Sémantique",
       "parent": "coll:00003"
     },
     "coll:00113": {
@@ -983,7 +983,7 @@
         29
       ],
       "key": "coll:00113",
-      "name": "\u00c9conomie",
+      "name": "Économie",
       "parent": "coll:00005"
     },
     "coll:00114": {
@@ -1001,7 +1001,7 @@
         31
       ],
       "key": "coll:00115",
-      "name": "Naturalisme (en g\u00e9n\u00e9ral)",
+      "name": "Naturalisme (en général)",
       "parent": "coll:00007"
     },
     "coll:00116": {
@@ -1020,7 +1020,7 @@
         35
       ],
       "key": "coll:00117",
-      "name": "R\u00e9f\u00e9rences m\u00e9moire (cr\u00e9\u00e9 le 16 oct. 2006)",
+      "name": "Références mémoire (créé le 16 oct. 2006)",
       "parent": "coll:00007"
     },
     "coll:00118": {
@@ -1038,7 +1038,7 @@
         7
       ],
       "key": "coll:00119",
-      "name": "D\u00e9bat Harman-Sturgeon",
+      "name": "Débat Harman-Sturgeon",
       "parent": "coll:00011"
     }
   },
@@ -1053,7 +1053,7 @@
       "asciiBibLaTeX": true,
       "biblatexExtendedNameFormat": true,
       "bibtexURL": "url",
-      "citekeyFormat": "[auth]-[year]-[shorttitle]",
+      "citekeyFormat": "auth(n=0,m=1,creator=\"*\",initials=false).fold + \"-\" + year + \"-\" + shorttitle",
       "itemObserverDelay": 100,
       "jabrefFormat": 4,
       "qualityReport": true
@@ -1236,7 +1236,7 @@
           "type": 1
         },
         {
-          "tag": "R\u00e9alisme",
+          "tag": "Réalisme",
           "type": 1
         }
       ],
@@ -1327,7 +1327,7 @@
       "publisher": "Springer",
       "series": "Boston studies in the philosophy of science",
       "seriesNumber": "293",
-      "shortTitle": "Is water H\u2082O?",
+      "shortTitle": "Is water H₂O?",
       "tags": [
         {
           "tag": "Composition",
@@ -1346,7 +1346,7 @@
           "type": 1
         }
       ],
-      "title": "Is water H\u2082O?: evidence, realism and pluralism"
+      "title": "Is water H₂O?: evidence, realism and pluralism"
     },
     {
       "ISBN": "978-94-009-3061-2",
@@ -1476,7 +1476,7 @@
           "type": 0
         },
         {
-          "tag": "Information, Th\u00e9orie de l'",
+          "tag": "Information, Théorie de l'",
           "type": 0
         },
         {
@@ -1540,7 +1540,7 @@
       "itemType": "bookSection",
       "language": "Anglais",
       "libraryCatalog": "link.springer.com",
-      "pages": "1\u20136",
+      "pages": "1–6",
       "publicationTitle": "Quantum Theory and Reality",
       "publisher": "Springer, Berlin, Heidelberg",
       "series": "Studies in the Foundations Methodology and Philosophy of Science",
@@ -1570,7 +1570,7 @@
       "itemType": "bookSection",
       "language": "Anglais",
       "libraryCatalog": "link.springer.com",
-      "pages": "27\u201349",
+      "pages": "27–49",
       "publicationTitle": "Probability in the Sciences",
       "publisher": "Springer, Dordrecht",
       "series": "Synthese Library",
@@ -1594,7 +1594,7 @@
       "itemID": 7,
       "itemType": "bookSection",
       "libraryCatalog": "PhilPapers",
-      "pages": "256\u2013281",
+      "pages": "256–281",
       "publicationTitle": "Essays on Moral Realism",
       "publisher": "Cornell University Press",
       "shortTitle": "Moral Theory and Explanatory Impotence In",
@@ -1765,7 +1765,7 @@
       "journalAbbreviation": "Applied Mathematical Modelling",
       "language": "Anglais",
       "libraryCatalog": "ScienceDirect",
-      "pages": "201\u2013204",
+      "pages": "201–204",
       "publicationTitle": "Applied Mathematical Modelling",
       "title": "A model of evolution",
       "url": "http://www.sciencedirect.com/science/article/pii/0307904X78900082",
@@ -1789,7 +1789,7 @@
       "journalAbbreviation": "New Ideas in Psychology",
       "language": "Anglais",
       "libraryCatalog": "ScienceDirect",
-      "pages": "227\u2013231",
+      "pages": "227–231",
       "publicationTitle": "New Ideas in Psychology",
       "title": "The difference between everyday knowledge, ideology, and scientific knowledge",
       "url": "http://www.sciencedirect.com/science/article/pii/0732118X9190027J",
@@ -1812,7 +1812,7 @@
       "itemType": "journalArticle",
       "language": "Anglais",
       "libraryCatalog": "CrossRef",
-      "pages": "404\u2013423",
+      "pages": "404–423",
       "publicationTitle": "Philosophy of the Social Sciences",
       "shortTitle": "Systems and Emergence, Rationality and Imprecision, Free-Wheeling and Evidence, Science and Ideology",
       "title": "Systems and Emergence, Rationality and Imprecision, Free-Wheeling and Evidence, Science and Ideology: Social Science and Its Philosophy According to van den Berg",
@@ -1829,19 +1829,19 @@
         },
         {
           "creatorType": "translator",
-          "name": "Services de traduction de l'Universit\u00e9 McGil"
+          "name": "Services de traduction de l'Université McGil"
         }
       ],
       "date": "2003",
       "itemID": 3,
       "itemType": "journalArticle",
-      "language": "Fran\u00e7ais",
+      "language": "Français",
       "libraryCatalog": "CrossRef",
       "notes": [
-        "<div style=\"left: 270px; top: 1125.17px; font-size: 16.4px; font-family: serif; transform: scaleX(0.801445);\">L'essentiel de ce texte est tir\u00e9 d'une \u00e9tude in\u00e9dite, intitul\u00e9e</div>\n<div style=\"left: 718.001px; top: 1125.17px; font-size: 16.4px; font-family: serif; transform: scaleX(0.828156);\">The</div>\n<div style=\"left: 753.2px; top: 1125.17px; font-size: 16.4px; font-family: serif; transform: scaleX(0.822593);\">Methodological</div>\n<div style=\"left: 867.6px; top: 1125.17px; font-size: 16.4px; font-family: serif; transform: scaleX(0.859719);\">Crisis of</div>\n<div style=\"left: 270px; top: 1143.17px; font-size: 16.4px; font-family: serif; transform: scaleX(0.816605);\">Economics.</div>\n<div style=\"left: 353.03px; top: 1143.17px; font-size: 16.4px; font-family: serif; transform: scaleX(0.788572);\">Une premi\u00e8re version de cette \u00e9tude a \u00e9t\u00e9 publi\u00e9e en espagnol, sous le titre</div>\n<div style=\"left: 863.6px; top: 1143.17px; font-size: 16.4px; font-family: serif; transform: scaleX(0.800597);\">Economia</div>\n<div style=\"left: 270px; top: 1161.17px; font-size: 16.4px; font-family: serif; transform: scaleX(0.842257);\">y</div>\n<div style=\"left: 283.601px; top: 1161.17px; font-size: 16.4px; font-family: serif; transform: scaleX(0.826636);\">filosofia</div>\n<div style=\"left: 337.201px; top: 1161.17px; font-size: 16.4px; font-family: serif; transform: scaleX(0.746873);\">, Madrid, Tecnos, 1982, 1985. Une premi\u00e8re version de la <span class=\"highlight selected\">traduction</span> de ce texte a \u00e9t\u00e9</div>\n<div style=\"left: 270px; top: 1179.17px; font-size: 16.4px; font-family: serif; transform: scaleX(0.777761);\">assur\u00e9e par les services de traduction de l'Universit\u00e9 McGill.</div>"
+        "<div style=\"left: 270px; top: 1125.17px; font-size: 16.4px; font-family: serif; transform: scaleX(0.801445);\">L'essentiel de ce texte est tiré d'une étude inédite, intitulée</div>\n<div style=\"left: 718.001px; top: 1125.17px; font-size: 16.4px; font-family: serif; transform: scaleX(0.828156);\">The</div>\n<div style=\"left: 753.2px; top: 1125.17px; font-size: 16.4px; font-family: serif; transform: scaleX(0.822593);\">Methodological</div>\n<div style=\"left: 867.6px; top: 1125.17px; font-size: 16.4px; font-family: serif; transform: scaleX(0.859719);\">Crisis of</div>\n<div style=\"left: 270px; top: 1143.17px; font-size: 16.4px; font-family: serif; transform: scaleX(0.816605);\">Economics.</div>\n<div style=\"left: 353.03px; top: 1143.17px; font-size: 16.4px; font-family: serif; transform: scaleX(0.788572);\">Une première version de cette étude a été publiée en espagnol, sous le titre</div>\n<div style=\"left: 863.6px; top: 1143.17px; font-size: 16.4px; font-family: serif; transform: scaleX(0.800597);\">Economia</div>\n<div style=\"left: 270px; top: 1161.17px; font-size: 16.4px; font-family: serif; transform: scaleX(0.842257);\">y</div>\n<div style=\"left: 283.601px; top: 1161.17px; font-size: 16.4px; font-family: serif; transform: scaleX(0.826636);\">filosofia</div>\n<div style=\"left: 337.201px; top: 1161.17px; font-size: 16.4px; font-family: serif; transform: scaleX(0.746873);\">, Madrid, Tecnos, 1982, 1985. Une première version de la <span class=\"highlight selected\">traduction</span> de ce texte a été</div>\n<div style=\"left: 270px; top: 1179.17px; font-size: 16.4px; font-family: serif; transform: scaleX(0.777761);\">assurée par les services de traduction de l'Université McGill.</div>"
       ],
       "series": "Classiques des sciences sociales.",
-      "title": "Consid\u00e9rations d'un philosophe sur l'\u00e9conomique du n\u00e9o-conservatisme (n\u00e9o-lib\u00e9ralisme)",
+      "title": "Considérations d'un philosophe sur l'économique du néo-conservatisme (néo-libéralisme)",
       "url": "http://www.uqac.ca/zone30/Classiques_des_sciences_sociales/contemporains/bunge_mario/considerations_eco/considerations_eco.html"
     },
     {
@@ -1885,7 +1885,7 @@
       "issue": "1",
       "itemID": 31,
       "itemType": "journalArticle",
-      "pages": "53\u2013114",
+      "pages": "53–114",
       "publicationTitle": "Philosophical Review",
       "title": "The Naturalists Return",
       "volume": "101"
@@ -1906,7 +1906,7 @@
       "itemType": "journalArticle",
       "language": "Anglais",
       "libraryCatalog": "JSTOR",
-      "pages": "89\u2013136",
+      "pages": "89–136",
       "publicationTitle": "Studies in Soviet Thought",
       "title": "About Mario Bunge's 'A Critical Examination of Dialectics'",
       "url": "http://www.jstor.org/stable/20099996",
@@ -1927,7 +1927,7 @@
       "itemID": 33,
       "itemType": "journalArticle",
       "language": "English",
-      "pages": "246\u2013262",
+      "pages": "246–262",
       "publicationTitle": "Mind and Language",
       "tags": [
         {
@@ -1973,7 +1973,7 @@
       "itemType": "journalArticle",
       "language": "Anglais",
       "libraryCatalog": "JSTOR",
-      "pages": "153\u2013172",
+      "pages": "153–172",
       "publicationTitle": "PSA: Proceedings of the Biennial Meeting of the Philosophy of Science Association",
       "title": "The Philosophical Richness of Technology",
       "url": "http://www.jstor.org/stable/192379",
@@ -1992,7 +1992,7 @@
       "itemID": 35,
       "itemType": "journalArticle",
       "language": "English",
-      "pages": "310\u2013328",
+      "pages": "310–328",
       "publicationTitle": "Pacific Philosophical Quarterly",
       "tags": [
         {
@@ -2030,7 +2030,7 @@
       "itemID": 36,
       "itemType": "journalArticle",
       "language": "English",
-      "pages": "59\u201366",
+      "pages": "59–66",
       "publicationTitle": "Conference: A Journal of Philosophy and Theory",
       "tags": [
         {
@@ -2070,7 +2070,7 @@
       "itemType": "journalArticle",
       "language": "Anglais",
       "libraryCatalog": "Google Scholar",
-      "pages": "17\u201328",
+      "pages": "17–28",
       "publicationTitle": "Philosophy and social action",
       "title": "Riot, Revolution and National Breakdown",
       "volume": "25"
@@ -2088,7 +2088,7 @@
       "itemType": "journalArticle",
       "language": "Anglais",
       "libraryCatalog": "CiteULike",
-      "pages": "87\u201390",
+      "pages": "87–90",
       "publicationTitle": "General Systems",
       "title": "General Systems and Holism",
       "volume": "22"

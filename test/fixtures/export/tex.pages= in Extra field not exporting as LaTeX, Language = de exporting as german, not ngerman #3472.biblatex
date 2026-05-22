@@ -1,0 +1,11 @@
+@article{KB1930eng-test,
+  title = {Testeintrag: Muss ändern},
+  author = {X, X},
+  date = {1930},
+  journaltitle = {Zeitung},
+  number = {1--9},
+  pages = {31 (5), \ppno\space 321-338 \addsemicolon\space 31 (6), \ppno\space 401-418},
+  langid = {ngerman},
+  shorthand = {KB 1930},
+  keywords = {CAS-engAdd}
+}

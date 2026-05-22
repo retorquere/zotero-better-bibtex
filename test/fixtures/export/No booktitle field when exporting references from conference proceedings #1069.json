@@ -7,7 +7,7 @@
       "exportNotes": true
     },
     "preferences": {
-      "citekeyFormat": "[auth:lower][year]",
+      "citekeyFormat": "auth(n=0,m=1,creator=\"*\",initials=false).fold.lower + year",
       "itemObserverDelay": 100,
       "postscript": "if(item.itemType == \"conferencePaper\" ) {\n    this.add({name: \"booktitle\", replace: false, value: item.conferenceName});\n}",
       "skipFields": "note,abstract,file,url,keywords,shorttitle,primaryclass,eprint,eprinttype,archiveprefix"

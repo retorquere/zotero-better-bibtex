@@ -8,7 +8,7 @@
     },
     "preferences": {
       "DOIandURL": "doi",
-      "citekeyFormat": "[zotero]",
+      "citekeyFormat": "zotero",
       "itemObserverDelay": 100,
       "quickCopyMode": "pandoc"
     }
@@ -63,7 +63,7 @@
       "itemType": "journalArticle",
       "journalAbbreviation": "Carbohydr Res",
       "language": "eng",
-      "pages": "37\u201348",
+      "pages": "37–48",
       "publicationTitle": "Carbohydrate research",
       "tags": [
         {
@@ -173,7 +173,7 @@
       "itemType": "journalArticle",
       "journalAbbreviation": "EMBO J",
       "language": "eng",
-      "pages": "6241\u20136250",
+      "pages": "6241–6250",
       "publicationTitle": "The EMBO journal",
       "tags": [
         {

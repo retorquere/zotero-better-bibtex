@@ -9,7 +9,7 @@
     "preferences": {
       "autoAbbrevStyle": "http://www.zotero.org/styles/cell",
       "bibtexURL": "note",
-      "citekeyFormat": "[auth:lower:nopunct]:[year][Title:lower:nopunct:skipwords:select,1,1][0]",
+      "citekeyFormat": "auth(n=0,m=1,creator=\"*\",initials=false).fold.lower.nopunct + \":\" + year + Title.lower.nopunct.skipwords.select(1,1) + postfix(\"-%(n)s\")",
       "skipWords": "a,aboard,about,above,across,after,against,al,along,amid,among,an,and,anti,around,as,at,before,behind,below,beneath,beside,besides,between,beyond,but,by,d,das,de,del,der,des,despite,die,do,down,during,ein,eine,einem,einen,einer,eines,el,except,for,from,in,inside,into,is,l,la,las,le,les,like,los,near,nor,of,off,on,onto,or,over,past,per,plus,round,save,since,so,some,than,the,through,to,toward,towards,un,una,unas,under,underneath,une,unlike,uno,unos,until,up,upon,versus,via,while,with,within,without,yet,zu,zum"
     }
   },

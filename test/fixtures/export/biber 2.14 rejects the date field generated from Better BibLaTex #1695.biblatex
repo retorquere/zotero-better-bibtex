@@ -1,4 +1,3 @@
-
 @online{ruderOverviewGradientDescent2016,
   title = {An Overview of Gradient Descent Optimization Algorithms},
   author = {Ruder, Sebastian},
@@ -9,5 +8,3 @@
   langid = {english},
   organization = {Sebastian Ruder}
 }
-
-

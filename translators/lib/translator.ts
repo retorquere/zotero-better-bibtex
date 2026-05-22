@@ -1,15 +1,13 @@
 declare const Zotero: any
-declare const __estrace: any // eslint-disable-line no-underscore-dangle
 
-import { Shim } from '../../content/os'
 import * as client from '../../content/client'
-const $OS = client.is7 ? Shim : OS
+import { Path } from '../../content/file'
 
 import * as Prefs from '../../gen/preferences/meta'
 const PrefNames: Set<string> = new Set(Object.keys(Prefs.defaults))
 import { DisplayOptions } from '../../gen/translators'
 import { regex as escapeRE } from '../../content/escape'
-import { Collection, Attachment } from '../../gen/typings/serialized-item'
+import { Serialized } from '../../gen/typings/serialized'
 import type { Exporter as BibTeXExporter } from '../bibtex/exporter'
 import type { CharMap } from 'unicode2latex'
 import { log } from '../../content/logger'
@@ -17,7 +15,7 @@ import type { Collected } from './collect'
 
 export type Output = {
   body: string
-  attachments: Attachment[]
+  attachments: Serialized.Attachment[]
 }
 
 class Override {
@@ -37,10 +35,10 @@ class Override {
       return false
     }
 
-    const candidates = [
-      $OS.Path.basename(this.exportPath).replace(/\.[^.]+$/, '') + extension,
+    const candidates: string[] = [
+      Path.basename(this.exportPath).replace(/\.[^.]+$/, '') + extension,
       override,
-    ].map(filename => <string>$OS.Path.join(this.exportDir, filename))
+    ].map(filename => PathUtils.join(this.exportDir, filename))
 
     for (const candidate of candidates) {
       try {
@@ -57,14 +55,13 @@ class Override {
         }
 
         for (const [ pref, value ] of Object.entries(prefs)) {
-          if (!PrefNames.has(pref as unknown as Prefs.PreferenceName)) {
+          if (!PrefNames.has(pref)) {
             log.error(`better-bibtex: unexpected preference override for ${ pref }`)
           }
           else if (typeof value !== typeof Prefs.defaults[pref]) {
             log.error(`better-bibtex: preference override for ${ pref }: expected ${ typeof Prefs.defaults[pref] }, got ${ typeof value }`)
           }
           else if (Prefs.options[pref] && !Prefs.options[pref][value]) {
-            // eslint-disable-next-line @typescript-eslint/no-base-to-string
             log.error(`better-bibtex: preference override for ${ pref }: expected ${ Object.keys(Prefs.options[pref]).join(' / ') }, got ${ value }`)
           }
           else {
@@ -83,20 +80,19 @@ class Override {
   }
 }
 
-export class Translation { // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
-  public importToExtra: Record<string, 'plain' | 'force'>
-  public skipFields: string[]
-  public skipField: RegExp
+export class Translation {
+  public importToExtra!: Record<string, 'plain' | 'force'>
+  public skipFields!: string[]
+  public skipField!: RegExp
   public verbatimFields?: (string | RegExp)[]
-  public csquotes: { open: string; close: string }
+  public csquotes!: { open: string; close: string }
   public export: { dir: string; path: string } = {
     dir: undefined,
     path: undefined,
   }
 
-  public charmap: CharMap
+  public charmap!: CharMap
 
-  /* eslint-disable @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match */
   public BetterBibLaTeX?: boolean
   public BetterBibTeX?: boolean
   public BetterTeX: boolean
@@ -107,13 +103,12 @@ export class Translation { // eslint-disable-line @typescript-eslint/naming-conv
   public BetterBibTeXJSON?: boolean
   public Citationgraph?: boolean
   public Collectednotes?: boolean
-  /* eslint-enable */
   // public TeX: boolean
   // public CSL: boolean
 
   public bibtex: BibTeXExporter
 
-  public collections: Record<string, Collection> = {} // keep because it is being used in postscripts
+  public collections: Record<string, Serialized.Collection> = {} // keep because it is being used in postscripts
   public output: Output = {
     body: '',
     attachments: [],
@@ -121,13 +116,13 @@ export class Translation { // eslint-disable-line @typescript-eslint/naming-conv
 
   private cacheable = true
 
-  public preferences: Prefs.Preferences
-  public options: DisplayOptions
+  public preferences!: Prefs.Preferences
+  public options!: DisplayOptions
 
-  public isJurisM: boolean
-  public isZotero: boolean
-  public unicode: boolean
-  public paths: {
+  public isJurisM!: boolean
+  public isZotero!: boolean
+  public unicode!: boolean
+  public paths!: {
     caseSensitive: boolean
     sep: string
   }
@@ -206,13 +201,13 @@ export class Translation { // eslint-disable-line @typescript-eslint/naming-conv
       collected.preferences.separatorNames = ` ${ collected.preferences.separatorNames } `
     }
 
-    if (collected.preferences.testing && typeof __estrace === 'undefined' && collected.translator.configOptions?.cached) {
+    if (collected.preferences.testing && collected.translator.configOptions?.cached) {
       const allowedPreferences: Prefs.Preferences = (collected.translator.label === 'BetterBibTeX JSON' ? Object.keys(Prefs.defaults) : Prefs.affectedBy[collected.translator.label])
         .concat(['testing'])
         .reduce((acc: any, pref: Prefs.PreferenceName) => {
           acc[pref] = collected.preferences[pref]
           return acc as Prefs.Preferences
-        }, {}) as unknown as Prefs.Preferences
+        }, {})
 
       collected.preferences = new Proxy(allowedPreferences, {
         set: (object, property, _value) => {
@@ -220,9 +215,9 @@ export class Translation { // eslint-disable-line @typescript-eslint/naming-conv
         },
         get: (object, property: Prefs.PreferenceName) => {
           // JSON.stringify will attempt to get this
-          if (property as unknown as string === 'toJSON') return object[property] // eslint-disable-line @typescript-eslint/no-unsafe-return
+          if (property as unknown as string === 'toJSON') return object[property]
           if (!(property in allowedPreferences)) new TypeError(`Preference ${ property } claims not to affect ${ collected.translator.label }`)
-          return object[property] // eslint-disable-line @typescript-eslint/no-unsafe-return
+          return object[property]
         },
       })
     }
@@ -249,11 +244,7 @@ export class Translation { // eslint-disable-line @typescript-eslint/naming-conv
       sep: this.collected.platform === 'win' ? '\\' : '/',
     }
 
-    try {
-      if (collected.displayOptions.cache === false) this.cacheable = false
-    }
-    catch {
-    }
+    if (!collected.preferences.cache) this.cacheable = false
 
     // when exporting file data you get relative paths, when not, you get absolute paths, only one version can go into the cache
     if (this.collected.displayOptions.exportFileData) this.cacheable = false

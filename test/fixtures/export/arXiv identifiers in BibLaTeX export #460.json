@@ -10,7 +10,7 @@
       "autoAbbrevStyle": "http://www.zotero.org/styles/cell",
       "autoExport": "idle",
       "bibtexURL": "note",
-      "citekeyFormat": "[auth][year:prefix,.][0][Title:nopunct:fold:skipwords:select,1,1:alphanum:prefix,.]"
+      "citekeyFormat": "auth(n=0,m=1,creator=\"*\",initials=false).fold + year.prefix(\".\") + postfix(\"-%(n)s\") + Title.nopunct.transliterate.skipwords.select(1,1).alphanum.prefix(\".\")"
     }
   },
   "items": [
@@ -108,7 +108,7 @@
         {
           "creatorType": "author",
           "firstName": "Troels F.",
-          "lastName": "R\u00f8nnow"
+          "lastName": "Rønnow"
         },
         {
           "creatorType": "author",
@@ -159,7 +159,7 @@
       "itemID": 3,
       "itemType": "journalArticle",
       "libraryCatalog": "arXiv.org",
-      "pages": "420\u2013424",
+      "pages": "420–424",
       "publicationTitle": "Science",
       "tags": [
         {

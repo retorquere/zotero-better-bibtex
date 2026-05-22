@@ -73,6 +73,9 @@ class MultiOrderedDict(OrderedDict):
 
 DB.execute('CREATE TABLE babel (tag NOT NULL, prio NOT NULL, rel NOT NULL, langid NOT NULL)')
 for path in sorted(Path('submodules/babel/locale').rglob('*.ini'), key=lambda p: p.name):
+  with open(path) as f:
+    if not '[identification]' in f.read():
+      continue
   locale = RawConfigParser(dict_type=MultiOrderedDict, strict=False, allow_no_value=True)
   locale.read(str(path))
   locale = locale['identification']
@@ -134,11 +137,15 @@ DB.execute('''
 
 DB.execute('CREATE TABLE langmap (language NOT NULL PRIMARY KEY, langid NOT NULL)')
 
+DB.execute("DELETE FROM babel WHERE tag = 'und'")
 for row in list(DB.execute('SELECT tag, count(*) FROM babel WHERE prio = 0 GROUP BY tag HAVING COUNT(*) > 1')):
   if tuple(row) == ('ko', 2):
     print('fixing', row)
     # fix ko|0|name|korean-han as ko|0|name|korean also exists
     DB.execute("UPDATE babel SET rel='alias', prio=1 WHERE tag='ko' AND langid='korean-han'")
+for row in list(DB.execute('SELECT tag FROM babel WHERE prio = 0 GROUP BY tag HAVING COUNT(*) > 1')):
+  for l in list(DB.execute('SELECT tag, langid, prio FROM babel WHERE tag = ?', (row[0],))):
+    print(l)
 DB.execute('INSERT INTO langmap (language, langid) SELECT tag, langid FROM babel WHERE prio = 0')
 
 # set self-alias
@@ -215,9 +222,11 @@ patchups = {
   'tw': 'chinese-traditional',
   'zh-tw': 'chinese-traditional',
   'ara': 'arabic',
+  'de': 'ngerman',
 }
 for language, langid in patchups.items():
-  DB.execute('INSERT INTO langmap (language, langid) SELECT ?, ? WHERE EXISTS (SELECT 1 FROM langmap WHERE langid = ?)', (language, langid, langid))
+  print('patching', language, '=>', langid)
+  DB.execute('REPLACE INTO langmap (language, langid) SELECT ?, ? WHERE EXISTS (SELECT 1 FROM langmap WHERE langid = ?)', (language, langid, langid))
 
 # all unique prefixes
 #for prefix, language in Trie.prefix([row.language for row in DB.execute('SELECT language FROM langmap')]).items():

@@ -9,7 +9,7 @@
     "preferences": {
       "baseAttachmentPath": "/home/zach/Documents/bib",
       "bibtexURL": "url",
-      "citekeyFormat": "[authors4][year]",
+      "citekeyFormat": "authorsn(n=4,creator=\"*\",initials=false,sep=\" \").fold + year",
       "extraMergeCSL": true,
       "extraMergeCitekeys": true,
       "extraMergeTeX": true,

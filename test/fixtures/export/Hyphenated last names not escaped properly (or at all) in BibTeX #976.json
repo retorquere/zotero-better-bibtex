@@ -8,7 +8,7 @@
     },
     "preferences": {
       "bibtexURL": "url",
-      "citekeyFormat": "[authorsAlpha][shorttitle2_2][shortyear]",
+      "citekeyFormat": "authorsAlpha(creator=\"*\",initials=false,sep=\" \").fold + shorttitle(2,2) + shortyear",
       "itemObserverDelay": 100,
       "skipFields": "publisher,place,pages,file,keywords,eprinttype,archiveprefix,eprint,month,language,archiveprefix,abstract"
     }

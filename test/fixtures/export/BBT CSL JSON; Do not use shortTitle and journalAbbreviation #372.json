@@ -5,7 +5,7 @@
     "localeDateOrder": "ymd",
     "preferences": {
       "bibtexURL": "note",
-      "citekeyFormat": "[auth][year]"
+      "citekeyFormat": "auth(n=0,m=1,creator=\"*\",initials=false).fold + year"
     }
   },
   "items": [
@@ -24,10 +24,10 @@
       "itemType": "journalArticle",
       "journalAbbreviation": "Libr. Q.",
       "language": "en-US",
-      "pages": "19\u201335",
+      "pages": "19–35",
       "publicationTitle": "Library Quarterly",
       "shortTitle": "Codes, costs, and critiques",
-      "title": "Codes, costs, and critiques: The organization of information in <i>Library Quarterly</i>, 1931\u20132004",
+      "title": "Codes, costs, and critiques: The organization of information in <i>Library Quarterly</i>, 1931–2004",
       "volume": "76"
     }
   ]

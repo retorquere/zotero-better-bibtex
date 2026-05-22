@@ -1,9 +1,9 @@
 import * as client from './client'
 import { orchestrator } from './orchestrator'
 
-import { simplifyForExport as simplify } from '../gen/items/simplify'
+import { simplifyForExport } from './item-schema'
 
-export const JournalAbbrev = new class { // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
+export const JournalAbbrev = new class {
   private style: any
   private abbrevs: any
   private journal = new Set(['conferencePaper', 'journalArticle', 'bill', 'case', 'statute'])
@@ -66,7 +66,7 @@ export const JournalAbbrev = new class { // eslint-disable-line @typescript-esli
 
   public get(item, mode: 'abbrev' | 'auto' | 'abbrev+auto' = 'abbrev+auto'): string {
     const zotero_item = !!(item._objectType) // eslint-disable-line no-underscore-dangle
-    if (!zotero_item) item = simplify(Object.create(item), { creators: false, scrub: false }) // don't mess with the serialized object, Zotero needs it intact
+    if (!zotero_item) item = simplifyForExport(Object.create(item), { creators: false, scrub: false }) // don't mess with the serialized object, Zotero needs it intact
 
     let abbrev = mode.startsWith('abbrev') ? this.getField(item, 'journalAbbreviation', zotero_item) : null
     if (abbrev || !mode.endsWith('auto')) return abbrev

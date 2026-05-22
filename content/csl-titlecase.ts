@@ -22,5 +22,5 @@ class State {
 }
 
 export function titleCased(text: string): string {
-  return CSL.Output.Formatters.title(new State, text)
+  return CSL.Output.Formatters.title(new State, text).replace(/\p{Script=Greek}/ug, (_match, offset) => text[offset])
 }

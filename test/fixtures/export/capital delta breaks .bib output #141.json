@@ -9,7 +9,7 @@
     "preferences": {
       "autoAbbrevStyle": "http://www.zotero.org/styles/cell",
       "bibtexURL": "note",
-      "citekeyFormat": "[auth:lower][year]"
+      "citekeyFormat": "auth(n=0,m=1,creator=\"*\",initials=false).fold.lower + year"
     }
   },
   "items": [
@@ -60,9 +60,9 @@
       "itemType": "journalArticle",
       "journalAbbreviation": "J. Am. Chem. Soc.",
       "libraryCatalog": "ACS Publications",
-      "pages": "4781\u20134784",
+      "pages": "4781–4784",
       "publicationTitle": "Journal of the American Chemical Society",
-      "title": "11-Oxygenated Steroids. XIII. Synthesis and proof of structure of <span class=\"nocase\">\u03941,4-Pregnadiene-17\u03b1,21-diol-3,11,20-trione and \u03941,4-Pregnadiene-11\u03b2,17\u03b1,21-triol-3,20-dione</span>",
+      "title": "11-Oxygenated Steroids. XIII. Synthesis and proof of structure of <span class=\"nocase\">Δ1,4-Pregnadiene-17α,21-diol-3,11,20-trione and Δ1,4-Pregnadiene-11β,17α,21-triol-3,20-dione</span>",
       "url": "http://dx.doi.org/10.1021/ja01623a027",
       "volume": "77"
     }

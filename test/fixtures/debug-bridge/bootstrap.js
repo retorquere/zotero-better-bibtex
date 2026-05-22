@@ -46,7 +46,6 @@ async function waitForZotero() {
     return
   }
 
-  var { Services } = ChromeUtils.import('resource://gre/modules/Services.jsm')
   var windows = Services.wm.getEnumerator('navigator:browser')
   var found = false
   while (windows.hasMoreElements()) {
@@ -149,11 +148,6 @@ async function startup({ resourceURI, rootURI = resourceURI.spec }, reason) {
   log(`async:startup:start, Zotero: ${typeof Zotero !== 'undefined'}`)
   await waitForZotero()
 
-  // 'Services' may not be available in Zotero 6
-  if (typeof Services == 'undefined') {
-    var { Services } = ChromeUtils.import('resource://gre/modules/Services.jsm')
-  }
-
   // Read prefs from prefs.js when the plugin in Zotero 6
   if (Zotero.platformMajorVersion < 102) {
     setDefaultPrefs(rootURI)
@@ -162,7 +156,7 @@ async function startup({ resourceURI, rootURI = resourceURI.spec }, reason) {
   Zotero.Server.Endpoints['/debug-bridge/execute'] = class {
     constructor() {
       this.supportedMethods = ['POST']
-      this.supportedDataTypes = 'application/javascript'
+      this.supportedDataTypes = ['application/javascript', 'text/plain']
       this.permitBookmarklet = false
     }
 
@@ -190,7 +184,8 @@ async function startup({ resourceURI, rootURI = resourceURI.spec }, reason) {
         }
       }
 
-      log(`executing\n${request.data} with ${JSON.stringify(query)}`)
+      const script = request.data.trim().match(/^\/\/ debug bridge:(?<script>[^\r\n]+)/i)?.groups?.script || request.data
+      log(`executing\n${script} with ${JSON.stringify(query)}`)
       const start = Date.now()
       let response
       try {

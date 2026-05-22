@@ -3,7 +3,7 @@
 import json
 from itertools import zip_longest
 
-with open("node_modules/unicode2latex/tables/biblatex.json") as f:
+with open("node_modules/unicode2latex/dist/tables/biblatex.json") as f:
   unicode = json.load(f)
 
 def maketable(pkg):

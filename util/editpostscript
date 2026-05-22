@@ -5,9 +5,9 @@ import editor, json, sys
 with open(sys.argv[1]) as f:
   lib = json.load(f)
 
-if not 'config' in lib: sys.exit(0)
-if not 'preferences' in lib['config']: sys.exit(0)
-if not 'postscript' in lib['config']['preferences']: sys.exit(0)
+if not 'config' in lib: lib['config'] = {}
+if not 'preferences' in lib['config']: lib['config']['preferences'] = {}
+if not 'postscript' in lib['config']['preferences']: lib['config']['preferences']['postscript'] = ''
 
 lib['config']['preferences']['postscript'] = editor.edit(contents=lib['config']['preferences']['postscript']).decode('utf-8')
 

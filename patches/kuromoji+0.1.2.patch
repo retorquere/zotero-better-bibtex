@@ -1,0 +1,53 @@
+diff --git a/node_modules/kuromoji/src/loader/BrowserDictionaryLoader.js b/node_modules/kuromoji/src/loader/BrowserDictionaryLoader.js
+index 04bfdcd..74e4f88 100644
+--- a/node_modules/kuromoji/src/loader/BrowserDictionaryLoader.js
++++ b/node_modules/kuromoji/src/loader/BrowserDictionaryLoader.js
+@@ -36,26 +36,30 @@ BrowserDictionaryLoader.prototype = Object.create(DictionaryLoader.prototype);
+  * @param {string} url Dictionary URL
+  * @param {BrowserDictionaryLoader~onLoad} callback Callback function
+  */
+-BrowserDictionaryLoader.prototype.loadArrayBuffer = function (url, callback) {
+-    var xhr = new XMLHttpRequest();
+-    xhr.open("GET", url, true);
+-    xhr.responseType = "arraybuffer";
+-    xhr.onload = function () {
+-        if (this.status > 0 && this.status !== 200) {
+-            callback(xhr.statusText, null);
+-            return;
++BrowserDictionaryLoader.prototype.loadArrayBuffer = async function (url, callback) {
++    url = `chrome://zotero-better-bibtex/content/resource/kuromoji/${url.replace(/.*[\\\/]/, '')}`
++    Zotero.debug(`BrowserDictionaryLoader.loadArrayBuffer: ${url}`)
++
++    try {
++        const response = await fetch(url)
++
++        if (!response.ok) {
++            callback(new Error(`Fetch on ${url} failed: ${response.status}`), null)
++            return
+         }
+-        var arraybuffer = this.response;
+ 
+-        var gz = new zlib.Zlib.Gunzip(new Uint8Array(arraybuffer));
+-        var typed_array = gz.decompress();
+-        callback(null, typed_array.buffer);
+-    };
+-    xhr.onerror = function (err) {
+-        callback(err, null);
+-    };
+-    xhr.send();
+-};
++        const arraybuffer = await response.arrayBuffer()
++
++        var gz = new zlib.Zlib.Gunzip(new Uint8Array(arraybuffer))
++        var typed_array = gz.decompress()
++        
++        callback(null, typed_array.buffer)
++    }
++    catch (err) {
++        Zotero.logError(`Fetch failed for ${url}: ${err}`)
++        callback(err, null)
++    }
++}
+ 
+ /**
+  * Callback

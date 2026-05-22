@@ -8,7 +8,7 @@
     },
     "preferences": {
       "baseAttachmentPath": "/Users/shirdekel/Dropbox (Sydney Uni)/zotero_library",
-      "citekeyFormat": "[auth:lower:alphanum][year]",
+      "citekeyFormat": "auth(n=0,m=1,creator=\"*\",initials=false).fold.lower.alphanum + year",
       "extraMergeCSL": true,
       "extraMergeCitekeys": true,
       "extraMergeTeX": true,

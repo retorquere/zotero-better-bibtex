@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 
-import type { ParsedDate } from '../../content/dateparser'
+import type { RichDate } from '../../content/dateparser'
 import { Translation } from '../lib/translator'
-import type { Translators } from '../../typings/translators'
+import type { Field } from './entry'
 
 function pad(v: string, padding: string): string {
   if (v.length >= padding.length) return v
@@ -11,10 +11,10 @@ function pad(v: string, padding: string): string {
 
 function year(y) {
   if (Math.abs(y) > 999) {
-    return `${ y }`
+    return `${y}`
   }
   else {
-    return (y < 0 ? '-' : '') + (`000${ Math.abs(y) }`).slice(-4)
+    return (y < 0 ? '-' : '') + (`000${Math.abs(y)}`).slice(-4)
   }
 }
 
@@ -22,10 +22,10 @@ function format(date, translation: Translation): string {
   let formatted
 
   if (typeof date.year === 'number' && date.month && date.day) {
-    formatted = `${ year(date.year) }-${ pad(date.month, '00') }-${ pad(date.day, '00') }`
+    formatted = `${year(date.year)}-${pad(date.month, '00')}-${pad(date.day, '00')}`
   }
   else if (typeof date.year === 'number' && (date.month || date.season)) {
-    formatted = `${ year(date.year) }-${ pad((date.month || ((date.season as number) + 20)), '00') }`
+    formatted = `${year(date.year)}-${pad((date.month || ((date.season as number) + 20)), '00')}`
   }
   else if (typeof date.year === 'number') {
     formatted = year(date.year)
@@ -42,8 +42,14 @@ function format(date, translation: Translation): string {
   return formatted
 }
 
-export function datefield(date: ParsedDate, field: Translators.BibTeX.Field, translation: Translation): Translators.BibTeX.Field {
-  field = JSON.parse(JSON.stringify({ ...field, value: '', enc: 'literal' }))
+function isnumber(v) {
+  if (typeof v === 'number') return true
+  if (typeof v === 'string' && v.match(/^\d+$/)) return true
+  return false
+}
+
+export function datefield(date: RichDate, field: Field, translation: Translation): Field {
+  field = structuredClone({ ...field, value: '', enc: 'literal' })
 
   if (!date) return field
   if (date && !date.type && date.orig) return field
@@ -70,6 +76,8 @@ export function datefield(date: ParsedDate, field: Translators.BibTeX.Field, tra
   }
 
   if (!field.value || !field.name) return field
+
+  if (translation.BetterBibTeX && isnumber(field.value)) field.bare = true
 
   // well this is fairly dense... the date field is not an verbatim field, so the 'circa' symbol ('~') ought to mean a
   // NBSP... but some magic happens in that field (always with the magic, BibLaTeX...). But hey, if I insert an NBSP,

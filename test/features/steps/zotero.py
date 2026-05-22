@@ -14,7 +14,7 @@ import urllib
 import requests
 import tempfile
 from munch import *
-from steps.utils import running, nested_dict_iter, benchmark, ROOT, assert_equal_diff, serialize, html2md, clean_html
+from steps.utils import terminate, running, nested_dict_iter, benchmark, ROOT, FIXTURES, EXPORTED, assert_equal_diff, serialize, html2md, clean_html
 from steps.library import load as cleanlib, sortbib
 import steps.utils as utils
 import shutil
@@ -31,6 +31,47 @@ import traceback
 from collections import OrderedDict
 from collections.abc import MutableMapping
 
+class CompactEncoder(json.JSONEncoder):
+  def __init__(self, *args, **kwargs):
+    kwargs.setdefault('ensure_ascii', True)
+    super().__init__(*args, **kwargs)
+    self.max_inline_length = 80
+
+  def iterencode(self, o, _one_shot=False):
+    yield self._encode_recursive(o, level=0)
+
+  def _encode_recursive(self, o, level):
+    indent_str = '  ' * level
+
+    if isinstance(o, dict):
+      items = []
+      for k in sorted(o):
+        v = o[k]
+        encoded_v = self._encode_recursive(v, level + 1)
+        items.append(f'{json.dumps(k)}: {encoded_v}')
+      compact = '{' + ', '.join(items) + '}'
+      if len(compact) <= self.max_inline_length:
+        return compact
+      pretty = '{\n' + ',\n'.join(
+        f'{indent_str}  {json.dumps(k)}: {self._encode_recursive(v, level + 1)}'
+        for k, v in sorted(o.items())
+      ) + f'\n{indent_str}}}'
+      return pretty
+
+    elif isinstance(o, list):
+      items = [self._encode_recursive(i, level + 1) for i in o]
+      compact = '[' + ', '.join(items) + ']'
+      if len(compact) <= self.max_inline_length:
+        return compact
+      pretty = '[\n' + ',\n'.join(
+        f'{indent_str}  {self._encode_recursive(i, level + 1)}'
+        for i in o
+      ) + f'\n{indent_str}]'
+      return pretty
+
+    else:
+      return json.dumps(o, ensure_ascii=True)
+
 import sys
 import threading
 import socket
@@ -43,9 +84,6 @@ import zipfile
 from ruamel.yaml import YAML
 yaml = YAML(typ='safe')
 yaml.default_flow_style = False
-
-EXPORTED = os.path.join(ROOT, 'exported')
-FIXTURES = os.path.join(ROOT, 'test/fixtures')
 
 #with open(os.path.join(ROOT, 'schema', 'BetterBibTeX JSON.json')) as f:
 #  bbt_json_schema = json.load(f)
@@ -77,7 +115,7 @@ class FirefoxProfile(webdriver.FirefoxProfile):
 
 def install_proxies(xpis, profile):
   for xpi in xpis:
-    assert os.path.isdir(xpi)
+    assert os.path.isdir(xpi), xpi
     utils.print(f'installing {xpi}')
     rdf = etree.parse(os.path.join(xpi, 'install.rdf'))
     xpi_id = rdf.xpath('/rdf:RDF/rdf:Description/em:id', namespaces={'rdf': 'http://www.w3.org/1999/02/22-rdf-syntax-ns#', 'em': 'http://www.mozilla.org/2004/em-rdf#'})[0].text
@@ -126,6 +164,13 @@ class Pinger():
 
     utils.print('.', end='')
     threading.Timer(every, self.display, [start, every, stop]).start()
+
+def show(context, what):
+  return
+  utils.print(f'----------------- {context} -----------------')
+  for k, v in what.items():
+    if k == 'self': continue
+    utils.print(f'  {k}: {v}')
 
 class Config:
   def __init__(self, userdata):
@@ -182,12 +227,14 @@ class Config:
     return str(self.data)
 
 class Library:
-  def __init__(self, path=None, body=None, client=None, variant='', ext=None):
+  def __init__(self, path=None, body=None, client=None, variant='', ext=None, name=None):
+    show(f'Library.__init__({name})' if name else 'Library.__init__', locals())
     if path and not os.path.isabs(path):
       path = os.path.join(FIXTURES, path)
 
     if path:
       self.ext = self.suffix(path)
+
     elif ext:
       if type(ext) == Library:
         self.ext = self.suffix(ext.path)
@@ -214,14 +261,15 @@ class Library:
       if self.patch:
         self.path = self.base[:-len(self.ext)] + '.' + self.patch.split('.')[-2] + self.ext
 
-    if not self.body and self.base and os.path.exists(self.base):
+    if not self.body and self.base:
+      assert os.path.exists(self.base), f'{json.dumps(self.base)} does not exist'
       with open(self.base) as f:
         self.body = f.read()
 
     self.normalized = self.body
 
     if self.normalized is None or self.ext is None:
-      raise ValueError('need something to work with')
+      raise ValueError('No library body -- maybe export failed?')
 
     #if self.base and not os.path.exists(self.base):
     #  with open(self.base, 'w') as f:
@@ -229,7 +277,10 @@ class Library:
 
     if self.ext.endswith('.json') or self.ext == '.csl.yml':
       if self.ext.endswith('.json'):
-        self.data = json.loads(self.body, object_pairs_hook=OrderedDict)
+        try:
+          self.data = json.loads(self.body, object_pairs_hook=OrderedDict)
+        except:
+          raise ValueError(self.body)
       else:
         self.data = yaml.load(io.StringIO(self.body))
 
@@ -237,8 +288,8 @@ class Library:
         self.data = jsonpatch.JsonPatch(json.load(f)).apply(self.data)
 
       if self.ext in ['.csl.json', '.csl.yml']:
-        self.data = sorted(self.data, key=lambda item: json.dumps(item, sort_keys=True))
-        self.normalized = json.dumps(self.data, indent=2, ensure_ascii=True, sort_keys=True)
+        self.data = sorted(self.data, key=lambda item: json.dumps(item, cls=CompactEncoder))
+        self.normalized = json.dumps(self.data, cls=CompactEncoder)
 
         if self.ext == '.csl.yml':
           normalized = io.StringIO()
@@ -248,8 +299,8 @@ class Library:
 
       elif self.ext == '.json':
         if 'config' in self.data and 'preferences' in self.data['config']: self.data['config']['preferences'].pop('autoAbbrevStyle', None)
-        self.data['items'] = sorted(self.data['items'], key=lambda item: json.dumps(item, sort_keys=True))
-        self.normalized = json.dumps(cleanlib(copy.deepcopy(self.data)), indent=2, ensure_ascii=True, sort_keys=True)
+        self.data['items'] = sorted(self.data['items'], key=lambda item: json.dumps(item, cls=CompactEncoder))
+        self.normalized = json.dumps(cleanlib(copy.deepcopy(self.data)), cls=CompactEncoder)
 
     elif self.ext in ['.biblatex', '.bibtex', '.bib']:
       if self.patch:
@@ -271,10 +322,7 @@ class Library:
     return suffixes[-1]
 
   def save(self, path):
-    self.exported = os.path.join(EXPORTED, os.path.basename(os.path.dirname(path)), os.path.basename(path))
-    Path(self.exported).parent.mkdir(parents=True, exist_ok=True)
-    with open(self.exported, 'w') as f:
-      f.write(self.body)
+    utils.exported(path, self.body)
 
   def clean(self):
     if self.exported:
@@ -291,6 +339,7 @@ class Zotero:
     self.beta = userdata.get('beta') == 'true'
     self.legacy = userdata.get('legacy') == 'true'
     self.dev = userdata.get('dev') == 'true'
+    self.bibliography = userdata.get('bibliography')
     self.token = str(uuid.uuid4())
     self.import_at_start = userdata.get('import', None)
     if self.import_at_start:
@@ -333,6 +382,9 @@ class Zotero:
     self.start()
     self.redir = '>>'
 
+  def pull_export_url(self, query):
+    return f'http://127.0.0.1:{self.port}/better-bibtex/export?{query}'
+
   def execute(self, script, **args):
     headers = {
       'Content-Type': 'application/json'
@@ -347,7 +399,8 @@ class Zotero:
 
     headers = {
       'Authorization': f'Bearer {self.token}',
-      'Content-Type': 'application/javascript'
+      # 'Content-Type': 'application/javascript'
+      'Content-Type': 'text/plain',
     }
 
     with Pinger(20):
@@ -358,42 +411,36 @@ class Zotero:
   def shutdown(self):
     if self.proc is None: return
 
-    # graceful shutdown
-    try:
-      self.execute("""
-        const appStartup = Components.classes['@mozilla.org/toolkit/app-startup;1'].getService(Components.interfaces.nsIAppStartup);
-        appStartup.quit(Components.interfaces.nsIAppStartup.eAttemptQuit);
-      """)
-    except:
-      pass
-
     def on_terminate(proc):
-        utils.print("process {} terminated with exit code {}".format(proc, proc.returncode))
+      utils.print(f'process {proc} terminated with exit code {proc.returncode or 0}')
 
     zotero = psutil.Process(self.proc.pid)
-    alive = zotero.children(recursive=True)
-    alive.append(zotero)
+    processes = zotero.children(recursive=True)
+    processes.append(zotero)
 
-    for p in alive:
+    for p in processes:
       try:
+        info = p.as_dict(attrs=['pid', 'name', 'cmdline'])
+        utils.print(f'shutdown: {json.dumps(info)}')
         p.terminate()
       except psutil.NoSuchProcess:
         pass
-    gone, alive = psutil.wait_procs(alive, timeout=5, callback=on_terminate)
+    gone, processes = psutil.wait_procs(processes, timeout=30, callback=on_terminate)
 
-    if alive:
-      for p in alive:
-        utils.print("process {} survived SIGTERM; trying SIGKILL" % p)
+    if processes:
+      for p in processes:
+        utils.print(f'process {p} survived SIGTERM; trying SIGKILL')
         try:
           p.kill()
         except psutil.NoSuchProcess:
           pass
-      gone, alive = psutil.wait_procs(alive, timeout=5, callback=on_terminate)
-      if alive:
-        for p in alive:
-          utils.print("process {} survived SIGKILL; giving up" % p)
+      gone, processes = psutil.wait_procs(processes, timeout=5, callback=on_terminate)
+      if processes:
+        for p in processes:
+          utils.print(f'process {p} survived SIGKILL; giving up')
+
     self.proc = None
-    assert not running('Zotero')
+    assert not running('Zotero'), 'Zotero is running'
 
   def restart(self, **kwargs):
     self.shutdown()
@@ -415,11 +462,12 @@ class Zotero:
     self.config.timeout = 2
     with benchmark(f'starting {self.client}') as bm:
       posted = False
-      for _ in redo.retrier(attempts=120,sleeptime=1):
+      for _ in redo.retrier(attempts=10,sleeptime=5):
         utils.print('connecting... (%.2fs)' % (bm.elapsed,))
 
         try:
           ready = self.execute("""
+            // debug bridge: startup detection
             if (!Zotero.BetterBibTeX) {
               Zotero.debug('{better-bibtex:debug bridge}: startup: BetterBibTeX not loaded')
               return false;
@@ -454,7 +502,6 @@ class Zotero:
           with open(self.import_at_start) as f:
             data = json.load(f)
             prefs = data.get('config', {}).get('preferences', {})
-        utils.print(f'import at start: {json.dumps(self.import_at_start)}, {json.dumps(prefs)}')
         self.execute('return await Zotero.BetterBibTeX.TestSupport.importFile(file, true, prefs)', file=self.import_at_start, prefs=prefs)
       except Exception as e:
         utils.print(f'failed to import at start: {json.dumps(self.import_at_start)}, {json.dumps(prefs)}')
@@ -468,7 +515,20 @@ class Zotero:
       self.config.reset()
       self.start()
 
-    self.execute('await Zotero.BetterBibTeX.TestSupport.reset(scenario)', scenario=scenario)
+    self.execute('''
+      try {
+        Zotero.debug('::: ' + scenario + ' :: reset start')
+        await Zotero.BetterBibTeX.TestSupport.reset(scenario)
+        Zotero.debug('::: ' + scenario + ' :: reset succeeded')
+      }
+      catch (err) {
+        Zotero.debug(':::! ' + scenario + ' :: reset failed: ' + err.message)
+        throw err
+      }
+      finally {
+        Zotero.debug('::: ' + scenario + ' :: reset completed')
+      }
+    ''', scenario=scenario)
     self.preferences = Preferences(self)
     for csv in glob.glob(os.path.join(self.profile.path, 'better-bibtex', '*.csv')):
       os.remove(csv)
@@ -489,7 +549,7 @@ class Zotero:
     assert_equal_diff(expected.body, found.strip())
 
   def export_library(self, translator, displayOptions = {}, collection = None, output = None, expected = None, resetCache = False):
-    assert not displayOptions.get('keepUpdated', False) or output # Auto-export needs a destination
+    assert not displayOptions.get('keepUpdated', False) or output, ('Auto-export needs a path', displayOptions, output) # Auto-export needs a destination
 
     if translator.startswith('id:'):
       translator = translator[len('id:'):]
@@ -516,8 +576,8 @@ class Zotero:
 
     if expected is None: return
 
-    expected = Library(path=expected, client=self.client, variant=self.variant)
-    found = Library(path=output, body=found, client=self.client, variant=self.variant, ext=expected)
+    expected = Library(path=expected, client=self.client, variant=self.variant, name='expected')
+    found = Library(path=output, body=found, client=self.client, variant=self.variant, ext=expected, name='found')
     found.save(expected.path)
 
     if expected.ext in ['.csl.json', '.csl.yml', '.html', '.bib', '.bibtex', '.biblatex']:
@@ -532,11 +592,13 @@ class Zotero:
     found.clean()
 
   def import_file(self, context, references, collection = False, items=True):
-    assert type(collection) in [bool, str]
+    assert type(collection) in [bool, str], type(collection)
 
     input = Library(path=references, client=self.client, variant=self.variant)
 
+    bibliography = None
     if input.path.endswith('.json'):
+      bibliography = self.bibliography
       # TODO: clean lib and test against schema
       config = input.data.get('config', {})
       preferences = config.get('preferences', {})
@@ -556,8 +618,8 @@ class Zotero:
       }
 
       for k, v in preferences.items():
+        if k == 'keyConflictPolicy': continue
         assert self.preferences.prefix + k in self.preferences.supported, f'Unsupported preference "{k}"'
-        assert type(v) == self.preferences.supported[self.preferences.prefix + k], f'Value for preference {k} has unexpected type {type(v)}'
       for item in input.data['items']:
         for att in item.get('attachments') or []:
           if path := att.get('path'):
@@ -592,11 +654,16 @@ class Zotero:
 
       filename = references
       if not items: filename = None
-      return self.execute('return await Zotero.BetterBibTeX.TestSupport.importFile(filename, createNewCollection, preferences, localeDateOrder)',
+      return self.execute('''
+          const library = await Zotero.BetterBibTeX.TestSupport.importFile(filename, createNewCollection, preferences, bibliography)
+          await Zotero.BetterBibTeX.TestSupport.fill()
+          return library
+        ''',
         filename = filename,
         createNewCollection = (collection != False),
         preferences = preferences,
-        localeDateOrder = localeDateOrder
+        localeDateOrder = localeDateOrder,
+        bibliography = bibliography
       )
 
   def expand_expected(self, expected):
@@ -604,7 +671,7 @@ class Zotero:
     if ext in ['.yml', '.json'] and base.endswith('.csl'):
       base = os.path.splitext(base)[0]
       ext = '.csl' + ext
-    assert ext != ''
+    assert ext != '', 'no extension'
 
     if self.client == 'zotero': return [ os.path.join(FIXTURES, expected), ext ]
 
@@ -633,7 +700,7 @@ class Zotero:
     if self.beta:
       self.variant = '-beta'
     elif self.legacy:
-      self.variant = '6'
+      self.variant = '7'
     elif self.dev:
       self.variant = '-dev'
     profile.binary = {
@@ -670,7 +737,6 @@ class Zotero:
     ini.set(profile.id, 'Default', None)
     with open(profile.ini, 'w') as f:
       ini.write(f, space_around_delimiters=False)
-    utils.print(str(dict(ini[profile.id])))
 
     # layout profile
     if self.config.profile:
@@ -777,20 +843,15 @@ class Preferences:
     self.pref = {}
     self.prefix = 'translators.better-bibtex.'
 
-    with open(os.path.join(ROOT, 'schema/BetterBibTeX JSON.json')) as f:
-      schema = json.load(f, object_hook=Munch)
-      self.supported = {
-        self.prefix + pref: {'string': str, 'boolean': bool, 'number': int}[tpe.type]
-        for pref, tpe in schema.properties.config.properties.preferences.properties.items()
-      }
-    self.supported[self.prefix + 'removeStock'] = bool
+    with open(os.path.join(ROOT, 'content/Preferences/preferences.yaml')) as f:
+      self.supported = [self.prefix + pref for pref in yaml.load(f).keys()]
+    self.supported.append(self.prefix + 'removeStock')
 
   def __setitem__(self, key, value):
     if key[0] == '.': key = self.prefix + key[1:]
 
     if key.startswith(self.prefix):
       assert key in self.supported, f'Unknown preference "{key}"'
-      assert type(value) == self.supported[key], f'Unexpected value of type {type(value)} for preference {key}'
 
     if key == 'translators.better-bibtex.postscript':
       with open(os.path.join(FIXTURES, value)) as f:

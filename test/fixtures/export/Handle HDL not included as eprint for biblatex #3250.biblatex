@@ -1,0 +1,58 @@
+@thesis{Elman2023,
+  type = {phdthesis},
+  title = {Exactly Soluble Models in Many-Body Physics},
+  author = {Elman, Samuel},
+  date = {2023},
+  eprint = {2123/31137},
+  eprinttype = {hdl},
+  institution = {University of Sydney},
+  url = {https://hdl.handle.net/2123/31137},
+  annotation = {Accepted: 2023-04-24T06:25:00Z}
+}
+% == BibLateX quality report for Elman2023:
+% ? unused Language ("en")
+% ? unused Library catalog ("ses.library.usyd.edu.au")
+
+@thesis{Naaijkens2012,
+  type = {phdthesis},
+  title = {Anyons in Infinite Quantum Systems: QFT in $d=2+1$ and the Toric Code},
+  shorttitle = {Anyons in Infinite Quantum Systems},
+  author = {Naaijkens, Pieter},
+  date = {2012},
+  institution = {Radboud University},
+  url = {http://repository.ubn.ru.nl/handle/2066/92737},
+  annotation = {Dissertation}
+}
+% == BibLateX quality report for Naaijkens2012:
+% ? Title looks like it was stored in title-case in Zotero
+% ? unused Library catalog ("repository.ubn.ru.nl")
+
+@article{Pare1993,
+  title = {Universal Covering Categories},
+  author = {Paré, Robert},
+  date = {1993},
+  journaltitle = {Rendiconti dell’Istituto di Matematica dell’Università di Trieste},
+  volume = {25},
+  eprint = {10077/4715},
+  eprinttype = {hdl},
+  pages = {391--411},
+  url = {http://hdl.handle.net/10077/4715}
+}
+% == BibLateX quality report for Pare1993:
+% ? unused ISSN ("0049-4704")
+% ? unused Language ("en")
+% ? unused Library catalog ("www.openstarts.units.it")
+
+@thesis{Stiegemann2019,
+  type = {phdthesis},
+  title = {Thompson {{Field Theory}}},
+  author = {Stiegemann, Deniz Ekrem},
+  date = {2019},
+  doi = {10.15488/5127},
+  url = {https://www.repo.uni-hannover.de/handle/123456789/5172}
+}
+% == BibLateX quality report for Stiegemann2019:
+% Missing required field 'institution'
+% ? Title looks like it was stored in title-case in Zotero
+% ? unused Language ("eng")
+% ? unused Library catalog ("DOI.org (Datacite)")

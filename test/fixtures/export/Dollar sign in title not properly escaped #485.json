@@ -10,7 +10,7 @@
       "asciiBibLaTeX": true,
       "autoAbbrevStyle": "http://www.zotero.org/styles/cell",
       "bibtexURL": "url",
-      "citekeyFormat": "[zotero][authors]",
+      "citekeyFormat": "zotero + authorsn(n=0,creator=\"*\",initials=false,sep=\" \").fold",
       "exportBibTeXStrings": "detect",
       "quickCopyMode": "orgmode"
     }

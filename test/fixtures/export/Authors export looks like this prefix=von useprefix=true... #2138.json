@@ -8,7 +8,7 @@
     },
     "preferences": {
       "DOIandURL": "url",
-      "citekeyFormat": "[auth:lower][shorttitle3_3][year]",
+      "citekeyFormat": "auth(n=0,m=1,creator=\"*\",initials=false).fold.lower + shorttitle(3,3) + year",
       "postscript": "if (Translator.BetterBibLaTeX && item.itemType === 'webpage') {\n    if (item.accessDate) {\n      reference.add({ name: 'note', value: \"(accessed \" + item.accessDate.replace(/\\s*T?\\d+:\\d+:\\d+.*/, '') + \")\" });\n    }\n    if (item.url.DASKANNWIEDERWEG_ICHMAGNURKEINEDOPPELTEURLIMGLOSSARY) {\n      reference.add({ name: 'howpublished', bibtex: \"{\\\\url{\" + reference.enc_verbatim({value: item.url}) + \"}}\" });\n    }\n  }",
       "biblatexExtendedNameFormat": false
     }
@@ -29,7 +29,7 @@
         },
         {
           "creatorType": "author",
-          "firstName": "Andr\ufffd",
+          "firstName": "Andr�",
           "lastName": "Teixeira"
         },
         {

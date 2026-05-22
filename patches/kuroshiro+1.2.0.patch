@@ -1,0 +1,25 @@
+diff --git a/node_modules/kuroshiro/src/core.js b/node_modules/kuroshiro/src/core.js
+index f2c70ac..da6c4f0 100644
+--- a/node_modules/kuroshiro/src/core.js
++++ b/node_modules/kuroshiro/src/core.js
+@@ -62,9 +62,9 @@ class Kuroshiro {
+      * @param {string} [options.romajiSystem="hepburn"] Romanization System ["nippon"|"passport"|"hepburn"]
+      * @param {string} [options.delimiter_start="("] Delimiter(Start)
+      * @param {string} [options.delimiter_end=")"] Delimiter(End)
+-     * @returns {Promise} Promise object represents the result of conversion
++     * @returns {string} result of conversion
+      */
+-    async convert(str, options) {
++    convert(str, options) {
+         options = options || {};
+         options.to = options.to || "hiragana";
+         options.mode = options.mode || "normal";
+@@ -86,7 +86,7 @@ class Kuroshiro {
+             throw new Error("Invalid Romanization System.");
+         }
+ 
+-        const rawTokens = await this._analyzer.parse(str);
++        const rawTokens = this._analyzer.parse(str);
+         const tokens = patchTokens(rawTokens);
+ 
+         if (options.mode === "normal" || options.mode === "spaced") {

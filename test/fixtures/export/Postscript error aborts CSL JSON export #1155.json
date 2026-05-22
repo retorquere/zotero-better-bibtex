@@ -5,7 +5,7 @@
     "localeDateOrder": "ymd",
     "preferences": {
       "bibtexURL": "note",
-      "citekeyFormat": "[auth][year]",
+      "citekeyFormat": "auth(n=0,m=1,creator=\"*\",initials=false).fold + year",
       "postscript": "if (this.item.DOI) {\n  var doi = this.item.DOI;\n  if (doi.indexOf('doi:') != 0) { doi = 'doi:' + doi; }\n  this.add({ name: 'note', duplicate: true, value: '[' + doi + ']' });\n}\nif (this.item.DOI) {\n  var doi = this.item.DOI;\n  if (doi.indexOf('doi:') != 0) { doi = 'doi:' + doi; }\n  this.add({ name: 'note', duplicate: true, value: '[' + doi + ']' });\n}"
     }
   },
@@ -108,7 +108,7 @@
       ],
       "itemID": 2,
       "itemType": "journalArticle",
-      "pages": "493\u2013518",
+      "pages": "493–518",
       "publicationTitle": "Bulletin of Volcanology",
       "tags": [
         {
@@ -139,9 +139,9 @@
       "itemType": "journalArticle",
       "language": "German",
       "libraryCatalog": "MetaPress",
-      "pages": "5\u201332",
+      "pages": "5–32",
       "publicationTitle": "Sacris Erudiri",
-      "title": "Skizze zur Auslegungsgeschichte der B\u00fccher <i>Prouerbia</i> und <i>Ecclesiastes</i> in der abendl\u00e4ndischen Kirche",
+      "title": "Skizze zur Auslegungsgeschichte der Bücher <i>Prouerbia</i> und <i>Ecclesiastes</i> in der abendländischen Kirche",
       "url": "http://dx.doi.org/10.1484/J.SE.2.303788",
       "volume": "34"
     }

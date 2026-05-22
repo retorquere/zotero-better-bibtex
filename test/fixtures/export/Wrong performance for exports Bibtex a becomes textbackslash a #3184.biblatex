@@ -1,0 +1,5 @@
+@book{a_,
+  title = {Title with {L}atex parts - {${\mathbf{R}}^n$}},
+  author = {{\"a}, FirstName},
+  publisher = {Publisher with the wrong part: \"a}
+}

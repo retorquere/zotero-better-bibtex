@@ -1,5 +1,3 @@
-import { is7 } from './client'
-
 export const NAMESPACE = {
   XUL: 'http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul',
   HTML: 'http://www.w3.org/1999/xhtml',
@@ -24,7 +22,7 @@ export class Elements {
   private className: string
   constructor(private document: Document) {
     this.className = `better-bibtex-${ Zotero.Utilities.generateObjectKey() }`
-    if (is7) Elements.all.push(new WeakRef(this))
+    Elements.all.push(new WeakRef(this))
   }
 
   public serialize(node: HTMLElement): string {
@@ -39,10 +37,8 @@ export class Elements {
     const namespace = name.startsWith('html:') ? NAMESPACE.HTML : NAMESPACE.XUL
     name = name.replace('html:', '')
 
-    const elt: HTMLElement = is7
-      ? this.document[namespace === NAMESPACE.XUL ? 'createXULElement' : 'createElement'](name) as HTMLElement
-      : this.document.createElementNS(namespace, name) as HTMLElement
-    attrs.class = `${ this.className } ${ attrs.class || '' }`.trim()
+    const elt: HTMLElement = this.document[namespace === NAMESPACE.XUL ? 'createXULElement' : 'createElement'](name) as HTMLElement
+    attrs.class = `${ this.className } ${ attrs.class as string || '' }`.trim()
     for (const [ a, v ] of Object.entries(attrs)) {
       if (typeof v === 'string') {
         elt.setAttribute(a, v)

@@ -1,23 +1,42 @@
-hbox(flex=0)
-  label(bbt:preference="extensions.zotero.translators.better-bibtex.importCaseProtection") &better-bibtex_preferences_advanced_import_case-protection;
-  menulist(preference="extensions.zotero.translators.better-bibtex.importCaseProtection")
+hbox(flex='0')
+  label(
+    bbt:preference='extensions.zotero.translators.better-bibtex.importCaseProtection'
+    data-l10n-id='better-bibtex_preferences_advanced_import_case-protection'
+  )
+  menulist(native='true', preference='extensions.zotero.translators.better-bibtex.importCaseProtection')
     menupopup
-      menuitem(value='as-needed' label='&better-bibtex_preferences_advanced_import_case-protection_as-needed.label;')
-      menuitem(value='on' label='&better-bibtex_preferences_advanced_import_case-protection_on.label;')
-      menuitem(value='off' label='&better-bibtex_preferences_advanced_import_case-protection_off.label;')
-  image(tooltip="bbt-tooltip-importCaseProtection" src="chrome://zotero-better-bibtex/content/skin/attention.svg" width='16px' height='16px')
+      menuitem(data-l10n-id='better-bibtex_preferences_advanced_import_case-protection_as-needed', value='as-needed')
+      menuitem(data-l10n-id='better-bibtex_preferences_advanced_import_case-protection_on', value='on')
+      menuitem(data-l10n-id='better-bibtex_preferences_advanced_import_case-protection_off', value='off')
 
-checkbox(preference="extensions.zotero.translators.better-bibtex.auxImport" label="&better-bibtex_preferences_citekey_aux-scanner_import.label;")
-hbox(flex=0)
-  groupbox
-    caption(bbt:preference="extensions.zotero.translators.better-bibtex.importSentenceCase") &better-bibtex_preferences_advanced_import_sentence-case;
-      image(tooltip="bbt-tooltip-importSentenceCase" src="chrome://zotero-better-bibtex/content/skin/attention.svg" width='16px' height='16px')
-    radiogroup(preference="extensions.zotero.translators.better-bibtex.importSentenceCase")
-      radio(label="&better-bibtex_preferences_advanced_import_sentence-case_on-guess.label;" value="on+guess")
-      radio(label="&better-bibtex_preferences_advanced_import_sentence-case_on.label;" value="on")
-      radio(label="&better-bibtex_preferences_advanced_import_sentence-case_off.label;" value="off")
-hbox(flex=0)
-  groupbox
-    caption &better-bibtex_preferences_advanced_import_migrate;
-    button(label="&better-bibtex_preferences_advanced_import_export-prefs.label;" oncommand="Zotero.BetterBibTeX.PrefPane.exportPrefs()")
-    button(label="&better-bibtex_preferences_advanced_import_prefs.label;" oncommand="Zotero.BetterBibTeX.PrefPane.importPrefs()")
+  img(
+    src='chrome://zotero-better-bibtex/content/skin/attention.svg'
+    style='width:16px;height:16px'
+    tooltip='bbt-tooltip-importCaseProtection'
+  )
+
+checkbox(
+  data-l10n-id='better-bibtex_preferences_citekey_aux-scanner_import'
+  native='true'
+  preference='extensions.zotero.translators.better-bibtex.auxImport'
+)
+
+hbox(flex='0')
+  groupbox.bbt-prefs-subsection
+    label
+      html:h2(
+        bbt:preference='extensions.zotero.translators.better-bibtex.importSentenceCase'
+        data-l10n-id='better-bibtex_preferences_advanced_import_sentence-case'
+      )
+        img(src='chrome://zotero-better-bibtex/content/skin/attention.svg', style='width:16px;height:16px', tooltip='bbt-tooltip-importSentenceCase')
+    radiogroup(preference='extensions.zotero.translators.better-bibtex.importSentenceCase')
+      radio(data-l10n-id='better-bibtex_preferences_advanced_import_sentence-case_on-guess', native='true', value='on+guess')
+      radio(data-l10n-id='better-bibtex_preferences_advanced_import_sentence-case_on', native='true', value='on')
+      radio(data-l10n-id='better-bibtex_preferences_advanced_import_sentence-case_off', native='true', value='off')
+
+hbox(flex='0')
+  groupbox.bbt-prefs-subsection
+    label
+      html:h2(data-l10n-id='better-bibtex_preferences_advanced_import_migrate')
+    button(data-l10n-id='better-bibtex_preferences_advanced_import_export-prefs', oncommand='Zotero.BetterBibTeX.PrefPane.exportPrefs()')
+    button(data-l10n-id='better-bibtex_preferences_advanced_import_prefs', oncommand='Zotero.BetterBibTeX.PrefPane.importPrefs()')

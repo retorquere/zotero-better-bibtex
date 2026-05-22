@@ -1,0 +1,15 @@
+@incollection{DGHV10,
+  title = {Fully Homomorphic Encryption over the Integers},
+  booktitle = {Advances in {{Cryptology}} – {{Eurocrypt}} 2010},
+  author = {family=Dijk, given=Marten, prefix=van, useprefix=true and Gentry, Craig and Halevi, Shai and Vaikuntanathan, Vinod},
+  editor = {Gilbert, Henri},
+  editora = {Hutchison, David and Kanade, Takeo and Kittler, Josef and Kleinberg, Jon M. and Mattern, Friedemann and Mitchell, John C. and Naor, Moni and Nierstrasz, Oscar and Pandu Rangan, C. and Steffen, Bernhard and Sudan, Madhu and Terzopoulos, Demetri and Tygar, Doug and Vardi, Moshe Y. and Weikum, Gerhard},
+  editoratype = {redactor},
+  date = {2010},
+  volume = {6110},
+  pages = {24--43},
+  publisher = {Springer Berlin Heidelberg},
+  location = {Berlin, Heidelberg},
+  doi = {10.1007/978-3-642-13190-5_2},
+  isbn = {978-3-642-13189-9 978-3-642-13190-5}
+}

@@ -7,7 +7,7 @@
     "preferences": {
       "autoAbbrevStyle": "http://www.zotero.org/styles/nature",
       "bibtexURL": "note",
-      "citekeyFormat": "[auth:lower][Title:fold:nopunct:skipwords:select,1,1:lower:alphanum:prefix,_][year:prefix,_][0]",
+      "citekeyFormat": "auth(n=0,m=1,creator=\"*\",initials=false).fold.lower + Title.transliterate.nopunct.skipwords.select(1,1).lower.alphanum.prefix(_) + year.prefix(_) + postfix(\"-%(n)s\")",
       "skipFields": "file,editora,editoratype,editorb,editorbtype"
     }
   },
@@ -30,14 +30,14 @@
       "itemID": 1,
       "itemType": "book",
       "language": "dan",
-      "place": "K\u00f8benhavn",
+      "place": "København",
       "publisher": "Akademisk Forlag",
       "shortTitle": "En ny sociologi",
-      "title": "En ny sociologi for et nyt samfund. Introduktion til Akt\u00f8r-Netv\u00e6rk-Teori"
+      "title": "En ny sociologi for et nyt samfund. Introduktion til Aktør-Netværk-Teori"
     },
     {
       "ISBN": "2-247-04268-6",
-      "abstractNote": "Pr\u00e9face de Ph. Raynaud.\nTrad. de : \"Vom Wesen und Wert der Demokratie\" - T\u00fcbingen : J.C.B.  Mohr, 1929.\nFac-sim. de la 2e \u00e9d., Paris : Sirey : 1932.",
+      "abstractNote": "Préface de Ph. Raynaud.\nTrad. de : \"Vom Wesen und Wert der Demokratie\" - Tübingen : J.C.B.  Mohr, 1929.\nFac-sim. de la 2e éd., Paris : Sirey : 1932.",
       "creators": [
         {
           "creatorType": "author",
@@ -60,7 +60,7 @@
       "extra": [
         "{:original-date: 1929}",
         "{:original-title: Vom Wesen und Wert der Demokratie}",
-        "{:original-publisher-place: T\u00fcbingen}",
+        "{:original-publisher-place: Tübingen}",
         "{:original-publisher: J.C.B. Mohr}"
       ],
       "itemID": 2,
@@ -70,8 +70,8 @@
       "numPages": "x+121",
       "place": "Paris",
       "publisher": "Dalloz",
-      "series": "Biblioth\u00e8que Dalloz",
-      "title": "La d\u00e9mocratie. Sa nature, sa valeur"
+      "series": "Bibliothèque Dalloz",
+      "title": "La démocratie. Sa nature, sa valeur"
     }
   ]
 }

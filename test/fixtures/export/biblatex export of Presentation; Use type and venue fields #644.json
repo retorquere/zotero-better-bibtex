@@ -9,7 +9,7 @@
     "preferences": {
       "DOIandURL": "doi",
       "biblatexExtendedDateFormat": false,
-      "citekeyFormat": "[auth:lower][year]",
+      "citekeyFormat": "auth(n=0,m=1,creator=\"*\",initials=false).fold.lower + year",
       "itemObserverDelay": 100,
       "skipFields": "doi"
     }
@@ -53,7 +53,7 @@
         {
           "creatorType": "presenter",
           "firstName": "Stacy",
-          "lastName": "D\u2019Erasmo"
+          "lastName": "D’Erasmo"
         }
       ],
       "date": "2000-04-26",

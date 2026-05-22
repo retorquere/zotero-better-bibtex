@@ -8,7 +8,7 @@
     },
     "preferences": {
       "biblatexExtendedNameFormat": true,
-      "citekeyFormat": "[shorttitle]=[year]",
+      "citekeyFormat": "shorttitle + \"=\" + year",
       "itemObserverDelay": 100,
       "skipFields": "rights"
     }

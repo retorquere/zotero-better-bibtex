@@ -6,12 +6,11 @@ import submodules
 import months
 import kuroshiro
 import item
-# import jieba
 import babel_languages
 import scannablecite
-import manifest
 import ftl2dtd
 import unicode
+import readme
 
 import shutil
 with open('submodules/zotero/chrome/content/zotero/osfile.mjs') as i, open('gen/osfile.js', 'w') as o:

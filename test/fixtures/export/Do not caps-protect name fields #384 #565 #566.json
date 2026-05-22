@@ -8,7 +8,7 @@
     },
     "preferences": {
       "bibtexURL": "note",
-      "citekeyFormat": "[auth:lower]",
+      "citekeyFormat": "auth(n=0,m=1,creator=\"*\",initials=false).fold.lower",
       "skipFields": "timestamp",
       "biblatexExtendedNameFormat": true
     }
@@ -60,12 +60,12 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "Fran\u00e7ois de La Mothe",
+          "firstName": "François de La Mothe",
           "lastName": "Le Vayer"
         }
       ],
       "extra": [
-        "[Le Vayer][Fran\u00e7ois de La Mothe]"
+        "[Le Vayer][François de La Mothe]"
       ],
       "itemID": 12,
       "itemType": "book"
@@ -75,11 +75,11 @@
         {
           "creatorType": "author",
           "firstName": "Gabriele",
-          "lastName": "D\u2019Annunzio"
+          "lastName": "D’Annunzio"
         }
       ],
       "extra": [
-        "[D\u2019Annunzio][Gabriele]"
+        "[D’Annunzio][Gabriele]"
       ],
       "itemID": 13,
       "itemType": "book"
@@ -131,11 +131,11 @@
         {
           "creatorType": "author",
           "firstName": "Jean le Rond",
-          "lastName": "d\u2019Alembert"
+          "lastName": "d’Alembert"
         }
       ],
       "extra": [
-        "[d\u2019Alembert][Jean le Rond]"
+        "[d’Alembert][Jean le Rond]"
       ],
       "itemID": 17,
       "itemType": "book"
@@ -158,12 +158,12 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "Jos\u00e9",
+          "firstName": "José",
           "lastName": "Ortega y Gasset"
         }
       ],
       "extra": [
-        "[Ortega y Gasset][Jos\u00e9]"
+        "[Ortega y Gasset][José]"
       ],
       "itemID": 19,
       "itemType": "book"
@@ -186,12 +186,12 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "Lorenzo de\u2019\u200b",
+          "firstName": "Lorenzo de’​",
           "lastName": "Medici"
         }
       ],
       "extra": [
-        "[Medici][Lorenzo de\u2019U+200B]"
+        "[Medici][Lorenzo de’U+200B]"
       ],
       "itemID": 20,
       "itemType": "book"
@@ -271,11 +271,11 @@
         {
           "creatorType": "author",
           "firstName": "Pierre-Charles",
-          "lastName": "L\u2019Enfant"
+          "lastName": "L’Enfant"
         }
       ],
       "extra": [
-        "[L\u2019Enfant][Pierre-Charles]"
+        "[L’Enfant][Pierre-Charles]"
       ],
       "itemID": 26,
       "itemType": "book"
@@ -298,12 +298,12 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "Ren\u00e9-Robert Cavelier de",
+          "firstName": "René-Robert Cavelier de",
           "lastName": "La Salle"
         }
       ],
       "extra": [
-        "[La Salle][Ren\u00e9-Robert Cavelier de]"
+        "[La Salle][René-Robert Cavelier de]"
       ],
       "itemID": 28,
       "itemType": "book"
@@ -479,12 +479,12 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "Alexandre, p\u00e8re",
+          "firstName": "Alexandre, père",
           "lastName": "Dumas"
         }
       ],
       "extra": [
-        "[Dumas][Alexandre, p\u00e8re]"
+        "[Dumas][Alexandre, père]"
       ],
       "itemID": 4,
       "itemType": "book"
@@ -521,11 +521,11 @@
         {
           "creatorType": "author",
           "firstName": "Alfonse",
-          "lastName": "D\u2019Amato"
+          "lastName": "D’Amato"
         }
       ],
       "extra": [
-        "[D\u2019Amato][Alfonse]"
+        "[D’Amato][Alfonse]"
       ],
       "itemID": 6,
       "itemType": "book"
@@ -548,12 +548,12 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "Beatrice d\u2019",
+          "firstName": "Beatrice d’",
           "lastName": "Este"
         }
       ],
       "extra": [
-        "[Este][Beatrice d\u2019]"
+        "[Este][Beatrice d’]"
       ],
       "itemID": 8,
       "itemType": "book"

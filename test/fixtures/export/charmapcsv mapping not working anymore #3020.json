@@ -8,7 +8,7 @@
       "asciiBibLaTeX": true,
       "asciiBibTeX": false,
       "autoExport": "idle",
-      "autoPinDelay": 1,
+      "fillKeyAfter": 1,
       "automaticTags": false,
       "biblatexExtractEprint": false,
       "charmap": "{\"·\":{\"text\":\"·\",\"math\":\"\"},\"ș\":{\"text\":\"ș\",\"math\":\"\"}}",

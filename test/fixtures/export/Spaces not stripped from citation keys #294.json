@@ -7,7 +7,7 @@
     "preferences": {
       "autoAbbrevStyle": "http://www.zotero.org/styles/elsevier-harvard",
       "bibtexURL": "note",
-      "citekeyFormat": "[auth:fold:lower]_[Title:nopunct:skipwords:fold:select,1,3:lower]_[year]",
+      "citekeyFormat": "auth(n=0,m=1,creator=\"*\",initials=false).fold.transliterate.lower + \"_\" + Title.nopunct.skipwords.transliterate.select(1,3).lower + \"_\" + year",
       "skipFields": "abstract,note,file"
     }
   },
@@ -15,17 +15,17 @@
     {
       "DOI": "10.1007/s00276-014-1305-7",
       "ISSN": "1279-8517",
-      "abstractNote": "PURPOSE: The aim of this literary search was to chart the etymology of 32 selected human skeletal muscles, representative of all body regions.\nMETHODS: In researching this study, analysis of 15 influential Latin and German anatomical textbooks, dating from the sixteenth to the nineteenth century, was undertaken, as well as reference to four versions of the official Latin anatomical terminologies. Particular emphasis has been placed on the historical development of muscular nomenclature, and the subsequent division of these data into groups, defined by similarities in the evolution of their names into the modern form.\nRESULTS: The first group represents examples of muscles whose names have not changed since their introduction by Vesalius (1543). The second group comprises muscles which earned their definitive names during the seventeenth and eighteenth century. The third group is defined by acceptance into common anatomical vernacular by the late nineteenth century, including those outlined in the first official Latin terminology (B.N.A.) of 1895. The final group is reserved for six extra-ocular muscles with a particularly poetic history, favoured and popularised by the anatomical giants of late Renaissance and 1,700\u00a0s.\nCONCLUSIONS: As this study will demonstrate, it is evident that up until introduction of the B.N.A. there was an extremely liberal approach to naming muscles, deserving great respect in the retrospective terminological studies if complete and relevant results are to be achieved. Without this knowledge of the vernacular of the ages past, modern researchers can find themselves 'reinventing the wheel' in looking for their answers.",
+      "abstractNote": "PURPOSE: The aim of this literary search was to chart the etymology of 32 selected human skeletal muscles, representative of all body regions.\nMETHODS: In researching this study, analysis of 15 influential Latin and German anatomical textbooks, dating from the sixteenth to the nineteenth century, was undertaken, as well as reference to four versions of the official Latin anatomical terminologies. Particular emphasis has been placed on the historical development of muscular nomenclature, and the subsequent division of these data into groups, defined by similarities in the evolution of their names into the modern form.\nRESULTS: The first group represents examples of muscles whose names have not changed since their introduction by Vesalius (1543). The second group comprises muscles which earned their definitive names during the seventeenth and eighteenth century. The third group is defined by acceptance into common anatomical vernacular by the late nineteenth century, including those outlined in the first official Latin terminology (B.N.A.) of 1895. The final group is reserved for six extra-ocular muscles with a particularly poetic history, favoured and popularised by the anatomical giants of late Renaissance and 1,700 s.\nCONCLUSIONS: As this study will demonstrate, it is evident that up until introduction of the B.N.A. there was an extremely liberal approach to naming muscles, deserving great respect in the retrospective terminological studies if complete and relevant results are to be achieved. Without this knowledge of the vernacular of the ages past, modern researchers can find themselves 'reinventing the wheel' in looking for their answers.",
       "creators": [
         {
           "creatorType": "author",
           "firstName": "Martin",
-          "lastName": "Vl\u010dek"
+          "lastName": "Vlček"
         },
         {
           "creatorType": "author",
           "firstName": "Marek",
-          "lastName": "V\u00e1cha"
+          "lastName": "Vácha"
         }
       ],
       "date": "May 15, 2014",

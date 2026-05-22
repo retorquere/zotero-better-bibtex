@@ -1,0 +1,16 @@
+@book{Muir1861Life,
+  title = {The Life of {{Mohammad}} : From Original Sources},
+  shorttitle = {The Life of {{Mohammad}}},
+  author = {Muir, William},
+  editor = {Weir, T. H. (Thomas Hunter)},
+  namea = {Northeastern University, Snell Library},
+  nameatype = {collaborator},
+  date = {1923},
+  origdate = {1861},
+  publisher = {Edinburgh : J. Grant},
+  url = {http://archive.org/details/lifeofmohammadfr00muir},
+  urldate = {2026-02-02},
+  abstract = {Reprint of the 1912 edition. Originally published in four volumes; Includes bibliographical references and index},
+  langid = {english},
+  pagetotal = {714}
+}

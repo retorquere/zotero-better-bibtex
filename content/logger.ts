@@ -1,10 +1,7 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-unsafe-return, @typescript-eslint/no-empty-function, no-restricted-syntax */
 
-declare const Zotero: any
-
 import * as client from './client'
-const version = require('./../gen/version.js')
-export const run = `<${version} ${client.run}>`
+import $stringify from 'safe-stable-stringify'
 
 declare const dump: (msg: string) => void
 
@@ -34,37 +31,54 @@ function stringifyError(obj) {
   return ''
 }
 
-function replacer() {
-  const seen = new WeakSet
-  return (key, value) => {
-    if (typeof value === 'object' && value !== null) {
-      if (seen.has(value)) return '[Circular]'
-      seen.add(value)
-    }
-
+function replacer(key, value) {
+  try {
     if (value === null) return value
     if (value instanceof Set) return [...value]
     if (value instanceof Map) return Object.fromEntries(value)
+    if (value instanceof RegExp) return value.source
+    if (Array.isArray(value)) return value
 
     switch (typeof value) {
       case 'string':
       case 'number':
       case 'boolean':
+      case 'function':
+      case 'undefined':
         return value
 
       case 'object':
         return stringifyXPCOM(value) || stringifyError(value) || value
     }
 
-    if (Array.isArray(value)) return value
-
-    return undefined
+    if (value.openDialog || value.querySelector) return value.toString() // window/document
   }
+  catch (err) {
+    return `{serialization error: ${err.message}}`
+  }
+
+  return '{unknown object}'
+}
+
+export function stringify(obj: any): string {
+  return $stringify(obj, replacer)
 }
 
 function to_s(obj: any): string {
   if (typeof obj === 'string') return obj
-  return JSON.stringify(obj, replacer(), 2)
+  return stringify(obj)
+}
+
+export function print(strings: TemplateStringsArray, ...expressions: any[]) {
+  let err: string
+  let prefix = ''
+  // acc will initially be the lead string
+  const s = strings.reduce((acc, v, i) => {
+    acc = acc + (typeof expressions[i] === 'string' ? expressions[i] : (err = stringifyError(expressions[i])) || stringify(expressions[i])) + v
+    if (err) prefix = 'error: '
+    return acc
+  })
+  return prefix + s
 }
 
 export function format(...msg): string {
@@ -75,7 +89,7 @@ export const log = new class {
   public prefix = ''
 
   #prefix(error?: any) {
-    return `{${ error ? 'error: ' : '' }${ client.worker ? 'worker: ' : '' }${this.prefix}better-bibtex: ${run}} `
+    return `{${ error ? 'error: ' : '' }${ client.worker ? 'worker: ' : '' }${this.prefix}better-bibtex:} `
   }
 
   public debug(...msg): void {
@@ -83,11 +97,11 @@ export const log = new class {
   }
 
   public info(...msg): void {
-    Zotero.debug(`${this.#prefix()}${format(...msg)}\n`)
+    Zotero.debug(`${this.#prefix()}${format(...msg)}\n`, 1)
   }
 
   public error(...msg): void {
-    Zotero.debug(`${this.#prefix(true)}${format(...msg)}\n`)
+    Zotero.debug(`${this.#prefix(true)}${format(...msg)}\n`, 1)
   }
 
   public dump(msg: string, error?: Error): void {

@@ -1,0 +1,51 @@
+diff --git a/node_modules/kuroshiro-analyzer-kuromoji/src/index.js b/node_modules/kuroshiro-analyzer-kuromoji/src/index.js
+index 3854289..c322b4c 100644
+--- a/node_modules/kuroshiro-analyzer-kuromoji/src/index.js
++++ b/node_modules/kuroshiro-analyzer-kuromoji/src/index.js
+@@ -1,11 +1,4 @@
+-import kuromoji from "kuromoji";
+-
+-// Check where we are
+-let isNode = false;
+-const isBrowser = (typeof window !== "undefined");
+-if (!isBrowser && typeof module !== "undefined" && module.exports) {
+-    isNode = true;
+-}
++const kuromoji = require("kuromoji");
+ 
+ /**
+  * Kuromoji based morphological analyzer for kuroshiro
+@@ -19,13 +12,7 @@ class Analyzer {
+     constructor({ dictPath } = {}) {
+         this._analyzer = null;
+ 
+-        if (!dictPath) {
+-            if (isNode) this._dictPath = require.resolve("kuromoji").replace(/src(?!.*src).*/, "dict/");
+-            else this._dictPath = "node_modules/kuromoji/dict/";
+-        }
+-        else {
+             this._dictPath = dictPath;
+-        }
+     }
+ 
+     /**
+@@ -74,8 +61,7 @@ class Analyzer {
+      * }]
+      */
+     parse(str = "") {
+-        return new Promise((resolve, reject) => {
+-            if (str.trim() === "") return resolve([]);
++            if (str.trim() === "") return [];
+             const result = this._analyzer.tokenize(str);
+             for (let i = 0; i < result.length; i++) {
+                 result[i].verbose = {};
+@@ -86,8 +72,7 @@ class Analyzer {
+                 delete result[i].word_type;
+                 delete result[i].word_position;
+             }
+-            resolve(result);
+-        });
++            return result;
+     }
+ }
+ 

@@ -9,7 +9,7 @@
     "preferences": {
       "autoAbbrevStyle": "http://www.zotero.org/styles/nature",
       "bibtexURL": "note",
-      "citekeyFormat": "[auth:lower][Title:fold:nopunct:skipwords:select,1,1:lower:alphanum:prefix,_][year:prefix,_][0]",
+      "citekeyFormat": "auth(n=0,m=1,creator=\"*\",initials=false).fold.lower + Title.transliterate.nopunct.skipwords.select(1,1).lower.alphanum.prefix(_) + year.prefix(_) + postfix(\"-%(n)s\")",
       "skipFields": "file,editora,editoratype,editorb,editorbtype"
     }
   },
@@ -32,11 +32,11 @@
       "itemType": "bookSection",
       "language": "fr-FR",
       "numberOfVolumes": "2 vol. (786, xxiv+908 p.)",
-      "pages": "9\u2013332",
+      "pages": "9–332",
       "place": "Paris",
       "publicationTitle": "Cours de droit administratif",
       "publisher": "LGDJ",
-      "title": "Les actes de l\u2019Administration [1949-1950]",
+      "title": "Les actes de l’Administration [1949-1950]",
       "volume": "t. 2"
     }
   ]

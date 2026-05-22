@@ -10,17 +10,16 @@
       "automaticTags": false,
       "biblatexExtractEprint": false,
       "citeCommand": "citep",
-      "citekeyFormat": "[auth:lower][year][veryshorttitle1_0]",
+      "citekeyFormat": "auth(n=0,m=1,creator=\"*\",initials=false).fold.lower + year + veryshorttitle(1,0)",
       "keyScope": "global",
       "skipFields": "shorttitle,month,abstract,archivePrefix,archiveprefix,eprint,eprinttype,file,language,primaryClass,primaryclass,arXiv,arxiv,arxiv.title"
     }
   },
   "items": [
     {
-      "abstractNote": "The recently proposed Thermodynamic Variational Objective (TVO) leverages thermodynamic integration to provide a family of variational inference objectives, which both tighten and generalize the ubiquitous Evidence Lower Bound (ELBO). However, the tightness of TVO bounds was not previously known, an expensive grid search was used to choose a \u201cschedule\u201d of intermediate distributions, and model learning suffered with ostensibly tighter bounds. In this work, we propose an exponential family interpretation of the geometric mixture curve underlying the TVO and various path sampling methods, which allows us to characterize the gap in TVO likelihood bounds as a sum of KL divergences. We propose to choose intermediate distributions using equal spacing in the moment parameters of our exponential family, which matches grid search performance and allows the schedule to adaptively update over the course of training. Finally, we derive a doubly reparameterized gradient estimator which improves model learning and allows the TVO to bene\ufb01t from more re\ufb01ned bounds. To further contextualize our contributions, we provide a uni\ufb01ed framework for understanding thermodynamic integration and the TVO using Taylor series remainders.",
+      "abstractNote": "The recently proposed Thermodynamic Variational Objective (TVO) leverages thermodynamic integration to provide a family of variational inference objectives, which both tighten and generalize the ubiquitous Evidence Lower Bound (ELBO). However, the tightness of TVO bounds was not previously known, an expensive grid search was used to choose a “schedule” of intermediate distributions, and model learning suffered with ostensibly tighter bounds. In this work, we propose an exponential family interpretation of the geometric mixture curve underlying the TVO and various path sampling methods, which allows us to characterize the gap in TVO likelihood bounds as a sum of KL divergences. We propose to choose intermediate distributions using equal spacing in the moment parameters of our exponential family, which matches grid search performance and allows the schedule to adaptively update over the course of training. Finally, we derive a doubly reparameterized gradient estimator which improves model learning and allows the TVO to beneﬁt from more reﬁned bounds. To further contextualize our contributions, we provide a uniﬁed framework for understanding thermodynamic integration and the TVO using Taylor series remainders.",
       "accessDate": "2020-12-21T18:39:36Z",
-      "attachments": [
-      ],
+      "attachments": [],
       "citationKey": "brekelmans2020All",
       "creators": [
         {

@@ -5,7 +5,7 @@
     "localeDateOrder": "ymd",
     "preferences": {
       "bibtexURL": "note",
-      "citekeyFormat": "[shorttitle]"
+      "citekeyFormat": "shorttitle"
     }
   },
   "items": [
@@ -50,7 +50,7 @@
       "date": "2001",
       "itemID": 1,
       "itemType": "journalArticle",
-      "pages": "493\u2013518",
+      "pages": "493–518",
       "publicationTitle": "Title, with comma",
       "tags": [
         {

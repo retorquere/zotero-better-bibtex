@@ -6,7 +6,7 @@
     "options": {},
     "preferences": {
       "bibtexURL": "note",
-      "citekeyFormat": "[zotero:clean]"
+      "citekeyFormat": "zotero.clean"
     }
   },
   "items": [
@@ -137,7 +137,7 @@
       "issue": "3",
       "itemID": 1,
       "itemType": "journalArticle",
-      "pages": "4\u201323",
+      "pages": "4–23",
       "publicationTitle": "Cinema Journal",
       "title": "The Politics of Film Canons: printemps 1985",
       "url": "http://www.jstor.org/stable/1225428",

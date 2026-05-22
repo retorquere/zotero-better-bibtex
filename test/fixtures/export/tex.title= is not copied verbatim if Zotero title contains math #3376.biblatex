@@ -1,0 +1,7 @@
+@article{TitleMath,
+  title = {Title without math $\ell_1$}
+}
+
+@article{TitleMath$ell_1$,
+  title = {Title with math $\ell_1$}
+}

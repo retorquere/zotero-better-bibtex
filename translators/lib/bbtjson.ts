@@ -3,16 +3,33 @@ import type { Library } from './normalize'
 
 import { log } from '../../content/logger'
 import { Translation } from './translator'
-import { simplifyForExport, simplifyForImport } from '../../gen/items/simplify'
-const version = require('../../gen/version.js')
+import { simplifyForImport, simplifyForExport } from '../../content/item-schema'
+import BBT from '../../gen/version.cjs'
+
+import { citationKey as extract } from '../../content/extra'
 
 // import { validItem } from '../content/ajv'
 // import { stringify } from '../content/stringify'
 
-function addSelect(item: any) {
+function addSelect(item: any, translation: Translation) {
+  if (translation.collected.preferences.testing) return
   const [ , kind, lib, key ] = item.uri.match(/^https?:\/\/zotero\.org\/(users|groups)\/((?:local\/)?[^/]+)\/items\/(.+)/)
   item.select = (kind === 'users') ? `zotero://select/library/items/${ key }` : `zotero://select/groups/${ lib }/items/${ key }`
 }
+
+const validAttachmentFields = new Set([
+  'dateAdded',
+  'dateModified',
+  'itemType',
+  'mimeType',
+  'path',
+  'relations',
+  'seeAlso',
+  'tags',
+  'title',
+  'uri',
+  'url',
+])
 
 export function generateBBTJSON(collected: Collected): Translation {
   const translation = Translation.Export(collected)
@@ -33,22 +50,37 @@ export function generateBBTJSON(collected: Collected): Translation {
     },
     version: {
       zotero: Zotero.version,
-      bbt: version,
+      bbt: BBT.version,
     },
     collections: translation.collections,
     items: [],
   }
 
   if (translation.collected.displayOptions.Items) {
-    const validAttachmentFields = new Set([ 'relations', 'uri', 'itemType', 'title', 'path', 'tags', 'dateAdded', 'dateModified', 'seeAlso', 'mimeType' ])
+    function handle(att) {
+      if (translation.collected.displayOptions.exportFileData && att.saveFile && att.defaultPath) {
+        att.saveFile(att.defaultPath, true)
+        att.path = att.defaultPath
+      }
+      else if (att.localPath) {
+        att.path = att.localPath
+      }
+
+      for (const field of Object.keys(att)) {
+        if (!validAttachmentFields.has(field)) {
+          delete att[field]
+        }
+      }
+      addSelect(att, translation)
+    }
 
     for (const item of translation.collected.items) {
       delete item.$cacheable
-      if (!translation.collected.preferences.testing) addSelect(item)
+      addSelect(item, translation)
 
       switch (item.itemType) {
         case 'attachment':
-          if (translation.collected.displayOptions.dropAttachments) continue
+          handle(item)
           break
 
         case 'note':
@@ -58,25 +90,10 @@ export function generateBBTJSON(collected: Collected): Translation {
         default:
           delete item.collections
 
-          if (translation.collected.displayOptions.Normalize) simplifyForExport(item, { dropAttachments: translation.collected.displayOptions.dropAttachments })
+          if (translation.collected.displayOptions.Normalize) simplifyForExport(item, {})
 
           for (const att of item.attachments || []) {
-            if (translation.collected.displayOptions.exportFileData && att.saveFile && att.defaultPath) {
-              att.saveFile(att.defaultPath, true)
-              att.path = att.defaultPath
-            }
-            else if (att.localPath) {
-              att.path = att.localPath
-            }
-
-            if (!att.path) continue // amazon/googlebooks etc links show up as atachments without a path
-
-            for (const field of Object.keys(att)) {
-              if (!validAttachmentFields.has(field)) {
-                delete att[field]
-              }
-            }
-            if (!translation.collected.preferences.testing) addSelect(att)
+            handle(att)
           }
           break
       }
@@ -94,6 +111,8 @@ export async function importBBTJSON(collected: Collected): Promise<void> {
   const data: Library = JSON.parse(collected.input)
   if (!data.items || !data.items.length) return
 
+  if (data.config?.preferences) delete data.config.preferences.keyConflictPolicy
+
   const items = new Set<number>
   for (const source of (data.items as any[])) {
     simplifyForImport(source)
@@ -101,7 +120,6 @@ export async function importBBTJSON(collected: Collected): Promise<void> {
     // I do export these but the cannot be imported back
     delete source.relations
     delete source.citekey
-    delete source.citationKey
 
     delete source.uri
     delete source.key
@@ -127,6 +145,10 @@ export async function importBBTJSON(collected: Collected): Promise<void> {
     }
     // validate tests for strings
     if (Array.isArray(source.extra)) source.extra = source.extra.join('\n')
+    const { extra, citationKey } = extract(source.extra || '')
+    source.citationKey = citationKey || source.citationKey
+    source.extra = extra
+
     // marker so BBT-JSON can be imported without extra-field meddling
     if (source.extra) source.extra = `\x1BBBT\x1B${ source.extra }`
 

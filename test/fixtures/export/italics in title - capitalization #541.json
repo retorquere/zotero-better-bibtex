@@ -6,7 +6,7 @@
     "options": {},
     "preferences": {
       "autoAbbrevStyle": "http://www.zotero.org/styles/ieee",
-      "citekeyFormat": "[zotero]",
+      "citekeyFormat": "zotero",
       "quickCopyMode": "citekeys"
     }
   },
@@ -34,7 +34,7 @@
       "journalAbbreviation": "Fish Physiol Biochem",
       "language": "en",
       "libraryCatalog": "link.springer.com",
-      "pages": "283\u2013294",
+      "pages": "283–294",
       "publicationTitle": "Fish Physiology and Biochemistry",
       "title": "Effects of open- and closed-system temperature changes on blood O<sub>2</sub>-binding characteristics of Atlantic bluefin tuna (<span class=\"nocase\"><i>Thunnus thynnus</i></span>)",
       "url": "http://link.springer.com/article/10.1007/s10695-006-9104-7",

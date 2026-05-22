@@ -9,7 +9,7 @@
     "preferences": {
       "autoAbbrevStyle": "http://www.zotero.org/styles/ieee",
       "bibtexURL": "note",
-      "citekeyFormat": "[auth][year]",
+      "citekeyFormat": "auth(n=0,m=1,creator=\"*\",initials=false).fold + year",
       "skipFields": "keywords,abstract,file"
     }
   },
@@ -29,10 +29,10 @@
       "language": "German",
       "libraryCatalog": "Open WorldCat",
       "notes": [
-        "<p>\"Der Gleichzeitigkeitsgrad g (n) der Spitzenlastanteile Ps von Wohnungen wurde<br />aus Messungen statistisch ermittelt [2.3]. Eine gute N\u00e4herung f\u00fcr die Praxis<br />ist die Gleichung (2.5) :\" (S. 2.3)</p>\n<p>Keine Notwendigkeit, in ihrem Grundlegendem Charakter v\u00f6llig verschiedenartige Belastungen (PV, W\u00e4rmepumpe) in dieses Schema zu pressen.</p>"
+        "<p>\"Der Gleichzeitigkeitsgrad g (n) der Spitzenlastanteile Ps von Wohnungen wurde<br />aus Messungen statistisch ermittelt [2.3]. Eine gute Näherung für die Praxis<br />ist die Gleichung (2.5) :\" (S. 2.3)</p>\n<p>Keine Notwendigkeit, in ihrem Grundlegendem Charakter völlig verschiedenartige Belastungen (PV, Wärmepumpe) in dieses Schema zu pressen.</p>"
       ],
       "place": "Berlin; Frankfurt am Main",
-      "publisher": "VDE-Verl. ; Verl.- und Wirtschaftsges. der Elektrizita\u0308tswerke",
+      "publisher": "VDE-Verl. ; Verl.- und Wirtschaftsges. der Elektrizitätswerke",
       "tags": [
         {
           "tag": "Gleichzeitigkeitsfaktor"
@@ -44,7 +44,7 @@
           "tag": "Verteilnetz"
         }
       ],
-      "title": "Planung o\u0308ffentlicher Elektrizit\u00e4tsverteilungs-Systeme"
+      "title": "Planung öffentlicher Elektrizitätsverteilungs-Systeme"
     }
   ]
 }

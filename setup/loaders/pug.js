@@ -11,7 +11,7 @@ module.exports.pug = {
         .join('\n')
       
       return {
-        contents: `module.exports = ${template_function}`,
+        contents: `export default ${template_function}`,
         loader: 'js'
       }
     })

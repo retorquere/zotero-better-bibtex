@@ -10,7 +10,7 @@
     },
     "preferences": {
       "asciiBibLaTeX": true,
-      "baseAttachmentPath": "/Users/Ibai/Library/Mobile Documents/3L68KQB4HG~com~readdle~CommonDocuments/Documents/Physics \ud83e\ude90/Physics Library \ud83c\udfdb",
+      "baseAttachmentPath": "/Users/Ibai/Library/Mobile Documents/3L68KQB4HG~com~readdle~CommonDocuments/Documents/Physics 🪐/Physics Library 🏛",
       "bibtexURL": "url",
       "citekeyFold": false,
       "citekeyFormat": "authors(min=4,n=2,sep=\"~\",etal=\"_et_al.\").capitalize.replace(\"-\",\"_\").condense(_).replace(\"~\",\"-\") + year.prefix(\"_\")\n|\nauthors(sep=\"~\").capitalize.replace(\"-\",\"_\").condense(_).replace(\"~\",\"-\") + year.prefix(\"_\")",
@@ -26,7 +26,6 @@
     {
       "ISBN": "978-0-521-22285-3",
       "accessDate": "2023-11-03T18:40:27Z",
-      "citationKey": "DeWitt-Hawking-Israel_1979",
       "creators": [
         {
           "creatorType": "author",
@@ -57,7 +56,6 @@
     {
       "ISBN": "978-0-85274-755-1",
       "accessDate": "2023-05-20T14:27:59Z",
-      "citationKey": "Davies-Christensen_1984",
       "creators": [
         {
           "creatorType": "author",
@@ -84,7 +82,7 @@
       "publisher": "Hilger",
       "tags": [
         {
-          "tag": "* Keep the spark alive \ud83d\udca5"
+          "tag": "* Keep the spark alive 💥"
         },
         {
           "tag": "Particle concept"

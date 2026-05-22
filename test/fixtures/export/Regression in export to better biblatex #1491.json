@@ -8,7 +8,7 @@
     },
     "preferences": {
       "autoAbbrevStyle": "http://www.zotero.org/styles/vancouver",
-      "citekeyFormat": "[zotero:clean]"
+      "citekeyFormat": "zotero.clean"
     }
   },
   "items": [
@@ -27,7 +27,7 @@
         {
           "creatorType": "author",
           "firstName": "M.P.",
-          "lastName": "Pa\u0131\u0308doussis"
+          "lastName": "Paı̈doussis"
         },
         {
           "creatorType": "author",

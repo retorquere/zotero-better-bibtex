@@ -1,4 +1,3 @@
-
 @software{heyns2021,
   title = {Retorquere/Zotero-Better-Bibtex 2},
   author = {Wittgenstein, Ludwig},
@@ -20,5 +19,3 @@
   abstract = {Make Zotero effective for us LaTeX holdouts. Contribute to retorquere/zotero-better-bibtex development by creating an account on GitHub.},
   keywords = {bib,biblatex,bibtex,citation-keys,latex,zotero}
 }
-
-

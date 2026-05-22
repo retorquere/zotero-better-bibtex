@@ -4,7 +4,7 @@ import { HTMLParser } from '../../content/text'
 import type { MarkupNode } from '../../typings/markup'
 
 import { log } from '../../content/logger'
-import HE = require('he')
+import { decodeHTMLAttribute } from 'entities'
 import { Transform } from 'unicode2latex'
 
 export type ConverterOptions = {
@@ -18,31 +18,38 @@ export function replace_command_spacers(latex: string): string {
   return latex.replace(/\0(\s)/g, '{}$1').replace(/\0([^;.,!?${}_^\\/])/g, ' $1').replace(/\0/g, '')
 }
 
-export type ParseResult = { latex: string; raw: boolean; packages: string[] }
-
-export type Mode = 'minimal' | 'bibtex' | 'biblatex'
+export type TeX = { latex: string; raw: boolean; packages: string[] }
 
 export class HTMLConverter {
   private latex = ''
   private tx: Transform
+  private txt: Transform
+  private txc: Transform
   private stack: any[] = []
   private options: ConverterOptions = {}
   private embraced: boolean
   private packages: Set<string> = new Set
   private translation: Translation
 
-  constructor(translation: Translation, mode: 'minimal' | 'bibtex' | 'biblatex') {
+  constructor(translation: Translation) {
     this.translation = translation
-    this.tx = new Transform(mode, {
+
+    const options = {
       math: this.translation.collected.preferences.mapMath,
       text: this.translation.collected.preferences.mapText,
       charmap: translation.charmap,
       ascii: this.translation.collected.preferences.ascii,
       packages: this.translation.collected.preferences.packages.trim().split(/\s*,\s*/),
-    })
+    }
+
+    const mode = translation.unicode ? 'minimal' : (translation.BetterBibTeX ? 'bibtex' : 'biblatex')
+    this.txt = new Transform(mode, options)
+    this.txc = mode === 'bibtex' ? new Transform('bibtex-creator', options) : this.txt
   }
 
-  public tolatex(source: string, options: ConverterOptions): ParseResult {
+  public tolatex(source: string, options: ConverterOptions): TeX {
+    this.tx = options.creator ? this.txc : this.txt
+
     this.embraced = false
     this.options = options
     this.latex = ''
@@ -68,7 +75,7 @@ export class HTMLConverter {
       .replace(/\n*\\par\n*$/, '')
       .replace(/^\n*\\par\n*/, '')
 
-    return { latex: this.latex, raw: ast.nodeName === 'pre', packages: [...this.packages]}
+    return { latex: this.latex, raw: ast.nodeName === 'pre', packages: [...this.packages] }
   }
 
   private walk(tag: MarkupNode, nocased = false) {
@@ -86,72 +93,72 @@ export class HTMLConverter {
 
     this.stack.unshift(tag)
 
-    let latex = '...' // default to no-op
+    let latex = '\x1D' // default to no-op
     switch (tag.nodeName) {
       case 'i':
       case 'em':
       case 'italic':
       case 'emphasis':
         if (this.translation.BetterBibTeX) {
-          latex = '\\emph{...}'
+          latex = '\\emph{\x1D}'
         }
         else {
-          latex = '\\mkbibemph{...}'
+          latex = '\\mkbibemph{\x1D}'
         }
         break
 
       case 'b':
       case 'strong':
-        latex = '\\textbf{...}'
+        latex = '\\textbf{\x1D}'
         break
 
       case 'tt':
       case 'code':
-        latex = '\\texttt{...}'
+        latex = '\\texttt{\x1D}'
         break
 
       case 'a':
         /* zotero://open-pdf/0_5P2KA4XM/7 is actually a reference. */
-        if (tag.attr.href && tag.attr.href.length) latex = `\\href{${ tag.attr.href.replace(/[{}]/g, '').replace(/([\\%#])/g, '\\$1') }}{...}`
+        if (tag.attr.href && tag.attr.href.length) latex = `\\href{${ tag.attr.href.replace(/[{}]/g, '').replace(/([\\%#])/g, '\\$1') }}{\x1D}`
         break
 
       case 'sup':
-        latex = '\\textsuperscript{...}'
+        latex = '\\textsuperscript{\x1D}'
         break
 
       case 'sub':
-        latex = '\\textsubscript{...}'
+        latex = '\\textsubscript{\x1D}'
         break
 
       case 'br':
         latex = ''
         /* line-breaks on empty line makes LaTeX sad */
-        if (this.latex !== '' && this.latex[this.latex.length - 1] !== '\n') latex = '\\\\'
-        latex += '\n...'
+        if (this.latex !== '' && this.latex.at(-1) !== '\n') latex = '\\\\'
+        latex += '\n\x1D'
         break
 
       case 'p':
       case 'div':
       case 'table':
       case 'tr':
-        latex = '\n\\par\n...\n\\par\n'
+        latex = '\n\\par\n\x1D\n\\par\n'
         break
 
       case 'h1':
       case 'h2':
       case 'h3':
       case 'h4':
-        latex = `\n\n\\${ 'sub'.repeat(parseInt(tag.nodeName[1]) - 1) }section{...}\n\n`
+        latex = `\n\n\\${ 'sub'.repeat(parseInt(tag.nodeName[1]) - 1) }section{\x1D}\n\n`
         break
 
       case 'ol':
-        latex = '\n\n\\begin{enumerate}\n...\n\n\\end{enumerate}\n'
+        latex = '\n\n\\begin{enumerate}\n\x1D\n\n\\end{enumerate}\n'
         break
       case 'ul':
-        latex = '\n\n\\begin{itemize}\n...\n\n\\end{itemize}\n'
+        latex = '\n\n\\begin{itemize}\n\x1D\n\n\\end{itemize}\n'
         break
       case 'li':
-        latex = '\n\\item ...'
+        latex = '\n\\item \x1D'
         break
 
       case 'span':
@@ -165,7 +172,7 @@ export class HTMLConverter {
 
       case 'td':
       case 'th':
-        latex = ' ... '
+        latex = ' \x1D '
         break
 
       case '#comment':
@@ -178,7 +185,7 @@ export class HTMLConverter {
         break // ignore
 
       case 'blockquote':
-        latex = '\n\n\\begin{quotation}\n...\n\n\\end{quotation}\n'
+        latex = '\n\n\\begin{quotation}\n\x1D\n\n\\end{quotation}\n'
         break
 
       case 'img':
@@ -191,8 +198,9 @@ export class HTMLConverter {
         break
     }
 
-    if (latex !== '...') latex = this.embrace(latex, /^\\[a-z]+{\.\.\.}$/.test(latex))
+    if (latex !== '\x1D') latex = this.embrace(latex, /^\\[a-z]+{\x1D}$/.test(latex)) // eslint-disable-line no-control-regex
     if (tag.smallcaps) latex = this.embrace(`\\textsc{${ latex }}`, true)
+    if (tag.tt) latex = this.embrace(`\\texttt{${ latex }}`, true)
     if (tag.nocase) latex = `{{${ latex }}}`
     if (tag.relax) latex = `{\\relax ${ latex }}`
     if (tag.enquote) {
@@ -204,7 +212,7 @@ export class HTMLConverter {
       }
     }
 
-    const [ prefix, postfix ] = latex.split('...')
+    const [ prefix, postfix ] = latex.split('\x1D')
 
     this.latex += prefix
     for (const child of tag.childNodes) {
@@ -225,7 +233,7 @@ export class HTMLConverter {
   }
 
   private chars(text, nocased) {
-    if (this.options.html) text = HE.decode(text, { isAttributeValue: true })
+    if (this.options.html) text = decodeHTMLAttribute(text)
     this.latex += this.tx.tolatex(text, { bracemath: !nocased, preservemacrospacers: true, packages: this.packages })
   }
 }

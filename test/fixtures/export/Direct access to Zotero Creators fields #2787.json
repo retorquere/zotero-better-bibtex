@@ -24,7 +24,6 @@
     {
       "ISBN": "978-3-05-003046-3",
       "callNumber": "B3199.A34 T4745 2006",
-      "citationKey": "HonnethEtAl2006KlassikerAuslegenNegative",
       "creators": [
         {
           "creatorType": "editor",
@@ -39,7 +38,7 @@
         {
           "creatorType": "seriesEditor",
           "firstName": "Otfried",
-          "lastName": "H\u00f6ffe"
+          "lastName": "Höffe"
         }
       ],
       "date": "2006",
@@ -55,7 +54,7 @@
       "shortTitle": "Klassiker Auslegen: Negative Dialektik",
       "tags": [
         {
-          "tag": "\ud83d\udce5"
+          "tag": "📥"
         },
         {
           "tag": "20. Jahrhundert"

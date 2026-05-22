@@ -1,0 +1,14 @@
+@report{BrinkKH.ChapmanDC:1987,
+  type = {Technical Report},
+  title = {Programs for computing properties of coastal-trapped waves and wind-driven motions over the continental shelf and slope, 2nd ed.},
+  author = {Brink, Kenneth H. and Chapman, David C.},
+  date = {1987-06},
+  number = {WHOI-87-24},
+  institution = {Woods Hole Oceanographic Institution},
+  url = {https://www.whoi.edu/cms/files/WHOI-87-24-Programs_for_Computing_text_25484.pdf},
+  urldate = {2021-04-02},
+  annotation = {[The programs are available from, and updates to them are documented in, https://www.whoi.edu/cms/files/Fortran\_30425.htm (2007).]},
+  note = {[The programs are available from, and updates to them are documented in, \url{https://www.whoi.edu/cms/files/Fortran_30425.htm} (2007).]}
+}
+% == BibLateX quality report for BrinkKH.ChapmanDC:1987:
+% duplicate "note" ("<div data-schema-version="9"><p>its 1st edition is https://<span style="color: rgb(33, 37, 41)"><span style="background-color: rgb(255, 255, 255)">10.1575/1912/5363</span></span> . whoi 85-17. &nbsp;the circumstances of the publication of the 2nd ed is documented in the foreword of the 2nd ed.</p> </div>") ignored

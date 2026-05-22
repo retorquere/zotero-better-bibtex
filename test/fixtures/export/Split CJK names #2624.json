@@ -1,0 +1,437 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "preferences": {
+      "citekeyFormat": "creatornames('%(f)s', transliterate=true);\nauth.capitalize + '.' + title",
+      "chinese": true,
+      "japanese": true,
+      "chineseSplitName": true
+    }
+  },
+  "items": [
+    {
+      "creators": [
+        {
+          "creatorType": "author",
+          "name": "长孙无忌"
+        }
+      ],
+      "itemID": 1,
+      "itemType": "book",
+      "language": "zh-CN",
+      "title": "(Possibly wrong pinyin) Hans Author: Zhangsun Wuji"
+    },
+    {
+      "creators": [
+        {
+          "creatorType": "author",
+          "name": "長孫無忌"
+        }
+      ],
+      "itemID": 2,
+      "itemType": "book",
+      "language": "zh-TW",
+      "title": "(Possibly wrong pinyin) Hant Author: Zhangsun Wuji"
+    },
+    {
+      "creators": [
+        {
+          "creatorType": "author",
+          "name": "东方不败"
+        }
+      ],
+      "itemID": 3,
+      "itemType": "book",
+      "language": "zh-CN",
+      "title": "Hans Author: Dongfang Bubai"
+    },
+    {
+      "creators": [
+        {
+          "creatorType": "author",
+          "name": "東方不敗"
+        }
+      ],
+      "itemID": 4,
+      "itemType": "book",
+      "language": "zh-TW",
+      "title": "Hant Author: Dongfang Bubai"
+    },
+    {
+      "creators": [
+        {
+          "creatorType": "author",
+          "name": "令狐冲"
+        }
+      ],
+      "itemID": 5,
+      "itemType": "book",
+      "language": "zh-CN",
+      "title": "Hans Author: Linghu Chong"
+    },
+    {
+      "creators": [
+        {
+          "creatorType": "author",
+          "name": "令狐沖"
+        }
+      ],
+      "itemID": 6,
+      "itemType": "book",
+      "language": "zh-TW",
+      "title": "Hant Author: Linghu Chong"
+    },
+    {
+      "creators": [
+        {
+          "creatorType": "author",
+          "name": "慕容复"
+        }
+      ],
+      "itemID": 7,
+      "itemType": "book",
+      "language": "zh-CN",
+      "title": "Hans Author: Murong Fu"
+    },
+    {
+      "creators": [
+        {
+          "creatorType": "author",
+          "name": "慕容復"
+        }
+      ],
+      "itemID": 8,
+      "itemType": "book",
+      "language": "zh-TW",
+      "title": "Hant Author: Murong Fu"
+    },
+    {
+      "creators": [
+        {
+          "creatorType": "author",
+          "name": "欧阳锋"
+        }
+      ],
+      "itemID": 9,
+      "itemType": "book",
+      "language": "zh-CN",
+      "title": "Hans Author: Ouyang Feng"
+    },
+    {
+      "creators": [
+        {
+          "creatorType": "author",
+          "name": "歐陽鋒"
+        }
+      ],
+      "itemID": 10,
+      "itemType": "book",
+      "language": "zh-TW",
+      "title": "Hant Author: Ouyang Feng"
+    },
+    {
+      "creators": [
+        {
+          "creatorType": "author",
+          "name": "任我行"
+        }
+      ],
+      "itemID": 11,
+      "itemType": "book",
+      "language": "zh-CN",
+      "title": "Hans Author: Ren Woxing"
+    },
+    {
+      "creators": [
+        {
+          "creatorType": "author",
+          "name": "任我行"
+        }
+      ],
+      "itemID": 12,
+      "itemType": "book",
+      "language": "zh-TW",
+      "title": "Hant Author: Ren Woxing"
+    },
+    {
+      "creators": [
+        {
+          "creatorType": "author",
+          "name": "上官云"
+        }
+      ],
+      "itemID": 13,
+      "itemType": "book",
+      "language": "zh-CN",
+      "title": "Hans Author: Shangguan Yun"
+    },
+    {
+      "creators": [
+        {
+          "creatorType": "author",
+          "name": "上官雲"
+        }
+      ],
+      "itemID": 14,
+      "itemType": "book",
+      "language": "zh-TW",
+      "title": "Hant Author: Shangguan Yun"
+    },
+    {
+      "creators": [
+        {
+          "creatorType": "author",
+          "name": "司马懿"
+        }
+      ],
+      "itemID": 15,
+      "itemType": "book",
+      "language": "zh-CN",
+      "title": "Hans Author: Sima Yi"
+    },
+    {
+      "creators": [
+        {
+          "creatorType": "author",
+          "name": "司馬懿"
+        }
+      ],
+      "itemID": 16,
+      "itemType": "book",
+      "language": "zh-TW",
+      "title": "Hant Author: Sima Yi"
+    },
+    {
+      "creators": [
+        {
+          "creatorType": "author",
+          "name": "司马仲达"
+        }
+      ],
+      "itemID": 17,
+      "itemType": "book",
+      "language": "zh-CN",
+      "title": "Hans Author: Sima Zhongda"
+    },
+    {
+      "creators": [
+        {
+          "creatorType": "author",
+          "name": "司馬仲達"
+        }
+      ],
+      "itemID": 18,
+      "itemType": "book",
+      "language": "zh-TW",
+      "title": "Hant Author: Sima Zhongda"
+    },
+    {
+      "creators": [
+        {
+          "creatorType": "author",
+          "name": "尉迟融"
+        }
+      ],
+      "itemID": 19,
+      "itemType": "book",
+      "language": "zh-CN",
+      "title": "(Possibly wrong pinyin) Hans Author: Yuchi Rong"
+    },
+    {
+      "creators": [
+        {
+          "creatorType": "author",
+          "name": "尉遲融"
+        }
+      ],
+      "itemID": 20,
+      "itemType": "book",
+      "language": "zh-TW",
+      "title": "(Possibly wrong pinyin) Hant Author: Yuchi Rong"
+    },
+    {
+      "creators": [
+        {
+          "creatorType": "author",
+          "name": "夏侯惇"
+        }
+      ],
+      "itemID": 21,
+      "itemType": "book",
+      "language": "zh-CN",
+      "title": "Hans Author: Xiahou Dun"
+    },
+    {
+      "creators": [
+        {
+          "creatorType": "author",
+          "name": "夏侯惇"
+        }
+      ],
+      "itemID": 22,
+      "itemType": "book",
+      "language": "zh-TW",
+      "title": "Hant Author: Xiahou Dun"
+    },
+    {
+      "creators": [
+        {
+          "creatorType": "author",
+          "name": "杨莲亭"
+        }
+      ],
+      "itemID": 23,
+      "itemType": "book",
+      "language": "zh-CN",
+      "title": "Hans Author: Yang Lianting"
+    },
+    {
+      "creators": [
+        {
+          "creatorType": "author",
+          "name": "楊蓮亭"
+        }
+      ],
+      "itemID": 24,
+      "itemType": "book",
+      "language": "zh-TW",
+      "title": "Hant Author: Yang Lianting"
+    },
+    {
+      "creators": [
+        {
+          "creatorType": "author",
+          "name": "诸葛孔明"
+        }
+      ],
+      "itemID": 25,
+      "itemType": "book",
+      "language": "zh-CN",
+      "title": "Hans Author: Zhuge Kongming"
+    },
+    {
+      "creators": [
+        {
+          "creatorType": "author",
+          "name": "諸葛孔明"
+        }
+      ],
+      "itemID": 26,
+      "itemType": "book",
+      "language": "zh-TW",
+      "title": "Hant Author: Zhuge Kongming"
+    },
+    {
+      "creators": [
+        {
+          "creatorType": "author",
+          "name": "諸葛亮"
+        }
+      ],
+      "itemID": 27,
+      "itemType": "book",
+      "language": "zh-TW",
+      "title": "Hant Author: Zhuge Liang"
+    },
+    {
+      "creators": [
+        {
+          "creatorType": "author",
+          "name": "诸葛亮"
+        }
+      ],
+      "itemID": 28,
+      "itemType": "book",
+      "language": "zh-CN",
+      "title": "Hans Author: Zhuge Liang"
+    },
+    {
+      "creators": [
+        {
+          "creatorType": "author",
+          "name": "肖发民"
+        }
+      ],
+      "itemID": 29,
+      "itemType": "book",
+      "language": "zh-Hans",
+      "title": "法医学铁道损伤图谱"
+    },
+    {
+      "creators": [
+        {
+          "creatorType": "author",
+          "name": "John Smith"
+        }
+      ],
+      "itemID": 30,
+      "itemType": "book",
+      "language": "zh-Hans",
+      "title": "A Random Book"
+    },
+    {
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "John",
+          "lastName": "Smith"
+        }
+      ],
+      "itemID": 31,
+      "itemType": "book",
+      "language": "zh-Hans",
+      "title": "A Random Book"
+    },
+    {
+      "creators": [
+        {
+          "creatorType": "author",
+          "name": "林秀贞"
+        }
+      ],
+      "itemID": 32,
+      "itemType": "book",
+      "language": "zh-Hans",
+      "title": "Zh Single Field"
+    },
+    {
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "秀贞",
+          "lastName": "林"
+        }
+      ],
+      "itemID": 33,
+      "itemType": "book",
+      "language": "zh-Hans",
+      "title": "Zh Split Field"
+    },
+    {
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "秀贞",
+          "lastName": "林"
+        }
+      ],
+      "itemID": 34,
+      "itemType": "book",
+      "language": "ja",
+      "title": "Ja Split Field"
+    },
+    {
+      "creators": [
+        {
+          "creatorType": "author",
+          "name": "阿里巴巴"
+        }
+      ],
+      "itemID": 35,
+      "itemType": "book",
+      "language": "zh-Hans",
+      "title": "Zh Not Name"
+    }
+  ]
+}

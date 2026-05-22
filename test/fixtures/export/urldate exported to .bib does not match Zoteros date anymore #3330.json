@@ -1,0 +1,74 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "preferences": {
+      "autoExportDelay": 18,
+      "biblatexUsePrefix": false,
+      "citekeyFormat": "auth.lower + year + shorttitle(3, 3)",
+      "exportTitleCase": false,
+      "quickCopyMode": "citekeys",
+      "skipFields": "file"
+    },
+    "options": {
+      "exportNotes": false,
+      "exportFileData": false,
+      "useJournalAbbreviation": false,
+      "biblatexAPA": false,
+      "biblatexChicago": false,
+      "keepUpdated": false,
+      "worker": true,
+      "includeAnnotations": false,
+      "exportDir": "/Users/jerdalb/Downloads/lib",
+      "exportPath": "/Users/jerdalb/Downloads/lib/My Library.bib",
+      "cache": true
+    }
+  },
+  "version": {
+    "zotero": "7.0.27",
+    "bbt": "7.0.59"
+  },
+  "collections": {},
+  "items": [
+    {
+      "key": "AY6KPM7U",
+      "version": 167185,
+      "itemType": "report",
+      "title": "Why doesn’t the US have a European-style welfare system?",
+      "date": "10/2001",
+      "language": "en",
+      "libraryCatalog": "DOI.org (Crossref)",
+      "url": "http://www.nber.org/papers/w8524.pdf",
+      "accessDate": "2023-11-30T00:15:33Z",
+      "extra": "DOI: 10.3386/w8524\nMAG: 2106676663\nOpenAlex: W2106676663\nCorpusID: 227225830\nCitation Key: alesina2001WhyDoesntUS",
+      "place": "Cambridge, MA",
+      "pages": "w8524",
+      "creators": [
+        {
+          "firstName": "Alberto",
+          "lastName": "Alesina",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "Edward",
+          "lastName": "Glaeser",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "Bruce",
+          "lastName": "Sacerdote",
+          "creatorType": "author"
+        }
+      ],
+      "tags": [],
+      "dateAdded": "2023-11-30T00:15:33Z",
+      "dateModified": "2025-09-20T12:06:11Z",
+      "itemID": 1546,
+      "attachments": [],
+      "notes": [],
+      "citationKey": "alesina2001WhyDoesntUS",
+      "number": "w8524",
+      "publisher": "National Bureau of Economic Research"
+    }
+  ]
+}

@@ -1,20 +1,21 @@
-/* eslint-disable @typescript-eslint/require-await, @typescript-eslint/no-unsafe-return, @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-shadow */
+/* eslint-disable @typescript-eslint/require-await, @typescript-eslint/no-unsafe-return, @typescript-eslint/no-shadow */
 
 import { Translators } from '../translators'
-import { getItemsAsync } from '../get-items-async'
+import { Serialized } from '../../gen/typings/serialized'
+import { getItemAsync, getItemsAsync } from '../get-items-async'
 import { Preference } from '../prefs'
 import { html as escapeHTML } from '../escape'
 import { scannableCite } from '../../gen/ScannableCite'
 import { citeCreators, yearFromDate } from '../../translators/Better BibTeX Citation Key Quick Copy'
 import { Eta } from 'eta'
 const eta = new Eta({ autoEscape: true })
-import { simplifyForExport } from '../../gen/items/simplify'
+import { simplifyForExport } from '../item-schema'
 
 import { Transform } from 'unicode2latex'
 
 function serialized(item) {
   if (item) {
-    const ser = simplifyForExport(Zotero.Utilities.Internal.itemToExportFormat(item, false, true))
+    const ser = simplifyForExport(Zotero.Utilities.Internal.itemToExportFormat(item, false, true) as Serialized.RegularItem)
     ser.uri = Zotero.URI.getItemURI(item)
     ser.itemID = item.id
     return ser
@@ -43,7 +44,7 @@ function shortLabel(label: string, options): string {
     section: 'sec.',
     subsection: 'subsec.',
     Section: 'Sec.',
-    'sub verbo': 'sv.',
+    'sub-verbo': 'sv.',
     schedule: 'sch.',
     title: 'tit.',
     verse: 'vrs.',
@@ -78,7 +79,7 @@ function citation2latex(citation, options) {
 }
 
 // export singleton: https://k94n.com/es6-modules-single-instance-pattern
-export const Formatter = new class { // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
+export const Formatter = new class {
   public async typst(citations, options): Promise<string> {
     const cite = citation => {
       let cited = citation.citationKey.match(/^[a-z0-9_\-:.]+$/i) ? `<${ citation.citationKey }>` : `label(${ JSON.stringify(citation.citationKey) })`
@@ -107,7 +108,6 @@ export const Formatter = new class { // eslint-disable-line @typescript-eslint/n
     if (citations.length > 1) {
       const state = citations.reduce((acc, cit) => {
         for (const field of [ 'prefix', 'suffix', 'suppressAuthor', 'locator', 'label' ]) {
-          // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
           acc[field] = (acc[field] || 0) + (cit[field] ? 1 : 0)
         }
         return acc
@@ -175,13 +175,17 @@ export const Formatter = new class { // eslint-disable-line @typescript-eslint/n
 
   public async pandoc(citations, options) {
     const formatted = []
+    function locator(n) {
+      if (typeof n === 'number' || n.match(/^\d+$/)) return n
+      return n ? `{${n}}` : ''
+    }
     for (const citation of citations) {
       let cite = ''
-      if (citation.prefix) cite += `${ citation.prefix } `
+      if (citation.prefix) cite += `${citation.prefix} `
       if (citation.suppressAuthor) cite += '-'
       cite += `@${ citation.citationKey }`
-      if (citation.locator) cite += `, ${ shortLabel(citation.label, options) } ${ citation.locator }`.replace(/\s+/, ' ')
-      if (citation.suffix) cite += ` ${ citation.suffix }`
+      if (citation.locator) cite += `, ${shortLabel(citation.label, options)} ${locator(citation.locator)}`.replace(/\s+/, ' ')
+      if (citation.suffix) cite += ` ${citation.suffix}`
       formatted.push(cite)
     }
 
@@ -205,7 +209,7 @@ export const Formatter = new class { // eslint-disable-line @typescript-eslint/n
   public async 'scannable-cite'(citations, options) {
     let markers = ''
     for (const citation of citations) {
-      const scannable = scannableCite(await getItemsAsync(citation.id))
+      const scannable = scannableCite(await getItemAsync(citation.id))
 
       const enriched = [
         citation.prefix || '',

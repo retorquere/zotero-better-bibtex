@@ -11,16 +11,16 @@
       "autoAbbrev": true,
       "autoAbbrevStyle": "http://www.zotero.org/styles/vancouver",
       "citeCommand": "citep",
-      "citekeyFormat": "[auth:lower][year]",
+      "citekeyFormat": "auth(n=0,m=1,creator=\"*\",initials=false).fold.lower + year",
       "itemObserverDelay": 100,
       "keyConflictPolicy": "change",
-      "mapMath": "\u2192"
+      "mapMath": "→"
     }
   },
   "items": [
     {
       "DOI": "10.1103/PhysRevA.7.957",
-      "abstractNote": "The results of a close-coupling calculation of the fine-structure transitions (j,mj\u2192j\u2032,m\u2032j) are presented for collisions between photons and F(Pj,mj2). The theory is formulated in the perturbed-stationary-state approximation using accurate molecular wave functions for the ground II2 and \u03a32 states of HF+. Comparison is made to the predictions of the Born approximation. The magnetic selection rule (j,mj\u2192j,\u2212mj) is strongly violated in the j=32 state and less strongly violated in the j=12 state. It is concluded that the important region of interaction for the j=12\u2192j=32 transition is at short-to-intermediate distances where accurate molecular potentials are required and close-coupling effects are dominant.",
+      "abstractNote": "The results of a close-coupling calculation of the fine-structure transitions (j,mj→j′,m′j) are presented for collisions between photons and F(Pj,mj2). The theory is formulated in the perturbed-stationary-state approximation using accurate molecular wave functions for the ground II2 and Σ2 states of HF+. Comparison is made to the predictions of the Born approximation. The magnetic selection rule (j,mj→j,−mj) is strongly violated in the j=32 state and less strongly violated in the j=12 state. It is concluded that the important region of interaction for the j=12→j=32 transition is at short-to-intermediate distances where accurate molecular potentials are required and close-coupling effects are dominant.",
       "accessDate": "2016-08-03T10:10:47Z",
       "creators": [
         {
@@ -47,7 +47,7 @@
     },
     {
       "DOI": "10.1103/PhysRevA.7.957",
-      "abstractNote": "The results of a close-coupling calculation of the fine-structure transitions (j,mj\u2192j\u2032,m\u2032j) are presented for collisions between photons and F(Pj,mj2). The theory is formulated in the perturbed-stationary-state approximation using accurate molecular wave functions for the ground II2 and \u03a32 states of HF+. Comparison is made to the predictions of the Born approximation. The magnetic selection rule (j,mj\u2192j,\u2212mj) is strongly violated in the j=32 state and less strongly violated in the j=12 state. It is concluded that the important region of interaction for the j=12\u2192j=32 transition is at short-to-intermediate distances where accurate molecular potentials are required and close-coupling effects are dominant.",
+      "abstractNote": "The results of a close-coupling calculation of the fine-structure transitions (j,mj→j′,m′j) are presented for collisions between photons and F(Pj,mj2). The theory is formulated in the perturbed-stationary-state approximation using accurate molecular wave functions for the ground II2 and Σ2 states of HF+. Comparison is made to the predictions of the Born approximation. The magnetic selection rule (j,mj→j,−mj) is strongly violated in the j=32 state and less strongly violated in the j=12 state. It is concluded that the important region of interaction for the j=12→j=32 transition is at short-to-intermediate distances where accurate molecular potentials are required and close-coupling effects are dominant.",
       "accessDate": "2016-08-03T10:10:47Z",
       "creators": [
         {

@@ -19,7 +19,6 @@
         {
           "accessDate": "2024-04-15T01:01:22Z",
           "itemType": "attachment",
-          "linkMode": "linked_url",
           "title": "adsurl",
           "url": "https://ui.adsabs.harvard.edu/abs/2004A&A...424..927C"
         }
@@ -73,7 +72,7 @@
           "tag": "stars: variables: Cepheids"
         }
       ],
-      "title": "Bright metal-poor variables: Why \u201canomalous\u201d cepheids?",
+      "title": "Bright metal-poor variables: Why “anomalous” cepheids?",
       "volume": "424"
     }
   ]

@@ -14,7 +14,7 @@ declare module 'async-indexed-db' {
     indexNames: DOMStringList
     // transaction: IDBTransaction
     autoIncrement: boolean
-    async add(value: any, key?: IDBValidKey | IDBKeyRange | null): Promise<IDBValidKey>
+    add(value: any, key?: IDBValidKey | IDBKeyRange | null): Promise<IDBValidKey>
     clear(): Promise<void>
     // count(key?: IDBValidKey | IDBKeyRange | null): IDBRequest<number>
     // createIndex(name: string, keyPath: string | string[], options?: IDBIndexParameters): IDBIndex
@@ -30,5 +30,5 @@ declare module 'async-indexed-db' {
     // put(value: any, key?: IDBValidKey | IDBKeyRange | null): IDBRequest<IDBValidKey>
   }
 
-  export = AsyncIndexedDB
+  export default AsyncIndexedDB
 }

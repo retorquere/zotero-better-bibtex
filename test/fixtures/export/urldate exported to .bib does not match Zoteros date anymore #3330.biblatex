@@ -1,0 +1,16 @@
+@report{alesina2001WhyDoesntUS,
+  title = {Why doesn’t the {{US}} have a {{European-style}} welfare system?},
+  author = {Alesina, Alberto and Glaeser, Edward and Sacerdote, Bruce},
+  date = {2001-10},
+  number = {w8524},
+  pages = {w8524},
+  institution = {National Bureau of Economic Research},
+  location = {Cambridge, MA},
+  doi = {10.3386/w8524},
+  url = {http://www.nber.org/papers/w8524.pdf},
+  urldate = {2023-11-30},
+  langid = {english},
+  annotation = {MAG: 2106676663\\
+OpenAlex: W2106676663\\
+CorpusID: 227225830}
+}

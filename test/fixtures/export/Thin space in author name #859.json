@@ -12,7 +12,7 @@
       "autoAbbrev": true,
       "autoAbbrevStyle": "http://www.zotero.org/styles/cell",
       "citekeyFold": false,
-      "citekeyFormat": "[auth:lower][year][veryshorttitle:lower]",
+      "citekeyFormat": "auth(n=0,m=1,creator=\"*\",initials=false).fold.lower + year + veryshorttitle.lower",
       "itemObserverDelay": 100,
       "keyConflictPolicy": "change",
       "skipFields": "extra,note,file,timestamp,abstract,urldate"
@@ -21,7 +21,7 @@
   "items": [
     {
       "DOI": "10.1103/PhysRevLett.115.250401",
-      "abstractNote": "Local realism is the worldview in which physical properties of objects exist independently of measurement and where physical influences cannot travel faster than the speed of light. Bell\u2019s theorem states that this worldview is incompatible with the predictions of quantum mechanics, as is expressed in Bell\u2019s inequalities. Previous experiments convincingly supported the quantum predictions. Yet, every experiment requires assumptions that provide loopholes for a local realist explanation. Here, we report a Bell test that closes the most significant of these loopholes simultaneously. Using a well-optimized source of entangled photons, rapid setting generation, and highly efficient superconducting detectors, we observe a violation of a Bell inequality with high statistical significance. The purely statistical probability of our results to occur under local realism does not exceed 3.74\u00d710\u221231, corresponding to an 11.5 standard deviation effect.",
+      "abstractNote": "Local realism is the worldview in which physical properties of objects exist independently of measurement and where physical influences cannot travel faster than the speed of light. Bell’s theorem states that this worldview is incompatible with the predictions of quantum mechanics, as is expressed in Bell’s inequalities. Previous experiments convincingly supported the quantum predictions. Yet, every experiment requires assumptions that provide loopholes for a local realist explanation. Here, we report a Bell test that closes the most significant of these loopholes simultaneously. Using a well-optimized source of entangled photons, rapid setting generation, and highly efficient superconducting detectors, we observe a violation of a Bell inequality with high statistical significance. The purely statistical probability of our results to occur under local realism does not exceed 3.74×10−31, corresponding to an 11.5 standard deviation effect.",
       "accessDate": "2017-12-29 18:37:20",
       "creators": [
         {
@@ -31,12 +31,12 @@
         },
         {
           "creatorType": "author",
-          "firstName": "Marijn A.\u2009M.",
+          "firstName": "Marijn A. M.",
           "lastName": "Versteegh"
         },
         {
           "creatorType": "author",
-          "firstName": "S\u00f6ren",
+          "firstName": "Sören",
           "lastName": "Wengerowsky"
         },
         {
@@ -66,13 +66,13 @@
         },
         {
           "creatorType": "author",
-          "firstName": "Jan-\u00c5ke",
+          "firstName": "Jan-Åke",
           "lastName": "Larsson"
         },
         {
           "creatorType": "author",
           "firstName": "Carlos",
-          "lastName": "Abell\u00e1n"
+          "lastName": "Abellán"
         },
         {
           "creatorType": "author",
@@ -91,7 +91,7 @@
         },
         {
           "creatorType": "author",
-          "firstName": "J\u00f6rn",
+          "firstName": "Jörn",
           "lastName": "Beyer"
         },
         {

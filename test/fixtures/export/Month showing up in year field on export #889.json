@@ -9,7 +9,7 @@
     "preferences": {
       "autoAbbrevStyle": "http://www.zotero.org/styles/cell",
       "autoExport": "off",
-      "citekeyFormat": "[authors3][shortyear]",
+      "citekeyFormat": "authorsn(n=3,creator=\"*\",initials=false,sep=\" \").fold + shortyear",
       "itemObserverDelay": 100,
       "keyConflictPolicy": "change",
       "skipFields": "abstract,copyright"
@@ -36,7 +36,7 @@
       "issue": "2",
       "itemID": 1,
       "itemType": "journalArticle",
-      "pages": "95\u2013110",
+      "pages": "95–110",
       "publicationTitle": "Cerebral Cortex",
       "title": "Distributed modular architectures linking basal ganglia, cerebellum, and cerebral cortex: Their role in planning and controlling action.",
       "url": "http://www.ncbi.nlm.nih.gov/pubmed/7620294",

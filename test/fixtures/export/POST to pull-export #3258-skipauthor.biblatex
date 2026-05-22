@@ -1,0 +1,77 @@
+@article{kiang03,
+  title = {A Comparative Assessment of Classification Methods},
+  date = {2003-07},
+  journaltitle = {Decision Support Systems},
+  shortjournal = {Decision Support Systems},
+  volume = {35},
+  number = {4},
+  pages = {441--454},
+  issn = {01679236},
+  doi = {10.1016/S0167-9236(02)00110-0},
+  url = {https://linkinghub.elsevier.com/retrieve/pii/S0167923602001100},
+  urldate = {2021-03-10},
+  abstract = {Classification systems play an important role in business decision-making tasks by classifying the available information based on some criteria. The objective of this research is to assess the relative performance of some well-known classification methods. We consider classification techniques that are based on statistical and AI techniques. We use synthetic data to perform a controlled experiment in which the data characteristics are systematically altered to introduce imperfections such as nonlinearity, multicollinearity, unequal covariance, etc. Our experiments suggest that data characteristics considerably impact the classification performance of the methods. The results of the study can aid in the design of classification systems in which several classification methods can be employed to increase the reliability and consistency of the classification.},
+  langid = {english},
+  keywords = {Nuovo}
+}
+
+@article{lee18,
+  title = {Partial Least Squares-Discriminant Analysis ({{PLS-DA}}) for Classification of High-Dimensional ({{HD}}) Data: A Review of Contemporary Practice Strategies and Knowledge Gaps},
+  shorttitle = {Partial Least Squares-Discriminant Analysis ({{PLS-DA}}) for Classification of High-Dimensional ({{HD}}) Data},
+  date = {2018},
+  journaltitle = {The Analyst},
+  shortjournal = {Analyst},
+  volume = {143},
+  number = {15},
+  pages = {3526--3539},
+  issn = {0003-2654, 1364-5528},
+  doi = {10.1039/C8AN00599K},
+  url = {http://xlink.rsc.org/?DOI=C8AN00599K},
+  urldate = {2021-03-12},
+  abstract = {This review highlights and discusses critically various knowledge gaps in classification modelling using PLS-DA for high dimensional data.           ,                             Partial least squares-discriminant analysis (PLS-DA) is a versatile algorithm that can be used for predictive and descriptive modelling as well as for discriminative variable selection. However, versatility is both a blessing and a curse and the user needs to optimize a wealth of parameters before reaching reliable and valid outcomes. Over the past two decades, PLS-DA has demonstrated great success in modelling high-dimensional datasets for diverse purposes,               e.g.               product authentication in food analysis, diseases classification in medical diagnosis, and evidence analysis in forensic science. Despite that, in practice, many users have yet to grasp the essence of constructing a valid and reliable PLS-DA model. As the technology progresses, across every discipline, datasets are evolving into a more complex form,               i.e.               multi-class, imbalanced and colossal. Indeed, the community is welcoming a new era called big data. In this context, the aim of the article is two-fold: (a) to review, outline and describe the contemporary PLS-DA modelling practice strategies, and (b) to critically discuss the respective knowledge gaps that have emerged in response to the present big data era. This work could complement other available reviews or tutorials on PLS-DA, to provide a timely and user-friendly guide to researchers, especially those working in applied research.},
+  langid = {english},
+  keywords = {Nuovo}
+}
+
+@book{ma14,
+  title = {Support {{Vector Machines Applications}}},
+  editor = {Ma, Yunqian and Guo, Guodong},
+  date = {2014},
+  publisher = {Springer International Publishing},
+  location = {Cham},
+  doi = {10.1007/978-3-319-02300-7},
+  url = {http://link.springer.com/10.1007/978-3-319-02300-7},
+  urldate = {2021-03-12},
+  isbn = {978-3-319-02299-4 978-3-319-02300-7},
+  langid = {english},
+  keywords = {Nuovo}
+}
+
+@article{noble06,
+  title = {What Is a Support Vector Machine?},
+  date = {2006-12},
+  journaltitle = {Nature Biotechnology},
+  shortjournal = {Nat Biotechnol},
+  volume = {24},
+  number = {12},
+  pages = {1565--1567},
+  issn = {1087-0156, 1546-1696},
+  doi = {10.1038/nbt1206-1565},
+  url = {http://www.nature.com/articles/nbt1206-1565},
+  urldate = {2021-03-12},
+  langid = {english}
+}
+
+@unpublished{riese20,
+  title = {{{SuSi}}: {{Supervised Self-Organizing Maps}} for {{Regression}} and {{Classification}} in {{Python}}},
+  shorttitle = {{{SuSi}}},
+  date = {2020-01-08},
+  eprint = {1903.11114},
+  eprinttype = {arXiv},
+  eprintclass = {cs, stat},
+  url = {http://arxiv.org/abs/1903.11114},
+  urldate = {2021-03-15},
+  abstract = {Machine learning approaches are valuable methods in hyperspectral remote sensing, especially for the classification of land cover or for the regression of physical parameters. While the recording of hyperspectral data has become affordable with innovative technologies, the acquisition of reference data (ground truth) has remained expensive and time-consuming. There is a need for methodological approaches that can handle datasets with significantly more hyperspectral input data than reference data. We introduce the Supervised Self-organizing Maps (SuSi) framework, which can perform unsupervised, supervised and semi-supervised classification as well as regression on high-dimensional data. The methodology of the SuSi framework is presented and compared to other frameworks. Its different parts are evaluated on two hyperspectral datasets. The results of the evaluations can be summarized in four major findings: (1) The supervised and semi-Supervised Self-organizing Maps (SOM) outperform random forest in the regression of soil moisture. (2) In the classification of land cover, the supervised and semi-supervised SOM reveal great potential. (3) The unsupervised SOM is a valuable tool to understand the data. (4) The SuSi framework is versatile, flexible, and easy to use. The SuSi framework is provided as an open-source Python package on GitHub.},
+  langid = {english},
+  keywords = {Computer Science - Computer Vision and Pattern Recognition,Computer Science - Machine Learning,Nuovo,Statistics - Machine Learning}
+}

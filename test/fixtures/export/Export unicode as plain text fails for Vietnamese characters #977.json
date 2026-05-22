@@ -8,7 +8,7 @@
     },
     "preferences": {
       "asciiBibLaTeX": true,
-      "citekeyFormat": "[zotero:clean]",
+      "citekeyFormat": "zotero.clean",
       "itemObserverDelay": 100,
       "skipFields": "url,abstract,file,doi,issn,isbn,language"
     }
@@ -19,16 +19,16 @@
         {
           "creatorType": "author",
           "firstName": "San",
-          "lastName": "V\u0169 Ng\u1ecdc"
+          "lastName": "Vũ Ngọc"
         }
       ],
       "date": "2000",
       "issue": "3, 4",
       "itemID": 1,
       "itemType": "journalArticle",
-      "pages": "319\u2013342",
+      "pages": "319–342",
       "publicationTitle": "Asymptotic Analysis",
-      "title": "Formes normales semi-classiques des syst\u00e8mes compl\u00e8tement int\u00e9grables au voisinage d'un point critique de l'application moment",
+      "title": "Formes normales semi-classiques des systèmes complètement intégrables au voisinage d'un point critique de l'application moment",
       "volume": "24"
     }
   ]

@@ -10,7 +10,7 @@
       "asciiBibLaTeX": true,
       "biblatexExtendedDateFormat": false,
       "biblatexExtendedNameFormat": true,
-      "citekeyFormat": "[auth:fold:lower]_[Title:nopunct:skipwords:select,1,1:lower]_[year]",
+      "citekeyFormat": "auth(n=0,m=1,creator=\"*\",initials=false).fold.transliterate.lower + \"_\" + Title.nopunct.skipwords.select(1,1).lower + \"_\" + year",
       "itemObserverDelay": 100
     }
   },
@@ -53,7 +53,7 @@
           "type": 0
         }
       ],
-      "title": "Dialogen \u00fcber einige Gegenst\u00e4nde der politischen Oekonomie und Philosophie"
+      "title": "Dialogen über einige Gegenstände der politischen Oekonomie und Philosophie"
     }
   ]
 }

@@ -2,10 +2,10 @@
   entrysubtype = {Audio podcast episode},
   title = {‘{{Unfinished}} Business’: {{Ring CEO Liz Hamren}} Leads {{Amazon}}’s Home Monitoring Products into the {{AI}} Era},
   author = {Bishop, Todd Joel and Hamren, Liz},
+  author+an:role = {1=host,2=producer},
   date = {2024-01-13},
   url = {https://www.geekwire.com/2024/unfinished-business-ring-ceo-liz-hamren-leads-amazons-home-monitoring-products-into-the-ai-era/},
   abstract = {Amazon Ring CEO Hamren talks about the new era of AI and Ring's direction under her leadership, almost a year after she took the role.},
-  author+an:role = {1=host,2=producer},
   maintitle = {{{GeekWire Podcast}}},
   keywords = {/unread},
   note = {als hij niet in de litlijst komt, dan de redundante \{\} om author weghalen

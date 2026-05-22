@@ -7,7 +7,7 @@
     "preferences": {
       "autoAbbrevStyle": "http://www.zotero.org/styles/cell",
       "bibtexURL": "note",
-      "citekeyFormat": "[auth:nopunct:condense,_][year][journal:nopunct][0]",
+      "citekeyFormat": "auth(n=0,m=1,creator=\"*\",initials=false).fold.nopunct.condense(_) + year + journal.nopunct + postfix(\"-%(n)s\")",
       "exportBibTeXStrings": "detect"
     }
   },
@@ -17,7 +17,7 @@
         {
           "creatorType": "author",
           "firstName": "Name",
-          "lastName": "N\u00f6me"
+          "lastName": "Nöme"
         }
       ],
       "date": "2014",
@@ -30,7 +30,7 @@
         {
           "creatorType": "author",
           "firstName": "Vincent",
-          "lastName": "van G\u00f6gh"
+          "lastName": "van Gögh"
         }
       ],
       "date": "2014",

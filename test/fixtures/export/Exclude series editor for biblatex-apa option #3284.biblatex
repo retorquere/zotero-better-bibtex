@@ -1,0 +1,14 @@
+@book{madiganNarrativeTherapy2019,
+  title = {Narrative Therapy},
+  author = {Madigan, Stephen},
+  date = {2019},
+  series = {Theories of Psychotherapy Series},
+  edition = {2},
+  publisher = {American Psychological Association},
+  location = {Washington, DC},
+  doi = {10.1037/0000131-000},
+  url = {https://content.apa.org/books/16107-000},
+  urldate = {2025-08-13},
+  isbn = {978-1-4338-2986-4 978-1-4338-3083-9},
+  langid = {english}
+}

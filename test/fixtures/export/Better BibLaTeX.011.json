@@ -5,7 +5,7 @@
     "localeDateOrder": "ymd",
     "preferences": {
       "bibtexURL": "note",
-      "citekeyFormat": "[auth][year]"
+      "citekeyFormat": "auth(n=0,m=1,creator=\"*\",initials=false).fold + year"
     }
   },
   "items": [
@@ -45,7 +45,7 @@
       ],
       "itemID": 1,
       "itemType": "conferencePaper",
-      "pages": "25\u201330",
+      "pages": "25–30",
       "publicationTitle": "CATA",
       "title": "Empirical Study of Support Vector Machine Kernels with Applications to Microarray Data"
     }

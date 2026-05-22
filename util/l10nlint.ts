@@ -8,7 +8,7 @@ import * as fs from 'fs'
 import { pugs, walk as pugwalk, ASTWalker } from '../setup/pug-ast-walker'
 
 import { parse } from 'acorn'
-import jswalk = require('acorn-walk')
+import jswalk from 'acorn-walk'
 
 const valid = {
   text: /^[-a-z0-9_]+$/,

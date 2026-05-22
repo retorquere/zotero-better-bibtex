@@ -8,7 +8,7 @@
     },
     "preferences": {
       "DOIandURL": "doi",
-      "citekeyFormat": "[auth2_1][auth2_2][auth2_3][year]",
+      "citekeyFormat": "auth(n=2,m=1,creator=\"*\",initials=false).fold + auth(n=2,m=2,creator=\"*\",initials=false).fold + auth(n=2,m=3,creator=\"*\",initials=false).fold + year",
       "itemObserverDelay": 100
     }
   },
@@ -36,7 +36,7 @@
       "issue": "1",
       "itemID": 1,
       "itemType": "journalArticle",
-      "pages": "1\u20132",
+      "pages": "1–2",
       "publicationTitle": "A Fancy Journal",
       "title": "My Article",
       "volume": "1"

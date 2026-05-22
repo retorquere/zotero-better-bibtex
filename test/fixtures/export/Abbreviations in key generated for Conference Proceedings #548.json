@@ -10,7 +10,7 @@
       "DOIandURL": "doi",
       "autoAbbrevStyle": "http://www.zotero.org/styles/nature",
       "autoExport": "idle",
-      "citekeyFormat": "[authors3][year][journal:nopunct]"
+      "citekeyFormat": "authorsn(n=3,creator=\"*\",initials=false,sep=\" \").fold + year + journal.nopunct"
     }
   },
   "items": [
@@ -40,7 +40,7 @@
       "itemType": "conferencePaper",
       "language": "en",
       "libraryCatalog": "CrossRef",
-      "pages": "197\u2013204",
+      "pages": "197–204",
       "publicationTitle": "Proceedings of the 1997 International Symposium on Symbolic and Algebraic Computation",
       "publisher": "ACM Press",
       "title": "A sequence of series for the Lambert <i>W</i> function"
