@@ -10,6 +10,7 @@ import { Serialized } from '../../gen/typings/serialized'
 import * as postscript from '../lib/postscript'
 import * as dateparser from '../../content/dateparser'
 import { Date as CSLDate, Data as CSLItem } from 'csl-json'
+
 import { babelLanguage } from '../../content/text'
 import BabelTag from '../../gen/babel/tag.json'
 
@@ -75,6 +76,8 @@ export abstract class CSLExporter {
       for (const field of ['page', 'issue', 'volume']) {
         if (csl[field]) csl[field] = csl[field].replace(/(?<=(^|,)\s*\d+)\s*-\s*(?=\d+\s*(,|$))/g, '\u2013')
       }
+      const language = babelLanguage(csl.language)
+      csl.language = BabelTag[language] || language || csl.language
 
       csl['citation-key'] = item.citationKey
       if (this.translation.collected.displayOptions.custom) csl.custom = { uri: item.uri, itemID: item.itemID }
@@ -172,9 +175,6 @@ export abstract class CSLExporter {
       }
       delete csl.multi
       delete csl.system_id
-
-      const language = babelLanguage(item.language)
-      if (language && BabelTag[language]) csl.language = BabelTag[language]
 
       let allow: postscript.Allow = { cache: true, write: true }
       try {
