@@ -1,0 +1,179 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "preferences": {
+      "autoExportDelay": 300,
+      "citekeyFormat": "auth.lower + shorttitle(3, 3) + year",
+      "DOIandURL": "doi",
+      "extraMergeCSL": true,
+      "extraMergeTeX": true,
+      "fillKeyAfter": 1,
+      "itemObserverDelay": 100,
+      "quickCopyMode": "pandoc",
+      "resetKeyOnChange": true,
+      "warnBulkModify": 0
+    },
+    "options": {
+      "keepUpdated": false,
+      "worker": true,
+      "exportDir": "/Users/Andrew/Downloads",
+      "exportPath": "/Users/Andrew/Downloads/Exported Items.json",
+      "cache": true
+    }
+  },
+  "version": {
+    "zotero": "9.0.3",
+    "bbt": "9.0.25"
+  },
+  "collections": {},
+  "items": [
+    {
+      "key": "XA2MLUAS",
+      "version": 15110,
+      "itemType": "blogPost",
+      "url": "https://example.com",
+      "date": "2018",
+      "extra": "available-date: 2017",
+      "accessDate": "2018-07-15",
+      "language": "en",
+      "title": "59 Blog post",
+      "citationKey": "author59BlogPost2018",
+      "creators": [
+        {
+          "firstName": "A. A.",
+          "lastName": "Author",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "A. A.",
+          "lastName": "Editor",
+          "creatorType": "contributor"
+        },
+        {
+          "firstName": "A. A.",
+          "lastName": "Translator",
+          "creatorType": "contributor"
+        }
+      ],
+      "tags": [],
+      "dateAdded": "2018-07-14T23:02:37Z",
+      "dateModified": "2026-04-01T10:05:49Z",
+      "itemID": 69282,
+      "attachments": [],
+      "notes": [],
+      "publicationTitle": "Website title",
+      "type": "Type"
+    },
+    {
+      "key": "VIGCXYIV",
+      "version": 15036,
+      "itemType": "book",
+      "rights": "CMOS18 14.23",
+      "volume": "2",
+      "place": "Chicago",
+      "publisher": "University of Chicago Press",
+      "ISBN": "978-0-226-46713-9 978-0-226-46734-4",
+      "date": "1977",
+      "extra": "volume-title: A century of wonder\npart-number: bk. 3\npart-title: The scholarly disciplines\navailable-date: 1965/1993",
+      "numberOfVolumes": "3 vols. in 9 bks.",
+      "libraryCatalog": "K10plus ISBN",
+      "language": "en",
+      "abstractNote": "Praised for its scope and depth, Asia in the Making of Europe is the first comprehensive study of Asian influences on Western culture. For volumes I and II, the author has sifted through virtually every European reference to Asia published in the sixteenth-century; he surveys a vast array of writings describing Asian life and society, the images of Asia that emerge from those writings, and, in turn, the reflections of those images in European literature and art. This monumental achievement reveals profound and pervasive influences of Asian societies on developing Western culture; in doing so",
+      "title": "Asia in the making of Europe",
+      "numPages": "442",
+      "citationKey": "lachAsiaMakingEurope1977",
+      "creators": [
+        {
+          "firstName": "Donald F.",
+          "lastName": "Lach",
+          "creatorType": "author"
+        }
+      ],
+      "tags": [],
+      "dateAdded": "2025-04-23T21:15:25Z",
+      "dateModified": "2026-02-16T11:04:07Z",
+      "itemID": 71087,
+      "attachments": [],
+      "notes": []
+    },
+    {
+      "key": "YMN4ZV5B",
+      "version": 52479,
+      "itemType": "book",
+      "series": "Abhandlungen der Gesellschaft der Wissenschaften zu Göttingen, Philologisch-historische Klasse",
+      "volume": "2",
+      "place": "Berlin",
+      "publisher": "Weidmann",
+      "ISBN": "978-3-525-82258-6",
+      "date": "1935",
+      "extra": "volume-title: Die kirchlichen Archive und Bibliotheken\npart-number: 1\npart-title: Berichte und Handschriftenbeschreibungen\navailable-date: 1930/1952",
+      "seriesNumber": "3rd ser., 14",
+      "numberOfVolumes": "3 vols in 5",
+      "libraryCatalog": "Open WorldCat",
+      "language": "de",
+      "title": "Papsturkunden in England",
+      "citationKey": "holtzmannPapsturkundenEngland1935",
+      "creators": [
+        {
+          "firstName": "Walther",
+          "lastName": "Holtzmann",
+          "creatorType": "author"
+        }
+      ],
+      "tags": [],
+      "dateAdded": "2026-01-09T13:53:33Z",
+      "dateModified": "2026-02-16T11:04:07Z",
+      "itemID": 74012,
+      "attachments": [],
+      "notes": []
+    },
+    {
+      "key": "S3XKFDM6",
+      "version": 58680,
+      "itemType": "book",
+      "url": "https://hdl.handle.net/2027/umn.319510020034482",
+      "volume": "5",
+      "place": "Oxford",
+      "publisher": "Clarendon Press",
+      "date": "1878",
+      "extra": "part-number: 2\npart-title: Viri munificentissimi Ricardi Rawlinson, J.C.D., codicum classem tertiam, in qua libri theologici atque miscellanei, complectens",
+      "accessDate": "2026-02-24T13:38:54Z",
+      "numberOfVolumes": "5",
+      "libraryCatalog": "HathiTrust",
+      "language": "la",
+      "title": "Catalogi codicum manuscriptorum bibliothecæ Bodleianæ",
+      "citationKey": "macrayCatalogiCodicumManuscriptorum1878",
+      "creators": [
+        {
+          "firstName": "William Dunn",
+          "lastName": "Macray",
+          "creatorType": "author"
+        }
+      ],
+      "tags": [
+        {
+          "tag": "Oxford",
+          "type": 1
+        },
+        {
+          "tag": "Manuscripts",
+          "type": 1
+        },
+        {
+          "tag": "England",
+          "type": 1
+        },
+        {
+          "tag": "Catalogs",
+          "type": 1
+        }
+      ],
+      "dateAdded": "2026-02-24T13:42:51Z",
+      "dateModified": "2026-04-25T22:37:57Z",
+      "itemID": 74403,
+      "attachments": [],
+      "notes": []
+    }
+  ]
+}

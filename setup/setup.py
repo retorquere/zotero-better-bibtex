@@ -11,6 +11,7 @@ import scannablecite
 import ftl2dtd
 import unicode
 import readme
+import csl_schema
 
 import shutil
 with open('submodules/zotero/chrome/content/zotero/osfile.mjs') as i, open('gen/osfile.js', 'w') as o:
