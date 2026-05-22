@@ -40,6 +40,41 @@
       "title": "A verse translation of Abbo of St. Germain's <span class=\"nocase\"><i>Bella Parisiacae urbis</i></span>",
       "url": "http://dx.doi.org/10.1484/J.JML.2.304214",
       "volume": "14"
+    },
+    {
+      "key": "NL5QYTBI",
+      "version": 58769,
+      "itemType": "bookSection",
+      "volume": "2",
+      "place": "Farnham",
+      "publisher": "Ashgate",
+      "pages": "453-477",
+      "ISBN": "978-0-7546-5033-1 978-1-4094-0951-9",
+      "date": "2011",
+      "extra": "volume-title: Genres and contexts",
+      "libraryCatalog": "BnF ISBN",
+      "language": "eng",
+      "title": "The hagiography of doubt and scepticism",
+      "citationKey": "kaldellisHagiographyDoubtScepticism2011",
+      "creators": [
+        {
+          "firstName": "Anthony",
+          "lastName": "Kaldellis",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "St\u00e9fanos",
+          "lastName": "Efthymi\u00e1dis",
+          "creatorType": "editor"
+        }
+      ],
+      "tags": [],
+      "dateAdded": "2026-04-29T18:06:57Z",
+      "dateModified": "2026-04-29T18:08:42Z",
+      "itemID": 74735,
+      "attachments": [],
+      "notes": [],
+      "publicationTitle": "The Ashgate research companion to Byzantine hagiography"
     }
   ]
 }
