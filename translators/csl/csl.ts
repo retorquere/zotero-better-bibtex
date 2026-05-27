@@ -79,7 +79,7 @@ export abstract class CSLExporter {
       }
       log.debug('3100:', { language: csl.language, isLangCode: isLangCode(csl.language), langCode: langCode(csl.language) })
       if (!isLangCode(csl.language)?.res) {
-        const language = langCode(csl.language)
+        const language = langCode(csl.language).toLowerCase()
         csl.language = BabelTag[language] || language || csl.language
         log.debug('3100:', { language, BabelTag: BabelTag[language] })
       }
