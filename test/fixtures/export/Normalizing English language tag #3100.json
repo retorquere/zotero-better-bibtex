@@ -75,6 +75,45 @@
       "attachments": [],
       "notes": [],
       "publicationTitle": "The Ashgate research companion to Byzantine hagiography"
+    },
+    {
+      "key": "DJ6NRCMA",
+      "version": 52094,
+      "itemType": "book",
+      "series": "Bibliotheca scriptorum graecorum et romanorum teubneriana",
+      "place": "Berlin",
+      "publisher": "De Gruyter",
+      "ISBN": "978-3-11-019608-5",
+      "date": "2013",
+      "callNumber": "PA6804 .A2 2013",
+      "DOI": "10.1515/9783110262483",
+      "accessDate": "2013-10-19T15:12:00Z",
+      "seriesNumber": "2011",
+      "libraryCatalog": "Library of Congress ISBN",
+      "language": "la",
+      "abstractNote": "This critical edition of the Latin text of Vergil's Bucolica and Georgica is informed by recent research on the author's style as well as the oldest manuscript versions of his works.",
+      "title": "P. Vergilius Maro. Bucolica et Georgica",
+      "numPages": "220",
+      "citationKey": "ottavianoVergiliusMaroBucolica2013",
+      "creators": [
+        {
+          "firstName": "Silvia",
+          "lastName": "Ottaviano",
+          "creatorType": "editor"
+        },
+        {
+          "firstName": "Gian Biagio",
+          "lastName": "Conte",
+          "creatorType": "editor"
+        }
+      ],
+      "tags": [],
+      "dateAdded": "2013-10-19T15:12:00Z",
+      "dateModified": "2026-02-16T11:04:07Z",
+      "itemID": 2630,
+      "attachments": [
+      ],
+      "notes": []
     }
   ]
 }

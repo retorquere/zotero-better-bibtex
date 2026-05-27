@@ -99,6 +99,7 @@
     "fracturedjsonjs": "^5.0.1",
     "html-to-md": "^0.8.8",
     "i": "^0.3.7",
+    "is-language-code": "^5.1.3",
     "jslingua": "^0.13.0",
     "kuromoji": "^0.1.2",
     "lodash.clonedeep": "^4.5.0",

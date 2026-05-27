@@ -22,7 +22,7 @@ import { Preference } from '../prefs'
 import { JournalAbbrev } from '../journal-abbrev'
 import * as Extra from '../extra'
 import { buildCiteKey as zotero_buildCiteKey } from '../../gen/ZoteroBibTeX.mjs'
-import { babelLanguage } from '../text'
+import { langCode } from '../text'
 import { fetchSync as fetchInspireHEP } from '../inspire-hep'
 
 import { compile, upgrade } from './compile'
@@ -297,7 +297,7 @@ class Item {
     this.libraryID = item.libraryID
     this.title = item.getField('title', false, true)
 
-    this.language = babelLanguage((this.getField('language') as string) || '')
+    this.language = langCode((this.getField('language') as string) || '')
     const babelTag = this.babelTag() as TransliterateMode
     this.transliterateMode = unaliasTransliterateMode[babelTag] || babelTag
     // this.transliterateModeCJK = ['chinese', 'japanese'].includes(this.transliterateMode)

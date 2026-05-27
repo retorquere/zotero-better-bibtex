@@ -8,6 +8,7 @@ import { titleCased } from './csl-titlecase'
 import { serialize, parseFragment } from 'parse5'
 
 import Language from '../gen/babel/langmap.json' with { type: 'json' }
+import { isLangCode } from 'is-language-code'
 // import Tag from '../gen/babel/tag.json'
 const LanguagePrefixes = Object.keys(Language).sort().reverse().filter(prefix => prefix.length > 3)
 
@@ -437,16 +438,18 @@ export const HTMLParser = new class {
   }
 }
 
-export function babelLanguage(language: string): string {
-  if (!language) return ''
-  const lc = language.toLowerCase()
+export function langCode(langcode: string): string {
+  if (!langcode) return ''
+  if (isLangCode(langcode)) return langcode
+
+  const lc = langcode.toLowerCase()
   // eslint-disable-next-line @typescript-eslint/no-unsafe-return
   return Language[lc]
     || Language[lc.replace(/[^a-z0-9]/, '-')]
     || Language[lc.replace(RE.notAlphaNum, '')]
     || (!lc.match(RE.notAlphaNum) && Language[LanguagePrefixes.find((prefix: string) => lc.startsWith(prefix))])
     || Language[lc.replace(/-.*/, '').replace(/[^a-z0-9]/, '-')]
-    || language
+    || langcode
 }
 
 const excelColumnCache: Map<number, string> = new Map
