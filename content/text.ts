@@ -447,7 +447,7 @@ export function langCode(langcode: string): string {
     || Language[lc.replace(RE.notAlphaNum, '')]
     || (!lc.match(RE.notAlphaNum) && Language[LanguagePrefixes.find((prefix: string) => lc.startsWith(prefix))])
     || Language[lc.replace(/-.*/, '').replace(/[^a-z0-9]/, '-')]
-    || langcode
+    || langcode.toLowerCase()
 }
 
 const excelColumnCache: Map<number, string> = new Map
