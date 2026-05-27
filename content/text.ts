@@ -8,7 +8,6 @@ import { titleCased } from './csl-titlecase'
 import { serialize, parseFragment } from 'parse5'
 
 import Language from '../gen/babel/langmap.json' with { type: 'json' }
-import { isLangCode } from 'is-language-code'
 // import Tag from '../gen/babel/tag.json'
 const LanguagePrefixes = Object.keys(Language).sort().reverse().filter(prefix => prefix.length > 3)
 
@@ -440,7 +439,6 @@ export const HTMLParser = new class {
 
 export function langCode(langcode: string): string {
   if (!langcode) return ''
-  if (isLangCode(langcode)) return langcode
 
   const lc = langcode.toLowerCase()
   // eslint-disable-next-line @typescript-eslint/no-unsafe-return
