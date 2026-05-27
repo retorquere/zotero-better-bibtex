@@ -1,0 +1,169 @@
+@article{2000,
+  entrysubtype = {magazine},
+  date = {2000-09},
+  journaltitle = {Gourmet},
+  langid = {english},
+  keywords = {robustness}
+}
+
+@article{2000a,
+  entrysubtype = {magazine},
+  date = {2000-09},
+  journaltitle = {Gourmet},
+  langid = {english},
+  keywords = {robustness}
+}
+
+@article{2010,
+  date = {2010-12-17},
+  journaltitle = {Science},
+  shortjournal = {Science},
+  volume = {330},
+  number = {6011},
+  pages = {1700},
+  issn = {0036-8075, 1095-9203},
+  doi = {10.1126/science.330.6011.1700-b},
+  abstract = {The show includes the top scientific breakthrough of 2010 and some of the big ideas of the past decade. , The show includes the top scientific breakthrough of 2010 and some of the big ideas of the past decade.},
+  langid = {english},
+  keywords = {cleaned,incorrect output}
+}
+
+@article{2010a,
+  date = {2010-12-17},
+  journaltitle = {Science},
+  shortjournal = {Science},
+  volume = {330},
+  number = {6011},
+  pages = {1700},
+  issn = {0036-8075, 1095-9203},
+  doi = {10.1126/science.330.6011.1700-b},
+  abstract = {The show includes the top scientific breakthrough of 2010 and some of the big ideas of the past decade. , The show includes the top scientific breakthrough of 2010 and some of the big ideas of the past decade.},
+  langid = {english},
+  keywords = {cleaned,incorrect output}
+}
+
+@artwork{Box137Folder,
+  langid = {english}
+}
+
+@artwork{Box137Foldera,
+  langid = {english}
+}
+
+@unpublished{dinkelHoughtonLibraryHarvard,
+  author = {Dinkel, Joseph},
+  howpublished = {description of Louis Agassiz written at the request of Elizabeth Cary Agassiz},
+  langid = {english}
+}
+
+@unpublished{dinkelHoughtonLibraryHarvarda,
+  author = {Dinkel, Joseph},
+  howpublished = {description of Louis Agassiz written at the request of Elizabeth Cary Agassiz},
+  langid = {english}
+}
+
+@unpublished{Francais146,
+  langid = {english}
+}
+
+@unpublished{Francais146a,
+  langid = {english}
+}
+
+@unpublished{MSRawlinson520,
+  langid = {english}
+}
+
+@unpublished{MSRawlinson520a,
+  langid = {english}
+}
+
+@article{PhiladelphiaInquirer1990,
+  entrysubtype = {newspaper},
+  date = {1990-07-30},
+  journaltitle = {Philadelphia Inquirer},
+  langid = {english}
+}
+
+@article{PhiladelphiaInquirer1990a,
+  entrysubtype = {newspaper},
+  date = {1990-07-30},
+  journaltitle = {Philadelphia Inquirer},
+  langid = {english}
+}
+
+@article{PointsLetters1935,
+  entrysubtype = {newspaper},
+  date = {1935-10-22},
+  journaltitle = {The Times},
+  number = {47201},
+  pages = {12},
+  location = {London},
+  issn = {0140-0460},
+  url = {https://link.gale.com/apps/doc/CS202714454/TTDA},
+  urldate = {2025-06-06},
+  journalsubtitle = {Points from letters},
+  langid = {english}
+}
+
+@unpublished{PROB111271616,
+  date = {1616-06-22},
+  howpublished = {Will of William Shakespeare, Gentleman of Stratford upon Avon, Warwickshire},
+  langid = {english}
+}
+
+@unpublished{PROB111271616a,
+  date = {1616-06-22},
+  howpublished = {Will of William Shakespeare, Gentleman of Stratford upon Avon, Warwickshire},
+  langid = {english}
+}
+
+@article{wallraffAtlantic2025,
+  entrysubtype = {magazine},
+  author = {Wallraff, Barbara},
+  journaltitle = {Atlantic},
+  issn = {2151-9463},
+  url = {https://www.theatlantic.com/magazine/archive/2008/07/word-fugitives/306848/},
+  urldate = {2025-03-18},
+  abstract = {The Atlantic covers news, politics, culture, technology, health, and more, through its articles, podcasts, videos, and flagship magazine.},
+  langid = {english}
+}
+
+@article{wallraffAtlantic2025a,
+  entrysubtype = {magazine},
+  author = {Wallraff, Barbara},
+  journaltitle = {Atlantic},
+  issn = {2151-9463},
+  url = {https://www.theatlantic.com/magazine/archive/2008/07/word-fugitives/306848/},
+  urldate = {2025-03-18},
+  abstract = {The Atlantic covers news, politics, culture, technology, health, and more, through its articles, podcasts, videos, and flagship magazine.},
+  langid = {english}
+}
+
+@inbook{wilkersonDeepSouthSocial2022,
+  booktitle = {Deep South: A Social Anthropological Study of Caste and Class},
+  author = {Wilkerson, Isabel},
+  date = {2022},
+  edition = {2},
+  pages = {xiii-xxiv},
+  publisher = {University of Chicago Press},
+  location = {Chicago},
+  abstract = {Intro -- Contents -- List of Illustrations -- List of Tables -- Foreword by Isabel Wilkerson -- Preface -- Part I -- 1. Introduction: Deep South-A Social Anthropological Study of Caste and Class W. Lloyd Warner -- 2. The System of Color-Castes -- 3. The Class System of the White Caste -- 4. The White Upper-Class Family -- 5. The White Middle-Class Family -- 6. The White Lower-Class Family -- 7. Social Cliques in the White Society -- 8. Social Mobility within the White Caste -- 9. The Class System of the Colored Caste -- Part II -- 10. Intimidation of Labor -- 11. The Plantation in Its Social Setting -- 12. Relation between the Caste System and the Economic System -- 13. Caste, Class, and Local Government: White Power -- 14. Retrospect, 1965: Power and Caste -- Afterword, 1986 Burleigh B. Gardner -- Index},
+  bookauthor = {Davis, Allison and Gardner, Burleigh B. and Gardner, Mary R.},
+  isbn = {978-0-226-81798-9 978-0-226-81799-6},
+  langid = {english}
+}
+
+@inbook{wilkersonDeepSouthSocial2022a,
+  booktitle = {Deep South: A Social Anthropological Study of Caste and Class},
+  author = {Wilkerson, Isabel},
+  date = {2022},
+  edition = {2},
+  pages = {xiii-xxiv},
+  publisher = {University of Chicago Press},
+  location = {Chicago},
+  abstract = {Intro -- Contents -- List of Illustrations -- List of Tables -- Foreword by Isabel Wilkerson -- Preface -- Part I -- 1. Introduction: Deep South-A Social Anthropological Study of Caste and Class W. Lloyd Warner -- 2. The System of Color-Castes -- 3. The Class System of the White Caste -- 4. The White Upper-Class Family -- 5. The White Middle-Class Family -- 6. The White Lower-Class Family -- 7. Social Cliques in the White Society -- 8. Social Mobility within the White Caste -- 9. The Class System of the Colored Caste -- Part II -- 10. Intimidation of Labor -- 11. The Plantation in Its Social Setting -- 12. Relation between the Caste System and the Economic System -- 13. Caste, Class, and Local Government: White Power -- 14. Retrospect, 1965: Power and Caste -- Afterword, 1986 Burleigh B. Gardner -- Index},
+  bookauthor = {Davis, Allison and Gardner, Burleigh B. and Gardner, Mary R.},
+  isbn = {978-0-226-81798-9 978-0-226-81799-6},
+  langid = {english}
+}

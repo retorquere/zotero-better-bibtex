@@ -249,6 +249,40 @@ function parseParticles(creator: Creator): Creator {
   return creator
 }
 
+const TitleFields = [
+  'title',
+  'partTitle', 'part-title',
+  'volume-title',
+  'original-title',
+  'reviewed-title',
+  'reviewed-genre',
+  'section',
+  'bookTitle', 'proceedingsTitle', 'dictionaryTitle', 'encyclopediaTitle', 'forumTitle', 'publicationTitle', 'sessionTitle', 'programTitle', 'websiteTitle', 'blogTitle', 'container-title',
+  'meetingName', 'conferenceName', 'event-title',
+  'seriesTitle', 'series', 'collection-title',
+  'archiveLocation', 'archive_location',
+  'archive_collection',
+  'archive',
+  // genre = type
+]
+
+const DateFields = [
+  'date',
+  'issued',
+  'issueDate',
+  'dateEnacted',
+  'dateDecided',
+  'event-date',
+  'available-date',
+  'filingDate', 'submitted',
+  'accessDate', 'accessed',
+  // status
+]
+const OrigDateFields = [
+  'originalDate',
+  'original-date',
+]
+
 class Item {
   public item: Zotero.Item
   private language = ''
@@ -265,7 +299,6 @@ class Item {
   public libraryID: number
   public transliterateMode: TransliterateMode | ''
   // public transliterateModeCJK: boolean
-  public getField: (name: string) => number | string
   public extra: string
   public extraFields: Extra.Fields
 
@@ -276,34 +309,11 @@ class Item {
     this.itemKey = this.key = item.key
     this.itemType = Zotero.ItemTypes.getName(item.itemTypeID)
     this.primaryCreator = Schema.primaryCreator[this.itemType] || ''
-    this.getField = function(name: string): string | number {
-      if (!name) return ''
-
-      switch (name) {
-        case 'dateAdded':
-        case 'dateModified':
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-          return this.item[name].replace(/ .*/, '')
-        case 'title':
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-          return this.title
-        default:
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-          return this.item.getField(name, false, true) || this.extraFields?.kv[name] || ''
-      }
-    }
 
     this.creators = item.getCreatorsJSON().map(parseParticles)
     this.libraryID = item.libraryID
-    this.title = item.getField('title', false, true)
-
-    this.language = langCode((this.getField('language') as string) || '')
-    const babelTag = this.babelTag() as TransliterateMode
-    this.transliterateMode = unaliasTransliterateMode[babelTag] || babelTag
-    // this.transliterateModeCJK = ['chinese', 'japanese'].includes(this.transliterateMode)
-
-    const zoteroFields = Extra.get(this.getField('extra') as string, 'zotero', { kv: true, tex: true })
-    const cslFields = Extra.get(this.getField('extra') as string, 'csl', { kv: true, tex: true })
+    const zoteroFields = Extra.get(this.item.getField('extra'), 'zotero', { kv: true, tex: true })
+    const cslFields = Extra.get(this.item.getField('extra'), 'csl', { kv: true, tex: true })
     this.extraFields = merge(cslFields.extraFields, zoteroFields.extraFields)
     this.extra = zoteroFields.extra // arbitrary
 
@@ -314,8 +324,29 @@ class Item {
       creator.lastName = creator.lastName || creator.name
     }
 
-    this.date = parseDate(this.getField('date') as string, (this.getField('originalDate') as string) || this.extraFields.kv.originalDate)
-    this.title = stripHTML(this.title)
+    this.title = stripHTML(TitleFields.reduce((acc, field) => acc || this.getField(field) as string, ''))
+    this.date = parseDate(
+      DateFields.reduce((acc, field) => acc || this.getField(field) as string, ''),
+      OrigDateFields.reduce((acc, field) => acc || this.getField(field) as string, '')
+    )
+
+    this.language = langCode((this.getField('language') as string) || '')
+    const babelTag = this.babelTag() as TransliterateMode
+    this.transliterateMode = unaliasTransliterateMode[babelTag] || babelTag
+    // this.transliterateModeCJK = ['chinese', 'japanese'].includes(this.transliterateMode)
+  }
+
+  public getField(name: string): string | number {
+    if (!name) return ''
+
+    switch (name) {
+      case 'dateAdded':
+      case 'dateModified':
+        return this.item[name].replace(/ .*/, '')
+
+      default:
+        return (typeof Zotero.ItemFields.getID(name) === 'number' && this.item.getField(name, false, true)) || this.extraFields?.kv[name] || ''
+    }
   }
 
   public babelTag(): BabelLanguage {
@@ -1573,25 +1604,41 @@ export class PatternFormatter {
     const primary = this.item.primaryCreator
 
     const creators = {
+      composer: [],
       editor: [],
       author: [],
       translator: [],
       collaborator: [],
     }
 
+    const hasEditor = this.item.creators.find(creator => creator.creatorType.match(/^editor(-translator)$/i))
+    let hasSeriesEditor = false
     for (const creator of this.item.creators) {
       const name = this.name(creator, template)
       if (!name) continue
 
-      let hasEditor = false
-      let hasSeriesEditor = false
-      switch (creator.creatorType) {
+      switch (creator.creatorType.toLowerCase()) {
+        case 'composer':
+          creators.composer.push(name)
+          break
+
+        case primary:
+        case 'author':
+        case 'guest':
+        case 'host':
+        case 'interviewer':
+        case 'performer':
+        case 'director':
+          creators.author.push(name)
+          break
+
         case 'editor':
-          hasEditor = true
+        case 'editor-translator':
           creators.editor.push(name)
           break
 
         case 'serieseditor':
+        case 'collection-editor':
           if (!hasEditor || hasSeriesEditor) {
             hasSeriesEditor = true
             creators.editor.push(name)
@@ -1602,15 +1649,15 @@ export class PatternFormatter {
           creators.translator.push(name)
           break
 
-        case primary:
-          creators.author.push(name)
-          break
-
         default:
           creators.collaborator.push(name)
+          break
       }
     }
 
+    log.debug('3234:', { item: this.item.creators, creators })
+
+    creators.author = [...creators.composer, ...creators.author]
     const candidates: AuthorType[] = select === '*' ? [ 'author', 'editor', 'translator', 'collaborator' ] : [select]
 
     for (const kind of candidates) {
