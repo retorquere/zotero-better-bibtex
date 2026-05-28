@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="height=device-height, width=device-width, initial-scale=1.0, minimum-scale=1.0">
-    <meta name="generator" content="Hugo 0.161.1">
+    <meta name="generator" content="Hugo 0.162.0">
     <meta name="generator" content="Relearn 9.0.3+36307e4ed23582638ab689240ac7b427217803ee">
     <meta name="description" content="Note: a number of functions below talk about the author’s lastname; you can read that as “when available”. If you have the name as a single-field name (for entities like International Business Machines or Aristoteles), Zotero doesn’t have a last name, and the full single-field name is taken instead.
 Functions auth(n: number=0, m: number=1, creator: &#39;*&#39; | &#39;author&#39; | &#39;collaborator&#39; | &#39;editor&#39; | &#39;translator&#39;=&#39;*&#39;, initials: boolean=false)The first n (default: all) characters of the mth (default: first) author&#39;s last name.">
@@ -22,7 +22,7 @@ Functions auth(n: number=0, m: number=1, creator: &#39;*&#39; | &#39;author&#39;
     <meta itemprop="name" content="Formulas :: Better BibTeX for Zotero">
     <meta itemprop="description" content="Note: a number of functions below talk about the author’s lastname; you can read that as “when available”. If you have the name as a single-field name (for entities like International Business Machines or Aristoteles), Zotero doesn’t have a last name, and the full single-field name is taken instead.
 Functions auth(n: number=0, m: number=1, creator: &#39;*&#39; | &#39;author&#39; | &#39;collaborator&#39; | &#39;editor&#39; | &#39;translator&#39;=&#39;*&#39;, initials: boolean=false)The first n (default: all) characters of the mth (default: first) author&#39;s last name.">
-    <meta itemprop="wordCount" content="5357">
+    <meta itemprop="wordCount" content="5380">
     <meta itemprop="keywords" content="Citation Keys">
     <title>Formulas :: Better BibTeX for Zotero</title>
     <link href="/zotero-better-bibtex/citing/formulas/index.xml" rel="alternate" type="application/rss+xml" title="Formulas :: Better BibTeX for Zotero"><link rel="icon" href="/zotero-better-bibtex/better-bibtex.ico" type="image/x-icon">
@@ -192,25 +192,25 @@ Functions auth(n: number=0, m: number=1, creator: &#39;*&#39; | &#39;author&#39;
               <tr>
                 <td><code>n</code></td>
                 <td>the number of characters to take from the name, 0 = all</td>
-                <td>undefined</td>
+                <td>0</td>
                 <td>number</td>
               </tr>
               <tr>
                 <td><code>m</code></td>
                 <td>select the <code>m</code>th author</td>
-                <td>undefined</td>
+                <td>1</td>
                 <td>number</td>
               </tr>
               <tr>
                 <td><code>creator</code></td>
                 <td>kind of creator to select, <code>*</code> selects <code>author</code> first, and if not present, <code>editor</code>, <code>translator</code> or <code>collaborator</code>, in that order.</td>
-                <td>undefined</td>
+                <td>'*'</td>
                 <td>'*' | 'author' | 'collaborator' | 'editor' | 'translator'</td>
               </tr>
               <tr>
                 <td><code>initials</code></td>
                 <td>add author initials</td>
-                <td>undefined</td>
+                <td>false</td>
                 <td>boolean</td>
               </tr></table>
 
@@ -224,19 +224,19 @@ Functions auth(n: number=0, m: number=1, creator: &#39;*&#39; | &#39;author&#39;
               <tr>
                 <td><code>creator</code></td>
                 <td>kind of creator to select, <code>*</code> selects <code>author</code> first, and if not present, <code>editor</code>, <code>translator</code> or <code>collaborator</code>, in that order.</td>
-                <td>undefined</td>
+                <td>'*'</td>
                 <td>'*' | 'author' | 'collaborator' | 'editor' | 'translator'</td>
               </tr>
               <tr>
                 <td><code>initials</code></td>
                 <td>add author initials</td>
-                <td>undefined</td>
+                <td>false</td>
                 <td>boolean</td>
               </tr>
               <tr>
                 <td><code>sep</code></td>
                 <td>use this character between authors</td>
-                <td>undefined</td>
+                <td>'.'</td>
                 <td>string</td>
               </tr></table>
 
@@ -254,19 +254,19 @@ more than 2 authors "EtAl" instead of ".etal" is appended.</p><table>
               <tr>
                 <td><code>creator</code></td>
                 <td>kind of creator to select, <code>*</code> selects <code>author</code> first, and if not present, <code>editor</code>, <code>translator</code> or <code>collaborator</code>, in that order.</td>
-                <td>undefined</td>
+                <td>'*'</td>
                 <td>'*' | 'author' | 'collaborator' | 'editor' | 'translator'</td>
               </tr>
               <tr>
                 <td><code>initials</code></td>
                 <td>add author initials</td>
-                <td>undefined</td>
+                <td>false</td>
                 <td>boolean</td>
               </tr>
               <tr>
                 <td><code>sep</code></td>
                 <td>use this character between authors</td>
-                <td>undefined</td>
+                <td>' '</td>
                 <td>string</td>
               </tr></table>
 
@@ -280,19 +280,19 @@ more than 2 authors "EtAl" instead of ".etal" is appended.</p><table>
               <tr>
                 <td><code>creator</code></td>
                 <td>kind of creator to select, <code>*</code> selects <code>author</code> first, and if not present, <code>editor</code>, <code>translator</code> or <code>collaborator</code>, in that order.</td>
-                <td>undefined</td>
+                <td>'*'</td>
                 <td>'*' | 'author' | 'collaborator' | 'editor' | 'translator'</td>
               </tr>
               <tr>
                 <td><code>initials</code></td>
                 <td>add author initials</td>
-                <td>undefined</td>
+                <td>false</td>
                 <td>boolean</td>
               </tr>
               <tr>
                 <td><code>sep</code></td>
                 <td>use this character between authors</td>
-                <td>undefined</td>
+                <td>'.'</td>
                 <td>string</td>
               </tr></table>
 
@@ -306,7 +306,7 @@ more than 2 authors "EtAl" instead of ".etal" is appended.</p><table>
               <tr>
                 <td><code>creator</code></td>
                 <td>kind of creator to select, <code>*</code> selects <code>author</code> first, and if not present, <code>editor</code>, <code>translator</code> or <code>collaborator</code>, in that order.</td>
-                <td>undefined</td>
+                <td>'*'</td>
                 <td>'*' | 'author' | 'collaborator' | 'editor' | 'translator'</td>
               </tr></table>
 
@@ -320,25 +320,25 @@ more than 2 authors "EtAl" instead of ".etal" is appended.</p><table>
               <tr>
                 <td><code>n</code></td>
                 <td>the number of characters to take from the name, 0 = all</td>
-                <td>undefined</td>
+                <td>0</td>
                 <td>number</td>
               </tr>
               <tr>
                 <td><code>creator</code></td>
                 <td>kind of creator to select, <code>*</code> selects <code>author</code> first, and if not present, <code>editor</code>, <code>translator</code> or <code>collaborator</code>, in that order.</td>
-                <td>undefined</td>
+                <td>'*'</td>
                 <td>'*' | 'author' | 'collaborator' | 'editor' | 'translator'</td>
               </tr>
               <tr>
                 <td><code>initials</code></td>
                 <td>add author initials</td>
-                <td>undefined</td>
+                <td>false</td>
                 <td>boolean</td>
               </tr>
               <tr>
                 <td><code>sep</code></td>
                 <td>use this character between authors</td>
-                <td>undefined</td>
+                <td>'.'</td>
                 <td>string</td>
               </tr></table>
 
@@ -352,19 +352,19 @@ more than 2 authors "EtAl" instead of ".etal" is appended.</p><table>
               <tr>
                 <td><code>creator</code></td>
                 <td>kind of creator to select, <code>*</code> selects <code>author</code> first, and if not present, <code>editor</code>, <code>translator</code> or <code>collaborator</code>, in that order.</td>
-                <td>undefined</td>
+                <td>'*'</td>
                 <td>'*' | 'author' | 'collaborator' | 'editor' | 'translator'</td>
               </tr>
               <tr>
                 <td><code>initials</code></td>
                 <td>add author initials</td>
-                <td>undefined</td>
+                <td>false</td>
                 <td>boolean</td>
               </tr>
               <tr>
                 <td><code>sep</code></td>
                 <td>use this character between authors</td>
-                <td>undefined</td>
+                <td>'.'</td>
                 <td>string</td>
               </tr></table>
 
@@ -378,13 +378,13 @@ more than 2 authors "EtAl" instead of ".etal" is appended.</p><table>
               <tr>
                 <td><code>creator</code></td>
                 <td>kind of creator to select, <code>*</code> selects <code>author</code> first, and if not present, <code>editor</code>, <code>translator</code> or <code>collaborator</code>, in that order.</td>
-                <td>undefined</td>
+                <td>'*'</td>
                 <td>'*' | 'author' | 'collaborator' | 'editor' | 'translator'</td>
               </tr>
               <tr>
                 <td><code>initials</code></td>
                 <td>add author initials</td>
-                <td>undefined</td>
+                <td>false</td>
                 <td>boolean</td>
               </tr></table>
 
@@ -398,7 +398,7 @@ more than 2 authors "EtAl" instead of ".etal" is appended.</p><table>
               <tr>
                 <td><code>creator</code></td>
                 <td>kind of creator to select, <code>*</code> selects <code>author</code> first, and if not present, <code>editor</code>, <code>translator</code> or <code>collaborator</code>, in that order.</td>
-                <td>undefined</td>
+                <td>'*'</td>
                 <td>'*' | 'author' | 'collaborator' | 'editor' | 'translator'</td>
               </tr></table>
 
@@ -413,19 +413,19 @@ More than four authors: First letters of last names of first three authors conca
               <tr>
                 <td><code>creator</code></td>
                 <td>kind of creator to select, <code>*</code> selects <code>author</code> first, and if not present, <code>editor</code>, <code>translator</code> or <code>collaborator</code>, in that order.</td>
-                <td>undefined</td>
+                <td>'*'</td>
                 <td>'*' | 'author' | 'collaborator' | 'editor' | 'translator'</td>
               </tr>
               <tr>
                 <td><code>initials</code></td>
                 <td>add author initials</td>
-                <td>undefined</td>
+                <td>false</td>
                 <td>boolean</td>
               </tr>
               <tr>
                 <td><code>sep</code></td>
                 <td>use this character between authors</td>
-                <td>undefined</td>
+                <td>' '</td>
                 <td>string</td>
               </tr></table>
 
@@ -439,25 +439,25 @@ More than four authors: First letters of last names of first three authors conca
               <tr>
                 <td><code>n</code></td>
                 <td>the number of characters to take from the name, 0 = all</td>
-                <td>undefined</td>
+                <td>0</td>
                 <td>number</td>
               </tr>
               <tr>
                 <td><code>creator</code></td>
                 <td>kind of creator to select, <code>*</code> selects <code>author</code> first, and if not present, <code>editor</code>, <code>translator</code> or <code>collaborator</code>, in that order.</td>
-                <td>undefined</td>
+                <td>'*'</td>
                 <td>'*' | 'author' | 'collaborator' | 'editor' | 'translator'</td>
               </tr>
               <tr>
                 <td><code>initials</code></td>
                 <td>add author initials</td>
-                <td>undefined</td>
+                <td>false</td>
                 <td>boolean</td>
               </tr>
               <tr>
                 <td><code>sep</code></td>
                 <td>use this character between authors</td>
-                <td>undefined</td>
+                <td>' '</td>
                 <td>string</td>
               </tr></table>
 
@@ -474,19 +474,19 @@ authors.</p><table>
               <tr>
                 <td><code>creator</code></td>
                 <td>kind of creator to select, <code>*</code> selects <code>author</code> first, and if not present, <code>editor</code>, <code>translator</code> or <code>collaborator</code>, in that order.</td>
-                <td>undefined</td>
+                <td>'*'</td>
                 <td>'*' | 'author' | 'collaborator' | 'editor' | 'translator'</td>
               </tr>
               <tr>
                 <td><code>initials</code></td>
                 <td>add author initials</td>
-                <td>undefined</td>
+                <td>false</td>
                 <td>boolean</td>
               </tr>
               <tr>
                 <td><code>sep</code></td>
                 <td>use this character between authors</td>
-                <td>undefined</td>
+                <td>'.'</td>
                 <td>string</td>
               </tr></table>
 
@@ -546,43 +546,43 @@ in the creator template, you can use:</p>
               <tr>
                 <td><code>n</code></td>
                 <td>select the first <code>n</code> creators (when passing a number) or the authors in this range (inclusive, when passing two values); negative numbers mean "from the end", default = 0 = all</td>
-                <td>undefined</td>
+                <td>0</td>
                 <td>number | [ number, number ]</td>
               </tr>
               <tr>
                 <td><code>type</code></td>
                 <td>select only creators of given type(s). Default: all</td>
-                <td>undefined</td>
+                <td>[ [ 'primary', 'editor', 'translator', '*' ] ]</td>
                 <td>'artist' | 'attorneyAgent' | 'author' | 'bookAuthor' | 'cartographer' | 'castMember' | 'commenter' | 'composer' | 'contributor' | 'cosponsor' | 'counsel' | 'director' | 'editor' | 'guest' | 'interviewee' | 'interviewer' | 'inventor' | 'performer' | 'podcaster' | 'presenter' | 'producer' | 'programmer' | 'recipient' | 'reviewedAuthor' | 'scriptwriter' | 'seriesEditor' | 'sponsor' | 'translator' | 'wordsBy' | ('artist' | 'attorneyAgent' | 'author' | 'bookAuthor' | 'cartographer' | 'castMember' | 'commenter' | 'composer' | 'contributor' | 'cosponsor' | 'counsel' | 'director' | 'editor' | 'guest' | 'interviewee' | 'interviewer' | 'inventor' | 'performer' | 'podcaster' | 'presenter' | 'producer' | 'programmer' | 'recipient' | 'reviewedAuthor' | 'scriptwriter' | 'seriesEditor' | 'sponsor' | 'translator' | 'wordsBy')[] | (('artist' | 'attorneyAgent' | 'author' | 'bookAuthor' | 'cartographer' | 'castMember' | 'commenter' | 'composer' | 'contributor' | 'cosponsor' | 'counsel' | 'director' | 'editor' | 'guest' | 'interviewee' | 'interviewer' | 'inventor' | 'performer' | 'podcaster' | 'presenter' | 'producer' | 'programmer' | 'recipient' | 'reviewedAuthor' | 'scriptwriter' | 'seriesEditor' | 'sponsor' | 'translator' | 'wordsBy' | '*')[])[] | '*'</td>
               </tr>
               <tr>
                 <td><code>name</code></td>
                 <td>sprintf-js template. Available named parameters are: <code>f</code> (family name), <code>F</code> (family name without dropping particle), <code>g</code> (given name), <code>i</code> (initials)</td>
-                <td>undefined</td>
+                <td>''</td>
                 <td>string containing at least one of '%(F)s', '%(f)s', '%(g)s', '%(i)s', '%(I)s', '%(g_zh)s', '%(f_zh)s' | ''</td>
               </tr>
               <tr>
                 <td><code>etal</code></td>
                 <td>use this term to replace authors after <code>n</code> authors have been named</td>
-                <td>undefined</td>
+                <td>''</td>
                 <td>string</td>
               </tr>
               <tr>
                 <td><code>sep</code></td>
                 <td>use this character between authors</td>
-                <td>undefined</td>
+                <td>' '</td>
                 <td>string</td>
               </tr>
               <tr>
                 <td><code>min</code></td>
                 <td>skip to the next pattern if there are less than <code>min</code> creators, 0 = ignore</td>
-                <td>undefined</td>
+                <td>0</td>
                 <td>number</td>
               </tr>
               <tr>
                 <td><code>max</code></td>
                 <td>skip to the next pattern if there are more than <code>max</code> creators, 0 = ignore</td>
-                <td>undefined</td>
+                <td>0</td>
                 <td>number</td>
               </tr></table>
 
@@ -612,7 +612,7 @@ the primary creator-type of the Zotero item under consideration. The list is pre
               <tr>
                 <td><code>format</code></td>
                 <td>sprintf-style format template</td>
-                <td>undefined</td>
+                <td>'%Y-%m-%d'</td>
                 <td>string</td>
               </tr></table>
 
@@ -672,13 +672,13 @@ in the template, you can use:</p>
               <tr>
                 <td><code>format</code></td>
                 <td>sprintf-style format template</td>
-                <td>undefined</td>
+                <td>'%(a)s'</td>
                 <td>string containing at least one of '%(a)s', '%(A)s', '%(n)s'</td>
               </tr>
               <tr>
                 <td><code>start</code></td>
                 <td>start value for postfix</td>
-                <td>undefined</td>
+                <td>0</td>
                 <td>number | string</td>
               </tr></table>
 
@@ -694,7 +694,7 @@ in the template, you can use:</p>
               <tr>
                 <td><code>id</code></td>
                 <td>'id': return itemID; 'key': return the item key</td>
-                <td>undefined</td>
+                <td>'key'</td>
                 <td>'id' | 'key'</td>
               </tr></table>
 
@@ -712,7 +712,7 @@ abbreviator if not (if auto-abbrev is enabled in the preferences), <code>auto</c
               <tr>
                 <td><code>abbrev</code></td>
                 <td>abbreviation mode</td>
-                <td>undefined</td>
+                <td>'abbrev+auto'</td>
                 <td>'abbrev' | 'abbrev+auto' | 'auto' | 'full' | 'off'</td>
               </tr></table>
 
@@ -776,13 +776,13 @@ in the template, you can use:</p>
               <tr>
                 <td><code>format</code></td>
                 <td>sprintf-style format template</td>
-                <td>undefined</td>
+                <td>'%(a)s'</td>
                 <td>string containing at least one of '%(a)s', '%(A)s', '%(n)s'</td>
               </tr>
               <tr>
                 <td><code>start</code></td>
                 <td>start value for postfix</td>
-                <td>undefined</td>
+                <td>0</td>
                 <td>number | string</td>
               </tr></table>
 
@@ -796,13 +796,13 @@ in the template, you can use:</p>
               <tr>
                 <td><code>n</code></td>
                 <td>number of words to select</td>
-                <td>undefined</td>
+                <td>3</td>
                 <td>number</td>
               </tr>
               <tr>
                 <td><code>m</code></td>
                 <td>number of words to capitalize. <code>0</code> means no words will be capitalized. Mind that existing capitals are not removed.</td>
-                <td>undefined</td>
+                <td>0</td>
                 <td>number</td>
               </tr></table>
 
@@ -849,13 +849,13 @@ When arguments as passed, tests whether the item is of any of the given types, a
               <tr>
                 <td><code>n</code></td>
                 <td>number of words to select</td>
-                <td>undefined</td>
+                <td>1</td>
                 <td>number</td>
               </tr>
               <tr>
                 <td><code>m</code></td>
                 <td>number of words to capitalize. <code>0</code> means no words will be capitalized. Mind that existing capitals are not removed.</td>
-                <td>undefined</td>
+                <td>0</td>
                 <td>number</td>
               </tr></table>
 
@@ -1320,7 +1320,7 @@ use this if you have existing papers that rely on this behavior.</p>
               <tr>
                 <td><code>chars</code></td>
                 <td>number of characters to return per word</td>
-                <td>undefined</td>
+                <td>1</td>
                 <td>number</td>
               </tr></table>
 
@@ -1334,19 +1334,19 @@ use this if you have existing papers that rely on this behavior.</p>
               <tr>
                 <td><code>list</code></td>
                 <td>lookup list. The list must be a CSV file and live in the <code>Zotero/better-bibtex</code> directory in your Zotero profile, and must use commas as the delimiter.</td>
-                <td>undefined</td>
+                <td>'acronyms'</td>
                 <td>string</td>
               </tr>
               <tr>
                 <td><code>reload</code></td>
                 <td>reload the list for every call. When off, the list will only be read at startup of Better BibTeX. You can set this to true temporarily to live-reload a list.</td>
-                <td>undefined</td>
+                <td>false</td>
                 <td>boolean</td>
               </tr>
               <tr>
                 <td><code>passthrough</code></td>
                 <td>if no match is found, pass through input.</td>
-                <td>undefined</td>
+                <td>false</td>
                 <td>boolean</td>
               </tr></table>
 
@@ -1354,7 +1354,19 @@ use this if you have existing papers that rely on this behavior.</p>
 
   <h3><b>.ascii</b></h3><p>removes all non-ascii characters</p>
 
-  <h3><b>.capitalize</b></h3><p>uppercases the first letter of each word</p>
+  <h3><b>.capitalize</b>(wordstart: RegExp=/((?&lt;=^|\s)[a-z])/g)</h3><p>uppercases the first letter of each word</p><table>
+              <tr>
+                <th><b>parameter</b></th>
+                <th/>
+                <th>value assumed when not provided</th>
+                <th>valid values</th>
+              </tr>
+              <tr>
+                <td><code>wordstart</code></td>
+                <td></td>
+                <td>/((?<=^|\s)[a-z])/g</td>
+                <td>RegExp</td>
+              </tr></table>
 
   <h3><b>.clean</b></h3><p>transliterates the citation key and removes unsafe characters</p>
 
@@ -1369,7 +1381,7 @@ parameter, e.g <code>.condense('_')</code> will replace spaces with underscores.
               <tr>
                 <td><code>sep</code></td>
                 <td>replacement character</td>
-                <td>undefined</td>
+                <td>''</td>
                 <td>string</td>
               </tr></table>
 
@@ -1405,7 +1417,7 @@ parameter, e.g <code>.condense('_')</code> will replace spaces with underscores.
               <tr>
                 <td><code>passthrough</code></td>
                 <td>if no match is found, pass through input.</td>
-                <td>undefined</td>
+                <td>false</td>
                 <td>boolean</td>
               </tr></table>
 
@@ -1419,7 +1431,7 @@ parameter, e.g <code>.condense('_')</code> will replace spaces with underscores.
               <tr>
                 <td><code>format</code></td>
                 <td>sprintf-style format template</td>
-                <td>undefined</td>
+                <td>'%Y-%m-%d'</td>
                 <td>string</td>
               </tr></table>
 
@@ -1439,13 +1451,13 @@ parameter, e.g <code>.condense('_')</code> will replace spaces with underscores.
               <tr>
                 <td><code>relation</code></td>
                 <td>comparison operator</td>
-                <td>undefined</td>
+                <td>'>'</td>
                 <td>'!=' | '<' | '<=' | '==' | '>' | '>='</td>
               </tr>
               <tr>
                 <td><code>length</code></td>
                 <td>value to compare length with</td>
-                <td>undefined</td>
+                <td>0</td>
                 <td>number</td>
               </tr></table>
 
@@ -1469,7 +1481,7 @@ parameter, e.g <code>.condense('_')</code> will replace spaces with underscores.
               <tr>
                 <td><code>clean</code></td>
                 <td>transliterates the current output and removes unsafe characters during matching</td>
-                <td>undefined</td>
+                <td>false</td>
                 <td>boolean</td>
               </tr></table>
 
@@ -1483,7 +1495,7 @@ parameter, e.g <code>.condense('_')</code> will replace spaces with underscores.
               <tr>
                 <td><code>dash</code></td>
                 <td>replace dashes with given character</td>
-                <td>undefined</td>
+                <td>'-'</td>
                 <td>string</td>
               </tr></table>
 
@@ -1559,7 +1571,7 @@ selected.</p><table>
               <tr>
                 <td><code>start</code></td>
                 <td>first word to select (1-based)</td>
-                <td>undefined</td>
+                <td>1</td>
                 <td>number</td>
               </tr>
               <tr>
@@ -1584,7 +1596,7 @@ Note that this filter is always applied with <code>nopunct</code> on if you use 
               <tr>
                 <td><code>nopunct</code></td>
                 <td>remove punctuation from words</td>
-                <td>undefined</td>
+                <td>false</td>
                 <td>boolean</td>
               </tr></table>
 
@@ -1598,7 +1610,7 @@ Note that this filter is always applied with <code>nopunct</code> on if you use 
               <tr>
                 <td><code>start</code></td>
                 <td>starting character (counting from 1)</td>
-                <td>undefined</td>
+                <td>1</td>
                 <td>number</td>
               </tr>
               <tr>

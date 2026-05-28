@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="height=device-height, width=device-width, initial-scale=1.0, minimum-scale=1.0">
-    <meta name="generator" content="Hugo 0.161.1">
+    <meta name="generator" content="Hugo 0.162.0">
     <meta name="generator" content="Relearn 9.0.3+36307e4ed23582638ab689240ac7b427217803ee">
     <meta name="description" content="The Better BibTeX exporters are a lot slower than the standard Zotero Bib(La)TeX exporters. If you have a small library, you will not likely notice this, but if you have several thousand items, and you are in the habit of exporting substantial parts of your library, this gets annoying really fast.
 To deal with this problem, Better BibTeX implements an extensive caching system. With a filled cache, Better BibTeX is substantially faster than the default Zotero exporters. Specifically for automatic background exports, a filled cache is a good thing to have.">
@@ -206,38 +206,38 @@ and go grab coffee (or lunch, depending on the size of your library). After that
 <p>Here are some numbers from a test with a library consisting of 86 items, exported 50 times in a row to middle out variances:</p>
 <p>(attachments are not exported for this test, but they still required serialization and handling):</p>
 <table>
-  <thead>
-      <tr>
-          <th>Exporter</th>
-          <th></th>
-      </tr>
-  </thead>
-  <tbody>
-      <tr>
-          <td>Zotero BibTeX</td>
-          <td>3s</td>
-      </tr>
-      <tr>
-          <td>Better BibTeX, empty cache</td>
-          <td>9s</td>
-      </tr>
-      <tr>
-          <td>Better BibTeX, filled cache</td>
-          <td>4s</td>
-      </tr>
-      <tr>
-          <td>Zotero BibLaTeX</td>
-          <td>4s</td>
-      </tr>
-      <tr>
-          <td>Better BibLaTeX, empty cache</td>
-          <td>9s</td>
-      </tr>
-      <tr>
-          <td>Better BibLaTeX, filled cache</td>
-          <td>3s</td>
-      </tr>
-  </tbody>
+	<thead>
+			<tr>
+					<th>Exporter</th>
+					<th></th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td>Zotero BibTeX</td>
+					<td>3s</td>
+			</tr>
+			<tr>
+					<td>Better BibTeX, empty cache</td>
+					<td>9s</td>
+			</tr>
+			<tr>
+					<td>Better BibTeX, filled cache</td>
+					<td>4s</td>
+			</tr>
+			<tr>
+					<td>Zotero BibLaTeX</td>
+					<td>4s</td>
+			</tr>
+			<tr>
+					<td>Better BibLaTeX, empty cache</td>
+					<td>9s</td>
+			</tr>
+			<tr>
+					<td>Better BibLaTeX, filled cache</td>
+					<td>3s</td>
+			</tr>
+	</tbody>
 </table>
 <p><strong>note</strong>: if you have &lsquo;Export files&rsquo; enabled during export, or set the JabRef export format to <code>4</code>, the cache will not be active. If you do large (auto)exports, avoid these.</p>
 <h2 id="caching">Caching<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h2>

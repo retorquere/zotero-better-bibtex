@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="height=device-height, width=device-width, initial-scale=1.0, minimum-scale=1.0">
-    <meta name="generator" content="Hugo 0.161.1">
+    <meta name="generator" content="Hugo 0.162.0">
     <meta name="generator" content="Relearn 9.0.3+36307e4ed23582638ab689240ac7b427217803ee">
     <meta name="description" content="In some cases the Zotero fields do not offer a place to enter the data you need to get your exported entries just right. For this Zotero has a so-called “cheater syntax” which allows you to add extra “fields” as separate lines in the extra field all items in Zotero have. These fields are supported by the citation processor inside Zotero, and BBT understands them too, and adds one “cheater syntax of its own.">
     <meta name="author" content="">
@@ -211,1276 +211,1276 @@ of its own.</p>
 <h2 id="labelvariable-list">Label/variable list<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h2>
 <p><em>note</em>: I list the Zotero fields here, not the bibtex fields. The Zotero fields are translated to bibtex fields but that translation is pretty complicated and I don&rsquo;t have a simple description of it at this time.</p>
 <table>
-  <thead>
-      <tr>
-          <th>label</th>
-          <th>type</th>
-          <th>zotero</th>
-          <th>csl</th>
-      </tr>
-  </thead>
-  <tbody>
-      <tr>
-          <td><strong>access date</strong></td>
-          <td>text</td>
-          <td>accessDate</td>
-          <td>accessed</td>
-      </tr>
-      <tr>
-          <td><strong>accessed</strong></td>
-          <td>date</td>
-          <td>accessDate</td>
-          <td>accessed</td>
-      </tr>
-      <tr>
-          <td><strong>annote</strong></td>
-          <td>text</td>
-          <td></td>
-          <td>annote</td>
-      </tr>
-      <tr>
-          <td><strong>application number</strong></td>
-          <td>text</td>
-          <td>applicationNumber</td>
-          <td>call-number</td>
-      </tr>
-      <tr>
-          <td><strong>archive</strong></td>
-          <td>text</td>
-          <td>archive</td>
-          <td>archive</td>
-      </tr>
-      <tr>
-          <td><strong>archive collection</strong></td>
-          <td>text</td>
-          <td></td>
-          <td>archive_collection</td>
-      </tr>
-      <tr>
-          <td><strong>archive id</strong></td>
-          <td>text</td>
-          <td>archiveID / number</td>
-          <td></td>
-      </tr>
-      <tr>
-          <td><strong>archive location</strong></td>
-          <td>text</td>
-          <td>archiveLocation</td>
-          <td>archive_location</td>
-      </tr>
-      <tr>
-          <td><strong>archive place</strong></td>
-          <td>text</td>
-          <td></td>
-          <td>archive-place</td>
-      </tr>
-      <tr>
-          <td><strong>artist</strong></td>
-          <td>name</td>
-          <td>artist</td>
-          <td></td>
-      </tr>
-      <tr>
-          <td><strong>artwork medium</strong></td>
-          <td>text</td>
-          <td>artworkMedium / medium</td>
-          <td></td>
-      </tr>
-      <tr>
-          <td><strong>artwork size</strong></td>
-          <td>text</td>
-          <td>artworkSize</td>
-          <td>dimensions</td>
-      </tr>
-      <tr>
-          <td><strong>assignee</strong></td>
-          <td>text</td>
-          <td>assignee</td>
-          <td></td>
-      </tr>
-      <tr>
-          <td><strong>attorney agent</strong></td>
-          <td>name</td>
-          <td>attorneyAgent</td>
-          <td></td>
-      </tr>
-      <tr>
-          <td><strong>audio file type</strong></td>
-          <td>text</td>
-          <td>audioFileType / medium</td>
-          <td></td>
-      </tr>
-      <tr>
-          <td><strong>audio recording format</strong></td>
-          <td>text</td>
-          <td>audioRecordingFormat / medium</td>
-          <td></td>
-      </tr>
-      <tr>
-          <td><strong>author</strong></td>
-          <td>name</td>
-          <td>author / creator</td>
-          <td>author</td>
-      </tr>
-      <tr>
-          <td><strong>authority</strong></td>
-          <td>text</td>
-          <td>authority</td>
-          <td>authority</td>
-      </tr>
-      <tr>
-          <td><strong>available date</strong></td>
-          <td>date</td>
-          <td></td>
-          <td>available-date</td>
-      </tr>
-      <tr>
-          <td><strong>bill number</strong></td>
-          <td>text</td>
-          <td>billNumber / number</td>
-          <td></td>
-      </tr>
-      <tr>
-          <td><strong>blog title</strong></td>
-          <td>text</td>
-          <td>blogTitle / publicationTitle</td>
-          <td></td>
-      </tr>
-      <tr>
-          <td><strong>book author</strong></td>
-          <td>name</td>
-          <td>bookAuthor</td>
-          <td>container-author</td>
-      </tr>
-      <tr>
-          <td><strong>book title</strong></td>
-          <td>text</td>
-          <td>bookTitle / publicationTitle</td>
-          <td></td>
-      </tr>
-      <tr>
-          <td><strong>call number</strong></td>
-          <td>text</td>
-          <td>applicationNumber / callNumber</td>
-          <td>call-number</td>
-      </tr>
-      <tr>
-          <td><strong>cartographer</strong></td>
-          <td>name</td>
-          <td>cartographer</td>
-          <td></td>
-      </tr>
-      <tr>
-          <td><strong>case name</strong></td>
-          <td>text</td>
-          <td>caseName / title</td>
-          <td></td>
-      </tr>
-      <tr>
-          <td><strong>cast member</strong></td>
-          <td>name</td>
-          <td>castMember</td>
-          <td>performer</td>
-      </tr>
-      <tr>
-          <td><strong>categories</strong></td>
-          <td>text</td>
-          <td></td>
-          <td>categories</td>
-      </tr>
-      <tr>
-          <td><strong>chair</strong></td>
-          <td>name</td>
-          <td>chair</td>
-          <td>chair</td>
-      </tr>
-      <tr>
-          <td><strong>chapter number</strong></td>
-          <td>text</td>
-          <td>session</td>
-          <td>chapter-number</td>
-      </tr>
-      <tr>
-          <td><strong>citation key</strong></td>
-          <td>text</td>
-          <td>citationKey</td>
-          <td>citation-key</td>
-      </tr>
-      <tr>
-          <td><strong>citation label</strong></td>
-          <td>text</td>
-          <td></td>
-          <td>citation-label</td>
-      </tr>
-      <tr>
-          <td><strong>citation number</strong></td>
-          <td>text</td>
-          <td></td>
-          <td>citation-number</td>
-      </tr>
-      <tr>
-          <td><strong>code</strong></td>
-          <td>text</td>
-          <td>code</td>
-          <td>container-title</td>
-      </tr>
-      <tr>
-          <td><strong>code number</strong></td>
-          <td>text</td>
-          <td>codeNumber</td>
-          <td>volume</td>
-      </tr>
-      <tr>
-          <td><strong>code pages</strong></td>
-          <td>text</td>
-          <td>codePages / pages</td>
-          <td></td>
-      </tr>
-      <tr>
-          <td><strong>code volume</strong></td>
-          <td>text</td>
-          <td>codeVolume / volume</td>
-          <td></td>
-      </tr>
-      <tr>
-          <td><strong>collection editor</strong></td>
-          <td>name</td>
-          <td>seriesEditor</td>
-          <td>collection-editor</td>
-      </tr>
-      <tr>
-          <td><strong>collection number</strong></td>
-          <td>text</td>
-          <td>seriesNumber</td>
-          <td>collection-number</td>
-      </tr>
-      <tr>
-          <td><strong>collection title</strong></td>
-          <td>text</td>
-          <td>series / seriesTitle</td>
-          <td>collection-title</td>
-      </tr>
-      <tr>
-          <td><strong>commenter</strong></td>
-          <td>name</td>
-          <td>commenter</td>
-          <td></td>
-      </tr>
-      <tr>
-          <td><strong>committee</strong></td>
-          <td>text</td>
-          <td>committee</td>
-          <td>section</td>
-      </tr>
-      <tr>
-          <td><strong>company</strong></td>
-          <td>text</td>
-          <td>company / publisher</td>
-          <td></td>
-      </tr>
-      <tr>
-          <td><strong>compiler</strong></td>
-          <td>name</td>
-          <td></td>
-          <td>compiler</td>
-      </tr>
-      <tr>
-          <td><strong>composer</strong></td>
-          <td>name</td>
-          <td>composer</td>
-          <td>composer</td>
-      </tr>
-      <tr>
-          <td><strong>conference name</strong></td>
-          <td>text</td>
-          <td>conferenceName</td>
-          <td>event-title</td>
-      </tr>
-      <tr>
-          <td><strong>container author</strong></td>
-          <td>name</td>
-          <td>bookAuthor</td>
-          <td>container-author</td>
-      </tr>
-      <tr>
-          <td><strong>container title</strong></td>
-          <td>text</td>
-          <td>code / publicationTitle / reporter</td>
-          <td>container-title</td>
-      </tr>
-      <tr>
-          <td><strong>container title short</strong></td>
-          <td>text</td>
-          <td></td>
-          <td>container-title-short</td>
-      </tr>
-      <tr>
-          <td><strong>contributor</strong></td>
-          <td>name</td>
-          <td>contributor</td>
-          <td>contributor</td>
-      </tr>
-      <tr>
-          <td><strong>cosponsor</strong></td>
-          <td>name</td>
-          <td>cosponsor</td>
-          <td></td>
-      </tr>
-      <tr>
-          <td><strong>counsel</strong></td>
-          <td>name</td>
-          <td>counsel</td>
-          <td></td>
-      </tr>
-      <tr>
-          <td><strong>country</strong></td>
-          <td>text</td>
-          <td>country</td>
-          <td></td>
-      </tr>
-      <tr>
-          <td><strong>court</strong></td>
-          <td>text</td>
-          <td>authority / court</td>
-          <td></td>
-      </tr>
-      <tr>
-          <td><strong>creator</strong></td>
-          <td>name</td>
-          <td>creator</td>
-          <td>author</td>
-      </tr>
-      <tr>
-          <td><strong>curator</strong></td>
-          <td>name</td>
-          <td></td>
-          <td>curator</td>
-      </tr>
-      <tr>
-          <td><strong>custom</strong></td>
-          <td></td>
-          <td></td>
-          <td>custom</td>
-      </tr>
-      <tr>
-          <td><strong>date</strong></td>
-          <td>date</td>
-          <td>date</td>
-          <td>issued</td>
-      </tr>
-      <tr>
-          <td><strong>date decided</strong></td>
-          <td>date</td>
-          <td>date / dateDecided</td>
-          <td></td>
-      </tr>
-      <tr>
-          <td><strong>date enacted</strong></td>
-          <td>date</td>
-          <td>date / dateEnacted</td>
-          <td></td>
-      </tr>
-      <tr>
-          <td><strong>dictionary title</strong></td>
-          <td>text</td>
-          <td>dictionaryTitle / publicationTitle</td>
-          <td></td>
-      </tr>
-      <tr>
-          <td><strong>dimensions</strong></td>
-          <td>text</td>
-          <td>artworkSize / runningTime</td>
-          <td>dimensions</td>
-      </tr>
-      <tr>
-          <td><strong>director</strong></td>
-          <td>name</td>
-          <td>director</td>
-          <td>director</td>
-      </tr>
-      <tr>
-          <td><strong>distributor</strong></td>
-          <td>text</td>
-          <td>distributor / publisher</td>
-          <td></td>
-      </tr>
-      <tr>
-          <td><strong>division</strong></td>
-          <td>text</td>
-          <td></td>
-          <td>division</td>
-      </tr>
-      <tr>
-          <td><strong>docket number</strong></td>
-          <td>text</td>
-          <td>docketNumber / number</td>
-          <td></td>
-      </tr>
-      <tr>
-          <td><strong>document number</strong></td>
-          <td>text</td>
-          <td>documentNumber / number</td>
-          <td></td>
-      </tr>
-      <tr>
-          <td><strong>doi</strong></td>
-          <td>text</td>
-          <td>DOI</td>
-          <td>DOI</td>
-      </tr>
-      <tr>
-          <td><strong>edition</strong></td>
-          <td>text</td>
-          <td>edition</td>
-          <td>edition</td>
-      </tr>
-      <tr>
-          <td><strong>editor</strong></td>
-          <td>name</td>
-          <td>editor</td>
-          <td>editor</td>
-      </tr>
-      <tr>
-          <td><strong>editorial director</strong></td>
-          <td>name</td>
-          <td></td>
-          <td>editorial-director</td>
-      </tr>
-      <tr>
-          <td><strong>encyclopedia title</strong></td>
-          <td>text</td>
-          <td>encyclopediaTitle / publicationTitle</td>
-          <td></td>
-      </tr>
-      <tr>
-          <td><strong>episode number</strong></td>
-          <td>text</td>
-          <td>episodeNumber / number</td>
-          <td></td>
-      </tr>
-      <tr>
-          <td><strong>event</strong></td>
-          <td>text</td>
-          <td></td>
-          <td>event</td>
-      </tr>
-      <tr>
-          <td><strong>event date</strong></td>
-          <td>date</td>
-          <td></td>
-          <td>event-date</td>
-      </tr>
-      <tr>
-          <td><strong>event place</strong></td>
-          <td>text</td>
-          <td>eventPlace</td>
-          <td>event-place</td>
-      </tr>
-      <tr>
-          <td><strong>event title</strong></td>
-          <td>text</td>
-          <td>conferenceName / meetingName</td>
-          <td>event-title</td>
-      </tr>
-      <tr>
-          <td><strong>executive producer</strong></td>
-          <td>name</td>
-          <td>executiveProducer</td>
-          <td>executive-producer</td>
-      </tr>
-      <tr>
-          <td><strong>filing date</strong></td>
-          <td>date</td>
-          <td>filingDate</td>
-          <td>submitted</td>
-      </tr>
-      <tr>
-          <td><strong>first page</strong></td>
-          <td>text</td>
-          <td>firstPage / pages</td>
-          <td></td>
-      </tr>
-      <tr>
-          <td><strong>first reference note number</strong></td>
-          <td>text</td>
-          <td></td>
-          <td>first-reference-note-number</td>
-      </tr>
-      <tr>
-          <td><strong>format</strong></td>
-          <td>text</td>
-          <td>format / medium</td>
-          <td></td>
-      </tr>
-      <tr>
-          <td><strong>forum title</strong></td>
-          <td>text</td>
-          <td>forumTitle / publicationTitle</td>
-          <td></td>
-      </tr>
-      <tr>
-          <td><strong>genre</strong></td>
-          <td>text</td>
-          <td>genre / programmingLanguage / type</td>
-          <td>genre</td>
-      </tr>
-      <tr>
-          <td><strong>guest</strong></td>
-          <td>name</td>
-          <td>guest</td>
-          <td>guest</td>
-      </tr>
-      <tr>
-          <td><strong>history</strong></td>
-          <td>text</td>
-          <td>history</td>
-          <td>references</td>
-      </tr>
-      <tr>
-          <td><strong>host</strong></td>
-          <td>name</td>
-          <td>host / podcaster</td>
-          <td>host</td>
-      </tr>
-      <tr>
-          <td><strong>id</strong></td>
-          <td>text</td>
-          <td></td>
-          <td>id</td>
-      </tr>
-      <tr>
-          <td><strong>identifier</strong></td>
-          <td>text</td>
-          <td>identifier / number</td>
-          <td></td>
-      </tr>
-      <tr>
-          <td><strong>illustrator</strong></td>
-          <td>name</td>
-          <td></td>
-          <td>illustrator</td>
-      </tr>
-      <tr>
-          <td><strong>institution</strong></td>
-          <td>text</td>
-          <td>institution / publisher</td>
-          <td></td>
-      </tr>
-      <tr>
-          <td><strong>interviewee</strong></td>
-          <td>name</td>
-          <td>interviewee</td>
-          <td></td>
-      </tr>
-      <tr>
-          <td><strong>interviewer</strong></td>
-          <td>name</td>
-          <td>interviewer</td>
-          <td>interviewer</td>
-      </tr>
-      <tr>
-          <td><strong>interview medium</strong></td>
-          <td>text</td>
-          <td>interviewMedium / medium</td>
-          <td></td>
-      </tr>
-      <tr>
-          <td><strong>inventor</strong></td>
-          <td>name</td>
-          <td>inventor</td>
-          <td></td>
-      </tr>
-      <tr>
-          <td><strong>isbn</strong></td>
-          <td>text</td>
-          <td>ISBN</td>
-          <td>ISBN</td>
-      </tr>
-      <tr>
-          <td><strong>issn</strong></td>
-          <td>text</td>
-          <td>ISSN</td>
-          <td>ISSN</td>
-      </tr>
-      <tr>
-          <td><strong>issue</strong></td>
-          <td>text</td>
-          <td>issue / priorityNumbers</td>
-          <td>issue</td>
-      </tr>
-      <tr>
-          <td><strong>issued</strong></td>
-          <td>date</td>
-          <td>date</td>
-          <td>issued</td>
-      </tr>
-      <tr>
-          <td><strong>issue date</strong></td>
-          <td>date</td>
-          <td>date / issueDate</td>
-          <td></td>
-      </tr>
-      <tr>
-          <td><strong>issuing authority</strong></td>
-          <td>text</td>
-          <td>authority / issuingAuthority</td>
-          <td></td>
-      </tr>
-      <tr>
-          <td><strong>journal abbreviation</strong></td>
-          <td>text</td>
-          <td>journalAbbreviation</td>
-          <td>journalAbbreviation</td>
-      </tr>
-      <tr>
-          <td><strong>jurisdiction</strong></td>
-          <td>text</td>
-          <td></td>
-          <td>jurisdiction</td>
-      </tr>
-      <tr>
-          <td><strong>keyword</strong></td>
-          <td>text</td>
-          <td></td>
-          <td>keyword</td>
-      </tr>
-      <tr>
-          <td><strong>label</strong></td>
-          <td>text</td>
-          <td>label / publisher</td>
-          <td></td>
-      </tr>
-      <tr>
-          <td><strong>language</strong></td>
-          <td>text</td>
-          <td>language</td>
-          <td>language</td>
-      </tr>
-      <tr>
-          <td><strong>legal status</strong></td>
-          <td>text</td>
-          <td>legalStatus / status</td>
-          <td></td>
-      </tr>
-      <tr>
-          <td><strong>legislative body</strong></td>
-          <td>text</td>
-          <td>authority / legislativeBody</td>
-          <td></td>
-      </tr>
-      <tr>
-          <td><strong>letter type</strong></td>
-          <td>text</td>
-          <td>letterType / type</td>
-          <td></td>
-      </tr>
-      <tr>
-          <td><strong>library catalog</strong></td>
-          <td>text</td>
-          <td>libraryCatalog</td>
-          <td>source</td>
-      </tr>
-      <tr>
-          <td><strong>license</strong></td>
-          <td>text</td>
-          <td>rights</td>
-          <td>license</td>
-      </tr>
-      <tr>
-          <td><strong>locator</strong></td>
-          <td>text</td>
-          <td></td>
-          <td>locator</td>
-      </tr>
-      <tr>
-          <td><strong>manuscript type</strong></td>
-          <td>text</td>
-          <td>manuscriptType / type</td>
-          <td></td>
-      </tr>
-      <tr>
-          <td><strong>map type</strong></td>
-          <td>text</td>
-          <td>mapType / type</td>
-          <td></td>
-      </tr>
-      <tr>
-          <td><strong>medium</strong></td>
-          <td>text</td>
-          <td>medium / system</td>
-          <td>medium</td>
-      </tr>
-      <tr>
-          <td><strong>meeting name</strong></td>
-          <td>text</td>
-          <td>meetingName</td>
-          <td>event-title</td>
-      </tr>
-      <tr>
-          <td><strong>name of act</strong></td>
-          <td>text</td>
-          <td>nameOfAct / title</td>
-          <td></td>
-      </tr>
-      <tr>
-          <td><strong>narrator</strong></td>
-          <td>name</td>
-          <td>narrator</td>
-          <td>narrator</td>
-      </tr>
-      <tr>
-          <td><strong>network</strong></td>
-          <td>text</td>
-          <td>network / publisher</td>
-          <td></td>
-      </tr>
-      <tr>
-          <td><strong>number</strong></td>
-          <td>text</td>
-          <td>number</td>
-          <td>number</td>
-      </tr>
-      <tr>
-          <td><strong>number of pages</strong></td>
-          <td>text</td>
-          <td>numPages</td>
-          <td>number-of-pages</td>
-      </tr>
-      <tr>
-          <td><strong>number of volumes</strong></td>
-          <td>text</td>
-          <td>numberOfVolumes</td>
-          <td>number-of-volumes</td>
-      </tr>
-      <tr>
-          <td><strong>num pages</strong></td>
-          <td>text</td>
-          <td>numPages</td>
-          <td>number-of-pages</td>
-      </tr>
-      <tr>
-          <td><strong>organization</strong></td>
-          <td>text</td>
-          <td>authority / organization</td>
-          <td></td>
-      </tr>
-      <tr>
-          <td><strong>organizer</strong></td>
-          <td>name</td>
-          <td>organizer</td>
-          <td>organizer</td>
-      </tr>
-      <tr>
-          <td><strong>original author</strong></td>
-          <td>name</td>
-          <td>originalCreator</td>
-          <td>original-author</td>
-      </tr>
-      <tr>
-          <td><strong>original creator</strong></td>
-          <td>name</td>
-          <td>originalCreator</td>
-          <td>original-author</td>
-      </tr>
-      <tr>
-          <td><strong>original date</strong></td>
-          <td>date</td>
-          <td>originalDate</td>
-          <td>original-date</td>
-      </tr>
-      <tr>
-          <td><strong>original place</strong></td>
-          <td>text</td>
-          <td>originalPlace</td>
-          <td>original-publisher-place</td>
-      </tr>
-      <tr>
-          <td><strong>original publisher</strong></td>
-          <td>text</td>
-          <td>originalPublisher</td>
-          <td>original-publisher</td>
-      </tr>
-      <tr>
-          <td><strong>original publisher place</strong></td>
-          <td>text</td>
-          <td>originalPlace</td>
-          <td>original-publisher-place</td>
-      </tr>
-      <tr>
-          <td><strong>original title</strong></td>
-          <td>text</td>
-          <td></td>
-          <td>original-title</td>
-      </tr>
-      <tr>
-          <td><strong>page</strong></td>
-          <td>text</td>
-          <td>pages</td>
-          <td>page</td>
-      </tr>
-      <tr>
-          <td><strong>page first</strong></td>
-          <td>text</td>
-          <td></td>
-          <td>page-first</td>
-      </tr>
-      <tr>
-          <td><strong>pages</strong></td>
-          <td>text</td>
-          <td>pages</td>
-          <td>page</td>
-      </tr>
-      <tr>
-          <td><strong>part</strong></td>
-          <td>text</td>
-          <td></td>
-          <td>part</td>
-      </tr>
-      <tr>
-          <td><strong>part number</strong></td>
-          <td>text</td>
-          <td>partNumber</td>
-          <td>part-number</td>
-      </tr>
-      <tr>
-          <td><strong>part title</strong></td>
-          <td>text</td>
-          <td>partTitle</td>
-          <td>part-title</td>
-      </tr>
-      <tr>
-          <td><strong>patent number</strong></td>
-          <td>text</td>
-          <td>number / patentNumber</td>
-          <td></td>
-      </tr>
-      <tr>
-          <td><strong>performer</strong></td>
-          <td>name</td>
-          <td>castMember / performer</td>
-          <td>performer</td>
-      </tr>
-      <tr>
-          <td><strong>place</strong></td>
-          <td>text</td>
-          <td>place</td>
-          <td>publisher-place</td>
-      </tr>
-      <tr>
-          <td><strong>pmcid</strong></td>
-          <td>text</td>
-          <td>PMCID</td>
-          <td>PMCID</td>
-      </tr>
-      <tr>
-          <td><strong>pmid</strong></td>
-          <td>text</td>
-          <td>PMID</td>
-          <td>PMID</td>
-      </tr>
-      <tr>
-          <td><strong>podcaster</strong></td>
-          <td>name</td>
-          <td>podcaster</td>
-          <td>host</td>
-      </tr>
-      <tr>
-          <td><strong>post type</strong></td>
-          <td>text</td>
-          <td>postType / type</td>
-          <td></td>
-      </tr>
-      <tr>
-          <td><strong>presentation type</strong></td>
-          <td>text</td>
-          <td>presentationType / type</td>
-          <td></td>
-      </tr>
-      <tr>
-          <td><strong>presenter</strong></td>
-          <td>name</td>
-          <td>presenter</td>
-          <td></td>
-      </tr>
-      <tr>
-          <td><strong>printing</strong></td>
-          <td>text</td>
-          <td></td>
-          <td>printing</td>
-      </tr>
-      <tr>
-          <td><strong>priority date</strong></td>
-          <td>text</td>
-          <td>originalDate / priorityDate</td>
-          <td></td>
-      </tr>
-      <tr>
-          <td><strong>priority numbers</strong></td>
-          <td>text</td>
-          <td>priorityNumbers</td>
-          <td>issue</td>
-      </tr>
-      <tr>
-          <td><strong>proceedings title</strong></td>
-          <td>text</td>
-          <td>proceedingsTitle / publicationTitle</td>
-          <td></td>
-      </tr>
-      <tr>
-          <td><strong>producer</strong></td>
-          <td>name</td>
-          <td>producer</td>
-          <td>producer</td>
-      </tr>
-      <tr>
-          <td><strong>programmer</strong></td>
-          <td>name</td>
-          <td>programmer</td>
-          <td></td>
-      </tr>
-      <tr>
-          <td><strong>programming language</strong></td>
-          <td>text</td>
-          <td>programmingLanguage</td>
-          <td>genre</td>
-      </tr>
-      <tr>
-          <td><strong>program title</strong></td>
-          <td>text</td>
-          <td>programTitle / publicationTitle</td>
-          <td></td>
-      </tr>
-      <tr>
-          <td><strong>publication title</strong></td>
-          <td>text</td>
-          <td>publicationTitle</td>
-          <td>container-title</td>
-      </tr>
-      <tr>
-          <td><strong>public law number</strong></td>
-          <td>text</td>
-          <td>number / publicLawNumber</td>
-          <td></td>
-      </tr>
-      <tr>
-          <td><strong>publisher</strong></td>
-          <td>text</td>
-          <td>publisher</td>
-          <td>publisher</td>
-      </tr>
-      <tr>
-          <td><strong>publisher place</strong></td>
-          <td>text</td>
-          <td>place</td>
-          <td>publisher-place</td>
-      </tr>
-      <tr>
-          <td><strong>recipient</strong></td>
-          <td>name</td>
-          <td>recipient</td>
-          <td>recipient</td>
-      </tr>
-      <tr>
-          <td><strong>references</strong></td>
-          <td>text</td>
-          <td>history / references</td>
-          <td>references</td>
-      </tr>
-      <tr>
-          <td><strong>reporter</strong></td>
-          <td>text</td>
-          <td>reporter</td>
-          <td>container-title</td>
-      </tr>
-      <tr>
-          <td><strong>reporter volume</strong></td>
-          <td>text</td>
-          <td>reporterVolume / volume</td>
-          <td></td>
-      </tr>
-      <tr>
-          <td><strong>report number</strong></td>
-          <td>text</td>
-          <td>number / reportNumber</td>
-          <td></td>
-      </tr>
-      <tr>
-          <td><strong>report type</strong></td>
-          <td>text</td>
-          <td>reportType / type</td>
-          <td></td>
-      </tr>
-      <tr>
-          <td><strong>repository</strong></td>
-          <td>text</td>
-          <td>publisher / repository</td>
-          <td></td>
-      </tr>
-      <tr>
-          <td><strong>repository location</strong></td>
-          <td>text</td>
-          <td>place / repositoryLocation</td>
-          <td></td>
-      </tr>
-      <tr>
-          <td><strong>reviewed author</strong></td>
-          <td>name</td>
-          <td>reviewedAuthor</td>
-          <td>reviewed-author</td>
-      </tr>
-      <tr>
-          <td><strong>reviewed genre</strong></td>
-          <td>text</td>
-          <td></td>
-          <td>reviewed-genre</td>
-      </tr>
-      <tr>
-          <td><strong>reviewed title</strong></td>
-          <td>text</td>
-          <td></td>
-          <td>reviewed-title</td>
-      </tr>
-      <tr>
-          <td><strong>rights</strong></td>
-          <td>text</td>
-          <td>rights</td>
-          <td>license</td>
-      </tr>
-      <tr>
-          <td><strong>running time</strong></td>
-          <td>text</td>
-          <td>runningTime</td>
-          <td>dimensions</td>
-      </tr>
-      <tr>
-          <td><strong>scale</strong></td>
-          <td>text</td>
-          <td>scale</td>
-          <td>scale</td>
-      </tr>
-      <tr>
-          <td><strong>scriptwriter</strong></td>
-          <td>name</td>
-          <td>scriptwriter</td>
-          <td>script-writer</td>
-      </tr>
-      <tr>
-          <td><strong>script writer</strong></td>
-          <td>name</td>
-          <td>scriptwriter</td>
-          <td>script-writer</td>
-      </tr>
-      <tr>
-          <td><strong>section</strong></td>
-          <td>text</td>
-          <td>committee / section</td>
-          <td>section</td>
-      </tr>
-      <tr>
-          <td><strong>series</strong></td>
-          <td>text</td>
-          <td>series</td>
-          <td>collection-title</td>
-      </tr>
-      <tr>
-          <td><strong>series creator</strong></td>
-          <td>name</td>
-          <td>seriesCreator</td>
-          <td>series-creator</td>
-      </tr>
-      <tr>
-          <td><strong>series editor</strong></td>
-          <td>name</td>
-          <td>seriesEditor</td>
-          <td>collection-editor</td>
-      </tr>
-      <tr>
-          <td><strong>series number</strong></td>
-          <td>text</td>
-          <td>seriesNumber</td>
-          <td>collection-number</td>
-      </tr>
-      <tr>
-          <td><strong>series text</strong></td>
-          <td>text</td>
-          <td>seriesText</td>
-          <td></td>
-      </tr>
-      <tr>
-          <td><strong>series title</strong></td>
-          <td>text</td>
-          <td>seriesTitle</td>
-          <td>collection-title</td>
-      </tr>
-      <tr>
-          <td><strong>session</strong></td>
-          <td>text</td>
-          <td>session</td>
-          <td>chapter-number</td>
-      </tr>
-      <tr>
-          <td><strong>session title</strong></td>
-          <td>text</td>
-          <td>publicationTitle / sessionTitle</td>
-          <td></td>
-      </tr>
-      <tr>
-          <td><strong>short title</strong></td>
-          <td>text</td>
-          <td>shortTitle</td>
-          <td>shortTitle / title-short</td>
-      </tr>
-      <tr>
-          <td><strong>source</strong></td>
-          <td>text</td>
-          <td>libraryCatalog</td>
-          <td>source</td>
-      </tr>
-      <tr>
-          <td><strong>sponsor</strong></td>
-          <td>name</td>
-          <td>sponsor</td>
-          <td></td>
-      </tr>
-      <tr>
-          <td><strong>status</strong></td>
-          <td>text</td>
-          <td>status</td>
-          <td>status</td>
-      </tr>
-      <tr>
-          <td><strong>studio</strong></td>
-          <td>text</td>
-          <td>publisher / studio</td>
-          <td></td>
-      </tr>
-      <tr>
-          <td><strong>subject</strong></td>
-          <td>text</td>
-          <td>subject / title</td>
-          <td></td>
-      </tr>
-      <tr>
-          <td><strong>submitted</strong></td>
-          <td>date</td>
-          <td>filingDate</td>
-          <td>submitted</td>
-      </tr>
-      <tr>
-          <td><strong>supplement</strong></td>
-          <td>text</td>
-          <td></td>
-          <td>supplement</td>
-      </tr>
-      <tr>
-          <td><strong>system</strong></td>
-          <td>text</td>
-          <td>system</td>
-          <td>medium</td>
-      </tr>
-      <tr>
-          <td><strong>thesis type</strong></td>
-          <td>text</td>
-          <td>thesisType / type</td>
-          <td></td>
-      </tr>
-      <tr>
-          <td><strong>title</strong></td>
-          <td>text</td>
-          <td>title</td>
-          <td>title</td>
-      </tr>
-      <tr>
-          <td><strong>title short</strong></td>
-          <td>text</td>
-          <td>shortTitle</td>
-          <td>title-short</td>
-      </tr>
-      <tr>
-          <td><strong>translator</strong></td>
-          <td>name</td>
-          <td>translator</td>
-          <td>translator</td>
-      </tr>
-      <tr>
-          <td><strong>type</strong></td>
-          <td>text</td>
-          <td>type</td>
-          <td>genre / type</td>
-      </tr>
-      <tr>
-          <td><strong>university</strong></td>
-          <td>text</td>
-          <td>publisher / university</td>
-          <td></td>
-      </tr>
-      <tr>
-          <td><strong>url</strong></td>
-          <td>text</td>
-          <td>url</td>
-          <td>URL</td>
-      </tr>
-      <tr>
-          <td><strong>version</strong></td>
-          <td>text</td>
-          <td>versionNumber</td>
-          <td>version</td>
-      </tr>
-      <tr>
-          <td><strong>version number</strong></td>
-          <td>text</td>
-          <td>versionNumber</td>
-          <td>version</td>
-      </tr>
-      <tr>
-          <td><strong>video recording format</strong></td>
-          <td>text</td>
-          <td>medium / videoRecordingFormat</td>
-          <td></td>
-      </tr>
-      <tr>
-          <td><strong>volume</strong></td>
-          <td>text</td>
-          <td>codeNumber / volume</td>
-          <td>volume</td>
-      </tr>
-      <tr>
-          <td><strong>volume title</strong></td>
-          <td>text</td>
-          <td></td>
-          <td>volume-title</td>
-      </tr>
-      <tr>
-          <td><strong>volume title short</strong></td>
-          <td>text</td>
-          <td></td>
-          <td>volume-title-short</td>
-      </tr>
-      <tr>
-          <td><strong>website title</strong></td>
-          <td>text</td>
-          <td>publicationTitle / websiteTitle</td>
-          <td></td>
-      </tr>
-      <tr>
-          <td><strong>website type</strong></td>
-          <td>text</td>
-          <td>type / websiteType</td>
-          <td></td>
-      </tr>
-      <tr>
-          <td><strong>words by</strong></td>
-          <td>name</td>
-          <td>wordsBy</td>
-          <td></td>
-      </tr>
-      <tr>
-          <td><strong>year suffix</strong></td>
-          <td>text</td>
-          <td></td>
-          <td>year-suffix</td>
-      </tr>
-  </tbody>
+	<thead>
+			<tr>
+					<th>label</th>
+					<th>type</th>
+					<th>zotero</th>
+					<th>csl</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td><strong>access date</strong></td>
+					<td>text</td>
+					<td>accessDate</td>
+					<td>accessed</td>
+			</tr>
+			<tr>
+					<td><strong>accessed</strong></td>
+					<td>date</td>
+					<td>accessDate</td>
+					<td>accessed</td>
+			</tr>
+			<tr>
+					<td><strong>annote</strong></td>
+					<td>text</td>
+					<td></td>
+					<td>annote</td>
+			</tr>
+			<tr>
+					<td><strong>application number</strong></td>
+					<td>text</td>
+					<td>applicationNumber</td>
+					<td>call-number</td>
+			</tr>
+			<tr>
+					<td><strong>archive</strong></td>
+					<td>text</td>
+					<td>archive</td>
+					<td>archive</td>
+			</tr>
+			<tr>
+					<td><strong>archive collection</strong></td>
+					<td>text</td>
+					<td></td>
+					<td>archive_collection</td>
+			</tr>
+			<tr>
+					<td><strong>archive id</strong></td>
+					<td>text</td>
+					<td>archiveID / number</td>
+					<td></td>
+			</tr>
+			<tr>
+					<td><strong>archive location</strong></td>
+					<td>text</td>
+					<td>archiveLocation</td>
+					<td>archive_location</td>
+			</tr>
+			<tr>
+					<td><strong>archive place</strong></td>
+					<td>text</td>
+					<td></td>
+					<td>archive-place</td>
+			</tr>
+			<tr>
+					<td><strong>artist</strong></td>
+					<td>name</td>
+					<td>artist</td>
+					<td></td>
+			</tr>
+			<tr>
+					<td><strong>artwork medium</strong></td>
+					<td>text</td>
+					<td>artworkMedium / medium</td>
+					<td></td>
+			</tr>
+			<tr>
+					<td><strong>artwork size</strong></td>
+					<td>text</td>
+					<td>artworkSize</td>
+					<td>dimensions</td>
+			</tr>
+			<tr>
+					<td><strong>assignee</strong></td>
+					<td>text</td>
+					<td>assignee</td>
+					<td></td>
+			</tr>
+			<tr>
+					<td><strong>attorney agent</strong></td>
+					<td>name</td>
+					<td>attorneyAgent</td>
+					<td></td>
+			</tr>
+			<tr>
+					<td><strong>audio file type</strong></td>
+					<td>text</td>
+					<td>audioFileType / medium</td>
+					<td></td>
+			</tr>
+			<tr>
+					<td><strong>audio recording format</strong></td>
+					<td>text</td>
+					<td>audioRecordingFormat / medium</td>
+					<td></td>
+			</tr>
+			<tr>
+					<td><strong>author</strong></td>
+					<td>name</td>
+					<td>author / creator</td>
+					<td>author</td>
+			</tr>
+			<tr>
+					<td><strong>authority</strong></td>
+					<td>text</td>
+					<td>authority</td>
+					<td>authority</td>
+			</tr>
+			<tr>
+					<td><strong>available date</strong></td>
+					<td>date</td>
+					<td></td>
+					<td>available-date</td>
+			</tr>
+			<tr>
+					<td><strong>bill number</strong></td>
+					<td>text</td>
+					<td>billNumber / number</td>
+					<td></td>
+			</tr>
+			<tr>
+					<td><strong>blog title</strong></td>
+					<td>text</td>
+					<td>blogTitle / publicationTitle</td>
+					<td></td>
+			</tr>
+			<tr>
+					<td><strong>book author</strong></td>
+					<td>name</td>
+					<td>bookAuthor</td>
+					<td>container-author</td>
+			</tr>
+			<tr>
+					<td><strong>book title</strong></td>
+					<td>text</td>
+					<td>bookTitle / publicationTitle</td>
+					<td></td>
+			</tr>
+			<tr>
+					<td><strong>call number</strong></td>
+					<td>text</td>
+					<td>applicationNumber / callNumber</td>
+					<td>call-number</td>
+			</tr>
+			<tr>
+					<td><strong>cartographer</strong></td>
+					<td>name</td>
+					<td>cartographer</td>
+					<td></td>
+			</tr>
+			<tr>
+					<td><strong>case name</strong></td>
+					<td>text</td>
+					<td>caseName / title</td>
+					<td></td>
+			</tr>
+			<tr>
+					<td><strong>cast member</strong></td>
+					<td>name</td>
+					<td>castMember</td>
+					<td>performer</td>
+			</tr>
+			<tr>
+					<td><strong>categories</strong></td>
+					<td>text</td>
+					<td></td>
+					<td>categories</td>
+			</tr>
+			<tr>
+					<td><strong>chair</strong></td>
+					<td>name</td>
+					<td>chair</td>
+					<td>chair</td>
+			</tr>
+			<tr>
+					<td><strong>chapter number</strong></td>
+					<td>text</td>
+					<td>session</td>
+					<td>chapter-number</td>
+			</tr>
+			<tr>
+					<td><strong>citation key</strong></td>
+					<td>text</td>
+					<td>citationKey</td>
+					<td>citation-key</td>
+			</tr>
+			<tr>
+					<td><strong>citation label</strong></td>
+					<td>text</td>
+					<td></td>
+					<td>citation-label</td>
+			</tr>
+			<tr>
+					<td><strong>citation number</strong></td>
+					<td>text</td>
+					<td></td>
+					<td>citation-number</td>
+			</tr>
+			<tr>
+					<td><strong>code</strong></td>
+					<td>text</td>
+					<td>code</td>
+					<td>container-title</td>
+			</tr>
+			<tr>
+					<td><strong>code number</strong></td>
+					<td>text</td>
+					<td>codeNumber</td>
+					<td>volume</td>
+			</tr>
+			<tr>
+					<td><strong>code pages</strong></td>
+					<td>text</td>
+					<td>codePages / pages</td>
+					<td></td>
+			</tr>
+			<tr>
+					<td><strong>code volume</strong></td>
+					<td>text</td>
+					<td>codeVolume / volume</td>
+					<td></td>
+			</tr>
+			<tr>
+					<td><strong>collection editor</strong></td>
+					<td>name</td>
+					<td>seriesEditor</td>
+					<td>collection-editor</td>
+			</tr>
+			<tr>
+					<td><strong>collection number</strong></td>
+					<td>text</td>
+					<td>seriesNumber</td>
+					<td>collection-number</td>
+			</tr>
+			<tr>
+					<td><strong>collection title</strong></td>
+					<td>text</td>
+					<td>series / seriesTitle</td>
+					<td>collection-title</td>
+			</tr>
+			<tr>
+					<td><strong>commenter</strong></td>
+					<td>name</td>
+					<td>commenter</td>
+					<td></td>
+			</tr>
+			<tr>
+					<td><strong>committee</strong></td>
+					<td>text</td>
+					<td>committee</td>
+					<td>section</td>
+			</tr>
+			<tr>
+					<td><strong>company</strong></td>
+					<td>text</td>
+					<td>company / publisher</td>
+					<td></td>
+			</tr>
+			<tr>
+					<td><strong>compiler</strong></td>
+					<td>name</td>
+					<td></td>
+					<td>compiler</td>
+			</tr>
+			<tr>
+					<td><strong>composer</strong></td>
+					<td>name</td>
+					<td>composer</td>
+					<td>composer</td>
+			</tr>
+			<tr>
+					<td><strong>conference name</strong></td>
+					<td>text</td>
+					<td>conferenceName</td>
+					<td>event-title</td>
+			</tr>
+			<tr>
+					<td><strong>container author</strong></td>
+					<td>name</td>
+					<td>bookAuthor</td>
+					<td>container-author</td>
+			</tr>
+			<tr>
+					<td><strong>container title</strong></td>
+					<td>text</td>
+					<td>code / publicationTitle / reporter</td>
+					<td>container-title</td>
+			</tr>
+			<tr>
+					<td><strong>container title short</strong></td>
+					<td>text</td>
+					<td></td>
+					<td>container-title-short</td>
+			</tr>
+			<tr>
+					<td><strong>contributor</strong></td>
+					<td>name</td>
+					<td>contributor</td>
+					<td>contributor</td>
+			</tr>
+			<tr>
+					<td><strong>cosponsor</strong></td>
+					<td>name</td>
+					<td>cosponsor</td>
+					<td></td>
+			</tr>
+			<tr>
+					<td><strong>counsel</strong></td>
+					<td>name</td>
+					<td>counsel</td>
+					<td></td>
+			</tr>
+			<tr>
+					<td><strong>country</strong></td>
+					<td>text</td>
+					<td>country</td>
+					<td></td>
+			</tr>
+			<tr>
+					<td><strong>court</strong></td>
+					<td>text</td>
+					<td>authority / court</td>
+					<td></td>
+			</tr>
+			<tr>
+					<td><strong>creator</strong></td>
+					<td>name</td>
+					<td>creator</td>
+					<td>author</td>
+			</tr>
+			<tr>
+					<td><strong>curator</strong></td>
+					<td>name</td>
+					<td></td>
+					<td>curator</td>
+			</tr>
+			<tr>
+					<td><strong>custom</strong></td>
+					<td></td>
+					<td></td>
+					<td>custom</td>
+			</tr>
+			<tr>
+					<td><strong>date</strong></td>
+					<td>date</td>
+					<td>date</td>
+					<td>issued</td>
+			</tr>
+			<tr>
+					<td><strong>date decided</strong></td>
+					<td>date</td>
+					<td>date / dateDecided</td>
+					<td></td>
+			</tr>
+			<tr>
+					<td><strong>date enacted</strong></td>
+					<td>date</td>
+					<td>date / dateEnacted</td>
+					<td></td>
+			</tr>
+			<tr>
+					<td><strong>dictionary title</strong></td>
+					<td>text</td>
+					<td>dictionaryTitle / publicationTitle</td>
+					<td></td>
+			</tr>
+			<tr>
+					<td><strong>dimensions</strong></td>
+					<td>text</td>
+					<td>artworkSize / runningTime</td>
+					<td>dimensions</td>
+			</tr>
+			<tr>
+					<td><strong>director</strong></td>
+					<td>name</td>
+					<td>director</td>
+					<td>director</td>
+			</tr>
+			<tr>
+					<td><strong>distributor</strong></td>
+					<td>text</td>
+					<td>distributor / publisher</td>
+					<td></td>
+			</tr>
+			<tr>
+					<td><strong>division</strong></td>
+					<td>text</td>
+					<td></td>
+					<td>division</td>
+			</tr>
+			<tr>
+					<td><strong>docket number</strong></td>
+					<td>text</td>
+					<td>docketNumber / number</td>
+					<td></td>
+			</tr>
+			<tr>
+					<td><strong>document number</strong></td>
+					<td>text</td>
+					<td>documentNumber / number</td>
+					<td></td>
+			</tr>
+			<tr>
+					<td><strong>doi</strong></td>
+					<td>text</td>
+					<td>DOI</td>
+					<td>DOI</td>
+			</tr>
+			<tr>
+					<td><strong>edition</strong></td>
+					<td>text</td>
+					<td>edition</td>
+					<td>edition</td>
+			</tr>
+			<tr>
+					<td><strong>editor</strong></td>
+					<td>name</td>
+					<td>editor</td>
+					<td>editor</td>
+			</tr>
+			<tr>
+					<td><strong>editorial director</strong></td>
+					<td>name</td>
+					<td></td>
+					<td>editorial-director</td>
+			</tr>
+			<tr>
+					<td><strong>encyclopedia title</strong></td>
+					<td>text</td>
+					<td>encyclopediaTitle / publicationTitle</td>
+					<td></td>
+			</tr>
+			<tr>
+					<td><strong>episode number</strong></td>
+					<td>text</td>
+					<td>episodeNumber / number</td>
+					<td></td>
+			</tr>
+			<tr>
+					<td><strong>event</strong></td>
+					<td>text</td>
+					<td></td>
+					<td>event</td>
+			</tr>
+			<tr>
+					<td><strong>event date</strong></td>
+					<td>date</td>
+					<td></td>
+					<td>event-date</td>
+			</tr>
+			<tr>
+					<td><strong>event place</strong></td>
+					<td>text</td>
+					<td>eventPlace</td>
+					<td>event-place</td>
+			</tr>
+			<tr>
+					<td><strong>event title</strong></td>
+					<td>text</td>
+					<td>conferenceName / meetingName</td>
+					<td>event-title</td>
+			</tr>
+			<tr>
+					<td><strong>executive producer</strong></td>
+					<td>name</td>
+					<td>executiveProducer</td>
+					<td>executive-producer</td>
+			</tr>
+			<tr>
+					<td><strong>filing date</strong></td>
+					<td>date</td>
+					<td>filingDate</td>
+					<td>submitted</td>
+			</tr>
+			<tr>
+					<td><strong>first page</strong></td>
+					<td>text</td>
+					<td>firstPage / pages</td>
+					<td></td>
+			</tr>
+			<tr>
+					<td><strong>first reference note number</strong></td>
+					<td>text</td>
+					<td></td>
+					<td>first-reference-note-number</td>
+			</tr>
+			<tr>
+					<td><strong>format</strong></td>
+					<td>text</td>
+					<td>format / medium</td>
+					<td></td>
+			</tr>
+			<tr>
+					<td><strong>forum title</strong></td>
+					<td>text</td>
+					<td>forumTitle / publicationTitle</td>
+					<td></td>
+			</tr>
+			<tr>
+					<td><strong>genre</strong></td>
+					<td>text</td>
+					<td>genre / programmingLanguage / type</td>
+					<td>genre</td>
+			</tr>
+			<tr>
+					<td><strong>guest</strong></td>
+					<td>name</td>
+					<td>guest</td>
+					<td>guest</td>
+			</tr>
+			<tr>
+					<td><strong>history</strong></td>
+					<td>text</td>
+					<td>history</td>
+					<td>references</td>
+			</tr>
+			<tr>
+					<td><strong>host</strong></td>
+					<td>name</td>
+					<td>host / podcaster</td>
+					<td>host</td>
+			</tr>
+			<tr>
+					<td><strong>id</strong></td>
+					<td>text</td>
+					<td></td>
+					<td>id</td>
+			</tr>
+			<tr>
+					<td><strong>identifier</strong></td>
+					<td>text</td>
+					<td>identifier / number</td>
+					<td></td>
+			</tr>
+			<tr>
+					<td><strong>illustrator</strong></td>
+					<td>name</td>
+					<td></td>
+					<td>illustrator</td>
+			</tr>
+			<tr>
+					<td><strong>institution</strong></td>
+					<td>text</td>
+					<td>institution / publisher</td>
+					<td></td>
+			</tr>
+			<tr>
+					<td><strong>interviewee</strong></td>
+					<td>name</td>
+					<td>interviewee</td>
+					<td></td>
+			</tr>
+			<tr>
+					<td><strong>interviewer</strong></td>
+					<td>name</td>
+					<td>interviewer</td>
+					<td>interviewer</td>
+			</tr>
+			<tr>
+					<td><strong>interview medium</strong></td>
+					<td>text</td>
+					<td>interviewMedium / medium</td>
+					<td></td>
+			</tr>
+			<tr>
+					<td><strong>inventor</strong></td>
+					<td>name</td>
+					<td>inventor</td>
+					<td></td>
+			</tr>
+			<tr>
+					<td><strong>isbn</strong></td>
+					<td>text</td>
+					<td>ISBN</td>
+					<td>ISBN</td>
+			</tr>
+			<tr>
+					<td><strong>issn</strong></td>
+					<td>text</td>
+					<td>ISSN</td>
+					<td>ISSN</td>
+			</tr>
+			<tr>
+					<td><strong>issue</strong></td>
+					<td>text</td>
+					<td>issue / priorityNumbers</td>
+					<td>issue</td>
+			</tr>
+			<tr>
+					<td><strong>issued</strong></td>
+					<td>date</td>
+					<td>date</td>
+					<td>issued</td>
+			</tr>
+			<tr>
+					<td><strong>issue date</strong></td>
+					<td>date</td>
+					<td>date / issueDate</td>
+					<td></td>
+			</tr>
+			<tr>
+					<td><strong>issuing authority</strong></td>
+					<td>text</td>
+					<td>authority / issuingAuthority</td>
+					<td></td>
+			</tr>
+			<tr>
+					<td><strong>journal abbreviation</strong></td>
+					<td>text</td>
+					<td>journalAbbreviation</td>
+					<td>journalAbbreviation</td>
+			</tr>
+			<tr>
+					<td><strong>jurisdiction</strong></td>
+					<td>text</td>
+					<td></td>
+					<td>jurisdiction</td>
+			</tr>
+			<tr>
+					<td><strong>keyword</strong></td>
+					<td>text</td>
+					<td></td>
+					<td>keyword</td>
+			</tr>
+			<tr>
+					<td><strong>label</strong></td>
+					<td>text</td>
+					<td>label / publisher</td>
+					<td></td>
+			</tr>
+			<tr>
+					<td><strong>language</strong></td>
+					<td>text</td>
+					<td>language</td>
+					<td>language</td>
+			</tr>
+			<tr>
+					<td><strong>legal status</strong></td>
+					<td>text</td>
+					<td>legalStatus / status</td>
+					<td></td>
+			</tr>
+			<tr>
+					<td><strong>legislative body</strong></td>
+					<td>text</td>
+					<td>authority / legislativeBody</td>
+					<td></td>
+			</tr>
+			<tr>
+					<td><strong>letter type</strong></td>
+					<td>text</td>
+					<td>letterType / type</td>
+					<td></td>
+			</tr>
+			<tr>
+					<td><strong>library catalog</strong></td>
+					<td>text</td>
+					<td>libraryCatalog</td>
+					<td>source</td>
+			</tr>
+			<tr>
+					<td><strong>license</strong></td>
+					<td>text</td>
+					<td>rights</td>
+					<td>license</td>
+			</tr>
+			<tr>
+					<td><strong>locator</strong></td>
+					<td>text</td>
+					<td></td>
+					<td>locator</td>
+			</tr>
+			<tr>
+					<td><strong>manuscript type</strong></td>
+					<td>text</td>
+					<td>manuscriptType / type</td>
+					<td></td>
+			</tr>
+			<tr>
+					<td><strong>map type</strong></td>
+					<td>text</td>
+					<td>mapType / type</td>
+					<td></td>
+			</tr>
+			<tr>
+					<td><strong>medium</strong></td>
+					<td>text</td>
+					<td>medium / system</td>
+					<td>medium</td>
+			</tr>
+			<tr>
+					<td><strong>meeting name</strong></td>
+					<td>text</td>
+					<td>meetingName</td>
+					<td>event-title</td>
+			</tr>
+			<tr>
+					<td><strong>name of act</strong></td>
+					<td>text</td>
+					<td>nameOfAct / title</td>
+					<td></td>
+			</tr>
+			<tr>
+					<td><strong>narrator</strong></td>
+					<td>name</td>
+					<td>narrator</td>
+					<td>narrator</td>
+			</tr>
+			<tr>
+					<td><strong>network</strong></td>
+					<td>text</td>
+					<td>network / publisher</td>
+					<td></td>
+			</tr>
+			<tr>
+					<td><strong>number</strong></td>
+					<td>text</td>
+					<td>number</td>
+					<td>number</td>
+			</tr>
+			<tr>
+					<td><strong>number of pages</strong></td>
+					<td>text</td>
+					<td>numPages</td>
+					<td>number-of-pages</td>
+			</tr>
+			<tr>
+					<td><strong>number of volumes</strong></td>
+					<td>text</td>
+					<td>numberOfVolumes</td>
+					<td>number-of-volumes</td>
+			</tr>
+			<tr>
+					<td><strong>num pages</strong></td>
+					<td>text</td>
+					<td>numPages</td>
+					<td>number-of-pages</td>
+			</tr>
+			<tr>
+					<td><strong>organization</strong></td>
+					<td>text</td>
+					<td>authority / organization</td>
+					<td></td>
+			</tr>
+			<tr>
+					<td><strong>organizer</strong></td>
+					<td>name</td>
+					<td>organizer</td>
+					<td>organizer</td>
+			</tr>
+			<tr>
+					<td><strong>original author</strong></td>
+					<td>name</td>
+					<td>originalCreator</td>
+					<td>original-author</td>
+			</tr>
+			<tr>
+					<td><strong>original creator</strong></td>
+					<td>name</td>
+					<td>originalCreator</td>
+					<td>original-author</td>
+			</tr>
+			<tr>
+					<td><strong>original date</strong></td>
+					<td>date</td>
+					<td>originalDate</td>
+					<td>original-date</td>
+			</tr>
+			<tr>
+					<td><strong>original place</strong></td>
+					<td>text</td>
+					<td>originalPlace</td>
+					<td>original-publisher-place</td>
+			</tr>
+			<tr>
+					<td><strong>original publisher</strong></td>
+					<td>text</td>
+					<td>originalPublisher</td>
+					<td>original-publisher</td>
+			</tr>
+			<tr>
+					<td><strong>original publisher place</strong></td>
+					<td>text</td>
+					<td>originalPlace</td>
+					<td>original-publisher-place</td>
+			</tr>
+			<tr>
+					<td><strong>original title</strong></td>
+					<td>text</td>
+					<td></td>
+					<td>original-title</td>
+			</tr>
+			<tr>
+					<td><strong>page</strong></td>
+					<td>text</td>
+					<td>pages</td>
+					<td>page</td>
+			</tr>
+			<tr>
+					<td><strong>page first</strong></td>
+					<td>text</td>
+					<td></td>
+					<td>page-first</td>
+			</tr>
+			<tr>
+					<td><strong>pages</strong></td>
+					<td>text</td>
+					<td>pages</td>
+					<td>page</td>
+			</tr>
+			<tr>
+					<td><strong>part</strong></td>
+					<td>text</td>
+					<td></td>
+					<td>part</td>
+			</tr>
+			<tr>
+					<td><strong>part number</strong></td>
+					<td>text</td>
+					<td>partNumber</td>
+					<td>part-number</td>
+			</tr>
+			<tr>
+					<td><strong>part title</strong></td>
+					<td>text</td>
+					<td>partTitle</td>
+					<td>part-title</td>
+			</tr>
+			<tr>
+					<td><strong>patent number</strong></td>
+					<td>text</td>
+					<td>number / patentNumber</td>
+					<td></td>
+			</tr>
+			<tr>
+					<td><strong>performer</strong></td>
+					<td>name</td>
+					<td>castMember / performer</td>
+					<td>performer</td>
+			</tr>
+			<tr>
+					<td><strong>place</strong></td>
+					<td>text</td>
+					<td>place</td>
+					<td>publisher-place</td>
+			</tr>
+			<tr>
+					<td><strong>pmcid</strong></td>
+					<td>text</td>
+					<td>PMCID</td>
+					<td>PMCID</td>
+			</tr>
+			<tr>
+					<td><strong>pmid</strong></td>
+					<td>text</td>
+					<td>PMID</td>
+					<td>PMID</td>
+			</tr>
+			<tr>
+					<td><strong>podcaster</strong></td>
+					<td>name</td>
+					<td>podcaster</td>
+					<td>host</td>
+			</tr>
+			<tr>
+					<td><strong>post type</strong></td>
+					<td>text</td>
+					<td>postType / type</td>
+					<td></td>
+			</tr>
+			<tr>
+					<td><strong>presentation type</strong></td>
+					<td>text</td>
+					<td>presentationType / type</td>
+					<td></td>
+			</tr>
+			<tr>
+					<td><strong>presenter</strong></td>
+					<td>name</td>
+					<td>presenter</td>
+					<td></td>
+			</tr>
+			<tr>
+					<td><strong>printing</strong></td>
+					<td>text</td>
+					<td></td>
+					<td>printing</td>
+			</tr>
+			<tr>
+					<td><strong>priority date</strong></td>
+					<td>text</td>
+					<td>originalDate / priorityDate</td>
+					<td></td>
+			</tr>
+			<tr>
+					<td><strong>priority numbers</strong></td>
+					<td>text</td>
+					<td>priorityNumbers</td>
+					<td>issue</td>
+			</tr>
+			<tr>
+					<td><strong>proceedings title</strong></td>
+					<td>text</td>
+					<td>proceedingsTitle / publicationTitle</td>
+					<td></td>
+			</tr>
+			<tr>
+					<td><strong>producer</strong></td>
+					<td>name</td>
+					<td>producer</td>
+					<td>producer</td>
+			</tr>
+			<tr>
+					<td><strong>programmer</strong></td>
+					<td>name</td>
+					<td>programmer</td>
+					<td></td>
+			</tr>
+			<tr>
+					<td><strong>programming language</strong></td>
+					<td>text</td>
+					<td>programmingLanguage</td>
+					<td>genre</td>
+			</tr>
+			<tr>
+					<td><strong>program title</strong></td>
+					<td>text</td>
+					<td>programTitle / publicationTitle</td>
+					<td></td>
+			</tr>
+			<tr>
+					<td><strong>publication title</strong></td>
+					<td>text</td>
+					<td>publicationTitle</td>
+					<td>container-title</td>
+			</tr>
+			<tr>
+					<td><strong>public law number</strong></td>
+					<td>text</td>
+					<td>number / publicLawNumber</td>
+					<td></td>
+			</tr>
+			<tr>
+					<td><strong>publisher</strong></td>
+					<td>text</td>
+					<td>publisher</td>
+					<td>publisher</td>
+			</tr>
+			<tr>
+					<td><strong>publisher place</strong></td>
+					<td>text</td>
+					<td>place</td>
+					<td>publisher-place</td>
+			</tr>
+			<tr>
+					<td><strong>recipient</strong></td>
+					<td>name</td>
+					<td>recipient</td>
+					<td>recipient</td>
+			</tr>
+			<tr>
+					<td><strong>references</strong></td>
+					<td>text</td>
+					<td>history / references</td>
+					<td>references</td>
+			</tr>
+			<tr>
+					<td><strong>reporter</strong></td>
+					<td>text</td>
+					<td>reporter</td>
+					<td>container-title</td>
+			</tr>
+			<tr>
+					<td><strong>reporter volume</strong></td>
+					<td>text</td>
+					<td>reporterVolume / volume</td>
+					<td></td>
+			</tr>
+			<tr>
+					<td><strong>report number</strong></td>
+					<td>text</td>
+					<td>number / reportNumber</td>
+					<td></td>
+			</tr>
+			<tr>
+					<td><strong>report type</strong></td>
+					<td>text</td>
+					<td>reportType / type</td>
+					<td></td>
+			</tr>
+			<tr>
+					<td><strong>repository</strong></td>
+					<td>text</td>
+					<td>publisher / repository</td>
+					<td></td>
+			</tr>
+			<tr>
+					<td><strong>repository location</strong></td>
+					<td>text</td>
+					<td>place / repositoryLocation</td>
+					<td></td>
+			</tr>
+			<tr>
+					<td><strong>reviewed author</strong></td>
+					<td>name</td>
+					<td>reviewedAuthor</td>
+					<td>reviewed-author</td>
+			</tr>
+			<tr>
+					<td><strong>reviewed genre</strong></td>
+					<td>text</td>
+					<td></td>
+					<td>reviewed-genre</td>
+			</tr>
+			<tr>
+					<td><strong>reviewed title</strong></td>
+					<td>text</td>
+					<td></td>
+					<td>reviewed-title</td>
+			</tr>
+			<tr>
+					<td><strong>rights</strong></td>
+					<td>text</td>
+					<td>rights</td>
+					<td>license</td>
+			</tr>
+			<tr>
+					<td><strong>running time</strong></td>
+					<td>text</td>
+					<td>runningTime</td>
+					<td>dimensions</td>
+			</tr>
+			<tr>
+					<td><strong>scale</strong></td>
+					<td>text</td>
+					<td>scale</td>
+					<td>scale</td>
+			</tr>
+			<tr>
+					<td><strong>scriptwriter</strong></td>
+					<td>name</td>
+					<td>scriptwriter</td>
+					<td>script-writer</td>
+			</tr>
+			<tr>
+					<td><strong>script writer</strong></td>
+					<td>name</td>
+					<td>scriptwriter</td>
+					<td>script-writer</td>
+			</tr>
+			<tr>
+					<td><strong>section</strong></td>
+					<td>text</td>
+					<td>committee / section</td>
+					<td>section</td>
+			</tr>
+			<tr>
+					<td><strong>series</strong></td>
+					<td>text</td>
+					<td>series</td>
+					<td>collection-title</td>
+			</tr>
+			<tr>
+					<td><strong>series creator</strong></td>
+					<td>name</td>
+					<td>seriesCreator</td>
+					<td>series-creator</td>
+			</tr>
+			<tr>
+					<td><strong>series editor</strong></td>
+					<td>name</td>
+					<td>seriesEditor</td>
+					<td>collection-editor</td>
+			</tr>
+			<tr>
+					<td><strong>series number</strong></td>
+					<td>text</td>
+					<td>seriesNumber</td>
+					<td>collection-number</td>
+			</tr>
+			<tr>
+					<td><strong>series text</strong></td>
+					<td>text</td>
+					<td>seriesText</td>
+					<td></td>
+			</tr>
+			<tr>
+					<td><strong>series title</strong></td>
+					<td>text</td>
+					<td>seriesTitle</td>
+					<td>collection-title</td>
+			</tr>
+			<tr>
+					<td><strong>session</strong></td>
+					<td>text</td>
+					<td>session</td>
+					<td>chapter-number</td>
+			</tr>
+			<tr>
+					<td><strong>session title</strong></td>
+					<td>text</td>
+					<td>publicationTitle / sessionTitle</td>
+					<td></td>
+			</tr>
+			<tr>
+					<td><strong>short title</strong></td>
+					<td>text</td>
+					<td>shortTitle</td>
+					<td>shortTitle / title-short</td>
+			</tr>
+			<tr>
+					<td><strong>source</strong></td>
+					<td>text</td>
+					<td>libraryCatalog</td>
+					<td>source</td>
+			</tr>
+			<tr>
+					<td><strong>sponsor</strong></td>
+					<td>name</td>
+					<td>sponsor</td>
+					<td></td>
+			</tr>
+			<tr>
+					<td><strong>status</strong></td>
+					<td>text</td>
+					<td>status</td>
+					<td>status</td>
+			</tr>
+			<tr>
+					<td><strong>studio</strong></td>
+					<td>text</td>
+					<td>publisher / studio</td>
+					<td></td>
+			</tr>
+			<tr>
+					<td><strong>subject</strong></td>
+					<td>text</td>
+					<td>subject / title</td>
+					<td></td>
+			</tr>
+			<tr>
+					<td><strong>submitted</strong></td>
+					<td>date</td>
+					<td>filingDate</td>
+					<td>submitted</td>
+			</tr>
+			<tr>
+					<td><strong>supplement</strong></td>
+					<td>text</td>
+					<td></td>
+					<td>supplement</td>
+			</tr>
+			<tr>
+					<td><strong>system</strong></td>
+					<td>text</td>
+					<td>system</td>
+					<td>medium</td>
+			</tr>
+			<tr>
+					<td><strong>thesis type</strong></td>
+					<td>text</td>
+					<td>thesisType / type</td>
+					<td></td>
+			</tr>
+			<tr>
+					<td><strong>title</strong></td>
+					<td>text</td>
+					<td>title</td>
+					<td>title</td>
+			</tr>
+			<tr>
+					<td><strong>title short</strong></td>
+					<td>text</td>
+					<td>shortTitle</td>
+					<td>title-short</td>
+			</tr>
+			<tr>
+					<td><strong>translator</strong></td>
+					<td>name</td>
+					<td>translator</td>
+					<td>translator</td>
+			</tr>
+			<tr>
+					<td><strong>type</strong></td>
+					<td>text</td>
+					<td>type</td>
+					<td>genre / type</td>
+			</tr>
+			<tr>
+					<td><strong>university</strong></td>
+					<td>text</td>
+					<td>publisher / university</td>
+					<td></td>
+			</tr>
+			<tr>
+					<td><strong>url</strong></td>
+					<td>text</td>
+					<td>url</td>
+					<td>URL</td>
+			</tr>
+			<tr>
+					<td><strong>version</strong></td>
+					<td>text</td>
+					<td>versionNumber</td>
+					<td>version</td>
+			</tr>
+			<tr>
+					<td><strong>version number</strong></td>
+					<td>text</td>
+					<td>versionNumber</td>
+					<td>version</td>
+			</tr>
+			<tr>
+					<td><strong>video recording format</strong></td>
+					<td>text</td>
+					<td>medium / videoRecordingFormat</td>
+					<td></td>
+			</tr>
+			<tr>
+					<td><strong>volume</strong></td>
+					<td>text</td>
+					<td>codeNumber / volume</td>
+					<td>volume</td>
+			</tr>
+			<tr>
+					<td><strong>volume title</strong></td>
+					<td>text</td>
+					<td></td>
+					<td>volume-title</td>
+			</tr>
+			<tr>
+					<td><strong>volume title short</strong></td>
+					<td>text</td>
+					<td></td>
+					<td>volume-title-short</td>
+			</tr>
+			<tr>
+					<td><strong>website title</strong></td>
+					<td>text</td>
+					<td>publicationTitle / websiteTitle</td>
+					<td></td>
+			</tr>
+			<tr>
+					<td><strong>website type</strong></td>
+					<td>text</td>
+					<td>type / websiteType</td>
+					<td></td>
+			</tr>
+			<tr>
+					<td><strong>words by</strong></td>
+					<td>name</td>
+					<td>wordsBy</td>
+					<td></td>
+			</tr>
+			<tr>
+					<td><strong>year suffix</strong></td>
+					<td>text</td>
+					<td></td>
+					<td>year-suffix</td>
+			</tr>
+	</tbody>
 </table>
 <p>¹ only supported in Juris-M</p>
 
