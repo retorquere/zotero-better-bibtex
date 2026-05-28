@@ -77,11 +77,9 @@ export abstract class CSLExporter {
       for (const field of ['page', 'issue', 'volume']) {
         if (csl[field]) csl[field] = csl[field].replace(/(?<=(^|,)\s*\d+)\s*-\s*(?=\d+\s*(,|$))/g, '\u2013')
       }
-      log.debug('3100:', { language: csl.language, isLangCode: isLangCode(csl.language), langCode: langCode(csl.language) })
       if (!isLangCode(csl.language)?.res) {
         const language = langCode(csl.language).toLowerCase()
         csl.language = BabelTag[language] || language || csl.language
-        log.debug('3100:', { language, BabelTag: BabelTag[language] })
       }
 
       csl['citation-key'] = item.citationKey
