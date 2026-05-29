@@ -45,7 +45,7 @@ jobs:
     - name: install node
       uses: actions/setup-node@v6
       with:
-        node-version: 24.x
+        node-version: 26.x
     - name: install node packages
       run: npm install --no-package-lock && npm ls
     - name: set slow/beta/legacy/whopper flags
@@ -110,7 +110,7 @@ jobs:
     - name: install node
       uses: actions/setup-node@v6
       with:
-        node-version: 24.x
+        node-version: 26.x
     - name: install node packages
       run: npm install --no-package-lock && npm ls
     - name: Install Latest Hugo
@@ -265,7 +265,7 @@ jobs:
     - name: install node
       uses: actions/setup-node@v6
       with:
-        node-version: 24.x
+        node-version: 26.x
     - name: install node packages
       run: npm install --no-package-lock && npm ls
 
