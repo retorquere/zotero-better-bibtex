@@ -6,6 +6,9 @@ on:
   schedule:
   - cron: 0 0 * * *
 
+permissions:
+  contents: write
+
 jobs:
   build:
     if: >-
@@ -52,6 +55,43 @@ jobs:
       run: ./util/action-flags
       env:
         GITHUB_CONTEXT: ${{ toJson(github) }}
+
+    - name: sync Zotero maxVersion
+      id: zotero_compat
+      if: github.event_name == 'schedule'
+      run: |
+        python - <<'PY'
+        import json
+        import urllib.request
+        from pathlib import Path
+
+        with urllib.request.urlopen('https://www.zotero.org/download/client/version?channel=beta') as response:
+          version = json.load(response)['linux-x86_64']
+
+        package_json = Path('package.json')
+        package = json.loads(package_json.read_text())
+
+        package['xpi']['maxVersion'] = f"{version.split('.', 1)[0]}.*"
+
+        package_json.write_text(json.dumps(package, indent=2) + '\n')
+        PY
+
+        if git diff --quiet -- package.json; then
+          echo 'updated=false' >> "$GITHUB_OUTPUT"
+        else
+          echo 'updated=true' >> "$GITHUB_OUTPUT"
+        fi
+
+    - name: commit package.json compatibility update
+      if: github.event_name == 'schedule' && github.ref == 'refs/heads/master' && steps.zotero_compat.outputs.updated == 'true'
+      run: |
+        git config user.name 'github-actions[bot]'
+        git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+        git add package.json
+        git commit -m 'Update Zotero compatibility range'
+        git push "https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" HEAD:master
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     - name: get previous test durations
       run: curl -L 
