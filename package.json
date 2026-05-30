@@ -18,7 +18,7 @@
     "updateInfoURL": "https://github.com/retorquere/zotero-better-bibtex/releases/latest",
     "releaseURL": "https://github.com/retorquere/zotero-better-bibtex/releases/download/release/",
     "minVersion": "8.0.1",
-    "maxVersion": "19.*"
+    "maxVersion": "10.*"
   },
   "scripts": {
     "mkp": "patch-package zotero-types",
