@@ -90,22 +90,28 @@ export async function migrate(verbose = false): Promise<void> {
         AND
         items.itemTypeID NOT IN (SELECT itemTypeID FROM itemTypes WHERE typeName IN ('attachment', 'note', 'annotation'))
       `
-      const zotero: { citationKeys: StoredKey[]; libraryID: Record<number, number> } = {
-        citationKeys: (await Zotero.DB.queryAsync(
-          `
-          SELECT items.itemID, items.key as itemKey, items.libraryID, ck.value AS citationKey, 0 as pinned
-          FROM items
-          JOIN itemData ckField ON ckField.itemID = items.itemID AND ckField.fieldID IN (SELECT fieldID FROM fields WHERE fieldName = 'citationKey')
-          JOIN itemDataValues ck ON ck.valueID = ckField.valueID
-          WHERE ${actualItems}
-            AND items.itemTypeID NOT IN (SELECT itemTypeID FROM itemTypes WHERE typeName IN ('attachment', 'note', 'annotation'))
-            AND items.itemID NOT IN (SELECT itemID from feedItems)
-            AND COALESCE(ck.value, '') <> ''
-        `.replace(/\n/g, ' ').trim())).map(unpack).filter(key => key.citationKey),
-        libraryID: (await Zotero.DB.queryAsync(`SELECT items.itemID, items.libraryID FROM items WHERE ${actualItems}`.replace(/\n/g, ' '))).reduce((acc, { itemID, libraryID }) => ({ ...acc, [itemID]: libraryID }), {}),
+      const zotero: { citationKeys: StoredKey[]; itemID: Record<number, { libraryID: number; itemKey: string }> } = {
+        citationKeys: (await Zotero.DB.queryAsync(`
+            SELECT items.itemID, items.key as itemKey, items.libraryID, ck.value AS citationKey, 0 as pinned
+            FROM items
+            JOIN itemData ckField ON ckField.itemID = items.itemID AND ckField.fieldID IN (SELECT fieldID FROM fields WHERE fieldName = 'citationKey')
+            JOIN itemDataValues ck ON ck.valueID = ckField.valueID
+            WHERE ${actualItems}
+              AND items.itemTypeID NOT IN (SELECT itemTypeID FROM itemTypes WHERE typeName IN ('attachment', 'note', 'annotation'))
+              AND items.itemID NOT IN (SELECT itemID from feedItems)
+              AND COALESCE(ck.value, '') <> ''
+            `.replace(/\n/g, ' ').trim()))
+          .map(unpack)
+          .filter(key => key.citationKey),
+        itemID: (await Zotero.DB.queryAsync(`SELECT items.itemID, items.libraryID, items.key FROM items WHERE ${actualItems}`.replace(/\n/g, ' ')))
+          .reduce((acc, { itemID, libraryID, key }) => ({ ...acc, [itemID]: { libraryID, itemKey: key } }), {}),
       }
 
-      bbt = bbt.filter(key => zotero.libraryID[key.itemID] === key.libraryID)
+      bbt = bbt.filter(key => {
+        const z = zotero.itemID[key.itemID]
+        if (!z) return false
+        return z.libraryID === key.libraryID && z.itemKey === key.itemKey
+      })
       speaker.say(`BBT keys valid: ${bbt.length}`)
 
       if (bbt.length) {
