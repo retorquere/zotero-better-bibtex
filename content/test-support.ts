@@ -19,6 +19,12 @@ const idleService: any = Components.classes['@mozilla.org/widget/useridleservice
 export class TestSupport {
   public timedMemoryLog: any
   public scenario: string
+  public libraryID: number
+
+  public selectLibrary(library: string | number): void {
+    this.libraryID = Zotero.Libraries.getAll().find(lib => lib.libraryID === library || lib.name === library)?.libraryID
+    if (typeof this.libraryID !== 'number') throw new Error(`library ${library} could not be found`)
+  }
 
   public isIdle(): boolean {
     return idleService.idleTime > 1000
@@ -165,13 +171,13 @@ export class TestSupport {
     if (collectionName) {
       let name = collectionName
       if (name[0] === '/') name = name.substring(1) // don't do full path parsing right now
-      for (const collection of Zotero.Collections.getByLibrary(Zotero.Libraries.userLibraryID)) {
+      for (const collection of Zotero.Collections.getByLibrary(this.libraryID)) {
         if (collection.name === name) scope = { type: 'collection', collection }
       }
       if (!scope) throw new Error(`Collection '${ name }' not found`)
     }
     else {
-      scope = { type: 'library', id: Zotero.Libraries.userLibraryID }
+      scope = { type: 'library', id: this.libraryID }
     }
 
     const job = { translatorID, displayOptions: displayOptions as Record<string, boolean>, scope, path }
