@@ -164,6 +164,8 @@ export const KeyManager = new class _KeyManager {
     await Cache.touch(ids)
     const items = (await getItemsAsync(ids)).filter(item => !item.isFeedItem && item.isRegularItem())
     for (const item of items) {
+      if (readonly(item)) continue
+
       const citationKey = item.getField('citationKey')
       if (citationKey) {
         const { extra } = Extra.citationKey(item.getField('extra'))
@@ -377,6 +379,16 @@ export const KeyManager = new class _KeyManager {
     this.started = true
   }
 
+  public async set(item: Zotero.Item, citationKey: string, tx = true) {
+    if (readonly(item)) {
+      if (!
+      // ...
+      return
+    }
+
+    if (tx) {
+    }
+
   public update(item: Zotero.Item, { replace = false, inspireHEP = undefined }: { replace?: boolean; inspireHEP?: string } = {}): Zotero.Item {
     if (item.isFeedItem || !item.isRegularItem()) return null
 
@@ -487,6 +499,10 @@ export const KeyManager = new class _KeyManager {
 
       await item.saveTx({ skipDateModifiedUpdate: true })
     }
+  }
+
+  private async setKey(item: Zotero.Item, notifierData?: any) {
+    if (readonlu
   }
 
   private expandSelection(ids: 'selected' | number | number[]): number[] {
