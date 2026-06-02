@@ -90,6 +90,11 @@ monkey.patch(Zotero.Item.prototype, 'clone', original => function Zotero_Item_pr
   if (this.isRegularItem()) clone.setField('citationKey', '')
   return clone
 })
+monkey.patch(Zotero.Item.prototype, 'getField', original => function Zotero_Item_prototype_getField(field) {
+  if (field === 'citationKey' && readonly(this.libraryID)) return KeyManager.get(this.id)?.citationKey ?? ''
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+  return original.apply(this, arguments)
+})
 
 // https://github.com/retorquere/zotero-better-bibtex/issues/1221
 monkey.patch(Zotero.Items, 'merge', original => async function Zotero_Items_merge(item: Zotero.Item, otherItems: Zotero.Item[]) {
