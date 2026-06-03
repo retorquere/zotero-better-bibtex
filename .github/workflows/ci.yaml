@@ -83,7 +83,8 @@ jobs:
         fi
 
     - name: commit package.json compatibility update
-      if: github.event_name == 'schedule' && github.ref == 'refs/heads/master' && steps.zotero_compat.outputs.updated == 'true'
+      if: github.event_name == 'schedule' && github.ref == 'refs/heads/master' 
+        && steps.zotero_compat.outputs.updated == 'true'
       run: |
         git config user.name 'github-actions[bot]'
         git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
