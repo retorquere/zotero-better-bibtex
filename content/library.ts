@@ -5,23 +5,19 @@ export function editable(): Set<number> {
   return new Set(libraries)
 }
 
-export function readonly(library: number | Zotero.Item | _ZoteroTypes.Library.LibraryLike, mem?: Map<number, boolean>): boolean {
+export function readonly(library: number | Zotero.Item | _ZoteroTypes.Library.LibraryLike): boolean {
   let lib: _ZoteroTypes.Library.LibraryLike
 
   if (typeof library === 'number') {
-    if (mem?.has(lib.libraryID)) return mem.get(lib.libraryID)
-
     lib = Zotero.Libraries.get(library) || undefined
   }
   else if ((library as _ZoteroTypes.Library.LibraryLike).libraryType) {
-    // pass
+    lib = library as _ZoteroTypes.Library.LibraryLike
   }
   else if ((library as Zotero.Item).objectType === 'item') {
     lib = Zotero.Libraries.get(library.libraryID) || undefined
   }
   if (!lib) throw new Error('LibraryLike not found')
-
-  mem?.set(lib.libraryID, !lib.editable)
 
   return !lib.editable
 }

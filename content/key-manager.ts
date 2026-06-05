@@ -41,8 +41,7 @@ const sql = {
     LEFT JOIN itemData id ON item.itemID = id.itemID AND id.fieldID = (SELECT fieldID FROM fields WHERE fieldName = 'citationKey')
     LEFT JOIN itemDataValues idv ON id.valueID = idv.valueID
     WHERE
-      lib.editable = 1
-      AND (id.itemID IS NULL OR idv.value = '')
+      (id.itemID IS NULL OR idv.value = '')
       AND item.itemID NOT IN (SELECT itemID FROM deletedItems)
       AND item.itemID NOT IN (SELECT itemID FROM feedItems)
       AND item.itemTypeID NOT IN (SELECT itemTypeID FROM itemTypes WHERE typeName IN ('attachment', 'note', 'annotation'))
@@ -126,6 +125,7 @@ class Keys extends TrackedMap<number, CitekeyRecord> {
     catch (err) {
       log.error('failed to load read-only keys', err)
     }
+    log.debug('3430: loaded', this.values())
 
     for (const { itemID, itemKey, libraryID, citationKey } of await Zotero.DB.queryAsync(sql.load)) {
       this.set(itemID, copy({ itemID, itemKey, libraryID, citationKey }))
@@ -137,14 +137,13 @@ class Keys extends TrackedMap<number, CitekeyRecord> {
 
   public async save(): Promise<void> {
     if (this.isDirty) {
-      const mem: Map<number, boolean> = new Map
-      await IOUtils.writeJSON(this.path, this.values(_ => readonly(_.libraryID, mem)))
+      await IOUtils.writeJSON(this.path, this.values(key => readonly(key.libraryID)))
       this.resetDirty()
     }
   }
 
-  public async flush(): Promise<void> { // eslint-disable-line @typescript-eslint/require-await
-    // await this.save()
+  public async flush(): Promise<void> {
+    await this.save()
     if (typeof this.#timer !== 'undefined') {
       clearInterval(this.#timer)
       this.#timer = undefined
@@ -157,6 +156,8 @@ export const KeyManager = new class _KeyManager {
   public started = false
 
   public autofill: Scheduler<number> = new Scheduler<number>('fillKeyAfter', 1000)
+
+  public getNativeKey = (_item: Zotero.Item) => ''
 
   public async pin(ids: 'selected' | number | number[]): Promise<void> {
     await this.fill(ids, { warn: true })
@@ -216,7 +217,7 @@ export const KeyManager = new class _KeyManager {
     const progress: Progress = items.length > 10 ? new Progress(items.length, 'Refreshing citation keys') : null
     for (const item of items) {
       if (!this.update(item, { replace, inspireHEP: inspireHEP ? (await fetchInspireHEP(item)) || '' : undefined })) {
-        this.store(item)
+        if (!readonly(item)) this.store(item)
         continue
       }
 
@@ -293,20 +294,24 @@ export const KeyManager = new class _KeyManager {
     }
   }
 
-  private async start(): Promise<void> {
-    await migrate()
-    await this.#keys.load()
-
+  public async fillMissing() {
     if (Preference.fillKeyAfter) {
       const missing: number[] = await Zotero.DB.columnQueryAsync(sql.missing)
       if (missing.length) {
-        void Zotero.DB.executeTransaction(async () => {
-          for (const item of await Zotero.Items.getAsync(missing)) {
+        log.debug('3430: missing', missing)
+        await Zotero.DB.executeTransaction(async () => {
+          for (const item of await getItemsAsync(missing)) {
+            log.debug('3430:', item.id, readonly(item) ? 'read-only' : 'read-write')
             await this.update(item)?.save({ skipDateModifiedUpdate: true })
           }
         })
       }
     }
+  }
+
+  private async start(): Promise<void> {
+    await migrate()
+    await this.#keys.load()
 
     Events.on('preference-changed', ({ data: pref }) => {
       switch (pref) {
@@ -379,30 +384,36 @@ export const KeyManager = new class _KeyManager {
     this.started = true
   }
 
-  public async set(item: Zotero.Item, citationKey: string, tx = true) {
-    if (readonly(item)) {
-      if (!
-      // ...
-      return
-    }
-
-    if (tx) {
-    }
-
   public update(item: Zotero.Item, { replace = false, inspireHEP = undefined }: { replace?: boolean; inspireHEP?: string } = {}): Zotero.Item {
+    if (readonly(item)) replace = true
+
+    log.debug('3430: update', {
+      ignore: item.isFeedItem || !item.isRegularItem(),
+      inspireHEP: typeof inspireHEP === 'string' && !inspireHEP,
+      current: this.getNativeKey(item),
+      replace,
+    })
     if (item.isFeedItem || !item.isRegularItem()) return null
+    log.debug('3430: not ignored')
 
     if (typeof inspireHEP === 'string' && !inspireHEP) return null
+    log.debug('3430: not empty inspireHEP')
 
-    const current = item.getField('citationKey')
+    const current = this.getNativeKey(item) || ''
+    log.debug('3430:', { current, replace })
     if (current && !replace) return null
 
     const proposed = inspireHEP || this.propose(item)
+    log.debug('3430:', { proposed }, 'for', item.id)
     if (!proposed || proposed === current) return null
 
+    log.debug('3430: storing', proposed)
     this.store(item, proposed)
 
-    if (readonly(item.libraryID)) return null
+    if (readonly(item)) {
+      log.debug('3430:', proposed, 'for read-only', item.id)
+      return null
+    }
 
     item.setField('citationKey', proposed)
     return item
@@ -499,10 +510,6 @@ export const KeyManager = new class _KeyManager {
 
       await item.saveTx({ skipDateModifiedUpdate: true })
     }
-  }
-
-  private async setKey(item: Zotero.Item, notifierData?: any) {
-    if (readonlu
   }
 
   private expandSelection(ids: 'selected' | number | number[]): number[] {

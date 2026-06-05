@@ -19,11 +19,12 @@ const idleService: any = Components.classes['@mozilla.org/widget/useridleservice
 export class TestSupport {
   public timedMemoryLog: any
   public scenario: string
-  public libraryID: number
+  public libraryID: number = Zotero.Libraries.userLibraryID
 
   public selectLibrary(library: string | number): void {
     this.libraryID = Zotero.Libraries.getAll().find(lib => lib.libraryID === library || lib.name === library)?.libraryID
     if (typeof this.libraryID !== 'number') throw new Error(`library ${library} could not be found`)
+    log.info('testing: library selected:', { library, id: this.libraryID })
   }
 
   public isIdle(): boolean {
@@ -61,6 +62,7 @@ export class TestSupport {
 
   public async reset(scenario: string): Promise<void> {
     let error
+    this.libraryID = Zotero.Libraries.userLibraryID
     for (let i = 0; i < 3; i++) {
       try {
         if (i) log.error(JSON.stringify(scenario), 'reset attempt', i + 1)

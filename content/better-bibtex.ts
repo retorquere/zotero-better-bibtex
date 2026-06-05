@@ -91,11 +91,14 @@ monkey.patch(Zotero.Item.prototype, 'clone', original => function Zotero_Item_pr
   return clone
 })
 
-field, unformatted, includeBaseMapped
-monkey.patch(Zotero.Item.prototype, 'getField', original => function Zotero_Item_prototype_getField(field, unformatted, includeBaseMapped) {
-  if (field === 'citationKey' && readonly(this.libraryID)) return KeyManager.get(this.id)?.citationKey ?? ''
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-  return original.call(this, field.replace('#', ''), unformatted, includeBaseMapped)
+let citationKeyFieldID: number
+monkey.patch(Zotero.Item.prototype, 'getField', original => function Zotero_Item_prototype_getField(field) {
+  if (!KeyManager.getNativeKey) KeyManager.getNativeKey = item => original.call(item, 'citationKey') as string
+
+  if (typeof citationKeyFieldID !== 'number') citationKeyFieldID = Zotero.ItemFields.getID('citationKey')
+  if ((field === 'citationKey' || field === citationKeyFieldID) && readonly(this)) return KeyManager.get(this.id)?.citationKey ?? ''
+
+  return original.apply(this, arguments) as string
 })
 
 // https://github.com/retorquere/zotero-better-bibtex/issues/1221
@@ -555,7 +558,7 @@ export class BetterBibTeX {
     orchestrator.add({
       id: 'done',
       description: 'user interface',
-      startup: () => {
+      startup: async () => {
         Ready.resolve(true)
 
         void Zotero.PreferencePanes.register({
@@ -810,6 +813,8 @@ export class BetterBibTeX {
         })
 
         monkey.enable()
+
+        await KeyManager.fillMissing()
       },
       shutdown: async () => { // eslint-disable-line @typescript-eslint/require-await
         Zotero.getMainWindows().forEach(win => {
