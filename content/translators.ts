@@ -277,6 +277,16 @@ export const Translators = new class {
   }
 
   public async exportItems(job: ExportJob): Promise<string> {
+    try {
+      return await this.#exportItems(job)
+    }
+    catch (err) {
+      log.debug('3525: exportItems failed:', err)
+      throw err
+    }
+  }
+
+  async #exportItems(job: ExportJob): Promise<string> {
     await Zotero.BetterBibTeX.ready
 
     const translator = this.byId[job.translatorID]
