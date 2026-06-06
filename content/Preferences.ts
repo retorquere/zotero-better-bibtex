@@ -280,7 +280,6 @@ export const PrefPane = new class $PrefPane {
   #window: Window
 
   private timer: ReturnType<typeof setInterval>
-  // private prefwindow: HTMLElement
 
   public get window(): Window {
     if (this.#window?.closed) this.#window = null
@@ -417,7 +416,7 @@ export const PrefPane = new class $PrefPane {
   public load(win: Window): void {
     this.#window = win
 
-    this.window.addEventListener('unload', _event => {
+    win.addEventListener('unload', _event => {
       this.#window = null
       if (typeof this.timer !== 'undefined') {
         clearInterval(this.timer)

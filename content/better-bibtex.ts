@@ -555,7 +555,7 @@ export class BetterBibTeX {
           pluginID,
           src: `${rootURI}content/preferences.xhtml`,
           stylesheets: [`${rootURI}content/preferences.css`],
-          // scripts: [`${rootURI}content/preferences.js`],
+          scripts: [`${rootURI}content/preferences.js`],
           label: 'Better BibTeX',
           defaultXUL: true,
         })
