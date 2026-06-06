@@ -280,6 +280,9 @@ jobs:
     if: github.event_name != 'schedule'
     needs: test
     runs-on: ubuntu-latest
+    permissions:
+      issues: write
+      contents: read
     steps:
     - name: Checkout repository
       uses: actions/checkout@v6
