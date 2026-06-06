@@ -242,8 +242,7 @@ better-bibtex_preferences_citekey_format_installed = Active citation key formula
 better-bibtex_preferences_citekey_dynamic =
   .label = Regenerate citation key when item changes
 
-better-bibtex_preferences_citekey_uniqueness = 
-  .label = Keeping citation keys unique
+better-bibtex_preferences_citekey_uniqueness = Keeping citation keys unique
 
 better-bibtex_preferences_citekey_uniqueness_case =
   .label = Ignore upper/lowercase when comparing for uniqueness
