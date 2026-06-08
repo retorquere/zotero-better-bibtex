@@ -604,7 +604,7 @@ export class BetterBibTeX {
         })
 
         function selectedItems() {
-          return Zotero.getActiveZoteroPane()?.getSelectedItems().filter(item => !readonly(item.libraryID) && !item.isFeedItem && item.isRegularItem()) || []
+          return Zotero.getActiveZoteroPane()?.getSelectedItems().filter(item => !readonly(item) && !item.isFeedItem && item.isRegularItem()) || []
         }
         const itemsSelected = (_event, context) => {
           context.setVisible(selectedItems().length !== 0)
@@ -642,6 +642,12 @@ export class BetterBibTeX {
                   l10nID: 'better-bibtex_zotero-pane_citekey_pin',
                   onShowing: itemsSelected,
                   onCommand: (_event, _context) => void Zotero.BetterBibTeX.KeyManager.pin('selected'),
+                },
+                {
+                  menuType: 'menuitem',
+                  l10nID: 'better-bibtex_zotero-pane_citekey_unpin',
+                  onShowing: itemsSelected,
+                  onCommand: (_event, _context) => void Zotero.BetterBibTeX.KeyManager.pin('selected', false),
                 },
                 {
                   menuType: 'menuitem',
@@ -791,7 +797,7 @@ export class BetterBibTeX {
             return item.getField('citationKey')
           },
           onSetData({ item, value }) {
-            if (!readonly(item.libraryID)) {
+            if (!readonly(item)) {
               item.setField('citationKey', value)
               void item.saveTx()
             }
