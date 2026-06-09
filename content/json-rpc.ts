@@ -454,6 +454,65 @@ export class NSItem {
   }
 
   /**
+   * Regenerate citekeys from current item metadata. For each input citekey, the
+   * underlying item's key is recomputed using the configured `citekeyFormat`,
+   * and any `Citation Key:` pin in the Extra field is refreshed to match.
+   *
+   * Useful when items were created in two phases — initial record from partial
+   * metadata, enrichment landing later — and the key pinned during phase one
+   * no longer matches what current metadata would produce.
+   *
+   * Returns an old → new mapping per input citekey. The value is `null` if the
+   * citekey could not be resolved to an item, the item lives in a read-only
+   * library, or the recomputed key did not change.
+   *
+   * Counterpart to the read-only `item.citationkey` lookup. Internally calls
+   * the same `KeyManager.fill(..., { replace: true })` path the `Regenerate
+   * BibTeX key` right-click menu item invokes.
+   *
+   * @param citekeys  Array of citekeys whose items should be regenerated.
+   */
+  public async regenerate_key(citekeys: string[]): Promise<Record<string, string | null>> {
+    const result: Record<string, string | null> = {}
+    const resolved: { citekey: string; itemID: number; oldKey: string }[] = []
+
+    for (const citekey of citekeys) {
+      const matched = Zotero.BetterBibTeX.KeyManager.any(byKey(citekey))
+      if (!matched) {
+        result[citekey] = null
+        continue
+      }
+      resolved.push({ citekey, itemID: matched.itemID, oldKey: matched.citationKey })
+    }
+
+    if (!resolved.length) return result
+
+    const items = await getItemsAsync(resolved.map(r => r.itemID))
+    const editable = items.filter(item =>
+      !item.isFeedItem
+      && item.isRegularItem()
+      && Zotero.Libraries.get(item.libraryID)?.editable
+    )
+    const editableIDs = new Set(editable.map(item => item.id))
+
+    for (const r of resolved) {
+      if (!editableIDs.has(r.itemID)) result[r.citekey] = null
+    }
+
+    if (!editable.length) return result
+
+    await Zotero.BetterBibTeX.KeyManager.fill(editable.map(item => item.id), { replace: true })
+
+    for (const r of resolved) {
+      if (!editableIDs.has(r.itemID)) continue
+      const newKey = Zotero.BetterBibTeX.KeyManager.get(r.itemID)?.citationKey || null
+      result[r.citekey] = (newKey && newKey !== r.oldKey) ? newKey : null
+    }
+
+    return result
+  }
+
+  /**
    * Generate an export for a list of citekeys
    *
    * @param citekeys      Array of citekeys
