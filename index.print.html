@@ -12186,6 +12186,27 @@ convert to/from unicode and (un)escape where required but will pass whatever is 
 <li>libraryID: ID of library to select the items from. When omitted, assume &lsquo;My Library&rsquo;</li>
 </ul>
 <p>Generate an export for a list of citekeys, tailored for the pandoc zotero filter</p>
+<p><strong>item.regenerate_key</strong>(citekeys: string[], library?: string | number)</p>
+<p>returns: { [string]: string | null }</p>
+<ul>
+<li>citekeys: Array of citekeys whose items should be regenerated.</li>
+<li>library: The libraryID to search in (optional). Pass <code>*</code> to search across your library and all groups.</li>
+</ul>
+<p>Regenerate citekeys from current item metadata. For each input citekey, the
+underlying item&rsquo;s key is recomputed using the configured <code>citekeyFormat</code>,
+and any <code>Citation Key:</code> pin in the Extra field is refreshed to match.</p>
+<p>Useful when items were created in two phases — initial record from partial
+metadata, enrichment landing later — and the key pinned during phase one
+no longer matches what current metadata would produce.</p>
+<p>Returns an old → new mapping per input citekey. The value is <code>null</code> only
+when the input citekey cannot be resolved to an item. Otherwise the value
+is the resulting citekey — equal to the input if the recomputed key is
+unchanged, or the new citekey if it changed.</p>
+<p>Read-only library handling is deferred to #3430; until that lands, scope
+the call to a writeable library via <code>library</code> to avoid touching read-only
+items.</p>
+<p>Counterpart to the read-only <code>item.citationkey</code> lookup. Internally calls
+the same <code>KeyManager.fill(..., { replace: true })</code> path the <code>Regenerate BibTeX key</code> right-click menu item invokes.</p>
 <p><strong>item.search</strong>(terms: string | ([ string ] | [ string, string ] | [ string, string, string | number ] | [ string, string, string | number, boolean ])[], library?: string | number)</p>
 <p>returns: any</p>
 <ul>
@@ -14819,8 +14840,8 @@ means a lot) so I can save up for a replacement a year or so down
 the line, head on over to <a href="https://www.patreon.com/retorquere" rel="external">Patreon</a>,
 but mind that Patreon takes a fairly large cut of what you give.</p>
 <p>Many, many thanks, also to the existing contributors &ndash; thanks to you I&rsquo;ve hit my first target and have been able to replace my trusty macbook air with a newer macbook pro which has much more breathing room.</p>
-<p><a href="#R-image-15553ab889cc2df4ecceec179c8daed9" class="lightbox-link"><img alt="My github stats" class="lazy lightbox figure-image" loading="lazy" src="https://github-readme-stats.vercel.app/api?username=retorquere&show_icons=true&hide_border=true&theme=dark" style="height: auto;width: auto;"></a>
-<a href="javascript:history.back();" class="lightbox-back" id="R-image-15553ab889cc2df4ecceec179c8daed9"><img alt="My github stats" class="lazy lightbox lightbox-image" loading="lazy" src="https://github-readme-stats.vercel.app/api?username=retorquere&show_icons=true&hide_border=true&theme=dark"></a></p>
+<p><a href="#R-image-a59bbc22f075c37ea61b6618c65915b3" class="lightbox-link"><img alt="My github stats" class="lazy lightbox figure-image" loading="lazy" src="https://github-readme-stats.vercel.app/api?username=retorquere&show_icons=true&hide_border=true&theme=dark" style="height: auto;width: auto;"></a>
+<a href="javascript:history.back();" class="lightbox-back" id="R-image-a59bbc22f075c37ea61b6618c65915b3"><img alt="My github stats" class="lazy lightbox lightbox-image" loading="lazy" src="https://github-readme-stats.vercel.app/api?username=retorquere&show_icons=true&hide_border=true&theme=dark"></a></p>
 <p>I prefer communicating via github issues, but for private information you can reach me on <a href="https://matrix.to/#/@retorquere:utwente.io" rel="external">matrix</a></p>
 
   <footer class="footline">
