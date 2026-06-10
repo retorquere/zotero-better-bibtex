@@ -1,113 +1,11 @@
-declare const ChromeUtils: any
-
 import { Formatter } from './cayw/formatter'
+import { Picker, type PickResult } from './cayw/pick'
 import { TeXstudio } from './tex-studio'
 import { flash } from './flash'
 import { log, stringify } from './logger'
 import { orchestrator } from './orchestrator'
 import { Server } from './server'
 import { toClipboard } from './text'
-
-class FieldEnumerator {
-  public QueryInterface = ChromeUtils.generateQI([ Components.interfaces.nsISupports, Components.interfaces.nsISimpleEnumerator ])
-  public doc: Document
-  public idx: number
-
-  constructor(doc) {
-    this.doc = doc
-    this.idx = 0
-  }
-
-  public hasMoreElements() { return this.idx < this.doc.fields.length }
-  public getNext() { return this.doc.fields[this.idx++] }
-}
-
-/**
- * The Field class corresponds to a field containing an individual citation
- * or bibliography
- */
-class Field {
-  public noteIndex = 0
-  public doc: Document
-  public code: string
-  public text: string
-  public isRich: boolean
-  public wrappedJSObject: Field
-
-  constructor(doc) {
-    this.doc = doc
-    this.code = ''
-    // This is actually required and current integration code depends on text being non-empty upon insertion.
-    // insertBibliography will fail if there is no placeholder text.
-    this.text = '{Placeholder}'
-    this.wrappedJSObject = this
-  }
-
-  /**
-   * Deletes this field and its contents.
-   */
-  public delete() { this.doc.fields.filter(field => field !== this) }
-
-  /**
-   * Removes this field, but maintains the field's contents.
-   */
-  public removeCode() { this.code = '' }
-
-  /**
-   * Selects this field.
-   */
-  public select() { return 0 }
-
-  /**
-   * Sets the text inside this field to a specified plain text string or pseudo-RTF formatted text
-   * string.
-   *
-   * @param {String} text
-   * @param {Boolean} isRich
-   */
-  public setText(text, isRich) {
-    this.text = text
-    this.isRich = isRich
-  }
-
-  /**
-   * Gets the text inside this field, preferably with formatting, but potentially without
-   *
-   * @returns {String}
-   */
-  public getText() { return this.text }
-
-  /**
-   * Sets field's code
-   *
-   * @param {String} code
-   */
-  public setCode(code) { this.code = code }
-
-  /**
-   * Gets field's code.
-   *
-   * @returns {String}
-   */
-  public getCode() { return this.code }
-
-  /**
-   * Returns true if this field and the passed field are actually references to the same field.
-   *
-   * @param {Field} field
-   * @returns {Boolean}
-   */
-  public equals(field) { return this === field }
-
-  /**
-   * This field's note index, if it is in a footnote or endnote; otherwise zero.
-   *
-   * @returns {Number}
-   */
-  public getNoteIndex() { return 0 }
-}
-
-type DocumentData = Record<string, any>
 
 type Citation = {
   id: number
@@ -118,201 +16,33 @@ type Citation = {
   label: string
   citationKey: string
 
-  uri: string
-  itemType: string
-  title: string
-}
-/**
- * The Document class corresponds to a single word processing document.
- */
-class Document {
-  public fields: Field[] = []
-  public data: DocumentData
-  public id: number
-
-  constructor(docId, options) {
-    this.id = docId
-
-    const data = (new Zotero.Integration.DocumentData)
-    data.prefs = {
-      noteType: 0,
-      fieldType: 'Field',
-      automaticJournalAbbreviations: true,
-    }
-    data.style = { styleID: options.style, locale: 'en-US', hasBibliography: true, bibliographyStyleHasBeenSet: true }
-    data.sessionID = Zotero.Utilities.randomString(10)
-    this.data = (data.serialize() as DocumentData)
-  }
-
-  /**
-   * Displays a dialog in the word processing application
-   *
-   * @param {String} dialogText
-   * @param {Number} icon - one of the constants defined in integration.js for dialog icons
-   * @param {Number} buttons - one of the constants defined in integration.js for dialog buttons
-   * @returns {Number}
-   * - Yes: 2, No: 1, Cancel: 0
-   * - Yes: 1, No: 0
-   * - Ok: 1, Cancel: 0
-   * - Ok: 0
-   */
-  public displayAlert(_dialogText, _icon, _buttons) { return 0 }
-
-  /**
-   * Brings this document to the foreground (if necessary to return after displaying a dialog)
-   */
-  public activate() { return 0 }
-
-  /**
-   * Determines whether a field can be inserted at the current position.
-   *
-   * @param {String} fieldType
-   * @returns {Boolean}
-   */
-  public canInsertField(_fieldType) { return true }
-
-  /**
-   * Returns the field in which the cursor resides, or NULL if none.
-   *
-   * @param {String} fieldType
-   * @returns {Boolean}
-   */
-  public cursorInField(_fieldType) { return false }
-
-  /**
-   * Get document data property from the current document
-   *
-   * @returns {String}
-   */
-  public getDocumentData() { return this.data }
-
-  /**
-   * Set document data property
-   *
-   * @param {String} data
-   */
-  public setDocumentData(data) { this.data = data }
-
-  /**
-   * Inserts a field at the given position and initializes the field object.
-   *
-   * @param {String} fieldType
-   * @param {Integer} noteType
-   * @returns {Field}
-   */
-  public insertField(fieldType, noteType) {
-    if (typeof noteType !== 'number') {
-      throw new Error('noteType must be an integer')
-    }
-    const field = new Field(this)
-    this.fields.push(field)
-    return field
-  }
-
-  /**
-   * Gets all fields present in the document.
-   *
-   * @param {String} fieldType
-   * @returns {FieldEnumerator}
-   */
-  public getFields(_fieldType) { return new FieldEnumerator(this) }
-
-  /**
-   * Gets all fields present in the document. The observer will receive notifications for two
-   * topics: "fields-progress", with the document as the subject and percent progress as data, and
-   * "fields-available", with an nsISimpleEnumerator of fields as the subject and the length as
-   * data
-   *
-   * @param {String} fieldType
-   * @param {nsIObserver} observer
-   */
-  public getFieldsAsync(fieldType, observer) {
-    observer.observe(this.getFields(fieldType), 'fields-available', null)
-  }
-
-  /**
-   * Sets the bibliography style, overwriting the current values for this document
-   */
-  public setBibliographyStyle(_firstLineIndent, _bodyIndent, _lineSpacing, _entrySpacing, _tabStops, _tabStopsCount) { return 0 }
-
-  /**
-   * Converts all fields in a document to a different fieldType or noteType
-   *
-   * @params {FieldEnumerator} fields
-   */
-  public convert(_fields, _toFieldType, _toNoteType, _count) { return 0 }
-
-  /**
-   * Cleans up the document state and resumes processor for editing
-   */
-  public cleanup() { return 0 }
-
-  /**
-   * Informs the document processor that the operation is complete
-   */
-  public complete() { return 0 }
-
-  /**
-   * Gets the citation
-   */
-  public citation(): Citation[] {
-    if (!this.fields[0] || !this.fields[0].code || !this.fields[0].code.startsWith('ITEM CSL_CITATION ')) return []
-
-    const citationItems: (Citation & { itemData: any })[] = JSON.parse(this.fields[0].code.replace(/ITEM CSL_CITATION /, '')).citationItems
-    const items = citationItems.map(item => ({
-      id: item.id,
-      locator: item.locator || '',
-      suppressAuthor: !!item['suppress-author'],
-      prefix: item.prefix || '',
-      suffix: item.suffix || '',
-      label: item.locator ? (item.label || 'page') : '',
-      citationKey: Zotero.BetterBibTeX.KeyManager.get(item.id)?.citationKey || '',
-
-      uri: Array.isArray(item.uri) ? item.uri[0] : undefined,
-      itemType: item.itemData ? item.itemData.type : undefined,
-      title: item.itemData ? item.itemData.title : undefined,
-    }))
-
-    return items
-  }
+  uri?: string
+  itemType?: string
+  title?: string
 }
 
-// export singleton: https://k94n.com/es6-modules-single-instance-pattern
-export const Application = new class {
-  public primaryFieldType = 'Field'
-  public secondaryFieldType = 'Bookmark'
-  public fields: any[] = []
+function citationItems(picks: PickResult[]): Citation[] {
+  const items: Citation[] = []
 
-  private docs: Record<string, Document> = {}
-  private active: string
+  for (const pick of picks) {
+    for (const item of pick.citationItems || []) {
+      items.push({
+        id: Number(item.id),
+        locator: typeof item.locator === 'string' ? item.locator : '',
+        suppressAuthor: !!item['suppress-author'],
+        prefix: typeof item.prefix === 'string' ? item.prefix : '',
+        suffix: typeof item.suffix === 'string' ? item.suffix : '',
+        label: typeof item.label === 'string' ? item.label : (item.locator ? 'page' : ''),
+        citationKey: Zotero.BetterBibTeX.KeyManager.get(Number(item.id))?.citationKey || '',
 
-  /**
-   * Gets the active document.
-   *
-   * @returns {Document}
-   */
-  public getActiveDocument() { return this.docs[this.active] }
-
-  /**
-   * Gets the document by some app-specific identifier.
-   *
-   * @param {String|Number} id
-   */
-  public async getDocument(id) { // eslint-disable-line @typescript-eslint/require-await
-    return this.docs[id]
+        uri: Array.isArray(item.uris) ? item.uris[0] : undefined,
+        itemType: typeof item.itemData?.type === 'string' ? item.itemData.type : undefined,
+        title: typeof item.itemData?.title === 'string' ? item.itemData.title : undefined,
+      })
+    }
   }
 
-  public QueryInterface() { return this }
-
-  public createDocument(options) {
-    this.active = `better-bibtex-cayw-${ Zotero.Utilities.generateObjectKey() }`
-    this.docs[this.active] = new Document(this.active, options)
-    return this.docs[this.active]
-  }
-
-  public closeDocument(doc) {
-    delete this.docs[doc.id]
-  }
+  return items
 }
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
@@ -322,41 +52,12 @@ export async function pick(options: any): Promise<string> {
   const formatter = options.format || 'latex'
   if (!Formatter[formatter]) throw new Error(`No such formatter ${ JSON.stringify(formatter) }`)
 
-  const doc = Application.createDocument(options)
-  const agent = 'BetterBibTeX'
-  const command = 'addEditCitation'
-
-  let session: any
-  const Integration: any = Zotero.Integration
-  Integration.currentDoc = doc
-
   try {
-    const [ sess, documentImported ] = await Integration.getSession(Application, doc, agent, command)
-    session = sess
-    Integration.currentSession = session
-
-    try {
-      if (!documentImported) {
-        await (new Integration.Interface(Application, doc, session))[command]()
-      }
-      doc.setDocumentData(session.data.serialize())
-    }
-    catch (err) {
-      // mirror Zotero.Integration.execCommand()'s UserCancelled handling:
-      // persist the current document data so the session survives, but
-      // treat the pick as "nothing selected".
-      const userCancelled = (Zotero as any).Exception?.UserCancelled
-      if ((userCancelled && err instanceof userCancelled) || err?.name === 'UserCancelled') {
-        try {
-          doc.setDocumentData(session.data.serialize())
-        }
-        catch {}
-        return ''
-      }
-      throw err
-    }
-
-    const picked = doc.citation()
+    const picker = new Picker({
+      documentId: options.documentId || `better-bibtex-cayw-${ Zotero.Utilities.generateObjectKey() }`,
+      processorName: 'Better BibTeX',
+    })
+    const picked = citationItems(await picker.pick())
     const citation: string = picked.length ? await Formatter[formatter](picked, options) : ''
 
     if (options.select && picked.length) {
@@ -369,31 +70,10 @@ export async function pick(options: any): Promise<string> {
     return citation
   }
   catch (err) {
-    log.error('CAYW error:', err, `${ err }`, err.stack, options)
-    flash('CAYW pick failed', stringify(err))
+    const error = err instanceof Error ? err : new Error(String(err))
+    log.error('CAYW error:', error, `${ error }`, error.stack, options)
+    flash('CAYW pick failed', stringify(error))
     return ''
-  }
-  finally {
-    // The citation dialog does NOT close itself on accept -- it signals via
-    // io.accept() and relies on Zotero.Integration.execCommand()'s finally
-    // block to close the dialog window. We have to do the same here or the
-    // picker will hang on screen after the user has made their selection
-    // (and the window's own close button can end up wedged because the
-    // dialog is still waiting for the integration host to tear it down).
-    try {
-      const w = Integration.currentWindow
-      if (w && !w.closed) w.close()
-    }
-    catch {}
-    try {
-      if (session?.progressBar) await session.progressBar.hide()
-    }
-    catch {}
-    try { Application.closeDocument(doc) }
-    catch {}
-    Integration.currentDoc = false
-    Integration.currentWindow = false
-    Integration.currentSession = null
   }
 }
 
@@ -417,7 +97,7 @@ async function selected(options): Promise<string> {
   return picked.length ? await Formatter[options.format || 'latex'](picked, options) : ''
 }
 
-function getStyle(id): { url: string } {
+function getStyle(id): { url: string } | null {
   try {
     return Zotero.Styles.get(id) as { url: string }
   }
@@ -463,9 +143,10 @@ class Handler {
       return [ this.OK, 'text/html; charset=utf-8', citation ]
     }
     catch (err) {
-      log.error('CAYW request failed:', options, err)
-      flash('CAYW Failed', err.message)
-      return [ this.SERVER_ERROR, 'application/text', `CAYW failed: ${ err.message }\n${ err.stack }` ]
+      const error = err instanceof Error ? err : new Error(String(err))
+      log.error('CAYW request failed:', options, error)
+      flash('CAYW Failed', error.message)
+      return [ this.SERVER_ERROR, 'application/text', `CAYW failed: ${ error.message }\n${ error.stack }` ]
     }
   }
 }
