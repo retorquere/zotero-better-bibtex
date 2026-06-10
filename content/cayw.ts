@@ -1,5 +1,5 @@
 import { Formatter } from './cayw/formatter'
-import { Picker, type PickResult } from './cayw/pick'
+import { Picker, type PickResult, type State } from './cayw/pick'
 import { TeXstudio } from './tex-studio'
 import { flash } from './flash'
 import { log, stringify } from './logger'
@@ -22,6 +22,27 @@ type Citation = {
 }
 
 type CitationFormatter = (citations: Citation[], options: any) => Promise<string>
+
+type CAYWOptions = Record<string, unknown> & {
+  format?: string
+  documentId?: string
+  state?: State
+  select?: boolean
+  selected?: boolean
+  style?: string
+  contentType?: string
+  locale?: string
+  probe?: boolean | string
+  minimize?: boolean | string
+  texstudio?: boolean | string
+  clipboard?: boolean | string
+}
+
+type PickResponse = {
+  state: State
+  pick: PickResult[]
+  output: string
+}
 
 function citationItems(picks: PickResult[]): Citation[] {
   const items: Citation[] = []
@@ -47,35 +68,43 @@ function citationItems(picks: PickResult[]): Citation[] {
   return items
 }
 
-function getFormatter(options): CitationFormatter {
+function getFormatter(options: CAYWOptions): CitationFormatter {
   const formatter = options.format || 'latex'
   const resolved = Formatter[formatter] as CitationFormatter | undefined
   if (!resolved) throw new Error(`No such formatter ${ JSON.stringify(formatter) }`)
   return resolved
 }
 
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-export async function pick(options: any): Promise<string> {
+export async function pick(options: CAYWOptions): Promise<PickResponse> {
   await Zotero.BetterBibTeX.ready
 
   const formatter = getFormatter(options)
+  const picker = new Picker({
+    documentId: options.documentId || `better-bibtex-cayw-${ Zotero.Utilities.generateObjectKey() }`,
+    processorName: 'Better BibTeX',
+    state: options.state,
+  })
+  const picks = await picker.pick()
+  const picked = citationItems(picks)
+  const output = picked.length ? await formatter(picked, options) : ''
 
+  if (options.select && picked.length) {
+    const zoteroPane = Zotero.getActiveZoteroPane()
+
+    // don't know why zotero-types is not picked up here
+    await zoteroPane.selectItems(picked.map(item => item.id), true)
+  }
+
+  return {
+    state: picker.state,
+    pick: picks,
+    output,
+  }
+}
+
+async function formattedPick(options: CAYWOptions): Promise<string> {
   try {
-    const picker = new Picker({
-      documentId: options.documentId || `better-bibtex-cayw-${ Zotero.Utilities.generateObjectKey() }`,
-      processorName: 'Better BibTeX',
-    })
-    const picked = citationItems(await picker.pick())
-    const citation: string = picked.length ? await formatter(picked, options) : ''
-
-    if (options.select && picked.length) {
-      const zoteroPane = Zotero.getActiveZoteroPane()
-
-      // don't know why zotero-types is not picked up here
-      await zoteroPane.selectItems(picked.map(item => item.id), true)
-    }
-
-    return citation
+    return (await pick(options)).output
   }
   catch (err) {
     const error = err instanceof Error ? err : new Error(String(err))
@@ -85,7 +114,7 @@ export async function pick(options: any): Promise<string> {
   }
 }
 
-async function selected(options): Promise<string> {
+async function selected(options: CAYWOptions): Promise<string> {
   const formatter = getFormatter(options)
   const pane = Zotero.getActiveZoteroPane()
   const items = pane.getSelectedItems()
@@ -115,12 +144,13 @@ function getStyle(id): { url: string } | null {
 }
 
 class Handler {
-  public supportedMethods = ['GET']
+  public supportedMethods = ['GET', 'POST']
+  public supportedDataTypes = ['application/json']
   public OK = 200
   public SERVER_ERROR = 500
 
   public async init(request) {
-    const options = Server.queryParams(request)
+    const options = { ...(request.data || {}), ...Server.queryParams(request) } as CAYWOptions
 
     if (options.probe) return [ this.OK, 'text/plain', Zotero.BetterBibTeX.starting ? 'starting' : 'ready' ]
 
@@ -137,7 +167,15 @@ class Handler {
           || getStyle(`http://juris-m.github.io/styles/${ options.style }`)
       options.style = style ? style.url : 'http://www.zotero.org/styles/apa'
 
-      const citation = options.selected ? (await selected(options)) : (await pick(options))
+      if (request.method === 'POST') {
+        const response = options.selected
+          ? { state: options.state || {}, pick: [], output: await selected(options) }
+          : await pick(options)
+
+        return [ this.OK, 'application/json', JSON.stringify(response) ]
+      }
+
+      const citation = options.selected ? (await selected(options)) : (await formattedPick(options))
 
       if (options.minimize) (Zotero.getMainWindow() as any)?.minimize()
 

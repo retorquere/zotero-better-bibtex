@@ -106,7 +106,7 @@ export async function addCitationLinks(): Promise<void> {
 
     const extra = items[0].getField('extra') || ''
     const citations = new Set(extra.split('\n').filter((line: string) => line.startsWith('cites:')))
-    const picked = (await CAYW.pick({ format: 'citationLinks' })).split('\n').filter(citation => !citations.has(citation))
+    const picked = (await CAYW.pick({ format: 'citationLinks' })).output.split('\n').filter(citation => !citations.has(citation))
 
     if (picked.length) {
       items[0].setField('extra', `${ extra }\n${ picked.join('\n') }`.trim())
