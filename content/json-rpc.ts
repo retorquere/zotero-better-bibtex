@@ -462,9 +462,14 @@ export class NSItem {
    * metadata, enrichment landing later — and the key pinned during phase one
    * no longer matches what current metadata would produce.
    *
-   * Returns an old → new mapping per input citekey. The value is `null` if the
-   * citekey could not be resolved to an item, the item lives in a read-only
-   * library, or the recomputed key did not change.
+   * Returns an old → new mapping per input citekey. The value is `null` only
+   * when the input citekey cannot be resolved to an item. Otherwise the value
+   * is the resulting citekey — equal to the input if the recomputed key is
+   * unchanged, or the new citekey if it changed.
+   *
+   * Read-only library handling is deferred to #3430; once that lands, items in
+   * read-only libraries will regenerate through the same path here without
+   * further changes.
    *
    * Counterpart to the read-only `item.citationkey` lookup. Internally calls
    * the same `KeyManager.fill(..., { replace: true })` path the `Regenerate
@@ -488,25 +493,20 @@ export class NSItem {
     if (!resolved.length) return result
 
     const items = await getItemsAsync(resolved.map(r => r.itemID))
-    const editable = items.filter(item =>
-      !item.isFeedItem
-      && item.isRegularItem()
-      && Zotero.Libraries.get(item.libraryID)?.editable
-    )
-    const editableIDs = new Set(editable.map(item => item.id))
+    const eligible = items.filter(item => !item.isFeedItem && item.isRegularItem())
+    const eligibleIDs = new Set(eligible.map(item => item.id))
 
     for (const r of resolved) {
-      if (!editableIDs.has(r.itemID)) result[r.citekey] = null
+      if (!eligibleIDs.has(r.itemID)) result[r.citekey] = r.oldKey
     }
 
-    if (!editable.length) return result
+    if (!eligible.length) return result
 
-    await Zotero.BetterBibTeX.KeyManager.fill(editable.map(item => item.id), { replace: true })
+    await Zotero.BetterBibTeX.KeyManager.fill(eligible.map(item => item.id), { replace: true })
 
     for (const r of resolved) {
-      if (!editableIDs.has(r.itemID)) continue
-      const newKey = Zotero.BetterBibTeX.KeyManager.get(r.itemID)?.citationKey || null
-      result[r.citekey] = (newKey && newKey !== r.oldKey) ? newKey : null
+      if (!eligibleIDs.has(r.itemID)) continue
+      result[r.citekey] = Zotero.BetterBibTeX.KeyManager.get(r.itemID)?.citationKey || r.oldKey
     }
 
     return result
