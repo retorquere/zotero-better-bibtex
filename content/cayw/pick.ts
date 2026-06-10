@@ -267,9 +267,30 @@ async function postJson(url: string, payload: unknown): Promise<unknown> {
 function getField(document: Document, index: unknown): Field {
   const idx = Number(index)
   if (!Number.isInteger(idx) || idx < 0 || idx >= document.fields.length) {
-    throw new IntegrationError(`Invalid field index: ${String(index)}`)
+    throw new IntegrationError(`Invalid field index: ${describe(index)}`)
   }
   return document.fields[idx]
+}
+
+function describe(value: unknown): string {
+  if (typeof value === 'string') return value
+  if (typeof value === 'number') return `${ value }`
+  if (typeof value === 'boolean') return value ? 'true' : 'false'
+  if (value == null) return 'null'
+  if (Array.isArray(value)) return JSON.stringify(value)
+
+  try {
+    const serialized = JSON.stringify(value)
+    if (typeof serialized === 'string') return serialized
+    return '[Unserializable value]'
+  }
+  catch {
+    return '[Unserializable value]'
+  }
+}
+
+function asString(value: unknown): string {
+  return typeof value === 'string' ? value : ''
 }
 
 export class Picker {
@@ -293,14 +314,15 @@ export class Picker {
 
       while (true) {
         if (!response || typeof response !== 'object' || !('command' in response)) {
-          throw new IntegrationError(`Unexpected Zotero response: ${String(response)}`)
+          throw new IntegrationError(`Unexpected Zotero response: ${describe(response)}`)
         }
 
-        const command = String((response as CommandRequest).command)
-        const arguments_ = Array.isArray((response as CommandRequest).arguments) ? (response as CommandRequest).arguments as unknown[] : []
+        const commandRequest = response as CommandRequest
+        const command = commandRequest.command
+        const args = Array.isArray(commandRequest.arguments) ? commandRequest.arguments : []
 
         try {
-          const payload = this.commandResponse(command, arguments_)
+          const payload = this.commandResponse(command, args)
 
           if (command === 'Document.complete') {
             break
@@ -331,7 +353,7 @@ export class Picker {
     return this.document
   }
 
-  private commandResponse(command: string, arguments_: unknown[]): unknown {
+  private commandResponse(command: string, args: unknown[]): unknown {
     if (command === 'Application.getActiveDocument') {
       return {
         documentID: this.document.id,
@@ -345,41 +367,39 @@ export class Picker {
       throw new IntegrationError(`Unsupported command: ${command}`)
     }
 
-    const [docId, ...args] = arguments_
+    const [docId, ...commandArgs] = args
     if (docId !== this.document.id) {
-      throw new IntegrationError(`Unexpected document ID: ${String(docId)}`)
+      throw new IntegrationError(`Unexpected document ID: ${describe(docId)}`)
     }
 
     if (command === 'Document.displayAlert') {
-      const dialogText = typeof args[0] === 'string' ? args[0] : 'Zotero integration alert'
-      console.error(dialogText)
       return 0
     }
 
     if (command === 'Document.activate') return null
-    if (command === 'Document.canInsertField') return this.document.canInsertField(String(args[0] ?? ''))
-    if (command === 'Document.cursorInField') return this.document.cursorInField(String(args[0] ?? ''))
+    if (command === 'Document.canInsertField') return this.document.canInsertField(asString(commandArgs[0]))
+    if (command === 'Document.cursorInField') return this.document.cursorInField(asString(commandArgs[0]))
     if (command === 'Document.getDocumentData') return this.document.getDocumentData()
 
     if (command === 'Document.setDocumentData') {
-      this.document.setDocumentData(String(args[0] ?? ''))
+      this.document.setDocumentData(asString(commandArgs[0]))
       return null
     }
 
     if (command === 'Document.insertField') {
-      return this.document.insertField(String(args[0] ?? ''), Number(args[1]))
+      return this.document.insertField(asString(commandArgs[0]), Number(commandArgs[1]))
     }
 
     if (command === 'Document.getFields') {
-      return this.document.getFields(String(args[0] ?? ''))
+      return this.document.getFields(asString(commandArgs[0]))
     }
 
     if (command === 'Document.convert') return null
 
     if (command === 'Document.convertPlaceholdersToFields') {
-      const codes = Array.isArray(args[0]) ? args[0] : []
-      const placeholderIds = Array.isArray(args[1]) ? args[1] : []
-      const noteType = Number(args[2])
+      const codes = Array.isArray(commandArgs[0]) ? commandArgs[0] : []
+      const placeholderIds = Array.isArray(commandArgs[1]) ? commandArgs[1] : []
+      const noteType = Number(commandArgs[2])
 
       if (codes.length !== placeholderIds.length) {
         throw new IntegrationError('codes and placeholderIDs must have the same length')
@@ -404,7 +424,7 @@ export class Picker {
     if (command === 'Document.complete') return null
 
     if (command === 'Field.delete') {
-      const field = getField(this.document, args[0])
+      const field = getField(this.document, commandArgs[0])
       this.document.fields = this.document.fields.filter(existing => existing !== field)
       return null
     }
@@ -412,21 +432,21 @@ export class Picker {
     if (command === 'Field.select') return null
 
     if (command === 'Field.removeCode') {
-      getField(this.document, args[0]).code = ''
+      getField(this.document, commandArgs[0]).code = ''
       return null
     }
 
     if (command === 'Field.setText') {
-      getField(this.document, args[0]).text = String(args[1] ?? '')
+      getField(this.document, commandArgs[0]).text = asString(commandArgs[1])
       return null
     }
 
     if (command === 'Field.getText') {
-      return getField(this.document, args[0]).text
+      return getField(this.document, commandArgs[0]).text
     }
 
     if (command === 'Field.setCode') {
-      getField(this.document, args[0]).code = String(args[1] ?? '')
+      getField(this.document, commandArgs[0]).code = asString(commandArgs[1])
       return null
     }
 

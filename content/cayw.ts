@@ -21,11 +21,13 @@ type Citation = {
   title?: string
 }
 
+type CitationFormatter = (citations: Citation[], options: any) => Promise<string>
+
 function citationItems(picks: PickResult[]): Citation[] {
   const items: Citation[] = []
 
-  for (const pick of picks) {
-    for (const item of pick.citationItems || []) {
+  for (const result of picks) {
+    for (const item of result.citationItems || []) {
       items.push({
         id: Number(item.id),
         locator: typeof item.locator === 'string' ? item.locator : '',
@@ -45,10 +47,11 @@ function citationItems(picks: PickResult[]): Citation[] {
   return items
 }
 
-function getFormatter(options) {
+function getFormatter(options): CitationFormatter {
   const formatter = options.format || 'latex'
-  if (!Formatter[formatter]) throw new Error(`No such formatter ${ JSON.stringify(formatter) }`)
-  return Formatter[formatter]
+  const resolved = Formatter[formatter] as CitationFormatter | undefined
+  if (!resolved) throw new Error(`No such formatter ${ JSON.stringify(formatter) }`)
+  return resolved
 }
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
