@@ -16,3 +16,10 @@ Feature: JSON-RPC API
     And I call JSON-RPC method "item.regenerate_key" with params [["Smith2024"]]
     Then the JSON-RPC response should have no error
     And the JSON-RPC result for "Smith2024" should be "Smith2024"
+
+  @item_regenerate_key
+  Scenario: item.regenerate_key accepts a library selector
+    When I import 1 reference from "json-rpc/regenerate-key.json"
+    And I call JSON-RPC method "item.regenerate_key" with params [["Smith2024"], "*"]
+    Then the JSON-RPC response should have no error
+    And the JSON-RPC result for "Smith2024" should be "Smith2024"

@@ -467,22 +467,27 @@ export class NSItem {
    * is the resulting citekey — equal to the input if the recomputed key is
    * unchanged, or the new citekey if it changed.
    *
-   * Read-only library handling is deferred to #3430; once that lands, items in
-   * read-only libraries will regenerate through the same path here without
-   * further changes.
+   * Read-only library handling is deferred to #3430; until that lands, scope
+   * the call to a writeable library via `library` to avoid touching read-only
+   * items.
    *
    * Counterpart to the read-only `item.citationkey` lookup. Internally calls
    * the same `KeyManager.fill(..., { replace: true })` path the `Regenerate
    * BibTeX key` right-click menu item invokes.
    *
    * @param citekeys  Array of citekeys whose items should be regenerated.
+   * @param library   The libraryID to search in (optional). Pass `*` to search across your library and all groups.
    */
-  public async regenerate_key(citekeys: string[]): Promise<Record<string, string | null>> {
+  public async regenerate_key(citekeys: string[], library?: string | number): Promise<Record<string, string | null>> {
+    if (typeof library === 'undefined') library = Zotero.Libraries.userLibraryID
+    const libraryID = library === '*' ? undefined : getLibrary(library)
+
     const result: Record<string, string | null> = {}
     const resolved: { citekey: string; itemID: number; oldKey: string }[] = []
 
     for (const citekey of citekeys) {
-      const matched = Zotero.BetterBibTeX.KeyManager.any(byKey(citekey))
+      const matchKey = byKey(citekey)
+      const matched = Zotero.BetterBibTeX.KeyManager.any(_ => (library === '*' || _.libraryID === libraryID) && matchKey(_))
       if (!matched) {
         result[citekey] = null
         continue
