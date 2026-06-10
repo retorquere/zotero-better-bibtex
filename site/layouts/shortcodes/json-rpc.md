@@ -104,6 +104,35 @@ returns: any
 Generate an export for a list of citekeys, tailored for the pandoc zotero filter
 
 
+**item.regenerate_key**(citekeys: string[], library?: string | number)
+
+returns: { [string]: string | null }
+
+* citekeys: Array of citekeys whose items should be regenerated.
+* library: The libraryID to search in (optional). Pass `*` to search across your library and all groups.
+
+Regenerate citekeys from current item metadata. For each input citekey, the
+underlying item's key is recomputed using the configured `citekeyFormat`,
+and any `Citation Key:` pin in the Extra field is refreshed to match.
+
+Useful when items were created in two phases — initial record from partial
+metadata, enrichment landing later — and the key pinned during phase one
+no longer matches what current metadata would produce.
+
+Returns an old → new mapping per input citekey. The value is `null` only
+when the input citekey cannot be resolved to an item. Otherwise the value
+is the resulting citekey — equal to the input if the recomputed key is
+unchanged, or the new citekey if it changed.
+
+Read-only library handling is deferred to #3430; until that lands, scope
+the call to a writeable library via `library` to avoid touching read-only
+items.
+
+Counterpart to the read-only `item.citationkey` lookup. Internally calls
+the same `KeyManager.fill(..., { replace: true })` path the `Regenerate
+BibTeX key` right-click menu item invokes.
+
+
 **item.search**(terms: string | ([ string ] | [ string, string ] | [ string, string, string | number ] | [ string, string, string | number, boolean ])[], library?: string | number)
 
 returns: any
