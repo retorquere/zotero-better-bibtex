@@ -45,12 +45,17 @@ function citationItems(picks: PickResult[]): Citation[] {
   return items
 }
 
+function getFormatter(options) {
+  const formatter = options.format || 'latex'
+  if (!Formatter[formatter]) throw new Error(`No such formatter ${ JSON.stringify(formatter) }`)
+  return Formatter[formatter]
+}
+
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export async function pick(options: any): Promise<string> {
   await Zotero.BetterBibTeX.ready
 
-  const formatter = options.format || 'latex'
-  if (!Formatter[formatter]) throw new Error(`No such formatter ${ JSON.stringify(formatter) }`)
+  const formatter = getFormatter(options)
 
   try {
     const picker = new Picker({
@@ -58,7 +63,7 @@ export async function pick(options: any): Promise<string> {
       processorName: 'Better BibTeX',
     })
     const picked = citationItems(await picker.pick())
-    const citation: string = picked.length ? await Formatter[formatter](picked, options) : ''
+    const citation: string = picked.length ? await formatter(picked, options) : ''
 
     if (options.select && picked.length) {
       const zoteroPane = Zotero.getActiveZoteroPane()
@@ -78,6 +83,7 @@ export async function pick(options: any): Promise<string> {
 }
 
 async function selected(options): Promise<string> {
+  const formatter = getFormatter(options)
   const pane = Zotero.getActiveZoteroPane()
   const items = pane.getSelectedItems()
   const picked: Citation[] = items.map(item => ({
@@ -93,8 +99,7 @@ async function selected(options): Promise<string> {
     itemType: undefined,
     title: item.getField('title'),
   }))
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-  return picked.length ? await Formatter[options.format || 'latex'](picked, options) : ''
+  return picked.length ? await formatter(picked, options) : ''
 }
 
 function getStyle(id): { url: string } | null {
