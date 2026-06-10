@@ -234,7 +234,10 @@ async function postJson(url: string, payload: unknown): Promise<unknown> {
   try {
     response = await fetch(url, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        'Content-Type': 'application/json',
+        'zotero-allowed-request': 'true',
+      },
       body: JSON.stringify(payload),
     })
   }
