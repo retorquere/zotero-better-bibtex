@@ -20,6 +20,7 @@ import html, re
 import timeit
 import platform
 import pytablewriter
+import requests
 
 from contextlib import contextmanager
 
@@ -536,3 +537,26 @@ def step_impl(context, nth, name):
   ''', nth=nth, itemID=context.selected[0], name=name)
 
 
+
+@when(u'I call JSON-RPC method "{method}" with params {params}')
+def step_impl(context, method, params):
+  response = requests.post(
+    'http://127.0.0.1:23119/better-bibtex/json-rpc',
+    json={'jsonrpc': '2.0', 'method': method, 'params': json.loads(params), 'id': 1},
+    headers={'Content-Type': 'application/json'},
+  )
+  context.jsonrpc_response = response.json()
+
+@then(u'the JSON-RPC response should have no error')
+def step_impl(context):
+  assert 'error' not in context.jsonrpc_response, f'Unexpected error: {context.jsonrpc_response.get("error")}'
+
+@then(u'the JSON-RPC result for "{citekey}" should be null')
+def step_impl(context, citekey):
+  result = context.jsonrpc_response.get('result', {})
+  assert result.get(citekey) is None, f'Expected null for {citekey}; got {result.get(citekey)!r}'
+
+@then(u'the JSON-RPC result for "{citekey}" should be "{expected}"')
+def step_impl(context, citekey, expected):
+  result = context.jsonrpc_response.get('result', {})
+  assert result.get(citekey) == expected, f'Expected {expected!r} for {citekey}; got {result.get(citekey)!r}'
