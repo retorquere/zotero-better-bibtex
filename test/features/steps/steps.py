@@ -555,3 +555,8 @@ def step_impl(context):
 def step_impl(context, citekey):
   result = context.jsonrpc_response.get('result', {})
   assert result.get(citekey) is None, f'Expected null for {citekey}; got {result.get(citekey)!r}'
+
+@then(u'the JSON-RPC result for "{citekey}" should be "{expected}"')
+def step_impl(context, citekey, expected):
+  result = context.jsonrpc_response.get('result', {})
+  assert result.get(citekey) == expected, f'Expected {expected!r} for {citekey}; got {result.get(citekey)!r}'

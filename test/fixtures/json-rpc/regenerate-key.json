@@ -1,0 +1,29 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "localeDateOrder": "ymd",
+    "options": {
+      "exportNotes": true
+    },
+    "preferences": {
+      "citekeyFormat": "auth + year"
+    }
+  },
+  "items": [
+    {
+      "itemID": 1,
+      "itemType": "journalArticle",
+      "title": "Test reference for item.regenerate_key json-rpc method",
+      "citationKey": "Smith2024",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "John",
+          "lastName": "Smith"
+        }
+      ],
+      "date": "2024"
+    }
+  ]
+}
