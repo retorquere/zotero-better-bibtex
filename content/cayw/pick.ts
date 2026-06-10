@@ -1,9 +1,5 @@
 import type { Data as CSLItem } from 'csl-json'
 
-const BASE_URL = 'http://127.0.0.1:23119/connector/document'
-const EXEC_COMMAND_URL = `${BASE_URL}/execCommand`
-const RESPOND_URL = `${BASE_URL}/respond`
-
 const ITEM_PREFIX = 'ITEM CSL_CITATION '
 const DEFAULT_DOC_ID = 'BetterBibTeX'
 const DEFAULT_PROCESSOR_NAME = 'Better BibTeX'
@@ -300,11 +296,17 @@ export class Picker {
   public readonly documentId: string
   public readonly processorName: string
   public state: State
+  private readonly baseURL: string
+  private readonly execCommandURL: string
+  private readonly respondURL: string
   private document: Document
 
   constructor({ documentId = DEFAULT_DOC_ID, processorName = DEFAULT_PROCESSOR_NAME, state }: PickerOptions = {}) {
     this.documentId = documentId
     this.processorName = processorName
+    this.baseURL = `http://127.0.0.1:${Zotero.Prefs.get('httpServer.port')}/connector/document`
+    this.execCommandURL = `${this.baseURL}/execCommand`
+    this.respondURL = `${this.baseURL}/respond`
     this.state = state ?? createDefaultState(this.documentId)
     this.document = Document.load(this.documentId, this.state)
   }
@@ -313,7 +315,7 @@ export class Picker {
     const request = { command: 'addEditCitation', docId: this.document.id }
 
     try {
-      let response = await postJson(EXEC_COMMAND_URL, request)
+      let response = await postJson(this.execCommandURL, request)
 
       while (true) {
         if (!response || typeof response !== 'object' || !('command' in response)) {
@@ -331,11 +333,11 @@ export class Picker {
             break
           }
 
-          response = await postJson(RESPOND_URL, payload)
+          response = await postJson(this.respondURL, payload)
         }
         catch (err) {
           const error = err instanceof Error ? err : new Error(String(err))
-          await postJson(RESPOND_URL, {
+          await postJson(this.respondURL, {
             error: error.name,
             message: error.message,
             stack: error.stack ?? null,
