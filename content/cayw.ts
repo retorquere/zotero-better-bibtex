@@ -151,6 +151,7 @@ class Handler {
 
   public async init(request) {
     const options = { ...(request.data || {}), ...Server.queryParams(request) } as CAYWOptions
+    log.info('CAYW request', options)
 
     if (options.probe) return [ this.OK, 'text/plain', Zotero.BetterBibTeX.starting ? 'starting' : 'ready' ]
 
