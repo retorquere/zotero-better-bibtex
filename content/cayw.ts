@@ -177,6 +177,7 @@ class Handler {
       }
 
       const citation = options.selected ? (await selected(options)) : (await formattedPick(options))
+      log.info('CAYW pick', citation)
 
       if (options.minimize) (Zotero.getMainWindow() as any)?.minimize()
 
@@ -193,7 +194,7 @@ class Handler {
       const error = err instanceof Error ? err : new Error(String(err))
       log.error('CAYW request failed:', options, error)
       flash('CAYW Failed', error.message)
-      return [ this.SERVER_ERROR, 'application/text', `CAYW failed: ${ error.message }\n${ error.stack }` ]
+      return [ this.SERVER_ERROR, 'application/text', `CAYW failed: ${JSON.stringify(options)} requested: ${error.message}` ]
     }
   }
 }
