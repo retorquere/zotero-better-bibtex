@@ -78,6 +78,7 @@ function getFormatter(options: CAYWOptions): CitationFormatter {
 export async function pick(options: CAYWOptions): Promise<PickResponse> {
   await Zotero.BetterBibTeX.ready
 
+  log.info('CAYW pick requested', options)
   const formatter = getFormatter(options)
   const picker = new Picker({
     documentId: options.documentId || `better-bibtex-cayw-${ Zotero.Utilities.generateObjectKey() }`,
@@ -89,11 +90,9 @@ export async function pick(options: CAYWOptions): Promise<PickResponse> {
   const output = picked.length ? await formatter(picked, options) : ''
 
   if (options.select && picked.length) {
-    const zoteroPane = Zotero.getActiveZoteroPane()
-
-    // don't know why zotero-types is not picked up here
-    await zoteroPane.selectItems(picked.map(item => item.id), true)
+    await Zotero.getActiveZoteroPane().selectItems(picked.map(item => item.id), true)
   }
+  log.info('CAYW pick completed', { state: picker.state, pick: picks })
 
   return {
     state: picker.state,
