@@ -339,10 +339,28 @@ def step_impl(context, title):
     pick[row[0]] = row[1]
   context.picked.append(dict(pick))
 
+@step(u'I set CAYW pick options to {options}')
+def step_impl(context, options):
+  context.caywOptions = json.loads(options)
+
 @then(u'the picks for "{fmt}" should be "{expected}"')
 def step_impl(context, fmt, expected):
-  found = context.zotero.execute('return await Zotero.BetterBibTeX.TestSupport.pick(fmt, picks)', fmt=fmt, picks=context.picked)
+  found = context.zotero.execute('return await Zotero.BetterBibTeX.TestSupport.pick(fmt, picks, options)', fmt=fmt, picks=context.picked, options=context.caywOptions)
   assert_equal_diff(expected, found)
+
+@then(u'the translated picks should include {n:d} item matching "{title}" and omit notes')
+def step_impl(context, n, title):
+  found = context.zotero.execute('return await Zotero.BetterBibTeX.TestSupport.pick("translate", picks, options)', picks=context.picked, options=context.caywOptions)
+  try:
+    exported = json.loads(found)
+    items = exported.get('items', []) if isinstance(exported, dict) else []
+
+    assert len(items) == n, { 'expected': n, 'found': len(items) }
+    assert any(title in item.get('title', '') for item in items), title
+    assert all('notes' not in item for item in items), exported
+  except json.JSONDecodeError:
+    assert title.lower() in found.lower(), found
+    assert 'This is the child note' not in found, found
 
 @when(u'I {change} the citation key')
 def step_impl(context, change):

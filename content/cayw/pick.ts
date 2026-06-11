@@ -400,19 +400,14 @@ export class Picker {
     if (command === 'Document.convert') return null
 
     if (command === 'Document.convertPlaceholdersToFields') {
-      const codes = Array.isArray(commandArgs[0]) ? commandArgs[0] : []
-      const placeholderIds = Array.isArray(commandArgs[1]) ? commandArgs[1] : []
-      const noteType = Number(commandArgs[2])
-
-      if (codes.length !== placeholderIds.length) {
-        throw new IntegrationError('codes and placeholderIDs must have the same length')
-      }
+      const placeholderIds = Array.isArray(commandArgs[0]) ? commandArgs[0] : []
+      const noteType = Number(commandArgs[1])
 
       const converted: FieldPayload[] = []
-      for (const code of codes) {
+      for (const placeholderId of placeholderIds) {
         const field = new Field({
           id: String(this.document.fields.length),
-          code: String(code),
+          code: String(placeholderId),
           noteIndex: noteType,
         })
         this.document.fields.push(field)
