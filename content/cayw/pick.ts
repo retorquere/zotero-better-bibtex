@@ -312,10 +312,8 @@ export class Picker {
   }
 
   public async pick(): Promise<PickResult[]> {
-    const request = { command: 'addEditCitation', docId: this.document.id }
-
     try {
-      let response = await postJson(this.execCommandURL, request)
+      let response = await postJson(this.execCommandURL, { command: 'addEditCitation', docId: this.document.id })
 
       while (true) {
         if (!response || typeof response !== 'object' || !('command' in response)) {

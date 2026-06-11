@@ -151,7 +151,6 @@ class Handler {
 
   public async init(request) {
     const options = { ...(request.data || {}), ...Server.queryParams(request) } as CAYWOptions
-    log.info('CAYW request', options)
 
     if (options.probe) return [ this.OK, 'text/plain', Zotero.BetterBibTeX.starting ? 'starting' : 'ready' ]
 
@@ -177,7 +176,6 @@ class Handler {
       }
 
       const citation = options.selected ? (await selected(options)) : (await formattedPick(options))
-      log.info('CAYW pick', citation)
 
       if (options.minimize) (Zotero.getMainWindow() as any)?.minimize()
 
