@@ -19,6 +19,7 @@ type Citation = {
   uri?: string
   itemType?: string
   title?: string
+  note?: string
 }
 
 type CitationFormatter = (citations: Citation[], options: any) => Promise<string>
@@ -61,11 +62,37 @@ function citationItems(picks: PickResult[]): Citation[] {
         uri: Array.isArray(item.uris) ? item.uris[0] : undefined,
         itemType: typeof item.itemData?.type === 'string' ? item.itemData.type : undefined,
         title: typeof item.itemData?.title === 'string' ? item.itemData.title : undefined,
+        note: typeof item.itemData?.note === 'string' ? item.itemData.note : undefined,
       })
     }
   }
 
   return items
+}
+
+function pickedItems(picks: PickResult[]): Record<string, unknown>[] {
+  const items: Record<string, unknown>[] = []
+
+  for (const result of picks) {
+    for (const item of result.citationItems || []) {
+      if (item.itemData && typeof item.itemData === 'object') {
+        items.push({
+          ...item.itemData,
+          ...(item.id ? { id: item.id } : {}),
+          ...(item.uris ? { uris: item.uris } : {}),
+        })
+      }
+      else {
+        items.push({ ...item })
+      }
+    }
+  }
+
+  return items
+}
+
+function itemPicks(citations: Citation[]): Citation[] {
+  return citations.filter(citation => citation.itemType !== 'note')
 }
 
 function getFormatter(options: CAYWOptions): CitationFormatter {
@@ -79,14 +106,22 @@ export async function pick(options: CAYWOptions): Promise<PickResponse> {
   await Zotero.BetterBibTeX.ready
 
   log.info('CAYW pick requested', options)
-  const formatter = getFormatter(options)
   const picker = new Picker({
     documentId: options.documentId || `better-bibtex-cayw-${ Zotero.Utilities.generateObjectKey() }`,
     processorName: 'Better BibTeX',
     state: options.state,
   })
   const picks = await picker.pick()
-  const picked = citationItems(picks)
+  if ((options.format || 'latex') === 'pick') {
+    return {
+      state: picker.state,
+      pick: picks,
+      output: JSON.stringify(pickedItems(picks)),
+    }
+  }
+
+  const formatter = getFormatter(options)
+  const picked = itemPicks(citationItems(picks))
   const output = picked.length ? await formatter(picked, options) : ''
 
   if (options.select && picked.length) {
@@ -130,7 +165,8 @@ async function selected(options: CAYWOptions): Promise<string> {
     itemType: undefined,
     title: item.getField('title'),
   }))
-  return picked.length ? await formatter(picked, options) : ''
+  const itemPicked = itemPicks(picked)
+  return itemPicked.length ? await formatter(itemPicked, options) : ''
 }
 
 function getStyle(id): { url: string } | null {

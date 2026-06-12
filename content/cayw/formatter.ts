@@ -156,7 +156,7 @@ export const Formatter = new class {
   }
 
   public async mmd(citations, _options) {
-    const formatted = []
+    const formatted: string[] = []
 
     for (const citation of citations) {
       if (citation.prefix) {
@@ -174,7 +174,7 @@ export const Formatter = new class {
   }
 
   public async pandoc(citations, options) {
-    const formatted = []
+    const formatted: string[] = []
     function locator(n) {
       if (typeof n === 'number' || n.match(/^\d+$/)) return n
       return n ? `{${n}}` : ''
@@ -193,7 +193,7 @@ export const Formatter = new class {
   }
 
   public async 'asciidoctor-bibtex'(citations, options) {
-    const formatted = []
+    const formatted: string[] = []
     for (const citation of citations) {
       let cite = citation.citationKey
       if (citation.locator) {
@@ -281,7 +281,7 @@ export const Formatter = new class {
   }
 
   public async translate(citations, options) {
-    const items = await getItemsAsync(citations.map(citation => citation.id))
+    const items = citations.length ? await getItemsAsync(citations.map(citation => citation.id)) : []
 
     const label = (options.translator || 'biblatex').replace(/\s/g, '').toLowerCase().replace('better', '')
     const translatorID = Object.keys(Translators.byId).find(id => Translators.byId[id].label.replace(/\s/g, '').toLowerCase().replace('better', '') === label) || options.translator
@@ -292,7 +292,7 @@ export const Formatter = new class {
       worker: !options.worker || [ 'yes', 'y', 'true' ].includes((options.worker || '').toLowerCase()),
     }
 
-    return await Translators.queueJob({ translatorID, displayOptions, scope: { type: 'items', items }})
+    return items.length ? await Translators.queueJob({ translatorID, displayOptions, scope: { type: 'items', items }}) : ''
   }
 
   public async json(citations, _options) {

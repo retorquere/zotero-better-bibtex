@@ -74,6 +74,18 @@ type PickerOptions = {
   state?: State
 }
 
+type SyntheticNoteItem = {
+  type: 'note'
+  note: string
+  title: string
+  nonCSL: true
+  source: 'cayw-inserted-note'
+}
+
+type Picked
+  = { kind: 'field'; field: Field }
+  | { kind: 'note'; text: string }
+
 class Field {
   public id: string
   public code: string
@@ -300,6 +312,8 @@ export class Picker {
   private readonly execCommandURL: string
   private readonly respondURL: string
   private document: Document
+  private readonly domParser: DOMParser
+  private picked: Picked[]
 
   constructor({ documentId = DEFAULT_DOC_ID, processorName = DEFAULT_PROCESSOR_NAME, state }: PickerOptions = {}) {
     this.documentId = documentId
@@ -309,6 +323,8 @@ export class Picker {
     this.respondURL = `${this.baseURL}/respond`
     this.state = state ?? createDefaultState(this.documentId)
     this.document = Document.load(this.documentId, this.state)
+    this.domParser = new DOMParser
+    this.picked = []
   }
 
   public async pick(): Promise<PickResult[]> {
@@ -356,6 +372,12 @@ export class Picker {
     return this.document
   }
 
+  private noteTitle(text: string): string {
+    const html = text.startsWith('<html>') ? text : `<html><body>${ text }</body></html>`
+    const doc = this.domParser.parseFromString(html, 'text/html')
+    return (doc.body?.textContent || '').replace(/\s+/g, ' ').trim().slice(0, 120)
+  }
+
   private commandResponse(command: string, args: unknown[]): unknown {
     if (command === 'Application.getActiveDocument') {
       return {
@@ -390,7 +412,9 @@ export class Picker {
     }
 
     if (command === 'Document.insertField') {
-      return this.document.insertField(asString(commandArgs[0]), Number(commandArgs[1]))
+      const inserted = this.document.insertField(asString(commandArgs[0]), Number(commandArgs[1]))
+      this.picked.push({ kind: 'field', field: this.document.fields[this.document.fields.length - 1] })
+      return inserted
     }
 
     if (command === 'Document.getFields') {
@@ -411,13 +435,17 @@ export class Picker {
           noteIndex: noteType,
         })
         this.document.fields.push(field)
+        this.picked.push({ kind: 'field', field })
         converted.push(field.asPayload())
       }
 
       return converted
     }
 
-    if (command === 'Document.insertText') return null
+    if (command === 'Document.insertText') {
+      this.picked.push({ kind: 'note', text: asString(commandArgs[0]) })
+      return null
+    }
     if (command === 'Document.setBibliographyStyle') return null
     if (command === 'Document.complete') return null
 
@@ -454,10 +482,25 @@ export class Picker {
   private extractPickResults(): PickResult[] {
     const picks: PickResult[] = []
 
-    for (const field of this.document.fields) {
-      if (!field.code.startsWith(ITEM_PREFIX)) continue
+    for (const picked of this.picked) {
+      if (picked.kind === 'field') {
+        if (!picked.field.code.startsWith(ITEM_PREFIX)) continue
+        picks.push(JSON.parse(picked.field.code.slice(ITEM_PREFIX.length)) as PickResult)
+        continue
+      }
 
-      picks.push(JSON.parse(field.code.slice(ITEM_PREFIX.length)) as PickResult)
+      picks.push({
+        citationItems: [{
+          itemData: {
+            type: 'note',
+            title: this.noteTitle(picked.text),
+            note: picked.text,
+            nonCSL: true,
+            source: 'cayw-inserted-note',
+          } as unknown as CSLItem & SyntheticNoteItem,
+        }],
+        properties: {},
+      })
     }
 
     return picks
