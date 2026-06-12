@@ -462,6 +462,14 @@ Feature: Export
     And the picks for "asciidoctor-bibtex" should be "cite:[bentley_academic_2011(1), pollard_bicycle_2007(ch. 1), kartinyeri(sec. 5), kartinyeri(vol. <1>)]"
     And the picks for "biblatex" should be "\autocites[1]{bentley_academic_2011}[ch. 1]{pollard_bicycle_2007}[see][sec. 5, et passim]{kartinyeri}[see][vol. $<$1$>$]{kartinyeri}"
 
+  @cayw
+  Scenario: CAYW picker translate options
+    When I import 3 references from "export/cayw.json"
+    And I set CAYW pick options to "{\"contentType\":\"text\",\"exportNotes\":\"false\",\"format\":\"translate\",\"locale\":\"en-US\",\"style\":\"http://www.zotero.org/styles/apa-annotated-bibliography\",\"translator\":\"36a3b0b5-bad0-4a04-b79b-441c7cef77db\"}"
+    And I pick "temporalities of planning" for CAYW
+      | page | 1 |
+    Then the translated picks should include 1 item matching "temporalities of planning" and omit notes
+
   @307 @bbt
   Scenario: thesis zotero entries always create @phdthesis bibtex entries #307
     When I import 2 references from "export/*.json"
