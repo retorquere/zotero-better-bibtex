@@ -548,6 +548,9 @@ export function isEDTF(value: string, minuteLevelPrecision = false): boolean {
 
 export function dateToISO(date: RichDate): string {
   switch (date.type) {
+    case 'verbatim':
+      return date.verbatim
+
     case 'interval':
       return `${dateToISO(date.from)}/${dateToISO(date.to)}`.replace(/^[/]$/, '')
 
