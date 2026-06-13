@@ -1,6 +1,7 @@
 import type { Data as CSLItem } from 'csl-json'
 
 const ITEM_PREFIX = 'ITEM CSL_CITATION '
+const NOTE_ID_COMMENT = /<!--\s*zotero-note-id:(?<id>\d+)\s*-->\s*$/
 const DEFAULT_DOC_ID = 'BetterBibTeX'
 const DEFAULT_PROCESSOR_NAME = 'Better BibTeX'
 
@@ -75,6 +76,7 @@ type PickerOptions = {
 }
 
 type SyntheticNoteItem = {
+  id?: number
   type: 'note'
   note: string
   title: string
@@ -304,6 +306,16 @@ function asString(value: unknown): string {
   return typeof value === 'string' ? value : ''
 }
 
+function extractNoteID(text: string): { text: string; id?: number } {
+  const match = text.match(NOTE_ID_COMMENT)
+  if (!match) return { text }
+
+  return {
+    text: text.replace(NOTE_ID_COMMENT, ''),
+    id: Number(match.groups?.id),
+  }
+}
+
 export class Picker {
   public readonly documentId: string
   public readonly processorName: string
@@ -397,86 +409,75 @@ export class Picker {
       throw new IntegrationError(`Unexpected document ID: ${describe(docId)}`)
     }
 
-    if (command === 'Document.displayAlert') {
-      return 0
-    }
-
-    if (command === 'Document.activate') return null
-    if (command === 'Document.canInsertField') return this.document.canInsertField(asString(commandArgs[0]))
-    if (command === 'Document.cursorInField') return this.document.cursorInField(asString(commandArgs[0]))
-    if (command === 'Document.getDocumentData') return this.document.getDocumentData()
-
-    if (command === 'Document.setDocumentData') {
-      this.document.setDocumentData(asString(commandArgs[0]))
-      return null
-    }
-
-    if (command === 'Document.insertField') {
-      const inserted = this.document.insertField(asString(commandArgs[0]), Number(commandArgs[1]))
-      this.picked.push({ kind: 'field', field: this.document.fields[this.document.fields.length - 1] })
-      return inserted
-    }
-
-    if (command === 'Document.getFields') {
-      return this.document.getFields(asString(commandArgs[0]))
-    }
-
-    if (command === 'Document.convert') return null
-
-    if (command === 'Document.convertPlaceholdersToFields') {
-      const placeholderIds = Array.isArray(commandArgs[0]) ? commandArgs[0] : []
-      const noteType = Number(commandArgs[1])
-
-      const converted: FieldPayload[] = []
-      for (const placeholderId of placeholderIds) {
-        const field = new Field({
-          id: String(this.document.fields.length),
-          code: String(placeholderId),
-          noteIndex: noteType,
-        })
-        this.document.fields.push(field)
-        this.picked.push({ kind: 'field', field })
-        converted.push(field.asPayload())
+    switch (command) {
+      case 'Document.displayAlert':
+        return 0
+      case 'Document.activate':
+        return null
+      case 'Document.canInsertField':
+        return this.document.canInsertField(asString(commandArgs[0]))
+      case 'Document.cursorInField':
+        return this.document.cursorInField(asString(commandArgs[0]))
+      case 'Document.getDocumentData':
+        return this.document.getDocumentData()
+      case 'Document.setDocumentData':
+        this.document.setDocumentData(asString(commandArgs[0]))
+        return null
+      case 'Document.insertField': {
+        const inserted = this.document.insertField(asString(commandArgs[0]), Number(commandArgs[1]))
+        this.picked.push({ kind: 'field', field: this.document.fields[this.document.fields.length - 1] })
+        return inserted
       }
+      case 'Document.getFields':
+        return this.document.getFields(asString(commandArgs[0]))
+      case 'Document.convert':
+        return null
+      case 'Document.convertPlaceholdersToFields': {
+        const placeholderIds = Array.isArray(commandArgs[0]) ? commandArgs[0] : []
+        const noteType = Number(commandArgs[1])
 
-      return converted
+        const converted: FieldPayload[] = []
+        for (const placeholderId of placeholderIds) {
+          const field = new Field({
+            id: String(this.document.fields.length),
+            code: String(placeholderId),
+            noteIndex: noteType,
+          })
+          this.document.fields.push(field)
+          this.picked.push({ kind: 'field', field })
+          converted.push(field.asPayload())
+        }
+
+        return converted
+      }
+      case 'Document.insertText':
+        this.picked.push({ kind: 'note', text: asString(commandArgs[0]) })
+        return null
+      case 'Document.setBibliographyStyle':
+        return null
+      case 'Document.complete':
+        return null
+      case 'Field.delete': {
+        const field = getField(this.document, commandArgs[0])
+        this.document.fields = this.document.fields.filter(existing => existing !== field)
+        return null
+      }
+      case 'Field.select':
+        return null
+      case 'Field.removeCode':
+        getField(this.document, commandArgs[0]).code = ''
+        return null
+      case 'Field.setText':
+        getField(this.document, commandArgs[0]).text = asString(commandArgs[1])
+        return null
+      case 'Field.getText':
+        return getField(this.document, commandArgs[0]).text
+      case 'Field.setCode':
+        getField(this.document, commandArgs[0]).code = asString(commandArgs[1])
+        return null
+      default:
+        throw new IntegrationError(`Unsupported command: ${command}`)
     }
-
-    if (command === 'Document.insertText') {
-      this.picked.push({ kind: 'note', text: asString(commandArgs[0]) })
-      return null
-    }
-    if (command === 'Document.setBibliographyStyle') return null
-    if (command === 'Document.complete') return null
-
-    if (command === 'Field.delete') {
-      const field = getField(this.document, commandArgs[0])
-      this.document.fields = this.document.fields.filter(existing => existing !== field)
-      return null
-    }
-
-    if (command === 'Field.select') return null
-
-    if (command === 'Field.removeCode') {
-      getField(this.document, commandArgs[0]).code = ''
-      return null
-    }
-
-    if (command === 'Field.setText') {
-      getField(this.document, commandArgs[0]).text = asString(commandArgs[1])
-      return null
-    }
-
-    if (command === 'Field.getText') {
-      return getField(this.document, commandArgs[0]).text
-    }
-
-    if (command === 'Field.setCode') {
-      getField(this.document, commandArgs[0]).code = asString(commandArgs[1])
-      return null
-    }
-
-    throw new IntegrationError(`Unsupported command: ${command}`)
   }
 
   private extractPickResults(): PickResult[] {
@@ -489,12 +490,14 @@ export class Picker {
         continue
       }
 
+      const { text, id } = extractNoteID(picked.text)
       picks.push({
         citationItems: [{
           itemData: {
+            ...(typeof id === 'number' ? { id } : {}),
             type: 'note',
-            title: this.noteTitle(picked.text),
-            note: picked.text,
+            title: this.noteTitle(text),
+            note: text,
             nonCSL: true,
             source: 'cayw-inserted-note',
           } as unknown as CSLItem & SyntheticNoteItem,

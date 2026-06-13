@@ -112,6 +112,8 @@ export async function pick(options: CAYWOptions): Promise<PickResponse> {
     state: options.state,
   })
   const picks = await picker.pick()
+  log.info('CAYW pick completed', { state: picker.state, pick: picks })
+
   if ((options.format || 'latex') === 'pick') {
     return {
       state: picker.state,
@@ -127,7 +129,6 @@ export async function pick(options: CAYWOptions): Promise<PickResponse> {
   if (options.select && picked.length) {
     await Zotero.getActiveZoteroPane().selectItems(picked.map(item => item.id), true)
   }
-  log.info('CAYW pick completed', { state: picker.state, pick: picks })
 
   return {
     state: picker.state,
