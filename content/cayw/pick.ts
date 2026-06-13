@@ -1,7 +1,7 @@
 import type { Data as CSLItem } from 'csl-json'
 
 const ITEM_PREFIX = 'ITEM CSL_CITATION '
-const NOTE_ID_COMMENT = /<!--\s*zotero-note-id:(?<id>\d+)\s*-->\s*$/
+const NOTE_ID_COMMENT = /<!--\s*zotero-note-id:(?<id>\d+)\s*-->/
 const DEFAULT_DOC_ID = 'BetterBibTeX'
 const DEFAULT_PROCESSOR_NAME = 'Better BibTeX'
 

@@ -22,7 +22,10 @@ type Citation = {
   note?: string
 }
 
-type CitationFormatter = (citations: Citation[], options: any) => Promise<string>
+type CitationFormatter = {
+  (citations: Citation[], options: any): Promise<string>
+  acceptsNotes?: boolean
+}
 
 type CAYWOptions = Record<string, unknown> & {
   format?: string
@@ -50,41 +53,22 @@ function citationItems(picks: PickResult[]): Citation[] {
 
   for (const result of picks) {
     for (const item of result.citationItems || []) {
+      const id = Number(item.id ?? item.itemData?.id)
+
       items.push({
-        id: Number(item.id),
+        id,
         locator: typeof item.locator === 'string' ? item.locator : '',
         suppressAuthor: !!item['suppress-author'],
         prefix: typeof item.prefix === 'string' ? item.prefix : '',
         suffix: typeof item.suffix === 'string' ? item.suffix : '',
         label: typeof item.label === 'string' ? item.label : (item.locator ? 'page' : ''),
-        citationKey: Zotero.BetterBibTeX.KeyManager.get(Number(item.id))?.citationKey || '',
+        citationKey: Zotero.BetterBibTeX.KeyManager.get(id)?.citationKey || '',
 
         uri: Array.isArray(item.uris) ? item.uris[0] : undefined,
         itemType: typeof item.itemData?.type === 'string' ? item.itemData.type : undefined,
         title: typeof item.itemData?.title === 'string' ? item.itemData.title : undefined,
         note: typeof item.itemData?.note === 'string' ? item.itemData.note : undefined,
       })
-    }
-  }
-
-  return items
-}
-
-function pickedItems(picks: PickResult[]): Record<string, unknown>[] {
-  const items: Record<string, unknown>[] = []
-
-  for (const result of picks) {
-    for (const item of result.citationItems || []) {
-      if (item.itemData && typeof item.itemData === 'object') {
-        items.push({
-          ...item.itemData,
-          ...(item.id ? { id: item.id } : {}),
-          ...(item.uris ? { uris: item.uris } : {}),
-        })
-      }
-      else {
-        items.push({ ...item })
-      }
     }
   }
 
@@ -114,16 +98,10 @@ export async function pick(options: CAYWOptions): Promise<PickResponse> {
   const picks = await picker.pick()
   log.info('CAYW pick completed', { state: picker.state, pick: picks })
 
-  if ((options.format || 'latex') === 'pick') {
-    return {
-      state: picker.state,
-      pick: picks,
-      output: JSON.stringify(pickedItems(picks)),
-    }
-  }
-
+  options.format ||= 'latex'
   const formatter = getFormatter(options)
-  const picked = itemPicks(citationItems(picks))
+  let picked = citationItems(picks)
+  if (!formatter.acceptsNotes) picked = itemPicks(picked)
   const output = picked.length ? await formatter(picked, options) : ''
 
   if (options.select && picked.length) {
@@ -153,7 +131,7 @@ async function selected(options: CAYWOptions): Promise<string> {
   const formatter = getFormatter(options)
   const pane = Zotero.getActiveZoteroPane()
   const items = pane.getSelectedItems()
-  const picked: Citation[] = items.map(item => ({
+  let picked: Citation[] = items.map(item => ({
     id: item.id,
     locator: '',
     suppressAuthor: false,
@@ -162,12 +140,13 @@ async function selected(options: CAYWOptions): Promise<string> {
     label: '',
     citationKey: Zotero.BetterBibTeX.KeyManager.get(item.id)?.citationKey || '',
 
-    uri: undefined,
-    itemType: undefined,
+    uri: Zotero.URI.getItemURI(item),
+    itemType: typeof item.itemType === 'string' ? item.itemType : undefined,
     title: item.getField('title'),
+    note: typeof item.note === 'string' ? item.note : undefined,
   }))
-  const itemPicked = itemPicks(picked)
-  return itemPicked.length ? await formatter(itemPicked, options) : ''
+  if (!formatter.acceptsNotes) picked = itemPicks(picked)
+  return picked.length ? await formatter(picked, options) : ''
 }
 
 function getStyle(id): { url: string } | null {
