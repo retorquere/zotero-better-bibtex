@@ -143,12 +143,6 @@ citekeyUnsafeChars:
   description: List of characters disallowed in citation keys
   default: \"#%'(),={}~
 
-citekeySearch:
-  description: >-
-    Enable searching on citation keys. Slows down startup on very large
-    libraries. Requires Zotero restart to enable/disable.
-  default: true
-
 citekeyCaseInsensitive:
   description: >-
     Treat "AugusteComte" and "augustecomte" as the same key when testing for
