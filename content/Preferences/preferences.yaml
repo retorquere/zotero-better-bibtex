@@ -140,6 +140,7 @@ citekeyFormatEditing:
   default: ''
 
 citekeyUnsafeChars:
+  description: List of characters disallowed in citation keys
   default: \"#%'(),={}~
 
 citekeySearch:

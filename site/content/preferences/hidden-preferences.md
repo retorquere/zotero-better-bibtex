@@ -46,6 +46,11 @@ but create a CSV (not semicolons) file named `charmap.csv` in the zotero data di
 default: `yes`
 
 Enable searching on citation keys. Slows down startup on very large libraries. Requires Zotero restart to enable/disable.
+## citekeyUnsafeChars
+
+default: `\"#%'(),={}~`
+
+List of characters disallowed in citation keys
 ## csquotes
 
 default: `<not set>`
