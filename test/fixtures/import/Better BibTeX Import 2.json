@@ -28,7 +28,6 @@
       "citeCommand": "cite",
       "citekeyFold": true,
       "citekeyFormat": "auth + year",
-      "citekeySearch": true,
       "citekeyUnsafeChars": "\\\"#%'(),={}~",
       "csquotes": "",
       "DOIandURL": "both",

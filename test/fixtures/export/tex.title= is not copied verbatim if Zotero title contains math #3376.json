@@ -6,7 +6,6 @@
       "asciiBibTeX": false,
       "autoExportDelay": 2,
       "citekeyFormat": "auth.lower + shorttitle(3, 3) + year",
-      "citekeySearch": false,
       "extraMergeCitekeys": true,
       "extraMergeCSL": true,
       "extraMergeTeX": true,
