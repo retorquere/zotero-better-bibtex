@@ -12,6 +12,8 @@ Feature: Export
 
     Examples:
       | file                                                                                                                     | references |
+      | Unrecognized date crashes export #3533                                                                                   | 1      |
+      | Better control of citation key capitalization #3492                                                                      | 1          |
       | Trouble with extra() function in citekey generator #3505                                                                 | 1          |
       | Citation key pulling in full date field rather than just year #3500                                                      | 1          |
       | tex.pages= in Extra field not exporting as LaTeX, Language = de exporting as german, not ngerman #3472                   | 1          |
@@ -350,6 +352,8 @@ Feature: Export
 
     Examples:
       | file                                                                             | references |
+      | Normalizing English language tag #3100                                           | 3          |
+      | Export does not include available-date #3286                                     | 4          |
       | Page, issue and volume range sign in CSL JSON is hyphen instead of en dash #3327 | 1          |
       | Export to Better CSL JSON not working in latest built 6600-6700 #3332            | 1          |
       | Better CSL does not extract extra variables #2963                                | 1          |
@@ -458,6 +462,14 @@ Feature: Export
     # And the picks for "scannable-cite" should be "{ | Abram, 2014 | p. 1 | | zu:0:ITEMKEY }{ | Pollard, & Bray, 2007 | ch. 1 | | zu:0:ITEMKEY }"
     And the picks for "asciidoctor-bibtex" should be "cite:[bentley_academic_2011(1), pollard_bicycle_2007(ch. 1), kartinyeri(sec. 5), kartinyeri(vol. <1>)]"
     And the picks for "biblatex" should be "\autocites[1]{bentley_academic_2011}[ch. 1]{pollard_bicycle_2007}[see][sec. 5, et passim]{kartinyeri}[see][vol. $<$1$>$]{kartinyeri}"
+
+  @cayw
+  Scenario: CAYW picker translate options
+    When I import 3 references from "export/cayw.json"
+    And I set CAYW pick options to "{\"contentType\":\"text\",\"exportNotes\":\"false\",\"format\":\"translate\",\"locale\":\"en-US\",\"style\":\"http://www.zotero.org/styles/apa-annotated-bibliography\",\"translator\":\"36a3b0b5-bad0-4a04-b79b-441c7cef77db\"}"
+    And I pick "temporalities of planning" for CAYW
+      | page | 1 |
+    Then the translated picks should include 1 item matching "temporalities of planning" and omit notes
 
   @307 @bbt
   Scenario: thesis zotero entries always create @phdthesis bibtex entries #307

@@ -39,7 +39,7 @@ import { Schema } from '../../content/item-schema'
 import type { Fields as ParsedExtraFields, TeXString } from '../../content/extra'
 import { zoteroCreator as ExtraZoteroCreator } from '../../content/extra'
 import { log } from '../../content/logger'
-import { babelLanguage, titleCase } from '../../content/text'
+import { langCode, titleCase } from '../../content/text'
 import BabelTag from '../../gen/babel/tag.json' with { type: 'json' }
 
 import { arXiv } from '../../content/arXiv'
@@ -248,7 +248,7 @@ export class Entry {
       this.english = true
     }
     else {
-      this.language = babelLanguage(item.language)
+      this.language = langCode(item.language)
       this.english = BabelTag[this.language] === 'en'
     }
 
@@ -690,7 +690,7 @@ export class Entry {
   }
 
   public langid(): string {
-    return babelLanguage(this.item.language)
+    return langCode(this.item.language)
   }
 
   public complete(): void {

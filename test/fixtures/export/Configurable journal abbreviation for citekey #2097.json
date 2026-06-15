@@ -9,7 +9,6 @@
     "preferences": {
       "autoAbbrev": true,
       "citekeyFormat": "auth(n=0,m=1,creator=\"*\",initials=false).fold.lower + shorttitle(3,3) + \".\" + journal(auto) + year",
-      "citekeySearch": false,
       "extraMergeCSL": true,
       "extraMergeCitekeys": true,
       "extraMergeTeX": true,

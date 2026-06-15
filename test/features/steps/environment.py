@@ -170,6 +170,7 @@ def before_scenario(context, scenario):
   context.selected = []
   context.imported = None
   context.picked = []
+  context.caywOptions = {}
 
   context.timeout = 90
   # jurism is just generally slower

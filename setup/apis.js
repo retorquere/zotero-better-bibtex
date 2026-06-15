@@ -2,10 +2,15 @@
 
 import crypto from 'crypto'
 import fs from 'fs'
-import { generateSchema } from 'json-schema-it'
+import * as jsonschema from 'json-schema-it'
 import path from 'path'
 import ts from 'typescript'
 import { inspect } from 'util'
+
+function generateSchema(value) {
+  if (value instanceof RegExp) return { instanceof: 'RegExp' }
+  return jsonschema.generateSchema(value)
+}
 
 import Showdown from 'showdown'
 const Markdown = new class {
@@ -58,6 +63,7 @@ function stop(...msg) {
 }
 
 function stringify(obj, sorted) {
+  if (obj instanceof RegExp) return `/${obj.source}/${obj.flags}`
   return inspect(obj, {
     depth: null,
     maxArrayLength: null,
@@ -142,6 +148,9 @@ export function printed(schema, parenthesize) {
 
     case 'void':
       return 'void'
+
+    case 'null':
+      return 'null'
 
     default:
       if (schema.instanceof) return schema.instanceof
@@ -252,7 +261,7 @@ function simplifySchema(schema) {
       // Removed the aggressive check for complex schemas here.
       // Complexity checks now rely on the final 'else' block.
 
-      // --- Attempt to extract type and value(s) ---
+      // Attempt to extract type and value(s)
       if (subSchema.type && subSchema.enum && Array.isArray(subSchema.enum)) {
         // CASE 1: Sub-schema is an enum
         typeForMerge = subSchema.type
@@ -279,7 +288,7 @@ function simplifySchema(schema) {
         break
       }
 
-      // --- Validation and Merge Check ---
+      // Validation and Merge Check
       if (typeForMerge && values.length > 0) {
         // Check 1: Consistency
         const newBaseType = checkCompatibility(baseType, typeForMerge)
@@ -319,6 +328,7 @@ function simplifySchema(schema) {
 
 function sortObject(obj) {
   if (obj === null || typeof obj !== 'object') return obj
+  if (obj instanceof RegExp) return obj
   if (Array.isArray(obj)) return obj.map(sortObject)
   return Object.keys(obj).sort(stringSort).reduce((acc, key) => {
     acc[key] = sortObject(obj[key])
@@ -673,8 +683,17 @@ ajv.addFormat('babel-language', new RegExp(`^(${Babel.languages.join('|')})$`, '
 ajv.addFormat('item-field', new RegExp(`^(${Zotero.itemFields.join('|')})$`, 'i'))
 
 function printParameters(method, brace) {
-  let doc = method.parameters.map(p => `${p.name}${p.isOptional && typeof p.defaultValue === 'undefined' ? '?' : ''}${p.isRest ? '...' : ''}: ${printed(p.type)}${typeof p.defaultValue !== 'undefined' ? '=' : ''}${typeof p.defaultValue !== 'undefined' ? stringify(p.defaultValue) : ''}`).join(', ')
+  let doc = method.parameters.map(p => [
+    p.name,
+    p.isOptional && typeof p.defaultValue === 'undefined' ? '?' : '',
+    p.isRest ? '...' : '',
+    ': ',
+    printed(p.type),
+    typeof p.defaultValue !== 'undefined' ? `=${stringify(p.defaultValue)}` : '',
+  ].join('')).join(', ')
+
   if (brace || method.parameters.length) doc = `(${doc})`
+
   return doc
 }
 
@@ -729,7 +748,7 @@ function compile(method) {
               <tr>
                 <td><code>${p.name}${p.isRest ? '...' : ''}</code></td>
                 <td>${Markdown.render(p.doc)}</td>
-                <td>${!p.isOptional && typeof p.defaultValue === 'undefined' ? 'none; must be provided' : stringify(p.DefaultValue)}</td>
+                <td>${!p.isOptional && typeof p.defaultValue === 'undefined' ? 'none; must be provided' : stringify(p.defaultValue)}</td>
                 <td>${printed(p.isRest ? p.type.items : p.type)}</td>
               </tr>`).join('')
           }</table>`

@@ -13,6 +13,10 @@ import { simplifyForExport } from '../item-schema'
 
 import { Transform } from 'unicode2latex'
 
+function acceptsNotes<This, Args extends any[], Return>(formatter: (this: This, ...args: Args) => Return, _context: ClassMethodDecoratorContext<This, (this: This, ...args: Args) => Return>): void {
+  (formatter as typeof formatter & { acceptsNotes?: boolean }).acceptsNotes = true
+}
+
 function serialized(item) {
   if (item) {
     const ser = simplifyForExport(Zotero.Utilities.Internal.itemToExportFormat(item, false, true) as Serialized.RegularItem)
@@ -156,7 +160,7 @@ export const Formatter = new class {
   }
 
   public async mmd(citations, _options) {
-    const formatted = []
+    const formatted: string[] = []
 
     for (const citation of citations) {
       if (citation.prefix) {
@@ -174,7 +178,7 @@ export const Formatter = new class {
   }
 
   public async pandoc(citations, options) {
-    const formatted = []
+    const formatted: string[] = []
     function locator(n) {
       if (typeof n === 'number' || n.match(/^\d+$/)) return n
       return n ? `{${n}}` : ''
@@ -193,7 +197,7 @@ export const Formatter = new class {
   }
 
   public async 'asciidoctor-bibtex'(citations, options) {
-    const formatted = []
+    const formatted: string[] = []
     for (const citation of citations) {
       let cite = citation.citationKey
       if (citation.locator) {
@@ -280,8 +284,9 @@ export const Formatter = new class {
     return eta.renderString(options.template, { items: citations })
   }
 
+  @acceptsNotes
   public async translate(citations, options) {
-    const items = await getItemsAsync(citations.map(citation => citation.id))
+    const items = citations.length ? await getItemsAsync(citations.map(citation => citation.id)) : []
 
     const label = (options.translator || 'biblatex').replace(/\s/g, '').toLowerCase().replace('better', '')
     const translatorID = Object.keys(Translators.byId).find(id => Translators.byId[id].label.replace(/\s/g, '').toLowerCase().replace('better', '') === label) || options.translator
@@ -292,14 +297,20 @@ export const Formatter = new class {
       worker: !options.worker || [ 'yes', 'y', 'true' ].includes((options.worker || '').toLowerCase()),
     }
 
-    return await Translators.queueJob({ translatorID, displayOptions, scope: { type: 'items', items }})
+    return items.length ? await Translators.queueJob({ translatorID, displayOptions, scope: { type: 'items', items }}) : ''
   }
 
+  @acceptsNotes
   public async json(citations, _options) {
     const items = await getItemsAsync(citations.map(cit => cit.id))
     for (const cit of citations) {
       cit.item = serialized(items.find(item => item.id === cit.id))
     }
+    return JSON.stringify(citations)
+  }
+
+  @acceptsNotes
+  public async pick(citations, _options) {
     return JSON.stringify(citations)
   }
 }

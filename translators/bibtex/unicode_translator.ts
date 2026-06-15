@@ -144,13 +144,6 @@ export class HTMLConverter {
         latex = '\n\\par\n\x1D\n\\par\n'
         break
 
-      case 'h1':
-      case 'h2':
-      case 'h3':
-      case 'h4':
-        latex = `\n\n\\${ 'sub'.repeat(parseInt(tag.nodeName[1]) - 1) }section{\x1D}\n\n`
-        break
-
       case 'ol':
         latex = '\n\n\\begin{enumerate}\n\x1D\n\n\\end{enumerate}\n'
         break
@@ -165,6 +158,10 @@ export class HTMLConverter {
       case 'sc':
       case 'nc':
         break // ignore, handled by the relax/nocase/smallcaps handler below
+
+      case 'address':
+        latex = '\x1D'
+        break // take only contents
 
       case 'header':
       case 'section':
@@ -194,7 +191,12 @@ export class HTMLConverter {
         break
 
       default:
-        log.error(`unexpected tag '${ tag.nodeName }' (${ Object.keys(tag) })`)
+        if (tag.nodeName.match(/^h\d+$/)) {
+          latex = `\n\n\\${ 'sub'.repeat(parseInt(tag.nodeName[1]) - 1) }section{\x1D}\n\n`
+        }
+        else {
+          log.error(`unexpected tag '${ tag.nodeName }' (${ Object.keys(tag) })`)
+        }
         break
     }
 

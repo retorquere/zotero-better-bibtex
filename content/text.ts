@@ -437,16 +437,17 @@ export const HTMLParser = new class {
   }
 }
 
-export function babelLanguage(language: string): string {
-  if (!language) return ''
-  const lc = language.toLowerCase()
+export function langCode(langcode: string): string {
+  if (!langcode) return ''
+
+  const lc = langcode.toLowerCase()
   // eslint-disable-next-line @typescript-eslint/no-unsafe-return
   return Language[lc]
     || Language[lc.replace(/[^a-z0-9]/, '-')]
     || Language[lc.replace(RE.notAlphaNum, '')]
     || (!lc.match(RE.notAlphaNum) && Language[LanguagePrefixes.find((prefix: string) => lc.startsWith(prefix))])
     || Language[lc.replace(/-.*/, '').replace(/[^a-z0-9]/, '-')]
-    || language
+    || langcode
 }
 
 const excelColumnCache: Map<number, string> = new Map
