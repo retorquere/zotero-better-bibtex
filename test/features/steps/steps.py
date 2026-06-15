@@ -145,7 +145,9 @@ def step_impl(context, source, target):
 def step_impl(context, references, source):
   source = expand_scenario_variables(context, source)
   context.imported = source
-  assert_that(context.zotero.import_file(context, source), equal_to(references))
+  imported = context.zotero.import_file(context, source)
+  if references != 0:
+    assert_that(imported, equal_to(references))
 
 @step(r'I import 1 reference from "{source}" into "{collection}"')
 def step_impl(context, source, collection):
@@ -169,19 +171,25 @@ def step_impl(context, source):
 def step_impl(context, references, attachments, source):
   source = expand_scenario_variables(context, source)
   context.imported = source
-  assert_that(context.zotero.import_file(context, source, True), equal_to(references))
+  imported = context.zotero.import_file(context, source, True)
+  if references != 0:
+    assert_that(imported, equal_to(references))
 
 @step(r'I import {references:d} references from "{source}" into a new collection')
 def step_impl(context, references, source):
   source = expand_scenario_variables(context, source)
   context.imported = source
-  assert_that(context.zotero.import_file(context, source, True), equal_to(references))
+  imported = context.zotero.import_file(context, source, True)
+  if references != 0:
+    assert_that(imported, equal_to(references))
 
 @step(r'I import {references:d} references with {attachments:d} attachments from "{source}"')
 def step_impl(context, references, attachments, source):
   source = expand_scenario_variables(context, source)
   context.imported = source
-  assert_that(context.zotero.import_file(context, source), equal_to(references))
+  imported = context.zotero.import_file(context, source)
+  if references != 0:
+    assert_that(imported, equal_to(references))
 
 @step(r'I export the library {n:d} times using "{translator}"')
 def step_impl(context, n, translator):

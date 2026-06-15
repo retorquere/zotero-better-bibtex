@@ -216,6 +216,9 @@ function swap_day_month(date: RichDate, fix_only = false): RichDate {
 }
 
 const re = {
+  //  1486/1487
+  Yy: /^(?<Year1>\d{4,})\/(?<year2>\d{2})$/,
+
   // '30-Mar-2020', '30 Mar 2020',
   dMy: new RegExp(`^(?<day>\\d+)(\\s+|-)(?<month>${Month.english})(\\s+|-)(?<year>\\d+)$`, 'ui'),
 
@@ -334,6 +337,17 @@ class DateParser {
       .replace(/\s+/g, ' ')
 
     const english = reparse ? Month.toEnglish(date_only) : date_only
+
+    if (m = english.match(re.Yy)) {
+      const { Year1: sYear1, year2: syear2 } = m.groups
+      const Year1 = parseInt(sYear1)
+      const Year2 = parseInt(sYear1.substring(0, 2) + syear2)
+      return {
+        type: 'interval',
+        from: { type: 'date', year: Year1 },
+        to: { type: 'date', year: Year2 },
+      }
+    }
 
     if (m = english.match(re.Mdy) || english.match(re.dMy)) {
       const { day: sday, month, year: syear } = m.groups
@@ -548,6 +562,9 @@ export function isEDTF(value: string, minuteLevelPrecision = false): boolean {
 
 export function dateToISO(date: RichDate): string {
   switch (date.type) {
+    case 'verbatim':
+      return date.verbatim
+
     case 'interval':
       return `${dateToISO(date.from)}/${dateToISO(date.to)}`.replace(/^[/]$/, '')
 
