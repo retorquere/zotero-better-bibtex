@@ -200,7 +200,7 @@
     "tslib": "^2.8.1",
     "typescript": "^5.9.3",
     "typescript-eslint": "^8.61.1",
-    "unicode2latex": "^7.0.30",
+    "unicode2latex": "^7.0.33",
     "uri-templates": "^0.2.0",
     "util": "^0.12.5",
     "xml-parser": "^1.2.1",
