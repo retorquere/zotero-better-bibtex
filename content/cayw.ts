@@ -81,7 +81,7 @@ function itemPicks(citations: Citation[]): Citation[] {
 
 function getFormatter(options: CAYWOptions): CitationFormatter {
   const formatter = options.format || 'latex'
-  const resolved = Formatter[formatter] as CitationFormatter | undefined
+  const resolved = Formatter[formatter]?.bind(Formatter) as CitationFormatter | undefined
   if (!resolved) throw new Error(`No such formatter ${ JSON.stringify(formatter) }`)
   return resolved
 }
