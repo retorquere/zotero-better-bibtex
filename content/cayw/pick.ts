@@ -1,4 +1,5 @@
 import type { Data as CSLItem } from 'csl-json'
+import { log } from '../logger'
 
 const ITEM_PREFIX = 'ITEM CSL_CITATION '
 const NOTE_ID_COMMENT = /<!--\s*zotero-note-id:(?<id>\d+)\s*-->/
@@ -68,6 +69,30 @@ export type PickResult = {
   citationItems?: PickItem[]
   schema?: string
 }
+
+type AnnotationCitationItem = {
+  id?: number | string
+  uris?: string[]
+  itemData?: CSLItem
+  locator?: string
+  label?: string
+  'suppress-author'?: boolean
+  prefix?: string
+  suffix?: string
+}
+
+type AnnotationData = {
+  attachmentURI?: string
+  pageLabel?: string
+  citationItem?: AnnotationCitationItem
+}
+
+type EmbeddedCitationData = {
+  citationItems?: PickItem[]
+  properties?: PickResult['properties']
+}
+
+type EmbeddedCitationItems = PickItem[]
 
 type PickerOptions = {
   documentId?: string
@@ -316,6 +341,62 @@ function extractNoteID(text: string): { text: string; id?: number } {
   }
 }
 
+function parseEmbeddedJSON<T>(encoded: string | null): T | null {
+  if (!encoded) return null
+
+  try {
+    return JSON.parse(decodeURIComponent(encoded)) as T
+  }
+  catch {
+    return null
+  }
+}
+
+async function annotationCitationItem(annotation: AnnotationData): Promise<PickItem | null> {
+  if (!annotation.citationItem) return null
+
+  const item = { ...annotation.citationItem }
+  await resolveItemID(item, annotation.attachmentURI)
+
+  if ((!item.locator || typeof item.locator !== 'string') && typeof annotation.pageLabel === 'string' && annotation.pageLabel) {
+    item.locator = annotation.pageLabel
+  }
+  if (item.locator && typeof item.label !== 'string') {
+    item.label = 'page'
+  }
+
+  return item
+}
+
+async function resolveItemID(item: PickItem, fallbackURI?: string): Promise<void> {
+  if (typeof item.id === 'number' && Number.isInteger(item.id)) return
+
+  const itemDataID = item.itemData && 'id' in item.itemData ? item.itemData.id : undefined
+  const uri = [
+    typeof item.id === 'string' ? item.id : undefined,
+    typeof itemDataID === 'string' ? itemDataID : undefined,
+    Array.isArray(item.uris) ? item.uris[0] : undefined,
+    fallbackURI,
+  ].find(candidate => typeof candidate === 'string' && candidate.startsWith('http'))
+
+  if (!uri) return
+
+  const resolved = await Zotero.URI.getURIItem(uri)
+  if (!resolved) return
+
+  item.id = typeof resolved.parentID === 'number' ? resolved.parentID : resolved.id
+}
+
+function pickItemSignature(item: PickItem): string {
+  return JSON.stringify({
+    id: item.id ?? '',
+    uri: Array.isArray(item.uris) ? item.uris[0] || '' : '',
+    locator: typeof item.locator === 'string' ? item.locator : '',
+    prefix: typeof item.prefix === 'string' ? item.prefix : '',
+    suffix: typeof item.suffix === 'string' ? item.suffix : '',
+  })
+}
+
 export class Picker {
   public readonly documentId: string
   public readonly processorName: string
@@ -388,6 +469,42 @@ export class Picker {
     const html = text.startsWith('<html>') ? text : `<html><body>${ text }</body></html>`
     const doc = this.domParser.parseFromString(html, 'text/html')
     return (doc.body?.textContent || '').replace(/\s+/g, ' ').trim().slice(0, 120)
+  }
+
+  private async noteCitationItems(text: string): Promise<PickItem[]> {
+    const html = text.startsWith('<html>') ? text : `<html><body>${ text }</body></html>`
+    const doc = this.domParser.parseFromString(html, 'text/html')
+    const items: PickItem[] = []
+
+    for (const node of doc.querySelectorAll('[data-citation-items]')) {
+      const element = node as Element
+      const citationItems = parseEmbeddedJSON<EmbeddedCitationItems>(element.getAttribute('data-citation-items'))
+      if (!Array.isArray(citationItems)) continue
+      for (const item of citationItems) {
+        await resolveItemID(item)
+        items.push(item)
+      }
+    }
+
+    if (items.length) return items
+
+    for (const node of doc.querySelectorAll('[data-annotation]')) {
+      const element = node as Element
+      const annotation = parseEmbeddedJSON<AnnotationData>(element.getAttribute('data-annotation'))
+      const item = annotation ? await annotationCitationItem(annotation) : null
+      if (item) items.push(item)
+    }
+
+    if (items.length) return items
+
+    for (const node of doc.querySelectorAll('[data-citation]')) {
+      const element = node as Element
+      const citation = parseEmbeddedJSON<EmbeddedCitationData>(element.getAttribute('data-citation'))
+      if (!citation?.citationItems?.length) continue
+      items.push(...citation.citationItems)
+    }
+
+    return items
   }
 
   private commandResponse(command: string, args: unknown[]): unknown {
@@ -480,17 +597,38 @@ export class Picker {
     }
   }
 
-  private extractPickResults(): PickResult[] {
+  private async extractPickResults(): Promise<PickResult[]> {
     const picks: PickResult[] = []
+    log.info('CAYW picked:', this.picked)
+    const fieldPickSignatures: Set<string> = new Set
+
+    for (const picked of this.picked) {
+      if (picked.kind !== 'field') continue
+      if (!picked.field.code.startsWith(ITEM_PREFIX)) continue
+
+      const result = JSON.parse(picked.field.code.slice(ITEM_PREFIX.length)) as PickResult
+      picks.push(result)
+      for (const item of result.citationItems || []) {
+        fieldPickSignatures.add(pickItemSignature(item))
+      }
+    }
 
     for (const picked of this.picked) {
       if (picked.kind === 'field') {
-        if (!picked.field.code.startsWith(ITEM_PREFIX)) continue
-        picks.push(JSON.parse(picked.field.code.slice(ITEM_PREFIX.length)) as PickResult)
         continue
       }
 
       const { text, id } = extractNoteID(picked.text)
+      const citationItems = await this.noteCitationItems(text)
+      if (citationItems.length) {
+        if (citationItems.some(item => fieldPickSignatures.has(pickItemSignature(item)))) continue
+        picks.push({
+          citationItems,
+          properties: {},
+        })
+        continue
+      }
+
       picks.push({
         citationItems: [{
           itemData: {
@@ -506,6 +644,7 @@ export class Picker {
       })
     }
 
+    log.info('CAYW pick result:', picks)
     return picks
   }
 }
