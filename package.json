@@ -126,7 +126,7 @@
     "uzip": "^0.20201231.0",
     "wasmjieba-web": "^1.0.15",
     "zotero-plugin": "^9.0.1",
-    "zotero-plugin-toolkit": "^5.1.2",
+    "zotero-plugin-toolkit": "^5.1.4",
     "zotero-types": "^4.1.2"
   },
   "devDependencies": {
@@ -135,7 +135,7 @@
     "@retorquere/bibtex-parser": "^10.0.0",
     "@stylistic/eslint-plugin": "^5.10.0",
     "@types/node": "^25.9.3",
-    "@typescript-eslint/eslint-plugin": "^8.61.0",
+    "@typescript-eslint/eslint-plugin": "^8.61.1",
     "@xmldom/xmldom": "^0.9.10",
     "ajv-keywords": "^5.1.0",
     "any-ascii": "^0.3.3",
@@ -199,7 +199,7 @@
     "ts-node": "^10.9.2",
     "tslib": "^2.8.1",
     "typescript": "^5.9.3",
-    "typescript-eslint": "^8.61.0",
+    "typescript-eslint": "^8.61.1",
     "unicode2latex": "^7.0.30",
     "uri-templates": "^0.2.0",
     "util": "^0.12.5",
