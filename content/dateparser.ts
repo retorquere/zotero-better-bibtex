@@ -1,5 +1,5 @@
-import { toEnglishOrdinal } from './text'
 import EDTF, { defaults } from 'edtf'
+import { toEnglishOrdinal } from './text'
 defaults.offset = false
 import edtfy from 'edtfy'
 
@@ -217,7 +217,7 @@ function swap_day_month(date: RichDate, fix_only = false): RichDate {
 
 const re = {
   //  1486/1487
-  Yy: /^(?<Year1>\d{4,})\/(?<year2>\d{2})$/,
+  Yy: /^(?<date1>\d{4,})\/(?<date2>\d{2})$/,
 
   // '30-Mar-2020', '30 Mar 2020',
   dMy: new RegExp(`^(?<day>\\d+)(\\s+|-)(?<month>${Month.english})(\\s+|-)(?<year>\\d+)$`, 'ui'),
@@ -339,13 +339,19 @@ class DateParser {
     const english = reparse ? Month.toEnglish(date_only) : date_only
 
     if (m = english.match(re.Yy)) {
-      const { Year1: sYear1, year2: syear2 } = m.groups
-      const Year1 = parseInt(sYear1)
-      const Year2 = parseInt(sYear1.substring(0, 2) + syear2)
+      const { date1, date2 } = m.groups
+      const year1 = parseInt(date1)
+      const year2 = parseInt(date1.substring(0, 2) + date2)
+      const month = parseInt(date2)
+
+      if (month >= 1 && month <= 12) {
+        return { type: 'date', year: year1, month }
+      }
+
       return {
         type: 'interval',
-        from: { type: 'date', year: Year1 },
-        to: { type: 'date', year: Year2 },
+        from: { type: 'date', year: year1 },
+        to: { type: 'date', year: year2 },
       }
     }
 
@@ -603,7 +609,7 @@ function selectstart(date: RichDate): RichDate {
     case 'list':
       return date.dates.find(d => d.type !== 'open') || date.dates[0]
     case 'interval':
-      return [ date.from, date.to ].find(d => d.type !== 'open') || [ date.from, date.to ].find(d => d) || { type: 'open' }
+      return [date.from, date.to].find(d => d.type !== 'open') || [date.from, date.to].find(d => d) || { type: 'open' }
     default:
       return date
   }
