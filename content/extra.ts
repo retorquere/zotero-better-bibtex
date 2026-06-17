@@ -32,6 +32,7 @@ export function citationKey(extra: string): { citationKey: string; extra: string
 export type Fields = {
   raw: Record<string, string>
   kv: Record<string, string>
+  csl: Record<string, string>
   creator: Record<string, string[]>
   creators: Creator[]
   tex: Record<string, TeXString>
@@ -67,11 +68,13 @@ export function zoteroCreator(value: string, creatorType: string): ZoteroCreator
 type SetOptions = {
   aliases?: string[]
   kv?: Record<string, string | string[]>
+  csl?: Record<string, string>
   tex?: Record<string, TeXString>
 }
 type GetOptions = SetOptions | {
   aliases?: boolean
   kv?: boolean
+  csl?: boolean
   tex?: boolean
 }
 
@@ -83,7 +86,7 @@ const casing = {
 export function get(extra: string, mode: 'zotero' | 'csl', options?: GetOptions): { extra: string; extraFields: Fields } {
   let defaults = false
   if (!options) {
-    options = { aliases: true, kv: true, tex: true }
+    options = { aliases: true, kv: true, csl: true, tex: true }
     defaults = true
   }
 
@@ -92,6 +95,7 @@ export function get(extra: string, mode: 'zotero' | 'csl', options?: GetOptions)
   const extraFields: Fields = {
     raw: {},
     kv: options.kv || defaults ? {} : undefined,
+    csl: options.csl || defaults ? {} : undefined,
     creator: {},
     creators: [],
     tex: options.tex || defaults ? {} : undefined,
@@ -99,6 +103,23 @@ export function get(extra: string, mode: 'zotero' | 'csl', options?: GetOptions)
   }
 
   let ef
+  function addMappedField(field: { field: string; type: string }, value: string): boolean {
+    switch (field.type) {
+      case 'name':
+        extraFields.creator[field.field] ??= []
+        extraFields.creator[field.field].push(value)
+        extraFields.creators.push({ name: value, type: field.field })
+        return true
+
+      case 'text':
+      case 'date':
+        extraFields.kv[field.field] = value
+        return true
+
+      default:
+        return false
+    }
+  }
   extra = extra.split('\n').filter((line, i) => {
     const m = line.match(re.old)
       || line.match(re.quoted) // quoted before new, because new will trigger on the quoted colon
@@ -106,7 +127,6 @@ export function get(extra: string, mode: 'zotero' | 'csl', options?: GetOptions)
     if (!m) return true
 
     let { tex, csl, key, assign, value } = m.groups
-    const cslkey = csl && key.trim().toLowerCase()
     const texmode = (assign === '=') ? 'raw' : (tex && (tex.includes('T') || tex.match(/^[A-Z]/)) ? 'cased' : undefined)
     tex = tex && tex.toLowerCase()
     csl = csl && csl.toLowerCase()
@@ -125,71 +145,46 @@ export function get(extra: string, mode: 'zotero' | 'csl', options?: GetOptions)
       key = key.replace(/(?!^)[-_]/g, ' ').replace(/([a-z])([A-Z])/g, '$1 $2').toLowerCase()
     }
 
-    if (options.aliases && !tex && key === 'citation key alias') {
-      extraFields.aliases = [ ...extraFields.aliases, ...(value.split(/s*,\s*/).filter(alias => alias)) ]
-      return false
-    }
-    if (options.aliases && tex && key === 'ids') {
-      extraFields.aliases = [ ...extraFields.aliases, ...(value.split(/s*,\s*/).filter(alias => alias)) ]
-      return false
-    }
-
-    // https://github.com/retorquere/zotero-better-bibtex/issues/2399
-    if (options.kv && key === '_eprint') {
-      extraFields.kv[key] = value
+    if (csl) {
+      // All explicit csl.* fields go into their own bucket.
+      // The CSL exporter handles typed conversion (name/date/text) for all of them uniformly.
+      if (options.csl && !key.includes(' ')) extraFields.csl[key] = value
       return false
     }
 
-    if (options.kv && csl && cslkey === 'type') {
-      extraFields.kv['csl.type'] = value
-      return false
-    }
-
-    const [ primary, secondary ] = mode === 'csl' ? ['csl', 'zotero'] : ['zotero', 'csl']
-    if (options.kv && cslkey && Schema.type.csl[cslkey]) {
-      ef = { field: cslkey, type: Schema.type.csl[cslkey] }
-
-      switch (ef.type) {
-        case 'name':
-          extraFields.creator[ef.field] ??= []
-          extraFields.creator[ef.field].push(value)
-          extraFields.creators.push({ name: value, type: ef.field })
-          return false
-
-        case 'text':
-        case 'date':
-          extraFields.kv[ef.field] = value
-          return false
+    if (tex) {
+      if (options.aliases && key === 'ids') {
+        extraFields.aliases = [ ...extraFields.aliases, ...value.split(/\s*,\s*/).filter(alias => alias) ]
+        return false
       }
-    }
 
-    if (options.kv && csl && !key.includes(' ')) {
-      extraFields.kv[`csl.${ key }`] = value
-      return false
-    }
-
-    if (options.kv && (!tex && (ef = Schema.labeled[primary][key] || Schema.labeled[secondary][key]))) {
-      switch (ef.type) {
-        case 'name':
-          extraFields.creator[ef.field] ??= []
-          extraFields.creator[ef.field].push(value)
-          extraFields.creators.push({ name: value, type: ef.field })
-          return false
-
-        case 'text':
-        case 'date':
-          extraFields.kv[ef.field] = value
-          return false
+      if (options.tex && !key.includes(' ')) {
+        extraFields.tex[tex + key] = { value, mode: texmode, line: i }
+        return false
       }
+
+      return true
     }
 
-    if (options.tex && tex && !key.includes(' ')) {
-      extraFields.tex[tex + key] = { value, mode: texmode, line: i }
+    // unprefixed: Zotero-first, explicit aliases, then CSL fallback
+    if (options.aliases && key === 'citation key alias') {
+      extraFields.aliases = [ ...extraFields.aliases, ...value.split(/\s*,\s*/).filter(alias => alias) ]
       return false
     }
 
-    if (options.tex && !tex && otherFields.includes(key.replace(/[- ]/g, ''))) {
-      extraFields.tex[`tex.${ key.replace(/[- ]/g, '') }`] = { value, line: i }
+    if (options.kv) {
+      // https://github.com/retorquere/zotero-better-bibtex/issues/2399
+      if (key === '_eprint') { extraFields.kv[key] = value; return false }
+
+      if ((ef = Schema.labeled.zotero[key]) && addMappedField(ef, value)) return false
+
+      // CSL fallback only when the key is not a known Zotero field.
+      // 'type' is excluded: CSL type overrides require explicit csl.type.
+      if (key !== 'type' && !Schema.labeled.zotero[key] && (ef = Schema.labeled.csl[key]) && addMappedField(ef, value)) return false
+    }
+
+    if (options.tex && otherFields.includes(key.replace(/[- ]/g, ''))) {
+      extraFields.tex[`tex.${key.replace(/[- ]/g, '')}`] = { value, line: i }
       return false
     }
 
@@ -223,6 +218,12 @@ export function set(extra: string, options: SetOptions = {}): string {
       if (otherFields.includes(field)) prefix = ''
       const value = options.tex[name]
       parsed.extra += `\n${ prefix }${ casing[field] || field }${ value.mode === 'raw' ? '=' : ':' } ${ value.value }`
+    }
+  }
+
+  if (options.csl) {
+    for (const name of Object.keys(options.csl).sort()) {
+      parsed.extra += `\ncsl.${ name }: ${ options.csl[name] }`
     }
   }
 
