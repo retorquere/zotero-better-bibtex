@@ -166,21 +166,23 @@ export function get(extra: string, mode: 'zotero' | 'csl', options?: GetOptions)
       return true
     }
 
-    // unprefixed: Zotero-first, explicit aliases, then CSL fallback
+    // unprefixed: mode-aware lookup, explicit aliases, then secondary fallback
     if (options.aliases && key === 'citation key alias') {
       extraFields.aliases = [ ...extraFields.aliases, ...value.split(/\s*,\s*/).filter(alias => alias) ]
       return false
     }
 
     if (options.kv) {
+      const [ primary, secondary ] = mode === 'csl' ? ['csl', 'zotero'] : ['zotero', 'csl']
+
       // https://github.com/retorquere/zotero-better-bibtex/issues/2399
       if (key === '_eprint') { extraFields.kv[key] = value; return false }
 
-      if ((ef = Schema.labeled.zotero[key]) && addMappedField(ef, value)) return false
+      if ((ef = Schema.labeled[primary][key]) && addMappedField(ef, value)) return false
 
-      // CSL fallback only when the key is not a known Zotero field.
-      // 'type' is excluded: CSL type overrides require explicit csl.type.
-      if (key !== 'type' && !Schema.labeled.zotero[key] && (ef = Schema.labeled.csl[key]) && addMappedField(ef, value)) return false
+      // Secondary fallback only when the key is not known in the primary mode.
+      // Unprefixed 'type' does not fall back to CSL in Zotero mode.
+      if ((mode === 'csl' || key !== 'type') && !Schema.labeled[primary][key] && (ef = Schema.labeled[secondary][key]) && addMappedField(ef, value)) return false
     }
 
     if (options.tex && otherFields.includes(key.replace(/[- ]/g, ''))) {
