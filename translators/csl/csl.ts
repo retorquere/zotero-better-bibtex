@@ -121,37 +121,59 @@ export abstract class CSLExporter {
 
       // special case for #587... not pretty
       // checked separately because .type isn't actually a CSL var so wouldn't pass the ef.type test below
-      if (!Schema.csl.types.includes(item.extraFields.kv['csl-type']) && Schema.csl.types.includes(item.extraFields.kv.type)) {
+      if (!Schema.csl.types.includes(item.extraFields.kv['csl.type']) && Schema.csl.types.includes(item.extraFields.kv.type)) {
         csl.type = item.extraFields.kv.type
         delete item.extraFields.kv.type
       }
 
       const extra: Set<string> = new Set
       for (const [ fieldName, value ] of Object.entries(item.extraFields.kv)) {
+        const literal = fieldName.match(/^csl\.(.+)$/i)
+        if (literal) {
+          const literalField = literal[1].trim()
+          const normalizedField = literalField.toLowerCase()
+          const cslField = Schema.type.csl[normalizedField] ? normalizedField : literalField
+
+          extra.add(cslField)
+
+          if (value) {
+            switch (Schema.type.csl[cslField]) {
+              case 'date':
+                csl[cslField] = this.date2CSL(dateparser.parse(value))
+                break
+
+              case 'name':
+                csl[cslField] = [ ...(csl[cslField] || []), cslCreator(value) ]
+                break
+
+              default:
+                csl[cslField] = value
+                break
+            }
+          }
+
+          delete item.extraFields.kv[fieldName]
+          continue
+        }
+
         extra.add(fieldName)
         if (!value) continue
 
-        if (fieldName === 'csl-type') {
-          if (!Schema.csl.types.includes(value)) continue
-          csl.type = value
-        }
-        else {
-          const type = Schema.type.csl[fieldName]
-          if (!type) continue
+        switch (Schema.type.csl[fieldName]) {
+          case 'date':
+            csl[fieldName] = this.date2CSL(dateparser.parse(value))
+            break
 
-          switch (type) {
-            case 'date':
-              csl[fieldName] = this.date2CSL(dateparser.parse(value))
-              break
+          case 'text':
+            if (fieldName === 'type' && !Schema.csl.types.includes(value)) continue
+            csl[fieldName] = value
+            break
 
-            case 'text':
-              if (fieldName === 'type' && !Schema.csl.types.includes(value)) continue
-              csl[fieldName] = value
-              break
+          case 'name':
+            continue // skip out of the loop, keep the kv-var
 
-            case 'name':
-              continue // skip out of the loop, keep the kv-var
-          }
+          default:
+            continue
         }
 
         delete item.extraFields.kv[fieldName]

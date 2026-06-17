@@ -140,9 +140,15 @@ export function get(extra: string, mode: 'zotero' | 'csl', options?: GetOptions)
       return false
     }
 
+    if (options.kv && csl && cslkey === 'type') {
+      extraFields.kv['csl.type'] = value
+      return false
+    }
+
     const [ primary, secondary ] = mode === 'csl' ? ['csl', 'zotero'] : ['zotero', 'csl']
     if (options.kv && cslkey && Schema.type.csl[cslkey]) {
       ef = { field: cslkey, type: Schema.type.csl[cslkey] }
+
       switch (ef.type) {
         case 'name':
           extraFields.creator[ef.field] ??= []
@@ -155,6 +161,11 @@ export function get(extra: string, mode: 'zotero' | 'csl', options?: GetOptions)
           extraFields.kv[ef.field] = value
           return false
       }
+    }
+
+    if (options.kv && csl && !key.includes(' ')) {
+      extraFields.kv[`csl.${ key }`] = value
+      return false
     }
 
     if (options.kv && (!tex && (ef = Schema.labeled[primary][key] || Schema.labeled[secondary][key]))) {
