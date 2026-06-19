@@ -2,7 +2,7 @@
   title = {The Theme of Diaspora in the Pentateuch},
   author = {Hidaka, Kishiya},
   date = {2026},
-  series = {Forschungen zum {{Alten Testament}}},
+  series = {Forschungen zum Alten Testament},
   edition = {1},
   number = {193},
   publisher = {Mohr Siebeck},
@@ -14,4 +14,36 @@
   keywords = {Diaspora,Perserzeit},
   annotation = {Read\_Status: To Read\\
 Read\_Status\_Date: 2026-05-15T20:53:01.555Z}
+}
+
+@book{Hidaka2026ThemeDiasporaa,
+  title = {The Theme of Diaspora in the Pentateuch},
+  author = {Hidaka, Kishiya},
+  date = {2026},
+  series = {Forschungen zum Alten Testament},
+  edition = {1},
+  number = {193},
+  publisher = {Mohr Siebeck},
+  location = {Tübingen},
+  doi = {10.1628/978-3-16-170559-5},
+  isbn = {978-3-16-170559-5},
+  langid = {english},
+  shortseries = {FAT},
+  keywords = {Diaspora,Perserzeit},
+  annotation = {Read\_Status: To Read\\
+Read\_Status\_Date: 2026-05-15T20:53:01.555Z}
+}
+
+@book{MuellerSchaefers2025VomText,
+  title = {Vom Text zum Entstehungsmodell in der Pentateuchkritik},
+  editor = {Müller, Reinhard and Schäfers, Kirsten M.},
+  date = {2025},
+  series = {Forschungen zum Alten Testament},
+  number = {186},
+  publisher = {Mohr Siebeck},
+  doi = {10.1628/978-3-16-158314-8},
+  abstract = {In this case study on Gen. 20-22, the contributions unfold how textual observations evolve into literary-historical models. The volume is designed as a textbook for method-oriented teaching. By reflecting on the methodology of Pentateuchal criticism and discussing the literary history of the Abraham cycle, the volume offers innovative perspectives on the current debate on the Pentateuch.           ,              Wie entstehen aus Textbeobachtungen literargeschichtliche Modelle? Anhand von Gen 20-22 entfalten die Beiträge dieses Bandes multiperspektivische Reflexionen über die Methodik der Pentateuchkritik. Den Hauptteil bildet eine neuartige Synopse, die die antiken Versionen des biblischen Textes mit einem differenzierten literarkritischen Kommentar verbindet. Der Band ist zugleich Arbeitsbuch und Beitrag zur aktuellen Debatte.           ,              Reinhard Müller /  Kirsten M. Schäfers : Einleitung Teil 1: Zum Status Quo Christoph Berner /  Katharina Pyschny : Die Analyse von Gen 20-22 in der Forschungsgeschichte. Einordnung und Perspektiven -  Kirsten M. Schäfers : Die Anwendung historisch-kritischer Methodenschritte in der Pentateuchforschung. Aktuelle Tendenzen und Desiderata mit Blick auf Gen 20-22 Teil 2: Synopse Gen 20-22: Text und KommentierungTeil 3: Literargeschichtliche Sollbruchstellen in Gen 20-22. Diskussion des Befundes Katharina Pyschny : Gen 20 -  Christoph Berner/  Christian Frevel : Gen 21,1-7 -  Reinhard Müller /  Kirsten M. Schäfers : Gen 21,8-21 -  Reinhard G. Kratz : Gen 21,22-34 -  Jonathan M. Robker : Gen 21,22-34 -  Reinhard Achenbach /  Christophe Nihan : Gen 22,1-19 -  Lars Maskow : Gen 22,20-24 Teil 4: Thesen zur Entstehung des Abraham-Zyklus Reinhard Achenbach : Anmerkungen zur Redaktionsgeschichte der Abraham-Erzählungen in Gen 11-25 -  Reinhard G. Kratz : Die jüngste Figur in dieser Gesellschaft. Abraham in der Genesis           ,              From Textual Observations to Literary-Historical Models in Pentateuchal Criticism. Studies on Gen 20-22},
+  isbn = {978-3-16-158314-8},
+  langid = {ngerman},
+  shortseries = {FAT}
 }
