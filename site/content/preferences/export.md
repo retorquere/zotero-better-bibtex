@@ -83,7 +83,7 @@ When a family name prefix is found, add useprefix=true
 
 ### Fields to omit from export (comma-separated)
 
-default: `annotation`
+default: `<not set>`
 
 If there are some fields you don't want in your bibtex files (such as `note` for example), add a list of them here, separated by comma's.
 

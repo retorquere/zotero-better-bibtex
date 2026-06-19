@@ -242,7 +242,7 @@ skipFields:
   description: >-
     If there are some fields you don't want in your bibtex files (such as `note`
     for example), add a list of them here, separated by comma's.
-  default: 'annotation'
+  default: ''
   affects:
     - Better BibLaTeX
     - Better BibTeX
@@ -735,6 +735,20 @@ exportTitlecase:
     BibTeX/BibLaTeX best practice (see the BBT FAQ) and the Zotero
     recommendations on title/sentence casing, but if you are dead-set
     on ignoring these, you can override them here.
+  default: ''
+  affects:
+    - Better BibLaTeX
+    - Better BibTeX
+
+exportCaseProtection:
+  tooltip: >-
+    This is a comma-separated list of export case-protection overrides for
+    English items. Prefix fields with "+" to force case-protection and "-"
+    to disable case-protection. Use just the field name to apply to both
+    bibtex and biblatex, or prefix with "bibtex." or "biblatex."
+    to restrict to one. The defaults in BBT adhere to BibTeX/BibLaTeX best
+    practice, but if you are dead-set on ignoring these, you can override them
+    here.
   default: ''
   affects:
     - Better BibLaTeX

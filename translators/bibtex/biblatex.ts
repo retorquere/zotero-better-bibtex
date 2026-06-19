@@ -7,7 +7,7 @@ import type { Collected } from '../lib/collect'
 import { Entry as BaseEntry, Config } from './entry'
 
 const config: Config = {
-  caseConversion: {
+  exportCaseDefaults: {
     title: true,
     subtitle: true,
     series: true,

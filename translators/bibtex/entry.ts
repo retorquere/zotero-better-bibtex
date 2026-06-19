@@ -141,7 +141,7 @@ const isBibString = /^[a-z][-a-z0-9_]*$/i
 
 export type Config = {
   fieldEncoding: Record<string, 'raw' | 'url' | 'verbatim' | 'creators' | 'literal' | 'literal_list' | 'tags' | 'attachments' | 'date' | 'extra'>
-  caseConversion: Record<string, boolean>
+  exportCaseDefaults: Record<string, boolean>
   typeMap: {
     csl: Record<string, string | { type: string; subtype?: string }>
     zotero: Record<string, string | { type: string; subtype?: string }>
@@ -173,6 +173,7 @@ export class Entry {
   private extraFields: ParsedExtraFields
 
   private titlecaseFields: Set<string>
+  private caseProtectionFields: Set<string>
 
   declare private re: {
     punctuationAtEnd: any
@@ -248,27 +249,45 @@ export class Entry {
 
     const translatorPrefix = this.translation.BetterBibTeX ? 'bibtex' : 'biblatex'
     this.titlecaseFields = new Set(
-      Object.entries(this.config.caseConversion)
+      Object.entries(this.config.exportCaseDefaults)
         .filter(([_name, enabled]) => enabled)
         .map(([name, _enabled]) => name)
     )
+    this.caseProtectionFields = new Set(this.titlecaseFields)
 
-    for (const setting of this.translation.collected.preferences.exportTitlecase.split(',').map((s: string) => s.trim()).filter((s: string) => s)) {
-      const operation = (setting[0] === '-' ? '-' : '+')
-      const scoped = (setting[0] === '-' || setting[0] === '+') ? setting.slice(1).trim() : setting
-      if (!scoped) continue
+    const parseOverrides = (settings: string): [operation: '+' | '-', field: string][] => settings
+      .split(',')
+      .map((s: string) => s.trim())
+      .filter((s: string) => s)
+      .flatMap((setting: string): [operation: '+' | '-', field: string][] => {
+        const operation = (setting[0] === '-' ? '-' : '+')
+        const scoped = (setting[0] === '-' || setting[0] === '+') ? setting.slice(1).trim() : setting
+        if (!scoped) return []
 
-      const dot = scoped.indexOf('.')
-      const [scope, field] = dot < 0 ? [null, scoped] : [scoped.slice(0, dot), scoped.slice(dot + 1)]
-      if (!field) continue
-      if (scope && !['bibtex', 'biblatex'].includes(scope)) continue
-      if (scope && scope !== translatorPrefix) continue
+        const dot = scoped.indexOf('.')
+        const [scope, field] = dot < 0 ? [null, scoped] : [scoped.slice(0, dot), scoped.slice(dot + 1)]
+        if (!field) return []
+        if (scope && !['bibtex', 'biblatex'].includes(scope)) return []
+        if (scope && scope !== translatorPrefix) return []
 
+        return [[operation, field]]
+      })
+
+    for (const [operation, field] of parseOverrides(this.translation.collected.preferences.exportTitlecase)) {
       if (operation === '+') {
         this.titlecaseFields.add(field)
       }
       else {
         this.titlecaseFields.delete(field)
+      }
+    }
+
+    for (const [operation, field] of parseOverrides(this.translation.collected.preferences.exportCaseProtection)) {
+      if (operation === '+') {
+        this.caseProtectionFields.add(field)
+      }
+      else {
+        this.caseProtectionFields.delete(field)
       }
     }
 
@@ -1189,11 +1208,13 @@ export class Entry {
 
     if (f.raw || options.raw) return f.value
 
-    const caseConversion = this.titlecaseFields.has(f.name)
+    const titlecase = this.titlecaseFields.has(f.name)
+    const exportCaseProtection = this.caseProtectionFields.has(f.name)
     const { latex, packages, raw } = this.translation.bibtex
       .text2latex(f.value, {
         html: f.html,
-        caseConversion: caseConversion && this.english,
+        exportCaseProtection: exportCaseProtection && this.english,
+        exportTitleCase: titlecase,
         creator: options.creator,
       })
     for (const pkg of packages) {
@@ -1209,7 +1230,7 @@ export class Entry {
       bibtex to back off from non-English titles is to wrap the whole
       thing in braces.
     */
-    if (caseConversion && this.translation.BetterBibTeX && !this.english && this.translation.collected.preferences.exportBraceProtection) value = `{${ value }}`
+    if (exportCaseProtection && this.translation.BetterBibTeX && !this.english && this.translation.collected.preferences.exportBraceProtection) value = `{${ value }}`
 
     if (f.value instanceof String && !raw) value = new String(`{${ value }}`)
     return value
