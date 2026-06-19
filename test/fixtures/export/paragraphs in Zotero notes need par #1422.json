@@ -11,7 +11,7 @@
       "automaticTags": false,
       "bibtexURL": "url",
       "citeCommand": "citep",
-      "exportTitlecase": "-title, -series, -shorttitle, -booktitle, -origtitle, -maintitle, -eventtitle, -bibtex.type, -biblatex.subtitle, -biblatex.origsubtitle, -biblatex.booksubtitle, -biblatex.mainsubtitle, -biblatex.eventsubtitle",
+      "exportTitlecase": "off",
       "skipFields": "file"
     }
   },

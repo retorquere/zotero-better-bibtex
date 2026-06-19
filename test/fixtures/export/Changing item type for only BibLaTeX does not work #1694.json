@@ -13,7 +13,7 @@
       "citekeyFold": false,
       "citekeyFormat": "auth(n=0,m=1,creator=\"*\",initials=false).fold.capitalize + year",
       "exportBraceProtection": false,
-      "exportTitlecase": "-title, -series, -shorttitle, -booktitle, -origtitle, -maintitle, -eventtitle, -bibtex.type, -biblatex.subtitle, -biblatex.origsubtitle, -biblatex.booksubtitle, -biblatex.mainsubtitle, -biblatex.eventsubtitle",
+      "exportTitlecase": "off",
       "itemObserverDelay": 100,
       "keyConflictPolicy": "change",
       "keyScope": "global",

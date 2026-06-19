@@ -10,7 +10,7 @@
       "DOIandURL": "doi",
       "bibtexURL": "url",
       "citekeyFormat": "authorsn(n=3,creator=\"*\",initials=false,sep=\" \").fold + year",
-      "exportTitlecase": "-title, -series, -shorttitle, -booktitle, -origtitle, -maintitle, -eventtitle, -bibtex.type, -biblatex.subtitle, -biblatex.origsubtitle, -biblatex.booksubtitle, -biblatex.mainsubtitle, -biblatex.eventsubtitle",
+      "exportTitlecase": "off",
       "itemObserverDelay": 100,
       "skipFields": "note,issn"
     }

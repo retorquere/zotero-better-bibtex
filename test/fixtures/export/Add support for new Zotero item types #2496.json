@@ -11,7 +11,7 @@
       "citekeyFold": false,
       "citekeyFormat": "auth.capitalize+year",
       "exportBraceProtection": false,
-      "exportTitlecase": "-title, -series, -shorttitle, -booktitle, -origtitle, -maintitle, -eventtitle, -bibtex.type, -biblatex.subtitle, -biblatex.origsubtitle, -biblatex.booksubtitle, -biblatex.mainsubtitle, -biblatex.eventsubtitle",
+      "exportTitlecase": "off",
       "extraMergeCSL": true,
       "extraMergeCitekeys": true,
       "extraMergeTeX": true,

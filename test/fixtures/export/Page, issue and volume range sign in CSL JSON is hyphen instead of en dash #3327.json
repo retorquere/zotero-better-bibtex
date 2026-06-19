@@ -14,7 +14,7 @@
       "citekeyFormat": "auth.transliterate.lower + year",
       "DOIandURL": "doi",
       "exportSort": "off",
-      "exportTitlecase": "-title, -series, -shorttitle, -booktitle, -origtitle, -maintitle, -eventtitle, -bibtex.type, -biblatex.subtitle, -biblatex.origsubtitle, -biblatex.booksubtitle, -biblatex.mainsubtitle, -biblatex.eventsubtitle",
+      "exportTitlecase": "off",
       "extraMergeCSL": true,
       "keyConflictPolicy": "change",
       "keyScope": "global",

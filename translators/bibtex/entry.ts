@@ -255,13 +255,14 @@ export class Entry {
     )
     this.caseProtectionFields = new Set(this.titlecaseFields)
 
-    const parseOverrides = (settings: string): [operation: '+' | '-', field: string][] => settings
+    const parseOverrides = (settings: string): [operation: '+' | '-' | 'x', field: string][] => settings
       .split(',')
       .map((s: string) => s.trim())
       .filter((s: string) => s)
-      .flatMap((setting: string): [operation: '+' | '-', field: string][] => {
+      .flatMap((setting: string): [operation: '+' | '-' | 'x', field: string][] => {
+        const hasOperationPrefix = (setting[0] === '-' || setting[0] === '+')
         const operation = (setting[0] === '-' ? '-' : '+')
-        const scoped = (setting[0] === '-' || setting[0] === '+') ? setting.slice(1).trim() : setting
+        const scoped = hasOperationPrefix ? setting.slice(1).trim() : setting
         if (!scoped) return []
 
         const dot = scoped.indexOf('.')
@@ -270,24 +271,26 @@ export class Entry {
         if (scope && !['bibtex', 'biblatex'].includes(scope)) return []
         if (scope && scope !== translatorPrefix) return []
 
+        if (field === 'off' && !hasOperationPrefix) {
+          return [['x', '']]
+        }
+
         return [[operation, field]]
       })
 
-    for (const [operation, field] of parseOverrides(this.translation.collected.preferences.exportTitlecase)) {
-      if (operation === '+') {
-        this.titlecaseFields.add(field)
-      }
-      else {
-        this.titlecaseFields.delete(field)
-      }
-    }
-
-    for (const [operation, field] of parseOverrides(this.translation.collected.preferences.exportCaseProtection)) {
-      if (operation === '+') {
-        this.caseProtectionFields.add(field)
-      }
-      else {
-        this.caseProtectionFields.delete(field)
+    for (const [set, overrides] of [ [ 'titlecaseFields', 'exportTitlecase' ], [ 'caseProtectionFields', 'exportCaseProtection' ] ]) {
+      for (const [operation, field] of parseOverrides(this.translation.collected.preferences[overrides])) {
+        switch (operation) {
+          case 'x':
+            this[set].clear()
+            break
+          case '+':
+            this[set].add(field)
+            break
+          case '-':
+            this[set].delete(field)
+            break
+        }
       }
     }
 

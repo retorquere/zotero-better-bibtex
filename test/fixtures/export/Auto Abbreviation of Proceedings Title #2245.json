@@ -8,7 +8,7 @@
     },
     "preferences": {
       "autoAbbrev": true,
-      "exportTitlecase": "-title, -series, -shorttitle, -booktitle, -origtitle, -maintitle, -eventtitle, -bibtex.type, -biblatex.subtitle, -biblatex.origsubtitle, -biblatex.booksubtitle, -biblatex.mainsubtitle, -biblatex.eventsubtitle",
+      "exportTitlecase": "off",
       "skipFields": "abstract,file,month,day,keywords,copyright"
     }
   },

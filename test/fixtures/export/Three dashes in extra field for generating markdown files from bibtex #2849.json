@@ -8,7 +8,7 @@
       "bibtexURL": "url",
       "citekeyFormat": "auth(n=0,m=1,creator=\"*\",initials=false).fold.lower + \"_\" + shorttitle(1).lower + \"_\" + year",
       "exportBraceProtection": false,
-      "exportTitlecase": "-title, -series, -shorttitle, -booktitle, -origtitle, -maintitle, -eventtitle, -bibtex.type, -biblatex.subtitle, -biblatex.origsubtitle, -biblatex.booksubtitle, -biblatex.mainsubtitle, -biblatex.eventsubtitle",
+      "exportTitlecase": "off",
       "importSentenceCase": "off",
       "keyScope": "global"
     }

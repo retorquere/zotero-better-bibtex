@@ -14,7 +14,7 @@
       "charmap": "{\"·\":{\"text\":\"·\",\"math\":\"\"},\"ș\":{\"text\":\"ș\",\"math\":\"\"}}",
       "citekeyFormat": "auth.transliterate.lower+year",
       "exportSort": "off",
-      "exportTitlecase": "-title, -series, -shorttitle, -booktitle, -origtitle, -maintitle, -eventtitle, -bibtex.type, -biblatex.subtitle, -biblatex.origsubtitle, -biblatex.booksubtitle, -biblatex.mainsubtitle, -biblatex.eventsubtitle",
+      "exportTitlecase": "off",
       "extraMergeCSL": true,
       "keyConflictPolicy": "change",
       "keyScope": "global",
