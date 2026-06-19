@@ -61,7 +61,7 @@ export class HTMLConverter {
       caseConversion: options.caseConversion,
       exportBraceProtection: this.translation.collected.preferences.exportBraceProtection,
       csquotes: this.translation.collected.preferences.csquotes,
-      exportTitleCase: this.translation.collected.preferences.exportTitleCase,
+      exportTitleCase: true,
     })
     this.walk(ast)
 

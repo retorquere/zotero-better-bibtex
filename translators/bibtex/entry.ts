@@ -172,6 +172,8 @@ export class Entry {
   private quality_report: string[] = []
   private extraFields: ParsedExtraFields
 
+  private titlecaseFields: Set<string>
+
   declare private re: {
     punctuationAtEnd: any
     startsWithLowercase: any
@@ -243,6 +245,32 @@ export class Entry {
     this.item = item
     this.config = config
     this.date = item.date ? DateParser.parse(item.date) : { type: 'none' }
+
+    const translatorPrefix = this.translation.BetterBibTeX ? 'bibtex' : 'biblatex'
+    this.titlecaseFields = new Set(
+      Object.entries(this.config.caseConversion)
+        .filter(([_name, enabled]) => enabled)
+        .map(([name, _enabled]) => name)
+    )
+
+    for (const setting of this.translation.collected.preferences.exportTitlecase.split(',').map((s: string) => s.trim()).filter((s: string) => s)) {
+      const operation = (setting[0] === '-' ? '-' : '+')
+      const scoped = (setting[0] === '-' || setting[0] === '+') ? setting.slice(1).trim() : setting
+      if (!scoped) continue
+
+      const dot = scoped.indexOf('.')
+      const [scope, field] = dot < 0 ? [null, scoped] : [scoped.slice(0, dot), scoped.slice(dot + 1)]
+      if (!field) continue
+      if (scope && !['bibtex', 'biblatex'].includes(scope)) continue
+      if (scope && scope !== translatorPrefix) continue
+
+      if (operation === '+') {
+        this.titlecaseFields.add(field)
+      }
+      else {
+        this.titlecaseFields.delete(field)
+      }
+    }
 
     if (!item.language) {
       this.english = true
@@ -856,7 +884,7 @@ export class Entry {
         continue
       }
 
-      const mode = ({ raw: { raw: true }, cased: { caseConversion: true }}[field.mode]) || {}
+      const mode = ({ raw: { raw: true }, cased: {}}[field.mode]) || {}
 
       switch (name) {
         case 'mr':
@@ -1161,7 +1189,7 @@ export class Entry {
 
     if (f.raw || options.raw) return f.value
 
-    const caseConversion = this.config.caseConversion[f.name] || f.caseConversion
+    const caseConversion = this.titlecaseFields.has(f.name)
     const { latex, packages, raw } = this.translation.bibtex
       .text2latex(f.value, {
         html: f.html,
@@ -1544,7 +1572,7 @@ export class Entry {
         }
       }
 
-      if (this.has.title && this.translation.collected.preferences.exportTitleCase) {
+      if (this.has.title && this.titlecaseFields.has('title')) {
         const titleCased = titleCase(this.has.title.value) === this.has.title.value
         if (this.has.title.value.match(/\s/)) {
           if (titleCased) report.push('? Title looks like it was stored in title-case in Zotero')

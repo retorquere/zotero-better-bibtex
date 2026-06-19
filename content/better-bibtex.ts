@@ -273,7 +273,7 @@ Zotero.Translate.Import.prototype.Sandbox.BetterBibTeX = {
       ...options,
       exportBraceProtection: Preference.exportBraceProtection,
       csquotes: Preference.csquotes,
-      exportTitleCase: Preference.exportTitleCase,
+      exportTitleCase: true,
     }
     return HTMLParser.parse(text.toString(), options)
   },

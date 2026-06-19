@@ -12,6 +12,7 @@ Feature: Export
 
     Examples:
       | file                                                                                                                     | references |
+      | Problems with Casing of Series Field with Non-English Series Titles #3539                                                | 1          |
       | Unrecognized date crashes export #3533                                                                                   | 1          |
       | Better control of citation key capitalization #3492                                                                      | 1          |
       | Trouble with extra() function in citekey generator #3505                                                                 | 1          |

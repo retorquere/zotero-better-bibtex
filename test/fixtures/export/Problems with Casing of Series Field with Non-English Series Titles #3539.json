@@ -1,0 +1,60 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "preferences": {
+      "baseAttachmentPath": "/Users/luisluetkehellweg/Library/Mobile Documents/com~apple~CloudDocs/Zotero PDFs",
+      "citekeyFormat": "authEtAl + year + veryshorttitle(2, 2)",
+      "DOIandURL": "doi",
+      "resetKeyOnChange": true,
+      "exportTitlecase": "-series",
+      "skipFields": "numPages, pagetotal"
+    },
+    "options": {}
+  },
+  "version": {
+    "zotero": "9.0.4",
+    "bbt": "9.0.29"
+  },
+  "collections": {},
+  "items": [
+    {
+      "key": "8PVATELQ",
+      "version": 17663,
+      "itemType": "book",
+      "title": "The theme of diaspora in the pentateuch",
+      "date": "2026",
+      "language": "eng",
+      "libraryCatalog": "K10plus ISBN",
+      "extra": "tex.shortseries = FAT\nRead_Status: To Read\nRead_Status_Date: 2026-05-15T20:53:01.555Z",
+      "place": "Tübingen",
+      "publisher": "Mohr Siebeck",
+      "ISBN": "978-3-16-170559-5",
+      "series": "Forschungen zum Alten Testament",
+      "seriesNumber": "193",
+      "edition": "1",
+      "DOI": "10.1628/978-3-16-170559-5",
+      "citationKey": "Hidaka2026ThemeDiaspora",
+      "creators": [
+        {
+          "firstName": "Kishiya",
+          "lastName": "Hidaka",
+          "creatorType": "author"
+        }
+      ],
+      "tags": [
+        {
+          "tag": "Diaspora"
+        },
+        {
+          "tag": "Perserzeit"
+        }
+      ],
+      "dateAdded": "2026-05-15T20:50:46Z",
+      "dateModified": "2026-06-17T10:49:37Z",
+      "itemID": 9518,
+      "attachments": [],
+      "notes": []
+    }
+  ]
+}
