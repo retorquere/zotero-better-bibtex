@@ -10,7 +10,7 @@
       "autoExport": "off",
       "bibtexURL": "url",
       "citekeyFormat": "[authors1]:[year][veryshorttitle1_0:substring=1,2]",
-      "exportTitleCase": false,
+      "exportTitlecase": "-title, -series, -shorttitle, -booktitle, -origtitle, -maintitle, -eventtitle, -bibtex.type, -biblatex.subtitle, -biblatex.origsubtitle, -biblatex.booksubtitle, -biblatex.mainsubtitle, -biblatex.eventsubtitle",
       "importSentenceCase": "off",
       "keyScope": "global"
     }

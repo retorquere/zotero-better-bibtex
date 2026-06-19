@@ -5,7 +5,7 @@
     "preferences": {
       "autoAbbrev": true,
       "citekeyFormat": "auth.lower + shorttitle(3, 3) + year",
-      "exportTitleCase": false
+      "exportTitlecase": "-title, -series, -shorttitle, -booktitle, -origtitle, -maintitle, -eventtitle, -bibtex.type, -biblatex.subtitle, -biblatex.origsubtitle, -biblatex.booksubtitle, -biblatex.mainsubtitle, -biblatex.eventsubtitle"
     },
     "options": {}
   },

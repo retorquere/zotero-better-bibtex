@@ -33,7 +33,6 @@
       "DOIandURL": "both",
       "exportBibTeXStrings": "off",
       "exportBraceProtection": true,
-      "exportTitleCase": true,
       "extraMergeCitekeys": false,
       "extraMergeCSL": false,
       "extraMergeTeX": false,

@@ -39,7 +39,6 @@
       "exportBibTeXStrings": "off",
       "exportBraceProtection": true,
       "exportSort": "citekey",
-      "exportTitleCase": true,
       "extraMergeCitekeys": false,
       "extraMergeCSL": false,
       "extraMergeTeX": false,

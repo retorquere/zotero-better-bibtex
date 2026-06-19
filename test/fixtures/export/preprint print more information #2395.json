@@ -11,7 +11,7 @@
       "autoExportDelay": 2,
       "baseAttachmentPath": "/Users/furue/Dropbox/doc/papers",
       "citekeyFormat": "authEtal2(initials=true).capitalize+\":\"+year",
-      "exportTitleCase": false,
+      "exportTitlecase": "-title, -series, -shorttitle, -booktitle, -origtitle, -maintitle, -eventtitle, -bibtex.type, -biblatex.subtitle, -biblatex.origsubtitle, -biblatex.booksubtitle, -biblatex.mainsubtitle, -biblatex.eventsubtitle",
       "extraMergeCSL": true,
       "qualityReport": true,
       "verbatimFields": "url,doi,file,eprint,verba,verbb,verbc,groups"

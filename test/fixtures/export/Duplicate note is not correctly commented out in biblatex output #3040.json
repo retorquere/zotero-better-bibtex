@@ -9,7 +9,7 @@
       "baseAttachmentPath": "/Users/furue/Dropbox/doc/papers",
       "bibtexURL": "url",
       "citekeyFormat": "authEtal2(initials=true).capitalize+\":\"+year",
-      "exportTitleCase": false,
+      "exportTitlecase": "-title, -series, -shorttitle, -booktitle, -origtitle, -maintitle, -eventtitle, -bibtex.type, -biblatex.subtitle, -biblatex.origsubtitle, -biblatex.booksubtitle, -biblatex.mainsubtitle, -biblatex.eventsubtitle",
       "extraMergeCSL": true,
       "language": "language",
       "postscript": "if (Translator.BetterTeX) {\n  if (item.extra) reference.add({ name: 'note',  value: item.extra.replace(/(https?:\\/\\/[^ ]+)/, \"<script>\\\\url{$1}</script>\") })\n}",

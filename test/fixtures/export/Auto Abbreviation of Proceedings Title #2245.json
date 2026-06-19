@@ -8,7 +8,7 @@
     },
     "preferences": {
       "autoAbbrev": true,
-      "exportTitleCase": false,
+      "exportTitlecase": "-title, -series, -shorttitle, -booktitle, -origtitle, -maintitle, -eventtitle, -bibtex.type, -biblatex.subtitle, -biblatex.origsubtitle, -biblatex.booksubtitle, -biblatex.mainsubtitle, -biblatex.eventsubtitle",
       "skipFields": "abstract,file,month,day,keywords,copyright"
     }
   },
@@ -26,7 +26,7 @@
         },
         {
           "creatorType": "author",
-          "firstName": "Francisco Perdig\u00f3n",
+          "firstName": "Francisco Perdigón",
           "lastName": "Romero"
         },
         {

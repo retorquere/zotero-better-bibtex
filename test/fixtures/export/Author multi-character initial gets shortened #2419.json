@@ -9,7 +9,7 @@
       "autoAbbrev": true,
       "autoExportDelay": 2,
       "citekeyFormat": "auth + year",
-      "exportTitleCase": false,
+      "exportTitlecase": "-title, -series, -shorttitle, -booktitle, -origtitle, -maintitle, -eventtitle, -bibtex.type, -biblatex.subtitle, -biblatex.origsubtitle, -biblatex.booksubtitle, -biblatex.mainsubtitle, -biblatex.eventsubtitle",
       "importSentenceCase": "off",
       "quickCopyMode": "citekeys",
       "biblatexExtendedNameFormat": true
