@@ -4,6 +4,7 @@ import { log } from './logger'
 import { getItemsAsync } from './get-items-async'
 
 type ZoteroAction = 'modify' | 'add' | 'trash' | 'delete'
+type ZoteroType = 'item' | 'item-tag' | 'collection' | 'collection-item' | 'group'
 
 type IdleState = 'active' | 'idle'
 export type SyncState = 'syncing' | 'idle'
@@ -25,6 +26,10 @@ export const REASON_KEY_SAVE = 'key-save' as const
 type Reason = typeof REASON_KEY_SAVE | 'key-refresh' | 'parent-modify' | 'parent-delete' | 'parent-add' | 'tagged'
 
 const logEvents = Zotero.Prefs.get('extensions.zotero.translators.better-bibtex.logEvents')
+
+function syncInProgress(): boolean {
+  return !!(Zotero.Sync?.Runner?.syncInProgress || Events.syncing === 'syncing')
+}
 
 type EventMap = {
   'collections-changed': number[]
@@ -48,13 +53,18 @@ class Emitter extends Emittery<EventMap> {
   public itemObserverDelay = 5
 
   public startup(): void {
-    this.listeners.push(new WindowListener)
-    this.listeners.push(new ItemListener)
-    this.listeners.push(new TagListener)
-    this.listeners.push(new CollectionListener)
-    this.listeners.push(new MemberListener)
-    this.listeners.push(new GroupListener)
-    this.listeners.push(new SyncListener)
+    this.addListener(WindowListener)
+    this.addListener(ItemListener)
+    this.addListener(TagListener)
+    this.addListener(CollectionListener)
+    this.addListener(MemberListener)
+    this.addListener(GroupListener)
+    this.addListener(SyncListener)
+  }
+
+  private addListener(listener) {
+    this.listeners.push(listener)
+    listener.startup()
   }
 
   override async emit<Name extends keyof EventMap>(eventName: Name, data?: EventMap[Name]): Promise<void> {
@@ -83,6 +93,7 @@ class Emitter extends Emittery<EventMap> {
       listener.unregister()
     }
 
+    this.listeners = []
     this.clearListeners()
   }
 }
@@ -103,11 +114,10 @@ export const Events = new Emitter(logEvents ? { // eslint-disable-line @stylisti
   },
 } : {})
 
-class WindowListener {
-  constructor() {
+const WindowListener = new class $WindowListener {
+  public startup() {
     Services.wm.addListener(this)
   }
-
   unregister() {
     Services.wm.removeListener(this)
   }
@@ -146,21 +156,47 @@ class IdleListener {
   }
 }
 
-class SyncListener {
-  private id: string
+const SyncListener = new class $SyncListener {
+  private id: string | null = null
 
-  constructor() {
+  public startup() {
+    if (this.id) return
     this.id = Zotero.Notifier.registerObserver(this, ['sync'], 'Better BibTeX', 1)
   }
 
   notify(action: string, _type: string, _ids: string[], _extraData?: any) {
-    const state: SyncState = action === 'start' ? 'syncing' : 'idle' // Zotero fires 'start' and 'finish'
+    let state: SyncState
+    switch (action) {
+      case 'start':
+        state = 'syncing'
+        break
+      case 'finish':
+        state = 'idle'
+        break
+      default:
+        return
+    }
+
     Events.syncing = state
-    void Events.emit('sync', { state })
+
+    // Keep notifier callbacks non-blocking: sync startup awaits observers.
+    void Zotero.Promise.delay(0).then(async () => {
+      await Events.emit('sync', { state })
+
+      if (state === 'idle') {
+        await ItemListener.flushBuffered()
+        await TagListener.flushBuffered()
+        CollectionListener.flushBuffered()
+        await MemberListener.flushBuffered()
+        GroupListener.flushBuffered()
+      }
+    })
   }
 
   unregister() {
+    if (!this.id) return
     Zotero.Notifier.unregisterObserver(this.id)
+    this.id = null
   }
 }
 
@@ -171,16 +207,20 @@ type ExtraData = {
 }
 
 abstract class ZoteroListener {
-  private id: string
+  private id: string | null = null
+  protected abstract type: ZoteroType
 
-  constructor(protected type) {
-    this.id = Zotero.Notifier.registerObserver(this, [type], 'Better BibTeX', 1)
+  public startup() {
+    if (this.id) return
+    this.id = Zotero.Notifier.registerObserver(this, [this.type], 'Better BibTeX', 1)
   }
 
   abstract notify(action: ZoteroAction, type: string, ids: string[] | number[], extraData?: ExtraData): Promise<void>
 
   public unregister() {
+    if (!this.id) return
     Zotero.Notifier.unregisterObserver(this.id)
+    this.id = null
   }
 }
 
@@ -191,12 +231,34 @@ function types(items) {
 }
 */
 
-class ItemListener extends ZoteroListener {
-  constructor() {
-    super('item')
+const ItemListener = new class $ItemListener extends ZoteroListener {
+  protected type: ZoteroListener['type'] = 'item'
+  private buffered = new Map<number, { action: ZoteroAction; keySave?: boolean; libraryID?: number }>
+
+  public async flushBuffered(): Promise<void> {
+    if (syncInProgress() || this.buffered.size === 0) return
+
+    const buffered = this.buffered
+    this.buffered = new Map
+
+    const grouped: Record<string, { ids: number[]; extraData: ExtraData }> = {}
+    for (const [id, event] of buffered) {
+      const key = `${ event.action }:${ event.keySave ? '1' : '0' }`
+      grouped[key] = grouped[key] || { ids: [], extraData: {} }
+      grouped[key].ids.push(id)
+      grouped[key].extraData[`${ id }`] = {
+        ...(typeof event.libraryID === 'number' ? { libraryID: event.libraryID } : {}),
+        ...(event.keySave ? { [REASON_KEY_SAVE]: true } : {}),
+      }
+    }
+
+    for (const [key, group] of Object.entries(grouped)) {
+      const [action] = key.split(':')
+      await this.process(action as ZoteroAction, 'item', group.ids, group.extraData)
+    }
   }
 
-  public async notify(action: ZoteroAction, type: string, ids: number[], extraData?: ExtraData) {
+  private async process(action: ZoteroAction, type: string, ids: number[], extraData?: ExtraData) {
     if (logEvents) log.info('item event:', { action, ids, extraData })
     try {
       let load = false
@@ -272,7 +334,7 @@ class ItemListener extends ZoteroListener {
 
       await Events.emit('cache-touch', { itemIDs: ids })
       if (items.length) {
-        await Events.emit('items-changed', { items, action, reason: extraData[REASON_KEY_SAVE] ? REASON_KEY_SAVE : undefined })
+        await Events.emit('items-changed', { items, action, reason: extraData?.[REASON_KEY_SAVE] ? REASON_KEY_SAVE : undefined })
       }
 
       if (parentIDs.size) {
@@ -293,18 +355,48 @@ class ItemListener extends ZoteroListener {
       log.error(`error in ${type} ${action} handler for ${JSON.stringify(ids)}: ${err.message}`)
     }
   }
+
+  public async notify(action: ZoteroAction, type: string, ids: number[], extraData?: ExtraData) {
+    if (syncInProgress()) {
+      for (const id of ids) {
+        const event = {
+          action,
+          keySave: !!extraData?.[REASON_KEY_SAVE],
+          libraryID: typeof extraData?.[`${id}`]?.libraryID === 'number' ? extraData[`${id}`].libraryID : undefined,
+        }
+        this.buffered.set(id, event)
+      }
+      return
+    }
+
+    await this.process(action, type, ids, extraData)
+  }
 }
 
-class TagListener extends ZoteroListener {
-  constructor() {
-    super('item-tag')
+const TagListener = new class $TagListener extends ZoteroListener {
+  protected type: ZoteroListener['type'] = 'item-tag'
+  private buffered = new Set<number>
+
+  public async flushBuffered(): Promise<void> {
+    if (syncInProgress() || this.buffered.size === 0) return
+
+    const ids = [...this.buffered]
+    this.buffered.clear()
+
+    await Zotero.BetterBibTeX.ready
+    void Events.emit('items-changed', { items: Zotero.Items.get(ids), action: 'modify', reason: 'tagged' })
   }
 
   public async notify(action: string, type: string, pairs: string[]) {
     try {
+      const ids = [...new Set(pairs.map(pair => parseInt(pair.split('-')[0])))]
+      if (syncInProgress()) {
+        for (const id of ids) this.buffered.add(id)
+        return
+      }
+
       await Zotero.BetterBibTeX.ready
 
-      const ids = [...new Set(pairs.map(pair => parseInt(pair.split('-')[0])))]
       void Events.emit('items-changed', { items: Zotero.Items.get(ids), action: 'modify', reason: 'tagged' })
     }
     catch (err) {
@@ -313,13 +405,27 @@ class TagListener extends ZoteroListener {
   }
 }
 
-class CollectionListener extends ZoteroListener {
-  constructor() {
-    super('collection')
+const CollectionListener = new class $CollectionListener extends ZoteroListener {
+  protected type: ZoteroListener['type'] = 'collection'
+  private buffered = new Map<number, string>
+
+  public flushBuffered(): void {
+    if (syncInProgress() || this.buffered.size === 0) return
+
+    const buffered = this.buffered
+    this.buffered = new Map
+
+    const removed = [...buffered.entries()].filter(([_id, action]) => action === 'delete').map(([id, _action]) => id)
+    if (removed.length) void Events.emit('collections-removed', removed)
   }
 
   public async notify(action: string, type: string, ids: number[]) {
     try {
+      if (syncInProgress()) {
+        for (const id of ids) this.buffered.set(id, action)
+        return
+      }
+
       await Zotero.BetterBibTeX.ready
       if ((action === 'delete') && ids.length) void Events.emit('collections-removed', ids)
     }
@@ -329,16 +435,43 @@ class CollectionListener extends ZoteroListener {
   }
 }
 
-class MemberListener extends ZoteroListener {
-  constructor() {
-    super('collection-item')
+const MemberListener = new class $MemberListener extends ZoteroListener {
+  protected type: ZoteroListener['type'] = 'collection-item'
+  private buffered = new Map<number, string>
+
+  public async flushBuffered(): Promise<void> {
+    if (syncInProgress() || this.buffered.size === 0) return
+
+    const buffered = [...this.buffered.entries()]
+    this.buffered.clear()
+
+    await Zotero.BetterBibTeX.ready
+
+    const changed: Set<number> = new Set
+    for (let [id, action] of buffered) {
+      if (action === 'delete') continue
+      while (id) {
+        changed.add(id)
+        id = Zotero.Collections.get(id).parentID
+      }
+    }
+
+    if (changed.size) void Events.emit('collections-changed', Array.from(changed))
   }
 
   public async notify(action: string, type: string, pairs: string[]) {
     try {
+      if (syncInProgress()) {
+        for (const pair of pairs) {
+          const id = parseInt(pair.split('-')[0])
+          if (!Number.isNaN(id)) this.buffered.set(id, action)
+        }
+        return
+      }
+
       await Zotero.BetterBibTeX.ready
 
-      const changed: Set<number> = (new Set)
+      const changed: Set<number> = new Set
 
       for (const pair of pairs) {
         let id = parseInt(pair.split('-')[0])
@@ -357,13 +490,27 @@ class MemberListener extends ZoteroListener {
   }
 }
 
-class GroupListener extends ZoteroListener {
-  constructor() {
-    super('group')
+const GroupListener = new class $GroupListener extends ZoteroListener {
+  protected type: ZoteroListener['type'] = 'group'
+  private buffered = new Map<number, string>
+
+  public flushBuffered(): void {
+    if (syncInProgress() || this.buffered.size === 0) return
+
+    const buffered = this.buffered
+    this.buffered = new Map
+
+    const removed = [...buffered.entries()].filter(([_id, action]) => action === 'delete').map(([id, _action]) => id)
+    if (removed.length) void Events.emit('libraries-removed', removed)
   }
 
   public async notify(action: string, type: string, ids: number[]) {
     try {
+      if (syncInProgress()) {
+        for (const id of ids) this.buffered.set(id, action)
+        return
+      }
+
       await Zotero.BetterBibTeX.ready
       if ((action === 'delete') && ids.length) void Events.emit('libraries-removed', ids)
     }
