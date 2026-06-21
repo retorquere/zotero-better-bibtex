@@ -143,7 +143,7 @@ async function selected(options: CAYWOptions): Promise<string> {
     uri: Zotero.URI.getItemURI(item),
     itemType: typeof item.itemType === 'string' ? item.itemType : undefined,
     title: item.getField('title'),
-    note: typeof item.note === 'string' ? item.note : undefined,
+    note: item.isNote() ? item.note : undefined,
   }))
   if (!formatter.acceptsNotes) picked = itemPicks(picked)
   return picked.length ? await formatter(picked, options) : ''
