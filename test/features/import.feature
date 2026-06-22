@@ -31,10 +31,6 @@ Feature: Import
     Then the library should match "import/*.json"
     And an export using "Better BibLaTeX" should match "import/*.roundtrip.bib"
 
-  Scenario: CSL-YAML import
-    When I import 11 references from "import/*.yml"
-    Then the library should match "import/*.json"
-
   Scenario: detect-urls
     When I set preference .verbatimFields to "url,doi,file,pdf,ids,eprint,/^verb[a-z]$/,groups,/^citeulike-linkout-[0-9]+$/,/^bdsk-url-[0-9]+$/, /^url_/"
     And I import 1 reference from "import/*.bib"
@@ -91,7 +87,8 @@ Feature: Import
     Then the library should match "import/*.json"
     Examples:
       | file                                                                                                                    | references |
-      | date wrongly imported from yaml-file day gets 00 prefixed #3452                                                         | 1  |
+      | date wrongly imported from yaml-file day gets 00 prefixed #3452                                                         | 1          |
+      | CSL-YAML import                                                                                                         | 11         |
 
   Scenario Outline: Import <references> references from <file>
     When I import <references> references from "import/<file>.bib"
