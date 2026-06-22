@@ -79,7 +79,7 @@ function cslDate(date): string {
   if (typeof season === 'number') return `${ fill(year, '0000') }-${ fill(season, '00') }${ circa(date) }`
   if (season) return `${ season } ${ fill(year, '0000') }`
 
-  if (day && month) return `${ fill(year, '0000') }-${ fill(month, '00') }-${ fill(day, '0000') }${ circa(date) }`
+  if (day && month) return `${ fill(year, '0000') }-${ fill(month, '00') }-${ fill(day, '00') }${ circa(date) }`
   if (month) return `${ fill(year, '0000') }-${ fill(month, '00') }${ circa(date) }`
   return `${ fill(year, '0000') }${ circa(date) }`
 }
@@ -103,7 +103,7 @@ function yamlDate(date): string {
   if (typeof date.season === 'number') return `${ fill(date.year, '0000') }-${ fill(date.season, '00') }${ circa(date) }`
   if (date.season) return `${ date.season } ${ fill(date.year, '0000') }`
 
-  if (date.day && date.month) return `${ fill(date.year, '0000') }-${ fill(date.month, '00') }-${ fill(date.day, '0000') }${ circa(date) }`
+  if (date.day && date.month) return `${ fill(date.year, '0000') }-${ fill(date.month, '00') }-${ fill(date.day, '00') }${ circa(date) }`
   if (date.month) return `${ fill(date.year, '0000') }-${ fill(date.month, '00') }${ circa(date) }`
   return `${ fill(date.year, '0000') }${ circa(date) }`
 }

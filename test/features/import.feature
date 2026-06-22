@@ -87,12 +87,19 @@ Feature: Import
     Then the library should match "import/*.json"
 
   Scenario Outline: Import <references> references from <file>
+    When I import <references> references from "import/<file>.yml"
+    Then the library should match "import/*.json"
+    Examples:
+      | file                                                                                                                    | references |
+      | date wrongly imported from yaml-file day gets 00 prefixed #3452                                                         | 1  |
+
+  Scenario Outline: Import <references> references from <file>
     When I import <references> references from "import/<file>.bib"
     Then the library should match "import/*.json"
 
     Examples:
       | file                                                                                                                    | references |
-      | Crossrefd incollection items are missing date on import #3514                                                           | 6  |
+      | Crossrefd incollection items are missing date on import #3514                                                           | 6          |
       | Multiple attachments in calibre bibtex file not imported in Zotero #3338                                                | 1          |
       | Book imported as book section when duplicate book title field is present #3328                                          | 1          |
       | Double newlines means parbreak #2789                                                                                    | 1          |

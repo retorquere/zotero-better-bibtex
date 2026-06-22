@@ -1,0 +1,20 @@
+---
+references:
+- id: wikipe:univer:2019
+  accessed:
+    - year: 2019
+      month: 7
+      day: 22
+  author:
+    - literal: Wikipedia
+  citation-key: wikipe:univer:2019
+  container-title: Wikipedia, Die freie Enzyklopädie
+  issued:
+    - year: 2019
+      month: 7
+      day: 11
+  title: Universität Regensburg
+  type: entry-encyclopedia
+  URL: >-
+    https://de.wikipedia.org/w/index.php?title=Universit%C3%A4t_Regensburg&oldid=190335453
+...
