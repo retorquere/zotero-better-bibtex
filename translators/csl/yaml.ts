@@ -1,4 +1,4 @@
-import YAML from 'js-yaml'
+import * as YAML from 'js-yaml'
 import { Date as CSLDate, Data as CSLItem, LooseNumber } from 'csl-json'
 
 import type { Collected } from '../lib/collect'
@@ -162,7 +162,7 @@ class Exporter extends CSLExporter {
     for (const [ k, v ] of Object.entries(csl)) {
       if (typeof v === 'string' && v.indexOf('<') >= 0) csl[k] = htmlConverter.convert(v)
     }
-    return YAML.dump([csl], { skipInvalid: true }) as string
+    return YAML.dump([csl], { skipInvalid: true })
   }
 
   public flush(items: string[]): string {
