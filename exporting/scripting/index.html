@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="height=device-height, width=device-width, initial-scale=1.0, minimum-scale=1.0">
-    <meta name="generator" content="Hugo 0.163.2">
+    <meta name="generator" content="Hugo 0.163.3">
     <meta name="generator" content="Relearn 9.0.3+36307e4ed23582638ab689240ac7b427217803ee">
     <meta name="description" content="You wanted customized… You got customized. If you go into the Export tab of the Better BibTeX preferences, subtab postscript, you will find a text box (empty by default) where you can edit a javascript snippet which will be executed for each entry generated in the Bib(La)TeX exporter. In this code, you have access to the entry just before it will be written out and cached. There is an API to do this, and it’s fairly stable, but usually you can just open a new issue and ask me to write it, and I’ll add it here (it’s how the examples got here). Postscripts are available in 4 of the translators:">
     <meta name="author" content="">
@@ -20,7 +20,7 @@
     <meta property="article:tag" content="Scripting">
     <meta itemprop="name" content="Scripting :: Better BibTeX for Zotero">
     <meta itemprop="description" content="You wanted customized… You got customized. If you go into the Export tab of the Better BibTeX preferences, subtab postscript, you will find a text box (empty by default) where you can edit a javascript snippet which will be executed for each entry generated in the Bib(La)TeX exporter. In this code, you have access to the entry just before it will be written out and cached. There is an API to do this, and it’s fairly stable, but usually you can just open a new issue and ask me to write it, and I’ll add it here (it’s how the examples got here). Postscripts are available in 4 of the translators:">
-    <meta itemprop="wordCount" content="2415">
+    <meta itemprop="wordCount" content="2414">
     <meta itemprop="keywords" content="Scripting">
     <title>Scripting :: Better BibTeX for Zotero</title><link rel="icon" href="/zotero-better-bibtex/better-bibtex.ico" type="image/x-icon">
 
@@ -269,7 +269,7 @@ here (it&rsquo;s how the examples got here). Postscripts are available in 4 of t
 </li>
 <li><code>sep</code>: if <code>value</code> is an array, and <code>enc</code> is <code>latex</code>, encode each array element using <code>latex</code> and join the results with the string in <code>sep</code>. Defaults to an empty string.</li>
 <li><code>html</code>: boolean indicating whether the <code>value</code> is full HTML (really only useful for notes)</li>
-<li><code>caseConversion</code>: boolean indicating whether the field should have title-casing applied.</li>
+<li><code>exportCaseProtection</code>: boolean indicating whether export case-protection processing is applied.</li>
 </ul>
 <p>e.g. change the value of year in output <code>tex.add({name: 'year', value: &quot;your_year_value&quot;})</code></p>
 </li>

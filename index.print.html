@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="height=device-height, width=device-width, initial-scale=1.0, minimum-scale=1.0">
-    <meta name="generator" content="Hugo 0.163.2">
+    <meta name="generator" content="Hugo 0.163.3">
     <meta name="generator" content="Relearn 9.0.3+36307e4ed23582638ab689240ac7b427217803ee">
     <meta name="description" content="Better BibTeX (BBT) is an extension for Zotero and (in principle) Juris-M that makes it easier to manage bibliographic data, especially for people authoring documents using text-based toolchains (e.g. based on LaTeX / Markdown).
 Notice With the advent of Zotero 8, items have a Zotero-native citation key field. This has replaced the BBT citation key field.">
@@ -540,7 +540,7 @@ duplicate citation keys.</p>
 <p>Some importers or Zotero extensions (such as the ShortDOI manager for example) create tags on items that are more for item management than that
 they are descriptive of the item. When this is off, such tags will not be included in the export.</p>
 <h3 id="apply-title-casing-to-titles">Apply title-casing to titles<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h3>
-<p>default: <code>yes</code></p>
+<p>default: <code>&lt;not set&gt;</code></p>
 <p>If you&rsquo;re dead-set on ignoring both BibTeX/BibLaTeX best practice (see the BBT FAQ) and the Zotero recommendations on title/sentence casing, you can turn this off to suppress title casing for English items</p>
 <h3 id="apply-case-protection-to-capitalized-words-by-enclosing-them-in-braces">Apply case-protection to capitalized words by enclosing them in braces<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h3>
 <p>default: <code>yes</code></p>
@@ -1190,7 +1190,7 @@ here (it&rsquo;s how the examples got here). Postscripts are available in 4 of t
 </li>
 <li><code>sep</code>: if <code>value</code> is an array, and <code>enc</code> is <code>latex</code>, encode each array element using <code>latex</code> and join the results with the string in <code>sep</code>. Defaults to an empty string.</li>
 <li><code>html</code>: boolean indicating whether the <code>value</code> is full HTML (really only useful for notes)</li>
-<li><code>caseConversion</code>: boolean indicating whether the field should have title-casing applied.</li>
+<li><code>exportCaseProtection</code>: boolean indicating whether export case-protection processing is applied.</li>
 </ul>
 <p>e.g. change the value of year in output <code>tex.add({name: 'year', value: &quot;your_year_value&quot;})</code></p>
 </li>
@@ -14840,8 +14840,8 @@ means a lot) so I can save up for a replacement a year or so down
 the line, head on over to <a href="https://www.patreon.com/retorquere" rel="external">Patreon</a>,
 but mind that Patreon takes a fairly large cut of what you give.</p>
 <p>Many, many thanks, also to the existing contributors &ndash; thanks to you I&rsquo;ve hit my first target and have been able to replace my trusty macbook air with a newer macbook pro which has much more breathing room.</p>
-<p><a href="#R-image-24428dfde52d7b0e0fe2655c2747d92f" class="lightbox-link"><img alt="My github stats" class="lazy lightbox figure-image" loading="lazy" src="https://github-readme-stats.vercel.app/api?username=retorquere&show_icons=true&hide_border=true&theme=dark" style="height: auto;width: auto;"></a>
-<a href="javascript:history.back();" class="lightbox-back" id="R-image-24428dfde52d7b0e0fe2655c2747d92f"><img alt="My github stats" class="lazy lightbox lightbox-image" loading="lazy" src="https://github-readme-stats.vercel.app/api?username=retorquere&show_icons=true&hide_border=true&theme=dark"></a></p>
+<p><a href="#R-image-e62124e9b601084bcd34c8ed06617baa" class="lightbox-link"><img alt="My github stats" class="lazy lightbox figure-image" loading="lazy" src="https://github-readme-stats.vercel.app/api?username=retorquere&show_icons=true&hide_border=true&theme=dark" style="height: auto;width: auto;"></a>
+<a href="javascript:history.back();" class="lightbox-back" id="R-image-e62124e9b601084bcd34c8ed06617baa"><img alt="My github stats" class="lazy lightbox lightbox-image" loading="lazy" src="https://github-readme-stats.vercel.app/api?username=retorquere&show_icons=true&hide_border=true&theme=dark"></a></p>
 <p>I prefer communicating via github issues, but for private information you can reach me on <a href="https://matrix.to/#/@retorquere:utwente.io" rel="external">matrix</a></p>
 
   <footer class="footline">
