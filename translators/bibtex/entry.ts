@@ -1659,7 +1659,7 @@ export class Entry {
 
     if (!report.length) return ''
 
-    report.unshift(`== ${ this.translation.BetterBibTeX ? 'BibTeX' : 'BibLateX' } quality report for ${ this.item.citationKey }:`)
+    report.unshift(`== ${ this.translation.BetterBibTeX ? 'BibTeX' : 'BibLaTeX' } quality report for ${ this.item.citationKey }:`)
     return report.map(line => `% ${ line }\n`).join('')
   }
 

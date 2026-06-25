@@ -14,7 +14,7 @@
   langid = {english},
   keywords = {data,data-collection,data-gathering,data-generation,data-management,data-quality,methodology,open-acccess}
 }
-% == BibLateX quality report for wilkinson-fair-2016:
+% == BibLaTeX quality report for wilkinson-fair-2016:
 % Unexpected field 'publisher'
 % ? unused Library catalog ("www.nature.com")
 % ? unused URL ("https://www.nature.com/articles/sdata201618")

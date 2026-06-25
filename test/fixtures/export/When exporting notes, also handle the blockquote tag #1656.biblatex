@@ -22,6 +22,6 @@ It can span several paragraphs.
 And this is some regular text again.},
   timestamp = {2015-02-24 12:14:36 +0100}
 }
-% == BibLateX quality report for Kant-Book:
+% == BibLaTeX quality report for Kant-Book:
 % Unexpected field 'timestamp' (added because JabRef format is set to 4)
 % Exactly one of 'date' / 'year' must be present

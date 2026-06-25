@@ -323,7 +323,7 @@ export:
   urldate = {2021-04-08},
   type = {Letter}
 }
-% == BibLateX quality report for MillionDemiInfirmes1968:
+% == BibLaTeX quality report for MillionDemiInfirmes1968:
 % Unexpected field 'title'
 % Unexpected field 'type'
 % ? Unused archive: Archives de la Ville et l'Eurométropole de Strasbourg
@@ -357,7 +357,7 @@ you get
   library = {Archives de la Ville et l'Eurométropole de Strasbourg},
   number = {114 Z 1 248}
 }
-% == BibLateX quality report for MillionDemiInfirmes1968:
+% == BibLaTeX quality report for MillionDemiInfirmes1968:
 % Unexpected field 'number'
 % Missing required field 'author'
 ```
