@@ -87,7 +87,7 @@ Feature: Import
     Then the library should match "import/*.json"
     Examples:
       | file                                                                                                                    | references |
-      | date wrongly imported from yaml-file day gets 00 prefixed #3452                                                         | 1          |
+      | date wrongly imported from yaml-file day gets 00 prefixed #3542                                                         | 4          |
       | CSL-YAML import                                                                                                         | 11         |
 
   Scenario Outline: Import <references> references from <file>
