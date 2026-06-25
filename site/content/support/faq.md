@@ -179,7 +179,7 @@ But wrt bibtex export, I don't think the Mendeley engineers actively use bib(la)
 
 Zotero's `language` field exports to the biblatex field `langid` only, not bib(la)tex `language`. Zotero's `language` field and the biblatex `langid` field are supposed to contain only language tags that control formatting, e.g. capitalization of titles and hyphenation.
 
-Biblatex's `language" field, by contrast, which has no equivalent in Zotero, is used to generate textual output in a formatted bibliography.
+BibLaTeX's `language" field, by contrast, which has no equivalent in Zotero, is used to generate textual output in a formatted bibliography.
 
 Exporting Zotero's `language` field to the biblatex field `language` would result in what are now merely language-dependent formatting instructions all of a sudden turned into textual output as well, breaking virtually every style on the biblatex side.
 
