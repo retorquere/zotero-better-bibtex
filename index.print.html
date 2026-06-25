@@ -858,7 +858,7 @@ when you import/save items in Zotero with titles that look like they&rsquo;re Ti
 
 <h1 id="exporting-items">Exporting items</h1>
 
-<p>Better BibTex adds a couple of export formats to Zotero&rsquo;s export dialog and several ways to improve export for plaintext-based authoring.
+<p>Better BibTeX adds a couple of export formats to Zotero&rsquo;s export dialog and several ways to improve export for plaintext-based authoring.
 The Better BibTeX <a href="/zotero-better-bibtex/preferences/">configuration</a> pane can be found under the regular Zotero preferences pane, tab &lsquo;Better BibTeX&rsquo; where you can tweak the exports, such as</p>
 <ul>
 <li><a href="/zotero-better-bibtex/preferences/export/#fields-to-omit-from-export-comma-separated">Omitting fields from exports</a> to slim down your bib files.</li>
@@ -945,27 +945,27 @@ from here, that can only be done by initiating an export.</p>
 <ul>
 <li>Auto-export + cloud-sync + import by URL
 <ul>
-<li>pro: gets the full Better BibTex / Better BibLaTeX file into Overleaf</li>
+<li>pro: gets the full Better BibTeX / Better BibLaTeX file into Overleaf</li>
 <li>pro: free or already included in what you pay for your cloud service</li>
 <li>con: requires cloud service which has direct-download links (Dropbox seems to offer this, as does Onedrive, but I haven&rsquo;t tested this)</li>
 </ul>
 </li>
 <li>Auto-export + Dropbox - Overleaf integration
 <ul>
-<li>pro: gets the full Better BibTex / Better BibLaTeX file into Overleaf</li>
+<li>pro: gets the full Better BibTeX / Better BibLaTeX file into Overleaf</li>
 <li>con: paid option on Overleaf</li>
 </ul>
 </li>
 <li>Auto-export + <code>git</code>:
 <ul>
-<li>pro: gets the full bibtex file to Overleaf, tested and works</li>
+<li>pro: gets the full BibTeX file to Overleaf, tested and works</li>
 <li>con: requires technical expertise to set up, paid option on overleaf</li>
 </ul>
 </li>
 </ul>
 <h3 id="dropbox--google-drive--boxcom--">DropBox / Google Drive / Box.com / &hellip;<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h3>
 <p>Or any other of the plethora of choices that are available today that will &ldquo;cloud-sync&rdquo; your files. Will work with any cloud service, as long as it delivers direct-download links, as this method will import into Overleaf by URL.
-1.Export the Better Bibtex / Better LaTeX file into an cloud shared folder, with the &ldquo;keep updated&rdquo;-option checked
+1.Export the Better BibTeX / Better BibLaTeX file into an cloud shared folder, with the &ldquo;keep updated&rdquo;-option checked
 2.Create/generate/find a direct-download link. Google is your friend.
 3.Import your cloud-saved bib-file into Overleaf by &ldquo;Add file -&gt; From external URL&rdquo;
 4.When adding new sources, refresh both the Zotero client, and click the &ldquo;refresh&rdquo;-button in the file on Overleaf</p>
@@ -1836,7 +1836,7 @@ the Zotero item looks like to the translator.</p>
 </span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span><span style="color:#a6e22e">tex</span>.<span style="color:#a6e22e">has</span>.<span style="color:#a6e22e">journaltitle</span>) { <span style="color:#a6e22e">tex</span>.<span style="color:#a6e22e">add</span>({ <span style="color:#a6e22e">name</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;journaltitle&#39;</span>, <span style="color:#a6e22e">bibtex</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;{}&#39;</span> }); }
 </span></span><span style="display:flex;"><span>}</span></span></code></pre></div>
 <h3 id="custom-field-order">Custom field order<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h3>
-<p>Specify the ordering of the listing of fields in an exported Biblatex/Bibtex entry. Your postscript:</p>
+<p>Specify the ordering of the listing of fields in an exported BibLaTeX/BibTeX entry. Your postscript:</p>
 <div class="highlight actionbar-wrapper wrap-code" dir="auto"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">Translator</span>.<span style="color:#a6e22e">BetterTeX</span>) {
 </span></span><span style="display:flex;"><span>  <span style="color:#75715e">// the bib(la)tex fields are ordered according to this array.
 </span></span></span><span style="display:flex;"><span>  <span style="color:#75715e">// If a field is not in this list, it will show up after the ordered fields.
@@ -1866,7 +1866,7 @@ the Zotero item looks like to the translator.</p>
   edition = {1}
 }
 </code></pre>
-<p>Further details <a href="https://github.com/retorquere/zotero-better-bibtex/issues/512" rel="external">Export to Biblatex/Bibtex. Custom field order. #512</a>.</p>
+<p>Further details <a href="https://github.com/retorquere/zotero-better-bibtex/issues/512" rel="external">Export to BibLaTeX/BibTeX. Custom field order. #512</a>.</p>
 <h3 id="case-protect-italicized-text">Case-protect italicized text<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h3>
 <div class="highlight actionbar-wrapper wrap-code" dir="auto"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">Translator</span>.<span style="color:#a6e22e">BetterTeX</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#a6e22e">tex</span>.<span style="color:#a6e22e">has</span>.<span style="color:#a6e22e">title</span>) {
 </span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">tex</span>.<span style="color:#a6e22e">add</span>({ <span style="color:#a6e22e">name</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;title&#39;</span>, <span style="color:#a6e22e">value</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">zotero</span>.<span style="color:#a6e22e">title</span>.<span style="color:#a6e22e">replace</span>(<span style="color:#e6db74">/(&lt;i&gt;)/ig</span>, <span style="color:#e6db74">&#39;&lt;span class=&#34;nocase&#34;&gt;$1&#39;</span>).<span style="color:#a6e22e">replace</span>(<span style="color:#e6db74">/(&lt;[/]i&gt;)/ig</span>, <span style="color:#e6db74">&#39;$1&lt;/span&gt;&#39;</span>))
@@ -14840,8 +14840,8 @@ means a lot) so I can save up for a replacement a year or so down
 the line, head on over to <a href="https://www.patreon.com/retorquere" rel="external">Patreon</a>,
 but mind that Patreon takes a fairly large cut of what you give.</p>
 <p>Many, many thanks, also to the existing contributors &ndash; thanks to you I&rsquo;ve hit my first target and have been able to replace my trusty macbook air with a newer macbook pro which has much more breathing room.</p>
-<p><a href="#R-image-e62124e9b601084bcd34c8ed06617baa" class="lightbox-link"><img alt="My github stats" class="lazy lightbox figure-image" loading="lazy" src="https://github-readme-stats.vercel.app/api?username=retorquere&show_icons=true&hide_border=true&theme=dark" style="height: auto;width: auto;"></a>
-<a href="javascript:history.back();" class="lightbox-back" id="R-image-e62124e9b601084bcd34c8ed06617baa"><img alt="My github stats" class="lazy lightbox lightbox-image" loading="lazy" src="https://github-readme-stats.vercel.app/api?username=retorquere&show_icons=true&hide_border=true&theme=dark"></a></p>
+<p><a href="#R-image-5afb493080602ca343aa16805926acb3" class="lightbox-link"><img alt="My github stats" class="lazy lightbox figure-image" loading="lazy" src="https://github-readme-stats.vercel.app/api?username=retorquere&show_icons=true&hide_border=true&theme=dark" style="height: auto;width: auto;"></a>
+<a href="javascript:history.back();" class="lightbox-back" id="R-image-5afb493080602ca343aa16805926acb3"><img alt="My github stats" class="lazy lightbox lightbox-image" loading="lazy" src="https://github-readme-stats.vercel.app/api?username=retorquere&show_icons=true&hide_border=true&theme=dark"></a></p>
 <p>I prefer communicating via github issues, but for private information you can reach me on <a href="https://matrix.to/#/@retorquere:utwente.io" rel="external">matrix</a></p>
 
   <footer class="footline">
