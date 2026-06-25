@@ -14,7 +14,7 @@ import { HTMLParser } from '../../content/text'
 const htmlConverter = new class HTML {
   private markdown: string
 
-  public convert(html) {
+  public convert(html: string): string {
     this.markdown = ''
     this.walk(HTMLParser.parse(html, {}))
     return this.markdown
@@ -159,9 +159,7 @@ class Exporter extends CSLExporter {
   }
 
   public serialize(csl: CSLItem): string {
-    for (const [ k, v ] of Object.entries(csl)) {
-      if (typeof v === 'string' && v.indexOf('<') >= 0) csl[k] = htmlConverter.convert(v)
-    }
+    csl = JSON.parse(JSON.stringify(csl, (_k: string, v: unknown): unknown => (typeof v === 'string' && v.includes('<')) ? htmlConverter.convert(v) : v)) as CSLItem
     return YAML.dump([csl], { skipInvalid: true })
   }
 
