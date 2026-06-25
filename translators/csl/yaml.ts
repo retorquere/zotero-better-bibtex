@@ -159,6 +159,8 @@ class Exporter extends CSLExporter {
   }
 
   public serialize(csl: CSLItem): string {
+    // CSL-YAML does not support HTML markup, and this (in/ac)cidentally fixes a problem that in no-worker mode, the objects contained something that makes js-yaml keel over and die.
+    // The roundtrip reliably removes that, even though I have no idea what "that" is.
     csl = JSON.parse(JSON.stringify(csl, (_k: string, v: unknown): unknown => (typeof v === 'string' && v.includes('<')) ? htmlConverter.convert(v) : v)) as CSLItem
     return YAML.dump([csl], { skipInvalid: true })
   }
