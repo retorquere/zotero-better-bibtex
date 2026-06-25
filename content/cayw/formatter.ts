@@ -178,25 +178,27 @@ export const Formatter = new class {
   }
 
   public async pandoc(citations, options) {
-    const formatted: string[] = []
-    function locator(n) {
-      if (typeof n === 'number' || n.match(/^\d+$/)) return n
-      if (!options.brackets) return n || ''
-      return n ? `{${n}}` : ''
-    }
-    for (const citation of citations) {
-      let cite = ''
-      if (citation.prefix) cite += `${citation.prefix} `
-      if (citation.suppressAuthor) cite += '-'
-      cite += `@${ citation.citationKey }`
-      if (citation.locator) cite += `, ${shortLabel(citation.label, options)} ${locator(citation.locator)}`.replace(/\s+/, ' ')
-      if (citation.suffix) cite += ` ${citation.suffix}`
-      formatted.push(cite)
-    }
+    const formatted = citations
+      .map(citation => {
+        let cite = ''
+        if (citation.prefix) cite += `${citation.prefix} `
+        if (citation.suppressAuthor) cite += '-'
+        cite += `@${ citation.citationKey }`
+        if (typeof citation.locator === 'number' || citation.locator) {
+          let locator = citation.locator + ''
+          const label = shortLabel(citation.label, options) || ''
+          if ((label && label !== 'p.') || !locator.match(/^\d+$/)) {
+            locator = `${label} ${locator}`.replace(/\s+/, ' ')
+            if (options.brackets) locator = `{${locator}}`
+          }
+          cite += `, ${locator}`
+        }
+        if (citation.suffix) cite += ` ${citation.suffix}`
+        return cite
+      })
+      .join('; ')
 
-    const [ open, close ] = options.brackets ? ['[', ']'] : ['', '']
-
-    return open + formatted.join('; ') + close
+    return options.brackets ? `[${formatted}]` : formatted
   }
 
   public async 'asciidoctor-bibtex'(citations, options) {
