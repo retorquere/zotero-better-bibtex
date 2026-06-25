@@ -181,6 +181,7 @@ export const Formatter = new class {
     const formatted: string[] = []
     function locator(n) {
       if (typeof n === 'number' || n.match(/^\d+$/)) return n
+      if (!options.brackets) return n || ''
       return n ? `{${n}}` : ''
     }
     for (const citation of citations) {
@@ -193,7 +194,9 @@ export const Formatter = new class {
       formatted.push(cite)
     }
 
-    return `${ options.brackets ? '[' : '' }${ formatted.join('; ') }${ options.brackets ? ']' : '' }`
+    const [ open, close ] = options.brackets ? ['[', ']'] : ['', '']
+
+    return open + formatted.join('; ') + close
   }
 
   public async 'asciidoctor-bibtex'(citations, options) {
