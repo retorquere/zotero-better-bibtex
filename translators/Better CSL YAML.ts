@@ -1,6 +1,7 @@
 declare const Zotero: any
 
 import { Collected, slurp } from './lib/collect'
+import { padInt } from '../content/text'
 import type { Header } from '../gen/translators'
 declare var ZOTERO_TRANSLATOR_INFO: Header // eslint-disable-line no-var
 
@@ -16,12 +17,6 @@ export function detectImport(): boolean {
   catch {
     return false
   }
-}
-
-function fill(n: number, template: string): string {
-  const str = `${ Math.abs(n) }`
-  const padded = `${ template }${ str }`
-  return `${ n < 0 ? '-' : '' }${ padded.slice(-Math.max(str.length, template.length)) }`
 }
 
 function circa(date) {
@@ -76,12 +71,12 @@ function cslDate(date): string {
   }
 
   if (typeof season === 'number') season = seasons[season] || season
-  if (typeof season === 'number') return `${ fill(year, '0000') }-${ fill(season, '00') }${ circa(date) }`
-  if (season) return `${ season } ${ fill(year, '0000') }`
+  if (typeof season === 'number') return `${padInt(year, 4)}-${padInt(season, 2)}${circa(date)}`
+  if (season) return `${ season } ${padInt(year, 4)}`
 
-  if (day && month) return `${ fill(year, '0000') }-${ fill(month, '00') }-${ fill(day, '00') }${ circa(date) }`
-  if (month) return `${ fill(year, '0000') }-${ fill(month, '00') }${ circa(date) }`
-  return `${ fill(year, '0000') }${ circa(date) }`
+  if (day && month) return `${padInt(year, 4)}-${padInt(month, 2)}-${padInt(day, 2)}${circa(date)}`
+  if (month) return `${padInt(year, 4)}-${padInt(month, 2)}${circa(date)}`
+  return `${padInt(year, 4)}${circa(date)}`
 }
 
 function yamlDate(date): string {
@@ -100,12 +95,12 @@ function yamlDate(date): string {
   }
 
   if (typeof date.season === 'number') date.season = seasons[date.season] || date.season
-  if (typeof date.season === 'number') return `${ fill(date.year, '0000') }-${ fill(date.season, '00') }${ circa(date) }`
-  if (date.season) return `${ date.season } ${ fill(date.year, '0000') }`
+  if (typeof date.season === 'number') return `${padInt(date.year, 4)}-${padInt(date.season, 2)}${circa(date)}`
+  if (date.season) return `${ date.season } ${padInt(date.year, 4)}`
 
-  if (date.day && date.month) return `${ fill(date.year, '0000') }-${ fill(date.month, '00') }-${ fill(date.day, '00') }${ circa(date) }`
-  if (date.month) return `${ fill(date.year, '0000') }-${ fill(date.month, '00') }${ circa(date) }`
-  return `${ fill(date.year, '0000') }${ circa(date) }`
+  if (date.day && date.month) return `${padInt(date.year, 4)}-${padInt(date.month, 2)}-${padInt(date.day, 2)}${circa(date)}`
+  if (date.month) return `${padInt(date.year, 4)}-${padInt(date.month, 2)}${circa(date)}`
+  return `${padInt(date.year, 4)}${circa(date)}`
 }
 
 export async function doImport(): Promise<void> {

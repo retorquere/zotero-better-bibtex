@@ -499,3 +499,7 @@ export function toEnglishOrdinal(n: number | string): string {
     return typeof n === 'string' ? n : ''
   }
 }
+
+export function padInt(num: number, length: number): string {
+  return num < 0 ? '-' + (-num + '').padStart(length, '0') : (num + '').padStart(length, '0')
+}
