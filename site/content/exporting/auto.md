@@ -43,11 +43,11 @@ from here, that can only be done by initiating an export.
 You may want to use your BBT generated bib(la)tex on other systems; maybe you use Overleaf (as I do), maybe you have your documents compiled using github actions (as I do). In any case, you want your auto-exported items to show up somewhere else. If you're thinking of this in the context of Overleaf, here's a TL;DR of the pros and cons:
 
 * Auto-export + cloud-sync + import by URL
-  * pro: gets the full Better BibTex / Better BibLaTeX file into Overleaf
+  * pro: gets the full Better BibTeX / Better BibLaTeX file into Overleaf
   * pro: free or already included in what you pay for your cloud service
   * con: requires cloud service which has direct-download links (Dropbox seems to offer this, as does Onedrive, but I haven't tested this)
 * Auto-export + Dropbox - Overleaf integration
-  * pro: gets the full Better BibTex / Better BibLaTeX file into Overleaf
+  * pro: gets the full Better BibTeX / Better BibLaTeX file into Overleaf
   * con: paid option on Overleaf
 * Auto-export + `git`:
   * pro: gets the full bibtex file to Overleaf, tested and works

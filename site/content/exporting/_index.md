@@ -10,7 +10,7 @@ aliases:
   - /export
 ---
 
-Better BibTex adds a couple of export formats to Zotero's export dialog and several ways to improve export for plaintext-based authoring.
+Better BibTeX adds a couple of export formats to Zotero's export dialog and several ways to improve export for plaintext-based authoring.
 The Better BibTeX [configuration]({{% ref "preferences" %}}) pane can be found under the regular Zotero preferences pane, tab 'Better BibTeX' where you can tweak the exports, such as
 
 * [Omitting fields from exports]({{% ref "preferences/export#fields-to-omit-from-export-comma-separated" %}}) to slim down your bib files.
