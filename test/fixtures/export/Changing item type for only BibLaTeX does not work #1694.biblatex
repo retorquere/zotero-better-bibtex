@@ -6,7 +6,7 @@
   weirdfield = {Blam},
   wonderfield = {Blub}
 }
-% == BibLateX quality report for Doe2020:
+% == BibLaTeX quality report for Doe2020:
 % Unexpected field 'weirdfield'
 % Unexpected field 'wonderfield'
 % Missing required field 'booktitle'

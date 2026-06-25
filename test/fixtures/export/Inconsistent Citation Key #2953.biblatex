@@ -5,6 +5,6 @@
   presort = {zzz},
   sortkey = {zzz}
 }
-% == BibLateX quality report for UPSSCalculatorV09:
+% == BibLaTeX quality report for UPSSCalculatorV09:
 % Unexpected field 'translator'
 % ? Title looks like it was stored in title-case in Zotero

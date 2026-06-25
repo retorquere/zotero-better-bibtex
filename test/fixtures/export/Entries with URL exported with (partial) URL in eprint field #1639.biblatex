@@ -12,7 +12,7 @@
   url = {https://www.jstor.org/stable/2802755?origin=crossref},
   urldate = {2020-05-15}
 }
-% == BibLateX quality report for Ferguson1985:
+% == BibLaTeX quality report for Ferguson1985:
 % ? unused ISSN ("00251496")
 % ? unused Issue ("4")
 % ? unused Library catalog ("DOI.org (Crossref)")
@@ -26,7 +26,7 @@
   pages = {397--406},
   url = {https://www.jstor.org/stable/4538686}
 }
-% == BibLateX quality report for Mehrling2000:
+% == BibLaTeX quality report for Mehrling2000:
 % ? unused Issue ("3")
 
 
