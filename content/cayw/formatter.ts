@@ -187,7 +187,7 @@ export const Formatter = new class {
         if (typeof citation.locator === 'number' || citation.locator) {
           let locator = citation.locator + ''
           const label = shortLabel(citation.label, options) || ''
-          if ((label && label !== 'p.') || !locator.match(/^\d+$/)) {
+          if (label || !locator.match(/^\d+$/)) {
             locator = `${label} ${locator}`.replace(/\s+/, ' ')
             if (options.brackets) locator = `{${locator}}`
           }
