@@ -174,7 +174,7 @@ if (Translator.BetterTeX && zotero.arXiv) {
 
 ### Custom field order
 
-Specify the ordering of the listing of fields in an exported Biblatex/Bibtex entry. Your postscript:
+Specify the ordering of the listing of fields in an exported BibLaTeX/BibTeX entry. Your postscript:
 
 ```javascript
 if (Translator.BetterTeX) {
@@ -209,7 +209,7 @@ In Zotero when using an Export Format of Better Biblatex we'll get something lik
 }
 </code></pre>
 
-Further details [Export to Biblatex/Bibtex. Custom field order. #512](https://github.com/retorquere/zotero-better-bibtex/issues/512).
+Further details [Export to BibLaTeX/BibTeX. Custom field order. #512](https://github.com/retorquere/zotero-better-bibtex/issues/512).
 
 ### Case-protect italicized text
 
