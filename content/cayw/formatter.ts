@@ -183,7 +183,7 @@ export const Formatter = new class {
         let cite = ''
         if (citation.prefix) cite += `${citation.prefix} `
         if (citation.suppressAuthor) cite += '-'
-        cite += `@${ citation.citationKey }`
+        cite += citation.citationKey.match(/^[a-zA-Z0-9_](?:[a-zA-Z0-9_]*[:.#$%&\-+?<>~/]?[a-zA-Z0-9_]+)*$/) ? `@${citation.citationKey}` : `@{${citation.citationKey}}`
         if (typeof citation.locator === 'number' || citation.locator) {
           let locator = citation.locator + ''
           const label = shortLabel(citation.label, options) || ''
