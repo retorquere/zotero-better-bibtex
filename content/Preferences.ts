@@ -9,10 +9,11 @@ import { AutoExport } from './auto-export'
 import { Translators } from './translators'
 import * as l10n from './l10n'
 import { Events } from './events'
-import { FilePickerHelper } from 'zotero-plugin-toolkit'
 import { flash } from './flash'
 import { icons } from './icons'
 import { Cache } from './translators/worker'
+
+const { FilePicker } = ChromeUtils.importESModule('chrome://zotero/content/modules/filePicker.mjs')
 
 Events.on('preference-changed', ({ data: pref }) => {
   switch (pref) {
@@ -294,7 +295,13 @@ export const PrefPane = new class $PrefPane {
   }
 
   public async exportPrefs(): Promise<void> {
-    let file = await new FilePickerHelper(Zotero.getString('fileInterface.export'), 'save', [[ 'BBT JSON file', '*.json' ]]).open()
+    const fp = new FilePicker
+    fp.init(this.window || Zotero.getMainWindow(), Zotero.getString('fileInterface.export'), fp.modeSave)
+    fp.defaultExtension = 'json'
+    fp.appendFilter('BBT JSON file', '*.json')
+
+    const rv = await fp.show()
+    let file = rv === fp.returnOK || rv === fp.returnReplace ? fp.file || '' : ''
     if (!file) return
     if (!file.match(/.json$/)) file = `${file}.json`
 
@@ -313,8 +320,13 @@ export const PrefPane = new class $PrefPane {
   }
 
   public async importPrefs(): Promise<void> {
+    const fp = new FilePicker
+    fp.init(this.window || Zotero.getMainWindow(), Zotero.getString('fileInterface.import'), fp.modeOpen)
+    fp.appendFilter('BBT JSON file', '*.json')
+
+    const rv = await fp.show()
     const preferences: { path: string; contents?: string; parsed?: any } = {
-      path: (await new FilePickerHelper(Zotero.getString('fileInterface.import'), 'open', [[ 'BBT JSON file', '*.json' ]]).open()) || '',
+      path: rv === fp.returnOK || rv === fp.returnReplace ? fp.file || '' : '',
     }
     if (!preferences.path) return
 
