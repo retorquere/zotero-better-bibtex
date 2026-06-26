@@ -12,7 +12,7 @@
   langid = {english},
   pubstate = {prepublished}
 }
-% == BibLateX quality report for CalilPHR:2022:
+% == BibLaTeX quality report for CalilPHR:2022:
 % Unexpected field 'issn'
 % ? unused Archive location ("world")
 % ? unused Library catalog ("www.essoar.org")

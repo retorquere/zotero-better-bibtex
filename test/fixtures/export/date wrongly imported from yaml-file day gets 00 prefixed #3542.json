@@ -1,0 +1,41 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "preferences": {
+      "citekeyFormat": "auth(n = 6).clean.lower + \":\" + year + \":\" + veryshorttitle.clean.lower",
+      "fillKeyAfter": 1
+    },
+    "options": {}
+  },
+  "version": {
+    "zotero": "9.0.4",
+    "bbt": "9.0.31"
+  },
+  "collections": {},
+  "items": [
+    {
+      "key": "RMXQUKDR",
+      "version": 0,
+      "itemType": "encyclopediaArticle",
+      "title": "Universität Regensburg",
+      "date": "2019-07-0011",
+      "citationKey": "wikipe:univer:2019",
+      "url": "https://de.wikipedia.org/w/index.php?title=Universit%C3%A4t_Regensburg&oldid=190335453",
+      "extra": "Citation Key: wikipe:univer:2019",
+      "creators": [
+        {
+          "name": "Wikipedia",
+          "creatorType": "author"
+        }
+      ],
+      "tags": [],
+      "dateAdded": "2026-06-22T12:12:40Z",
+      "dateModified": "2026-06-22T12:12:40Z",
+      "itemID": 338,
+      "attachments": [],
+      "notes": [],
+      "publicationTitle": "Wikipedia, Die freie Enzyklopädie"
+    }
+  ]
+}
