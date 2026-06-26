@@ -434,6 +434,16 @@ export class BetterBibTeX {
         await AUXScanner.scan(aux)
         break
 
+      case 'collection-replace': {
+        const selected = Zotero.getActiveZoteroPane().getSelectedCollection()
+        if (!selected) {
+          flash('No collection selected for AUX scan')
+          return
+        }
+        await AUXScanner.scan(aux, { collection: { libraryID: selected.libraryID, key: selected.key, replace: true } })
+        break
+      }
+
       case 'tag':
         // eslint-disable-next-line no-case-declarations
         let name = PathUtils.filename(aux)
@@ -729,6 +739,11 @@ export class BetterBibTeX {
               return ''
           }
         }
+        const selectedCollection = context => collType(context) === 'collection' ? Zotero.getActiveZoteroPane().getSelectedCollection() : null
+        const selectedCollectionHasItems = context => {
+          const collection = selectedCollection(context)
+          return !!collection?.hasChildItems()
+        }
         function selectedAutoExports(context) {
           const type = collType(context)
           const selected = type === 'collection'
@@ -784,6 +799,17 @@ export class BetterBibTeX {
                   l10nID: 'better-bibtex_aux-scanner',
                   onCommand: (_event, context) => {
                     void Zotero.BetterBibTeX.scanAUX(collType(context))
+                  },
+                },
+                {
+                  menuType: 'menuitem',
+                  l10nID: 'better-bibtex_aux-scanner_replace-collection',
+                  onShowing: (_event, context) => {
+                    context.setVisible(selectedCollectionHasItems(context))
+                  },
+                  onCommand: (_event, context) => {
+                    if (!selectedCollectionHasItems(context)) return
+                    void Zotero.BetterBibTeX.scanAUX('collection-replace')
                   },
                 },
                 {

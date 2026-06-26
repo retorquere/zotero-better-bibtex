@@ -61,7 +61,7 @@ jobs:
 
       - run: echo Status = ${{ steps.labelgun.outputs.status != '' }}
 
-      - uses: actions/add-to-project@v1.0.2
+      - uses: actions/add-to-project@v2
         if: ${{ steps.labelgun.outputs.status != '' }}
         with:
           project-url: https://github.com/users/retorquere/projects/5
@@ -69,7 +69,7 @@ jobs:
 
       - name: Set status
         if: ${{ steps.labelgun.outputs.status != '' }}
-        uses: nipe0324/update-project-v2-item-field@v2.0.2
+        uses: retorquere/update-project-v2-item-field@v3
         with:
           project-url: https://github.com/users/retorquere/projects/5
           github-token: ${{ secrets.PROJECT_TOKEN }}
@@ -78,7 +78,7 @@ jobs:
 
       - name: Set end date
         if: ${{ steps.labelgun.outputs.status != '' && steps.labelgun.outputs.lastactive != '' }}
-        uses: nipe0324/update-project-v2-item-field@v2.0.2
+        uses: retorquere/update-project-v2-item-field@v3
         with:
           project-url: https://github.com/users/retorquere/projects/5
           github-token: ${{ secrets.PROJECT_TOKEN }}
@@ -87,7 +87,7 @@ jobs:
 
       - name: Set users
         if: ${{ steps.labelgun.outputs.status != '' && steps.actor.outputs.users != '' }}
-        uses: nipe0324/update-project-v2-item-field@v2.0.2
+        uses: retorquere/update-project-v2-item-field@v3
         with:
           project-url: https://github.com/users/retorquere/projects/5
           github-token: ${{ secrets.PROJECT_TOKEN }}

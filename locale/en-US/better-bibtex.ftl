@@ -8,6 +8,8 @@ better-bibtex_aux-scan_title_aux = Tag cited items from AUX file
 better-bibtex_aux-scan_title_md = Tag cited items from Markdown file
 better-bibtex_aux-scanner =
   .label = Scan BibTeX AUX/Markdown file for references...
+better-bibtex_aux-scanner_replace-collection =
+  .label = Scan BibTeX AUX/Markdown file and replace items in this collection...
 better-bibtex_bulk-keys-confirm_warning = You are changing more than { $treshold } items in one go. Are you sure?
 better-bibtex_bulk-keys-confirm_stop_asking = OK, and don't ask me again
 

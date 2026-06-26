@@ -16,9 +16,9 @@ import { log } from './logger'
 import { AutoExport } from './auto-export'
 import { KeyManager } from './key-manager'
 
-import { FilePickerHelper } from 'zotero-plugin-toolkit'
-
 import * as UZip from 'uzip'
+
+const { FilePicker } = ChromeUtils.importESModule('chrome://zotero/content/modules/filePicker.mjs')
 
 const ENV = Components.classes['@mozilla.org/process/environment;1'].getService(Components.interfaces.nsIEnvironment)
 
@@ -266,7 +266,14 @@ export class ErrorReport {
   }
 
   public async save(): Promise<void> {
-    const filename = await new FilePickerHelper('Logs', 'save', [[ 'Zip Archive (*.zip)', '*.zip' ]], `${this.name()}.zip`).open()
+    const fp = new FilePicker
+    fp.init(Zotero.getMainWindow(), 'Logs', fp.modeSave)
+    fp.defaultExtension = 'zip'
+    fp.defaultString = `${this.name()}.zip`
+    fp.appendFilter('Zip Archive (*.zip)', '*.zip')
+
+    const rv = await fp.show()
+    const filename = rv === fp.returnOK || rv === fp.returnReplace ? fp.file || '' : ''
     if (filename) await IOUtils.write(filename, this.zip(), { tmpPath: filename + '.tmp' })
   }
 
