@@ -61,35 +61,41 @@ jobs:
 
       - run: echo Status = ${{ steps.labelgun.outputs.status != '' }}
 
-      - uses: actions/add-to-project@v1.0.2
+      - uses: actions/add-to-project@v2
         if: ${{ steps.labelgun.outputs.status != '' }}
         with:
           project-url: https://github.com/users/retorquere/projects/5
           github-token: ${{ secrets.PROJECT_TOKEN }}
 
-      - name: Set status
+      - name: Update Project V2 Status
         if: ${{ steps.labelgun.outputs.status != '' }}
-        uses: nipe0324/update-project-v2-item-field@v2.0.2
-        with:
-          project-url: https://github.com/users/retorquere/projects/5
-          github-token: ${{ secrets.PROJECT_TOKEN }}
-          field-name: "Status"
-          field-value: "${{ steps.labelgun.outputs.status }}"
+        env:
+          GH_TOKEN: ${{ secrets.PROJECT_TOKEN }}
+          PROJECT_URL: "https://github.com/users/retorquere/projects/5"
+          FIELD_NAME: "Status"
+          FIELD_VALUE: "${{ steps.labelgun.outputs.status }}"
+          ITEM_URL: ${{ github.event.issue.html_url }}
+        run: |
+          gh project item-edit --url "$PROJECT_URL" --id "$(gh project item-lookup "$PROJECT_URL" --url "$ITEM_URL" --format json | jq -r '.id')" --field "$FIELD_NAME" --value "$FIELD_VALUE"
 
-      - name: Set end date
+      - name: Update Project V2 EndDate
         if: ${{ steps.labelgun.outputs.status != '' && steps.labelgun.outputs.lastactive != '' }}
-        uses: nipe0324/update-project-v2-item-field@v2.0.2
-        with:
-          project-url: https://github.com/users/retorquere/projects/5
-          github-token: ${{ secrets.PROJECT_TOKEN }}
-          field-name: "End date"
-          field-value: "${{ steps.labelgun.outputs.lastactive }}"
+        env:
+          GH_TOKEN: ${{ secrets.PROJECT_TOKEN }}
+          PROJECT_URL: "https://github.com/users/retorquere/projects/5"
+          FIELD_NAME: "End date"
+          FIELD_VALUE: "${{ steps.labelgun.outputs.lastactive }}"
+          ITEM_URL: ${{ github.event.issue.html_url }}
+        run: |
+          gh project item-edit --url "$PROJECT_URL" --id "$(gh project item-lookup "$PROJECT_URL" --url "$ITEM_URL" --format json | jq -r '.id')" --field "$FIELD_NAME" --value "$FIELD_VALUE"
 
-      - name: Set users
+      - name: Update Project V2 Users
         if: ${{ steps.labelgun.outputs.status != '' && steps.actor.outputs.users != '' }}
-        uses: nipe0324/update-project-v2-item-field@v2.0.2
-        with:
-          project-url: https://github.com/users/retorquere/projects/5
-          github-token: ${{ secrets.PROJECT_TOKEN }}
-          field-name: "Users"
-          field-value: "${{ steps.actor.outputs.users }}"
+        env:
+          GH_TOKEN: ${{ secrets.PROJECT_TOKEN }}
+          PROJECT_URL: "https://github.com/users/retorquere/projects/5"
+          FIELD_NAME: "Users"
+          FIELD_VALUE: "${{ steps.actor.outputs.users }}"
+          ITEM_URL: ${{ github.event.issue.html_url }}
+        run: |
+          gh project item-edit --url "$PROJECT_URL" --id "$(gh project item-lookup "$PROJECT_URL" --url "$ITEM_URL" --format json | jq -r '.id')" --field "$FIELD_NAME" --value "$FIELD_VALUE"
