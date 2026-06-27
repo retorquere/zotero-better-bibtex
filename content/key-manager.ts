@@ -242,6 +242,7 @@ export const KeyManager = new class _KeyManager {
     progress?.done()
 
     for (const item of items) {
+      if (readonly(item)) continue // keys for read-only items are cached only, never written back
       await item.saveTx({ skipDateModifiedUpdate: true })
       await Zotero.Promise.delay(10)
     }
@@ -385,8 +386,6 @@ export const KeyManager = new class _KeyManager {
   }
 
   public update(item: Zotero.Item, { replace = false, inspireHEP = undefined }: { replace?: boolean; inspireHEP?: string } = {}): Zotero.Item {
-    if (readonly(item)) replace = true
-
     log.debug('3430: update', {
       ignore: item.isFeedItem || !item.isRegularItem(),
       inspireHEP: typeof inspireHEP === 'string' && !inspireHEP,
@@ -398,6 +397,20 @@ export const KeyManager = new class _KeyManager {
 
     if (typeof inspireHEP === 'string' && !inspireHEP) return null
     log.debug('3430: not empty inspireHEP')
+
+    if (readonly(item)) {
+      // Native key (assigned by group owner) always wins; never overwrite it with a BBT-generated key.
+      const nativeKey = this.getNativeKey(item) || ''
+      if (nativeKey) {
+        log.debug('3430: read-only native key', nativeKey, 'for', item.id)
+        this.store(item, nativeKey)
+        return null
+      }
+      // No native key: preserve an existing cached BBT key unless the caller explicitly requests replacement.
+      if (!replace && this.#keys.get(item.id)?.citationKey) return null
+      // No key at all: fall through to generate a BBT key and cache it (never written to the item).
+      replace = true
+    }
 
     const current = this.getNativeKey(item) || ''
     log.debug('3430:', { current, replace })
