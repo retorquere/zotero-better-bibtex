@@ -6,7 +6,7 @@
       "autoExportDelay": 18,
       "biblatexUsePrefix": false,
       "citekeyFormat": "auth.lower + year + shorttitle(3, 3)",
-      "exportTitleCase": false,
+      "exportTitlecase": "off",
       "quickCopyMode": "citekeys",
       "skipFields": "file"
     },

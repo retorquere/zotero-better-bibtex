@@ -101,6 +101,19 @@ monkey.patch(Zotero.Item.prototype, 'getField', original => function Zotero_Item
   return original.apply(this, arguments) as string
 })
 
+monkey.patch(Zotero.Integration.Session.prototype, '_processNote', original => async function Zotero_Integration_Session_prototype_processNote(this: any, noteItem: Zotero.Item) {
+  const processed = await original.apply(this, arguments) as [string, unknown[], unknown[]]
+
+  if (!noteItem?.id) return processed
+
+  const [text, citations, placeholderIDs] = processed
+  const parser = new DOMParser
+  const doc = parser.parseFromString(text, 'text/html')
+  doc.body?.append(doc.createComment(` zotero-note-id:${ String(noteItem.id) } `))
+
+  return [doc.documentElement?.outerHTML || text, citations, placeholderIDs]
+})
+
 // https://github.com/retorquere/zotero-better-bibtex/issues/1221
 monkey.patch(Zotero.Items, 'merge', original => async function Zotero_Items_merge(item: Zotero.Item, otherItems: Zotero.Item[]) {
   try {
@@ -270,7 +283,7 @@ Zotero.Translate.Import.prototype.Sandbox.BetterBibTeX = {
       ...options,
       exportBraceProtection: Preference.exportBraceProtection,
       csquotes: Preference.csquotes,
-      exportTitleCase: Preference.exportTitleCase,
+      exportTitleCase: true,
     }
     return HTMLParser.parse(text.toString(), options)
   },
@@ -431,6 +444,16 @@ export class BetterBibTeX {
         await AUXScanner.scan(aux)
         break
 
+      case 'collection-replace': {
+        const selected = Zotero.getActiveZoteroPane().getSelectedCollection()
+        if (!selected) {
+          flash('No collection selected for AUX scan')
+          return
+        }
+        await AUXScanner.scan(aux, { collection: { libraryID: selected.libraryID, key: selected.key, replace: true } })
+        break
+      }
+
       case 'tag':
         // eslint-disable-next-line no-case-declarations
         let name = PathUtils.filename(aux)
@@ -565,7 +588,7 @@ export class BetterBibTeX {
           pluginID,
           src: `${rootURI}content/preferences.xhtml`,
           stylesheets: [`${rootURI}content/preferences.css`],
-          // scripts: [`${rootURI}content/preferences.js`],
+          scripts: [`${rootURI}content/Preferences/ui.js`],
           label: 'Better BibTeX',
           defaultXUL: true,
         })
@@ -614,7 +637,7 @@ export class BetterBibTeX {
         })
 
         function selectedItems() {
-          return Zotero.getActiveZoteroPane()?.getSelectedItems().filter(item => !readonly(item.libraryID) && !item.isFeedItem && item.isRegularItem()) || []
+          return Zotero.getActiveZoteroPane()?.getSelectedItems().filter(item => !readonly(item) && !item.isFeedItem && item.isRegularItem()) || []
         }
         const itemsSelected = (_event, context) => {
           context.setVisible(selectedItems().length !== 0)
@@ -652,6 +675,12 @@ export class BetterBibTeX {
                   l10nID: 'better-bibtex_zotero-pane_citekey_pin',
                   onShowing: itemsSelected,
                   onCommand: (_event, _context) => void Zotero.BetterBibTeX.KeyManager.pin('selected'),
+                },
+                {
+                  menuType: 'menuitem',
+                  l10nID: 'better-bibtex_zotero-pane_citekey_unpin',
+                  onShowing: itemsSelected,
+                  onCommand: (_event, _context) => void Zotero.BetterBibTeX.KeyManager.pin('selected', false),
                 },
                 {
                   menuType: 'menuitem',
@@ -720,6 +749,11 @@ export class BetterBibTeX {
               return ''
           }
         }
+        const selectedCollection = context => collType(context) === 'collection' ? Zotero.getActiveZoteroPane().getSelectedCollection() : null
+        const selectedCollectionHasItems = context => {
+          const collection = selectedCollection(context)
+          return !!collection?.hasChildItems()
+        }
         function selectedAutoExports(context) {
           const type = collType(context)
           const selected = type === 'collection'
@@ -779,6 +813,17 @@ export class BetterBibTeX {
                 },
                 {
                   menuType: 'menuitem',
+                  l10nID: 'better-bibtex_aux-scanner_replace-collection',
+                  onShowing: (_event, context) => {
+                    context.setVisible(selectedCollectionHasItems(context))
+                  },
+                  onCommand: (_event, context) => {
+                    if (!selectedCollectionHasItems(context)) return
+                    void Zotero.BetterBibTeX.scanAUX('collection-replace')
+                  },
+                },
+                {
+                  menuType: 'menuitem',
                   l10nID: 'better-bibtex_report-errors',
                   onCommand: (_event, context) => {
                     void Zotero.BetterBibTeX.ErrorReport.open(collType(context))
@@ -801,7 +846,7 @@ export class BetterBibTeX {
             return item.getField('citationKey')
           },
           onSetData({ item, value }) {
-            if (!readonly(item.libraryID)) {
+            if (!readonly(item)) {
               item.setField('citationKey', value)
               void item.saveTx()
             }

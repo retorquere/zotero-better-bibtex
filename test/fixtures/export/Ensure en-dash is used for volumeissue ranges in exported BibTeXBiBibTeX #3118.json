@@ -14,7 +14,7 @@
       "charmap": "{\"·\":{\"text\":\"·\",\"math\":\"\"},\"ș\":{\"text\":\"ș\",\"math\":\"\"}}",
       "citekeyFormat": "auth.transliterate.lower+year",
       "exportSort": "off",
-      "exportTitleCase": false,
+      "exportTitlecase": "off",
       "extraMergeCSL": true,
       "keyConflictPolicy": "change",
       "keyScope": "global",

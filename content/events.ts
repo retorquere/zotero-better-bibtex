@@ -6,6 +6,7 @@ import { getItemsAsync } from './get-items-async'
 type ZoteroAction = 'modify' | 'add' | 'trash' | 'delete'
 
 type IdleState = 'active' | 'idle'
+export type SyncState = 'syncing' | 'idle'
 export type Action = 'modify' | 'delete' | 'add'
 
 type IdleObserver = {
@@ -37,11 +38,13 @@ type EventMap = {
   'preference-changed': string
   'window-loaded': { win: Window; href: string }
   idle: { state: IdleState; topic: IdleTopic }
+  sync: { state: SyncState }
 }
 
 class Emitter extends Emittery<EventMap> {
   private listeners: any[] = []
   public idle: Partial<Record<IdleTopic, IdleState>> = {}
+  public syncing: SyncState = 'idle'
   public itemObserverDelay = 5
 
   public startup(): void {
@@ -51,6 +54,7 @@ class Emitter extends Emittery<EventMap> {
     this.listeners.push(new CollectionListener)
     this.listeners.push(new MemberListener)
     this.listeners.push(new GroupListener)
+    this.listeners.push(new SyncListener)
   }
 
   override async emit<Name extends keyof EventMap>(eventName: Name, data?: EventMap[Name]): Promise<void> {
@@ -139,6 +143,24 @@ class IdleListener {
   unregister() {
     delete Events.idle[this.topic]
     idleService.removeIdleObserver(this, this.delay)
+  }
+}
+
+class SyncListener {
+  private id: string
+
+  constructor() {
+    this.id = Zotero.Notifier.registerObserver(this, ['sync'], 'Better BibTeX', 1)
+  }
+
+  notify(action: string, _type: string, _ids: string[], _extraData?: any) {
+    const state: SyncState = action === 'start' ? 'syncing' : 'idle' // Zotero fires 'start' and 'finish'
+    Events.syncing = state
+    void Events.emit('sync', { state })
+  }
+
+  unregister() {
+    Zotero.Notifier.unregisterObserver(this.id)
   }
 }
 

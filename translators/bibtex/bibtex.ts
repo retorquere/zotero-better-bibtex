@@ -29,7 +29,7 @@ function asarray(v?: string | number | string[]): string[] {
 }
 
 const config: Config = {
-  caseConversion: {
+  exportCaseDefaults: {
     title: true,
     series: true,
     shorttitle: true,

@@ -8,7 +8,6 @@
       "automaticTags": false,
       "baseAttachmentPath": "/Users/jdh/Documents/Academia/Library",
       "citekeyFormat": "creatornames('%(F)s') + authEtAl2(creator = '*', initials = false, sep = '_') + '_' + year",
-      "citekeySearch": false,
       "keyScope": "global",
       "quickCopyMode": "pandoc"
     }

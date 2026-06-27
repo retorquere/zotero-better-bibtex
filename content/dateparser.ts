@@ -1,5 +1,5 @@
-import { toEnglishOrdinal } from './text'
 import EDTF, { defaults } from 'edtf'
+import { toEnglishOrdinal } from './text'
 defaults.offset = false
 import edtfy from 'edtfy'
 
@@ -216,6 +216,9 @@ function swap_day_month(date: RichDate, fix_only = false): RichDate {
 }
 
 const re = {
+  //  1486/1487
+  Yy: /^(?<date1>\d{4,})\/(?<date2>\d{2})$/,
+
   // '30-Mar-2020', '30 Mar 2020',
   dMy: new RegExp(`^(?<day>\\d+)(\\s+|-)(?<month>${Month.english})(\\s+|-)(?<year>\\d+)$`, 'ui'),
 
@@ -334,6 +337,23 @@ class DateParser {
       .replace(/\s+/g, ' ')
 
     const english = reparse ? Month.toEnglish(date_only) : date_only
+
+    if (m = english.match(re.Yy)) {
+      const { date1, date2 } = m.groups
+      const year1 = parseInt(date1)
+      const year2 = parseInt(date1.substring(0, 2) + date2)
+      const month = parseInt(date2)
+
+      if (month >= 1 && month <= 12) {
+        return { type: 'date', year: year1, month }
+      }
+
+      return {
+        type: 'interval',
+        from: { type: 'date', year: year1 },
+        to: { type: 'date', year: year2 },
+      }
+    }
 
     if (m = english.match(re.Mdy) || english.match(re.dMy)) {
       const { day: sday, month, year: syear } = m.groups
@@ -548,6 +568,9 @@ export function isEDTF(value: string, minuteLevelPrecision = false): boolean {
 
 export function dateToISO(date: RichDate): string {
   switch (date.type) {
+    case 'verbatim':
+      return date.verbatim
+
     case 'interval':
       return `${dateToISO(date.from)}/${dateToISO(date.to)}`.replace(/^[/]$/, '')
 
@@ -586,7 +609,7 @@ function selectstart(date: RichDate): RichDate {
     case 'list':
       return date.dates.find(d => d.type !== 'open') || date.dates[0]
     case 'interval':
-      return [ date.from, date.to ].find(d => d.type !== 'open') || [ date.from, date.to ].find(d => d) || { type: 'open' }
+      return [date.from, date.to].find(d => d.type !== 'open') || [date.from, date.to].find(d => d) || { type: 'open' }
     default:
       return date
   }

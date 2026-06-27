@@ -15,7 +15,7 @@
   pubstate = {The status},
   version = {3333}
 }
-% == BibLateX quality report for Foo2021:
+% == BibLaTeX quality report for Foo2021:
 % Unexpected field 'type'
 % Unexpected field 'title'
 % Unexpected field 'author'

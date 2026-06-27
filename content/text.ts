@@ -99,7 +99,7 @@ export function sentenceCase(text: string): string {
 
 export type HTMLParserOptions = {
   html?: boolean
-  caseConversion?: boolean
+  exportCaseProtection?: boolean
   exportBraceProtection?: boolean
   csquotes?: string
   exportTitleCase?: boolean
@@ -156,7 +156,7 @@ export const HTMLParser = new class {
 
     let doc: MarkupNode
 
-    this.options = { ...options, exportBraceProtection: options.caseConversion && options.exportBraceProtection }
+    this.options = { ...options, exportBraceProtection: options.exportCaseProtection && options.exportBraceProtection }
     this.sentenceStart = true
 
     // add enquote tags.
@@ -179,7 +179,7 @@ export const HTMLParser = new class {
 
     doc = this.walk(parseFragment(this.html, { sourceCodeLocationInfo: true }))
 
-    if (this.options.caseConversion) {
+    if (this.options.exportCaseProtection) {
       if (this.options.exportTitleCase) {
         this.titleCased = ''
         this.collectText(doc)
@@ -383,7 +383,7 @@ export const HTMLParser = new class {
           continue
         }
 
-        if (!this.options.caseConversion || isNocased) {
+        if (!this.options.exportCaseProtection || isNocased) {
           this.plaintext(normalized_node.childNodes, child.value, child.sourceCodeLocation.startOffset)
           continue
         }
@@ -498,4 +498,8 @@ export function toEnglishOrdinal(n: number | string): string {
   else {
     return typeof n === 'string' ? n : ''
   }
+}
+
+export function padInt(num: number, length: number): string {
+  return num < 0 ? '-' + (-num + '').padStart(length, '0') : (num + '').padStart(length, '0')
 }

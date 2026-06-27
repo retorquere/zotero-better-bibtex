@@ -9,7 +9,7 @@
   url = {https://hdl.handle.net/2123/31137},
   annotation = {Accepted: 2023-04-24T06:25:00Z}
 }
-% == BibLateX quality report for Elman2023:
+% == BibLaTeX quality report for Elman2023:
 % ? unused Language ("en")
 % ? unused Library catalog ("ses.library.usyd.edu.au")
 
@@ -23,7 +23,7 @@
   url = {http://repository.ubn.ru.nl/handle/2066/92737},
   annotation = {Dissertation}
 }
-% == BibLateX quality report for Naaijkens2012:
+% == BibLaTeX quality report for Naaijkens2012:
 % ? Title looks like it was stored in title-case in Zotero
 % ? unused Library catalog ("repository.ubn.ru.nl")
 
@@ -38,7 +38,7 @@
   pages = {391--411},
   url = {http://hdl.handle.net/10077/4715}
 }
-% == BibLateX quality report for Pare1993:
+% == BibLaTeX quality report for Pare1993:
 % ? unused ISSN ("0049-4704")
 % ? unused Language ("en")
 % ? unused Library catalog ("www.openstarts.units.it")
@@ -51,7 +51,7 @@
   doi = {10.15488/5127},
   url = {https://www.repo.uni-hannover.de/handle/123456789/5172}
 }
-% == BibLateX quality report for Stiegemann2019:
+% == BibLaTeX quality report for Stiegemann2019:
 % Missing required field 'institution'
 % ? Title looks like it was stored in title-case in Zotero
 % ? unused Language ("eng")

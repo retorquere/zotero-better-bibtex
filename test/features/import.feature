@@ -31,10 +31,6 @@ Feature: Import
     Then the library should match "import/*.json"
     And an export using "Better BibLaTeX" should match "import/*.roundtrip.bib"
 
-  Scenario: CSL-YAML import
-    When I import 11 references from "import/*.yml"
-    Then the library should match "import/*.json"
-
   Scenario: detect-urls
     When I set preference .verbatimFields to "url,doi,file,pdf,ids,eprint,/^verb[a-z]$/,groups,/^citeulike-linkout-[0-9]+$/,/^bdsk-url-[0-9]+$/, /^url_/"
     And I import 1 reference from "import/*.bib"
@@ -87,12 +83,20 @@ Feature: Import
     Then the library should match "import/*.json"
 
   Scenario Outline: Import <references> references from <file>
+    When I import <references> references from "import/<file>.yml"
+    Then the library should match "import/*.json"
+    Examples:
+      | file                                                                                                                    | references |
+      | date wrongly imported from yaml-file day gets 00 prefixed #3542                                                         | 4          |
+      | CSL-YAML import                                                                                                         | 11         |
+
+  Scenario Outline: Import <references> references from <file>
     When I import <references> references from "import/<file>.bib"
     Then the library should match "import/*.json"
 
     Examples:
       | file                                                                                                                    | references |
-      | Crossrefd incollection items are missing date on import #3514                                                           | 6  |
+      | Crossrefd incollection items are missing date on import #3514                                                           | 6          |
       | Multiple attachments in calibre bibtex file not imported in Zotero #3338                                                | 1          |
       | Book imported as book section when duplicate book title field is present #3328                                          | 1          |
       | Double newlines means parbreak #2789                                                                                    | 1          |

@@ -159,18 +159,18 @@ export const KeyManager = new class _KeyManager {
 
   public getNativeKey = (_item: Zotero.Item) => ''
 
-  public async pin(ids: 'selected' | number | number[]): Promise<void> {
+  public async pin(ids: 'selected' | number | number[], pin = true): Promise<void> {
     await this.fill(ids, { warn: true })
     ids = this.expandSelection(ids)
     await Cache.touch(ids)
-    const items = (await getItemsAsync(ids)).filter(item => !item.isFeedItem && item.isRegularItem())
+    const items = (await getItemsAsync(ids)).filter(item => !readonly(item) && !item.isFeedItem && item.isRegularItem())
     for (const item of items) {
       if (readonly(item)) continue
 
-      const citationKey = item.getField('citationKey')
-      if (citationKey) {
+      const citationKey = pin ? item.getField('citationKey') : ''
+      if (!pin || citationKey) {
         const { extra } = Extra.citationKey(item.getField('extra'))
-        item.setField('extra', `Citation Key: ${citationKey}\n${extra}`.trim())
+        item.setField('extra', pin ? `Citation Key: ${citationKey}\n${extra}`.trim() : extra)
         await item.saveTx({ skipDateModifiedUpdate: true })
         await Zotero.Promise.delay(10)
       }

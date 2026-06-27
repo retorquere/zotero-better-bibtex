@@ -263,7 +263,7 @@ they are descriptive of the item. When this is off, such tags will not be includ
 
 ### Apply title-casing to titles
 
-default: `yes`
+default: `<not set>`
 
 If you're dead-set on ignoring both BibTeX/BibLaTeX best practice (see the BBT FAQ) and the Zotero recommendations on title/sentence casing, you can turn this off to suppress title casing for English items
 

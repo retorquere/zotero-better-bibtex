@@ -11,7 +11,7 @@
       "citeCommand": "autocite",
       "citekeyFormat": "authorsn(n=0,creator=\"*\",initials=false,sep=\";\").fold.replace(find=/[^;]+/,replace=\"\").len('>', 1).discard + authorsn(n=1,creator=\"*\",initials=false,sep=\";\").fold.replace(find=/;.*/,replace=\"\").postfix(\";ea\");\nauthorsn(n=2,creator=\"*\",initials=false,sep=\";\").fold;",
       "exportBraceProtection": false,
-      "exportTitleCase": false,
+      "exportTitlecase": "off",
       "importSentenceCase": "off",
       "postscript": "if (Translator.BetterBibLaTeX && reference.has.title) {\n\tconst titles = reference.has.title.value.match(/(.+?)([?:;])(.*)/);\n\tif (titles) {\n\t\tlet title = titles[1] + (titles[2] === \"?\" ? \"?\" : \"\");\n\t\treference.add({ name: \"title\", value: title });\n\t\treference.add({ name: \"subtitle\", value: titles[3].trim() });\n\t}\n}\n",
       "quickCopyMode": "citekeys",

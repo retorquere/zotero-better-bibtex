@@ -141,7 +141,7 @@ const isBibString = /^[a-z][-a-z0-9_]*$/i
 
 export type Config = {
   fieldEncoding: Record<string, 'raw' | 'url' | 'verbatim' | 'creators' | 'literal' | 'literal_list' | 'tags' | 'attachments' | 'date' | 'extra'>
-  caseConversion: Record<string, boolean>
+  exportCaseDefaults: Record<string, boolean>
   typeMap: {
     csl: Record<string, string | { type: string; subtype?: string }>
     zotero: Record<string, string | { type: string; subtype?: string }>
@@ -171,6 +171,9 @@ export class Entry {
   private inPostscript = false
   private quality_report: string[] = []
   private extraFields: ParsedExtraFields
+
+  private titlecaseFields: Set<string>
+  private caseProtectionFields: Set<string>
 
   declare private re: {
     punctuationAtEnd: any
@@ -243,6 +246,53 @@ export class Entry {
     this.item = item
     this.config = config
     this.date = item.date ? DateParser.parse(item.date) : { type: 'none' }
+
+    const translatorPrefix = this.translation.BetterBibTeX ? 'bibtex' : 'biblatex'
+    this.titlecaseFields = new Set(
+      Object.entries(this.config.exportCaseDefaults)
+        .filter(([_name, enabled]) => enabled)
+        .map(([name, _enabled]) => name)
+    )
+    this.caseProtectionFields = new Set(this.titlecaseFields)
+
+    const parseOverrides = (settings: string): [operation: '+' | '-' | 'x', field: string][] => settings
+      .split(',')
+      .map((s: string) => s.trim())
+      .filter((s: string) => s)
+      .flatMap((setting: string): [operation: '+' | '-' | 'x', field: string][] => {
+        const hasOperationPrefix = (setting[0] === '-' || setting[0] === '+')
+        const operation = (setting[0] === '-' ? '-' : '+')
+        const scoped = hasOperationPrefix ? setting.slice(1).trim() : setting
+        if (!scoped) return []
+
+        const dot = scoped.indexOf('.')
+        const [scope, field] = dot < 0 ? [null, scoped] : [scoped.slice(0, dot), scoped.slice(dot + 1)]
+        if (!field) return []
+        if (scope && !['bibtex', 'biblatex'].includes(scope)) return []
+        if (scope && scope !== translatorPrefix) return []
+
+        if (field === 'off' && !hasOperationPrefix) {
+          return [['x', '']]
+        }
+
+        return [[operation, field]]
+      })
+
+    for (const [set, overrides] of [ [ 'titlecaseFields', 'exportTitlecase' ], [ 'caseProtectionFields', 'exportCaseProtection' ] ]) {
+      for (const [operation, field] of parseOverrides(this.translation.collected.preferences[overrides])) {
+        switch (operation) {
+          case 'x':
+            this[set].clear()
+            break
+          case '+':
+            this[set].add(field)
+            break
+          case '-':
+            this[set].delete(field)
+            break
+        }
+      }
+    }
 
     if (!item.language) {
       this.english = true
@@ -856,7 +906,7 @@ export class Entry {
         continue
       }
 
-      const mode = ({ raw: { raw: true }, cased: { caseConversion: true }}[field.mode]) || {}
+      const mode = ({ raw: { raw: true }, cased: {}}[field.mode]) || {}
 
       switch (name) {
         case 'mr':
@@ -1067,7 +1117,19 @@ export class Entry {
           useprefix: creator.useprefix,
         }
 
-        if (this.translation.collected.preferences.parseParticles) CSL.parseParticles(name)
+        const quoted = {
+          family: name.family.match(/^".+"$/),
+          given: name.given.match(/^".+"$/),
+        }
+        const unquote = (n: string): string => n.slice(1, -1).replace(/[ ,]/g, m => encodeURIComponent(m))
+        if (quoted.family) name.family = unquote(name.family)
+        if (quoted.given) name.given = unquote(name.given)
+
+        if (this.translation.collected.preferences.parseParticles) {
+          CSL.parseParticles(name)
+        }
+        if (quoted.family) name.family = new String(decodeURIComponent(name.family))
+        if (quoted.given) name.given = new String(decodeURIComponent(name.given))
 
         if (!this.translation.BetterBibLaTeX || !this.translation.collected.preferences.biblatexExtendedNameFormat) {
           // side effects to set use-prefix/uniorcomma -- make sure addCreators is called *before* adding 'options'
@@ -1149,11 +1211,13 @@ export class Entry {
 
     if (f.raw || options.raw) return f.value
 
-    const caseConversion = this.config.caseConversion[f.name] || f.caseConversion
+    const titlecase = this.titlecaseFields.has(f.name)
+    const exportCaseProtection = this.caseProtectionFields.has(f.name)
     const { latex, packages, raw } = this.translation.bibtex
       .text2latex(f.value, {
         html: f.html,
-        caseConversion: caseConversion && this.english,
+        exportCaseProtection: exportCaseProtection && this.english,
+        exportTitleCase: titlecase,
         creator: options.creator,
       })
     for (const pkg of packages) {
@@ -1169,7 +1233,7 @@ export class Entry {
       bibtex to back off from non-English titles is to wrap the whole
       thing in braces.
     */
-    if (caseConversion && this.translation.BetterBibTeX && !this.english && this.translation.collected.preferences.exportBraceProtection) value = `{${ value }}`
+    if (exportCaseProtection && this.translation.BetterBibTeX && !this.english && this.translation.collected.preferences.exportBraceProtection) value = `{${ value }}`
 
     if (f.value instanceof String && !raw) value = new String(`{${ value }}`)
     return value
@@ -1532,7 +1596,7 @@ export class Entry {
         }
       }
 
-      if (this.has.title && this.translation.collected.preferences.exportTitleCase) {
+      if (this.has.title && this.titlecaseFields.has('title')) {
         const titleCased = titleCase(this.has.title.value) === this.has.title.value
         if (this.has.title.value.match(/\s/)) {
           if (titleCased) report.push('? Title looks like it was stored in title-case in Zotero')
@@ -1595,7 +1659,7 @@ export class Entry {
 
     if (!report.length) return ''
 
-    report.unshift(`== ${ this.translation.BetterBibTeX ? 'BibTeX' : 'BibLateX' } quality report for ${ this.item.citationKey }:`)
+    report.unshift(`== ${ this.translation.BetterBibTeX ? 'BibTeX' : 'BibLaTeX' } quality report for ${ this.item.citationKey }:`)
     return report.map(line => `% ${ line }\n`).join('')
   }
 

@@ -14,7 +14,7 @@
   keywords = {Availability,Biological system modeling,compact smart devices,computation power,Computational modeling,confidentiality,countermeasures,cyber attacks,data privacy,edge computing,edge nodes,energy capacity,integrity,Internet,Internet of things,Internet of Things,Internet technologies,Internet-of-Things,IoT reference models,IoT security,Monitoring,organized crime,personal privacy issues,privacy,public security concerns,security,Security,security of data,Smart devices,smart things,vulnerabilities,Wireless sensor networks},
   annotation = {ZSCC: NoCitationData[s0]}
 }
-% == BibLateX quality report for mosenia2017ComprehensiveStudySecurity:
+% == BibLaTeX quality report for mosenia2017ComprehensiveStudySecurity:
 % Unexpected field 'publisher'
 % ? Title looks like it was stored in title-case in Zotero
 % ? unused Library catalog ("IEEE Xplore")

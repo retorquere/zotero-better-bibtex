@@ -160,6 +160,10 @@ export const Preference = new class PreferenceManager extends PreferenceManagerB
     this.move('suppressSentenceCase', 'importSentenceCase', old => old ? 'off' : 'on+guess')
     this.move('suppressBraceProtection', 'exportBraceProtection', old => !old)
     this.move('suppressTitleCase', 'exportTitleCase', old => !old)
+    this.move('exportTitleCase', 'exportTitlecase', (old: boolean) => {
+      Zotero.Prefs.set('translators.better-bibtex.exportCaseProtection', old ? '' : 'off')
+      return old ? '' : 'off'
+    })
     this.move('jieba', 'chinese', old => !!old)
     this.move('kuroshiro', 'japanese', old => !!old)
 

@@ -8,7 +8,6 @@
     "preferences": {
       "fillKeyAfter": 10,
       "citekeyFormat": "inspirehep | auth+\":\"+year",
-      "citekeySearch": false,
       "extraMergeCSL": true,
       "extraMergeCitekeys": true,
       "extraMergeTeX": true,

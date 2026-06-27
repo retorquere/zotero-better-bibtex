@@ -244,14 +244,21 @@ export class TestSupport {
     return Array.from(new Set(ids))
   }
 
-  public async pick(format: string, citations: { id: number[]; uri: string; citationKey: string }[]): Promise<string> {
-    for (const citation of citations) {
+  public async pick(format: string, citations: { id: number[]; uri: string; citationKey: string }[], options: Record<string, string> = {}): Promise<string> {
+    const picked = citations.map(citation => {
       if (citation.id.length !== 1) throw new Error(`Expected 1 item, got ${ citation.id.length }`)
-      citation.citationKey = Zotero.BetterBibTeX.KeyManager.get(citation.id[0])?.citationKey || ''
-      citation.uri = Zotero.URI.getItemURI(await getItemAsync(citation.id[0]))
+      return {
+        ...citation,
+        id: citation.id[0],
+      }
+    })
+
+    for (const citation of picked) {
+      citation.citationKey = Zotero.BetterBibTeX.KeyManager.get(citation.id)?.citationKey || ''
+      citation.uri = Zotero.URI.getItemURI(await getItemAsync(citation.id))
     }
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-    return await CAYWFormatter[format](citations, {})
+    return await CAYWFormatter[format](picked, options)
   }
 
   public async pinCiteKey(itemID: number, action: string, citationKey?: string): Promise<void> {

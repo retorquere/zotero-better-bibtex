@@ -28,13 +28,11 @@
       "citeCommand": "cite",
       "citekeyFold": true,
       "citekeyFormat": "auth + year",
-      "citekeySearch": true,
       "citekeyUnsafeChars": "\\\"#%'(),={}~",
       "csquotes": "",
       "DOIandURL": "both",
       "exportBibTeXStrings": "off",
       "exportBraceProtection": true,
-      "exportTitleCase": true,
       "extraMergeCitekeys": false,
       "extraMergeCSL": false,
       "extraMergeTeX": false,
@@ -105,7 +103,7 @@
       "title": "One flew over the cuckoo's nest",
       "creators": [
         {
-          "firstName": "Milo\u0161",
+          "firstName": "Miloš",
           "lastName": "Forman",
           "creatorType": "director"
         }
@@ -138,7 +136,7 @@
       "title": "One flew over the cuckoo's nest",
       "creators": [
         {
-          "firstName": "Milo\u0161",
+          "firstName": "Miloš",
           "lastName": "Forman",
           "creatorType": "director"
         }
@@ -171,7 +169,7 @@
       "title": "One flew over the cuckoo's nest",
       "creators": [
         {
-          "firstName": "Milo\u0161",
+          "firstName": "Miloš",
           "lastName": "Forman",
           "creatorType": "director"
         }
@@ -204,7 +202,7 @@
       "title": "One flew over the cuckoo's nest",
       "creators": [
         {
-          "firstName": "Milo\u0161",
+          "firstName": "Miloš",
           "lastName": "Forman",
           "creatorType": "director"
         }

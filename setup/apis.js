@@ -149,6 +149,9 @@ export function printed(schema, parenthesize) {
     case 'void':
       return 'void'
 
+    case 'null':
+      return 'null'
+
     default:
       if (schema.instanceof) return schema.instanceof
       if (schema.oneOf) return schema.oneOf.map(subtype => printed(subtype)).join(' | ')

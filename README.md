@@ -71,7 +71,7 @@ If nothing else, you could keep your existing workflow as-is, and just enjoy the
 
 Better BibTeX works from [BibTeXing](http://ctan.cs.uu.nl/biblio/bibtex/base/btxdoc.pdf) and [Tame the
 BeaST](http://www.lsv.ens-cachan.fr/~markey/BibTeX/doc/ttb_en.pdf) for BibTeX, and
-[The Biblatex Package](http://mirrors.ctan.org/macros/latex/contrib/biblatex/doc/biblatex.pdf) for BibLaTeX, but
+[The BibLaTeX Package](http://mirrors.ctan.org/macros/latex/contrib/biblatex/doc/biblatex.pdf) for BibLaTeX, but
 since there isn't really a definitive manual for either format that is universally followed by Bib(La)TeX
 editors/processors, I'm pragmatic about implementing what works.
 
