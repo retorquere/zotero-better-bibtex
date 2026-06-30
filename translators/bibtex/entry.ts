@@ -745,7 +745,7 @@ export class Entry {
 
   public complete(): void {
     if (this.translation.collected.preferences.jabrefFormat >= 4 && this.item.collections?.length) {
-      const groups = Array.from(new Set(this.item.collections.map(key => this.translation.collections[key]?.name).filter(name => name))).sort()
+      const groups = Array.from(new Set(this.item.collections.map(key => this.translation.collections[key]?.name).filter(name => name))).sort((a, b) => strcmp.base(a, b))
       this.add({ name: 'groups', value: groups.join(',') })
     }
 
