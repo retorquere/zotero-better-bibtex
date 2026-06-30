@@ -17,6 +17,7 @@ import * as l10n from './l10n'
 import { orchestrator } from './orchestrator'
 import { pick } from './object'
 import { uri } from './escape'
+import { strcmp } from './string-compare'
 
 const cmdMeta = /(["^&|<>()%!])/
 const cmdMetaOrSpace = /[\s"^&|<>()%!]/
@@ -75,7 +76,7 @@ class Store extends ObservedMap<string, Job> {
     super(jobs)
   }
 
-  order = (a: Job, b: Job) => a.path.localeCompare(b.path, undefined, { sensitivity: 'base', usage: 'sort' })
+  order = (a: Job, b: Job) => strcmp.base(a.path, b.path)
 
   onChange(method: 'set' | 'delete' | 'clear', key?: string) {
     if (!key) throw new Error('do not clear the database')

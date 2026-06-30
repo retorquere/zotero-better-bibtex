@@ -1,6 +1,6 @@
 export const strcmp = (['base', 'accent', 'case', 'variant'] as const).reduce(
   (acc, sensitivity) => {
-    const collator = new Intl.Collator(undefined, { sensitivity })
+    const collator = new Intl.Collator(undefined, { sensitivity, usage: 'sort', ignorePunctuation: true })
     return {
       ...acc,
       [sensitivity]: collator.compare.bind(collator),

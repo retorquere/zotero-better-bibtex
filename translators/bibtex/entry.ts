@@ -963,7 +963,7 @@ export class Entry {
       if (fa && fb) return Math.abs(fa) - Math.abs(fb)
       if (fa) return -fa
       if (fb) return fb
-      return a.localeCompare(b)
+      return strcmp.variant(a, b)
     })
     for (const field of keys) {
       const value = this.has[field]
