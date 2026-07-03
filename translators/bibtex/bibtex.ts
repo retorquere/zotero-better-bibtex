@@ -1,5 +1,6 @@
 declare const Zotero: any
 
+import { strcmp } from '../../content/string-compare'
 import * as escape from '../../content/escape'
 import { log } from '../../content/logger'
 import { Exporter as BibTeXExporter } from './exporter'
@@ -1630,7 +1631,7 @@ class ZoteroItem {
 
         const ta = a.startsWith('tex.')
         const tb = b.startsWith('tex.')
-        if (ta === tb) return a.localeCompare(b, undefined, { sensitivity: 'base' })
+        if (ta === tb) return strcmp.base(a, b)
         return ta ? 1 : -1
       })
       this.item.extra = this.extra.map(line => line.replace(/\n+/g, ' ')).concat(this.item.extra || '').join('\n').trim()

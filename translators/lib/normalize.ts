@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 
 import stringify from 'safe-stable-stringify'
+import { strcmp } from '../../content/string-compare'
 import type { Serialized } from '../../gen/typings/serialized'
 
 function rjust(str: string | number, width: number, padding: string): string {
@@ -69,7 +70,7 @@ function strip(obj) {
 }
 
 export function normalize(library: Library, sort = true): void {
-  if (sort) library.items.sort((a, b) => key(a).localeCompare(key(b)))
+  if (sort) library.items.sort((a, b) => strcmp.variant(key(a), key(b)))
 
   for (const item of (library.items as any[])) {
     delete item.citekey
@@ -89,7 +90,7 @@ export function normalize(library: Library, sort = true): void {
     }
 
     if (item.tags?.length) {
-      item.tags = item.tags.map(tag => typeof tag === 'string' ? { tag } : tag).sort((a, b) => a.tag.localeCompare(b.tag))
+      item.tags = item.tags.map(tag => typeof tag === 'string' ? { tag } : tag).sort((a, b) => strcmp.variant(a.tag, b.tag))
     }
     else {
       delete item.tags
@@ -138,7 +139,7 @@ export function normalize(library: Library, sort = true): void {
   }
 
   // sort items and normalize their IDs
-  library.items.sort((a, b) => stringify({ ...a, itemID: 0 }).localeCompare(stringify({ ...b, itemID: 0 })))
+  library.items.sort((a, b) => strcmp.variant(stringify({ ...a, itemID: 0 }), stringify({ ...b, itemID: 0 })))
   const itemIDs: Record<number, number> = library.items.reduce((acc, item, i) => {
     item.itemID = acc[item.itemID] = i + 1 // Zotero does not recognize items with itemID 0 in collections...
     return acc
@@ -146,7 +147,7 @@ export function normalize(library: Library, sort = true): void {
 
   if (library.collections && Object.keys(library.collections).length) {
     const collectionOrder: Serialized.Collection[] = Object.values(library.collections)
-      .sort((a: Serialized.Collection, b: Serialized.Collection): number => stringify({ ...a, key: '', parent: '' }).localeCompare(stringify({ ...b, key: '', parent: '' })))
+      .sort((a: Serialized.Collection, b: Serialized.Collection): number => strcmp.variant(stringify({ ...a, key: '', parent: '' }), stringify({ ...b, key: '', parent: '' })))
     const collectionKeys: Record<string, string> = collectionOrder.reduce((acc: Record<string, string>, coll: Serialized.Collection, i: number): Record<string, string> => {
       coll.key = acc[coll.key] = `coll:${ rjust(i, 5, '0') }`
       return acc

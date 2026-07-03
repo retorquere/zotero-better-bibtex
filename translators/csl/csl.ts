@@ -2,6 +2,7 @@ declare const Zotero: any
 
 import { Translation } from '../lib/translator'
 
+import { strcmp } from '../../content/string-compare'
 import { Schema, simplifyForExport } from '../../content/item-schema'
 import { Fields as ParsedExtraFields, get as getExtra, cslCreator } from '../../content/extra'
 import type { ExportedItem } from '../../content/worker/cache'
@@ -217,7 +218,7 @@ export abstract class CSLExporter {
     if (oa && ob) return oa - ob
     if (oa) return -1
     if (ob) return 1
-    return a.localeCompare(b, undefined, { sensitivity: 'base' })
+    return strcmp.base(a, b)
   }
 
   private sortObject(obj: any): any {
