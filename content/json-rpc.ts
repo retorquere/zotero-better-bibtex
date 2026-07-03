@@ -455,11 +455,10 @@ export class NSItem {
 
   /**
    * Regenerate citekeys from current item metadata. For each input citekey, the
-   * underlying item's key is recomputed using the configured `citekeyFormat`,
-   * and any `Citation Key:` pin in the Extra field is refreshed to match.
+    * underlying item's key is recomputed using the configured `citekeyFormat`.
    *
    * Useful when items were created in two phases — initial record from partial
-   * metadata, enrichment landing later — and the key pinned during phase one
+   * metadata, enrichment landing later — and the key generated during phase one
    * no longer matches what current metadata would produce.
    *
    * Returns an old → new mapping per input citekey. The value is `null` only

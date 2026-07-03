@@ -1,7 +1,6 @@
 import { log } from '../logger'
 import { getItemAsync } from '../get-items-async'
 import { flash } from '../flash'
-import { citationKey as extract } from '../extra'
 import { Preference } from '../prefs'
 import { AltDebug } from '../debug-log'
 import { editable as editableLibs } from '../library'
@@ -166,14 +165,10 @@ export async function migrate(verbose = false): Promise<void> {
 
       speaker.say(`migrating ${bbt.length} citation keys`, true)
 
-      for (const { itemID, citationKey, pinned } of bbt) {
+      for (const { itemID, citationKey } of bbt) {
         const item = await getItemAsync(itemID)
         if (choice.overwrite || !item.getField('citationKey')) {
           item.setField('citationKey', citationKey)
-          if (choice.dynamic && pinned) {
-            const { extra } = extract(item.getField('extra'))
-            item.setField('extra', `${extra}\nCitation Key: ${citationKey}`.trim())
-          }
           await item.save({ skipDateModifiedUpdate: true, skipNotifier: !!choice.zotero })
         }
       }

@@ -157,22 +157,6 @@ export const KeyManager = new class _KeyManager {
 
   public autofill: Scheduler<number> = new Scheduler<number>('fillKeyAfter', 1000)
 
-  public async pin(ids: 'selected' | number | number[], pin = true): Promise<void> {
-    await this.fill(ids, { warn: true })
-    ids = this.expandSelection(ids)
-    await Cache.touch(ids)
-    const items = (await getItemsAsync(ids)).filter(item => !readonly(item) && !item.isFeedItem && item.isRegularItem())
-    for (const item of items) {
-      const citationKey = pin ? item.getField('citationKey') : ''
-      if (!pin || citationKey) {
-        const { extra } = Extra.citationKey(item.getField('extra'))
-        item.setField('extra', pin ? `Citation Key: ${citationKey}\n${extra}`.trim() : extra)
-        await item.saveTx({ skipDateModifiedUpdate: true })
-        await Zotero.Promise.delay(10)
-      }
-    }
-  }
-
   public async fill(ids: 'selected' | number | number[], { warn = false, replace = false, inspireHEP = false }: { warn?: boolean; replace?: boolean; inspireHEP?: boolean } = {}): Promise<void> {
     ids = this.expandSelection(ids)
     const selected: Set<number> = new Set(ids)

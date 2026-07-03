@@ -151,7 +151,7 @@
   },
   {
     "summary": "<b>pinned</b>",
-    "description": "A pinned citation key from the extra field. eg if you have <code>citation key: me</code> in the extra field, <code>me</code> would be used as the value. This is always prepended to your formula.",
+    "description": "Legacy compatibility formatter.</p>\n<p>Pinned citation keys in Extra are no longer supported, but existing\nformulas may still reference $pinned(). Keep this formatter as a no-op.",
     "parameters": ""
   },
   {

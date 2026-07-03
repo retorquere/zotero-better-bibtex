@@ -66,6 +66,32 @@ export async function patchDates(): Promise<void> {
   }
 }
 
+export function selectedItemsHaveCitationKeyInExtra(): boolean {
+  return Zotero.getActiveZoteroPane().getSelectedItems().some(item => {
+    if (item.isFeedItem || !item.isRegularItem()) return false
+    return !!Extra.citationKey(item.getField('extra')).citationKey
+  })
+}
+
+export async function applyCitationKeyFromExtra(move: boolean): Promise<void> {
+  try {
+    const items = Zotero.getActiveZoteroPane().getSelectedItems()
+    for (const item of items) {
+      if (item.isFeedItem || !item.isRegularItem()) continue
+
+      const { citationKey, extra } = Extra.citationKey(item.getField('extra'))
+      if (!citationKey) continue
+
+      if (move) item.setField('citationKey', citationKey)
+      item.setField('extra', extra)
+      await item.saveTx()
+    }
+  }
+  catch (err) {
+    log.error('applyCitationKeyFromExtra:', err)
+  }
+}
+
 export async function sentenceCase(): Promise<void> {
   try {
     const items = Zotero.getActiveZoteroPane().getSelectedItems()
