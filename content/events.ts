@@ -226,13 +226,13 @@ class ItemListener extends ZoteroListener {
       const changed: Record<number, string[]> = (!extraData || typeof extraData !== 'object')
         ? {}
         : ids.reduce((acc, id) => {
-          const perItem = extraData[id]
-          if (!perItem || typeof perItem !== 'object') return acc
-          if (!perItem.changed || typeof perItem.changed !== 'object') return acc
+            const perItem = extraData[id]
+            if (!perItem || typeof perItem !== 'object') return acc
+            if (!perItem.changed || typeof perItem.changed !== 'object') return acc
 
-          acc[id] = Object.keys(perItem.changed as Record<string, unknown>)
-          return acc
-        }, {} as Record<number, string[]>)
+            acc[id] = Object.keys(perItem.changed as Record<string, unknown>)
+            return acc
+          }, {} as Record<number, string[]>)
 
       if (action === 'delete') {
         await Events.emit('items-removed', { itemIDs: ids })
