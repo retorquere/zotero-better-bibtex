@@ -322,7 +322,8 @@ export const KeyManager = new class _KeyManager {
       })
 
       const update = (item: Zotero.Item) => {
-        if (changed?.[item.id]?.includes('citationKey')) {
+        const citationKey = item.getField('citationKey')
+        if (changed?.[item.id]?.includes('citationKey') && citationKey) {
           this.store(item)
           return
         }
