@@ -465,6 +465,21 @@ export function generateBibTeX(collected: Collected): Translation {
       ref.add({ name: 'journal', value: journalAbbreviation || item.publicationTitle, bibtexStrings: true })
     }
 
+    log.info('bibtex journal resolution:', {
+      itemID: item.itemID,
+      itemKey: item.itemKey,
+      itemType: item.itemType,
+      entrytype: ref.entrytype,
+      entrytypeSource: ref.entrytype_source,
+      useJournalAbbreviation: translation.collected.displayOptions.useJournalAbbreviation,
+      publicationTitle: item.publicationTitle || null,
+      journalAbbreviation: item.journalAbbreviation || null,
+      autoJournalAbbreviation: item.autoJournalAbbreviation || null,
+      resolvedJournalAbbreviation: journalAbbreviation || null,
+      journal: ref.has.journal?.value || null,
+      booktitle: ref.has.booktitle?.value || null,
+    })
+
     let reftype = ref.entrytype_source.split('.')[1]
     if (reftype.endsWith('thesis')) reftype = 'thesis' // # 1965
     switch (reftype) {

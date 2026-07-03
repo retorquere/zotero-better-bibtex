@@ -1,6 +1,7 @@
 import { Exporter as BibTeXExporter } from './exporter'
 import { Translation } from '../lib/translator'
 import { strToISO } from '../../content/dateparser'
+import { log } from '../../content/logger'
 import { qualityReport } from '../../gen/biber-tool'
 import type { Collected } from '../lib/collect'
 
@@ -454,6 +455,22 @@ export function generateBibLaTeX(collected: Collected): Translation {
       default:
         if (!entry.has.journaltitle && (item.publicationTitle !== item.title)) entry.add({ name: 'journaltitle', value: item.publicationTitle })
     }
+
+    log.info('biblatex journal resolution:', {
+      itemID: item.itemID,
+      itemKey: item.itemKey,
+      itemType: item.itemType,
+      entrytype: entry.entrytype,
+      useJournalAbbreviation: translation.collected.displayOptions.useJournalAbbreviation,
+      publicationTitle: item.publicationTitle || null,
+      journalAbbreviation: item.journalAbbreviation || null,
+      autoJournalAbbreviation: item.autoJournalAbbreviation || null,
+      resolvedJournalAbbreviation: journalAbbreviation || null,
+      journaltitle: entry.has.journaltitle?.value || null,
+      shortjournal: entry.has.shortjournal?.value || null,
+      booktitle: entry.has.booktitle?.value || null,
+      organization: entry.has.organization?.value || null,
+    })
 
     let main
     // eslint-disable-next-line no-underscore-dangle
