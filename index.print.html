@@ -353,9 +353,7 @@ appropriate place in your pattern, but checking this checkbox will just apply <c
 <p>Treat &ldquo;AugusteComte&rdquo; and &ldquo;augustecomte&rdquo; as the same key when testing for uniqueness</p>
 <h3 id="keep-keys-unique">Keep keys unique<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h3>
 <p>default: <code>within each library</code></p>
-<p>Auto-generated (non-pinned) keys automatically get a postfix when they would generate a duplicate. By default, the check for duplicates is restricted
-to the library/group the item lives in. When set to global, the check will include all libraries/groups, so auto-generated keys would be globally
-unique. Changing this setting <em>does not</em> affect existign keys - for this you would need to select the items and refresh the keys.</p>
+<p>Generated keys automatically get a postfix when they would generate a duplicate. By default, the check for duplicates is restricted to the library/group the item lives in. When set to global, the check will include all libraries/groups, so auto-generated keys would be globally unique. Changing this setting <em>does not</em> affect existign keys - for this you would need to select the items and refresh the keys.</p>
 <p>Options:</p>
 <ul>
 <li>across all libraries</li>
@@ -12193,10 +12191,9 @@ convert to/from unicode and (un)escape where required but will pass whatever is 
 <li>library: The libraryID to search in (optional). Pass <code>*</code> to search across your library and all groups.</li>
 </ul>
 <p>Regenerate citekeys from current item metadata. For each input citekey, the
-underlying item&rsquo;s key is recomputed using the configured <code>citekeyFormat</code>,
-and any <code>Citation Key:</code> pin in the Extra field is refreshed to match.</p>
+underlying item&rsquo;s key is recomputed using the configured <code>citekeyFormat</code>.</p>
 <p>Useful when items were created in two phases — initial record from partial
-metadata, enrichment landing later — and the key pinned during phase one
+metadata, enrichment landing later — and the key generated during phase one
 no longer matches what current metadata would produce.</p>
 <p>Returns an old → new mapping per input citekey. The value is <code>null</code> only
 when the input citekey cannot be resolved to an item. Otherwise the value
@@ -13326,7 +13323,9 @@ abbreviator if not (if auto-abbrev is enabled in the preferences), <code>auto</c
 
   <h3><b>origyear</b></h3><p>the original year of the publication</p>
 
-  <h3><b>pinned</b></h3><p>A pinned citation key from the extra field. eg if you have <code>citation key: me</code> in the extra field, <code>me</code> would be used as the value. This is always prepended to your formula.</p>
+  <h3><b>pinned</b></h3><p>Legacy compatibility formatter.</p>
+<p>Pinned citation keys in Extra are no longer supported, but existing
+formulas may still reference $pinned(). Keep this formatter as a no-op.</p>
 
   <h3><b>postfix</b>(format: string containing at least one of &#39;%(a)s&#39;, &#39;%(A)s&#39;, &#39;%(n)s&#39;=&#39;%(a)s&#39;, start: number | string=0)</h3><p>a pseudo-function that sets the citekey disambiguation postfix using an <a href="https://www.npmjs.com/package/sprintf-js">sprintf-js</a> format spec
 for when a key is generated that already exists. Does not add any text to the citekey otherwise.
@@ -14840,8 +14839,8 @@ means a lot) so I can save up for a replacement a year or so down
 the line, head on over to <a href="https://www.patreon.com/retorquere" rel="external">Patreon</a>,
 but mind that Patreon takes a fairly large cut of what you give.</p>
 <p>Many, many thanks, also to the existing contributors &ndash; thanks to you I&rsquo;ve hit my first target and have been able to replace my trusty macbook air with a newer macbook pro which has much more breathing room.</p>
-<p><a href="#R-image-7c3be458f393a9720fe9baf83094b668" class="lightbox-link"><img alt="My github stats" class="lazy lightbox figure-image" loading="lazy" src="https://github-readme-stats.vercel.app/api?username=retorquere&show_icons=true&hide_border=true&theme=dark" style="height: auto;width: auto;"></a>
-<a href="javascript:history.back();" class="lightbox-back" id="R-image-7c3be458f393a9720fe9baf83094b668"><img alt="My github stats" class="lazy lightbox lightbox-image" loading="lazy" src="https://github-readme-stats.vercel.app/api?username=retorquere&show_icons=true&hide_border=true&theme=dark"></a></p>
+<p><a href="#R-image-7f6e5d78726546aa05c5b4421665b6f0" class="lightbox-link"><img alt="My github stats" class="lazy lightbox figure-image" loading="lazy" src="https://github-readme-stats.vercel.app/api?username=retorquere&show_icons=true&hide_border=true&theme=dark" style="height: auto;width: auto;"></a>
+<a href="javascript:history.back();" class="lightbox-back" id="R-image-7f6e5d78726546aa05c5b4421665b6f0"><img alt="My github stats" class="lazy lightbox lightbox-image" loading="lazy" src="https://github-readme-stats.vercel.app/api?username=retorquere&show_icons=true&hide_border=true&theme=dark"></a></p>
 <p>I prefer communicating via github issues, but for private information you can reach me on <a href="https://matrix.to/#/@retorquere:utwente.io" rel="external">matrix</a></p>
 
   <footer class="footline">
