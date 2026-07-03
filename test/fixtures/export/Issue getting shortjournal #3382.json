@@ -5,7 +5,7 @@
     "preferences": {
       "autoAbbrev": true,
       "citekeyFormat": "auth.lower + shorttitle(3, 3) + year",
-      "exportTitleCase": false
+      "exportTitlecase": "off"
     },
     "options": {}
   },

@@ -39,13 +39,13 @@ import { Schema } from '../../content/item-schema'
 import type { Fields as ParsedExtraFields, TeXString } from '../../content/extra'
 import { zoteroCreator as ExtraZoteroCreator } from '../../content/extra'
 import { log } from '../../content/logger'
-import { babelLanguage, titleCase } from '../../content/text'
+import { langCode, titleCase } from '../../content/text'
 import BabelTag from '../../gen/babel/tag.json' with { type: 'json' }
 
 import { arXiv } from '../../content/arXiv'
 import { uri } from '../../content/escape'
 
-import { stringCompare } from '../lib/string-compare'
+import { strcmp } from '../../content/string-compare'
 import * as CSL from 'citeproc'
 
 /*
@@ -130,7 +130,7 @@ const fieldOrder = [
 }, {})
 
 function property_sort(a: [string, string, string, string], b: [string, string, string, string]): number {
-  return stringCompare(a[0], b[0])
+  return strcmp.variant(a[0], b[0])
 }
 
 const enc_creators_marker = {
@@ -141,7 +141,7 @@ const isBibString = /^[a-z][-a-z0-9_]*$/i
 
 export type Config = {
   fieldEncoding: Record<string, 'raw' | 'url' | 'verbatim' | 'creators' | 'literal' | 'literal_list' | 'tags' | 'attachments' | 'date' | 'extra'>
-  caseConversion: Record<string, boolean>
+  exportCaseDefaults: Record<string, boolean>
   typeMap: {
     csl: Record<string, string | { type: string; subtype?: string }>
     zotero: Record<string, string | { type: string; subtype?: string }>
@@ -164,13 +164,16 @@ export class Entry {
   public useprefix: boolean
   public language: string
   public english: boolean
-  public date: DateParser.ParsedDate | { type: 'none' }
+  public date: DateParser.RichDate | { type: 'none' }
 
   public config: Config
 
   private inPostscript = false
   private quality_report: string[] = []
   private extraFields: ParsedExtraFields
+
+  private titlecaseFields: Set<string>
+  private caseProtectionFields: Set<string>
 
   declare private re: {
     punctuationAtEnd: any
@@ -244,11 +247,58 @@ export class Entry {
     this.config = config
     this.date = item.date ? DateParser.parse(item.date) : { type: 'none' }
 
+    const translatorPrefix = this.translation.BetterBibTeX ? 'bibtex' : 'biblatex'
+    this.titlecaseFields = new Set(
+      Object.entries(this.config.exportCaseDefaults)
+        .filter(([_name, enabled]) => enabled)
+        .map(([name, _enabled]) => name)
+    )
+    this.caseProtectionFields = new Set(this.titlecaseFields)
+
+    const parseOverrides = (settings: string): [operation: '+' | '-' | 'x', field: string][] => settings
+      .split(',')
+      .map((s: string) => s.trim())
+      .filter((s: string) => s)
+      .flatMap((setting: string): [operation: '+' | '-' | 'x', field: string][] => {
+        const hasOperationPrefix = (setting[0] === '-' || setting[0] === '+')
+        const operation = (setting[0] === '-' ? '-' : '+')
+        const scoped = hasOperationPrefix ? setting.slice(1).trim() : setting
+        if (!scoped) return []
+
+        const dot = scoped.indexOf('.')
+        const [scope, field] = dot < 0 ? [null, scoped] : [scoped.slice(0, dot), scoped.slice(dot + 1)]
+        if (!field) return []
+        if (scope && !['bibtex', 'biblatex'].includes(scope)) return []
+        if (scope && scope !== translatorPrefix) return []
+
+        if (field === 'off' && !hasOperationPrefix) {
+          return [['x', '']]
+        }
+
+        return [[operation, field]]
+      })
+
+    for (const [set, overrides] of [ [ 'titlecaseFields', 'exportTitlecase' ], [ 'caseProtectionFields', 'exportCaseProtection' ] ]) {
+      for (const [operation, field] of parseOverrides(this.translation.collected.preferences[overrides])) {
+        switch (operation) {
+          case 'x':
+            this[set].clear()
+            break
+          case '+':
+            this[set].add(field)
+            break
+          case '-':
+            this[set].delete(field)
+            break
+        }
+      }
+    }
+
     if (!item.language) {
       this.english = true
     }
     else {
-      this.language = babelLanguage(item.language)
+      this.language = langCode(item.language)
       this.english = BabelTag[this.language] === 'en'
     }
 
@@ -482,7 +532,8 @@ export class Entry {
 
     if (this.translation.skipField?.exec(`${ this.translation.BetterBibTeX ? 'bibtex' : 'biblatex' }.${ this.entrytype }.${ field.name }`)) return null
 
-    field.enc = field.raw ? 'raw' : (field.enc || this.config.fieldEncoding[field.name] || 'literal')
+    // field.enc = field.raw ? 'raw' : (field.enc || this.config.fieldEncoding[field.name] || 'literal')
+    field.enc = field.enc || this.config.fieldEncoding[field.name] || (field.raw ? 'raw' : 'literal')
 
     if (field.enc === 'date') {
       if (!field.value) return null
@@ -689,12 +740,12 @@ export class Entry {
   }
 
   public langid(): string {
-    return babelLanguage(this.item.language)
+    return langCode(this.item.language)
   }
 
   public complete(): void {
     if (this.translation.collected.preferences.jabrefFormat >= 4 && this.item.collections?.length) {
-      const groups = Array.from(new Set(this.item.collections.map(key => this.translation.collections[key]?.name).filter(name => name))).sort()
+      const groups = Array.from(new Set(this.item.collections.map(key => this.translation.collections[key]?.name).filter(name => name))).sort((a, b) => strcmp.base(a, b))
       this.add({ name: 'groups', value: groups.join(',') })
     }
 
@@ -855,7 +906,7 @@ export class Entry {
         continue
       }
 
-      const mode = ({ raw: { raw: true }, cased: { caseConversion: true }}[field.mode]) || {}
+      const mode = ({ raw: { raw: true }, cased: {}}[field.mode]) || {}
 
       switch (name) {
         case 'mr':
@@ -912,7 +963,7 @@ export class Entry {
       if (fa && fb) return Math.abs(fa) - Math.abs(fb)
       if (fa) return -fa
       if (fb) return fb
-      return a.localeCompare(b)
+      return strcmp.variant(a, b)
     })
     for (const field of keys) {
       const value = this.has[field]
@@ -1066,7 +1117,19 @@ export class Entry {
           useprefix: creator.useprefix,
         }
 
-        if (this.translation.collected.preferences.parseParticles) CSL.parseParticles(name)
+        const quoted = {
+          family: name.family.match(/^".+"$/),
+          given: name.given.match(/^".+"$/),
+        }
+        const unquote = (n: string): string => n.slice(1, -1).replace(/[ ,]/g, m => encodeURIComponent(m))
+        if (quoted.family) name.family = unquote(name.family)
+        if (quoted.given) name.given = unquote(name.given)
+
+        if (this.translation.collected.preferences.parseParticles) {
+          CSL.parseParticles(name)
+        }
+        if (quoted.family) name.family = new String(decodeURIComponent(name.family))
+        if (quoted.given) name.given = new String(decodeURIComponent(name.given))
 
         if (!this.translation.BetterBibLaTeX || !this.translation.collected.preferences.biblatexExtendedNameFormat) {
           // side effects to set use-prefix/uniorcomma -- make sure addCreators is called *before* adding 'options'
@@ -1148,11 +1211,13 @@ export class Entry {
 
     if (f.raw || options.raw) return f.value
 
-    const caseConversion = this.config.caseConversion[f.name] || f.caseConversion
+    const titlecase = this.titlecaseFields.has(f.name)
+    const exportCaseProtection = this.caseProtectionFields.has(f.name)
     const { latex, packages, raw } = this.translation.bibtex
       .text2latex(f.value, {
         html: f.html,
-        caseConversion: caseConversion && this.english,
+        exportCaseProtection: exportCaseProtection && this.english,
+        exportTitleCase: titlecase,
         creator: options.creator,
       })
     for (const pkg of packages) {
@@ -1168,7 +1233,7 @@ export class Entry {
       bibtex to back off from non-English titles is to wrap the whole
       thing in braces.
     */
-    if (caseConversion && this.translation.BetterBibTeX && !this.english && this.translation.collected.preferences.exportBraceProtection) value = `{${ value }}`
+    if (exportCaseProtection && this.translation.BetterBibTeX && !this.english && this.translation.collected.preferences.exportBraceProtection) value = `{${ value }}`
 
     if (f.value instanceof String && !raw) value = new String(`{${ value }}`)
     return value
@@ -1194,7 +1259,7 @@ export class Entry {
       }
     }
 
-    return [...encoded].sort((a, b) => stringCompare(a, b)).join(',')
+    return [...encoded].sort((a, b) => strcmp.base(a, b)).join(',')
   }
 
   relPath(path) {
@@ -1266,7 +1331,7 @@ export class Entry {
     attachments.sort((a, b) => {
       if ((a.mimetype === 'text/html') && (b.mimetype !== 'text/html')) return 1
       if ((b.mimetype === 'text/html') && (a.mimetype !== 'text/html')) return -1
-      return stringCompare(a.path, b.path)
+      return strcmp.base(a.path, b.path)
     })
 
     if (this.translation.collected.preferences.jabrefFormat) {
@@ -1531,7 +1596,7 @@ export class Entry {
         }
       }
 
-      if (this.has.title && this.translation.collected.preferences.exportTitleCase) {
+      if (this.has.title && this.titlecaseFields.has('title')) {
         const titleCased = titleCase(this.has.title.value) === this.has.title.value
         if (this.has.title.value.match(/\s/)) {
           if (titleCased) report.push('? Title looks like it was stored in title-case in Zotero')
@@ -1594,7 +1659,7 @@ export class Entry {
 
     if (!report.length) return ''
 
-    report.unshift(`== ${ this.translation.BetterBibTeX ? 'BibTeX' : 'BibLateX' } quality report for ${ this.item.citationKey }:`)
+    report.unshift(`== ${ this.translation.BetterBibTeX ? 'BibTeX' : 'BibLaTeX' } quality report for ${ this.item.citationKey }:`)
     return report.map(line => `% ${ line }\n`).join('')
   }
 

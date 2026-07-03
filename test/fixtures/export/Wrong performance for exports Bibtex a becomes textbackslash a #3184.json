@@ -11,7 +11,7 @@
       "biblatexExtractEprint": false,
       "citekeyFormat": "authorsn(n=3,creator=\"*\",initials=false,sep=\" \").fold + \"_\" + year",
       "exportBraceProtection": false,
-      "exportTitleCase": false,
+      "exportTitlecase": "off",
       "importBibTeXStrings": false,
       "importCaseProtection": "off",
       "importCitationKey": false,

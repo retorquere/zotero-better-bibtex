@@ -1,0 +1,64 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "preferences": {
+      "baseAttachmentPath": "/home/noxellar/ProtoDOS/04 - NoxCDN (Resources)",
+      "citekeyFormat": "auth.lower + shorttitle(3, 3) + year",
+      "fillKeyAfter": 1,
+      "resetKeyOnChange": true
+    },
+    "options": {}
+  },
+  "version": {
+    "zotero": "9.0",
+    "bbt": "9.0.18"
+  },
+  "collections": {},
+  "items": [
+    {
+      "key": "PRJAKJNK",
+      "version": 7108,
+      "itemType": "presentation",
+      "title": "ENGG2112 Lecture W5S1 2026",
+      "date": "26 Mar 2026 10:00:00+AEDT",
+      "language": "en-AU",
+      "accessDate": "2026-04-12",
+      "place": "University of Sydney - J09.03.309.Seymour Centre.Seymour Lecture Theatre 309 (Everest)",
+      "series": "ENGG2112: Multi-disciplinary Engineering Lectures S1 2026",
+      "citationKey": "tseENGG2112LectureW5S126Mar202610:00:00+AEDT",
+      "meetingName": "ENGG2112: Multi-disciplinary Engineering - Lecture",
+      "creators": [
+        {
+          "firstName": "Nicholas",
+          "lastName": "Tse",
+          "creatorType": "presenter"
+        }
+      ],
+      "tags": [
+        {
+          "tag": "artificial-intelligence"
+        },
+        {
+          "tag": "ENGG2112"
+        },
+        {
+          "tag": "engineering"
+        },
+        {
+          "tag": "machine-learning"
+        },
+        {
+          "tag": "note/lecture"
+        }
+      ],
+      "dateAdded": "2026-04-12T12:37:21Z",
+      "dateModified": "2026-04-19T11:41:54Z",
+      "itemID": 3223,
+      "attachments": [],
+      "notes": [],
+      "type": "Lecture",
+      "publicationTitle": "ENGG2112 S1 2026 - Lecture 5"
+    }
+  ]
+}

@@ -2,7 +2,7 @@
 
 /* eslint-disable @typescript-eslint/no-unsafe-return, no-console, @typescript-eslint/no-shadow, no-eval, @typescript-eslint/no-empty-function, id-blacklist */
 
-console.log('pre-processing preferences')
+console.info('pre-processing preferences')
 
 import * as pug from 'pug'
 import * as fs from 'fs'
@@ -18,8 +18,8 @@ import { Eta } from 'eta'
 const eta = new Eta
 
 function error(...args) {
-  console.log(...args)
-  console.log((new Error).stack)
+  console.error(...args)
+  console.error((new Error).stack)
   process.exit(1)
 }
 
@@ -58,7 +58,7 @@ const l10n = new class {
     const resource = new FluentResource(fs.readFileSync('locale/en-US/better-bibtex.ftl', 'utf-8'))
     this.bundle = new FluentBundle("en-US")
     const errors = this.bundle.addResource(resource)
-    if (errors.length) console.log(errors)
+    if (errors.length) console.error(errors)
   }
 
   find(id, softfail=false) {
@@ -331,7 +331,7 @@ The Better BibTeX hidden preferences are preceded by “extensions.zotero.transl
 
     for (const [ slug, page ] of Object.entries(this.pages)) {
       if (!page.path) error('no template for', slug)
-      console.log(page.matter.data)
+      console.info(page.matter.data)
       page.matter.content = eta.renderString(`\n\n{{% preferences/header %}}\n\n${ page.content }`, prefs)
       ensureDir(page.path)
       fs.writeFileSync(page.path, page.matter.stringify())

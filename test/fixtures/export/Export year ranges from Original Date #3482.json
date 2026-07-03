@@ -1,0 +1,93 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "preferences": {
+      "autoExportDelay": 2,
+      "citekeyFormat": "auth + shorttitle(3, 3) + year",
+      "extraMergeCitekeys": true,
+      "extraMergeCSL": true,
+      "extraMergeTeX": true,
+      "fillKeyAfter": 1,
+      "quickCopyMode": "pandoc",
+      "skipFields": "abstract",
+      "verbatimFields": "url,doi,file,eprint,verba,verbb,verbc"
+    },
+    "options": {}
+  },
+  "version": {
+    "zotero": "8.0.4",
+    "bbt": "9.0.10"
+  },
+  "collections": {},
+  "items": [
+    {
+      "key": "7DZL87FL",
+      "version": 70569,
+      "itemType": "book",
+      "place": "Stuttgart",
+      "publisher": "F. Frommann",
+      "date": "1968",
+      "numberOfVolumes": "6 vols. in 2",
+      "language": "la",
+      "title": "S. Anselmi Cantuariensis archiepiscopi opera omnia",
+      "citationKey": "SchmittAnselmiCantuariensisArchiepiscopi1968",
+      "originalDate": "1938-1961",
+      "originalPublisher": "Seccovii",
+      "creators": [
+        {
+          "firstName": "Franciscus Salesius",
+          "lastName": "Schmitt",
+          "creatorType": "editor"
+        }
+      ],
+      "tags": [
+        {
+          "tag": "Latin language"
+        },
+        {
+          "tag": "theology"
+        },
+        {
+          "tag": "Anselm, Archbishop of Canterbury, 1033-1109"
+        },
+        {
+          "tag": "0edition"
+        },
+        {
+          "tag": "European Medieval period"
+        }
+      ],
+      "dateAdded": "2022-10-16T16:36:22Z",
+      "dateModified": "2026-03-26T12:29:12Z",
+      "itemID": 13334,
+      "attachments": [
+        {
+          "itemType": "attachment",
+          "url": "https://www.google.com/books/edition/Opera_omnia/W9vWAAAAMAAJ?hl=en&gbpv=0",
+          "title": "Google Books vol 1",
+          "tags": [],
+          "dateAdded": "2022-10-16T16:48:32Z",
+          "dateModified": "2022-10-16T16:48:32Z"
+        },
+        {
+          "itemType": "attachment",
+          "url": "https://www.google.com/books/edition/_/ydvWAAAAMAAJ?hl=en&sa=X&ved=2ahUKEwjO7uiRkOX6AhU4kIkEHURyD6MQ7_IDegQIDRAF",
+          "title": "Google Books vol 2",
+          "tags": [],
+          "dateAdded": "2022-10-16T16:49:30Z",
+          "dateModified": "2022-10-16T16:49:30Z"
+        },
+        {
+          "itemType": "attachment",
+          "url": "https://i-share-nby.primo.exlibrisgroup.com/permalink/01CARLI_NBY/i5mcb2/alma992254568805867",
+          "title": "Newberry copy",
+          "tags": [],
+          "dateAdded": "2022-10-16T16:43:05Z",
+          "dateModified": "2022-10-16T16:43:05Z"
+        }
+      ],
+      "notes": []
+    }
+  ]
+}

@@ -11,6 +11,7 @@ import { Preference } from './prefs'
 import { orchestrator } from './orchestrator'
 import { Server } from './server'
 import type { CitekeyRecord } from './key-manager'
+import { strcmp } from './string-compare'
 
 import BBT from '../gen/version.cjs'
 
@@ -32,31 +33,12 @@ function getStyle(id: string): any {
 
 function byKeys(citekeys: string[]): (key: CitekeyRecord) => boolean {
   citekeys = citekeys.map(citekey => citekey.replace('@', ''))
-  let field: string
+  const different = strcmp[Preference.citekeyCaseInsensitive ? 'base' : 'variant']
 
-  if (Preference.citekeyCaseInsensitive) {
-    citekeys = citekeys.map(citekey => citekey.toLowerCase())
-    field = 'lcCitationKey'
-  }
-  else {
-    field = 'citationKey'
-  }
-
-  return (key: CitekeyRecord): boolean => citekeys.includes(key[field])
+  return (key: CitekeyRecord): boolean => citekeys.find(citekey => !different(citekey, key.citationKey)) as unknown as boolean
 }
 function byKey(citekey: string): (key: CitekeyRecord) => boolean {
-  citekey = citekey.replace('@', '')
-  let field: string
-
-  if (Preference.citekeyCaseInsensitive) {
-    citekey = citekey.toLowerCase()
-    field = 'lcCitationKey'
-  }
-  else {
-    field = 'citationKey'
-  }
-
-  return (key: CitekeyRecord): boolean => key[field] === citekey
+  return byKeys([citekey])
 }
 
 function find(library?: string | number): (citationKey: string) => number | undefined {
@@ -422,18 +404,6 @@ export class NSItem {
 
     if (((format as any).mode || 'bibliography') !== 'bibliography') throw new Error(`mode must be bibliograpy, not ${ (format as any).mode }`)
 
-    /* WHAT
-    const where: Query = {}
-    if (library !== '*') where.libraryID = getLibrary(library)
-    citekeys = citekeys.map(citekey => citekey.replace('@', ''))
-    if (Preference.citekeyCaseInsensitive) {
-      where.lcCitationKey = { in: citekeys.map(citekey => citekey.toLowerCase()) }
-    }
-    else {
-      where.citationKey = { in: citekeys }
-    }
-    */
-
     const resolve = find(library)
     const items = await getItemsAsync(citekeys.map(resolve).filter(_ => _))
 
@@ -481,6 +451,70 @@ export class NSItem {
     }
 
     return keys
+  }
+
+  /**
+   * Regenerate citekeys from current item metadata. For each input citekey, the
+   * underlying item's key is recomputed using the configured `citekeyFormat`,
+   * and any `Citation Key:` pin in the Extra field is refreshed to match.
+   *
+   * Useful when items were created in two phases — initial record from partial
+   * metadata, enrichment landing later — and the key pinned during phase one
+   * no longer matches what current metadata would produce.
+   *
+   * Returns an old → new mapping per input citekey. The value is `null` only
+   * when the input citekey cannot be resolved to an item. Otherwise the value
+   * is the resulting citekey — equal to the input if the recomputed key is
+   * unchanged, or the new citekey if it changed.
+   *
+   * Read-only library handling is deferred to #3430; until that lands, scope
+   * the call to a writeable library via `library` to avoid touching read-only
+   * items.
+   *
+   * Counterpart to the read-only `item.citationkey` lookup. Internally calls
+   * the same `KeyManager.fill(..., { replace: true })` path the `Regenerate
+   * BibTeX key` right-click menu item invokes.
+   *
+   * @param citekeys  Array of citekeys whose items should be regenerated.
+   * @param library   The libraryID to search in (optional). Pass `*` to search across your library and all groups.
+   */
+  public async regenerate_key(citekeys: string[], library?: string | number): Promise<Record<string, string | null>> {
+    if (typeof library === 'undefined') library = Zotero.Libraries.userLibraryID
+    const libraryID = library === '*' ? undefined : getLibrary(library)
+
+    const result: Record<string, string | null> = {}
+    const resolved: { citekey: string; itemID: number; oldKey: string }[] = []
+
+    for (const citekey of citekeys) {
+      const matchKey = byKey(citekey)
+      const matched = Zotero.BetterBibTeX.KeyManager.any(_ => (library === '*' || _.libraryID === libraryID) && matchKey(_))
+      if (!matched) {
+        result[citekey] = null
+        continue
+      }
+      resolved.push({ citekey, itemID: matched.itemID, oldKey: matched.citationKey })
+    }
+
+    if (!resolved.length) return result
+
+    const items = await getItemsAsync(resolved.map(r => r.itemID))
+    const eligible = items.filter(item => !item.isFeedItem && item.isRegularItem())
+    const eligibleIDs = new Set(eligible.map(item => item.id))
+
+    for (const r of resolved) {
+      if (!eligibleIDs.has(r.itemID)) result[r.citekey] = r.oldKey
+    }
+
+    if (!eligible.length) return result
+
+    await Zotero.BetterBibTeX.KeyManager.fill(eligible.map(item => item.id), { replace: true })
+
+    for (const r of resolved) {
+      if (!eligibleIDs.has(r.itemID)) continue
+      result[r.citekey] = Zotero.BetterBibTeX.KeyManager.get(r.itemID)?.citationKey || r.oldKey
+    }
+
+    return result
   }
 
   /**

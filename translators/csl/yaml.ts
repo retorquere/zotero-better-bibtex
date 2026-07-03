@@ -1,4 +1,4 @@
-import YAML from 'js-yaml'
+import * as YAML from 'js-yaml'
 import { Date as CSLDate, Data as CSLItem, LooseNumber } from 'csl-json'
 
 import type { Collected } from '../lib/collect'
@@ -8,13 +8,13 @@ import type { MarkupNode } from '../../typings/markup'
 
 import { CSLExporter } from './csl'
 import { log } from '../../content/logger'
-import { ParsedDate, century } from '../../content/dateparser'
+import { RichDate, century } from '../../content/dateparser'
 import { HTMLParser } from '../../content/text'
 
 const htmlConverter = new class HTML {
   private markdown: string
 
-  public convert(html) {
+  public convert(html: string): string {
     this.markdown = ''
     this.walk(HTMLParser.parse(html, {}))
     return this.markdown
@@ -136,7 +136,7 @@ function date2csl(date): [LooseNumber, LooseNumber?, LooseNumber?] { // fudge fo
 }
 
 class Exporter extends CSLExporter {
-  public date2CSL(date: ParsedDate): CSLDate { // fudge for CSL-YAML dates
+  public date2CSL(date: RichDate): CSLDate { // fudge for CSL-YAML dates
     switch (date.type) {
       case 'date':
       case 'open':
@@ -159,10 +159,10 @@ class Exporter extends CSLExporter {
   }
 
   public serialize(csl: CSLItem): string {
-    for (const [ k, v ] of Object.entries(csl)) {
-      if (typeof v === 'string' && v.indexOf('<') >= 0) csl[k] = htmlConverter.convert(v)
-    }
-    return YAML.dump([csl], { skipInvalid: true }) as string
+    // CSL-YAML does not support HTML markup, and this (in/ac)cidentally fixes a problem that in no-worker mode, the objects contained something that makes js-yaml keel over and die.
+    // The roundtrip reliably removes that, even though I have no idea what "that" is.
+    csl = JSON.parse(JSON.stringify(csl, (_k: string, v: unknown): unknown => (typeof v === 'string' && v.includes('<')) ? htmlConverter.convert(v) : v)) as CSLItem
+    return YAML.dump([csl], { skipInvalid: true })
   }
 
   public flush(items: string[]): string {

@@ -2,11 +2,13 @@ import { Path, File } from './file'
 
 import { Translators } from './translators'
 import { Preference } from './prefs'
-import { FilePickerHelper } from 'zotero-plugin-toolkit'
 import { findBinary } from './path-search'
 import { log } from './logger'
 import { alert } from './prompt'
 import { getItemsAsync } from './get-items-async'
+import { strcmp } from './string-compare'
+
+const { FilePicker } = ChromeUtils.importESModule('chrome://zotero/content/modules/filePicker.mjs')
 
 import BBT from '../gen/version.cjs'
 
@@ -47,7 +49,14 @@ export const AUXScanner = new class {
   public async pick(): Promise<string> {
     if (typeof this.pandoc !== 'string') this.pandoc = await findBinary('pandoc')
     const filters = this.pandoc ? this.filters.pandoc : this.filters.aux
-    return (await new FilePickerHelper(Zotero.getString('fileInterface.import'), 'open', filters).open()) || ''
+    const fp = new FilePicker
+    fp.init(Zotero.getMainWindow(), Zotero.getString('fileInterface.import'), fp.modeOpen)
+    for (const [label, filter] of filters) {
+      fp.appendFilter(label, filter)
+    }
+
+    const rv = await fp.show()
+    return rv === fp.returnOK || rv === fp.returnReplace ? (fp.file as string) || '' : ''
   }
 
   public async scan(path: string, options: { tag?: string; libraryID?: number; collection?: Collection } = {}) {
@@ -56,8 +65,7 @@ export const AUXScanner = new class {
     }
 
     const parsed = await this.parse(path)
-
-    if (!parsed || !parsed.citationKeys.length) return
+    if (!parsed) return
 
     let collection, libraryID
     if (typeof options.libraryID === 'number') {
@@ -72,6 +80,14 @@ export const AUXScanner = new class {
       const azp = Zotero.getActiveZoteroPane()
       collection = azp.getSelectedCollection()
       libraryID = collection ? collection.libraryID : azp.getSelectedLibraryID()
+    }
+
+    // In replace mode, an empty citation set should clear the selected collection.
+    if (!parsed.citationKeys.length) {
+      if (collection && options.collection?.replace) {
+        await this.saveToCollection(parsed.source, [], [], { collection })
+      }
+      return
     }
 
     const itemIDs: number[] = []
@@ -264,8 +280,7 @@ export const AUXScanner = new class {
     }
 
     if (missing_keys.length) {
-      const collator = new Intl.Collator('en')
-      missing_keys.sort(collator.compare.bind(collator))
+      missing_keys.sort(strcmp.base)
       let report = `<html><div><p><b>${ source } scan</b></p><p>Missing entries:</p><ul>`
       for (const citekey of missing_keys) {
         report += `<li>${ citekey.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/'/g, '&quot;').replace(/'/g, '&#039;') }</li>`

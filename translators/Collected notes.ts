@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 
+import { strcmp } from '../content/string-compare'
 import { Translation } from './lib/translator'
 import { Collected } from './lib/collect'
 import type { Header } from '../gen/translators'
@@ -35,7 +36,7 @@ type ExpandedCollection = {
 }
 
 function sorted(collections: ExpandedCollection[]) {
-  return collections.sort((a, b) => a.name.localeCompare(b.name, undefined, { sensitivity: 'base' }))
+  return collections.sort((a, b) => strcmp.base(a.name, b.name))
 }
 
 class Exporter {

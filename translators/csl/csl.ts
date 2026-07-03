@@ -2,6 +2,7 @@ declare const Zotero: any
 
 import { Translation } from '../lib/translator'
 
+import { strcmp } from '../../content/string-compare'
 import { Schema, simplifyForExport } from '../../content/item-schema'
 import { Fields as ParsedExtraFields, get as getExtra, cslCreator } from '../../content/extra'
 import type { ExportedItem } from '../../content/worker/cache'
@@ -10,6 +11,10 @@ import { Serialized } from '../../gen/typings/serialized'
 import * as postscript from '../lib/postscript'
 import * as dateparser from '../../content/dateparser'
 import { Date as CSLDate, Data as CSLItem } from 'csl-json'
+
+import { langCode } from '../../content/text'
+import BabelTag from '../../gen/babel/tag.json'
+import { isLangCode } from 'is-language-code'
 
 type ExtendedItem = Serialized.RegularItem & { extraFields: ParsedExtraFields }
 
@@ -26,7 +31,7 @@ export abstract class CSLExporter {
   private translation: Translation
   protected abstract flush(items: string[]): string
   protected abstract serialize(items: CSLItem): string
-  protected abstract date2CSL(date: dateparser.ParsedDate): CSLDate
+  protected abstract date2CSL(date: dateparser.RichDate): CSLDate
 
   constructor(translation: Translation) {
     this.translation = translation
@@ -73,6 +78,10 @@ export abstract class CSLExporter {
       for (const field of ['page', 'issue', 'volume']) {
         if (csl[field]) csl[field] = csl[field].replace(/(?<=(^|,)\s*\d+)\s*-\s*(?=\d+\s*(,|$))/g, '\u2013')
       }
+      if (!isLangCode(csl.language)?.res) {
+        const language = langCode(csl.language).toLowerCase()
+        csl.language = BabelTag[language] || language || csl.language
+      }
 
       csl['citation-key'] = item.citationKey
       if (this.translation.collected.displayOptions.custom) csl.custom = { uri: item.uri, itemID: item.itemID }
@@ -86,20 +95,20 @@ export abstract class CSLExporter {
 
       if (csl.journalAbbreviation) [ csl.journalAbbreviation, csl['container-title-short'] ] = [ csl['container-title-short'], csl.journalAbbreviation ]
 
-      if (item.date) {
-        const parsed = dateparser.parse(item.date)
-        try {
-          // preconvert both so the values get set only if both are convertable
-          const issued = parsed.type ? this.date2CSL(parsed) : undefined // possible for there to be an orig-date only
-          const original = parsed.orig ? this.date2CSL(parsed.orig) : undefined
+      const extraFields: ParsedExtraFields = structuredClone(item.extraFields)
+      const date = dateparser.parse(item.date, item.originalDate || extraFields.kv.originalDate)
 
-          if (issued) csl.issued = issued
-          if (original) csl['original-date'] = original
-        }
-        catch (err) {
-          log.error('could not convert CSL date', { input: item.date, parsed }, err)
-          csl.issued = { literal: item.date }
-        }
+      try {
+        // preconvert both so the values get set only if both are convertable
+        const issued = (date.type || 'open') === 'open' ? undefined : this.date2CSL(date)
+        const original = (date.orig?.type || 'open') === 'open' ? undefined : this.date2CSL(date.orig)
+
+        if (issued) csl.issued = issued
+        if (original) csl['original-date'] = original
+      }
+      catch (err) {
+        log.error('could not convert CSL date', { input: item.date, date }, err)
+        csl.issued = { literal: item.date }
       }
 
       if (item.accessDate) csl.accessed = this.date2CSL(dateparser.parse(item.accessDate))
@@ -111,45 +120,47 @@ export abstract class CSLExporter {
 
       if (csl.type === 'broadcast' && csl.genre === 'television broadcast') delete csl.genre
 
-      const extraFields: ParsedExtraFields = structuredClone(item.extraFields)
+      const extra: Set<string> = new Set
 
-      // special case for #587... not pretty
-      // checked separately because .type isn't actually a CSL var so wouldn't pass the ef.type test below
-      if (!Schema.csl.type.enum.includes(item.extraFields.kv['csl-type']) && Schema.csl.type.enum.includes(item.extraFields.kv.type)) {
-        csl.type = item.extraFields.kv.type
-        delete item.extraFields.kv.type
+      const applyCSLField = (fieldName: string, value: string, explicit = false): boolean => {
+        extra.add(fieldName)
+        if (!value) return true
+
+        switch (Schema.type.csl[fieldName]) {
+          case 'date':
+            csl[fieldName] = this.date2CSL(dateparser.parse(value))
+            return true
+
+          case 'name':
+            csl[fieldName] = [ ...(csl[fieldName] || []), cslCreator(value) ]
+            return true
+
+          case 'text':
+            if (fieldName === 'type' && !explicit && !Schema.csl.types.includes(value)) return false
+            csl[fieldName] = value
+            return true
+
+          default:
+            if (!explicit) return false
+            csl[fieldName] = value
+            return true
+        }
       }
 
-      const extra: Set<string> = new Set
+      for (const [ fieldName, value ] of Object.entries(item.extraFields.csl)) {
+        const normalizedField = fieldName.toLowerCase()
+        const cslField = Schema.type.csl[normalizedField] ? normalizedField : fieldName
+        applyCSLField(cslField, value, true)
+        delete item.extraFields.csl[fieldName]
+      }
+
       for (const [ fieldName, value ] of Object.entries(item.extraFields.kv)) {
-        extra.add(fieldName)
-        if (!value) continue
-
-        const type = Schema.csl[fieldName]
-        if (!type) continue
-
-        if (type.type === 'string' && (!type.enum || type.enum.includes(value))) {
-          csl[fieldName] = value
-        }
-        else if (type.$ref === '#/definitions/date-variable') {
-          csl[fieldName] = this.date2CSL(dateparser.parse(value))
-        }
-        else if (type.type === 'string' || (Array.isArray(type.type) && type.type.find(t => ['number', 'string'].includes(t)))) {
-          csl[fieldName] = value
-        }
-        else if (fieldName === 'csl-type') {
-          if (!type.type.enum.includes(value)) continue // and keep the kv variable, maybe for postscripting
-          csl.type = value
-        }
-        else {
-          continue // skip out of the loop, keep the kv-var
-        }
-
+        if (!applyCSLField(fieldName, value)) continue
         delete item.extraFields.kv[fieldName]
       }
 
       for (const [ fieldName, value ] of Object.entries(item.extraFields.creator)) {
-        if (Schema.csl[fieldName]) {
+        if (Schema.type.csl[fieldName] === 'name') {
           extra.add(fieldName)
           csl[fieldName] = [ ...(csl[fieldName] || []), ...value.map(cslCreator) ]
           delete item.extraFields.creator[fieldName]
@@ -207,7 +218,7 @@ export abstract class CSLExporter {
     if (oa && ob) return oa - ob
     if (oa) return -1
     if (ob) return 1
-    return a.localeCompare(b, undefined, { sensitivity: 'base' })
+    return strcmp.base(a, b)
   }
 
   private sortObject(obj: any): any {

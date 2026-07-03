@@ -13,7 +13,7 @@
       "asciiBibLaTeX": true,
       "bibtexURL": "url",
       "citekeyFormat": "auth.lower + year",
-      "exportTitleCase": false,
+      "exportTitlecase": "off",
       "skipFields": "language,note,isbn,issn,urldate,accessed,abstract,Library catalogue,Call Number,file,primaryclass"
     }
   },

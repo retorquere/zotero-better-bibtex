@@ -1,0 +1,65 @@
+---
+references:
+- id: wikipe:univer:2019
+  accessed:
+    - year: 2019
+      month: 7
+      day: 22
+  author:
+    - literal: Wikipedia
+  citation-key: wikipe:univer:2019
+  container-title: Wikipedia, Die freie Enzyklopädie
+  issued:
+    - year: 2019
+      month: 7
+      day: 11
+  title: Universität Regensburg
+  type: entry-encyclopedia
+  URL: >-
+    https://de.wikipedia.org/w/index.php?title=Universit%C3%A4t_Regensburg&oldid=190335453
+- id: '@stanf:2012:animal'
+  author:
+    - literal: '@StanfordMed'
+  citation-key: '@stanf:2012:animal'
+  issued:
+    - year: 2012
+      month: 10
+      day: 9
+  note: '[Twitter, Tweet]'
+  title: >-
+    Animal study shows sleeping brain behaves as if it's remembering:
+    https://stan.md/RrqyEt #sleep #neuroscience #research
+  type: webpage
+  URL: https://twitter.com/SUMedicine/status/255644688630046720
+
+- id: ur.reg:2021:fur
+  author:
+    - literal: UR.Regensburg
+  citation-key: ur.reg:2021:fur
+  issued:
+    - year: 2021
+      month: 9
+      day: 23
+  note: '[Facebook, Status Update]'
+  title: >-
+    Für das Wintersemester 2021/22 ist die lang erwartete Rückkehr zu einem
+    möglichst weitreichenden Präsenzlehrbetrieb geplant
+  type: webpage
+  URL: >-
+    https://www.facebook.com/UR.Regensburg/photos/a.714984458891629/1739632266426838/
+
+- id: wikipe:2019:universitat
+  author:
+    - literal: Wikipedia
+  citation-key: wikipe:2019:universitat
+  container-title: Wikipedia, Die freie Enzyklopädie
+  issued:
+    - year: 2019
+      month: 7
+      day: 11
+  title: Universität Regensburg
+  type: entry-encyclopedia
+  URL: >-
+    https://de.wikipedia.org/w/index.php?title=Universit%C3%A4t_Regensburg&oldid=190335453
+
+...

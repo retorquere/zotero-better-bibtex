@@ -9,7 +9,7 @@
       "autoAbbrev": true,
       "autoExportDelay": 2,
       "citekeyFormat": "auth + year",
-      "exportTitleCase": false,
+      "exportTitlecase": "off",
       "importSentenceCase": "off",
       "quickCopyMode": "citekeys",
       "biblatexExtendedNameFormat": true

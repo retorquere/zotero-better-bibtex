@@ -140,13 +140,8 @@ citekeyFormatEditing:
   default: ''
 
 citekeyUnsafeChars:
+  description: List of characters disallowed in citation keys
   default: \"#%'(),={}~
-
-citekeySearch:
-  description: >-
-    Enable searching on citation keys. Slows down startup on very large
-    libraries. Requires Zotero restart to enable/disable.
-  default: true
 
 citekeyCaseInsensitive:
   description: >-
@@ -544,7 +539,7 @@ postscriptOverride:
     You can use a custom postscript per export directory:
 
 
-    1. Edit the hidden preference `postscriptOverride`, and set it to a filename
+    1. Edit the hidden preference `extensions.zotero.translators.better-bibtex.postscriptOverride`, and set it to a filename
     like `postscript.js`
 
     2. In the directory where you intend to export to, create a file called
@@ -562,7 +557,7 @@ preferencesOverride:
     You can use custom preferences per export directory:
 
 
-    1. Edit the hidden preference `preferencesOverride`, and set it to a
+    1. Edit the hidden preference `extensions.zotero.translators.better-bibtex.preferencesOverride`, and set it to a
     filename like `preferences.json`
 
     2. In the directory where you intend to export to, create a file called
@@ -584,7 +579,7 @@ stringsOverride:
     You can use a custom @string list per export directory:
 
 
-    1. Edit the hidden preference `stringstOverride`, and set it to a filename
+    1. Edit the hidden preference `extensions.zotero.translators.better-bibtex.stringstOverride`, and set it to a filename
     like `strings.bib`
 
     2. In the directory where you intend to export to, create a file called
@@ -730,12 +725,31 @@ packages:
 cacheDelete:
   default: false
 
-exportTitleCase:
+exportTitlecase:
   tooltip: >-
-    If you're dead-set on ignoring both BibTeX/BibLaTeX best practice (see the
-    BBT FAQ) and the Zotero recommendations on title/sentence casing, you can
-    turn this off to suppress title casing for English items
-  default: true
+    This is a comma-separated list of titlecase overrides for English
+    items. Prefix fields with "+" to force title-casing and "-" to
+    disable title-casing. Use just the field name to apply to both
+    bibtex and biblatex, or prefix with "bibtex." or "biblatex."
+    to restrict to one. The defaults in BBT adhere to
+    BibTeX/BibLaTeX best practice (see the BBT FAQ) and the Zotero
+    recommendations on title/sentence casing, but if you are dead-set
+    on ignoring these, you can override them here.
+  default: ''
+  affects:
+    - Better BibLaTeX
+    - Better BibTeX
+
+exportCaseProtection:
+  tooltip: >-
+    This is a comma-separated list of export case-protection overrides for
+    English items. Prefix fields with "+" to force case-protection and "-"
+    to disable case-protection. Use just the field name to apply to both
+    bibtex and biblatex, or prefix with "bibtex." or "biblatex."
+    to restrict to one. The defaults in BBT adhere to BibTeX/BibLaTeX best
+    practice, but if you are dead-set on ignoring these, you can override them
+    here.
+  default: ''
   affects:
     - Better BibLaTeX
     - Better BibTeX

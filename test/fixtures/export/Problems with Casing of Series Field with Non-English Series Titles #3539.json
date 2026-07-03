@@ -1,0 +1,136 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "preferences": {
+      "baseAttachmentPath": "/Users/luisluetkehellweg/Library/Mobile Documents/com~apple~CloudDocs/Zotero PDFs",
+      "citekeyFormat": "authEtAl + year + veryshorttitle(2, 2)",
+      "DOIandURL": "doi",
+      "resetKeyOnChange": true,
+      "exportTitlecase": "-series",
+      "exportCaseProtection": "-series",
+      "skipFields": "numPages, pagetotal"
+    },
+    "options": {}
+  },
+  "version": {
+    "zotero": "9.0.4",
+    "bbt": "9.0.29"
+  },
+  "collections": {},
+  "items": [
+    {
+      "key": "8PVATELQ",
+      "version": 17663,
+      "itemType": "book",
+      "title": "The theme of diaspora in the pentateuch",
+      "date": "2026",
+      "language": "eng",
+      "libraryCatalog": "K10plus ISBN",
+      "extra": "tex.shortseries = FAT\nRead_Status: To Read\nRead_Status_Date: 2026-05-15T20:53:01.555Z",
+      "place": "T\u00fcbingen",
+      "publisher": "Mohr Siebeck",
+      "ISBN": "978-3-16-170559-5",
+      "series": "Forschungen zum Alten Testament",
+      "seriesNumber": "193",
+      "edition": "1",
+      "DOI": "10.1628/978-3-16-170559-5",
+      "citationKey": "Hidaka2026ThemeDiaspora",
+      "creators": [
+        {
+          "firstName": "Kishiya",
+          "lastName": "Hidaka",
+          "creatorType": "author"
+        }
+      ],
+      "tags": [
+        {
+          "tag": "Diaspora"
+        },
+        {
+          "tag": "Perserzeit"
+        }
+      ],
+      "dateAdded": "2026-05-15T20:50:46Z",
+      "dateModified": "2026-06-17T10:49:37Z",
+      "itemID": 9518,
+      "attachments": [],
+      "notes": []
+    },
+    {
+      "key": "8PVATELQ",
+      "version": 17663,
+      "itemType": "book",
+      "title": "The theme of diaspora in the pentateuch",
+      "date": "2026",
+      "language": "eng",
+      "libraryCatalog": "K10plus ISBN",
+      "extra": "tex.shortseries = FAT\nRead_Status: To Read\nRead_Status_Date: 2026-05-15T20:53:01.555Z",
+      "place": "T\u00fcbingen",
+      "publisher": "Mohr Siebeck",
+      "ISBN": "978-3-16-170559-5",
+      "series": "Forschungen zum Alten Testament",
+      "seriesNumber": "193",
+      "edition": "1",
+      "DOI": "10.1628/978-3-16-170559-5",
+      "citationKey": "Hidaka2026ThemeDiaspora",
+      "creators": [
+        {
+          "firstName": "Kishiya",
+          "lastName": "Hidaka",
+          "creatorType": "author"
+        }
+      ],
+      "tags": [
+        {
+          "tag": "Perserzeit"
+        },
+        {
+          "tag": "Diaspora"
+        }
+      ],
+      "dateAdded": "2026-05-15T20:50:46Z",
+      "dateModified": "2026-06-17T10:49:37Z",
+      "itemID": 9518,
+      "attachments": [],
+      "notes": []
+    },
+    {
+      "key": "GA58N5WR",
+      "version": 17665,
+      "itemType": "book",
+      "title": "Vom Text zum Entstehungsmodell in der Pentateuchkritik",
+      "abstractNote": "In this case study on Gen. 20-22, the contributions unfold how textual observations evolve into literary-historical models. The volume is designed as a textbook for method-oriented teaching. By reflecting on the methodology of Pentateuchal criticism and discussing the literary history of the Abraham cycle, the volume offers innovative perspectives on the current debate on the Pentateuch.\n          , \n            Wie entstehen aus Textbeobachtungen literargeschichtliche Modelle? Anhand von Gen 20-22 entfalten die Beitr\u00e4ge dieses Bandes multiperspektivische Reflexionen \u00fcber die Methodik der Pentateuchkritik. Den Hauptteil bildet eine neuartige Synopse, die die antiken Versionen des biblischen Textes mit einem differenzierten literarkritischen Kommentar verbindet. Der Band ist zugleich Arbeitsbuch und Beitrag zur aktuellen Debatte.\n          , \n            Reinhard M\u00fcller /  Kirsten M. Sch\u00e4fers : Einleitung Teil 1: Zum Status Quo Christoph Berner /  Katharina Pyschny : Die Analyse von Gen 20-22 in der Forschungsgeschichte. Einordnung und Perspektiven -  Kirsten M. Sch\u00e4fers : Die Anwendung historisch-kritischer Methodenschritte in der Pentateuchforschung. Aktuelle Tendenzen und Desiderata mit Blick auf Gen 20-22 Teil 2: Synopse Gen 20-22: Text und KommentierungTeil 3: Literargeschichtliche Sollbruchstellen in Gen 20-22. Diskussion des Befundes Katharina Pyschny : Gen 20 -  Christoph Berner/  Christian Frevel : Gen 21,1-7 -  Reinhard M\u00fcller /  Kirsten M. Sch\u00e4fers : Gen 21,8-21 -  Reinhard G. Kratz : Gen 21,22-34 -  Jonathan M. Robker : Gen 21,22-34 -  Reinhard Achenbach /  Christophe Nihan : Gen 22,1-19 -  Lars Maskow : Gen 22,20-24 Teil 4: Thesen zur Entstehung des Abraham-Zyklus Reinhard Achenbach : Anmerkungen zur Redaktionsgeschichte der Abraham-Erz\u00e4hlungen in Gen 11-25 -  Reinhard G. Kratz : Die j\u00fcngste Figur in dieser Gesellschaft. Abraham in der Genesis\n          , \n            From Textual Observations to Literary-Historical Models in Pentateuchal Criticism. Studies on Gen 20-22",
+      "date": "2025",
+      "language": "de",
+      "libraryCatalog": "DOI.org (Crossref)",
+      "url": "https://www.mohrsiebeck.com/10.1628/978-3-16-158314-8",
+      "accessDate": "2026-03-09T15:34:57Z",
+      "extra": "tex.shortseries = FAT",
+      "publisher": "Mohr Siebeck",
+      "ISBN": "978-3-16-158314-8",
+      "series": "Forschungen zum Alten Testament",
+      "seriesNumber": "186",
+      "DOI": "10.1628/978-3-16-158314-8",
+      "citationKey": "MuellerSchaefers2025VomText",
+      "creators": [
+        {
+          "firstName": "Reinhard",
+          "lastName": "M\u00fcller",
+          "creatorType": "editor"
+        },
+        {
+          "firstName": "Kirsten M.",
+          "lastName": "Sch\u00e4fers",
+          "creatorType": "editor"
+        }
+      ],
+      "tags": [],
+      "dateAdded": "2026-03-09T15:34:57Z",
+      "dateModified": "2026-06-19T12:48:54Z",
+      "itemID": 8697,
+      "attachments": [],
+      "notes": []
+    }
+  ]
+}

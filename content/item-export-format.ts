@@ -28,7 +28,7 @@ class Serializer {
         break
 
       case 'attachment':
-        serialized = this.attachment(serialized as unknown as Serialized.Attachment, item)
+        serialized = this.attachment(serialized, item)
         break
 
       default:
@@ -64,5 +64,5 @@ export function fix(serialized: Serialized.Item, item: Zotero.Item): Serialized.
   serialized.itemKey = item.key
   serialized.libraryID = item.libraryID
 
-  return serialized as unknown as Serialized.Item
+  return serialized
 }

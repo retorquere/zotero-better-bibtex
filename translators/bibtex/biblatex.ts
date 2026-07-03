@@ -7,6 +7,21 @@ import type { Collected } from '../lib/collect'
 import { Entry as BaseEntry, Config } from './entry'
 
 const config: Config = {
+  exportCaseDefaults: {
+    title: true,
+    subtitle: true,
+    series: true,
+    shorttitle: true,
+    origtitle: true,
+    origsubtitle: true,
+    booktitle: true,
+    booksubtitle: true,
+    maintitle: true,
+    mainsubtitle: true,
+    eventtitle: true,
+    eventsubtitle: true,
+  },
+
   fieldEncoding: {
     groups: 'verbatim', // blegh jabref field
     url: 'url',
@@ -27,21 +42,6 @@ const config: Config = {
     organization: 'literal',
     location: 'literal_list',
     origlocation: 'literal_list',
-  },
-
-  caseConversion: {
-    title: true,
-    subtitle: true,
-    series: true,
-    shorttitle: true,
-    origtitle: true,
-    origsubtitle: true,
-    booktitle: true,
-    booksubtitle: true,
-    maintitle: true,
-    mainsubtitle: true,
-    eventtitle: true,
-    eventsubtitle: true,
   },
 
   typeMap: {
@@ -359,6 +359,9 @@ export function generateBibLaTeX(collected: Collected): Translation {
     }
     else {
       entry.add({ name: 'location', value: item.place || item.extraFields.kv['publisher-place'], enc: 'literal' })
+      if (item.itemType === 'conferencePaper' && !entry.has.venue) {
+        entry.add({ name: 'venue', value: item.eventPlace, enc: 'literal' })
+      }
     }
 
     /*

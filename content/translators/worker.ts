@@ -93,6 +93,16 @@ class CacheClient extends WorkerClient implements CacheInterface {
 
 export const Cache = new CacheClient
 
+async function lastModified(): Promise<string> {
+  try {
+    return await Zotero.DB.valueQueryAsync('SELECT MAX(dateModified) FROM items') as string || ''
+  }
+  catch (err) {
+    log.error('worker: failed to retrieve item last modified:', err)
+    return ''
+  }
+}
+
 orchestrator.add({
   id: 'worker',
   description: 'worker',
@@ -103,9 +113,7 @@ orchestrator.add({
     await Exporter.initialize({
       CSL_MAPPINGS: Object.entries(Zotero.Schema).reduce((acc, [ k, v ]) => { if (k.startsWith('CSL')) acc[k] = v; return acc }, {}),
       dateFormatsJSON: Zotero.File.getResource('resource://zotero/schema/dateFormats.json'),
-      lastUpdated: Zotero.Prefs.get(cacheDelete)
-        ? 'delete'
-        : (await Zotero.DB.valueQueryAsync('SELECT MAX(dateModified) FROM items') as string || ''),
+      lastUpdated: Zotero.Prefs.get(cacheDelete) ? 'delete' : await lastModified(),
     })
     Zotero.Prefs.clear(cacheDelete)
     Exporter.ready = true

@@ -41,11 +41,11 @@ default: `<not set>`
 a JSON mapping from single character to raw LaTeX, to augment the default mapping; these will be applied when you export as ASCII. **DO NOT** edit this preferencedirectly,
 but create a CSV (not semicolons) file named `charmap.csv` in the zotero data directory under the `better-bibtex` folder with columns `unicode` (the source character),
 `text` (representation in LaTeX text mode, if any) and `math` (representation in LaTeX math mode, if any, without dollar signs).
-## citekeySearch
+## citekeyUnsafeChars
 
-default: `yes`
+default: `\"#%'(),={}~`
 
-Enable searching on citation keys. Slows down startup on very large libraries. Requires Zotero restart to enable/disable.
+List of characters disallowed in citation keys
 ## csquotes
 
 default: `<not set>`
@@ -169,7 +169,7 @@ default: `<not set>`
 
 You can use a custom postscript per export directory:
 
-1. Edit the hidden preference `postscriptOverride`, and set it to a filename like `postscript.js`
+1. Edit the hidden preference `extensions.zotero.translators.better-bibtex.postscriptOverride`, and set it to a filename like `postscript.js`
 2. In the directory where you intend to export to, create a file called `postscript.js` (or whatever you set the preference to) and add the postscript you want there
 3. Export to that directory.
 
@@ -181,7 +181,7 @@ default: `<not set>`
 
 You can use custom preferences per export directory:
 
-1. Edit the hidden preference `preferencesOverride`, and set it to a filename like `preferences.json`
+1. Edit the hidden preference `extensions.zotero.translators.better-bibtex.preferencesOverride`, and set it to a filename like `preferences.json`
 2. In the directory where you intend to export to, create a file called `preferences.json` (or whatever you set the preference to), or called `[bibfile you are exporting to].json` and add the desired preference overrides in the format `{"override": { "preferences": {"skipFields": "note"} } }`. You can get your current preferences by exporting to `BetterBibTeX JSON` and removing everything except config.`preferences`, and renaming `config` to `override`.
 3. Export to that directory.
 
@@ -242,7 +242,7 @@ default: `<not set>`
 
 You can use a custom @string list per export directory:
 
-1. Edit the hidden preference `stringstOverride`, and set it to a filename like `strings.bib`
+1. Edit the hidden preference `extensions.zotero.translators.better-bibtex.stringstOverride`, and set it to a filename like `strings.bib`
 2. In the directory where you intend to export to, create a file called `strings.bib` (or whatever you set the preference to) and add the @string declarations you want there
 3. Export to that directory.
 

@@ -1,0 +1,390 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "preferences": {
+      "ascii": "",
+      "asciiBibLaTeX": false,
+      "asciiBibTeX": true,
+      "autoAbbrev": false,
+      "autoExport": "immediate",
+      "autoExportDelay": 5,
+      "autoExportIdleWait": 10,
+      "autoExportPathReplaceDiacritics": false,
+      "autoExportPathReplaceDirSep": "-",
+      "autoExportPathReplaceSpace": " ",
+      "automaticTags": true,
+      "auxImport": false,
+      "baseAttachmentPath": "",
+      "biblatexExtendedDateFormat": true,
+      "biblatexExtendedNameFormat": true,
+      "biblatexExtractEprint": true,
+      "biblatexUsePrefix": true,
+      "bibtexEditionOrdinal": false,
+      "bibtexParticleNoOp": false,
+      "bibtexURL": "off",
+      "cache": true,
+      "cacheDelete": false,
+      "charmap": "",
+      "chinese": false,
+      "chineseSplitName": true,
+      "citeCommand": "cite",
+      "citekeyCaseInsensitive": true,
+      "citekeyFold": true,
+      "citekeyFormat": "auth + year",
+      "citekeyUnsafeChars": "\\\"#%'(),={}~",
+      "csquotes": "",
+      "DOIandURL": "both",
+      "exportBibTeXStrings": "off",
+      "exportBraceProtection": true,
+      "exportSort": "citekey",
+      "extraMergeCitekeys": false,
+      "extraMergeCSL": false,
+      "extraMergeTeX": false,
+      "fillKeyAfter": 1,
+      "git": "config",
+      "import": true,
+      "importBibTeXStrings": true,
+      "importCaseProtection": "as-needed",
+      "importCitationKey": true,
+      "importDetectURLs": true,
+      "importExtra": true,
+      "importJabRefAbbreviations": true,
+      "importJabRefStrings": true,
+      "importNoteToExtra": "",
+      "importPlaceEvent": "inproceedings,conference,presentation,talk",
+      "importSentenceCase": "on+guess",
+      "importSentenceCaseQuoted": true,
+      "importUnknownTexCommand": "ignore",
+      "itemObserverDelay": 5,
+      "jabrefFormat": 0,
+      "japanese": false,
+      "keyScope": "library",
+      "language": "langid",
+      "mapMath": "",
+      "mapText": "",
+      "packages": "",
+      "parseParticles": true,
+      "patchDates": "dateadded=dateAdded, date-added=dateAdded, datemodified=dateModified, date-modified=dateModified",
+      "postscript": "",
+      "postscriptOverride": "",
+      "preferencesOverride": "",
+      "qualityReport": false,
+      "quickCopyEta": "",
+      "quickCopyMode": "latex",
+      "quickCopyOrgMode": "zotero",
+      "quickCopyPandocBrackets": false,
+      "quickCopySelectLink": "zotero",
+      "rawImports": false,
+      "rawLaTag": "#LaTeX",
+      "relativeFilePaths": false,
+      "remigrate": false,
+      "resetKeyOnChange": false,
+      "separatorList": "and",
+      "separatorNames": "and",
+      "skipFields": "",
+      "skipWords": "a,ab,aboard,about,above,across,after,against,al,along,amid,among,an,and,anti,around,as,at,before,behind,below,beneath,beside,besides,between,beyond,but,by,d,da,das,de,del,dell,dello,dei,degli,della,dell,delle,dem,den,der,des,despite,die,do,down,du,during,ein,eine,einem,einen,einer,eines,el,en,et,except,for,from,gli,i,il,in,inside,into,is,l,la,las,le,les,like,lo,los,near,nor,of,off,on,onto,or,over,past,per,plus,round,save,since,so,some,sur,than,the,through,to,toward,towards,un,una,unas,under,underneath,une,unlike,uno,unos,until,up,upon,versus,via,von,while,with,within,without,yet,zu,zum",
+      "startupProgress": "popup",
+      "strings": "",
+      "stringsOverride": "",
+      "verbatimFields": "url,doi,file,pdf,ids,eprint,/^verb[a-z]$/,groups,/^citeulike-linkout-[0-9]+$/, /^bdsk-url-[0-9]+$/, keywords",
+      "warnBulkModify": 10,
+      "warnTitleCased": false
+    },
+    "options": {
+      "Items": true,
+      "Normalize": true,
+      "Preferences": true,
+      "exportFileData": false,
+      "exportNotes": true,
+      "keepUpdated": false,
+      "worker": true
+    }
+  },
+  "version": {
+    "zotero": "9.0.2",
+    "bbt": "9.0.23.emile.kiku.fritz.box"
+  },
+  "collections": {},
+  "items": [
+    {
+      "key": "QB95TD99",
+      "version": 0,
+      "itemType": "book",
+      "place": "Mettingen, Germany",
+      "publisher": "Brasilienkunde Verlag",
+      "ISBN": "978-3-88559-089-7",
+      "date": "2007",
+      "extra": "Citation Key: Chiappini_Hauck_2007\ntex.date-added: 2026-05-13 20:33:05 +0200\ntex.date-modified: 2026-05-13 20:33:05 +0200",
+      "language": "german",
+      "title": "Mercosul/Mercosur: Dynamik der Grenzen und kulturelle Integration",
+      "citationKey": "Chiappini_Hauck_2007",
+      "creators": [
+        {
+          "firstName": "Ligia",
+          "lastName": "Chiappini",
+          "creatorType": "editor"
+        },
+        {
+          "firstName": "Jan David",
+          "lastName": "Hauck",
+          "creatorType": "editor"
+        }
+      ],
+      "tags": [],
+      "dateAdded": "2026-05-16T12:19:43Z",
+      "dateModified": "2026-05-16T12:19:43Z",
+      "uri": "http://zotero.org/users/8230813/items/QB95TD99",
+      "itemID": 109,
+      "attachments": [],
+      "notes": [],
+      "itemKey": "QB95TD99",
+      "libraryID": 1
+    },
+    {
+      "key": "F6VTDDQ2",
+      "version": 0,
+      "itemType": "bookSection",
+      "url": "http://www.brasilienkunde.de/4764.html",
+      "place": "Mettingen, Germany",
+      "publisher": "Brasilienkunde Verlag",
+      "pages": "67-90",
+      "ISBN": "978-3-88559-089-7",
+      "date": "2007",
+      "extra": "Citation Key: Hauck_2007\nSection: 4\ntex.date-added: 2026-05-13 20:33:07 +0200\ntex.date-modified: 2026-05-13 20:33:07 +0200",
+      "language": "german",
+      "title": "Kultur, Sprache und Integration in der postkolonialen Ära: Das Guaraní und der Mercosur",
+      "shortTitle": "Kultur, Sprache und Integration in der postkolonialen Ära",
+      "citationKey": "Hauck_2007",
+      "creators": [
+        {
+          "firstName": "Jan David",
+          "lastName": "Hauck",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "Ligia",
+          "lastName": "Chiappini",
+          "creatorType": "editor"
+        },
+        {
+          "firstName": "Jan David",
+          "lastName": "Hauck",
+          "creatorType": "editor"
+        }
+      ],
+      "tags": [
+        {
+          "tag": "bilingualism"
+        },
+        {
+          "tag": "multilingualism"
+        },
+        {
+          "tag": "Paraguay"
+        },
+        {
+          "tag": "Guaraní (language)"
+        },
+        {
+          "tag": "identities"
+        },
+        {
+          "tag": "language ideologies"
+        },
+        {
+          "tag": "language planning"
+        },
+        {
+          "tag": "linguistic politics"
+        }
+      ],
+      "dateAdded": "2026-05-16T12:19:43Z",
+      "dateModified": "2026-05-16T12:19:43Z",
+      "uri": "http://zotero.org/users/8230813/items/F6VTDDQ2",
+      "itemID": 105,
+      "attachments": [],
+      "notes": [],
+      "itemKey": "F6VTDDQ2",
+      "libraryID": 1,
+      "publicationTitle": "Mercosul/Mercosur: Dynamik der Grenzen und kulturelle Integration"
+    },
+    {
+      "key": "PQPTTNCG",
+      "version": 0,
+      "itemType": "bookSection",
+      "place": "Porto Alegre",
+      "publisher": "Território das Artes",
+      "pages": "130-153",
+      "ISBN": "ISBN 978-85-63994-24-0",
+      "date": "2011",
+      "extra": "Citation Key: Hauck_2011\ntex.date-added: 2026-05-13 20:33:07 +0200\ntex.date-modified: 2026-05-13 20:33:07 +0200",
+      "language": "spanish",
+      "title": "Lenguas, fronteras e ideología lingüística en el Paraguay",
+      "citationKey": "Hauck_2011",
+      "creators": [
+        {
+          "firstName": "Jan David",
+          "lastName": "Hauck",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "Jan David",
+          "lastName": "Hauck",
+          "creatorType": "editor"
+        },
+        {
+          "firstName": "Ligia",
+          "lastName": "Chiappini",
+          "creatorType": "editor"
+        },
+        {
+          "firstName": "Liana",
+          "lastName": "Timm",
+          "creatorType": "editor"
+        }
+      ],
+      "tags": [
+        {
+          "tag": "bilingualism"
+        },
+        {
+          "tag": "multilingualism"
+        },
+        {
+          "tag": "Paraguay"
+        }
+      ],
+      "dateAdded": "2026-05-16T12:19:43Z",
+      "dateModified": "2026-05-16T12:19:43Z",
+      "uri": "http://zotero.org/users/8230813/items/PQPTTNCG",
+      "itemID": 104,
+      "attachments": [],
+      "notes": [],
+      "itemKey": "PQPTTNCG",
+      "libraryID": 1,
+      "publicationTitle": "Fronteiras da integração: dimensões culturais do Mercosul — Fronteras de la integración: las dimensiones culturales del Mercosur"
+    },
+    {
+      "key": "TK9N9EIU",
+      "version": 0,
+      "itemType": "bookSection",
+      "place": "Araraquara, SP",
+      "publisher": "Letraria",
+      "pages": "41-75",
+      "ISBN": "978-65-5434-040-3",
+      "date": "2023",
+      "extra": "Citation Key: Hauck_2023j\ntex.date-added: 2026-05-13 20:33:06 +0200\ntex.date-modified: 2026-05-13 20:33:06 +0200",
+      "language": "portuguese",
+      "title": "A línguagem de outro jeito: naturezas linguísticas e o desafio ontológico",
+      "shortTitle": "A línguagem de outro jeito",
+      "citationKey": "Hauck_2023j",
+      "creators": [
+        {
+          "firstName": "Jan David",
+          "lastName": "Hauck",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "Cristine Gorski",
+          "lastName": "Severo",
+          "creatorType": "editor"
+        },
+        {
+          "firstName": "Marcelo",
+          "lastName": "Buzato",
+          "creatorType": "editor"
+        },
+        {
+          "firstName": "Marcelo",
+          "lastName": "Buzato",
+          "creatorType": "translator"
+        }
+      ],
+      "tags": [],
+      "dateAdded": "2026-05-16T12:19:43Z",
+      "dateModified": "2026-05-16T12:19:43Z",
+      "uri": "http://zotero.org/users/8230813/items/TK9N9EIU",
+      "itemID": 106,
+      "attachments": [],
+      "notes": [],
+      "itemKey": "TK9N9EIU",
+      "libraryID": 1,
+      "publicationTitle": "Cosmopolítica e linguagem"
+    },
+    {
+      "key": "XAC4KMVJ",
+      "version": 0,
+      "itemType": "book",
+      "place": "Porto Alegre",
+      "publisher": "Território das Artes",
+      "ISBN": "ISBN 978-85-63994-24-0",
+      "date": "2011",
+      "extra": "Citation Key: Hauck_etal_2011\ntex.date-added: 2026-05-13 20:33:06 +0200\ntex.date-modified: 2026-05-13 20:33:06 +0200",
+      "language": "portuguese",
+      "title": "Fronteiras da integração: dimensões culturais do Mercosul — Fronteras de la integración: las dimensiones culturales del Mercosur",
+      "shortTitle": "Fronteiras da integração - Fronteras de la integración",
+      "citationKey": "Hauck_etal_2011",
+      "creators": [
+        {
+          "firstName": "Jan David",
+          "lastName": "Hauck",
+          "creatorType": "editor"
+        },
+        {
+          "firstName": "Ligia",
+          "lastName": "Chiappini",
+          "creatorType": "editor"
+        },
+        {
+          "firstName": "Liana",
+          "lastName": "Timm",
+          "creatorType": "editor"
+        }
+      ],
+      "tags": [],
+      "dateAdded": "2026-05-16T12:19:43Z",
+      "dateModified": "2026-05-16T12:19:43Z",
+      "uri": "http://zotero.org/users/8230813/items/XAC4KMVJ",
+      "itemID": 108,
+      "attachments": [],
+      "notes": [],
+      "itemKey": "XAC4KMVJ",
+      "libraryID": 1
+    },
+    {
+      "key": "5SFG5KDF",
+      "version": 0,
+      "itemType": "book",
+      "place": "Araraquara, SP",
+      "publisher": "Letraria",
+      "ISBN": "978-65-5434-040-3",
+      "date": "2023",
+      "extra": "Citation Key: Severo_Buzato_2023\ntex.date-added: 2026-05-13 20:33:06 +0200\ntex.date-modified: 2026-05-13 20:33:06 +0200",
+      "language": "portuguese",
+      "title": "Cosmopolítica e linguagem",
+      "citationKey": "Severo_Buzato_2023",
+      "creators": [
+        {
+          "firstName": "Cristine Gorski",
+          "lastName": "Severo",
+          "creatorType": "editor"
+        },
+        {
+          "firstName": "Marcelo",
+          "lastName": "Buzato",
+          "creatorType": "editor"
+        }
+      ],
+      "tags": [],
+      "dateAdded": "2026-05-16T12:19:43Z",
+      "dateModified": "2026-05-16T12:19:43Z",
+      "uri": "http://zotero.org/users/8230813/items/5SFG5KDF",
+      "itemID": 107,
+      "attachments": [],
+      "notes": [],
+      "itemKey": "5SFG5KDF",
+      "libraryID": 1
+    }
+  ]
+}
