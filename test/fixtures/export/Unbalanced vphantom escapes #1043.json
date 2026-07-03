@@ -30,9 +30,7 @@
         }
       ],
       "date": "March 1, 1973",
-      "extra": [
-        "Citation Key: mies1973"
-      ],
+      "extra": [],
       "issue": "3",
       "itemID": 1,
       "itemType": "journalArticle",
@@ -43,7 +41,8 @@
       "shortTitle": "Molecular Theory of Atomic Collisions",
       "title": "Molecular Theory of Atomic Collisions: Calculated Cross Sections for ${\\mathrm{H}}^{+}+\\mathrm{F}(^{2}P)$}",
       "url": "http://link.aps.org/doi/10.1103/PhysRevA.7.957",
-      "volume": "7"
+      "volume": "7",
+      "citationKey": "mies1973"
     },
     {
       "DOI": "10.1103/PhysRevA.7.957",
@@ -57,9 +56,7 @@
         }
       ],
       "date": "March 1, 1973",
-      "extra": [
-        "Citation Key: mies1973"
-      ],
+      "extra": [],
       "issue": "3",
       "itemID": 1,
       "itemType": "journalArticle",
@@ -70,7 +67,8 @@
       "shortTitle": "Molecular Theory of Atomic Collisions",
       "title": "Molecular Theory of Atomic Collisions: Calculated Cross Sections for H⁺+F(²P)",
       "url": "http://link.aps.org/doi/10.1103/PhysRevA.7.957",
-      "volume": "7"
+      "volume": "7",
+      "citationKey": "mies1973"
     }
   ]
 }

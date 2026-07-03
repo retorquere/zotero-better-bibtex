@@ -22,9 +22,7 @@
         }
       ],
       "date": "1973/74",
-      "extra": [
-        "Citation Key: bora2021"
-      ],
+      "extra": [],
       "itemID": 1,
       "itemType": "journalArticle",
       "language": "en",
@@ -62,7 +60,8 @@
       ],
       "title": "Resettlement, intergenerational memory, place attachment, and place identity in Roșia Jiu coal mine - Gorj County, Romania",
       "url": "https://www.sciencedirect.com/science/article/pii/S0743016721002059",
-      "volume": "86"
+      "volume": "86",
+      "citationKey": "bora2021"
     },
     {
       "key": "9QCNAAK4",

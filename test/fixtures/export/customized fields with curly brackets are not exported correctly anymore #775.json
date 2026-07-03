@@ -25,7 +25,6 @@
       ],
       "date": "1789",
       "extra": [
-        "Citation Key: knoblauch_dialogen_1789-1",
         "tex.options= pseudoauthor=true"
       ],
       "itemID": 1,
@@ -53,7 +52,8 @@
           "type": 0
         }
       ],
-      "title": "Dialogen über einige Gegenstände der politischen Oekonomie und Philosophie"
+      "title": "Dialogen über einige Gegenstände der politischen Oekonomie und Philosophie",
+      "citationKey": "knoblauch_dialogen_1789-1"
     }
   ]
 }

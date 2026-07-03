@@ -21,12 +21,11 @@
           "lastName": "Hacker"
         }
       ],
-      "extra": [
-        "Citation Key: HackerManuscript-HACTRO"
-      ],
+      "extra": [],
       "itemID": 1,
       "itemType": "manuscript",
-      "title": "The Relevance of Wittgenstein's Philosophy of Psychology to the Psychological Sciences"
+      "title": "The Relevance of Wittgenstein's Philosophy of Psychology to the Psychological Sciences",
+      "citationKey": "HackerManuscript-HACTRO"
     }
   ]
 }

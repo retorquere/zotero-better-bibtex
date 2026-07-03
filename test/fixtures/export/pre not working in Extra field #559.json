@@ -23,12 +23,12 @@
         }
       ],
       "extra": [
-        "Citation Key: Brons:pretest",
         "Hello <pre> hej </pre>"
       ],
       "itemID": 1,
       "itemType": "journalArticle",
-      "title": "<pre>$pretest$</pre>"
+      "title": "<pre>$pretest$</pre>",
+      "citationKey": "Brons:pretest"
     }
   ]
 }
