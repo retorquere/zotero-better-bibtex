@@ -9,6 +9,7 @@ import js from '@eslint/js'
 import stylistic from '@stylistic/eslint-plugin'
 import tsParser from '@typescript-eslint/parser'
 import _import from 'eslint-plugin-import'
+import { execSync } from 'node:child_process'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 
@@ -20,10 +21,30 @@ const compat = new FlatCompat({
   allConfig: js.configs.all,
 })
 
-import shell from 'shelljs'
-const branch = (process.env.GITHUB_REF && process.env.GITHUB_REF.startsWith('refs/heads/'))
-  ? process.env.GITHUB_REF.replace('refs/heads/', '')
-  : shell.exec('git rev-parse --abbrev-ref HEAD', { silent: true }).stdout.trim()
+const branch = process.env.GITHUB_REF_NAME
+  || ((process.env.GITHUB_REF && process.env.GITHUB_REF.startsWith('refs/heads/'))
+    ? process.env.GITHUB_REF.replace('refs/heads/', '')
+    : (() => {
+        try {
+          return execSync('git symbolic-ref --short HEAD', {
+            cwd: __dirname,
+            encoding: 'utf8',
+            stdio: ['ignore', 'pipe', 'ignore'],
+          }).trim()
+        }
+        catch {
+          try {
+            return execSync('git rev-parse --abbrev-ref HEAD', {
+              cwd: __dirname,
+              encoding: 'utf8',
+              stdio: ['ignore', 'pipe', 'ignore'],
+            }).trim()
+          }
+          catch {
+            return ''
+          }
+        }
+      })())
 
 const config = [
   {
