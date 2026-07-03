@@ -91,16 +91,6 @@ monkey.patch(Zotero.Item.prototype, 'clone', original => function Zotero_Item_pr
   return clone
 })
 
-let citationKeyFieldID: number
-monkey.patch(Zotero.Item.prototype, 'getField', original => function Zotero_Item_prototype_getField(field) {
-  if (!KeyManager.getNativeKey) KeyManager.getNativeKey = item => original.call(item, 'citationKey') as string
-
-  if (typeof citationKeyFieldID !== 'number') citationKeyFieldID = Zotero.ItemFields.getID('citationKey')
-  if ((field === 'citationKey' || field === citationKeyFieldID) && readonly(this)) return KeyManager.get(this.id)?.citationKey ?? ''
-
-  return original.apply(this, arguments) as string
-})
-
 monkey.patch(Zotero.Integration.Session.prototype, '_processNote', original => async function Zotero_Integration_Session_prototype_processNote(this: any, noteItem: Zotero.Item) {
   const processed = await original.apply(this, arguments) as [string, unknown[], unknown[]]
 

@@ -29,6 +29,7 @@ import * as l10n from './l10n'
 import { migrate } from './key-manager/migrate'
 import { readonly } from './library'
 import { strcmp } from './string-compare'
+import { monkey } from './monkey-patch'
 
 function scrub(q: string): string {
   return q.replace(/\n/g, ' ').trim()
@@ -157,8 +158,6 @@ export const KeyManager = new class _KeyManager {
 
   public autofill: Scheduler<number> = new Scheduler<number>('fillKeyAfter', 1000)
 
-  public getNativeKey = (_item: Zotero.Item) => ''
-
   public async pin(ids: 'selected' | number | number[], pin = true): Promise<void> {
     await this.fill(ids, { warn: true })
     ids = this.expandSelection(ids)
@@ -248,6 +247,12 @@ export const KeyManager = new class _KeyManager {
     }
   }
 
+  // eslint-disable-next-line @typescript-eslint/unbound-method
+  #getField: ((this: Zotero.Item, field: string) => string) = Zotero.Item.prototype.getField // guaranteed to run before constructor
+  #getNativeKey(item: Zotero.Item): string {
+    return this.#getField.call(item, 'citationKey') as string
+  }
+
   constructor() {
     orchestrator.add({
       id: 'keymanager',
@@ -260,6 +265,13 @@ export const KeyManager = new class _KeyManager {
         Formatter.update([Preference.citekeyFormat])
 
         await this.start()
+
+        const citationKeyFieldID: number = Zotero.ItemFields.getID('citationKey')
+        monkey.patch(Zotero.Item.prototype, 'getField', original => function Zotero_Item_prototype_getField(field) {
+          if ((field === 'citationKey' || field === citationKeyFieldID) && readonly(this)) return KeyManager.get(this.id)?.citationKey ?? ''
+
+          return original.apply(this, arguments) as string // eslint-disable-line prefer-rest-params
+        })
       },
       shutdown: async () => {
         await this.#keys.flush()
@@ -389,7 +401,7 @@ export const KeyManager = new class _KeyManager {
     log.debug('3430: update', {
       ignore: item.isFeedItem || !item.isRegularItem(),
       inspireHEP: typeof inspireHEP === 'string' && !inspireHEP,
-      current: this.getNativeKey(item),
+      current: this.#getNativeKey(item),
       replace,
     })
     if (item.isFeedItem || !item.isRegularItem()) return null
@@ -400,7 +412,7 @@ export const KeyManager = new class _KeyManager {
 
     if (readonly(item)) {
       // Native key (assigned by group owner) always wins; never overwrite it with a BBT-generated key.
-      const nativeKey = this.getNativeKey(item) || ''
+      const nativeKey = this.#getNativeKey(item) || ''
       if (nativeKey) {
         log.debug('3430: read-only native key', nativeKey, 'for', item.id)
         this.store(item, nativeKey)
@@ -412,7 +424,7 @@ export const KeyManager = new class _KeyManager {
       replace = true
     }
 
-    const current = this.getNativeKey(item) || ''
+    const current = this.#getNativeKey(item) || ''
     log.debug('3430:', { current, replace })
     if (current && !replace) return null
 
