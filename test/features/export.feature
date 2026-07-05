@@ -4,6 +4,11 @@ Feature: Export
   Background:
     Given I set the temp directory to "test/tmp"
 
+  Scenario: Read-only group #3430
+    When I restart Zotero with "readonly"
+    And I select the library named "Open Data Citation for Social Science and Humanities"
+    Then an export using "Better BibLaTeX" should match "export/*.biblatex"
+
   @biblatex
   Scenario Outline: Export <references> references for BibLaTeX to <file>
     When I import <references> references from "export/<file>.json"
@@ -911,11 +916,6 @@ Feature: Export
     When I change the name of the first author to [Thaldar][Donrich]
     #And I force-refresh the citation key
     And I wait 5 seconds
-    Then an export using "Better BibLaTeX" should match "export/*.biblatex"
-
-  Scenario: Read-only group #3430
-    When I restart Zotero with "readonly"
-    And I select the library named "Open Data Citation for Social Science and Humanities"
     Then an export using "Better BibLaTeX" should match "export/*.biblatex"
 
   Scenario: Question BBT is changing lastname, firstname de to de lastname, firstname #3367
