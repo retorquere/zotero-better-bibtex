@@ -32,6 +32,8 @@ EXPORTED = os.path.join(ROOT, 'exported')
 def print(txt, end='\n'):
   sys.stdout.write(str(txt) + end)
   sys.stdout.flush()
+  with open(str(pathlib.Path('~/.BBTTEST/behave.txt').expanduser()), 'a') as f:
+    f.write(str(txt) + end)
 
 class HashableDict(dict):
   def __hash__(self):
