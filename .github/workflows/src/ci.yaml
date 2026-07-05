@@ -224,10 +224,6 @@ jobs:
       run: |
         touch ~/.BBTTEST.log
         cp ~/.BBTTEST.log ~/BBTTEST--${{ matrix.client }}--${{ matrix.bin }}${{ matrix.worker }}.txt
-
-        touch ~/.BBTTEST/behave.txt
-        cp ~/.BBTTEST/behave.txt ~/BBTTEST--${{ matrix.client }}--${{ matrix.bin }}${{ matrix.worker }}.behave.txt
-
         cp ~/.BBTTEST/zotero/zotero.sqlite ~/BBTTEST--${{ matrix.client }}--${{ matrix.bin }}${{ matrix.worker }}.zotero.sqlite
         cp -r ~/.BBTTEST ~/BBTTEST
     - name: upload log on failure
