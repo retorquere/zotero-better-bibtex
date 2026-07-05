@@ -697,13 +697,13 @@ class Zotero:
 
       url = f'https://github.com/retorquere/zotero-better-bibtex/releases/download/test-database/{self.config.db}.{name}.sqlite'
       utils.print(f'downloading {url}')
-      with requests.get(url, stream=True) as response:
-        if response.status_code == 404:
-          return False
+      response = requests.get(url, allow_redirects=True)
+      if response.status_code == 404:
+        return False
       response.raise_for_status()
-      with open(db, 'wb') as file:
-        for chunk in response.iter_content(chunk_size=8192):
-          file.write(chunk)
+
+      with open(db, 'wb') as f:
+        f.write(response.content)
       downloaded = True
 
     utils.print(f'copying {db}')
