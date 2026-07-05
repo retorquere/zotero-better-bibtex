@@ -193,6 +193,7 @@ export class TestSupport {
     }
     catch (err) {
       log.error('json-rpc: export failed:', job, err)
+      throw err
     }
     finally {
       log.info(`performance: ${ translatorID } export took ${ Date.now() - start }`)
