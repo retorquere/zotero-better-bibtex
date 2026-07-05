@@ -262,6 +262,7 @@ jobs:
           matrix.worker }}
         path: |
           ~/BBTTEST*.txt
+          ~/BBTTEST/zotero/zotero.sqlite
           exported/
         retention-days: 5
 
