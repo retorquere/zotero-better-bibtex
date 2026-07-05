@@ -27,7 +27,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v6
+      uses: actions/checkout@v7
       with:
         persist-credentials: false
         fetch-depth: 1
@@ -132,7 +132,7 @@ jobs:
       !contains(github.event.head_commit.message, '[tagged build]')
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v6
+      uses: actions/checkout@v7
       with:
         persist-credentials: false
         fetch-depth: 1
@@ -188,7 +188,7 @@ jobs:
         worker: [--worker, --no-worker]
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v6
+      uses: actions/checkout@v7
       with:
         persist-credentials: false
         fetch-depth: 1
@@ -293,7 +293,7 @@ jobs:
       contents: write
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v6
+      uses: actions/checkout@v7
       with:
         persist-credentials: false
         fetch-depth: 1
@@ -347,7 +347,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v6
+      uses: actions/checkout@v7
       with:
         persist-credentials: false
         fetch-depth: 1
