@@ -30,7 +30,10 @@ FIXTURES = os.path.join(ROOT, 'test/fixtures')
 EXPORTED = os.path.join(ROOT, 'exported')
 
 def print(txt, end='\n'):
-  os.write(1, (str(txt) + end).encode('utf-8'))
+  if os.environ.get('BBTTESTLOG') == 'true':
+    txt += end
+    txt = b'\033[31m' + (str(txt) + end).encode('utf-8') + b'\033[0m'
+    os.write(1, txt)
 
 class HashableDict(dict):
   def __hash__(self):
