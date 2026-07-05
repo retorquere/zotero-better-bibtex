@@ -25,7 +25,6 @@
       ],
       "date": "2009",
       "extra": [
-        "Citation Key: ea",
         "tex.referencetype= mvreference"
       ],
       "itemID": 1,
@@ -47,7 +46,8 @@
       ],
       "title": "Encyclopedia of Arabic Language and Linguistics",
       "url": "https://katalog.ub.uni-leipzig.de/Record/0002828121/Multipart",
-      "volume": "1-5"
+      "volume": "1-5",
+      "citationKey": "ea"
     }
   ]
 }

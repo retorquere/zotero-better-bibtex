@@ -20,7 +20,7 @@
         {
           "creatorType": "author",
           "firstName": "Franz",
-          "lastName": "Brau\u00dfe"
+          "lastName": "Brauße"
         },
         {
           "creatorType": "author",
@@ -35,7 +35,7 @@
         {
           "creatorType": "author",
           "firstName": "Norbert Th.",
-          "lastName": "M\u00fcller"
+          "lastName": "Müller"
         },
         {
           "creatorType": "editor",
@@ -49,12 +49,10 @@
         }
       ],
       "date": "2019",
-      "extra": [
-        "Citation Key: brausse2019"
-      ],
+      "extra": [],
       "itemID": 1,
       "itemType": "conferencePaper",
-      "pages": "131\u2013148",
+      "pages": "131–148",
       "publicationTitle": "Frontiers of Combining Systems - 12th International Symposium, FroCoS 2019, London, UK, September 4-6, 2019, Proceedings",
       "publisher": "Springer",
       "series": "Lecture Notes in Computer Science",

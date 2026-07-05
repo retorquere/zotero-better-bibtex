@@ -129,7 +129,7 @@ function win_quote(s: string, forCmd = true): string {
 import { quote as posix_quote } from 'shell-quote'
 
 function quote(cmd: string[]): string {
-  return client.isWin ? cmd.map(s => win_quote(s)).join(' ') : <string>posix_quote(cmd)
+  return client.isWin ? cmd.map(s => win_quote(s)).join(' ') : posix_quote(cmd)
 }
 
 class Git {

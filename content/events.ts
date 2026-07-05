@@ -21,8 +21,7 @@ type IdleTopic = 'auto-export' | 'cache-purge'
 
 const idleService: IdleService = Components.classes['@mozilla.org/widget/useridleservice;1'].getService(Components.interfaces.nsIUserIdleService)
 
-export const REASON_KEY_SAVE = 'key-save' as const
-type Reason = typeof REASON_KEY_SAVE | 'key-refresh' | 'parent-modify' | 'parent-delete' | 'parent-add' | 'tagged'
+type Reason = 'key-refresh' | 'parent-modify' | 'parent-delete' | 'parent-add' | 'tagged'
 
 const logEvents = Zotero.Prefs.get('extensions.zotero.translators.better-bibtex.logEvents')
 
@@ -31,7 +30,7 @@ type EventMap = {
   'collections-removed': number[]
   'export-progress': { pct: number; message: string; ae?: string }
   'cache-touch': { itemIDs: number[] }
-  'items-changed': { items: Zotero.Item[]; action: Action; reason?: Reason }
+  'items-changed': { items: Zotero.Item[]; action: Action; reason?: Reason; changed?: Record<number, string[]> }
   'items-removed': { itemIDs: number[]; reason?: Reason }
   'libraries-changed': number[]
   'libraries-removed': number[]
@@ -164,11 +163,7 @@ class SyncListener {
   }
 }
 
-type ExtraData = {
-  [K in string]: K extends typeof REASON_KEY_SAVE
-    ? boolean
-    : { libraryID?: number }
-}
+type ExtraData = Record<string, any>
 
 abstract class ZoteroListener {
   private id: string
@@ -228,6 +223,17 @@ class ItemListener extends ZoteroListener {
         libraries: new Set<number>,
       }
 
+      const changed: Record<number, string[]> = (!extraData || typeof extraData !== 'object')
+        ? {}
+        : ids.reduce((acc, id) => {
+            const perItem = extraData[id]
+            if (!perItem || typeof perItem !== 'object') return acc
+            if (!perItem.changed || typeof perItem.changed !== 'object') return acc
+
+            acc[id] = Object.keys(perItem.changed as Record<string, unknown>)
+            return acc
+          }, {} as Record<number, string[]>)
+
       if (action === 'delete') {
         await Events.emit('items-removed', { itemIDs: ids })
         if (extraData && typeof extraData === 'object') {
@@ -272,7 +278,7 @@ class ItemListener extends ZoteroListener {
 
       await Events.emit('cache-touch', { itemIDs: ids })
       if (items.length) {
-        await Events.emit('items-changed', { items, action, reason: extraData[REASON_KEY_SAVE] ? REASON_KEY_SAVE : undefined })
+        await Events.emit('items-changed', { items, action, changed })
       }
 
       if (parentIDs.size) {

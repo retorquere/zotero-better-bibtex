@@ -20,7 +20,6 @@
       ],
       "date": "-0333",
       "extra": [
-        "Citation Key: t5",
         "accessed: -0332-11-05",
         "original-date: -0333/-0332",
         "event-date: 0000",
@@ -28,7 +27,8 @@
       ],
       "itemID": 10,
       "itemType": "book",
-      "title": "BC tests: -0333"
+      "title": "BC tests: -0333",
+      "citationKey": "t5"
     },
     {
       "creators": [
@@ -39,12 +39,11 @@
         }
       ],
       "date": "-0099-07-12/-0043-03-15",
-      "extra": [
-        "Citation Key: t6"
-      ],
+      "extra": [],
       "itemID": 11,
       "itemType": "book",
-      "title": "BC tests 2: -0099-07-12/-0043-03-15"
+      "title": "BC tests 2: -0099-07-12/-0043-03-15",
+      "citationKey": "t6"
     },
     {
       "creators": [
@@ -83,14 +82,14 @@
         }
       ],
       "extra": [
-        "Citation Key: t2",
         "accessed: 13th cent",
         "event-date: 1800-01-01--1800-12-31",
         "submitted: 1900-01-01/1900-12-31"
       ],
       "itemID": 7,
       "itemType": "book",
-      "title": "event-date and submitted test"
+      "title": "event-date and submitted test",
+      "citationKey": "t2"
     },
     {
       "creators": [
@@ -101,12 +100,11 @@
         }
       ],
       "date": "2014-12-31/",
-      "extra": [
-        "Citation Key: t3"
-      ],
+      "extra": [],
       "itemID": 8,
       "itemType": "book",
-      "title": "open-ended date range test: 2014-12-31/"
+      "title": "open-ended date range test: 2014-12-31/",
+      "citationKey": "t3"
     },
     {
       "creators": [
@@ -117,12 +115,11 @@
         }
       ],
       "date": "2014-12-31",
-      "extra": [
-        "Citation Key: t4"
-      ],
+      "extra": [],
       "itemID": 9,
       "itemType": "book",
-      "title": "single date test: 2014-12-31"
+      "title": "single date test: 2014-12-31",
+      "citationKey": "t4"
     },
     {
       "accessDate": "2015-04-30",
@@ -153,7 +150,6 @@
       ],
       "date": "2014-12-31/2015-01-01",
       "extra": [
-        "Citation Key: t1",
         "accessed: 2014-12-31~",
         "original-date: 1777-07-27/1888-08-28",
         "event-date: 1888-08-28",
@@ -161,7 +157,8 @@
       ],
       "itemID": 2,
       "itemType": "manuscript",
-      "title": "A manuscript: 2014-12-31/2015-01-01"
+      "title": "A manuscript: 2014-12-31/2015-01-01",
+      "citationKey": "t1"
     },
     {
       "creators": [

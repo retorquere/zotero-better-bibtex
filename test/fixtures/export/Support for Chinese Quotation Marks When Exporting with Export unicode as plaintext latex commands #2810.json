@@ -29,48 +29,46 @@
     {
       "DOI": "10.16619/j.cnki.rmltxsqy.2022.02.003",
       "ISSN": "2095-3461",
-      "abstractNote": "\u57fa\u4e8e\u897f\u65b9\u5386\u53f2\u7ecf\u9a8c\u7684\u6c11\u65cf\u56fd\u5bb6\u5f62\u6210\u8def\u5f84\uff0c\u8fdc\u975e\u666e\u904d\u9002\u7528\u4e8e\u4e16\u754c\u5404\u56fd\u5386\u53f2\u7684\u8ba4\u77e5\u8303\u5f0f\uff0c\u5c24\u5176\u4e0d\u80fd\u7b80\u5355\u9002\u7528\u4e8e\u6570\u4e16\u7eaa\u4ee5\u6765\u73b0\u4ee3\u4e2d\u56fd\u7684\u5f62\u6210\u8fc7\u7a0b\u3002\u73b0\u4ee3\u4e2d\u56fd\u89c4\u6a21\u4e4b\u201c\u5927\u201d\uff0c\u65e2\u6709\u6e05\u671d\u4ee5\u524d\u7684\u5386\u53f2\u548c\u4eba\u53e3\u4f5c\u57fa\u7840\uff0c\u4e5f\u662f\u6e05\u671d\u56fd\u5bb6\u5bf9\u8fb9\u7586\u7684\u6574\u5408\u548c\u6709\u6548\u6cbb\u7406\u7684\u7ed3\u679c\uff0c\u800c\u73b0\u4ee3\u4e2d\u56fd\u7ed3\u6784\u4e4b\u201c\u5f3a\u201d\uff0c\u662f18\u4e16\u7eaa\u4ee5\u6765\u4e2d\u592e\u4e0e\u5730\u65b9\u4e4b\u95f4\u6743\u529b\u5173\u7cfb\u8fa9\u8bc1\u8fd0\u52a8\u7684\u5386\u53f2\u4ea7\u7269\uff0c\u5176\u4ea7\u751f\u8def\u5f84\u8fe5\u5f02\u4e8e\u897f\u65b9\u6240\u8c13\u201c\u4ece\u5e1d\u56fd\u5230\u6c11\u65cf\u56fd\u5bb6\u201d\u7684\u8fc7\u7a0b\u3002",
+      "abstractNote": "基于西方历史经验的民族国家形成路径，远非普遍适用于世界各国历史的认知范式，尤其不能简单适用于数世纪以来现代中国的形成过程。现代中国规模之“大”，既有清朝以前的历史和人口作基础，也是清朝国家对边疆的整合和有效治理的结果，而现代中国结构之“强”，是18世纪以来中央与地方之间权力关系辩证运动的历史产物，其产生路径迥异于西方所谓“从帝国到民族国家”的过程。",
       "accessDate": "2024-02-29T05:26:59Z",
       "citationKey": "lihuaiyin2022b",
       "creators": [
         {
           "creatorType": "author",
-          "name": "\u674e\u6000\u5370"
+          "name": "李怀印"
         }
       ],
       "date": "2022",
-      "extra": [
-        "Citation Key: lihuaiyin2022b"
-      ],
+      "extra": [],
       "issue": "2",
       "itemID": 1,
       "itemType": "journalArticle",
       "language": "zh-CN",
       "libraryCatalog": "CNKI",
       "pages": "21-31",
-      "publicationTitle": "\u4eba\u6c11\u8bba\u575b\u00b7\u5b66\u672f\u524d\u6cbf",
+      "publicationTitle": "人民论坛·学术前沿",
       "tags": [
         {
           "tag": "Finished"
         },
         {
-          "tag": "\u56fd\u5bb6\u5f62\u6210",
+          "tag": "国家形成",
           "type": 1
         },
         {
-          "tag": "\u6b27\u6d32\u4e2d\u5fc3\u8bba",
+          "tag": "欧洲中心论",
           "type": 1
         },
         {
-          "tag": "\u6c11\u65cf\u56fd\u5bb6",
+          "tag": "民族国家",
           "type": 1
         },
         {
-          "tag": "\u73b0\u4ee3\u4e2d\u56fd",
+          "tag": "现代中国",
           "type": 1
         }
       ],
-      "title": "\u201c\u6c11\u65cf\u56fd\u5bb6\u201d\u7684\u8ff7\u601d\u4e0e\u73b0\u4ee3\u4e2d\u56fd\u7684\u5f62\u6210",
+      "title": "“民族国家”的迷思与现代中国的形成",
       "url": "https://kns.cnki.net/KCMS/detail/detail.aspx?dbcode=CJFQ&dbname=CJFDLAST2022&filename=RMXS202202003"
     }
   ]

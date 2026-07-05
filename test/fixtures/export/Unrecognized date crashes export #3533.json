@@ -42,7 +42,7 @@
       "date": "1486/87",
       "dateAdded": "2020-12-09T12:49:01Z",
       "dateModified": "2021-02-19T19:28:57Z",
-      "extra": "Accessed: Wed Dec 09 2020 13:49:01 GMT+0100 (Central European Standard Time)\nCitation Key: augustinus1486CivitateDei",
+      "extra": "Accessed: Wed Dec 09 2020 13:49:01 GMT+0100 (Central European Standard Time)",
       "itemID": 7843,
       "itemType": "book",
       "key": "56MRC5Q4",
@@ -50,7 +50,7 @@
       "libraryCatalog": "Incunabula Short Title Catalogue (ISTC)",
       "notes": [],
       "place": "Abbeville",
-      "publisher": "Pierre G\u00e9rard and Jean Du Pr\u00e9 (printer of Paris)",
+      "publisher": "Pierre Gérard and Jean Du Pré (printer of Paris)",
       "shortTitle": "De civitate dei [French] De la cite de dieu. Comm",
       "tags": [
         {
@@ -69,13 +69,13 @@
           "tag": "document"
         },
         {
-          "tag": "imprim\u00e9"
+          "tag": "imprimé"
         },
         {
           "tag": "publishing"
         }
       ],
-      "title": "De civitate dei [French] De la cit\u00e9 de dieu",
+      "title": "De civitate dei [French] De la cité de dieu",
       "url": "https://data.cerl.org/istc/ia01247000",
       "version": 55675
     }

@@ -8,7 +8,7 @@ import { chinese } from './key-manager/chinese'
 import { Scheduler } from './scheduler'
 import { log } from './logger'
 import { flash } from './flash'
-import { Events, REASON_KEY_SAVE } from './events'
+import { Events } from './events'
 import { fetchAsync as fetchInspireHEP } from './inspire-hep'
 import { excelColumn, sentenceCase } from './text'
 import * as Extra from './extra'
@@ -157,24 +157,6 @@ export const KeyManager = new class _KeyManager {
   public started = false
 
   public autofill: Scheduler<number> = new Scheduler<number>('fillKeyAfter', 1000)
-
-  public async pin(ids: 'selected' | number | number[], pin = true): Promise<void> {
-    await this.fill(ids, { warn: true })
-    ids = this.expandSelection(ids)
-    await Cache.touch(ids)
-    const items = (await getItemsAsync(ids)).filter(item => !readonly(item) && !item.isFeedItem && item.isRegularItem())
-    for (const item of items) {
-      if (readonly(item)) continue
-
-      const citationKey = pin ? item.getField('citationKey') : ''
-      if (!pin || citationKey) {
-        const { extra } = Extra.citationKey(item.getField('extra'))
-        item.setField('extra', pin ? `Citation Key: ${citationKey}\n${extra}`.trim() : extra)
-        await item.saveTx({ skipDateModifiedUpdate: true })
-        await Zotero.Promise.delay(10)
-      }
-    }
-  }
 
   public async fill(ids: 'selected' | number | number[], { warn = false, replace = false, inspireHEP = false }: { warn?: boolean; replace?: boolean; inspireHEP?: boolean } = {}): Promise<void> {
     ids = this.expandSelection(ids)
@@ -343,9 +325,9 @@ export const KeyManager = new class _KeyManager {
       this.clear(itemIDs)
     })
 
-    Events.on('items-changed', ({ data: { items, action, reason } }) => {
+    Events.on('items-changed', ({ data: { items, action, reason, changed } }) => {
       log.info('items-changed', { reason })
-      if (reason?.startsWith('parent-') || reason === 'tagged' || reason === REASON_KEY_SAVE) return
+      if (reason?.startsWith('parent-') || reason === 'tagged') return
 
       let warn_titlecase = 0 // should not be here
 
@@ -359,9 +341,15 @@ export const KeyManager = new class _KeyManager {
       })
 
       const update = (item: Zotero.Item) => {
+        const citationKey = item.getField('citationKey')
+        if (changed?.[item.id]?.includes('citationKey') && citationKey) {
+          this.store(item)
+          return
+        }
+
         if (this.update(item, { replace: Preference.resetKeyOnChange })) {
           item
-            .saveTx({ skipDateModifiedUpdate: true, notifierData: { [REASON_KEY_SAVE]: true } })
+            .saveTx({ skipDateModifiedUpdate: true })
             .catch(err => log.error('failed to update', item.id, ':', err))
         }
         else {
