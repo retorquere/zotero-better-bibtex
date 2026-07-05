@@ -30,7 +30,7 @@ FIXTURES = os.path.join(ROOT, 'test/fixtures')
 EXPORTED = os.path.join(ROOT, 'exported')
 
 def print(txt, end='\n'):
-  os.write(1, str(txt) + end)
+  os.write(1, (str(txt) + end).encode('utf-8'))
 
 class HashableDict(dict):
   def __hash__(self):
