@@ -232,6 +232,7 @@ jobs:
         name: debug-log--${{ matrix.client }}--${{ matrix.bin }}${{ matrix.worker }}
         path: |
           ~/BBTTEST*.txt
+          ~/BBTTEST/zotero/zotero.sqlite
           exported/
         retention-days: 5
 
