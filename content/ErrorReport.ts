@@ -548,6 +548,8 @@ export class ErrorReport {
     context += 'Settings:\n'
     const settings = { default: '', set: '' }
     for (const [ key, value ] of Object.entries(Preference.all)) {
+      if (key === 'citekeyFormatEditing') continue
+
       if (value === defaults[key]) {
         settings.default += `  ${key} = ${ JSON.stringify(value) }\n`
       }
@@ -555,8 +557,7 @@ export class ErrorReport {
         settings.set += `  ${key} = ${JSON.stringify(value)} (default: ${JSON.stringify(defaults[key])})\n`
       }
     }
-    if (settings.default) settings.default = `Settings at default:\n${ settings.default }`
-    context += settings.set + settings.default
+    context += settings.set + (settings.default ? `Settings at default:\n${settings.default}` : '')
 
     for (const key of ['export.quickCopy.setting']) {
       context += `  Zotero: ${ key } = ${ JSON.stringify(Zotero.Prefs.get(key)) }\n`
