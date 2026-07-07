@@ -110,6 +110,26 @@ import { Predicate, TrackedMap } from './object'
 
 class Keys extends TrackedMap<number, CitekeyRecord> {
   #timer: ReturnType<typeof setInterval>
+  // Monotonic mutation counter used by save() to detect changes that land while read-only.json is being written.
+  #generation = 0
+
+  override set(key: number, value: CitekeyRecord): this {
+    // Track structural changes so save() can detect writes that happen while the cache file is being flushed.
+    this.#generation += 1
+    return super.set(key, value)
+  }
+
+  override delete(key: number): boolean {
+    const deleted = super.delete(key)
+    if (deleted) this.#generation += 1
+    return deleted
+  }
+
+  override clear(filter?: Predicate<CitekeyRecord>): void {
+    const size = this.size
+    super.clear(filter)
+    if (this.size !== size) this.#generation += 1
+  }
 
   public get path() {
     return PathUtils.join(Zotero.BetterBibTeX.dir, 'read-only.json')
@@ -126,7 +146,6 @@ class Keys extends TrackedMap<number, CitekeyRecord> {
     catch (err) {
       log.error('failed to load read-only keys', err)
     }
-    log.debug('3430: loaded', this.values())
 
     for (const { itemID, itemKey, libraryID, citationKey } of await Zotero.DB.queryAsync(sql.load)) {
       this.set(itemID, copy({ itemID, itemKey, libraryID, citationKey }))
@@ -137,9 +156,16 @@ class Keys extends TrackedMap<number, CitekeyRecord> {
   }
 
   public async save(): Promise<void> {
-    if (this.isDirty) {
-      await IOUtils.writeJSON(this.path, this.values(key => readonly(key.libraryID)))
-      this.resetDirty()
+    while (this.isDirty) {
+      const generation = this.#generation
+      await IOUtils.writeJSON(this.path, this.values(key => {
+        // Cache rows can outlive their originating group library; skip rows whose library no longer exists.
+        const library = Zotero.Libraries.get(key.libraryID)
+        // Persist only read-only-library keys in read-only.json.
+        return !!library && readonly(library)
+      }))
+      // Only clear the dirty flag if nothing changed during the async write; otherwise loop and flush again.
+      if (this.#generation === generation) this.resetDirty()
     }
   }
 
@@ -293,10 +319,8 @@ export const KeyManager = new class _KeyManager {
     if (Preference.fillKeyAfter) {
       const missing: number[] = await Zotero.DB.columnQueryAsync(sql.missing)
       if (missing.length) {
-        log.debug('3430: missing', missing)
         await Zotero.DB.executeTransaction(async () => {
           for (const item of await getItemsAsync(missing)) {
-            log.debug('3430:', item.id, readonly(item) ? 'read-only' : 'read-write')
             await this.update(item)?.save({ skipDateModifiedUpdate: true })
           }
         })
@@ -341,18 +365,41 @@ export const KeyManager = new class _KeyManager {
       })
 
       const update = (item: Zotero.Item) => {
-        const citationKey = item.getField('citationKey')
-        if (changed?.[item.id]?.includes('citationKey') && citationKey) {
-          this.store(item)
+        const nativeCitationKey = this.#getNativeKey(item) || ''
+        // Handle explicit citationKey edits/notifier updates first so cache state follows the source of truth.
+        if (changed?.[item.id]?.includes('citationKey')) {
+          // Native citationKey is present: mirror it to cache and stop.
+          if (nativeCitationKey) {
+            // For read-only items, changed citationKey notifications must refresh the cache from the native field,
+            // not from the monkey-patched getField('citationKey') view.
+            this.store(item, nativeCitationKey)
+            return
+          }
+
+          // Native citationKey was cleared on a read-only item.
+          if (readonly(item)) {
+            // An emptied native key on a read-only item means the shadow key is no longer authoritative.
+            // Drop the cache entry first, then regenerate a BBT key if read-only support still requires one.
+            this.#keys.delete(item.id)
+            this.update(item, { replace: true })
+            return
+          }
+        }
+
+        // Non-read-only items that got a direct citationKey change should just refresh cache from native value.
+        if (changed?.[item.id]?.includes('citationKey') && nativeCitationKey) {
+          this.store(item, nativeCitationKey)
           return
         }
 
+        // Metadata changed (or citationKey empty): let KeyManager decide whether to regenerate and persist.
         if (this.update(item, { replace: Preference.resetKeyOnChange })) {
           item
             .saveTx({ skipDateModifiedUpdate: true })
             .catch(err => log.error('failed to update', item.id, ':', err))
         }
-        else {
+        // No persisted change happened; for writable items, keep cache aligned with current native field.
+        else if (!readonly(item)) {
           this.store(item)
         }
       }
@@ -386,45 +433,37 @@ export const KeyManager = new class _KeyManager {
   }
 
   public update(item: Zotero.Item, { replace = false, inspireHEP = undefined }: { replace?: boolean; inspireHEP?: string } = {}): Zotero.Item {
-    log.debug('3430: update', {
-      ignore: item.isFeedItem || !item.isRegularItem(),
-      inspireHEP: typeof inspireHEP === 'string' && !inspireHEP,
-      current: this.#getNativeKey(item),
-      replace,
-    })
+    // Feed/non-regular items never participate in citation-key generation.
     if (item.isFeedItem || !item.isRegularItem()) return null
-    log.debug('3430: not ignored')
 
+    // Empty InspireHEP lookups should not trigger fallback citekey regeneration.
     if (typeof inspireHEP === 'string' && !inspireHEP) return null
-    log.debug('3430: not empty inspireHEP')
 
     if (readonly(item)) {
-      // Native key (assigned by group owner) always wins; never overwrite it with a BBT-generated key.
+      // Native keys on read-only items come from outside BBT and always take precedence over the cached shadow key.
       const nativeKey = this.#getNativeKey(item) || ''
       if (nativeKey) {
-        log.debug('3430: read-only native key', nativeKey, 'for', item.id)
         this.store(item, nativeKey)
         return null
       }
-      // No native key: preserve an existing cached BBT key unless the caller explicitly requests replacement.
+      // If a read-only item already has a cached key, keep serving it until a caller explicitly asks to regenerate.
       if (!replace && this.#keys.get(item.id)?.citationKey) return null
-      // No key at all: fall through to generate a BBT key and cache it (never written to the item).
+      // Otherwise generate a new shadow key for export/UI use, but never write it back to Zotero.
       replace = true
     }
 
     const current = this.#getNativeKey(item) || ''
-    log.debug('3430:', { current, replace })
+    // Respect existing native keys unless caller requested replacement.
     if (current && !replace) return null
 
     const proposed = inspireHEP || this.propose(item)
-    log.debug('3430:', { proposed }, 'for', item.id)
+    // No-op when generation failed or produced the same key.
     if (!proposed || proposed === current) return null
 
-    log.debug('3430: storing', proposed)
     this.store(item, proposed)
 
     if (readonly(item)) {
-      log.debug('3430:', proposed, 'for read-only', item.id)
+      // Read-only keys are cache-only; never write generated keys into Zotero's citationKey field.
       return null
     }
 
@@ -436,6 +475,10 @@ export const KeyManager = new class _KeyManager {
     // I cannot prevent being called before the init is done because Zotero unlocks the UI *way* before I'm getting the
     // go-ahead to *start* my init.
     return this.#keys.get(itemID)
+  }
+
+  public async flush(): Promise<void> {
+    await this.#keys.flush()
   }
 
   public any(query: Predicate<CitekeyRecord>): CitekeyRecord | undefined { // eslint-disable-line id-blacklist

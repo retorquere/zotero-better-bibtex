@@ -54,3 +54,4 @@ toml
 xvfbwrapper
 rnc2rng
 xmltodict
+colorama
