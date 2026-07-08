@@ -571,7 +571,7 @@ export class BetterBibTeX {
     orchestrator.add({
       id: 'done',
       description: 'user interface',
-      startup: () => {
+      startup: async () => {
         Ready.resolve(true)
 
         void Zotero.PreferencePanes.register({
@@ -848,6 +848,8 @@ export class BetterBibTeX {
         })
 
         monkey.enable()
+
+        await KeyManager.fillMissing()
       },
       shutdown: async () => { // eslint-disable-line @typescript-eslint/require-await
         Zotero.getMainWindows().forEach(win => {

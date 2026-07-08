@@ -27,6 +27,7 @@ import time
 import datetime
 import jsonschema
 import traceback
+from types import SimpleNamespace
 
 from collections import OrderedDict
 from collections.abc import MutableMapping
@@ -682,6 +683,33 @@ class Zotero:
 
     return [None, None]
 
+  def install_db(self, profile, name, download=True):
+    utils.print(f'install_db: {name} download={download}')
+    dbs = os.path.join(ROOT, 'test', 'db', self.config.db)
+    if not os.path.exists(dbs): os.makedirs(dbs)
+
+    db = os.path.join(dbs, f'{name}.sqlite')
+
+    downloaded = False
+    if not os.path.exists(db):
+      if not download:
+        return False
+
+      url = f'https://github.com/retorquere/zotero-better-bibtex/releases/download/test-database/{self.config.db}.{name}.sqlite'
+      utils.print(f'downloading {url}')
+      response = requests.get(url, allow_redirects=True)
+      if response.status_code == 404:
+        return False
+      response.raise_for_status()
+
+      with open(db, 'wb') as f:
+        f.write(response.content)
+      downloaded = True
+
+    utils.print(f'copying {db}')
+    shutil.copy(db, os.path.join(profile.path, self.client, os.path.basename(db)))
+    return downloaded
+
   def create_profile(self):
     profile = Munch(
       name='BBTTEST'
@@ -796,22 +824,9 @@ class Zotero:
     if self.config.db:
       self.needs_restart = True
       utils.print(f'restarting using {self.config.db}')
-      dbs = os.path.join(ROOT, 'test', 'db', self.config.db)
-      if not os.path.exists(dbs): os.makedirs(dbs)
 
-      db_zotero = os.path.join(dbs, f'{self.client}.sqlite')
-      db_zotero_alt = os.path.join(dbs, self.client, f'{self.client}.sqlite')
-      if not os.path.exists(db_zotero) and not os.path.exists(db_zotero_alt):
-        urllib.request.urlretrieve(f'https://github.com/retorquere/zotero-better-bibtex/releases/download/test-database/{self.config.db}.zotero.sqlite', db_zotero)
-      if not os.path.exists(db_zotero): db_zotero = db_zotero_alt
-      shutil.copy(db_zotero, os.path.join(profile.path, self.client, os.path.basename(db_zotero)))
-
-      db_bbt = os.path.join(dbs, 'better-bibtex.sqlite')
-      db_bbt_alt = os.path.join(dbs, self.client, 'better-bibtex.sqlite')
-      if not os.path.exists(db_bbt) and not os.path.exists(db_bbt_alt):
-        urllib.request.urlretrieve(f'https://github.com/retorquere/zotero-better-bibtex/releases/download/test-database/{self.config.db}.better-bibtex.sqlite', db_bbt)
-      if not os.path.exists(db_bbt): db_bbt = db_bbt_alt
-      shutil.copy(db_bbt, os.path.join(profile.path, self.client, os.path.basename(db_bbt)))
+      downloaded = self.install_db(profile, 'zotero')
+      self.install_db(profile, 'better-bibtex', downloaded)
 
       # remove any auto-exports that may exist
       # db = sqlite3.connect(os.path.join(profile.path, self.client, os.path.basename(db_bbt)))

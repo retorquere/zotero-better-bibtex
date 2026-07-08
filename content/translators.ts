@@ -276,6 +276,58 @@ export const Translators = new class {
     return merge({}, defaults, displayOptions)
   }
 
+  // dit laadt de data voor exports van de niet-huidig geselecteerde library, voor bijv auto-export
+  private async preload(scope: ExportScope): Promise<void> {
+    let items: any[] = []
+
+    switch (scope.type) {
+      case 'library':
+        items = await Zotero.Items.getAll(scope.id, true)
+        break
+
+      case 'items':
+        items = scope.items
+        break
+
+      case 'collection':
+        const withDuplicates = new Set(scope.collection.getChildItems())
+        for (const collection of Zotero.Collections.getByParent(scope.collection.id, true)) {
+          for (const item of collection.getChildItems()) {
+            withDuplicates.add(item)
+          }
+        }
+        items = Array.from(withDuplicates.values())
+        break
+
+      default:
+        throw new Error(`Unexpected scope: ${ Object.keys(scope) }`)
+    }
+
+    const ids = items
+      .map(item => typeof item === 'number' ? item : item?.id)
+      .filter(id => typeof id === 'number')
+
+    if (!ids.length) return
+
+    // itemToExportFormat depends on data types loaded on Zotero.Item objects.
+    const topLevelItems = await Zotero.Items.getAsync(ids)
+    if (!topLevelItems.length) return
+
+    await Zotero.Items.loadDataTypes(topLevelItems)
+
+    const childIDs = new Set<number>
+    for (const item of topLevelItems) {
+      if (!item.isRegularItem()) continue
+      for (const id of item.getAttachments()) childIDs.add(id)
+      for (const id of item.getNotes()) childIDs.add(id)
+    }
+
+    if (!childIDs.size) return
+
+    const childItems = await Zotero.Items.getAsync([ ...childIDs ])
+    if (childItems.length) await Zotero.Items.loadDataTypes(childItems)
+  }
+
   public async exportItems(job: ExportJob): Promise<string> {
     await Zotero.BetterBibTeX.ready
 
@@ -286,6 +338,8 @@ export const Translators = new class {
     const translation = new Zotero.Translate.Export
 
     const scope = this.exportScope(job.scope)
+
+    await this.preload(scope)
 
     switch (scope.type) {
       case 'library':
