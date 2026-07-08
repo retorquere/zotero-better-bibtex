@@ -23,12 +23,11 @@
         }
       ],
       "date": "October 2006",
-      "extra": [
-        "Citation Key: conference:06"
-      ],
+      "extra": [],
       "itemID": 2,
       "itemType": "book",
-      "title": "Proceedings of the Xth conference on XYZ"
+      "title": "Proceedings of the Xth conference on XYZ",
+      "citationKey": "conference:06"
     },
     {
       "creators": [
@@ -44,13 +43,13 @@
         }
       ],
       "extra": [
-        "Citation Key: author:06",
         "tex.crossref= conference:06"
       ],
       "itemID": 1,
       "itemType": "conferencePaper",
       "pages": "330—331",
-      "title": "Some publication title"
+      "title": "Some publication title",
+      "citationKey": "author:06"
     }
   ]
 }

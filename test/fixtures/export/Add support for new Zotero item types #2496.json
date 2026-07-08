@@ -96,16 +96,15 @@
         }
       ],
       "date": "2018",
-      "extra": [
-        "Citation Key: MyDGS_annotated"
-      ],
+      "extra": [],
       "itemID": 1,
       "itemType": "dataset",
       "publisher": "DGS-Korpus project, IDGS, Hamburg University",
       "rights": "Restricted to linguistic research",
       "shortTitle": "Public DGS Corpus",
       "title": "MY DGS – annotated. Public Corpus of German Sign Language",
-      "versionNumber": "1.0"
+      "versionNumber": "1.0",
+      "citationKey": "MyDGS_annotated"
     },
     {
       "version": 0,

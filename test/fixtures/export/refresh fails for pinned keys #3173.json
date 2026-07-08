@@ -24,14 +24,13 @@
         }
       ],
       "date": "2013",
-      "extra": [
-        "Citation Key: DBLP:books/daglib/0032853"
-      ],
+      "extra": [],
       "itemID": 1,
       "itemType": "book",
       "publisher": "Cambridge University Press",
       "title": "Quantum computing since democritus",
-      "url": "http://www.cambridge.org/de/academic/subjects/physics/quantum-physics-quantum-information-and-quantum-computation/quantum-computing-democritus?format=PB"
+      "url": "http://www.cambridge.org/de/academic/subjects/physics/quantum-physics-quantum-information-and-quantum-computation/quantum-computing-democritus?format=PB",
+      "citationKey": "DBLP:books/daglib/0032853"
     }
   ]
 }

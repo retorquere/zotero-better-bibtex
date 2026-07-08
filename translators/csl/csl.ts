@@ -57,7 +57,7 @@ export abstract class CSLExporter {
 
   public doExport(): void {
     const items = []
-    for (const item of (this.translation.collected.items.regular as Generator<ExtendedItem, void, unknown>)) {
+    for (let item of (this.translation.collected.items.regular as Generator<ExtendedItem, void, unknown>)) {
       let cached: ExportedItem
       if (!this.translation.collected.displayOptions.custom && (cached = Zotero.BetterBibTeX.Cache.fetch(item.itemID))) {
         items.push(cached.entry)
@@ -65,7 +65,7 @@ export abstract class CSLExporter {
       }
 
       Object.assign(item, getExtra(item.extra, 'csl'))
-      simplifyForExport(item)
+      item = simplifyForExport(item)
       if (item.accessDate) { // WTH is Juris-M doing with those dates?
         item.accessDate = item.accessDate.replace(/T?[0-9]{2}:[0-9]{2}:[0-9]{2}.*/, '').trim()
       }

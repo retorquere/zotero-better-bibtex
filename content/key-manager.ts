@@ -8,7 +8,7 @@ import { chinese } from './key-manager/chinese'
 import { Scheduler } from './scheduler'
 import { log } from './logger'
 import { flash } from './flash'
-import { Events, REASON_KEY_SAVE } from './events'
+import { Events } from './events'
 import { fetchAsync as fetchInspireHEP } from './inspire-hep'
 import { excelColumn, sentenceCase } from './text'
 import * as Extra from './extra'
@@ -29,6 +29,7 @@ import * as l10n from './l10n'
 import { migrate } from './key-manager/migrate'
 import { readonly } from './library'
 import { strcmp } from './string-compare'
+import { monkey } from './monkey-patch'
 
 function scrub(q: string): string {
   return q.replace(/\n/g, ' ').trim()
@@ -41,8 +42,7 @@ const sql = {
     LEFT JOIN itemData id ON item.itemID = id.itemID AND id.fieldID = (SELECT fieldID FROM fields WHERE fieldName = 'citationKey')
     LEFT JOIN itemDataValues idv ON id.valueID = idv.valueID
     WHERE
-      lib.editable = 1
-      AND (id.itemID IS NULL OR idv.value = '')
+      (id.itemID IS NULL OR idv.value = '')
       AND item.itemID NOT IN (SELECT itemID FROM deletedItems)
       AND item.itemID NOT IN (SELECT itemID FROM feedItems)
       AND item.itemTypeID NOT IN (SELECT itemTypeID FROM itemTypes WHERE typeName IN ('attachment', 'note', 'annotation'))
@@ -110,6 +110,26 @@ import { Predicate, TrackedMap } from './object'
 
 class Keys extends TrackedMap<number, CitekeyRecord> {
   #timer: ReturnType<typeof setInterval>
+  // Monotonic mutation counter used by save() to detect changes that land while read-only.json is being written.
+  #generation = 0
+
+  override set(key: number, value: CitekeyRecord): this {
+    // Track structural changes so save() can detect writes that happen while the cache file is being flushed.
+    this.#generation += 1
+    return super.set(key, value)
+  }
+
+  override delete(key: number): boolean {
+    const deleted = super.delete(key)
+    if (deleted) this.#generation += 1
+    return deleted
+  }
+
+  override clear(filter?: Predicate<CitekeyRecord>): void {
+    const size = this.size
+    super.clear(filter)
+    if (this.size !== size) this.#generation += 1
+  }
 
   public get path() {
     return PathUtils.join(Zotero.BetterBibTeX.dir, 'read-only.json')
@@ -136,14 +156,21 @@ class Keys extends TrackedMap<number, CitekeyRecord> {
   }
 
   public async save(): Promise<void> {
-    if (this.isDirty) {
-      await IOUtils.writeJSON(this.path, this.values(_ => readonly(_.libraryID)))
-      this.resetDirty()
+    while (this.isDirty) {
+      const generation = this.#generation
+      await IOUtils.writeJSON(this.path, this.values(key => {
+        // Cache rows can outlive their originating group library; skip rows whose library no longer exists.
+        const library = Zotero.Libraries.get(key.libraryID)
+        // Persist only read-only-library keys in read-only.json.
+        return !!library && readonly(library)
+      }))
+      // Only clear the dirty flag if nothing changed during the async write; otherwise loop and flush again.
+      if (this.#generation === generation) this.resetDirty()
     }
   }
 
-  public async flush(): Promise<void> { // eslint-disable-line @typescript-eslint/require-await
-    // await this.save()
+  public async flush(): Promise<void> {
+    await this.save()
     if (typeof this.#timer !== 'undefined') {
       clearInterval(this.#timer)
       this.#timer = undefined
@@ -156,22 +183,6 @@ export const KeyManager = new class _KeyManager {
   public started = false
 
   public autofill: Scheduler<number> = new Scheduler<number>('fillKeyAfter', 1000)
-
-  public async pin(ids: 'selected' | number | number[], pin = true): Promise<void> {
-    await this.fill(ids, { warn: true })
-    ids = this.expandSelection(ids)
-    await Cache.touch(ids)
-    const items = (await getItemsAsync(ids)).filter(item => !readonly(item) && !item.isFeedItem && item.isRegularItem())
-    for (const item of items) {
-      const citationKey = pin ? item.getField('citationKey') : ''
-      if (!pin || citationKey) {
-        const { extra } = Extra.citationKey(item.getField('extra'))
-        item.setField('extra', pin ? `Citation Key: ${citationKey}\n${extra}`.trim() : extra)
-        await item.saveTx({ skipDateModifiedUpdate: true })
-        await Zotero.Promise.delay(10)
-      }
-    }
-  }
 
   public async fill(ids: 'selected' | number | number[], { warn = false, replace = false, inspireHEP = false }: { warn?: boolean; replace?: boolean; inspireHEP?: boolean } = {}): Promise<void> {
     ids = this.expandSelection(ids)
@@ -213,7 +224,7 @@ export const KeyManager = new class _KeyManager {
     const progress: Progress = items.length > 10 ? new Progress(items.length, 'Refreshing citation keys') : null
     for (const item of items) {
       if (!this.update(item, { replace, inspireHEP: inspireHEP ? (await fetchInspireHEP(item)) || '' : undefined })) {
-        this.store(item)
+        if (!readonly(item)) this.store(item)
         continue
       }
 
@@ -238,9 +249,16 @@ export const KeyManager = new class _KeyManager {
     progress?.done()
 
     for (const item of items) {
+      if (readonly(item)) continue // keys for read-only items are cached only, never written back
       await item.saveTx({ skipDateModifiedUpdate: true })
       await Zotero.Promise.delay(10)
     }
+  }
+
+  // eslint-disable-next-line @typescript-eslint/unbound-method
+  #getField: ((this: Zotero.Item, field: string) => string) = Zotero.Item.prototype.getField // guaranteed to run before constructor
+  #getNativeKey(item: Zotero.Item): string {
+    return this.#getField.call(item, 'citationKey') as string
   }
 
   constructor() {
@@ -255,6 +273,13 @@ export const KeyManager = new class _KeyManager {
         Formatter.update([Preference.citekeyFormat])
 
         await this.start()
+
+        const citationKeyFieldID: number = Zotero.ItemFields.getID('citationKey')
+        monkey.patch(Zotero.Item.prototype, 'getField', original => function Zotero_Item_prototype_getField(field) {
+          if ((field === 'citationKey' || field === citationKeyFieldID) && readonly(this)) return KeyManager.get(this.id)?.citationKey ?? ''
+
+          return original.apply(this, arguments) as string // eslint-disable-line prefer-rest-params
+        })
       },
       shutdown: async () => {
         await this.#keys.flush()
@@ -290,20 +315,22 @@ export const KeyManager = new class _KeyManager {
     }
   }
 
-  private async start(): Promise<void> {
-    await migrate()
-    await this.#keys.load()
-
+  public async fillMissing() {
     if (Preference.fillKeyAfter) {
       const missing: number[] = await Zotero.DB.columnQueryAsync(sql.missing)
       if (missing.length) {
-        void Zotero.DB.executeTransaction(async () => {
-          for (const item of await Zotero.Items.getAsync(missing)) {
+        await Zotero.DB.executeTransaction(async () => {
+          for (const item of await getItemsAsync(missing)) {
             await this.update(item)?.save({ skipDateModifiedUpdate: true })
           }
         })
       }
     }
+  }
+
+  private async start(): Promise<void> {
+    await migrate()
+    await this.#keys.load()
 
     Events.on('preference-changed', ({ data: pref }) => {
       switch (pref) {
@@ -322,9 +349,9 @@ export const KeyManager = new class _KeyManager {
       this.clear(itemIDs)
     })
 
-    Events.on('items-changed', ({ data: { items, action, reason } }) => {
+    Events.on('items-changed', ({ data: { items, action, reason, changed } }) => {
       log.info('items-changed', { reason })
-      if (reason?.startsWith('parent-') || reason === 'tagged' || reason === REASON_KEY_SAVE) return
+      if (reason?.startsWith('parent-') || reason === 'tagged') return
 
       let warn_titlecase = 0 // should not be here
 
@@ -338,12 +365,41 @@ export const KeyManager = new class _KeyManager {
       })
 
       const update = (item: Zotero.Item) => {
+        const nativeCitationKey = this.#getNativeKey(item) || ''
+        // Handle explicit citationKey edits/notifier updates first so cache state follows the source of truth.
+        if (changed?.[item.id]?.includes('citationKey')) {
+          // Native citationKey is present: mirror it to cache and stop.
+          if (nativeCitationKey) {
+            // For read-only items, changed citationKey notifications must refresh the cache from the native field,
+            // not from the monkey-patched getField('citationKey') view.
+            this.store(item, nativeCitationKey)
+            return
+          }
+
+          // Native citationKey was cleared on a read-only item.
+          if (readonly(item)) {
+            // An emptied native key on a read-only item means the shadow key is no longer authoritative.
+            // Drop the cache entry first, then regenerate a BBT key if read-only support still requires one.
+            this.#keys.delete(item.id)
+            this.update(item, { replace: true })
+            return
+          }
+        }
+
+        // Non-read-only items that got a direct citationKey change should just refresh cache from native value.
+        if (changed?.[item.id]?.includes('citationKey') && nativeCitationKey) {
+          this.store(item, nativeCitationKey)
+          return
+        }
+
+        // Metadata changed (or citationKey empty): let KeyManager decide whether to regenerate and persist.
         if (this.update(item, { replace: Preference.resetKeyOnChange })) {
           item
-            .saveTx({ skipDateModifiedUpdate: true, notifierData: { [REASON_KEY_SAVE]: true } })
+            .saveTx({ skipDateModifiedUpdate: true })
             .catch(err => log.error('failed to update', item.id, ':', err))
         }
-        else {
+        // No persisted change happened; for writable items, keep cache aligned with current native field.
+        else if (!readonly(item)) {
           this.store(item)
         }
       }
@@ -377,19 +433,39 @@ export const KeyManager = new class _KeyManager {
   }
 
   public update(item: Zotero.Item, { replace = false, inspireHEP = undefined }: { replace?: boolean; inspireHEP?: string } = {}): Zotero.Item {
+    // Feed/non-regular items never participate in citation-key generation.
     if (item.isFeedItem || !item.isRegularItem()) return null
 
+    // Empty InspireHEP lookups should not trigger fallback citekey regeneration.
     if (typeof inspireHEP === 'string' && !inspireHEP) return null
 
-    const current = item.getField('citationKey')
+    if (readonly(item)) {
+      // Native keys on read-only items come from outside BBT and always take precedence over the cached shadow key.
+      const nativeKey = this.#getNativeKey(item) || ''
+      if (nativeKey) {
+        this.store(item, nativeKey)
+        return null
+      }
+      // If a read-only item already has a cached key, keep serving it until a caller explicitly asks to regenerate.
+      if (!replace && this.#keys.get(item.id)?.citationKey) return null
+      // Otherwise generate a new shadow key for export/UI use, but never write it back to Zotero.
+      replace = true
+    }
+
+    const current = this.#getNativeKey(item) || ''
+    // Respect existing native keys unless caller requested replacement.
     if (current && !replace) return null
 
     const proposed = inspireHEP || this.propose(item)
+    // No-op when generation failed or produced the same key.
     if (!proposed || proposed === current) return null
 
     this.store(item, proposed)
 
-    if (readonly(item.libraryID)) return null
+    if (readonly(item)) {
+      // Read-only keys are cache-only; never write generated keys into Zotero's citationKey field.
+      return null
+    }
 
     item.setField('citationKey', proposed)
     return item
@@ -399,6 +475,10 @@ export const KeyManager = new class _KeyManager {
     // I cannot prevent being called before the init is done because Zotero unlocks the UI *way* before I'm getting the
     // go-ahead to *start* my init.
     return this.#keys.get(itemID)
+  }
+
+  public async flush(): Promise<void> {
+    await this.#keys.flush()
   }
 
   public any(query: Predicate<CitekeyRecord>): CitekeyRecord | undefined { // eslint-disable-line id-blacklist

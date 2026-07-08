@@ -17,6 +17,9 @@ import copy
 import unicodedata
 from pathlib import Path
 
+import colorama
+colorama.init()
+
 import warnings
 warnings.filterwarnings("ignore", category=UserWarning, module='bs4', message='.*looks like a URL.*')
 
@@ -30,8 +33,7 @@ FIXTURES = os.path.join(ROOT, 'test/fixtures')
 EXPORTED = os.path.join(ROOT, 'exported')
 
 def print(txt, end='\n'):
-  sys.stdout.write(str(txt) + end)
-  sys.stdout.flush()
+  os.write(1, f'{colorama.Fore.LIGHTMAGENTA_EX}{txt}{end}{colorama.Style.RESET_ALL}'.encode('utf-8'))
 
 class HashableDict(dict):
   def __hash__(self):

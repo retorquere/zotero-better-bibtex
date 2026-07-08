@@ -36,9 +36,7 @@
       ],
       "date": "2007",
       "edition": "5",
-      "extra": [
-        "Citation Key: Landafshits.V7"
-      ],
+      "extra": [],
       "itemID": 1,
       "itemType": "book",
       "language": "russian",
@@ -48,7 +46,8 @@
       "publisher": "Физматлит",
       "series": "Теоретическая физика",
       "title": "Теория упругости",
-      "volume": "7"
+      "volume": "7",
+      "citationKey": "Landafshits.V7"
     }
   ]
 }

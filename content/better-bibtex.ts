@@ -571,7 +571,7 @@ export class BetterBibTeX {
     orchestrator.add({
       id: 'done',
       description: 'user interface',
-      startup: () => {
+      startup: async () => {
         Ready.resolve(true)
 
         void Zotero.PreferencePanes.register({
@@ -662,15 +662,15 @@ export class BetterBibTeX {
                 },
                 {
                   menuType: 'menuitem',
-                  l10nID: 'better-bibtex_zotero-pane_citekey_pin',
-                  onShowing: itemsSelected,
-                  onCommand: (_event, _context) => void Zotero.BetterBibTeX.KeyManager.pin('selected'),
+                  l10nID: 'better-bibtex_zotero-pane_citekey_move_from_extra',
+                  onShowing: (_event, context) => context.setVisible(Zotero.BetterBibTeX.MenuHelper.selectedItemsHaveCitationKeyInExtra()),
+                  onCommand: (_event, _context) => void Zotero.BetterBibTeX.MenuHelper.applyCitationKeyFromExtra(true),
                 },
                 {
                   menuType: 'menuitem',
-                  l10nID: 'better-bibtex_zotero-pane_citekey_unpin',
-                  onShowing: itemsSelected,
-                  onCommand: (_event, _context) => void Zotero.BetterBibTeX.KeyManager.pin('selected', false),
+                  l10nID: 'better-bibtex_zotero-pane_citekey_clear_from_extra',
+                  onShowing: (_event, context) => context.setVisible(Zotero.BetterBibTeX.MenuHelper.selectedItemsHaveCitationKeyInExtra()),
+                  onCommand: (_event, _context) => void Zotero.BetterBibTeX.MenuHelper.applyCitationKeyFromExtra(false),
                 },
                 {
                   menuType: 'menuitem',
@@ -848,6 +848,8 @@ export class BetterBibTeX {
         })
 
         monkey.enable()
+
+        await KeyManager.fillMissing()
       },
       shutdown: async () => { // eslint-disable-line @typescript-eslint/require-await
         Zotero.getMainWindows().forEach(win => {

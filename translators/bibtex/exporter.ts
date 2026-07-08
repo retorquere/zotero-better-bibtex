@@ -47,7 +47,7 @@ export class Exporter {
   private *itemsGenerator(): Generator<Serialized.RegularItem, void, unknown> {
     if (!this.postfix && this.translation.BetterTeX) this.postfix = new Postfix(this.translation.collected.preferences.qualityReport)
 
-    for (const item of this.translation.collected.items.regular) {
+    for (let item of this.translation.collected.items.regular) {
       if (this.translation.output.body) this.translation.output.body += '\n'
 
       if (typeof item.itemID !== 'number') item.$cacheable = false
@@ -74,7 +74,7 @@ export class Exporter {
 
       this.jabref.citekeys.set(item.itemID, item.citationKey)
 
-      simplifyForExport(item)
+      item = simplifyForExport(item) as typeof item
 
       // strip extra.tex fields that are not for me
       const prefix = this.translation.BetterBibLaTeX ? 'biblatex.' : 'bibtex.'

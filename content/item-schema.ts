@@ -223,6 +223,8 @@ function unalias(item: Serialized.RegularItem, scrub = true) {
 }
 
 export function simplifyForExport(item: Serialized.RegularItem, { creators = true, scrub = true }: { creators?: boolean; scrub?: boolean } = {}): Serialized.RegularItem {
+  item = structuredClone(item)
+
   unalias(item, scrub)
 
   if (item.filingDate) item.filingDate = item.filingDate.replace(/^0000-00-00 /, '')

@@ -6,6 +6,8 @@ import type { Serialized } from '../gen/typings/serialized'
 import { JournalAbbrev } from './journal-abbrev'
 import { log } from './logger'
 import { Preference } from './prefs'
+import { KeyManager } from './key-manager'
+import { readonly } from './library'
 
 class Serializer {
   private attachment(serialized: Serialized.Attachment, att): Serialized.Attachment {
@@ -67,6 +69,8 @@ export function fix(serialized: Serialized.Item, item: Zotero.Item): Serialized.
         autoAbbrev: Preference.autoAbbrev,
       })
     }
+
+    if (!regular.citationKey && readonly(item.libraryID)) regular.citationKey = KeyManager.get(item.id)?.citationKey ?? ''
   }
 
   // come on -- these are used in the collections export but not provided on the items?!

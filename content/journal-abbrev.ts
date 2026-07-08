@@ -67,7 +67,7 @@ export const JournalAbbrev = new class {
 
   public get(item, mode: 'abbrev' | 'auto' | 'abbrev+auto' = 'abbrev+auto'): string {
     const zotero_item = !!(item._objectType) // eslint-disable-line no-underscore-dangle
-    if (!zotero_item) item = simplifyForExport(Object.create(item), { creators: false, scrub: false }) // don't mess with the serialized object, Zotero needs it intact
+    if (!zotero_item) item = simplifyForExport(item, { creators: false, scrub: false })
 
     const itemType = zotero_item ? Zotero.ItemTypes.getName(item.itemTypeID) : item.itemType
     const itemKey = item.itemKey || item.key || null
