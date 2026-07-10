@@ -323,7 +323,7 @@ monkey.patch(Zotero.Translate.Export.prototype, 'translate', original =>
 
     const displayOptions = this._displayOptions = this._displayOptions || {}
 
-    Zotero.BetterBibTeX.exportOptions = [ ...Zotero.BetterBibTeX.exportOptions,  { translatorID, displayOptions } ].slice(-5)
+    Zotero.BetterBibTeX.exportOptions = [ ...Zotero.BetterBibTeX.exportOptions, { translatorID, displayOptions } ].slice(-5)
 
     if (this.location) {
       if (displayOptions.exportFileData) { // when exporting file data, the user was asked to pick a directory rather than a file

@@ -21,7 +21,7 @@ function unpack({ citationKey, itemID, itemKey, libraryID, pinned }: StoredKey):
 }
 
 function show(obj: Record<string, any>): string {
-  return stringifyObject(obj, { indent: '  ' }) as string
+  return stringifyObject(obj, { indent: '  ' })
   /*
   const s: string[] = []
   for (const [k, v] of Object.entries(obj)) {

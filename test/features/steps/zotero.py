@@ -209,7 +209,7 @@ class Config:
 
   def update(self, **kwargs):
     for k, v in kwargs.items():
-      if not k in self.data[-1]: raise AttributeError(f"'{type(self)}' object has no attribute '{name}'")
+      if not k in self.data[-1]: raise AttributeError(f"'{type(self)}' object has no attribute '{k}'")
       if type(v) != type(self.data[-1][k]): raise ValueError(f'{type(self)}.{k} must be of type {self.data[-1][k]}')
       self.data[0][k] = v
 
@@ -228,11 +228,20 @@ class Config:
     return str(self.data)
 
 class Library:
-  def __init__(self, path=None, body=None, client=None, variant='', ext=None, name=None):
+  """Represents an input/export library fixture and its normalized comparison form.
+
+  The constructor resolves where content comes from (path/body), optionally applies
+  client-specific patches, parses by extension, and prepares normalized content used
+  by test assertions.
+  """
+
+  def __init__(self, path=None, body=None, client=None, variant='', ext=None, name=None, translator=None):
     show(f'Library.__init__({name})' if name else 'Library.__init__', locals())
     if path and not os.path.isabs(path):
       path = os.path.join(FIXTURES, path)
 
+    # Extension resolution priority:
+    # 1) explicit file path, 2) explicit ext argument, 3) unknown.
     if path:
       self.ext = self.suffix(path)
 
@@ -245,6 +254,7 @@ class Library:
       self.ext = None
 
     self.base = path
+    self.source = path
     self.body = body
     self.client = client
 
@@ -254,17 +264,29 @@ class Library:
     self.exported = None
 
     if self.base:
+      # self.path is the expected output location, potentially rewritten when a
+      # fixture patch exists for this client/variant.
       self.path = self.base
 
+      # Prefer client+variant patch, then plain client patch.
       patches = [ self.base + '.' + client + variant + '.patch' ]
       if len(variant) > 0: patches.append(self.base + '.' + self.client + '.patch')
       self.patch = next((patch for patch in patches if os.path.exists(patch)), None)
       if self.patch:
+        # Preserve extension but switch fixture basename to the patched variant.
         self.path = self.base[:-len(self.ext)] + '.' + self.patch.split('.')[-2] + self.ext
 
     if not self.body and self.base:
-      assert os.path.exists(self.base), f'{json.dumps(self.base)} does not exist'
-      with open(self.base) as f:
+      # BetterBibTeX JSON compatibility fallback:
+      # if expected .json is missing, silently read sibling .yaml instead.
+      if not os.path.exists(self.base) and translator == 'BetterBibTeX JSON' and self.base.endswith('.json'):
+        yaml_fallback = self.base[:-len('.json')] + '.yaml'
+        if os.path.exists(yaml_fallback):
+          self.source = yaml_fallback
+
+      # Keep assertion message on original expected path for clearer failures.
+      assert os.path.exists(self.source), f'{json.dumps(self.base)} does not exist'
+      with open(self.source) as f:
         self.body = f.read()
 
     self.normalized = self.body
@@ -276,19 +298,31 @@ class Library:
     #  with open(self.base, 'w') as f:
     #    f.write(self.body)
 
+    # Data parsing/normalization strategy is selected by extension.
     if self.ext.endswith('.json') or self.ext == '.csl.yml':
       if self.ext.endswith('.json'):
-        try:
-          self.data = json.loads(self.body, object_pairs_hook=OrderedDict)
-        except:
-          raise ValueError(self.body)
+        # Parse as YAML when source was silently switched to .yaml, or when
+        # BetterBibTeX JSON expects .json but the content is actually YAML.
+        if self.source and self.source.endswith('.yaml'):
+          self.data = yaml.load(io.StringIO(self.body))
+        else:
+          try:
+            self.data = json.loads(self.body, object_pairs_hook=OrderedDict)
+          except:
+            if translator == 'BetterBibTeX JSON':
+              self.data = yaml.load(io.StringIO(self.body))
+            else:
+              raise ValueError(self.body)
       else:
+        # .csl.yml fixtures are always parsed as YAML.
         self.data = yaml.load(io.StringIO(self.body))
 
       if self.patch:
+        # JSON patch mutates parsed data before normalization.
         self.data = jsonpatch.JsonPatch(json.load(f)).apply(self.data)
 
       if self.ext in ['.csl.json', '.csl.yml']:
+        # CSL exports are normalized as sorted item lists.
         self.data = sorted(self.data, key=lambda item: json.dumps(item, cls=CompactEncoder))
         self.normalized = json.dumps(self.data, cls=CompactEncoder)
 
@@ -299,20 +333,24 @@ class Library:
           self.normalized = normalized.getvalue()
 
       elif self.ext == '.json':
+        # BetterBibTeX JSON exports normalize preferences/items for stable diffs.
         if 'config' in self.data and 'preferences' in self.data['config']: self.data['config']['preferences'].pop('autoAbbrevStyle', None)
         self.data['items'] = sorted(self.data['items'], key=lambda item: json.dumps(item, cls=CompactEncoder))
         self.normalized = json.dumps(cleanlib(copy.deepcopy(self.data)), cls=CompactEncoder)
 
     elif self.ext in ['.biblatex', '.bibtex', '.bib']:
+      # BibTeX-family exports normalize through deterministic bib sorting.
       if self.patch:
         dmp = diff_match_patch()
         self.body = dmp.patch_apply(dmp.patch_fromText(open(self.patch).read()), self.body)[0]
       self.normalized = sortbib(self.body)
 
     elif self.ext == '.html':
+      # HTML exports normalize by stripping unstable formatting details.
       self.normalized = clean_html(self.body).strip()
 
   def suffix(self, path):
+    # Normalize recognized extension families and reject unsupported naming.
     suffixes = Path(path).suffixes
     if suffixes[-1] == '.yaml':
       raise ValueError(f'Use .yml, not .yaml, in {path}')
@@ -577,7 +615,7 @@ class Zotero:
 
     if expected is None: return
 
-    expected = Library(path=expected, client=self.client, variant=self.variant, name='expected')
+    expected = Library(path=expected, client=self.client, variant=self.variant, name='expected', translator=self.translators.byId[translator].label)
     found = Library(path=output, body=found, client=self.client, variant=self.variant, ext=expected, name='found')
     found.save(expected.path)
 
