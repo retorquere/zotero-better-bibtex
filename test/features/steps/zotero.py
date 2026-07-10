@@ -259,6 +259,7 @@ class Library:
     self.client = client
 
     self.data = None
+    self.parsed_as = None
     self.patch = None
     self.path = None
     self.exported = None
@@ -302,20 +303,27 @@ class Library:
     if self.ext.endswith('.json') or self.ext == '.csl.yml':
       if self.ext.endswith('.json'):
         # Parse as YAML when source was silently switched to .yaml, or when
-        # BetterBibTeX JSON expects .json but the content is actually YAML.
+        # a .json fixture contains YAML content.
         if self.source and self.source.endswith('.yaml'):
           self.data = yaml.load(io.StringIO(self.body))
+          self.parsed_as = 'yaml'
         else:
           try:
             self.data = json.loads(self.body, object_pairs_hook=OrderedDict)
+            self.parsed_as = 'json'
           except:
-            if translator == 'BetterBibTeX JSON':
-              self.data = yaml.load(io.StringIO(self.body))
+            # Keep fallback narrow: only accept parsed mappings/lists, which
+            # are the expected top-level structures for test fixtures.
+            parsed = yaml.load(io.StringIO(self.body))
+            if isinstance(parsed, (dict, list)):
+              self.data = parsed
+              self.parsed_as = 'yaml'
             else:
               raise ValueError(self.body)
       else:
         # .csl.yml fixtures are always parsed as YAML.
         self.data = yaml.load(io.StringIO(self.body))
+        self.parsed_as = 'yaml'
 
       if self.patch:
         # JSON patch mutates parsed data before normalization.
@@ -670,6 +678,17 @@ class Zotero:
 
     with tempfile.TemporaryDirectory() as d:
       references = input.path
+      converted = None
+
+      # If a .json fixture actually contains YAML, convert it to a temporary
+      # JSON file next to the original fixture so relative attachment paths keep
+      # resolving against the same directory.
+      if references.endswith('.json') and input.parsed_as == 'yaml':
+        with tempfile.NamedTemporaryFile(mode='w', suffix='.json', prefix=os.path.basename(references) + '.converted.', dir=os.path.dirname(references), delete=False) as f:
+          json.dump(input.data, f)
+          converted = f.name
+        references = converted
+
       if type(collection) is str:
         orig = references
         references = os.path.join(d, collection)
@@ -693,17 +712,21 @@ class Zotero:
 
       filename = references
       if not items: filename = None
-      return self.execute('''
-          const library = await Zotero.BetterBibTeX.TestSupport.importFile(filename, createNewCollection, preferences, bibliography)
-          await Zotero.BetterBibTeX.TestSupport.fill()
-          return library
-        ''',
-        filename = filename,
-        createNewCollection = (collection != False),
-        preferences = preferences,
-        localeDateOrder = localeDateOrder,
-        bibliography = bibliography
-      )
+      try:
+        return self.execute('''
+            const library = await Zotero.BetterBibTeX.TestSupport.importFile(filename, createNewCollection, preferences, bibliography)
+            await Zotero.BetterBibTeX.TestSupport.fill()
+            return library
+          ''',
+          filename = filename,
+          createNewCollection = (collection != False),
+          preferences = preferences,
+          localeDateOrder = localeDateOrder,
+          bibliography = bibliography
+        )
+      finally:
+        if converted and os.path.exists(converted):
+          os.remove(converted)
 
   def expand_expected(self, expected):
     base, ext = os.path.splitext(expected)
