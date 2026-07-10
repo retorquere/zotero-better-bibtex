@@ -4,11 +4,6 @@ Feature: Export
   Background:
     Given I set the temp directory to "test/tmp"
 
-  Scenario: Read-only group #3430
-    When I restart Zotero with "readonly"
-    And I select the library named "Open Data Citation for Social Science and Humanities"
-    Then an export using "Better BibLaTeX" should match "export/*.biblatex"
-
   @biblatex
   Scenario Outline: Export <references> references for BibLaTeX to <file>
     When I import <references> references from "export/<file>.json"
@@ -924,3 +919,9 @@ Feature: Export
     Then an export using "Better BibTeX" should match "export/*.bibtex"
     When I set preference .bibtexParticleNoOp to true
     Then an export using "Better BibTeX" should match "export/*-noop.bibtex"
+
+  Scenario: Read-only group #3430
+    When I restart Zotero with "readonly"
+    And I select the library named "Open Data Citation for Social Science and Humanities"
+    Then an export using "Better BibLaTeX" should match "export/*.biblatex"
+

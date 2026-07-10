@@ -648,6 +648,7 @@ export class ErrorReport {
 
     if (scope) {
       try {
+        const options = Zotero.BetterBibTeX.exportOptions.find(eo => Object.keys(eo.displayOptions).length)?.displayOptions || {}
         items = await Zotero.BetterBibTeX.Translators.queueJob({
           translatorID: Zotero.BetterBibTeX.Translators.bySlug.BetterBibTeXJSON.translatorID,
           displayOptions: { worker: true, exportNotes: true, Normalize: true },
@@ -655,7 +656,7 @@ export class ErrorReport {
           timeout: 40,
         })
         const merge = JSON.parse(items)
-        merge.config.options = Zotero.BetterBibTeX.lastExport.displayOptions
+        merge.config.options = options
         items = JSON.stringify(merge, null, 2)
       }
       catch (err) {
