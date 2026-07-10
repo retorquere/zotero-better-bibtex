@@ -59,7 +59,6 @@ export async function migrate(verbose = false): Promise<void> {
   if (!sqlite) return
 
   const editable = editableLibs()
-  log.debug('3430: editable =', [...editable])
   const choice = {
     migrate: 'postpone' as 'none' | 'all' | 'pinned' | 'postpone',
     overwrite: false,
@@ -125,7 +124,6 @@ export async function migrate(verbose = false): Promise<void> {
           duplicates: 0,
           new: 0,
         }
-        log.debug('3430: item libraries =', bbt.reduce((acc, bkey) => ({ ...acc, [bkey.libraryID]: editable.has(bkey.libraryID) }), {}))
         bbt = bbt.filter(bkey => {
           if (!editable.has(bkey.libraryID)) {
             readonly.push(bkey)
@@ -180,7 +178,6 @@ export async function migrate(verbose = false): Promise<void> {
           Zotero.Prefs.set('translators.better-bibtex.resetKeyOnChange', !!choice.dynamic)
 
           speaker.say(`migrating ${bbt.length} citation keys`, true)
-          log.debug('3430: migrating', bbt)
 
           for (const { itemID, citationKey, pinned } of bbt) {
             const item = await getItemAsync(itemID)
@@ -190,7 +187,6 @@ export async function migrate(verbose = false): Promise<void> {
                 const { extra } = extract(item.getField('extra'))
                 item.setField('extra', `${extra}\nCitation Key: ${citationKey}`.trim())
               }
-              log.debug('3430: saving', { title: item.getField('title'), libraryID: item.libraryID })
               await item.save({ skipDateModifiedUpdate: true, skipNotifier: !!choice.zotero })
             }
           }
