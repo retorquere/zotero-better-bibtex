@@ -456,7 +456,7 @@ export function generateBibLaTeX(collected: Collected): Translation {
         if (!entry.has.journaltitle && (item.publicationTitle !== item.title)) entry.add({ name: 'journaltitle', value: item.publicationTitle })
     }
 
-    log.info('biblatex journal resolution:', {
+    log.debug('biblatex journal resolution:', {
       itemID: item.itemID,
       itemKey: item.itemKey,
       itemType: item.itemType,
