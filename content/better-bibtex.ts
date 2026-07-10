@@ -322,10 +322,8 @@ monkey.patch(Zotero.Translate.Export.prototype, 'translate', original =>
     }
 
     const displayOptions = this._displayOptions = this._displayOptions || {}
-    Zotero.BetterBibTeX.lastExport = {
-      translatorID,
-      displayOptions,
-    }
+
+    Zotero.BetterBibTeX.exportOptions = [ ...Zotero.BetterBibTeX.exportOptions,  { translatorID, displayOptions } ].slice(-5)
 
     if (this.location) {
       if (displayOptions.exportFileData) { // when exporting file data, the user was asked to pick a directory rather than a file
@@ -390,7 +388,7 @@ export class BetterBibTeX {
     },
   }
 
-  public lastExport: { translatorID: string; displayOptions: DisplayOptions } = { translatorID: '', displayOptions: {} }
+  public exportOptions: { translatorID: string; displayOptions: DisplayOptions }[] = []
 
   public CSL() { // eslint-disable-line @typescript-eslint/explicit-module-boundary-types
     return CSL // eslint-disable-line @typescript-eslint/no-unsafe-return

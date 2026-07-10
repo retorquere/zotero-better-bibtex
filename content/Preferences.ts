@@ -305,15 +305,15 @@ export const PrefPane = new class $PrefPane {
     if (!file) return
     if (!file.match(/.json$/)) file = `${file}.json`
 
-    const options = structuredClone(Zotero.BetterBibTeX.lastExport.displayOptions)
-    delete options.exportDir
-    delete options.exportPath
-    delete options.keepUpdated
-    delete options.worker
-
+    const clear = {
+      exportDir: undefined,
+      exportPath: undefined,
+      keepUpdated: undefined,
+      worker: undefined,
+    }
     Zotero.File.putContents(Zotero.File.pathToFile(file), JSON.stringify({
       config: {
-        options,
+        options: Zotero.BetterBibTeX.exportOptions.map(eo => ({ ...eo.displayOptions, clear })),
         preferences: Preference.all,
       },
     }, null, 2))
