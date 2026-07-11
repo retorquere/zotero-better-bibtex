@@ -1,7 +1,6 @@
 import { Exporter as BibTeXExporter } from './exporter'
 import { Translation } from '../lib/translator'
 import { strToISO } from '../../content/dateparser'
-import { log } from '../../content/logger'
 import { qualityReport } from '../../gen/biber-tool'
 import type { Collected } from '../lib/collect'
 
@@ -399,13 +398,11 @@ export function generateBibLaTeX(collected: Collected): Translation {
     }
     entry.add({ name: !number_added && looks_like_number_field(item.issue) ? 'number' : 'issue', value: entry.normalizeDashes(item.issue) })
 
-    const autoJournalAbbreviation = item.autoJournalAbbreviation || ''
-    const journalAbbreviationMode = translation.collected.preferences.journalAbbreviation
     const journalAbbreviation = {
-      abbrev: item.journalAbbreviation || '',
-      auto: autoJournalAbbreviation,
-      'abbrev+auto': item.journalAbbreviation || autoJournalAbbreviation,
-    }[journalAbbreviationMode] || (item.journalAbbreviation || autoJournalAbbreviation)
+      abbrev: item.journalAbbreviation,
+      auto: item.autoJournalAbbreviation,
+      'abbrev+auto': item.journalAbbreviation || item.autoJournalAbbreviation,
+    }[translation.collected.preferences.journalAbbreviation] || ''
     switch (entry.entrytype) {
       case 'jurisdiction':
         entry.add({ name: 'journaltitle', value: item.reporter || (item.publicationTitle !== item.title && item.publicationTitle), bibtexStrings: true })
@@ -461,23 +458,6 @@ export function generateBibLaTeX(collected: Collected): Translation {
       default:
         if (!entry.has.journaltitle && (item.publicationTitle !== item.title)) entry.add({ name: 'journaltitle', value: item.publicationTitle })
     }
-
-    log.debug('biblatex journal resolution:', {
-      itemID: item.itemID,
-      itemKey: item.itemKey,
-      itemType: item.itemType,
-      entrytype: entry.entrytype,
-      useJournalAbbreviation: translation.collected.displayOptions.useJournalAbbreviation,
-      journalAbbreviationMode,
-      publicationTitle: item.publicationTitle || null,
-      journalAbbreviation: item.journalAbbreviation || null,
-      autoJournalAbbreviation: autoJournalAbbreviation || null,
-      resolvedJournalAbbreviation: journalAbbreviation || null,
-      journaltitle: entry.has.journaltitle?.value || null,
-      shortjournal: entry.has.shortjournal?.value || null,
-      booktitle: entry.has.booktitle?.value || null,
-      organization: entry.has.organization?.value || null,
-    })
 
     let main
     // eslint-disable-next-line no-underscore-dangle
