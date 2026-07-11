@@ -74,7 +74,7 @@ export const JournalAbbrev = new class {
 
     let abbrev = mode.startsWith('abbrev') ? this.getField(item, 'journalAbbreviation', zotero_item) : null
     if (abbrev || !mode.endsWith('auto')) {
-      log.info('3451: journal-abbrev.get (fixed):', {
+      log.debug('3451: journal-abbrev.get (fixed):', {
         mode,
         itemKey,
         itemType,
@@ -88,7 +88,7 @@ export const JournalAbbrev = new class {
     }
 
     if (!this.journal.has(itemType)) {
-      log.info('3451: journal-abbrev.get (non-journal):', {
+      log.debug('3451: journal-abbrev.get (non-journal):', {
         mode,
         itemKey,
         itemType,
@@ -103,7 +103,7 @@ export const JournalAbbrev = new class {
 
     const journal: string = this.fields.map(field => this.getField(item, field, zotero_item)?.replace(/<\/?(sup|sub|i|b)>/g, '')).find(_ => _)
     if (!journal) {
-      log.info('journal-abbrev.get (no-source):', {
+      log.debug('3451: journal-abbrev.get (no-source):', {
         mode,
         itemKey,
         itemType,
@@ -122,7 +122,7 @@ export const JournalAbbrev = new class {
     }
     abbrev = this.abbrevs.default['container-title'][journal]
     if (abbrev && abbrev.toLowerCase() !== journal.toLowerCase().replace(/[.]/g, '')) {
-      log.info('journal-abbrev.get (auto):', {
+      log.debug('3451: journal-abbrev.get (auto):', {
         mode,
         itemKey,
         itemType,
@@ -136,7 +136,7 @@ export const JournalAbbrev = new class {
       return abbrev
     }
 
-    log.info('journal-abbrev.get (none):', {
+    log.debug('3451: journal-abbrev.get (none):', {
       mode,
       itemKey,
       itemType,

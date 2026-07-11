@@ -56,7 +56,7 @@ export function fix(serialized: Serialized.Item, item: Zotero.Item): Serialized.
   if (item.isRegularItem() && !item.isFeedItem) {
     const regular = <Serialized.RegularItem>serialized
 
-    if (!Zotero.BetterBibTeX.starting && Preference.journalAbbreviation === 'abbrev+auto') {
+    if (!Zotero.BetterBibTeX.starting) {
       regular.autoJournalAbbreviation = JournalAbbrev.get(regular, 'auto') || ''
 
       log.info('3451: item-export-format.fix: journal fields', {

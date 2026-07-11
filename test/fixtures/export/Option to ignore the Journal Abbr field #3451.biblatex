@@ -1,21 +1,18 @@
-@article{CullenJ.IvanovR:2022,
-  title = {Hamiltonian Description of Internal Ocean Waves with {{Coriolis}} Force},
-  author = {Cullen, Joseph and Ivanov, Rossen},
-  date = {2022},
-  journaltitle = {Communications on Pure and Applied Analysis},
-  volume = {21},
-  number = {7},
-  eprint = {2203.13940},
-  eprinttype = {arXiv},
-  eprintclass = {nlin, physics:physics},
-  pages = {2291},
-  issn = {1534-0392, 1553-5258},
-  doi = {10.3934/cpaa.2022029},
-  url = {http://arxiv.org/abs/2203.13940},
-  urldate = {2023-05-27},
-  abstract = {The interfacial internal waves are formed at the pycnocline or thermocline in the ocean and are influenced by the Coriolis force due to the Earth's rotation. A derivation of the model equations for the internal wave propagation taking into account the Coriolis effect is proposed. It is based on the Hamiltonian formulation of the internal wave dynamics in the irrotational case, appropriately extended to a \{\textbackslash it nearly\} Hamiltonian formulation which incorporates the Coriolis forces. Two propagation regimes are examined, the long-wave and the intermediate long-wave propagation with a small amplitude approximation for certain geophysical scales of the physical variables. The obtained models are of the type of the well-known Ostrovsky equation and describe the wave propagation over the two spatial horizontal dimensions of the ocean surface.},
-  keywords = {Nonlinear Sciences - Pattern Formation and Solitons,Physics - Fluid Dynamics,Primary: 35Q35 76B55 Secondary 35Q86 37K10}
+@article{KumarR.etal:2024,
+  title = {A primer on eigenvalue problems of non-self-adjoint operators},
+  author = {Kumar, Rakesh and Hiremath, Kirankumar R. and Manzetti, Sergio},
+  date = {2024-03-04},
+  journaltitle = {Analysis and Mathematical Physics},
+  shortjournal = {Anal. Math. Phys.},
+  volume = {14},
+  number = {2},
+  pages = {21},
+  doi = {10.1007/s13324-024-00881-7},
+  url = {https://doi.org/10.1007/s13324-024-00881-7},
+  urldate = {2024-10-22},
+  language = {en},
+  keywords = {Complex eigenvalues,Finite number of eigenvalues,Non-self-adjoint operators,Pseudospectra}
 }
-% == BibLaTeX quality report for CullenJ.IvanovR:2022:
-% 'issn': not a valid ISSN
-% ? unused Journal abbr ("ABCXYZ")
+% == BibLaTeX quality report for KumarR.etal:2024:
+% ? unused ISSN ("1664-235X")
+% ? unused Library catalog ("Springer Link")
