@@ -521,6 +521,8 @@ export class Entry {
    *   ignored)
    */
   public add(field: Field): string {
+    if (!field.name) return null
+
     if (this.translation.collected.preferences.testing && !this.inPostscript && field.name !== field.name.toLowerCase()) {
       throw new Error(`Do not add mixed-case field ${ field.name }`)
     }
