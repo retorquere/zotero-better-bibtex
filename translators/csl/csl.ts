@@ -70,8 +70,6 @@ export abstract class CSLExporter {
         item.accessDate = item.accessDate.replace(/T?[0-9]{2}:[0-9]{2}:[0-9]{2}.*/, '').trim()
       }
 
-      item.journalAbbreviation = item.journalAbbreviation || item.autoJournalAbbreviation
-
       let csl = Zotero.Utilities.Item.itemToCSLJSON(item)
 
       // #3327
