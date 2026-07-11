@@ -290,6 +290,8 @@ journalAbbreviation:
   affects:
     - Better BibLaTeX
     - Better BibTeX
+    - Better CSL JSON
+    - Better CSL YAML
 
 autoExportIdleWait:
   description: >-
