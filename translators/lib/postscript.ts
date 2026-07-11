@@ -14,6 +14,10 @@ export function postscript(kind: 'csl' | 'tex', main: string, guard?: string): P
     // aliases for backwards compat
     const item = source;
     const zotero = source;
+    const BBT = Translator.BetterBibTeX
+    const BBLT = Translator.BetterBibLaTeX
+    const BT = Translator.BetterTeX
+    const CSL = Translator.BetterCSL
 
     const reference = target;
     const entry = target;
