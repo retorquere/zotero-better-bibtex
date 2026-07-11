@@ -7,14 +7,14 @@
     },
     "preferences": {
       "asciiBibLaTeX": true,
-      "autoAbbrev": true,
       "autoExportDelay": 2,
       "baseAttachmentPath": "/Users/furue/Dropbox/doc/papers",
       "citekeyFormat": "authEtal2(initials=true).capitalize+\":\"+year",
       "exportTitlecase": "off",
       "extraMergeCSL": true,
       "qualityReport": true,
-      "verbatimFields": "url,doi,file,eprint,verba,verbb,verbc,groups"
+      "verbatimFields": "url,doi,file,eprint,verba,verbb,verbc,groups",
+      "journalAbbreviation": "abbrev+auto"
     }
   },
   "items": [

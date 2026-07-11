@@ -6,7 +6,6 @@
       "ascii": "",
       "asciiBibLaTeX": false,
       "asciiBibTeX": true,
-      "autoAbbrev": false,
       "autoExport": "immediate",
       "autoExportDelay": 5,
       "autoExportIdleWait": 10,
@@ -89,7 +88,8 @@
       "stringsOverride": "",
       "verbatimFields": "url,doi,file,pdf,ids,eprint,/^verb[a-z]$/,groups,/^citeulike-linkout-[0-9]+$/, /^bdsk-url-[0-9]+$/, keywords",
       "warnBulkModify": 10,
-      "warnTitleCased": false
+      "warnTitleCased": false,
+      "journalAbbreviation": "auto"
     },
     "options": {
       "Items": true,

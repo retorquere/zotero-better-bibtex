@@ -9,13 +9,13 @@
     "preferences": {
       "DOIandURL": "doi",
       "asciiBibLaTeX": true,
-      "autoAbbrev": true,
       "autoAbbrevStyle": "http://www.zotero.org/styles/cell",
       "citekeyFold": false,
       "citekeyFormat": "auth(n=0,m=1,creator=\"*\",initials=false).fold.lower + year + veryshorttitle.lower",
       "itemObserverDelay": 100,
       "keyConflictPolicy": "change",
-      "skipFields": "extra,note,file,timestamp,abstract,urldate"
+      "skipFields": "extra,note,file,timestamp,abstract,urldate",
+      "journalAbbreviation": "abbrev+auto"
     }
   },
   "items": [

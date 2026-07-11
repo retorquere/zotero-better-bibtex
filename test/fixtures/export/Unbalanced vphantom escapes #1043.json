@@ -8,13 +8,13 @@
     },
     "preferences": {
       "asciiBibLaTeX": true,
-      "autoAbbrev": true,
       "autoAbbrevStyle": "http://www.zotero.org/styles/vancouver",
       "citeCommand": "citep",
       "citekeyFormat": "auth(n=0,m=1,creator=\"*\",initials=false).fold.lower + year",
       "itemObserverDelay": 100,
       "keyConflictPolicy": "change",
-      "mapMath": "→"
+      "mapMath": "→",
+      "journalAbbreviation": "abbrev+auto"
     }
   },
   "items": [
