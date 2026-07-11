@@ -144,6 +144,20 @@ export const Preference = new class PreferenceManager extends PreferenceManagerB
       Zotero.Prefs.set(key, defaults.autoExportDelay)
     }
 
+    const oldAutoAbbrevKey = 'translators.better-bibtex.autoAbbrev'
+    const journalAbbreviationKey = 'translators.better-bibtex.journalAbbreviation'
+    const oldAutoAbbrev = Zotero.Prefs.get(oldAutoAbbrevKey)
+    const journalAbbreviation = Zotero.Prefs.get(journalAbbreviationKey)
+    if (typeof journalAbbreviation === 'undefined') {
+      if (typeof oldAutoAbbrev === 'boolean') {
+        Zotero.Prefs.set(journalAbbreviationKey, oldAutoAbbrev ? 'abbrev+auto' : 'auto')
+      }
+      else if (typeof oldAutoAbbrev === 'string' && ['abbrev', 'auto', 'abbrev+auto'].includes(oldAutoAbbrev)) {
+        Zotero.Prefs.set(journalAbbreviationKey, oldAutoAbbrev)
+      }
+    }
+    Zotero.Prefs.clear(oldAutoAbbrevKey)
+
     Zotero.Prefs.clear('translators.better-bibtex.worker')
     Zotero.Prefs.clear('translators.better-bibtex.workersCache')
     Zotero.Prefs.clear('translators.better-bibtex.workersMax')

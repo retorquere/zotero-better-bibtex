@@ -280,17 +280,16 @@ strings:
     - Better BibLaTeX
     - Better BibTeX
 
-autoAbbrev:
+journalAbbreviation:
   description: >-
-    If set, generates journal abbreviations on export using the Zotero journal
-    abbreviator, according to the abbreviation style selected in the list below
-    the checkbox.
-  default: false
+    Journal abbreviation behavior for BibTeX/BibLaTeX exports:
+    `abbrev` always uses the explicit abbreviation field,
+    `auto` always uses the Zotero auto-abbreviation,
+    `abbrev+auto` prefers the explicit abbreviation and falls back to auto-abbreviation.
+  default: abbrev
   affects:
     - Better BibLaTeX
     - Better BibTeX
-    - Better CSL JSON
-    - Better CSL YAML
 
 autoExportIdleWait:
   description: >-

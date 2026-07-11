@@ -311,7 +311,7 @@ const main = async () => {
       styles: {
         '!!str': 'block'
       }
-    });
+    }))
     execSync(`git add "${source}"`, { cwd: root, stdio: 'inherit' })
 
     const target = `${fixture}${argv.export ? Translator.ext : '.bib'}`

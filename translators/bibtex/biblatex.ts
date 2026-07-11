@@ -399,7 +399,13 @@ export function generateBibLaTeX(collected: Collected): Translation {
     }
     entry.add({ name: !number_added && looks_like_number_field(item.issue) ? 'number' : 'issue', value: entry.normalizeDashes(item.issue) })
 
-    const journalAbbreviation = item.journalAbbreviation || item.autoJournalAbbreviation
+    const autoJournalAbbreviation = item.autoJournalAbbreviation || ''
+    const journalAbbreviationMode = translation.collected.preferences.journalAbbreviation
+    const journalAbbreviation = {
+      abbrev: item.journalAbbreviation || '',
+      auto: autoJournalAbbreviation,
+      'abbrev+auto': item.journalAbbreviation || autoJournalAbbreviation,
+    }[journalAbbreviationMode] || (item.journalAbbreviation || autoJournalAbbreviation)
     switch (entry.entrytype) {
       case 'jurisdiction':
         entry.add({ name: 'journaltitle', value: item.reporter || (item.publicationTitle !== item.title && item.publicationTitle), bibtexStrings: true })
@@ -462,9 +468,10 @@ export function generateBibLaTeX(collected: Collected): Translation {
       itemType: item.itemType,
       entrytype: entry.entrytype,
       useJournalAbbreviation: translation.collected.displayOptions.useJournalAbbreviation,
+      journalAbbreviationMode,
       publicationTitle: item.publicationTitle || null,
       journalAbbreviation: item.journalAbbreviation || null,
-      autoJournalAbbreviation: item.autoJournalAbbreviation || null,
+      autoJournalAbbreviation: autoJournalAbbreviation || null,
       resolvedJournalAbbreviation: journalAbbreviation || null,
       journaltitle: entry.has.journaltitle?.value || null,
       shortjournal: entry.has.shortjournal?.value || null,
