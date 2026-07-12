@@ -181,11 +181,11 @@ better-bibtex_preferences_advanced_tab_strings = @string definitions
 
 better-bibtex_preferences_auto-abbrev = Journal abbreviation mode (BibTeX/BibLaTeX)
 better-bibtex_preferences_auto-abbrev_abbrev =
-  .label = abbrev: always use the explicit abbreviation field
+  .label = always use the Zotero abbreviation field
 better-bibtex_preferences_auto-abbrev_auto =
-  .label = auto: always use the auto-abbreviated value
+  .label = always use the auto-abbreviated value
 better-bibtex_preferences_auto-abbrev_abbrev-plus-auto =
-  .label = abbrev+auto: use explicit abbreviation, fallback to auto-abbreviation
+  .label = use Zotero abbreviation field, fallback to auto-abbreviation
 
 better-bibtex_collection-menu_auto-export =
   .label = Automatic export
