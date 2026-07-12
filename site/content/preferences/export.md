@@ -90,15 +90,15 @@ If there are some fields you don't want in your bibtex files (such as `note` for
 
 ### Journal abbreviation mode (BibTeX/BibLaTeX)
 
-default: `abbrev: always use the explicit abbreviation field`
+default: `always use the Zotero abbreviation field`
 
 Journal abbreviation behavior for BibTeX/BibLaTeX exports: `abbrev` always uses the explicit abbreviation field, `auto` always uses the Zotero auto-abbreviation, `abbrev+auto` prefers the explicit abbreviation and falls back to auto-abbreviation.
 
 Options:
 
-* abbrev: always use the explicit abbreviation field
-* auto: always use the auto-abbreviated value
-* abbrev+auto: use explicit abbreviation, fallback to auto-abbreviation
+* always use the Zotero abbreviation field
+* always use the auto-abbreviated value
+* use Zotero abbreviation field, fallback to auto-abbreviation
 
 
 ### BibTeX/BibLaTeX

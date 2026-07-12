@@ -583,6 +583,10 @@ Feature: Export
     And I import 1 reference from "export/*.json"
     Then an export using "Better BibTeX" with useJournalAbbreviation on should match "export/*.bibtex"
 
+  Scenario: Option to ignore the Journal Abbr field #3451
+    When I import 1 reference from "export/*.json"
+    Then an export using "Better BibTeX" with useJournalAbbreviation on should match "export/*.bibtex"
+
   @postscript @bbt
   Scenario: Export web page to misc type with notes and howpublished custom fields #329
     Given I import 3 references from "export/*.json"
