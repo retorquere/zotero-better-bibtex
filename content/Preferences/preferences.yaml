@@ -403,21 +403,6 @@ biblatexUsePrefix:
   affects:
     - Better BibLaTeX
 
-startupProgress:
-  description: >-
-    Zotero takes a few seconds to start up, which is sometimes mistakenly
-    attributed to BBT. BBT will tell you what phase the startup process is in
-    (of Zotero and BBT) to
-
-    prevent support requests for something that I cannot change. Please only use
-    values:
-
-
-    * `popup`: show a popup during startup
-
-    * `progressbar`: show a progressbar in the top of the frame
-  default: popup
-
 importUnknownTexCommand:
   description: >
     What to do when encountering a TeX command the parser does not know about.

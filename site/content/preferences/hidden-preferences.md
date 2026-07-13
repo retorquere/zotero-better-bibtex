@@ -222,15 +222,6 @@ Separator between author names. You will need to add `--namesep='|'` to your bib
 default: `a,ab,aboard,about,above,across,after,against,al,along,amid,among,an,and,anti,around,as,at,before,behind,below,beneath,beside,besides,between,beyond,but,by,d,da,das,de,del,dell,dello,dei,degli,della,dell,delle,dem,den,der,des,despite,die,do,down,du,during,ein,eine,einem,einen,einer,eines,el,en,et,except,for,from,gli,i,il,in,inside,into,is,l,la,las,le,les,like,lo,los,near,nor,of,off,on,onto,or,over,past,per,plus,round,save,since,so,some,sur,than,the,through,to,toward,towards,un,una,unas,under,underneath,une,unlike,uno,unos,until,up,upon,versus,via,von,while,with,within,without,yet,zu,zum`
 
 list of words to skip in title when generating citation keys
-## startupProgress
-
-default: `popup`
-
-Zotero takes a few seconds to start up, which is sometimes mistakenly attributed to BBT. BBT will tell you what phase the startup process is in (of Zotero and BBT) to
-prevent support requests for something that I cannot change. Please only use values:
-
-* `popup`: show a popup during startup
-* `progressbar`: show a progressbar in the top of the frame
 ## strings
 
 default: `<not set>`
