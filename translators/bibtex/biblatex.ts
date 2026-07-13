@@ -398,7 +398,11 @@ export function generateBibLaTeX(collected: Collected): Translation {
     }
     entry.add({ name: !number_added && looks_like_number_field(item.issue) ? 'number' : 'issue', value: entry.normalizeDashes(item.issue) })
 
-    const journalAbbreviation = item.journalAbbreviation || item.autoJournalAbbreviation
+    const journalAbbreviation = {
+      abbrev: item.journalAbbreviation,
+      auto: item.autoJournalAbbreviation,
+      'abbrev+auto': item.journalAbbreviation || item.autoJournalAbbreviation,
+    }[translation.collected.preferences.journalAbbreviation] || ''
     switch (entry.entrytype) {
       case 'jurisdiction':
         entry.add({ name: 'journaltitle', value: item.reporter || (item.publicationTitle !== item.title && item.publicationTitle), bibtexStrings: true })

@@ -1,0 +1,18 @@
+@article{KumarR.etal:2024,
+  title = {A primer on eigenvalue problems of non-self-adjoint operators},
+  author = {Kumar, Rakesh and Hiremath, Kirankumar R. and Manzetti, Sergio},
+  date = {2024-03-04},
+  journaltitle = {Analysis and Mathematical Physics},
+  shortjournal = {Anal. Math. Phys.},
+  volume = {14},
+  number = {2},
+  pages = {21},
+  doi = {10.1007/s13324-024-00881-7},
+  url = {https://doi.org/10.1007/s13324-024-00881-7},
+  urldate = {2024-10-22},
+  language = {en},
+  keywords = {Complex eigenvalues,Finite number of eigenvalues,Non-self-adjoint operators,Pseudospectra}
+}
+% == BibLaTeX quality report for KumarR.etal:2024:
+% ? unused ISSN ("1664-235X")
+% ? unused Library catalog ("Springer Link")

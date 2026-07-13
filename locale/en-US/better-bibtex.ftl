@@ -179,8 +179,13 @@ better-bibtex_preferences_advanced_tab_postscript = postscript
 
 better-bibtex_preferences_advanced_tab_strings = @string definitions
 
-better-bibtex_preferences_auto-abbrev = 
-  .label = Automatically abbreviate journal title if none is set explicitly
+better-bibtex_preferences_auto-abbrev = Journal abbreviation mode (BibTeX/BibLaTeX)
+better-bibtex_preferences_auto-abbrev_abbrev =
+  .label = always use the Zotero abbreviation field
+better-bibtex_preferences_auto-abbrev_auto =
+  .label = always use the auto-abbreviated value
+better-bibtex_preferences_auto-abbrev_abbrev-plus-auto =
+  .label = use Zotero abbreviation field, fallback to auto-abbreviation
 
 better-bibtex_collection-menu_auto-export =
   .label = Automatic export

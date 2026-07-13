@@ -82,6 +82,19 @@ default: `<not set>`
 If there are some fields you don't want in your bibtex files (such as `note` for example), add a list of them here, separated by comma's.
 
 
+### Journal abbreviation mode (BibTeX/BibLaTeX)
+
+default: `always use the Zotero abbreviation field`
+
+Journal abbreviation behavior for BibTeX/BibLaTeX exports: `abbrev` always uses the explicit abbreviation field, `auto` always uses the Zotero auto-abbreviation, `abbrev+auto` prefers the explicit abbreviation and falls back to auto-abbreviation.
+
+Options:
+
+* always use the Zotero abbreviation field
+* always use the auto-abbreviated value
+* use Zotero abbreviation field, fallback to auto-abbreviation
+
+
 ### BibTeX/BibLaTeX
 
 #### Export language as
@@ -203,13 +216,6 @@ To find out what an item looks like inside the template, export some items as Be
 ## postscript
 
 ## Miscellaneous
-
-### Automatically abbreviate journal title if none is set explicitly
-
-default: `no`
-
-If set, generates journal abbreviations on export using the Zotero journal abbreviator, according to the abbreviation style selected in the list below the checkbox.
-
 
 ### Sort TeX/CSL output (useful if you use version control on the output):
 

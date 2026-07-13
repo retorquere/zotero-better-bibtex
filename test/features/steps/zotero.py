@@ -278,9 +278,9 @@ class Library:
         self.path = self.base[:-len(self.ext)] + '.' + self.patch.split('.')[-2] + self.ext
 
     if not self.body and self.base:
-      # BetterBibTeX JSON compatibility fallback:
-      # if expected .json is missing, silently read sibling .yaml instead.
-      if not os.path.exists(self.base) and translator == 'BetterBibTeX JSON' and self.base.endswith('.json'):
+      # Compatibility fallback: if expected .json is missing, silently read
+      # sibling .yaml instead.
+      if not os.path.exists(self.base) and self.base.endswith('.json'):
         yaml_fallback = self.base[:-len('.json')] + '.yaml'
         if os.path.exists(yaml_fallback):
           self.source = yaml_fallback

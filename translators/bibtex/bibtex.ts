@@ -451,7 +451,11 @@ export function generateBibTeX(collected: Collected): Translation {
     if (![ 'book', 'inbook', 'incollection', 'proceedings', 'inproceedings' ].includes(ref.entrytype) || !ref.has.volume) ref.add({ name: 'number', value: item.number || item.issue || item.seriesNumber })
     ref.add({ name: 'urldate', value: item.accessDate && item.accessDate.replace(/\s*T?\d+:\d+:\d+.*/, '') })
 
-    const journalAbbreviation = translation.collected.displayOptions.useJournalAbbreviation && (item.journalAbbreviation || item.autoJournalAbbreviation)
+    const journalAbbreviation = (translation.collected.displayOptions.useJournalAbbreviation && {
+      abbrev: item.journalAbbreviation,
+      auto: item.autoJournalAbbreviation,
+      'abbrev+auto': item.journalAbbreviation || item.autoJournalAbbreviation,
+    }[translation.collected.preferences.journalAbbreviation]) || ''
     if (ref.entrytype_source === 'zotero.conferencePaper') {
       ref.add({ name: 'booktitle', value: journalAbbreviation || item.publicationTitle || item.conferenceName, bibtexStrings: true })
     }
@@ -464,6 +468,21 @@ export function generateBibTeX(collected: Collected): Translation {
     else {
       ref.add({ name: 'journal', value: journalAbbreviation || item.publicationTitle, bibtexStrings: true })
     }
+
+    log.info('bibtex journal resolution:', {
+      itemID: item.itemID,
+      itemKey: item.itemKey,
+      itemType: item.itemType,
+      entrytype: ref.entrytype,
+      entrytypeSource: ref.entrytype_source,
+      useJournalAbbreviation: translation.collected.displayOptions.useJournalAbbreviation,
+      publicationTitle: item.publicationTitle || null,
+      journalAbbreviation: item.journalAbbreviation || null,
+      autoJournalAbbreviation: item.autoJournalAbbreviation || null,
+      resolvedJournalAbbreviation: journalAbbreviation || null,
+      journal: ref.has.journal?.value || null,
+      booktitle: ref.has.booktitle?.value || null,
+    })
 
     let reftype = ref.entrytype_source.split('.')[1]
     if (reftype.endsWith('thesis')) reftype = 'thesis' // # 1965

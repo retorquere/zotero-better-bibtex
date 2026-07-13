@@ -12,6 +12,7 @@ Feature: Export
 
     Examples:
       | file                                                                                                                     | references |
+      | Option to ignore the Journal Abbr field #3451                                                                            | 1          |
       | Problems with Casing of Series Field with Non-English Series Titles #3539                                                | 3          |
       | Unrecognized date crashes export #3533                                                                                   | 1          |
       | Better control of citation key capitalization #3492                                                                      | 1          |
@@ -582,6 +583,10 @@ Feature: Export
     And I import 1 reference from "export/*.json"
     Then an export using "Better BibTeX" with useJournalAbbreviation on should match "export/*.bibtex"
 
+  Scenario: Option to ignore the Journal Abbr field #3451
+    When I import 1 reference from "export/*.json"
+    Then an export using "Better BibTeX" with useJournalAbbreviation on should match "export/*.bibtex"
+
   @postscript @bbt
   Scenario: Export web page to misc type with notes and howpublished custom fields #329
     Given I import 3 references from "export/*.json"
@@ -924,4 +929,3 @@ Feature: Export
     When I restart Zotero with "readonly"
     And I select the library named "Open Data Citation for Social Science and Humanities"
     Then an export using "Better BibLaTeX" should match "export/*.biblatex"
-
