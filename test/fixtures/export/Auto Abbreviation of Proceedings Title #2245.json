@@ -7,9 +7,9 @@
       "worker": true
     },
     "preferences": {
-      "autoAbbrev": true,
       "exportTitlecase": "off",
-      "skipFields": "abstract,file,month,day,keywords,copyright"
+      "skipFields": "abstract,file,month,day,keywords,copyright",
+      "journalAbbreviation": "abbrev+auto"
     }
   },
   "items": [

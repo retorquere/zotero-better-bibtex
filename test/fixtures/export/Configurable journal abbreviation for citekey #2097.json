@@ -7,14 +7,14 @@
       "exportNotes": true
     },
     "preferences": {
-      "autoAbbrev": true,
       "citekeyFormat": "auth(n=0,m=1,creator=\"*\",initials=false).fold.lower + shorttitle(3,3) + \".\" + journal(auto) + year",
       "extraMergeCSL": true,
       "extraMergeCitekeys": true,
       "extraMergeTeX": true,
       "quickCopyMode": "pandoc",
       "quickCopyPandocBrackets": true,
-      "verbatimFields": "url,doi,file,eprint,verba,verbb,verbc"
+      "verbatimFields": "url,doi,file,eprint,verba,verbb,verbc",
+      "journalAbbreviation": "abbrev+auto"
     }
   },
   "items": [

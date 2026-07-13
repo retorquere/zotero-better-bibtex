@@ -7,7 +7,6 @@
       "exportNotes": true
     },
     "preferences": {
-      "autoAbbrev": true,
       "autoExport": "idle",
       "autoExportDelay": 7,
       "bibtexURL": "url",
@@ -18,7 +17,8 @@
       "postscript": "Zotero.debug('date === ' + JSON.stringify(reference.date)); if (Translator.BetterBibTeX && reference.date.type === 'season') { reference.add({ name: 'month', value: ['', 'spring', 'summer', 'fall', 'winter'][reference.date.season] }) }",
       "qualityReport": true,
       "quickCopyMode": "citekeys",
-      "skipFields": "abstract,lccn,keywords,file,annotation,call-number"
+      "skipFields": "abstract,lccn,keywords,file,annotation,call-number",
+      "journalAbbreviation": "abbrev+auto"
     }
   },
   "items": [
