@@ -423,6 +423,15 @@ This biblatex has a new (less ambiguous) way to store creator names. It&rsquo;s 
 <h3 id="fields-to-omit-from-export-comma-separated">Fields to omit from export (comma-separated)<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h3>
 <p>default: <code>&lt;not set&gt;</code></p>
 <p>If there are some fields you don&rsquo;t want in your bibtex files (such as <code>note</code> for example), add a list of them here, separated by comma&rsquo;s.</p>
+<h3 id="journal-abbreviation-mode-bibtexbiblatex">Journal abbreviation mode (BibTeX/BibLaTeX)<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h3>
+<p>default: <code>always use the Zotero abbreviation field</code></p>
+<p>Journal abbreviation behavior for BibTeX/BibLaTeX exports: <code>abbrev</code> always uses the explicit abbreviation field, <code>auto</code> always uses the Zotero auto-abbreviation, <code>abbrev+auto</code> prefers the explicit abbreviation and falls back to auto-abbreviation.</p>
+<p>Options:</p>
+<ul>
+<li>always use the Zotero abbreviation field</li>
+<li>always use the auto-abbreviated value</li>
+<li>use Zotero abbreviation field, fallback to auto-abbreviation</li>
+</ul>
 <h3 id="bibtexbiblatex">BibTeX/BibLaTeX<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h3>
 <h4 id="export-language-as">Export language as<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h4>
 <p>default: <code>langid</code></p>
@@ -504,9 +513,6 @@ You can paste a <a href="https://eta.js.org/" rel="external">Eta</a> template he
 To find out what an item looks like inside the template, export some items as BetterBibTeX JSON.</p>
 <h2 id="postscript">postscript<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h2>
 <h2 id="miscellaneous">Miscellaneous<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h2>
-<h3 id="automatically-abbreviate-journal-title-if-none-is-set-explicitly">Automatically abbreviate journal title if none is set explicitly<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h3>
-<p>default: <code>no</code></p>
-<p>If set, generates journal abbreviations on export using the Zotero journal abbreviator, according to the abbreviation style selected in the list below the checkbox.</p>
 <h3 id="sort-texcsl-output-useful-if-you-use-version-control-on-the-output">Sort TeX/CSL output (useful if you use version control on the output):<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h3>
 <p>default: <code>citation key (slower on very large libraries)</code></p>
 <p>BBT sorts the output for TeX and CSL exports to have the output be versioning-friendly.</p>
@@ -14793,8 +14799,8 @@ means a lot) so I can save up for a replacement a year or so down
 the line, head on over to <a href="https://www.patreon.com/retorquere" rel="external">Patreon</a>,
 but mind that Patreon takes a fairly large cut of what you give.</p>
 <p>Many, many thanks, also to the existing contributors &ndash; thanks to you I&rsquo;ve hit my first target and have been able to replace my trusty macbook air with a newer macbook pro which has much more breathing room.</p>
-<p><a href="#R-image-09bcaf07a7c53bdf5471c95add2a16b1" class="lightbox-link"><img alt="My github stats" class="lazy lightbox figure-image" loading="lazy" src="https://github-readme-stats.vercel.app/api?username=retorquere&show_icons=true&hide_border=true&theme=dark" style="height: auto;width: auto;"></a>
-<a href="javascript:history.back();" class="lightbox-back" id="R-image-09bcaf07a7c53bdf5471c95add2a16b1"><img alt="My github stats" class="lazy lightbox lightbox-image" loading="lazy" src="https://github-readme-stats.vercel.app/api?username=retorquere&show_icons=true&hide_border=true&theme=dark"></a></p>
+<p><a href="#R-image-504352af175d20893be6782875d9a1e7" class="lightbox-link"><img alt="My github stats" class="lazy lightbox figure-image" loading="lazy" src="https://github-readme-stats.vercel.app/api?username=retorquere&show_icons=true&hide_border=true&theme=dark" style="height: auto;width: auto;"></a>
+<a href="javascript:history.back();" class="lightbox-back" id="R-image-504352af175d20893be6782875d9a1e7"><img alt="My github stats" class="lazy lightbox lightbox-image" loading="lazy" src="https://github-readme-stats.vercel.app/api?username=retorquere&show_icons=true&hide_border=true&theme=dark"></a></p>
 <p>I prefer communicating via github issues, but for private information you can reach me on <a href="https://matrix.to/#/@retorquere:utwente.io" rel="external">matrix</a></p>
 
   <footer class="footline">
