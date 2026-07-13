@@ -39,7 +39,6 @@ export function generateBBTJSON(collected: Collected): Translation {
   delete preferences.testing
   delete preferences.platform
   delete preferences.logEvents
-  delete preferences.scrubDatabase
 
   const data = {
     config: {

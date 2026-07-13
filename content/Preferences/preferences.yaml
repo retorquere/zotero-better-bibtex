@@ -1,33 +1,27 @@
 language:
-  description: >
-    Export either langid, language or both fields based on the item language (if
-    any).
+  description: >-
+    Export either langid, language or both fields based on the item language (if any).
   default: langid
   affects:
     - Better BibLaTeX
     - Better BibTeX
 
 DOIandURL:
-  description: >
+  description: >-
     Does what it says on the tin, really. If an item has both a DOI and an URL,
     you can choose to have them both exported, or either one of them. Note that
-    for BibTeX,
-
-    you must load the `url` package when you have `doi` or `url` fields. `doi`
+    for BibTeX, you must load the `url` package when you have `doi` or `url` fields. `doi`
     and `url` fields are so-called `verbatim` fields with different escaping
-    rules, and
-
-    BibTeX compilation will likely error out without the package loaded.
+    rules, and BibTeX compilation will likely error out without the package loaded.
   default: both
   affects:
     - Better BibLaTeX
     - Better BibTeX
 
 automaticTags:
-  description: >
+  description: >-
     Some importers or Zotero extensions (such as the ShortDOI manager for
     example) create tags on items that are more for item management than that
-
     they are descriptive of the item. When this is off, such tags will not be
     included in the export.
   default: true
@@ -38,10 +32,9 @@ automaticTags:
     - Better CSL YAML
 
 asciiBibLaTeX:
-  description: >
+  description: >-
     BibLaTeX actually has really good Unicode support, so you generally want
     this off. But for some geezers such as me it is
-
     simply more pleasing to have things like accented characters translated to
     their equivalent LaTeX constructs on export.
   default: false
@@ -49,41 +42,30 @@ asciiBibLaTeX:
     - Better BibLaTeX
 
 asciiBibTeX:
-  description: >
+  description: >-
     BibTeX has really spotty Unicode support, so you generally want this on. It
     will translate things like accented characters
-
     to their equivalent LaTeX constructs on export.
   default: true
   affects:
     - Better BibTeX
 
 autoExport:
-  description: >
+  description: >-
     Determines when [automatic exports]({{ ref . "exporting" }}) are kicked off.
-    Having it disabled still marks
-
-    auto-exports as needing updates, so when you re-enable it, those exports
-    will start. On-change means exports
-
-    happen whenever an item in the export changes/is added/is removed. On idle
-    does more or less what
-
-    `Disabled` (that is, no exports but mark as needing changes), but will kick
-    off exports when your computer is
-
-    idle. You mostly want this if your computer is performance-constrained (aka
+    Having it disabled still marks auto-exports as needing updates, so when you re-enable it, those exports
+    will start. On-change means exports happen whenever an item in the export changes/is added/is removed. On idle
+    does more or less what `Disabled` (that is, no exports but mark as needing changes), but will kick
+    off exports when your computer is idle. You mostly want this if your computer is performance-constrained (aka
     slow).
   default: immediate
 
 quickCopyMode:
-  description: >
+  description: >-
     Used for drag-and-drop/quick copy using Better BibTeX citation keys. In the
     Zotero "Export" pane, choose `Better BibTeX Quick Copy`
-
     as the default export format for quick copy, and choose the desired format
     for the drag-and-drop citations here.
-
 
     In the case of Eta templates, the selected items are available as
     `it.items`. `&lt;%= JSON.stringify(it.items) %&gt;` will show you the
@@ -91,23 +73,21 @@ quickCopyMode:
   default: latex
 
 citeCommand:
-  description: >
+  description: >-
     Used for drag-and-drop/quick copy citations in `LaTeX` format. Set the
     desired LaTeX citation command here. If you set this to `citep`,
-
     drag-and-drop citations will yield `\citep{key1,key2,...}`
   default: cite
 
 quickCopyPandocBrackets:
-  description: >
+  description: >-
     Used for drag-and-drop/quick copy citations in `Pandoc` format. You can use
     this option to select whether you want
-
     to have these pandoc citations surrounded with brackets or not.
   default: false
 
 quickCopyEta:
-  description: >
+  description: >-
     Used for drag-and-drop/quick copy citations in `Build your own` format. This
     is going to get pretty technical, sorry.
 
@@ -128,7 +108,7 @@ quickCopySelectLink:
   default: zotero
 
 citekeyFormat:
-  description: >
+  description: >-
     Set the pattern used to generate citation keys. The format of the keys is
     documented [here]({{ ref . "citing" }}).
 
@@ -145,39 +125,23 @@ citekeyUnsafeChars:
 
 citekeyCaseInsensitive:
   description: >-
-    Treat "AugusteComte" and "augustecomte" as the same key when testing for
-    uniqueness
+    Treat "AugusteComte" and "augustecomte" as the same key when testing for uniqueness
   default: true
 
 citekeyFold:
   description: >
     If you have deviated from the default citation key format pattern by
     [specifying your own]({{ ref . "citing" }}), you may
-
     wind up with non-ASCII characters in your citation keys. You can prevent
     that using the `fold` function at the
-
     appropriate place in your pattern, but checking this checkbox will just
     apply `fold` to all your keys.
   default: true
-
-#keyConflictPolicy:
-#  description: >
-#    This determines what happens if you fill a key to a value that is already in
-#    use in a different.
-#
-#    Neither are ideal, you just get to pick your poison. If you let BBT change
-#    the non-pinned key by adding a postfix character,
-#
-#    the citation key changes which could be problematic for existing papers. If
-#    you keep the non-pinned key as-is, your library now has duplicate keys.
-#  default: keep
 
 auxImport:
   description: >
     By default, when scanning for cited items in the aux file, BBT will just
     generate a note listing all citation keys it cannot find in Zotero.
-
     When this option is turned on, BBT will attempt to import such missing items
     from the bib file that the AUX file being scanned points to.
   default: false
@@ -203,7 +167,6 @@ exportBibTeXStrings:
     When enabled, BBT will try to retain @string vars its exports unsurrounded
     by braces; when set to 'detect', single-word strings will be assumed to be
     externally-defined @string vars,
-
     when set to 'match', only @strings declared in the @strings section of the
     preferences will be preserved. If you don't know what this means, leave it
     off.
@@ -251,10 +214,8 @@ warnBulkModify:
   description: >
     For those who are curious about what the `Clear/Generate BibTeX key`
     right-click options do, this will warn
-
     you if you are doing this on more than 10 (default) at the same time, to
     prevent your curiosity from changing
-
     all your citation keys at once.
   default: 10
 
@@ -302,7 +263,6 @@ csquotes:
   description: >
     if you set `csquotes` to a string of character pairs, each pair will be
     assumed to be the open and close parts of a pair and
-
     will be replaced with a `\\enquote{...}` construct.
   default: ''
   affects:
@@ -314,11 +274,9 @@ patchDates:
     Import translators cannot set the date-added and date-modified of the items
     that are imported, they always get the current time as their date-added. BBT
     will leave fields it can't map as
-
     `tex.[field]` in the `extra` field of the item. If you enter a list of
     comma-separated field mappings here, like `date-added = dateAdded,
     timestamp=dateModified`, BBT will offer a menu option
-
     to remove them from the `extra` field and set the corresponding date of the
     item to their values, assuming they can be parsed as simple dates (no circa
     and stuff).
@@ -356,9 +314,7 @@ verbatimFields:
     list of fields to treat as verbatim during import. If you're importing e.g.
     Mendeley-generated BibTeX, which is out of spec in various ways, try
     removing `file` from this list before import.
-  default: >-
-    url,doi,file,pdf,ids,eprint,/^verb[a-z]$/,groups,/^citeulike-linkout-[0-9]+$/,
-    /^bdsk-url-[0-9]+$/, keywords
+  default: url,doi,file,pdf,ids,eprint,/^verb[a-z]$/,groups,/^citeulike-linkout-[0-9]+$/,/^bdsk-url-[0-9]+$/, keywords
   affects:
     - Better BibLaTeX
     - Better BibTeX
@@ -367,9 +323,7 @@ qualityReport:
   description: >
     Generate quality reports for exported entries. These show up only in BibTeX
     and BibLaTeX report formats and indicate things like missing required fields
-    and
-
-    duplicate citation keys.
+    and duplicate citation keys.
   default: false
   affects:
     - Better BibLaTeX
@@ -387,12 +341,8 @@ biblatexExtendedNameFormat:
     BibLaTeX 3.5 or later.
 
     This biblatex has a new (less ambiguous) way to store creator names. It's
-    technically
-
-    superior, but the LaTeX world moves slowly, so many people won't have it
-    yet. But if you're an early adopter,
-
-    you can enable it here
+    technically superior, but the LaTeX world moves slowly, so many people won't have it
+    yet. But if you're an early adopter, you can enable it here
   default: true
   affects:
     - Better BibLaTeX
@@ -408,7 +358,6 @@ importUnknownTexCommand:
     What to do when encountering a TeX command the parser does not know about.
     Please only use values:
 
-
     * `ignore`: ignore the command entirely
 
     * `tex`: import and mark as TeX code, so on re-export it will be output
@@ -422,9 +371,7 @@ autoExportDelay:
   description: >
     If you have auto-exports set up, BBT will wait this many seconds before
     actually kicking off the exports to buffer multiple changes in quick
-    succession
-
-    setting off an unreasonable number of auto-exports. Minimum is 1 second.
+    succession setting off an unreasonable number of auto-exports. Minimum is 1 second.
     Changes to this preference take effect after restarting Zotero.
   default: 5
 
@@ -433,11 +380,9 @@ warnTitleCased:
     Both Zotero and BBT expect titles to be in sentence-case, but a lot of sites
     offer import data that is Title Cased. When exporting these titles to
     bib(la)tex you're going
-
     to get a lot of extra unwanted braces, because all these Title Cased words
     will look like proper nouns to BBTs own title-casing mechanism. When this
     setting is on, you will be warned
-
     when you import/save items in Zotero with titles that look like they're
     Title Cased, so that you can inspect/correct them.
   default: false
@@ -446,10 +391,8 @@ itemObserverDelay:
   description: >
     I've had reports where Zotero notifies extensions that items have changed,
     but if BBT then actually
-
     retrieves those same items, Zotero complains they "haven't been saved yet".
     Super. This preference sets
-
     the number of microseconds BBT should wait after being notified before
     acting on the changed items.
   default: 5
@@ -521,16 +464,12 @@ postscriptOverride:
   description: >
     You can use a custom postscript per export directory:
 
-
     1. Edit the hidden preference `extensions.zotero.translators.better-bibtex.postscriptOverride`, and set it to a filename
     like `postscript.js`
-
     2. In the directory where you intend to export to, create a file called
     `postscript.js` (or whatever you set the preference to) and add the
     postscript you want there
-
     3. Export to that directory.
-
 
     A postscript override will disable caching for that export.
   default: ''
@@ -538,7 +477,6 @@ postscriptOverride:
 preferencesOverride:
   description: >
     You can use custom preferences per export directory:
-
 
     1. Edit the hidden preference `extensions.zotero.translators.better-bibtex.preferencesOverride`, and set it to a
     filename like `preferences.json`
@@ -561,7 +499,6 @@ stringsOverride:
   description: >
     You can use a custom @string list per export directory:
 
-
     1. Edit the hidden preference `extensions.zotero.translators.better-bibtex.stringstOverride`, and set it to a filename
     like `strings.bib`
 
@@ -570,7 +507,6 @@ stringsOverride:
     declarations you want there
 
     3. Export to that directory.
-
 
     A strings override will disable caching for that export.
   default: ''
@@ -598,7 +534,6 @@ relativeFilePaths:
   description: >
     When exporting a Bib(La)TeX file, if the attachments are stored anywhere
     under the directory the bibliography is exported to, use relative paths
-
     to those attachments. Caching is disabled when this option is on, so it
     affects performance.
   default: false
@@ -614,10 +549,8 @@ cache:
   description: >
     Even though BBT exports happen in a separate thread, some work needs to be
     done before the background export can
-
     start. Part of this work is preloading the cache. You can shorten the
     (blocking) preparation time by turning off
-
     the cache, at the cost of longer export times.
   default: true
   affects:
@@ -649,11 +582,9 @@ charmap:
     a JSON mapping from single character to raw LaTeX, to augment the default
     mapping; these will be applied when you export as ASCII. **DO NOT** edit
     this preferencedirectly,
-
     but create a CSV (not semicolons) file named `charmap.csv` in the zotero
     data directory under the `better-bibtex` folder with columns `unicode` (the
     source character),
-
     `text` (representation in LaTeX text mode, if any) and `math`
     (representation in LaTeX math mode, if any, without dollar signs).
   default: ''
@@ -683,7 +614,6 @@ ascii:
   description: >
     If you have unicode turned on you can still selectively replace some
     characters to plain-text commands; any characters entered here will always
-
     be replaced by their LaTeX-command counterparts.
   default: ''
   affects:
@@ -694,12 +624,10 @@ packages:
   description: >
     Some LaTeX commands only work when certain packages are loaded. By default,
     BBT will export Bib(La)TeX that requires no extra packages, but
-
     you can provide a comma-separated list here of packages to load to get
     higher fidelity export (for some admittedly niche characters).
 
-    Details of these packages and what they add can be found [here]({{ ref .
-    "exporting/unicode.md" }}).
+    Details of these packages and what they add can be found [here]({{ ref . "exporting/unicode.md" }}).
   default: ''
   affects:
     - Better BibLaTeX
@@ -742,12 +670,10 @@ importCaseProtection:
     On import, BBT will add case-protection (&lt;span
     class="nocase"&gt;...&lt;span&gt;) to titles that have words in {Braces}.
 
-
     There's plenty of bib(la)tex files out there that do this a little
     overzealously, and you may not like the resulting HTML code in your items,
     even though this is what the braces mean in bib(la)tex, and Zotero supports
     it.
-
 
     If you turn this off, the markup is omitted during import. When you select
     'yes', all braces that bib(la)tex would interpret as case protection (which
@@ -798,11 +724,9 @@ importSentenceCase:
     Bib(La)TeX entries must be stored in Title Case; Zotero items are expected
     to be entered as sentence-case.
 
-
     With this option on, BBT will try to sentence-case during import. This
     sentence-casing uses heuristics, no natural language processing is
     performed, and the results are not perfect.
-
 
     You can turn this off, but you may then also want to disable `Apply
     title-casing to titles` (which has its own problems, see the help entry for
@@ -852,9 +776,6 @@ baseAttachmentPath:
     - Better BibTeX
     - Better CSL JSON
     - Better CSL YAML
-
-scrubDatabase:
-  default: false
 
 testing:
   default: false

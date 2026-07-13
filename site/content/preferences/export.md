@@ -14,9 +14,7 @@ aliases:
 
 default: `yes`
 
-BibTeX has really spotty Unicode support, so you generally want this on. It will translate things like accented characters
-to their equivalent LaTeX constructs on export.
-
+BibTeX has really spotty Unicode support, so you generally want this on. It will translate things like accented characters to their equivalent LaTeX constructs on export.
 
 
 ### Disregard name prefixes when sorting
@@ -56,9 +54,7 @@ Options:
 
 default: `no`
 
-BibLaTeX actually has really good Unicode support, so you generally want this off. But for some geezers such as me it is
-simply more pleasing to have things like accented characters translated to their equivalent LaTeX constructs on export.
-
+BibLaTeX actually has really good Unicode support, so you generally want this off. But for some geezers such as me it is simply more pleasing to have things like accented characters translated to their equivalent LaTeX constructs on export.
 
 
 ### Use BibLaTeX extended name format (requires biblatex 3.5)
@@ -66,9 +62,7 @@ simply more pleasing to have things like accented characters translated to their
 default: `yes`
 
 Use the extended biber 2.7 format for names with particles - only works in BibLaTeX 3.5 or later.
-This biblatex has a new (less ambiguous) way to store creator names. It's technically
-superior, but the LaTeX world moves slowly, so many people won't have it yet. But if you're an early adopter,
-you can enable it here
+This biblatex has a new (less ambiguous) way to store creator names. It's technically superior, but the LaTeX world moves slowly, so many people won't have it yet. But if you're an early adopter, you can enable it here
 
 
 
@@ -96,7 +90,6 @@ default: `langid`
 
 Export either langid, language or both fields based on the item language (if any).
 
-
 Options:
 
 * langid
@@ -108,10 +101,7 @@ Options:
 
 default: `both`
 
-Does what it says on the tin, really. If an item has both a DOI and an URL, you can choose to have them both exported, or either one of them. Note that for BibTeX,
-you must load the `url` package when you have `doi` or `url` fields. `doi` and `url` fields are so-called `verbatim` fields with different escaping rules, and
-BibTeX compilation will likely error out without the package loaded.
-
+Does what it says on the tin, really. If an item has both a DOI and an URL, you can choose to have them both exported, or either one of them. Note that for BibTeX, you must load the `url` package when you have `doi` or `url` fields. `doi` and `url` fields are so-called `verbatim` fields with different escaping rules, and BibTeX compilation will likely error out without the package loaded.
 
 Options:
 
@@ -142,11 +132,8 @@ Options:
 
 default: `LaTeX citation`
 
-Used for drag-and-drop/quick copy using Better BibTeX citation keys. In the Zotero "Export" pane, choose `Better BibTeX Quick Copy`
-as the default export format for quick copy, and choose the desired format for the drag-and-drop citations here.
-
+Used for drag-and-drop/quick copy using Better BibTeX citation keys. In the Zotero "Export" pane, choose `Better BibTeX Quick Copy` as the default export format for quick copy, and choose the desired format for the drag-and-drop citations here.
 In the case of Eta templates, the selected items are available as `it.items`. `&lt;%= JSON.stringify(it.items) %&gt;` will show you the available data on the items.
-
 
 Options:
 
@@ -170,18 +157,14 @@ Options:
 
 default: `cite`
 
-Used for drag-and-drop/quick copy citations in `LaTeX` format. Set the desired LaTeX citation command here. If you set this to `citep`,
-drag-and-drop citations will yield `\citep{key1,key2,...}`
-
+Used for drag-and-drop/quick copy citations in `LaTeX` format. Set the desired LaTeX citation command here. If you set this to `citep`, drag-and-drop citations will yield `\citep{key1,key2,...}`
 
 
 #### Surround Pandoc citations with brackets
 
 default: `no`
 
-Used for drag-and-drop/quick copy citations in `Pandoc` format. You can use this option to select whether you want
-to have these pandoc citations surrounded with brackets or not.
-
+Used for drag-and-drop/quick copy citations in `Pandoc` format. You can use this option to select whether you want to have these pandoc citations surrounded with brackets or not.
 
 
 #### Org-mode select link
@@ -217,7 +200,6 @@ You can paste a [Eta](https://eta.js.org/) template here. Inside the template, y
 To find out what an item looks like inside the template, export some items as BetterBibTeX JSON.
 
 
-
 ## postscript
 
 ## Miscellaneous
@@ -247,8 +229,7 @@ Options:
 
 default: `no`
 
-Generate quality reports for exported entries. These show up only in BibTeX and BibLaTeX report formats and indicate things like missing required fields and
-duplicate citation keys.
+Generate quality reports for exported entries. These show up only in BibTeX and BibLaTeX report formats and indicate things like missing required fields and duplicate citation keys.
 
 
 
@@ -256,9 +237,7 @@ duplicate citation keys.
 
 default: `yes`
 
-Some importers or Zotero extensions (such as the ShortDOI manager for example) create tags on items that are more for item management than that
-they are descriptive of the item. When this is off, such tags will not be included in the export.
-
+Some importers or Zotero extensions (such as the ShortDOI manager for example) create tags on items that are more for item management than that they are descriptive of the item. When this is off, such tags will not be included in the export.
 
 
 ### Apply title-casing to titles
@@ -281,9 +260,7 @@ If you're dead-set on ignoring both BibTeX/BibLaTeX best practice (see the BBT F
 
 default: `yes`
 
-Even though BBT exports happen in a separate thread, some work needs to be done before the background export can
-start. Part of this work is preloading the cache. You can shorten the (blocking) preparation time by turning off
-the cache, at the cost of longer export times.
+Even though BBT exports happen in a separate thread, some work needs to be done before the background export can start. Part of this work is preloading the cache. You can shorten the (blocking) preparation time by turning off the cache, at the cost of longer export times.
 
 
 
