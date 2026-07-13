@@ -60,7 +60,6 @@ references:
     given: Andrew N.J.
   collection-number: '33'
   collection-title: Toronto Medieval Latin Texts
-  event-place: Toronto
   issued:
   - year: 2016
   publisher: Pontifical Institute of Mediaeval Studies
@@ -83,7 +82,6 @@ references:
   editor:
   - family: Wordsworth
     given: John
-  event-place: Oxford
   issued:
   - year: 1883
   language: English

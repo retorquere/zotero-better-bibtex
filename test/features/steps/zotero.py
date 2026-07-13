@@ -27,6 +27,7 @@ import time
 import datetime
 import jsonschema
 import traceback
+from types import SimpleNamespace
 
 from collections import OrderedDict
 from collections.abc import MutableMapping
@@ -208,7 +209,7 @@ class Config:
 
   def update(self, **kwargs):
     for k, v in kwargs.items():
-      if not k in self.data[-1]: raise AttributeError(f"'{type(self)}' object has no attribute '{name}'")
+      if not k in self.data[-1]: raise AttributeError(f"'{type(self)}' object has no attribute '{k}'")
       if type(v) != type(self.data[-1][k]): raise ValueError(f'{type(self)}.{k} must be of type {self.data[-1][k]}')
       self.data[0][k] = v
 
@@ -227,11 +228,20 @@ class Config:
     return str(self.data)
 
 class Library:
-  def __init__(self, path=None, body=None, client=None, variant='', ext=None, name=None):
+  """Represents an input/export library fixture and its normalized comparison form.
+
+  The constructor resolves where content comes from (path/body), optionally applies
+  client-specific patches, parses by extension, and prepares normalized content used
+  by test assertions.
+  """
+
+  def __init__(self, path=None, body=None, client=None, variant='', ext=None, name=None, translator=None):
     show(f'Library.__init__({name})' if name else 'Library.__init__', locals())
     if path and not os.path.isabs(path):
       path = os.path.join(FIXTURES, path)
 
+    # Extension resolution priority:
+    # 1) explicit file path, 2) explicit ext argument, 3) unknown.
     if path:
       self.ext = self.suffix(path)
 
@@ -244,26 +254,40 @@ class Library:
       self.ext = None
 
     self.base = path
+    self.source = path
     self.body = body
     self.client = client
 
     self.data = None
+    self.parsed_as = None
     self.patch = None
     self.path = None
     self.exported = None
 
     if self.base:
+      # self.path is the expected output location, potentially rewritten when a
+      # fixture patch exists for this client/variant.
       self.path = self.base
 
+      # Prefer client+variant patch, then plain client patch.
       patches = [ self.base + '.' + client + variant + '.patch' ]
       if len(variant) > 0: patches.append(self.base + '.' + self.client + '.patch')
       self.patch = next((patch for patch in patches if os.path.exists(patch)), None)
       if self.patch:
+        # Preserve extension but switch fixture basename to the patched variant.
         self.path = self.base[:-len(self.ext)] + '.' + self.patch.split('.')[-2] + self.ext
 
     if not self.body and self.base:
-      assert os.path.exists(self.base), f'{json.dumps(self.base)} does not exist'
-      with open(self.base) as f:
+      # Compatibility fallback: if expected .json is missing, silently read
+      # sibling .yaml instead.
+      if not os.path.exists(self.base) and self.base.endswith('.json'):
+        yaml_fallback = self.base[:-len('.json')] + '.yaml'
+        if os.path.exists(yaml_fallback):
+          self.source = yaml_fallback
+
+      # Keep assertion message on original expected path for clearer failures.
+      assert os.path.exists(self.source), f'{json.dumps(self.base)} does not exist'
+      with open(self.source) as f:
         self.body = f.read()
 
     self.normalized = self.body
@@ -275,19 +299,38 @@ class Library:
     #  with open(self.base, 'w') as f:
     #    f.write(self.body)
 
+    # Data parsing/normalization strategy is selected by extension.
     if self.ext.endswith('.json') or self.ext == '.csl.yml':
       if self.ext.endswith('.json'):
-        try:
-          self.data = json.loads(self.body, object_pairs_hook=OrderedDict)
-        except:
-          raise ValueError(self.body)
+        # Parse as YAML when source was silently switched to .yaml, or when
+        # a .json fixture contains YAML content.
+        if self.source and self.source.endswith('.yaml'):
+          self.data = yaml.load(io.StringIO(self.body))
+          self.parsed_as = 'yaml'
+        else:
+          try:
+            self.data = json.loads(self.body, object_pairs_hook=OrderedDict)
+            self.parsed_as = 'json'
+          except:
+            # Keep fallback narrow: only accept parsed mappings/lists, which
+            # are the expected top-level structures for test fixtures.
+            parsed = yaml.load(io.StringIO(self.body))
+            if isinstance(parsed, (dict, list)):
+              self.data = parsed
+              self.parsed_as = 'yaml'
+            else:
+              raise ValueError(self.body)
       else:
+        # .csl.yml fixtures are always parsed as YAML.
         self.data = yaml.load(io.StringIO(self.body))
+        self.parsed_as = 'yaml'
 
       if self.patch:
+        # JSON patch mutates parsed data before normalization.
         self.data = jsonpatch.JsonPatch(json.load(f)).apply(self.data)
 
       if self.ext in ['.csl.json', '.csl.yml']:
+        # CSL exports are normalized as sorted item lists.
         self.data = sorted(self.data, key=lambda item: json.dumps(item, cls=CompactEncoder))
         self.normalized = json.dumps(self.data, cls=CompactEncoder)
 
@@ -298,20 +341,24 @@ class Library:
           self.normalized = normalized.getvalue()
 
       elif self.ext == '.json':
+        # BetterBibTeX JSON exports normalize preferences/items for stable diffs.
         if 'config' in self.data and 'preferences' in self.data['config']: self.data['config']['preferences'].pop('autoAbbrevStyle', None)
         self.data['items'] = sorted(self.data['items'], key=lambda item: json.dumps(item, cls=CompactEncoder))
         self.normalized = json.dumps(cleanlib(copy.deepcopy(self.data)), cls=CompactEncoder)
 
     elif self.ext in ['.biblatex', '.bibtex', '.bib']:
+      # BibTeX-family exports normalize through deterministic bib sorting.
       if self.patch:
         dmp = diff_match_patch()
         self.body = dmp.patch_apply(dmp.patch_fromText(open(self.patch).read()), self.body)[0]
       self.normalized = sortbib(self.body)
 
     elif self.ext == '.html':
+      # HTML exports normalize by stripping unstable formatting details.
       self.normalized = clean_html(self.body).strip()
 
   def suffix(self, path):
+    # Normalize recognized extension families and reject unsupported naming.
     suffixes = Path(path).suffixes
     if suffixes[-1] == '.yaml':
       raise ValueError(f'Use .yml, not .yaml, in {path}')
@@ -576,7 +623,7 @@ class Zotero:
 
     if expected is None: return
 
-    expected = Library(path=expected, client=self.client, variant=self.variant, name='expected')
+    expected = Library(path=expected, client=self.client, variant=self.variant, name='expected', translator=self.translators.byId[translator].label)
     found = Library(path=output, body=found, client=self.client, variant=self.variant, ext=expected, name='found')
     found.save(expected.path)
 
@@ -631,6 +678,17 @@ class Zotero:
 
     with tempfile.TemporaryDirectory() as d:
       references = input.path
+      converted = None
+
+      # If a .json fixture actually contains YAML, convert it to a temporary
+      # JSON file next to the original fixture so relative attachment paths keep
+      # resolving against the same directory.
+      if references.endswith('.json') and input.parsed_as == 'yaml':
+        with tempfile.NamedTemporaryFile(mode='w', suffix='.json', prefix=os.path.basename(references) + '.converted.', dir=os.path.dirname(references), delete=False) as f:
+          json.dump(input.data, f)
+          converted = f.name
+        references = converted
+
       if type(collection) is str:
         orig = references
         references = os.path.join(d, collection)
@@ -654,17 +712,21 @@ class Zotero:
 
       filename = references
       if not items: filename = None
-      return self.execute('''
-          const library = await Zotero.BetterBibTeX.TestSupport.importFile(filename, createNewCollection, preferences, bibliography)
-          await Zotero.BetterBibTeX.TestSupport.fill()
-          return library
-        ''',
-        filename = filename,
-        createNewCollection = (collection != False),
-        preferences = preferences,
-        localeDateOrder = localeDateOrder,
-        bibliography = bibliography
-      )
+      try:
+        return self.execute('''
+            const library = await Zotero.BetterBibTeX.TestSupport.importFile(filename, createNewCollection, preferences, bibliography)
+            await Zotero.BetterBibTeX.TestSupport.fill()
+            return library
+          ''',
+          filename = filename,
+          createNewCollection = (collection != False),
+          preferences = preferences,
+          localeDateOrder = localeDateOrder,
+          bibliography = bibliography
+        )
+      finally:
+        if converted and os.path.exists(converted):
+          os.remove(converted)
 
   def expand_expected(self, expected):
     base, ext = os.path.splitext(expected)
@@ -681,6 +743,33 @@ class Zotero:
       if os.path.exists(variant): return [variant, ext]
 
     return [None, None]
+
+  def install_db(self, profile, name, download=True):
+    utils.print(f'install_db: {name} download={download}')
+    dbs = os.path.join(ROOT, 'test', 'db', self.config.db)
+    if not os.path.exists(dbs): os.makedirs(dbs)
+
+    db = os.path.join(dbs, f'{name}.sqlite')
+
+    downloaded = False
+    if not os.path.exists(db):
+      if not download:
+        return False
+
+      url = f'https://github.com/retorquere/zotero-better-bibtex/releases/download/test-database/{self.config.db}.{name}.sqlite'
+      utils.print(f'downloading {url}')
+      response = requests.get(url, allow_redirects=True)
+      if response.status_code == 404:
+        return False
+      response.raise_for_status()
+
+      with open(db, 'wb') as f:
+        f.write(response.content)
+      downloaded = True
+
+    utils.print(f'copying {db}')
+    shutil.copy(db, os.path.join(profile.path, self.client, os.path.basename(db)))
+    return downloaded
 
   def create_profile(self):
     profile = Munch(
@@ -796,22 +885,9 @@ class Zotero:
     if self.config.db:
       self.needs_restart = True
       utils.print(f'restarting using {self.config.db}')
-      dbs = os.path.join(ROOT, 'test', 'db', self.config.db)
-      if not os.path.exists(dbs): os.makedirs(dbs)
 
-      db_zotero = os.path.join(dbs, f'{self.client}.sqlite')
-      db_zotero_alt = os.path.join(dbs, self.client, f'{self.client}.sqlite')
-      if not os.path.exists(db_zotero) and not os.path.exists(db_zotero_alt):
-        urllib.request.urlretrieve(f'https://github.com/retorquere/zotero-better-bibtex/releases/download/test-database/{self.config.db}.zotero.sqlite', db_zotero)
-      if not os.path.exists(db_zotero): db_zotero = db_zotero_alt
-      shutil.copy(db_zotero, os.path.join(profile.path, self.client, os.path.basename(db_zotero)))
-
-      db_bbt = os.path.join(dbs, 'better-bibtex.sqlite')
-      db_bbt_alt = os.path.join(dbs, self.client, 'better-bibtex.sqlite')
-      if not os.path.exists(db_bbt) and not os.path.exists(db_bbt_alt):
-        urllib.request.urlretrieve(f'https://github.com/retorquere/zotero-better-bibtex/releases/download/test-database/{self.config.db}.better-bibtex.sqlite', db_bbt)
-      if not os.path.exists(db_bbt): db_bbt = db_bbt_alt
-      shutil.copy(db_bbt, os.path.join(profile.path, self.client, os.path.basename(db_bbt)))
+      downloaded = self.install_db(profile, 'zotero')
+      self.install_db(profile, 'better-bibtex', downloaded)
 
       # remove any auto-exports that may exist
       # db = sqlite3.connect(os.path.join(profile.path, self.client, os.path.basename(db_bbt)))

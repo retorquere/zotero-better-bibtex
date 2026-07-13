@@ -4,10 +4,10 @@
     "label": "BetterBibTeX JSON",
     "localeDateOrder": "ymd",
     "preferences": {
-      "autoAbbrev": true,
       "bibtexURL": "note",
       "citekeyFormat": "auth(n=0,m=1,creator=\"*\",initials=false).fold + year",
-      "bibtexURLpackage": true
+      "bibtexURLpackage": true,
+      "journalAbbreviation": "abbrev+auto"
     }
   },
   "items": [

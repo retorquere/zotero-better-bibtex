@@ -1,5 +1,6 @@
 import * as client from './client'
 import { Path, File } from './file'
+import { binaries } from './path-search'
 
 import { Cache } from './translators/worker'
 import { regex as escapeRE } from './escape'
@@ -15,9 +16,9 @@ import { log } from './logger'
 import { AutoExport } from './auto-export'
 import { KeyManager } from './key-manager'
 
-import { FilePickerHelper } from 'zotero-plugin-toolkit'
-
 import * as UZip from 'uzip'
+
+const { FilePicker } = ChromeUtils.importESModule('chrome://zotero/content/modules/filePicker.mjs')
 
 const ENV = Components.classes['@mozilla.org/process/environment;1'].getService(Components.interfaces.nsIEnvironment)
 
@@ -151,11 +152,10 @@ class Upgrades {
     const zotero = async () => {
       show({ id: 'zotero' })
       try {
-        const release = client.isBeta ? 'beta' : 'release'
+        const channel = client.isBeta ? 'beta' : 'release'
+        const releases = JSON.parse((await Zotero.HTTP.request('GET', `https://www.zotero.org/download/client/version?channel=${channel}`, { noCache: true })).response)
         const platform = `${client.platform.replace(/lin/, 'linux')}${ { mac: '', win: '-x64', lin: '-x86_64' }[client.platform] || '' }`
-        this.zotero.upgrade = (await manifest(`https://www.zotero.org/download/client/manifests/${release}/updates-${platform}.json`))
-          .map(v => v.version as string)
-          .sort((a, b) => Services.vc.compare(b, a))[0] as string
+        this.zotero.upgrade = releases[platform]
         show(this.zotero)
       }
       catch (err) {
@@ -266,7 +266,14 @@ export class ErrorReport {
   }
 
   public async save(): Promise<void> {
-    const filename = await new FilePickerHelper('Logs', 'save', [[ 'Zip Archive (*.zip)', '*.zip' ]], `${this.name()}.zip`).open()
+    const fp = new FilePicker
+    fp.init(Zotero.getMainWindow(), 'Logs', fp.modeSave)
+    fp.defaultExtension = 'zip'
+    fp.defaultString = `${this.name()}.zip`
+    fp.appendFilter('Zip Archive (*.zip)', '*.zip')
+
+    const rv = await fp.show()
+    const filename = rv === fp.returnOK || rv === fp.returnReplace ? fp.file || '' : ''
     if (filename) await IOUtils.write(filename, this.zip(), { tmpPath: filename + '.tmp' })
   }
 
@@ -305,9 +312,11 @@ export class ErrorReport {
       /protocol is not allowed for attachments/,
     ].map(re => re.source).join('|'))
 
-    return logging.filter(line => !line.match(ignore))
-      .map(line => line.replace($home, '$HOME'))
-      .join('\n')
+    return this.unhome(logging.filter(line => !line.match(ignore)).join('\n'))
+  }
+
+  private unhome(logging: string): string {
+    return logging.replace($home, '$HOME')
   }
 
   private errors(): string {
@@ -539,6 +548,8 @@ export class ErrorReport {
     context += 'Settings:\n'
     const settings = { default: '', set: '' }
     for (const [ key, value ] of Object.entries(Preference.all)) {
+      if (key === 'citekeyFormatEditing') continue
+
       if (value === defaults[key]) {
         settings.default += `  ${key} = ${ JSON.stringify(value) }\n`
       }
@@ -546,8 +557,7 @@ export class ErrorReport {
         settings.set += `  ${key} = ${JSON.stringify(value)} (default: ${JSON.stringify(defaults[key])})\n`
       }
     }
-    if (settings.default) settings.default = `Settings at default:\n${ settings.default }`
-    context += settings.set + settings.default
+    context += settings.set + (settings.default ? `Settings at default:\n${settings.default}` : '')
 
     for (const key of ['export.quickCopy.setting']) {
       context += `  Zotero: ${ key } = ${ JSON.stringify(Zotero.Prefs.get(key)) }\n`
@@ -592,6 +602,13 @@ export class ErrorReport {
       }
     }
 
+    if (Object.keys(binaries()).length) {
+      context += 'Binaries:\n'
+      for (const [k, v] of Object.entries(binaries())) {
+        context += `  ${k}: ${v}\n`
+      }
+    }
+
     context += 'Libraries:\n'
     for (const lib of Zotero.Libraries.getAll()) {
       context += `  ${JSON.stringify(lib.name)}, libraryID = ${lib.libraryID}, groupID = ${(lib as unknown as Zotero.Group).groupID ?? false}, read-only: ${readonly(lib)}\n`
@@ -600,7 +617,7 @@ export class ErrorReport {
     context += `Zotero.Debug.storing: ${ Zotero.Debug.storing }\n`
     context += `Zotero.Debug.storing at start: ${ Zotero.BetterBibTeX.debugEnabledAtStart }\n`
 
-    return context
+    return this.unhome(context)
   }
 
   public async open(items?: string): Promise<void> {
@@ -631,6 +648,7 @@ export class ErrorReport {
 
     if (scope) {
       try {
+        const options = Zotero.BetterBibTeX.exportOptions.find(eo => Object.keys(eo.displayOptions).length)?.displayOptions || {}
         items = await Zotero.BetterBibTeX.Translators.queueJob({
           translatorID: Zotero.BetterBibTeX.Translators.bySlug.BetterBibTeXJSON.translatorID,
           displayOptions: { worker: true, exportNotes: true, Normalize: true },
@@ -638,7 +656,7 @@ export class ErrorReport {
           timeout: 40,
         })
         const merge = JSON.parse(items)
-        merge.config.options = Zotero.BetterBibTeX.lastExport.displayOptions
+        merge.config.options = options
         items = JSON.stringify(merge, null, 2)
       }
       catch (err) {

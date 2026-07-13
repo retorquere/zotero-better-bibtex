@@ -14,13 +14,12 @@
   "items": [
     {
       "accessDate": "2014-10-18",
-      "extra": [
-        "Citation Key: zotero-1855286-1414"
-      ],
+      "extra": [],
       "itemID": 1,
       "itemType": "journalArticle",
       "title": "patent Landscape analysis: sample from SPECFEM3D_GLOBE",
-      "url": "http://www.patanalyse.com/sample-analysis.html"
+      "url": "http://www.patanalyse.com/sample-analysis.html",
+      "citationKey": "zotero-1855286-1414"
     }
   ]
 }

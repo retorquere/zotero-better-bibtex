@@ -11,7 +11,7 @@
       "citekeyFold": false,
       "citekeyFormat": "auth.capitalize+year",
       "exportBraceProtection": false,
-      "exportTitleCase": false,
+      "exportTitlecase": "off",
       "extraMergeCSL": true,
       "extraMergeCitekeys": true,
       "extraMergeTeX": true,
@@ -63,12 +63,12 @@
         {
           "creatorType": "author",
           "firstName": "Lutz",
-          "lastName": "K\u00f6nig"
+          "lastName": "König"
         },
         {
           "creatorType": "author",
           "firstName": "Susanne",
-          "lastName": "K\u00f6nig"
+          "lastName": "König"
         },
         {
           "creatorType": "author",
@@ -97,16 +97,15 @@
         }
       ],
       "date": "2018",
-      "extra": [
-        "Citation Key: MyDGS_annotated"
-      ],
+      "extra": [],
       "itemID": 1,
       "itemType": "dataset",
       "publisher": "DGS-Korpus project, IDGS, Hamburg University",
       "rights": "Restricted to linguistic research",
       "shortTitle": "Public DGS Corpus",
-      "title": "MY DGS \u2013 annotated. Public Corpus of German Sign Language",
-      "versionNumber": "1.0"
+      "title": "MY DGS – annotated. Public Corpus of German Sign Language",
+      "versionNumber": "1.0",
+      "citationKey": "MyDGS_annotated"
     },
     {
       "version": 0,

@@ -1,4 +1,3 @@
-checkbox(data-l10n-id='better-bibtex_preferences_auto-abbrev', native='true', preference='extensions.zotero.translators.better-bibtex.autoAbbrev')
 html:div
   label(bbt:preference='extensions.zotero.translators.better-bibtex.exportSort', data-l10n-id='better-bibtex_preferences_export_sort')
   menulist(native='true', preference='extensions.zotero.translators.better-bibtex.exportSort')
@@ -20,13 +19,14 @@ checkbox(
 )
 
 html:div
-  checkbox(
-    data-l10n-id='better-bibtex_preferences_advanced_export_title-case'
-    preference='extensions.zotero.translators.better-bibtex.exportTitleCase'
-    native='true'
-  )
-
-  img(src='chrome://zotero-better-bibtex/content/skin/attention.svg', style='width:16px;height:16px', tooltip='bbt-tooltip-exportTitleCase')
+  label(bbt:preference='extensions.zotero.translators.better-bibtex.exportTitlecase', data-l10n-id='better-bibtex_preferences_advanced_export_title-case')
+  html:div(style='display:flex;align-items:center;gap:4px')
+    textbox(
+      preference='extensions.zotero.translators.better-bibtex.exportTitlecase'
+      native='true'
+      style='flex:1'
+    )
+    img(src='chrome://zotero-better-bibtex/content/skin/attention.svg', style='width:16px;height:16px', tooltip='bbt-tooltip-exportTitlecase')
 
 html:div
   checkbox(

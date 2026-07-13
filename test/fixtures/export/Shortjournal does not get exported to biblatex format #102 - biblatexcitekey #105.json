@@ -35,9 +35,7 @@
         }
       ],
       "date": "September 20, 2006",
-      "extra": [
-        "Citation Key: Acin2006-105"
-      ],
+      "extra": [],
       "issue": "12",
       "itemID": 1,
       "itemType": "journalArticle",
@@ -47,7 +45,8 @@
       "publicationTitle": "Physical Review Letters",
       "title": "From Bell\u2019s Theorem to secure quantum key distribution",
       "url": "http://link.aps.org/doi/10.1103/PhysRevLett.97.120405",
-      "volume": "97"
+      "volume": "97",
+      "citationKey": "Acin2006-105"
     }
   ]
 }

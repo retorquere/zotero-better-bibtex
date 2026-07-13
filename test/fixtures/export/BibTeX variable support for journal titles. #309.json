@@ -24,16 +24,15 @@
         }
       ],
       "date": "1972",
-      "extra": [
-        "Citation Key: blahut_capacity"
-      ],
+      "extra": [],
       "issue": "4",
       "itemID": 1,
       "itemType": "journalArticle",
       "pages": "460\u2013473",
       "publicationTitle": "IEEE_J_IT",
       "title": "Computation of channel capacity and rate-distortion functions",
-      "volume": "18"
+      "volume": "18",
+      "citationKey": "blahut_capacity"
     }
   ]
 }

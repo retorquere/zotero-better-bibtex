@@ -6,6 +6,7 @@ import { getItemsAsync } from './get-items-async'
 type ZoteroAction = 'modify' | 'add' | 'trash' | 'delete'
 
 type IdleState = 'active' | 'idle'
+export type SyncState = 'syncing' | 'idle'
 export type Action = 'modify' | 'delete' | 'add'
 
 type IdleObserver = {
@@ -29,18 +30,20 @@ type EventMap = {
   'collections-removed': number[]
   'export-progress': { pct: number; message: string; ae?: string }
   'cache-touch': { itemIDs: number[] }
-  'items-changed': { items: Zotero.Item[]; action: Action; reason?: Reason }
+  'items-changed': { items: Zotero.Item[]; action: Action; reason?: Reason; changed?: Record<number, string[]> }
   'items-removed': { itemIDs: number[]; reason?: Reason }
   'libraries-changed': number[]
   'libraries-removed': number[]
   'preference-changed': string
   'window-loaded': { win: Window; href: string }
   idle: { state: IdleState; topic: IdleTopic }
+  sync: { state: SyncState }
 }
 
 class Emitter extends Emittery<EventMap> {
   private listeners: any[] = []
   public idle: Partial<Record<IdleTopic, IdleState>> = {}
+  public syncing: SyncState = 'idle'
   public itemObserverDelay = 5
 
   public startup(): void {
@@ -50,6 +53,7 @@ class Emitter extends Emittery<EventMap> {
     this.listeners.push(new CollectionListener)
     this.listeners.push(new MemberListener)
     this.listeners.push(new GroupListener)
+    this.listeners.push(new SyncListener)
   }
 
   override async emit<Name extends keyof EventMap>(eventName: Name, data?: EventMap[Name]): Promise<void> {
@@ -141,6 +145,26 @@ class IdleListener {
   }
 }
 
+class SyncListener {
+  private id: string
+
+  constructor() {
+    this.id = Zotero.Notifier.registerObserver(this, ['sync'], 'Better BibTeX', 1)
+  }
+
+  notify(action: string, _type: string, _ids: string[], _extraData?: any) {
+    const state: SyncState = action === 'start' ? 'syncing' : 'idle' // Zotero fires 'start' and 'finish'
+    Events.syncing = state
+    void Events.emit('sync', { state })
+  }
+
+  unregister() {
+    Zotero.Notifier.unregisterObserver(this.id)
+  }
+}
+
+type ExtraData = Record<string, any>
+
 abstract class ZoteroListener {
   private id: string
 
@@ -148,7 +172,7 @@ abstract class ZoteroListener {
     this.id = Zotero.Notifier.registerObserver(this, [type], 'Better BibTeX', 1)
   }
 
-  abstract notify(action: ZoteroAction, type: string, ids: string[] | number[], extraData?: Record<number, { libraryID?: number }>): Promise<void>
+  abstract notify(action: ZoteroAction, type: string, ids: string[] | number[], extraData?: ExtraData): Promise<void>
 
   public unregister() {
     Zotero.Notifier.unregisterObserver(this.id)
@@ -167,7 +191,7 @@ class ItemListener extends ZoteroListener {
     super('item')
   }
 
-  public async notify(action: ZoteroAction, type: string, ids: number[], extraData?: Record<number, { libraryID?: number }>) {
+  public async notify(action: ZoteroAction, type: string, ids: number[], extraData?: ExtraData) {
     if (logEvents) log.info('item event:', { action, ids, extraData })
     try {
       let load = false
@@ -199,9 +223,20 @@ class ItemListener extends ZoteroListener {
         libraries: new Set<number>,
       }
 
+      const changed: Record<number, string[]> = (!extraData || typeof extraData !== 'object')
+        ? {}
+        : ids.reduce((acc, id) => {
+            const perItem = extraData[id]
+            if (!perItem || typeof perItem !== 'object') return acc
+            if (!perItem.changed || typeof perItem.changed !== 'object') return acc
+
+            acc[id] = Object.keys(perItem.changed as Record<string, unknown>)
+            return acc
+          }, {} as Record<number, string[]>)
+
       if (action === 'delete') {
         await Events.emit('items-removed', { itemIDs: ids })
-        if (extraData) {
+        if (extraData && typeof extraData === 'object') {
           for (const { libraryID } of Object.values(extraData)) {
             if (typeof libraryID === 'number') touched.libraries.add(libraryID)
           }
@@ -242,7 +277,10 @@ class ItemListener extends ZoteroListener {
       })
 
       await Events.emit('cache-touch', { itemIDs: ids })
-      if (items.length) await Events.emit('items-changed', { items, action })
+      if (items.length) {
+        await Events.emit('items-changed', { items, action, changed })
+      }
+
       if (parentIDs.size) {
         const parents = Zotero.Items.get([...parentIDs])
         for (const item of parents) {

@@ -1,0 +1,598 @@
+@online{2013,
+  title = {Joint {{Declaration}} of {{Data Citation Principles}} - {{FINAL}}},
+  date = {2013-10-30T11:20:51-07:00},
+  url = {https://www.force11.org/group/joint-declaration-data-citation-principles-final},
+  urldate = {2016-04-22},
+  abstract = {When citing please use: ~ Data Citation Synthesis Group: Joint Declaration of Data Citation Principles. Martone M. (ed.) San Diego CA: FORCE11; 2014 [/datacitation]. Endorsement List},
+  organization = {FORCE11}
+}
+
+@book{2015,
+  title = {Preparing the {{Workforce}} for {{Digital Curation}}},
+  date = {2015-04-22},
+  publisher = {National Academies Press},
+  location = {Washington, D.C.},
+  url = {http://www.nap.edu/catalog/18590},
+  urldate = {2016-04-25},
+  isbn = {978-0-309-29694-6}
+}
+
+@article{altman2013,
+  entrysubtype = {magazine},
+  title = {The {{Evolution}} of {{Data Citation}}: {{From Principles}} to {{Implementation}}},
+  shorttitle = {The {{Evolution}} of {{Data Citation}}},
+  author = {Altman, Micah and Crosas, Mercè},
+  date = {2013},
+  journaltitle = {IASSIST Quarterly},
+  volume = {37},
+  pages = {62},
+  issn = {0739-1137},
+  url = {http://www.iassistdata.org/iq/evolution-data-citation-principles-implementation},
+  urldate = {2016-04-24},
+  issue = {Spring}
+}
+
+@article{austinclairec2015,
+  title = {Key Components of Data Publishing: {{Using}} Current Best Practices to Develop a Reference Model for Data Publishing},
+  shorttitle = {Key Components of Data Publishing},
+  author = {{Austin, Claire C} and {Bloom, Theodora} and {Dallmeier-Tiessen, Sunje} and {Khodiyar, Varsha} and {Murphy, Fiona} and {Nurnberger, Amy} and {Raymond, Lisa} and {Stockhause, Martina} and {Tedds, Jonathan} and {Vardigan, Mary} and {Whyte, Angus}},
+  date = {2015},
+  doi = {10.5281/zenodo.34542},
+  url = {http://dx.doi.org/10.5281/zenodo.34542},
+  urldate = {2016-04-26}
+}
+
+@unpublished{bargheer2015,
+  title = {Practical Experiences at {{Göttingen University}} in Providing {{Open Access}} Services to Researchers, Scholars and Faculties},
+  author = {Bargheer, Margo},
+  date = {2015-05-20},
+  doi = {10.5281/zenodo.46060},
+  url = {http://zenodo.org/record/46060},
+  urldate = {2016-08-29},
+  abstract = {This is a talk I gave for a virtual conference in Ljublijana on how we run our publishing services in G\&ouml;ttingen. The audience consisted of researchers and librarians from the region.},
+  keywords = {DOAB,FOSTER,library publishing,OAPEN,Open access,university press}
+}
+
+@unpublished{bargheer2016,
+  title = {The Dissertation Almost Done, but How to Publish Now?},
+  author = {Bargheer, Margo},
+  date = {2016-02-15},
+  doi = {10.5281/zenodo.46059},
+  url = {http://zenodo.org/record/46059},
+  urldate = {2016-08-29},
+  abstract = {This is a talk I gave for international members of G\&ouml;ttingen Graduate Schools. It aims at understanding why we publish, how the publishing system works and what role Open Access and Open Science play. I also introduced the publishing services our library runs on behalf of the university.},
+  keywords = {Open access,open science,publishing,university press}
+}
+
+@online{birnbaum,
+  title = {What Is {{XML}} and Why Should Humanists Care? {{An}} Even Gentler Introduction to {{XML}}},
+  author = {Birnbaum, David},
+  url = {http://dh.obdurodon.org/what-is-xml.xhtml},
+  urldate = {2016-10-19}
+}
+
+@unpublished{bordier2016,
+  title = {Open Peer Review : From an Experiment to a Model},
+  shorttitle = {Open Peer Review},
+  author = {Bordier, Julien},
+  date = {2016-02},
+  url = {https://hal.archives-ouvertes.fr/hal-01302597},
+  urldate = {2016-08-29},
+  abstract = {This article narrates the development of the experimentation of an open peer review and open commentary protocols. This experiment concerns propositions of articles for the environmental sciences journal VertigO, digital and open access scientific publication. This experiment did not last long enough (4 months) and was not deployed on a large enough corpus (10 preprints) to lead to firm quantitative conclusions. However, it highlights practical leads and thoughts about the potentialities and the limitations of the open review processes – in the broadest sense – for scientific publishing. Based on the exemplary of the experiment and a participant observation as a copy-editor devoted to open peer review, the article finally proposes a model from the experimented prototype. This model, named OPRISM, could be implemented on other publishing contexts for social sciences and humanities. Central and much debated activity in the academic world, peer review refers to different practices such as control, validation, allocation and contradiction exercised by the scientific community for itself. Its scope is wide: from the allocation for funding to the relevance of a recruitment. According to common sense, the control of the scientific community by itself is a guarantee of scientific quality. This issue became even more important in an international context of competition between universities and between scholars themselves},
+  keywords = {Digital publishing,Open access,Open commentary,Open peer review,OpenAire,OpenEdition,Publishing innovation},
+  annotation = {working paper or preprint}
+}
+
+@online{borgman,
+  title = {{{HarvardDataCitationSymposiumBorgman20120516}}.Pptx - Harvarddatacitationsymposiumborgman20120516.Pdf},
+  author = {Borgman, Christine},
+  url = {http://projects.iq.harvard.edu/files/attribution_workshop/files/harvarddatacitationsymposiumborgman20120516.pdf},
+  urldate = {2016-04-25}
+}
+
+@unpublished{borgman2011,
+  title = {Data {{Attribution}} and {{Citation Practices}} and {{Standards}}},
+  author = {Borgman, Christine},
+  date = {2011-10-27},
+  url = {http://sites.nationalacademies.org/cs/groups/pgasite/documents/webpage/pga_066705.pptx},
+  urldate = {2016-04-25}
+}
+
+@article{borgman2012,
+  title = {Why Are the Attribution and Citation of Scientific Data Important? {{In}}: {{Uhlir}}, {{Paul}} and {{Cohen}}, {{Daniel}} (Eds.). {{Report}} from {{Developing Data Attribution}} and {{Citation Practices}} and {{Standards}}: {{An International Symposium}} and {{Workshop}}.},
+  shorttitle = {Why Are the Attribution and Citation of Scientific Data Important?},
+  author = {Borgman, Christine L.},
+  date = {2012},
+  journaltitle = {National Academy of Sciences’ Board on Research Data and Information. National Academies Press: Washington DC. http://www.nap.edu},
+  url = {https://works.bepress.com/borgman/265/},
+  urldate = {2016-04-25},
+  abstract = {Berkeley Electronic Press Selected Works, Keynote address from the Developing Data Attribution and Citation Practices and Standards: An International Symposium and Workshop in Berkeley, CA on 22 August 2011. Keynote speech is contained within the forthcoming 2012 Report from Developing Data Attribution and Citation Practices and Standards: An International Symposium and Workshop published by the National Academy of Sciences. Preferred Citation: Borgman, C.L. (2012, forthcoming). Why are the attribution and citation of scientific data important? In: Uhlir, Paul and Cohen, Daniel (eds.). Report from Developing Data Attribution and Citation Practices and Standards: An International Symposium and Workshop. National Academy of Sciences’ Board on Research Data and Information. National Academies Press: Washington DC. http://www.nap.edu}
+}
+
+@article{borgman2012a,
+  title = {The Conundrum of Sharing Research Data},
+  author = {Borgman, Christine L.},
+  date = {2012-06},
+  journaltitle = {Journal of the American Society for Information Science and Technology},
+  volume = {63},
+  number = {6},
+  pages = {1059--1078},
+  issn = {15322882},
+  doi = {10.1002/asi.22634},
+  url = {http://doi.wiley.com/10.1002/asi.22634},
+  urldate = {2016-04-25},
+  langid = {english}
+}
+
+@report{buddenbohm2016,
+  type = {report},
+  title = {State of the Art Report on Open Access Publishing of Research Data in the Humanities},
+  author = {Buddenbohm, Stefan and Cretin, Nathanael and Dijk, Elly and Gaiffe, Bertrand and Jong, Maaike De and Minel, Jean-Luc and Nouvel, Blandine},
+  date = {2016-08-12},
+  institution = {DARIAH},
+  url = {https://halshs.archives-ouvertes.fr/halshs-01357208/document},
+  urldate = {2016-09-05},
+  abstract = {Publishing research data as open data is not yet common practice for researchers in the arts and humanities, and lags behind other scientific fields, such as the natural sciences. Moreover, even when humanities researchers publish their data in repositories and archives, these data are often hard to find and use by other researchers in the field. This report gives an overview of the various aspects that are connected to open access publishing of research data in the humanities. After the introduction, where we give definitions of key concepts, we describe the research data life cycle. We present an overview of the different stakeholders involved and we look into advantages and obstacles for researchers to share research data. Furthermore, a description of the European data repositories is given, followed by certification standards of trusted digital data repositories. The possibility of data citation is important for sharing open data and is also described in this report. We also discuss the standards and use of metadata in the humanities. Finally, we discuss best practice example of open access research data system in the humanities: the French open research data ecosystem. With this report we provide information and guidance on open access publishing of humanities research data for researchers. It will also serve as input for the design and implementation of an open humanities data platform in DARIAH.},
+  langid = {english}
+}
+
+@article{christine2014,
+  title = {{{EPISCIENCES}} - an Overlay Publication Platform},
+  author = {Christine, Berthaud and Laurent, Capelli and Jens, Gustedt and Claude, Kirchner and Kevin, Loiseau and Agnès, Magron and Maud, Medves and Alain, Monteil and Gaëlle, Riverieux and Laurent, Romary},
+  date = {2014},
+  journaltitle = {Stand Alone},
+  pages = {78--87},
+  issn = {0000-0000},
+  doi = {10.3233/978-1-61499-409-1-78},
+  url = {http://www.medra.org/servlet/aliasResolver?alias=iospressISBN&isbn=978-1-61499-408-4&spage=78},
+  urldate = {2016-08-24},
+  abstract = {This paper delineates the main characteristics of the Episciences platform, an environment for overlay peer-reviewing that complements existing publication repositories, designed by the Centre pour la Communication Scientifique directe (CCSDCCSD is a joint service unit between the CNRS, Inria and the University of Lyon}
+}
+
+@online{cliggett,
+  title = {The {{Qualitative Report}} 2013 {{Volume}} 18, {{How To Article}} 1 , 1 - 11 {{http://www.nova.edu/ssss/QR/QR18/}} Cliggett1.Pdf},
+  author = {Cliggett, Lisa},
+  url = {http://www.nova.edu/ssss/QR/QR18/cliggett1.pdf},
+  urldate = {2016-04-18}
+}
+
+@article{corti2014,
+  title = {Progress on Open Data Publishing in the Social Sciences},
+  author = {Corti, Louise},
+  date = {2014-10-30},
+  url = {http://dspace.ut.ee/handle/10062/44055},
+  urldate = {2016-04-18},
+  langid = {english}
+}
+
+@book{davidhazi2014,
+  title = {New Publication Cultures in the Humanities: Exploring the Paradigm Shift},
+  shorttitle = {New Publication Cultures in the Humanities},
+  editor = {Dávidházi, Péter},
+  date = {2014},
+  publisher = {Amsterdam University Press},
+  location = {Amsterdam},
+  isbn = {978-90-8964-564-7},
+  pagetotal = {211},
+  keywords = {Electronic publishing,Humanities,publishing,Scholarly publishing,Social aspects}
+}
+
+@artwork{djenzar2015,
+  title = {Robot},
+  author = {{djenzar}},
+  date = {2015-10-25},
+  url = {https://www.flickr.com/photos/djenzar/26431038934/},
+  urldate = {2016-11-07},
+  keywords = {robot,toy}
+}
+
+@book{haber2013,
+  title = {Historyblogosphere, Bloggen in den Geschichtswissenschaften},
+  author = {Haber, Peter and Pfanzelter, Eva},
+  date = {2013},
+  publisher = {De Gruyter},
+  location = {Berlin, Boston},
+  doi = {10.1524/9783486755732},
+  url = {https://www.degruyter.com/view/product/216968},
+  urldate = {2018-03-18},
+  abstract = {For the first time in the German language historical disciplines, a book has been subject to open peer review as it was developed. All contributions were discussed online with comments. The ‘history blogosphere’ has thereby engaged in understanding an especially timely topic– namely, the medium of the blog itself.},
+  isbn = {978-3-486-75573-2},
+  langid = {DT}
+}
+
+@article{joachimschopfel2014,
+  title = {Open Access to Research Data in Electronic Theses and Dissertations: An Overview},
+  shorttitle = {Open Access to Research Data in Electronic Theses and Dissertations},
+  author = {{Joachim Schöpfel} and {Stéphane Chaudiron} and {Bernard Jacquemin} and {Hélène Prost} and {Marta Severo} and {Florence Thiault}},
+  date = {2014-11-11},
+  journaltitle = {Library Hi Tech},
+  shortjournal = {Library Hi Tech},
+  volume = {32},
+  number = {4},
+  pages = {612--627},
+  issn = {0737-8831},
+  doi = {10.1108/LHT-06-2014-0058},
+  url = {http://www.emeraldinsight.com/doi/abs/10.1108/LHT-06-2014-0058},
+  urldate = {2016-08-24}
+}
+
+@article{king2014,
+  title = {Restructuring the {{Social Sciences}}: {{Reflections}} from {{Harvard}}\&\#039;s {{Institute}} for {{Quantitative Social Science}}},
+  shorttitle = {Restructuring the {{Social Sciences}}},
+  author = {King, Gary},
+  date = {2014},
+  journaltitle = {PS: Political Science and Politics},
+  volume = {47},
+  number = {1},
+  pages = {165--172}
+}
+
+@article{konkiel2013,
+  title = {Tracking Citations and Altmetrics for Research Data: {{Challenges}} and Opportunities},
+  shorttitle = {Tracking Citations and Altmetrics for Research Data},
+  author = {Konkiel, Stacy},
+  date = {2013-08},
+  journaltitle = {Bulletin of the American Society for Information Science and Technology},
+  volume = {39},
+  number = {6},
+  pages = {27--32},
+  issn = {00954403},
+  doi = {10.1002/bult.2013.1720390610},
+  url = {http://doi.wiley.com/10.1002/bult.2013.1720390610},
+  urldate = {2016-06-27},
+  langid = {english}
+}
+
+@article{kratz2014,
+  title = {Data Publication Consensus and Controversies},
+  author = {Kratz, John and Strasser, Carly},
+  date = {2014-04-23},
+  journaltitle = {F1000Research},
+  issn = {2046-1402},
+  doi = {10.12688/f1000research.3979.1},
+  url = {http://f1000research.com/articles/3-94/v1},
+  urldate = {2016-06-27},
+  langid = {english}
+}
+
+@article{margo2008,
+  title = {Göttingen {{University Press}}: {{Publishing}} Services in an {{Open Access}} Environment},
+  shorttitle = {G\&ouml;Ttingen {{University Press}}},
+  author = {Margo, Bargheer and Birgit, Schmidt},
+  date = {2008},
+  journaltitle = {Information Services and Use},
+  number = {2},
+  pages = {133--139},
+  issn = {0167-5265},
+  doi = {10.3233/ISU-2008-0569},
+  url = {http://www.medra.org/servlet/aliasResolver?alias=iospress&genre=article&issn=0167-5265&volume=28&issue=2&spage=133&doi=10.3233/ISU-2008-0569},
+  urldate = {2016-08-29}
+}
+
+@article{maxwell2015,
+  title = {Beyond {{Open Access}} to {{Open Publication}} and {{Open Scholarship}}},
+  author = {Maxwell, John W.},
+  date = {2015-10-22},
+  journaltitle = {Scholarly and Research Communication},
+  volume = {6},
+  number = {3},
+  url = {http://src-online.ca/index.php/src/article/view/202},
+  urldate = {2016-04-18},
+  abstract = {This       article explores a moment of opportunity to imagine a new humanities       scholarship based on radical openness, beyond the level of access to       scholarly content that the open access movement has so far championed, to       a culture of transformation that can actively include the public(s) beyond       the community of scholars. The possibilities for enhancing scholarly and       research practices are intriguing, but even greater may be the generative       opportunity to engage audiences beyond the scholarly community~–       particularly online, where the humanities connects to broader cultural       currents.},
+  langid = {english}
+}
+
+@article{misutka2015,
+  title = {Linguistic Digital Repository Based on {{DSpace}} 5.2},
+  author = {Mišutka, Jozef and Kamran, Amir and Košarko, Ondřej and Josífko, Michal and Ramasamy, Loganathan and Straňák, Pavel and Hajič, Jan},
+  date = {2015},
+  journaltitle = {https://github.com/ufal/lindat-dspace},
+  url = {https://lindat.mff.cuni.cz/repository/xmlui/handle/11234/1-1481},
+  urldate = {2016-08-29},
+  abstract = {One of the goals of LINDAT/CLARIN Centre for Language Research Infrastructure is to provide technical background to institutions or researchers who wants to share their tools and data used for research in linguistics or related research fields. The digital repository is built on a highly customised DSpace platform.}
+}
+
+@article{mooney2012,
+  title = {The {{Anatomy}} of a {{Data Citation}}: {{Discovery}}, {{Reuse}}, and {{Credit}}},
+  shorttitle = {The {{Anatomy}} of a {{Data Citation}}},
+  author = {Mooney, Hailey and Newton, Mark},
+  date = {2012},
+  journaltitle = {Journal of Librarianship and Scholarly Communication},
+  volume = {1},
+  number = {1},
+  issn = {21623309},
+  doi = {10.7710/2162-3309.1035},
+  url = {http://jlsc-pub.org/articles/10.7710/2162-3309.1035},
+  urldate = {2016-04-25}
+}
+
+@book{moore2014,
+  title = {Issues in {{Open Research Data}}},
+  editor = {Moore, Samuel},
+  date = {2014-12-19},
+  publisher = {Ubiquity Press},
+  url = {http://www.ubiquitypress.com/site/books/detail/12/issues-in-open-research-data/},
+  urldate = {2016-04-26},
+  isbn = {978-1-909188-30-3}
+}
+
+@book{mounier2012,
+  title = {Read/Write Book 2 : Une introduction aux humanités numériques},
+  shorttitle = {Read/Write Book 2},
+  translator = {Mounier, Pierre and Allard, Laurence and Équipe du Centre virtuel de la connaissance sur l’Europe (CVCE, Luxembourg) and Grosdemouge, Pierre and Lamé, Marion and Pailler, Fred},
+  date = {2012-09-21},
+  series = {Read/Write Book},
+  publisher = {OpenEdition Press},
+  location = {Marseille},
+  url = {http://books.openedition.org/oep/226},
+  urldate = {2016-06-28},
+  abstract = {Qu’est-ce que les humanités numériques ?  Apparue en 2006, l’expression connaît depuis un véritable succès. Mais au-delà du slogan à la mode, quelle est la réalité des pratiques qu’il désigne ? Si tout le monde s’accorde sur une définition minimale à l’intersection des technologies numériques et des sciences humaines et sociales, les vues divergent lorsqu’on entre dans le vif du sujet. Les humanités numériques représentent-elles une véritable révolution des pratiques de recherche et des paradigmes intellectuels qui les fondent ou, plus simplement, une optimisation des méthodes existantes ? Constituent-elles un champ suffisamment structuré pour justifier une réforme des modes de financement de la recherche, des cursus de formation, des critères d’évaluation ? L’archive numérique offre-t-elle à la recherche suffisamment de garanties ? Quelle place la recherche « dirigée par les données » laisse-t-elle à l’interprétation ? Telles sont quelques-unes des questions abordées par ce deuxième opus de la collection « Read/Write Book ».  Ces dix-huit textes essentiels, rédigés ou traduits en français par des chercheurs de différentes nationalités, proposent une introduction aux humanités numériques accessible à tous ceux qui souhaitent en savoir plus sur ce domaine de recherche en constante évolution.},
+  isbn = {978-2-8218-1325-0},
+  langid = {french},
+  pagetotal = {264},
+  keywords = {digital humanities,édition électronique,usages,web}
+}
+
+@incollection{noiret2012,
+  title = {La digital history~: histoire et mémoire à la portée de tous},
+  shorttitle = {La digital history},
+  booktitle = {Read/Write Book 2 : Une introduction aux humanités numériques},
+  author = {Noiret, Serge},
+  editor = {Mounier, Pierre},
+  date = {2012-09-21},
+  series = {Read/Write Book},
+  pages = {151--177},
+  publisher = {OpenEdition Press},
+  location = {Marseille},
+  url = {http://books.openedition.org/oep/258},
+  urldate = {2018-03-18},
+  isbn = {978-2-8218-1325-0},
+  langid = {french}
+}
+
+@inproceedings{pienta2010,
+  title = {The Enduring Value of Social Science Research: The Use and Reuse of Primary Research Data},
+  shorttitle = {The Enduring Value of Social Science Research},
+  booktitle = {Organisation, {{Economics}} and {{Policy}} of {{Scientific Research}}” Workshop, {{Torino}}, {{Italy}}, in {{April}}},
+  author = {Pienta, Amy M. and Alter, George C. and Lyle, Jared A.},
+  date = {2010},
+  url = {https://deepblue.lib.umich.edu/bitstream/handle/2027.42/78307/pienta_alter_lyle_100331.pd?sequence=1},
+  urldate = {2016-09-02}
+}
+
+@report{prost2015,
+  type = {report},
+  title = {Les données de la recherche en SHS. Une enquête à l’Université de Lille 3.},
+  author = {Prost, Hélène and Schöpfel, Joachim},
+  date = {2015},
+  institution = {Lille 3},
+  url = {http://hal.univ-lille3.fr/hal-01198379/document},
+  urldate = {2016-12-07},
+  abstract = {Les données de la recherche deviennent l’un des nouveaux défis de la gestion scientifique. Produites dans le cadre des projets de recherche, ces données posent des questions inédites aux laboratoires, bibliothèques et services informatiques des universités : comment conserver ces données, comment les signaler et mettre à disposition d’autres chercheurs, comment faire le lien avec les publications, comment les intégrer dans une politique du libre accès à l’information scientifique ? Avant de se lancer dans un projet de données de la recherche, un établissement doit faire un état des lieux sur le terrain pour mieux connaître les producteurs de ces données, leurs pratiques et besoins dans la gestion des données et leurs outils, mais aussi la nature concrète de ces données. L’Université de Lille 3 a réalisé une étude sur les pratiques, besoins et attentes en matière de gestion des données de la recherche auprès de son personnel scientifique. L’étude est pilotée par le laboratoire GERiiCO et le SCD de Lille 3. Elle fait partie d’une démarche concertée en faveur de la gestion et du partage des données de la recherche mise en œuvre à partir de 2013, avec plusieurs analyses, séminaires et publications. L’enquête a été préparée avec l’Université Humboldt de Berlin. Le questionnaire contient 22 questions et a été mis en ligne en avril et mai 2015. Il a reçu 270 réponses (taux de réponse 15\%). Toutes les disciplines sont représentées, ainsi que toutes les catégories des personnels scientifiques. Les personnes interrogées décrivent un large éventail de données sources. Les corpus (documents textuels) sont de loin la source la plus importante (64\%), suivi par les enquêtes et entretiens (47\%), observations (41\%), expériences (36\%) et archives (34\%). Quant à la typologie des données produites par les chercheurs comme résultat de leur travail, les données textuelles occupent de loin le premier rang (75\%), suivies des tableaux (49\%), bases de données (37\%), visualisations ou modèles multidimensionnels (32\%) et données AV (photo, son, vidéo), avec 20-25\%. Le stockage en local est de loin le mode de sauvegarde privilégié, choisi par 207 participants, que ce soit sur leur ordinateur privé pour 83\% des répondants, ou sur leur ordinateur professionnel pour 49\% d’entre eux. 40 répondants (19\%) stockent « dans le cloud », alors que 8\% ont des données sur le serveur d’une autre institution. En réseau, 12\% des répondants se tournent vers le serveur de l’université. La majorité ne partage pas ses données avec d’autres. Et ceux qui le font, partagent d’abord et surtout avec les collègues du groupe de travail (équipe scientifique) (34\%). Très peu ({$<$}5\%) ouvrent leurs données davantage et partagent avec l’institution, d’autres chercheurs ou « tout le monde », dans une démarche open data au sens strict du terme. 36\% ont déjà pratiqué, d’une manière ou d’une autre, le partage des données – que ce soit avec les collègues d’une équipe scientifique ou d’un projet, via une archive ouverte ou lors de la publication d’un article, ou en téléchargeant les résultats d’autres chercheurs. Apparemment, 20-25\% ont davantage d’expérience que les autres (« précurseurs »). 18\% autres répondants se disent prêts et ont l’intention d’adopter ces pratiques à l’avenir (« motivés »). 5-10\% indiquent qu’ils n’ont pas l’intention de partager leurs données à l’avenir (« réticents »). 30\% manquent d’information et de connaissance concernant le partage des données de la recherche (« ignorants »). En tête de la liste des besoins figure l’espace d’archivage sécurisé et fiable pour ses propres données, suivi des conseils pour la gestion, des conseils techniques (normes, métadonnées etc.) et des conseils juridiques (autour de 50\%). Moins nombreux sont les chercheurs qui souhaitent des conseils ou de l’assistance pour la publication ou diffusion des données (autour de 40\%), encore moins ceux qui demandent de l’aide pour préparer un plan de gestion (29\%) ou un conseil dans le domaine de l’éthique (24\%). Les résultats ont été analysés par rapport aux disciplines et statuts des personnes interrogées. Ils ont été également comparés avec les résultats de trois autres enquêtes (Berlin, Strasbourg, LIBER Europe). A l’issue de l’enquête, nous allons mener des interviews avec un échantillon restreint d’enseignants-chercheurs et doctorants volontaires, afin de mieux connaître certains pratiques et besoins et aussi, pour valider les résultats de l’enquête. En même temps, nous allons contribuer à développer une offre de service sur le campus de l’Université de Lille 3 pour accompagner et faciliter la gestion des données de la recherche des équipes scientifiques. Cette offre pourrait s’articuler autour de trois axes : la formation des étudiants et chercheurs à la gestion des données, une proposition de conseil et assistance, et une contribution à la création d’une nouvelle infrastructure pour la curation, le stockage, l’archivage et la diffusion des données.},
+  langid = {french}
+}
+
+@article{prost2015a,
+  title = {Hidden {{Treasures}}: {{Opening Data}} in {{PhD Dissertations}} in {{Social Sciences}} and {{Humanities}}},
+  shorttitle = {Hidden {{Treasures}}},
+  author = {Prost, Hélène and Malleret, Cécile and Schöpfel, Joachim},
+  date = {2015},
+  journaltitle = {Journal of Librarianship and Scholarly Communication},
+  volume = {3},
+  number = {2},
+  issn = {21623309},
+  doi = {10.7710/2162-3309.1230},
+  url = {http://jlsc-pub.org/articles/10.7710/2162-3309.1230},
+  urldate = {2016-04-12}
+}
+
+@video{researchdatanetherlands2014,
+  entrysubtype = {video},
+  title = {Persistent Identifiers and Data Citation Explained},
+  editor = {{Research Data Netherlands}},
+  editortype = {director},
+  date = {2014-04-01},
+  url = {https://www.youtube.com/watch?v=PgqtiY7oZ6k&feature=youtu.be},
+  urldate = {2016-06-29},
+  keywords = {Persistent identifiers}
+}
+
+@inproceedings{romary2016,
+  title = {Datasets of {{IPERION CH}}},
+  author = {Romary, Laurent and Puren, Marie},
+  date = {2016-03-10},
+  url = {https://hal.inria.fr/hal-01289058/document},
+  urldate = {2016-09-02},
+  abstract = {Le projet européen Iperion regroupe un ensemble d'acteurs européens offrant des services d'infrastructure pour l'étude du patrimoine matériel sous la forme d'équipements fixes ou mobiles. Ces différents services génèrent potentiellement de grandes quantités de données qu'il est nécessaire de gérer et documenter. En particulier, il semble utile de travailler à la constitution d'un réservoir de telles données qui soit consultable par une large communauté de chercheurs, notamment en sciences humaines. On peut ainsi penser au rôle que peuvent jouer des analyses précises d'une oeuvre pour un historien des arts qui souhaite étudier l'évolution de la technique d'un peintre par exemple. La mise en place d'une telle infrastructure de données réutilisables dans le domaine du patrimoine matériel se heurte cependant à plusieurs difficultés que nous essayons de réduire au sein du projet Iperion. Tout d'abord, il n'est pas nécessairement dans la culture du déploiement des équipements eux-mêmes d'envisager une réutilisation large des données. Le scénario de base est souvent celui d'un chercheur qui va conduire une analyse ciblée d'un objet patrimonial, pour ensuite exploiter lui-même les résultats correspondants et passer à l'analyse suivante, sans se préoccuper d'une réutilisation des données produites. Ensuite, du point de vue des formats de données, on observe l'absence de réels standards de représentation communs aux différents types d'équipements. On se retrouve ainsi à devoir gérer des données propriétaires qui dépendent principalement des constructeurs des équipements. Enfin, se posele problème complexe des droits d'utilisation qui combinent un ensemble de difficultés liées au statut des oeuvres elles-mêmes, aux règles régissant l'équipement, mais aussi à la volonté de partage du chercheur qui a effectué le recueil initial des données. Dans ce cadre, notre objectif est de mettre en place une démarche d'analyse de l'état des lieux et de proposition de principes communs de gestion des données au sein du projet. Il s'agirait ainsi de préfigurer une charte de gestion des données applicable à la future infrastructure européenne E-RIHS, en collaboration avec l'infrastructure numérique DARIAH en sciences humaines. Nous avons ainsi recueilli les réponses des différents partenaires du projet concernant à la fois les modes de gestion des équipements, et le statut des jeux de données disponibles. La variété des réponses obtenues montre déjà que seules des recommandations génériques pourront être produites à l'échelle européenne, et nous esquisserons quelques propositions dans ce sens. Laurent Romary est directeur de recherche à Inria où il mène des recherches dans le domaine des humanités numériques et plus particulièrement sur la modélisation et la représentation de données en sciences humaines et sociales. Depuis plusieurs années, il a contribué à la définition des politiques d'information scientifique du CNRS, de la société Max Planck et d'Inria, où il a contribué notamment à la définition d'une obligation de dépôt en archives ouvertes dans HAL. Il a aussi participé de longue date à la définition et à l'évolution des directives de la TEI (Text Encoding Initiative), notamment comme membre, mais aussi comme président du conseil technique de la TEI, et préside le comité 37 de l'ISO (Organisation international de normalisation). Il dirige l'infrastructure Européenne DARIAH pour le développement de méthodes numériques en sciences humaines et sociales. https://cv.archives-ouvertes.fr/laurentromary},
+  eventtitle = {Atelier Interdisciplinaire « {{Matériaux}} Du Patrimoine et Patrimoine Matériel »},
+  langid = {english}
+}
+
+@article{romary2016a,
+  title = {Data Fluidity in {{DARIAH}} – Pushing the Agenda Forward},
+  author = {Romary, Laurent and Mertens, Mike and Baillot, Anne},
+  date = {2016},
+  journaltitle = {BIBLIOTHEK Forschung und Praxis},
+  volume = {39},
+  number = {3},
+  pages = {350--357},
+  url = {https://hal.inria.fr/hal-01285917/document},
+  urldate = {2016-08-02},
+  abstract = {This paper provides both an update concerning the setting up of the European DARIAH infrastructure and a series of strong action lines related to the development of a data centred strategy for the humanities in the coming years. In particular we tackle various aspect of data management: data hosting, the setting up of a DARIAH seal of approval, the establishment of a charter between cultural heritage institutions and scholars and finally a specific view on certification mechanisms for data.},
+  langid = {english}
+}
+
+@article{roorda2014,
+  title = {Annotation as a {{New Paradigm}} in {{Research Archiving}}},
+  author = {Roorda, Dirk and family=Heuvel, given=Charles, prefix=van den, useprefix=false},
+  date = {2014-10-07},
+  journaltitle = {ResearchGate},
+  url = {https://www.researchgate.net/publication/269711156_Annotation_as_a_New_Paradigm_in_Research_Archiving},
+  urldate = {2016-04-18},
+  abstract = {We outline a paradigm to preserve results of digital scholarship, whether they are query results, feature values, or topic assignments. This paradigm is characterized by using annotations as...}
+}
+
+@online{schopfel,
+  title = {Research Data Management in Social Sciences and Humanities: {{A}} Survey at the {{University}} of {{Lille}} ({{France}})},
+  author = {Schöpfel, Joachim and Prost, Hélène},
+  url = {http://edoc.hu-berlin.de/libreas/29/schoepfel-joachim-71/PDF/schoepfel.pdf},
+  urldate = {2016-08-24}
+}
+
+@inproceedings{schopfel2015,
+  title = {Dissertations and {{Data}}},
+  author = {Schöpfel, Joachim and Primož, Južnič and Prost, Hélène and Malleret, Cécile and Češarek, Ana and Koler-Povh, Teja},
+  date = {2015-12-01},
+  url = {http://hal.univ-lille3.fr/hal-01285304/document},
+  urldate = {2016-12-07},
+  abstract = {The keynote provides an overview on the field of research data produced by PhD students, in the context of open science, open access to research results, e-Science and the handling of electronic theses and dissertations. The keynote includes recent empirical results and recommendations for good practice and further research. In particular, the paper is based on an assessment of 864 print and electronic dissertations in sciences, social sciences and humanities from the Universities of Lille (France) and Ljubljana (Slovenia), submitted between 1987 and 2015, and on a survey on data management with 270 scientists in social sciences and humanities of the University of Lille 3. The keynote starts with an introduction into data-driven science, data life cycle and data publishing. It then moves on to research data management by PhD students, their practice, their needs and their willingness to disseminate and share their data. After this qualitative analysis of information behaviour, we present the results of a quantitative assessment of research data produced and submitted with dissertations Special attention is paid to the size of the research data in appendices, to their presentation and link to the text, to their sources and typology, and to their potential for further research. The discussion puts the focus on legal aspects (database protection, intellectual property, privacy, third-party rights) and other barriers to data sharing, reuse and dissemination through open access. Another part adds insight into the potential handling of these data, in the framework of the French and Slovenian dissertation infrastructures. What could be done to valorise these data in a centralized system for electronic theses and dissertations (ETDs)? The topics are formats, metadata (including attribution of unique identifiers), submission/deposit, long-term preservation and dissemination. This part will also draw on experiences from other campuses and make use of results from surveys on data management at the Universities of Berlin and Lille. The conclusion provides some recommendations for the assistance and advice to PhD students in managing and depositing their research data, and also for further research. Our study will be helpful for academic libraries to develop assistance and advice for PhD students in managing their research data, in collaboration with the research structures and the graduate schools. Moreover, it should be helpful to prepare and select research data for long-term preservation, curate research data in open repositories and design data repositories. The French part of paper is part of an ongoing research project at the University of Lille 3 (France) in the field of digital humanities and research data, conducted with scientists and academic librarians. Its preliminary results have been presented at a conference on research data in February 2015 at Lille, at the 8th Conference on Grey Literature and Repositories at Prague in October 2015 and published in the Journal of Librarianship and Scholarly Communication. The Slovenian research results have not been published before.},
+  eventtitle = {{{GL17 International Conference}} on {{Grey Literature}}},
+  langid = {english}
+}
+
+@inproceedings{schopfel2015a,
+  title = {Dissertations and {{Data}}},
+  booktitle = {{{GL17 International Conference}} on {{Grey Literature}}},
+  author = {Schöpfel, Joachim and Primož, Južnič and Prost, Hélène and Malleret, Cécile and Češarek, Ana and Koler-Povh, Teja},
+  date = {2015},
+  url = {http://hal.univ-lille3.fr/hal-01285304},
+  urldate = {2016-08-29}
+}
+
+@inproceedings{schopfel2015b,
+  title = {Making Data in {{PhD}} Dissertations Reusable for Research},
+  author = {Schöpfel, Joachim and Prost, Hélène and Malleret, Cécile},
+  date = {2015-10-21},
+  url = {http://hal.univ-lille3.fr/hal-01248979/document},
+  urldate = {2016-08-24},
+  abstract = {How can an academic library contribute to make data submitted together with PhD dissertations useful for further research? Our paper provides some recommendations for information professionals, based on a review of studies and projects and on empirical evidence from a content analysis of data sources and types from 300 print and digital dissertations in social sciences and humanities (1987-2013) and a survey on data management conducted with the scientists and PhD students of the University of Lille 3 in April and May 2015.},
+  eventtitle = {8th {{Conference}} on {{Grey Literature}} and {{Repositories}}},
+  langid = {english}
+}
+
+@inproceedings{schopfel2016,
+  title = {Research {{Data}} in {{Current Research Information Systems}}},
+  author = {Schöpfel, Joachim and Prost, Hélène and Rebouillat, Violaine},
+  date = {2016-06-09},
+  publisher = {euroCRIS},
+  url = {http://dspacecris.eurocris.org/handle/11366/501},
+  urldate = {2016-08-24},
+  abstract = {The paper provides an overview of recent research and publications on the integration of research data in Current Research Information Systems (CRIS) and addresses three related issues, i.e. the object of evaluation, identifier schemes and conservation. Our focus is on social sciences and humanities. As research data gradually become a crucial topic of scientific communication and evaluation, current research information systems must be able to consider and manage the great variety and granularity levels of data as sources and results of scientific research. More empirical and moreover conceptual work is needed to increase our understanding of the reality of research data and the way they can and should be used for the needs and objectives of research evaluation. The paper contributes to the debate on the evaluation of research data, especially in the environment of open science and open data, and will be helpful in implementing CRIS and research data policies.},
+  langid = {english}
+}
+
+@article{silvello2015,
+  title = {A {{Methodology}} for {{Citing Linked Open Data Subsets}}},
+  author = {Silvello, Gianmaria},
+  date = {2015-01},
+  journaltitle = {D-Lib Magazine},
+  volume = {21},
+  number = {1/2},
+  issn = {1082-9873},
+  doi = {10.1045/january2015-silvello},
+  url = {http://www.dlib.org/dlib/january15/silvello/01silvello.html},
+  urldate = {2016-04-29},
+  langid = {english}
+}
+
+@article{starr2015,
+  title = {Achieving Human and Machine Accessibility of Cited Data in Scholarly Publications},
+  author = {Starr, Joan and Castro, Eleni and Crosas, Mercè and Dumontier, Michel and Downs, Robert R. and Duerr, Ruth and Haak, Laurel L. and Haendel, Melissa and Herman, Ivan and Hodson, Simon and Hourclé, Joe and Kratz, John Ernest and Lin, Jennifer and Nielsen, Lars Holm and Nurnberger, Amy and Proell, Stefan and Rauber, Andreas and Sacchi, Simone and Smith, Arthur and Taylor, Mike and Clark, Tim},
+  date = {2015-05-27},
+  journaltitle = {PeerJ Computer Science},
+  volume = {1},
+  pages = {e1},
+  issn = {2376-5992},
+  doi = {10.7717/peerj-cs.1},
+  url = {https://peerj.com/articles/cs-1},
+  urldate = {2016-04-24},
+  langid = {english}
+}
+
+@book{uhlir2012,
+  title = {For Attribution--: {{Developing Data Attribution}} and {{Citation Practices}} and {{Standards}}: Summary of an International Workshop},
+  shorttitle = {For Attribution--},
+  editor = {Uhlir, P. F. and {National Research Council (U.S.)}},
+  date = {2012},
+  publisher = {The National Academies Press},
+  location = {Washington, D.C},
+  abstract = {"The growth of electronic publishing of literature has created new challenges, such as the need for mechanisms for citing online references in ways that can assure discoverability and retrieval for many years into the future. The growth in online datasets presents related, yet more complex challenges. It depends upon the ability to reliably identify, locate, access, interpret, and verify the version, integrity, and provenance of digital datasets. Data citation standards and good practices can form the basis for increased incentives, recognition, and rewards for scientific data activities that in many cases are currently lacking in many fields of research. The rapidly-expanding universe of online digital data holds the promise of allowing peer-examination and review of conclusions or analysis based on experimental or observational data, the integration of data into new forms of scholarly publishing, and the ability for subsequent users to make new and unforeseen uses and analyses of the same data-either in isolation, or in combination with, other data sets. The problem of citing online data is complicated by the lack of established practices for referring to portions or subsets of data. There are a number of initiatives in different organizations, countries, and disciplines already underway. An important set of technical and policy approaches have already been launched by the U.S. National Information Standards Organization (NISO) and other standards bodies regarding persistent identifiers and online linking. The workshop summarized in For Attribution -- Developing Data Attribution and Citation Practices and Standards: Summary of an International Workshop was organized by a steering committee under the National Research Council's (NRC's) Board on Research Data and Information, in collaboration with an international CODATA-ICSTI Task Group on Data Citation Standards and Practices. The purpose of the symposium was to examine a number of key issues related to data identification, attribution, citation, and linking to help coordinate activities in this area internationally, and to promote common practices and standards in the scientific community."--Publisher's description},
+  isbn = {978-0-309-26728-1},
+  pagetotal = {219},
+  keywords = {Citation of electronic information resources,Data processing,research},
+  annotation = {OCLC: ocn821882717}
+}
+
+@online{zaken2016,
+  type = {publicatie},
+  title = {Amsterdam Call for Action on Open Science - Publication - EU2016.nl},
+  author = {Zaken, Ministerie van Buitenlandse},
+  date = {2016-04-07T10:33},
+  url = {https://english.eu2016.nl/documents/reports/2016/04/04/amsterdam-call-for-action-on-open-science},
+  urldate = {2016-12-07},
+  langid = {dutch}
+}
+
+@article{zotero-item-112,
+  title = {{{OpenAIRE}}'s {{Experiments}} in {{Open Peer Review}} / {{Report}}},
+  journaltitle = {Zenodo},
+  doi = {10.5281/zenodo.154647},
+  url = {https://zenodo.org/record/154647},
+  urldate = {2016-09-28},
+  abstract = {Public report of the Open Peer Review Experiments hosted by OpenAIRE2020 and conducted by OpenScholar CIC, The Winnower, and OpenEdition. Review this report: We welcome feedback on this report from any and all interested parties, whether a formal review of the report as publication, a comment on your judgement of the value of the work contained therein, or just a quick note to advise of any formatting/language issues that should be addressed in any future version. Please make use of the commentary function of the following OpenAIRE blogpost to leave your feedback on the report: https://blogs.openaire.eu/?p=1269 All comments will be gratefully received!},
+  keywords = {Evaluation Platform,Open peer review,OPR,OPRM,Peer Review,Repositories,Scholarly Communication}
+}
+
+@online{zotero-item-114,
+  title = {Canonical {{Text Services}} Protocol Specification},
+  url = {https://cite-architecture.github.io/cts_spec/},
+  urldate = {2016-09-09},
+  keywords = {Persistent identifiers}
+}
+
+@online{zotero-item-118,
+  title = {Open {{Access}} for {{East}} and {{West}}},
+  url = {https://sdvigpress.org/projet},
+  urldate = {2016-09-15},
+  abstract = {Description of Sdvig Press Project}
+}
+
+@online{zotero-item-120,
+  title = {The {{Canonical Text Service}} ({{CTS}}) · {{The CITE Architecture}}},
+  url = {https://cite-architecture.github.io/cts/},
+  urldate = {2016-09-09},
+  keywords = {Persistent identifiers}
+}
+
+@online{zotero-item-121,
+  title = {Four {{URLs}}},
+  url = {http://folio.furman.edu/projects/cite/four_urls.html},
+  urldate = {2016-09-09},
+  keywords = {Persistent identifiers}
+}
+
+@online{zotero-item-122,
+  title = {The {{OHCO2}} Model of Text · {{The CITE Architecture}}},
+  url = {https://cite-architecture.github.io/ohco2/},
+  urldate = {2016-09-09},
+  keywords = {Persistent identifiers}
+}
+
+@online{zotero-item-125,
+  title = {{{CLARIN}} - {{Persistent}} and Unique {{Identifiers}}},
+  url = {http://www-sk.let.uu.nl/u/D2R-2b.pdf},
+  urldate = {2016-09-02},
+  keywords = {Persistent identifiers}
+}
+
+@online{zotero-item-128,
+  title = {{{OECD Principles}} and {{Guidelines}} for {{Access}} to {{Research Data}} from {{Public Funding}} - {{OECD}}},
+  url = {https://www.oecd.org/sti/sci-tech/oecdprinciplesandguidelinesforaccesstoresearchdatafrompublicfunding.htm},
+  urldate = {2016-09-02}
+}
+
+@online{zotero-item-129,
+  title = {H2020 {{Programme Guidelines}} on {{FAIR}}  {{Data Management}} in {{Horizon}} 2020},
+  url = {https://ec.europa.eu/research/participants/data/ref/h2020/grants_manual/hi/oa_pilot/h2020-hi-oa-data-mgt_en.pdf},
+  urldate = {2016-09-02}
+}

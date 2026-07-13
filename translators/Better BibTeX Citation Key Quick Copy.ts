@@ -2,6 +2,7 @@ declare const Zotero: any
 
 import { simplifyForExport } from '../content/item-schema'
 import { uri, html as escapeHTML } from '../content/escape'
+import { strcmp } from '../content/string-compare'
 
 import { Eta } from 'eta'
 const eta = new Eta({ autoEscape: true })
@@ -158,7 +159,7 @@ export function doExport(): void {
   items.sort((a: any, b: any) => {
     const ka = [ a.citationKey || a.itemType, a.dateModified || a.dateAdded, a.itemID ].join('\t')
     const kb = [ b.citationKey || b.itemType, b.dateModified || b.dateAdded, b.itemID ].join('\t')
-    return ka.localeCompare(kb, undefined, { sensitivity: 'base' })
+    return strcmp.base(ka, kb)
   })
 
   const mode = Mode[Zotero.getOption('quickCopyMode')] || Mode[Zotero.getHiddenPref('better-bibtex.quickCopyMode')]

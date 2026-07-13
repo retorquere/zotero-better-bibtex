@@ -6,7 +6,7 @@
       "autoExportDelay": 18,
       "biblatexUsePrefix": false,
       "citekeyFormat": "auth.lower + year + shorttitle(3, 3)",
-      "exportTitleCase": false,
+      "exportTitlecase": "off",
       "quickCopyMode": "citekeys",
       "skipFields": "file"
     },
@@ -40,7 +40,7 @@
       "libraryCatalog": "DOI.org (Crossref)",
       "url": "http://www.nber.org/papers/w8524.pdf",
       "accessDate": "2023-11-30T00:15:33Z",
-      "extra": "DOI: 10.3386/w8524\nMAG: 2106676663\nOpenAlex: W2106676663\nCorpusID: 227225830\nCitation Key: alesina2001WhyDoesntUS",
+      "extra": "DOI: 10.3386/w8524\nMAG: 2106676663\nOpenAlex: W2106676663\nCorpusID: 227225830",
       "place": "Cambridge, MA",
       "pages": "w8524",
       "creators": [

@@ -1,5 +1,6 @@
 declare const Zotero: any
 
+import { strcmp } from '../../content/string-compare'
 import * as escape from '../../content/escape'
 import { log } from '../../content/logger'
 import { Exporter as BibTeXExporter } from './exporter'
@@ -7,7 +8,7 @@ import { parse as arXiv } from '../../content/arXiv'
 import { Schema } from '../../content/item-schema'
 import wordsToNumbers from '@insomnia-dev/words-to-numbers'
 
-import { ParsedDate, parse as parseDate, strToISO as strToISODate, century } from '../../content/dateparser'
+import { RichDate, parse as parseDate, strToISO as strToISODate, century } from '../../content/dateparser'
 import { toEnglishOrdinal } from '../../content/text'
 
 import { parseBuffer as parsePList } from 'bplist-parser'
@@ -38,7 +39,7 @@ function isURL(url: string): boolean {
 }
 
 const config: Config = {
-  caseConversion: {
+  exportCaseDefaults: {
     title: true,
     series: true,
     shorttitle: true,
@@ -357,8 +358,8 @@ export async function importBibTeX(collected: Collected): Promise<void> {
   await importer.import()
 }
 
-function addDate(ref: Entry, date: ParsedDate | { type: 'none' }, verbatim: string) {
-  const print = (d: ParsedDate) => {
+function addDate(ref: Entry, date: RichDate | { type: 'none' }, verbatim: string) {
+  const print = (d: RichDate) => {
     switch (d.type) {
       case 'date':
       case 'season':
@@ -462,7 +463,11 @@ export function generateBibTeX(collected: Collected): Translation {
     if (![ 'book', 'inbook', 'incollection', 'proceedings', 'inproceedings' ].includes(ref.entrytype) || !ref.has.volume) ref.add({ name: 'number', value: item.number || item.issue || item.seriesNumber })
     ref.add({ name: 'urldate', value: item.accessDate && item.accessDate.replace(/\s*T?\d+:\d+:\d+.*/, '') })
 
-    const journalAbbreviation = o.useJournalAbbreviation && (item.journalAbbreviation || item.autoJournalAbbreviation)
+    const journalAbbreviation = (translation.collected.displayOptions.useJournalAbbreviation && {
+      abbrev: item.journalAbbreviation,
+      auto: item.autoJournalAbbreviation,
+      'abbrev+auto': item.journalAbbreviation || item.autoJournalAbbreviation,
+    }[translation.collected.preferences.journalAbbreviation]) || ''
     if (ref.entrytype_source === 'zotero.conferencePaper') {
       ref.add({ name: 'booktitle', value: journalAbbreviation || item.publicationTitle || item.conferenceName, bibtexStrings: true })
     }
@@ -475,6 +480,21 @@ export function generateBibTeX(collected: Collected): Translation {
     else {
       ref.add({ name: 'journal', value: journalAbbreviation || item.publicationTitle, bibtexStrings: true })
     }
+
+    log.info('bibtex journal resolution:', {
+      itemID: item.itemID,
+      itemKey: item.itemKey,
+      itemType: item.itemType,
+      entrytype: ref.entrytype,
+      entrytypeSource: ref.entrytype_source,
+      useJournalAbbreviation: translation.collected.displayOptions.useJournalAbbreviation,
+      publicationTitle: item.publicationTitle || null,
+      journalAbbreviation: item.journalAbbreviation || null,
+      autoJournalAbbreviation: item.autoJournalAbbreviation || null,
+      resolvedJournalAbbreviation: journalAbbreviation || null,
+      journal: ref.has.journal?.value || null,
+      booktitle: ref.has.booktitle?.value || null,
+    })
 
     let reftype = ref.entrytype_source.split('.')[1]
     if (reftype.endsWith('thesis')) reftype = 'thesis' // # 1965
@@ -641,7 +661,7 @@ async function parseBibTeX(translation: Translation): Promise<Library> {
         case 'tex':
           return `<script>${tex}</script>`
         case 'text':
-          return node.type === 'macro' ? node.content : tex
+          return node.type === 'macro' ? node.content as string : tex
         case 'ignore':
           return ''
         default:
@@ -1152,7 +1172,7 @@ class ZoteroItem {
     for (const att of value.split(/,\s+/)) {
       const m = att.match(/^:?(?<path>.+?)(?::(?<mimeType>[a-z]+))?$/i)
       if (m) {
-        this.addAttachment(m.groups as { path: string })
+        this.addAttachment(m.groups)
       }
       else {
         this.addAttachment({ path: att })
@@ -1483,7 +1503,7 @@ class ZoteroItem {
       // 'assignee' is not a creator field for Zotero
       if (type === 'holder' && this.item.itemType === 'patent') continue
 
-      const creators: Creator[] = this.bibtex.fields[type] as unknown as Creator[]
+      const creators = this.bibtex.fields[type] as unknown as Creator[]
 
       let creatorType = creatorTypeMap[`${ this.item.itemType }.${ type }`] || creatorTypeMap[type]
       if (creatorType === 'author') creatorType = [ 'director', 'inventor', 'programmer', 'author' ].find(t => creatorsForType.includes(t))
@@ -1666,7 +1686,7 @@ class ZoteroItem {
 
         const ta = a.startsWith('tex.')
         const tb = b.startsWith('tex.')
-        if (ta === tb) return a.localeCompare(b, undefined, { sensitivity: 'base' })
+        if (ta === tb) return strcmp.base(a, b)
         return ta ? 1 : -1
       })
       this.item.extra = this.extra.map(line => line.replace(/\n+/g, ' ')).concat(this.item.extra || '').join('\n').trim()

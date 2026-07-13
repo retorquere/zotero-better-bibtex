@@ -44,12 +44,12 @@
     },
     {
       "extra": [
-        "Citation Key: emptybook",
         "{:X-genre: xxx}",
         "{:editor: Xxx}"
       ],
       "itemID": 7,
-      "itemType": "encyclopediaArticle"
+      "itemType": "encyclopediaArticle",
+      "citationKey": "emptybook"
     },
     {
       "creators": [
@@ -115,7 +115,6 @@
       ],
       "date": "1996-09-16",
       "extra": [
-        "Citation Key: friends:leia:tv",
         "volume: 3"
       ],
       "itemID": 3,
@@ -129,7 +128,8 @@
       "publicationTitle": "Friends",
       "publisher": "NBC",
       "runningTime": "22 min",
-      "title": "The one with the Princess Leia fantasy"
+      "title": "The one with the Princess Leia fantasy",
+      "citationKey": "friends:leia:tv"
     },
     {
       "creators": [
@@ -165,7 +165,6 @@
       ],
       "date": "2003",
       "extra": [
-        "Citation Key: friends:leia:dvd",
         "container-title: Friends",
         "number: 1",
         "original-publisher: NBC",
@@ -182,7 +181,8 @@
       "publisher": "Warner Home Video",
       "runningTime": "22 min",
       "title": "The one with the Princess Leia fantasy",
-      "volume": "3"
+      "volume": "3",
+      "citationKey": "friends:leia:dvd"
     }
   ]
 }

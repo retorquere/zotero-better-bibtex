@@ -29,8 +29,7 @@ Options:
 
 default: `no`
 
-By default, when scanning for cited items in the aux file, BBT will just generate a note listing all citation keys it cannot find in Zotero.
-When this option is turned on, BBT will attempt to import such missing items from the bib file that the AUX file being scanned points to.
+By default, when scanning for cited items in the aux file, BBT will just generate a note listing all citation keys it cannot find in Zotero. When this option is turned on, BBT will attempt to import such missing items from the bib file that the AUX file being scanned points to.
 
 
 

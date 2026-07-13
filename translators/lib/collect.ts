@@ -4,6 +4,7 @@ import { Serialized } from '../../gen/typings/serialized'
 import { displayOptions, DisplayOptions } from '../../gen/translators'
 import type { Preferences } from '../../gen/preferences/meta'
 import { defaults } from '../../gen/preferences/meta'
+import { strcmp } from '../../content/string-compare'
 
 type CacheableItem = Serialized.Item & { $cacheable: boolean }
 type CacheableRegularItem = Serialized.RegularItem & { $cacheable: boolean }
@@ -35,10 +36,10 @@ export class Items {
   public sort(sort: 'off' | 'id' | 'citekey'): void {
     switch (sort) {
       case 'id':
-        this.items.sort((a: { dateAdded?: string }, b: { dateAdded?: string }) => (a.dateAdded || '').localeCompare(b.dateAdded || ''))
+        this.items.sort((a: { dateAdded?: string }, b: { dateAdded?: string }) => strcmp.variant(a.dateAdded || '', b.dateAdded || ''))
         break
       case 'citekey':
-        this.items.sort((a: any, b: any) => this.sortkey(a).localeCompare(this.sortkey(b)))
+        this.items.sort((a: any, b: any) => strcmp.variant(this.sortkey(a), this.sortkey(b)))
         break
     }
   }
@@ -77,7 +78,7 @@ export class Items {
           break
 
         default:
-          yield (this.current = item) as unknown as CacheableRegularItem
+          yield (this.current = item)
       }
     }
     // trace('items: end item delivery')

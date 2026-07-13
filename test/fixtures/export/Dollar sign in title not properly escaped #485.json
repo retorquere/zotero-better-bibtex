@@ -27,13 +27,13 @@
       ],
       "date": "2016-04-06",
       "extra": [
-        "Citation Key: sanders_largest_2016",
         "tex.titleaddon= SenSanders"
       ],
       "itemID": 1,
       "itemType": "journalArticle",
       "title": "The largest U.S. companies would owe $620 billion in U.S. taxes on the cash they store in tax havens, the equivalent of our defense budget. [Tweet]",
-      "url": "https://twitter.com/SenSanders/status/717771426284060673"
+      "url": "https://twitter.com/SenSanders/status/717771426284060673",
+      "citationKey": "sanders_largest_2016"
     }
   ]
 }

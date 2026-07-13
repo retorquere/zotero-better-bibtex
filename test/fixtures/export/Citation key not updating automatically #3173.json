@@ -4,13 +4,13 @@
     "label": "BetterBibTeX JSON",
     "preferences": {
       "DOIandURL": "doi",
-      "autoAbbrev": true,
       "fillKeyAfter": 1,
       "citekeyFormat": "auth.lower+year+shorttitle(3,3)+type.abbr(4).capitalize",
       "keyConflictPolicy": "change",
       "keyScope": "global",
       "language": "both",
-      "skipFields": "file,biburl,bibsource,abstract,eissn,timestamp"
+      "skipFields": "file,biburl,bibsource,abstract,eissn,timestamp",
+      "journalAbbreviation": "abbrev+auto"
     }
   },
   "items": [
@@ -24,14 +24,13 @@
         }
       ],
       "date": "2013",
-      "extra": [
-        "Citation Key: DBLP:books/daglib/0032853"
-      ],
+      "extra": [],
       "itemID": 1,
       "itemType": "book",
       "publisher": "Cambridge University Press",
       "title": "Quantum computing since democritus",
-      "url": "http://www.cambridge.org/de/academic/subjects/physics/quantum-physics-quantum-information-and-quantum-computation/quantum-computing-democritus?format=PB"
+      "url": "http://www.cambridge.org/de/academic/subjects/physics/quantum-physics-quantum-information-and-quantum-computation/quantum-computing-democritus?format=PB",
+      "citationKey": "DBLP:books/daglib/0032853"
     }
   ]
 }

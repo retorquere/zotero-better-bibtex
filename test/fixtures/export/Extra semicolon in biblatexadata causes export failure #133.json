@@ -25,8 +25,7 @@
       ],
       "date": "2009",
       "extra": [
-        "Citation Key: ISI:000270196200011-0",
-        "biblatexdata*[affiliation=Fu, CL (Reprint Author), Lanzhou Univ, Sch Math & Stat, Lanzhou 730000, Peoples R China.\u2029 [Fu, Chu-Li; Deng, Zhi-Liang; Feng, Xiao-Li; Dou, Fang-Fang] Lanzhou Univ, Sch Math & Stat, Lanzhou 730000, Peoples R China.\u2029 [Deng, Zhi-Liang] Heilongjiang Univ, Sch Math Sci, Harbin 150080, Peoples R China.;author-email=fuchuli@lzu.edu.cn\u2029 zhiliangdeng@gmail.com\u2029 fengxl05@163.com\u2029 doufang566@163.com;doc-delivery-number=499DD;funding-acknowledgement=National Natural Science Foundation of China [10671085];funding-text=This project was supported by the National Natural Science Foundation\u2029 of China (grant 10671085).;journal-iso=SIAM J. Numer. Anal.;keywords-plus=TRANSFORM;number-of-cited-references=13;subject-category=Mathematics, Applied;times-cited=0]"
+        "biblatexdata*[affiliation=Fu, CL (Reprint Author), Lanzhou Univ, Sch Math & Stat, Lanzhou 730000, Peoples R China.  [Fu, Chu-Li; Deng, Zhi-Liang; Feng, Xiao-Li; Dou, Fang-Fang] Lanzhou Univ, Sch Math & Stat, Lanzhou 730000, Peoples R China.  [Deng, Zhi-Liang] Heilongjiang Univ, Sch Math Sci, Harbin 150080, Peoples R China.;author-email=fuchuli@lzu.edu.cn  zhiliangdeng@gmail.com  fengxl05@163.com  doufang566@163.com;doc-delivery-number=499DD;funding-acknowledgement=National Natural Science Foundation of China [10671085];funding-text=This project was supported by the National Natural Science Foundation  of China (grant 10671085).;journal-iso=SIAM J. Numer. Anal.;keywords-plus=TRANSFORM;number-of-cited-references=13;subject-category=Mathematics, Applied;times-cited=0]"
       ],
       "issue": "4",
       "itemID": 1,
@@ -49,7 +48,8 @@
         }
       ],
       "title": "A MODIFIED TIKHONOV REGULARIZATION FOR STABLE ANALYTIC CONTINUATION",
-      "volume": "47"
+      "volume": "47",
+      "citationKey": "ISI:000270196200011-0"
     },
     {
       "DOI": "10.1137/080730196",
@@ -63,9 +63,8 @@
       ],
       "date": "2009",
       "extra": [
-        "Citation Key: ISI:000270196200011-1",
-        "tex.affiliation: Fu, CL (Reprint Author), Lanzhou Univ, Sch Math & Stat, Lanzhou 730000, Peoples R China.\u2029 (Fu, Chu-Li, Deng, Zhi-Liang, Feng, Xiao-Li, Dou, Fang-Fang) Lanzhou Univ, Sch Math & Stat, Lanzhou 730000, Peoples R China.\u2029 (Deng, Zhi-Liang) Heilongjiang Univ, Sch Math Sci, Harbin 150080, Peoples R China.",
-        "tex.author-email: fuchuli@lzu.edu.cn\u2029 zhiliangdeng@gmail.com\u2029 fengxl05@163.com\u2029 doufang566@163.com",
+        "tex.affiliation: Fu, CL (Reprint Author), Lanzhou Univ, Sch Math & Stat, Lanzhou 730000, Peoples R China.  (Fu, Chu-Li, Deng, Zhi-Liang, Feng, Xiao-Li, Dou, Fang-Fang) Lanzhou Univ, Sch Math & Stat, Lanzhou 730000, Peoples R China.  (Deng, Zhi-Liang) Heilongjiang Univ, Sch Math Sci, Harbin 150080, Peoples R China.",
+        "tex.author-email: fuchuli@lzu.edu.cn  zhiliangdeng@gmail.com  fengxl05@163.com  doufang566@163.com",
         "tex.doc-delivery-number: 499DD",
         "tex.funding-acknowledgement: National Natural Science Foundation of China (10671085)",
         "tex.funding-text: This project was supported by the National Natural Science Foundation\u2029 of China (grant 10671085).",
@@ -96,7 +95,8 @@
         }
       ],
       "title": "A MODIFIED TIKHONOV REGULARIZATION FOR STABLE ANALYTIC CONTINUATION",
-      "volume": "47"
+      "volume": "47",
+      "citationKey": "ISI:000270196200011-1"
     },
     {
       "DOI": "10.1137/080730196",
@@ -110,9 +110,8 @@
       ],
       "date": "2009",
       "extra": [
-        "Citation Key: ISI:000270196200011-2",
-        "tex.affiliation: Fu, CL (Reprint Author), Lanzhou Univ, Sch Math & Stat, Lanzhou 730000, Peoples R China.\u2029 [Fu, Chu-Li; Deng, Zhi-Liang; Feng, Xiao-Li; Dou, Fang-Fang] Lanzhou Univ, Sch Math & Stat, Lanzhou 730000, Peoples R China.\u2029 [Deng, Zhi-Liang] Heilongjiang Univ, Sch Math Sci, Harbin 150080, Peoples R China.",
-        "tex.author-email: fuchuli@lzu.edu.cn\u2029 zhiliangdeng@gmail.com\u2029 fengxl05@163.com\u2029 doufang566@163.com",
+        "tex.affiliation: Fu, CL (Reprint Author), Lanzhou Univ, Sch Math & Stat, Lanzhou 730000, Peoples R China.  [Fu, Chu-Li; Deng, Zhi-Liang; Feng, Xiao-Li; Dou, Fang-Fang] Lanzhou Univ, Sch Math & Stat, Lanzhou 730000, Peoples R China.  [Deng, Zhi-Liang] Heilongjiang Univ, Sch Math Sci, Harbin 150080, Peoples R China.",
+        "tex.author-email: fuchuli@lzu.edu.cn  zhiliangdeng@gmail.com  fengxl05@163.com  doufang566@163.com",
         "tex.doc-delivery-number: 499DD",
         "tex.funding-acknowledgement: National Natural Science Foundation of China [10671085]",
         "tex.funding-text: This project was supported by the National Natural Science Foundation\u2029 of China (grant 10671085).",
@@ -143,7 +142,8 @@
         }
       ],
       "title": "A MODIFIED TIKHONOV REGULARIZATION FOR STABLE ANALYTIC CONTINUATION",
-      "volume": "47"
+      "volume": "47",
+      "citationKey": "ISI:000270196200011-2"
     }
   ]
 }

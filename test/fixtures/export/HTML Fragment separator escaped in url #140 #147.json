@@ -23,13 +23,13 @@
         }
       ],
       "extra": [
-        "Citation Key: MacFarlaneJohna",
         "tex.referencetype= archived"
       ],
       "itemID": 1,
       "itemType": "webpage",
-      "title": "Pandoc User\u2019s Guide",
-      "url": "http://johnmacfarlane.net/pandoc/README.html#citations"
+      "title": "Pandoc User’s Guide",
+      "url": "http://johnmacfarlane.net/pandoc/README.html#citations",
+      "citationKey": "MacFarlaneJohna"
     }
   ]
 }

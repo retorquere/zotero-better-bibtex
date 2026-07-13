@@ -17,6 +17,7 @@ import * as l10n from './l10n'
 import { orchestrator } from './orchestrator'
 import { pick } from './object'
 import { uri } from './escape'
+import { strcmp } from './string-compare'
 
 const cmdMeta = /(["^&|<>()%!])/
 const cmdMetaOrSpace = /[\s"^&|<>()%!]/
@@ -79,7 +80,7 @@ class Store extends ObservedMap<string, Job> {
     super(jobs)
   }
 
-  order = (a: Job, b: Job) => a.path.localeCompare(b.path, undefined, { sensitivity: 'base', usage: 'sort' })
+  order = (a: Job, b: Job) => strcmp.base(a.path, b.path)
 
   onChange(method: 'set' | 'delete' | 'clear', key?: string) {
     if (!key) throw new Error('do not clear the database')
@@ -132,7 +133,7 @@ function win_quote(s: string, forCmd = true): string {
 import { quote as posix_quote } from 'shell-quote'
 
 function quote(cmd: string[]): string {
-  return client.isWin ? cmd.map(s => win_quote(s)).join(' ') : <string>posix_quote(cmd)
+  return client.isWin ? cmd.map(s => win_quote(s)).join(' ') : posix_quote(cmd)
 }
 
 class Git {

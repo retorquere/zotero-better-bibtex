@@ -11,6 +11,8 @@ import { fileURLToPath } from 'url'
 import yargs from 'yargs'
 import { hideBin } from 'yargs/helpers'
 
+import * as YAML from 'js-yaml'
+
 import { TableCell, TableRow } from 'gherkin-ast'
 import { format } from 'gherkin-formatter'
 import { read } from 'gherkin-io'
@@ -301,9 +303,15 @@ const main = async () => {
 
   // Copy/create test fixtures
   const fixture = path.join(root, `test/fixtures/${argv.mode}`, argv.title)
-  const source = `${fixture}.json`
+  const source = `${fixture}.yaml`
   try {
-    fs.copyFileSync(argv.data, source)
+    fs.writeFileSync(source, YAML.dump(JSON.parse(fs.readFileSync(argv.data, 'utf-8')), {
+      indent: 2,
+      lineWidth: -1,
+      styles: {
+        '!!str': 'block'
+      }
+    }))
     execSync(`git add "${source}"`, { cwd: root, stdio: 'inherit' })
 
     const target = `${fixture}${argv.export ? Translator.ext : '.bib'}`

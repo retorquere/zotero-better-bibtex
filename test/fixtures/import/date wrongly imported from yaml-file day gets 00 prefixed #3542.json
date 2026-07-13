@@ -1,0 +1,110 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "preferences": {},
+    "options": {}
+  },
+  "version": {
+    "zotero": "9.0.4",
+    "bbt": "9.0.31.emile.kiku.local"
+  },
+  "collections": {},
+  "items": [
+    {
+      "key": "3XVGQFSP",
+      "version": 0,
+      "itemType": "encyclopediaArticle",
+      "url": "https://de.wikipedia.org/w/index.php?title=Universit%C3%A4t_Regensburg&oldid=190335453",
+      "date": "2019-07-11",
+      "extra": "Citation Key: wikipe:univer:2019",
+      "accessDate": "2019-07-22",
+      "title": "Universit\u00e4t Regensburg",
+      "citationKey": "wikipe:univer:2019",
+      "creators": [
+        {
+          "name": "Wikipedia",
+          "creatorType": "author"
+        }
+      ],
+      "tags": [],
+      "relations": {},
+      "dateAdded": "2026-06-22T14:11:05Z",
+      "dateModified": "2026-06-22T14:11:05Z",
+      "uri": "http://zotero.org/users/8230813/items/3XVGQFSP",
+      "itemID": 108,
+      "attachments": [],
+      "notes": [],
+      "itemKey": "3XVGQFSP",
+      "libraryID": 1,
+      "publicationTitle": "Wikipedia, Die freie Enzyklop\u00e4die"
+    },
+    {
+      "key": "74A4X7RI",
+      "version": 0,
+      "itemType": "webpage",
+      "title": "Animal study shows sleeping brain behaves as if it's remembering: https://stan.md/RrqyEt #sleep #neuroscience #research",
+      "date": "2012-10-09",
+      "citationKey": "@stanf:2012:animal",
+      "url": "https://twitter.com/SUMedicine/status/255644688630046720",
+      "extra": "[Twitter, Tweet]\nCitation Key: @stanf:2012:animal",
+      "creators": [
+        {
+          "name": "@StanfordMed",
+          "creatorType": "author"
+        }
+      ],
+      "tags": [],
+      "dateAdded": "2026-06-25T17:31:27Z",
+      "dateModified": "2026-06-25T17:31:27Z",
+      "itemID": 361,
+      "attachments": [],
+      "notes": []
+    },
+    {
+      "key": "TG3ZW2CS",
+      "version": 0,
+      "itemType": "webpage",
+      "title": "F\u00fcr das Wintersemester 2021/22 ist die lang erwartete R\u00fcckkehr zu einem m\u00f6glichst weitreichenden Pr\u00e4senzlehrbetrieb geplant",
+      "date": "2021-09-23",
+      "citationKey": "ur.reg:2021:fur",
+      "url": "https://www.facebook.com/UR.Regensburg/photos/a.714984458891629/1739632266426838/",
+      "extra": "[Facebook, Status Update]\nCitation Key: ur.reg:2021:fur",
+      "creators": [
+        {
+          "name": "UR.Regensburg",
+          "creatorType": "author"
+        }
+      ],
+      "tags": [],
+      "dateAdded": "2026-06-25T17:31:27Z",
+      "dateModified": "2026-06-25T17:31:27Z",
+      "itemID": 380,
+      "attachments": [],
+      "notes": []
+    },
+    {
+      "key": "6M6G5NQT",
+      "version": 0,
+      "itemType": "encyclopediaArticle",
+      "title": "Universit\u00e4t Regensburg",
+      "date": "2019-07-11",
+      "citationKey": "wikipe:2019:universitat",
+      "url": "https://de.wikipedia.org/w/index.php?title=Universit%C3%A4t_Regensburg&oldid=190335453",
+      "extra": "Citation Key: wikipe:2019:universitat",
+      "creators": [
+        {
+          "name": "Wikipedia",
+          "creatorType": "author"
+        }
+      ],
+      "tags": [],
+      "dateAdded": "2026-06-25T17:31:27Z",
+      "dateModified": "2026-06-25T17:31:27Z",
+      "itemID": 381,
+      "attachments": [],
+      "notes": [],
+      "publicationTitle": "Wikipedia, Die freie Enzyklop\u00e4die"
+    }
+  ]
+}

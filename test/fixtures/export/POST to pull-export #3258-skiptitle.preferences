@@ -39,7 +39,6 @@
       "citekeyFold": true,
       "citekeyFormat": "auth.lower + shorttitle(3, 3) + year",
       "citekeyFormatEditing": "auth.lower + shorttitle(3, 3) + year",
-      "citekeySearch": true,
       "citekeyUnsafeChars": "\\\"#%'(),={}~",
       "csquotes": "",
       "DOIandURL": "both",

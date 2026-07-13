@@ -26,7 +26,6 @@
       ],
       "date": "2013-10-22",
       "extra": [
-        "Citation Key: simonite2013declinewikipediaeven",
         "tex.titleaddon= MIT Technology Review"
       ],
       "itemID": 1,
@@ -34,7 +33,8 @@
       "publicationTitle": "MIT Technology Review",
       "shortTitle": "The decline of Wikipedia",
       "title": "The decline of Wikipedia: even as more people than ever rely on it, fewer people create it",
-      "url": "http://www.technologyreview.com/featuredstory/520446/the-decline-of-wikipedia/"
+      "url": "http://www.technologyreview.com/featuredstory/520446/the-decline-of-wikipedia/",
+      "citationKey": "simonite2013declinewikipediaeven"
     }
   ]
 }

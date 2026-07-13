@@ -49,9 +49,7 @@
         }
       ],
       "date": "2001",
-      "extra": [
-        "Citation Key: Adams2001"
-      ],
+      "extra": [],
       "itemID": 1,
       "itemType": "journalArticle",
       "pages": "493\u2013518",
@@ -68,7 +66,8 @@
         }
       ],
       "title": "The physical volcanology of the 1600 eruption of Huaynaputina, southern Peru",
-      "volume": "62"
+      "volume": "62",
+      "citationKey": "Adams2001"
     }
   ]
 }

@@ -132,7 +132,7 @@
         {
           "creatorType": "author",
           "firstName": "Vincent",
-          "lastName": "Quenneville-B\u00e9lair"
+          "lastName": "Quenneville-Bélair"
         },
         {
           "creatorType": "author",
@@ -223,8 +223,7 @@
       ],
       "date": "2016-09-19",
       "extra": [
-        "arXiv: 1609.03499",
-        "Citation Key: vandenoordWaveNetGenerativeModel2016"
+        "arXiv: 1609.03499"
       ],
       "itemID": 2,
       "itemType": "journalArticle",

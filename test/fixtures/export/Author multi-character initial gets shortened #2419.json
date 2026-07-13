@@ -6,13 +6,13 @@
       "exportNotes": true
     },
     "preferences": {
-      "autoAbbrev": true,
       "autoExportDelay": 2,
       "citekeyFormat": "auth + year",
-      "exportTitleCase": false,
+      "exportTitlecase": "off",
       "importSentenceCase": "off",
       "quickCopyMode": "citekeys",
-      "biblatexExtendedNameFormat": true
+      "biblatexExtendedNameFormat": true,
+      "journalAbbreviation": "abbrev+auto"
     }
   },
   "items": [

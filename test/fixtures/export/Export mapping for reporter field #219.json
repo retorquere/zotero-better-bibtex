@@ -19,7 +19,6 @@
       "court": "HCA",
       "date": "1998-04-01",
       "extra": [
-        "Citation Key: kartinyeri",
         "tex.author= Kaetinyeri v Commonwealth",
         "tex.translator= Kartinyeri"
       ],
@@ -34,7 +33,8 @@
         }
       ],
       "title": "Kartinyeri v Commonwealth",
-      "volume": "195"
+      "volume": "195",
+      "citationKey": "kartinyeri"
     }
   ]
 }

@@ -8,6 +8,8 @@ better-bibtex_aux-scan_title_aux = Tag cited items from AUX file
 better-bibtex_aux-scan_title_md = Tag cited items from Markdown file
 better-bibtex_aux-scanner =
   .label = Scan BibTeX AUX/Markdown file for references...
+better-bibtex_aux-scanner_replace-collection =
+  .label = Scan BibTeX AUX/Markdown file and replace items in this collection...
 better-bibtex_bulk-keys-confirm_warning = You are changing more than { $treshold } items in one go. Are you sure?
 better-bibtex_bulk-keys-confirm_stop_asking = OK, and don't ask me again
 
@@ -177,8 +179,13 @@ better-bibtex_preferences_advanced_tab_postscript = postscript
 
 better-bibtex_preferences_advanced_tab_strings = @string definitions
 
-better-bibtex_preferences_auto-abbrev = 
-  .label = Automatically abbreviate journal title if none is set explicitly
+better-bibtex_preferences_auto-abbrev = Journal abbreviation mode (BibTeX/BibLaTeX)
+better-bibtex_preferences_auto-abbrev_abbrev =
+  .label = always use the Zotero abbreviation field
+better-bibtex_preferences_auto-abbrev_auto =
+  .label = always use the auto-abbreviated value
+better-bibtex_preferences_auto-abbrev_abbrev-plus-auto =
+  .label = use Zotero abbreviation field, fallback to auto-abbreviation
 
 better-bibtex_collection-menu_auto-export =
   .label = Automatic export
@@ -242,8 +249,7 @@ better-bibtex_preferences_citekey_format_installed = Active citation key formula
 better-bibtex_preferences_citekey_dynamic =
   .label = Regenerate citation key when item changes
 
-better-bibtex_preferences_citekey_uniqueness = 
-  .label = Keeping citation keys unique
+better-bibtex_preferences_citekey_uniqueness = Keeping citation keys unique
 
 better-bibtex_preferences_citekey_uniqueness_case =
   .label = Ignore upper/lowercase when comparing for uniqueness
@@ -431,8 +437,10 @@ better-bibtex_zotero-pane_add-citation-links =
   .label = Citation Graph: add citation links...
 better-bibtex_zotero-pane_citekey_pin_inspire-hep =
   .label = Set BibTeX key from InspireHEP
-better-bibtex_zotero-pane_citekey_pin =
-  .label = Pin BibTeX key
+better-bibtex_zotero-pane_citekey_move_from_extra =
+  .label = Move Citation Key from extra to citation key field
+better-bibtex_zotero-pane_citekey_clear_from_extra =
+  .label = Clear Citation Key from extra
 better-bibtex_zotero-pane_citekey_refresh =
   .label = Regenerate BibTeX key
 better-bibtex_zotero-pane_citekey_fill =
@@ -453,4 +461,3 @@ better-bibtex_zotero-pane_tex-studio =
   .label = Push entries to TeXstudio
 
 betterbibtex-item-pane-header = { -citation-key }
-

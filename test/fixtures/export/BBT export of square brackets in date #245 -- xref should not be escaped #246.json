@@ -18,7 +18,6 @@
       "court": "HCA",
       "date": "1998-04-01",
       "extra": [
-        "Citation Key: kartinyeri",
         "tex.author= Kaetinyeri v Commonwealth",
         "tex.translator= Kartinyeri"
       ],
@@ -33,7 +32,8 @@
         }
       ],
       "title": "Kartinyeri v Commonwealth",
-      "volume": "195"
+      "volume": "195",
+      "citationKey": "kartinyeri"
     },
     {
       "creators": [
@@ -71,7 +71,6 @@
       ],
       "date": "[2014]",
       "extra": [
-        "Citation Key: bentley_academic_2011",
         "tex.xref= welker_andreas_1999"
       ],
       "itemID": 3,
@@ -93,7 +92,8 @@
       ],
       "title": "6\u00a0The time it takes: temporalities of planning",
       "url": "http://onlinelibrary.wiley.com.ep.fjernadgang.kb.dk/doi/10.1111/1467-9655.12097/abstract",
-      "volume": "20"
+      "volume": "20",
+      "citationKey": "bentley_academic_2011"
     }
   ]
 }

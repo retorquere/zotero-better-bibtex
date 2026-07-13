@@ -4,10 +4,10 @@
     "label": "BetterBibTeX JSON",
     "localeDateOrder": "ymd",
     "preferences": {
-      "autoAbbrev": true,
       "bibtexURL": "note",
       "citekeyFormat": "auth(n=0,m=1,creator=\"*\",initials=false).fold + year",
-      "bibtexURLpackage": true
+      "bibtexURLpackage": true,
+      "journalAbbreviation": "abbrev+auto"
     }
   },
   "items": [
@@ -31,16 +31,15 @@
         }
       ],
       "date": "2012",
-      "extra": [
-        "Citation Key: Frit2"
-      ],
+      "extra": [],
       "itemID": 1,
       "itemType": "journalArticle",
       "language": "fr-FR",
       "pages": "71\u201380",
       "publicationTitle": "Actes du 4<sup>\u00e8me</sup> Congr\u00e8s Fran\u00e7ais d'Acoustique",
       "title": "Test of markupconversion: Italics, bold, superscript, subscript, and small caps: Mitochondrial DNA<sub>2</sub> sequences suggest unexpected phylogenetic position of Corso-Sardinian grass snakes (<i>Natrix cetti</i>) and <b>do not</b> support their <span style=\"small-caps\">species status</span>, with notes on phylogeography and subspecies delineation of grass snakes.",
-      "volume": "12"
+      "volume": "12",
+      "citationKey": "Frit2"
     }
   ]
 }

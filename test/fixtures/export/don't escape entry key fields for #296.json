@@ -26,7 +26,6 @@
       ],
       "date": "1983",
       "extra": [
-        "Citation Key: eisenmann_actes_1983",
         "tex.crossref= eisenmann_cours_1982"
       ],
       "itemID": 1,
@@ -37,8 +36,9 @@
       "place": "Paris",
       "publicationTitle": "Cours de droit administratif",
       "publisher": "LGDJ",
-      "title": "Les actes de l\u2019Administration [1949-1950]",
-      "volume": "t. 2"
+      "title": "Les actes de l’Administration [1949-1950]",
+      "volume": "t. 2",
+      "citationKey": "eisenmann_actes_1983"
     }
   ]
 }

@@ -22,7 +22,7 @@ body:
 
       Please be available in the days following your report for follow-up questions and testing.
 
-      ## Please **DO NOT** enter "N/A" or somesuch in the debug log ID field.
+      # **DO NOT** enter random garbage in the debug log ID field. I will probably close your issue sight unseen.
 
       I am done explaining why this is needed. Just include one.
 
@@ -34,9 +34,9 @@ body:
   attributes:
     label: Debug log ID
     description: Please fill in an actual debug log ID here. The ID must have 
-      `-euc` or `-apse` in it.
-    placeholder: ex. ABCD1234-ref-euc or nNwplUbkYrQu-buc-ABCD1234 for 
-      bashupload.com.
+      `-euc` or `-apse` in it. Relevant to *both* problem diagnosis and feature 
+      requests.
+    placeholder: ex. ABC123-ref-euc or nNwplUbkYrQu-fbn-ABC123
   validations:
     required: true
 - type: textarea

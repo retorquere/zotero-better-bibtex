@@ -4,7 +4,10 @@ import { getItemsAsync } from './get-items-async'
 import type { Serialized } from '../gen/typings/serialized'
 
 import { JournalAbbrev } from './journal-abbrev'
+import { log } from './logger'
 import { Preference } from './prefs'
+import { KeyManager } from './key-manager'
+import { readonly } from './library'
 
 class Serializer {
   private attachment(serialized: Serialized.Attachment, att): Serialized.Attachment {
@@ -28,7 +31,7 @@ class Serializer {
         break
 
       case 'attachment':
-        serialized = this.attachment(serialized as unknown as Serialized.Attachment, item)
+        serialized = this.attachment(serialized, item)
         break
 
       default:
@@ -53,9 +56,21 @@ export function fix(serialized: Serialized.Item, item: Zotero.Item): Serialized.
   if (item.isRegularItem() && !item.isFeedItem) {
     const regular = <Serialized.RegularItem>serialized
 
-    if (!Zotero.BetterBibTeX.starting && Preference.autoAbbrev) {
+    if (!Zotero.BetterBibTeX.starting) {
       regular.autoJournalAbbreviation = JournalAbbrev.get(regular, 'auto') || ''
+
+      log.info('3451: item-export-format.fix: journal fields', {
+        itemID: regular.itemID,
+        itemKey: regular.itemKey,
+        itemType: regular.itemType,
+        publicationTitle: regular.publicationTitle || null,
+        explicitJournalAbbreviation: regular.journalAbbreviation || null,
+        autoJournalAbbreviation: regular.autoJournalAbbreviation || null,
+        journalAbbreviation: Preference.journalAbbreviation,
+      })
     }
+
+    if (!regular.citationKey && readonly(item.libraryID)) regular.citationKey = KeyManager.get(item.id)?.citationKey ?? ''
   }
 
   // come on -- these are used in the collections export but not provided on the items?!
@@ -64,5 +79,5 @@ export function fix(serialized: Serialized.Item, item: Zotero.Item): Serialized.
   serialized.itemKey = item.key
   serialized.libraryID = item.libraryID
 
-  return serialized as unknown as Serialized.Item
+  return serialized
 }

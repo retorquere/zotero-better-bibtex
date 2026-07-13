@@ -2,11 +2,11 @@ import { toClipboard, sentenceCase as toSentenceCase } from './text'
 import { Preference } from './prefs'
 import { flash } from './flash'
 import * as Extra from './extra'
-import * as DateParser from './dateparser'
 import { log } from './logger'
 import * as CAYW from './cayw'
 import { TeXstudio } from './tex-studio'
 import { Translators } from './translators'
+import { parse } from './dateparser'
 
 export async function clipSelected(translatorID: string): Promise<void> {
   const items = Zotero.getActiveZoteroPane().getSelectedItems()
@@ -38,7 +38,7 @@ export async function patchDates(): Promise<void> {
         const extra = Extra.get(item.getField('extra'), 'zotero', { tex: true })
         for (const [ k, v ] of Object.entries(extra.extraFields.tex)) {
           if (mapping[k]) {
-            const date = DateParser.parse(v.value)
+            const date = parse(v.value)
             if (date.type === 'date' && date.day) {
               delete extra.extraFields.tex[k]
               const time = typeof date.seconds === 'number'
@@ -63,6 +63,32 @@ export async function patchDates(): Promise<void> {
   }
   catch (err) {
     log.error('patchDates:', err)
+  }
+}
+
+export function selectedItemsHaveCitationKeyInExtra(): boolean {
+  return Zotero.getActiveZoteroPane().getSelectedItems().some(item => {
+    if (item.isFeedItem || !item.isRegularItem()) return false
+    return !!Extra.citationKey(item.getField('extra')).citationKey
+  })
+}
+
+export async function applyCitationKeyFromExtra(move: boolean): Promise<void> {
+  try {
+    const items = Zotero.getActiveZoteroPane().getSelectedItems()
+    for (const item of items) {
+      if (item.isFeedItem || !item.isRegularItem()) continue
+
+      const { citationKey, extra } = Extra.citationKey(item.getField('extra'))
+      if (!citationKey) continue
+
+      if (move) item.setField('citationKey', citationKey)
+      item.setField('extra', extra)
+      await item.saveTx()
+    }
+  }
+  catch (err) {
+    log.error('applyCitationKeyFromExtra:', err)
   }
 }
 
@@ -106,7 +132,7 @@ export async function addCitationLinks(): Promise<void> {
 
     const extra = items[0].getField('extra') || ''
     const citations = new Set(extra.split('\n').filter((line: string) => line.startsWith('cites:')))
-    const picked = (await CAYW.pick({ format: 'citationLinks' })).split('\n').filter(citation => !citations.has(citation))
+    const picked = (await CAYW.pick({ format: 'citationLinks' })).output.split('\n').filter(citation => !citations.has(citation))
 
     if (picked.length) {
       items[0].setField('extra', `${ extra }\n${ picked.join('\n') }`.trim())

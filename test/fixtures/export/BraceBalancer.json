@@ -29,9 +29,7 @@
       ],
       "date": "2013",
       "edition": "Summer 2013",
-      "extra": [
-        "Citation Key: sep-aesthetic-judgment"
-      ],
+      "extra": [],
       "itemID": 1,
       "itemType": "bookSection",
       "libraryCatalog": "Stanford Encyclopedia of Philosophy}",
@@ -48,7 +46,8 @@
         }
       ],
       "title": "Aesthetic Judgment}",
-      "url": "http://plato.stanford.edu/archives/sum2013/entries/aesthetic-judgment/"
+      "url": "http://plato.stanford.edu/archives/sum2013/entries/aesthetic-judgment/",
+      "citationKey": "sep-aesthetic-judgment"
     }
   ]
 }

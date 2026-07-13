@@ -11,7 +11,7 @@
       "automaticTags": false,
       "bibtexURL": "url",
       "citeCommand": "citep",
-      "exportTitleCase": false,
+      "exportTitlecase": "off",
       "skipFields": "file",
       "bibtexURLpackage": true
     }
@@ -37,9 +37,7 @@
         }
       ],
       "date": "January 1, 2008",
-      "extra": [
-        "Citation Key: schayeRelationSchmidtKennicuttSchmidt2008"
-      ],
+      "extra": [],
       "itemID": 1,
       "itemType": "journalArticle",
       "journalAbbreviation": "Monthly Notices of the Royal Astronomical Society",

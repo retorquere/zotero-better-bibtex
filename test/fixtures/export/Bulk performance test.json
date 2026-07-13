@@ -623,7 +623,6 @@
       "date": "2007",
       "edition": "1. University of Minnesota Press ed.",
       "extra": [
-        "Citation Key: Serres2007Parasite",
         "tex.options= usetranslator=false"
       ],
       "itemID": 1025,
@@ -632,7 +631,8 @@
       "libraryCatalog": "Primo",
       "numPages": "255",
       "publisher": "University of Minnesota Press, [1980]",
-      "title": "The Parasite"
+      "title": "The Parasite",
+      "citationKey": "Serres2007Parasite"
     },
     {
       "ISBN": "9780816673070  0816673071  9780816676354  0816676356",
@@ -5493,9 +5493,7 @@
         }
       ],
       "date": "2012",
-      "extra": [
-        "Citation Key: KlimatilpasningKokkedal2012Projektkonkurrence"
-      ],
+      "extra": [],
       "itemID": 509,
       "itemType": "book",
       "libraryCatalog": "Primo",
@@ -5505,7 +5503,8 @@
           "tag": "vigtig"
         }
       ],
-      "title": "Klimatilpasning Kokkedal. Indbudt projektkonkurrence 2012"
+      "title": "Klimatilpasning Kokkedal. Indbudt projektkonkurrence 2012",
+      "citationKey": "KlimatilpasningKokkedal2012Projektkonkurrence"
     },
     {
       "creators": [
@@ -6402,9 +6401,7 @@
         }
       ],
       "date": "2012",
-      "extra": [
-        "Citation Key: KlimatilpasningKokkedal2012Projektbeskrivelse"
-      ],
+      "extra": [],
       "itemID": 7,
       "itemType": "book",
       "language": "da",
@@ -6414,7 +6411,8 @@
           "tag": "vigtig"
         }
       ],
-      "title": "Klimatilpasning Kokkedal. Hvordan udvikler man en hel bydel gennem klimatilpasning? Projektbeskrivelse"
+      "title": "Klimatilpasning Kokkedal. Hvordan udvikler man en hel bydel gennem klimatilpasning? Projektbeskrivelse",
+      "citationKey": "KlimatilpasningKokkedal2012Projektbeskrivelse"
     },
     {
       "accessDate": "2013-12-13 23:47:13",

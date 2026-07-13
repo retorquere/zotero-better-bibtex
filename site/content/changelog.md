@@ -4,6 +4,15 @@ title: Changelog
 weight: 500
 ---
 <!-- WARNING: GENERATED FROM https://github.com/retorquere/zotero-better-bibtex/blob/master/CHANGELOG.md. EDITS WILL BE OVERWRITTEN -->
+## v9.0.21
+
+- Hidden preference instructions updated
+- Cloned items have their citation keys cleared automatically to prevent duplicates
+- CAYW works again
+- Date parsing logic was enhanced to support better timezone offset detection and date interval handling
+- Collection path resolution support fixed for library and group IDs in absolute paths
+- Pattern formatting for author initials was updated to correctly handle cases where full names are requested instead of just substrings
+
 ## v9.0.10
 
 * Citation key at the top

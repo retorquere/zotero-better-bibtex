@@ -30,7 +30,6 @@
       ],
       "date": "2014",
       "extra": [
-        "Citation Key: anand2014technicalreportformally",
         "tex.origdate= 1856",
         "tex.origtitle= An Old Title",
         "tex.timestamp= 2011.03.22",
@@ -39,7 +38,8 @@
       "itemID": 1,
       "itemType": "journalArticle",
       "title": "Technical Report : Towards a Formally Verified Proof Assistant",
-      "url": "http://www.nuprl.org/html/verification/"
+      "url": "http://www.nuprl.org/html/verification/",
+      "citationKey": "anand2014technicalreportformally"
     }
   ]
 }

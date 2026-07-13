@@ -30,9 +30,7 @@
         }
       ],
       "date": "2003",
-      "extra": [
-        "Citation Key: yan_cairong__2003"
-      ],
+      "extra": [],
       "itemID": 2,
       "itemType": "thesis",
       "language": "Chinese",
@@ -51,7 +49,8 @@
       "publisher": "國立暨南國際大學",
       "title": "明清時期出版與文化─以「才子佳人」小說為中心",
       "type": "Ph.D. Dissertation",
-      "url": "http://ndltd.ncl.edu.tw/cgi-bin/gs32/gsweb.cgi?o=dnclcdr&s=id=%22091NCNU0493006%22.&searchmode=basic"
+      "url": "http://ndltd.ncl.edu.tw/cgi-bin/gs32/gsweb.cgi?o=dnclcdr&s=id=%22091NCNU0493006%22.&searchmode=basic",
+      "citationKey": "yan_cairong__2003"
     },
     {
       "accessDate": "2016-04-20 13:56:34",
@@ -72,9 +71,7 @@
         }
       ],
       "date": "n.d.",
-      "extra": [
-        "Citation Key: leishuku"
-      ],
+      "extra": [],
       "itemID": 1,
       "itemType": "webpage",
       "language": "zh",
@@ -97,7 +94,8 @@
       "shortTitle": "leishuku",
       "title": "中國類書庫",
       "type": "Full-text databse",
-      "url": "http://server.wenzibase.com"
+      "url": "http://server.wenzibase.com",
+      "citationKey": "leishuku"
     }
   ]
 }

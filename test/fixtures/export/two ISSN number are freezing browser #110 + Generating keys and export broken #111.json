@@ -32,7 +32,6 @@
       ],
       "date": "01/01/1989",
       "extra": [
-        "Citation Key: fixed",
         "04849",
         "PMID: 2563713"
       ],
@@ -46,7 +45,8 @@
       "publicationTitle": "Genetics",
       "title": "Mapping Mendelian factors underlying quantitative traits using RFLP linkage maps.",
       "url": "http://www.genetics.org/content/121/1/185",
-      "volume": "121"
+      "volume": "121",
+      "citationKey": "fixed"
     }
   ]
 }

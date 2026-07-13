@@ -1,0 +1,22 @@
+name: Label user inactivity
+
+on:
+  issue_comment:
+    types: [created]
+  schedule:
+    - cron: '0 3 * * *'
+  workflow_dispatch:
+
+jobs:
+  stale:
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+    steps:
+      - name: Run stalebot
+        uses: retorquere/stalebot@v1
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          days-inactive: '14'
+          stale: 'stale'
+          ignore: 'question,wip,blocked,in-progress'

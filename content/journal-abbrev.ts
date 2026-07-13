@@ -66,12 +66,16 @@ export const JournalAbbrev = new class {
 
   public get(item, mode: 'abbrev' | 'auto' | 'abbrev+auto' = 'abbrev+auto'): string {
     const zotero_item = !!(item._objectType) // eslint-disable-line no-underscore-dangle
-    if (!zotero_item) item = simplifyForExport(Object.create(item), { creators: false, scrub: false }) // don't mess with the serialized object, Zotero needs it intact
+    if (!zotero_item) item = simplifyForExport(item, { creators: false, scrub: false })
+
+    const itemType = zotero_item ? Zotero.ItemTypes.getName(item.itemTypeID) : item.itemType
 
     let abbrev = mode.startsWith('abbrev') ? this.getField(item, 'journalAbbreviation', zotero_item) : null
-    if (abbrev || !mode.endsWith('auto')) return abbrev
+    if (abbrev || !mode.endsWith('auto')) {
+      return abbrev
+    }
 
-    if (!this.journal.has(zotero_item ? Zotero.ItemTypes.getName(item.itemTypeID) : item.itemType)) return null
+    if (!this.journal.has(itemType)) return null
 
     const journal: string = this.fields.map(field => this.getField(item, field, zotero_item)?.replace(/<\/?(sup|sub|i|b)>/g, '')).find(_ => _)
     if (!journal) return null
@@ -81,7 +85,9 @@ export const JournalAbbrev = new class {
       Zotero.Cite.getAbbreviation(this.style, this.abbrevs, 'default', 'container-title', journal)
     }
     abbrev = this.abbrevs.default['container-title'][journal]
-    if (abbrev && abbrev.toLowerCase() !== journal.toLowerCase().replace(/[.]/g, '')) return abbrev
+    if (abbrev && abbrev.toLowerCase() !== journal.toLowerCase().replace(/[.]/g, '')) {
+      return abbrev
+    }
 
     return null
   }

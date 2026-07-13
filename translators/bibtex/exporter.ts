@@ -1,5 +1,6 @@
 declare const Zotero: any
 
+import { strcmp } from '../../content/string-compare'
 import { Translation } from '../lib/translator'
 
 import { Serialized } from '../../gen/typings/serialized'
@@ -46,7 +47,7 @@ export class Exporter {
   private *itemsGenerator(): Generator<Serialized.RegularItem, void, unknown> {
     if (!this.postfix && this.translation.BetterTeX) this.postfix = new Postfix(this.translation.collected.preferences.qualityReport)
 
-    for (const item of this.translation.collected.items.regular) {
+    for (let item of this.translation.collected.items.regular) {
       if (this.translation.output.body) this.translation.output.body += '\n'
 
       if (typeof item.itemID !== 'number') item.$cacheable = false
@@ -73,11 +74,11 @@ export class Exporter {
 
       this.jabref.citekeys.set(item.itemID, item.citationKey)
 
-      simplifyForExport(item)
+      item = simplifyForExport(item) as typeof item
 
       // strip extra.tex fields that are not for me
       const prefix = this.translation.BetterBibLaTeX ? 'biblatex.' : 'bibtex.'
-      for (const [ name, field ] of Object.entries(item.extraFields.tex).sort((a, b) => b[0].localeCompare(a[0]))) { // sorts the fields from tex. to biblatex. to bibtex.
+      for (const [ name, field ] of Object.entries(item.extraFields.tex).sort((a, b) => strcmp.variant(b[0], a[0]))) { // sorts the fields from tex. to biblatex. to bibtex.
         for (const type of [ prefix, 'tex.' ]) {
           if (name.startsWith(type)) {
             item.extraFields.tex[name.substr(type.length)] = field
@@ -117,7 +118,7 @@ export class Exporter {
       const duplicates = [
         '% == Citekey duplicates in this file:\n',
       ]
-      for (const [ citekey, n ] of Object.entries(this.citekeys).sort((a, b) => a[0].localeCompare(b[0]))) {
+      for (const [ citekey, n ] of Object.entries(this.citekeys).sort((a, b) => strcmp.variant(a[0], b[0]))) {
         if (n > 1) duplicates.push(`% ${ citekey } duplicates: ${ n }\n`)
       }
       if (duplicates.length > 1) postfix.push(duplicates.join(''))

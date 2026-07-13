@@ -27,9 +27,7 @@
         }
       ],
       "date": "2008",
-      "extra": [
-        "Citation Key: Torre2008"
-      ],
+      "extra": [],
       "itemID": 1,
       "itemType": "document",
       "notes": [
@@ -37,7 +35,8 @@
         "note 2"
       ],
       "publisher": "Doubleday",
-      "title": "XYZZY"
+      "title": "XYZZY",
+      "citationKey": "Torre2008"
     }
   ]
 }

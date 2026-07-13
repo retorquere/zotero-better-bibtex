@@ -19,7 +19,7 @@
   langid = {the language},
   version = {3333}
 }
-% == BibLateX quality report for Foo2021:
+% == BibLaTeX quality report for Foo2021:
 % ? unused Call number ("the call number")
 % ? unused Library catalog ("the library catalogue")
 % ? unused Medium ("the format")

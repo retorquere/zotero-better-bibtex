@@ -4,8 +4,8 @@
     "label": "BetterBibTeX JSON",
     "preferences": {
       "DOIandURL": "doi",
-      "autoAbbrev": true,
-      "citekeyFormat": "authEtAl.lower + shortyear"
+      "citekeyFormat": "authEtAl.lower + shortyear",
+      "journalAbbreviation": "abbrev+auto"
     }
   },
   "items": [

@@ -9,7 +9,6 @@
       "automaticTags": false,
       "baseAttachmentPath": "/Users/jdh/Documents/Academia/Library",
       "citekeyFormat": "authEtAl2(creator = \"*\", initials = false, sep = \"_\") + \"_\" + year",
-      "citekeySearch": false,
       "keyScope": "global",
       "quickCopyMode": "pandoc"
     }
@@ -28,7 +27,6 @@
       ],
       "date": "2024-04-24",
       "extra": [
-        "Citation Key: Savoldi_2024",
         "DOI: 10.11606/D.8.2024.tde-15102024-121507",
         "tex.author=Savoldi da Rocha Azevedo, Dora",
         "tex.shortauthor=Savoldi"

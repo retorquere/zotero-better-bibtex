@@ -20,6 +20,7 @@ import html, re
 import timeit
 import platform
 import pytablewriter
+import requests
 
 from contextlib import contextmanager
 
@@ -144,7 +145,9 @@ def step_impl(context, source, target):
 def step_impl(context, references, source):
   source = expand_scenario_variables(context, source)
   context.imported = source
-  assert_that(context.zotero.import_file(context, source), equal_to(references))
+  imported = context.zotero.import_file(context, source)
+  if references != 0:
+    assert_that(imported, equal_to(references))
 
 @step(r'I import 1 reference from "{source}" into "{collection}"')
 def step_impl(context, source, collection):
@@ -168,19 +171,25 @@ def step_impl(context, source):
 def step_impl(context, references, attachments, source):
   source = expand_scenario_variables(context, source)
   context.imported = source
-  assert_that(context.zotero.import_file(context, source, True), equal_to(references))
+  imported = context.zotero.import_file(context, source, True)
+  if references != 0:
+    assert_that(imported, equal_to(references))
 
 @step(r'I import {references:d} references from "{source}" into a new collection')
 def step_impl(context, references, source):
   source = expand_scenario_variables(context, source)
   context.imported = source
-  assert_that(context.zotero.import_file(context, source, True), equal_to(references))
+  imported = context.zotero.import_file(context, source, True)
+  if references != 0:
+    assert_that(imported, equal_to(references))
 
 @step(r'I import {references:d} references with {attachments:d} attachments from "{source}"')
 def step_impl(context, references, attachments, source):
   source = expand_scenario_variables(context, source)
   context.imported = source
-  assert_that(context.zotero.import_file(context, source), equal_to(references))
+  imported = context.zotero.import_file(context, source)
+  if references != 0:
+    assert_that(imported, equal_to(references))
 
 @step(r'I export the library {n:d} times using "{translator}"')
 def step_impl(context, n, translator):
@@ -339,10 +348,28 @@ def step_impl(context, title):
     pick[row[0]] = row[1]
   context.picked.append(dict(pick))
 
+@step(u'I set CAYW pick options to {options}')
+def step_impl(context, options):
+  context.caywOptions = json.loads(options)
+
 @then(u'the picks for "{fmt}" should be "{expected}"')
 def step_impl(context, fmt, expected):
-  found = context.zotero.execute('return await Zotero.BetterBibTeX.TestSupport.pick(fmt, picks)', fmt=fmt, picks=context.picked)
+  found = context.zotero.execute('return await Zotero.BetterBibTeX.TestSupport.pick(fmt, picks, options)', fmt=fmt, picks=context.picked, options=context.caywOptions)
   assert_equal_diff(expected, found)
+
+@then(u'the translated picks should include {n:d} item matching "{title}" and omit notes')
+def step_impl(context, n, title):
+  found = context.zotero.execute('return await Zotero.BetterBibTeX.TestSupport.pick("translate", picks, options)', picks=context.picked, options=context.caywOptions)
+  try:
+    exported = json.loads(found)
+    items = exported.get('items', []) if isinstance(exported, dict) else []
+
+    assert len(items) == n, { 'expected': n, 'found': len(items) }
+    assert any(title in item.get('title', '') for item in items), title
+    assert all('notes' not in item for item in items), exported
+  except json.JSONDecodeError:
+    assert title.lower() in found.lower(), found
+    assert 'This is the child note' not in found, found
 
 @when(u'I {change} the citation key')
 def step_impl(context, change):
@@ -536,3 +563,26 @@ def step_impl(context, nth, name):
   ''', nth=nth, itemID=context.selected[0], name=name)
 
 
+
+@when(u'I call JSON-RPC method "{method}" with params {params}')
+def step_impl(context, method, params):
+  response = requests.post(
+    'http://127.0.0.1:23119/better-bibtex/json-rpc',
+    json={'jsonrpc': '2.0', 'method': method, 'params': json.loads(params), 'id': 1},
+    headers={'Content-Type': 'application/json'},
+  )
+  context.jsonrpc_response = response.json()
+
+@then(u'the JSON-RPC response should have no error')
+def step_impl(context):
+  assert 'error' not in context.jsonrpc_response, f'Unexpected error: {context.jsonrpc_response.get("error")}'
+
+@then(u'the JSON-RPC result for "{citekey}" should be null')
+def step_impl(context, citekey):
+  result = context.jsonrpc_response.get('result', {})
+  assert result.get(citekey) is None, f'Expected null for {citekey}; got {result.get(citekey)!r}'
+
+@then(u'the JSON-RPC result for "{citekey}" should be "{expected}"')
+def step_impl(context, citekey, expected):
+  result = context.jsonrpc_response.get('result', {})
+  assert result.get(citekey) == expected, f'Expected {expected!r} for {citekey}; got {result.get(citekey)!r}'

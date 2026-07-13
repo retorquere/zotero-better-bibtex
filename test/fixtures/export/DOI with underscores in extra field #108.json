@@ -28,7 +28,6 @@
       ],
       "date": "1999",
       "extra": [
-        "Citation Key: koopman_efficient_99",
         "tex.doi= 10.1007/3-540-48515-5_8"
       ],
       "itemID": 1,
@@ -37,7 +36,8 @@
       "pages": "120\u2013136",
       "publicationTitle": "Implementation of Functional Languages",
       "publisher": "Springer",
-      "title": "Efficient combinator parsers"
+      "title": "Efficient combinator parsers",
+      "citationKey": "koopman_efficient_99"
     }
   ]
 }

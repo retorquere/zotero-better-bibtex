@@ -55,7 +55,7 @@ class Override {
         }
 
         for (const [ pref, value ] of Object.entries(prefs)) {
-          if (!PrefNames.has(pref as unknown as Prefs.PreferenceName)) {
+          if (!PrefNames.has(pref)) {
             log.error(`better-bibtex: unexpected preference override for ${ pref }`)
           }
           else if (typeof value !== typeof Prefs.defaults[pref]) {
@@ -207,7 +207,7 @@ export class Translation {
         .reduce((acc: any, pref: Prefs.PreferenceName) => {
           acc[pref] = collected.preferences[pref]
           return acc as Prefs.Preferences
-        }, {}) as unknown as Prefs.Preferences
+        }, {})
 
       collected.preferences = new Proxy(allowedPreferences, {
         set: (object, property, _value) => {

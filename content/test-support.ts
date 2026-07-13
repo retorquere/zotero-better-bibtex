@@ -19,6 +19,13 @@ const idleService: any = Components.classes['@mozilla.org/widget/useridleservice
 export class TestSupport {
   public timedMemoryLog: any
   public scenario: string
+  public libraryID: number = Zotero.Libraries.userLibraryID
+
+  public selectLibrary(library: string | number): void {
+    this.libraryID = Zotero.Libraries.getAll().find(lib => lib.libraryID === library || lib.name === library)?.libraryID
+    if (typeof this.libraryID !== 'number') throw new Error(`library ${library} could not be found`)
+    log.info('testing: library selected:', { library, id: this.libraryID })
+  }
 
   public isIdle(): boolean {
     return idleService.idleTime > 1000
@@ -55,6 +62,7 @@ export class TestSupport {
 
   public async reset(scenario: string): Promise<void> {
     let error
+    this.libraryID = Zotero.Libraries.userLibraryID
     for (let i = 0; i < 3; i++) {
       try {
         if (i) log.error(JSON.stringify(scenario), 'reset attempt', i + 1)
@@ -165,13 +173,13 @@ export class TestSupport {
     if (collectionName) {
       let name = collectionName
       if (name[0] === '/') name = name.substring(1) // don't do full path parsing right now
-      for (const collection of Zotero.Collections.getByLibrary(Zotero.Libraries.userLibraryID)) {
+      for (const collection of Zotero.Collections.getByLibrary(this.libraryID)) {
         if (collection.name === name) scope = { type: 'collection', collection }
       }
       if (!scope) throw new Error(`Collection '${ name }' not found`)
     }
     else {
-      scope = { type: 'library', id: Zotero.Libraries.userLibraryID }
+      scope = { type: 'library', id: this.libraryID }
     }
 
     const job = { translatorID, displayOptions: displayOptions as Record<string, boolean>, scope, path }
@@ -185,6 +193,7 @@ export class TestSupport {
     }
     catch (err) {
       log.error('json-rpc: export failed:', job, err)
+      throw err
     }
     finally {
       log.info(`performance: ${ translatorID } export took ${ Date.now() - start }`)
@@ -236,14 +245,21 @@ export class TestSupport {
     return Array.from(new Set(ids))
   }
 
-  public async pick(format: string, citations: { id: number[]; uri: string; citationKey: string }[]): Promise<string> {
-    for (const citation of citations) {
+  public async pick(format: string, citations: { id: number[]; uri: string; citationKey: string }[], options: Record<string, string> = {}): Promise<string> {
+    const picked = citations.map(citation => {
       if (citation.id.length !== 1) throw new Error(`Expected 1 item, got ${ citation.id.length }`)
-      citation.citationKey = Zotero.BetterBibTeX.KeyManager.get(citation.id[0])?.citationKey || ''
-      citation.uri = Zotero.URI.getItemURI(await getItemAsync(citation.id[0]))
+      return {
+        ...citation,
+        id: citation.id[0],
+      }
+    })
+
+    for (const citation of picked) {
+      citation.citationKey = Zotero.BetterBibTeX.KeyManager.get(citation.id)?.citationKey || ''
+      citation.uri = Zotero.URI.getItemURI(await getItemAsync(citation.id))
     }
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-    return await CAYWFormatter[format](citations, {})
+    return await CAYWFormatter[format](picked, options)
   }
 
   public async pinCiteKey(itemID: number, action: string, citationKey?: string): Promise<void> {

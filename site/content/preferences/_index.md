@@ -16,14 +16,11 @@ Set the pattern used to generate citation keys. The format of the keys is docume
 Changing this setting *does not* affect existign keys - for this you would need to select the items and refresh the keys.
 
 
-
 ## Force citation key to plain text
 
 default: `yes`
 
-If you have deviated from the default citation key format pattern by [specifying your own]({{ ref . "citing" }}), you may
-wind up with non-ASCII characters in your citation keys. You can prevent that using the `fold` function at the
-appropriate place in your pattern, but checking this checkbox will just apply `fold` to all your keys.
+If you have deviated from the default citation key format pattern by [specifying your own]({{ ref . "citing" }}), you may wind up with non-ASCII characters in your citation keys. You can prevent that using the `fold` function at the appropriate place in your pattern, but checking this checkbox will just apply `fold` to all your keys.
 
 
 
@@ -54,9 +51,7 @@ Treat "AugusteComte" and "augustecomte" as the same key when testing for uniquen
 
 default: `within each library`
 
-Auto-generated (non-pinned) keys automatically get a postfix when they would generate a duplicate. By default, the check for duplicates is restricted
-to the library/group the item lives in. When set to global, the check will include all libraries/groups, so auto-generated keys would be globally
-unique. Changing this setting *does not* affect existign keys - for this you would need to select the items and refresh the keys.
+Generated keys automatically get a postfix when they would generate a duplicate. By default, the check for duplicates is restricted to the library/group the item lives in. When set to global, the check will include all libraries/groups, so auto-generated keys would be globally unique. Changing this setting *does not* affect existign keys - for this you would need to select the items and refresh the keys.
 
 
 Options:
@@ -92,9 +87,7 @@ Split all Chinese-like single-field names.
 
 default: `10`
 
-For those who are curious about what the `Clear/Generate BibTeX key` right-click options do, this will warn
-you if you are doing this on more than 10 (default) at the same time, to prevent your curiosity from changing
-all your citation keys at once.
+For those who are curious about what the `Clear/Generate BibTeX key` right-click options do, this will warn you if you are doing this on more than 10 (default) at the same time, to prevent your curiosity from changing all your citation keys at once.
 
 
 

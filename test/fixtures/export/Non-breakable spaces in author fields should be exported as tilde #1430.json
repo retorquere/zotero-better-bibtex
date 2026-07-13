@@ -7,7 +7,6 @@
     },
     "preferences": {
       "DOIandURL": "doi",
-      "autoAbbrev": true,
       "autoExportDelay": 1,
       "bibtexParticleNoOp": true,
       "bibtexURL": "url",
@@ -20,7 +19,7 @@
       "qualityReport": true,
       "skipFields": "abstract,ZSCC",
       "verbatimFields": "url,doi,file,eprint,verba,verbb,verbc",
-      "bibtexURLpackage": true
+      "journalAbbreviation": "abbrev+auto"
     }
   },
   "items": [
@@ -34,9 +33,7 @@
         }
       ],
       "date": "1999-12-01",
-      "extra": [
-        "Citation Key: c99"
-      ],
+      "extra": [],
       "itemID": 1,
       "itemType": "report",
       "language": "en",

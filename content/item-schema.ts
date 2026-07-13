@@ -1,6 +1,26 @@
 import $zotero from '../submodules/zotero/resource/schema/global/schema.json' with { type: 'json' }
-import $csl from '../submodules/citation-style-language-schema/schemas/input/csl-data.json' with { type: 'json' }
+import $csl from '../gen/csl-schema.json' with { type: 'json' }
 import { Serialized } from '../gen/typings/serialized'
+
+const cslVariableType: Partial<Record<keyof typeof $csl.variables, FieldType>> = {
+  dates: 'date',
+  names: 'name',
+}
+
+const cslFieldType: Record<string, FieldType> = {
+  type: 'text',
+  id: 'text',
+  categories: 'text',
+  journalAbbreviation: 'text',
+  shortTitle: 'text',
+}
+
+for (const [group, fields] of Object.entries($csl.variables) as Array<[keyof typeof $csl.variables, string[]]>) {
+  const type = cslVariableType[group] ?? 'text'
+  for (const field of fields) {
+    cslFieldType[field] = type
+  }
+}
 
 /*
 function tostring(o): string {
@@ -57,7 +77,7 @@ export type FieldType = 'date' | 'name' | 'text'
 
 export const Schema = new class $Schema {
   public zotero = $zotero
-  public csl = $csl.items.properties
+  public csl = $csl
 
   public lookup = {
     baseField: LookUp(),
@@ -150,33 +170,14 @@ export const Schema = new class $Schema {
       }
     }
 
-    const csltype = (type): FieldType => {
-      if (Array.isArray(type.type)) {
-        if (type.type.includes('number')) return 'text'
-        if (type.type.includes('string')) return 'text'
-        return (type.type as string[]).join('/') as 'text'
-      }
-
-      switch (type.$ref) {
-        case '#/definitions/name-variable': return 'name'
-        case '#/definitions/date-variable': return 'date'
-      }
-
-      switch (type.type) {
-        case 'string': return 'text'
-        case 'number': return 'text'
-        case 'array': return csltype(type.items)
-        case 'object': return null
-      }
-    }
-    for (const [ field, type ] of Object.entries(this.csl)) {
-      this.type.csl[field] = csltype(type)
+    for (const [ field, type ] of Object.entries(cslFieldType)) {
+      this.type.csl[field] = type
       const labels = [
         field,
         ...this.zoteroAliases(field),
       ]
       for (const label of labels) {
-        if (label) this.labeled.csl[label] ??= { field, type: this.type.csl[field] }
+        if (label) this.labeled.csl[label] ??= { field, type }
       }
     }
   }
@@ -222,6 +223,8 @@ function unalias(item: Serialized.RegularItem, scrub = true) {
 }
 
 export function simplifyForExport(item: Serialized.RegularItem, { creators = true, scrub = true }: { creators?: boolean; scrub?: boolean } = {}): Serialized.RegularItem {
+  item = structuredClone(item)
+
   unalias(item, scrub)
 
   if (item.filingDate) item.filingDate = item.filingDate.replace(/^0000-00-00 /, '')

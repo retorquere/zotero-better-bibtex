@@ -7,6 +7,21 @@ import type { Collected } from '../lib/collect'
 import { Entry as BaseEntry, Config } from './entry'
 
 const config: Config = {
+  exportCaseDefaults: {
+    title: true,
+    subtitle: true,
+    series: true,
+    shorttitle: true,
+    origtitle: true,
+    origsubtitle: true,
+    booktitle: true,
+    booksubtitle: true,
+    maintitle: true,
+    mainsubtitle: true,
+    eventtitle: true,
+    eventsubtitle: true,
+  },
+
   fieldEncoding: {
     groups: 'verbatim', // blegh jabref field
     url: 'url',
@@ -27,21 +42,6 @@ const config: Config = {
     organization: 'literal',
     location: 'literal_list',
     origlocation: 'literal_list',
-  },
-
-  caseConversion: {
-    title: true,
-    subtitle: true,
-    series: true,
-    shorttitle: true,
-    origtitle: true,
-    origsubtitle: true,
-    booktitle: true,
-    booksubtitle: true,
-    maintitle: true,
-    mainsubtitle: true,
-    eventtitle: true,
-    eventsubtitle: true,
   },
 
   typeMap: {
@@ -359,6 +359,9 @@ export function generateBibLaTeX(collected: Collected): Translation {
     }
     else {
       entry.add({ name: 'location', value: item.place || item.extraFields.kv['publisher-place'], enc: 'literal' })
+      if (item.itemType === 'conferencePaper' && !entry.has.venue) {
+        entry.add({ name: 'venue', value: item.eventPlace, enc: 'literal' })
+      }
     }
 
     /*
@@ -395,7 +398,11 @@ export function generateBibLaTeX(collected: Collected): Translation {
     }
     entry.add({ name: !number_added && looks_like_number_field(item.issue) ? 'number' : 'issue', value: entry.normalizeDashes(item.issue) })
 
-    const journalAbbreviation = item.journalAbbreviation || item.autoJournalAbbreviation
+    const journalAbbreviation = {
+      abbrev: item.journalAbbreviation,
+      auto: item.autoJournalAbbreviation,
+      'abbrev+auto': item.journalAbbreviation || item.autoJournalAbbreviation,
+    }[translation.collected.preferences.journalAbbreviation] || ''
     switch (entry.entrytype) {
       case 'jurisdiction':
         entry.add({ name: 'journaltitle', value: item.reporter || (item.publicationTitle !== item.title && item.publicationTitle), bibtexStrings: true })

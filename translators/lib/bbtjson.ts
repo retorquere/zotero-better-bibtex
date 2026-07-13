@@ -39,7 +39,6 @@ export function generateBBTJSON(collected: Collected): Translation {
   delete preferences.testing
   delete preferences.platform
   delete preferences.logEvents
-  delete preferences.scrubDatabase
 
   const data = {
     config: {
@@ -74,7 +73,7 @@ export function generateBBTJSON(collected: Collected): Translation {
       addSelect(att, translation)
     }
 
-    for (const item of translation.collected.items) {
+    for (let item of translation.collected.items) {
       delete item.$cacheable
       addSelect(item, translation)
 
@@ -89,8 +88,7 @@ export function generateBBTJSON(collected: Collected): Translation {
 
         default:
           delete item.collections
-
-          if (translation.collected.displayOptions.Normalize) simplifyForExport(item, {})
+          if (translation.collected.displayOptions.Normalize) item = simplifyForExport(item, {}) as typeof item
 
           for (const att of item.attachments || []) {
             handle(att)
