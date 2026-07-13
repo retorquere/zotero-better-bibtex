@@ -1,6 +1,5 @@
 import * as client from './client'
 import { orchestrator } from './orchestrator'
-import { log } from './logger'
 
 import { simplifyForExport } from './item-schema'
 
@@ -70,7 +69,6 @@ export const JournalAbbrev = new class {
     if (!zotero_item) item = simplifyForExport(item, { creators: false, scrub: false })
 
     const itemType = zotero_item ? Zotero.ItemTypes.getName(item.itemTypeID) : item.itemType
-    const itemKey = item.itemKey || item.key || null
 
     let abbrev = mode.startsWith('abbrev') ? this.getField(item, 'journalAbbreviation', zotero_item) : null
     if (abbrev || !mode.endsWith('auto')) {
