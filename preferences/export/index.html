@@ -223,8 +223,7 @@ really large library, but you can read about what is involved <a href="/zotero-b
 <h2 id="bibtex">BibTeX<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h2>
 <h3 id="export-unicode-as-plain-text-latex-commands-recommended">Export unicode as plain-text latex commands (recommended)<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h3>
 <p>default: <code>yes</code></p>
-<p>BibTeX has really spotty Unicode support, so you generally want this on. It will translate things like accented characters
-to their equivalent LaTeX constructs on export.</p>
+<p>BibTeX has really spotty Unicode support, so you generally want this on. It will translate things like accented characters to their equivalent LaTeX constructs on export.</p>
 <h3 id="disregard-name-prefixes-when-sorting">Disregard name prefixes when sorting<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h3>
 <p>default: <code>no</code></p>
 <p>Name handling is a lot more complex than I had ever thought it to be. A <em>lot</em> more complex. BibTeX has really limited ways of dealing with names with particles (van, von, de, etc). If you turn this on, BBT will add code to have <code>van Gogh</code> sorted under <code>Gogh</code>.</p>
@@ -245,14 +244,11 @@ to their equivalent LaTeX constructs on export.</p>
 <h2 id="biblatex">BibLaTeX<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h2>
 <h3 id="export-unicode-as-plain-text-latex-commands">Export unicode as plain-text latex commands<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h3>
 <p>default: <code>no</code></p>
-<p>BibLaTeX actually has really good Unicode support, so you generally want this off. But for some geezers such as me it is
-simply more pleasing to have things like accented characters translated to their equivalent LaTeX constructs on export.</p>
+<p>BibLaTeX actually has really good Unicode support, so you generally want this off. But for some geezers such as me it is simply more pleasing to have things like accented characters translated to their equivalent LaTeX constructs on export.</p>
 <h3 id="use-biblatex-extended-name-format-requires-biblatex-35">Use BibLaTeX extended name format (requires biblatex 3.5)<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h3>
 <p>default: <code>yes</code></p>
 <p>Use the extended biber 2.7 format for names with particles - only works in BibLaTeX 3.5 or later.
-This biblatex has a new (less ambiguous) way to store creator names. It&rsquo;s technically
-superior, but the LaTeX world moves slowly, so many people won&rsquo;t have it yet. But if you&rsquo;re an early adopter,
-you can enable it here</p>
+This biblatex has a new (less ambiguous) way to store creator names. It&rsquo;s technically superior, but the LaTeX world moves slowly, so many people won&rsquo;t have it yet. But if you&rsquo;re an early adopter, you can enable it here</p>
 <h3 id="add-use-prefix-when-family-name-has-a-prefix">add use-prefix when family name has a prefix<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h3>
 <p>default: <code>yes</code></p>
 <p>When a family name prefix is found, add useprefix=true</p>
@@ -272,9 +268,7 @@ you can enable it here</p>
 </ul>
 <h4 id="when-an-item-has-both-a-doi-and-a-url-export">When an item has both a DOI and a URL, export<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h4>
 <p>default: <code>both</code></p>
-<p>Does what it says on the tin, really. If an item has both a DOI and an URL, you can choose to have them both exported, or either one of them. Note that for BibTeX,
-you must load the <code>url</code> package when you have <code>doi</code> or <code>url</code> fields. <code>doi</code> and <code>url</code> fields are so-called <code>verbatim</code> fields with different escaping rules, and
-BibTeX compilation will likely error out without the package loaded.</p>
+<p>Does what it says on the tin, really. If an item has both a DOI and an URL, you can choose to have them both exported, or either one of them. Note that for BibTeX, you must load the <code>url</code> package when you have <code>doi</code> or <code>url</code> fields. <code>doi</code> and <code>url</code> fields are so-called <code>verbatim</code> fields with different escaping rules, and BibTeX compilation will likely error out without the package loaded.</p>
 <p>Options:</p>
 <ul>
 <li>both</li>
@@ -295,9 +289,8 @@ BibTeX compilation will likely error out without the package loaded.</p>
 <h3 id="quick-copydrag-and-drop-citations">Quick-Copy/drag-and-drop citations<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h3>
 <h4 id="quick-copy-format">Quick-Copy format<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h4>
 <p>default: <code>LaTeX citation</code></p>
-<p>Used for drag-and-drop/quick copy using Better BibTeX citation keys. In the Zotero &ldquo;Export&rdquo; pane, choose <code>Better BibTeX Quick Copy</code>
-as the default export format for quick copy, and choose the desired format for the drag-and-drop citations here.</p>
-<p>In the case of Eta templates, the selected items are available as <code>it.items</code>. <code>&amp;lt;%= JSON.stringify(it.items) %&amp;gt;</code> will show you the available data on the items.</p>
+<p>Used for drag-and-drop/quick copy using Better BibTeX citation keys. In the Zotero &ldquo;Export&rdquo; pane, choose <code>Better BibTeX Quick Copy</code> as the default export format for quick copy, and choose the desired format for the drag-and-drop citations here.
+In the case of Eta templates, the selected items are available as <code>it.items</code>. <code>&amp;lt;%= JSON.stringify(it.items) %&amp;gt;</code> will show you the available data on the items.</p>
 <p>Options:</p>
 <ul>
 <li>LaTeX citation</li>
@@ -317,12 +310,10 @@ as the default export format for quick copy, and choose the desired format for t
 </ul>
 <h4 id="latex-command">LaTeX command<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h4>
 <p>default: <code>cite</code></p>
-<p>Used for drag-and-drop/quick copy citations in <code>LaTeX</code> format. Set the desired LaTeX citation command here. If you set this to <code>citep</code>,
-drag-and-drop citations will yield <code>\citep{key1,key2,...}</code></p>
+<p>Used for drag-and-drop/quick copy citations in <code>LaTeX</code> format. Set the desired LaTeX citation command here. If you set this to <code>citep</code>, drag-and-drop citations will yield <code>\citep{key1,key2,...}</code></p>
 <h4 id="surround-pandoc-citations-with-brackets">Surround Pandoc citations with brackets<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h4>
 <p>default: <code>no</code></p>
-<p>Used for drag-and-drop/quick copy citations in <code>Pandoc</code> format. You can use this option to select whether you want
-to have these pandoc citations surrounded with brackets or not.</p>
+<p>Used for drag-and-drop/quick copy citations in <code>Pandoc</code> format. You can use this option to select whether you want to have these pandoc citations surrounded with brackets or not.</p>
 <h4 id="org-mode-select-link">Org-mode select link<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h4>
 <p>default: <code>using Zotero item key</code></p>
 <p>OrgMode to select items in your library</p>
@@ -360,12 +351,10 @@ To find out what an item looks like inside the template, export some items as Be
 </ul>
 <h3 id="include-comments-about-potential-problems-with-the-exported-entries">Include comments about potential problems with the exported entries<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h3>
 <p>default: <code>no</code></p>
-<p>Generate quality reports for exported entries. These show up only in BibTeX and BibLaTeX report formats and indicate things like missing required fields and
-duplicate citation keys.</p>
+<p>Generate quality reports for exported entries. These show up only in BibTeX and BibLaTeX report formats and indicate things like missing required fields and duplicate citation keys.</p>
 <h3 id="include-automatic-tags-in-export">Include automatic tags in export<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h3>
 <p>default: <code>yes</code></p>
-<p>Some importers or Zotero extensions (such as the ShortDOI manager for example) create tags on items that are more for item management than that
-they are descriptive of the item. When this is off, such tags will not be included in the export.</p>
+<p>Some importers or Zotero extensions (such as the ShortDOI manager for example) create tags on items that are more for item management than that they are descriptive of the item. When this is off, such tags will not be included in the export.</p>
 <h3 id="apply-title-casing-to-titles">Apply title-casing to titles<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h3>
 <p>default: <code>&lt;not set&gt;</code></p>
 <p>If you&rsquo;re dead-set on ignoring both BibTeX/BibLaTeX best practice (see the BBT FAQ) and the Zotero recommendations on title/sentence casing, you can turn this off to suppress title casing for English items</p>
@@ -375,9 +364,7 @@ they are descriptive of the item. When this is off, such tags will not be includ
 <h3 id="cache">Cache<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h3>
 <h4 id="enable-caching-for-background-exports">Enable caching for background exports<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h4>
 <p>default: <code>yes</code></p>
-<p>Even though BBT exports happen in a separate thread, some work needs to be done before the background export can
-start. Part of this work is preloading the cache. You can shorten the (blocking) preparation time by turning off
-the cache, at the cost of longer export times.</p>
+<p>Even though BBT exports happen in a separate thread, some work needs to be done before the background export can start. Part of this work is preloading the cache. You can shorten the (blocking) preparation time by turning off the cache, at the cost of longer export times.</p>
 
   <footer class="footline">
   </footer>
