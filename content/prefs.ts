@@ -150,7 +150,7 @@ export const Preference = new class PreferenceManager extends PreferenceManagerB
     }
     if (bibtexURL.endsWith('url-ish')) {
       Zotero.Prefs.set(key, bibtexURL.replace('url-ish', '') || 'url')
-    },
+    }
     const oldAutoAbbrevKey = 'translators.better-bibtex.autoAbbrev'
     const journalAbbreviationKey = 'translators.better-bibtex.journalAbbreviation'
     const oldAutoAbbrev = Zotero.Prefs.get(oldAutoAbbrevKey)

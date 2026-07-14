@@ -463,7 +463,7 @@ export function generateBibTeX(collected: Collected): Translation {
     if (![ 'book', 'inbook', 'incollection', 'proceedings', 'inproceedings' ].includes(ref.entrytype) || !ref.has.volume) ref.add({ name: 'number', value: item.number || item.issue || item.seriesNumber })
     ref.add({ name: 'urldate', value: item.accessDate && item.accessDate.replace(/\s*T?\d+:\d+:\d+.*/, '') })
 
-    const journalAbbreviation = (translation.collected.displayOptions.useJournalAbbreviation && {
+    const journalAbbreviation = (o.useJournalAbbreviation && {
       abbrev: item.journalAbbreviation,
       auto: item.autoJournalAbbreviation,
       'abbrev+auto': item.journalAbbreviation || item.autoJournalAbbreviation,
@@ -487,7 +487,7 @@ export function generateBibTeX(collected: Collected): Translation {
       itemType: item.itemType,
       entrytype: ref.entrytype,
       entrytypeSource: ref.entrytype_source,
-      useJournalAbbreviation: translation.collected.displayOptions.useJournalAbbreviation,
+      useJournalAbbreviation: o.useJournalAbbreviation,
       publicationTitle: item.publicationTitle || null,
       journalAbbreviation: item.journalAbbreviation || null,
       autoJournalAbbreviation: item.autoJournalAbbreviation || null,
