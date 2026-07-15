@@ -1,6 +1,7 @@
 declare const Zotero: any
 
 import * as YAML from 'js-yaml'
+import * as dateparser from '../../content/dateparser'
 import { Serialized } from '../../gen/typings/serialized'
 
 type HayagrivaPerson = string | { name?: string; given?: string; family?: string }
@@ -103,6 +104,38 @@ function pickParent(entry: HayagrivaEntry): HayagrivaEntry | null {
   return entry.parent
 }
 
+const seasons = [ '', 'Spring', 'Summer', 'Autumn', 'Winter' ]
+
+function formatParsedDate(date: dateparser.RichDate): string {
+  switch (date.type) {
+    case 'date': {
+      if (typeof date.year !== 'number') return ''
+      let value = `${date.year}`.padStart(4, '0')
+      if (typeof date.month === 'number') {
+        value += `-${`${date.month}`.padStart(2, '0')}`
+        if (typeof date.day === 'number') value += `-${`${date.day}`.padStart(2, '0')}`
+      }
+      return value
+    }
+
+    case 'season':
+      if (typeof date.year !== 'number') return ''
+      return `${seasons[date.season] || date.season} ${`${date.year}`.padStart(4, '0')}`
+
+    case 'verbatim':
+      return date.verbatim || ''
+
+    case 'interval':
+      return formatParsedDate(date.from?.type === 'open' ? date.to : date.from)
+
+    case 'list':
+      return formatParsedDate(date.dates.find(d => d.type !== 'open') || date.dates[0])
+
+    default:
+      return ''
+  }
+}
+
 export const Hayagriva = new class {
   public fromZotero(item: Serialized.RegularItem): HayagrivaEntry {
     const entry: HayagrivaEntry = {
@@ -110,7 +143,10 @@ export const Hayagriva = new class {
     }
 
     if (item.title) entry.title = item.title
-    if (item.date) entry.date = item.date
+    if (item.date) {
+      const parsed = dateparser.parse(item.date, item.originalDate)
+      entry.date = formatParsedDate(parsed) || item.date
+    }
     if (item.language) entry.language = item.language
     if (item.volume) entry.volume = item.volume
     if (item.issue) entry.issue = item.issue
@@ -190,13 +226,13 @@ export const Hayagriva = new class {
       const type = (entry.type || 'misc').toLowerCase()
       const item = new Zotero.Item(zoteroType[type] || 'document')
 
-      item.extra = `${ item.extra || '' }\nCitation Key: ${ sanitizeKey(id) }`.trim()
+      item.citationKey = id
 
       if (entry.title) item.title = entry.title
       if (entry.date) item.date = entry.date
       if (entry.language) item.language = entry.language
-      if (entry.volume) item.volume = `${ entry.volume }`
-      if (entry.issue) item.issue = `${ entry.issue }`
+      if (entry.volume) item.volume = `${entry.volume}`
+      if (entry.issue) item.issue = `${entry.issue}`
       if (entry['page-range']) item.pages = entry['page-range']
 
       const url = normalizeURL(entry.url)

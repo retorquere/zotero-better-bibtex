@@ -10,7 +10,6 @@ let flashes = 10
 export function readonly(source: number | Zotero.Item | _ZoteroTypes.Library.LibraryLike): boolean {
   let lib: _ZoteroTypes.Library.LibraryLike
 
-  log.debug('3559:', (source as Zotero.Item).objectType)
   if (typeof source === 'number') {
     lib = Zotero.Libraries.get(source) || undefined
   }
