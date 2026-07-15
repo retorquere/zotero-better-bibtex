@@ -1,5 +1,4 @@
 import { AltDebug } from '../debug-log'
-import { citationKey as extract } from '../extra'
 import { flash } from '../flash'
 import { getItemAsync } from '../get-items-async'
 import { editable as editableLibs } from '../library'
@@ -179,7 +178,7 @@ export async function migrate(verbose = false): Promise<void> {
 
           speaker.say(`migrating ${bbt.length} citation keys`, true)
 
-          for (const { itemID, citationKey, pinned } of bbt) {
+          for (const { itemID, citationKey } of bbt) {
             const item = await getItemAsync(itemID)
             if (choice.overwrite || !item.getField('citationKey')) {
               item.setField('citationKey', citationKey)
