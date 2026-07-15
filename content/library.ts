@@ -1,23 +1,32 @@
 import { log } from './logger'
+import { flash } from './flash'
 
 export function editable(): Set<number> {
   const libraries = Zotero.Libraries.getAll().filter(lib => lib.editable).map(lib => lib.libraryID)
   return new Set(libraries)
 }
 
-export function readonly(library: number | Zotero.Item | _ZoteroTypes.Library.LibraryLike): boolean {
+let flashes = 10
+export function readonly(source: number | Zotero.Item | _ZoteroTypes.Library.LibraryLike): boolean {
   let lib: _ZoteroTypes.Library.LibraryLike
 
-  if (typeof library === 'number') {
-    lib = Zotero.Libraries.get(library) || undefined
+  log.debug('3559:', (source as Zotero.Item).objectType)
+  if (typeof source === 'number') {
+    lib = Zotero.Libraries.get(source) || undefined
   }
-  else if ((library as _ZoteroTypes.Library.LibraryLike).libraryType) {
-    lib = library as _ZoteroTypes.Library.LibraryLike
+  else if ((source as _ZoteroTypes.Library.LibraryLike).libraryType) {
+    lib = source as _ZoteroTypes.Library.LibraryLike
   }
-  else if ((library as Zotero.Item).objectType === 'item') {
-    lib = Zotero.Libraries.get(library.libraryID) || undefined
+  else if (typeof (source as Zotero.Item).libraryID === 'number') {
+    lib = Zotero.Libraries.get(source.libraryID) || undefined
   }
-  if (!lib) throw new Error('LibraryLike not found')
+
+  if (!lib) {
+    const msg = `library.readonly: no LibraryLike found for ${JSON.stringify(source)}`
+    log.error(msg)
+    if (flashes--) flash(msg)
+    return false
+  }
 
   return !lib.editable
 }
