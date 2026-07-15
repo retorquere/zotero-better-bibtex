@@ -1607,7 +1607,6 @@ class ZoteroItem {
     if (this.bibtex.key && this.translation.collected.preferences.importCitationKey) {
       // if (this.validFields.citationKey)
       this.item.citationKey = this.bibtex.key
-      this.extra.push(`Citation Key: ${this.bibtex.key}`)
     }
 
     if (this.eprint.slaccitation && !this.eprint.eprint) {
