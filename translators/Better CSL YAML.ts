@@ -2,6 +2,8 @@ declare const Zotero: any
 
 import { Collected, slurp } from './lib/collect'
 import { padInt } from '../content/text'
+import { Hayagriva } from './csl/hayagriva'
+import { detectYAMLFormat } from './csl/yaml'
 import type { Header } from '../gen/translators'
 declare var ZOTERO_TRANSLATOR_INFO: Header // eslint-disable-line no-var
 
@@ -12,7 +14,8 @@ export function doExport(): void {
 
 export function detectImport(): boolean {
   try {
-    return !!Zotero.BetterBibTeX.parseCSLYAML(slurp()).references
+    const parsed = Zotero.BetterBibTeX.parseCSLYAML(slurp())
+    return [ 'csl', 'hayagriva' ].includes(detectYAMLFormat(parsed))
   }
   catch {
     return false
@@ -104,7 +107,20 @@ function yamlDate(date): string {
 }
 
 export async function doImport(): Promise<void> {
-  const { references } = Zotero.BetterBibTeX.parseCSLYAML(slurp())
+  const parsed = Zotero.BetterBibTeX.parseCSLYAML(slurp())
+  switch (detectYAMLFormat(parsed)) {
+    case 'hayagriva':
+      await Hayagriva.import(parsed)
+      return
+
+    case 'csl':
+      break
+
+    default:
+      throw new Error('Input is neither CSL-YAML nor Hayagriva')
+  }
+
+  const { references } = parsed
   for (const source of references) {
     const item = (new Zotero.Item)
 

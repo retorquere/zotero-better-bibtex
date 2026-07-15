@@ -89,6 +89,7 @@ Feature: Import
       | file                                                                                                                    | references |
       | date wrongly imported from yaml-file day gets 00 prefixed #3542                                                         | 4          |
       | CSL-YAML import                                                                                                         | 11         |
+      | Hayagriva import                                                                                                        | 1          |
 
   Scenario Outline: Import <references> references from <file>
     When I import <references> references from "import/<file>.bib"

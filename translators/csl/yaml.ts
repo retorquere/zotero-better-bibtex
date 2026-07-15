@@ -7,9 +7,30 @@ import { Translation } from '../lib/translator'
 import type { MarkupNode } from '../../typings/markup'
 
 import { CSLExporter } from './csl'
+import { Hayagriva } from './hayagriva'
 import { log } from '../../content/logger'
 import { RichDate, century } from '../../content/dateparser'
 import { HTMLParser } from '../../content/text'
+
+export type YAMLFormat = 'csl' | 'hayagriva' | 'unknown'
+
+export function detectYAMLFormat(data: unknown): YAMLFormat {
+  if (!data || typeof data !== 'object' || Array.isArray(data)) return 'unknown'
+
+  const mapped = data as Record<string, unknown>
+  if (Array.isArray(mapped.references)) return 'csl'
+
+  const values = Object.values(mapped)
+  if (!values.length) return 'unknown'
+
+  const hayagriva = values.every(value => {
+    if (!value || typeof value !== 'object' || Array.isArray(value)) return false
+    const record = value as Record<string, unknown>
+    return typeof record.type === 'string' || typeof record.title === 'string'
+  })
+
+  return hayagriva ? 'hayagriva' : 'unknown'
+}
 
 const htmlConverter = new class HTML {
   private markdown: string
@@ -172,6 +193,12 @@ class Exporter extends CSLExporter {
 
 export function generateCSLYAML(collected: Collected): Translation {
   const translation = Translation.Export(collected)
+
+  if (translation.options.hayagriva) {
+    translation.output.body += Hayagriva.export(collected.items.regular)
+    return translation
+  }
+
   const exporter = new Exporter(translation)
   exporter.doExport()
   return translation

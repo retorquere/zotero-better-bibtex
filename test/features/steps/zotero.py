@@ -321,7 +321,7 @@ class Library:
             else:
               raise ValueError(self.body)
       else:
-        # .csl.yml fixtures are always parsed as YAML.
+        # .csl.y*ml fixtures are always parsed as YAML.
         self.data = yaml.load(io.StringIO(self.body))
         self.parsed_as = 'yaml'
 
@@ -330,14 +330,20 @@ class Library:
         self.data = jsonpatch.JsonPatch(json.load(f)).apply(self.data)
 
       if self.ext in ['.csl.json', '.csl.yml']:
-        # CSL exports are normalized as sorted item lists.
-        self.data = sorted(self.data, key=lambda item: json.dumps(item, cls=CompactEncoder))
-        self.normalized = json.dumps(self.data, cls=CompactEncoder)
+        # CSL exports are normalized by structure. CSL-JSON is a list, CSL-YAML
+        # can be either {references:[...]} or a Hayagriva mapping.
+        if self.ext == '.csl.json':
+          self.data = sorted(self.data, key=lambda item: json.dumps(item, cls=CompactEncoder))
+          self.normalized = json.dumps(self.data, cls=CompactEncoder)
+        else:
+          if isinstance(self.data, dict) and 'references' in self.data and isinstance(self.data['references'], list):
+            normalized_data = { 'references': sorted(self.data['references'], key=lambda item: json.dumps(item, cls=CompactEncoder)) }
+          else:
+            normalized_data = self.data
 
-        if self.ext == '.csl.yml':
+          # Re-use key sorting from json dumps for deterministic YAML output.
           normalized = io.StringIO()
-          # re-use the key sorting from json dumps
-          yaml.dump(json.loads(self.normalized), normalized)
+          yaml.dump(json.loads(json.dumps(normalized_data, cls=CompactEncoder)), normalized)
           self.normalized = normalized.getvalue()
 
       elif self.ext == '.json':
