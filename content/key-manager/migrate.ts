@@ -183,10 +183,6 @@ export async function migrate(verbose = false): Promise<void> {
             const item = await getItemAsync(itemID)
             if (choice.overwrite || !item.getField('citationKey')) {
               item.setField('citationKey', citationKey)
-              if (choice.dynamic && pinned) {
-                const { extra } = extract(item.getField('extra'))
-                item.setField('extra', `${extra}\nCitation Key: ${citationKey}`.trim())
-              }
               await item.save({ skipDateModifiedUpdate: true, skipNotifier: !!choice.zotero })
             }
           }
