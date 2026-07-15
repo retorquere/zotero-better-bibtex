@@ -321,7 +321,7 @@ class Library:
             else:
               raise ValueError(self.body)
       else:
-        # .csl.yml fixtures are always parsed as YAML.
+        # .csl.y*ml fixtures are always parsed as YAML.
         self.data = yaml.load(io.StringIO(self.body))
         self.parsed_as = 'yaml'
 
@@ -330,13 +330,21 @@ class Library:
         self.data = jsonpatch.JsonPatch(json.load(f)).apply(self.data)
 
       if self.ext in ['.csl.json', '.csl.yml']:
-        # CSL exports are normalized as sorted item lists.
-        self.data = sorted(self.data, key=lambda item: json.dumps(item, cls=CompactEncoder))
-        self.normalized = json.dumps(self.data, cls=CompactEncoder)
-
-        if self.ext == '.csl.yml':
+        # CSL-JSON stays list-based. For .csl.yml, preserve the legacy
+        # normalization for regular CSL-YAML fixtures and only use structural
+        # normalization for Hayagriva's top-level mapping shape.
+        if self.ext == '.csl.json':
+          self.data = sorted(self.data, key=lambda item: json.dumps(item, cls=CompactEncoder))
+          self.normalized = json.dumps(self.data, cls=CompactEncoder)
+        elif isinstance(self.data, dict) and 'references' not in self.data:
           normalized = io.StringIO()
-          # re-use the key sorting from json dumps
+          yaml.dump(json.loads(json.dumps(self.data, cls=CompactEncoder)), normalized)
+          self.normalized = normalized.getvalue()
+        else:
+          self.data = sorted(self.data, key=lambda item: json.dumps(item, cls=CompactEncoder))
+          self.normalized = json.dumps(self.data, cls=CompactEncoder)
+
+          normalized = io.StringIO()
           yaml.dump(json.loads(self.normalized), normalized)
           self.normalized = normalized.getvalue()
 
