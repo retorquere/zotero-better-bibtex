@@ -647,6 +647,9 @@ class Zotero:
       assert len(expected.data['items']) == len(found.data['items']), f"found {len(found.data['items'])}, expected {len(expected.data['items'])}, {summary(found.data)}, {summary(expected.data)}"
       assert_equal_diff(expected.normalized, found.normalized)
 
+    elif expected.ext in [ '.dot', '.aux', '.pandoc' ]:
+      pass
+
     else:
       raise ValueError(f'Unsupported expected extension {expected.ext} for {expected.path}')
 
