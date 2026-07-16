@@ -6,7 +6,7 @@ PDFOvercomingExploration:
   title: (PDF) Overcoming Exploration in Reinforcement Learning with Demonstrations
   type: Web
   url:
-    date: '2026-07-07T13:26:41Z'
+    date: '2026-07-07'
     value: https://www.researchgate.net/publication/320098321_Overcoming_Exploration_in_Reinforcement_Learning_with_Demonstrations
 andrychowiczHindsightExperienceReplay2018:
   author:
@@ -26,5 +26,5 @@ andrychowiczHindsightExperienceReplay2018:
   title: Hindsight Experience Replay
   type: Report
   url:
-    date: '2026-06-23T11:20:48Z'
+    date: '2026-06-23'
     value: http://arxiv.org/abs/1707.01495

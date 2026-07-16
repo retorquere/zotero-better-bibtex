@@ -89,7 +89,10 @@ function personList(source: HayagrivaPerson | HayagrivaPerson[] | undefined): Ha
 function normalizeURL(url: HayagrivaEntry['url']): { value?: string; date?: string } {
   if (!url) return {}
   if (typeof url === 'string') return { value: url }
-  return { value: url.value, date: url.date }
+  return {
+    value: url.value,
+    date: url.date ? dateOnly(url.date) : undefined,
+  }
 }
 
 function normalizePublisher(publisher: HayagrivaPublisher): { name?: string; location?: string } {
@@ -164,7 +167,7 @@ export const Hayagriva = new class {
     if (item.url || item.accessDate) {
       entry.url = {
         ...(item.url ? { value: item.url } : {}),
-        ...(item.accessDate ? { date: item.accessDate } : {}),
+        ...(item.accessDate ? { date: dateOnly(item.accessDate) } : {}),
       }
     }
 
