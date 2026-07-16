@@ -33,6 +33,8 @@ import re
 from collections import OrderedDict
 from collections.abc import MutableMapping
 
+PLAINTEXT = [ '.dot', '.aux', '.pandoc', '.latex' ]
+
 class CompactEncoder(json.JSONEncoder):
   def __init__(self, *args, **kwargs):
     kwargs.setdefault('ensure_ascii', True)
@@ -359,7 +361,7 @@ class Library:
       # HTML exports normalize by stripping unstable formatting details.
       self.normalized = clean_html(self.body).strip()
 
-    elif self.ext in [ '.dot', '.aux', '.pandoc' ]:
+    elif self.ext in PLAINTEXT:
       pass
 
     else:
@@ -647,7 +649,7 @@ class Zotero:
       assert len(expected.data['items']) == len(found.data['items']), f"found {len(found.data['items'])}, expected {len(expected.data['items'])}, {summary(found.data)}, {summary(expected.data)}"
       assert_equal_diff(expected.normalized, found.normalized)
 
-    elif expected.ext in [ '.dot', '.aux', '.pandoc' ]:
+    elif expected.ext in PLAINTEXT:
       pass
 
     else:
