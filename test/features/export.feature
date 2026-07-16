@@ -384,11 +384,14 @@ Feature: Export
       | file                                        | references |
       | Export year ranges from Original Date #3482 | 1          |
 
-  @csl @timeout=3000
-  Scenario: Export 1 reference as Hayagriva using CSL-YAML option
-    When I import 1 reference from "export/Export year ranges from Original Date #3482.json"
+  Scenario Outline: Export <references> references for Hayagriva to <file>
+    When I import <references> references from "export/<file>.json"
     And I set export option hayagriva to true
-    Then an export using "Better CSL YAML" should match "export/Export year ranges from Original Date #3482.hayagriva.csl.yml"
+    Then an export using "Better CSL YAML" should match "export/*.hayagriva.yml"
+    Examples:
+      | file                                        | references |
+      | Export year ranges from Original Date #3482 | 1          |
+      | Hayagriva date field in wrong format #3562  | 2          |
 
   Scenario: Journal acronym from acronyms list not used in generated citation key #2634
     And I install "export/*.csv" in the better bibtex directory as "acronyms.csv"

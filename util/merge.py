@@ -10,7 +10,7 @@ yaml_loader = YAML(typ='safe')
 yaml_dumper = YAML()
 yaml_dumper.indent(mapping=2, sequence=4, offset=2)
 yaml_dumper.allow_unicode = False
-yaml.width = float('inf')
+yaml_dumper.width = float('inf')
 
 def walk_and_style(data):
   if isinstance(data, dict):

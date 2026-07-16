@@ -136,6 +136,11 @@ function formatParsedDate(date: dateparser.RichDate): string {
   }
 }
 
+function dateOnly(date: string, origDate?: string): string {
+  const parsed = dateparser.parse(date, origDate)
+  return formatParsedDate(parsed) || date
+}
+
 export const Hayagriva = new class {
   public fromZotero(item: Serialized.RegularItem): HayagrivaEntry {
     const entry: HayagrivaEntry = {
@@ -143,10 +148,14 @@ export const Hayagriva = new class {
     }
 
     if (item.title) entry.title = item.title
+
     if (item.date) {
-      const parsed = dateparser.parse(item.date, item.originalDate)
-      entry.date = formatParsedDate(parsed) || item.date
+      entry.date = dateOnly(item.date, item.originalDate)
     }
+    else if (item.itemType === 'webpage' && item.accessDate) {
+      entry.date = dateOnly(item.accessDate)
+    }
+
     if (item.language) entry.language = item.language
     if (item.volume) entry.volume = item.volume
     if (item.issue) entry.issue = item.issue

@@ -28,6 +28,7 @@ import datetime
 import jsonschema
 import traceback
 from types import SimpleNamespace
+import re
 
 from collections import OrderedDict
 from collections.abc import MutableMapping
@@ -281,9 +282,11 @@ class Library:
       # Compatibility fallback: if expected .json is missing, silently read
       # sibling .yaml instead.
       if not os.path.exists(self.base) and self.base.endswith('.json'):
-        yaml_fallback = self.base[:-len('.json')] + '.yaml'
-        if os.path.exists(yaml_fallback):
-          self.source = yaml_fallback
+        for ext in ['.yml', '.yaml']:
+          yaml_fallback = self.base[:-len('.json')] + ext
+          if os.path.exists(yaml_fallback):
+            self.source = yaml_fallback
+            break
 
       # Keep assertion message on original expected path for clearer failures.
       assert os.path.exists(self.source), f'{json.dumps(self.base)} does not exist'
@@ -300,26 +303,15 @@ class Library:
     #    f.write(self.body)
 
     # Data parsing/normalization strategy is selected by extension.
-    if self.ext.endswith('.json') or self.ext == '.csl.yml':
+    if self.ext.endswith('.json') or self.ext.endswith('.yml'):
       if self.ext.endswith('.json'):
-        # Parse as YAML when source was silently switched to .yaml, or when
-        # a .json fixture contains YAML content.
-        if self.source and self.source.endswith('.yaml'):
+        # Parse as YAML when source was silently switched to .yaml
+        if self.source and re.search('[.]ya?ml$', self.source):
           self.data = yaml.load(io.StringIO(self.body))
           self.parsed_as = 'yaml'
         else:
-          try:
-            self.data = json.loads(self.body, object_pairs_hook=OrderedDict)
-            self.parsed_as = 'json'
-          except:
-            # Keep fallback narrow: only accept parsed mappings/lists, which
-            # are the expected top-level structures for test fixtures.
-            parsed = yaml.load(io.StringIO(self.body))
-            if isinstance(parsed, (dict, list)):
-              self.data = parsed
-              self.parsed_as = 'yaml'
-            else:
-              raise ValueError(self.body)
+          self.data = json.loads(self.body, object_pairs_hook=OrderedDict)
+          self.parsed_as = 'json'
       else:
         # .csl.y*ml fixtures are always parsed as YAML.
         self.data = yaml.load(io.StringIO(self.body))
@@ -329,14 +321,14 @@ class Library:
         # JSON patch mutates parsed data before normalization.
         self.data = jsonpatch.JsonPatch(json.load(f)).apply(self.data)
 
-      if self.ext in ['.csl.json', '.csl.yml']:
+      if self.ext in ['.csl.json', '.csl.yml', '.hayagriva.yml']:
         # CSL-JSON stays list-based. For .csl.yml, preserve the legacy
         # normalization for regular CSL-YAML fixtures and only use structural
         # normalization for Hayagriva's top-level mapping shape.
         if self.ext == '.csl.json':
           self.data = sorted(self.data, key=lambda item: json.dumps(item, cls=CompactEncoder))
           self.normalized = json.dumps(self.data, cls=CompactEncoder)
-        elif isinstance(self.data, dict) and 'references' not in self.data:
+        elif self.ext == '.hayagriva.yml' or (isinstance(self.data, dict) and 'references' not in self.data):
           normalized = io.StringIO()
           yaml.dump(json.loads(json.dumps(self.data, cls=CompactEncoder)), normalized)
           self.normalized = normalized.getvalue()
@@ -348,9 +340,10 @@ class Library:
           yaml.dump(json.loads(self.normalized), normalized)
           self.normalized = normalized.getvalue()
 
-      elif self.ext == '.json':
+      elif self.ext in [ '.json', '.yml' ]:
         # BetterBibTeX JSON exports normalize preferences/items for stable diffs.
-        if 'config' in self.data and 'preferences' in self.data['config']: self.data['config']['preferences'].pop('autoAbbrevStyle', None)
+        if 'config' in self.data and 'preferences' in self.data['config']:
+          self.data['config']['preferences'].pop('autoAbbrevStyle', None)
         self.data['items'] = sorted(self.data['items'], key=lambda item: json.dumps(item, cls=CompactEncoder))
         self.normalized = json.dumps(cleanlib(copy.deepcopy(self.data)), cls=CompactEncoder)
 
@@ -365,11 +358,17 @@ class Library:
       # HTML exports normalize by stripping unstable formatting details.
       self.normalized = clean_html(self.body).strip()
 
+    else:
+      raise ValueError(f'Unsupported fixture extension {self.ext} for {self.base or self.source or self.path}')
+
   def suffix(self, path):
     # Normalize recognized extension families and reject unsupported naming.
     suffixes = Path(path).suffixes
     if suffixes[-1] == '.yaml':
       raise ValueError(f'Use .yml, not .yaml, in {path}')
+
+    if len(suffixes) >= 2 and suffixes[-2] == '.hayagriva' and suffixes[-1] == '.yml':
+      return ''.join(suffixes[-2:])
 
     if len(suffixes) >= 2 and suffixes[-2] == '.csl' and suffixes[-1] in ['.json', '.yml']:
       return ''.join(suffixes[-2:])
@@ -635,7 +634,7 @@ class Zotero:
     found = Library(path=output, body=found, client=self.client, variant=self.variant, ext=expected, name='found')
     found.save(expected.path)
 
-    if expected.ext in ['.csl.json', '.csl.yml', '.html', '.bib', '.bibtex', '.biblatex']:
+    if expected.ext in ['.csl.json', '.csl.yml', '.hayagriva.yml', '.html', '.bib', '.bibtex', '.biblatex']:
       assert_equal_diff(expected.normalized, found.normalized)
 
     elif expected.path.endswith('.json'):
@@ -643,6 +642,9 @@ class Zotero:
         return [(item['itemType'], item.get('title', '')) for item in items['items']]
       assert len(expected.data['items']) == len(found.data['items']), f"found {len(found.data['items'])}, expected {len(expected.data['items'])}, {summary(found.data)}, {summary(expected.data)}"
       assert_equal_diff(expected.normalized, found.normalized)
+
+    else:
+      raise ValueError(f'Unsupported expected extension {expected.ext} for {expected.path}')
 
     found.clean()
 
