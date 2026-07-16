@@ -342,10 +342,11 @@ class Library:
 
       elif self.ext in [ '.json', '.yml' ]:
         # BetterBibTeX JSON exports normalize preferences/items for stable diffs.
-        if 'config' in self.data and 'preferences' in self.data['config']:
-          self.data['config']['preferences'].pop('autoAbbrevStyle', None)
-        self.data['items'] = sorted(self.data['items'], key=lambda item: json.dumps(item, cls=CompactEncoder))
-        self.normalized = json.dumps(cleanlib(copy.deepcopy(self.data)), cls=CompactEncoder)
+        if self.data.get('config', {}).get('id', None) == '36a3b0b5-bad0-4a04-b79b-441c7cef77db':
+          if self.data.get('config', {}).get('preferences', None):
+            self.data['config']['preferences'].pop('autoAbbrevStyle', None)
+          self.data['items'] = sorted(self.data['items'], key=lambda item: json.dumps(item, cls=CompactEncoder))
+          self.normalized = json.dumps(cleanlib(copy.deepcopy(self.data)), cls=CompactEncoder)
 
     elif self.ext in ['.biblatex', '.bibtex', '.bib']:
       # BibTeX-family exports normalize through deterministic bib sorting.
@@ -357,6 +358,9 @@ class Library:
     elif self.ext == '.html':
       # HTML exports normalize by stripping unstable formatting details.
       self.normalized = clean_html(self.body).strip()
+
+    elif self.ext in [ '.dot', '.aux', '.pandoc' ]:
+      pass
 
     else:
       raise ValueError(f'Unsupported fixture extension {self.ext} for {self.base or self.source or self.path}')
