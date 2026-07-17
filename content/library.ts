@@ -14,6 +14,9 @@ export function readonly(source: number | Zotero.Item | _ZoteroTypes.Library.Lib
   else if ((source as _ZoteroTypes.Library.LibraryLike).libraryType) {
     lib = source as _ZoteroTypes.Library.LibraryLike
   }
+  else if (((source as Zotero.Item).objectType === 'item' || (source as Zotero.Item).objectType === 'feedItem') && typeof (source as Zotero.Item).libraryID !== 'number') {
+    return true
+  }
   else if (typeof (source as Zotero.Item).libraryID === 'number') {
     lib = Zotero.Libraries.get(source.libraryID) || undefined
   }
