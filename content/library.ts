@@ -23,7 +23,7 @@ export function readonly(source: number | Zotero.Item | _ZoteroTypes.Library.Lib
   if (!lib) {
     const msg = `library.readonly: no LibraryLike found for ${JSON.stringify(source)}`
     log.error(msg)
-    if (flashes--) flash(msg)
+    if ((flashes--) > 0) flash(msg)
     return false
   }
 
