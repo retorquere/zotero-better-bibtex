@@ -4,8 +4,8 @@ import * as YAML from 'js-yaml'
 import { Serialized } from '../../gen/typings/serialized'
 import { strToISO as parseDateToISO } from '../../content/dateparser'
 
-type HayagrivaPerson = string | { name?: string; given?: string; family?: string }
-type HayagrivaSerial = {
+type Person = string | { name?: string; given?: string; family?: string }
+type Serial = {
   doi?: string
   isbn?: string
   issn?: string
@@ -14,31 +14,31 @@ type HayagrivaSerial = {
   serial?: string
   version?: string
 }
-type HayagrivaPublisher = string | { name?: string; location?: string }
-type HayagrivaAffiliated = {
+type Publisher = string | { name?: string; location?: string }
+type Affiliated = {
   role?: string
-  names?: HayagrivaPerson | HayagrivaPerson[]
+  names?: Person | Person[]
 }
 
-type HayagrivaEntry = {
+type Entry = {
   type?: string
   title?: string
-  author?: HayagrivaPerson | HayagrivaPerson[]
-  editor?: HayagrivaPerson | HayagrivaPerson[]
-  translator?: HayagrivaPerson | HayagrivaPerson[]
-  affiliated?: HayagrivaAffiliated | HayagrivaAffiliated[]
+  author?: Person | Person[]
+  editor?: Person | Person[]
+  translator?: Person | Person[]
+  affiliated?: Affiliated | Affiliated[]
   date?: string
   language?: string
   volume?: string | number
   issue?: string | number
   'page-range'?: string
-  publisher?: HayagrivaPublisher
+  publisher?: Publisher
   url?: string | { value?: string; date?: string }
-  'serial-number'?: HayagrivaSerial
-  parent?: HayagrivaEntry | HayagrivaEntry[]
+  'serial-number'?: Serial
+  parent?: Entry | Entry[]
 }
 
-type HayagrivaDoc = Record<string, HayagrivaEntry>
+type Doc = Record<string, Entry>
 
 const hayagrivaType: Record<string, string> = {
   audioRecording: 'audio',
@@ -140,7 +140,7 @@ function normalizeType(value: unknown): string {
   return normalizeScalar(value).toLowerCase()
 }
 
-function makeParent(item: Serialized.RegularItem): HayagrivaEntry | null {
+function makeParent(item: Serialized.RegularItem): Entry | null {
   if ([ 'journalArticle', 'magazineArticle', 'newspaperArticle' ].includes(item.itemType)) {
     const title = item.publicationTitle || ''
     if (!title) return null
@@ -198,8 +198,8 @@ function makeParent(item: Serialized.RegularItem): HayagrivaEntry | null {
   return null
 }
 
-function parseExtraSerialNumbers(extra: unknown): HayagrivaSerial {
-  const serial: HayagrivaSerial = {}
+function parseExtraSerialNumbers(extra: unknown): Serial {
+  const serial: Serial = {}
   const lines = normalizeScalar(extra).split(/\r?\n/)
 
   for (const line of lines) {
@@ -218,8 +218,8 @@ function parseExtraSerialNumbers(extra: unknown): HayagrivaSerial {
   return serial
 }
 
-function serialNumber(item: Serialized.RegularItem): HayagrivaSerial {
-  const serial: HayagrivaSerial = {
+function serialNumber(item: Serialized.RegularItem): Serial {
+  const serial: Serial = {
     ...(item.DOI ? { doi: item.DOI } : {}),
     ...(item.ISBN ? { isbn: item.ISBN } : {}),
     ...(item.ISSN ? { issn: item.ISSN } : {}),
@@ -245,7 +245,7 @@ function hasContent(entry: Record<string, unknown>): boolean {
   })
 }
 
-function parseAffiliated(entry: HayagrivaEntry): Array<{ creatorType: string; firstName?: string; lastName?: string; name?: string; fieldMode?: number }> {
+function parseAffiliated(entry: Entry): Array<{ creatorType: string; firstName?: string; lastName?: string; name?: string; fieldMode?: number }> {
   const people: Array<{ creatorType: string; firstName?: string; lastName?: string; name?: string; fieldMode?: number }> = []
   const affiliated = entry.affiliated ? (Array.isArray(entry.affiliated) ? entry.affiliated : [ entry.affiliated ]) : []
 
@@ -273,7 +273,7 @@ function parseAffiliated(entry: HayagrivaEntry): Array<{ creatorType: string; fi
   return people
 }
 
-function parsePerson(person: HayagrivaPerson): { firstName?: string; lastName?: string; name?: string; fieldMode?: number } {
+function parsePerson(person: Person): { firstName?: string; lastName?: string; name?: string; fieldMode?: number } {
   if (typeof person !== 'string') {
     if (person.family || person.given) return { lastName: person.family || '', firstName: person.given || '' }
     if (person.name) return { name: person.name, fieldMode: 1 }
@@ -286,24 +286,24 @@ function parsePerson(person: HayagrivaPerson): { firstName?: string; lastName?: 
   return {}
 }
 
-function personList(source: HayagrivaPerson | HayagrivaPerson[] | undefined): HayagrivaPerson[] {
+function personList(source: Person | Person[] | undefined): Person[] {
   if (!source) return []
   return Array.isArray(source) ? source : [ source ]
 }
 
-function normalizeURL(url: HayagrivaEntry['url']): { value?: string; date?: string } {
+function normalizeURL(url: Entry['url']): { value?: string; date?: string } {
   if (!url) return {}
   if (typeof url === 'string') return { value: url }
   return { value: url.value, date: url.date }
 }
 
-function normalizePublisher(publisher: HayagrivaPublisher): { name?: string; location?: string } {
+function normalizePublisher(publisher: Publisher): { name?: string; location?: string } {
   if (!publisher) return {}
   if (typeof publisher === 'string') return { name: publisher }
   return { name: publisher.name, location: publisher.location }
 }
 
-function pickParent(entry: HayagrivaEntry): HayagrivaEntry | null {
+function pickParent(entry: Entry): Entry | null {
   if (!entry.parent) return null
   if (Array.isArray(entry.parent)) return entry.parent[0] || null
   return entry.parent
@@ -320,8 +320,8 @@ function creatorFingerprint(creator: { creatorType: string; firstName?: string; 
 }
 
 export const Hayagriva = new class {
-  public fromZotero(item: Serialized.RegularItem): HayagrivaEntry {
-    const entry: HayagrivaEntry = {
+  public fromZotero(item: Serialized.RegularItem): Entry {
+    const entry: Entry = {
       type: hayagrivaType[item.itemType] || 'misc',
     }
 
@@ -379,7 +379,7 @@ export const Hayagriva = new class {
   }
 
   public export(items: Iterable<Serialized.RegularItem>): string {
-    const doc: HayagrivaDoc = {}
+    const doc: Doc = {}
     for (const item of items) {
       const key = sanitizeKey(item.citationKey || item.itemKey)
       doc[key] = this.fromZotero(item)
@@ -389,7 +389,7 @@ export const Hayagriva = new class {
   }
 
   public async import(data: unknown): Promise<void> {
-    const doc = data as HayagrivaDoc
+    const doc = data as Doc
 
     for (const [ id, entry ] of Object.entries(doc)) {
       if (!entry || typeof entry !== 'object') continue
