@@ -1,12 +1,10 @@
 import { log } from './logger'
-import { flash } from './flash'
 
 export function editable(): Set<number> {
   const libraries = Zotero.Libraries.getAll().filter(lib => lib.editable).map(lib => lib.libraryID)
   return new Set(libraries)
 }
 
-let flashes = 10
 export function readonly(source: number | Zotero.Item | _ZoteroTypes.Library.LibraryLike): boolean {
   let lib: _ZoteroTypes.Library.LibraryLike
 
