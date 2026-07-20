@@ -208,9 +208,7 @@ jobs:
           sudo mv pandoc*/bin/pandoc /usr/bin
           pandoc -v
 
-          curl -s https://api.github.com/repos/typst/hayagriva/releases/latest | jq -r '.assets[] | select(.name | endswith("x86_64-unknown-linux-musl.tar.gz")) | .browser_download_url' | xargs wget -q -O hayagriva.tar.gz
-          tar xvzf hayagriva.tar.gz
-          sudo mv hayagriva /usr/bin
+          cargo install hayagriva
           hayagriva --version
 
           # preserve log hierarchy
