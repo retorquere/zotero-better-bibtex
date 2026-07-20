@@ -287,17 +287,17 @@ def step_impl(context, translator, expected):
 def step_impl(context, fixture):
   fixture_path = os.path.join(ROOT, 'test/fixtures', expand_scenario_variables(context, fixture))
   baseline_path = fixture_path.replace('.hayagriva.yml', '.hayagriva.reference.apa')
-  
+
   result = subprocess.run(
     ['hayagriva', fixture_path, 'reference', '--style', 'apa', '--no-fmt'],
     stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True
   )
-  
+
   assert result.returncode == 0, f'hayagriva failed on {fixture_path}:\n{result.stdout}'
-  
+
   # Write reference output to exported directory for inspection
   utils.exported(baseline_path.replace('test/fixtures/', ''), result.stdout)
-  
+
   if os.path.exists(baseline_path):
     with open(baseline_path, 'r') as f:
       baseline = f.read()
