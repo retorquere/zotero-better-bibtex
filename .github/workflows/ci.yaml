@@ -223,6 +223,7 @@ jobs:
         max_attempts: 3
         retry_wait_seconds: 15
         command: |
+          set -e
           curl -sL https://raw.githubusercontent.com/retorquere/zotero-deb/master/install.sh | sudo bash
           sudo apt-get update
           sudo apt-get install ${{ matrix.client }}
@@ -233,8 +234,7 @@ jobs:
           sudo mv pandoc*/bin/pandoc /usr/bin
           pandoc -v
 
-          cargo install hayagriva
-          hayagriva --version
+          cargo install hayagriva --features cli && hayagriva --version
 
           # preserve log hierarchy
           mkdir -p stats
