@@ -40,7 +40,7 @@ const argv = yargs(hideBin(process.argv))
     alias: 't',
     type: 'string',
     default: 'biblatex',
-    description: 'Translator type (biblatex, bibtex, csl, csl-json, yml, csl-yaml)',
+    description: 'Translator type (biblatex, bibtex, csl, csl-json, yml, csl-yaml, hayagriva)',
   })
   .option('data', {
     alias: 'd',
@@ -142,6 +142,10 @@ const Translator = new class {
       case 'csl-yaml':
         this.name = 'CSL-YAML'
         this.ext = '.csl.yml'
+        break
+      case 'hayagriva':
+        this.name = 'Better Hayagriva'
+        this.ext = '.hayagriva.yml'
         break
     }
   }
