@@ -285,13 +285,26 @@ def step_impl(context, translator, expected):
 
 @step('"{fixture}" compiles with hayagriva')
 def step_impl(context, fixture):
-  fixture = os.path.join(ROOT, 'test/fixtures', expand_scenario_variables(context, fixture))
+  fixture_path = os.path.join(ROOT, 'test/fixtures', expand_scenario_variables(context, fixture))
+  baseline_path = fixture_path.replace('.hayagriva.yml', '.hayagriva.reference.apa')
+  
   result = subprocess.run(
-    ['hayagriva', fixture, 'reference', '--style', 'apa'],
+    ['hayagriva', fixture_path, 'reference', '--style', 'apa', '--no-fmt'],
     stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True
   )
-  utils.print(result.stdout)
-  assert result.returncode == 0, f'hayagriva failed on {fixture}:\n{result.stdout}'
+  
+  assert result.returncode == 0, f'hayagriva failed on {fixture_path}:\n{result.stdout}'
+  
+  # Write reference output to exported directory for inspection
+  utils.exported(baseline_path.replace('test/fixtures/', ''), result.stdout)
+  
+  if os.path.exists(baseline_path):
+    with open(baseline_path, 'r') as f:
+      baseline = f.read()
+    assert_equal_diff(baseline, result.stdout)
+  else:
+    utils.print(f'Baseline file not found: {baseline_path}')
+    utils.print(result.stdout)
 
 @step('the library should match "{expected}"')
 def step_impl(context, expected):

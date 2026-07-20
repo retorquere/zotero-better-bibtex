@@ -362,7 +362,7 @@ class Library:
       self.normalized = clean_html(self.body).strip()
 
     elif self.ext in PLAINTEXT:
-      pass
+      pass ## keep normalized = body
 
     else:
       raise ValueError(f'Unsupported fixture extension {self.ext} for {self.base or self.source or self.path}')

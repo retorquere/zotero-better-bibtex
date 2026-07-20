@@ -7,6 +7,7 @@ import type { Collected } from './collect'
 import { Translation } from './translator'
 
 type Person = string | { name?: string; given?: string; family?: string }
+type HayagrivaType = 'article' | 'artwork' | 'audio' | 'blog' | 'book' | 'case' | 'chapter' | 'conference' | 'entry' | 'legislation' | 'manuscript' | 'misc' | 'newspaper' | 'patent' | 'periodical' | 'proceedings' | 'repository' | 'report' | 'thread' | 'thesis' | 'video' | 'web'
 type Serial = {
   doi?: string
   isbn?: string
@@ -23,7 +24,7 @@ type Affiliated = {
 }
 
 type Entry = {
-  type?: string
+  type?: HayagrivaType
   title?: string
   author?: Person | Person[]
   editor?: Person | Person[]
@@ -42,7 +43,7 @@ type Entry = {
 
 type Doc = Record<string, Entry>
 
-const hayagrivaType: Record<string, string> = {
+const hayagrivaType: Record<Serialized.RegularItem['itemType'], HayagrivaType> = {
   audioRecording: 'audio',
   artwork: 'artwork',
   bill: 'legislation',
@@ -70,7 +71,7 @@ const hayagrivaType: Record<string, string> = {
   newspaperArticle: 'article',
   patent: 'patent',
   podcast: 'audio',
-  preprint: 'article',
+  preprint: 'report',
   presentation: 'misc',
   radioBroadcast: 'audio',
   report: 'report',
@@ -82,7 +83,7 @@ const hayagrivaType: Record<string, string> = {
   webpage: 'web',
 }
 
-const zoteroType: Record<string, Serialized.RegularItem['itemType']> = {
+const zoteroType: Record<Exclude<HayagrivaType, 'blog' | 'proceedings'> | 'anthos' | 'anthology' | 'reference', Serialized.RegularItem['itemType']> = {
   anthos: 'bookSection',
   anthology: 'book',
   article: 'journalArticle',

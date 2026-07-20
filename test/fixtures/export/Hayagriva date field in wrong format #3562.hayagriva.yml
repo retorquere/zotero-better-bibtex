@@ -4,7 +4,7 @@ PDFOvercomingExploration:
   serial-number:
     doi: 10.48550/arXiv.1709.10089
   title: (PDF) Overcoming Exploration in Reinforcement Learning with Demonstrations
-  type: Web
+  type: web
   url:
     date: '2026-07-07'
     value: https://www.researchgate.net/publication/320098321_Overcoming_Exploration_in_Reinforcement_Learning_with_Demonstrations
@@ -24,7 +24,7 @@ andrychowiczHindsightExperienceReplay2018:
   serial-number:
     doi: 10.48550/arXiv.1707.01495
   title: Hindsight Experience Replay
-  type: Report
+  type: report
   url:
     date: '2026-06-23'
     value: http://arxiv.org/abs/1707.01495
