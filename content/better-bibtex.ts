@@ -61,9 +61,12 @@ import { Exporter } from './translators/worker'
 import { generateBibLaTeX } from '../translators/bibtex/biblatex'
 import { generateBibTeX, importBibTeX } from '../translators/bibtex/bibtex'
 import { generateCSLJSON } from '../translators/csl/json'
-import { generateCSLYAML, parseCSLYAML } from '../translators/csl/yaml'
+import { generateCSLYAML } from '../translators/csl/yaml'
+import { parse as parseYAML } from '../translators/lib/yaml'
+import { generateHayagriva } from '../translators/lib/hayagriva'
 import { generateBBTJSON, importBBTJSON } from '../translators/lib/bbtjson'
 import type { Collected } from '../translators/lib/collect'
+import * as YAML from 'js-yaml'
 
 // MONKEY PATCHES
 
@@ -260,8 +263,18 @@ Zotero.Translate.Export.prototype.Sandbox.BetterBibTeX = {
   generateCSLJSON(_sandbox: any, collected: Collected) {
     return generateCSLJSON(collected)
   },
+  generateHayagriva(_sandbox: any, collected: Collected) {
+    return generateHayagriva(collected)
+  },
   generateBBTJSON(_sandbox: any, collected: Collected) {
     return generateBBTJSON(collected)
+  },
+
+  yamlDump(_sandbox: any, data: any, options?: any) {
+    return YAML.dump(data, options)
+  },
+  yamlLoad(_sandbox: any, input: string) {
+    return YAML.load(input)
   },
 
   parseDate(_sandbox: any, date: string): RichDate {
@@ -293,8 +306,14 @@ Zotero.Translate.Import.prototype.Sandbox.BetterBibTeX = {
   async importBBTJSON(_sandbox: any, collected: Collected) {
     return await importBBTJSON(collected)
   },
-  parseCSLYAML(_sandbox: any, input: string): any {
-    return parseCSLYAML(input)
+  parseYAML(_sandbox: any, input: string): any {
+    return parseYAML(input, str => YAML.load(str))
+  },
+  yamlDump(_sandbox: any, data: any, options?: any) {
+    return YAML.dump(data, options)
+  },
+  yamlLoad(_sandbox: any, input: string) {
+    return YAML.load(input)
   },
 }
 
