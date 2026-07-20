@@ -116,7 +116,7 @@ function sanitizeKey(id: string): string {
 function normalizeScalar(value: unknown): string {
   if (value === null || typeof value === 'undefined') return ''
   if (typeof value === 'string') return value.trim()
-  if (typeof value === 'number') return `${ value }`.trim()
+  if (typeof value === 'number') return `${value}`.trim()
   if (typeof value === 'boolean') return (value ? 'true' : 'false')
   if (typeof value === 'bigint') return value.toString().trim()
   return ''
@@ -128,7 +128,7 @@ function normalizePageRange(value: unknown): string {
   return pages.replace(/--+/g, '-')
 }
 
-const seasons = [ '', 'Spring', 'Summer', 'Autumn', 'Winter' ]
+const seasons = ['', 'Spring', 'Summer', 'Autumn', 'Winter']
 
 function formatParsedDate(date: dateparser.RichDate): string {
   switch (date.type) {
@@ -170,7 +170,7 @@ function normalizeType(value: unknown): string {
 }
 
 function makeParent(item: Serialized.RegularItem): Entry | null {
-  if ([ 'journalArticle', 'magazineArticle', 'newspaperArticle' ].includes(item.itemType)) {
+  if (['journalArticle', 'magazineArticle', 'newspaperArticle'].includes(item.itemType)) {
     const title = item.publicationTitle || ''
     if (!title) return null
     return {
@@ -239,9 +239,15 @@ function parseExtraSerialNumbers(extra: unknown): Serial {
     const value = normalizeScalar(matched[2])
     if (!value) continue
 
-    if ([ 'version', 'version number' ].includes(label)) serial.version = value
-    else if ([ 'report number', 'patent number', 'docket number' ].includes(label)) serial.serial = value
-    else serial[label] = value
+    if (['version', 'version number'].includes(label)) {
+      serial.version = value
+    }
+    else if (['report number', 'patent number', 'docket number'].includes(label)) {
+      serial.serial = value
+    }
+    else {
+      serial[label] = value
+    }
   }
 
   return serial
@@ -256,7 +262,7 @@ function serialNumber(item: Serialized.RegularItem): Serial {
     ...(item.PMCID ? { pmcid: item.PMCID } : {}),
   }
 
-  if ([ 'report', 'patent', 'case' ].includes(item.itemType) && item.number) serial.serial = item.number
+  if (['report', 'patent', 'case'].includes(item.itemType) && item.number) serial.serial = item.number
   if (item.itemType === 'computerProgram' && item.versionNumber) serial.version = item.versionNumber
 
   const extra = parseExtraSerialNumbers(item.extra)
@@ -276,7 +282,7 @@ function hasContent(entry: Record<string, unknown>): boolean {
 
 function parseAffiliated(entry: Entry): Array<{ creatorType: string; firstName?: string; lastName?: string; name?: string; fieldMode?: number }> {
   const people: Array<{ creatorType: string; firstName?: string; lastName?: string; name?: string; fieldMode?: number }> = []
-  const affiliated = entry.affiliated ? (Array.isArray(entry.affiliated) ? entry.affiliated : [ entry.affiliated ]) : []
+  const affiliated = entry.affiliated ? (Array.isArray(entry.affiliated) ? entry.affiliated : [entry.affiliated]) : []
 
   const creatorType: Record<string, string> = {
     collaborator: 'contributor',
@@ -317,7 +323,7 @@ function parsePerson(person: Person): { firstName?: string; lastName?: string; n
 
 function personList(source: Person | Person[] | undefined): Person[] {
   if (!source) return []
-  return Array.isArray(source) ? source : [ source ]
+  return Array.isArray(source) ? source : [source]
 }
 
 function normalizeURL(url: Entry['url']): { value?: string; date?: string } {
@@ -385,7 +391,7 @@ export const Hayagriva = new class {
 
     const creators: Record<string, string[]> = { author: [], editor: [], translator: [] }
     for (const creator of item.creators || []) {
-      const name = creator.name || [ creator.lastName, creator.firstName ].filter(part => part).join(', ')
+      const name = creator.name || [creator.lastName, creator.firstName].filter(part => part).join(', ')
       if (!name) continue
 
       switch (creator.creatorType) {
@@ -425,19 +431,19 @@ export const Hayagriva = new class {
   public async import(data: unknown): Promise<void> {
     const doc = data as Doc
 
-    for (const [ id, entry ] of Object.entries(doc)) {
+    for (const [id, entry] of Object.entries(doc)) {
       if (!entry || typeof entry !== 'object') continue
 
       const type = normalizeType(entry.type) || 'misc'
       const item = new Zotero.Item(zoteroType[type] || 'document')
 
-      item.extra = `${ item.extra || '' }\nCitation Key: ${ sanitizeKey(id) }`.trim()
+      item.extra = `${item.extra || ''}\nCitation Key: ${sanitizeKey(id)}`.trim()
 
       if (entry.title) item.title = entry.title
       if (entry.date) item.date = entry.date
       if (entry.language) item.language = entry.language
-      if (entry.volume) item.volume = `${ entry.volume }`
-      if (entry.issue) item.issue = `${ entry.issue }`
+      if (entry.volume) item.volume = `${entry.volume}`
+      if (entry.issue) item.issue = `${entry.issue}`
       if (entry['page-range']) item.pages = normalizePageRange(entry['page-range'])
 
       const url = normalizeURL(entry.url)
@@ -458,11 +464,11 @@ export const Hayagriva = new class {
         if (item.itemType === 'report') item.reportNumber = serial.serial
         else if (item.itemType === 'patent') item.patentNumber = serial.serial
         else if (item.itemType === 'case') item.docketNumber = serial.serial
-        else item.extra = `${ item.extra || '' }\nSerial Number: ${ serial.serial }`.trim()
+        else item.extra = `${item.extra || ''}\nSerial Number: ${serial.serial}`.trim()
       }
       if (serial.version) {
         if (item.itemType === 'computerProgram') item.versionNumber = serial.version
-        else item.extra = `${ item.extra || '' }\nVersion: ${ serial.version }`.trim()
+        else item.extra = `${item.extra || ''}\nVersion: ${serial.version}`.trim()
       }
 
       const parent = pickParent(entry)
