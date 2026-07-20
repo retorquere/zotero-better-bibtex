@@ -386,8 +386,8 @@ Feature: Export
 
   Scenario Outline: Export <references> references for Hayagriva to <file>
     When I import <references> references from "export/<file>.json"
-    And I set export option hayagriva to true
-    Then an export using "Better CSL YAML" should match "export/*.hayagriva.yml"
+    Then an export using "Better Hayagriva" should match "export/*.hayagriva.yml"
+    And "export/<file>.hayagriva.yml" compiles with hayagriva
     Examples:
       | file                                        | references |
       | Export year ranges from Original Date #3482 | 1          |

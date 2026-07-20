@@ -283,6 +283,16 @@ def step_impl(context, translator, expected):
     expected = expected
   )
 
+@step('"{fixture}" compiles with hayagriva')
+def step_impl(context, fixture):
+  fixture = os.path.join(ROOT, 'test/fixtures', expand_scenario_variables(context, fixture))
+  result = subprocess.run(
+    ['hayagriva', fixture, 'reference', '--style', 'apa'],
+    stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True
+  )
+  utils.print(result.stdout)
+  assert result.returncode == 0, f'hayagriva failed on {fixture}:\n{result.stdout}'
+
 @step('the library should match "{expected}"')
 def step_impl(context, expected):
   export_library(context, expected = expected)
