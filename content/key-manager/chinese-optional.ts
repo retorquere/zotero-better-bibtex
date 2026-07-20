@@ -8,7 +8,7 @@ initSync(wasm.bytes)
 wasm.bytes = null
 
 export function jieba(input: string): string[] {
-  return (cut(input, true) as string[]).filter(w => w.trim())
+  return cut(input, true).map(token => token.word.trim()).filter(String)
 }
 
 export function pinyin(str: string): string {

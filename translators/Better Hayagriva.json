@@ -1,7 +1,7 @@
 {
-  "translatorID": "0f238e69-043e-4882-93bf-342de007de19",
-  "label": "Better CSL YAML",
-  "description": "exports items in pandoc-compatible CSL-YAML format, with added citation keys and parsing of metadata",
+  "translatorID": "8a2f0d30-0b73-4f2c-8b5b-7c1a9e3f2d4e",
+  "label": "Better Hayagriva",
+  "description": "imports/exports items in Hayagriva YAML format",
   "creator": "Emiliano heyns",
   "target": "yaml",
   "minVersion": "4.0.27",
@@ -16,6 +16,6 @@
   },
   "translatorType": 3,
   "browserSupport": "gcsv",
-  "priority": 800,
-  "inRepository": false
+  "inRepository": false,
+  "priority": 799
 }

@@ -30,6 +30,7 @@ automaticTags:
     - Better BibTeX
     - Better CSL JSON
     - Better CSL YAML
+    - Better Hayagriva
 
 asciiBibLaTeX:
   description: >-
@@ -209,6 +210,7 @@ skipFields:
     - Better BibTeX
     - Better CSL JSON
     - Better CSL YAML
+    - Better Hayagriva
 
 warnBulkModify:
   description: >
@@ -229,6 +231,7 @@ postscript:
     - Better BibTeX
     - Better CSL JSON
     - Better CSL YAML
+    - Better Hayagriva
 
 strings:
   description: >-
@@ -559,6 +562,7 @@ cache:
     - Better BibTeX
     - Better CSL JSON
     - Better CSL YAML
+    - Better Hayagriva
 
 separatorList:
   description: >-

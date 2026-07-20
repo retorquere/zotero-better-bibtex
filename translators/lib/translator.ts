@@ -98,6 +98,7 @@ export class Translation {
   public BetterTeX: boolean
   public BetterCSLJSON?: boolean
   public BetterCSLYAML?: boolean
+  public BetterHayagriva?: boolean
   public BetterCSL?: boolean
   public BetterBibTeXCitationKeyQuickCopy?: boolean
   public BetterBibTeXJSON?: boolean

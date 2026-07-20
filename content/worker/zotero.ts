@@ -20,8 +20,10 @@ import { generateBibLaTeX } from '../../translators/bibtex/biblatex'
 import { generateBibTeX } from '../../translators/bibtex/bibtex'
 import { generateCSLJSON } from '../../translators/csl/json'
 import { generateCSLYAML } from '../../translators/csl/yaml'
+import { generateHayagriva } from '../../translators/lib/hayagriva'
 import { generateBBTJSON } from '../../translators/lib/bbtjson'
 import type { Collected } from '../../translators/lib/collect'
+import * as YAML from 'js-yaml'
 
 import { DOMParser as XMLDOMParser } from '@xmldom/xmldom'
 import { Schema } from '../item-schema'
@@ -268,7 +270,15 @@ class WorkerZoteroBetterBibTeX {
   public generateBibTeX(collected: Collected) { return generateBibTeX(collected) }
   public generateCSLYAML(collected: Collected) { return generateCSLYAML(collected) }
   public generateCSLJSON(collected: Collected) { return generateCSLJSON(collected) }
+  public generateHayagriva(collected: Collected) { return generateHayagriva(collected) }
   public generateBBTJSON(collected: Collected) { return generateBBTJSON(collected) }
+
+  public yamlDump(data: any, options?: any) {
+    return YAML.dump(data, options)
+  }
+  public yamlLoad(input: string) {
+    return YAML.load(input)
+  }
 }
 
 const WorkerZoteroUtilities = {

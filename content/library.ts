@@ -1,12 +1,10 @@
 import { log } from './logger'
-import { flash } from './flash'
 
 export function editable(): Set<number> {
   const libraries = Zotero.Libraries.getAll().filter(lib => lib.editable).map(lib => lib.libraryID)
   return new Set(libraries)
 }
 
-let flashes = 10
 export function readonly(source: number | Zotero.Item | _ZoteroTypes.Library.LibraryLike): boolean {
   let lib: _ZoteroTypes.Library.LibraryLike
 
@@ -16,18 +14,14 @@ export function readonly(source: number | Zotero.Item | _ZoteroTypes.Library.Lib
   else if ((source as _ZoteroTypes.Library.LibraryLike).libraryType) {
     lib = source as _ZoteroTypes.Library.LibraryLike
   }
+  else if (((source as Zotero.Item).objectType === 'item' || (source as Zotero.Item).objectType === 'feedItem') && typeof (source as Zotero.Item).libraryID !== 'number') {
+    return true
+  }
   else if (typeof (source as Zotero.Item).libraryID === 'number') {
     lib = Zotero.Libraries.get(source.libraryID) || undefined
   }
 
-  if (!lib) {
-    const msg = `library.readonly: no LibraryLike found for ${JSON.stringify(source)}`
-    log.error(msg)
-    if (flashes--) flash(msg)
-    return false
-  }
-
-  return !lib.editable
+  return lib ? !lib.editable : false
 }
 
 export function get(query: Record<string, string | number>, throws = false): Zotero.Library {
