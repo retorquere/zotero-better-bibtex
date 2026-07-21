@@ -146,7 +146,11 @@ function normalize_edtf(date: any): RichDate | null {
 
     case 'Season': {
       const [year, month] = date.values
-      if (typeof Season.fromMonth(month) !== 'number') throw new Error(`normalize EDTF: Unexpected season ${month}`)
+      if (typeof Season.fromMonth(month) !== 'number') {
+        // eslint-disable-next-line no-restricted-syntax
+        Zotero.debug(`better-bibtex: normalize EDTF: ${JSON.stringify(date)} has unexpected season ${month}`)
+        return null
+      }
       return Season.seasonize({
         type: 'date',
         year,
@@ -169,7 +173,9 @@ function normalize_edtf(date: any): RichDate | null {
     }
   }
 
-  throw new Error(`normalize EDTF: failed to normalize ${type} ${JSON.stringify(date.values)}`)
+  // eslint-disable-next-line no-restricted-syntax
+  Zotero.debug(`better-bibtex: normalize EDTF: failed to normalize ${type} ${JSON.stringify(date)}`)
+  return null
 }
 
 function upgrade_edtf(date: string): string {
