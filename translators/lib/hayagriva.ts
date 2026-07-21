@@ -292,20 +292,15 @@ const zoteroCreatorType: Record<string, string> = {
 }
 
 function parseAffiliated(entry: Entry): Array<{ creatorType: string; firstName?: string; lastName?: string; name?: string; fieldMode?: number }> {
-  const people: Array<{ creatorType: string; firstName?: string; lastName?: string; name?: string; fieldMode?: number }> = []
-  const affiliated = asArray(entry.affiliated)
+  return asArray(entry.affiliated).flatMap(affiliated => {
+    const creatorType = zoteroCreatorType[normalizeType(affiliated?.role)]
+    if (!creatorType) return []
 
-  for (const role of affiliated) {
-    const mapped = zoteroCreatorType[normalizeType(role?.role)]
-    if (!mapped) continue
-    for (const person of asArray(role?.names)) {
-      const parsed = parsePerson(person)
-      if (!Object.keys(parsed).length) continue
-      people.push({ creatorType: mapped, ...parsed })
-    }
-  }
-
-  return people
+    return asArray(affiliated?.names)
+      .map(person => parsePerson(person))
+      .filter(parsed => Object.keys(parsed).length > 0)
+      .map(parsed => ({ creatorType, ...parsed }))
+  })
 }
 
 function parsePerson(person: Person): { firstName?: string; lastName?: string; name?: string; fieldMode?: number } {
@@ -340,8 +335,7 @@ function normalizePublisher(publisher: Publisher): { name?: string; location?: s
 }
 
 function pickParent(entry: Entry): Entry | null {
-  const [parent] = asArray(entry.parent)
-  return parent || null
+  return asArray(entry.parent)[0] || null
 }
 
 function creatorFingerprint(creator: { creatorType: string; firstName?: string; lastName?: string; name?: string; fieldMode?: number }): string {
