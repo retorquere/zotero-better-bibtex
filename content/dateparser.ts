@@ -90,7 +90,12 @@ export type RichDate = {
 const Season = new class {
   private ranges = [
     [13, 14, 15, 16],
-    [21, 22, 23, 24],
+    [21, 22, 23, 24], // Astronomical / Location-Independent Seasons
+    [25, 26, 27, 28], // Spring, Summer, Autumn, Winter (Northern Hemisphere)
+    [29, 30, 31, 32], // Spring, Summer, Autumn, Winter (Southern Hemisphere)
+    [33, 34, 35, 36], // Quarter 1 through Quarter 4 (3 months each)
+    [37, 38, 39],     // Quadrimester 1 through Quadrimester 3 (4 months each)
+    [40, 41],         // Semestral 1 (First 6 months / H1), Semestral 2 (Second 6 months / H2)
   ]
 
   public fromMonth(month: number): SeasonID {
