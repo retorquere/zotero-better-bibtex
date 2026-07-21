@@ -31,7 +31,8 @@ jobs:
       with:
         persist-credentials: false
         fetch-depth: 1
-        submodules: recursive
+        submodules: ${{ (github.job == 'build' || github.job == 'site') && 
+          'recursive' || 'false' }}
 
     - name: get package version
       run: echo "version="`jq -r .version package.json` >> $GITHUB_ENV
@@ -135,7 +136,8 @@ jobs:
       with:
         persist-credentials: false
         fetch-depth: 1
-        submodules: recursive
+        submodules: ${{ (github.job == 'build' || github.job == 'site') && 
+          'recursive' || 'false' }}
 
     - name: install python
       uses: actions/setup-python@v6
@@ -191,7 +193,8 @@ jobs:
       with:
         persist-credentials: false
         fetch-depth: 1
-        submodules: recursive
+        submodules: ${{ (github.job == 'build' || github.job == 'site') && 
+          'recursive' || 'false' }}
 
     - name: fetch build artifacts
       uses: actions/download-artifact@v8
@@ -299,7 +302,8 @@ jobs:
       with:
         persist-credentials: false
         fetch-depth: 1
-        submodules: recursive
+        submodules: ${{ (github.job == 'build' || github.job == 'site') && 
+          'recursive' || 'false' }}
 
 
     - name: fetch build artifacts
@@ -354,7 +358,8 @@ jobs:
       with:
         persist-credentials: false
         fetch-depth: 1
-        submodules: recursive
+        submodules: ${{ (github.job == 'build' || github.job == 'site') && 
+          'recursive' || 'false' }}
 
     - name: install python
       uses: actions/setup-python@v6

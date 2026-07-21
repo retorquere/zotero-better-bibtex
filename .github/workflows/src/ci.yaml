@@ -39,7 +39,7 @@ _anchors:
     with:
       persist-credentials: false
       fetch-depth: 1
-      submodules: recursive
+      submodules: ${{ (github.job == 'build' || github.job == 'site') && 'recursive' || 'false' }}
 
 jobs:
   build:
