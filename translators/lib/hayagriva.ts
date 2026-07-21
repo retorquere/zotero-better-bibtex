@@ -280,25 +280,25 @@ function hasContent(entry: Record<string, unknown>): boolean {
   })
 }
 
+const zoteroCreatorType: Record<string, string> = {
+  collaborator: 'contributor',
+  composer: 'composer',
+  director: 'director',
+  holder: 'inventor',
+  illustrator: 'artist',
+  producer: 'producer',
+  translator: 'translator',
+  writer: 'contributor',
+}
+
 function parseAffiliated(entry: Entry): Array<{ creatorType: string; firstName?: string; lastName?: string; name?: string; fieldMode?: number }> {
   const people: Array<{ creatorType: string; firstName?: string; lastName?: string; name?: string; fieldMode?: number }> = []
-  const affiliated = entry.affiliated ? (Array.isArray(entry.affiliated) ? entry.affiliated : [entry.affiliated]) : []
-
-  const creatorType: Record<string, string> = {
-    collaborator: 'contributor',
-    composer: 'composer',
-    director: 'director',
-    holder: 'inventor',
-    illustrator: 'artist',
-    producer: 'producer',
-    translator: 'translator',
-    writer: 'contributor',
-  }
+  const affiliated = asArray(entry.affiliated)
 
   for (const role of affiliated) {
-    const mapped = creatorType[normalizeType(role?.role)]
+    const mapped = zoteroCreatorType[normalizeType(role?.role)]
     if (!mapped) continue
-    for (const person of personList(role?.names)) {
+    for (const person of asArray(role?.names)) {
       const parsed = parsePerson(person)
       if (!Object.keys(parsed).length) continue
       people.push({ creatorType: mapped, ...parsed })
@@ -309,19 +309,20 @@ function parseAffiliated(entry: Entry): Array<{ creatorType: string; firstName?:
 }
 
 function parsePerson(person: Person): { firstName?: string; lastName?: string; name?: string; fieldMode?: number } {
-  if (typeof person !== 'string') {
+  if (typeof person === 'string') {
+    const parts = person.split(',').map(part => part.trim()).filter(Boolean)
+    if (parts.length >= 2) return { lastName: parts[0], firstName: parts.slice(1).join(', ') }
+    if (parts.length === 1) return { name: parts[0], fieldMode: 1 }
+  }
+  else {
     if (person.family || person.given) return { lastName: person.family || '', firstName: person.given || '' }
     if (person.name) return { name: person.name, fieldMode: 1 }
-    return {}
   }
 
-  const parts = person.split(',').map(part => part.trim()).filter(part => part)
-  if (parts.length >= 2) return { lastName: parts[0], firstName: parts.slice(1).join(', ') }
-  if (parts.length === 1) return { name: parts[0], fieldMode: 1 }
   return {}
 }
 
-function personList(source: Person | Person[] | undefined): Person[] {
+function asArray<T>(source: T | T[] | null | undefined): T[] {
   if (!source) return []
   return Array.isArray(source) ? source : [source]
 }
@@ -339,9 +340,8 @@ function normalizePublisher(publisher: Publisher): { name?: string; location?: s
 }
 
 function pickParent(entry: Entry): Entry | null {
-  if (!entry.parent) return null
-  if (Array.isArray(entry.parent)) return entry.parent[0] || null
-  return entry.parent
+  const [parent] = asArray(entry.parent)
+  return parent || null
 }
 
 function creatorFingerprint(creator: { creatorType: string; firstName?: string; lastName?: string; name?: string; fieldMode?: number }): string {
@@ -508,19 +508,19 @@ export const Hayagriva = new class {
         }
       }
 
-      for (const person of personList(entry.author)) {
+      for (const person of asArray(entry.author)) {
         const parsed = parsePerson(person)
         if (!Object.keys(parsed).length) continue
         item.creators.push({ creatorType: 'author', ...parsed })
       }
 
-      for (const person of personList(entry.editor)) {
+      for (const person of asArray(entry.editor)) {
         const parsed = parsePerson(person)
         if (!Object.keys(parsed).length) continue
         item.creators.push({ creatorType: 'editor', ...parsed })
       }
 
-      for (const person of personList(entry.translator)) {
+      for (const person of asArray(entry.translator)) {
         const parsed = parsePerson(person)
         if (!Object.keys(parsed).length) continue
         item.creators.push({ creatorType: 'translator', ...parsed })
