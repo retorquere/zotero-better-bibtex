@@ -147,6 +147,18 @@ def before_all(context):
   TestBin.load(context)
   context.memory = Munch(total=None, increase=None)
   context.zotero = Zotero(context.config.userdata)
+  context.memory_csv = context.config.userdata.get('memory', 'false') == 'true'
+  context.memory_baseline = None
+  context.memory_after_reset = None
+
+  if context.memory_csv:
+    baseline = Munch.fromDict(context.zotero.execute('return Zotero.BetterBibTeX.TestSupport.memoryState("behave baseline")'))
+    context.memory_baseline = baseline.resident
+    with open('memory.csv', 'w', newline='') as f:
+      writer = csv.writer(f)
+      writer.writerow(['kind', 'scenario', 'baseline_mb', 'after_reset_mb', 'after_test_mb', 'after_post_reset_mb'])
+      writer.writerow(['baseline', '', f'{baseline.resident:.3f}', '', '', ''])
+
   context.tests = None
   if 'test' in context.config.userdata: context.tests = [ test.lower() for test in json.loads(context.config.userdata['test']) ]
   setup_active_tag_values(active_tag_value_provider, context.config.userdata)
@@ -163,6 +175,11 @@ def before_scenario(context, scenario):
 
   TestBin.start(scenario)
   context.zotero.reset(scenario.name)
+
+  if context.memory_csv:
+    after_reset = Munch.fromDict(context.zotero.execute('return Zotero.BetterBibTeX.TestSupport.memoryState("behave after reset")'))
+    context.memory_after_reset = after_reset.resident
+
   context.displayOptions = {
     # set export option to the --worker option passed to behave
     'worker': context.zotero.worker,
@@ -185,10 +202,30 @@ def before_scenario(context, scenario):
   context.zotero.config.timeout = context.timeout
 
 def after_scenario(context, scenario):
+  after_test = None
+  if context.memory_csv and not getattr(scenario, 'skip_reason', None):
+    after_test = Munch.fromDict(context.zotero.execute('return Zotero.BetterBibTeX.TestSupport.memoryState("behave after test")')).resident
+
   if context.memory.increase or context.memory.total:
     memory = Munch.fromDict(context.zotero.execute('return Zotero.BetterBibTeX.TestSupport.memoryState("behave cap")'))
     if context.memory.increase and memory.delta > context.memory.increase:
       raise AssertionError(f'Memory increase cap of {context.memory.increase}MB exceeded by {memory.delta - context.memory.increase}MB')
     if context.memory.total and memory.resident > context.memory.total:
       raise AssertionError(f'Total memory cap of {context.memory.total}MB exceeded by {memory.resident - context.memory.total}MB')
+
+  if context.memory_csv and not getattr(scenario, 'skip_reason', None):
+    context.zotero.reset(f'{scenario.name} (post)')
+    after_post_reset = Munch.fromDict(context.zotero.execute('return Zotero.BetterBibTeX.TestSupport.memoryState("behave after post-reset")')).resident
+
+    with open('memory.csv', 'a', newline='') as f:
+      writer = csv.writer(f)
+      writer.writerow([
+        'scenario',
+        scenario.name,
+        f'{context.memory_baseline:.3f}' if context.memory_baseline is not None else '',
+        f'{context.memory_after_reset:.3f}' if context.memory_after_reset is not None else '',
+        f'{after_test:.3f}' if after_test is not None else '',
+        f'{after_post_reset:.3f}',
+      ])
+
   TestBin.stop(scenario)
