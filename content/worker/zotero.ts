@@ -454,13 +454,19 @@ class WorkerZotero {
 
     doExport()
 
-    if (this.exportFile) await IOUtils.writeUTF8(this.exportFile, this.output)
+    const output = this.output
+
+    if (this.exportFile) await IOUtils.writeUTF8(this.exportFile, output)
+
+    this.output = ''
+    this.running.serialized = []
+    this.running.exported.clear()
 
     await this.running.flush()
     const cacheRate = this.running.hits + this.running.misses ? this.running.hits / (this.running.hits + this.running.misses) : 0
     this.BetterBibTeX.setProgress(100)
     this.running = null
-    return { output: Zotero.output, cacheRate }
+    return { output, cacheRate }
   }
 
   public send(message: Message) {
