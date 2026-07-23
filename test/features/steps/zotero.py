@@ -953,7 +953,7 @@ class Preferences:
         value = f.read()
 
     self.pref[key] = value
-    self.zotero.execute('Zotero.Prefs.set(pref, value)', pref=key, value=value)
+    self.zotero.execute('await Zotero.BetterBibTeX.TestSupport.setPreference(pref, value)', pref=key, value=value)
 
   def keys(self):
     return self.pref.keys()

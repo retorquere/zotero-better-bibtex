@@ -20,6 +20,7 @@ export class TestSupport {
   public timedMemoryLog: any
   public scenario: string
   public libraryID: number = Zotero.Libraries.userLibraryID
+  public cjkLibrariesLoaded = false
 
   public selectLibrary(library: string | number): void {
     this.libraryID = Zotero.Libraries.getAll().find(lib => lib.libraryID === library || lib.name === library)?.libraryID
@@ -87,6 +88,9 @@ export class TestSupport {
 
     Zotero.Prefs.set(`${ prefix }testing`, true)
 
+    // Reset CJK flag for next scenario
+    this.cjkLibrariesLoaded = false
+
     // Zotero DB access is *really* slow and times out even with chunked transactions. 3.5k items take ~ 50 seconds
     // to delete.
     let items = await Zotero.Items.getAll(Zotero.Libraries.userLibraryID, false, true, true)
@@ -130,6 +134,11 @@ export class TestSupport {
     return itemIDs.length
   }
 
+  public setPreference(pref: string, value: string | number | boolean): void {
+    if (pref.match(/[.](chinese|japanese|chineseSplitName)$/) && value) this.cjkLibrariesLoaded = true
+    Zotero.Prefs.set(pref, value)
+  }
+
   public async importFile(path: string, createNewCollection: boolean, preferences: Record<string, number | boolean | string>, bibstyle?: string): Promise<number> {
     preferences = preferences || {}
 
@@ -137,6 +146,12 @@ export class TestSupport {
       if (['texmap', 'keyConflictPolicy'].includes(pref)) continue
       if (typeof defaults[pref] === 'undefined') throw new Error(`Unsupported preference ${ pref } in test case`)
       if (Array.isArray(value)) value = value.join(',')
+
+      // track when CJK libraries are loaded
+      if (['chinese', 'japanese', 'chineseSplitName'].includes(pref) && value) {
+        this.cjkLibrariesLoaded = true
+      }
+
       Zotero.Prefs.set(`translators.better-bibtex.${ pref }`, value)
     }
 
