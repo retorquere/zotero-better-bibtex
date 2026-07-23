@@ -412,11 +412,20 @@ export const Hayagriva = new class {
     return entry
   }
 
-  public export(items: Iterable<Serialized.RegularItem>): string {
+  public export(items: Iterable<Serialized.RegularItem>, translation?: Translation): string {
     const doc: Doc = {}
     for (const item of items) {
       const key = sanitizeKey(item.citationKey || item.itemKey)
-      doc[key] = this.fromZotero(item)
+      const entry = this.fromZotero(item)
+
+      if (translation?.skipField) {
+        for (const field of Object.keys(entry)) {
+          // Hayagriva is a non-TeX exporter, so skipField matches on `csl.<type>.<field>` (see Translation.typefield)
+          if (`csl.${ entry.type }.${ field }`.match(translation.skipField)) delete entry[field as keyof Entry]
+        }
+      }
+
+      doc[key] = entry
     }
 
     return YAML.dump(doc, { skipInvalid: true, sortKeys: true, lineWidth: -1 })
@@ -535,6 +544,6 @@ export const Hayagriva = new class {
 
 export function generateHayagriva(collected: Collected): Translation {
   const translation = Translation.Export(collected)
-  translation.output.body = Hayagriva.export(collected.items.regular)
+  translation.output.body = Hayagriva.export(collected.items.regular, translation)
   return translation
 }
