@@ -349,7 +349,7 @@ function creatorFingerprint(creator: { creatorType: string; firstName?: string; 
 }
 
 export const Hayagriva = new class {
-  public fromZotero(item: Serialized.RegularItem): Entry {
+  public fromZotero(item: Serialized.RegularItem, skipField: RegExp): Entry {
     const entry: Entry = {
       type: hayagrivaType[item.itemType] || 'misc',
     }
@@ -409,14 +409,20 @@ export const Hayagriva = new class {
     const parent = makeParent(item)
     if (parent) entry.parent = parent
 
+    if (skipField) {
+      for (const field of Object.keys(entry)) {
+        if (`hayagriva.${entry.type}.${field}`.match(skipField)) delete entry[field]
+      }
+    }
+
     return entry
   }
 
-  public export(items: Iterable<Serialized.RegularItem>): string {
+  public export(items: Iterable<Serialized.RegularItem>, translation: Translation): string {
     const doc: Doc = {}
     for (const item of items) {
       const key = sanitizeKey(item.citationKey || item.itemKey)
-      doc[key] = this.fromZotero(item)
+      doc[key] = this.fromZotero(item, translation.skipField)
     }
 
     return YAML.dump(doc, { skipInvalid: true, sortKeys: true, lineWidth: -1 })
@@ -535,6 +541,6 @@ export const Hayagriva = new class {
 
 export function generateHayagriva(collected: Collected): Translation {
   const translation = Translation.Export(collected)
-  translation.output.body = Hayagriva.export(collected.items.regular)
+  translation.output.body = Hayagriva.export(collected.items.regular, translation)
   return translation
 }
