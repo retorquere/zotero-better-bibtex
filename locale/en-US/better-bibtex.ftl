@@ -179,7 +179,7 @@ better-bibtex_preferences_advanced_tab_postscript = postscript
 
 better-bibtex_preferences_advanced_tab_strings = @string definitions
 
-better-bibtex_preferences_auto-abbrev = Journal abbreviation mode (BibTeX/BibLaTeX)
+better-bibtex_preferences_auto-abbrev = Journal abbreviation mode
 better-bibtex_preferences_auto-abbrev_abbrev =
   .label = always use the Zotero abbreviation field
 better-bibtex_preferences_auto-abbrev_auto =
