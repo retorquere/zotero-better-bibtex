@@ -199,8 +199,7 @@ export abstract class CSLExporter {
 
       if (this.translation.skipField) {
         for (const field of Object.keys(csl)) {
-          const fullname = `csl.${ csl.type }.${ field }`
-          if (fullname.match(this.translation.skipField)) delete csl[field]
+          if (`csl.${csl.type}.${field}`.match(this.translation.skipField)) delete csl[field]
         }
       }
 
