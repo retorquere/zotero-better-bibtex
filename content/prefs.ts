@@ -144,20 +144,6 @@ export const Preference = new class PreferenceManager extends PreferenceManagerB
       Zotero.Prefs.set(key, defaults.autoExportDelay)
     }
 
-    const oldAutoAbbrevKey = 'translators.better-bibtex.autoAbbrev'
-    const journalAbbreviationKey = 'translators.better-bibtex.journalAbbreviation'
-    const oldAutoAbbrev = Zotero.Prefs.get(oldAutoAbbrevKey)
-    const journalAbbreviation = Zotero.Prefs.get(journalAbbreviationKey)
-    if (typeof journalAbbreviation === 'undefined') {
-      if (typeof oldAutoAbbrev === 'boolean') {
-        Zotero.Prefs.set(journalAbbreviationKey, oldAutoAbbrev ? 'abbrev+auto' : 'auto')
-      }
-      else if (typeof oldAutoAbbrev === 'string' && ['abbrev', 'auto', 'abbrev+auto'].includes(oldAutoAbbrev)) {
-        Zotero.Prefs.set(journalAbbreviationKey, oldAutoAbbrev)
-      }
-    }
-    Zotero.Prefs.clear(oldAutoAbbrevKey)
-
     Zotero.Prefs.clear('translators.better-bibtex.worker')
     Zotero.Prefs.clear('translators.better-bibtex.workersCache')
     Zotero.Prefs.clear('translators.better-bibtex.workersMax')
@@ -167,6 +153,7 @@ export const Preference = new class PreferenceManager extends PreferenceManagerB
     Zotero.Prefs.clear('translators.better-bibtex.caching')
     Zotero.Prefs.clear('translators.better-bibtex.citekeyFormatBackup')
 
+    this.move('autoAbbrev', 'journalAbbreviation', old => old ? 'abbrev+auto' : 'abbrev')
     this.move('autoPin', 'fillKeyAfter', old => old ? 2 : 0)
     this.move('autoPinDelay', 'fillKeyAfter', old => old as number)
     this.move('autoPinOverwrite', 'resetKeyOnChange', old => old as boolean)
@@ -208,8 +195,8 @@ export const Preference = new class PreferenceManager extends PreferenceManagerB
   }
 
   private move(ist: string, soll: string, convert: (v: any) => any) {
-    if (!ist.match(/[.]/)) ist = `translators.better-bibtex.${ ist }`
-    if (!soll.match(/[.]/)) soll = `translators.better-bibtex.${ soll }`
+    if (!ist.match(/[.]/)) ist = this.prefix + ist
+    if (!soll.match(/[.]/)) soll = this.prefix + soll
     const old = Zotero.Prefs.get(ist)
     if (typeof old === 'undefined') return
     Zotero.Prefs.clear(ist)
