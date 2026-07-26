@@ -1,7 +1,7 @@
 {
   "name": "zotero-better-bibtex",
   "type": "module",
-  "version": "9.0.49",
+  "version": "9.0.50",
   "description": "Make Zotero useful for us LaTeX holdouts.",
   "homepage": "https://retorque.re/zotero-better-bibtex",
   "license": "ISC",
