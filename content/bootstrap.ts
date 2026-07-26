@@ -5,6 +5,7 @@ declare const Ci: any
 declare const dump: (msg: string) => void
 
 import { alert } from './prompt'
+import { memory } from './memory'
 
 const BOOTSTRAP_REASONS = {
   1: 'APP_STARTUP',
@@ -45,6 +46,7 @@ export function onMainWindowUnload({ window }) {
 
 let chromeHandle
 export async function startup({ resourceURI, rootURI = resourceURI.spec }, reason: ReasonId) {
+  memory.log('bootstrap.startup')
   try {
     log('startup started')
 
@@ -89,6 +91,7 @@ export async function startup({ resourceURI, rootURI = resourceURI.spec }, reaso
     alert({ title: 'Better BibTeX startup failed', text: `${err}\n${err.stack}` })
     log(`${err}\n${err.stack}`)
   }
+  memory.log('bootstrap.startup done')
 }
 
 export async function shutdown(data: any, reason: ReasonId) {

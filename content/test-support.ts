@@ -7,7 +7,6 @@ import { getItemAsync, getItemsAsync } from './get-items-async'
 import { AUXScanner } from './aux-scanner'
 import { defaults } from '../gen/preferences/meta'
 import { Preference } from './prefs'
-import * as memory from './memory'
 import { Cache } from './translators/worker'
 
 // import { Bench } from 'tinybench'
@@ -17,7 +16,6 @@ const setatstart: string[] = [ 'testing', 'cache' ].filter(p => Preference[p] !=
 const idleService: any = Components.classes['@mozilla.org/widget/useridleservice;1'].getService(Components.interfaces.nsIUserIdleService)
 
 export class TestSupport {
-  public timedMemoryLog: any
   public scenario: string
   public libraryID: number = Zotero.Libraries.userLibraryID
   public cjkLibrariesLoaded = false
@@ -36,11 +34,6 @@ export class TestSupport {
     const start = Date.now()
     while (idleService.idleTime > 1000) await Zotero.Promise.delay(1000)
     return Date.now() - start
-  }
-
-  public memoryState(snapshot: string): memory.State {
-    const state = memory.state(snapshot)
-    return state
   }
 
   public autoExportRunning(): number {

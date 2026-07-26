@@ -82,7 +82,7 @@ default: `<not set>`
 If there are some fields you don't want in your bibtex files (such as `note` for example), add a list of them here, separated by comma's.
 
 
-### Journal abbreviation mode (BibTeX/BibLaTeX)
+### Journal abbreviation mode
 
 default: `always use the Zotero abbreviation field`
 
