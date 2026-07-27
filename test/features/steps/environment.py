@@ -202,6 +202,7 @@ def before_scenario(context, scenario):
   context.zotero.config.timeout = context.timeout
 
 def after_scenario(context, scenario):
+  context.zotero.execute('return Zotero.BetterBibTeX.TestSupport.finished(scenario)', scenario=scenario.name)
   after_test = None
   if context.memory_csv and not getattr(scenario, 'skip_reason', None):
     after_test = Munch.fromDict(context.zotero.execute('return Zotero.BetterBibTeX.TestSupport.memoryState("behave after test")')).resident

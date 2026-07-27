@@ -879,6 +879,11 @@ class Zotero:
 
     profile.firefox.set_preference('extensions.zotero.debug-bridge.token', self.token)
     profile.firefox.set_preference('dom.max_chrome_script_run_time', self.config.timeout)
+
+    profile.firefox.set_preference('devtools.debugger.remote-enabled', True) # Enables the remote debugging protocol server
+    profile.firefox.set_preference('devtools.chrome.enabled', True) # Allows debugging browser internal/chrome code
+    profile.firefox.set_preference('devtools.debugger.prompt-connection', False) # Suppresses the "Incoming connection" UI dialog
+
     utils.print(f'dom.max_chrome_script_run_time={self.config.timeout}')
 
     with open(os.path.join(os.path.dirname(__file__), 'preferences.toml')) as f:

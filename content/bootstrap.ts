@@ -46,6 +46,8 @@ export function onMainWindowUnload({ window }) {
 
 let chromeHandle
 export async function startup({ resourceURI, rootURI = resourceURI.spec }, reason: ReasonId) {
+  if (!Zotero.Debug.storing && Zotero.Prefs.get('translators.better-bibtex.forceLogging')) Zotero.Debug.setStore(true)
+
   memory.log('bootstrap.startup')
   try {
     log('startup started')

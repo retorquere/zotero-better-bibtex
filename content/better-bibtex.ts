@@ -1,10 +1,5 @@
 /* eslint-disable prefer-rest-params */
 
-const debugEnabledAtStart = Zotero.Prefs.get('debug.store') || Zotero.Debug.storing
-if (!debugEnabledAtStart && Zotero.Prefs.get('translators.better-bibtex.forceLogging')) {
-  Zotero.Debug.setStore(true)
-}
-
 declare const rootURI: string
 const pluginID = 'better-bibtex@iris-advies.com'
 
@@ -431,7 +426,7 @@ export class BetterBibTeX {
   public ready: Promise<boolean> = Ready.promise
   public dir: string
 
-  public debugEnabledAtStart = debugEnabledAtStart
+  public debugEnabledAtStart = Zotero.Debug.storing
 
   public generateCSLJSON = generateCSLJSON
 
