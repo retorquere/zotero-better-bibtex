@@ -127,7 +127,7 @@ class Handler {
       switch (m[1]) {
         case 'id':
           if (!m[2].match(/^\d+$/)) return [ NOT_FOUND, 'text/plain', `${m[2]} ID is not a number` ]
-          collection = Zotero.Collections.get(parseInt(m[2]))
+          collection = Zotero.Collections.get(parseInt(m[2])) || undefined
           break
         case 'key':
           collection = Zotero.Collections.getByLibraryAndKey(library.libraryID, m[2]) || undefined

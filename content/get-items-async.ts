@@ -6,6 +6,6 @@ export async function getItemsAsync(ids: number[]): Promise<any[]> {
 
 export async function getItemAsync(id: number): Promise<any> {
   const item = await Zotero.Items.getAsync(id)
-  await item.loadAllData()
-  return item
+  if (item) await item.loadAllData()
+  return item || undefined
 }

@@ -417,7 +417,8 @@ const queue = new class TaskQueue {
     AutoExport.status(path, 'done')
   }
 
-  private getCollectionPath(coll: { name: string; parentID: number }, root: number): string[] {
+  private getCollectionPath(coll, root: number): string[] {
+    if (!coll) return []
     let path: string[] = [coll.name]
     if (coll.parentID && coll.parentID !== root) path = this.getCollectionPath(Zotero.Collections.get(coll.parentID), root).concat(path)
     return path

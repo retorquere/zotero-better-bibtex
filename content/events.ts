@@ -249,7 +249,8 @@ class ItemListener extends ZoteroListener {
         for (let collectionID of item.getCollections()) {
           while (collectionID && !touched.collections.has(collectionID)) {
             touched.collections.add(collectionID)
-            collectionID = Zotero.Collections.get(collectionID).parentID
+            const collection = Zotero.Collections.get(collectionID)
+            collectionID = collection ? collection.parentID : undefined
           }
         }
       }
@@ -351,7 +352,8 @@ class MemberListener extends ZoteroListener {
         if (changed.has(id)) continue
         while (id) {
           changed.add(id)
-          id = Zotero.Collections.get(id).parentID
+          const collection = Zotero.Collections.get(id)
+          id = collection ? collection.parentID : undefined
         }
       }
 

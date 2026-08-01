@@ -339,7 +339,9 @@ export class NSItem {
     for (const key of keys) {
       const item = await getItemAsync(key.itemID)
       collections[key.citationKey] = item.getCollections().map(id => {
-        const col = structuredClone(Zotero.Collections.get(id).toJSON())
+        const maybeCol = Zotero.Collections.get(id)
+        if (!maybeCol) return undefined
+        const col = structuredClone(maybeCol.toJSON())
 
         delete col.relations
         delete col.version
