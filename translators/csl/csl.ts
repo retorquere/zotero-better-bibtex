@@ -7,6 +7,7 @@ import { Schema, simplifyForExport } from '../../content/item-schema'
 import { Fields as ParsedExtraFields, get as getExtra, cslCreator } from '../../content/extra'
 import type { ExportedItem } from '../../content/worker/cache'
 import { log } from '../../content/logger'
+import { clone } from '../../content/object'
 import { Serialized } from '../../gen/typings/serialized'
 import * as postscript from '../lib/postscript'
 import * as dateparser from '../../content/dateparser'
@@ -99,7 +100,7 @@ export abstract class CSLExporter {
 
       if (csl.journalAbbreviation) [ csl.journalAbbreviation, csl['container-title-short'] ] = [ csl['container-title-short'], csl.journalAbbreviation ]
 
-      const extraFields: ParsedExtraFields = structuredClone(item.extraFields)
+      const extraFields: ParsedExtraFields = clone(item.extraFields)
       const date = dateparser.parse(item.date, item.originalDate || extraFields.kv.originalDate)
 
       try {

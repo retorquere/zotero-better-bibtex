@@ -2,6 +2,15 @@ import fromPairs from 'lodash.frompairs'
 
 export { fromPairs }
 
+export function clone<T>(obj: T): T {
+  try {
+    return JSON.parse(JSON.stringify(obj)) as T
+  }
+  catch {
+    return structuredClone(obj)
+  }
+}
+
 // pick from radash -- WTF would you bother with hasOwnProperty here?!?!
 export const pick = <T extends object, TKeys extends keyof T>(obj: T, keys: TKeys[]): Pick<T, TKeys> => {
   if (!obj) return {} as Pick<T, TKeys>

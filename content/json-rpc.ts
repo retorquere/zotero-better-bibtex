@@ -12,6 +12,7 @@ import { orchestrator } from './orchestrator'
 import { Server } from './server'
 import type { CitekeyRecord } from './key-manager'
 import { strcmp } from './string-compare'
+import { clone } from './object'
 
 import BBT from '../gen/version.cjs'
 
@@ -316,7 +317,7 @@ export class NSItem {
         let col = (Zotero.Collections.getByLibraryAndKey(libraryID, key) || null)?.toJSON()
 
         if (col) {
-          col = structuredClone(col)
+          col = clone(col)
         }
         else {
           return ''
@@ -341,7 +342,7 @@ export class NSItem {
       collections[key.citationKey] = item.getCollections().map(id => {
         const maybeCol = Zotero.Collections.get(id)
         if (!maybeCol) return undefined
-        const col = structuredClone(maybeCol.toJSON())
+        const col = clone(maybeCol.toJSON())
 
         delete col.relations
         delete col.version

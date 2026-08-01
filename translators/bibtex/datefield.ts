@@ -4,6 +4,7 @@ import type { RichDate } from '../../content/dateparser'
 import { Translation } from '../lib/translator'
 import type { Field } from './entry'
 import { padInt } from '../../content/text'
+import { clone } from '../../content/object'
 
 function year(y) {
   return Math.abs(y) > 999 ? (y + '') : padInt(y, 4)
@@ -40,7 +41,7 @@ function isnumber(v) {
 }
 
 export function datefield(date: RichDate, field: Field, translation: Translation): Field {
-  field = structuredClone({ ...field, value: '', enc: 'literal' })
+  field = clone({ ...field, value: '', enc: 'literal' })
 
   if (!date) return field
   if (date && !date.type && date.orig) return field

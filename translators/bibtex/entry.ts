@@ -5,6 +5,7 @@
 declare const Zotero: any
 
 import { Serialized } from '../../gen/typings/serialized'
+import { clone } from '../../content/object'
 
 export type Field = {
   name: string
@@ -302,7 +303,7 @@ export class Entry {
       this.english = BabelTag[this.language] === 'en'
     }
 
-    this.extraFields = structuredClone(item.extraFields)
+    this.extraFields = clone(item.extraFields)
 
     // should be const entrytype: string | { type: string, subtype?: string }
     // https://github.com/Microsoft/TypeScript/issues/10422

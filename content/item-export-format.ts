@@ -8,6 +8,7 @@ import { log } from './logger'
 import { Preference } from './prefs'
 import { KeyManager } from './key-manager'
 import { selectedLibraryID } from './library'
+import { clone } from './object'
 
 class Serializer {
   private attachment(serialized: Serialized.Attachment, att): Serialized.Attachment {
@@ -42,7 +43,7 @@ class Serializer {
         break
     }
 
-    return structuredClone(fix(serialized, item))
+    return clone(fix(serialized, item))
   }
 
   public async serialize(items: Zotero.Item[]): Promise<Serialized.Item[]> {

@@ -59,7 +59,7 @@ import { Translators } from './translators'
 import * as Collection from './collection'
 import * as Library from './library'
 import { getItemsAsync } from './get-items-async'
-import { fromPairs } from './object'
+import { fromPairs, clone } from './object'
 import { orchestrator } from './orchestrator'
 import { Server } from './server'
 import { log } from './logger'
@@ -69,7 +69,7 @@ function displayOptions(request) {
   const query = Server.queryParams(request)
   if (!query.worker) query.worker = 'y'
 
-  const options = structuredClone(request.data || {})
+  const options = clone(request.data || {})
   if (request.data?.config?.preferences) options.cache = false
   for (const option of ['exportNotes', 'useJournalAbbreviation', 'worker']) {
     if (query[option]) options[option] = !!query[option].match(/^(y(es)?|true)$/)
