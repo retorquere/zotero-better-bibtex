@@ -87,6 +87,7 @@ monkey.patch(Zotero.Utilities.Item?.itemToCSLJSON ? Zotero.Utilities.Item : Zote
 */
 
 import { readonly, selectedLibraryID } from './library'
+import { selectedCollection } from './collection'
 
 monkey.patch(Zotero.Item.prototype, 'clone', original => function Zotero_Item_prototype_clone() {
   const clone: Zotero.Item = original.apply(this, arguments)
@@ -451,7 +452,7 @@ export class BetterBibTeX {
         break
 
       case 'collection-replace': {
-        const selected = Zotero.getActiveZoteroPane().getSelectedCollection()
+        const selected = selectedCollection()
         if (!selected) {
           flash('No collection selected for AUX scan')
           return
@@ -755,17 +756,14 @@ export class BetterBibTeX {
               return ''
           }
         }
-        const selectedCollection = context => collType(context) === 'collection'
-          ? Zotero.getActiveZoteroPane().getSelectedCollection()
-          : null
         const selectedCollectionHasItems = context => {
-          const collection = selectedCollection(context)
+          const collection = collType(context) === 'collection' ? selectedCollection() : null
           return !!collection?.hasChildItems()
         }
         function selectedAutoExports(context) {
           const type = collType(context)
           const selected = type === 'collection'
-            ? Zotero.getActiveZoteroPane().getSelectedCollection(true)
+            ? selectedCollection(true)
             : selectedLibraryID()
           return AutoExport.db.values(_ => _.type === type && _.id === selected)
         }

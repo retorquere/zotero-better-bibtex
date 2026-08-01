@@ -8,6 +8,7 @@ import { alert } from './prompt'
 import { getItemsAsync } from './get-items-async'
 import { strcmp } from './string-compare'
 import { selectedLibraryID } from './library'
+import { selectedCollection } from './collection'
 
 const { FilePicker } = ChromeUtils.importESModule('chrome://zotero/content/modules/filePicker.mjs')
 
@@ -78,7 +79,7 @@ export const AUXScanner = new class {
       libraryID = options.collection.libraryID
     }
     else {
-      collection = Zotero.getActiveZoteroPane().getSelectedCollection()
+      collection = selectedCollection()
       libraryID = collection ? collection.libraryID : selectedLibraryID()
     }
 

@@ -1,5 +1,27 @@
 import * as Library from './library'
 
+/* eslint-disable no-redeclare, @typescript-eslint/no-unsafe-return */
+export function selectedCollections(asIDs?: false): Zotero.Collection[]
+export function selectedCollections(asIDs: true): number[]
+export function selectedCollections(asIDs = false): Zotero.Collection[] | number[] {
+  const azp = Zotero.getActiveZoteroPane()
+  if (typeof azp.getSelectedCollections === 'function') {
+    return azp.getSelectedCollections(asIDs as any) as any[]
+  }
+  else {
+    const collection = azp.getSelectedCollection(asIDs as any)
+    return typeof collection !== 'boolean' ? [ collection ] as any[] : []
+  }
+}
+
+export function selectedCollection(asID?: false): Zotero.Collection
+export function selectedCollection(asID: true): number
+export function selectedCollection(asID = false): Zotero.Collection | number {
+  const collections = selectedCollections(asID as any)
+  return collections.length === 1 ? collections[0] : undefined
+}
+/* eslint-enable no-redeclare, @typescript-eslint/no-unsafe-return */
+
 class CollectionError extends Error {
   kind: 'duplicate' | 'notfound'
   code: number

@@ -5,6 +5,7 @@ import { binaries } from './path-search'
 import { Cache } from './translators/worker'
 import { regex as escapeRE } from './escape'
 import { readonly, selectedLibraryID } from './library'
+import { selectedCollection } from './collection'
 
 import { Preference } from './prefs'
 
@@ -622,17 +623,16 @@ export class ErrorReport {
 
   public async open(items?: string): Promise<void> {
     let scope = null
-    const zp = Zotero.getActiveZoteroPane()
     switch (items) {
       case 'collection':
       case 'library':
-        scope = { type: 'collection', collection: zp.getSelectedCollection() }
+        scope = { type: 'collection', collection: selectedCollection() }
         if (!scope.collection) scope = { type: 'library', id: selectedLibraryID() }
         break
 
       case 'items':
         try {
-          scope = { type: 'items', items: zp.getSelectedItems() }
+          scope = { type: 'items', items: Zotero.getActiveZoteroPane().getSelectedItems() }
         }
         catch (err) { // ZoteroPane.getSelectedItems() doesn't test whether there's a selection and errors out if not
           log.error('Could not get selected items:', err)

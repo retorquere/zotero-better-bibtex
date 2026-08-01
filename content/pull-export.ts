@@ -7,14 +7,13 @@ const BAD_REQUEST = 400
 
 import { uri } from './escape'
 import { selectedLibraryID } from './library'
+import { selectedCollection } from './collection'
 
 function nullify(obj) {
   return obj ? obj : undefined
 }
 export function showURLs(mode: 'collection' | 'library'): void {
-  let collection = mode === 'collection'
-    ? nullify(Zotero.getActiveZoteroPane().getSelectedCollection())
-    : undefined
+  let collection: Zotero.Collection | false = mode === 'collection' ? selectedCollection() : undefined
   const libraryID = mode === 'collection' ? collection?.libraryID : selectedLibraryID()
   const library = nullify(typeof libraryID === 'number' ? Zotero.Libraries.get(libraryID) : undefined)
 
@@ -41,9 +40,9 @@ export function showURLs(mode: 'collection' | 'library'): void {
     params.url.short += `/collection;key:${collection.key}/${collection.name}`
 
     let path = `/${uri.encode(collection.name)}`
-    while (typeof collection.parentID === 'number') {
+    while (collection && typeof collection.parentID === 'number') {
       collection = Zotero.Collections.get(collection.parentID)
-      path = `/${uri.encode(collection.name)}${path}`
+      if (collection) path = `/${uri.encode(collection.name)}${path}`
     }
     params.url.long += `/collection${path}`
   }
