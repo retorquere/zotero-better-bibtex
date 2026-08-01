@@ -15,6 +15,7 @@ import { orchestrator } from './orchestrator'
 import type { Reason } from './bootstrap'
 import { Header, headers as Headers, byLabel, byId, bySlug } from '../gen/translators'
 import { Job, worker, Exporter, Message } from './translators/worker'
+import { selectedLibraryID } from './library'
 
 Events.on('preference-changed', async ({ data: pref }) => {
   for (const translator of (affects[pref] || [])) {
@@ -158,8 +159,8 @@ export const Translators = new class {
 
     if (!translators.length) throw new Error('No translators found')
 
-    const libraryID = zp.getSelectedLibraryIDs()?.[0]
-    await zp.collectionsView.selectLibrary(libraryID) // TODO: zotero-types does somehow not declare this to return a promise
+    const libraryID: number = selectedLibraryID()
+    if (typeof libraryID === 'number') await zp.collectionsView.selectLibrary(libraryID)
 
     translation.setTranslator(translators[0])
 
