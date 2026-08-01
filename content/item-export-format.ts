@@ -7,6 +7,7 @@ import { JournalAbbrev } from './journal-abbrev'
 import { log } from './logger'
 import { Preference } from './prefs'
 import { KeyManager } from './key-manager'
+import { selectedLibraryID } from './library'
 
 class Serializer {
   private attachment(serialized: Serialized.Attachment, att): Serialized.Attachment {
@@ -17,8 +18,8 @@ class Serializer {
     return serialized
   }
 
-  private async item(item: Zotero.Item, selectedLibraryID: number): Promise<Serialized.Item> {
-    if (item.libraryID !== selectedLibraryID) await item.loadAllData()
+  private async item(item: Zotero.Item, libraryID: number): Promise<Serialized.Item> {
+    if (item.libraryID !== libraryID) await item.loadAllData()
 
     let serialized: Serialized.Item = item.toJSON() as unknown as Serialized.Item
     serialized.uri = Zotero.URI.getItemURI(item)
@@ -45,8 +46,8 @@ class Serializer {
   }
 
   public async serialize(items: Zotero.Item[]): Promise<Serialized.Item[]> {
-    const selectedLibraryID = Zotero.getActiveZoteroPane().getSelectedLibraryID()
-    return Promise.all(items.map(item => this.item(item, selectedLibraryID)))
+    const libraryID = selectedLibraryID()
+    return Promise.all(items.map(item => this.item(item, libraryID)))
   }
 }
 export const serializer = new Serializer

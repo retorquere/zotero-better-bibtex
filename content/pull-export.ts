@@ -6,13 +6,17 @@ const NOT_FOUND = 404
 const BAD_REQUEST = 400
 
 import { uri } from './escape'
+import { selectedLibraryID } from './library'
 
 function nullify(obj) {
   return obj ? obj : undefined
 }
 export function showURLs(mode: 'collection' | 'library'): void {
-  let collection = nullify(mode === 'collection' ? Zotero.getActiveZoteroPane().getSelectedCollection() : undefined)
-  const library = nullify(Zotero.Libraries.get(mode === 'collection' ? collection?.libraryID : Zotero.getActiveZoteroPane().getSelectedLibraryID()))
+  let collection = mode === 'collection'
+    ? nullify(Zotero.getActiveZoteroPane().getSelectedCollection())
+    : undefined
+  const libraryID = mode === 'collection' ? collection?.libraryID : selectedLibraryID()
+  const library = nullify(typeof libraryID === 'number' ? Zotero.Libraries.get(libraryID) : undefined)
 
   if (typeof library === 'undefined' || (mode === 'collection' && typeof collection === 'undefined')) return
 

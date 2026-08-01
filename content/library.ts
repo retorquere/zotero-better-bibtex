@@ -5,6 +5,11 @@ export function editable(): Set<number> {
   return new Set(libraries)
 }
 
+export function selectedLibraryID(): number {
+  const libraryIDs: number[] = Zotero.getActiveZoteroPane().getSelectedLibraryIDs()
+  return libraryIDs.length === 1 ? libraryIDs[0] : undefined
+}
+
 export function readonly(source: number | Zotero.Item | _ZoteroTypes.Library.LibraryLike): boolean {
   let lib: _ZoteroTypes.Library.LibraryLike
 

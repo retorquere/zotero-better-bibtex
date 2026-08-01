@@ -4,7 +4,7 @@ import { binaries } from './path-search'
 
 import { Cache } from './translators/worker'
 import { regex as escapeRE } from './escape'
-import { readonly } from './library'
+import { readonly, selectedLibraryID } from './library'
 
 import { Preference } from './prefs'
 
@@ -627,7 +627,7 @@ export class ErrorReport {
       case 'collection':
       case 'library':
         scope = { type: 'collection', collection: zp.getSelectedCollection() }
-        if (!scope.collection) scope = { type: 'library', id: zp.getSelectedLibraryID() }
+        if (!scope.collection) scope = { type: 'library', id: selectedLibraryID() }
         break
 
       case 'items':

@@ -158,7 +158,7 @@ export const Translators = new class {
 
     if (!translators.length) throw new Error('No translators found')
 
-    const libraryID = zp.getSelectedLibraryID()
+    const libraryID = zp.getSelectedLibraryIDs()?.[0]
     await zp.collectionsView.selectLibrary(libraryID) // TODO: zotero-types does somehow not declare this to return a promise
 
     translation.setTranslator(translators[0])

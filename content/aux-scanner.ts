@@ -7,6 +7,7 @@ import { log } from './logger'
 import { alert } from './prompt'
 import { getItemsAsync } from './get-items-async'
 import { strcmp } from './string-compare'
+import { selectedLibraryID } from './library'
 
 const { FilePicker } = ChromeUtils.importESModule('chrome://zotero/content/modules/filePicker.mjs')
 
@@ -77,9 +78,8 @@ export const AUXScanner = new class {
       libraryID = options.collection.libraryID
     }
     else {
-      const azp = Zotero.getActiveZoteroPane()
-      collection = azp.getSelectedCollection()
-      libraryID = collection ? collection.libraryID : azp.getSelectedLibraryID()
+      collection = Zotero.getActiveZoteroPane().getSelectedCollection()
+      libraryID = collection ? collection.libraryID : selectedLibraryID()
     }
 
     // In replace mode, an empty citation set should clear the selected collection.

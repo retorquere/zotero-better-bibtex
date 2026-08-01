@@ -86,7 +86,7 @@ monkey.patch(Zotero.Utilities.Item?.itemToCSLJSON ? Zotero.Utilities.Item : Zote
 })
 */
 
-import { readonly } from './library'
+import { readonly, selectedLibraryID } from './library'
 
 monkey.patch(Zotero.Item.prototype, 'clone', original => function Zotero_Item_prototype_clone() {
   const clone: Zotero.Item = original.apply(this, arguments)
@@ -748,14 +748,16 @@ export class BetterBibTeX {
           switch (context.collectionTreeRow.type) {
             case 'library':
             case 'group':
-              return 'library'
+              return typeof selectedLibraryID() === 'number' ? 'library' : ''
             case 'collection':
               return 'collection'
             default:
               return ''
           }
         }
-        const selectedCollection = context => collType(context) === 'collection' ? Zotero.getActiveZoteroPane().getSelectedCollection() : null
+        const selectedCollection = context => collType(context) === 'collection'
+          ? Zotero.getActiveZoteroPane().getSelectedCollection()
+          : null
         const selectedCollectionHasItems = context => {
           const collection = selectedCollection(context)
           return !!collection?.hasChildItems()
@@ -764,7 +766,7 @@ export class BetterBibTeX {
           const type = collType(context)
           const selected = type === 'collection'
             ? Zotero.getActiveZoteroPane().getSelectedCollection(true)
-            : Zotero.getActiveZoteroPane().getSelectedLibraryID()
+            : selectedLibraryID()
           return AutoExport.db.values(_ => _.type === type && _.id === selected)
         }
         Zotero.MenuManager.registerMenu({
