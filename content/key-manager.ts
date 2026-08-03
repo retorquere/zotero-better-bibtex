@@ -536,34 +536,68 @@ export const KeyManager = new class _KeyManager {
     }
   }
 
-  public async tagDuplicates(libraryID: number): Promise<void> {
+  public async tagDuplicates(libraryID?: number): Promise<void> {
     const tag = '#duplicate-citation-key'
 
-    const tagged = (await ZoteroDB.queryAsync(`
-      SELECT items.itemID
-      FROM items
-      JOIN itemTags ON itemTags.itemID = items.itemID
-      JOIN tags ON tags.tagID = itemTags.tagID
-      WHERE (items.libraryID = ? OR 'global' = ?) AND tags.name = ? AND items.itemID NOT IN (select itemID from deletedItems)
-    `, [ libraryID, Preference.keyScope, tag ])).map((item: { itemID: number }) => item.itemID)
-
-    const citekeys: Record<string, any[]> = {}
-    for (const item of this.all(key => Preference.keyScope === 'global' || key.libraryID === libraryID)) {
-      citekeys[item.citationKey] ??= []
-      citekeys[item.citationKey].push({ itemID: item.itemID, tagged: tagged.includes(item.itemID), duplicate: false })
-      if (citekeys[item.citationKey].length > 1) citekeys[item.citationKey].forEach(i => i.duplicate = true)
+    if (Preference.keyScope === 'library' && typeof libraryID !== 'number') {
+      flash('key scope is library, but no library provided')
+      return
     }
 
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-    const mistagged = Object.values(citekeys).reduce((acc, val) => acc.concat(val), []).filter(i => i.tagged !== i.duplicate).map(i => i.itemID)
-    for (const item of await getItemsAsync(mistagged)) {
-      if (tagged.includes(item.id)) {
+    const library = typeof libraryID === 'number'
+      ? `i.libraryID = ${libraryID} AND`
+      : ''
+
+    // outer SELECT tricks Zotero into treating it as a SELECT query
+    const q = `
+      SELECT * FROM (
+        WITH CitationKeys AS (
+          SELECT id.itemID, idv.value AS citationKey
+          FROM itemData id
+          JOIN fields f ON id.fieldID = f.fieldID
+          JOIN itemDataValues idv ON id.valueID = idv.valueID
+          WHERE f.fieldName = 'citationKey'
+        ),
+
+        Tagged AS (
+          SELECT DISTINCT itag.itemID
+          FROM itemTags itag
+          JOIN tags t ON itag.tagID = t.tagID
+          WHERE t.name = '${tag}'
+        )
+
+        SELECT
+          i.itemID,
+          ck.citationKey,
+          CASE
+            WHEN ck.citationKey IS NULL THEN 1
+            ELSE COUNT(ck.citationKey) OVER (PARTITION BY ck.citationKey)
+          END AS duplicates,
+          CASE
+            WHEN t.itemID IS NOT NULL THEN 1
+            ELSE 0
+          END AS tagged
+        FROM items i
+        JOIN itemTypes it ON i.itemTypeID = it.itemTypeID
+        LEFT JOIN feedItems fi ON i.itemID = fi.itemID
+        LEFT JOIN deletedItems di ON i.itemID = di.itemID
+        LEFT JOIN CitationKeys ck ON i.itemID = ck.itemID
+        LEFT JOIN Tagged t ON i.itemID = t.itemID
+        WHERE ${library}
+          di.itemID is NULL
+          AND fi.itemID IS NULL
+          AND it.typeName NOT IN ('attachment', 'note', 'annotation')
+      ) WHERE (tagged = 1 and duplicates = 1) OR (tagged = 0 and duplicates > 1)`
+
+    for (const { itemID, tagged } of await ZoteroDB.queryAsync(q)) {
+      const item = await Zotero.Items.getAsync(itemID)
+      if (!item) continue // should not happen, but pacifies typescript
+      if (tagged) {
         item.removeTag(tag)
       }
       else {
         item.addTag(tag)
       }
-
       await item.saveTx({ skipDateModifiedUpdate: true })
     }
   }

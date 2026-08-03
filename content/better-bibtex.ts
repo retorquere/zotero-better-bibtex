@@ -627,6 +627,26 @@ export class BetterBibTeX {
           ],
         })
 
+        Zotero.MenuManager.registerMenu({
+          menuID: `${pluginID}-menu-tools`,
+          pluginID,
+          target: 'main/menubar/tools',
+          menus: [
+            {
+              menuType: 'submenu',
+              l10nID: 'better-bibtex',
+              menus: [
+                {
+                  menuType: 'menuitem',
+                  l10nID: 'better-bibtex_zotero-pane_tag_duplicates',
+                  onShowing: (event, context) => context.setVisible(Preference.keyScope === 'global'),
+                  onCommand: (_event, _context) => void Zotero.BetterBibTeX.KeyManager.tagDuplicates(),
+                },
+              ],
+            },
+          ],
+        })
+
         const hideRemigrate = Date.now() + (5 * 60000)
         Zotero.MenuManager.registerMenu({
           menuID: `${pluginID}-menu-help`,
@@ -756,8 +776,11 @@ export class BetterBibTeX {
               return ''
           }
         }
+        const isCollection = context => collType(context) === 'collection'
+        const isLibrary = context => collType(context) === 'library'
+
         const selectedCollectionHasItems = context => {
-          const collection = collType(context) === 'collection' ? selectedCollection() : null
+          const collection = isCollection(context) ? selectedCollection() : null
           return !!collection?.hasChildItems()
         }
         function selectedAutoExports(context) {
@@ -777,7 +800,6 @@ export class BetterBibTeX {
               l10nID: 'better-bibtex',
               icon: 'chrome://zotero-better-bibtex/content/skin/bibtex-menu.svg',
               onShowing: (_event, context) => {
-                log.info('collection:', context.collectionTreeRow.type)
                 context.setVisible(!!collType(context))
               },
               menus: [
@@ -806,6 +828,7 @@ export class BetterBibTeX {
                 {
                   menuType: 'menuitem',
                   l10nID: 'better-bibtex_zotero-pane_show_collection-key',
+                  onShowing: (_event, context) => collType(context),
                   onCommand: (_event, context) => {
                     showPullExportURLs(collType(context) as 'collection' | 'library')
                   },
@@ -813,6 +836,7 @@ export class BetterBibTeX {
                 {
                   menuType: 'menuitem',
                   l10nID: 'better-bibtex_aux-scanner',
+                  onShowing: (_event, context) => collType(context),
                   onCommand: (_event, context) => {
                     void Zotero.BetterBibTeX.scanAUX(collType(context))
                   },
@@ -827,6 +851,12 @@ export class BetterBibTeX {
                     if (!selectedCollectionHasItems(context)) return
                     void Zotero.BetterBibTeX.scanAUX('collection-replace')
                   },
+                },
+                {
+                  menuType: 'menuitem',
+                  l10nID: 'better-bibtex_zotero-pane_tag_duplicates',
+                  onShowing: (_event, context) => context.setVisible(Preference.keyScope === 'library' && isLibrary(context)),
+                  onCommand: (_event, context) => void Zotero.BetterBibTeX.KeyManager.tagDuplicates(context.collectionTreeRow.ref.id),
                 },
                 {
                   menuType: 'menuitem',
