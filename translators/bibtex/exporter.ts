@@ -74,7 +74,7 @@ export class Exporter {
 
       this.jabref.citekeys.set(item.itemID, item.citationKey)
 
-      item = simplifyForExport(item) as typeof item
+      item = simplifyForExport(item, { clone: false }) as typeof item
 
       // strip extra.tex fields that are not for me
       const prefix = this.translation.BetterBibLaTeX ? 'biblatex.' : 'bibtex.'

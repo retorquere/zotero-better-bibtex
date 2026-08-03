@@ -88,7 +88,7 @@ export function generateBBTJSON(collected: Collected): Translation {
 
         default:
           delete item.collections
-          if (translation.collected.displayOptions.Normalize) item = simplifyForExport(item, {}) as typeof item
+          if (translation.collected.displayOptions.Normalize) item = simplifyForExport(item, { clone: false }) as typeof item
 
           for (const att of item.attachments || []) {
             handle(att)

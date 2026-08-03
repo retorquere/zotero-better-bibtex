@@ -66,7 +66,7 @@ export abstract class CSLExporter {
       }
 
       Object.assign(item, getExtra(item.extra, 'csl'))
-      item = simplifyForExport(item)
+      item = simplifyForExport(item, { clone: false })
       if (item.accessDate) { // WTH is Juris-M doing with those dates?
         item.accessDate = item.accessDate.replace(/T?[0-9]{2}:[0-9]{2}:[0-9]{2}.*/, '').trim()
       }

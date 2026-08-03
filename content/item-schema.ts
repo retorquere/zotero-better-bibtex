@@ -1,7 +1,7 @@
 import $zotero from '../submodules/zotero/resource/schema/global/schema.json' with { type: 'json' }
 import $csl from '../gen/csl-schema.json' with { type: 'json' }
 import { Serialized } from '../gen/typings/serialized'
-import { clone } from './object'
+import { clone as cloneObject } from './object'
 
 const cslVariableType: Partial<Record<keyof typeof $csl.variables, FieldType>> = {
   dates: 'date',
@@ -223,8 +223,14 @@ function unalias(item: Serialized.RegularItem, scrub = true) {
   }
 }
 
-export function simplifyForExport(item: Serialized.RegularItem, { creators = true, scrub = true }: { creators?: boolean; scrub?: boolean } = {}): Serialized.RegularItem {
-  item = clone(item)
+type Simplify = {
+  creators?: boolean
+  scrub?: boolean
+  clone?: boolean
+}
+
+export function simplifyForExport(item: Serialized.RegularItem, { clone = true, creators = true, scrub = true }: Simplify = {}): Serialized.RegularItem {
+  if (clone) item = cloneObject(item)
 
   unalias(item, scrub)
 
