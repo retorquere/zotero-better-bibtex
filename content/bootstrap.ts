@@ -5,7 +5,6 @@ declare const Ci: any
 declare const dump: (msg: string) => void
 
 import { alert } from './prompt'
-import { memory } from './memory'
 
 const BOOTSTRAP_REASONS = {
   1: 'APP_STARTUP',
@@ -44,11 +43,38 @@ export function onMainWindowUnload({ window }) {
   Zotero.BetterBibTeX.onMainWindowUnload({ window })
 }
 
-let chromeHandle
-export async function startup({ resourceURI, rootURI = resourceURI.spec }, reason: ReasonId) {
-  if (!Zotero.Debug.storing && Zotero.Prefs.get('translators.better-bibtex.forceLogging')) Zotero.Debug.setStore(true)
+let chromeHandle: any = null
+let sandbox: any = null
 
-  memory.log('bootstrap.startup')
+function makeSandbox(wantGlobalProperties: string[] = []): any {
+  const Sandbox = Components.utils.Sandbox as unknown as new(principal: any, options?: any) => any
+  return new Sandbox(Components.utils.getObjectPrincipal(globalThis), {
+    freshZone: true,
+    freshCompartment: true,
+    wantGlobalProperties,
+  })
+}
+
+export async function startup({ resourceURI, rootURI = resourceURI.spec }: { resourceURI: any; rootURI?: string }, reason: ReasonId) {
+  if (Zotero.BetterBibTeX) throw new Error('Better BibTeX is already started')
+
+  // if (!Zotero.Debug.storing && Zotero.Prefs.get('translators.better-bibtex.forceLogging')) Zotero.Debug.setStore(true)
+  Zotero.Debug.setStore(true)
+
+  sandbox = makeSandbox([
+    'atob',
+    'btoa',
+    'ChromeUtils',
+    'FormData',
+    'structuredClone',
+    'TextDecoder',
+    'TextEncoder',
+    'XMLHttpRequest',
+    'URL',
+    'URLSearchParams',
+    'fetch',
+  ])
+
   try {
     log('startup started')
 
@@ -64,26 +90,25 @@ export async function startup({ resourceURI, rootURI = resourceURI.spec }, reaso
       ['locale', 'zotero-better-bibtex', 'it-IT', 'locale/it-IT/'],
     ])
 
-    if (Zotero.BetterBibTeX) throw new Error('Better BibTeX is already started')
+    const { FileUtils } = ChromeUtils.importESModule('resource://gre/modules/FileUtils.sys.mjs')
+    // Waive Xrays on the sandbox global before assigning properties across compartment boundaries
+    Object.assign(Components.utils.waiveXrays(sandbox), {
+      Zotero,
+      ChromeWorker,
+      rootURI,
+      setTimeout,
+      clearTimeout,
+      setInterval,
+      clearInterval,
+      Localization,
+      FileUtils,
+      PathUtils,
+      IOUtils,
+    })
 
-    // const $window = Zotero.getMainWindow()
     Services.scriptloader.loadSubScriptWithOptions(`${rootURI}content/better-bibtex.js`, {
-      charset: 'utf=8',
-      // ignoreCache: true,
-      target: {
-        Zotero,
-        // because the Zotero sample code assumes you're doing everything in bootstrap.js
-        rootURI,
-
-        // to pacify libraries that do env-detection
-        // window: $window,
-        // document: $window.document,
-
-        setTimeout,
-        clearTimeout,
-        setInterval,
-        clearInterval,
-      },
+      charset: 'utf-8',
+      target: sandbox,
     })
 
     await Zotero.BetterBibTeX.startup(BOOTSTRAP_REASONS[reason])
@@ -93,17 +118,17 @@ export async function startup({ resourceURI, rootURI = resourceURI.spec }, reaso
     alert({ title: 'Better BibTeX startup failed', text: `${err}\n${err.stack}` })
     log(`${err}\n${err.stack}`)
   }
-  memory.log('bootstrap.startup done')
 }
 
 export async function shutdown(data: any, reason: ReasonId) {
   try {
     log('shutdown started')
 
-    if (typeof chromeHandle !== 'undefined') {
+    if (typeof chromeHandle !== 'undefined' && chromeHandle) {
       chromeHandle.destruct()
       chromeHandle = undefined
     }
+
     if (Zotero.BetterBibTeX) {
       log('shutdown started')
       await Zotero.BetterBibTeX.shutdown(BOOTSTRAP_REASONS[reason])
@@ -111,6 +136,11 @@ export async function shutdown(data: any, reason: ReasonId) {
       delete Zotero.BetterBibTeX
       log('BBT deleted')
     }
+
+    // Clear sandbox references to allow GC reaping
+    if (sandbox) Components.utils.nukeSandbox(sandbox)
+    sandbox = null
+
     log('bootstrap: shutdown: done')
   }
   catch (err) {
