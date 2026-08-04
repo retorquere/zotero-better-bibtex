@@ -1,4 +1,4 @@
-/* eslint-disable no-restricted-syntax */
+/* eslint-disable no-restricted-syntax, @typescript-eslint/no-unsafe-return */
 
 const kB = 1024
 const MB = kB * kB
@@ -68,17 +68,42 @@ type AnyMethod<This = any, Args extends any[] = any[], Return = any> = (this: Th
 type MethodContext<This = any, Args extends any[] = any[], Return = any> = ClassMethodDecoratorContext<This, AnyMethod<This, Args, Return>>
 type MethodDecorator = <This, Args extends any[], Return>(target: AnyMethod<This, Args, Return>, context: MethodContext<This, Args, Return>) => AnyMethod<This, Args, Return> | void
 
+const baseline = memory.resident
 export const audit: MethodDecorator = function(target, context) {
-  const className = context.static ? this.name : this.constructor.name
   const methodName = String(context.name)
+  let className = ''
 
-  return function(this, ...args) {
-    try {
-      memory.log(`entering ${className}.${methodName}`)
-      return target.call(this, ...args) // eslint-disable-line @typescript-eslint/no-unsafe-return
+  context.addInitializer(function(this: any) {
+    const ctor = Object.getPrototypeOf(this)?.constructor
+    className = (ctor && ctor.name !== 'Object' && ctor.name !== '')
+      ? ctor.name
+      : this.constructor?.name || 'Object'
+  })
+
+  return function(this: any, ...args: any[]) {
+    const start = memory.resident
+
+    const logIncrease = () => {
+      const current = memory.resident
+      const increase = current - start
+      if (increase > 0) {
+        memory.log(`${className}.${methodName}(${args.filter(a => JSON.stringify(a)).join(', ')}) increased memory use by ${increase}, total increase ${current - baseline}`)
+      }
     }
-    finally {
-      memory.log(`leaving ${className}.${methodName}`)
+
+    try {
+      const result = target.call(this, ...args)
+
+      if (result && typeof result === 'object' && typeof result.then === 'function') {
+        return result.finally(logIncrease)
+      }
+
+      logIncrease()
+      return result
+    }
+    catch (err) {
+      logIncrease()
+      throw err
     }
   }
 }
