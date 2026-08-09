@@ -5,6 +5,8 @@ import * as dateparser from '../../content/dateparser'
 import { Serialized } from '../../gen/typings/serialized'
 import type { Collected } from './collect'
 import { Translation } from './translator'
+import { simplifyForExport } from '../../content/item-schema'
+// import { log } from '../../content/logger'
 
 type Person = string | { name?: string; given?: string; family?: string }
 type HayagrivaType = 'article' | 'artwork' | 'audio' | 'blog' | 'book' | 'case' | 'chapter' | 'conference' | 'entry' | 'legislation' | 'manuscript' | 'misc' | 'newspaper' | 'patent' | 'periodical' | 'proceedings' | 'repository' | 'report' | 'thread' | 'thesis' | 'video' | 'web'
@@ -26,6 +28,7 @@ type Affiliated = {
 type Entry = {
   type?: HayagrivaType
   title?: string
+  genre?: string
   author?: Person | Person[]
   editor?: Person | Person[]
   translator?: Person | Person[]
@@ -170,58 +173,29 @@ function normalizeType(value: unknown): string {
 }
 
 function makeParent(item: Serialized.RegularItem): Entry | null {
-  if (['journalArticle', 'magazineArticle', 'newspaperArticle'].includes(item.itemType)) {
-    const title = item.publicationTitle || ''
-    if (!title) return null
-    return {
-      type: item.itemType === 'newspaperArticle' ? 'newspaper' : 'periodical',
-      title,
-    }
-  }
+  switch (item.itemType) {
+    case 'journalArticle':
+    case 'magazineArticle':
+      return item.publicationTitle ? { type: 'periodical', title: item.publicationTitle } : null
 
-  if (item.itemType === 'bookSection') {
-    const title = item.publicationTitle || ''
-    if (!title) return null
-    return {
-      type: 'book',
-      title,
-    }
-  }
+    case 'newspaperArticle':
+      return item.publicationTitle ? { type: 'newspaper', title: item.publicationTitle } : null
 
-  if (item.itemType === 'conferencePaper') {
-    const title = item.publicationTitle || item.conferenceName || ''
-    if (!title) return null
-    return {
-      type: item.publicationTitle ? 'proceedings' : 'conference',
-      title,
-    }
-  }
+    case 'bookSection':
+      return item.publicationTitle ? { type: 'book', title: item.publicationTitle } : null
 
-  if (item.itemType === 'blogPost') {
-    const title = item.publicationTitle || ''
-    if (!title) return null
-    return {
-      type: 'blog',
-      title,
-    }
-  }
+    case 'conferencePaper':
+      if (item.conferenceName) return { type: 'conference', title: item.conferenceName }
+      return item.publicationTitle ? { type: 'proceedings', title: item.publicationTitle } : null
 
-  if (item.itemType === 'webpage') {
-    const title = item.publicationTitle || ''
-    if (!title) return null
-    return {
-      type: 'web',
-      title,
-    }
-  }
+    case 'blogPost':
+      return item.publicationTitle ? { type: 'blog', title: item.publicationTitle } : null
 
-  if (item.itemType === 'forumPost') {
-    const title = item.publicationTitle || ''
-    if (!title) return null
-    return {
-      type: 'thread',
-      title,
-    }
+    case 'webpage':
+      return item.publicationTitle ? { type: 'web', title: item.publicationTitle } : null
+
+    case 'forumPost':
+      return item.publicationTitle ? { type: 'thread', title: item.publicationTitle } : null
   }
 
   return null
@@ -239,14 +213,21 @@ function parseExtraSerialNumbers(extra: unknown): Serial {
     const value = normalizeScalar(matched[2])
     if (!value) continue
 
-    if (['version', 'version number'].includes(label)) {
-      serial.version = value
-    }
-    else if (['report number', 'patent number', 'docket number'].includes(label)) {
-      serial.serial = value
-    }
-    else {
-      serial[label] = value
+    switch (label) {
+      case 'version':
+      case 'version number':
+        serial.version = value
+        break
+
+      case 'report number':
+      case 'patent number':
+      case 'docket number':
+        serial.serial = value
+        break
+
+      default:
+        serial[label] = value
+        break
     }
   }
 
@@ -262,8 +243,17 @@ function serialNumber(item: Serialized.RegularItem): Serial {
     ...(item.PMCID ? { pmcid: item.PMCID } : {}),
   }
 
-  if (['report', 'patent', 'case'].includes(item.itemType) && item.number) serial.serial = item.number
-  if (item.itemType === 'computerProgram' && item.versionNumber) serial.version = item.versionNumber
+  switch (item.itemType) {
+    case 'report':
+    case 'patent':
+    case 'case':
+      if (item.number) serial.serial = item.number
+      break
+
+    case 'computerProgram':
+      if (item.versionNumber) serial.version = item.versionNumber
+      break
+  }
 
   const extra = parseExtraSerialNumbers(item.extra)
   return {
@@ -350,6 +340,7 @@ function creatorFingerprint(creator: { creatorType: string; firstName?: string; 
 
 export const Hayagriva = new class {
   public fromZotero(item: Serialized.RegularItem, skipField: RegExp): Entry {
+    simplifyForExport(item, { clone: false })
     const entry: Entry = {
       type: hayagrivaType[item.itemType] || 'misc',
     }
@@ -408,6 +399,8 @@ export const Hayagriva = new class {
 
     const parent = makeParent(item)
     if (parent) entry.parent = parent
+
+    if (item.type) entry.genre = item.type
 
     if (skipField) {
       for (const field of Object.keys(entry)) {

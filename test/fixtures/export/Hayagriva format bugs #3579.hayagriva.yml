@@ -1,7 +1,10 @@
 datta2024a:
   author: Datta, Rothin
   date: '2024'
+  genre: PhD Dissertation
   language: en
+  publisher:
+    name: Johns Hopkins University
   title: 'Foucault’s other marx: Limits, origins, and the production of the natural'
   type: thesis
 smithMyChapterBook2026:
@@ -9,6 +12,9 @@ smithMyChapterBook2026:
     - Smith, Jane
     - Juan, Rodriguez
   date: '2026'
+  parent:
+    title: A Really Great Book
+    type: book
   publisher:
     location: London
     name: Bloomsbury
@@ -22,6 +28,9 @@ teixeiraPlaceMoneyMarxs2019:
     - Sabadini, Mauricio de Souza
   language: en
   page-range: 9-41
+  parent:
+    title: 'Financial Speculation and Fictitious Profits: A Marxist Analysis'
+    type: book
   publisher:
     location: Cham
     name: Springer International Publishing
@@ -36,6 +45,9 @@ teixeiraPlaceMoneyMarxs2019:
 zotero-item-1082:
   author: Jones, Bob
   date: '2024'
+  parent:
+    title: Boondoggle Conference
+    type: proceedings
   publisher:
     location: New York
   title: My Brilliant Paper
