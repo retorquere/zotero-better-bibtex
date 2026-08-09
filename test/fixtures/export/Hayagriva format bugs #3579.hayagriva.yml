@@ -1,0 +1,42 @@
+datta2024a:
+  author: Datta, Rothin
+  date: '2024'
+  language: en
+  title: 'Foucault’s other marx: Limits, origins, and the production of the natural'
+  type: thesis
+smithMyChapterBook2026:
+  author:
+    - Smith, Jane
+    - Juan, Rodriguez
+  date: '2026'
+  publisher:
+    location: London
+    name: Bloomsbury
+  title: My Chapter in Book
+  type: chapter
+teixeiraPlaceMoneyMarxs2019:
+  author: Teixeira, Adriano Lopes Almeida
+  date: '2019'
+  editor:
+    - Mello, Gustavo Moura de Cavalcanti
+    - Sabadini, Mauricio de Souza
+  language: en
+  page-range: 9-41
+  publisher:
+    location: Cham
+    name: Springer International Publishing
+  serial-number:
+    doi: 10.1007/978-3-030-23360-0_2
+    isbn: 978-3-030-23360-0
+  title: The Place of Money in Marx’s Theory of Capital
+  type: chapter
+  url:
+    date: '2026-05-09'
+    value: https://doi.org/10.1007/978-3-030-23360-0_2
+zotero-item-1082:
+  author: Jones, Bob
+  date: '2024'
+  publisher:
+    location: New York
+  title: My Brilliant Paper
+  type: article

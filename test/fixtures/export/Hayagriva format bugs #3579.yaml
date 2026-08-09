@@ -1,0 +1,116 @@
+config:
+  id: 36a3b0b5-bad0-4a04-b79b-441c7cef77db
+  label: BetterBibTeX JSON
+  preferences:
+    citekeyFold: false
+    citekeyFormat: auth.lower + year
+    fillKeyAfter: 1
+    quickCopyMode: pandoc
+    quickCopyPandocBrackets: true
+  options:
+    keepUpdated: false
+    worker: true
+    exportDir: /Users/sam/sandbox
+    exportPath: /Users/sam/sandbox/HayagrivaBug.yaml
+    cache: true
+version:
+  zotero: 9.0.6
+  bbt: 9.0.55
+collections: {}
+items:
+  - key: 83XPNGHK
+    version: 2425
+    itemType: thesis
+    title: 'Foucault’s other marx: Limits, origins, and the production of the natural'
+    date: '2024'
+    citationKey: datta2024a
+    language: en
+    creators:
+      - firstName: Rothin
+        lastName: Datta
+        creatorType: author
+    tags: []
+    dateAdded: '2026-02-15T18:41:46Z'
+    dateModified: '2026-08-02T18:26:35Z'
+    itemID: 527
+    attachments: []
+    notes: []
+    autoJournalAbbreviation: ''
+    type: PhD Dissertation
+    publisher: Johns Hopkins University
+  - key: 7CALIAHB
+    version: 1937
+    itemType: bookSection
+    title: My Chapter in Book
+    date: '2026'
+    citationKey: smithMyChapterBook2026
+    publisher: Bloomsbury
+    place: London
+    creators:
+      - firstName: Jane
+        lastName: Smith
+        creatorType: author
+      - firstName: Rodriguez
+        lastName: Juan
+        creatorType: author
+    tags: []
+    dateAdded: '2026-05-11T16:01:59Z'
+    dateModified: '2026-05-11T16:05:32Z'
+    itemID: 1081
+    attachments: []
+    notes: []
+    autoJournalAbbreviation: ''
+    publicationTitle: A Really Great Book
+  - key: 2GBWVPAK
+    version: 1916
+    itemType: bookSection
+    title: The Place of Money in Marx’s Theory of Capital
+    abstractNote: In this chapter, Teixeira seeks to locate the Marxist theory of money in relation to the major objective of his intellectual pathway, which was to unravel the mode of being of capitalist sociability through a theory of capital. Money in Marx appears not as an autonomous and self-sufficient entity of a specific monetary theory but as a theoretical moment prior to the advent of capital, a concept that, notwithstanding, assumes the protagonism of the process of social reproduction, modifying the forms of the existence of money and reconfiguring the elements of the Marxist exposition method, potentially making it capable of explaining the monetary and financial phenomena of contemporary capitalism.
+    date: '2019'
+    DOI: 10.1007/978-3-030-23360-0_2
+    citationKey: teixeiraPlaceMoneyMarxs2019
+    url: https://doi.org/10.1007/978-3-030-23360-0_2
+    accessDate: '2026-05-09T12:20:06Z'
+    language: en
+    libraryCatalog: Springer Link
+    publisher: Springer International Publishing
+    place: Cham
+    ISBN: 978-3-030-23360-0
+    pages: 9-41
+    creators:
+      - firstName: Adriano Lopes Almeida
+        lastName: Teixeira
+        creatorType: author
+      - firstName: Gustavo Moura de Cavalcanti
+        lastName: Mello
+        creatorType: editor
+      - firstName: Mauricio de Souza
+        lastName: Sabadini
+        creatorType: editor
+    tags: []
+    dateAdded: '2026-05-09T12:20:06Z'
+    dateModified: '2026-05-09T12:20:06Z'
+    itemID: 1036
+    attachments: []
+    notes: []
+    autoJournalAbbreviation: ''
+    publicationTitle: 'Financial Speculation and Fictitious Profits: A Marxist Analysis'
+  - key: VFBY5R8V
+    version: 1954
+    itemType: conferencePaper
+    title: My Brilliant Paper
+    date: '2024'
+    citationKey: zotero-item-1082
+    place: New York
+    creators:
+      - firstName: Bob
+        lastName: Jones
+        creatorType: author
+    tags: []
+    dateAdded: '2026-05-11T21:35:24Z'
+    dateModified: '2026-05-11T21:35:55Z'
+    itemID: 1082
+    attachments: []
+    notes: []
+    autoJournalAbbreviation: Boondoggle Conf.
+    publicationTitle: Boondoggle Conference
