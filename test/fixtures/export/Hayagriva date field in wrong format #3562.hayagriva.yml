@@ -1,6 +1,9 @@
 PDFOvercomingExploration:
   date: '2026-07-07'
   language: en
+  parent:
+    title: ResearchGate
+    type: web
   serial-number:
     doi: 10.48550/arXiv.1709.10089
   title: (PDF) Overcoming Exploration in Reinforcement Learning with Demonstrations
@@ -21,6 +24,8 @@ andrychowiczHindsightExperienceReplay2018:
     - Abbeel, Pieter
     - Zaremba, Wojciech
   date: '2018-02-23'
+  publisher:
+    name: arXiv
   serial-number:
     doi: 10.48550/arXiv.1707.01495
   title: Hindsight Experience Replay
