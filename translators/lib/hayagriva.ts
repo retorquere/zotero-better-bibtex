@@ -186,7 +186,10 @@ function makeParent(item: Serialized.RegularItem): Entry | null {
 
     case 'conferencePaper':
       if (item.conferenceName || item.publicationTitle) {
-        return { type: item.DOI ? 'proceedings' : 'conference', title: item.conferenceName || item.publicationTitle }
+        return {
+          type: item.DOI || item.publicationTitle ? 'proceedings' : 'conference',
+          title: item.conferenceName || item.publicationTitle,
+        }
       }
       return null
 

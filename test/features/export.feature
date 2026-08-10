@@ -384,6 +384,7 @@ Feature: Export
       | file                                        | references |
       | Export year ranges from Original Date #3482 | 1          |
 
+  @hayagriva
   Scenario Outline: Export <references> references for Better Hayagriva to <file>
     When I import <references> references from "export/<file>.json"
     Then an export using "Better Hayagriva" should match "export/*.hayagriva.yml"
