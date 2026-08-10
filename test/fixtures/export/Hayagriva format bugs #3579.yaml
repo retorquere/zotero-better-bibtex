@@ -114,3 +114,65 @@ items:
     notes: []
     autoJournalAbbreviation: Boondoggle Conf.
     publicationTitle: Boondoggle Conference
+  - key: B9V2V6FQ
+    version: 2997
+    itemType: conferencePaper
+    title: 'AI Empowerment: Innovation and Exploration of Image-Based Virtual and Real Restoration Technology for Murals of Shoroon Bumbagar Tomb'
+    abstractNote: This paper focuses on the study of image-based virtual and real restoration technology in the era of artificial intelligence, aiming to solve the problem of restoration of ancient murals damaged by natural and human factors in Mongolia's Shoroon Bumbagar Tomb. AI technologies-deep learning, generative adversarial networks for example-can analyze mural image, and accurately restore damaged areas. The findings demonstrate that this method outperforms traditional approaches in mural restoration, enhancing both accuracy and efficiency while offering a novel technical solution for cultural heritage preservation.
+    date: 2025-09
+    DOI: 10.1109/ISCSET65760.2025.11540529
+    citationKey: wang2025
+    url: https://ieeexplore.ieee.org/document/11540529
+    accessDate: '2026-08-10T14:42:14Z'
+    shortTitle: AI Empowerment
+    libraryCatalog: IEEE Xplore
+    pages: 1-5
+    conferenceName: 2025 International Symposium on Computer Science and Educational Technology (ISCSET)
+    creators:
+      - firstName: Chen
+        lastName: Wang
+        creatorType: author
+      - firstName: Narantsatsral
+        lastName: Delgerkhuu
+        creatorType: author
+      - firstName: Lin
+        lastName: Hu
+        creatorType: author
+    tags:
+      - tag: algorithm
+        type: 1
+      - tag: Algorithms
+        type: 1
+      - tag: Artificial intelligence
+        type: 1
+      - tag: Generative adversarial networks
+        type: 1
+      - tag: Indexes
+        type: 1
+      - tag: Indexing
+        type: 1
+      - tag: Maintenance engineering
+        type: 1
+      - tag: Modeling
+        type: 1
+      - tag: optimization
+        type: 1
+      - tag: Printing
+        type: 1
+      - tag: PSNR
+        type: 1
+      - tag: relics
+        type: 1
+      - tag: restoration
+        type: 1
+      - tag: segmentation
+        type: 1
+      - tag: Technology
+        type: 1
+    dateAdded: '2026-08-10T14:42:14Z'
+    dateModified: '2026-08-10T14:42:18Z'
+    itemID: 1214
+    attachments: []
+    notes: []
+    autoJournalAbbreviation: 2025 Int. Symp. Comput. Sci. Educ. Technol. ISCSET
+    publicationTitle: 2025 International Symposium on Computer Science and Educational Technology (ISCSET)

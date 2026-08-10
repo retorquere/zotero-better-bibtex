@@ -391,7 +391,7 @@ Feature: Export
 
     Examples:
       | file                                        | references |
-      | Hayagriva format bugs #3579                 | 4          |
+      | Hayagriva format bugs #3579                 | 5          |
       | Export year ranges from Original Date #3482 | 1          |
       | Hayagriva date field in wrong format #3562  | 2          |
 

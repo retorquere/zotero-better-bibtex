@@ -185,8 +185,10 @@ function makeParent(item: Serialized.RegularItem): Entry | null {
       return item.publicationTitle ? { type: 'book', title: item.publicationTitle } : null
 
     case 'conferencePaper':
-      if (item.conferenceName) return { type: 'conference', title: item.conferenceName }
-      return item.publicationTitle ? { type: 'conference', title: item.publicationTitle } : null
+      if (item.conferenceName || item.publicationTitle) {
+        return { type: item.DOI ? 'proceedings' : 'conference', title: item.conferenceName || item.publicationTitle }
+      }
+      return null
 
     case 'blogPost':
       return item.publicationTitle ? { type: 'blog', title: item.publicationTitle } : null

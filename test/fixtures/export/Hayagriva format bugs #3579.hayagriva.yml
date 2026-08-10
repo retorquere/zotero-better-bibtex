@@ -42,6 +42,23 @@ teixeiraPlaceMoneyMarxs2019:
   url:
     date: '2026-05-09'
     value: https://doi.org/10.1007/978-3-030-23360-0_2
+wang2025:
+  author:
+    - Wang, Chen
+    - Delgerkhuu, Narantsatsral
+    - Hu, Lin
+  date: 2025-09
+  page-range: 1-5
+  parent:
+    title: 2025 International Symposium on Computer Science and Educational Technology (ISCSET)
+    type: proceedings
+  serial-number:
+    doi: 10.1109/ISCSET65760.2025.11540529
+  title: 'AI Empowerment: Innovation and Exploration of Image-Based Virtual and Real Restoration Technology for Murals of Shoroon Bumbagar Tomb'
+  type: article
+  url:
+    date: '2026-08-10'
+    value: https://ieeexplore.ieee.org/document/11540529
 zotero-item-1082:
   author: Jones, Bob
   date: '2024'
