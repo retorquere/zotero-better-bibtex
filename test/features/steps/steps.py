@@ -298,13 +298,10 @@ def step_impl(context, fixture):
   # Write reference output to exported directory for inspection
   utils.exported(baseline_path.replace('test/fixtures/', ''), result.stdout)
 
-  if os.path.exists(baseline_path):
-    with open(baseline_path, 'r') as f:
-      baseline = f.read()
-    assert_equal_diff(baseline, result.stdout)
-  else:
-    utils.print(f'Baseline file not found: {baseline_path}')
-    utils.print(result.stdout)
+  assert os.path.exists(baseline_path), f'Baseline file not found: {baseline_path}'
+  with open(baseline_path, 'r') as f:
+    baseline = f.read()
+  assert_equal_diff(baseline, result.stdout)
 
 @step('the library should match "{expected}"')
 def step_impl(context, expected):

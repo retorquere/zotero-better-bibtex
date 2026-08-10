@@ -47,7 +47,7 @@ zotero-item-1082:
   date: '2024'
   parent:
     title: Boondoggle Conference
-    type: proceedings
+    type: conference
   publisher:
     location: New York
   title: My Brilliant Paper

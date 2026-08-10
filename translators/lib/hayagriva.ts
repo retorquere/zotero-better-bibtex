@@ -186,7 +186,7 @@ function makeParent(item: Serialized.RegularItem): Entry | null {
 
     case 'conferencePaper':
       if (item.conferenceName) return { type: 'conference', title: item.conferenceName }
-      return item.publicationTitle ? { type: 'proceedings', title: item.publicationTitle } : null
+      return item.publicationTitle ? { type: 'conference', title: item.publicationTitle } : null
 
     case 'blogPost':
       return item.publicationTitle ? { type: 'blog', title: item.publicationTitle } : null
@@ -413,12 +413,21 @@ export const Hayagriva = new class {
 
   public export(items: Iterable<Serialized.RegularItem>, translation: Translation): string {
     const doc: Doc = {}
+    const duplicates: Set<string> = new Set
     for (const item of items) {
       const key = sanitizeKey(item.citationKey || item.itemKey)
-      doc[key] = this.fromZotero(item, translation.skipField)
+      if (doc[key]) {
+        duplicates.add(key)
+      }
+      else {
+        doc[key] = this.fromZotero(item, translation.skipField)
+      }
     }
 
-    return YAML.dump(doc, { skipInvalid: true, sortKeys: true, lineWidth: -1 })
+    const header = duplicates.size
+      ? `# duplicate keys found, only first duplicate retained:\n# ${JSON.stringify([...duplicates].sort())}\n`
+      : ''
+    return header + YAML.dump(doc, { skipInvalid: true, sortKeys: true, lineWidth: -1 })
   }
 
   public async import(data: unknown): Promise<void> {

@@ -21,7 +21,7 @@ items:
   - key: 83XPNGHK
     version: 2425
     itemType: thesis
-    title: 'Foucault’s other marx: Limits, origins, and the production of the natural'
+    title: "Foucault\u2019s other marx: Limits, origins, and the production of the natural"
     date: '2024'
     citationKey: datta2024a
     language: en
@@ -64,7 +64,7 @@ items:
   - key: 2GBWVPAK
     version: 1916
     itemType: bookSection
-    title: The Place of Money in Marx’s Theory of Capital
+    title: "The Place of Money in Marx\u2019s Theory of Capital"
     abstractNote: In this chapter, Teixeira seeks to locate the Marxist theory of money in relation to the major objective of his intellectual pathway, which was to unravel the mode of being of capitalist sociability through a theory of capital. Money in Marx appears not as an autonomous and self-sufficient entity of a specific monetary theory but as a theoretical moment prior to the advent of capital, a concept that, notwithstanding, assumes the protagonism of the process of social reproduction, modifying the forms of the existence of money and reconfiguring the elements of the Marxist exposition method, potentially making it capable of explaining the monetary and financial phenomena of contemporary capitalism.
     date: '2019'
     DOI: 10.1007/978-3-030-23360-0_2
