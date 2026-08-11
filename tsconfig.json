@@ -14,7 +14,6 @@
     "removeComments": false,
     "preserveConstEnums": true,
     "sourceMap": false,
-    "downlevelIteration": true,
     "resolveJsonModule": true,
     "module": "preserve",
     "moduleResolution": "bundler",
