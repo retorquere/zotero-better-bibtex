@@ -20,7 +20,7 @@ type NestedCollection = {
 export class Items {
   private items: CacheableItem[] = []
   public map: Record<number | string, CacheableItem> = {}
-  public current: CacheableItem
+  public current!: CacheableItem
 
   constructor() {
     let item: CacheableItem
@@ -47,6 +47,7 @@ export class Items {
   public erase(): void {
     this.items = []
     this.map = {}
+    // @ts-expect-error this.current is always defined during a run, this is just memory cleanup
     this.current = null
   }
 
@@ -158,8 +159,8 @@ export function slurp(): string {
 
 export class Collected {
   public input = ''
-  public items: Items
-  public collections: Collections
+  public items!: Items
+  public collections!: Collections
   public preferences: Preferences
   public displayOptions: DisplayOptions = {}
   public platform: string

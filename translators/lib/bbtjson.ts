@@ -109,6 +109,7 @@ export async function importBBTJSON(collected: Collected): Promise<void> {
   const data: Library = JSON.parse(collected.input)
   if (!data.items || !data.items.length) return
 
+  data.collections ??= {}
   if (data.config?.preferences) delete data.config.preferences.keyConflictPolicy
 
   const items = new Set<number>
@@ -167,7 +168,7 @@ export async function importBBTJSON(collected: Collected): Promise<void> {
   }
   collected.progress(100)
 
-  const collections: any[] = Object.values(data.collections || {})
+  const collections: any[] = Object.values(data.collections)
   for (const collection of collections) {
     collection.zoteroCollection = collected.collection()
     collection.zoteroCollection.type = 'collection'

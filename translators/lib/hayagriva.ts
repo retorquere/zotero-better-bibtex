@@ -147,16 +147,16 @@ function formatParsedDate(date: dateparser.RichDate): string {
 
     case 'season':
       if (typeof date.year !== 'number') return ''
-      return `${seasons[date.season] || date.season} ${`${date.year}`.padStart(4, '0')}`
+      return `${seasons[date.season!] || date.season!} ${`${date.year}`.padStart(4, '0')}`
 
     case 'verbatim':
       return date.verbatim || ''
 
     case 'interval':
-      return formatParsedDate(date.from?.type === 'open' ? date.to : date.from)
+      return formatParsedDate(date.from?.type === 'open' ? date.to! : date.from!)
 
     case 'list':
-      return formatParsedDate(date.dates.find(d => d.type !== 'open') || date.dates[0])
+      return formatParsedDate(date.dates!.find(d => d.type !== 'open') || date.dates![0])
 
     default:
       return ''
@@ -323,7 +323,7 @@ function normalizeURL(url: Entry['url']): { value?: string; date?: string } {
   return { value: url.value, date: url.date }
 }
 
-function normalizePublisher(publisher: Publisher): { name?: string; location?: string } {
+function normalizePublisher(publisher?: Publisher): { name?: string; location?: string } {
   if (!publisher) return {}
   if (typeof publisher === 'string') return { name: publisher }
   return { name: publisher.name, location: publisher.location }
@@ -435,9 +435,7 @@ export const Hayagriva = new class {
     return header + YAML.dump(doc, { skipInvalid: true, sortKeys: true, lineWidth: -1 })
   }
 
-  public async import(data: unknown): Promise<void> {
-    const doc = data as Doc
-
+  public async import(doc: Doc): Promise<void> {
     for (const [id, entry] of Object.entries(doc)) {
       if (!entry || typeof entry !== 'object') continue
 
