@@ -14,7 +14,7 @@ export type Message
   = { kind: 'debug'; message: string }
   | { kind: 'error'; message: string; stack?: string }
   | { kind: 'cache-delete' }
-  | { kind: 'progress'; percent: number; translator: string; autoExport: string }
+  | { kind: 'progress'; percent: number; translator: string; autoExport?: string }
 
 export type Job = {
   translator: string

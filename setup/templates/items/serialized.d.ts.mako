@@ -72,9 +72,11 @@ export namespace Serialized {
     path: string
     title?: string
     mimeType?: string
+    contentType?: string
     localPath?: string
     defaultPath?: string
     relations: { 'dc:relation': string[] }
+    linkMode: string
 
     saveFile(path: string, overwrite: boolean): void
   }

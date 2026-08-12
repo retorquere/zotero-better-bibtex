@@ -181,7 +181,7 @@ class Running {
     this.serialized = await Cache.Serialized.get(itemIDs)
   }
 
-  public fetch(itemID: number): ExportedItem {
+  public fetch(itemID: number): ExportedItem | undefined {
     const item = this.exported.get(itemID)
     if (item) {
       this.hits++
@@ -220,11 +220,11 @@ class WorkerZoteroBetterBibTeX {
   }
 
   public setProgress(percent: number) {
-    Zotero.send({ kind: 'progress', percent, translator: Zotero.running.job.translator, autoExport: Zotero.running.job.autoExport })
+    Zotero.send({ kind: 'progress', percent, translator: Zotero.running!.job.translator, autoExport: Zotero.running!.job.autoExport })
   }
 
-  public getContents(path: string): string {
-    if (!path) return null
+  public getContents(path: string): string | undefined {
+    if (!path) return
 
     try {
       const file = IOUtils.openFileForSyncReading(path)
@@ -246,11 +246,11 @@ class WorkerZoteroBetterBibTeX {
       file.close()
       return text
     }
-    catch (err) {
+    catch (error) {
+      const err = error as Error
       if (!err.message?.includes('NS_ERROR_FILE_NOT_FOUND')) {
         log.error(`getContents ${ path } error ${ err } ${ Object.keys(err) } ${ err.message }`)
       }
-      return null
     }
   }
 
@@ -293,7 +293,7 @@ async function makeDirs(path) {
   await IOUtils.makeDirectory(path, { ignoreExisting: true, createAncestors: true })
 }
 
-async function saveFile(path, overwrite) {
+async function saveFile(this: Serialized.Attachment, path: string, overwrite: boolean): Promise<boolean> {
   if (!Zotero.exportDirectory) return false
 
   const protect = overwrite
@@ -309,7 +309,7 @@ async function saveFile(path, overwrite) {
       }
     }
 
-  if (!await File.exists(this.localPath)) return false
+  if (!await File.exists(this.localPath!)) return false
 
   try {
     this.path = PathUtils.join(Zotero.exportDirectory, path)
@@ -325,17 +325,17 @@ async function saveFile(path, overwrite) {
     await IOUtils.copy(this.localPath, this.path)
   }
   else if (this.linkMode === 'imported_url') {
-    const target = PathUtils.parent(this.path)
+    const target = PathUtils.parent(this.path)!
     await protect(target, this.localPath)
 
     await IOUtils.remove(target, { recursive: true, ignoreAbsent: true })
     await makeDirs(target)
 
-    const snapshot = PathUtils.parent(this.localPath)
+    const snapshot = PathUtils.parent(this.localPath!)!
     for (const src of await IOUtils.getChildren(snapshot)) {
       if (PathUtils.filename(src) === '.zotero-ft-cache') continue
       if (await File.isDir(src)) throw new Error(`Unexpected directory ${JSON.stringify(src)} in snapshot`)
-      const tgt = PathUtils.join(target, PathUtils.filename(src))
+      const tgt = PathUtils.join(target, PathUtils.filename(src))!
       await protect(tgt, src)
       await IOUtils.copy(src, tgt)
     }
@@ -403,9 +403,9 @@ class WorkerZoteroItemFields {
 class WorkerZotero {
   public worker = true
 
-  public output: string
-  public exportDirectory: string
-  public exportFile: string
+  public output!: string
+  public exportDirectory!: string
+  public exportFile!: string
   public version: string = client.version
 
   public running?: Running
@@ -443,7 +443,7 @@ class WorkerZotero {
         this.exportFile = job.output
         const ext = `.${ ZOTERO_TRANSLATOR_INFO.target }`
         if (!this.exportFile.endsWith(ext)) this.exportFile += ext
-        this.exportDirectory = PathUtils.parent(this.exportFile)
+        this.exportDirectory = PathUtils.parent(this.exportFile)!
       }
       await makeDirs(this.exportDirectory)
     }
@@ -465,7 +465,7 @@ class WorkerZotero {
     await this.running.flush()
     const cacheRate = this.running.hits + this.running.misses ? this.running.hits / (this.running.hits + this.running.misses) : 0
     this.BetterBibTeX.setProgress(100)
-    this.running = null
+    this.running = undefined
     return { output, cacheRate }
   }
 
@@ -478,11 +478,11 @@ class WorkerZotero {
   }
 
   public getHiddenPref(pref) {
-    return this.running.job.preferences[pref.replace(/^better-bibtex\./, '')]
+    return this.running!.job.preferences[pref.replace(/^better-bibtex\./, '')]
   }
 
   public getOption(option) {
-    return this.running.job.options[option]
+    return this.running!.job.options[option]
   }
 
   public debug(message) {
@@ -500,12 +500,12 @@ class WorkerZotero {
   }
 
   public nextItem() {
-    this.BetterBibTeX.setProgress(this.running.progress)
+    this.BetterBibTeX.setProgress(this.running!.progress)
     return this.running!.serialized.shift()
   }
 
-  public nextCollection(): Serialized.Collection {
-    return this.running!.job.data.collections.shift()
+  public nextCollection(): Serialized.Collection | undefined {
+    return this.running!.job.data!.collections?.shift()
   }
 
   private patchAttachments(item): void {
