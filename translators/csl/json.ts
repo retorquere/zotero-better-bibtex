@@ -12,7 +12,7 @@ function date2csl(date: RichDate): [LooseNumber, LooseNumber?, LooseNumber?] {
       return [0]
 
     case 'date':
-      csl = [`${ date.year > 0 ? date.year : date.year - 1 }`]
+      csl = [`${ date.year! > 0 ? date.year! : date.year! - 1 }`]
       if (date.month) {
         csl.push(date.month)
         if (date.day) {
@@ -23,16 +23,16 @@ function date2csl(date: RichDate): [LooseNumber, LooseNumber?, LooseNumber?] {
 
     case 'season':
       // https://github.com/retorquere/zotero-better-bibtex/issues/860
-      return [ `${ date.year > 0 ? date.year : date.year - 1 }`, date.season + 12 ]
+      return [ `${ date.year! > 0 ? date.year! : date.year! - 1 }`, date.season! + 12 ]
 
     case 'century':
-      return date2csl({ type: 'date', year: date.century * 100 + 1 })
+      return date2csl({ type: 'date', year: date.century! * 100 + 1 })
   }
   throw new Error(`Expected date or open, got ${ date.type }`)
 }
 
 class Exporter extends CSLExporter {
-  public date2CSL(date: RichDate): CSLDate {
+  public date2CSL(date: RichDate): CSLDate | null {
     switch (date.type) {
       case 'date':
       case 'open':
@@ -43,20 +43,20 @@ class Exporter extends CSLExporter {
 
       case 'interval': {
         return {
-          'date-parts': [ date2csl(date.from), date2csl(date.to) ],
-          circa: (date.from.approximate || date.from.uncertain || date.to.approximate || date.to.uncertain || (date.from.type === 'century' && date.to.type === 'open')) ? true : undefined,
+          'date-parts': [ date2csl(date.from!), date2csl(date.to!) ],
+          circa: (date.from!.approximate || date.from!.uncertain || date.to!.approximate || date.to!.uncertain || (date.from!.type === 'century' && date.to!.type === 'open')) ? true : undefined,
         }
       }
 
       case 'verbatim':
-        return { literal: date.verbatim }
+        return { literal: date.verbatim! }
 
       case 'century':
-        return { literal: century(date.century) }
+        return { literal: century(date.century!) }
 
       case 'season':
         return {
-          'date-parts': [[date.year]],
+          'date-parts': [[date.year!]],
           season: date.season,
           circa: (date.approximate || date.uncertain) ? true : undefined,
         }

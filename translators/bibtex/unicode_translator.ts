@@ -23,12 +23,12 @@ export type TeX = { latex: string; raw: boolean; packages: string[] }
 
 export class HTMLConverter {
   private latex = ''
-  private tx: Transform
-  private txt: Transform
-  private txc: Transform
+  private tx!: Transform
+  private txt!: Transform
+  private txc!: Transform
   private stack: any[] = []
   private options: ConverterOptions = {}
-  private embraced: boolean
+  private embraced!: boolean
   private packages: Set<string> = new Set
   private translation: Translation
 
@@ -120,7 +120,7 @@ export class HTMLConverter {
 
       case 'a':
         /* zotero://open-pdf/0_5P2KA4XM/7 is actually a reference. */
-        if (tag.attr.href && tag.attr.href.length) latex = `\\href{${ tag.attr.href.replace(/[{}]/g, '').replace(/([\\%#])/g, '\\$1') }}{\x1D}`
+        if (tag.attr?.href && tag.attr.href.length) latex = `\\href{${ tag.attr.href.replace(/[{}]/g, '').replace(/([\\%#])/g, '\\$1') }}{\x1D}`
         break
 
       case 'sup':
@@ -218,8 +218,10 @@ export class HTMLConverter {
     const [ prefix, postfix ] = latex.split('\x1D')
 
     this.latex += prefix
-    for (const child of tag.childNodes) {
-      this.walk(child, nocased || tag.nocase)
+    if (tag.childNodes) {
+      for (const child of tag.childNodes) {
+        this.walk(child, nocased || tag.nocase)
+      }
     }
     this.latex += postfix
 
@@ -230,7 +232,9 @@ export class HTMLConverter {
     /* holy mother of %^$#^%$@ the bib(la)tex case conversion rules are insane */
     /* https://github.com/retorquere/zotero-better-bibtex/issues/541 */
     /* https://github.com/plk/biblatex/issues/459 ... oy! */
-    if (!this.embraced) this.embraced = this.options.exportCaseProtection && (((this.latex || latex)[0] !== '\\') || this.translation.BetterBibTeX)
+    if (!this.embraced) {
+      this.embraced = (this.options.exportCaseProtection && (((this.latex || latex)[0] !== '\\') || this.translation.BetterBibTeX)) as boolean
+    }
     if (!this.embraced || !condition) return latex
     return `{${ latex }}`
   }

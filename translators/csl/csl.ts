@@ -32,7 +32,7 @@ export abstract class CSLExporter {
   private translation: Translation
   protected abstract flush(items: string[]): string
   protected abstract serialize(items: CSLItem): string
-  protected abstract date2CSL(date: dateparser.RichDate): CSLDate
+  protected abstract date2CSL(date: dateparser.RichDate): CSLDate | null
 
   constructor(translation: Translation) {
     this.translation = translation
@@ -57,7 +57,7 @@ export abstract class CSLExporter {
   }
 
   public doExport(): void {
-    const items = []
+    const items: string[] = []
     for (let item of (this.translation.collected.items.regular as Generator<ExtendedItem, void, unknown>)) {
       let cached: ExportedItem
       if (!this.translation.collected.displayOptions.custom && (cached = Zotero.BetterBibTeX.Cache.fetch(item.itemID))) {
@@ -106,7 +106,7 @@ export abstract class CSLExporter {
       try {
         // preconvert both so the values get set only if both are convertable
         const issued = (date.type || 'open') === 'open' ? undefined : this.date2CSL(date)
-        const original = (date.orig?.type || 'open') === 'open' ? undefined : this.date2CSL(date.orig)
+        const original = (date.orig?.type || 'open') === 'open' ? undefined : this.date2CSL(date.orig!)
 
         if (issued) csl.issued = issued
         if (original) csl['original-date'] = original

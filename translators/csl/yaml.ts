@@ -12,7 +12,7 @@ import { RichDate, century } from '../../content/dateparser'
 import { HTMLParser } from '../../content/text'
 
 const htmlConverter = new class HTML {
-  private markdown: string
+  private markdown = ''
 
   public convert(html: string): string {
     this.markdown = ''
@@ -24,7 +24,7 @@ const htmlConverter = new class HTML {
     if (!tag) return
 
     if ([ '#text', 'pre', 'script' ].includes(tag.nodeName)) {
-      this.markdown += tag.value.replace(/([[*~^])/g, '\\$1')
+      this.markdown += tag.value!.replace(/([[*~^])/g, '\\$1')
       return
     }
 
@@ -40,7 +40,7 @@ const htmlConverter = new class HTML {
 
       case 'a':
         /* zotero://open-pdf/0_5P2KA4XM/7 is actually a reference. */
-        if (tag.attr.href && tag.attr.href.length) this.markdown += '['
+        if (tag.attr?.href && tag.attr.href.length) this.markdown += '['
         break
 
       case 'sup':
@@ -53,14 +53,16 @@ const htmlConverter = new class HTML {
 
       case 'sc':
         this.markdown += '<span style="font-variant:small-caps;">'
-        tag.attr.style = 'font-variant:small-caps;'
+        tag.attr!.style = 'font-variant:small-caps;'
         break
 
       case 'span':
-        for (const [ k, v ] of Object.entries(tag.attr)) {
-          span_attrs += ` ${ k }="${ v }"`
+        if (tag.attr) {
+          for (const [ k, v ] of Object.entries(tag.attr)) {
+            span_attrs += ` ${ k }="${ v }"`
+          }
+          if (span_attrs) this.markdown += `<span${ span_attrs }>`
         }
-        if (span_attrs) this.markdown += `<span${ span_attrs }>`
         break
 
       case 'tbody':
@@ -74,8 +76,10 @@ const htmlConverter = new class HTML {
         log.error(`unexpected tag '${ tag.nodeName }'`)
     }
 
-    for (const child of tag.childNodes) {
-      this.walk(child)
+    if (tag.childNodes) {
+      for (const child of tag.childNodes) {
+        this.walk(child)
+      }
     }
 
     switch (tag.nodeName) {
@@ -96,7 +100,7 @@ const htmlConverter = new class HTML {
         break
 
       case 'a':
-        if (tag.attr.href && tag.attr.href.length) this.markdown += `](${ tag.attr.href })`
+        if (tag.attr?.href && tag.attr.href.length) this.markdown += `](${ tag.attr.href })`
         break
 
       case 'sc':
@@ -136,7 +140,7 @@ function date2csl(date): [LooseNumber, LooseNumber?, LooseNumber?] { // fudge fo
 }
 
 class Exporter extends CSLExporter {
-  public date2CSL(date: RichDate): CSLDate { // fudge for CSL-YAML dates
+  public date2CSL(date: RichDate): CSLDate | null { // fudge for CSL-YAML dates
     switch (date.type) {
       case 'date':
       case 'open':
@@ -150,7 +154,7 @@ class Exporter extends CSLExporter {
         return [{ literal: date.verbatim }] as unknown as CSLDate
 
       case 'century':
-        return [{ literal: century(date.century) }] as unknown as CSLDate
+        return [{ literal: century(date.century!) }] as unknown as CSLDate
 
       default:
         if (!date.type && date.orig) return null // handled by orig-handler

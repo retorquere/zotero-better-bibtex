@@ -14,14 +14,14 @@ import type { ExportedItem } from '../../content/worker/cache'
 import { HTMLConverter, ConverterOptions, TeX } from './unicode_translator'
 
 export class Exporter {
-  public postfix: Postfix
+  public postfix?: Postfix
   public jabref: JabRef
   public strings: Record<string, string> = {}
   public strings_reverse: Record<string, string> = {}
   public citekeys: Record<string, number> = {}
 
   private translation: Translation
-  private tx: HTMLConverter
+  private tx!: HTMLConverter
 
   constructor(translation: Translation) {
     this.translation = translation
@@ -52,8 +52,8 @@ export class Exporter {
 
       if (typeof item.itemID !== 'number') item.$cacheable = false
       if (item.$cacheable && this.translation.BetterTeX) {
-        let cached: ExportedItem = null
-        if (cached = Zotero.BetterBibTeX.Cache.fetch(item.itemID)) {
+        const cached: ExportedItem = Zotero.BetterBibTeX.Cache.fetch(item.itemID)
+        if (cached) {
           this.translation.output.body += cached.entry
           this.postfix?.add(cached.metadata)
           continue
@@ -104,7 +104,7 @@ export class Exporter {
 
   text2latex(text: string, options: ConverterOptions = {}): TeX {
     if (typeof options.html === 'undefined') options.html = false
-    this.tx = this.tx || new HTMLConverter(this.translation)
+    this.tx = this.tx ?? new HTMLConverter(this.translation)
     return this.tx.tolatex(text, options)
   }
 

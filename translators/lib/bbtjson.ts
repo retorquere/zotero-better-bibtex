@@ -5,6 +5,8 @@ import { log } from '../../content/logger'
 import { Translation } from './translator'
 import { simplifyForImport, simplifyForExport } from '../../content/item-schema'
 import BBT from '../../gen/version.cjs'
+import { Serialized } from '../../gen/typings/serialized'
+import omit from 'lodash.omit'
 
 import { citationKey as extract } from '../../content/extra'
 
@@ -34,11 +36,12 @@ const validAttachmentFields = new Set([
 export function generateBBTJSON(collected: Collected): Translation {
   const translation = Translation.Export(collected)
 
-  const preferences = { ...translation.collected.preferences }
-  delete preferences.citekeyFormatEditing
-  delete preferences.testing
-  delete preferences.platform
-  delete preferences.logEvents
+  const preferences = omit(translation.collected.preferences, [
+    'citekeyFormatEditing',
+    'testing',
+    'platform',
+    'logEvents',
+  ])
 
   const data = {
     config: {
@@ -52,7 +55,7 @@ export function generateBBTJSON(collected: Collected): Translation {
       bbt: BBT.version,
     },
     collections: translation.collections,
-    items: [],
+    items: [] as Serialized.Item[],
   }
 
   if (translation.collected.displayOptions.Items) {
@@ -74,7 +77,6 @@ export function generateBBTJSON(collected: Collected): Translation {
     }
 
     for (let item of translation.collected.items) {
-      delete item.$cacheable
       addSelect(item, translation)
 
       switch (item.itemType) {
@@ -87,7 +89,6 @@ export function generateBBTJSON(collected: Collected): Translation {
           break
 
         default:
-          delete item.collections
           if (translation.collected.displayOptions.Normalize) item = simplifyForExport(item, { clone: false }) as typeof item
 
           for (const att of item.attachments || []) {
@@ -96,7 +97,7 @@ export function generateBBTJSON(collected: Collected): Translation {
           break
       }
 
-      data.items.push(item)
+      data.items.push(omit(item, ['collections', '$cacheable']) as Serialized.Item)
     }
   }
 

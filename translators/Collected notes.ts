@@ -4,6 +4,7 @@ import { strcmp } from '../content/string-compare'
 import { Translation } from './lib/translator'
 import { Collected } from './lib/collect'
 import type { Header } from '../gen/translators'
+import type { RichDate } from '../content/dateparser'
 declare var ZOTERO_TRANSLATOR_INFO: Header // eslint-disable-line no-var
 
 declare const Zotero: any
@@ -66,7 +67,7 @@ class Exporter {
         items: (collection.items || []).map(itemID => items[itemID]).filter(item => item),
         // resolve collection IDs to collections
         collections: [],
-        root: !this.translation.collections[collection.parent],
+        root: !this.translation.collections[collection.parent as unknown as string],
       }
     }
 
@@ -166,7 +167,7 @@ class Exporter {
   }
 
   item(item) {
-    let notes = []
+    let notes: { note: string }[] = []
     let title = ''
 
     if (item.itemType === 'attachment') {
@@ -178,11 +179,12 @@ class Exporter {
 
       const creators = this.creators(item.creators.map(creator => this.creator(creator)).filter(v => v))
 
-      let date = null
+      let date: RichDate | null = null
       if (item.date) {
-        date = Zotero.BetterBibTeX.parseDate(item.date)
-        if (date.from) date = date.from
-        date = typeof date.year === 'number' ? date.year : item.date
+        if (date = Zotero.BetterBibTeX.parseDate(item.date) as RichDate | null) {
+          if (date.from) date = date.from
+          date = typeof date.year === 'number' ? date.year : item.date
+        }
       }
 
       const author = [ creators, date ].filter(v => v).join(', ')

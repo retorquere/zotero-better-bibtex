@@ -48,7 +48,7 @@ export function doExport(): void {
       label.push(`\u201C${ ref.title.replace(/"/g, '\'') }\u201D`)
     }
 
-    const author = []
+    const author: string[] = []
     if (add.authors && ref.creators && ref.creators.length) {
       const name = ref.creators?.map(creator => (creator.name || creator.lastName || '').replace(/"/g, '\'')).filter(creator => creator).join(', ')
       if (name) author.push(name)
@@ -65,14 +65,12 @@ export function doExport(): void {
       label: label.join('\n'),
       relations: (ref.relations?.['dc:relation'] || []),
       // eslint-disable-next-line prefer-spread
-      cites: [].concat.apply([],
-        (ref.extra || '')
-          .split('\n')
-          .filter((line: string) => line.startsWith('cites:'))
-          .map((line: string) => line.replace(/^cites:/, '').trim())
-          .filter((keys: string) => keys)
-          .map((keys: string) => keys.split(/\s*,\s*/))
-      ),
+      cites: (ref.extra || '')
+        .split('\n')
+        .filter((line: string) => line.startsWith('cites:'))
+        .map((line: string) => line.replace(/^cites:/, '').trim())
+        .filter((keys: string) => keys)
+        .flatMap((keys: string) => keys.split(/\s*,\s*/)),
       citationKey: ref.citationKey,
       uri: ref.uri,
     })
