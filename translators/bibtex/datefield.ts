@@ -54,7 +54,7 @@ export function datefield(date: RichDate, field: Field, translation: Translation
       field.value = '<pre>\\bibstring{nodate}</pre>'
     }
     else {
-      field.value = date.verbatim
+      field.value = date.verbatim!
     }
   }
   else if (date.type === 'date' || date.type === 'season') {

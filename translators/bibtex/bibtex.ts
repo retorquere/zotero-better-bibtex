@@ -874,7 +874,7 @@ class ZoteroItem {
   }
 
   protected $journaltitle(): boolean {
-    let journal: { field: string; value: string }, abbr: { field: string; value: string } = null
+    let journal: { field: string; value: string }, abbr: { field: string; value: string } | null = null
 
     // journal-full is bibdesk
     const titles = [ 'journal-full', 'journal', 'journaltitle', 'shortjournal' ]
@@ -1198,7 +1198,7 @@ class ZoteroItem {
   protected $issue(value: string): boolean {
     if (this.validFields.number && this.bibtex.fields.number && this.validFields.seriesTitle) return this.set('seriesTitle', value)
     const field = [ 'issue', 'number' ].find(f => this.validFields[f])
-    return field && this.set(field, value)
+    return field ? this.set(field, value) : false
   }
 
   protected $eid(value: string): boolean {
@@ -1611,7 +1611,7 @@ class ZoteroItem {
 
     if (this.eprint.slaccitation && !this.eprint.eprint) {
       const m = this.eprint.slaccitation.match(/^%%CITATION = (.+);%%$/)
-      const arxiv = arXiv(m && m[1].trim())
+      const arxiv = arXiv(m?.[1].trim())
 
       if (arxiv.id) {
         this.eprint.eprintType = this.eprint.eprinttype = 'arXiv'
@@ -1681,8 +1681,8 @@ class ZoteroItem {
     }
   }
 
-  private set(field, value, fallback = null) {
-    if (!this.validFields[field]) return fallback && this.fallback(fallback, value)
+  private set(field, value, fallback = null): boolean {
+    if (!this.validFields[field]) return fallback ? this.fallback(fallback, value) : false
 
     if (this.translation.collected.preferences.testing && (this.item[field] || typeof this.item[field] === 'number') && (value || typeof value === 'number') && this.item[field] !== value) {
       this.error(`import error: duplicate ${ field } on ${ this.item.itemType } ${ this.bibtex.key } (old: ${ this.item[field] }, new: ${ value })`)

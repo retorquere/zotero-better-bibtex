@@ -162,8 +162,8 @@ export class Entry {
   public item: Serialized.RegularItem
   public entrytype: string
   public entrytype_source: string
-  public useprefix: boolean
-  public language: string
+  public useprefix!: boolean
+  public language!: string
   public english: boolean
   public date: DateParser.RichDate | { type: 'none' }
 
@@ -220,7 +220,7 @@ export class Entry {
 
   private metadata: ExportedItemMetadata = { DeclarePrefChars: '', noopsort: false, packages: []}
   private packages: Record<string, boolean> = {}
-  private juniorcomma: boolean
+  private juniorcomma!: boolean
   public translation: Translation
 
   public lint(_explanation: Record<string, string>): string[] {
@@ -521,8 +521,8 @@ export class Entry {
    *   'enc' means 'enc_literal'. If you pass both 'bibtex' and 'value', 'bibtex' takes precedence (and 'value' will be
    *   ignored)
    */
-  public add(field: Field): string {
-    if (!field.name) return null
+  public add(field: Field): string | undefined {
+    if (!field.name) return undefined
 
     if (this.translation.collected.preferences.testing && !this.inPostscript && field.name !== field.name.toLowerCase()) {
       throw new Error(`Do not add mixed-case field ${ field.name }`)
@@ -530,16 +530,16 @@ export class Entry {
 
     if (!field.value && !field.bibtex && this.inPostscript) {
       delete this.has[field.name]
-      return null
+      return undefined
     }
 
-    if (this.translation.skipField?.exec(`${ this.translation.BetterBibTeX ? 'bibtex' : 'biblatex' }.${ this.entrytype }.${ field.name }`)) return null
+    if (this.translation.skipField?.exec(`${this.translation.BetterBibTeX ? 'bibtex' : 'biblatex'}.${this.entrytype}.${field.name}`)) return undefined
 
     // field.enc = field.raw ? 'raw' : (field.enc || this.config.fieldEncoding[field.name] || 'literal')
     field.enc = field.enc || this.config.fieldEncoding[field.name] || (field.raw ? 'raw' : 'literal')
 
     if (field.enc === 'date') {
-      if (!field.value) return null
+      if (!field.value) return undefined
 
       if (field.value === 'today') {
         return this.add({
@@ -564,7 +564,7 @@ export class Entry {
       if (date.orig) {
         this.add(datefield(date.orig, {
           ...field,
-          name: (field.orig && field.orig.inherit) ? `orig${ field.name }` : (field.orig && field.orig.name),
+          name: field.orig?.inherit ? `orig${field.name}` : field.orig?.name ?? '',
           verbatim: (field.orig && field.orig.inherit && field.verbatim) ? `orig${ field.verbatim }` : (field.orig && field.orig.verbatim),
         }, this.translation))
       }
@@ -575,27 +575,27 @@ export class Entry {
     if (field.fallback && field.replace) throw new Error('pick fallback or replace, buddy')
     if (field.fallback && this.has[field.name]) {
       log.error(`add: fallback already filled for ${ field.name }`)
-      return null
+      return undefined
     }
 
     // legacy field addition
     if (!field.name) {
       log.error(`add: empty legacy object ${ field.name }`)
-      return null
+      return undefined
     }
 
     if (!field.bibtex) {
-      if ((typeof field.value !== 'number') && !field.value) return null
-      if ((typeof field.value === 'string') && (field.value.trim() === '')) return null
-      if (Array.isArray(field.value) && (field.value.length === 0)) return null
+      if ((typeof field.value !== 'number') && !field.value) return undefined
+      if ((typeof field.value === 'string') && (field.value.trim() === '')) return undefined
+      if (Array.isArray(field.value) && (field.value.length === 0)) return undefined
     }
 
     if (this.has[field.name]) {
-      if (!Array.isArray(field.value) && this.has[field.name].value === field.value && this.has[field.name].enc === field.enc) return null
+      if (!Array.isArray(field.value) && this.has[field.name].value === field.value && this.has[field.name].enc === field.enc) return undefined
 
       if (!this.inPostscript && !field.replace) {
         const value = field.bibtex ? 'bibtex' : 'value'
-        throw new Error(`duplicate field '${ field.name }' for ${ this.item.citationKey }: old: ${ this.has[field.name][value] }, new: ${ field[value] as string }`)
+        throw new Error(`duplicate field '${ field.name }' for ${ this.item.citationKey }: old: ${ this.has[field.name][value] }, new: ${ field[value]! }`)
       }
 
       if (!field.replace) {
@@ -616,8 +616,8 @@ export class Entry {
 
     if (!field.bibtex) {
       let bibstring = ''
-      if ((typeof field.value === 'number') || (field.bibtexStrings && (bibstring = this.getBibString(field.value)))) {
-        field.bibtex = `${ bibstring || field.value as string }`
+      if ((typeof field.value === 'number') || (field.bibtexStrings && (bibstring = this.getBibString(field.value as string)))) {
+        field.bibtex = `${ bibstring || field.value! }`
       }
       else {
         switch (field.enc) {
@@ -667,7 +667,7 @@ export class Entry {
             throw new Error(`Unexpected field encoding: ${ JSON.stringify(field.enc) }`)
         }
 
-        if (!field.bibtex) return null
+        if (!field.bibtex) return undefined
 
         field.bibtex = field.bibtex.trim()
 
@@ -697,15 +697,15 @@ export class Entry {
     return removed
   }
 
-  public getBibString(value): string {
-    if (!value || typeof value !== 'string') return null
+  public getBibString(value: string): string {
+    if (!value || typeof value !== 'string') return ''
 
     switch (this.translation.collected.preferences.exportBibTeXStrings) {
       case 'off':
-        return null
+        return ''
 
       case 'detect':
-        return isBibString.test(value) && value
+        return isBibString.test(value) ? value : ''
 
       case 'match':
         // the importer uppercases string declarations
@@ -717,7 +717,7 @@ export class Entry {
         return this.translation.bibtex.strings[value] ? value : this.translation.bibtex.strings_reverse[value]
 
       default:
-        return null
+        return ''
     }
   }
 
@@ -776,7 +776,7 @@ export class Entry {
         continue
       }
 
-      let name = null
+      let name: string = ''
 
       if (this.translation.BetterBibLaTeX) {
         switch (key) {
@@ -789,7 +789,7 @@ export class Entry {
             break
 
           case 'title':
-            name = this.entrytype === 'book' ? 'maintitle' : null
+            name = this.entrytype === 'book' ? 'maintitle' : ''
             break
 
           case 'publicationTitle':
@@ -909,7 +909,7 @@ export class Entry {
         continue
       }
 
-      const mode = ({ raw: { raw: true }, cased: {}}[field.mode]) || {}
+      const mode = ({ raw: { raw: true }, cased: {}}[field.mode!]) || {}
 
       switch (name) {
         case 'mr':
@@ -1019,7 +1019,7 @@ export class Entry {
     this.metadata.packages = Object.keys(this.packages)
     if (this.item.$cacheable) Zotero.BetterBibTeX.Cache.store(this.item.itemID, ref, this.metadata)
 
-    this.translation.bibtex.postfix.add(this.metadata)
+    this.translation.bibtex.postfix!.add(this.metadata)
   }
 
   /*
@@ -1097,10 +1097,10 @@ export class Entry {
    * @param {field} field to encode. The 'value' must be an array of Zotero-serialized `creator` objects.
    * @return {String} field.value encoded as author-style value
    */
-  protected enc_creators(f, raw: boolean) {
-    if (f.value.length === 0) return null
+  protected enc_creators(f, raw: boolean): string | undefined {
+    if (f.value.length === 0) return undefined
 
-    const encoded = []
+    const encoded: string[] = []
     for (const creator of f.value) {
       let name
       if (creator.name && raw) {
@@ -1242,7 +1242,7 @@ export class Entry {
     return value
   }
 
-  protected enc_tags(f): string {
+  protected enc_tags(f): string | undefined {
     const verbatim = this.translation.isVerbatimField(f.name)
     const unicode = this.translation.unicode
     const tags = f.value
@@ -1250,7 +1250,7 @@ export class Entry {
       .filter(tag => (this.translation.collected.preferences.automaticTags || (tag.type !== 1)) && tag.tag !== this.translation.collected.preferences.rawLaTag)
       .map(tag => ({ ...tag, tag: tag.tag.replace(/[#%]/g, '') }))
       .filter(tag => tag.tag)
-    if (tags.length === 0) return null
+    if (tags.length === 0) return undefined
 
     const encoded: Set<string> = new Set
     for (const tag of tags) {
@@ -1271,7 +1271,7 @@ export class Entry {
 
     if (drive(this.translation.export.dir) !== drive(path)) return path
 
-    const from = this.translation.export.dir.split(this.translation.paths.sep)
+    const from = this.translation.export.dir!.split(this.translation.paths.sep)
     const to = path.split(this.translation.paths.sep)
 
     while (from.length && to.length && normalize(from[0]) === normalize(to[0])) {
@@ -1281,8 +1281,8 @@ export class Entry {
     return `..${ this.translation.paths.sep }`.repeat(from.length) + to.join(this.translation.paths.sep)
   }
 
-  protected enc_attachments(f, modify?: (path: string) => string): string {
-    if (!f.value || (f.value.length === 0)) return null
+  protected enc_attachments(f, modify?: (path: string) => string): string | undefined {
+    if (!f.value || (f.value.length === 0)) return undefined
     const attachments: { title: string; mimetype: string; path: string }[] = []
 
     // #1939
@@ -1328,7 +1328,7 @@ export class Entry {
       attachments.push(att)
     }
 
-    if (attachments.length === 0) return null
+    if (attachments.length === 0) return undefined
 
     // sort attachments for stable tests, and to make non-snapshots the default for JabRef to open (#355)
     attachments.sort((a, b) => {
@@ -1437,8 +1437,8 @@ export class Entry {
   }
 
   private _enc_creators_biblatex(name: { family?: string; given?: string; suffix?: string; initials?: string; useprefix: boolean }): string {
-    let family: string | String
-    if ((name.family.length > 1) && (name.family[0] === '"') && (name.family.at(-1) === '"')) {
+    let family: string | String | undefined
+    if (name.family?.match(/^".+|$/)) {
       family = new String(name.family.slice(1, -1))
     }
     else {
@@ -1552,7 +1552,7 @@ export class Entry {
     return { cache: true, write: true }
   }
 
-  public thesistype(type: string, phdthesis: string, mastersthesis: string, bathesis?: string, candthesis?: string): string {
+  public thesistype(type: string, phdthesis: string, mastersthesis: string, bathesis?: string, candthesis?: string): string | undefined {
     return {
       phd: phdthesis,
       dissertation: phdthesis,
@@ -1648,10 +1648,12 @@ export class Entry {
       if (!label || label.includes('.')) return Schema.toLabel(k)
       return label.replace(/ [A-Z]/g, c => c.toLowerCase())
     }
-    const unused_data = Object.entries(this.item.extraFields.kv).map(([ k, v ]) => [ '', `extra: ${k}`, v ])
-      .concat(Object.entries(this.item).map(([ k, v ]) => [ k, pretty(k), v ]))
-      .map(([ k, label, v ]: [ string, string, string ]) => [ k, label, v, this.valueish(v) ] as [ string, string, string, string ])
-      .filter(([ k, _label, v, vi ]) => !ignore_unused_props.includes(k) && !used_values.includes(v) && (vi && !used_values.includes(vi)))
+    const unused_data = [
+      ...Object.entries(this.item.extraFields.kv).map(([k, v]) => ['', `extra: ${k}`, v]),
+      ...Object.entries(this.item).map(([k, v]) => [k, pretty(k), v]),
+    ]
+      .map(([k, label, v]): [string, string, string, string] => [k, label, v, this.valueish(v)])
+      .filter(([k, _label, v, vi]) => !ignore_unused_props.includes(k) && !used_values.includes(v) && (vi && !used_values.includes(vi)))
       .sort(property_sort)
 
     for (const [ key, label, value, valueish ] of unused_data) {

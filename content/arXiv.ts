@@ -13,7 +13,11 @@ export class arXiv {
   public category = ''
   public source = ''
 
-  public parse(id: string, source = ''): boolean {
+  constructor(id?: string | undefined | null) {
+    if (id) this.parse(id)
+  }
+
+  public parse(id: string | null | undefined, source = ''): boolean {
     if (!id) return false
 
     let match
@@ -35,8 +39,6 @@ export class arXiv {
   }
 }
 
-export function parse(id: string): arXiv {
-  const arxiv = new arXiv
-  arxiv.parse(id)
-  return arxiv
+export function parse(id: string | null | undefined): arXiv {
+  return new arXiv(id)
 }
