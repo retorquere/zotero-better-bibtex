@@ -349,7 +349,7 @@ export function generateBibLaTeX(collected: Collected): Translation {
     if (entry.entrytype === 'report' && item.type?.toLowerCase().includes('manual')) entry.entrytype = 'manual'
     // if (item.itemType === 'preprint' && entry.entrytype === 'online' && item.ISSN && item.publicationTitle) entry.entrytype = 'article'
 
-    entry.add({ name: 'pubstate', value: item.status || (item.itemType === 'preprint' && 'prepublished') })
+    entry.add({ name: 'pubstate', value: item.status || (item.itemType === 'preprint' ? 'prepublished' : undefined) })
 
     if (entry.entrytype === 'patent') {
       if (item.country && !patent.region(item)) entry.add({ name: 'location', value: item.country || item.extraFields.kv['publisher-place'] })
@@ -392,7 +392,7 @@ export function generateBibLaTeX(collected: Collected): Translation {
 
     entry.add({ name: 'pagetotal', value: item.numPages })
 
-    let number_added = ''
+    let number_added: string | undefined = undefined
     if (!item.number?.match(/arxiv/i) || !entry.has.eprint) {
       number_added = entry.add({ name: 'number', value: patent.number(item) || entry.normalizeDashes(item.number || item.seriesNumber) })
     }
@@ -405,11 +405,11 @@ export function generateBibLaTeX(collected: Collected): Translation {
     }[translation.collected.preferences.journalAbbreviation] || ''
     switch (entry.entrytype) {
       case 'jurisdiction':
-        entry.add({ name: 'journaltitle', value: item.reporter || (item.publicationTitle !== item.title && item.publicationTitle), bibtexStrings: true })
+        entry.add({ name: 'journaltitle', value: item.reporter || (item.publicationTitle !== item.title ? item.publicationTitle : undefined), bibtexStrings: true })
         break
 
       case 'legislation':
-        entry.add({ name: 'journaltitle', value: item.code || (item.publicationTitle !== item.title && item.publicationTitle), bibtexStrings: true })
+        entry.add({ name: 'journaltitle', value: item.code || (item.publicationTitle !== item.title ? item.publicationTitle: undefined), bibtexStrings: true })
         break
 
       case 'incollection':

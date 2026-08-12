@@ -1,3 +1,4 @@
+// @ts-nocheck
 /* eslint-disable @typescript-eslint/no-unsafe-return, prefer-template,@typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-shadow, prefer-arrow/prefer-arrow-functions */
 
 declare const Zotero: any
@@ -44,7 +45,6 @@ export function scannableCite(item: any): ScannableCite {
 
   /* eslint-disable */
   const header = ${src}
-  header.lastUpdated = null // pacify typescript needing to use all variables
   /* eslint-enable */
 
   doExport()

@@ -3,6 +3,7 @@ declare const Zotero: any
 import { simplifyForExport } from '../content/item-schema'
 import { uri, html as escapeHTML } from '../content/escape'
 import { strcmp } from '../content/string-compare'
+import type { Serialized } from '../gen/typings/serialized'
 
 import { Eta } from 'eta'
 const eta = new Eta({ autoEscape: true })
@@ -117,7 +118,7 @@ const Mode = {
 
   rtfScan(items) {
     const reference = items.map(item => {
-      const ref = []
+      const ref: string[] = []
 
       ref.push(citeCreators(item.creators))
 
@@ -151,7 +152,7 @@ const Mode = {
 }
 
 export function doExport(): void {
-  const items = []
+  const items: Serialized.RegularItem[] = []
   let item: any
   while (item = Zotero.nextItem()) {
     if (item.citationKey) items.push(item)

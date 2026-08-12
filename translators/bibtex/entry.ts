@@ -10,7 +10,7 @@ import { clone } from '../../content/object'
 export type Field = {
   name: string
   verbatim?: string
-  value: string | string[] | number | null | Serialized.Attachment[] | Serialized.Tag[]
+  value: string | string[] | number | Serialized.Attachment[] | Serialized.Tag[] | Serialized.Creator[] | undefined
   enc?: 'raw' | 'url' | 'verbatim' | 'creators' | 'literal' | 'literal_list' | 'latex' | 'tags' | 'attachments' | 'date' | 'minimal' | 'bibtex' | 'biblatex' | 'extra'
   orig?: { name?: string; verbatim?: string; inherit?: boolean }
   bibtexStrings?: boolean

@@ -7,6 +7,7 @@ import { Exporter as BibTeXExporter } from './exporter'
 import { parse as arXiv } from '../../content/arXiv'
 import { Schema } from '../../content/item-schema'
 import wordsToNumbers from '@insomnia-dev/words-to-numbers'
+import type { Serialized } from '../../gen/typings/serialized'
 
 import { RichDate, parse as parseDate, strToISO as strToISODate, century } from '../../content/dateparser'
 import { toEnglishOrdinal } from '../../content/text'
@@ -192,9 +193,9 @@ class Entry extends BaseEntry {
     },
   }
 
-  public lint(_explanation) {
+  public lint(_explanation: Record<string, string>): string[] {
     const type = this.lintrules[this.entrytype.toLowerCase()]
-    if (!type) return
+    if (!type) return []
 
     // let fields = Object.keys(this.has)
     const warnings: string[] = []
@@ -223,10 +224,10 @@ class Entry extends BaseEntry {
     if (!this.item.creators || !this.item.creators.length) return
 
     // split creators into subcategories
-    const authors = []
-    const editors = []
-    const translators = []
-    const collaborators = []
+    const authors: Serialized.Creator[] = []
+    const editors: Serialized.Creator[] = []
+    const translators: Serialized.Creator[] = []
+    const collaborators: Serialized.Creator[] = []
     const primaryCreatorType = Zotero.Utilities.getCreatorsForType(this.item.itemType)[0] || null
 
     for (const creator of this.item.creators) {
@@ -294,7 +295,7 @@ class Importer {
 
     const whitelist = bib.comments
       .filter((comment: string) => comment.startsWith('zotero-better-bibtex:whitelist:'))
-      .map((comment: string) => comment.toLowerCase().replace(/\s/g, '').split(':').pop().split(',').filter((key: string) => key))[0]
+      .map((comment: string) => comment.toLowerCase().replace(/\s/g, '').split(':').pop()!.split(',').filter((key: string) => key))[0]
 
     let imported = 0
     let id = 0
@@ -313,7 +314,7 @@ class Importer {
         if (builder.import(errors)) await item.complete()
       }
       catch (err) {
-        errors.push({ error: err.message, input: '' })
+        errors.push({ error: (err as Error).message, input: '' })
       }
 
       imported += 1
@@ -356,7 +357,7 @@ function addDate(ref: Entry, date: RichDate | { type: 'none' }, verbatim: string
       case 'season':
         return d.year
       case 'century':
-        return century(d.century)
+        return century(d.century!)
       default:
         return ''
     }
@@ -364,15 +365,15 @@ function addDate(ref: Entry, date: RichDate | { type: 'none' }, verbatim: string
   if (date.type === 'interval') {
     const { from, to } = date
 
-    if (from.type === 'open' && to.type === 'open') return
+    if (from!.type === 'open' && to!.type === 'open') return
 
-    if (from.type === 'open') {
-      date = to
+    if (from!.type === 'open') {
+      date = to!
     }
-    else if (to.type === 'open' || (from.year && from.year === to.year)) {
-      date = from
+    else if (to!.type === 'open' || (from!.year && from!.year === to!.year)) {
+      date = from!
     }
-    else if (ref.add({ name: 'year', value: [print(from), print(to)].filter(_ => _).join('\u2013') })) {
+    else if (ref.add({ name: 'year', value: [print(from!), print(to!)].filter(_ => _).join('\u2013') })) {
       return
     }
     else {
@@ -386,11 +387,11 @@ function addDate(ref: Entry, date: RichDate | { type: 'none' }, verbatim: string
       return
 
     case 'verbatim':
-      ref.add({ name: 'year', value: date.verbatim })
+      ref.add({ name: 'year', value: date.verbatim! })
       return
 
     case 'century':
-      ref.add({ name: 'year', value: century(date.century) })
+      ref.add({ name: 'year', value: century(date.century!) })
       return
 
     case 'date':
@@ -404,7 +405,7 @@ function addDate(ref: Entry, date: RichDate | { type: 'none' }, verbatim: string
       return
 
     case 'season':
-      ref.add({ name: 'year', value: date.year, bare: true })
+      ref.add({ name: 'year', value: date.year!, bare: true })
       break
 
     default:
@@ -505,7 +506,7 @@ export function generateBibTeX(collected: Collected): Translation {
     }
 
     const doi = item.DOI || item.extraFields.kv.DOI
-    let urlfield = null
+    let urlfield: string | undefined = undefined
     if (collected.preferences.DOIandURL !== 'doi' || !doi) {
       switch (collected.preferences.bibtexURL) {
         case 'url':
@@ -547,11 +548,11 @@ export function generateBibTeX(collected: Collected): Translation {
 
     // #1471 and http://ctan.cs.uu.nl/biblio/bibtex/base/btxdoc.pdf: organization The organization that sponsors a conference or that publishes a manual.
     if (ref.entrytype === 'inproceedings') {
-      const sponsors = []
+      const sponsors: string[] = []
       item.creators = item.creators.filter(creator => {
         if (creator.creatorType !== 'sponsor') return true
 
-        let sponsor = creator.source
+        let sponsor: string = creator.source ?? ''
         sponsor = sponsor.replace(/ and /g, ' {and} ')
         if (translation.and.names.repl !== ' {and} ') sponsor = sponsor.replace(translation.and.names.re, translation.and.names.repl)
 
@@ -704,7 +705,7 @@ class ZoteroItem {
 
   private extra: string[] = []
   private eprint: Record<string, string> = {}
-  private validFields: Record<string, boolean>
+  private validFields!: Record<string, boolean>
   private patentNumberPrefix = ''
 
   constructor(private translation: Translation, private item: any, private bibtex: BibTeXEntry, private jabref: JabRefMetadata) {
@@ -714,7 +715,7 @@ class ZoteroItem {
   }
 
   private fallback(fields: string[], value: string): boolean {
-    const field = fields.reduce((acc: string, f: string) => acc ?? Schema.labeled.zotero[f]?.field, null)
+    const field = fields.reduce((acc: string | undefined, f: string) => acc ?? Schema.labeled.zotero[f]?.field, undefined)
     if (field) {
       if (typeof value === 'string') value = value.replace(/\n+/g, '')
       this.extra.push(`${Schema.extra[field] || field}: ${value}`)
@@ -1377,12 +1378,16 @@ class ZoteroItem {
       && this.bibtex.fields.title
       && this.bibtex.fields.booktitle
       && this.bibtex.fields.title !== this.bibtex.fields.booktitle
-      && !this.bibtex.crossref?.donated.includes('booktitle')) this.item.itemType = 'bookSection'
+      && !this.bibtex.crossref?.donated.includes('booktitle')) {
+        this.item.itemType = 'bookSection'
+    }
 
     if (
       this.item.itemType === 'journalArticle'
       && this.bibtex.fields.booktitle?.length
-      && this.bibtex.fields.booktitle.match(/proceeding/i)) this.item.itemType = 'conferencePaper'
+      && this.bibtex.fields.booktitle.match(/proceeding/i)) {
+        this.item.itemType = 'conferencePaper'
+    }
 
     this.validFields = Schema.valid.fields[this.item.itemType]
     if (!this.validFields) this.error(`import error: unexpected item ${ this.bibtex.key } of type ${ this.item.itemType }`)

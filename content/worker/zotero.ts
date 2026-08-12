@@ -501,11 +501,11 @@ class WorkerZotero {
 
   public nextItem() {
     this.BetterBibTeX.setProgress(this.running.progress)
-    return this.running.serialized.shift()
+    return this.running!.serialized.shift()
   }
 
   public nextCollection(): Serialized.Collection {
-    return this.running.job.data.collections.shift()
+    return this.running!.job.data.collections.shift()
   }
 
   private patchAttachments(item): void {
@@ -543,7 +543,7 @@ class WorkerServer extends WorkerServerBase implements ExporterInterface {
       return await Zotero.start(job)
     }
     finally {
-      Zotero.running = null
+      Zotero.running = undefined
     }
   }
 

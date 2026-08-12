@@ -1,6 +1,7 @@
 /* eslint-disable quote-props, @typescript-eslint/quotes, @typescript-eslint/indent, comma-dangle, prefer-arrow/prefer-arrow-functions, object-shorthand, max-len */
 
 import { qualityReport as qr } from '../content/bibertool-qr-check.js'
+import type { Entry } from '../translators/bibtex/entry'
 
 const fieldSet = <%- fieldSet %>
 const allowed = {
@@ -31,10 +32,10 @@ const required = [
   <%_ } -%>
 ]
 
-export function qualityReport(explanation: Record<string, string>): string[] {
+export function qualityReport(this: Entry, explanation: Record<string, string>): string[] {
   const type = this.entrytype.toLowerCase()
 
-  if (!allowed[type]) return
+  if (!allowed[type]) return []
 
   const unexpected: string[] = Object.keys(this.has).filter((field: string) => !allowed[type].find((set: Set<string>) => set.has(field)))
   const report: string[] = unexpected.map(field => "Unexpected field '" + field + "'" + (explanation[field] ? (' (' + explanation[field] + ')'): ''))
@@ -46,7 +47,7 @@ export function qualityReport(explanation: Record<string, string>): string[] {
   <%_ for (const [, {test, fields, params}] of Object.entries(data)) { -%>
     for (const field of <%- JSON.stringify(fields) -%>) {
       if (this.has[field]) {
-        const warning = qr(this.has[field].value, <%- JSON.stringify(test) -%><%- typeof params === 'undefined' ? '' : ', ' + JSON.stringify(params) -%>)
+        const warning = qr(this.has[field].value, <%- JSON.stringify(test) -%><%- typeof params === 'undefined' || params === null ? '' : ', ' + JSON.stringify(params) -%>)
         if (warning) report.push("'" + field + "': " + warning)
       }
     }
