@@ -22,15 +22,13 @@ function urls(item): { type: string; id: string; url: string }[] {
   return candidates
 }
 
-function parse(type, id, response): string {
+function parse(type, id, response): string | undefined {
   if (response.status && (response.status < 200 || response.status > 299)) {
     log.error('Could not fetch inspireHEP key for', type, id, 'InspireHEP says:', response.message)
-    return null
+    return
   }
 
-  if (response.metadata.texkeys.length === 0) {
-    return null
-  }
+  if (response.metadata.texkeys.length === 0) return
 
   if (response.metadata.texkeys.length > 1) log.error('Multiple inspireHEP keys found for', type, id, response.metadata.texkeys)
   return (response.metadata.texkeys[0] as string)

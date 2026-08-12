@@ -119,9 +119,10 @@ export class NSUser {
    *
    * @param includeCollections Wether or not the result should include a list of collection for each library (default is false)
    */
-  public async groups(includeCollections?: boolean): Promise<{ id: number; name: string; collections: any[] }[]> {
+  public async groups(includeCollections?: boolean): Promise<{ id: number; name: string; collections: undefined | any[] }[]> {
     return Zotero.Libraries
-      .getAll().map(lib => ({
+      .getAll()
+      .map(lib => ({
         id: lib.libraryID,
         name: lib.name,
         collections: includeCollections ? Zotero.Collections.getByLibrary(lib.libraryID, true) : undefined,

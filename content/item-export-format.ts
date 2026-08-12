@@ -19,7 +19,7 @@ class Serializer {
     return serialized
   }
 
-  private async item(item: Zotero.Item, libraryID: number): Promise<Serialized.Item> {
+  private async item(item: Zotero.Item, libraryID: number | undefined): Promise<Serialized.Item> {
     if (item.libraryID !== libraryID) await item.loadAllData()
 
     let serialized: Serialized.Item = item.toJSON() as unknown as Serialized.Item
@@ -47,7 +47,7 @@ class Serializer {
   }
 
   public async serialize(items: Zotero.Item[]): Promise<Serialized.Item[]> {
-    const libraryID = selectedLibraryID()
+    const libraryID = selectedLibraryID() // assume selected library items are all loaded
     return Promise.all(items.map(item => this.item(item, libraryID)))
   }
 }

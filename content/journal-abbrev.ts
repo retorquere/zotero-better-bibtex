@@ -57,10 +57,10 @@ export const JournalAbbrev = new class {
 
   getField(item, field, native): string {
     try {
-      return (native ? item.getField(field, false, true) as string : item[field] as string) || null
+      return (native ? item.getField(field, false, true) as string : item[field] as string) || ''
     }
     catch {
-      return null
+      return ''
     }
   }
 
@@ -70,15 +70,15 @@ export const JournalAbbrev = new class {
 
     const itemType = zotero_item ? Zotero.ItemTypes.getName(item.itemTypeID) : item.itemType
 
-    let abbrev = mode.startsWith('abbrev') ? this.getField(item, 'journalAbbreviation', zotero_item) : null
+    let abbrev = mode.startsWith('abbrev') ? this.getField(item, 'journalAbbreviation', zotero_item) : ''
     if (abbrev || !mode.endsWith('auto')) {
       return abbrev
     }
 
-    if (!this.journal.has(itemType)) return null
+    if (!this.journal.has(itemType)) return ''
 
-    const journal: string = this.fields.map(field => this.getField(item, field, zotero_item)?.replace(/<\/?(sup|sub|i|b)>/g, '')).find(_ => _)
-    if (!journal) return null
+    const journal: string = this.fields.map(field => this.getField(item, field, zotero_item)?.replace(/<\/?(sup|sub|i|b)>/g, '')).find(_ => _) || ''
+    if (!journal) return journal
 
     // juris-m doesn't offer the abbreviator anymore. https://github.com/Juris-M/zotero/issues/47
     if (!this.abbrevs.default['container-title'][journal] && typeof Zotero.Cite.getAbbreviation === 'function') {
@@ -89,6 +89,6 @@ export const JournalAbbrev = new class {
       return abbrev
     }
 
-    return null
+    return ''
   }
 }

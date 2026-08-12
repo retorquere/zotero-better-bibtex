@@ -10,9 +10,9 @@ export function validate(issn: string): boolean {
   return expectedCheckDigit === actualCheckDigit
 }
 
-export function format(issn: string): string {
+export function format(issn: string): string | undefined {
   const matches = text(issn).match(isIssnLax)
-  return matches ? `${ matches[1] }-${ matches[2] }${ matches[3] }`.toUpperCase() : undefined
+  return matches ? `${matches[1]}-${matches[2]}${matches[3]}`.toUpperCase() : undefined
 }
 
 const isDigitsForChecksum = /^(\d{7})$/

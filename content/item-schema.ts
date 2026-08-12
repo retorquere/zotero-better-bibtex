@@ -69,7 +69,7 @@ function LookUp<T = string>(textOnly = false): Record<string, T> {
     },
 
     deleteProperty(target, prop) {
-      if (typeof prop === 'string') return delete target[simplify(prop)]
+      return typeof prop === 'string' ? delete target[simplify(prop)] : true
     },
   }) as Record<string, T>
 }
@@ -113,13 +113,13 @@ export const Schema = new class $Schema {
     this.zotero.meta.fields.accessDate = { type: 'date' }
 
     if (!this.zotero.itemTypes.find(itemType => itemType.fields.find(field => field.field === 'volumeTitle'))) {
-      this.zotero.itemTypes.find(itemType => itemType.itemType === 'book').fields.push({ field: 'volumeTitle' })
+      this.zotero.itemTypes.find(itemType => itemType.itemType === 'book')!.fields.push({ field: 'volumeTitle' })
       this.zotero.csl.fields.text['volume-title'] = [ 'volumeTitle' ]
     }
 
     if (!this.zotero.itemTypes.find(itemType => itemType.fields.find(field => field.field === 'eventDate'))) {
       // not sure how this ended up in the test suite
-      this.zotero.itemTypes.find(itemType => itemType.itemType === 'conferencePaper').fields.push({ field: 'eventDate' })
+      this.zotero.itemTypes.find(itemType => itemType.itemType === 'conferencePaper')!.fields.push({ field: 'eventDate' })
       // @ts-expect-error doesn't actually exist in the JSON but should
       this.zotero.meta.fields.eventDate = { type: 'date' }
       this.zotero.csl.fields.date['event-date'] = 'eventDate'
@@ -134,7 +134,10 @@ export const Schema = new class $Schema {
 
       for (const { field, baseField } of fields) {
         this.valid.fields[itemType][field] = this.valid.fields[itemType][baseField || field] = true
-        const type = this.type.zotero[field] = this.type.zotero[baseField || field] = (this.zotero.meta.fields[baseField] || this.zotero.meta.fields[field])?.type || 'text'
+        const type
+          = this.type.zotero[field]
+          = this.type.zotero[(baseField || field) as string]
+          = (this.zotero.meta.fields[baseField as string] || this.zotero.meta.fields[field])?.type || 'text'
         this.lookup.baseField[field] = this.lookup.baseField[baseField || field] = baseField || field
         this.extra[field] = this.#extra[field] || this.toLabel(field)
         if (baseField) this.extra[baseField] = this.#extra[baseField] || this.toLabel(baseField)
@@ -143,7 +146,7 @@ export const Schema = new class $Schema {
           field,
           baseField,
           this.zotero.locales['en-US'].fields[field],
-          this.zotero.locales['en-US'].fields[baseField],
+          this.zotero.locales['en-US'].fields[baseField as string],
           ...this.cslAliases(field),
           ...this.cslAliases(baseField),
           ...(this.#extra[field] || []),
@@ -192,7 +195,8 @@ export const Schema = new class $Schema {
       .replace(/^./, c => c.toUpperCase())
   }
 
-  private cslAliases(fieldName: string): string[] {
+  private cslAliases(fieldName: string | undefined): string[] {
+    if (!fieldName) return []
     return [
       ...(Object.entries(this.zotero.csl.fields.text).map(([cslField, zoteroFields]) => zoteroFields[0] === fieldName ? cslField : null)),
       ...(Object.entries(this.zotero.csl.fields.date).map(([cslField, zoteroField]) => zoteroField === fieldName ? cslField : null)),
@@ -249,8 +253,8 @@ export function simplifyForExport(item: Serialized.RegularItem, { clone = true, 
 
   // @ts-expect-error fallback for attachments and notes
   if (item.itemType === 'attachment' || item.itemType === 'note' || item.itemType === 'annotation') {
-    delete item.attachments
-    delete item.notes
+    delete (item as any).attachments
+    delete (item as any).notes
   }
   else {
     item.attachments ??= []

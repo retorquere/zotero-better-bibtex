@@ -126,7 +126,7 @@ export function get(extra: string, mode: 'zotero' | 'csl', options?: GetOptions)
       || line.match(re.new)
     if (!m) return true
 
-    let { tex, csl, key, assign, value } = m.groups
+    let { tex, csl, key, assign, value } = m.groups!
     const texmode = (assign === '=') ? 'raw' : (tex && (tex.includes('T') || tex.match(/^[A-Z]/)) ? 'cased' : undefined)
     tex = tex && tex.toLowerCase()
     csl = csl && csl.toLowerCase()
