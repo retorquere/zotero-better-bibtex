@@ -754,7 +754,7 @@ class ZoteroItem {
   protected $publisher(value: string, field: string): boolean {
     // difference between jurism and zotero. Prepending 'field' makes the import prefer exact matches to the input
     const candidates = [field].concat([ 'institution', 'publisher' ])
-    field = candidates.find(f => this.validFields[f])
+    field = candidates.find(f => this.validFields[f]) as string
     if (!field) return this.fallback(candidates, value)
 
     const flatten = (v): string => typeof v === 'string' ? v : Array.isArray(v) ? v.join(' and ') : ''
@@ -874,25 +874,28 @@ class ZoteroItem {
   }
 
   protected $journaltitle(): boolean {
-    let journal: { field: string; value: string }, abbr: { field: string; value: string } | null = null
+    type JournalField = { field: string; value: string }
+    let journal: JournalField | undefined = undefined
+    let abbr: JournalField | undefined = undefined
 
     // journal-full is bibdesk
-    const titles = [ 'journal-full', 'journal', 'journaltitle', 'shortjournal' ]
+    const titles: JournalField[] = [ 'journal-full', 'journal', 'journaltitle', 'shortjournal' ]
       .map(field => {
         const value = this.bibtex.fields[field]
         delete this.bibtex.fields[field] // this makes sure we're not ran again
-        return { field, value }
+        return { field, value } as JournalField
       })
-      .filter(candidate => candidate.value) // skip empty
-      .filter(candidate => {
+      .filter((candidate): candidate is JournalField & { value: string } => Boolean(candidate?.value)) // skip empty
+      .filter((candidate: JournalField) => {
         if (unabbreviations.enabled && !abbr && candidate.field === 'shortjournal') { // shortjournal is assumed to be an abbrev
           abbr = candidate
           return false
         }
         return true
       })
-      .filter(candidate => {
-        // to be considered an abbrev, it must have at least two periods, and there can be no periods that are not followed by a space, and no space that are not preceded by a period
+      .filter((candidate: JournalField) => {
+        // to be considered an abbrev, it must have at least two periods, and there can be no periods that
+        // are not followed by a space, and no space that are not preceded by a period
         const assumed_abbrev = unabbreviations.enabled && candidate.value.match(/[.].+[.]/) && !candidate.value.match(/[.][^ ]/) && !candidate.value.match(/[^.] /)
         if (assumed_abbrev) {
           if (!abbr) {
@@ -905,9 +908,9 @@ class ZoteroItem {
           return false
         }
         return true
-      }).filter(candidate => {
+      }).filter((candidate: JournalField) => {
         if (unabbreviations.enabled && journal && !abbr) {
-          abbr = candidate
+          abbr = candidate!
           return false
         }
         return true
@@ -933,11 +936,11 @@ class ZoteroItem {
     }
 
     let resolved: string
-    if (abbr && !journal && (resolved = resolve(abbr.value))) {
+    if (abbr && !journal && (resolved = resolve((abbr as JournalField).value))) {
       journal = { field: '', value: resolved }
     }
-    else if (journal && !abbr && (resolved = resolve(journal.value))) {
-      abbr = { ...journal }
+    else if (journal && !abbr && (resolved = resolve((journal as JournalField).value))) {
+      abbr = { ...(journal as JournalField) }
       journal = { field: '', value: resolved }
     }
 
@@ -1681,7 +1684,7 @@ class ZoteroItem {
     }
   }
 
-  private set(field, value, fallback = null): boolean {
+  private set(field, value, fallback?: string[]): boolean {
     if (!this.validFields[field]) return fallback ? this.fallback(fallback, value) : false
 
     if (this.translation.collected.preferences.testing && (this.item[field] || typeof this.item[field] === 'number') && (value || typeof value === 'number') && this.item[field] !== value) {
