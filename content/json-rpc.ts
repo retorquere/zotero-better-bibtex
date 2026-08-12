@@ -13,6 +13,7 @@ import { Server } from './server'
 import type { CitekeyRecord } from './key-manager'
 import { strcmp } from './string-compare'
 import { clone } from './object'
+import omit from 'lodash.omit'
 
 import BBT from '../gen/version.cjs'
 
@@ -128,8 +129,10 @@ export class NSUser {
   }
 }
 
-function getLibrary(term: string | number): number {
-  return Library.get({ libraryID: term, group: term }, true).libraryID
+function getLibrary(term: string | number | undefined): number {
+  const libraryID = typeof term === 'undefined' ? term : Library.get({ libraryID: term, group: term }, true)?.libraryID
+  if (typeof libraryID === 'undefined') throw new Error(`could not find library ${term}`)
+  return libraryID
 }
 
 export class NSItem {
@@ -327,10 +330,7 @@ export class NSItem {
           col.parentCollection = recurseParents(libraryID, col.parentCollection)
         }
 
-        delete col.relations
-        delete col.version
-
-        seen[key] = col
+        seen[key] = omit(col,  [ 'relations', 'version' ])
       }
 
       return seen[key]
@@ -344,16 +344,13 @@ export class NSItem {
         if (!maybeCol) return undefined
         const col = clone(maybeCol.toJSON())
 
-        delete col.relations
-        delete col.version
-
         seen[id] = col
 
         if (includeParents && col.parentCollection) {
           col.parentCollection = recurseParents(item.libraryID, col.parentCollection)
         }
 
-        return col
+        return omit(col, [ 'relations', 'version' ])
       })
     }
 
@@ -408,7 +405,7 @@ export class NSItem {
     if (((format as any).mode || 'bibliography') !== 'bibliography') throw new Error(`mode must be bibliograpy, not ${ (format as any).mode }`)
 
     const resolve = find(library)
-    const items = await getItemsAsync(citekeys.map(resolve).filter(_ => _))
+    const items = await getItemsAsync(citekeys.map(resolve).filter(itemID => typeof itemID === 'number'))
 
     const bibliography = Zotero.QuickCopy.getContentFromItems(items, { ...format, mode: 'bibliography' }, null, false)
     return bibliography[format.contentType || 'html']
@@ -423,7 +420,7 @@ export class NSItem {
     const keys = {}
 
     if (item_keys === 'selected') {
-      for (const item of Zotero.getActiveZoteroPane().getSelectedItems()) {
+      for (const item of Zotero.getActiveZoteroPane()!.getSelectedItems()) {
         if (item.isFeedItem) continue
         if (item.isRegularItem()) {
           keys[item.key] = Zotero.BetterBibTeX.KeyManager.any(_ => _.libraryID === item.libraryID && _.itemKey === item.key)?.citationKey || null
@@ -538,7 +535,7 @@ export class NSItem {
     for (const item of found) {
       status[item.citationKey] += 1
     }
-    const error = { missing: [], duplicates: []}
+    const error = { missing: [] as string[], duplicates: [] as string[] }
     for (const [ citekey, n ] of Object.entries(status)) {
       switch (n) {
         case 0:
@@ -739,8 +736,8 @@ const api = new class API {
     }
     catch (err) {
       log.error('JSON-RPC:', err)
-      if (err.code) {
-        return { jsonrpc: '2.0', error: { code: err.code, message: err.message }, id: null }
+      if ((err as any).code) {
+        return { jsonrpc: '2.0', error: { code: (err as any).code, message: (err as any).message }, id: null }
       }
       else {
         return { jsonrpc: '2.0', error: { code: INTERNAL_ERROR, message: `${ err }` }, id: null }

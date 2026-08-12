@@ -109,7 +109,7 @@ class Progress {
 import { Predicate, TrackedMap } from './object'
 
 class Keys extends TrackedMap<number, CitekeyRecord> {
-  #timer: ReturnType<typeof setInterval>
+  #timer: ReturnType<typeof setInterval> | undefined
   // Monotonic mutation counter used by save() to detect changes that land while read-only.json is being written.
   #generation = 0
 
@@ -147,7 +147,7 @@ class Keys extends TrackedMap<number, CitekeyRecord> {
       log.error('failed to load read-only keys', err)
     }
 
-    for (const { itemID, itemKey, libraryID, citationKey } of await Zotero.DB.queryAsync(sql.load)) {
+    for (const { itemID, itemKey, libraryID, citationKey } of (await Zotero.DB.queryAsync(sql.load))!) {
       this.set(itemID, copy({ itemID, itemKey, libraryID, citationKey }))
     }
     this.resetDirty()
@@ -192,10 +192,11 @@ export const KeyManager = new class _KeyManager {
     if (replace && warn && Preference.warnBulkModify && this.all(key => selected.has(key.itemID)).length > Preference.warnBulkModify) {
       const ignore = { value: false }
       const index = Services.prompt.confirmEx(
+        // @ts-expect-error TS2345 https://github.com/windingwind/zotero-types/issues/97
         null, // no parent
         'Better BibTeX for Zotero', // dialog title
         l10n.localize('better-bibtex_bulk-keys-confirm_warning', { treshold: Preference.warnBulkModify }),
-        Services.prompt.STD_OK_CANCEL_BUTTONS + Services.prompt.BUTTON_POS_2 * Services.prompt.BUTTON_TITLE_IS_STRING, // buttons
+        Services.prompt.STD_OK_CANCEL_BUTTONS! + Services.prompt.BUTTON_POS_2! * Services.prompt.BUTTON_TITLE_IS_STRING!,
         null, null, l10n.localize('better-bibtex_bulk-keys-confirm_stop_asking'), // button labels
         null, ignore // no checkbox
       )
@@ -221,7 +222,7 @@ export const KeyManager = new class _KeyManager {
     // clear before refresh so they can update without hitting "claimed keys" in the deleted set
     this.clear(items.map(item => item.id as number))
 
-    const progress: Progress = items.length > 10 ? new Progress(items.length, 'Refreshing citation keys') : null
+    const progress: Progress | undefined = items.length > 10 ? new Progress(items.length, 'Refreshing citation keys') : undefined
     for (const item of items) {
       if (!this.update(item, { replace, inspireHEP: inspireHEP ? (await fetchInspireHEP(item)) || '' : undefined })) {
         if (!readonly(item)) this.store(item)
@@ -275,7 +276,7 @@ export const KeyManager = new class _KeyManager {
         await this.start()
 
         const citationKeyFieldID: number = Zotero.ItemFields.getID('citationKey')
-        monkey.patch(Zotero.Item.prototype, 'getField', original => function Zotero_Item_prototype_getField(field) {
+        monkey.patch(Zotero.Item.prototype, 'getField', original => function Zotero_Item_prototype_getField(this: Zotero.Item, field) {
           if ((field === 'citationKey' || field === citationKeyFieldID) && readonly(this)) return KeyManager.get(this.id)?.citationKey ?? ''
 
           return original.apply(this, arguments) as string // eslint-disable-line prefer-rest-params
@@ -432,46 +433,46 @@ export const KeyManager = new class _KeyManager {
     this.started = true
   }
 
-  public update(item: Zotero.Item, { replace = false, inspireHEP = undefined }: { replace?: boolean; inspireHEP?: string } = {}): Zotero.Item {
+  public update(item: Zotero.Item, { replace = false, inspireHEP = undefined }: { replace?: boolean; inspireHEP?: string } = {}): Zotero.Item | undefined {
     // Feed/non-regular items never participate in citation-key generation.
-    if (item.isFeedItem || !item.isRegularItem()) return null
+    if (item.isFeedItem || !item.isRegularItem()) return
 
     // Empty InspireHEP lookups should not trigger fallback citekey regeneration.
-    if (typeof inspireHEP === 'string' && !inspireHEP) return null
+    if (typeof inspireHEP === 'string' && !inspireHEP) return
 
     if (readonly(item)) {
       // Native keys on read-only items come from outside BBT and always take precedence over the cached shadow key.
       const nativeKey = this.#getNativeKey(item) || ''
       if (nativeKey) {
         this.store(item, nativeKey)
-        return null
+        return
       }
       // If a read-only item already has a cached key, keep serving it until a caller explicitly asks to regenerate.
-      if (!replace && this.#keys.get(item.id)?.citationKey) return null
+      if (!replace && this.#keys.get(item.id)?.citationKey) return
       // Otherwise generate a new shadow key for export/UI use, but never write it back to Zotero.
       replace = true
     }
 
     const current = this.#getNativeKey(item) || ''
     // Respect existing native keys unless caller requested replacement.
-    if (current && !replace) return null
+    if (current && !replace) return
 
     const proposed = inspireHEP || this.propose(item)
     // No-op when generation failed or produced the same key.
-    if (!proposed || proposed === current) return null
+    if (!proposed || proposed === current) return
 
     this.store(item, proposed)
 
     if (readonly(item)) {
       // Read-only keys are cache-only; never write generated keys into Zotero's citationKey field.
-      return null
+      return
     }
 
     item.setField('citationKey', proposed)
     return item
   }
 
-  public get(itemID: number): CitekeyRecord {
+  public get(itemID: number): CitekeyRecord | undefined {
     // I cannot prevent being called before the init is done because Zotero unlocks the UI *way* before I'm getting the
     // go-ahead to *start* my init.
     return this.#keys.get(itemID)
@@ -607,7 +608,7 @@ export const KeyManager = new class _KeyManager {
 
     if (ids === 'selected') {
       try {
-        return Zotero.getActiveZoteroPane().getSelectedItems(true)
+        return Zotero.getActiveZoteroPane()!.getSelectedItems(true)
       }
       catch (err) { // zoteroPane.getSelectedItems() doesn't test whether there's a selection and errors out if not
         log.error('Could not get selected items:', err)
