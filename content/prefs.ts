@@ -81,7 +81,7 @@ export const Preference = new class PreferenceManager extends PreferenceManagerB
         }
       }
       catch (err) {
-        error = `could not set default for ${pref} to ${typeof value} ${JSON.stringify(value)} (${err.message})`
+        error = `could not set default for ${pref} to ${typeof value} ${JSON.stringify(value)} (${(err as any).message})`
       }
       if (error) {
         const v = Zotero.Prefs.get(`translators.better-bibtex.${ pref }`)
@@ -224,12 +224,18 @@ export const Preference = new class PreferenceManager extends PreferenceManagerB
 
   public async startup(dir: string) {
     // load from csv for easier editing
-    await this.loadFromCSV('charmap', PathUtils.join(dir, 'charmap.csv'), '{}', (rows: Record<string, string>[]) => JSON.stringify(
-      rows.reduce((acc: CharMap, row: { unicode: string; text: string; math: string }) => {
-        if (row.unicode && (row.math || row.text)) acc[row.unicode] = { text: row.text, math: row.math }
-        return acc
-      }, {})
-    ))
+    await this.loadFromCSV(
+      'charmap',
+      PathUtils.join(dir, 'charmap.csv'),
+      '{}',
+      (rows: { unicode: string; text: string; math: string }[]) =>
+        JSON.stringify(
+          rows.reduce((acc: CharMap, row: { unicode: string; text: string; math: string }) => {
+            if (row.unicode && (row.math || row.text)) acc[row.unicode] = { text: row.text, math: row.math }
+            return acc
+          }, {})
+        )
+    )
 
     for (const pref of Object.keys(defaults)) {
       if (pref !== 'platform' && pref !== 'testing') {

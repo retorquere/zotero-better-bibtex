@@ -17,13 +17,14 @@ const setatstart: string[] = [ 'testing', 'cache' ].filter(p => Preference[p] !=
 const idleService: any = Components.classes['@mozilla.org/widget/useridleservice;1'].getService(Components.interfaces.nsIUserIdleService)
 
 export class TestSupport {
-  public scenario: string
+  public scenario!: string
   public libraryID: number = Zotero.Libraries.userLibraryID
   public cjkLibrariesLoaded = false
 
   public selectLibrary(library: string | number): void {
-    this.libraryID = Zotero.Libraries.getAll().find(lib => lib.libraryID === library || lib.name === library)?.libraryID
-    if (typeof this.libraryID !== 'number') throw new Error(`library ${library} could not be found`)
+    const libraryID = Zotero.Libraries.getAll().find(lib => lib.libraryID === library || lib.name === library)?.libraryID
+    if (typeof libraryID !== 'number') throw new Error(`library ${library} could not be found`)
+    this.libraryID = libraryID
     log.info('testing: library selected:', { library, id: this.libraryID })
   }
 
@@ -221,7 +222,7 @@ export class TestSupport {
   }
 
   public async select(ids: number[]): Promise<boolean> {
-    const zoteroPane = Zotero.getActiveZoteroPane()
+    const zoteroPane = Zotero.getActiveZoteroPane()!
     // zoteroPane.show()
 
     const sortedIDs = JSON.stringify(ids.slice().sort())
@@ -356,7 +357,7 @@ export class TestSupport {
   }
 
   public async clearCollection(path: string): Promise<void> {
-    let collection = null
+    let collection: Zotero.Collection | undefined = undefined
 
     for (const name of path.split('/')) {
       const collections = collection ? Zotero.Collections.getByParent(collection.id) : Zotero.Collections.getByLibrary(Zotero.Libraries.userLibraryID)
@@ -371,12 +372,12 @@ export class TestSupport {
       if (!found) throw new Error(`${ path } not found`)
     }
 
-    const itemIDs = collection.getChildItems(true)
+    const itemIDs = collection!.getChildItems(true)
     if (!itemIDs.length) throw new Error(`${ path } is empty`)
     await Zotero.DB.executeTransaction(async () => {
-      await collection.removeItems(itemIDs)
+      await collection!.removeItems(itemIDs)
     })
-    if (collection.getChildItems(true).length) throw new Error(`${ path } not empty`)
+    if (collection!.getChildItems(true).length) throw new Error(`${ path } not empty`)
   }
 
   public citationKey(itemID: number): string {

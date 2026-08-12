@@ -54,14 +54,14 @@ function replacer(key, value) {
     if (value.openDialog || value.querySelector) return value.toString() // window/document
   }
   catch (err) {
-    return `{serialization error: ${err.message}}`
+    return `{serialization error: ${(err as any).message}}`
   }
 
   return '{unknown object}'
 }
 
 export function stringify(obj: any): string {
-  return $stringify(obj, replacer)
+  return $stringify(obj, replacer) || 'undefined'
 }
 
 function to_s(obj: any): string {

@@ -26,7 +26,7 @@ export type Job = {
   output: string
   debugEnabled: boolean
 
-  data?: {
+  data: {
     items: number[]
     collections: Serialized.Collection[]
   }

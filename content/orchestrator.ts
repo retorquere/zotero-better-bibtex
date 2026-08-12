@@ -2,8 +2,6 @@ export type Actor = 'worker' | 'start' | 'done' | 'auto-export' | 'translators' 
 export type PhaseID = 'startup' | 'shutdown'
 import type { Reason } from './bootstrap'
 import { log } from './logger'
-import { Preference } from './prefs'
-
 type Handler = (reason: Reason, task?: Task) => void | string | Promise<void | string>
 
 interface Task {
@@ -20,11 +18,11 @@ export type Progress = (phase: string, name: string, done: number, total: number
 
 export class Orchestrator {
   public id: string = Zotero.Utilities.generateObjectKey()
-  public running: Actor
+  public running!: Actor
   public start: Actor = 'start'
   public done: Actor = 'done'
   private tasks: Partial<Record<Actor, Task>> = {}
-  private $ordered: Task[]
+  private $ordered!: Task[]
 
   public add({ description, id, startup, shutdown, needs }: Task): void {
     if (this.$ordered) throw new Error(`orchestrator: add ${ id } after ordered`)
@@ -33,12 +31,12 @@ export class Orchestrator {
     if (!startup && !shutdown) throw new Error(`orchestrator: ${ id }: no-op task`)
     if (this.tasks[id]) throw new Error(`orchestrator: ${ id } exists`)
     switch (id) {
-      case this.start:
-      case this.done:
+      case 'start':
+      case 'done':
         if (needs.length) throw new Error(`${ id } task cannot have dependencies`)
         break
       default:
-        if (!needs.length) needs = [this.start]
+        if (!needs.length) needs = ['start']
         break
     }
 
@@ -47,13 +45,13 @@ export class Orchestrator {
       description: description || id,
       startup,
       shutdown,
-      needs: needs || [],
+      needs: needs,
     }
   }
 
   public get ordered(): Task[] {
     if (!this.$ordered) {
-      if (this.tasks[this.done]) this.tasks[this.done].needs = (Object.keys(this.tasks) as Actor[]).filter(id => id !== this.done)
+      if (this.tasks.done) this.tasks.done.needs = (Object.keys(this.tasks) as Actor[]).filter(id => id !== 'done')
 
       const tasks: Task[] = Object.values(this.tasks)
 
@@ -62,21 +60,21 @@ export class Orchestrator {
       let edges = 0
       for (const task of tasks) {
         needs[task.id] = new Set(task.needs)
-        edges += task.needs.length
+        edges += task.needs!.length
         if (!dependents[task.id]) dependents[task.id] = []
 
-        for (const parent of task.needs) {
+        for (const parent of task.needs!) {
           if (!this.tasks[parent]) throw new Error(`orchestrator: ${ task.id } needs non-existent task ${ parent }`)
           if (!dependents[parent]) dependents[parent] = []
           dependents[parent].push(task.id)
         }
       }
 
-      const sources = tasks.filter(task => task.id !== this.done && !task.needs.length)
+      const sources = tasks.filter(task => task.id !== 'done' && !task.needs!.length)
       this.$ordered = []
 
       while (sources.length) {
-        const task = sources.shift()
+        const task = sources.shift()!
         this.$ordered.push(task)
 
         for (const dependent of dependents[task.id]) {
@@ -85,7 +83,7 @@ export class Orchestrator {
           if (!needs[dependent].size) sources.push(this.tasks[dependent])
         }
       }
-      if (edges) throw new Error(`orchestrator: cyclic dependency involving ${ [...(new Set([].concat(...(Object.values(needs).map(n => [...n])))))].join(',') }`)
+      if (edges) throw new Error(`orchestrator: cyclic dependency involving ${ [...new Set(Object.values(needs).flatMap(n => n))].join(',') }`)
     }
 
     return [...this.$ordered]
@@ -107,7 +105,7 @@ export class Orchestrator {
     log.info(`${ phase } orchestrator started: ${ reason }`)
     const action = phase === 'startup' ? 'starting' : 'shutting down'
     while (tasks.length) {
-      const task = tasks.shift()
+      const task = tasks.shift()!
 
       log.prefix = ` ${ phase }: [${ task.id }`
       if (tasks.length) log.prefix += `+${ tasks.length }`
@@ -119,7 +117,7 @@ export class Orchestrator {
 
       task.started = Date.now()
       try {
-        await task[phase](reason, task)
+        await task[phase]!(reason, task)
       }
       catch (err) {
         log.error(phase, task.id, 'failed:', err, `${err}`)
@@ -139,96 +137,13 @@ export class Orchestrator {
     log.info(`orchestrator: ${ action } took ${ duration(runtime.bbt) }${ waiting }`)
   }
 
-  private gantt(phase: PhaseID) {
-    const tasks: (Task & { taskid: number })[] = this.ordered.map((task: Task, taskid: number) => ({ ...task, taskid }))
-
-    const today = (new Date).toISOString().slice(0, 10)
-    let gantt = `<?xml version="1.0" encoding="UTF-8"?>
-      <project
-        name="Better BibTeX ${ phase }"
-        company=""
-        webLink="https://"
-        view-date="${ today }"
-        view-index="0"
-        gantt-divider-location="614"
-        resource-divider-location="300"
-        version="3.3.3295"
-        locale="en_GB"
-      >
-        <description/>
-        <view zooming-state="default:7" id="gantt-chart">
-          <field id="tpd3" name="Name" width="140" order="0"/>
-          <field id="tpc0" name="Runtime" width="58" order="2"/>
-        </view>
-        <calendars>
-          <day-types>
-            <day-type id="0"/>
-            <day-type id="1"/>
-            <default-week id="1" name="default" sun="0" mon="0" tue="0" wed="0" thu="0" fri="0" sat="0"/>
-            <days/>
-          </day-types>
-        </calendars>
-        <tasks empty-milestones="true">
-          <taskproperties>
-            <taskproperty id="tpd0" name="type" type="default" valuetype="icon"/>
-            <taskproperty id="tpd1" name="priority" type="default" valuetype="icon"/>
-            <taskproperty id="tpd2" name="info" type="default" valuetype="icon"/>
-            <taskproperty id="tpd3" name="name" type="default" valuetype="text"/>
-            <taskproperty id="tpd4" name="begindate" type="default" valuetype="date"/>
-            <taskproperty id="tpd5" name="enddate" type="default" valuetype="date"/>
-            <taskproperty id="tpd6" name="duration" type="default" valuetype="int"/>
-            <taskproperty id="tpd7" name="completion" type="default" valuetype="int"/>
-            <taskproperty id="tpd8" name="coordinator" type="default" valuetype="text"/>
-            <taskproperty id="tpd9" name="predecessorsr" type="default" valuetype="text"/>
-            <taskproperty id="tpc0" name="Runtime" type="custom" valuetype="double"/>
-          </taskproperties>
-    `
-    for (const task of tasks) {
-      gantt += `
-          <task
-            id="${ task.taskid }"
-            uid="${ task.id }${ Math.random() }"
-            name="${ task.id }" meeting="false"
-            ${ task.needs.length ? '' : `start="${ today }"` }
-            duration="${ Math.ceil((task.finished - task.started) / 100) }"
-            complete="0"
-            expand="true"
-          >`
-      for (const dependent of tasks.filter(t => t.needs.includes(task.id))) {
-        gantt += `
-            <depend id="${ dependent.taskid }" type="2" difference="0" hardness="Strong"/>
-        `
-      }
-      gantt += `
-            <customproperty taskproperty-id="tpc0" value="${ ((task.finished - task.started) / 1000).toFixed(2) }"/>
-          </task>
-      `
-    }
-    gantt += `
-        </tasks>
-        <resources/>
-        <allocations/>
-        <vacations/>
-        <previous/>
-        <roles roleset-name="Default"/>
-        <roles roleset-name="SoftwareDevelopment"/>
-      </project>
-    `
-
-    Zotero.File.putContents(Zotero.File.pathToFile(PathUtils.join(Zotero.BetterBibTeX.dir, `${ phase }.gan`)), gantt)
-  }
-
   public async startup(reason: Reason, progress?: Progress): Promise<void> {
     await this.run('startup', reason, progress)
     progress?.('startup', 'ready', 100, 100, 'ready')
-
-    if (Preference.testing) this.gantt('startup')
   }
 
   public async shutdown(reason: Reason): Promise<void> {
     await this.run('shutdown', reason)
-
-    if (Preference.testing) this.gantt('shutdown')
   }
 }
 

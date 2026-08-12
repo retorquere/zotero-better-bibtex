@@ -55,7 +55,7 @@ export const Translators = new class {
   public bySlug: Record<string, Header> = {}
   public queue = newQueue(1)
 
-  private reinit: { header: Header; code: string }[]
+  #reinit!: { header: Header; code: string }[]
 
   constructor() {
     // const ready = Zotero.Promise.defer()
@@ -67,18 +67,18 @@ export const Translators = new class {
       description: 'translators',
       needs: [ 'worker', 'keymanager' ],
       startup: async () => {
-        worker.addEventListener('message', (e: MessageEvent) => {
-          const data = e.data as Message
+        worker.addEventListener('message', (e: Event) => {
+          const data = (e as MessageEvent).data as Message
           if (!data || (data as unknown as any).id) return // data.id means it is a JSON-RPC message
 
           switch (data?.kind) {
             case 'debug':
               // this is pre-formatted
-              Zotero.debug(e.data.message) // eslint-disable-line no-restricted-syntax
+              Zotero.debug(data.message) // eslint-disable-line no-restricted-syntax
               break
 
             case 'progress':
-              void Events.emit('export-progress', { pct: e.data.percent, message: e.data.translator, ae: e.data.autoExport })
+              void Events.emit('export-progress', { pct: data.percent, message: data.translator, ae: data.autoExport })
               break
           }
         })
@@ -148,7 +148,7 @@ export const Translators = new class {
     const translation = new Zotero.Translate.Import
     translation.setString(str)
 
-    const zp = Zotero.getActiveZoteroPane()
+    const zp = Zotero.getActiveZoteroPane()!
     if (!zp.collectionsView) return
 
     if (!zp.collectionsView.editable) {
@@ -159,7 +159,7 @@ export const Translators = new class {
 
     if (!translators.length) throw new Error('No translators found')
 
-    const libraryID: number = selectedLibraryID()
+    const libraryID = selectedLibraryID()
     if (typeof libraryID === 'number') await zp.collectionsView.selectLibrary(libraryID)
 
     translation.setTranslator(translators[0])
@@ -270,6 +270,8 @@ export const Translators = new class {
       log.error('translation failed:', err)
       if (job.translate) job.translate.complete(false, err)
     }
+
+    return ''
   }
 
   public displayOptions(translatorID: string, displayOptions: any): any {
@@ -363,17 +365,17 @@ export const Translators = new class {
     if (Object.keys(displayOptions).length !== 0) translation.setDisplayOptions(displayOptions)
 
     if (job.path) {
-      let file = null
+      let file: nsIFile | undefined
 
       try {
         file = Zotero.File.pathToFile(job.path)
         // path could exist but not be a regular file
-        if (file.exists() && !file.isFile()) file = null
+        if (file.exists() && !file.isFile()) file = undefined
       }
       catch (err) {
         // or Zotero.File.pathToFile could have thrown an error
         log.error('Translators.exportItems:', err)
-        file = null
+        file = undefined
       }
 
       if (!file) throw new Error(l10n.localize('better-bibtex_translate_error_target_not_a_file', { path: job.path }))
@@ -391,9 +393,9 @@ export const Translators = new class {
 
     if (typeof job.timeout === 'number') {
       const timeout = async () => {
-        await Zotero.Promise.delay(job.timeout * 1000)
+        await Zotero.Promise.delay(job.timeout! * 1000)
         if (!finished) {
-          const err = new TimeoutError(`translation timeout after ${ job.timeout } seconds`, { timeout: job.timeout })
+          const err = new TimeoutError(`translation timeout after ${ job.timeout } seconds`, { timeout: job.timeout! })
           log.error(err)
           throw err
         }
@@ -424,7 +426,7 @@ export const Translators = new class {
   }
 
   public async needsInstall(): Promise<{ header: Header; code: string }[]> {
-    if (!this.reinit) {
+    if (!this.#reinit) {
       const reinit: Record<string, { header: Header; code: string }> = {}
 
       const code = (label: string) => [
@@ -437,7 +439,7 @@ export const Translators = new class {
 
       const filenames = headers.map(header => `'${ header.label }.js'`).join(',')
       const installed: Record<string, Header> = {}
-      for (const { fileName, metadataJSON } of (await Zotero.DB.queryAsync(`SELECT fileName, metadataJSON FROM translatorCache WHERE fileName IN (${ filenames })`))) {
+      for (const { fileName, metadataJSON } of (await Zotero.DB.queryAsync(`SELECT fileName, metadataJSON FROM translatorCache WHERE fileName IN (${ filenames })`))!) {
         try {
           installed[fileName.replace(/[.]js$/, '')] = JSON.parse(metadataJSON)
         }
@@ -452,16 +454,16 @@ export const Translators = new class {
           reinit[header.label] = { header, code: code(header.label) }
           log.info(`translator install: new translator ${ header.label }`)
         }
-        else if (existing.configOptions?.hash !== header.configOptions.hash) {
+        else if (existing.configOptions?.hash !== header.configOptions!.hash) {
           reinit[header.label] = { header, code: code(header.label) }
           log.info(`translator install: updated translator ${ header.label }`)
         }
       }
 
-      this.reinit = Object.values(reinit)
+      this.#reinit = Object.values(reinit)
     }
 
-    return this.reinit
+    return this.#reinit
   }
 
   private async installTranslators() {

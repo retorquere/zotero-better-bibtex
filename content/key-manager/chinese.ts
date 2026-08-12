@@ -1,32 +1,22 @@
 import { Preference } from '../prefs'
 import { Events } from '../events'
-// import { discard } from '../logger'
 
-import type { splitName as splitNameFunc, jieba as jiebaFunc, pinyin as pinyinFunc } from './chinese-optional'
+import type { splitName, jieba, pinyin } from './chinese-optional'
 
-// Replace the console object with the empty shim
-export const chinese = new class {
-  // public window: Window
-  // public document: Document
-  // public console = discard
-
-  public jieba: typeof jiebaFunc
-  public pinyin: typeof pinyinFunc
-  public splitName: typeof splitNameFunc
+class Chinese {
+  public jieba!: typeof jieba
+  public pinyin!: typeof pinyin
+  public splitName!: typeof splitName
 
   constructor() {
     // this should give jieba time to load the dicts
     this.load()
   }
 
-  public get enabled(): this {
+  public get enabled(): Chinese | null {
     if (!Preference.chinese) return null
     this.load()
     return this
-  }
-
-  public get loaded(): this {
-    return this.enabled
   }
 
   private load() {
@@ -45,3 +35,5 @@ export const chinese = new class {
     })
   }
 }
+
+export const chinese = new Chinese

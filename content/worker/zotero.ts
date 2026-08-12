@@ -149,9 +149,9 @@ import * as DateParser from '../../content/dateparser'
 import dateFormats from '../../submodules/zotero/resource/schema/dateFormats.json' with { type: 'json' }
 
 class Running {
-  public serialized: Serialized.Item[]
-  public exported: Map<number, ExportedItem>
-  public context: number | false
+  public serialized!: Serialized.Item[]
+  public exported!: Map<number, ExportedItem>
+  public context!: number | false
   public hits = 0
   public misses = 0
   public items: number
@@ -246,10 +246,9 @@ class WorkerZoteroBetterBibTeX {
       file.close()
       return text
     }
-    catch (error) {
-      const err = error as Error
-      if (!err.message?.includes('NS_ERROR_FILE_NOT_FOUND')) {
-        log.error(`getContents ${ path } error ${ err } ${ Object.keys(err) } ${ err.message }`)
+    catch (err) {
+      if (!(err as Error).message?.includes('NS_ERROR_FILE_NOT_FOUND')) {
+        log.error(`getContents ${path} error ${err} ${Object.keys(err as Error)} ${(err as Error).message}`)
       }
     }
   }

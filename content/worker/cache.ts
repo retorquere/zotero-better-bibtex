@@ -65,7 +65,7 @@ async function allSettled(promises): Promise<string> {
     return rejected ? `${rejected}/${settled.length}` : ''
   }
   catch (err) {
-    return `[[${err.message}]]`
+    return `[[${(err as Error).message}]]`
   }
 }
 
@@ -79,7 +79,7 @@ export class ExportCache {
     for (const itemID of itemIDs) {
       const cursor = index.openKeyCursor(itemID)
       while (!(await cursor.end())) {
-        deletes.push(store.delete(cursor.primaryKey))
+        deletes.push(store.delete(cursor.primaryKey!))
         cursor.continue()
       }
     }
@@ -102,7 +102,7 @@ export class ExportCache {
       const cursor = exportsIndex.openKeyCursor<[number, number], number>(exportContext.id)
 
       while (!(await cursor.end())) {
-        deletes.push(exportsStore.delete(cursor.primaryKey))
+        deletes.push(exportsStore.delete(cursor.primaryKey!))
         cursor.continue()
       }
 
@@ -128,7 +128,7 @@ export class ExportCache {
       for (const contextID of contextIDs) {
         const cursor = exportsIndex.openKeyCursor<[number, number], number>(contextID)
         while (!(await cursor.end())) {
-          deletes.push(exportsStore.delete(cursor.primaryKey))
+          deletes.push(exportsStore.delete(cursor.primaryKey!))
           cursor.continue()
         }
       }
@@ -280,7 +280,7 @@ class $Cache implements CacheInterface {
   public version = 11
   public name = 'BetterBibTeXCache'
 
-  public db: Database
+  public db!: Database
   public Serialized = new SerializedCache
   public Exports = new ExportCache
 
@@ -312,8 +312,8 @@ class $Cache implements CacheInterface {
       }])
     }
     catch (err) {
-      log.error(`cache: ${action} ${this.version} failed: ${err.message}`)
-      return null
+      log.error(`cache: ${action} ${this.version} failed: ${(err as Error).message}`)
+      throw err
     }
   }
 
@@ -364,7 +364,7 @@ class $Cache implements CacheInterface {
       }
     }
     catch (err) {
-      log.error(`failed to fetch metadata: ${err.message}`)
+      log.error(`failed to fetch metadata: ${(err as Error).message}`)
     }
 
     return metadata
@@ -445,6 +445,8 @@ class $Cache implements CacheInterface {
     if (!this.available('close')) return
 
     this.db.close()
+
+    // @ts-expect-error TS2322: memory cleanup, but I don't want to assert all over the code
     this.db = null
   }
 
@@ -478,7 +480,7 @@ class $Cache implements CacheInterface {
             tables[name] = {}
             const cursor = store.openCursor<number, number, boolean>()
             while (!(await cursor.end())) {
-              tables[name][cursor.primaryKey] = cursor.value
+              tables[name][cursor.primaryKey!] = cursor.value
               cursor.continue()
             }
             break
@@ -494,7 +496,7 @@ class $Cache implements CacheInterface {
         }
       }
       catch (err) {
-        tables[name] = { error: err.message }
+        tables[name] = { error: (err as Error).message }
         log.error(`cache dump of ${name} failed:`, err)
       }
     }

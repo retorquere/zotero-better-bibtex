@@ -29,7 +29,7 @@ type Timer = ReturnType<typeof setInterval>
 export const memory = new class {
   #header = true
   #scale = MB
-  #timer: Timer
+  #timer: Timer | undefined
   #prefix = '[[better-bibtex memory state]]'
 
   constructor() {
@@ -49,7 +49,10 @@ export const memory = new class {
   }
 
   public record(on: boolean) {
-    if (this.#timer) clearInterval(this.#timer)
+    if (this.#timer) {
+      clearInterval(this.#timer)
+      this.#timer = undefined
+    }
     if (on) this.#timer = setInterval(this.log.bind(this, 'recording'), 10000)
   }
 
@@ -92,9 +95,12 @@ export const audit: MethodDecorator = function(target, context) {
     }
 
     try {
+      // @ts-expect-error TS2345 memory auditing is inherently icky
       const result = target.call(this, ...args)
 
+      // @ts-expect-error TS2339 resturn val is a promise
       if (result && typeof result === 'object' && typeof result.then === 'function') {
+        // @ts-expect-error TS2339 resturn val is a promise
         return result.finally(logIncrease)
       }
 

@@ -117,7 +117,7 @@ abstract class FilteredMap<K, V> {
       }
     }
 
-    if (this.order) entries.sort((a, b) => this.order(a[1], b[1]))
+    if (this.order) entries.sort((a, b) => this.order!(a[1], b[1]))
 
     return entries
   }

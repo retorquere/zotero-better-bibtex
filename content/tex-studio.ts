@@ -4,8 +4,8 @@ import { orchestrator } from './orchestrator'
 
 // export singleton: https://k94n.com/es6-modules-single-instance-pattern
 export const TeXstudio = new class {
-  public enabled: boolean
-  public texstudio: string
+  public enabled!: boolean
+  public texstudio: string | undefined
 
   constructor() {
     orchestrator.add({
@@ -23,12 +23,11 @@ export const TeXstudio = new class {
   }
 
   public async push(citation?: string) {
-    if (!this.enabled) throw new Error('texstudio was not found')
+    if (!this.texstudio) throw new Error('texstudio was not found')
 
     if (!citation) {
       try {
-        const pane = Zotero.getActiveZoteroPane() // can Zotero 5 have more than one pane at all?
-        const items = pane.getSelectedItems()
+        const items = Zotero.getActiveZoteroPane()!.getSelectedItems()
         citation = items.map(item => Zotero.BetterBibTeX.KeyManager.get(item.id)?.citationKey).filter(citekey => citekey).join(',')
       }
       catch (err) { // zoteroPane.getSelectedItems() doesn't test whether there's a selection and errors out if not

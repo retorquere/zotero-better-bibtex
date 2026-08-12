@@ -89,7 +89,7 @@ const unaliasTransliterateMode = {
 export type TransliterateModeAlias = keyof typeof unaliasTransliterateMode
 export type TransliterateMode = (typeof unaliasTransliterateMode)[keyof typeof unaliasTransliterateMode]
 
-function skip() {
+function skip(): never {
   throw { next: true } // eslint-disable-line @typescript-eslint/only-throw-error
 }
 
@@ -332,7 +332,7 @@ const page_range_splitter = /[-\s,\u2013]/
 export class PatternFormatter {
   public citekey = ''
 
-  public generate: () => string
+  public generate!: () => string
 
   private re = {
     unsafechars_allow_spaces: /\s/g,
@@ -354,9 +354,9 @@ export class PatternFormatter {
   */
   private months = { 1: 'jan', 2: 'feb', 3: 'mar', 4: 'apr', 5: 'may', 6: 'jun', 7: 'jul', 8: 'aug', 9: 'sep', 10: 'oct', 11: 'nov', 12: 'dec' }
 
-  private item: Item
+  private item!: Item
 
-  private skipWords: Set<string>
+  private skipWords!: Set<string>
 
   private config = {
     creatorNames: {
@@ -390,7 +390,7 @@ export class PatternFormatter {
       compile(formula)
     }
     catch (err) {
-      return err.message as string
+      return (err as any).message as string
     }
     return ''
   }
@@ -420,9 +420,9 @@ export class PatternFormatter {
         return error
       }
       catch (err) {
-        if (!error) error = err.message
+        if (!error) error = (err as any).message
         log.error('CitekeyFormatter.update: Error parsing citekeyFormat ', formula)
-        log.error(err, err.location)
+        log.error(err, (err as any).location)
       }
     }
 
@@ -590,8 +590,11 @@ export class PatternFormatter {
       include.push({ '*': types[0], primary }[type] || type)
     }
     else {
-      for (let t of type) {
-        if (Array.isArray(t)) t = t.map(candidate => ({ '*': types[0], primary }[candidate] || candidate) as CreatorType).find(candidate => types.includes(candidate))
+      let t: typeof type[number] | undefined
+      for (t of type) {
+        if (Array.isArray(t)) {
+          t = t.map(candidate => ({ '*': types[0], primary }[candidate] || candidate) as CreatorType).find(candidate => types.includes(candidate))
+        }
         if (!t) continue;
         (t[0] === '-' ? exclude : include).push((t as string).replace(/^-/, ''))
       }
@@ -749,7 +752,7 @@ export class PatternFormatter {
   public $authorIni(creator: AuthorType = '*', initials = false, sep = '.'): string {
     const authors = this.creators(creator, initials ? `${this.config.creatorNames.template}%(I)s` : this.config.creatorNames.template)
     if (!authors.length) return ''
-    const firstAuthor = authors.shift()
+    const firstAuthor = authors.shift()!
 
     return [firstAuthor.substring(0, 5)].concat(authors.map(name => name.substring(0, 1)).join(sep)).join(sep)
   }
@@ -918,7 +921,7 @@ export class PatternFormatter {
       .find(val => val)
     if (value) return value
 
-    const extra: RegExpMatchArray = (this.item.extra || '')
+    const extra: RegExpMatchArray | null | undefined = (this.item.extra || '')
       .split('\n')
       .map((line: string) => line.match(/^([^:]+):\s*(.+)/i))
       .find(match => match && (variables.includes(match[1].trim().toLowerCase()) || variable.toLowerCase() === match[1].trim().toLowerCase()))
@@ -1063,8 +1066,8 @@ export class PatternFormatter {
     const offset = match.global ? 0 : 1
     const m = cleaned(input).match(match)
     if (!m) skip()
-    if (m.length === offset) return input
-    return m.slice(offset).join(' ')
+    if (m!.length === offset) return input
+    return m!.slice(offset).join(' ')
   }
   public __match(input: string, match: RegExp | string, clean = false): string {
     this._match(input, match, clean)
@@ -1081,7 +1084,7 @@ export class PatternFormatter {
       return this._match(input, match)
     }
     catch (err) {
-      if (err.next) {
+      if ((err as any).next) {
         return passthrough ? input : ''
       }
       else {
@@ -1406,7 +1409,7 @@ export class PatternFormatter {
    * @param mode specialized translateration modes for german, japanese or chinese.
    */
   public _transliterate(input: string, mode?: TransliterateModeAlias): string {
-    return this.transliterate(input, (unaliasTransliterateMode[mode] || mode || this.item.transliterateMode) as TransliterateMode)
+    return this.transliterate(input, (unaliasTransliterateMode[mode as string] || mode || this.item.transliterateMode) as TransliterateMode)
   }
 
   private transliterate(str: string, mode?: TransliterateMode): string {
@@ -1416,7 +1419,7 @@ export class PatternFormatter {
 
     switch (mode) {
       case 'german':
-        str = str.normalize('NFC').replace(/[äöüÄÖÜ]/g, char => ({ ä: 'ae', ö: 'oe', ü: 'ue', Ä: 'Ae', Ö: 'Oe', Ü: 'Ue' }[char]))
+        str = str.normalize('NFC').replace(/[äöüÄÖÜ]/g, char => ({ ä: 'ae', ö: 'oe', ü: 'ue', Ä: 'Ae', Ö: 'Oe', Ü: 'Ue' }[char] || char))
         break
 
       case 'chinese':
@@ -1491,7 +1494,7 @@ export class PatternFormatter {
 
     // apply jieba.cut and flatten.
     if (chinese.enabled && this.item.transliterateMode === 'chinese') {
-      words = [].concat(...words.map(word => chinese.jieba(word)))
+      words = words.flatMap(word => chinese.jieba(word))
     }
 
     if (japanese.enabled && this.item.transliterateMode === 'japanese') {
@@ -1576,10 +1579,10 @@ export class PatternFormatter {
     const primary = this.item.primaryCreator
 
     const creators = {
-      editor: [],
-      author: [],
-      translator: [],
-      collaborator: [],
+      editor: [] as string[],
+      author: [] as string[],
+      translator: [] as string[],
+      collaborator: [] as string[],
     }
 
     for (const creator of this.item.creators) {
@@ -1641,13 +1644,13 @@ export class PatternFormatter {
   }
 
   public formula_sequence(...e: (() => string)[]): string {
-    const final = e.pop()
+    const final = e.pop()!
     for (const attempt of e) {
       try {
         return attempt()
       }
       catch (err) {
-        if (!err.next) {
+        if (!(err as any).next) {
           log.error('formula: sequence element', err)
           throw err
         }
@@ -1657,13 +1660,13 @@ export class PatternFormatter {
   }
 
   public formula_and(...e: (() => string)[]): string {
-    const final = e.pop()
+    const final = e.pop()!
     for (const attempt of e) {
       try {
         if (!attempt()) return ''
       }
       catch (err) {
-        if (err.next) return ''
+        if ((err as any).next) return ''
         log.error('formula: or expression element', err)
         throw err
       }
@@ -1672,14 +1675,14 @@ export class PatternFormatter {
   }
 
   public formula_or(...e: (() => string)[]): string {
-    const final = e.pop()
+    const final = e.pop()!
     let res: string
     for (const attempt of e) {
       try {
         if (res = attempt()) return res
       }
       catch (err) {
-        if (!err.next) {
+        if (!(err as any).next) {
           log.error('formula: or expression element', err)
           throw err
         }

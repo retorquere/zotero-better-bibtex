@@ -89,7 +89,7 @@ export async function migrate(verbose = false): Promise<void> {
         items.itemTypeID NOT IN (SELECT itemTypeID FROM itemTypes WHERE typeName IN ('attachment', 'note', 'annotation'))
       `
       const zotero: { citationKeys: StoredKey[]; itemID: Record<number, { libraryID: number; itemKey: string }> } = {
-        citationKeys: (await Zotero.DB.queryAsync(`
+        citationKeys: ((await Zotero.DB.queryAsync(`
             SELECT items.itemID, items.key as itemKey, items.libraryID, ck.value AS citationKey, 0 as pinned
             FROM items
             JOIN itemData ckField ON ckField.itemID = items.itemID AND ckField.fieldID IN (SELECT fieldID FROM fields WHERE fieldName = 'citationKey')
@@ -98,10 +98,10 @@ export async function migrate(verbose = false): Promise<void> {
               AND items.itemTypeID NOT IN (SELECT itemTypeID FROM itemTypes WHERE typeName IN ('attachment', 'note', 'annotation'))
               AND items.itemID NOT IN (SELECT itemID from feedItems)
               AND COALESCE(ck.value, '') <> ''
-            `.replace(/\n/g, ' ').trim()))
+            `.replace(/\n/g, ' ').trim())) as unknown as StoredKey[])
           .map(unpack)
           .filter(key => key.citationKey),
-        itemID: (await Zotero.DB.queryAsync(`SELECT items.itemID, items.libraryID, items.key FROM items WHERE ${actualItems}`.replace(/\n/g, ' ')))
+        itemID: (await Zotero.DB.queryAsync(`SELECT items.itemID, items.libraryID, items.key FROM items WHERE ${actualItems}`.replace(/\n/g, ' ')))!
           .reduce((acc, { itemID, libraryID, key }) => ({ ...acc, [itemID]: { libraryID, itemKey: key } }), {}),
       }
 
@@ -201,13 +201,13 @@ export async function migrate(verbose = false): Promise<void> {
           }
         }
         catch (err) {
-          speaker.say(`citation key migration error: migration rename error: ${err.message}`)
+          speaker.say(`citation key migration error: migration rename error: ${(err as any).message}`)
         }
       }
     })
   }
   catch (err) {
-    speaker.say(`migration error: ${err.message}`)
+    speaker.say(`migration error: ${(err as any).message}`)
   }
 }
 
@@ -216,7 +216,7 @@ export async function canMigrate(): Promise<boolean> {
   return !(!migrated && !sqlite)
 }
 
-export async function remigrate(): Promise<boolean> {
+export async function remigrate(): Promise<void> {
   const speaker = new Speaker(true)
   speaker.say('remigration started')
   if (!Zotero.Debug.storing) Zotero.Debug.setStore(true)
@@ -228,7 +228,7 @@ export async function remigrate(): Promise<boolean> {
   }
 
   if (!sqlite) {
-    const renamed = await Zotero.File.rename(migrated, 'better-bibtex.sqlite')
+    const renamed = await Zotero.File.rename(migrated!, 'better-bibtex.sqlite')
     if (!renamed) {
       speaker.say(`re-migrate failed: could not rename ${JSON.stringify(migrated)} to ${JSON.stringify(sqlite)}`)
       return
@@ -245,6 +245,6 @@ export async function remigrate(): Promise<boolean> {
     speaker.say('remigration completed')
   }
   catch (err) {
-    speaker.say(`remigration failed: ${err.message}`)
+    speaker.say(`remigration failed: ${(err as any).message}`)
   }
 }

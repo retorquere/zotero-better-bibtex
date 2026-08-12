@@ -14,9 +14,9 @@ export function selectedCollections(asIDs = false): Zotero.Collection[] | number
   }
 }
 
-export function selectedCollection(asID?: false): Zotero.Collection
-export function selectedCollection(asID: true): number
-export function selectedCollection(asID = false): Zotero.Collection | number {
+export function selectedCollection(asID?: false): Zotero.Collection | undefined
+export function selectedCollection(asID: true): number | undefined
+export function selectedCollection(asID = false): Zotero.Collection | number | undefined {
   const collections = selectedCollections(asID as any)
   return collections.length === 1 ? collections[0] : undefined
 }

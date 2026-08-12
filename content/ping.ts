@@ -10,7 +10,7 @@ export class Pinger {
   public name: string
   private pct: number
   private step: number
-  private callback: (pct: number) => void
+  private callback: undefined | ((pct: number) => void)
 
   private next: number
   private incr: number
@@ -40,7 +40,7 @@ export class Pinger {
     if (this.callback) {
       // if (this.name) Zotero.debug(`ping: ${this.name} emit ${Math.min(this.next, 100)}`)
       this.callback(Math.min(this.next, 100))
-      if (this.next > 100) this.callback = null
+      if (this.next > 100) this.callback = undefined
       this.next += this.step
     }
   }

@@ -50,11 +50,11 @@ const resolver = new class {
           }
         }
 
-        return this.cache.get($varName)
+        return this.cache.get($varName)!
       }))
     }
 
-    return this.cache.get(path)
+    return this.cache.get(path)!
   }
 }
 

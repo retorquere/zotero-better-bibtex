@@ -73,7 +73,7 @@ export function titleCase(text: string): string {
   // restore single-letter "words". Shame firefox doesn't do lookbehind, but this will work
   text.replace(RE.titleCaseKeep, (match: string, offset: number) => {
     if (match[0] !== '<') {
-      const [ , punc, l ] = match.match(RE.singleLetter)
+      const [ , punc, l ] = match.match(RE.singleLetter) as RegExpMatchArray
       if (punc && (l === 'a' || l === 'A')) {
         match = match.toUpperCase()
       }
@@ -144,11 +144,11 @@ const CSQuotes = new class {
 }
 
 export const HTMLParser = new class {
-  private options: HTMLParserOptions
-  private sentenceStart: boolean
+  private options!: HTMLParserOptions
+  private sentenceStart!: boolean
   private spuriousNode = new Set([ '#document-fragment', '#document', 'div', 'span' ])
-  private titleCased: string
-  private html: string
+  private titleCased!: string
+  private html!: string
   private ligatures = new RegExp(`[${ Object.keys(ligatures).join('') }]`, 'g')
 
   public parse(html: string, options: HTMLParserOptions): MarkupNode {
@@ -193,7 +193,7 @@ export const HTMLParser = new class {
         doc = unwrapped[0]
       }
       else {
-        doc = { nodeName: 'span', attr: {}, class: {}, childNodes: unwrapped }
+        doc = { nodeName: 'span', attr: {}, class: {}, childNodes: unwrapped } as unknown as MarkupNode
       }
       this.cleanupNocase(doc)
     }
@@ -207,7 +207,7 @@ export const HTMLParser = new class {
 
   private titleCase(node: MarkupNode) {
     if (node.nodeName === '#text') {
-      node.value = this.titleCased.substr(node.titleCased, node.value.length)
+      node.value = this.titleCased.substr(node.titleCased!, node.value.length)
       return
     }
 
@@ -234,7 +234,7 @@ export const HTMLParser = new class {
     if (node.nodeName === '#text') return [node]
 
     // unwrap and flatten
-    node.childNodes = [].concat(...node.childNodes.map(child => this.unwrapNocase(child)))
+    node.childNodes = node.childNodes.flatMap(child => this.unwrapNocase(child))
 
     // no nocase children? done
     if (node.nocase || !node.childNodes.find(child => child.nocase)) return [node]
@@ -255,8 +255,8 @@ export const HTMLParser = new class {
     })
   }
 
-  private cleanupNocase(node: MarkupNode, nocased = false): MarkupNode[] {
-    if (node.nodeName === '#text') return null
+  private cleanupNocase(node: MarkupNode, nocased = false): void {
+    if (node.nodeName === '#text') return
 
     if (nocased) delete node.nocase
 
@@ -292,7 +292,7 @@ export const HTMLParser = new class {
     text = text.replace(this.ligatures, (ligature: string) => (ligatures[ligature] as string))
     const l = childNodes.length
     if (l === 0 || (childNodes[l - 1].nodeName !== '#text')) {
-      childNodes.push({ nodeName: '#text', offset, value: text, attr: {}, class: {}})
+      childNodes.push({ nodeName: '#text', offset, value: text, childNodes: [], attr: {}, class: {}})
     }
     else {
       childNodes[l - 1].value += text
@@ -315,13 +315,13 @@ export const HTMLParser = new class {
     })
   }
 
-  private walk(node, isNocased = false) {
+  private walk(node, isNocased = false): MarkupNode {
     const normalized_node: MarkupNode = {
       nodeName: node.nodeName,
       childNodes: [],
       attr: {},
       class: {},
-    }
+    } as unknown as MarkupNode
     for (const { name, value } of (node.attrs || [])) {
       normalized_node.attr[name] = value
     }
@@ -445,7 +445,7 @@ export function langCode(langcode: string): string {
   return Language[lc]
     || Language[lc.replace(/[^a-z0-9]/, '-')]
     || Language[lc.replace(RE.notAlphaNum, '')]
-    || (!lc.match(RE.notAlphaNum) && Language[LanguagePrefixes.find((prefix: string) => lc.startsWith(prefix))])
+    || (!lc.match(RE.notAlphaNum) && Language[LanguagePrefixes.find((prefix: string) => lc.startsWith(prefix)) as string])
     || Language[lc.replace(/-.*/, '').replace(/[^a-z0-9]/, '-')]
     || langcode
 }

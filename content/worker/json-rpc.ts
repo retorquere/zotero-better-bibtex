@@ -23,8 +23,8 @@ export class Client {
     this.#namespace = namespace
     this.#id = `[${this.#namespace}${Date.now()}:${Math.random()}]`
 
-    worker.addEventListener('message', (e: MessageEvent<JsonRpcMessage>) => {
-      const req = e.data
+    worker.addEventListener('message', e => {
+      const req = (e as MessageEvent<JsonRpcMessage>).data as JsonRpcMessage
       if (!req || req.jsonrpc !== '2.0' || typeof req.id !== 'string') return
       // received neighbour json-rpc response
       if (!req.id.startsWith(this.#id)) return
@@ -82,10 +82,10 @@ export class Server {
         const m = req.method.split('.')
 
         let host = this // eslint-disable-line @typescript-eslint/no-this-alias
-        let method = this[m.shift()]
+        let method = this[m.shift() as string]
         while (method && typeof method !== 'function' && m.length) {
           host = method
-          method = method[m.shift()]
+          method = method[m.shift() as string]
         }
 
         if (typeof method !== 'function' || m.length) {
@@ -111,8 +111,8 @@ export class Server {
           method: req.method,
           error: {
             code: INTERNAL_ERROR,
-            message: err.message,
-            stack: err.stack,
+            message: (err as Error).message,
+            stack: (err as Error).stack,
           },
           id: req.id,
         })

@@ -6,7 +6,7 @@ export function editable(): Set<number> {
 }
 
 export function selectedLibraryIDs(): number[] {
-  const azp = Zotero.getActiveZoteroPane()
+  const azp = Zotero.getActiveZoteroPane()!
   if (typeof azp.getSelectedLibraryIDs === 'function') {
     return azp.getSelectedLibraryIDs() as number[]
   }
@@ -15,13 +15,13 @@ export function selectedLibraryIDs(): number[] {
     return typeof libraryID === 'number' ? [ libraryID ] : []
   }
 }
-export function selectedLibraryID(): number {
+export function selectedLibraryID(): number | undefined {
   const libraryIDs = selectedLibraryIDs()
   return libraryIDs.length === 1 ? libraryIDs[0] : undefined
 }
 
 export function readonly(source: number | Zotero.Item | _ZoteroTypes.Library.LibraryLike): boolean {
-  let lib: _ZoteroTypes.Library.LibraryLike
+  let lib: _ZoteroTypes.Library.LibraryLike | undefined = undefined
 
   if (typeof source === 'number') {
     lib = Zotero.Libraries.get(source) || undefined
@@ -39,7 +39,7 @@ export function readonly(source: number | Zotero.Item | _ZoteroTypes.Library.Lib
   return lib ? !lib.editable : false
 }
 
-export function get(query: Record<string, string | number>, throws = false): Zotero.Library {
+export function get(query: Record<string, string | number | undefined>, throws = false): Zotero.Library | undefined {
   const oops = err => {
     log.error(err)
     if (throws) throw new Error(err)
@@ -90,5 +90,4 @@ export function get(query: Record<string, string | number>, throws = false): Zot
   }
 
   oops(`library.get: ${JSON.stringify(query)} not found`)
-  return
 }

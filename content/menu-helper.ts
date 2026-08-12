@@ -9,7 +9,7 @@ import { Translators } from './translators'
 import { parse } from './dateparser'
 
 export async function clipSelected(translatorID: string): Promise<void> {
-  const items = Zotero.getActiveZoteroPane().getSelectedItems()
+  const items = Zotero.getActiveZoteroPane()!.getSelectedItems()
   toClipboard(await Translators.queueJob({
     translatorID,
     displayOptions: { worker: true },
@@ -19,12 +19,15 @@ export async function clipSelected(translatorID: string): Promise<void> {
 
 export async function patchDates(): Promise<void> {
   try {
-    const items = Zotero.getActiveZoteroPane().getSelectedItems()
+    const items = Zotero.getActiveZoteroPane()!.getSelectedItems()
     const mapping: Record<string, string> = {}
     try {
       for (const assignment of Preference.patchDates.trim().split(/\s*,\s*/)) {
-        const [ , k, v ] = assignment.trim().match(/^([-_a-z09]+)\s*=\s*(dateadded|datemodified)$/i)
-        mapping[k.toLowerCase()] = mapping[`tex.${ k.toLowerCase() }`] = { dateadded: 'dateAdded', datemodified: 'dateModified' }[v.toLowerCase()]
+        const m = assignment.trim().match(/^([-_a-z09]+)\s*=\s*(dateadded|datemodified)$/i)
+        if (m) {
+          const [ , k, v ] = m
+          mapping[k.toLowerCase()] = mapping[`tex.${k.toLowerCase()}`] = { dateadded: 'dateAdded', datemodified: 'dateModified' }[v.toLowerCase()]!
+        }
       }
     }
     catch {
@@ -43,8 +46,8 @@ export async function patchDates(): Promise<void> {
               delete extra.extraFields.tex[k]
               const time = typeof date.seconds === 'number'
               const timestamp = new Date(
-                date.year, date.month - 1, date.day,
-                time ? date.hour : 0, time ? date.minute - (date.offset || 0) : 0, time ? date.seconds : 0, 0
+                date.year!, date.month! - 1, date.day,
+                time ? date.hour : 0, time ? date.minute! - (date.offset || 0) : 0, time ? date.seconds : 0, 0
               )
               item.setField(mapping[k], timestamp.toISOString())
               save = true
@@ -53,7 +56,7 @@ export async function patchDates(): Promise<void> {
         }
         if (save) {
           item.setField('extra', Extra.set(extra.extra, extra.extraFields))
-          await item.saveTx()
+          await item.saveTx({ skipDateModifiedUpdate: true })
         }
       }
       catch (err) {
@@ -67,7 +70,7 @@ export async function patchDates(): Promise<void> {
 }
 
 export function selectedItemsHaveCitationKeyInExtra(): boolean {
-  return Zotero.getActiveZoteroPane().getSelectedItems().some(item => {
+  return Zotero.getActiveZoteroPane()!.getSelectedItems().some(item => {
     if (item.isFeedItem || !item.isRegularItem()) return false
     return !!Extra.citationKey(item.getField('extra')).citationKey
   })
@@ -75,7 +78,7 @@ export function selectedItemsHaveCitationKeyInExtra(): boolean {
 
 export async function applyCitationKeyFromExtra(move: boolean): Promise<void> {
   try {
-    const items = Zotero.getActiveZoteroPane().getSelectedItems()
+    const items = Zotero.getActiveZoteroPane()!.getSelectedItems()
     for (const item of items) {
       if (item.isFeedItem || !item.isRegularItem()) continue
 
@@ -94,7 +97,7 @@ export async function applyCitationKeyFromExtra(move: boolean): Promise<void> {
 
 export async function sentenceCase(): Promise<void> {
   try {
-    const items = Zotero.getActiveZoteroPane().getSelectedItems()
+    const items = Zotero.getActiveZoteroPane()!.getSelectedItems()
     for (const item of items) {
       let save = false
 
@@ -124,7 +127,7 @@ export async function sentenceCase(): Promise<void> {
 
 export async function addCitationLinks(): Promise<void> {
   try {
-    const items = Zotero.getActiveZoteroPane().getSelectedItems()
+    const items = Zotero.getActiveZoteroPane()!.getSelectedItems()
     if (items.length !== 1) {
       flash('Citation links only works for a single item')
       return

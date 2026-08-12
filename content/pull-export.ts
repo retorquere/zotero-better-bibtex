@@ -13,7 +13,7 @@ function nullify(obj) {
   return obj ? obj : undefined
 }
 export function showURLs(mode: 'collection' | 'library'): void {
-  let collection: Zotero.Collection | false = mode === 'collection' ? selectedCollection() : undefined
+  let collection: Zotero.Collection | undefined = mode === 'collection' ? selectedCollection() : undefined
   const libraryID = mode === 'collection' ? collection?.libraryID : selectedLibraryID()
   const library = nullify(typeof libraryID === 'number' ? Zotero.Libraries.get(libraryID) : undefined)
 
@@ -37,12 +37,12 @@ export function showURLs(mode: 'collection' | 'library'): void {
   }
 
   if (mode === 'collection') {
-    params.url.short += `/collection;key:${collection.key}/${collection.name}`
+    params.url.short += `/collection;key:${collection!.key}/${collection!.name}`
 
-    let path = `/${uri.encode(collection.name)}`
+    let path = `/${uri.encode(collection!.name)}`
     while (collection && typeof collection.parentID === 'number') {
-      collection = Zotero.Collections.get(collection.parentID)
-      if (collection) path = `/${uri.encode(collection.name)}${path}`
+      collection = Zotero.Collections.get(collection!.parentID) || undefined
+      if (collection) path = `/${uri.encode(collection!.name)}${path}`
     }
     params.url.long += `/collection${path}`
   }
@@ -97,7 +97,7 @@ class Handler {
     const translatorID = Translators.getTranslatorId(ext)
     urlpath = urlpath.slice(0, -1 * m[0].length)
 
-    let library = Zotero.Libraries.get(Zotero.Libraries.userLibraryID)
+    let library = Zotero.Libraries.get(Zotero.Libraries.userLibraryID) || undefined
     if (m = urlpath.match(/^(group|library);(id|name):([^/]+)[/]/)) {
       urlpath = urlpath.substring(m[0].length)
 
@@ -122,7 +122,7 @@ class Handler {
 
     if (m = urlpath.match(/^collection(?:;(id|key):(.+?)[/])?/)) {
       urlpath = urlpath.substring(m[0].length)
-      let collection: Zotero.Collection
+      let collection: Zotero.Collection | undefined
       switch (m[1]) {
         case 'id':
           if (!m[2].match(/^\d+$/)) return [ NOT_FOUND, 'text/plain', `${m[2]} ID is not a number` ]
@@ -136,7 +136,7 @@ class Handler {
             collection = await Collection.resolve(library, urlpath)
           }
           catch (err) {
-            if (err.code) return [ err.code, 'text/plain', err.message ]
+            if ((err as any).code) return [ (err as any).code, 'text/plain', (err as any).message ]
             throw err
           }
           break
@@ -182,7 +182,9 @@ class CollectionHandler {
     const urlpath: string = Server.queryParams(request)['']
     if (!urlpath) return [ NOT_FOUND, 'text/plain', 'Could not export bibliography: no path' ]
 
-    const [ , lib, path, translator ] = urlpath.match(/^\/(?:([0-9]+)\/)?(.*)\.([-0-9a-z]+)$/i)
+    const m = urlpath.match(/^\/(?:([0-9]+)\/)?(.*)\.([-0-9a-z]+)$/i)
+    if (!m) return [ BAD_REQUEST, 'text/plain', `no library/path/translator found in ${urlpath}` ]
+    const [ , lib, path, translator ] = m
 
     const libraryID = Library.get({ libraryID: lib, groupID: lib })?.libraryID
     let collection
@@ -206,7 +208,7 @@ class CollectionHandler {
       }
     }
     catch (err) {
-      if (err.code) return [ err.code, 'text/plain', err.message ]
+      if ((err as any).code) return [ (err as any).code, 'text/plain', (err as any).message ]
       throw err
     }
 
@@ -230,7 +232,9 @@ class LibraryHandler {
     if (!urlpath) return [ NOT_FOUND, 'text/plain', 'Could not export library: no path' ]
 
     try {
-      const [ , libraryID, translator ] = urlpath.match(/\/?(?:([0-9]+)\/)?library\.([-0-9a-z]+)$/i)
+      const m = urlpath.match(/\/?(?:([0-9]+)\/)?library\.([-0-9a-z]+)$/i)
+      if (!m) return [ BAD_REQUEST, 'text/plain', `no library/translator found in ${urlpath}` ]
+      const [ , libraryID, translator ] = m
 
       const library = Library.get({ libraryID, groupID: libraryID })
       if (!library) return [ NOT_FOUND, 'text/plain', `Could not export bibliography: library '${ urlpath }' does not exist` ]
@@ -258,7 +262,7 @@ class SelectedHandler {
     if (!translator) return [ NOT_FOUND, 'text/plain', 'Could not export bibliography: no format' ]
 
     try {
-      const items = Zotero.getActiveZoteroPane().getSelectedItems()
+      const items = Zotero.getActiveZoteroPane()!.getSelectedItems()
       if (!items.length) return [ NOT_FOUND, 'text/plain', 'Could not export bibliography: no selection' ]
 
       if (translator === 'quick-copy') {

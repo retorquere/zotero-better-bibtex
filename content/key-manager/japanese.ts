@@ -7,7 +7,7 @@ import { Events } from '../events'
 import * as client from '../client'
 
 export const japanese = new class {
-  public enabled: typeof this = null
+  public enabled: typeof this | null = null
   private kuroshiro: any
   private kuromoji: any
 
