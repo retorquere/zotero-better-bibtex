@@ -39,7 +39,7 @@ api.ready()
 returns: { betterbibtex: string; zotero: string }
 Returns the Zotero and BetterBibTeX version to show the JSON-RPC API is ready.
 autoexport.add(collection: string, translator: string, path: string, displayOptions?: { [string]: boolean }, replace: boolean=false)">
-    <meta itemprop="wordCount" content="1058">
+    <meta itemprop="wordCount" content="1060">
     <title>JSON-RPC :: Better BibTeX for Zotero</title><link rel="icon" href="/zotero-better-bibtex/better-bibtex.ico" type="image/x-icon">
 
     <link href="/zotero-better-bibtex/css/auto-complete/auto-complete.min.css" rel="stylesheet">
@@ -299,7 +299,7 @@ Array of tuples similar as typed into the advanced search box in Zotero
 <li>search([[&lsquo;joinMode&rsquo;, &lsquo;any&rsquo;], [&lsquo;creator&rsquo;, &lsquo;contains&rsquo;, &lsquo;Johnny&rsquo;], [&rsquo;title&rsquo;, &lsquo;contains&rsquo;, &lsquo;Zotero&rsquo;], [&lsquo;creator&rsquo;, &lsquo;contains&rsquo;, &lsquo;Smith&rsquo;, true]]): search for entries with (Creator &lsquo;Johnny&rsquo; OR Title &lsquo;Zotero&rsquo;) AND (Creator &lsquo;Smith&rsquo;)</li>
 </ul>
 <p><strong>user.groups</strong>(includeCollections?: boolean)</p>
-<p>returns: { collections: any[]; id: number; name: string }[]</p>
+<p>returns: ({ collections: null | any[]; id: number; name: string })[]</p>
 <ul>
 <li>includeCollections: Wether or not the result should include a list of collection for each library (default is false)</li>
 </ul>
