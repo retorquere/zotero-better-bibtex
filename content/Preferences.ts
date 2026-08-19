@@ -50,8 +50,8 @@ const AutoExportPane = new class $AutoExportPane {
 
     this.refresh()
 
-    Events.on('export-progress', async ({ data: { pct, ae } }) => {
-      if (ae) if (pct >= 100) await this.refresh(ae)
+    Events.on('export-progress', ({ data: { pct, ae } }) => {
+      if (ae) if (pct >= 100) this.refresh(ae)
     })
   }
 
@@ -106,7 +106,7 @@ const AutoExportPane = new class $AutoExportPane {
         node.style.display = node.classList.contains(displayed) ? 'initial' : 'none'
       }
 
-      for (const node of Array.from(details!.querySelectorAll('*[data-ae-field]')) as HTMLElement[]) {
+      for (const node of Array.from(details!.querySelectorAll('*[data-ae-field]'))) {
         const field = node.getAttribute('data-ae-field')
 
         switch (field) {
@@ -189,15 +189,15 @@ const AutoExportPane = new class $AutoExportPane {
     const path = menulist.selectedItem.getAttribute('value')!
     await Cache.Exports.dropAutoExport(path, true)
     AutoExport.remove(path)
-    await this.refresh()
+    this.refresh()
   }
 
-  public async run() {
+  public run() {
     const menulist: XUL.MenuList = this.document!.querySelector('#bbt-prefs-auto-export-select') as unknown as XUL.MenuList
     if (!menulist.selectedItem) return
 
     AutoExport.run(menulist.selectedItem.getAttribute('value')!)
-    await this.refresh()
+    this.refresh()
   }
 
   public async edit(node) {
@@ -209,8 +209,8 @@ const AutoExportPane = new class $AutoExportPane {
 
     await Cache.Exports.dropAutoExport(path, false)
 
-    let value: number | boolean | string | undefined = undefined
-    let disable: 'biblatexChicago' | 'biblatexAPA' | undefined = undefined
+    let value: number | boolean | string | undefined
+    let disable: 'biblatexChicago' | 'biblatexAPA' | undefined
 
     const field = node.getAttribute('data-ae-field')
     switch (field) {
@@ -243,7 +243,7 @@ const AutoExportPane = new class $AutoExportPane {
     else {
       AutoExport.edit(path, field, value)
       if (disable) AutoExport.edit(path, disable, false)
-      await this.refresh()
+      this.refresh()
     }
   }
 

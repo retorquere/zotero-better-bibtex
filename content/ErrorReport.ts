@@ -107,11 +107,10 @@ class Upgrades {
     const manifest = async updates => JSON.parse((await Zotero.HTTP.request('GET', updates, { noCache: true })).response)
 
     const show = (upgrade: Partial<Upgrade>) => {
-      // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
       const text = <HTMLInputElement> document.querySelector(`#better-bibtex-report-upgrade-${upgrade.id}`)
-      // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
+
       const auto = <HTMLInputElement> document.querySelector(`#better-bibtex-report-upgrade-${upgrade.id}_auto`)
-      // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
+
       const manual = <HTMLInputElement> document.querySelector(`#better-bibtex-report-upgrade-${upgrade.id}_manual`)
 
       log.info(upgrade.id, 'upgrade', upgrade.running && upgrade.running !== upgrade.upgrade ? 'show:' : 'hide:', upgrade)
@@ -466,7 +465,7 @@ export class ErrorReport {
     wizard.getPageById('page-done').addEventListener('pageshow', this.show.bind(this))
 
     for (const cb of Array.from(this.document.getElementsByClassName('better-bibtex-error-report-facet')) as HTMLInputElement[]) {
-      cb.addEventListener('command', this.reload.bind(this))
+      cb.addEventListener('command', () => void this.reload())
     }
 
     let cache = ''

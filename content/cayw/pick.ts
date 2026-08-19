@@ -477,7 +477,7 @@ export class Picker {
     const items: PickItem[] = []
 
     for (const node of doc.querySelectorAll('[data-citation-items]')) {
-      const element = node as Element
+      const element = node
       const citationItems = parseEmbeddedJSON<EmbeddedCitationItems>(element.getAttribute('data-citation-items'))
       if (!Array.isArray(citationItems)) continue
       for (const item of citationItems) {
@@ -489,7 +489,7 @@ export class Picker {
     if (items.length) return items
 
     for (const node of doc.querySelectorAll('[data-annotation]')) {
-      const element = node as Element
+      const element = node
       const annotation = parseEmbeddedJSON<AnnotationData>(element.getAttribute('data-annotation'))
       const item = annotation ? await annotationCitationItem(annotation) : null
       if (item) items.push(item)
@@ -498,7 +498,7 @@ export class Picker {
     if (items.length) return items
 
     for (const node of doc.querySelectorAll('[data-citation]')) {
-      const element = node as Element
+      const element = node
       const citation = parseEmbeddedJSON<EmbeddedCitationData>(element.getAttribute('data-citation'))
       if (!citation?.citationItems?.length) continue
       items.push(...citation.citationItems)

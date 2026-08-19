@@ -113,8 +113,8 @@ export interface ListDate extends DateFlags {
   dates: RichDate[]
 }
 
-export type RichDate =
-  | SimpleDate
+export type RichDate
+  = | SimpleDate
   | OpenDate
   | VerbatimDate
   | SeasonDate
@@ -432,11 +432,11 @@ class DateParser {
 
     if (reparse && (m = value.match(re.orig_date) || value.match(re.date_orig))) {
       const { orig, date } = m.groups!
-      const _orig: RichDate = this.#parse(orig, { range: false, reparse: false })
+      const $orig: RichDate = this.#parse(orig, { range: false, reparse: false })
 
       return date
-        ? { ...this.#parse(date, { range: false, reparse: false }), orig: _orig }
-        : { type: null, orig: _orig }
+        ? { ...this.#parse(date, { range: false, reparse: false }), orig: $orig }
+        : { type: null, orig: $orig }
     }
 
     if (reparse && (m = english.match(re.M_d_d_y))) {
@@ -584,7 +584,7 @@ class DateParser {
     }
 
     // https://github.com/inukshuk/edtf.js/issues/5
-    let edtf = normalize_edtf(this.edtf(upgrade_edtf(date.replace(/_|--/, '/'))))
+    const edtf = normalize_edtf(this.edtf(upgrade_edtf(date.replace(/_|--/, '/'))))
     if (edtf) return edtf
 
     return normalize_edtf(this.edtf(this.edtfy(english)))

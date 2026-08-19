@@ -41,8 +41,8 @@ export function showURLs(mode: 'collection' | 'library'): void {
 
     let path = `/${uri.encode(collection!.name)}`
     while (collection && typeof collection.parentID === 'number') {
-      collection = Zotero.Collections.get(collection!.parentID) || undefined
-      if (collection) path = `/${uri.encode(collection!.name)}${path}`
+      collection = Zotero.Collections.get(collection.parentID) || undefined
+      if (collection) path = `/${uri.encode(collection.name)}${path}`
     }
     params.url.long += `/collection${path}`
   }

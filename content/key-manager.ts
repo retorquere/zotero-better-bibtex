@@ -259,7 +259,7 @@ export const KeyManager = new class _KeyManager {
   // eslint-disable-next-line @typescript-eslint/unbound-method
   #getField: ((this: Zotero.Item, field: string) => string) = Zotero.Item.prototype.getField // guaranteed to run before constructor
   #getNativeKey(item: Zotero.Item): string {
-    return this.#getField.call(item, 'citationKey') as string
+    return this.#getField.call(item, 'citationKey')
   }
 
   constructor() {

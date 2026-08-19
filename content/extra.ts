@@ -115,7 +115,7 @@ export function get(extra: string, mode: 'zotero' | 'csl', options?: GetOptions)
       case 'date':
         if (options!.kv) {
           extraFields.kv ??= {}
-          extraFields.kv![field.field] = value
+          extraFields.kv[field.field] = value
         }
         return true
 

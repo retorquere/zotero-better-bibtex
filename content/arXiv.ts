@@ -13,7 +13,7 @@ export class arXiv {
   public category = ''
   public source = ''
 
-  constructor(id?: string | undefined | null) {
+  constructor(id?: string | null) {
     if (id) this.parse(id)
   }
 

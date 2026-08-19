@@ -45,7 +45,7 @@ export class Orchestrator {
       description: description || id,
       startup,
       shutdown,
-      needs: needs,
+      needs,
     }
   }
 
@@ -83,7 +83,10 @@ export class Orchestrator {
           if (!needs[dependent].size) sources.push(this.tasks[dependent])
         }
       }
-      if (edges) throw new Error(`orchestrator: cyclic dependency involving ${ [...new Set(Object.values(needs).flatMap(n => n))].join(',') }`)
+      if (edges) {
+        const actors = [...new Set(Object.values(needs).flatMap(n => [...n]))].join(',')
+        throw new Error(`orchestrator: cyclic dependency involving ${actors}`)
+      }
     }
 
     return [...this.$ordered]

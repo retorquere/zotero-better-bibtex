@@ -21,7 +21,7 @@ export function selectedLibraryID(): number | undefined {
 }
 
 export function readonly(source: number | Zotero.Item | _ZoteroTypes.Library.LibraryLike): boolean {
-  let lib: _ZoteroTypes.Library.LibraryLike | undefined = undefined
+  let lib: _ZoteroTypes.Library.LibraryLike | undefined
 
   if (typeof source === 'number') {
     lib = Zotero.Libraries.get(source) || undefined

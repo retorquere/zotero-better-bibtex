@@ -283,14 +283,14 @@ class Item {
       switch (name) {
         case 'dateAdded':
         case 'dateModified':
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+
           return this.item[name].replace(/ .*/, '')
         case 'title':
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+
           return this.title
         default:
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-          return this.item.getField(name, false, true) || this.extraFields!.kv![name] || ''
+
+          return this.item.getField(name, false, true) || this.extraFields.kv![name] || ''
       }
     }
 
@@ -1067,8 +1067,8 @@ export class PatternFormatter {
     const offset = match.global ? 0 : 1
     const m = cleaned(input).match(match)
     if (!m) skip()
-    if (m!.length === offset) return input
-    return m!.slice(offset).join(' ')
+    if (m.length === offset) return input
+    return m.slice(offset).join(' ')
   }
   public __match(input: string, match: RegExp | string, clean = false): string {
     this._match(input, match, clean)
@@ -1402,7 +1402,7 @@ export class PatternFormatter {
    * @param mode specialized translateration modes for german, japanese or chinese.
    */
   public $transliterate(mode: TransliterateModeAlias): string {
-    this.item.transliterateMode = (unaliasTransliterateMode[mode] || mode) as TransliterateMode
+    this.item.transliterateMode = (unaliasTransliterateMode[mode] || mode)
     return ''
   }
   /**

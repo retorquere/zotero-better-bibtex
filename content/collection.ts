@@ -40,7 +40,7 @@ class CollectionError extends Error {
 
 const CS_CI: Array<(n: string) => string> = [
   n => n,
-  n => n.toLowerCase()
+  n => n.toLowerCase(),
 ]
 export async function resolve(library: _ZoteroTypes.Library.LibraryLike, path: string, create = false): Promise<Zotero.Collection | undefined> {
   let names = (path || '').split('/')
@@ -49,7 +49,7 @@ export async function resolve(library: _ZoteroTypes.Library.LibraryLike, path: s
   if (names.length === 0) throw new CollectionError('path is too short', 'notfound')
 
   let children: Zotero.Collection[] = Zotero.Collections.getByLibrary(library.libraryID)
-  let collection: Zotero.Collection | undefined = undefined
+  let collection: Zotero.Collection | undefined
   path = ''
   for (const name of names) {
     path += `/${name}`

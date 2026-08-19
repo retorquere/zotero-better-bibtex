@@ -24,7 +24,7 @@ type Reason = 'key-refresh' | 'parent-modify' | 'parent-delete' | 'parent-add' |
 const logEvents = Zotero.Prefs.get('extensions.zotero.translators.better-bibtex.logEvents')
 
 interface ZoteroObserver {
-  notify: _ZoteroTypes.Notifier.Notify;
+  notify: _ZoteroTypes.Notifier.Notify
 }
 type NotifierIDs = number[] | string[]
 
@@ -169,7 +169,7 @@ class SyncListener extends ZoteroListener {
     super('sync')
   }
 
-  notify(action: _ZoteroTypes.Notifier.Event, type: _ZoteroTypes.Notifier.Type, ids: NotifierIDs, extraData: any): void {
+  notify(action: _ZoteroTypes.Notifier.Event, _type: _ZoteroTypes.Notifier.Type, _ids: NotifierIDs, _extraData: any): void {
     const state: SyncState = action === ('start' as unknown as _ZoteroTypes.Notifier.Type) ? 'syncing' : 'idle' // Zotero fires 'start' and 'finish'
     Events.syncing = state
     void Events.emit('sync', { state })

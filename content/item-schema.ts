@@ -136,8 +136,8 @@ export const Schema = new class $Schema {
         this.valid.fields[itemType][field] = this.valid.fields[itemType][baseField || field] = true
         const type
           = this.type.zotero[field]
-          = this.type.zotero[(baseField || field) as string]
-          = (this.zotero.meta.fields[baseField as string] || this.zotero.meta.fields[field])?.type || 'text'
+            = this.type.zotero[(baseField || field)]
+              = (this.zotero.meta.fields[baseField as string] || this.zotero.meta.fields[field])?.type || 'text'
         this.lookup.baseField[field] = this.lookup.baseField[baseField || field] = baseField || field
         this.extra[field] = this.#extra[field] || this.toLabel(field)
         if (baseField) this.extra[baseField] = this.#extra[baseField] || this.toLabel(baseField)

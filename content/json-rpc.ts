@@ -331,7 +331,7 @@ export class NSItem {
           col.parentCollection = recurseParents(libraryID, col.parentCollection)
         }
 
-        seen[key] = omit(col,  [ 'relations', 'version' ])
+        seen[key] = omit(col, [ 'relations', 'version' ])
       }
 
       return seen[key]
