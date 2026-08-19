@@ -18,10 +18,10 @@ const re = {
 
 export function citationKey(extra: string): { citationKey: string; extra: string } {
   let ck = ''
-  let m: RegExpMatchArray
+  let m: RegExpMatchArray | null
   extra = (extra || '').split('\n').filter(line => {
     if (m = line.match(re.ck)) {
-      ck = m.groups.citationKey.trim()
+      ck = m.groups!.citationKey.trim()
       return false
     }
     return true
@@ -31,12 +31,12 @@ export function citationKey(extra: string): { citationKey: string; extra: string
 
 export type Fields = {
   raw: Record<string, string>
-  kv: Record<string, string>
-  csl: Record<string, string>
+  kv?: Record<string, string>
+  csl?: Record<string, string>
   creator: Record<string, string[]>
   creators: Creator[]
-  tex: Record<string, TeXString>
-  aliases: string[]
+  tex?: Record<string, TeXString>
+  aliases?: string[]
 }
 
 type CSLCreator = { literal?: string; isInstitution?: 1; family?: string; given?: string }
@@ -113,7 +113,10 @@ export function get(extra: string, mode: 'zotero' | 'csl', options?: GetOptions)
 
       case 'text':
       case 'date':
-        extraFields.kv[field.field] = value
+        if (options!.kv) {
+          extraFields.kv ??= {}
+          extraFields.kv![field.field] = value
+        }
         return true
 
       default:
@@ -148,18 +151,18 @@ export function get(extra: string, mode: 'zotero' | 'csl', options?: GetOptions)
     if (csl) {
       // All explicit csl.* fields go into their own bucket.
       // The CSL exporter handles typed conversion (name/date/text) for all of them uniformly.
-      if (options.csl && !key.includes(' ')) extraFields.csl[key] = value
+      if (options.csl && !key.includes(' ')) extraFields.csl![key] = value
       return false
     }
 
     if (tex) {
       if (options.aliases && key === 'ids') {
-        extraFields.aliases = [ ...extraFields.aliases, ...value.split(/\s*,\s*/).filter(alias => alias) ]
+        extraFields.aliases = [ ...(extraFields.aliases || []), ...value.split(/\s*,\s*/).filter(alias => alias) ]
         return false
       }
 
       if (options.tex && !key.includes(' ')) {
-        extraFields.tex[tex + key] = { value, mode: texmode, line: i }
+        extraFields.tex![tex + key] = { value, mode: texmode, line: i }
         return false
       }
 
@@ -168,7 +171,7 @@ export function get(extra: string, mode: 'zotero' | 'csl', options?: GetOptions)
 
     // unprefixed: mode-aware lookup, explicit aliases, then secondary fallback
     if (options.aliases && key === 'citation key alias') {
-      extraFields.aliases = [ ...extraFields.aliases, ...value.split(/\s*,\s*/).filter(alias => alias) ]
+      extraFields.aliases = [ ...(extraFields.aliases || []), ...value.split(/\s*,\s*/).filter(alias => alias) ]
       return false
     }
 
@@ -176,7 +179,7 @@ export function get(extra: string, mode: 'zotero' | 'csl', options?: GetOptions)
       const [ primary, secondary ] = mode === 'csl' ? ['csl', 'zotero'] : ['zotero', 'csl']
 
       // https://github.com/retorquere/zotero-better-bibtex/issues/2399
-      if (key === '_eprint') { extraFields.kv[key] = value; return false }
+      if (key === '_eprint') { extraFields.kv![key] = value; return false }
 
       if ((ef = Schema.labeled[primary][key]) && addMappedField(ef, value)) return false
 
@@ -186,7 +189,7 @@ export function get(extra: string, mode: 'zotero' | 'csl', options?: GetOptions)
     }
 
     if (options.tex && otherFields.includes(key.replace(/[- ]/g, ''))) {
-      extraFields.tex[`tex.${key.replace(/[- ]/g, '')}`] = { value, line: i }
+      extraFields.tex![`tex.${key.replace(/[- ]/g, '')}`] = { value, line: i }
       return false
     }
 

@@ -64,7 +64,6 @@ export function doExport(): void {
       id: `node-${ items.length }`,
       label: label.join('\n'),
       relations: (ref.relations?.['dc:relation'] || []),
-      // eslint-disable-next-line prefer-spread
       cites: (ref.extra || '')
         .split('\n')
         .filter((line: string) => line.startsWith('cites:'))

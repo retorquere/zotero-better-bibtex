@@ -24,7 +24,7 @@ const htmlConverter = new class HTML {
     if (!tag) return
 
     if ([ '#text', 'pre', 'script' ].includes(tag.nodeName)) {
-      this.markdown += tag.value!.replace(/([[*~^])/g, '\\$1')
+      this.markdown += tag.value.replace(/([[*~^])/g, '\\$1')
       return
     }
 
@@ -53,7 +53,7 @@ const htmlConverter = new class HTML {
 
       case 'sc':
         this.markdown += '<span style="font-variant:small-caps;">'
-        tag.attr!.style = 'font-variant:small-caps;'
+        tag.attr.style = 'font-variant:small-caps;'
         break
 
       case 'span':
@@ -154,7 +154,7 @@ class Exporter extends CSLExporter {
         return [{ literal: date.verbatim }] as unknown as CSLDate
 
       case 'century':
-        return [{ literal: century(date.century!) }] as unknown as CSLDate
+        return [{ literal: century(date.century) }] as unknown as CSLDate
 
       default:
         if (!date.type && date.orig) return null // handled by orig-handler

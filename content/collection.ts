@@ -4,7 +4,7 @@ import * as Library from './library'
 export function selectedCollections(asIDs?: false): Zotero.Collection[]
 export function selectedCollections(asIDs: true): number[]
 export function selectedCollections(asIDs = false): Zotero.Collection[] | number[] {
-  const azp = Zotero.getActiveZoteroPane()
+  const azp = Zotero.getActiveZoteroPane()!
   if (typeof azp.getSelectedCollections === 'function') {
     return azp.getSelectedCollections(asIDs as any) as any[]
   }
@@ -38,30 +38,30 @@ class CollectionError extends Error {
   }
 }
 
-export async function resolve(library: _ZoteroTypes.Library.LibraryLike, path: string, create = false): Promise<Zotero.Collection> {
+const CS_CI: Array<(n: string) => string> = [
+  n => n,
+  n => n.toLowerCase()
+]
+export async function resolve(library: _ZoteroTypes.Library.LibraryLike, path: string, create = false): Promise<Zotero.Collection | undefined> {
   let names = (path || '').split('/')
   if (names.shift() !== '') throw new CollectionError(`collection path ${JSON.stringify(path)} is not an absolute path`, 'notfound')
   names = names.filter(_ => _)
   if (names.length === 0) throw new CollectionError('path is too short', 'notfound')
 
   let children: Zotero.Collection[] = Zotero.Collections.getByLibrary(library.libraryID)
-  let collection: Zotero.Collection
+  let collection: Zotero.Collection | undefined = undefined
   path = ''
   for (const name of names) {
     path += `/${name}`
 
-    let found: Zotero.Collection[]
-    for (const tx of [ (n: string) => n, (n: string) => n.toLowerCase() ]) {
-      found = children.filter(coll => tx(coll.name) === tx(name))
-      switch (found.length) {
-        case 0:
-        case 1:
-          break
-        default:
-          throw new CollectionError(`Collection '${ path }' is not unique`, 'duplicate')
-      }
-      if (found.length) break
-    }
+    const found: Zotero.Collection[] = CS_CI.reduce<Zotero.Collection[]>((acc, tx) => {
+      // If a match was already found in a previous transform, pass it forward
+      if (acc.length) return acc
+
+      const matches = children.filter(coll => tx(coll.name) === tx(name))
+      if (matches.length > 1) throw new CollectionError(`Collection '${path}' is not unique`, 'duplicate')
+      return matches
+    }, [])
 
     if (found.length) {
       collection = found[0]
@@ -70,11 +70,8 @@ export async function resolve(library: _ZoteroTypes.Library.LibraryLike, path: s
       throw new CollectionError(`Collection '${ path }' does not exist`, 'notfound')
     }
     else {
-      collection = new Zotero.Collection({
-        name,
-        libraryID: library.libraryID,
-        parentID: collection?.id,
-      })
+      const parentID = collection?.id
+      collection = new Zotero.Collection({ name, libraryID: library.libraryID, parentID })
       await collection.saveTx()
     }
     children = Zotero.Collections.getByParent(collection.id)

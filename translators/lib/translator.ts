@@ -203,11 +203,11 @@ export class Translation {
     }
 
     if (collected.preferences.testing && collected.translator.configOptions?.cached) {
-      const allowedPreferences: Prefs.Preferences =
-        (collected.translator.label === 'BetterBibTeX JSON'
+      const allowedPreferences: Prefs.Preferences = (
+        collected.translator.label === 'BetterBibTeX JSON'
           ? Object.keys(Prefs.defaults) as Prefs.PreferenceName[]
           : Prefs.affectedBy[collected.translator.label]
-        )
+      )
         .concat(['testing'])
         .reduce((acc: any, pref: Prefs.PreferenceName) => {
           acc[pref] = collected.preferences[pref]

@@ -4,7 +4,7 @@ import { strcmp } from '../content/string-compare'
 import { Translation } from './lib/translator'
 import { Collected } from './lib/collect'
 import type { Header } from '../gen/translators'
-import type { RichDate } from '../content/dateparser'
+import { RichDate, simplify } from '../content/dateparser'
 declare var ZOTERO_TRANSLATOR_INFO: Header // eslint-disable-line no-var
 
 declare const Zotero: any
@@ -179,15 +179,8 @@ class Exporter {
 
       const creators = this.creators(item.creators.map(creator => this.creator(creator)).filter(v => v))
 
-      let date: RichDate | null = null
-      if (item.date) {
-        if (date = Zotero.BetterBibTeX.parseDate(item.date) as RichDate | null) {
-          if (date.from) date = date.from
-          date = typeof date.year === 'number' ? date.year : item.date
-        }
-      }
-
-      const author = [ creators, date ].filter(v => v).join(', ')
+      const date = simplify(Zotero.BetterBibTeX.parseDate(item.date) as RichDate)
+      const author = [ creators, date && ('year' in date) ? `${date.year}` : item.date ].filter(v => v).join(', ')
 
       if (item.title) title += `<i>${ escape.html(item.title) }</i>`
       if (author) title += ` (${ escape.html(author) })`

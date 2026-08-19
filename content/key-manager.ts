@@ -234,7 +234,7 @@ export const KeyManager = new class _KeyManager {
 
       // remove the new citekey from the aliases if present
       const aliases = Extra.get(item.getField('extra'), 'zotero', { aliases: true })
-      if (aliases.extraFields.aliases.includes(citationKey)) {
+      if (aliases.extraFields.aliases?.includes(citationKey)) {
         aliases.extraFields.aliases = aliases.extraFields.aliases.filter(alias => alias !== citationKey)
 
         if (aliases.extraFields.aliases.length) {

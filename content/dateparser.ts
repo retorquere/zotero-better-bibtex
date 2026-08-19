@@ -58,34 +58,72 @@ import { getLocaleDateOrder } from '../submodules/zotero-utilities/date'
 
 type SeasonID = 1 | 2 | 3 | 4
 
-export type RichDate = {
-  type?: 'date' | 'open' | 'verbatim' | 'season' | 'interval' | 'list' | 'century'
-  year?: number
+export interface DateFlags {
+  uncertain?: boolean
+  approximate?: boolean
+  edtf?: string
+  verbatim?: string
+  orig?: RichDate
+}
+
+export interface OrigDate extends Omit<DateFlags, 'orig'> {
+  type: null
+  orig: RichDate
+}
+
+export interface SimpleDate extends DateFlags {
+  type: 'date'
+  year: number
   month?: number
   day?: number
-
   hour?: number
   minute?: number
   seconds?: number
   offset?: number
-
-  orig?: RichDate
-  verbatim?: string
-
-  from?: RichDate
-  to?: RichDate
-
-  dates?: RichDate[]
-
-  season?: SeasonID
-
-  century?: number
-
-  uncertain?: boolean
-  approximate?: boolean
-
-  edtf?: string
 }
+
+export interface OpenDate extends DateFlags {
+  type: 'open'
+}
+
+export interface VerbatimDate extends DateFlags {
+  type: 'verbatim'
+  verbatim: string
+}
+
+export interface SeasonDate extends DateFlags {
+  type: 'season'
+  season: SeasonID
+  year: number
+}
+
+export interface CenturyDate extends DateFlags {
+  type: 'century'
+  century: number
+}
+
+export interface IntervalDate extends DateFlags {
+  type: 'interval'
+  from: RichDate
+  to: RichDate
+}
+
+export interface ListDate extends DateFlags {
+  type: 'list'
+  dates: RichDate[]
+}
+
+export type RichDate =
+  | SimpleDate
+  | OpenDate
+  | VerbatimDate
+  | SeasonDate
+  | CenturyDate
+  | IntervalDate
+  | ListDate
+  | OrigDate
+
+export type OptionalRichDate = RichDate | undefined
 
 const Season = new class {
   private ranges = [
@@ -98,21 +136,21 @@ const Season = new class {
     [40, 41], // Semestral 1 (First 6 months / H1), Semestral 2 (Second 6 months / H2)
   ]
 
-  public fromMonth(month: number): SeasonID {
+  public fromMonth(month: number | null | undefined): SeasonID | undefined {
+    if (typeof month !== 'number') return undefined
+
     for (const range of this.ranges) {
       if (range.includes(month)) return (month - range[0]) + 1 as SeasonID
     }
+
     return undefined
   }
 
   public seasonize(date: RichDate): RichDate {
-    const season = this.fromMonth(date.month)
-    if (date.type === 'date' && typeof season === 'number') {
-      date.type = 'season'
-      date.season = season
-      delete date.month
-    }
-    return date
+    const season = 'month' in date ? this.fromMonth(date.month) : undefined
+    return (date.type === 'date' && typeof season === 'number')
+      ? { type: 'season', season, year: date.year, orig: date.orig }
+      : date
   }
 }
 
@@ -120,8 +158,8 @@ function flagged(v: boolean | { value: number }): boolean | number {
   return typeof v === 'boolean' ? v : v?.value
 }
 
-function normalize_edtf(date: any): RichDate | null {
-  if (!date) return null
+function normalize_edtf(date: any): OptionalRichDate {
+  if (!date) return
 
   const type = date.type.replace('_', '')
   switch (type) {
@@ -145,8 +183,8 @@ function normalize_edtf(date: any): RichDate | null {
 
     case 'Interval': {
       const [min, max] = date.values
-      if (!min || !max) return null
-      return { type: 'interval', from: normalize_edtf(min), to: normalize_edtf(max) }
+      if (!min || !max) return
+      return { type: 'interval', from: normalize_edtf(min)!, to: normalize_edtf(max)! }
     }
 
     case 'Season': {
@@ -154,7 +192,7 @@ function normalize_edtf(date: any): RichDate | null {
       if (typeof Season.fromMonth(month) !== 'number') {
         // eslint-disable-next-line no-restricted-syntax
         Zotero.debug(`better-bibtex: normalize EDTF: ${JSON.stringify(date)} has unexpected season ${month}`)
-        return null
+        return
       }
       return Season.seasonize({
         type: 'date',
@@ -166,7 +204,7 @@ function normalize_edtf(date: any): RichDate | null {
     case 'List': {
       return {
         type: 'list',
-        dates: date.values.map(normalize_edtf),
+        dates: date.values.map(normalize_edtf).filter(Boolean),
       }
     }
 
@@ -180,7 +218,6 @@ function normalize_edtf(date: any): RichDate | null {
 
   // eslint-disable-next-line no-restricted-syntax
   Zotero.debug(`better-bibtex: normalize EDTF: failed to normalize ${type} ${JSON.stringify(date)}`)
-  return null
 }
 
 function upgrade_edtf(date: string): string {
@@ -194,7 +231,8 @@ function upgrade_edtf(date: string): string {
     .replace(/^(\d{2})--$/, '$1XX')
 }
 
-function is_valid_month(month: number, allowseason: boolean) {
+function is_valid_month(month: number | undefined, allowseason: boolean): boolean {
+  if (typeof month !== 'number') return false
   if (month >= 1 && month <= 12) return true
   if (allowseason && Season.fromMonth(month)) return true
 
@@ -202,7 +240,7 @@ function is_valid_month(month: number, allowseason: boolean) {
 }
 
 function has_valid_month(date: RichDate) {
-  return date.type === 'date' && typeof date.month === 'number' && is_valid_month(date.month, true)
+  return date.type === 'date' && is_valid_month(date.month, true)
 }
 
 function is_valid_date(date: RichDate) {
@@ -218,7 +256,7 @@ function is_valid_date(date: RichDate) {
 }
 
 // swap day/month for our American friends
-function swap_day_month(date: RichDate, fix_only = false): RichDate {
+function swap_day_month(date: SimpleDate, fix_only = false): SimpleDate {
   if (!date.day) return date
 
   if (!is_valid_month(date.month, false) && is_valid_month(date.day, false)) return { ...date, month: date.day, day: date.month }
@@ -310,9 +348,9 @@ class DateParser {
   }
 
   #parse(value: string, options = { range: true, reparse: true }): RichDate {
-    let $date: RichDate
+    let $date: RichDate | undefined
     let $year: string
-    let m: RegExpMatchArray
+    let m: RegExpMatchArray | null
 
     const { reparse, range } = options
 
@@ -332,15 +370,15 @@ class DateParser {
 
     // if (value.match(/[T ]/) && !(date = this.parseEDTF(value)).verbatim) return date
 
-    const time_doubt: RichDate = {}
-    const date_only = value
+    const time_doubt: Partial<SimpleDate> = {}
+    const date_only: string = value
       .replace(re.withtime, (...match) => {
         const { hour, minute, seconds, offsetH, offsetM, doubt } = match.pop()
-        if (hour) time_doubt.hour = parseInt(hour)
-        if (minute) time_doubt.minute = parseInt(minute)
-        if (seconds) time_doubt.seconds = parseFloat(seconds)
-        if (offsetH) time_doubt.offset = 60 * parseInt(offsetH)
-        if (offsetM) time_doubt.offset += (offsetH[0] === '-' ? -1 : 1) * parseInt(offsetM)
+        if (typeof hour === 'string') time_doubt.hour = parseInt(hour)
+        if (typeof minute === 'string') time_doubt.minute = parseInt(minute)
+        if (typeof seconds === 'string') time_doubt.seconds = parseFloat(seconds)
+        if (typeof offsetH === 'string') time_doubt.offset = 60 * parseInt(offsetH)
+        if (typeof offsetM === 'string') time_doubt.offset! += (offsetH[0] === '-' ? -1 : 1) * parseInt(offsetM)
         if (doubt && doubt.indexOf('~') >= 0) time_doubt.approximate = true
         if (doubt && doubt.indexOf('?') >= 0) time_doubt.uncertain = true
         return ''
@@ -350,7 +388,7 @@ class DateParser {
     const english = reparse ? Month.toEnglish(date_only) : date_only
 
     if (m = english.match(re.Yy)) {
-      const { date1, date2 } = m.groups
+      const { date1, date2 } = m.groups!
       const year1 = parseInt(date1)
       const year2 = parseInt(date1.substring(0, 2) + date2)
       const month = parseInt(date2)
@@ -367,7 +405,7 @@ class DateParser {
     }
 
     if (m = english.match(re.Mdy) || english.match(re.dMy)) {
-      const { day: sday, month, year: syear } = m.groups
+      const { day: sday, month, year: syear } = m.groups!
       let day = parseInt(sday)
       let year = parseInt(syear)
       if (day > 31 && year < 31) [day, year] = [year, day]
@@ -381,28 +419,28 @@ class DateParser {
     }
 
     if (reparse && (m = value.match(re.nasa.dash) || value.match(re.nasa.slash) || value.match(re.nasa.ym))) {
-      return this.#parse(m.groups.date, { range: false, reparse: false })
+      return this.#parse(m.groups!.date, { range: false, reparse: false })
     }
 
     if (m = english.match(re.My) || english.match(re.yM)) {
       return Season.seasonize({
         type: 'date',
-        year: parseInt(m.groups.year),
-        month: Month.no(m.groups.month),
+        year: parseInt(m.groups!.year),
+        month: Month.no(m.groups!.month),
       })
     }
 
     if (reparse && (m = value.match(re.orig_date) || value.match(re.date_orig))) {
-      const { orig, date } = m.groups
-      const parsed = {
-        orig: this.#parse(orig, { range: false, reparse: false }),
-        date: date ? this.#parse(date, { range: false, reparse: false }) : undefined,
-      }
-      if (parsed.orig.type === 'date' && (!parsed.date || parsed.date.type === 'date')) return { ...parsed.date, orig: parsed.orig }
+      const { orig, date } = m.groups!
+      const _orig: RichDate = this.#parse(orig, { range: false, reparse: false })
+
+      return date
+        ? { ...this.#parse(date, { range: false, reparse: false }), orig: _orig }
+        : { type: null, orig: _orig }
     }
 
     if (reparse && (m = english.match(re.M_d_d_y))) {
-      const { month, day1, day2, year } = m.groups
+      const { month, day1, day2, year } = m.groups!
 
       const from = this.#parse(`${month} ${day1} ${year}`, { range: false, reparse: false })
       const to = this.#parse(`${month} ${day2} ${year}`, { range: false, reparse: false })
@@ -412,7 +450,7 @@ class DateParser {
 
     // #747: January 30–February 3, 1989
     if (m = english.match(re.M_d_M_d_y)) {
-      const { month1, day1, month2, day2, year } = m.groups
+      const { month1, day1, month2, day2, year } = m.groups!
 
       return {
         type: 'interval',
@@ -423,7 +461,7 @@ class DateParser {
 
     // #746: 22-26 June 2015, 29 June-1 July 2011
     if (m = english.match(re.d_M_d_M_y)) {
-      const { day1, month1, day2, month2, year } = m.groups
+      const { day1, month1, day2, month2, year } = m.groups!
 
       return {
         type: 'interval',
@@ -434,7 +472,7 @@ class DateParser {
 
     // July-October 1985
     if (m = english.match(re.M_M_y)) {
-      const { month1, month2, year } = m.groups
+      const { month1, month2, year } = m.groups!
 
       return {
         type: 'interval',
@@ -446,7 +484,7 @@ class DateParser {
     // these assume a sensible y/m/d format by default. There's no sane way to guess between y/d/m and y/m/d, and y/d/m is
     // just wrong. https://en.wikipedia.org/wiki/Date_format_by_country
     if (m = value.match(re.ydm) || date_only.match(re.dmy) || date_only.match(re.my) || date_only.match(re.ym)) {
-      const { year, month, day } = m.groups
+      const { year, month, day } = m.groups!
 
       // #3322
       if (!day && year.length === 4 && month.length === 2 && month > '24' && year < ($year = `${year.substring(0, 2)}${month}`)) {
@@ -457,11 +495,11 @@ class DateParser {
         }
       }
 
-      const parsed = swap_day_month({
+      const parsed: SimpleDate = swap_day_month({
         type: 'date',
         year: parseInt(year),
         month: parseInt(month),
-        day: day && parseInt(day),
+        day: day ? parseInt(day) : undefined,
         ...time_doubt,
       }, true)
 
@@ -472,7 +510,7 @@ class DateParser {
 
     // https://github.com/retorquere/zotero-better-bibtex/issues/1112
     if (m = date_only.match(re.pubmed)) {
-      const { day, month, year } = m.groups
+      const { day, month, year } = m.groups!
 
       const parsed = swap_day_month({
         type: 'date',
@@ -486,7 +524,7 @@ class DateParser {
     }
 
     if (m = date_only.match(re.y)) {
-      const { year } = m.groups
+      const { year } = m.groups!
       return Season.seasonize({ type: 'date', year: parseInt(year), ...time_doubt })
     }
 
@@ -494,7 +532,7 @@ class DateParser {
 
     // https://github.com/retorquere/zotero-better-bibtex/issues/868
     if (m = english.match(re.y_M_d)) {
-      const { year, month, day } = m.groups
+      const { year, month, day } = m.groups!
       const edtf = normalize_edtf(this.edtf(this.edtfy(`${day || ''} ${month} ${year}`.trim())))
       if (edtf) return edtf
     }
@@ -531,13 +569,13 @@ class DateParser {
     return { type: 'verbatim', verbatim: value }
   }
 
-  parseEDTF(value: string, english: string): RichDate {
+  parseEDTF(value: string, english: string): OptionalRichDate {
     // 2378 + 2275
     let date = value
 
     const m = date.match(re.edtf)
     if (m) {
-      let { year, month, day, time, tz } = m.groups
+      let { year, month, day, time, tz } = m.groups!
       year = year.padStart(4, '0')
       month = month.padStart(2, '0')
       day = day.padStart(2, '0')
@@ -549,10 +587,7 @@ class DateParser {
     let edtf = normalize_edtf(this.edtf(upgrade_edtf(date.replace(/_|--/, '/'))))
     if (edtf) return edtf
 
-    edtf = normalize_edtf(this.edtf(this.edtfy(english)))
-    if (edtf) return edtf
-
-    return null
+    return normalize_edtf(this.edtf(this.edtfy(english)))
   }
 }
 
@@ -625,9 +660,21 @@ function selectstart(date: RichDate): RichDate {
       return date
   }
 }
-export function start(date: RichDate): RichDate {
-  return {
-    ...selectstart(date),
-    orig: date.orig && selectstart(date.orig),
+export function start(date: OptionalRichDate): OptionalRichDate {
+  if (!date) return
+
+  const orig: OptionalRichDate = 'orig' in date && date.orig ? date.orig : undefined
+  if (!date.type) {
+    return orig ? { type: null, orig: selectstart(orig) } : undefined
   }
+
+  return orig ? { ...selectstart(date), orig: selectstart(orig) } : selectstart(date)
+}
+
+export function simplify(date: OptionalRichDate): OptionalRichDate {
+  if (!date) return
+  if (!date.type) return simplify(date.orig)
+  if (date.type === 'interval') return simplify({ type: 'list', dates: [ date.from, date.to ] })
+  if (date.type === 'list') return date.dates.map(simplify).find(d => d && d.type && d.type !== 'open' && d.type !== 'verbatim')
+  return date.type === 'open' ? undefined : date
 }

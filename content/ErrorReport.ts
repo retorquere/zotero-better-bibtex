@@ -13,6 +13,7 @@ import { defaults } from '../gen/preferences/meta'
 const supported: string[] = Object.keys(defaults).filter(name => ![ 'client', 'testing', 'platform', 'newTranslatorsAskRestart' ].includes(name))
 
 import { byId } from '../gen/translators'
+import type { ExportScope } from './translators'
 import { log } from './logger'
 import { AutoExport } from './auto-export'
 import { KeyManager } from './key-manager'
@@ -59,8 +60,8 @@ import BBT from '../gen/version.cjs'
 
 type Report = {
   context: string
-  errors: string
-  log: string
+  errors?: string
+  log?: string
   items?: string
   acronyms?: string
   cache?: string
@@ -171,23 +172,23 @@ const upgrades = new Upgrades
 
 export class ErrorReport {
   private previewSize = 3
-  private document: Document
+  private document!: Document
 
-  private key: string
-  private region: {
+  private key!: string
+  private region!: {
     region: string
     short: string
     tld: string
   }
 
-  private timestamp: string
+  private timestamp!: string
 
-  private bucket: string
-  private cacheState: string
+  private bucket!: string
+  private cacheState!: string
 
-  private input: Report
-  private report: Report
-  private config: Record<keyof Report | 'attachments' | 'cache' | 'notes', boolean>
+  private input!: Report
+  private report!: Report
+  private config!: Record<keyof Report | 'attachments' | 'cache' | 'notes', boolean>
 
   public async send(): Promise<void> {
     const wizard: Wizard = this.document.getElementById('better-bibtex-error-report') as Wizard
@@ -232,10 +233,11 @@ export class ErrorReport {
   }
 
   public restartWithDebugEnabled(): void {
-    const buttonFlags = Services.prompt.BUTTON_POS_0 * Services.prompt.BUTTON_TITLE_IS_STRING
-      + Services.prompt.BUTTON_POS_1 * Services.prompt.BUTTON_TITLE_CANCEL
-      + Services.prompt.BUTTON_POS_2 * Services.prompt.BUTTON_TITLE_IS_STRING
+    const buttonFlags = Services.prompt.BUTTON_POS_0! * Services.prompt.BUTTON_TITLE_IS_STRING!
+      + Services.prompt.BUTTON_POS_1! * Services.prompt.BUTTON_TITLE_CANCEL!
+      + Services.prompt.BUTTON_POS_2! * Services.prompt.BUTTON_TITLE_IS_STRING!
     const index = Services.prompt.confirmEx(
+      // @ts-expect-error TS2345 zotero-types bug
       null,
       Zotero.getString('zotero.debugOutputLogging'),
       Zotero.getString('zotero.debugOutputLogging.enabledAfterRestart', [Zotero.clientName]),
@@ -422,7 +424,8 @@ export class ErrorReport {
       log.error('cache: failed getting cache count', err)
       entries = -1
     }
-    this.document.querySelector('#better-bibtex-report-cache').setAttribute('data-l10n-args', JSON.stringify({ entries }))
+    this.document.querySelector('#better-bibtex-report-cache')!
+      .setAttribute('data-l10n-args', JSON.stringify({ entries }))
     this.cacheState = `cache: ${entries}`
 
     this.report.log = [
@@ -453,7 +456,8 @@ export class ErrorReport {
 
     this.show()
 
-    this.document.querySelector('#better-bibtex-error-send-reminder').setAttribute('data-l10n-args', JSON.stringify({ send: continueButton.getAttribute('label') }))
+    this.document.querySelector('#better-bibtex-error-send-reminder')!
+      .setAttribute('data-l10n-args', JSON.stringify({ send: continueButton.getAttribute('label') }))
 
     wizard.getPageById('page-enable-debug').addEventListener('pageshow', this.show.bind(this))
     wizard.getPageById('page-upgrade').addEventListener('pageshow', this.show.bind(this))
@@ -498,7 +502,7 @@ export class ErrorReport {
     }
     catch (err) {
       log.error('errorreport:', err)
-      alert({ text: `No AWS region can be reached: ${ err.message }` })
+      alert({ text: `No AWS region can be reached: ${(err as any).message}` })
       wizard.getButton('cancel').disabled = false
     }
   }
@@ -622,17 +626,17 @@ export class ErrorReport {
   }
 
   public async open(items?: string): Promise<void> {
-    let scope = null
+    let scope: ExportScope | null = null
     switch (items) {
       case 'collection':
       case 'library':
         scope = { type: 'collection', collection: selectedCollection() }
-        if (!scope.collection) scope = { type: 'library', id: selectedLibraryID() }
+        if (!scope.collection) scope = { type: 'library', id: selectedLibraryID()! }
         break
 
       case 'items':
         try {
-          scope = { type: 'items', items: Zotero.getActiveZoteroPane().getSelectedItems() }
+          scope = { type: 'items', items: Zotero.getActiveZoteroPane()!.getSelectedItems() }
         }
         catch (err) { // ZoteroPane.getSelectedItems() doesn't test whether there's a selection and errors out if not
           log.error('Could not get selected items:', err)
@@ -660,13 +664,13 @@ export class ErrorReport {
         items = JSON.stringify(merge, null, 2)
       }
       catch (err) {
-        if (err.timeout) {
-          log.error('errorreport: items timed out after', err.timeout, 'seconds')
+        if ((err as any).timeout) {
+          log.error('errorreport: items timed out after', (err as any).timeout, 'seconds')
           items = 'Timeout retrieving items'
         }
         else {
           log.error('errorreport: could not get items', err)
-          items = `Error retrieving items: ${ err }`
+          items = `Error retrieving items: ${err}`
         }
       }
     }

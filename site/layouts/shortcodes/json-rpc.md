@@ -158,7 +158,7 @@ Examples
 
 **user.groups**(includeCollections?: boolean)
 
-returns: { collections: any[]; id: number; name: string }[]
+returns: ({ collections: null | any[]; id: number; name: string })[]
 
 * includeCollections: Wether or not the result should include a list of collection for each library (default is false)
 

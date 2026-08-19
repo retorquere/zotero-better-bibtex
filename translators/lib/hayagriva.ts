@@ -147,16 +147,16 @@ function formatParsedDate(date: dateparser.RichDate): string {
 
     case 'season':
       if (typeof date.year !== 'number') return ''
-      return `${seasons[date.season!] || date.season!} ${`${date.year}`.padStart(4, '0')}`
+      return `${seasons[date.season] || date.season} ${`${date.year}`.padStart(4, '0')}`
 
     case 'verbatim':
       return date.verbatim || ''
 
     case 'interval':
-      return formatParsedDate(date.from?.type === 'open' ? date.to! : date.from!)
+      return formatParsedDate(date.from?.type === 'open' ? date.to : date.from)
 
     case 'list':
-      return formatParsedDate(date.dates!.find(d => d.type !== 'open') || date.dates![0])
+      return formatParsedDate(date.dates.find(d => d.type !== 'open') || date.dates[0])
 
     default:
       return ''

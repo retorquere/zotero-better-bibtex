@@ -334,7 +334,7 @@ async function saveFile(this: Serialized.Attachment, path: string, overwrite: bo
     for (const src of await IOUtils.getChildren(snapshot)) {
       if (PathUtils.filename(src) === '.zotero-ft-cache') continue
       if (await File.isDir(src)) throw new Error(`Unexpected directory ${JSON.stringify(src)} in snapshot`)
-      const tgt = PathUtils.join(target, PathUtils.filename(src))!
+      const tgt = PathUtils.join(target, PathUtils.filename(src))
       await protect(tgt, src)
       await IOUtils.copy(src, tgt)
     }
@@ -504,7 +504,7 @@ class WorkerZotero {
   }
 
   public nextCollection(): Serialized.Collection | undefined {
-    return this.running!.job.data!.collections?.shift()
+    return this.running!.job.data.collections?.shift()
   }
 
   private patchAttachments(item): void {

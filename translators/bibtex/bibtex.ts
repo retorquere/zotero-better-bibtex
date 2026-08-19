@@ -9,7 +9,7 @@ import { Schema } from '../../content/item-schema'
 import wordsToNumbers from '@insomnia-dev/words-to-numbers'
 import type { Serialized } from '../../gen/typings/serialized'
 
-import { RichDate, parse as parseDate, strToISO as strToISODate, century } from '../../content/dateparser'
+import { OptionalRichDate, simplify as simplifyDate, parse as parseDate, strToISO as strToISODate, century } from '../../content/dateparser'
 import { toEnglishOrdinal } from '../../content/text'
 
 import { parseBuffer as parsePList } from 'bplist-parser'
@@ -350,71 +350,61 @@ export async function importBibTeX(collected: Collected): Promise<void> {
   await importer.import()
 }
 
-function addDate(ref: Entry, date: RichDate | { type: 'none' }, verbatim: string) {
-  const print = (d: RichDate) => {
-    switch (d.type) {
-      case 'date':
-      case 'season':
-        return d.year
-      case 'century':
-        return century(d.century!)
-      default:
-        return ''
-    }
+function addDate(ref: Entry, date: OptionalRichDate, verbatim: string) {
+  if (!date) return
+
+  const year = (d: OptionalRichDate) => {
+    if (!d) return ''
+    if ('year' in d) return d.year
+    if ('century' in d) return d.century
+    return ''
   }
+
   if (date.type === 'interval') {
-    const { from, to } = date
-
-    if (from!.type === 'open' && to!.type === 'open') return
-
-    if (from!.type === 'open') {
-      date = to!
+    if (date.from.type === 'open') {
+      date = date.to
     }
-    else if (to!.type === 'open' || (from!.year && from!.year === to!.year)) {
-      date = from!
+    else if (date.to.type === 'open') {
+      date = date.from
     }
-    else if (ref.add({ name: 'year', value: [print(from!), print(to!)].filter(_ => _).join('\u2013') })) {
+    else if (ref.add({ name: 'year', value: [year(simplifyDate(date.from)), year(simplifyDate(date.to))].filter(Boolean).join('\u2013') })) {
       return
     }
-    else {
-      ref.add({ name: 'year', value: verbatim })
-    }
   }
 
-  switch (date.type) {
+  const orig = 'orig' in date ? simplifyDate(date.orig) : undefined
+  if (date.type) date = simplifyDate(date)
+
+  switch (date?.type) {
     case 'open':
-    case 'none':
+    case null:
+      if (year(orig)) ref.add({ name: 'year', value: `[${year(orig)}]` })
       return
 
     case 'verbatim':
-      ref.add({ name: 'year', value: date.verbatim! })
+      ref.add({ name: 'year', value: date.verbatim })
       return
 
     case 'century':
-      ref.add({ name: 'year', value: century(date.century!) })
+      ref.add({ name: 'year', value: century(date.century) })
       return
 
     case 'date':
-      if (date.month) ref.add({ name: 'month', value: months[date.month - 1], bare: date.month <= 12 })
-      if (date.orig?.type === 'date') {
-        ref.add({ name: 'year', value: `[${ date.orig.year }] ${ date.year }` })
+      if ('month' in date) ref.add({ name: 'month', value: months[date.month! - 1], bare: date.month! <= 12 })
+      if (year(orig)) {
+        ref.add({ name: 'year', value: `[${year(orig)}] ${year(date)}`.trim() })
       }
       else {
-        ref.add({ name: 'year', value: `${date.year}`, bare: true })
+        ref.add({ name: 'year', value: `${year(date)}`, bare: true })
       }
       return
 
     case 'season':
-      ref.add({ name: 'year', value: date.year!, bare: true })
+      ref.add({ name: 'year', value: date.year, bare: true })
       break
 
     default:
-      if (!date.type && date.orig?.type === 'date') {
-        ref.add({ name: 'year', value: `[${ date.orig.year }]` })
-      }
-      else {
-        log.error(`Unexpected date type ${ JSON.stringify({ date: verbatim, parsed: date }) }`)
-      }
+      log.error(`Unexpected date type for ${JSON.stringify(verbatim)}`)
   }
 }
 
@@ -505,15 +495,15 @@ export function generateBibTeX(collected: Collected): Translation {
         break
     }
 
-    const doi = item.DOI || item.extraFields.kv.DOI
-    let urlfield: string | undefined = undefined
+    const doi = item.DOI || item.extraFields.kv!.DOI
+    let urlfield: string | undefined
     if (collected.preferences.DOIandURL !== 'doi' || !doi) {
       switch (collected.preferences.bibtexURL) {
         case 'url':
         case 'url-ish':
           urlfield = ref.add({
             name: 'url',
-            value: item.url || item.extraFields.kv.url,
+            value: item.url || item.extraFields.kv!.url,
             enc: translation.collected.preferences.bibtexURL === 'url' && translation.isVerbatimField('url') ? 'url' : 'literal',
           })
           break
@@ -522,14 +512,14 @@ export function generateBibTeX(collected: Collected): Translation {
         case 'note-url-ish':
           urlfield = ref.add({
             name: ([ 'misc', 'booklet' ].includes(ref.entrytype) && !ref.has.howpublished ? 'howpublished' : 'note'),
-            value: item.url || item.extraFields.kv.url,
+            value: item.url || item.extraFields.kv!.url,
             enc: translation.collected.preferences.bibtexURL === 'note' ? 'url' : 'literal',
           })
           break
 
         default:
           if ([ 'csl.webpage', 'zotero.webpage', 'csl.post', 'csl.post-weblog' ].includes(ref.entrytype_source)) {
-            urlfield = ref.add({ name: 'howpublished', value: item.url || item.extraFields.kv.url })
+            urlfield = ref.add({ name: 'howpublished', value: item.url || item.extraFields.kv!.url })
           }
           break
       }
@@ -876,15 +866,15 @@ class ZoteroItem {
 
   protected $journaltitle(): boolean {
     type JournalField = { field: string; value: string }
-    let journal: JournalField | undefined = undefined
-    let abbr: JournalField | undefined = undefined
+    let journal: JournalField | undefined
+    let abbr: JournalField | undefined
 
     // journal-full is bibdesk
     const titles: JournalField[] = [ 'journal-full', 'journal', 'journaltitle', 'shortjournal' ]
       .map(field => {
         const value = this.bibtex.fields[field]
         delete this.bibtex.fields[field] // this makes sure we're not ran again
-        return { field, value } as JournalField
+        return { field, value }
       })
       .filter((candidate): candidate is JournalField & { value: string } => Boolean(candidate?.value)) // skip empty
       .filter((candidate: JournalField) => {
@@ -937,11 +927,11 @@ class ZoteroItem {
     }
 
     let resolved: string
-    if (abbr && !journal && (resolved = resolve((abbr as JournalField).value))) {
+    if (abbr && !journal && (resolved = resolve(abbr.value))) {
       journal = { field: '', value: resolved }
     }
-    else if (journal && !abbr && (resolved = resolve((journal as JournalField).value))) {
-      abbr = { ...(journal as JournalField) }
+    else if (journal && !abbr && (resolved = resolve(journal.value))) {
+      abbr = { ...journal }
       journal = { field: '', value: resolved }
     }
 
@@ -1379,14 +1369,14 @@ class ZoteroItem {
       && this.bibtex.fields.booktitle
       && this.bibtex.fields.title !== this.bibtex.fields.booktitle
       && !this.bibtex.crossref?.donated.includes('booktitle')) {
-        this.item.itemType = 'bookSection'
+      this.item.itemType = 'bookSection'
     }
 
     if (
       this.item.itemType === 'journalArticle'
       && this.bibtex.fields.booktitle?.length
       && this.bibtex.fields.booktitle.match(/proceeding/i)) {
-        this.item.itemType = 'conferencePaper'
+      this.item.itemType = 'conferencePaper'
     }
 
     this.validFields = Schema.valid.fields[this.item.itemType]
@@ -1543,7 +1533,7 @@ class ZoteroItem {
             }
           }
           catch (err) {
-            if (err) this.error(`import error: ${ this.item.itemType } ${ this.bibtex.key }: ${ err }\n${ JSON.stringify(this.item, null, 2) }`)
+            this.error(`import error: ${this.item.itemType} ${this.bibtex.key}: ${(err as any).message}\n${JSON.stringify(this.item, null, 2)}`)
           }
           if (imported) continue
         }

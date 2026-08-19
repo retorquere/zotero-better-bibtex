@@ -357,7 +357,7 @@ export class TestSupport {
   }
 
   public async clearCollection(path: string): Promise<void> {
-    let collection: Zotero.Collection | undefined = undefined
+    let collection: Zotero.Collection | undefined
 
     for (const name of path.split('/')) {
       const collections = collection ? Zotero.Collections.getByParent(collection.id) : Zotero.Collections.getByLibrary(Zotero.Libraries.userLibraryID)

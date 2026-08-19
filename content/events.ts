@@ -3,8 +3,6 @@ import Emittery from 'emittery'
 import { log } from './logger'
 import { getItemsAsync } from './get-items-async'
 
-type ZoteroAction = 'modify' | 'add' | 'trash' | 'delete'
-
 type IdleState = 'active' | 'idle'
 export type SyncState = 'syncing' | 'idle'
 export type Action = 'modify' | 'delete' | 'add'
@@ -24,6 +22,11 @@ const idleService: IdleService = Components.classes['@mozilla.org/widget/useridl
 type Reason = 'key-refresh' | 'parent-modify' | 'parent-delete' | 'parent-add' | 'tagged'
 
 const logEvents = Zotero.Prefs.get('extensions.zotero.translators.better-bibtex.logEvents')
+
+interface ZoteroObserver {
+  notify: _ZoteroTypes.Notifier.Notify;
+}
+type NotifierIDs = number[] | string[]
 
 type EventMap = {
   'collections-changed': number[]
@@ -145,37 +148,31 @@ class IdleListener {
   }
 }
 
-class SyncListener {
-  private id: string
-
-  constructor() {
-    this.id = Zotero.Notifier.registerObserver(this, ['sync'], 'Better BibTeX', 1)
-  }
-
-  notify(action: string, _type: string, _ids: string[], _extraData?: any) {
-    const state: SyncState = action === 'start' ? 'syncing' : 'idle' // Zotero fires 'start' and 'finish'
-    Events.syncing = state
-    void Events.emit('sync', { state })
-  }
-
-  unregister() {
-    Zotero.Notifier.unregisterObserver(this.id)
-  }
-}
-
 type ExtraData = Record<string, any>
 
-abstract class ZoteroListener {
+abstract class ZoteroListener implements ZoteroObserver {
   private id: string
 
   constructor(protected type) {
     this.id = Zotero.Notifier.registerObserver(this, [type], 'Better BibTeX', 1)
   }
 
-  abstract notify(action: ZoteroAction, type: string, ids: string[] | number[], extraData?: ExtraData): Promise<void>
+  abstract notify(action: _ZoteroTypes.Notifier.Event, type: _ZoteroTypes.Notifier.Type, ids: NotifierIDs, extraData: ExtraData): void | Promise<void>
 
   public unregister() {
     Zotero.Notifier.unregisterObserver(this.id)
+  }
+}
+
+class SyncListener extends ZoteroListener {
+  constructor() {
+    super('sync')
+  }
+
+  notify(action: _ZoteroTypes.Notifier.Event, type: _ZoteroTypes.Notifier.Type, ids: NotifierIDs, extraData: any): void {
+    const state: SyncState = action === ('start' as unknown as _ZoteroTypes.Notifier.Type) ? 'syncing' : 'idle' // Zotero fires 'start' and 'finish'
+    Events.syncing = state
+    void Events.emit('sync', { state })
   }
 }
 
@@ -191,7 +188,7 @@ class ItemListener extends ZoteroListener {
     super('item')
   }
 
-  public async notify(action: ZoteroAction, type: string, ids: number[], extraData?: ExtraData) {
+  public async notify(action: _ZoteroTypes.Notifier.Event, type: _ZoteroTypes.Notifier.Type, ids: number[], extraData?: ExtraData): Promise<void> {
     if (logEvents) log.info('item event:', { action, ids, extraData })
     try {
       let load = false
@@ -297,7 +294,7 @@ class ItemListener extends ZoteroListener {
       })
     }
     catch (err) {
-      log.error(`error in ${type} ${action} handler for ${JSON.stringify(ids)}: ${err.message}`)
+      log.error(`error in ${type} ${action} handler for ${JSON.stringify(ids)}: ${(err as any).message}`)
     }
   }
 }
@@ -315,7 +312,7 @@ class TagListener extends ZoteroListener {
       void Events.emit('items-changed', { items: Zotero.Items.get(ids), action: 'modify', reason: 'tagged' })
     }
     catch (err) {
-      log.error(`error in ${type} ${action} handler for ${JSON.stringify(pairs)}: ${err.message}`)
+      log.error(`error in ${type} ${action} handler for ${JSON.stringify(pairs)}: ${(err as any).message}`)
     }
   }
 }
@@ -325,13 +322,13 @@ class CollectionListener extends ZoteroListener {
     super('collection')
   }
 
-  public async notify(action: string, type: string, ids: number[]) {
+  public async notify(action: string, type: string, ids: NotifierIDs) {
     try {
       await Zotero.BetterBibTeX.ready
-      if ((action === 'delete') && ids.length) void Events.emit('collections-removed', ids)
+      if ((action === 'delete') && ids.length) void Events.emit('collections-removed', ids as number[])
     }
     catch (err) {
-      log.error(`error in ${type} ${action} handler for ${JSON.stringify(ids)}: ${err.message}`)
+      log.error(`error in ${type} ${action} handler for ${JSON.stringify(ids)}: ${(err as any).message}`)
     }
   }
 }
@@ -348,7 +345,7 @@ class MemberListener extends ZoteroListener {
       const changed: Set<number> = (new Set)
 
       for (const pair of pairs) {
-        let id = parseInt(pair.split('-')[0])
+        let id: number | null = parseInt(pair.split('-')[0])
         if (changed.has(id)) continue
         while (id) {
           changed.add(id)
@@ -360,7 +357,7 @@ class MemberListener extends ZoteroListener {
       if (changed.size) void Events.emit('collections-changed', Array.from(changed))
     }
     catch (err) {
-      log.error(`error in ${type} ${action} handler for ${JSON.stringify(pairs)}: ${err.message}`)
+      log.error(`error in ${type} ${action} handler for ${JSON.stringify(pairs)}: ${(err as any).message}`)
     }
   }
 }
@@ -370,13 +367,13 @@ class GroupListener extends ZoteroListener {
     super('group')
   }
 
-  public async notify(action: string, type: string, ids: number[]) {
+  public async notify(action: string, type: string, ids: NotifierIDs) {
     try {
       await Zotero.BetterBibTeX.ready
-      if ((action === 'delete') && ids.length) void Events.emit('libraries-removed', ids)
+      if ((action === 'delete') && ids.length) void Events.emit('libraries-removed', ids as number[])
     }
     catch (err) {
-      log.error(`error in ${type} ${action} handler for ${JSON.stringify(ids)}: ${err.message}`)
+      log.error(`error in ${type} ${action} handler for ${JSON.stringify(ids)}: ${(err as any).message}`)
     }
   }
 }

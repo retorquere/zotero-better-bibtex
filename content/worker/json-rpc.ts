@@ -24,7 +24,7 @@ export class Client {
     this.#id = `[${this.#namespace}${Date.now()}:${Math.random()}]`
 
     worker.addEventListener('message', e => {
-      const req = (e as MessageEvent<JsonRpcMessage>).data as JsonRpcMessage
+      const req = (e as MessageEvent<JsonRpcMessage>).data
       if (!req || req.jsonrpc !== '2.0' || typeof req.id !== 'string') return
       // received neighbour json-rpc response
       if (!req.id.startsWith(this.#id)) return

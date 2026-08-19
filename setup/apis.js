@@ -130,6 +130,9 @@ export function printed(schema, parenthesize) {
 
     case 'number':
     case 'boolean':
+    case 'any':
+    case 'void':
+    case 'null':
       return schema.type
 
     case 'integer':
@@ -142,15 +145,6 @@ export function printed(schema, parenthesize) {
       return schema.prefixItems
         ? `[ ${schema.prefixItems.map(printed).join(', ')} ]`
         : `${parens(printed(schema.items))}[]`
-
-    case 'any':
-      return 'any'
-
-    case 'void':
-      return 'void'
-
-    case 'null':
-      return 'null'
 
     default:
       if (schema.instanceof) return schema.instanceof
@@ -601,7 +595,9 @@ class APIReader {
       */
     }
 
-    stop('Unexpected type component', ts.SyntaxKind[type.kind])
+    stop('Unexpected type component', ts.SyntaxKind[type.kind], `in [${this.source}] ${this.currentClassName}`)
+    this.className = className
+    this.methodName = methodName
   }
 }
 

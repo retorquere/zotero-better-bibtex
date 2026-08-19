@@ -20,7 +20,7 @@ Events.on('window-loaded', ({ data: { win, href } }: { data: { win: Window; href
   const document = window.document
 
   window.addEventListener('unload', () => {
-    const reminder: HTMLElement = document.getElementById('better-bibtex-reminder')
+    const reminder: HTMLElement | null = document.getElementById('better-bibtex-reminder')
     if (reminder) reminder.hidden = true
     window.bbtmonkey?.disable()
   })
@@ -32,7 +32,7 @@ Events.on('window-loaded', ({ data: { win, href } }: { data: { win: Window; href
     const biblatexAPA = document.getElementById('export-option-biblatexAPA') as unknown as XUL.Checkbox
     const biblatexChicago = document.getElementById('export-option-biblatexChicago') as unknown as XUL.Checkbox
 
-    if (!exportFileData || !keepUpdated) return null
+    if (!exportFileData || !keepUpdated) return
 
     if (!e) keepUpdated.checked = false
 
@@ -59,9 +59,9 @@ Events.on('window-loaded', ({ data: { win, href } }: { data: { win: Window; href
 
   function show() {
     const index = (document.getElementById('format-menu') as HTMLSelectElement).selectedIndex
-    const selected = (index >= 0) ? window.arguments[0].translators[index] : null
+    const selected = (index >= 0) ? window.arguments![0].translators[index] : null
 
-    let reminder: HTMLElement = document.getElementById('better-bibtex-reminder')
+    let reminder: HTMLElement | null = document.getElementById('better-bibtex-reminder')
 
     if (!selected) {
       if (reminder) reminder.hidden = true
@@ -69,12 +69,12 @@ Events.on('window-loaded', ({ data: { win, href } }: { data: { win: Window; href
     }
 
     if (!reminder) {
-      const translateOptions = document.getElementById('translator-options')
+      const translateOptions = document.getElementById('translator-options')!
       reminder = document.createXULElement('description') as HTMLElement
       reminder.setAttribute('style', 'color: red')
       reminder.hidden = true
       reminder.setAttribute('id', 'better-bibtex-reminder')
-      translateOptions.parentNode.insertBefore(reminder, translateOptions)
+      translateOptions.parentNode!.insertBefore(reminder, translateOptions)
     }
 
     switch (selected.translatorID) {
@@ -126,7 +126,7 @@ Events.on('window-loaded', ({ data: { win, href } }: { data: { win: Window; href
   }
   else {
     window.bbtmonkey = new Monkey(true)
-    window.bbtmonkey.patch(window.Zotero_File_Interface_Export, 'updateOptions', original => function(_options) {
+    window.bbtmonkey.patch(window.Zotero_File_Interface_Export, 'updateOptions', original => function(this: any) {
       // eslint-disable-next-line prefer-rest-params
       original.apply(this, arguments)
       show()

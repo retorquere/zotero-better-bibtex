@@ -101,7 +101,7 @@ export abstract class CSLExporter {
       if (csl.journalAbbreviation) [ csl.journalAbbreviation, csl['container-title-short'] ] = [ csl['container-title-short'], csl.journalAbbreviation ]
 
       const extraFields: ParsedExtraFields = clone(item.extraFields)
-      const date = dateparser.parse(item.date, item.originalDate || extraFields.kv.originalDate)
+      const date = dateparser.parse(item.date, item.originalDate || extraFields.kv!.originalDate)
 
       try {
         // preconvert both so the values get set only if both are convertable
@@ -152,16 +152,16 @@ export abstract class CSLExporter {
         }
       }
 
-      for (const [ fieldName, value ] of Object.entries(item.extraFields.csl)) {
+      for (const [ fieldName, value ] of Object.entries(item.extraFields.csl!)) {
         const normalizedField = fieldName.toLowerCase()
         const cslField = Schema.type.csl[normalizedField] ? normalizedField : fieldName
         applyCSLField(cslField, value, true)
-        delete item.extraFields.csl[fieldName]
+        delete item.extraFields.csl![fieldName]
       }
 
-      for (const [ fieldName, value ] of Object.entries(item.extraFields.kv)) {
+      for (const [ fieldName, value ] of Object.entries(item.extraFields.kv!)) {
         if (!applyCSLField(fieldName, value)) continue
-        delete item.extraFields.kv[fieldName]
+        delete item.extraFields.kv![fieldName]
       }
 
       for (const [ fieldName, value ] of Object.entries(item.extraFields.creator)) {

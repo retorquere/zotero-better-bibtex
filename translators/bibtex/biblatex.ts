@@ -352,13 +352,13 @@ export function generateBibLaTeX(collected: Collected): Translation {
     entry.add({ name: 'pubstate', value: item.status || (item.itemType === 'preprint' ? 'prepublished' : undefined) })
 
     if (entry.entrytype === 'patent') {
-      if (item.country && !patent.region(item)) entry.add({ name: 'location', value: item.country || item.extraFields.kv['publisher-place'] })
+      if (item.country && !patent.region(item)) entry.add({ name: 'location', value: item.country || item.extraFields.kv!['publisher-place'] })
     }
     else if (entry.entrytype === 'unpublished' && item.itemType === 'presentation') {
       entry.add({ name: 'venue', value: item.place, enc: 'literal' })
     }
     else {
-      entry.add({ name: 'location', value: item.place || item.extraFields.kv['publisher-place'], enc: 'literal' })
+      entry.add({ name: 'location', value: item.place || item.extraFields.kv!['publisher-place'], enc: 'literal' })
       if (item.itemType === 'conferencePaper' && !entry.has.venue) {
         entry.add({ name: 'venue', value: item.eventPlace, enc: 'literal' })
       }
@@ -379,8 +379,8 @@ export function generateBibLaTeX(collected: Collected): Translation {
     entry.add({ name: 'isbn', value: item.ISBN })
     entry.add({ name: 'issn', value: item.ISSN })
 
-    entry.add({ name: 'url', value: item.url || item.extraFields.kv.url })
-    entry.add({ name: 'doi', value: (item.DOI || item.extraFields.kv.DOI || '').replace(/^https?:\/\/doi.org\//i, '') })
+    entry.add({ name: 'url', value: item.url || item.extraFields.kv!.url })
+    entry.add({ name: 'doi', value: (item.DOI || item.extraFields.kv!.DOI || '').replace(/^https?:\/\/doi.org\//i, '') })
 
     entry.add({ name: 'shorttitle', value: item.shortTitle })
     entry.add({ name: 'abstract', value: item.abstractNote?.replace(/\n+/g, ' ') })
@@ -392,7 +392,7 @@ export function generateBibLaTeX(collected: Collected): Translation {
 
     entry.add({ name: 'pagetotal', value: item.numPages })
 
-    let number_added: string | undefined = undefined
+    let number_added: string | undefined
     if (!item.number?.match(/arxiv/i) || !entry.has.eprint) {
       number_added = entry.add({ name: 'number', value: patent.number(item) || entry.normalizeDashes(item.number || item.seriesNumber) })
     }
@@ -409,7 +409,7 @@ export function generateBibLaTeX(collected: Collected): Translation {
         break
 
       case 'legislation':
-        entry.add({ name: 'journaltitle', value: item.code || (item.publicationTitle !== item.title ? item.publicationTitle: undefined), bibtexStrings: true })
+        entry.add({ name: 'journaltitle', value: item.code || (item.publicationTitle !== item.title ? item.publicationTitle : undefined), bibtexStrings: true })
         break
 
       case 'incollection':

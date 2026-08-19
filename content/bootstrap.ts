@@ -45,7 +45,7 @@ export function onMainWindowUnload({ window }) {
 
 let chromeHandle: any = null
 let sandbox: any = null
-const BBT: { profiler?: AllocationProfiler } = ((Zotero as any).BBT = {})
+const BBT: { profiler?: AllocationProfiler | null } = ((Zotero as any).BBT = {})
 
 function makeSandbox(wantGlobalProperties: string[] = []): any {
   const Sandbox = Components.utils.Sandbox as unknown as new(principal: any, options?: any) => any
@@ -112,6 +112,7 @@ export async function startup({ resourceURI, rootURI = resourceURI.spec }: { res
       target: sandbox,
     })
 
+    // @ts-expect-error TS2339
     await Zotero.BetterBibTeX.startup(BOOTSTRAP_REASONS[reason])
     log('startup done')
 
@@ -123,8 +124,8 @@ export async function startup({ resourceURI, rootURI = resourceURI.spec }: { res
     }
   }
   catch (err) {
-    alert({ title: 'Better BibTeX startup failed', text: `${err}\n${err.stack}` })
-    log(`${err}\n${err.stack}`)
+    alert({ title: 'Better BibTeX startup failed', text: `${err}\n${(err as any).stack}` })
+    log(`${err}\n${(err as any).stack}`)
   }
 }
 
@@ -141,7 +142,7 @@ export async function shutdown(data: any, reason: ReasonId) {
       log('shutdown started')
       await Zotero.BetterBibTeX.shutdown(BOOTSTRAP_REASONS[reason])
       log('shutdown completed')
-      delete Zotero.BetterBibTeX
+      delete (Zotero as any).BetterBibTeX
       log('BBT deleted')
     }
 
@@ -154,7 +155,7 @@ export async function shutdown(data: any, reason: ReasonId) {
   }
   catch (err) {
     alert({ title: 'Better BibTeX shutdown failed', text: `${err}` })
-    log(`${err}\n${err.stack}`)
+    log(`${err}\n${(err as any).stack}`)
   }
 }
 

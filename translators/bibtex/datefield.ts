@@ -61,9 +61,9 @@ export function datefield(date: RichDate, field: Field, translation: Translation
     field.value = format(date, translation)
   }
   else if (date.type === 'interval') {
-    field.value = `${ format(date.from, translation) }/${ format(date.to, translation) }`
+    field.value = `${format(date.from, translation) }/${ format(date.to, translation)}`
   }
-  else if (date.year) {
+  else if ('year' in date) {
     field.value = format(date, translation)
   }
 

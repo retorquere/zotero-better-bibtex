@@ -34,7 +34,7 @@ class TimeoutError extends Error {
   }
 }
 
-type ExportScope = { type: 'items'; items: any[] } | { type: 'library'; id: number } | { type: 'collection'; collection: any }
+export type ExportScope = { type: 'items'; items: any[] } | { type: 'library'; id: number } | { type: 'collection'; collection: any }
 export type ExportJob = {
   translatorID: string
   displayOptions: Record<string, boolean>

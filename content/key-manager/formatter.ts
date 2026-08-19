@@ -126,7 +126,7 @@ function parseDate(d: string, o = ''): FormattableDate {
         return `${n}`
     }
   }
-  function assign(dp, prefix) {
+  function assign(dp: DateParser.OptionalRichDate, prefix: string): void {
     if (!dp?.type) return
 
     switch (dp.type) {
@@ -146,7 +146,7 @@ function parseDate(d: string, o = ''): FormattableDate {
         break
 
       case 'century':
-        Object.assign(parsed, { [`${prefix}Y`]: `${str(date.century)}xx` })
+        Object.assign(parsed, { [`${prefix}Y`]: `${str(dp.century)}xx` })
         break
 
       default:
@@ -155,13 +155,14 @@ function parseDate(d: string, o = ''): FormattableDate {
   }
 
   const date = DateParser.start(DateParser.parse(d, o))
-
-  assign(date, '')
-  assign(date.orig, 'o')
-  if (!parsed.Y) Object.assign(parsed, { Y: parsed.oY, y: parsed.oy, m: parsed.om, d: parsed.od })
-  if (!parsed.oY) Object.assign(parsed, { oY: parsed.Y, oy: parsed.y, om: parsed.m, od: parsed.d })
-  if (typeof date.hour === 'number') {
-    Object.assign(parsed, { H: str(date.hour), M: str(date.minute), S: str(date.seconds) })
+  if (date) {
+    assign(date, '')
+    if (date.orig) assign(date.orig, 'o')
+    if (!parsed.Y) Object.assign(parsed, { Y: parsed.oY, y: parsed.oy, m: parsed.om, d: parsed.od })
+    if (!parsed.oY) Object.assign(parsed, { oY: parsed.Y, oy: parsed.y, om: parsed.m, od: parsed.d })
+    if (date.type === 'date') {
+      Object.assign(parsed, { H: str(date.hour!), M: str(date.minute!), S: str(date.seconds!) })
+    }
   }
 
   return parsed
@@ -289,7 +290,7 @@ class Item {
           return this.title
         default:
           // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-          return this.item.getField(name, false, true) || this.extraFields?.kv[name] || ''
+          return this.item.getField(name, false, true) || this.extraFields!.kv![name] || ''
       }
     }
 
@@ -314,7 +315,7 @@ class Item {
       creator.lastName = creator.lastName || creator.name
     }
 
-    this.date = parseDate(this.getField('date') as string, (this.getField('originalDate') as string) || this.extraFields.kv.originalDate)
+    this.date = parseDate(this.getField('date') as string, (this.getField('originalDate') as string) || this.extraFields.kv!.originalDate)
     this.title = stripHTML(this.title)
   }
 
@@ -917,7 +918,7 @@ export class PatternFormatter {
     if (!variables.length) return ''
 
     const value = variables
-      .map((varname: string) => this.item.extraFields.kv[varname] || this.item.extraFields.tex[varname]?.value || this.item.extraFields.tex[`tex.${ varname }`]?.value)
+      .map((varname: string) => this.item.extraFields.kv![varname] || this.item.extraFields.tex![varname]?.value || this.item.extraFields.tex![`tex.${ varname }`]?.value)
       .find(val => val)
     if (value) return value
 

@@ -8,7 +8,7 @@ function urls(item): { type: string; id: string; url: string }[] {
   const candidates: { type: string; id: string; url: string }[] = []
 
   let m
-  const doi = (item.getField('DOI') || parsed.extraFields.kv.DOI || '').replace(/^https?:\/\/doi.org\//i, '')
+  const doi = (item.getField('DOI') || parsed.extraFields.kv!.DOI || '').replace(/^https?:\/\/doi.org\//i, '')
   if (m = doi.match(/\/arXiv[.](.+)/i)) {
     candidates.push({ type: 'arXiv ID', id: m[1], url: `https://inspirehep.net/api/arxiv/${ m[1] }` })
   }
@@ -16,7 +16,8 @@ function urls(item): { type: string; id: string; url: string }[] {
     candidates.push({ type: 'DOI', id: doi, url: `https://inspirehep.net/api/doi/${ doi }` })
   }
 
-  const arxiv = (([ 'arxiv.org', 'arxiv' ].includes((item.getField('libraryCatalog') || '').toLowerCase())) && arXiv(item.getField('publicationTitle')).id) || arXiv(parsed.extraFields.tex['tex.arxiv']?.value).id
+  const arxiv = ((item.getField('libraryCatalog') || '').match(/^arxiv([.]org)$/i) && arXiv(item.getField('publicationTitle')).id)
+    || arXiv(parsed.extraFields.tex?.['tex.arxiv']?.value).id
   if (arxiv) candidates.push({ type: 'arXiv ID', id: arxiv, url: `https://inspirehep.net/api/arxiv/${ arxiv }` })
 
   return candidates

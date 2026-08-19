@@ -39,11 +39,11 @@ export async function patchDates(): Promise<void> {
       let save = false
       try {
         const extra = Extra.get(item.getField('extra'), 'zotero', { tex: true })
-        for (const [ k, v ] of Object.entries(extra.extraFields.tex)) {
+        for (const [ k, v ] of Object.entries(extra.extraFields.tex!)) {
           if (mapping[k]) {
             const date = parse(v.value)
             if (date.type === 'date' && date.day) {
-              delete extra.extraFields.tex[k]
+              delete extra.extraFields.tex![k]
               const time = typeof date.seconds === 'number'
               const timestamp = new Date(
                 date.year!, date.month! - 1, date.day,

@@ -61,9 +61,9 @@ export class Exporter {
       }
 
       Object.assign(item, Extra.get(item.extra, 'zotero'))
-      if (!item.citationKey && item.extraFields.kv.citationKey) {
-        item.citationKey = item.extraFields.kv.citationKey
-        delete item.extraFields.kv.citationKey
+      if (!item.citationKey && item.extraFields.kv!.citationKey) {
+        item.citationKey = item.extraFields.kv!.citationKey
+        delete item.extraFields.kv!.citationKey
       }
       if (typeof item.itemID !== 'number') { // https://github.com/diegodlh/zotero-cita/issues/145
         item.citationKey = Extra.citationKey(item.extra).citationKey
@@ -76,17 +76,20 @@ export class Exporter {
 
       item = simplifyForExport(item, { clone: false }) as typeof item
 
-      // strip extra.tex fields that are not for me
-      const prefix = this.translation.BetterBibLaTeX ? 'biblatex.' : 'bibtex.'
-      for (const [ name, field ] of Object.entries(item.extraFields.tex).sort((a, b) => strcmp.variant(b[0], a[0]))) { // sorts the fields from tex. to biblatex. to bibtex.
-        for (const type of [ prefix, 'tex.' ]) {
-          if (name.startsWith(type)) {
-            item.extraFields.tex[name.substr(type.length)] = field
-            break
+      if (item.extraFields.tex) {
+        // strip extra.tex fields that are not for me
+        const prefix = this.translation.BetterBibLaTeX ? 'biblatex.' : 'bibtex.'
+        for (const [ name, field ] of Object.entries(item.extraFields.tex).sort((a, b) => strcmp.variant(b[0], a[0]))) {
+          // sorts the fields from tex. to biblatex. to bibtex.
+          for (const type of [ prefix, 'tex.' ]) {
+            if (name.startsWith(type)) {
+              item.extraFields.tex[name.substr(type.length)] = field
+              break
+            }
           }
-        }
 
-        delete item.extraFields.tex[name]
+          delete item.extraFields.tex[name]
+        }
       }
 
       item.raw = this.translation.BetterTeX && this.translation.collected.preferences.rawLaTag === '*'
