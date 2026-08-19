@@ -149,6 +149,15 @@ export type Config = {
   }
 }
 
+const quotedName = new class {
+  #quoted = /^"(.+)"$/
+  #replace: Record<string, string> = [...' ,'].reduce((acc, c) => ({ ...acc, [c]: encodeURIComponent(c) }), {} as Record<string, string>)
+
+  public extract(name: string): string | undefined {
+    return name?.match(this.#quoted)?.[1]!.replace(/[ ,]/g, m => this.#replace[m])
+  }
+}
+
 const nonAcademicSubtype = new Set(['newspaper', 'magazine'])
 /*
  * The fields are objects with the following keys:
@@ -1134,16 +1143,15 @@ export class Entry {
         }
 
         const quoted = {
-          family: name.family.match(/^".+"$/),
-          given: name.given.match(/^".+"$/),
+          family: quotedName.extract(name.family),
+          given: quotedName.extract(name.given),
         }
-        const unquote = (n: string): string => n.slice(1, -1).replace(/[ ,]/g, m => encodeURIComponent(m))
-        if (quoted.family) name.family = unquote(name.family)
-        if (quoted.given) name.given = unquote(name.given)
-
+        if (quoted.family) name.family = quoted.family
+        if (quoted.given) name.given = quoted.given
         if (this.translation.collected.preferences.parseParticles) {
           CSL.parseParticles(name)
         }
+        if (quoted.family || quoted.given) log.info('quoted:', quoted)
         if (quoted.family) name.family = new String(decodeURIComponent(name.family))
         if (quoted.given) name.given = new String(decodeURIComponent(name.given))
 
@@ -1157,7 +1165,9 @@ export class Entry {
           name = this._enc_creators_bibtex(name)
         }
         else {
+          log.info('name: before', name)
           name = this._enc_creators_biblatex(name)
+          log.info('name: after', name)
         }
 
         name = name.replace(/ and /g, ' {and} ')
@@ -1450,14 +1460,7 @@ export class Entry {
   }
 
   private _enc_creators_biblatex(name: { family?: string; given?: string; suffix?: string; initials?: string; useprefix: boolean }): string {
-    let family: string | String | undefined
-    if (name.family?.match(/^".+|$/)) {
-      family = new String(name.family.slice(1, -1))
-    }
-    else {
-      ;({ family } = name)
-    }
-
+    let family: string | String | undefined = name.family
     // cleanup from old initials detection
     name.given = name.given?.replace(enc_creators_marker.initials, '')
     this.detectInitials(name)
@@ -1492,7 +1495,7 @@ export class Entry {
       return namebuilder.join(', ')
     }
 
-    if (family && family.match(this.re.startsWithLowercase)) family = new String(family)
+    if (family && !(family instanceof String) && family.match(this.re.startsWithLowercase)) family = new String(family)
 
     if (family) family = this._enc_creator_part(family)
 
