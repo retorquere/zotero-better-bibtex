@@ -277,19 +277,26 @@ class Item {
     this.itemKey = this.key = item.key
     this.itemType = Zotero.ItemTypes.getName(item.itemTypeID)
     this.primaryCreator = Schema.primaryCreator[this.itemType] || ''
+
+    const extra: string = this.item.getField('extra', false, true)
+    const zoteroFields = Extra.get(extra, 'zotero', { kv: true, tex: true })
+    const cslFields = Extra.get(extra, 'csl', { kv: true, tex: true })
+    this.extraFields = merge(cslFields.extraFields, zoteroFields.extraFields)
+    log.debug('extra fields:', { zoteroFields, cslFields, merged: this.extraFields })
+    this.extra = zoteroFields.extra // arbitrary
+
     this.getField = function(name: string): string | number {
       if (!name) return ''
 
       switch (name) {
         case 'dateAdded':
         case 'dateModified':
-
           return this.item[name].replace(/ .*/, '')
+
         case 'title':
-
           return this.title
-        default:
 
+        default:
           return this.item.getField(name, false, true) || this.extraFields.kv![name] || ''
       }
     }
@@ -302,11 +309,6 @@ class Item {
     const babelTag = this.babelTag() as TransliterateMode
     this.transliterateMode = unaliasTransliterateMode[babelTag] || babelTag
     // this.transliterateModeCJK = ['chinese', 'japanese'].includes(this.transliterateMode)
-
-    const zoteroFields = Extra.get(this.getField('extra') as string, 'zotero', { kv: true, tex: true })
-    const cslFields = Extra.get(this.getField('extra') as string, 'csl', { kv: true, tex: true })
-    this.extraFields = merge(cslFields.extraFields, zoteroFields.extraFields)
-    this.extra = zoteroFields.extra // arbitrary
 
     for (const [ creatorType, creators ] of Object.entries(this.extraFields.creator || {})) {
       this.creators = this.creators.concat(creators.map(creator => Extra.zoteroCreator(creator, creatorType)))
