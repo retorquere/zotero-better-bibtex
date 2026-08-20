@@ -21,8 +21,7 @@ const idleService: IdleService = Components.classes['@mozilla.org/widget/useridl
 
 type Reason = 'key-refresh' | 'parent-modify' | 'parent-delete' | 'parent-add' | 'tagged'
 
-// const logEvents = Zotero.Prefs.get('extensions.zotero.translators.better-bibtex.logEvents')
-const logEvents = true
+const logEvents = Zotero.Prefs.get('extensions.zotero.translators.better-bibtex.logEvents')
 
 interface ZoteroObserver {
   notify: _ZoteroTypes.Notifier.Notify
@@ -42,6 +41,12 @@ type EventMap = {
   'window-loaded': { win: Window; href: string }
   idle: { state: IdleState; topic: IdleTopic }
   sync: { state: SyncState }
+
+  error: {
+    error: Error
+    eventName: string | symbol
+    listener: (...args: any[]) => any
+  }
 }
 
 class Emitter extends Emittery<EventMap> {
@@ -100,18 +105,18 @@ export const Events = new Emitter(logEvents ? { // eslint-disable-line @stylisti
     name: 'better-bibtex event',
     enabled: true,
     logger: (type, _debugName, eventName, eventData) => {
+      if (typeof eventName === 'symbol') return
       if (eventName === 'export-progress') return
-
-      try {
-        if (typeof eventName === 'symbol') return
-        log.info('emit logger: event: type =', type, 'event =', eventName, 'data =', eventData)
-      }
-      catch (err) {
-        log.error(`emit logger error: ${err} ${(err as any).stack}`)
-      }
+      log.info('emit logger: event: type =', type, 'event =', eventName, 'data =', eventData)
     },
   },
 } : {})
+
+Events.on('error', ({ data: { error, eventName, listener } }) => {
+  log.error(`[emittery error:] event: "${String(eventName)}"`)
+  log.error('[emittery error:] listener:', listener.name || listener)
+  log.error('[emittery error:] stack trace:', error)
+})
 
 class WindowListener {
   constructor() {
