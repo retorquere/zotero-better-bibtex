@@ -21,7 +21,8 @@ const idleService: IdleService = Components.classes['@mozilla.org/widget/useridl
 
 type Reason = 'key-refresh' | 'parent-modify' | 'parent-delete' | 'parent-add' | 'tagged'
 
-const logEvents = Zotero.Prefs.get('extensions.zotero.translators.better-bibtex.logEvents')
+// const logEvents = Zotero.Prefs.get('extensions.zotero.translators.better-bibtex.logEvents')
+const logEvents = true
 
 interface ZoteroObserver {
   notify: _ZoteroTypes.Notifier.Notify
@@ -60,20 +61,25 @@ class Emitter extends Emittery<EventMap> {
   }
 
   override async emit<Name extends keyof EventMap>(eventName: Name, data?: EventMap[Name]): Promise<void> {
-    switch (eventName) {
-      case 'items-changed': {
-        const d = data as EventMap['items-changed']
-        if (d?.items) await super.emit('cache-touch', { itemIDs: d.items.map(item => item.id) })
-        break
+    try {
+      switch (eventName) {
+        case 'items-changed': {
+          const d = data as EventMap['items-changed']
+          if (d?.items) await super.emit('cache-touch', { itemIDs: d.items.map(item => item.id) })
+          break
+        }
+        case 'items-removed': {
+          const d = data as EventMap['items-removed']
+          if (d?.itemIDs) await super.emit('cache-touch', { itemIDs: d.itemIDs })
+          break
+        }
       }
-      case 'items-removed': {
-        const d = data as EventMap['items-removed']
-        if (d?.itemIDs) await super.emit('cache-touch', { itemIDs: d.itemIDs })
-        break
-      }
-    }
 
-    return super.emit(eventName, data as any)
+      return super.emit(eventName, data as any)
+    }
+    catch (err) {
+      log.error(`emit logger: listener ${(err as any).message}`)
+    }
   }
 
   public addIdleListener(topic: IdleTopic, delay: number): void {
@@ -93,13 +99,15 @@ export const Events = new Emitter(logEvents ? { // eslint-disable-line @stylisti
   debug: {
     name: 'better-bibtex event',
     enabled: true,
-    logger: (type, debugName, eventName, eventData) => {
+    logger: (type, _debugName, eventName, eventData) => {
+      if (eventName === 'export-progress') return
+
       try {
         if (typeof eventName === 'symbol') return
-        log.info('emit: event:', { type, debugName, eventName, eventData })
+        log.info('emit logger: event: type =', type, 'event =', eventName, 'data =', eventData)
       }
       catch (err) {
-        log.error(`emit: ${err}`)
+        log.error(`emit logger error: ${err} ${(err as any).stack}`)
       }
     },
   },
@@ -189,7 +197,7 @@ class ItemListener extends ZoteroListener {
   }
 
   public async notify(action: _ZoteroTypes.Notifier.Event, type: _ZoteroTypes.Notifier.Type, ids: number[], extraData?: ExtraData): Promise<void> {
-    if (logEvents) log.info('item event:', { action, ids, extraData })
+    if (logEvents) log.info('item logger event:', { action, ids, extraData })
     try {
       let load = false
       switch (action) {
@@ -294,7 +302,7 @@ class ItemListener extends ZoteroListener {
       })
     }
     catch (err) {
-      log.error(`error in ${type} ${action} handler for ${JSON.stringify(ids)}: ${(err as any).message}`)
+      log.error(`emit logger: error in ${type} ${action} handler for ${JSON.stringify(ids)}: ${(err as any).message}`)
     }
   }
 }
@@ -312,7 +320,7 @@ class TagListener extends ZoteroListener {
       void Events.emit('items-changed', { items: Zotero.Items.get(ids), action: 'modify', reason: 'tagged' })
     }
     catch (err) {
-      log.error(`error in ${type} ${action} handler for ${JSON.stringify(pairs)}: ${(err as any).message}`)
+      log.error(`emit logger: error in ${type} ${action} handler for ${JSON.stringify(pairs)}: ${(err as any).message}`)
     }
   }
 }
@@ -328,7 +336,7 @@ class CollectionListener extends ZoteroListener {
       if ((action === 'delete') && ids.length) void Events.emit('collections-removed', ids as number[])
     }
     catch (err) {
-      log.error(`error in ${type} ${action} handler for ${JSON.stringify(ids)}: ${(err as any).message}`)
+      log.error(`emit logger: error in ${type} ${action} handler for ${JSON.stringify(ids)}: ${(err as any).message}`)
     }
   }
 }
@@ -357,7 +365,7 @@ class MemberListener extends ZoteroListener {
       if (changed.size) void Events.emit('collections-changed', Array.from(changed))
     }
     catch (err) {
-      log.error(`error in ${type} ${action} handler for ${JSON.stringify(pairs)}: ${(err as any).message}`)
+      log.error(`emit logger: error in ${type} ${action} handler for ${JSON.stringify(pairs)}: ${(err as any).message}`)
     }
   }
 }
@@ -373,7 +381,7 @@ class GroupListener extends ZoteroListener {
       if ((action === 'delete') && ids.length) void Events.emit('libraries-removed', ids as number[])
     }
     catch (err) {
-      log.error(`error in ${type} ${action} handler for ${JSON.stringify(ids)}: ${(err as any).message}`)
+      log.error(`emit logger: error in ${type} ${action} handler for ${JSON.stringify(ids)}: ${(err as any).message}`)
     }
   }
 }

@@ -5,7 +5,6 @@ import esbuild from 'esbuild'
 import { exec } from 'child_process'
 import { glob } from 'glob'
 import crypto from 'crypto'
-import stringify from 'safe-stable-stringify'
 
 import * as loader from './setup/loaders/index.js'
 import { shims } from './setup/shims/index.js'
@@ -308,7 +307,7 @@ async function rebuild() {
 
     const source = await fs.promises.readFile(outfile, 'utf-8')
     const checksum = crypto.createHash('sha256')
-    checksum.update(stringify(header) + source)
+    checksum.update(JSON.stringify(header) + source)
 
     if (!header.configOptions) header.configOptions = {}
     header.configOptions.hash = checksum.digest('hex')

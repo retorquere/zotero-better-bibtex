@@ -1,6 +1,7 @@
 // import { DatabaseFactory, Database, ObjectStoreInterface } from '@idxdb/promised'
 import { DatabaseFactory, Database } from '@idxdb/promised'
 // import { SynchronousPromise } from 'synchronous-promise'
+import stringify from 'fast-json-stable-stringify'
 
 import type { Serialized } from '../../gen/typings/serialized'
 import { Cache as CacheInterface } from './interface'
@@ -30,7 +31,6 @@ export type CacheMetadata = {
 }
 
 import { log } from '../logger'
-import stringify from 'safe-stable-stringify'
 
 import { pick, unpick } from '../object'
 
@@ -343,8 +343,8 @@ class $Cache implements CacheInterface {
     }
     await tx.commit()
 
-    const expected = stringify(this.#schema, null, 2)
-    const found = stringify(schema, null, 2)
+    const expected = JSON.stringify(this.#schema, null, 2)
+    const found = JSON.stringify(schema, null, 2)
     log.info(`cache: schema: ${found}`)
     if (expected !== found) {
       log.error(`cache: schema mismatch!\nexpected:${expected}\nfound:${found}`)

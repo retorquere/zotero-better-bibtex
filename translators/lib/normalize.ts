@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 
-import stringify from 'safe-stable-stringify'
 import { strcmp } from '../../content/string-compare'
 import type { Serialized } from '../../gen/typings/serialized'
+import stringify from 'fast-json-stable-stringify'
 
 function rjust(str: string | number, width: number, padding: string): string {
   if (typeof str === 'number') str = `${ str }`
@@ -69,7 +69,7 @@ function strip(obj) {
 }
 
 function asString(obj: Serialized.Collection | Library['items'][number]): string {
-  return stringify({ ...obj, key: '', parent: '', itemID: 0 }) || ''
+  return stringify({ ...obj, key: '', parent: '', itemID: 0 })
 }
 
 export function normalize(library: Library, sort = true): void {

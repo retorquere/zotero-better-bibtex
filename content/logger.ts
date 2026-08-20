@@ -1,7 +1,6 @@
-/* eslint-disable @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-unsafe-return, @typescript-eslint/no-empty-function, no-restricted-syntax */
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-empty-function, no-restricted-syntax */
 
 import * as client from './client'
-import $stringify from 'safe-stable-stringify'
 
 declare const dump: (msg: string) => void
 
@@ -16,57 +15,151 @@ export const discard = {
   table(): void {},
 }
 
-function stringifyXPCOM(obj): string {
+function stringifyXPCOM(obj: any): string {
   if (!obj.QueryInterface) return ''
-  if (obj.message) return `[XPCOM error ${ obj.message }]`
-  if (obj.name) return `[XPCOM object ${ obj.name }]`
+  if (obj.message) return `[XPCOM error ${obj.message}]`
+  if (obj.name) return `[XPCOM object ${obj.name}]`
   return '[XPCOM object]'
 }
 
-function stringifyError(obj) {
-  if (obj instanceof Error) return `[error: ${ obj.message || '<unspecified error>' }\n${ obj.stack }]`
+function stringifyError(obj: any): string {
+  if (obj instanceof Error) return `[error: ${obj.message || '<unspecified error>'}\n${obj.stack}]`
   // guess it is an errorevent
-  if (obj.error instanceof Error && obj.message) return `[errorevent: ${ obj.message } ${ stringifyError(obj.error) }]`
-  if (typeof ErrorEvent !== 'undefined' && obj instanceof ErrorEvent) return `[errorevent: ${ obj.message || '<unspecified errorevent>' }]`
+  if (obj.error instanceof Error && obj.message) return `[errorevent: ${obj.message} ${stringifyError(obj.error)}]`
+  if (typeof ErrorEvent !== 'undefined' && obj instanceof ErrorEvent) return `[errorevent: ${obj.message || '<unspecified errorevent>'}]`
   return ''
 }
 
-function replacer(key, value) {
-  try {
-    if (value === null) return value
-    if (value instanceof Set) return [...value]
-    if (value instanceof Map) return Object.fromEntries(value)
-    if (value instanceof RegExp) return value.source
-    if (Array.isArray(value)) return value
+function $serialize(val: any, seen: WeakSet<any>): string | undefined {
+  if (val === null) return 'null'
+  if (val === undefined) return undefined
 
-    switch (typeof value) {
-      case 'string':
-      case 'number':
-      case 'boolean':
-      case 'function':
-      case 'undefined':
-        return value
+  switch (typeof val) {
+    case 'number': return isFinite(val) ? String(val) : 'null'
 
-      case 'object':
-        return stringifyXPCOM(value) || stringifyError(value) || value
+    case 'boolean': return val ? 'true' : 'false'
+
+    case 'string': return JSON.stringify(val)
+
+    case 'symbol':
+    case 'function':
+      return undefined
+
+    case 'object':
+      break // handled below
+
+    default:
+      return undefined
+  }
+
+  if (seen.has(val)) {
+    return '"[Circular]"'
+  }
+
+  seen.add(val)
+
+  let res: string
+
+  if (typeof val.toJSON === 'function') {
+    const serialized = $serialize(val.toJSON(), seen)
+    seen.delete(val)
+    return serialized
+  }
+
+  if ('getField' in val) {
+    res = JSON.stringify(Zotero.Utilities.Internal.itemToExportFormat(val, false, true))
+  }
+
+  else if (val.openDialog || val.querySelector) { // window/document
+    res = JSON.stringify(val.toString())
+  }
+
+  else if (res = stringifyXPCOM(val) || stringifyError(val)) {
+    res = JSON.stringify(res)
+  }
+
+  else if (Array.isArray(val)) {
+    let out = '['
+    for (let i = 0; i < val.length; i++) {
+      if (i > 0) out += ','
+      const item = $serialize(val[i], seen)
+      out += item === undefined ? 'null' : item
     }
+    res = out + ']'
+  }
 
-    if (value.openDialog || value.querySelector) return value.toString() // window/document
+  else if (val instanceof RegExp) {
+    res = JSON.stringify(val.toString())
+  }
+
+  else if (val instanceof Set) {
+    let out = '['
+    let first = true
+    for (const entry of val) {
+      const item = $serialize(entry, seen)
+      if (item !== undefined) {
+        if (!first) out += ','
+        out += item
+        first = false
+      }
+    }
+    res = out + ']'
+  }
+
+  else if (val instanceof Map) {
+    let out = '{'
+    let first = true
+    for (const [key, entryVal] of val) {
+      const item = $serialize(entryVal, seen)
+      if (item !== undefined) {
+        if (!first) out += ','
+        const formattedKey = typeof key === 'string' ? key : String(key)
+        out += JSON.stringify(formattedKey) + ':' + item
+        first = false
+      }
+    }
+    res = out + '}'
+  }
+
+  else {
+    let out = '{'
+    let first = true
+    const keys = Object.keys(val)
+    // eslint-disable-next-line @typescript-eslint/prefer-for-of
+    for (let i = 0; i < keys.length; i++) {
+      const key = keys[i]
+      const item = $serialize(val[key], seen)
+      if (item !== undefined) {
+        if (!first) out += ','
+        out += JSON.stringify(key) + ':' + item
+        first = false
+      }
+    }
+    res = out + '}'
+  }
+
+  seen.delete(val)
+  return res
+}
+
+function serialize(val: any, seen: WeakSet<any>): string {
+  try {
+    return $serialize(val, seen) || ''
   }
   catch (err) {
-    return `{serialization error: ${(err as any).message}}`
+    const msg = `\n\nstringify error: ${(err as any).message}\n${(err as any).stack}\n\n`
+    log.error(msg)
+    return msg
   }
-
-  return '{unknown object}'
 }
 
 export function stringify(obj: any): string {
-  return $stringify(obj, replacer) || 'undefined'
+  return serialize(obj, new WeakSet)
 }
 
 function to_s(obj: any): string {
   if (typeof obj === 'string') return obj
-  return stringify(obj)
+  return stringify(obj) || ''
 }
 
 export function print(strings: TemplateStringsArray, ...expressions: any[]) {

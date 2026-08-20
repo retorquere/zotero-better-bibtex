@@ -5,7 +5,7 @@ import { editable as editableLibs } from '../library'
 import { log } from '../logger'
 import { Preference } from '../prefs'
 const { Sqlite } = ChromeUtils.importESModule('resource://gre/modules/Sqlite.sys.mjs')
-import stringifyObject from 'stringify-object'
+import { stringify } from '../logger'
 
 export type StoredKey = {
   citationKey: string
@@ -20,14 +20,8 @@ function unpack({ citationKey, itemID, itemKey, libraryID, pinned }: StoredKey):
 }
 
 function show(obj: Record<string, any>): string {
-  return stringifyObject(obj, { indent: '  ' })
-  /*
-  const s: string[] = []
-  for (const [k, v] of Object.entries(obj)) {
-    if (typeof v !== 'undefined') s.push(`${k}=${JSON.stringify(v)}`)
-  }
-  return s.join('\n')
-  */
+  const s = stringify(obj)
+  return s ? JSON.stringify(JSON.parse(s), null, 2) : ''
 }
 
 type Paths = { sqlite: string | null; migrated: string | null }
