@@ -219,20 +219,37 @@ jobs:
     - name: Verify proxy settings
       run: env | grep -i proxy
 
+    - name: Setup Pandoc
+      uses: pandoc/actions/setup@v1
+      with:
+        pandoc-version: latest
+
+    - name: Set cache key
+      id: hayagriva-cache-key
+      run: echo "week=$(date +'%Y-%V')" >> $GITHUB_OUTPUT
+    - name: Cache Hayagriva
+      id: cache-hayagriva
+      uses: actions/cache@v6
+      with:
+        path: ~/.cargo/bin/hayagriva
+        key: ${{ runner.os }}-hayagriva-${{ 
+          steps.hayagriva-cache-key.outputs.week }}
+    - name: Install Hayagriva
+      if: steps.cache-hayagriva.outputs.cache-hit != 'true'
+      run: cargo install hayagriva --features cli
+
     - name: install ${{ matrix.client }}
       run: |
         set -e
+
+        pandoc -v
+        hayagriva --version
+
         curl -sL https://raw.githubusercontent.com/retorquere/zotero-deb/master/install.sh | sudo bash
         sudo apt-get update
         sudo apt-get install ${{ matrix.client }}
         sudo apt-get install mesa-utils xvfb libegl1 libgl1 libdbus-glib-1-2
         sudo apt-get install wmctrl xdotool
-        curl -s https://api.github.com/repos/jgm/pandoc/releases/latest | jq -r '.assets[] | select(.name | endswith("linux-amd64.tar.gz")) | .browser_download_url' | xargs wget -q -O pandoc.tar.gz
-        tar xvzf pandoc.tar.gz
-        sudo mv pandoc*/bin/pandoc /usr/bin
-        pandoc -v
-
-        cargo install hayagriva --features cli && hayagriva --version
 
         # preserve log hierarchy
         mkdir -p stats
