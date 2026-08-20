@@ -148,7 +148,7 @@
 |**presentation type**          |text|presentationType / type             |                           |
 |**presenter**                  |name|presenter                           |                           |
 |**printing**                   |text|                                    |printing                   |
-|**priority date**              |text|originalDate / priorityDate         |                           |
+|**priority date**              |date|originalDate / priorityDate         |                           |
 |**priority numbers**           |text|priorityNumbers                     |issue                      |
 |**proceedings title**          |text|proceedingsTitle / publicationTitle |                           |
 |**producer**                   |name|producer                            |producer                   |

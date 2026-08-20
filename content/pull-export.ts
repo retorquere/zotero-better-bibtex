@@ -182,11 +182,11 @@ class CollectionHandler {
     const urlpath: string = Server.queryParams(request)['']
     if (!urlpath) return [ NOT_FOUND, 'text/plain', 'Could not export bibliography: no path' ]
 
-    const m = urlpath.match(/^\/(?:([0-9]+)\/)?(.*)\.([-0-9a-z]+)$/i)
+    const m = urlpath.match(/^\/(?:(\d+)\/)?(.*)\.([-0-9a-z]+)$/i)
     if (!m) return [ BAD_REQUEST, 'text/plain', `no library/path/translator found in ${urlpath}` ]
     const [ , lib, path, translator ] = m
 
-    const libraryID = Library.get({ libraryID: lib, groupID: lib })?.libraryID
+    const libraryID = (Library.get({ libraryID: lib }) || Library.get({ groupID: lib }))?.libraryID
     let collection
 
     try {

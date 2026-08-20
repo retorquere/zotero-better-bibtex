@@ -39,55 +39,66 @@ export function readonly(source: number | Zotero.Item | _ZoteroTypes.Library.Lib
   return lib ? !lib.editable : false
 }
 
-export function get(query: Record<string, string | number | undefined>, throws = false): Zotero.Library | undefined {
-  const oops = err => {
+export type Query = {
+  name?: string
+  library?: string
+  group?: string
+  libraryID?: number | string
+  groupID?: number | string
+}
+function isNumber(v: any) {
+  return (typeof v === 'number') && isFinite(v)
+}
+export function get(query: Query, throws = false): Zotero.Library | undefined {
+  function oops(err: string): undefined {
     log.error(err)
     if (throws) throw new Error(err)
   }
 
-  const libraries = Zotero.Libraries.getAll()
-
-  const found: Record<'libraryID' | 'groupID' | 'group', Set<number>> = {
-    libraryID: new Set,
-    groupID: new Set,
-    group: new Set,
-  }
-  let searched = false
-  for (const [search, value] of Object.entries(query)) {
-    if (typeof value === 'undefined') continue
-    searched = true
-    switch (search) {
-      case 'libraryID':
-        libraries.filter(l => l.libraryID === value || l.libraryID === parseInt(value as string)).forEach(l => found.libraryID.add(l.libraryID))
-        break
-
-      case 'groupID':
-        (libraries as unknown as Zotero.Group[]).filter(l => l.groupID === value || l.groupID === parseInt(value as string)).forEach(l => found.groupID.add(l.libraryID))
-        break
-
-      case 'group':
-      case 'library': // legacy compat, they are the same
-        libraries.filter(l => l.name === `${value}`).forEach(l => found.group.add(l.libraryID))
-        break
-
-      default:
-        oops(`library.get: unsupported parameter ${JSON.stringify(search)}`)
-        return
+  for (const term of ['libraryID', 'groupID']) {
+    if (typeof query[term] === 'string') {
+      if (!term.match(/^\d+$/)) return oops(`${term} must be numeric`)
+      query[term] = parseInt(query[term], 10)
     }
   }
-  if (!searched) found.libraryID.add(Zotero.Libraries.userLibraryID)
-
-  for (const kind of ['libraryID', 'groupID', 'group']) {
-    switch (found[kind].size) {
-      case 0:
-        continue
-      case 1:
-        return Zotero.Libraries.get([...found[kind]][0]) as Zotero.Library
-      default:
-        oops(`library.get: ${kind} in ${JSON.stringify(query)} is not unique`)
-        return
+  for (const alias of ['library', 'group']) {
+    if (typeof query[alias] !== 'undefined') {
+      if (typeof query.name !== 'undefined') return oops(`invalid library search query ${JSON.stringify(query)}`)
+      query.name = query[alias]
     }
   }
+  let { name, libraryID, groupID } = query
 
-  oops(`library.get: ${JSON.stringify(query)} not found`)
+  switch ([name, libraryID, groupID].filter(arg => typeof arg !== 'undefined').length) {
+    case 0:
+      libraryID = Zotero.Libraries.userLibraryID
+    case 1:
+      break
+    default:
+      return oops(`invalid library search query ${JSON.stringify(query)}`)
+  }
+
+  let libraries = Zotero.Libraries.getAll()
+
+  if (typeof name !== 'undefined') {
+    if (typeof name !== 'string') return oops(`invalid library search query ${JSON.stringify(query)}, name must be a string`)
+    libraries = libraries.filter(l => l.name === name)
+  }
+  else if (typeof libraryID !== 'undefined') {
+    if (!isNumber(libraryID)) return oops(`invalid library search query ${JSON.stringify(query)}, libraryID must be a number`)
+    libraries = libraries.filter(l => l.libraryID === libraryID)
+  }
+  else if (typeof groupID !== 'undefined') {
+    if (!isNumber(groupID)) return oops(`invalid library search query ${JSON.stringify(query)}, groupID must be a number`)
+    libraries = (libraries as unknown as Zotero.Group[]).filter(l => l.groupID === groupID)
+  }
+
+  switch (libraries.length) {
+    case 0:
+      return oops(`library.get: ${JSON.stringify(query)} not found`)
+    case 1:
+      return libraries[0] as unknown as Zotero.Library
+    default:
+      return oops(`library search: ${JSON.stringify(query)} is not unique`)
+  }
 }

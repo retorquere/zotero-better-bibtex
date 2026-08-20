@@ -82,10 +82,21 @@ export async function resolve(library: _ZoteroTypes.Library.LibraryLike, path: s
 
 export async function get(path: string, create = false): Promise<any> {
   if (path[0] !== '/') throw new CollectionError(`collection path ${JSON.stringify(path)} is not an absolute path`, 'notfound')
-  const m = path.match(/^\/([^/]*)\/(.+)/)
+  const m = path.match(/^\/(?<libraryID>[^/]*)(?<treepath>\/.+)/)
   if (!m) throw new CollectionError('path is too short', 'notfound')
+  const { libraryID, treepath } = m.groups!
 
-  const library = Library.get({ libraryID: m[1], groupID: m[1], group: m[1] })
-  if (!library) throw new CollectionError(`Library ${ m[1] } not found`, 'notfound')
-  return await resolve(library, `/${m[2]}`, create)
+  let library: Zotero.Library | undefined
+  if (libraryID.match(/^\d+$/)) {
+    const lid = parseInt(libraryID)
+    library = Library.get({ libraryID: lid }) || Library.get({ groupID: lid })
+  }
+  else if (libraryID) {
+    library = Library.get({ name: libraryID})
+  }
+  else {
+    library = Library.get({})
+  }
+  if (!library) throw new CollectionError(`Library ${libraryID} not found`, 'notfound')
+  return await resolve(library, treepath, create)
 }

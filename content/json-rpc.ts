@@ -45,7 +45,7 @@ function byKey(citekey: string): (key: CitekeyRecord) => boolean {
 
 function find(library?: string | number): (citationKey: string) => number | undefined {
   if (typeof library === 'undefined') library = Zotero.Libraries.userLibraryID
-  const libraryID = library === '*' ? undefined : getLibrary(library)
+  const libraryID = library === '*' ? undefined : getLibraryID(library)
 
   return (citationKey: string): number | undefined => {
     const matchKey = byKey(citationKey)
@@ -130,10 +130,12 @@ export class NSUser {
   }
 }
 
-function getLibrary(term: string | number | undefined): number {
-  const libraryID = typeof term === 'undefined' ? term : Library.get({ libraryID: term, group: term }, true)?.libraryID
-  if (typeof libraryID === 'undefined') throw new Error(`could not find library ${term}`)
-  return libraryID
+function getLibraryID(term: string | number | undefined): number {
+  const library = Library.get({ name: term as string })
+    || Library.get({ libraryID: term })
+    || Library.get({ groupID: term })
+  if (!library) throw new Error(`could not find library ${term}`)
+  return library.libraryID
 }
 
 export class NSItem {
@@ -197,7 +199,7 @@ export class NSItem {
 
       if (typeof library !== 'undefined' && library !== '*') {
         try {
-          search.addCondition('libraryID', 'is', getLibrary(library), true)
+          search.addCondition('libraryID', 'is', getLibraryID(library), true)
         }
         catch {
           throw new Error(`library ${ JSON.stringify(library) } not found`)
@@ -220,7 +222,7 @@ export class NSItem {
         // libraryId can be provided as Library Name
         else if ((term.length >= 3) && (term[0] === 'libraryID')) {
           try {
-            term[2] = getLibrary(term[2])
+            term[2] = getLibraryID(term[2])
           }
           catch {
             throw new Error(`library ${ JSON.stringify(term[2]) } not found`)
@@ -258,7 +260,7 @@ export class NSItem {
    */
   public async attachments(citekey: string, library?: string | number): Promise<any> {
     const citationKey = citekey.replace(/^@/, '')
-    const libraryID = library === '*' ? undefined : getLibrary(library)
+    const libraryID = library === '*' ? undefined : getLibraryID(library)
     const key = Zotero.BetterBibTeX.KeyManager.any(_ => _.citationKey === citationKey && (library === '*' || _.libraryID === libraryID))
 
     if (!key) throw { code: INVALID_PARAMETERS, message: `${ citekey } not found` }
@@ -480,7 +482,7 @@ export class NSItem {
    */
   public async regenerate_key(citekeys: string[], library?: string | number): Promise<Record<string, string | null>> {
     if (typeof library === 'undefined') library = Zotero.Libraries.userLibraryID
-    const libraryID = library === '*' ? undefined : getLibrary(library)
+    const libraryID = library === '*' ? undefined : getLibraryID(library)
 
     const result: Record<string, string | null> = {}
     const resolved: { citekey: string; itemID: number; oldKey: string }[] = []
@@ -525,7 +527,7 @@ export class NSItem {
    * @param libraryID     ID of library to select the items from. When omitted, assume 'My Library'
    */
   public async export(citekeys: string[], translator: string, libraryID?: string | number): Promise<string> {
-    libraryID = getLibrary(libraryID)
+    libraryID = getLibraryID(libraryID)
     const keyMatch = byKeys(citekeys)
     const found = Zotero.BetterBibTeX.KeyManager.all(_ => _.libraryID === libraryID && keyMatch(_))
 
@@ -576,7 +578,9 @@ export class NSItem {
     citekeys = [...(new Set(citekeys))]
     const result: { errors: Record<string, number>; items: Record<string, any> } = { errors: {}, items: {}}
 
-    const libraryIDs: Set<number> = new Set(Array.isArray(libraryID) ? libraryID.map(getLibrary) : [ getLibrary(libraryID) ])
+    log.debug('pandoc_filter:', { libraryID })
+    const libraryIDs: Set<number> = new Set(Array.isArray(libraryID) ? libraryID.map(getLibraryID) : [ getLibraryID(libraryID) ])
+    log.debug('pandoc_filter:', { libraryIDs })
     const itemIDs: number[] = []
 
     for (const citationKey of citekeys) {
