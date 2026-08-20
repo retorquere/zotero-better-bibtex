@@ -1151,7 +1151,6 @@ export class Entry {
         if (this.translation.collected.preferences.parseParticles) {
           CSL.parseParticles(name)
         }
-        if (quoted.family || quoted.given) log.info('quoted:', quoted)
         if (quoted.family) name.family = new String(decodeURIComponent(name.family))
         if (quoted.given) name.given = new String(decodeURIComponent(name.given))
 
@@ -1165,9 +1164,7 @@ export class Entry {
           name = this._enc_creators_bibtex(name)
         }
         else {
-          log.info('name: before', name)
           name = this._enc_creators_biblatex(name)
-          log.info('name: after', name)
         }
 
         name = name.replace(/ and /g, ' {and} ')
