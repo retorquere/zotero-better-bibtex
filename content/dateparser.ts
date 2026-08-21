@@ -149,7 +149,7 @@ const Season = new class {
   public seasonize(date: RichDate): RichDate {
     const season = 'month' in date ? this.fromMonth(date.month) : undefined
     return (date.type === 'date' && typeof season === 'number')
-      ? { type: 'season', season, year: date.year, orig: date.orig }
+      ? { type: 'season', season, year: date.year, orig: date.orig, uncertain: date.uncertain, approximate: date.approximate }
       : date
   }
 }
@@ -348,6 +348,7 @@ class DateParser {
   }
 
   #parse(value: string, options = { range: true, reparse: true }): RichDate {
+    let $ = 1
     let $date: RichDate | undefined
     let $year: string
     let m: RegExpMatchArray | null
@@ -415,6 +416,7 @@ class DateParser {
         year,
         month: Month.no(month),
         day,
+        ...time_doubt,
       })
     }
 
@@ -427,6 +429,7 @@ class DateParser {
         type: 'date',
         year: parseInt(m.groups!.year),
         month: Month.no(m.groups!.month),
+        ...time_doubt,
       })
     }
 
@@ -504,7 +507,7 @@ class DateParser {
       }, true)
 
       // if (!month && !day) return { type: 'date', year, ...time_doubt }
-      if (!day && has_valid_month($date = { type: 'date', year: parsed.year, month: parsed.month })) return Season.seasonize({ ...$date, ...time_doubt })
+      if (!day && has_valid_month(parsed)) return Season.seasonize(parsed)
       if (is_valid_date(parsed)) return Season.seasonize(parsed)
     }
 
@@ -528,13 +531,13 @@ class DateParser {
       return Season.seasonize({ type: 'date', year: parseInt(year), ...time_doubt })
     }
 
-    if ($date = this.parseEDTF(value, english)) return $date
+    if ($date = this.parseEDTF(value, english)) return { ...$date, ...time_doubt }
 
     // https://github.com/retorquere/zotero-better-bibtex/issues/868
     if (m = english.match(re.y_M_d)) {
       const { year, month, day } = m.groups!
       const edtf = normalize_edtf(this.edtf(this.edtfy(`${day || ''} ${month} ${year}`.trim())))
-      if (edtf) return edtf
+      if (edtf) return { ...edtf, ...time_doubt }
     }
 
     if (range) {
