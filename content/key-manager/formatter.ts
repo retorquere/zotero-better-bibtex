@@ -282,7 +282,6 @@ class Item {
     const zoteroFields = Extra.get(extra, 'zotero', { kv: true, tex: true })
     const cslFields = Extra.get(extra, 'csl', { kv: true, tex: true })
     this.extraFields = merge(cslFields.extraFields, zoteroFields.extraFields)
-    log.debug('extra fields:', { zoteroFields, cslFields, merged: this.extraFields })
     this.extra = zoteroFields.extra // arbitrary
 
     this.getField = function(name: string): string | number {

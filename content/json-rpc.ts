@@ -578,9 +578,7 @@ export class NSItem {
     citekeys = [...(new Set(citekeys))]
     const result: { errors: Record<string, number>; items: Record<string, any> } = { errors: {}, items: {}}
 
-    log.debug('pandoc_filter:', { libraryID })
     const libraryIDs: Set<number> = new Set(Array.isArray(libraryID) ? libraryID.map(getLibraryID) : [ getLibraryID(libraryID) ])
-    log.debug('pandoc_filter:', { libraryIDs })
     const itemIDs: number[] = []
 
     for (const citationKey of citekeys) {
