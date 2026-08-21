@@ -245,9 +245,7 @@ jobs:
 
         curl -sL https://raw.githubusercontent.com/retorquere/zotero-deb/master/install.sh | sudo bash
         sudo apt-get update
-        sudo apt-get install ${{ matrix.client }}
-        sudo apt-get install mesa-utils xvfb libegl1 libgl1 libdbus-glib-1-2
-        sudo apt-get install wmctrl xdotool
+        sudo apt-get install ${{ matrix.client }} mesa-utils xvfb libegl1 libgl1 libdbus-glib-1-2 wmctrl xdotool
 
         # preserve log hierarchy
         mkdir -p stats
