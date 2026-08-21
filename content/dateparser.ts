@@ -348,7 +348,6 @@ class DateParser {
   }
 
   #parse(value: string, options = { range: true, reparse: true }): RichDate {
-    let $ = 1
     let $date: RichDate | undefined
     let $year: string
     let m: RegExpMatchArray | null
@@ -531,13 +530,13 @@ class DateParser {
       return Season.seasonize({ type: 'date', year: parseInt(year), ...time_doubt })
     }
 
-    if ($date = this.parseEDTF(value, english)) return { ...$date, ...time_doubt }
+    if ($date = this.parseEDTF(value, english)) return $date
 
     // https://github.com/retorquere/zotero-better-bibtex/issues/868
     if (m = english.match(re.y_M_d)) {
       const { year, month, day } = m.groups!
       const edtf = normalize_edtf(this.edtf(this.edtfy(`${day || ''} ${month} ${year}`.trim())))
-      if (edtf) return { ...edtf, ...time_doubt }
+      if (edtf) return edtf
     }
 
     if (range) {

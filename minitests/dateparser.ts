@@ -25,7 +25,8 @@ function date2csl(date) {
   }
 }
 
-import { parse, strToISO } from '../content/dateparser'
-const value = "2017-24~"
-console.log(value)
-console.log('parse:', parse(value))
+import { parse, simplify } from '../content/dateparser'
+
+for (const value of process.argv.slice(2)) {
+  console.log(value, '=>', parse(value), '/', simplify(parse(value)))
+}

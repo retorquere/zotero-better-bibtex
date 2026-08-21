@@ -356,7 +356,7 @@ function addDate(ref: Entry, date: OptionalRichDate, verbatim: string) {
   const year = (d: OptionalRichDate) => {
     if (!d) return ''
     if ('year' in d) return d.year
-    if ('century' in d) return d.century
+    if ('century' in d) return d.century * 100
     return ''
   }
 
@@ -367,8 +367,10 @@ function addDate(ref: Entry, date: OptionalRichDate, verbatim: string) {
     else if (date.to.type === 'open') {
       date = date.from
     }
-    else if (ref.add({ name: 'year', value: [year(simplifyDate(date.from)), year(simplifyDate(date.to))].filter(Boolean).join('\u2013') })) {
-      return
+    else {
+      const from = year(simplifyDate(date.from))
+      const to = year(simplifyDate(date.to))
+      if (from && to && from !== to && ref.add({ name: 'year', value: `${from}\u2013${to}` })) return
     }
   }
 

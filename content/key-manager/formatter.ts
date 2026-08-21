@@ -1151,8 +1151,6 @@ export class PatternFormatter {
 
     const date = (typeof input === 'string') ? parseDate(input) : input
 
-    log.debug('z10:', input, '=>', date)
-
     let keep = true
     const formatted = format.split(/(%-?o?[a-z]|%%)/i).map((spec, i) => {
       if ((i % 2) === 0) return spec
