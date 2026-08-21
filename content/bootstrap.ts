@@ -66,6 +66,7 @@ export async function startup({ resourceURI, rootURI = resourceURI.spec }: { res
     'atob',
     'btoa',
     'ChromeUtils',
+    'DOMParser',
     'FormData',
     'structuredClone',
     'TextDecoder',

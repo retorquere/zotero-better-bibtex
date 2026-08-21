@@ -240,14 +240,14 @@ class Document {
 
 function createDefaultDocumentData(documentId: string): string {
   return `<data data-version="3" zotero-version="9.0.4">
-              <session id="${ documentId }"/>
-                <style id="http://www.zotero.org/styles/chicago-shortened-notes-bibliography" locale="en-GB" hasBibliography="1" bibliographyStyleHasBeenSet="0"/>
-                <prefs>
-                  <pref name="fieldType" value="Http"/>
-                  <pref name="automaticJournalAbbreviations" value="true"/>
-                  <pref name="noteType" value="1"/>
-                </prefs>
-              </data>`
+           <session id="${ documentId }"/>
+             <style id="http://www.zotero.org/styles/chicago-shortened-notes-bibliography" locale="en-GB" hasBibliography="1" bibliographyStyleHasBeenSet="0"/>
+             <prefs>
+               <pref name="fieldType" value="Http"/>
+               <pref name="automaticJournalAbbreviations" value="true"/>
+               <pref name="noteType" value="1"/>
+             </prefs>
+           </data>`
 }
 
 export function createDefaultState(documentId = DEFAULT_DOC_ID): State {
