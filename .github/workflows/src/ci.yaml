@@ -194,18 +194,7 @@ jobs:
     - name: Setup Pandoc
       uses: pandoc/actions/setup@v1
 
-    - name: Set cache key
-      id: hayagriva-cache-key
-      run: echo "week=$(date +'%Y-%V')" >> $GITHUB_OUTPUT
-    - name: Cache Hayagriva
-      id: cache-hayagriva
-      uses: actions/cache@v6
-      with:
-        path: ~/.cargo/bin/hayagriva
-        key: ${{ runner.os }}-hayagriva-${{ steps.hayagriva-cache-key.outputs.week }}
-    - name: Install Hayagriva
-      if: steps.cache-hayagriva.outputs.cache-hit != 'true'
-      run: cargo install hayagriva --features cli
+    - uses: ./.github/actions/setup-hayagriva
 
     - name: install ${{ matrix.client }}
       run: |

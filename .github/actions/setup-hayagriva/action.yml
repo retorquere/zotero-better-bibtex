@@ -1,0 +1,42 @@
+name: 'Setup Hayagriva'
+description: 'Installs Hayagriva with Cargo, with configurable cache intervals.'
+
+inputs:
+  cache-frequency:
+    description: 'Cache refresh interval: "weekly", "daily", "monthly", or "none"'
+    required: false
+    default: 'weekly'
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Set cache key
+      if: inputs.cache-frequency != 'none' && inputs.cache-frequency != 'false'
+      id: hayagriva-cache-key
+      shell: bash
+      run: |
+        case "${{ inputs.cache-frequency }}" in
+          daily)
+            FORMAT="%Y-%m-%d"
+            ;;
+          monthly)
+            FORMAT="%Y-%m"
+            ;;
+          weekly|*)
+            FORMAT="%Y-%V"
+            ;;
+        esac
+        echo "interval=$(date +"$FORMAT")" >> $GITHUB_OUTPUT
+
+    - name: Cache Hayagriva
+      if: inputs.cache-frequency != 'none' && inputs.cache-frequency != 'false'
+      id: cache-hayagriva
+      uses: actions/cache@v4
+      with:
+        path: ~/.cargo/bin/hayagriva
+        key: ${{ runner.os }}-hayagriva-${{ inputs.cache-frequency }}-${{ steps.hayagriva-cache-key.outputs.interval }}
+
+    - name: Install Hayagriva
+      if: inputs.cache-frequency == 'none' || inputs.cache-frequency == 'false' || steps.cache-hayagriva.outputs.cache-hit != 'true'
+      shell: bash
+      run: cargo install hayagriva --features cli
