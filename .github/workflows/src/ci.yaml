@@ -191,10 +191,11 @@ jobs:
     - name: Verify proxy settings
       run: env | grep -i proxy
 
-    - name: Setup Pandoc
+    - name: install Pandoc
       uses: pandoc/actions/setup@v1
 
-    - uses: ./.github/actions/setup-hayagriva
+    - name: install Hayagriva
+      uses: ./.github/actions/setup-hayagriva
 
     - name: install ${{ matrix.client }}
       run: |
@@ -212,7 +213,7 @@ jobs:
         mkdir -p .stats
         mktemp .stats/stats.XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 
-    - name: Run tests
+    - name: run tests
       # continue-on-error: ${{ matrix.client == 'jurism' }}
       run: ./test/behave --client ${{ matrix.client }} ${{ matrix.worker }} ${{ needs.build.outputs.slow }} --bin ${{ matrix.bin }} --bins ${{ needs.build.outputs.bins }} --durations test/stats/durations--${{ matrix.client }}${{ matrix.worker }}--${{ matrix.bin }}.json
       env:
