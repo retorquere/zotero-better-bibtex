@@ -1,4 +1,4 @@
-import { AltDebug } from '../debug-log'
+// import { AltDebug } from '../debug-log'
 import { flash } from '../flash'
 import { getItemAsync } from '../get-items-async'
 import { editable as editableLibs } from '../library'
@@ -230,13 +230,15 @@ export async function remigrate(): Promise<void> {
   }
 
   try {
-    AltDebug.on()
+    // AltDebug.on()
     await migrate(true)
     Preference.remigrate = false
+    /*
     Zotero.Promise.delay(60000000).then(() => {
       AltDebug.off()
     })
     speaker.say('remigration completed')
+    */
   }
   catch (err) {
     speaker.say(`remigration failed: ${(err as any).message}`)

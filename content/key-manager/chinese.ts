@@ -1,10 +1,12 @@
 import { Preference } from '../prefs'
 import { Events } from '../events'
 
-import type { splitName, jieba, pinyin } from './chinese-optional'
+import type { Jieba, splitName, pinyin } from './chinese-optional'
+import { log } from '../logger'
 
 class Chinese {
-  public jieba!: typeof jieba
+  private loaded = false
+  public jieba!: Jieba
   public pinyin!: typeof pinyin
   public splitName!: typeof splitName
 
@@ -13,19 +15,21 @@ class Chinese {
     this.load()
   }
 
-  public get enabled(): Chinese | null {
-    if (!Preference.chinese) return null
+  public get enabled(): Chinese | undefined {
     this.load()
-    return this
+    return this.loaded ? this : undefined
   }
 
   private load() {
-    if (!this.jieba) {
+    if (Preference.chinese && !this.loaded) {
+      // sets .loaded as a side-effect
       Services.scriptloader.loadSubScriptWithOptions('chrome://zotero-better-bibtex/content/key-manager/chinese-optional.js', {
         target: this,
         charset: 'utf-8',
         // ignoreCache: true,
       })
+
+      if (this.jieba.error) log.error('failed to load jieba.cut:', this.jieba.error)
     }
   }
 
