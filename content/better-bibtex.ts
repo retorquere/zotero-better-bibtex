@@ -636,7 +636,6 @@ export class BetterBibTeX {
           ],
         })
 
-        const hideRemigrate = Date.now() + (5 * 60000)
         Zotero.MenuManager.registerMenu({
           menuID: `${pluginID}-menu-help`,
           pluginID,
@@ -646,7 +645,7 @@ export class BetterBibTeX {
             {
               menuType: 'menuitem',
               l10nID: 'better-bibtex_remigrate',
-              onShowing: (event, context) => context.setVisible((Date.now() < hideRemigrate) || Preference.remigrate),
+              onShowing: (event, context) => context.setVisible(Preference.remigrate),
               onCommand: (_event, _context) => void Zotero.BetterBibTeX.remigrate(),
             },
           ],
