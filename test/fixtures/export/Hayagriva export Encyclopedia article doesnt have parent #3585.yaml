@@ -1,0 +1,33 @@
+config:
+  id: 36a3b0b5-bad0-4a04-b79b-441c7cef77db
+  label: BetterBibTeX JSON
+  preferences:
+    citekeyFormat: auth.lower + shorttitle(3, 3) + year
+    fillKeyAfter: 1
+version:
+  zotero: 9.0.6
+  bbt: 9.0.57
+collections: {}
+items:
+  - key: ADI6229P
+    version: 6209
+    itemType: encyclopediaArticle
+    title: Lead–lead dating
+    abstractNote: Lead–lead dating is a method for dating geological samples, normally based on 'whole-rock' samples of material such as granite. For most dating requirements it has been superseded by uranium–lead dating (U–Pb dating), but in certain specialized situations (such as dating meteorites and the age of the Earth) it is more important than U–Pb dating.
+    date: '2025-03-24T11:21:43Z'
+    language: en
+    libraryCatalog: Wikipedia
+    url: https://en.wikipedia.org/w/index.php?title=Lead%E2%80%93lead_dating&oldid=1282108712
+    accessDate: '2026-08-22T20:07:25Z'
+    rights: Creative Commons Attribution-ShareAlike License
+    extra: 'Page Version ID: 1282108712'
+    citationKey: LeadLeadDating2025
+    creators: []
+    tags: []
+    dateAdded: '2026-08-22T20:07:25Z'
+    dateModified: '2026-08-22T20:07:25Z'
+    itemID: 8760
+    attachments: []
+    notes: []
+    autoJournalAbbreviation: ''
+    publicationTitle: Wikipedia

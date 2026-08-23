@@ -88,6 +88,7 @@ import zipfile
 from ruamel.yaml import YAML
 yaml = YAML(typ='safe')
 yaml.default_flow_style = False
+yaml.constructor.add_constructor('tag:yaml.org,2002:timestamp', lambda loader, node: loader.construct_scalar(node))
 
 #with open(os.path.join(ROOT, 'schema', 'BetterBibTeX JSON.json')) as f:
 #  bbt_json_schema = json.load(f)

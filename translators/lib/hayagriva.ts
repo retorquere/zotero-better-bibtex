@@ -9,7 +9,31 @@ import { simplifyForExport } from '../../content/item-schema'
 // import { log } from '../../content/logger'
 
 type Person = string | { name?: string; given?: string; family?: string }
-type HayagrivaType = 'article' | 'artwork' | 'audio' | 'blog' | 'book' | 'case' | 'chapter' | 'conference' | 'entry' | 'legislation' | 'manuscript' | 'misc' | 'newspaper' | 'patent' | 'periodical' | 'proceedings' | 'repository' | 'report' | 'thread' | 'thesis' | 'video' | 'web'
+type HayagrivaType
+  = 'article'
+  | 'artwork'
+  | 'audio'
+  | 'blog'
+  | 'book'
+  | 'case'
+  | 'chapter'
+  | 'conference'
+  | 'entry'
+  | 'legislation'
+  | 'manuscript'
+  | 'misc'
+  | 'newspaper'
+  | 'patent'
+  | 'periodical'
+  | 'proceedings'
+  | 'reference'
+  | 'repository'
+  | 'report'
+  | 'thread'
+  | 'thesis'
+  | 'video'
+  | 'web'
+
 type Serial = {
   doi?: string
   isbn?: string
@@ -201,6 +225,9 @@ function makeParent(item: Serialized.RegularItem): Entry | null {
 
     case 'forumPost':
       return item.publicationTitle ? { type: 'thread', title: item.publicationTitle } : null
+
+    case 'encyclopediaArticle':
+      return item.publicationTitle ? { type: 'reference', title: item.publicationTitle } : null
   }
 
   return null
