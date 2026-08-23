@@ -6,8 +6,6 @@ const pluginID = 'better-bibtex@iris-advies.com'
 import { Deferred } from './promise'
 const Ready = new Deferred<boolean>
 
-import { AltDebug } from './debug-log'
-
 import { getItemsAsync } from './get-items-async'
 
 import { DisplayOptions } from '../gen/translators'
@@ -533,8 +531,6 @@ export class BetterBibTeX {
       id: 'start',
       description: 'waiting for zotero',
       startup: async () => {
-        AltDebug.on()
-
         // https://groups.google.com/d/msg/zotero-dev/QYNGxqTSpaQ/uvGObVNlCgAJ
         // this is what really takes long
         await Promise.all([
@@ -592,10 +588,6 @@ export class BetterBibTeX {
         ExportOptions.enable()
         Zotero.getMainWindows().forEach(win => {
           this.onMainWindowLoad({ window: win })
-        })
-
-        Zotero.Promise.delay(15000).then(() => {
-          AltDebug.off()
         })
 
         Zotero.MenuManager.registerMenu({

@@ -136,6 +136,7 @@ function js(src) {
 }
 
 async function bundle(config) {
+  // console.log(config.entryPoints)
   config = {
     bundle: true,
     format: 'iife',

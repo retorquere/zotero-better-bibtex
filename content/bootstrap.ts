@@ -6,6 +6,9 @@ declare const dump: (msg: string) => void
 
 import { alert } from './prompt'
 
+import { jwk as pubkey } from './public'
+import { DebugLogSender } from 'zotero-plugin/debug-log'
+
 const BOOTSTRAP_REASONS = {
   1: 'APP_STARTUP',
   2: 'APP_SHUTDOWN',
@@ -57,6 +60,11 @@ function makeSandbox(wantGlobalProperties: string[] = []): any {
 }
 
 export async function startup({ resourceURI, rootURI = resourceURI.spec }: { resourceURI: any; rootURI?: string }, reason: ReasonId) {
+  const prefix = 'translators.better-bibtex.'
+  const pluginID = 'better-bibtex@iris-advies.com'
+  const sender = new DebugLogSender(pluginID, 'Fallback Better BibTeX debug log (if regular fails)', [prefix, `${prefix}$autoExport.`], pubkey)
+  sender.enabled = true
+
   if (Zotero.BetterBibTeX) throw new Error('Better BibTeX is already started')
 
   // if (!Zotero.Debug.storing && Zotero.Prefs.get('translators.better-bibtex.forceLogging')) Zotero.Debug.setStore(true)
@@ -123,6 +131,7 @@ export async function startup({ resourceURI, rootURI = resourceURI.spec }: { res
     else {
       BBT.profiler = null
     }
+    sender.enabled = false
   }
   catch (err) {
     alert({ title: 'Better BibTeX startup failed', text: `${err}\n${(err as any).stack}` })
