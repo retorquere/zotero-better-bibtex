@@ -447,7 +447,7 @@ importNoteToExtra:
 extraFieldAsNote:
   description: >-
     Treat the Zotero `extra` field as a note.
-  default: true
+  default: false
 
 importCitationKey:
   description: On import, assign the existing citation key to the item being imported
