@@ -10,6 +10,13 @@ aliases:
 
 ## Fields
 
+### Treat the `extra` field as a note
+
+default: `yes`
+
+Treat the Zotero `extra` field as a note.
+
+
 ### When merging items, also merge:
 
 #### their citation keys into an bib(la)tex `ids` field
