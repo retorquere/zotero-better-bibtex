@@ -12,9 +12,10 @@ export class Monkey {
 
     obj[methodName] = new Proxy(originalMethod, {
       apply: (target, thisArg, argumentsList) => {
+        let patched: Function
         try {
-          if (this.#enabled) {
-            return newMethod.deref()?.apply(thisArg, argumentsList)
+          if (this.#enabled && (patched = newMethod.deref())) {
+            return patched.apply(thisArg, argumentsList)
           }
           else {
             return originalMethod.apply(thisArg, argumentsList)
