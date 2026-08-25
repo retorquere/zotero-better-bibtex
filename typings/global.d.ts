@@ -16,7 +16,7 @@ declare module '*.wasm' {
 
 declare module 'wasmjieba-web/wasmjieba-web_bg.wasm' {
   const wasm: {
-    bytes: Uint8Array
+    bytes?: Uint8Array
   }
   export default wasm
 }
