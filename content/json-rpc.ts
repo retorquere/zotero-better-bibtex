@@ -165,7 +165,9 @@ export class NSItem {
   ): Promise<any> {
     const search = (new Zotero.Search)
 
-    if (!terms.length) { /* */ }
+    if (!terms.length) {
+      // empty string or empty array
+    }
     else if (typeof terms === 'string') {
       // Custom action for only string.
       // Similar behavior as quicksearch-titleCreateorYear, but search also in citationKey and ignore feeds and attachments
@@ -183,23 +185,24 @@ export class NSItem {
         'citationKey',
       ]
 
-      search.addCondition('blockStart')
+      search.addCondition('groupStart', 'true', '')
+      search.addCondition('joinMode', 'any')
       for (const field of fields) {
         search.addCondition(field, 'contains', terms, false)
       }
-      search.addCondition('blockEnd')
+      search.addCondition('groupEnd', 'true', '')
 
       // Ignore Feeds
       for (const feed of Zotero.Feeds.getAll()) {
-        search.addCondition('libraryID', 'isNot', feed.libraryID, true)
+        search.addCondition('libraryID', 'isNot', feed.libraryID)
       }
 
       // Do not list attachments
-      search.addCondition('itemType', 'isNot', 'attachment', true)
+      search.addCondition('itemType', 'isNot', 'attachment')
 
       if (typeof library !== 'undefined' && library !== '*') {
         try {
-          search.addCondition('libraryID', 'is', getLibraryID(library), true)
+          search.addCondition('libraryID', 'is', getLibraryID(library))
         }
         catch {
           throw new Error(`library ${ JSON.stringify(library) } not found`)
@@ -213,7 +216,7 @@ export class NSItem {
           switch (term[0]) {
             case 'ignore_feeds': {
               for (const feed of Zotero.Feeds.getAll()) {
-                search.addCondition('libraryID', 'isNot', feed.libraryID, true)
+                search.addCondition('libraryID', 'isNot', feed.libraryID)
               }
               continue blk
             }
@@ -738,7 +741,7 @@ const api = new class API {
       return { jsonrpc: '2.0', result: await method(...request.params), id: request.id || null }
     }
     catch (err) {
-      log.error('JSON-RPC:', err)
+      log.error('JSON-RPC:', err, (err as any).stack)
       if ((err as any).code) {
         return { jsonrpc: '2.0', error: { code: (err as any).code, message: (err as any).message }, id: null }
       }
