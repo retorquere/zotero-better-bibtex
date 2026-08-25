@@ -734,7 +734,9 @@ export class BetterBibTeX {
         })
 
         const collType = context => {
-          switch (context.collectionTreeRow.type) {
+          if (context.collectionTreeRows?.length !== 1) return ''
+
+          switch (context.collectionTreeRows[0].type) {
             case 'library':
             case 'group':
               return typeof selectedLibraryID() === 'number' ? 'library' : ''
@@ -826,7 +828,7 @@ export class BetterBibTeX {
                   menuType: 'menuitem',
                   l10nID: 'better-bibtex_zotero-pane_tag_duplicates',
                   onShowing: (_event, context) => context.setVisible(Preference.keyScope === 'library' && isLibrary(context)),
-                  onCommand: (_event, context) => void Zotero.BetterBibTeX.KeyManager.tagDuplicates(context.collectionTreeRow!.ref.id),
+                  onCommand: (_event, context) => void Zotero.BetterBibTeX.KeyManager.tagDuplicates(context.collectionTreeRows[0].ref.id),
                 },
                 {
                   menuType: 'menuitem',
