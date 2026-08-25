@@ -603,6 +603,7 @@ export class BetterBibTeX {
             {
               menuType: 'submenu',
               l10nID: 'better-bibtex',
+              onShowing: (event, context) => context.setVisible(Preference.keyScope === 'global'),
               menus: [
                 {
                   menuType: 'menuitem',
