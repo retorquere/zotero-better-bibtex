@@ -10,7 +10,7 @@ import { jwk as pubkey } from './public'
 import { DebugLogSender } from 'zotero-plugin/debug-log'
 
 import { Monkey } from './monkey-patch'
-const monkey = new Monkey('better bibtex')
+let monkey: Monkey | undefined
 
 const BOOTSTRAP_REASONS = {
   1: 'APP_STARTUP',
@@ -104,6 +104,7 @@ export async function startup({ resourceURI, rootURI = resourceURI.spec }: { res
     ])
 
     const { FileUtils } = ChromeUtils.importESModule('resource://gre/modules/FileUtils.sys.mjs')
+    monkey = new Monkey('better bibtex')
     // Waive Xrays on the sandbox global before assigning properties across compartment boundaries
     Object.assign(Components.utils.waiveXrays(sandbox), {
       monkey,
@@ -146,6 +147,8 @@ export async function startup({ resourceURI, rootURI = resourceURI.spec }: { res
 export async function shutdown(data: any, reason: ReasonId) {
   try {
     log('shutdown started')
+    monkey?.disable()
+    monkey = undefined
 
     if (typeof chromeHandle !== 'undefined' && chromeHandle) {
       chromeHandle.destruct()
