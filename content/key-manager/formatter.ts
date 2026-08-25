@@ -1378,8 +1378,9 @@ export class PatternFormatter {
     * word segmentation for Chinese items. Uses substantial memory, and adds about 7 seconds to BBTs startup time; must be enabled under Preferences -> Better BibTeX -> Advanced -> Citekeys
     */
   public _jieba(input: string): string {
-    if (!chinese.enabled) return input
-    return chinese.jieba(input).join(' ').trim()
+    return chinese.enabled?.jieba.cut
+      ? chinese.jieba.cut!(input).join(' ').trim()
+      : input
   }
 
   /** word segmentation for Japanese items. Uses substantial memory; must be enabled under Preferences -> Better BibTeX -> Advanced -> Citekeys */
@@ -1495,8 +1496,8 @@ export class PatternFormatter {
       .filter(word => word && !(ucs2.decode(word).length === 1 && !word.match(/^\d+$/) && !word.match(CJK)))
 
     // apply jieba.cut and flatten.
-    if (chinese.enabled && this.item.transliterateMode === 'chinese') {
-      words = words.flatMap(word => chinese.jieba(word))
+    if (chinese.enabled?.jieba.cut && this.item.transliterateMode === 'chinese') {
+      words = words.flatMap(word => chinese.jieba.cut!(word))
     }
 
     if (japanese.enabled && this.item.transliterateMode === 'japanese') {
