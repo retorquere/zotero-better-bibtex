@@ -24,8 +24,7 @@ andrychowiczHindsightExperienceReplay2018:
     - Abbeel, Pieter
     - Zaremba, Wojciech
   date: '2018-02-23'
-  publisher:
-    name: arXiv
+  publisher: arXiv
   serial-number:
     doi: 10.48550/arXiv.1707.01495
   title: Hindsight Experience Replay

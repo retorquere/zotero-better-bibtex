@@ -8,6 +8,38 @@ import { Translation } from './translator'
 import { simplifyForExport } from '../../content/item-schema'
 // import { log } from '../../content/logger'
 
+function deepHas(obj, targetProp, visited = new WeakSet) {
+  // Base case: null or non-objects can't contain properties
+  if (obj === null || typeof obj !== 'object') return false
+
+  // Prevent infinite loops on circular references
+  if (visited.has(obj)) return false
+  visited.add(obj)
+
+  // Direct check: Does this node have targetProp with a scalar value?
+  if (Object.hasOwn(obj, targetProp)) {
+    const val = obj[targetProp]
+    const type = typeof val
+
+    if (val !== null && (type === 'string' || type === 'number' || type === 'boolean')) {
+      return true
+    }
+  }
+
+  // 2. Recursive search into nested objects/arrays
+  for (const key in obj) {
+    if (Object.hasOwn(obj, key)) {
+      const child = obj[key]
+
+      if (child !== null && typeof child === 'object') {
+        if (deepHas(child, targetProp, visited)) return true
+      }
+    }
+  }
+
+  return false
+}
+
 type Person = string | { name?: string; given?: string; family?: string }
 type HayagrivaType
   = 'article'
@@ -384,11 +416,6 @@ function creatorFingerprint(creator: { creatorType: string; firstName?: string; 
   ].join('|')
 }
 
-function getProperty(entry: Entry | Entry[] | undefined, property: string): string | number | undefined {
-  if (!entry) return
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-  return ((Array.isArray(entry)) ? entry.find(e => getProperty(e, property)) : entry)?.[property]
-}
 export const Hayagriva = new class {
   public fromZotero(item: Serialized.RegularItem, skipField: RegExp): Entry {
     simplifyForExport(item, { clone: false })
@@ -406,7 +433,7 @@ export const Hayagriva = new class {
       entry.date = dateOnly(item.accessDate)
     }
     if (item.language) entry.language = item.language
-    if (item.volume && !getProperty(entry.parent, 'volume')) entry.volume = asNumber(item.volume)
+    if (item.volume && !deepHas(entry.parent, 'volume')) entry.volume = asNumber(item.volume)
     if (item.issue) entry.issue = asNumber(item.issue)
     if (item.pages) entry['page-range'] = normalizePageRange(item.pages)
 
@@ -416,7 +443,7 @@ export const Hayagriva = new class {
         : item.url
     }
 
-    if (!getProperty(entry.parent, 'publisher') && (item.publisher || item.place)) {
+    if (!deepHas(entry.parent, 'publisher') && (item.publisher || item.place)) {
       entry.publisher = item.place
         ? { name: item.publisher, location: item.place }
         : item.publisher
