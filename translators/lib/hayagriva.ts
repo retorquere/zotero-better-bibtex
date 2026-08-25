@@ -51,7 +51,7 @@ type Affiliated = {
 
 type Entry = {
   type?: HayagrivaType
-  title?: string
+  title?: string | number
   genre?: string
   author?: Person | Person[]
   editor?: Person | Person[]
@@ -61,7 +61,7 @@ type Entry = {
   language?: string
   volume?: string | number
   issue?: string | number
-  'page-range'?: string
+  'page-range'?: string | number
   publisher?: Publisher
   url?: string | { value?: string; date?: string }
   'serial-number'?: Serial
@@ -140,17 +140,22 @@ function sanitizeKey(id: string): string {
   return (id || 'item').replace(/[^a-zA-Z0-9:_-]/g, '_')
 }
 
-function normalizeScalar(value: unknown): string {
-  if (value === null || typeof value === 'undefined') return ''
-  if (typeof value === 'string') return value.trim()
-  if (typeof value === 'number') return `${value}`.trim()
-  if (typeof value === 'boolean') return (value ? 'true' : 'false')
-  if (typeof value === 'bigint') return value.toString().trim()
+function normalizeScalar(v: unknown): string {
+  if (v === null || typeof v === 'undefined') return ''
+  if (typeof v === 'string') return v.trim()
+  if (typeof v === 'number') return `${v}`.trim()
+  if (typeof v === 'boolean') return (v ? 'true' : 'false')
+  if (typeof v === 'bigint') return v.toString().trim()
   return ''
 }
 
-function normalizePageRange(value: unknown): string {
-  const pages = normalizeScalar(value)
+function asNumber(v: string): string | number {
+  return (typeof v === 'string' && v.match(/^\d+$/)) ? parseInt(v, 10) : v
+}
+
+function normalizePageRange(v: unknown): string | number {
+  if (typeof v === 'string' && v.match(/^\d+$/)) return parseInt(v, 10)
+  const pages = normalizeScalar(v)
   if (!pages) return ''
   return pages.replace(/--+/g, '-')
 }
@@ -161,12 +166,12 @@ function formatParsedDate(date: dateparser.RichDate): string {
   switch (date.type) {
     case 'date': {
       if (typeof date.year !== 'number') return ''
-      let value = `${date.year}`.padStart(4, '0')
+      let v = `${date.year}`.padStart(4, '0')
       if (typeof date.month === 'number') {
-        value += `-${`${date.month}`.padStart(2, '0')}`
-        if (typeof date.day === 'number') value += `-${`${date.day}`.padStart(2, '0')}`
+        v += `-${`${date.month}`.padStart(2, '0')}`
+        if (typeof date.day === 'number') v += `-${`${date.day}`.padStart(2, '0')}`
       }
-      return value
+      return v
     }
 
     case 'season':
@@ -192,8 +197,8 @@ function dateOnly(date: string, origDate?: string): string {
   return formatParsedDate(parsed) || date
 }
 
-function normalizeType(value: unknown): string {
-  return normalizeScalar(value).toLowerCase()
+function normalizeType(v: unknown): string {
+  return normalizeScalar(v).toLowerCase()
 }
 
 function makeParent(item: Serialized.RegularItem): Entry | null {
@@ -227,7 +232,16 @@ function makeParent(item: Serialized.RegularItem): Entry | null {
       return item.publicationTitle ? { type: 'thread', title: item.publicationTitle } : null
 
     case 'encyclopediaArticle':
-      return item.publicationTitle ? { type: 'reference', title: item.publicationTitle } : null
+      if (!item.publicationTitle) return null
+      return {
+        type: 'reference',
+        title: item.publicationTitle,
+        ...(item.publisher ? { publisher: item.publisher } : {}),
+        ...(item.seriesNumber ? { issue: asNumber(item.seriesNumber) } : {}),
+        ...(item.volume ? { volume: asNumber(item.volume) } : {}),
+        ...(item.edition ? { edition: asNumber(item.edition) } : {}),
+        ...(item.series ? { parent: { type: 'reference', title: item.series } } : {}),
+      }
   }
 
   return null
@@ -370,12 +384,19 @@ function creatorFingerprint(creator: { creatorType: string; firstName?: string; 
   ].join('|')
 }
 
+function getProperty(entry: Entry | Entry[] | undefined, property: string): string | number | undefined {
+  if (!entry) return
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+  return ((Array.isArray(entry)) ? entry.find(e => getProperty(e, property)) : entry)?.[property]
+}
 export const Hayagriva = new class {
   public fromZotero(item: Serialized.RegularItem, skipField: RegExp): Entry {
     simplifyForExport(item, { clone: false })
     const entry: Entry = {
       type: hayagrivaType[item.itemType] || 'misc',
     }
+    const parent = makeParent(item)
+    if (parent) entry.parent = parent
 
     if (item.title) entry.title = item.title
     if (item.date) {
@@ -385,22 +406,20 @@ export const Hayagriva = new class {
       entry.date = dateOnly(item.accessDate)
     }
     if (item.language) entry.language = item.language
-    if (item.volume) entry.volume = item.volume
-    if (item.issue) entry.issue = item.issue
+    if (item.volume && !getProperty(entry.parent, 'volume')) entry.volume = asNumber(item.volume)
+    if (item.issue) entry.issue = asNumber(item.issue)
     if (item.pages) entry['page-range'] = normalizePageRange(item.pages)
 
     if (item.url || item.accessDate) {
-      entry.url = {
-        ...(item.url ? { value: item.url } : {}),
-        ...(item.accessDate ? { date: dateOnly(item.accessDate) } : {}),
-      }
+      entry.url = item.accessDate
+        ? { value: item.url, date: dateOnly(item.accessDate) }
+        : item.url
     }
 
-    if (item.publisher || item.place) {
-      entry.publisher = {
-        ...(item.publisher ? { name: item.publisher } : {}),
-        ...(item.place ? { location: item.place } : {}),
-      }
+    if (!getProperty(entry.parent, 'publisher') && (item.publisher || item.place)) {
+      entry.publisher = item.place
+        ? { name: item.publisher, location: item.place }
+        : item.publisher
     }
 
     const serial = serialNumber(item)
@@ -428,9 +447,6 @@ export const Hayagriva = new class {
       if (!creators[role].length) continue
       entry[role] = creators[role].length === 1 ? creators[role][0] : creators[role]
     }
-
-    const parent = makeParent(item)
-    if (parent) entry.parent = parent
 
     if (item.type) entry.genre = item.type
 

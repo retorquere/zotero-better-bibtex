@@ -9,3 +9,19 @@ LeadLeadDating2025:
   url:
     date: '2026-08-22'
     value: https://en.wikipedia.org/w/index.php?title=Lead%E2%80%93lead_dating&oldid=1282108712
+zotero-item-8762:
+  author: Mustermann, Max
+  date: 2024-03-24
+  title: Dummy Item
+  type: entry
+  url: https://example.org
+  parent:
+    type: reference
+    title: Wikipedia
+    publisher: FooPublisher
+    issue: 4
+    volume: 70
+    edition: 3
+    parent:
+      type: reference
+      title: WikiSeries

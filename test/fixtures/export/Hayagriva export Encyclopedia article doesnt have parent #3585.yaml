@@ -31,3 +31,31 @@ items:
     notes: []
     autoJournalAbbreviation: ''
     publicationTitle: Wikipedia
+  - key: 8UCXB9YC
+    version: 6239
+    itemType: encyclopediaArticle
+    title: Dummy Item
+    date: '2024-03-24'
+    archive: FooArchive
+    archiveLocation: FooLocation
+    url: https://example.org
+    volume: '70'
+    numberOfVolumes: '82'
+    publisher: FooPublisher
+    series: WikiSeries
+    seriesNumber: '4'
+    edition: '3'
+    citationKey: zotero-item-8762
+    creators:
+      - firstName: Max
+        lastName: Mustermann
+        creatorType: author
+    tags: []
+    dateAdded: '2026-08-23T20:46:18Z'
+    dateModified: '2026-08-24T06:41:31Z'
+    itemID: 8762
+    attachments: []
+    notes: []
+    autoJournalAbbreviation: ''
+    publicationTitle: Wikipedia
+
