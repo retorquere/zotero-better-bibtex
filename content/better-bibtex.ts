@@ -733,10 +733,14 @@ export class BetterBibTeX {
           ],
         })
 
+        function collRow(context): _ZoteroTypes.CollectionTree | undefined {
+          if (context.collectionTreeRows) {
+            return context.collectionTreeRows.lenght === 1 ? context.collectionTreeRows[0] as _ZoteroTypes.CollectionTree : undefined
+          }
+          return context.collectionTreeRow as _ZoteroTypes.CollectionTree
+        }
         const collType = context => {
-          if (context.collectionTreeRows?.length !== 1) return ''
-
-          switch (context.collectionTreeRows[0].type) {
+          switch (collRow(context)?.type) {
             case 'library':
             case 'group':
               return typeof selectedLibraryID() === 'number' ? 'library' : ''
@@ -828,7 +832,7 @@ export class BetterBibTeX {
                   menuType: 'menuitem',
                   l10nID: 'better-bibtex_zotero-pane_tag_duplicates',
                   onShowing: (_event, context) => context.setVisible(Preference.keyScope === 'library' && isLibrary(context)),
-                  onCommand: (_event, context) => void Zotero.BetterBibTeX.KeyManager.tagDuplicates(context.collectionTreeRows[0].ref.id),
+                  onCommand: (_event, context) => void Zotero.BetterBibTeX.KeyManager.tagDuplicates(collRow(context)!.ref.id),
                 },
                 {
                   menuType: 'menuitem',
