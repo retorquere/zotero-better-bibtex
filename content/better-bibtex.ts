@@ -777,6 +777,7 @@ export class BetterBibTeX {
                   l10nID: 'better-bibtex_collection-menu_auto-export',
                   onShowing: (_event, context) => {
                     const aes = selectedAutoExports(context)
+                    log.debug('3589: auto-exports', aes)
                     context.setVisible(aes.length > 0)
                   },
                   menus: Array.from({ length: 10 }).map((_, i) => ({
