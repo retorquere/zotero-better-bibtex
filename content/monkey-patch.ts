@@ -8,21 +8,20 @@ export class Monkey {
 
   public patch(obj: any, methodName: string, patcher: Function): void {
     const originalMethod = obj[methodName]
-    const newMethod = new WeakRef(patcher(obj[methodName]))
+    const newMethod = patcher(obj[methodName])
 
     obj[methodName] = new Proxy(originalMethod, {
       apply: (target, thisArg, argumentsList) => {
-        let patched: Function
         try {
-          if (this.#enabled && (patched = newMethod.deref())) {
-            return patched.apply(thisArg, argumentsList)
+          if (this.#enabled) {
+            return newMethod.apply(thisArg, argumentsList)
           }
           else {
             return originalMethod.apply(thisArg, argumentsList)
           }
         }
         catch (err) {
-          Zotero.debug(`${this.name} monkey-patch error: ${(err as any).message}`)
+          Zotero.debug(`${this.name} monkey-patch ${methodName} error: ${(err as any).message}`)
           Zotero.logError(err as Error)
           throw err
         }

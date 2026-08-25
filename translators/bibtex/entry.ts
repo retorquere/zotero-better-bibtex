@@ -314,6 +314,7 @@ export class Entry {
     }
 
     this.extraFields = clone(item.extraFields)
+    log.debug('wtf:', this.extraFields)
 
     // should be const entrytype: string | { type: string, subtype?: string }
     // https://github.com/Microsoft/TypeScript/issues/10422

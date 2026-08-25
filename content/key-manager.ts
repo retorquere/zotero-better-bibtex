@@ -273,13 +273,6 @@ export const KeyManager = new class _KeyManager {
         Formatter.update([Preference.citekeyFormat])
 
         await this.start()
-
-        const citationKeyFieldID: number = Zotero.ItemFields.getID('citationKey')
-        monkey.patch(Zotero.Item.prototype, 'getField', original => function Zotero_Item_prototype_getField(this: Zotero.Item, field) {
-          if ((field === 'citationKey' || field === citationKeyFieldID) && readonly(this)) return KeyManager.get(this.id)?.citationKey ?? ''
-
-          return original.apply(this, arguments) as string // eslint-disable-line prefer-rest-params
-        })
       },
       shutdown: async () => {
         await this.#keys.flush()
