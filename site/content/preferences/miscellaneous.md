@@ -12,7 +12,7 @@ aliases:
 
 ### Treat the `extra` field as a note
 
-default: `yes`
+default: `no`
 
 Treat the Zotero `extra` field as a note.
 
