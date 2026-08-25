@@ -29,7 +29,6 @@ import * as l10n from './l10n'
 import { migrate } from './key-manager/migrate'
 import { readonly } from './library'
 import { strcmp } from './string-compare'
-import { monkey } from './monkey-patch'
 
 function scrub(q: string): string {
   return q.replace(/\n/g, ' ').trim()
