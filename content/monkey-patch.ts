@@ -7,19 +7,36 @@ export class Monkey {
 
   constructor(private name: string) {}
 
+  private needsProxy(fn: any): boolean {
+    if (typeof fn !== 'function') return false
+
+    // Check if the function has custom attached properties or static methods
+    if (Object.getOwnPropertyNames(fn).find(key => !['length', 'name', 'prototype', 'arguments', 'caller'].includes(key))) return true
+
+    // Check if it's a constructable class or constructor function
+    // (Arrow functions and bound functions lack a .prototype property)
+    if (fn.prototype && fn.prototype.constructor === fn) return true
+
+    return false
+  }
+
   public patch(obj: any, methodName: string, patcher: Function): void {
-    if (this.#terminated) throw new Error(`monkey-patch ${this.name}: Cannot patch after disable() has been called.`)
+    if (this.#terminated) {
+      throw new Error(`${this.name}: Cannot patch after disable() has been called.`)
+    }
 
     const originalMethod = obj[methodName]
     const newMethod = patcher(originalMethod)
 
-    const wrapper = (...args: any[]) => {
+    let wrapper: any
+
+    const invoke = (thisArg: any, args: any[]) => {
       try {
         if (this.#enabled) {
-          return newMethod.apply(obj, args)
+          return newMethod.apply(thisArg, args)
         }
         else {
-          return originalMethod.apply(obj, args)
+          return originalMethod.apply(thisArg, args)
         }
       }
       catch (err) {
@@ -29,24 +46,43 @@ export class Monkey {
       }
     }
 
-    // restore callback for this patch
+    if (this.needsProxy(originalMethod)) {
+      // Use Proxy for complex functions, constructors, or functions with metadata/properties
+      wrapper = new Proxy(originalMethod, {
+        apply: (_target, thisArg, argumentsList) => invoke(thisArg, argumentsList),
+        construct: (_target, argumentsList, newTarget) => {
+          if (this.#enabled) {
+            return Reflect.construct(newMethod, argumentsList, newTarget)
+          }
+          return Reflect.construct(originalMethod, argumentsList, newTarget)
+        },
+      })
+    }
+    else {
+      // Fallback to fast standard closure for plain methods
+      wrapper = (...args: any[]) => invoke(obj, args)
+    }
+
     this.#unpatchers.push(() => {
-      if (obj[methodName] === wrapper) obj[methodName] = originalMethod
+      if (obj[methodName] === wrapper) {
+        obj[methodName] = originalMethod
+      }
     })
 
     obj[methodName] = wrapper
   }
 
   enable() {
-    if (this.#terminated) throw new Error(`${this.name}: Cannot enable a disabled patcher.`)
+    if (this.#terminated) {
+      throw new Error(`${this.name}: Cannot enable a disabled patcher.`)
+    }
     this.#enabled = true
   }
 
   disable() {
-    this.#enabled = false
     this.#terminated = true
+    this.#enabled = false
 
-    // Restore patched methods (in reverse order to cleanly unwind dependencies)
     while (this.#unpatchers.length > 0) {
       const unpatch = this.#unpatchers.pop()
       unpatch?.()
