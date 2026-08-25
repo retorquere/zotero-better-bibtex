@@ -17,7 +17,7 @@ class Chinese {
 
   public get enabled(): Chinese | null {
     this.load()
-    return this.#loaded ? this : null
+    return this.#loaded && Preference.chinese ? this : null
   }
 
   private load() {
