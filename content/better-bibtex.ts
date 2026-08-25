@@ -93,19 +93,6 @@ monkey.patch(Zotero.Item.prototype, 'clone', original => function Zotero_Item_pr
   return clone
 })
 
-monkey.patch(Zotero.Integration.Session.prototype, '_processNote', original => async function Zotero_Integration_Session_prototype_processNote(this: any, noteItem: Zotero.Item) {
-  const processed = await original.apply(this, arguments) as [string, unknown[], unknown[]]
-
-  if (!noteItem?.id) return processed
-
-  const [text, citations, placeholderIDs] = processed
-  const parser = new DOMParser
-  const doc = parser.parseFromString(text, 'text/html')
-  doc.body?.append(doc.createComment(` zotero-note-id:${ String(noteItem.id) } `))
-
-  return [doc.documentElement?.outerHTML || text, citations, placeholderIDs]
-})
-
 // https://github.com/retorquere/zotero-better-bibtex/issues/1221
 monkey.patch(Zotero.Items, 'merge', original => async function Zotero_Items_merge(this: any, item: Zotero.Item, otherItems: Zotero.Item[]) {
   try {
@@ -616,6 +603,7 @@ export class BetterBibTeX {
             {
               menuType: 'submenu',
               l10nID: 'better-bibtex',
+              onShowing: (event, context) => context.setVisible(Preference.keyScope === 'global'),
               menus: [
                 {
                   menuType: 'menuitem',
