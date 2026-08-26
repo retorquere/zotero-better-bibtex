@@ -112,6 +112,9 @@ better-bibtex_preferences_advanced_export_title-case_warning = If you're dead-se
 better-bibtex_preferences_advanced_export_workers_cache = 
   .label = Enable caching for background exports
 
+better-bibtex_preferences_advanced_extra-field_as-note = 
+  .label = Treat the `extra` field as a note
+
 better-bibtex_preferences_advanced_extra-merge = When merging items, also merge:
 
 better-bibtex_preferences_advanced_extra-merge-csl = 

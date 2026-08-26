@@ -125,7 +125,7 @@ Events.on('window-loaded', ({ data: { win, href } }: { data: { win: Window; href
     window.bbtmonkey.enable()
   }
   else {
-    window.bbtmonkey = new Monkey(true)
+    window.bbtmonkey = new Monkey('better bibtex export options')
     window.bbtmonkey.patch(window.Zotero_File_Interface_Export, 'updateOptions', original => function(this: any) {
       // eslint-disable-next-line prefer-rest-params
       original.apply(this, arguments)

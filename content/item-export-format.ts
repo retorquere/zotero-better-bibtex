@@ -4,8 +4,6 @@ import { getItemsAsync } from './get-items-async'
 import type { Serialized } from '../gen/typings/serialized'
 
 import { JournalAbbrev } from './journal-abbrev'
-import { log } from './logger'
-import { Preference } from './prefs'
 import { KeyManager } from './key-manager'
 import { selectedLibraryID } from './library'
 import { clone } from './object'
@@ -59,16 +57,6 @@ export function fix(serialized: Serialized.Item, item: Zotero.Item): Serialized.
 
     if (!Zotero.BetterBibTeX.starting) {
       regular.autoJournalAbbreviation = JournalAbbrev.get(regular, 'auto') || ''
-
-      log.info('3451: item-export-format.fix: journal fields', {
-        itemID: regular.itemID,
-        itemKey: regular.itemKey,
-        itemType: regular.itemType,
-        publicationTitle: regular.publicationTitle || null,
-        explicitJournalAbbreviation: regular.journalAbbreviation || null,
-        autoJournalAbbreviation: regular.autoJournalAbbreviation || null,
-        journalAbbreviation: Preference.journalAbbreviation,
-      })
     }
 
     // fetch for read-only items

@@ -15,7 +15,6 @@ import { ErrorReport } from './ErrorReport'
 import * as ExportOptions from './ExportOptions'
 import { flash } from './flash'
 import * as MenuHelper from './menu-helper'
-import { monkey } from './monkey-patch'
 import { orchestrator } from './orchestrator'
 import { PrefPane } from './Preferences'
 import { prompt } from './prompt'
@@ -603,6 +602,7 @@ export class BetterBibTeX {
             {
               menuType: 'submenu',
               l10nID: 'better-bibtex',
+              onShowing: (event, context) => context.setVisible(Preference.keyScope === 'global'),
               menus: [
                 {
                   menuType: 'menuitem',
@@ -873,7 +873,7 @@ export class BetterBibTeX {
         ExportOptions.disable()
         Events.shutdown()
         Elements.removeAll()
-        monkey.disableAll()
+        monkey.disable()
         Preference.shutdown()
         for (const endpoint of Object.keys(Zotero.Server.Endpoints)) {
           if (endpoint.startsWith('/better-bibtex/')) delete Zotero.Server.Endpoints[endpoint]

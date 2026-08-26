@@ -4,6 +4,8 @@ declare namespace Zotero {
   let write: (body: string) => void // needed in translators
 }
 
+declare const monkey: import('../content/monkey-patch').Monkey
+
 // declare const rootURI: string
 declare const FileUtils: any
 type DedicatedWorkerGlobalScope = any
