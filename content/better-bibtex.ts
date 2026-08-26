@@ -734,8 +734,11 @@ export class BetterBibTeX {
 
         function collRow(context): _ZoteroTypes.CollectionTree | undefined {
           if (context.collectionTreeRows) {
+            log.debug('3589: collRows', context.collectionTreeRows.length)
             return context.collectionTreeRows.lenght === 1 ? context.collectionTreeRows[0] as _ZoteroTypes.CollectionTree : undefined
           }
+
+          log.debug('3589: collRow', context.collectionTreeRows ? 1 : 0)
           return context.collectionTreeRow as _ZoteroTypes.CollectionTree
         }
         const collType = context => {
@@ -761,6 +764,7 @@ export class BetterBibTeX {
           const selected = type === 'collection'
             ? selectedCollection(true)
             : selectedLibraryID()
+          log.debug('3589: selectedAutoExports', { type, selected, n: AutoExport.db.values(_ => _.type === type && _.id === selected).length })
           return AutoExport.db.values(_ => _.type === type && _.id === selected)
         }
         type LibraryMenuContext = _ZoteroTypes.MenuManager.LibraryMenuContext
