@@ -65,9 +65,6 @@ class RDPConnection:
       {js_code}
     """
     
-    with open('/tmp/rdp.txt', 'w') as f:
-      f.write(js_code)
-
     wrapped = f'''
     (() => {{
       let __fn = async () => {{
