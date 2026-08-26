@@ -512,7 +512,7 @@ class Zotero:
     self.profile = profile = self.create_profile()
     shutil.rmtree(os.path.join(profile.path, self.client, 'better-bibtex'), ignore_errors=True)
 
-    cmd = f'{shlex.quote(profile.binary)} -P {shlex.quote(profile.name)} -jsconsole -purgecaches -ZoteroDebugText {self.redir} {shlex.quote(profile.path + ".log")} -start-debugger-server 6000 2>&1'
+    cmd = f'{shlex.quote(profile.binary)} -P {shlex.quote(profile.name)} -jsconsole -purgecaches -ZoteroDebugText -start-debugger-server 6000 {self.redir} {shlex.quote(profile.path + ".log")} 2>&1'
     utils.print(f'Starting {self.client}: {cmd}')
     self.proc = subprocess.Popen(cmd, shell=True)
     utils.print(f'{self.client} started: {self.proc.pid}')
