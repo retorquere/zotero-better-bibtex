@@ -1,6 +1,15 @@
+from pathlib import Path
+import glob
 import json
+import os
+import re
+import shutil
 import socket
 import steps.utils as utils
+import subprocess
+import time
+import toml
+import zipfile
 
 class RDPConnection:
   def __init__(self, host='127.0.0.1', port=6000, timeout=120.0):
@@ -133,3 +142,95 @@ class RDPConnection:
 
   def __exit__(self, exc_type, exc_val, exc_tb):
     self.close()
+
+def get_addon_id(xpi: Path) -> str:
+  '''Extract Add-on ID from manifest.json inside the XPI.'''
+  with zipfile.ZipFile(xpi, 'r') as z:
+    try:
+      with z.open('manifest.json') as f:
+        manifest = json.load(f)
+      return (
+          manifest.get('browser_specific_settings', {}).get('gecko', {}).get('id')
+          or manifest.get('applications', {}).get('gecko', {}).get('id')
+          or manifest.get('id')
+      )
+    except KeyError:
+      manifest_raw = z.read('manifest.json').decode('utf-8')
+      match = re.search(r'"id":\s*"([^"]+)"', manifest_raw)
+      if match:
+        return match.group(1)
+  raise ValueError(f'Could not extract Add-on ID from {xpi}')
+
+def format_pref(key: str, value) -> str:
+  '''Formats Python values into valid prefs.js syntax.'''
+  if isinstance(value, bool):
+    val_str = 'true' if value else 'false'
+  elif isinstance(value, (int, float)):
+    val_str = str(value)
+  else:
+    val_str = f'"{json.dumps(str(value))[1:-1]}"'
+  return f'user_pref("{key}", {val_str});\n'
+
+# --- Path Setup & Clean Workspace ---
+
+HOME = Path.home()
+ROOT = Path('.').resolve()
+FIXTURES = ROOT / 'test/fixtures'
+
+PROFILE_DIR = HOME / '.BBTTEST'
+DATA_DIR = PROFILE_DIR / 'zotero'
+EXT_DIR = PROFILE_DIR / 'extensions'
+LOG_FILE = HOME / '.BBTTEST.log'
+
+def install(config):
+  if PROFILE_DIR.exists():
+    shutil.rmtree(PROFILE_DIR)
+
+  PROFILE_DIR.mkdir(parents=True, exist_ok=True)
+  DATA_DIR.mkdir(parents=True, exist_ok=True)
+  EXT_DIR.mkdir(parents=True, exist_ok=True)
+
+  # Copy SQLite fixture
+  fixture_sqlite = FIXTURES / 'profile/zotero/zotero/zotero.sqlite'
+  if fixture_sqlite.exists():
+    shutil.copy(fixture_sqlite, DATA_DIR / 'zotero.sqlite')
+
+  # --- Install BBT ---
+  xpis = glob.glob('xpi/zotero-better-bibtex-*.xpi')
+  if len(xpis) != 1:
+    raise FileNotFoundError("Could not find single XPI matching 'xpi/zotero-better-bibtex-*.xpi'")
+
+  xpi = Path(xpis[0])
+  addon_id = get_addon_id(xpi)
+  shutil.copy(xpi, EXT_DIR / f'{addon_id}.xpi')
+  print(f'Installed extension: {xpi.name} -> {addon_id}.xpi')
+
+  # --- Preferences ---
+  prefs = {
+    'extensions.zotero.dataDir': str(DATA_DIR),
+    'extensions.zotero.customDataDir': str(DATA_DIR),
+    'extensions.zotero.translators.better-bibtex.testing': getattr(config, 'testing', True),
+    'extensions.zotero.translators.better-bibtex.logEvents': getattr(config, 'testing', True),
+    'extensions.zotero.translators.better-bibtex.caching': getattr(config, 'caching', True),
+    'dom.max_chrome_script_run_time': getattr(config, 'timeout', 180),
+  }
+
+  # Add default citekey format if not first run
+  if not config.get('first_run', False):
+    prefs['extensions.zotero.translators.better-bibtex.citekeyFormat'] = '[auth:lower][year]'
+
+  with open(Path(__file__).parent / 'preferences.toml') as f:
+    preferences = toml.load(f)
+  for p, v in nested_dict_iter(preferences['general']):
+    prefs[p] = v
+
+  locale = getattr(config, 'locale', None)
+  if locale == 'fr' and 'fr' in preferences:
+    for p, v in nested_dict_iter(preferences['fr']):
+      prefs[p] = v
+
+  # Write all preferences to prefs.js
+  prefs_file = PROFILE_DIR / 'prefs.js'
+  with open(prefs_file, 'w') as f:
+    for key, val in prefs.items():
+      f.write(format_pref(key, val))

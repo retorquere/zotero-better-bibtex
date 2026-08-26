@@ -9,12 +9,11 @@ import platform
 import configparser
 import glob
 from selenium import webdriver
-import toml
 import urllib
 import requests
 import tempfile
 from munch import *
-from steps.utils import terminate, running, nested_dict_iter, benchmark, ROOT, FIXTURES, EXPORTED, assert_equal_diff, serialize, html2md, clean_html
+from steps.utils import terminate, running, benchmark, ROOT, FIXTURES, EXPORTED, assert_equal_diff, serialize, html2md, clean_html
 from steps.library import load as cleanlib, sortbib
 import steps.utils as utils
 import shutil
@@ -854,7 +853,6 @@ class Zotero:
       profile.firefox = FirefoxProfile(os.path.join(FIXTURES, 'profile', self.profiletemplate or self.client))
 
     profile.firefox.set_preference('extensions.zotero.dataDir', os.path.join(profile.path, self.client))
-    profile.firefox.set_preference('extensions.zotero.useDataDir', True)
 
     install_xpis(os.path.join(ROOT, 'xpi'), profile.firefox)
 
@@ -862,42 +860,26 @@ class Zotero:
     if self.config.db: install_xpis(os.path.join(ROOT, 'test/db', self.config.db, 'xpis'), profile.firefox)
     if self.config.profile: install_xpis(os.path.join(ROOT, 'test/db', self.config.profile, 'xpis'), profile.firefox)
 
-    profile.firefox.set_preference('extensions.zotero.debug.memoryInfo', True)
     profile.firefox.set_preference('extensions.zotero.translators.better-bibtex.testing', self.testing)
     profile.firefox.set_preference('extensions.zotero.translators.better-bibtex.logEvents', self.testing)
     profile.firefox.set_preference('extensions.zotero.translators.better-bibtex.caching', self.caching)
-    profile.firefox.set_preference('extensions.zotero.translators.better-bibtex.scrubDatabase', True)
-    # don't nag about the Z7 beta for a day
-    profile.firefox.set_preference('extensions.zotero.hiddenNotices', json.dumps({ 'crossref-outage-2024-08-21': time.time() + 86400 }))
-    profile.firefox.set_preference('extensions.zotero.firstRunGuidanceShown.z7Banner', False)
-
-    profile.firefox.set_preference('extensions.zoteroMacWordIntegration.lastAttemptedVersion', '7.0.5.SOURCE')
-    profile.firefox.set_preference('extensions.zoteroMacWordIntegration.version', '7.0.5.SOURCE')
-
-    profile.firefox.set_preference('intl.accept_languages', 'en-GB')
-    profile.firefox.set_preference('intl.locale.requested', 'en-GB')
 
     profile.firefox.set_preference('extensions.zotero.debug-bridge.token', self.token)
     profile.firefox.set_preference('dom.max_chrome_script_run_time', self.config.timeout)
 
-    profile.firefox.set_preference('devtools.debugger.remote-enabled', True) # Enables the remote debugging protocol server
-    profile.firefox.set_preference('devtools.chrome.enabled', True) # Allows debugging browser internal/chrome code
-    profile.firefox.set_preference('devtools.debugger.prompt-connection', False) # Suppresses the "Incoming connection" UI dialog
-    profile.firefox.set_preference('devtools.debugger.force-local', True) # Binds the RDP server strictly to the local loopback interface (127.0.0.1)
-
     utils.print(f'dom.max_chrome_script_run_time={self.config.timeout}')
 
-    with open(os.path.join(os.path.dirname(__file__), 'preferences.toml')) as f:
-      preferences = toml.load(f)
-      for p, v in nested_dict_iter(preferences['general']):
-        profile.firefox.set_preference(p, v)
+    with open(os.path.join(os.path.dirname(__file__), 'preferences.yaml')) as f:
+      preferences = yaml.load(f)
+    for p, v in preferences['general'].items():
+      profile.firefox.set_preference(p, v)
 
       if self.config.locale == 'fr':
-        for p, v in nested_dict_iter(preferences['fr']):
+        for p, v in preferences['fr'].items():
           profile.firefox.firefox.set_preference(p, v)
 
     if not self.config.first_run:
-      profile.firefox.set_preference('extensions.zotero.translators.better-bibtex.citekeyFormat', "[auth:lower][year] | [=forumPost/WebPage][Auth:lower:capitalize][Date:format-date=%Y-%m-%d.%H\\:%M\\:%S:prefix=.][PublicationTitle:lower:capitalize:prefix=.][shorttitle3_3:lower:capitalize:prefix=.][Pages:prefix=.p.][Volume:prefix=.Vol.][NumberofVolumes:prefix=de] | [Auth:lower:capitalize][date=%oY:prefix=.][PublicationTitle:lower:capitalize:prefix=.][shorttitle3_3:lower:capitalize:prefix=.][Pages:prefix=.p.][Volume:prefix=.Vol.][NumberofVolumes:prefix=de]")
+      profile.firefox.set_preference('extensions.zotero.translators.better-bibtex.citekeyFormat', '[auth:lower][year]')
 
     profile.firefox.update_preferences()
 

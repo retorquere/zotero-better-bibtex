@@ -1,0 +1,98 @@
+general:
+  browser.displayedE10SNotice: 4
+  browser.dom.window.dump.enabled: true
+  browser.EULA.3.accepted: true
+  browser.EULA.override: true
+  browser.laterrun.enabled: false
+  browser.link.open_external: 2
+  browser.link.open_newwindow: 2
+  browser.newtabpage.enabled: false
+  browser.newtab.url: "about:blank"
+  browser.offline: false
+  browser.reader.detectedFirstArticle: true
+  browser.safebrowsing.enabled: false
+  browser.safebrowsing.malware.enabled: false
+  browser.search.update: false
+  browser.selfsupport.url: ""
+  browser.sessionstore.resume_from_crash: false
+  browser.shell.checkDefaultBrowser: false
+  browser.startup.homepage: "about:blank"
+  browser.startup.page: 0
+  browser.tabs.warnOnClose: false
+  browser.tabs.warnOnOpen: false
+  browser.usedOnWindows10.introURL: "about:blank"
+  devtools.chrome.enabled: true
+
+  datareporting.healthreport.logging.consoleEnabled: false
+  datareporting.healthreport.service.firstRun: false
+
+  # First Run / Upgrade Notifications
+  extensions.zotero.firstRun2.appVersion: "7.99.99"
+  extensions.zotero.firstRun2: false
+  extensions.zotero.firstRunGuidance: false
+  datareporting.healthreport.uploadEnabled: false
+  datareporting.policy.dataSubmissionPolicyAccepted: false
+  extensions.zotero.firstRun.skipFirefoxProfileAccessCheck: true
+  extensions.zotero.showUpgradeNotification: false
+
+  devtools.errorconsole.enabled: true
+  devtools.source-map.locations.enabled: true
+
+  dom.disable_open_during_load: false
+  dom.max_chrome_script_run_time: 0
+  dom.max_script_run_time: 0
+  dom.report_all_js_exceptions: true
+
+  # Extension Sideloading & Signature Bypass
+  xpinstall.signatures.required: false
+  extensions.autoDisableScopes: 10
+  extensions.enabledScopes: 15,
+  extensions.blocklist.enabled: false
+  extensions.blocklist.pingCountVersion: -1
+  extensions.logging.enabled: true
+  extensions.zotero.automaticScraperUpdates: true
+
+  extensions.zotero.reportTranslationFailure: false
+  extensions.zotero.translators.better-bibtex.kuroshiro: true
+  extensions.zotero.translators.better-bibtex.lockedInit: false
+
+  extensions.zotero.debug.log: true
+  extensions.zotero.debug.time: true
+  extensions.zotero.debug.store: true
+
+  # Data Directory & RDP Setup
+  extensions.zotero.useDataDir: true
+  devtools.debugger.remote-enabled: true
+  devtools.debugger.prompt-connection: false
+  devtools.debugger.force-local: true
+
+  # Sync Prompts
+  extensions.zotero.sync.autoSync: false
+  extensions.zotero.sync.server.banner.dismissed: true
+  extensions.zotero.sync.prompt: false
+  extensions.zotero.sync.storage.banner.dismissed: true
+
+  # Word Integration
+  extensions.zotero.integration.showMacWord3Notice: false
+  extensions.zotero.integration.hasRun: true
+  extensions.zotero.integration.keepWinOnTop: false
+  extensions.zotero.integration.donotWarnAccessMacWord: true
+  extensions.zotero.integration.flagWordIntegrationInstalled: true
+  extensions.zoteroMacWordIntegration.lastAttemptedVersion: "7.0.5.SOURCE"
+  extensions.zoteroMacWordIntegration.version: "7.0.5.SOURCE"
+  extensions.zoteroMacWordIntegration.installed: true
+  extensions.zotero.firstRunGuidanceShown.z7Banner: false
+
+  # Localization
+  intl.accept_languages: "en-GB"
+  intl.locale.requested: "en-GB"
+
+  # Better-BibTeX Preferences
+  extensions.zotero.debug.memoryInfo: true
+  extensions.zotero.translators.better-bibtex.removeStock: true
+  extensions.zotero.translators.better-bibtex.scrubDatabase: true
+
+fr:
+  intl.locale.matchOS: false
+  general.useragent.locale: fr
+  intl.accept_languages: 'fr, fr-fr, en-us, en'
