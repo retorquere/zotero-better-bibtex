@@ -9,8 +9,5 @@
   doi = {10.3386/w8524},
   url = {http://www.nber.org/papers/w8524.pdf},
   urldate = {2023-11-30},
-  langid = {english},
-  annotation = {MAG: 2106676663\\
-OpenAlex: W2106676663\\
-CorpusID: 227225830}
+  langid = {english}
 }

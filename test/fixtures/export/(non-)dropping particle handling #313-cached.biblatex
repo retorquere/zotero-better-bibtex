@@ -1,7 +1,6 @@
 @article{abbot1,
   title = {{{(Aubignac) (François Hédelin, abbé d')}}},
-  author = {Aubignac, abbé d', François Hédelin},
-  annotation = {relies on paricleParser fallback detection}
+  author = {Aubignac, abbé d', François Hédelin}
 }
 
 @article{abbot3,
