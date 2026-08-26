@@ -157,7 +157,7 @@ export async function shutdown(data: any, reason: ReasonId) {
     }
 
     // Clear sandbox references to allow GC reaping
-    // if (sandbox) Components.utils.nukeSandbox(sandbox)
+    if (sandbox) Components.utils.nukeSandbox(sandbox)
     sandbox = null
 
     log('bootstrap: shutdown: done')

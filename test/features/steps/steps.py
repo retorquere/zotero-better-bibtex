@@ -1,5 +1,6 @@
 from numerizer import numerize
 import steps.zotero as zotero
+import steps.rdp as rdp
 from munch import *
 from behave import given, when, then
 import behave
@@ -606,3 +607,9 @@ def step_impl(context, citekey):
 def step_impl(context, citekey, expected):
   result = context.jsonrpc_response.get('result', {})
   assert result.get(citekey) == expected, f'Expected {expected!r} for {citekey}; got {result.get(citekey)!r}'
+
+@then('the disabled monkey-patches work')
+def step_impl(context):
+  with rdp.RDPConnection() as zotero:
+    serialized = zotero.execute('return Zotero.getActiveZoteroPane().getSelectedItems().map(item => Zotero.Utilities.Internal.itemToExportFormat(item))')
+    assert type(serialized) == list, f'Expected serialized object, got {type(serialized)}, {json.dumps(serialized)}'
