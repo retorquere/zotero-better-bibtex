@@ -1,0 +1,42 @@
+config:
+  id: 36a3b0b5-bad0-4a04-b79b-441c7cef77db
+  label: BetterBibTeX JSON
+  preferences:
+    citekeyFormat: auth.lower + shorttitle(3, 3) + year
+    fillKeyAfter: 1
+    skipFields: language
+  options: {}
+version:
+  zotero: 9.0.6
+  bbt: 9.0.61
+collections: {}
+items:
+  - key: 4ZFJBJDL
+    version: 2615
+    itemType: presentation
+    title: Direct Modeling of Microcollapse and Pore Size by Population Balance
+    date: 4/15/2026
+    place: Chicago, IL, USA
+    citationKey: wheelerDirectModelingMicrocollapse2026
+    meetingName: International Society of Lyophilization and Freeze Drying 2026 Midwest Chapter Conference
+    creators:
+      - firstName: Isaac S
+        lastName: Wheeler
+        creatorType: presenter
+      - firstName: Vivek
+        lastName: Narsimhan
+        creatorType: contributor
+      - firstName: Alina A
+        lastName: Alexeenko
+        creatorType: contributor
+      - firstName: Davide
+        lastName: Fissore
+        creatorType: contributor
+    tags: []
+    dateAdded: '2026-06-22T14:56:58Z'
+    dateModified: '2026-06-22T15:00:39Z'
+    itemID: 781
+    attachments: []
+    notes: []
+    autoJournalAbbreviation: ''
+    type: Oral
