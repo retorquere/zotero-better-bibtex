@@ -101,7 +101,9 @@ export function generateBBTJSON(collected: Collected): Translation {
     }
   }
 
-  translation.output.body = JSON.stringify(data, null, 2)
+  translation.output.body = translation.collected.displayOptions.YAML
+    ? Zotero.BetterBibTeX.yamlDump(data)
+    : JSON.stringify(data, null, 2)
 
   return translation
 }
