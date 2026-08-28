@@ -17,8 +17,3 @@ export function detectFormat(data: unknown): YAMLFormat {
 
   return hayagriva ? 'hayagriva' : 'unknown'
 }
-
-export function parse(input: string, yamlLoad: (input: string) => any): any {
-  input = input.replace(/\n---[\r\n]*$/, '\n...\n')
-  return yamlLoad(input)
-}
