@@ -13,7 +13,7 @@ export function doExport(): void {
 
 export function detectImport(): boolean {
   try {
-    const parsed = Zotero.BetterBibTeX.parseYAML(slurp())
+    const parsed = Zotero.BetterBibTeX.yamlLoad(slurp())
     return detectFormat(parsed) === 'csl'
   }
   catch {
@@ -106,7 +106,7 @@ function yamlDate(date): string {
 }
 
 export async function doImport(): Promise<void> {
-  const parsed = Zotero.BetterBibTeX.parseYAML(slurp())
+  const parsed = Zotero.BetterBibTeX.yamlLoad(slurp())
   if (detectFormat(parsed) !== 'csl') {
     throw new Error('Input is not in CSL-YAML format')
   }

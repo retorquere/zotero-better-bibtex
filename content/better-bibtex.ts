@@ -54,11 +54,10 @@ import { generateBibLaTeX } from '../translators/bibtex/biblatex'
 import { generateBibTeX, importBibTeX } from '../translators/bibtex/bibtex'
 import { generateCSLJSON } from '../translators/csl/json'
 import { generateCSLYAML } from '../translators/csl/yaml'
-import { parse as parseYAML } from '../translators/lib/yaml'
 import { generateHayagriva } from '../translators/lib/hayagriva'
 import { generateBBTJSON, importBBTJSON } from '../translators/lib/bbtjson'
 import type { Collected } from '../translators/lib/collect'
-import * as YAML from 'js-yaml'
+import * as yaml from './yaml'
 
 // MONKEY PATCHES
 
@@ -242,11 +241,11 @@ Zotero.Translate.Export.prototype.Sandbox.BetterBibTeX = {
     return generateBBTJSON(collected)
   },
 
-  yamlDump(_sandbox: any, data: any, options?: any) {
-    return YAML.dump(data, options)
+  yamlDump(_sandbox: any, data: any): string {
+    return yaml.dump(data)
   },
-  yamlLoad(_sandbox: any, input: string) {
-    return YAML.load(input)
+  yamlLoad(_sandbox: any, input: string): any {
+    return yaml.load(input)
   },
 
   parseDate(_sandbox: any, date: string): RichDate {
@@ -278,14 +277,11 @@ Zotero.Translate.Import.prototype.Sandbox.BetterBibTeX = {
   async importBBTJSON(_sandbox: any, collected: Collected) {
     return await importBBTJSON(collected)
   },
-  parseYAML(_sandbox: any, input: string): any {
-    return parseYAML(input, str => YAML.load(str))
+  yamlDump(_sandbox: any, data: any): string {
+    return yaml.dump(data)
   },
-  yamlDump(_sandbox: any, data: any, options?: any) {
-    return YAML.dump(data, options)
-  },
-  yamlLoad(_sandbox: any, input: string) {
-    return YAML.load(input)
+  yamlLoad(_sandbox: any, input: string): any {
+    return yaml.load(input)
   },
 }
 
@@ -919,6 +915,13 @@ export class BetterBibTeX {
   public onMainWindowUnload({ window }: { window: Window }): void {
     window.document.querySelector('[href="better-bibtex.ftl"]')?.remove()
     window.document.querySelector(`#${this.hideNativeField}`)?.remove()
+  }
+
+  public yamlDump(data: unknown): string {
+    return yaml.dump(data)
+  }
+  public yamlLoad(input: string): any {
+    return yaml.load(input)
   }
 
   public parseDate(date: string): RichDate {
