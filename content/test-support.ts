@@ -8,7 +8,6 @@ import { AUXScanner } from './aux-scanner'
 import { defaults } from '../gen/preferences/meta'
 import { Preference } from './prefs'
 import { Cache } from './translators/worker'
-import { memory } from './memory'
 
 // import { Bench } from 'tinybench'
 
@@ -64,8 +63,6 @@ export class TestSupport {
       try {
         if (i) log.error(JSON.stringify(scenario), 'reset attempt', i + 1)
         await this.attemptReset()
-        await memory.minimize()
-        memory.log(`starting ${scenario}`)
         return
       }
       catch (err) {
@@ -74,9 +71,8 @@ export class TestSupport {
     }
     throw error
   }
-  public async finished(scenario: string): Promise<void> {
-    await memory.minimize()
-    memory.log(`finished ${scenario}`)
+  public finished(scenario: string): void {
+    log.info(`finished ${scenario}`)
   }
 
   public async attemptReset(): Promise<void> {

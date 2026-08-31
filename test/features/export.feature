@@ -795,6 +795,7 @@ Feature: Export
   Scenario: Really Big whopping library
     When I restart Zotero with "1287"
     And I restart Zotero with "1287"
+    And I set preference .extraFieldAsNote to true
     And I set preference .DOIandURL to "doi"
     # And I set preference .autoAbbrevStyle to "http://www.zotero.org/styles/cell"
     And I set preference .autoExport to "off"

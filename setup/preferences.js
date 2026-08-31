@@ -12,7 +12,7 @@ import frontmatter from 'gray-matter'
 import _ from 'lodash'
 import { walk, Lint, ASTWalker as BaseASTWalker } from './pug-ast-walker.js'
 import { FluentBundle, FluentResource } from '@fluent/bundle'
-import * as yaml from 'js-yaml'
+import * as yaml from 'lightning-yaml'
 
 import { Eta } from 'eta'
 const eta = new Eta
@@ -141,7 +141,7 @@ class Docs extends ASTWalker {
 
   constructor() {
     super()
-    for (const [name, pref] of Object.entries(yaml.load(fs.readFileSync('content/Preferences/preferences.yaml', 'utf-8')))) {
+    for (const [name, pref] of Object.entries(yaml.parse(fs.readFileSync('content/Preferences/preferences.yaml', 'utf-8')))) {
       pref.description = pref.description || ''
       this.preferences[`${prefprefix}${name}`] = { name, affects: [], type: typeof pref.default, ...pref }
     }

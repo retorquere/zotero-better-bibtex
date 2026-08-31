@@ -1,9 +1,10 @@
 /* eslint-disable no-restricted-syntax, @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-unsafe-function-type, @typescript-eslint/no-unsafe-return */
 
-import { alert } from './prompt'
+import { confirm } from './prompt'
 
 export class Monkey {
   #enabled = false
+  #dead = false
   #unpatchers: undefined | Array<() => void> = []
 
   constructor(private name: string) {}
@@ -26,11 +27,20 @@ export class Monkey {
       throw new Error(`${this.name}: Cannot patch after disable() has been called.`)
     }
     if (Cu.isDeadWrapper(obj[methodName])) {
-      alert({
+      if (this.#dead) return
+      this.#dead = true
+      if (confirm({
         title: 'Better BibTeX startup error',
-        text: 'Better BibTeX has experienced a startup error. Please restart Zotero to resolve. If restarting does not resolve it, please report on https://github.com/retorquere/zotero-better-bibtex/issues/3590',
-      })
-      return
+        text: `Better BibTeX has experienced a startup error. Please restart Zotero to resolve it.
+              If restarting does not resolve it, please report on
+              https://github.com/retorquere/zotero-better-bibtex/issues/3590 .
+              Do you want to restart now?`.replace(/  */g, ' '),
+      })) {
+        Zotero.Utilities.Internal.quit(true)
+      }
+      else {
+        return
+      }
     }
 
     const originalMethod = obj[methodName]

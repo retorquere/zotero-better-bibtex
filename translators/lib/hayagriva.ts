@@ -1,6 +1,5 @@
 declare const Zotero: any
 
-import * as YAML from 'js-yaml'
 import * as dateparser from '../../content/dateparser'
 import { Serialized } from '../../gen/typings/serialized'
 import type { Collected } from './collect'
@@ -432,7 +431,7 @@ export const Hayagriva = new class {
     const header = duplicates.size
       ? `# duplicate keys found, only first duplicate retained:\n# ${JSON.stringify([...duplicates].sort())}\n`
       : ''
-    return header + YAML.dump(doc, { skipInvalid: true, sortKeys: true, lineWidth: -1 })
+    return header + Zotero.BetterBibTeX.yamlDump(doc, { skipInvalid: true, sortKeys: true, lineWidth: -1 })
   }
 
   public async import(doc: Doc): Promise<void> {
