@@ -362,6 +362,50 @@ monkey.patch(Zotero.Translate.Export.prototype, 'translate', original => functio
 
 const scheduler = new Scheduler<'column-refresh'>(500)
 
+function autoHide<M extends _ZoteroTypes.MenuManager.MenuData<any>>(config: M): M {
+  return {
+    ...config,
+    menuType: 'submenu',
+    onShowing: (event: Event, context: _ZoteroTypes.MenuManager.MenuContext) => {
+      // Run the parent's own onShowing if defined
+      config.onShowing?.(event, context as any)
+
+      // Check if at least one child is visible
+      let hasVisibleChild = false
+
+      for (const child of config.menus || []) {
+        if (!child.onShowing) {
+          hasVisibleChild = true
+          break
+        }
+
+        let isChildVisible = true
+        // eslint-disable-next-line @typescript-eslint/unbound-method
+        const originalSetVisible = context.setVisible
+
+        context.setVisible = (visible: boolean) => {
+          isChildVisible = !!visible
+        }
+
+        try {
+          child.onShowing(event, context as any)
+        }
+        finally {
+          context.setVisible = originalSetVisible
+        }
+
+        if (isChildVisible) {
+          hasVisibleChild = true
+          break
+        }
+      }
+
+      // Update the real parent visibility
+      context.setVisible(hasVisibleChild)
+    },
+  }
+}
+
 export class BetterBibTeX {
   public clientName = Zotero.clientName
   public clientVersion = Zotero.version
@@ -595,19 +639,18 @@ export class BetterBibTeX {
           pluginID,
           target: 'main/menubar/tools',
           menus: [
-            {
+            autoHide({
               menuType: 'submenu',
               l10nID: 'better-bibtex',
-              onShowing: (event, context) => context.setVisible(Preference.keyScope === 'global'),
               menus: [
                 {
                   menuType: 'menuitem',
                   l10nID: 'better-bibtex_zotero-pane_tag_duplicates',
-                  onShowing: (event, context) => context.setVisible(Preference.keyScope === 'global'),
+                  onShowing: (event, context) => { context.setVisible(Preference.keyScope === 'global') },
                   onCommand: (_event, _context) => void Zotero.BetterBibTeX.KeyManager.tagDuplicates(),
                 },
               ],
-            },
+            }),
           ],
         })
 
@@ -737,7 +780,7 @@ export class BetterBibTeX {
           log.debug('3589: collRow', context.collectionTreeRows ? 1 : 0)
           return context.collectionTreeRow as _ZoteroTypes.CollectionTree
         }
-        const collType = context => {
+        const $collType = context => {
           switch (collRow(context)?.type) {
             case 'library':
             case 'group':
@@ -747,6 +790,10 @@ export class BetterBibTeX {
             default:
               return ''
           }
+        }
+        const collType = context => {
+          log.debug('3589: collType', $collType(context))
+          return $collType(context)
         }
         const isCollection = context => collType(context) === 'collection'
         const isLibrary = context => collType(context) === 'library'
@@ -769,22 +816,14 @@ export class BetterBibTeX {
           pluginID,
           target: 'main/library/collection',
           menus: [
-            {
+            autoHide({
               menuType: 'submenu',
               l10nID: 'better-bibtex',
               icon: 'chrome://zotero-better-bibtex/content/skin/bibtex-menu.svg',
-              onShowing: (_event, context) => {
-                context.setVisible(!!collType(context))
-              },
               menus: [
-                {
+                autoHide({
                   menuType: 'submenu',
                   l10nID: 'better-bibtex_collection-menu_auto-export',
-                  onShowing: (_event, context) => {
-                    const aes = selectedAutoExports(context)
-                    log.debug('3589: auto-exports', aes)
-                    context.setVisible(aes.length > 0)
-                  },
                   menus: Array.from({ length: 10 }).map((_, i) => ({
                     menuType: 'menuitem',
                     // l10nID: 'better-bibtex_collection-menu_auto-export_path',
@@ -799,7 +838,7 @@ export class BetterBibTeX {
                       if (ae) Zotero.BetterBibTeX.AutoExport.run(ae.path)
                     },
                   })),
-                },
+                }),
                 {
                   menuType: 'menuitem',
                   l10nID: 'better-bibtex_zotero-pane_show_collection-key',
@@ -823,14 +862,13 @@ export class BetterBibTeX {
                     context.setVisible(selectedCollectionHasItems(context))
                   },
                   onCommand: (_event, context) => {
-                    if (!selectedCollectionHasItems(context)) return
-                    void Zotero.BetterBibTeX.scanAUX('collection-replace')
+                    if (selectedCollectionHasItems(context)) void Zotero.BetterBibTeX.scanAUX('collection-replace')
                   },
                 },
                 {
                   menuType: 'menuitem',
                   l10nID: 'better-bibtex_zotero-pane_tag_duplicates',
-                  onShowing: (_event, context) => context.setVisible(Preference.keyScope === 'library' && isLibrary(context)),
+                  onShowing: (_event, context) => { context.setVisible(Preference.keyScope === 'library' && isLibrary(context)) },
                   onCommand: (_event, context) => void Zotero.BetterBibTeX.KeyManager.tagDuplicates(collRow(context)!.ref.id),
                 },
                 {
@@ -841,7 +879,7 @@ export class BetterBibTeX {
                   },
                 },
               ],
-            },
+            }),
           ],
         })
 
