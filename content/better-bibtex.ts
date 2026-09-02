@@ -35,7 +35,7 @@ import { AUXScanner } from './aux-scanner'
 import * as Extra from './extra'
 import { HTMLParser, HTMLParserOptions, sentenceCase } from './text'
 
-import { AutoExport } from './auto-export'
+import { AutoExport, Job } from './auto-export'
 import { uri } from './escape'
 
 import { Events } from './events'
@@ -82,7 +82,7 @@ monkey.patch(Zotero.Utilities.Item?.itemToCSLJSON ? Zotero.Utilities.Item : Zote
 })
 */
 
-import { readonly, selectedLibraryID } from './library'
+import { readonly } from './library'
 import { selectedCollection } from './collection'
 
 monkey.patch(Zotero.Item.prototype, 'clone', original => function Zotero_Item_prototype_clone(this: Zotero.Item) {
@@ -362,6 +362,50 @@ monkey.patch(Zotero.Translate.Export.prototype, 'translate', original => functio
 
 const scheduler = new Scheduler<'column-refresh'>(500)
 
+function autoHide<M extends _ZoteroTypes.MenuManager.MenuData<any>>(config: M): M {
+  return {
+    ...config,
+    menuType: 'submenu',
+    onShowing: (event: Event, context: _ZoteroTypes.MenuManager.MenuContext) => {
+      // Run the parent's own onShowing if defined
+      config.onShowing?.(event, context as any)
+
+      // Check if at least one child is visible
+      let hasVisibleChild = false
+
+      for (const child of config.menus || []) {
+        if (!child.onShowing) {
+          hasVisibleChild = true
+          break
+        }
+
+        let isChildVisible = true
+        // eslint-disable-next-line @typescript-eslint/unbound-method
+        const originalSetVisible = context.setVisible
+
+        context.setVisible = (visible: boolean) => {
+          isChildVisible = !!visible
+        }
+
+        try {
+          child.onShowing(event, context as any)
+        }
+        finally {
+          context.setVisible = originalSetVisible
+        }
+
+        if (isChildVisible) {
+          hasVisibleChild = true
+          break
+        }
+      }
+
+      // Update the real parent visibility
+      context.setVisible(hasVisibleChild)
+    },
+  }
+}
+
 export class BetterBibTeX {
   public clientName = Zotero.clientName
   public clientVersion = Zotero.version
@@ -595,19 +639,18 @@ export class BetterBibTeX {
           pluginID,
           target: 'main/menubar/tools',
           menus: [
-            {
+            autoHide({
               menuType: 'submenu',
               l10nID: 'better-bibtex',
-              onShowing: (event, context) => context.setVisible(Preference.keyScope === 'global'),
               menus: [
                 {
                   menuType: 'menuitem',
                   l10nID: 'better-bibtex_zotero-pane_tag_duplicates',
-                  onShowing: (event, context) => context.setVisible(Preference.keyScope === 'global'),
+                  onShowing: (event, context) => { context.setVisible(Preference.keyScope === 'global') },
                   onCommand: (_event, _context) => void Zotero.BetterBibTeX.KeyManager.tagDuplicates(),
                 },
               ],
-            },
+            }),
           ],
         })
 
@@ -728,109 +771,147 @@ export class BetterBibTeX {
           ],
         })
 
-        const collType = context => {
-          switch (context.collectionTreeRow.type) {
-            case 'library':
-            case 'group':
-              return typeof selectedLibraryID() === 'number' ? 'library' : ''
-            case 'collection':
-              return 'collection'
-            default:
-              return ''
+        class Row {
+          #row?: _ZoteroTypes.CollectionTree
+
+          constructor(context: any) {
+            if (context.collectionTreeRows) {
+              this.#row = context.collectionTreeRows.length === 1 ? context.collectionTreeRows[0] : undefined
+            }
+            else {
+              this.#row = context.collectionTreeRow
+            }
+          }
+
+          static isLibrary(context): boolean {
+            return new this(context).type === 'library'
+          }
+          static isCollection(context): boolean {
+            return new this(context).type === 'collection'
+          }
+
+          static replace(context, setVisible = false): boolean {
+            function visible(v: boolean): boolean {
+              if (setVisible) context.setVisible(v)
+              return v
+            }
+
+            const row = new this(context)
+            if (row.type !== 'collection') return visible(false)
+            const coll = Zotero.Collections.get(row.collection!)
+            if (!coll) return visible(false)
+            return visible(coll.hasChildItems())
+          }
+
+          static autoexports(context): Job[] {
+            const row = new this(context)
+            const type = row.type
+            const id = type === 'collection' ? row.collection : (type === 'library' ? row.library : undefined)
+            const jobs = AutoExport.db.values(ae => ae.type === type && ae.id === id)
+            return jobs
+          }
+
+          static type(context, setVisible = false): 'collection' | 'library' | '' {
+            const type = (new this(context)).type
+            if (setVisible) context.setVisible(!!type)
+            return type
+          }
+
+          static library(context): number | undefined {
+            return (new this(context)).library
+          }
+
+          get type(): 'collection' | 'library' | '' {
+            switch (this.#row?.type) {
+              case 'library':
+              case 'collection':
+                return this.#row.type as 'collection' | 'library'
+              case 'group':
+                return 'library'
+            }
+
+            return ''
+          }
+
+          get library(): number | undefined {
+            switch (this.#row?.type) {
+              case 'library':
+              case 'group':
+                return this.#row.ref.libraryID as number
+            }
+          }
+
+          get collection(): number | undefined {
+            if (this.#row?.type === 'collection') return this.#row.ref.id as number
           }
         }
-        const isCollection = context => collType(context) === 'collection'
-        const isLibrary = context => collType(context) === 'library'
 
-        const selectedCollectionHasItems = context => {
-          const collection = isCollection(context) ? selectedCollection() : null
-          return !!collection?.hasChildItems()
-        }
-        function selectedAutoExports(context) {
-          const type = collType(context)
-          const selected = type === 'collection'
-            ? selectedCollection(true)
-            : selectedLibraryID()
-          return AutoExport.db.values(_ => _.type === type && _.id === selected)
-        }
         type LibraryMenuContext = _ZoteroTypes.MenuManager.LibraryMenuContext
         Zotero.MenuManager.registerMenu({
           menuID: `${pluginID}-menu-collection`,
           pluginID,
           target: 'main/library/collection',
           menus: [
-            {
+            autoHide({
               menuType: 'submenu',
               l10nID: 'better-bibtex',
               icon: 'chrome://zotero-better-bibtex/content/skin/bibtex-menu.svg',
-              onShowing: (_event, context) => {
-                context.setVisible(!!collType(context))
-              },
               menus: [
-                {
+                autoHide({
                   menuType: 'submenu',
                   l10nID: 'better-bibtex_collection-menu_auto-export',
-                  onShowing: (_event, context) => {
-                    const aes = selectedAutoExports(context)
-                    context.setVisible(aes.length > 0)
-                  },
                   menus: Array.from({ length: 10 }).map((_, i) => ({
                     menuType: 'menuitem',
                     // l10nID: 'better-bibtex_collection-menu_auto-export_path',
                     onShowing: (event: Event, context: any) => {
-                      const aes = selectedAutoExports(context)
-                      context.setVisible(aes.length > i)
-                      // context.setL10nArgs(aes[i] || {})
-                      context.menuElem.setAttribute('label', aes[i]?.path || '[path not set]')
+                      const ae = Row.autoexports(context)[i]
+                      context.setVisible(!!ae)
+                      if (ae) context.menuElem.setAttribute('label', ae.path || '[path not set]')
                     },
                     onCommand: (_event: Event, context: LibraryMenuContext) => {
-                      const ae = selectedAutoExports(context)[i]
+                      const ae = Row.autoexports(context)[i]
                       if (ae) Zotero.BetterBibTeX.AutoExport.run(ae.path)
                     },
                   })),
-                },
+                }),
                 {
                   menuType: 'menuitem',
                   l10nID: 'better-bibtex_zotero-pane_show_collection-key',
-                  onShowing: (_event, context) => collType(context),
+                  onShowing: (_event, context) => Row.type(context, true),
                   onCommand: (_event, context) => {
-                    showPullExportURLs(collType(context) as 'collection' | 'library')
+                    const type = Row.type(context)
+                    if (type) showPullExportURLs(type)
                   },
                 },
                 {
                   menuType: 'menuitem',
                   l10nID: 'better-bibtex_aux-scanner',
-                  onShowing: (_event, context) => collType(context),
+                  onShowing: (_event, context) => Row.type(context, true),
                   onCommand: (_event, context) => {
-                    void Zotero.BetterBibTeX.scanAUX(collType(context))
+                    void Zotero.BetterBibTeX.scanAUX(Row.type(context))
                   },
                 },
                 {
                   menuType: 'menuitem',
                   l10nID: 'better-bibtex_aux-scanner_replace-collection',
-                  onShowing: (_event, context) => {
-                    context.setVisible(selectedCollectionHasItems(context))
-                  },
-                  onCommand: (_event, context) => {
-                    if (!selectedCollectionHasItems(context)) return
-                    void Zotero.BetterBibTeX.scanAUX('collection-replace')
-                  },
+                  onShowing: (_event, context) => Row.replace(context, true),
+                  onCommand: (_event, _context) => void Zotero.BetterBibTeX.scanAUX('collection-replace'),
                 },
                 {
                   menuType: 'menuitem',
                   l10nID: 'better-bibtex_zotero-pane_tag_duplicates',
-                  onShowing: (_event, context) => context.setVisible(Preference.keyScope === 'library' && isLibrary(context)),
-                  onCommand: (_event, context) => void Zotero.BetterBibTeX.KeyManager.tagDuplicates(context.collectionTreeRow!.ref.id),
+                  onShowing: (_event, context) => { context.setVisible(Preference.keyScope === 'library' && Row.isLibrary(context)) },
+                  onCommand: (_event, context) => void Zotero.BetterBibTeX.KeyManager.tagDuplicates(Row.library(context)),
                 },
                 {
                   menuType: 'menuitem',
                   l10nID: 'better-bibtex_report-errors',
                   onCommand: (_event, context) => {
-                    void Zotero.BetterBibTeX.ErrorReport.open(collType(context))
+                    void Zotero.BetterBibTeX.ErrorReport.open(Row.type(context))
                   },
                 },
               ],
-            },
+            }),
           ],
         })
 
