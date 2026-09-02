@@ -800,12 +800,17 @@ export class BetterBibTeX {
             return new this(context).type === 'collection'
           }
 
-          static replace(context): boolean {
+          static replace(context, setVisible = false): boolean {
+            function visible(v: boolean): boolean {
+              if (setVisible) context.setVisible(v)
+              return v
+            }
+
             const row = new this(context)
-            if (row.type !== 'collection') return false
+            if (row.type !== 'collection') return visible(false)
             const coll = Zotero.Collections.get(row.collection!)
-            if (!coll) return false
-            return coll.hasChildItems()
+            if (!coll) return visible(false)
+            return visible(coll.hasChildItems())
           }
 
           static autoexports(context): Job[] {
@@ -816,8 +821,10 @@ export class BetterBibTeX {
             return jobs
           }
 
-          static type(context): 'collection' | 'library' | '' {
-            return (new this(context)).type
+          static type(context, setVisible = false): 'collection' | 'library' | '' {
+            const type = (new this(context)).type
+            if (setVisible) context.setVisible(!!type)
+            return type
           }
 
           static library(context): number | undefined {
@@ -880,7 +887,7 @@ export class BetterBibTeX {
                 {
                   menuType: 'menuitem',
                   l10nID: 'better-bibtex_zotero-pane_show_collection-key',
-                  onShowing: (_event, context) => Row.type(context),
+                  onShowing: (_event, context) => Row.type(context, true),
                   onCommand: (_event, context) => {
                     const type = Row.type(context)
                     if (type) showPullExportURLs(type)
@@ -889,7 +896,7 @@ export class BetterBibTeX {
                 {
                   menuType: 'menuitem',
                   l10nID: 'better-bibtex_aux-scanner',
-                  onShowing: (_event, context) => Row.type(context),
+                  onShowing: (_event, context) => Row.type(context, true),
                   onCommand: (_event, context) => {
                     void Zotero.BetterBibTeX.scanAUX(Row.type(context))
                   },
@@ -897,7 +904,7 @@ export class BetterBibTeX {
                 {
                   menuType: 'menuitem',
                   l10nID: 'better-bibtex_aux-scanner_replace-collection',
-                  onShowing: (_event, context) => Row.replace(context),
+                  onShowing: (_event, context) => Row.replace(context, true),
                   onCommand: (_event, _context) => void Zotero.BetterBibTeX.scanAUX('collection-replace'),
                 },
                 {
