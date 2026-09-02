@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 import anyAscii from 'any-ascii'
-import { execSync } from 'child_process'
+import { execFileSync, execSync } from 'child_process'
 import fs from 'fs'
 import { globSync as glob } from 'glob'
 import path from 'path'
@@ -11,7 +11,7 @@ import { fileURLToPath } from 'url'
 import yargs from 'yargs'
 import { hideBin } from 'yargs/helpers'
 
-import * as YAML from 'js-yaml'
+import { stringify } from 'lightning-yaml'
 
 import { TableCell, TableRow } from 'gherkin-ast'
 import { format } from 'gherkin-formatter'
@@ -306,19 +306,22 @@ const main = async () => {
   fs.writeFileSync(argv.feature, format(document))
 
   // Copy/create test fixtures
+  const fixtures = []
   const fixture = path.join(root, `test/fixtures/${argv.mode}`, argv.title)
   const source = `${fixture}.yaml`
   try {
-    fs.writeFileSync(source, YAML.dump(JSON.parse(fs.readFileSync(argv.data, 'utf-8')), {
+    fs.writeFileSync(source, stringify(JSON.parse(fs.readFileSync(argv.data, 'utf-8')), {
       indent: 2,
       lineWidth: -1,
       styles: {
         '!!str': 'block'
       }
     }))
-    execSync(`git add "${source}"`, { cwd: root, stdio: 'inherit' })
+    fixtures.push(source)
 
     const target = `${fixture}${argv.export ? Translator.ext : '.bib'}`
+    fixtures.push(target)
+
     if (Translator.name === 'CSL-JSON') {
       fs.writeFileSync(target, '{}', 'utf8')
     }
@@ -326,7 +329,13 @@ const main = async () => {
       fs.writeFileSync(target, '', 'utf8')
     }
 
-    execSync(`git add "${target}"`, { cwd: root, stdio: 'inherit' })
+    if (argv.export && Translator.name === 'Better Hayagriva') {
+      const reference = `${fixture}.hayagriva.reference.apa`
+      if (!fs.existsSync(reference)) fs.writeFileSync(reference, '', 'utf8')
+      fixtures.push(reference)
+    }
+
+    execFileSync('git', ['add', ...fixtures], { cwd: root, stdio: 'inherit' })
   }
   catch (err) {
     console.error('Error creating/copying fixture files:', err.message)

@@ -9,7 +9,7 @@ import { log } from '../../content/logger'
 
 export type Postscript = (target: any, source: any, translator: Translation, extra: ExtraFields) => Allow
 
-export function postscript(kind: 'csl' | 'tex', main: string, guard?: string): Postscript {
+export function postscript(kind: 'csl' | 'tex' | 'hayagriva', main: string, guard?: string): Postscript {
   let body = `
     // aliases for backwards compat
     const item = source;

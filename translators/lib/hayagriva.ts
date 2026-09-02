@@ -4,8 +4,12 @@ import * as dateparser from '../../content/dateparser'
 import { Serialized } from '../../gen/typings/serialized'
 import type { Collected } from './collect'
 import { Translation } from './translator'
-import { simplifyForExport } from '../../content/item-schema'
-// import { log } from '../../content/logger'
+import { Schema, simplifyForExport } from '../../content/item-schema'
+import { log } from '../../content/logger'
+import { Fields as ParsedExtraFields, get as getExtra } from '../../content/extra'
+import { Postscript, postscript as compile, noop } from '../lib/postscript'
+import { clone } from '../../content/object'
+import clean from 'clean-deep'
 
 type Person = string | { name?: string; given?: string; family?: string }
 type HayagrivaType = 'article' | 'artwork' | 'audio' | 'blog' | 'book' | 'case' | 'chapter' | 'conference' | 'entry' | 'legislation' | 'manuscript' | 'misc' | 'newspaper' | 'patent' | 'periodical' | 'proceedings' | 'repository' | 'report' | 'thread' | 'thesis' | 'video' | 'web'
@@ -18,7 +22,7 @@ type Serial = {
   serial?: string
   version?: string
 }
-type Publisher = string | { name?: string; location?: string }
+type Publisher = string | { title?: string; name?: string; location?: string; type?: string }
 type Affiliated = {
   role?: string
   names?: Person | Person[]
@@ -74,7 +78,7 @@ const hayagrivaType: Record<Serialized.RegularItem['itemType'], HayagrivaType> =
   patent: 'patent',
   podcast: 'audio',
   preprint: 'report',
-  presentation: 'misc',
+  presentation: 'article',
   radioBroadcast: 'audio',
   report: 'report',
   standard: 'report',
@@ -171,38 +175,41 @@ function normalizeType(value: unknown): string {
   return normalizeScalar(value).toLowerCase()
 }
 
-function makeParent(item: Serialized.RegularItem): Entry | null {
+function makeParent(item: Serialized.RegularItem): Entry | undefined {
   switch (item.itemType) {
     case 'journalArticle':
     case 'magazineArticle':
-      return item.publicationTitle ? { type: 'periodical', title: item.publicationTitle } : null
+      if (item.publicationTitle) return { type: 'periodical', title: item.publicationTitle }
+      break
 
     case 'newspaperArticle':
-      return item.publicationTitle ? { type: 'newspaper', title: item.publicationTitle } : null
+      if (item.publicationTitle) return { type: 'newspaper', title: item.publicationTitle }
+      break
 
     case 'bookSection':
-      return item.publicationTitle ? { type: 'book', title: item.publicationTitle } : null
+      if (item.publicationTitle) return { type: 'book', title: item.publicationTitle }
+      break
 
-    case 'conferencePaper':
-      if (item.conferenceName || item.publicationTitle) {
-        return {
-          type: item.DOI || item.publicationTitle ? 'proceedings' : 'conference',
-          title: item.conferenceName || item.publicationTitle,
-        }
-      }
-      return null
+    case 'conferencePaper': {
+      const title = item.conferenceName || item.publicationTitle || item.meetingName
+      if (title) return { type: item.DOI || item.publicationTitle ? 'proceedings' : 'conference', title }
+      break
+    }
 
     case 'blogPost':
-      return item.publicationTitle ? { type: 'blog', title: item.publicationTitle } : null
+      if (item.publicationTitle) return { type: 'blog', title: item.publicationTitle }
+      break
 
     case 'webpage':
-      return item.publicationTitle ? { type: 'web', title: item.publicationTitle } : null
+      if (item.publicationTitle) return { type: 'web', title: item.publicationTitle }
+      break
 
     case 'forumPost':
-      return item.publicationTitle ? { type: 'thread', title: item.publicationTitle } : null
+      if (item.publicationTitle) return { type: 'thread', title: item.publicationTitle }
+      break
   }
 
-  return null
+  return undefined
 }
 
 function parseExtraSerialNumbers(extra: unknown): Serial {
@@ -344,47 +351,44 @@ function creatorFingerprint(creator: { creatorType: string; firstName?: string; 
 
 export const Hayagriva = new class {
   public fromZotero(item: Serialized.RegularItem, skipField: RegExp): Entry {
-    simplifyForExport(item, { clone: false })
     const entry: Entry = {
       type: hayagrivaType[item.itemType] || 'misc',
+      title: item.title,
+      language: item.language,
+      volume: item.volume,
+      issue: item.issue,
+      'page-range': normalizePageRange(item.pages),
+      url: {
+        value: item.url,
+        date: dateOnly(item.accessDate),
+      },
+      publisher: {
+        title: item.publisher || item.meetingName,
+        location: item.place,
+        type: item.itemType === 'presentation' && item.meetingName ? 'conference' : '',
+      },
+      parent: makeParent(item),
+      genre: item.type,
     }
 
-    if (item.title) entry.title = item.title
     if (item.date) {
       entry.date = dateOnly(item.date, item.originalDate)
     }
     else if (item.itemType === 'webpage' && item.accessDate) {
       entry.date = dateOnly(item.accessDate)
     }
-    if (item.language) entry.language = item.language
-    if (item.volume) entry.volume = item.volume
-    if (item.issue) entry.issue = item.issue
-    if (item.pages) entry['page-range'] = normalizePageRange(item.pages)
-
-    if (item.url || item.accessDate) {
-      entry.url = {
-        ...(item.url ? { value: item.url } : {}),
-        ...(item.accessDate ? { date: dateOnly(item.accessDate) } : {}),
-      }
-    }
-
-    if (item.publisher || item.place) {
-      entry.publisher = {
-        ...(item.publisher ? { name: item.publisher } : {}),
-        ...(item.place ? { location: item.place } : {}),
-      }
-    }
 
     const serial = serialNumber(item)
     if (hasContent(serial)) entry['serial-number'] = serial
 
+    const primary = Schema.primaryCreator[item.itemType] || 'author'
     const creators: Record<string, string[]> = { author: [], editor: [], translator: [] }
     for (const creator of item.creators || []) {
       const name = creator.name || [creator.lastName, creator.firstName].filter(part => part).join(', ')
       if (!name) continue
 
       switch (creator.creatorType) {
-        case 'author':
+        case primary:
           creators.author.push(name)
           break
         case 'editor':
@@ -401,21 +405,31 @@ export const Hayagriva = new class {
       entry[role] = creators[role].length === 1 ? creators[role][0] : creators[role]
     }
 
-    const parent = makeParent(item)
-    if (parent) entry.parent = parent
-
-    if (item.type) entry.genre = item.type
-
     if (skipField) {
       for (const field of Object.keys(entry)) {
         if (`hayagriva.${entry.type}.${field}`.match(skipField)) delete entry[field]
       }
     }
 
-    return entry
+    return clean(entry)
+  }
+
+  private compile(postscript?: string): Postscript {
+    postscript = postscript?.trim() || ''
+    if (!postscript) return noop
+
+    try {
+      return compile('hayagriva', postscript)
+    }
+    catch (err) {
+      log.error(`failed to install postscript\n${postscript}`, err)
+      return noop
+    }
   }
 
   public export(items: Iterable<Serialized.RegularItem>, translation: Translation): string {
+    const postscript = this.compile(translation.collected.preferences.postscript)
+
     const doc: Doc = {}
     const duplicates: Set<string> = new Set
     for (const item of items) {
@@ -424,7 +438,11 @@ export const Hayagriva = new class {
         duplicates.add(key)
       }
       else {
+        const extraFields: ParsedExtraFields = clone(item.extraFields)
+        Object.assign(item, getExtra(item.extra, 'zotero'))
+        simplifyForExport(item, { clone: false })
         doc[key] = this.fromZotero(item, translation.skipField)
+        postscript(doc[key], item, translation, extraFields)
       }
     }
 
