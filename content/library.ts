@@ -8,18 +8,15 @@ export function editable(): Set<number> {
 export function selectedLibraryIDs(): number[] {
   const azp = Zotero.getActiveZoteroPane()!
   if (typeof azp.getSelectedLibraryIDs === 'function') {
-    log.debug('3589: getSelectedLibraryIDs')
     return azp.getSelectedLibraryIDs() as number[]
   }
   else {
     const libraryID = azp.getSelectedLibraryID()
-    log.debug('3589: getSelectedLibraryID')
     return typeof libraryID === 'number' ? [ libraryID ] : []
   }
 }
 export function selectedLibraryID(): number | undefined {
   const libraryIDs = selectedLibraryIDs()
-  log.debug('3589: getSelectedLibraryIDs =', libraryIDs.length)
   return libraryIDs.length === 1 ? libraryIDs[0] : undefined
 }
 

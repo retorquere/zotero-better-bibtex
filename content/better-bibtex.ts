@@ -776,20 +776,10 @@ export class BetterBibTeX {
 
           constructor(context: any) {
             if (context.collectionTreeRows) {
-              log.debug(`row 3589: context has many (${context.collectionTreeRows.length}) collection rows`)
               this.#row = context.collectionTreeRows.length === 1 ? context.collectionTreeRows[0] : undefined
             }
             else {
-              log.debug(`row 3589: context has zero or one (${context.collectionTreeRow ? 1 : 0}) collection rows`)
               this.#row = context.collectionTreeRow
-            }
-
-            if (this.#row) {
-              log.debug('row 3589: row is', {
-                type: this.#row.type || '<no row>',
-                ref: typeof this.#row.ref,
-                attrs: this.#row.ref ? Object.keys(this.#row.ref) : [],
-              })
             }
           }
 
