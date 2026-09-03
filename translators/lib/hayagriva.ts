@@ -1,5 +1,7 @@
 declare const Zotero: any
 
+import * as hg from '../../gen/typings/hayagriva'
+
 import * as dateparser from '../../content/dateparser'
 import { Serialized } from '../../gen/typings/serialized'
 import type { Collected } from './collect'
@@ -11,45 +13,9 @@ import { Postscript, postscript as compile, noop } from '../lib/postscript'
 import { clone } from '../../content/object'
 import clean from 'clean-deep'
 
-type Person = string | { name?: string; given?: string; family?: string }
-type HayagrivaType = 'article' | 'artwork' | 'audio' | 'blog' | 'book' | 'case' | 'chapter' | 'conference' | 'entry' | 'legislation' | 'manuscript' | 'misc' | 'newspaper' | 'patent' | 'periodical' | 'proceedings' | 'repository' | 'report' | 'thread' | 'thesis' | 'video' | 'web'
-type Serial = {
-  doi?: string
-  isbn?: string
-  issn?: string
-  pmid?: string
-  pmcid?: string
-  serial?: string
-  version?: string
-}
-type Publisher = string | { title?: string; name?: string; location?: string; type?: string }
-type Affiliated = {
-  role?: string
-  names?: Person | Person[]
-}
+type Bibliography = Record<string, hg.BibliographyEntry>
 
-type Entry = {
-  type?: HayagrivaType
-  title?: string
-  genre?: string
-  author?: Person | Person[]
-  editor?: Person | Person[]
-  translator?: Person | Person[]
-  affiliated?: Affiliated | Affiliated[]
-  date?: string
-  language?: string
-  volume?: string | number
-  issue?: string | number
-  'page-range'?: string
-  publisher?: Publisher
-  url?: string | { value?: string; date?: string }
-  'serial-number'?: Serial
-  parent?: Entry | Entry[]
-}
-
-type Doc = Record<string, Entry>
-
-const hayagrivaType: Record<Serialized.RegularItem['itemType'], HayagrivaType> = {
+const hayagrivaType: Record<Serialized.RegularItem['itemType'], hg.EntryType> = {
   audioRecording: 'audio',
   artwork: 'artwork',
   bill: 'legislation',
@@ -89,28 +55,35 @@ const hayagrivaType: Record<Serialized.RegularItem['itemType'], HayagrivaType> =
   webpage: 'web',
 }
 
-const zoteroType: Record<Exclude<HayagrivaType, 'blog' | 'proceedings'> | 'anthos' | 'anthology' | 'reference', Serialized.RegularItem['itemType']> = {
-  anthos: 'bookSection',
+const zoteroType: Record<hg.EntryType, Serialized.RegularItem['itemType']> = {
   anthology: 'book',
+  anthos: 'bookSection',
   article: 'journalArticle',
-  audio: 'audioRecording',
   artwork: 'artwork',
+  audio: 'audioRecording',
+  blog: 'webpage',
   book: 'book',
   case: 'case',
   chapter: 'bookSection',
   conference: 'conferencePaper',
   entry: 'dictionaryEntry',
+  exhibition: 'document',
   legislation: 'statute',
   manuscript: 'manuscript',
   misc: 'document',
   newspaper: 'newspaperArticle',
+  original: 'document',
   patent: 'patent',
+  performance: 'document',
   periodical: 'journalArticle',
+  post: 'webpage',
+  proceedings: 'document',
   reference: 'dictionaryEntry',
-  repository: 'computerProgram',
   report: 'report',
-  thread: 'forumPost',
+  repository: 'computerProgram',
+  scene: 'document',
   thesis: 'thesis',
+  thread: 'forumPost',
   video: 'videoRecording',
   web: 'webpage',
 }
@@ -175,7 +148,7 @@ function normalizeType(value: unknown): string {
   return normalizeScalar(value).toLowerCase()
 }
 
-function makeParent(item: Serialized.RegularItem): Entry | undefined {
+function makeParent(item: Serialized.RegularItem): hg.ParentEntry | undefined {
   switch (item.itemType) {
     case 'journalArticle':
     case 'magazineArticle':
@@ -207,13 +180,25 @@ function makeParent(item: Serialized.RegularItem): Entry | undefined {
     case 'forumPost':
       if (item.publicationTitle) return { type: 'thread', title: item.publicationTitle }
       break
+
+    case 'presentation':
+      return {
+        title: item.meetingName || item.publisher,
+        location: item.place,
+        type: item.meetingName ? 'conference' : undefined,
+      }
+
+    case 'preprint':
+      if (item.libraryCatalog) return { title: item.libraryCatalog }
+      break
   }
 
   return undefined
 }
 
-function parseExtraSerialNumbers(extra: unknown): Serial {
-  const serial: Serial = {}
+type SerialNumberObject = Extract<hg.SerialNumber, object>
+function parseExtraSerialNumbers(extra: unknown): SerialNumberObject {
+  const serial: SerialNumberObject = {}
   const lines = normalizeScalar(extra).split(/\r?\n/)
 
   for (const line of lines) {
@@ -245,24 +230,24 @@ function parseExtraSerialNumbers(extra: unknown): Serial {
   return serial
 }
 
-function serialNumber(item: Serialized.RegularItem): Serial {
-  const serial: Serial = {
-    ...(item.DOI ? { doi: item.DOI } : {}),
-    ...(item.ISBN ? { isbn: item.ISBN } : {}),
-    ...(item.ISSN ? { issn: item.ISSN } : {}),
-    ...(item.PMID ? { pmid: item.PMID } : {}),
-    ...(item.PMCID ? { pmcid: item.PMCID } : {}),
+function serialNumber(item: Serialized.RegularItem): SerialNumberObject {
+  const serial: SerialNumberObject = {
+    doi: item.DOI,
+    isbn: item.ISBN,
+    issn: item.ISSN,
+    pmid: item.PMID,
+    pmcid: item.PMCID,
   }
 
   switch (item.itemType) {
     case 'report':
     case 'patent':
     case 'case':
-      if (item.number) serial.serial = item.number
+      serial.serial = item.number
       break
 
     case 'computerProgram':
-      if (item.versionNumber) serial.version = item.versionNumber
+      serial.version = item.versionNumber
       break
   }
 
@@ -292,7 +277,7 @@ const zoteroCreatorType: Record<string, string> = {
   writer: 'contributor',
 }
 
-function parseAffiliated(entry: Entry): Array<{ creatorType: string; firstName?: string; lastName?: string; name?: string; fieldMode?: number }> {
+function parseAffiliated(entry: hg.BibliographyEntry): Array<{ creatorType: string; firstName?: string; lastName?: string; name?: string; fieldMode?: number }> {
   return asArray(entry.affiliated).flatMap(affiliated => {
     const creatorType = zoteroCreatorType[normalizeType(affiliated?.role)]
     if (!creatorType) return []
@@ -304,14 +289,14 @@ function parseAffiliated(entry: Entry): Array<{ creatorType: string; firstName?:
   })
 }
 
-function parsePerson(person: Person): { firstName?: string; lastName?: string; name?: string; fieldMode?: number } {
+function parsePerson(person: hg.Person): { firstName?: string; lastName?: string; name?: string; fieldMode?: number } {
   if (typeof person === 'string') {
     const parts = person.split(',').map(part => part.trim()).filter(Boolean)
     if (parts.length >= 2) return { lastName: parts[0], firstName: parts.slice(1).join(', ') }
     if (parts.length === 1) return { name: parts[0], fieldMode: 1 }
   }
   else {
-    if (person.family || person.given) return { lastName: person.family || '', firstName: person.given || '' }
+    if (person['given-name']) return { lastName: person.name || '', firstName: person['given-name'] || '' }
     if (person.name) return { name: person.name, fieldMode: 1 }
   }
 
@@ -323,19 +308,23 @@ function asArray<T>(source: T | T[] | null | undefined): T[] {
   return Array.isArray(source) ? source : [source]
 }
 
-function normalizeURL(url: Entry['url']): { value?: string; date?: string } {
+function normalizeURL(url: hg.BibliographyEntry['url']): { value?: string; date?: string } {
   if (!url) return {}
   if (typeof url === 'string') return { value: url }
-  return { value: url.value, date: url.date }
+
+  return {
+    value: url.value,
+    date: typeof url.date === 'number' || typeof url.date === 'string' ? `${url.date}` : undefined,
+  }
 }
 
-function normalizePublisher(publisher?: Publisher): { name?: string; location?: string } {
+function normalizePublisher(publisher?: hg.Publisher): { name?: string; location?: string } {
   if (!publisher) return {}
   if (typeof publisher === 'string') return { name: publisher }
   return { name: publisher.name, location: publisher.location }
 }
 
-function pickParent(entry: Entry): Entry | null {
+function pickParent(entry: hg.BibliographyEntry): hg.BibliographyEntry | null {
   return asArray(entry.parent)[0] || null
 }
 
@@ -350,8 +339,8 @@ function creatorFingerprint(creator: { creatorType: string; firstName?: string; 
 }
 
 export const Hayagriva = new class {
-  public fromZotero(item: Serialized.RegularItem, skipField: RegExp): Entry {
-    const entry: Entry = {
+  public fromZotero(item: Serialized.RegularItem, skipField: RegExp): hg.BibliographyEntry {
+    const entry: hg.BibliographyEntry = {
       type: hayagrivaType[item.itemType] || 'misc',
       title: item.title,
       language: item.language,
@@ -361,11 +350,6 @@ export const Hayagriva = new class {
       url: {
         value: item.url,
         date: dateOnly(item.accessDate),
-      },
-      publisher: {
-        title: item.publisher || item.meetingName,
-        location: item.place,
-        type: item.itemType === 'presentation' && item.meetingName ? 'conference' : '',
       },
       parent: makeParent(item),
       genre: item.type,
@@ -382,13 +366,19 @@ export const Hayagriva = new class {
     if (hasContent(serial)) entry['serial-number'] = serial
 
     const primary = Schema.primaryCreator[item.itemType] || 'author'
-    const creators: Record<string, string[]> = { author: [], editor: [], translator: [] }
+    const creators: Record<string, string[]> = {
+      author: [],
+      editor: [],
+      translator: [],
+      collaborator: [],
+    }
     for (const creator of item.creators || []) {
       const name = creator.name || [creator.lastName, creator.firstName].filter(part => part).join(', ')
       if (!name) continue
 
       switch (creator.creatorType) {
         case primary:
+        case 'author':
           creators.author.push(name)
           break
         case 'editor':
@@ -397,12 +387,14 @@ export const Hayagriva = new class {
         case 'translator':
           creators.translator.push(name)
           break
+        default:
+          creators.collaborator.push(name)
+          break
       }
     }
 
-    for (const role of Object.keys(creators)) {
-      if (!creators[role].length) continue
-      entry[role] = creators[role].length === 1 ? creators[role][0] : creators[role]
+    for (const [ role, persons ] of Object.entries(creators)) {
+      entry[role] = persons.length === 1 ? persons[0] : persons
     }
 
     if (skipField) {
@@ -430,7 +422,7 @@ export const Hayagriva = new class {
   public export(items: Iterable<Serialized.RegularItem>, translation: Translation): string {
     const postscript = this.compile(translation.collected.preferences.postscript)
 
-    const doc: Doc = {}
+    const doc: Bibliography = {}
     const duplicates: Set<string> = new Set
     for (const item of items) {
       const key = sanitizeKey(item.citationKey || item.itemKey)
@@ -452,8 +444,8 @@ export const Hayagriva = new class {
     return header + Zotero.BetterBibTeX.yamlDump(doc, { skipInvalid: true, sortKeys: true, lineWidth: -1 })
   }
 
-  public async import(doc: Doc): Promise<void> {
-    for (const [id, entry] of Object.entries(doc)) {
+  public async import(bib: Bibliography): Promise<void> {
+    for (const [id, entry] of Object.entries(bib)) {
       if (!entry || typeof entry !== 'object') continue
 
       const type = normalizeType(entry.type) || 'misc'
@@ -476,7 +468,16 @@ export const Hayagriva = new class {
       if (publisher.name) item.publisher = publisher.name
       if (publisher.location) item.place = publisher.location
 
-      const serial = entry['serial-number'] || {}
+      let serial: SerialNumberObject
+      if (!entry['serial-number']) {
+        serial = {}
+      }
+      else if (typeof entry['serial-number'] === 'number' || entry['serial-number'] === 'string') {
+        serial = { serial: `${entry['serial-number']}` }
+      }
+      else {
+        serial = entry['serial-number'] as SerialNumberObject
+      }
       if (serial.doi) item.DOI = serial.doi
       if (serial.isbn) item.ISBN = serial.isbn
       if (serial.issn) item.ISSN = serial.issn
@@ -489,8 +490,12 @@ export const Hayagriva = new class {
         else item.extra = `${item.extra || ''}\nSerial Number: ${serial.serial}`.trim()
       }
       if (serial.version) {
-        if (item.itemType === 'computerProgram') item.versionNumber = serial.version
-        else item.extra = `${item.extra || ''}\nVersion: ${serial.version}`.trim()
+        if (item.itemType === 'computerProgram') {
+          item.versionNumber = serial.version
+        }
+        else {
+          item.extra = `${item.extra || ''}\nVersion: ${serial.version}`.trim()
+        }
       }
 
       const parent = pickParent(entry)
@@ -540,12 +545,6 @@ export const Hayagriva = new class {
         const parsed = parsePerson(person)
         if (!Object.keys(parsed).length) continue
         item.creators.push({ creatorType: 'editor', ...parsed })
-      }
-
-      for (const person of asArray(entry.translator)) {
-        const parsed = parsePerson(person)
-        if (!Object.keys(parsed).length) continue
-        item.creators.push({ creatorType: 'translator', ...parsed })
       }
 
       const seenCreators = new Set(item.creators.map(creatorFingerprint))

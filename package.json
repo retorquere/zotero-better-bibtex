@@ -178,6 +178,7 @@
     "is-isbn": "^1.1.0",
     "jsesc": "^3.1.0",
     "json-schema-it": "^1.2.24",
+    "json-schema-to-typescript": "^16.0.0",
     "kuroshiro": "^1.2.0",
     "kuroshiro-analyzer-kuromoji": "^1.1.0",
     "meriyah": "^7.3.2",

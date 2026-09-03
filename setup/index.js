@@ -10,6 +10,7 @@ import 'zotero-plugin/make-manifest'
 import 'zotero-plugin/make-version'
 import './bibertool.js'
 import './apis.js'
+import './hayagriva.js'
 
 fs.copyFileSync('node_modules/@retorquere/bibtex-parser/dist/data/unabbrev.json', 'build/content/resource/bibtex/unabbrev.json')
 fs.copyFileSync('node_modules/@retorquere/bibtex-parser/dist/data/strings.bib', 'build/content/resource/bibtex/strings.bib')
