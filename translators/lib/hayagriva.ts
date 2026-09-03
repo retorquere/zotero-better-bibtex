@@ -150,6 +150,10 @@ function normalizeType(value: unknown): string {
 
 function makeParent(item: Serialized.RegularItem): hg.ParentEntry | undefined {
   switch (item.itemType) {
+    case 'thesis':
+      if (item.publisher) return { title: item.publisher }
+      break
+
     case 'journalArticle':
     case 'magazineArticle':
       if (item.publicationTitle) return { type: 'periodical', title: item.publicationTitle }
@@ -159,9 +163,14 @@ function makeParent(item: Serialized.RegularItem): hg.ParentEntry | undefined {
       if (item.publicationTitle) return { type: 'newspaper', title: item.publicationTitle }
       break
 
-    case 'bookSection':
-      if (item.publicationTitle) return { type: 'book', title: item.publicationTitle }
+    case 'bookSection': {
+      const parent = clean({
+        title: item.publicationTitle || item.publisher,
+        location: item.place,
+      })
+      if (Object.keys(parent).length) return { ...parent, type: 'book' }
       break
+    }
 
     case 'conferencePaper': {
       const title = item.conferenceName || item.publicationTitle || item.meetingName
