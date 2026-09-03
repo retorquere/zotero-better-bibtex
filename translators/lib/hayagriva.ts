@@ -13,7 +13,7 @@ import { Postscript, postscript as compile, noop } from '../lib/postscript'
 import { clone } from '../../content/object'
 import clean from 'clean-deep'
 
-type Bibliography = Record<string, hg.BibliographyEntry>
+type Bibliography = Record<string, hg.TopLevelEntry>
 
 const hayagrivaType: Record<Serialized.RegularItem['itemType'], hg.EntryType> = {
   audioRecording: 'audio',
@@ -339,7 +339,7 @@ function creatorFingerprint(creator: { creatorType: string; firstName?: string; 
 }
 
 export const Hayagriva = new class {
-  public fromZotero(item: Serialized.RegularItem, skipField: RegExp): hg.BibliographyEntry {
+  public fromZotero(item: Serialized.RegularItem, skipField: RegExp): hg.TopLevelEntry {
     const entry: hg.BibliographyEntry = {
       type: hayagrivaType[item.itemType] || 'misc',
       title: item.title,
@@ -403,7 +403,7 @@ export const Hayagriva = new class {
       }
     }
 
-    return clean(entry)
+    return clean(entry) as hg.TopLevelEntry
   }
 
   private compile(postscript?: string): Postscript {
