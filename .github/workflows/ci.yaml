@@ -26,6 +26,13 @@ jobs:
       slow: ${{ env.slow }}
     runs-on: ubuntu-latest
     steps:
+    - name: enable/disable npm audit
+      run: |
+        if [ "${{ github.event_name }}" != "schedule" ]; then
+          echo "npm_config_audit=false" >> $GITHUB_ENV
+        else
+          echo "npm_config_audit=true" >> $GITHUB_ENV
+        fi
     - name: Checkout repository
       uses: actions/checkout@v7
       with:
@@ -131,6 +138,13 @@ jobs:
     if: github.event_name == 'push' && github.ref == 'refs/heads/master' && 
       !contains(github.event.head_commit.message, '[tagged build]')
     steps:
+    - name: enable/disable npm audit
+      run: |
+        if [ "${{ github.event_name }}" != "schedule" ]; then
+          echo "npm_config_audit=false" >> $GITHUB_ENV
+        else
+          echo "npm_config_audit=true" >> $GITHUB_ENV
+        fi
     - name: Checkout repository
       uses: actions/checkout@v7
       with:
@@ -188,6 +202,13 @@ jobs:
         client: ${{ fromJSON(needs.build.outputs.clients) }}
         worker: [--worker, --no-worker]
     steps:
+    - name: enable/disable npm audit
+      run: |
+        if [ "${{ github.event_name }}" != "schedule" ]; then
+          echo "npm_config_audit=false" >> $GITHUB_ENV
+        else
+          echo "npm_config_audit=true" >> $GITHUB_ENV
+        fi
     - name: Checkout repository
       uses: actions/checkout@v7
       with:
@@ -294,6 +315,13 @@ jobs:
       issues: write
       contents: write
     steps:
+    - name: enable/disable npm audit
+      run: |
+        if [ "${{ github.event_name }}" != "schedule" ]; then
+          echo "npm_config_audit=false" >> $GITHUB_ENV
+        else
+          echo "npm_config_audit=true" >> $GITHUB_ENV
+        fi
     - name: Checkout repository
       uses: actions/checkout@v7
       with:
@@ -350,6 +378,13 @@ jobs:
     - test
     runs-on: ubuntu-latest
     steps:
+    - name: enable/disable npm audit
+      run: |
+        if [ "${{ github.event_name }}" != "schedule" ]; then
+          echo "npm_config_audit=false" >> $GITHUB_ENV
+        else
+          echo "npm_config_audit=true" >> $GITHUB_ENV
+        fi
     - name: Checkout repository
       uses: actions/checkout@v7
       with:

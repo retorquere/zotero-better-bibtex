@@ -10,6 +10,14 @@ permissions:
   contents: write
 
 _anchors:
+  npm_audit: &npm_audit
+    name: enable/disable npm audit
+    run: |
+      if [ "${{ github.event_name }}" != "schedule" ]; then
+        echo "npm_config_audit=false" >> $GITHUB_ENV
+      else
+        echo "npm_config_audit=true" >> $GITHUB_ENV
+      fi
   get_version: &get_version
     name: get package version
     run: echo "version="`jq -r .version package.json` >> $GITHUB_ENV
@@ -56,6 +64,7 @@ jobs:
       slow: ${{ env.slow }}
     runs-on: ubuntu-latest
     steps:
+    - *npm_audit
     - *checkout
     - name: get package version
       run: echo "version="`jq -r .version package.json` >> $GITHUB_ENV
@@ -137,6 +146,7 @@ jobs:
     continue-on-error: true
     if: github.event_name == 'push' && github.ref == 'refs/heads/master' && !contains(github.event.head_commit.message, '[tagged build]')
     steps:
+    - *npm_audit
     - *checkout
     - *install_python
     - *install_python_packages
@@ -175,6 +185,7 @@ jobs:
         client: ${{ fromJSON(needs.build.outputs.clients) }}
         worker: ['--worker', '--no-worker']
     steps:
+    - *npm_audit
     - *checkout
     - name: fetch build artifacts
       uses: actions/download-artifact@v8
@@ -260,6 +271,7 @@ jobs:
       issues: write
       contents: write
     steps:
+    - *npm_audit
     - *checkout
 
     - name: fetch build artifacts
@@ -295,6 +307,7 @@ jobs:
       - test
     runs-on: ubuntu-latest
     steps:
+    - *npm_audit
     - *checkout
     - *install_python
     - *install_python_packages
