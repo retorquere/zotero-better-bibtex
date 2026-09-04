@@ -370,7 +370,7 @@ function makeAffiliates(item): hg.AffiliatedPeople | undefined {
   if (item.assignee) {
     affiliates.push({
       role: 'holder',
-      names: item.assignee,
+      names: [ item.assignee ],
     })
   }
   return affiliates.length ? affiliates as hg.AffiliatedPeople : undefined
@@ -434,7 +434,7 @@ export const Hayagriva = new class {
     }
 
     for (const [ role, persons ] of Object.entries(creators)) {
-      entry[role] = persons.length === 1 ? persons[0] : persons
+      if (persons.length) entry[role] = persons
     }
 
     if (skipField) {

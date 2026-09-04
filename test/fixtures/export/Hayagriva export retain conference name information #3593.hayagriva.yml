@@ -5,7 +5,8 @@ Benary1999:
   affiliated:
     -
       role: holder
-      names: Sulzer Metco (US) Inc., Westbury, N.Y.
+      names:
+        - Sulzer Metco (US) Inc., Westbury, N.Y.
   serial-number:
     serial: US 5,964,405
   author:
@@ -21,7 +22,8 @@ wheelerDirectModelingMicrocollapse2026:
     type: conference
   genre: Oral
   date: 2026-04-15
-  author: Wheeler, Isaac S
+  author:
+    - Wheeler, Isaac S
   collaborator:
     - Narsimhan, Vivek
     - Alexeenko, Alina A
