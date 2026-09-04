@@ -154,6 +154,7 @@ function normalizeType(value: unknown): string {
 function makePublisher(item: Serialized.RegularItem): hg.Publisher | undefined {
   switch (item.itemType) {
     case 'thesis':
+    case 'book':
       if (item.publisher) return { name: item.publisher, location: item.place }
       break
   }
