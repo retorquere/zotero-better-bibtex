@@ -1,3 +1,17 @@
+Benary1999:
+  type: patent
+  title: Arc Thermal Spray Gun and Gas Cap therefor
+  language: en
+  affiliated:
+    -
+      role: holder
+      names: Sulzer Metco (US) Inc., Westbury, N.Y.
+  serial-number:
+    serial: US 5,964,405
+  author:
+    - Benary, Raphael
+    - Dirmeier, Ludwig
+    - Böhm, Reinhard
 wheelerDirectModelingMicrocollapse2026:
   type: article
   title: Direct Modeling of Microcollapse and Pore Size by Population Balance

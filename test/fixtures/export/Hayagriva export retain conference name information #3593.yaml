@@ -11,8 +11,7 @@ version:
   bbt: 9.0.61
 collections: {}
 items:
-  -
-    key: 4ZFJBJDL
+  - key: 4ZFJBJDL
     version: 2615
     itemType: presentation
     title: Direct Modeling of Microcollapse and Pore Size by Population Balance
@@ -21,27 +20,49 @@ items:
     citationKey: wheelerDirectModelingMicrocollapse2026
     meetingName: International Society of Lyophilization and Freeze Drying 2026 Midwest Chapter Conference
     creators:
-      -
-        firstName: Isaac S
+      - firstName: Isaac S
         lastName: Wheeler
         creatorType: presenter
-      -
-        firstName: Vivek
+      - firstName: Vivek
         lastName: Narsimhan
         creatorType: contributor
-      -
-        firstName: Alina A
+      - firstName: Alina A
         lastName: Alexeenko
         creatorType: contributor
-      -
-        firstName: Davide
+      - firstName: Davide
         lastName: Fissore
         creatorType: contributor
     tags: []
-    dateAdded: 2026-06-22T14:56:58Z
-    dateModified: 2026-06-22T15:00:39Z
+    dateAdded: '2026-06-22T14:56:58Z'
+    dateModified: '2026-06-22T15:00:39Z'
     itemID: 781
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
     type: Oral
+  - key: 3JST6VGV
+    version: 1349
+    itemType: patent
+    title: Arc Thermal Spray Gun and Gas Cap therefor
+    language: en
+    citationKey: Benary1999
+    assignee: Sulzer Metco (US) Inc., Westbury, N.Y.
+    filingDate: 12.10.1999
+    creators:
+      - firstName: Raphael
+        lastName: Benary
+        creatorType: inventor
+      - firstName: Ludwig
+        lastName: Dirmeier
+        creatorType: inventor
+      - firstName: Reinhard
+        lastName: "B\xF6hm"
+        creatorType: inventor
+    tags: []
+    dateAdded: '2025-05-31T08:34:03Z'
+    dateModified: '2025-05-31T08:41:36Z'
+    itemID: 491
+    notes: []
+    autoJournalAbbreviation: ''
+    authority: United States Patent and Trademark Office
+    number: US 5,964,405

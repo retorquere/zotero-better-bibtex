@@ -365,6 +365,17 @@ function creatorFingerprint(creator: { creatorType: string; firstName?: string; 
   ].join('|')
 }
 
+function makeAffiliates(item): hg.AffiliatedPeople | undefined {
+  const affiliates: hg.AffiliatedRole[] = []
+  if (item.assignee) {
+    affiliates.push({
+      role: 'holder',
+      names: item.assignee,
+    })
+  }
+  return affiliates.length ? affiliates as hg.AffiliatedPeople : undefined
+}
+
 export const Hayagriva = new class {
   public fromZotero(item: Serialized.RegularItem, skipField: RegExp): hg.TopLevelEntry {
     const entry: hg.BibliographyEntry = {
@@ -381,6 +392,7 @@ export const Hayagriva = new class {
       parent: makeParent(item),
       publisher: makePublisher(item),
       genre: item.type,
+      affiliated: makeAffiliates(item),
     }
 
     if (item.date) {
