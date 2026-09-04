@@ -12,7 +12,6 @@ Feature: Export
 
     Examples:
       | file                                                                                                                                                     | references |
-      | Unicode>LaTeX export produces unbraced stacked accents for precomposed Vietnamese letters (e, a), which biber then half-decodes into invalid input #3599 | 1          |
       | Option to ignore the Journal Abbr field #3451                                                                                                            | 1          |
       | Problems with Casing of Series Field with Non-English Series Titles #3539                                                                                | 3          |
       | Unrecognized date crashes export #3533                                                                                                                   | 1          |
@@ -256,6 +255,7 @@ Feature: Export
 
     Examples:
       | file                                                                                                               | references |
+      | Unicode-LaTeX export produces unbraced stacked accents for precomposed Vietnamese letters (e, a), which biber then half-decodes into invalid input #3599 | 1          |
       | Export fails with Translation using Better BibTeX failed Error normalize EDTF failed to normalize Century #3322    | 5          |
       | Wrong year field in Better BibTeX export #3244                                                                     | 1          |
       | Export field zoteroautoJournalAbbreviation only available when zoterojournalAbbreviation is empty #3046            | 2          |
