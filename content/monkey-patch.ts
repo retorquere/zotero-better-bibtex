@@ -2,6 +2,8 @@
 
 import { confirm } from './prompt'
 
+const prefix = `{better-bibtex monkey patch${Date.now()}}: `
+
 export class Monkey {
   #enabled = false
   #dead = false
@@ -26,6 +28,7 @@ export class Monkey {
     if (!this.#unpatchers) {
       throw new Error(`${this.name}: Cannot patch after disable() has been called.`)
     }
+
     if (Cu.isDeadWrapper(obj[methodName])) {
       if (this.#dead) return
       this.#dead = true
@@ -58,8 +61,7 @@ export class Monkey {
         }
       }
       catch (err) {
-        Zotero.debug(`${this.name} monkey-patch ${methodName} error: ${(err as any).message}`)
-        Zotero.logError(err as Error)
+        Zotero.debug(`${prefix}${this.name} monkey-patch ${methodName} error: ${(err as any).message}`)
         throw err
       }
     }
@@ -85,6 +87,9 @@ export class Monkey {
       if (obj[methodName] === wrapper) {
         obj[methodName] = originalMethod
       }
+      else {
+        Zotero.debug(`${prefix}could not unpatch ${methodName}, using trampoline instead`)
+      }
     })
 
     obj[methodName] = wrapper
@@ -92,6 +97,7 @@ export class Monkey {
 
   enable() {
     if (!this.#unpatchers) {
+      Zotero.debug(`${prefix}${this.name}: Cannot enable a disabled patcher.`)
       throw new Error(`${this.name}: Cannot enable a disabled patcher.`)
     }
     this.#enabled = true
