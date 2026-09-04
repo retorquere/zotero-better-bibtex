@@ -216,5 +216,10 @@
   },
   "bugs": {
     "url": "https://github.com/retorquere/zotero-better-bibtex/issues"
+  },
+  "allowScripts": {
+    "dprint@0.56.1": true,
+    "es5-ext@0.10.64": true,
+    "esbuild@0.28.2": true
   }
 }

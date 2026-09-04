@@ -109,7 +109,10 @@ function normalizePageRange(value: unknown): string {
 
 const seasons = ['', 'Spring', 'Summer', 'Autumn', 'Winter']
 
-function formatParsedDate(date: dateparser.RichDate): string {
+function maybeNumber(n: string): number | string {
+  return (n.match(/^\d+$/)) ? parseInt(n, 10) : n
+}
+function formatParsedDate(date: dateparser.RichDate): string | number {
   switch (date.type) {
     case 'date': {
       if (typeof date.year !== 'number') return ''
@@ -118,7 +121,7 @@ function formatParsedDate(date: dateparser.RichDate): string {
         value += `-${`${date.month}`.padStart(2, '0')}`
         if (typeof date.day === 'number') value += `-${`${date.day}`.padStart(2, '0')}`
       }
-      return value
+      return maybeNumber(value)
     }
 
     case 'season':
@@ -139,7 +142,7 @@ function formatParsedDate(date: dateparser.RichDate): string {
   }
 }
 
-function dateOnly(date: string, origDate?: string): string {
+function dateOnly(date: string, origDate?: string): string | number {
   const parsed = dateparser.parse(date, origDate)
   return formatParsedDate(parsed) || date
 }
@@ -148,12 +151,16 @@ function normalizeType(value: unknown): string {
   return normalizeScalar(value).toLowerCase()
 }
 
-function makeParent(item: Serialized.RegularItem): hg.ParentEntry | undefined {
+function makePublisher(item: Serialized.RegularItem): hg.Publisher | undefined {
   switch (item.itemType) {
     case 'thesis':
-      if (item.publisher) return { title: item.publisher }
+      if (item.publisher) return { name: item.publisher, location: item.place }
       break
+  }
+}
 
+function makeParent(item: Serialized.RegularItem): hg.ParentEntry | undefined {
+  switch (item.itemType) {
     case 'journalArticle':
     case 'magazineArticle':
       if (item.publicationTitle) return { type: 'periodical', title: item.publicationTitle }
@@ -163,18 +170,28 @@ function makeParent(item: Serialized.RegularItem): hg.ParentEntry | undefined {
       if (item.publicationTitle) return { type: 'newspaper', title: item.publicationTitle }
       break
 
-    case 'bookSection': {
-      const parent = clean({
-        title: item.publicationTitle || item.publisher,
-        location: item.place,
-      })
-      if (Object.keys(parent).length) return { ...parent, type: 'book' }
+    case 'bookSection':
+      if (item.publisher) {
+        return {
+          type: 'book',
+          title: item.publicationTitle,
+          publisher: {
+            name: item.publisher,
+            location: item.place,
+          },
+        }
+      }
       break
-    }
 
     case 'conferencePaper': {
       const title = item.conferenceName || item.publicationTitle || item.meetingName
-      if (title) return { type: item.DOI || item.publicationTitle ? 'proceedings' : 'conference', title }
+      if (title) {
+        return {
+          type: item.DOI || item.publicationTitle ? 'proceedings' : 'conference',
+          title,
+          location: item.place,
+        }
+      }
       break
     }
 
@@ -361,6 +378,7 @@ export const Hayagriva = new class {
         date: dateOnly(item.accessDate),
       },
       parent: makeParent(item),
+      publisher: makePublisher(item),
       genre: item.type,
     }
 

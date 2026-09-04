@@ -1,71 +1,70 @@
 datta2024a:
-  author: Datta, Rothin
-  date: '2024'
-  genre: PhD Dissertation
+  type: thesis
+  title: 'Foucault’s other marx: Limits, origins, and the production of the natural'
   language: en
   publisher:
     name: Johns Hopkins University
-  title: 'Foucault’s other marx: Limits, origins, and the production of the natural'
-  type: thesis
+  genre: PhD Dissertation
+  date: 2024
+  author: Datta, Rothin
 smithMyChapterBook2026:
+  type: chapter
+  title: My Chapter in Book
+  parent:
+    type: book
+    title: A Really Great Book
+    publisher:
+      name: Bloomsbury
+      location: London
+  date: 2026
   author:
     - Smith, Jane
     - Juan, Rodriguez
-  date: '2026'
-  parent:
-    title: A Really Great Book
-    type: book
-  publisher:
-    location: London
-    name: Bloomsbury
-  title: My Chapter in Book
-  type: chapter
 teixeiraPlaceMoneyMarxs2019:
-  author: Teixeira, Adriano Lopes Almeida
-  date: '2019'
-  editor:
-    - Mello, Gustavo Moura de Cavalcanti
-    - Sabadini, Mauricio de Souza
+  type: chapter
+  title: The Place of Money in Marx’s Theory of Capital
   language: en
   page-range: 9-41
+  url:
+    value: https://doi.org/10.1007/978-3-030-23360-0_2
+    date: 2026-05-09
   parent:
-    title: 'Financial Speculation and Fictitious Profits: A Marxist Analysis'
     type: book
-  publisher:
-    location: Cham
-    name: Springer International Publishing
+    title: 'Financial Speculation and Fictitious Profits: A Marxist Analysis'
+    publisher:
+      name: Springer International Publishing
+      location: Cham
+  date: 2019
   serial-number:
     doi: 10.1007/978-3-030-23360-0_2
     isbn: 978-3-030-23360-0
-  title: The Place of Money in Marx’s Theory of Capital
-  type: chapter
-  url:
-    date: '2026-05-09'
-    value: https://doi.org/10.1007/978-3-030-23360-0_2
+  author: Teixeira, Adriano Lopes Almeida
+  editor:
+    - Mello, Gustavo Moura de Cavalcanti
+    - Sabadini, Mauricio de Souza
 wang2025:
+  type: article
+  title: 'AI Empowerment: Innovation and Exploration of Image-Based Virtual and Real Restoration Technology for Murals of Shoroon Bumbagar Tomb'
+  page-range: 1-5
+  url:
+    value: https://ieeexplore.ieee.org/document/11540529
+    date: 2026-08-10
+  parent:
+    type: proceedings
+    title: 2025 International Symposium on Computer Science and Educational Technology (ISCSET)
+  date: 2025-09
+  serial-number:
+    doi: 10.1109/ISCSET65760.2025.11540529
   author:
     - Wang, Chen
     - Delgerkhuu, Narantsatsral
     - Hu, Lin
-  date: 2025-09
-  page-range: 1-5
-  parent:
-    title: 2025 International Symposium on Computer Science and Educational Technology (ISCSET)
-    type: proceedings
-  serial-number:
-    doi: 10.1109/ISCSET65760.2025.11540529
-  title: 'AI Empowerment: Innovation and Exploration of Image-Based Virtual and Real Restoration Technology for Murals of Shoroon Bumbagar Tomb'
-  type: article
-  url:
-    date: '2026-08-10'
-    value: https://ieeexplore.ieee.org/document/11540529
 zotero-item-1082:
-  author: Jones, Bob
-  date: '2024'
-  parent:
-    title: Boondoggle Conference
-    type: proceedings
-  publisher:
-    location: New York
-  title: My Brilliant Paper
   type: article
+  title: My Brilliant Paper
+  parent:
+    type: proceedings
+    title: Boondoggle Conference
+    location: New York
+  date: 2024
+  author: Jones, Bob

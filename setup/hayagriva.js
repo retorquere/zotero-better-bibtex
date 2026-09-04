@@ -12,11 +12,24 @@ const response = await fetch(SCHEMA_URL)
 
 if (!response.ok) throw new Error(`Failed to fetch schema: ${response.status} ${response.statusText}`)
 
-const schemaText = await response.text()
-const schemaObj = JSON.parse(schemaText)
+function fix(obj) {
+  if (obj?.definitions?.entryType) {
+    obj.definitions.entryType.enum = obj.definitions.entryType.pattern.replace(/[^a-z|]/g, '').split('|')
+    delete obj.definitions.entryType.pattern
+  }
+  if (obj === null || typeof obj !== 'object') return obj
+  if (Array.isArray(obj)) return obj.map(fix)
 
-schemaObj.definitions.entryType.enum = schemaObj.definitions.entryType.pattern.replace(/[^a-z|]/g, '').split('|')
-delete schemaObj.definitions.entryType.pattern
+  if (obj.type === 'string' && obj.format === 'uri') delete obj.format
+
+  for (const k of Object.keys(obj)) {
+    obj[k] = fix(obj[k])
+  }
+
+  return obj
+}
+const schemaText = await response.text()
+const schemaObj = fix(JSON.parse(schemaText))
 
 console.log('  Generating TypeScript types...')
 const tsDefinitions = await compile(schemaObj, 'Hayagriva', {
