@@ -22,6 +22,7 @@ import { Scheduler } from './scheduler'
 import { TeXstudio } from './tex-studio'
 import { Cache } from './translators/worker'
 import type { ExportedItem, ExportedItemMetadata } from './worker/cache'
+import { Profiler, timeit } from './audit'
 
 import { Preference } from './prefs'
 
@@ -444,6 +445,11 @@ export class BetterBibTeX {
 
   public generateCSLJSON = generateCSLJSON
 
+  public profile = {
+    startup: '',
+    operation: '',
+  }
+
   constructor() {
     if (Preference.testing) this.TestSupport = new TestSupport
     log.info('Zotero logging', this.debugEnabledAtStart ? 'was' : 'was not', 'enabled at start')
@@ -553,45 +559,60 @@ export class BetterBibTeX {
   }
 
   public async startup(reason: Reason): Promise<void> {
+    const profiling = Zotero.Prefs.get('translators.better-bibtex.profiling') as number
+    const profiler: Profiler | null = profiling ? new Profiler : null
+
+    if (profiler) await profiler.start()
+
     orchestrator.add({
       id: 'start',
-      description: 'waiting for zotero',
+      description: 'foundation',
       startup: async () => {
-        // https://groups.google.com/d/msg/zotero-dev/QYNGxqTSpaQ/uvGObVNlCgAJ
-        // this is what really takes long
-        await Promise.all([
-          Zotero.initializationPromise,
-          Zotero.unlockPromise,
-          // Zotero.uiReadyPromise,
-        ])
-        while (await Zotero.DB.valueQueryAsync("SELECT COUNT(*) FROM settings WHERE setting='globalSchema' AND key='migrateExtra'")) {
-          await new Promise(resolve => setTimeout(resolve, 5000))
-        }
-
-        // and this
-        if ((await Translators.needsInstall()).length) await Zotero.Translators.init()
-
-        await l10n.initialize()
-
-        this.dir = PathUtils.join(Zotero.DataDirectory.dir, 'better-bibtex')
-        await IOUtils.makeDirectory(this.dir, { ignoreExisting: true, createAncestors: true })
-        await Preference.startup(this.dir)
-
-        Events.startup()
-        Events.on('export-progress', ({ data: { pct, message } }) => {
-          this.setProgress(pct, message)
+        await timeit.Async('Zotero delay', async () => {
+          await Promise.all([
+            Zotero.initializationPromise,
+            Zotero.unlockPromise,
+            // Zotero.uiReadyPromise,
+          ])
         })
 
-        Events.on('cache-touch', async ({ data: { itemIDs } }) => {
-          const withParents: Set<number> = new Set(itemIDs)
-          for (const item of await getItemsAsync(itemIDs)) {
-            if (typeof item?.parentID === 'number') withParents.add(item.parentID)
+        await timeit.Async('Extra migration', async () => {
+          while (await Zotero.DB.valueQueryAsync("SELECT COUNT(*) FROM settings WHERE setting='globalSchema' AND key='migrateExtra'")) {
+            await new Promise(resolve => setTimeout(resolve, 5000))
           }
-          await Cache.touch([...withParents])
         })
-        Events.addIdleListener('cache-purge', Preference.autoExportIdleWait)
-        Events.on('idle', async ({ data: state }) => {
-          if (state.topic === 'cache-purge' && Cache.ready) await Cache.Serialized.purge()
+
+        await timeit.Async('Translator installation', async () => {
+          if ((await Translators.needsInstall()).length) await Zotero.Translators.init()
+        })
+
+        await timeit.Async('l10n', async () => {
+          await l10n.initialize()
+        })
+
+        await timeit.Async('root', async () => {
+          this.dir = PathUtils.join(Zotero.DataDirectory.dir, 'better-bibtex')
+          await IOUtils.makeDirectory(this.dir, { ignoreExisting: true, createAncestors: true })
+          await Preference.startup(this.dir)
+        })
+
+        timeit.Sync('events', () => {
+          Events.startup()
+          Events.on('export-progress', ({ data: { pct, message } }) => {
+            this.setProgress(pct, message)
+          })
+
+          Events.on('cache-touch', async ({ data: { itemIDs } }) => {
+            const withParents: Set<number> = new Set(itemIDs)
+            for (const item of await getItemsAsync(itemIDs)) {
+              if (typeof item?.parentID === 'number') withParents.add(item.parentID)
+            }
+            await Cache.touch([...withParents])
+          })
+          Events.addIdleListener('cache-purge', Preference.autoExportIdleWait)
+          Events.on('idle', async ({ data: state }) => {
+            if (state.topic === 'cache-purge' && Cache.ready) await Cache.Serialized.purge()
+          })
         })
       },
     })
@@ -625,10 +646,16 @@ export class BetterBibTeX {
               menuType: 'submenu',
               l10nID: 'better-bibtex',
               menus: [
-                // eslint-disable-next-line @typescript-eslint/no-misused-promises
-                { menuType: 'menuitem', l10nID: 'better-bibtex_aux-scanner', onCommand: (_event, _context) => Zotero.BetterBibTeX.scanAUX('tag') },
-                // eslint-disable-next-line @typescript-eslint/no-misused-promises
-                { menuType: 'menuitem', l10nID: 'better-bibtex_report-errors', onCommand: (_event, _context) => Zotero.BetterBibTeX.ErrorReport.open() },
+                {
+                  menuType: 'menuitem',
+                  l10nID: 'better-bibtex_aux-scanner',
+                  onCommand: (_event, _context) => void Zotero.BetterBibTeX.scanAUX('tag'),
+                },
+                {
+                  menuType: 'menuitem',
+                  l10nID: 'better-bibtex_report-errors',
+                  onCommand: (_event, _context) => void Zotero.BetterBibTeX.ErrorReport.open(),
+                },
               ],
             },
           ],
@@ -659,7 +686,11 @@ export class BetterBibTeX {
           pluginID,
           target: 'main/menubar/help',
           menus: [
-            { menuType: 'menuitem', l10nID: 'better-bibtex_report-errors', onCommand: (_event, _context) => void Zotero.BetterBibTeX.ErrorReport.open() },
+            {
+              menuType: 'menuitem',
+              l10nID: 'better-bibtex_report-errors',
+              onCommand: (_event, _context) => void Zotero.BetterBibTeX.ErrorReport.open(),
+            },
             {
               menuType: 'menuitem',
               l10nID: 'better-bibtex_remigrate',
@@ -765,7 +796,11 @@ export class BetterBibTeX {
                   menuType: 'separator',
                   onShowing: itemsSelected,
                 },
-                { menuType: 'menuitem', l10nID: 'better-bibtex_report-errors', onCommand: (_event, _context) => void Zotero.BetterBibTeX.ErrorReport.open('items') },
+                {
+                  menuType: 'menuitem',
+                  l10nID: 'better-bibtex_report-errors',
+                  onCommand: (_event, _context) => void Zotero.BetterBibTeX.ErrorReport.open('items'),
+                },
               ],
             },
           ],
@@ -962,6 +997,22 @@ export class BetterBibTeX {
       this.setProgress(done * 100 / total, message || name)
     })
     this.setProgress(100, 'finished')
+
+    if (profiler) {
+      void (async () => {
+        try {
+          this.profile.startup = await profiler.stop()
+          log.debug('profiles:', this.profile)
+          await profiler.start()
+          await Zotero.Promise.delay(profiling)
+          this.profile.operation = await profiler.stop()
+          log.debug('profiles:', this.profile)
+        }
+        catch (err) {
+          log.error('profiling error:', this.profile, err)
+        }
+      })()
+    }
   }
 
   public async shutdown(reason: Reason): Promise<void> {

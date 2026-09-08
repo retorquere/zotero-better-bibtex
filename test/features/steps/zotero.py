@@ -865,6 +865,7 @@ class Zotero:
 
     profile.firefox.set_preference('extensions.zotero.debug.memoryInfo', True)
     profile.firefox.set_preference('extensions.zotero.translators.better-bibtex.testing', self.testing)
+    profile.firefox.set_preference('extensions.zotero.translators.better-bibtex.profiling', 60 * 1000)
     profile.firefox.set_preference('extensions.zotero.translators.better-bibtex.logEvents', self.testing)
     profile.firefox.set_preference('extensions.zotero.translators.better-bibtex.caching', self.caching)
     profile.firefox.set_preference('extensions.zotero.translators.better-bibtex.scrubDatabase', True)

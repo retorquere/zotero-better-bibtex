@@ -206,7 +206,7 @@ export class ErrorReport {
           'x-amz-acl': 'bucket-owner-full-control',
           'Content-Type': 'application/x-gzip',
         },
-        body: this.zip(),
+        body: await this.zip(),
       })
 
       wizard.advance()
@@ -250,7 +250,7 @@ export class ErrorReport {
     if (index === 0) Zotero.Utilities.Internal.quit(true)
   }
 
-  public zip(): Uint8Array {
+  public async zip(): Promise<Uint8Array> {
     const files: Record<string, Uint8Array> = {}
     const enc = new TextEncoder
     const name = this.name()
@@ -263,6 +263,9 @@ export class ErrorReport {
       files[`${ name }/cache.json`] = enc.encode(this.report.cache)
     }
     if (this.report.acronyms) files[`${ name }/acronyms.csv`] = enc.encode(this.report.acronyms)
+    for (const [ profile, path ] of Object.entries(Zotero.BetterBibTeX.profile)) {
+      if (path) files[`${name}/${profile}.json`] = enc.encode(await IOUtils.readUTF8(path))
+    }
 
     return new Uint8Array(UZip.encode(files) as ArrayBuffer)
   }
@@ -276,7 +279,7 @@ export class ErrorReport {
 
     const rv = await fp.show()
     const filename = rv === fp.returnOK || rv === fp.returnReplace ? fp.file || '' : ''
-    if (filename) await IOUtils.write(filename, this.zip(), { tmpPath: filename + '.tmp' })
+    if (filename) await IOUtils.write(filename, await this.zip(), { tmpPath: filename + '.tmp' })
   }
 
   private async ping(region: string) {
