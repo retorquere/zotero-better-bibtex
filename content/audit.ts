@@ -228,7 +228,7 @@ export const timeit = {
     this.log(label, start)
   },
 
-  log(label: string, start: number) {
+  log(label: string, start: number): void {
     log.info(`Execution time ${label}: ${((Date.now() - start) / 1000).toFixed(3)} s`)
   },
 }
