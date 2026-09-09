@@ -576,12 +576,6 @@ export class BetterBibTeX {
           ])
         })
 
-        await timeit.Async('Extra migration', async () => {
-          while (await Zotero.DB.valueQueryAsync("SELECT COUNT(*) FROM settings WHERE setting='globalSchema' AND key='migrateExtra'")) {
-            await new Promise(resolve => setTimeout(resolve, 5000))
-          }
-        })
-
         await timeit.Async('Translator installation', async () => {
           if ((await Translators.needsInstall()).length) await Zotero.Translators.init()
         })

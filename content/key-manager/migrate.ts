@@ -50,6 +50,10 @@ export async function migrate(verbose = false): Promise<void> {
   const { sqlite } = await databases()
   if (!sqlite) return
 
+  while (await Zotero.DB.valueQueryAsync("SELECT COUNT(*) FROM settings WHERE setting='globalSchema' AND key='migrateExtra'")) {
+    await new Promise(resolve => setTimeout(resolve, 5000))
+  }
+
   const editable = editableLibs()
   const choice = {
     migrate: 'postpone' as 'none' | 'all' | 'pinned' | 'postpone',
