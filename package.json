@@ -135,7 +135,7 @@
   "devDependencies": {
     "@eslint/compat": "^2.1.1",
     "@fluent/bundle": "^0.19.1",
-    "@retorquere/bibtex-parser": "^10.0.2",
+    "@retorquere/bibtex-parser": "^11.0.0",
     "@stylistic/eslint-plugin": "^5.10.0",
     "@types/node": "^26.5.0",
     "@typescript-eslint/eslint-plugin": "^8.70.0",
@@ -220,6 +220,6 @@
   "allowScripts": {
     "es5-ext@0.10.64": true,
     "esbuild@0.28.2": true,
-    "dprint@0.57.1": true
+    "dprint@0.57.4": true
   }
 }

@@ -618,7 +618,7 @@ async function parseBibTeX(translation: Translation): Promise<Library> {
         case 'tex':
           return `<script>${tex}</script>`
         case 'text':
-          return node.type === 'macro' ? node.content as string : tex
+          return node.type === 'macro' ? node.content : tex
         case 'ignore':
           return ''
         default:
@@ -733,10 +733,10 @@ class ZoteroItem {
 
   protected $holder(): boolean {
     if (this.item.itemType === 'patent') {
-      this.item.assignee = this.bibtex.fields.holder
+      this.item.assignee = (this.bibtex.fields.holder || [])
         .map(creator => [ creator.name, creator.lastName, creator.firstName ]
           .filter(name => name)
-          .map((name: string) => name.replace(/"/g, ''))
+          .map(name => name!.replace(/"/g, ''))
           .join(', ')
         )
         .join('; ')
@@ -818,12 +818,10 @@ class ZoteroItem {
   protected $isbn(value: string): boolean { return this.set('ISBN', value) }
 
   protected $booktitle(value: string): boolean {
-    switch (this.item.itemType) {
-      case 'book':
-        if (this.bibtex.fields.title && this.bibtex.crossref?.donated.includes('booktitle')) return true
-        if (this.bibtex.fields.title === value) return true
-        if (!this.item.title) return this.set('title', value)
-        break
+    if (this.item.itemType === 'book') {
+      if (this.bibtex.fields.title && this.bibtex.crossref?.booktitle) return true
+      if (this.bibtex.fields.title === value) return true
+      if (!this.item.title) return this.set('title', value)
     }
 
     if (this.validFields.publicationTitle) return this.set('publicationTitle', value)
@@ -1000,7 +998,7 @@ class ZoteroItem {
       }
     }
 
-    add(this.bibtex.fields.keywords)
+    add(this.bibtex.fields.keywords || [])
     add(this.bibtex.fields.keyword)
     add(this.bibtex.fields.mesh)
     add(this.bibtex.fields.tags)
@@ -1369,8 +1367,8 @@ class ZoteroItem {
       this.item.itemType === 'book'
       && this.bibtex.fields.title
       && this.bibtex.fields.booktitle
-      && this.bibtex.fields.title !== this.bibtex.fields.booktitle
-      && !this.bibtex.crossref?.donated.includes('booktitle')) {
+      && !this.bibtex.crossref?.booktitle
+      && this.bibtex.fields.title !== this.bibtex.fields.booktitle) {
       this.item.itemType = 'bookSection'
     }
 
