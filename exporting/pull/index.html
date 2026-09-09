@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="height=device-height, width=device-width, initial-scale=1.0, minimum-scale=1.0">
     <meta name="generator" content="Hugo 0.165.0">
-    <meta name="generator" content="Relearn 9.0.3+36307e4ed23582638ab689240ac7b427217803ee">
+    <meta name="generator" content="Relearn 9.0.3+cca22eec0fbd822d67073ae1d40be765e061a1e0">
     <meta name="description" content="You can fetch your bibliography on the url http://127.0.0.1:23119/better-bibtex/collection?[collectionID].[format] 1. You can get this URL for a group, library or collection by right-clicking it and selecting Download Better BibTeX export...
 You can add options to the export as URL parameters:
 &amp;exportNotes=[true|false] &amp;useJournalAbbreviation=[true|false] You can fetch your library as part of your build, using something like curl from your Makefile, or with a BibLaTeX remote statement like
@@ -42,7 +42,7 @@ You can add options to the export as URL parameters:
     <script src="/zotero-better-bibtex/js/search.min.js" defer></script>
     <script>
       window.relearn = window.relearn || {};
-      window.relearn.index_js_url="/zotero-better-bibtex/searchindex.en.js";
+      window.relearn.index_js_url="../../"+"searchindex.en.min.js";
     </script>
     <script src="/zotero-better-bibtex/js/lunr/lunr.min.js" defer></script>
     <script src="/zotero-better-bibtex/js/lunr/lunr.stemmer.support.min.js" defer></script>
@@ -59,7 +59,6 @@ You can add options to the export as URL parameters:
     <script>
       window.relearn = window.relearn || {};
       // configuration
-      window.relearn.min = `.min`;
       window.relearn.path='\/exporting\/pull\/index.html';
       window.relearn.relBasePath='..\/..';
       window.relearn.relBaseUri='..\/..\/..';
