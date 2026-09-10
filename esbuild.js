@@ -201,38 +201,6 @@ async function rebuild() {
     exportGlobals: true,
   })
 
-  // plugin code
-  await bundle({
-    entryPoints: [ 'content/better-bibtex.ts' ],
-    plugins: [
-      loader.text,
-      loader.sql,
-      loader.peggy,
-      loader.pug,
-      loader.__dirname,
-      shims
-    ],
-    metafile: 'gen/better-bibtex-esbuild.json',
-    inject: ['./setup/loaders/globals.js'],
-    outdir: 'build/content',
-    banner: { js: `
-      const { FileUtils } = ChromeUtils.importESModule('resource://gre/modules/FileUtils.sys.mjs')
-      Components.utils.importGlobalProperties(['FormData', 'structuredClone'])
-      if (!Zotero.BetterBibTeX) {
-      `},
-    footer: { js: '\n}' },
-    external: [
-      'zotero/itemTree',
-      'mock-aws-s3',
-      '@node-rs/jieba-darwin-x64',
-      'nock',
-      'aws-sdk',
-    ],
-    alias: {
-      'transliteration': 'transliteration/dist/browser/bundle.esm.min.js',
-    }
-  })
-
   // chinese for dynamic loading
   await bundle({
     entryPoints: [ 'content/key-manager/chinese-optional.ts' ],
@@ -282,6 +250,7 @@ async function rebuild() {
   })
 
   // translators
+  const headers = []
   for (const translator of (await glob('translators/*.json')).map(tr => path.parse(tr))) {
     const header = JSON.parse(fs.readFileSync(path.join(translator.dir, translator.name + '.json'), 'utf-8'))
     const outfile = path.join('build/content/resource', translator.name + '.js')
@@ -313,8 +282,44 @@ async function rebuild() {
     if (!header.configOptions) header.configOptions = {}
     header.configOptions.hash = checksum.digest('hex')
     header.lastUpdated = (new Date).toISOString().replace(/T.*/, '')
+    headers.push(header)
     await fs.promises.writeFile(path.join('build/content/resource', translator.name + '.json'), JSON.stringify(header, null, 2))
   }
+
+  fs.writeFileSync('gen/translators.json', JSON.stringify(headers, null, 2))
+
+  // plugin code
+  await bundle({
+    entryPoints: [ 'content/better-bibtex.ts' ],
+    plugins: [
+      loader.text,
+      loader.sql,
+      loader.peggy,
+      loader.pug,
+      loader.__dirname,
+      shims
+    ],
+    metafile: 'gen/better-bibtex-esbuild.json',
+    inject: ['./setup/loaders/globals.js'],
+    outdir: 'build/content',
+    banner: { js: `
+      const { FileUtils } = ChromeUtils.importESModule('resource://gre/modules/FileUtils.sys.mjs')
+      Components.utils.importGlobalProperties(['FormData', 'structuredClone'])
+      if (!Zotero.BetterBibTeX) {
+      `},
+    footer: { js: '\n}' },
+    external: [
+      'zotero/itemTree',
+      'mock-aws-s3',
+      '@node-rs/jieba-darwin-x64',
+      'nock',
+      'aws-sdk',
+    ],
+    alias: {
+      'transliteration': 'transliteration/dist/browser/bundle.esm.min.js',
+    }
+  })
+
 }
 
 rebuild().catch(err => {

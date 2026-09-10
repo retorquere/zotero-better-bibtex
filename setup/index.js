@@ -3,6 +3,7 @@
 import fs from 'fs'
 import { fileURLToPath } from 'url'
 
+import './translators.js'
 import './pugs.js'
 import './preferences.js'
 import 'zotero-plugin/copy-assets'

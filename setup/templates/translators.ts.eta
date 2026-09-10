@@ -1,29 +1,19 @@
 export type DisplayOptions = {
-  % for option, default in sorted(displayOptions.items()):
-  ${makeOption(option, default)}
-  % endfor
+<%~ Object.keys(it.displayOptions).sort().map(option => it.displayOptions[option]).join('\n') + '\n' %>
 
   // pseudo options
-  % for option, default in sorted(pseudoOptions.items()):
-  ${makeOption(option, default)}
-  % endfor
+<%~ Object.keys(it.pseudoOptions).sort().map(option => it.pseudoOptions[option]).join('\n') + '\n' %>
 }
 
 export const displayOptions = [
-  % for option in sorted(displayOptions.keys()):
-  '${option}',
-  % endfor
+<%~ Object.keys(it.displayOptions).sort().map(option => `  '${ option }',`).join('\n') + '\n' %>
 
   // pseudo options
-  % for option in sorted(pseudoOptions.keys()):
-  '${option}',
-  % endfor
+<%~ Object.keys(it.pseudoOptions).sort().map(option => `  '${ option }',`).join('\n') + '\n' %>
 ]
 
 export const psuedoOptions = new Set([
-  % for option in sorted(pseudoOptions.keys()):
-  '${option}',
-  % endfor
+<%~ Object.keys(it.pseudoOptions).sort().map(option => `  '${ option }',`).join('\n') + '\n' %>
 ])
 
 export type Header = {
@@ -34,20 +24,21 @@ export type Header = {
   minVersion: string
   maxVersion: string
   translatorType: number
-  inRepository: false
+  inRepository: boolean
   priority: number
   target: string
-  browserSupport: 'gcsv'
-  configOptions?: {
+  browserSupport: string
+  configOptions: {
     getCollections?: boolean
     async?: boolean
-    hash?: string
     cached?: boolean
-   }
+    hash: string
+  }
   displayOptions?: DisplayOptions
 }
 
-export const headers: Header[] = ${json.dumps(headers, indent='  ')}
+import $headers from './translators.json'
+export const headers: Header[] = $headers
 export const byId: Record<string, Header> = {}
 export const byLabel: Record<string, Header> = {}
 export const bySlug: Record<string, Header> = {}
