@@ -35,7 +35,7 @@ import { log } from '../logger'
 import { pick, unpick } from '../object'
 
 import { byLabel, DisplayOptions } from '../../gen/translators'
-import BBT from '../../gen/version.cjs'
+import * as BBT from '../../gen/build'
 // import { main as probe } from './cache-test'
 
 export const Context = new class {

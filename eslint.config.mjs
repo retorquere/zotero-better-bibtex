@@ -54,7 +54,7 @@ const config = [
       'content/public.ts',
       'eslint.config.mjs',
       'esbuild.js',
-      'site/**/*.{ts,js,mjs}',
+      'site/**/*.{ts,js,mjs,cjs,mts}',
       'build/**/*.{ts,js}',
       'headless/**/*.{ts,js}',
       'tmp/**/*.{ts,js}',

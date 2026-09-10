@@ -55,7 +55,7 @@ export const Translators = new class {
   public bySlug: Record<string, Header> = {}
   public queue = newQueue(1)
 
-  #reinit!: { header: Header; code: string }[]
+  #needsInstall!: string[]
 
   constructor() {
     // const ready = Zotero.Promise.defer()
@@ -88,7 +88,7 @@ export const Translators = new class {
         this.uninstall('\u672B BetterBibTeX JSON (for debugging)')
         this.uninstall('BetterBibTeX JSON (for debugging)')
 
-        await this.installTranslators()
+        await this.install()
 
         // ready.resolve(true as unknown as void)
       },
@@ -425,53 +425,42 @@ export const Translators = new class {
     return false
   }
 
-  public async needsInstall(): Promise<{ header: Header; code: string }[]> {
-    if (!this.#reinit) {
-      const reinit: Record<string, { header: Header; code: string }> = {}
-
-      const code = (label: string) => [
-        `if (typeof ZOTERO_CONFIG === 'undefined') ZOTERO_CONFIG = ${JSON.stringify(ZOTERO_CONFIG)}`,
-        Zotero.File.getContentsFromURL(`chrome://zotero-better-bibtex/content/resource/${ label }.js`),
-      ].join('\n')
-
-      const headers: Header[] = Headers
-        .map(header => JSON.parse(Zotero.File.getContentsFromURL(`chrome://zotero-better-bibtex/content/resource/${ header.label }.json`)))
-
-      const filenames = headers.map(header => `'${ header.label }.js'`).join(',')
+  public async needsInstall(): Promise<string[]> {
+    if (!this.#needsInstall) {
+      const filenames = Headers.map(header => `'${header.label}.js'`).join(',')
+      const installs = `SELECT fileName, metadataJSON FROM translatorCache WHERE fileName IN (${filenames})`
       const installed: Record<string, Header> = {}
-      for (const { fileName, metadataJSON } of (await Zotero.DB.queryAsync(`SELECT fileName, metadataJSON FROM translatorCache WHERE fileName IN (${ filenames })`))!) {
+      this.#needsInstall = []
+      for (const { fileName, metadataJSON } of (await Zotero.DB.queryAsync(installs))!) {
         try {
           installed[fileName.replace(/[.]js$/, '')] = JSON.parse(metadataJSON)
         }
-        catch {
-          log.error('translator install: failed to parse header for', fileName, ':', metadataJSON)
+        catch (err) {
+          log.error(fileName, 'metadata could not be loaded:', err)
         }
       }
 
-      for (const header of headers) {
-        const existing = installed[header.label]
-        if (!existing) {
-          reinit[header.label] = { header, code: code(header.label) }
-          log.info(`translator install: new translator ${ header.label }`)
-        }
-        else if (existing.configOptions?.hash !== header.configOptions!.hash) {
-          reinit[header.label] = { header, code: code(header.label) }
-          log.info(`translator install: updated translator ${ header.label }`)
-        }
+      for (const header of Headers) {
+        if (installed[header.label]?.configOptions.hash !== header.configOptions.hash) this.#needsInstall.push(header.label)
       }
 
-      this.#reinit = Object.values(reinit)
+      log.info('needs install:', this.#needsInstall)
     }
 
-    return this.#reinit
+    return this.#needsInstall
   }
 
-  private async installTranslators() {
-    const install = await this.needsInstall()
-    if (!install.length) return
+  private async install() {
+    const names = await this.needsInstall()
+    if (!names.length) return
 
-    for (const { header, code } of install) {
-      await Cache.Exports.dropTranslator(header.label)
+    for (const name of names) {
+      await Cache.Exports.dropTranslator(name)
+      const header = Headers.find(h => h.label === name)!
+      const code = [
+        `if (typeof ZOTERO_CONFIG === 'undefined') ZOTERO_CONFIG = ${JSON.stringify(ZOTERO_CONFIG)}`,
+        Zotero.File.getContentsFromURL(`chrome://zotero-better-bibtex/content/resource/${name}.js`),
+      ].join('\n')
       await Zotero.Translators.save(header, code)
     }
 
