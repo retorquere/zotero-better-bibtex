@@ -17,6 +17,7 @@ import type { ExportScope } from './translators'
 import { log } from './logger'
 import { AutoExport } from './auto-export'
 import { KeyManager } from './key-manager'
+import { profiler } from './audit'
 
 import * as UZip from 'uzip'
 
@@ -263,8 +264,8 @@ export class ErrorReport {
       files[`${ name }/cache.json`] = enc.encode(this.report.cache)
     }
     if (this.report.acronyms) files[`${ name }/acronyms.csv`] = enc.encode(this.report.acronyms)
-    for (const [ profile, path ] of Object.entries(Zotero.BetterBibTeX.profile)) {
-      if (path) files[`${name}/${profile}.json`] = enc.encode(await IOUtils.readUTF8(path))
+    for (const [ profile, path ] of Object.entries(profiler.logs)) {
+      if (path) files[`${name}/profile/${profile}.json`] = enc.encode(await IOUtils.readUTF8(path))
     }
 
     return new Uint8Array(UZip.encode(files) as ArrayBuffer)

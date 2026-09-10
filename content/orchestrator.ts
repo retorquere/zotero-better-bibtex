@@ -2,6 +2,7 @@ export type Actor = 'worker' | 'start' | 'done' | 'auto-export' | 'translators' 
 export type PhaseID = 'startup' | 'shutdown'
 import type { Reason } from './bootstrap'
 import { log } from './logger'
+import { release } from '../gen/build'
 type Handler = (reason: Reason, task?: Task) => void | string | Promise<void | string>
 
 interface Task {
@@ -15,6 +16,7 @@ interface Task {
 }
 
 export type Progress = (phase: string, name: string, done: number, total: number, message?: string) => void
+import { profiler } from './audit'
 
 export class Orchestrator {
   public id: string = Zotero.Utilities.generateObjectKey()
@@ -23,6 +25,13 @@ export class Orchestrator {
   public done: Actor = 'done'
   private tasks: Partial<Record<Actor, Task>> = {}
   private $ordered!: Task[]
+
+  private profiling: number
+
+  constructor() {
+    const profiling = Zotero.Prefs.get('translators.better-bibtex.profiling')
+    this.profiling = typeof profiling === 'number' ? profiling : (release ? 0 : 60)
+  }
 
   public add({ description, id, startup, shutdown, needs }: Task): void {
     if (this.$ordered) throw new Error(`orchestrator: add ${ id } after ordered`)
@@ -110,6 +119,8 @@ export class Orchestrator {
     while (tasks.length) {
       const task = tasks.shift()!
 
+      if (this.profiling) await profiler.start()
+
       log.prefix = ` ${ phase }: [${ task.id }`
       if (tasks.length) log.prefix += `+${ tasks.length }`
       log.prefix += ']'
@@ -133,16 +144,31 @@ export class Orchestrator {
       runtime[task.id === 'start' ? 'zotero' : 'bbt'] += task.finished - task.started
 
       progress?.(phase, task.id, finished.length, total, tasks.length ? tasks.map(t => t.id).join(',') : 'finished')
+
+      if (this.profiling) await profiler.stop(`${phase}-${task.id}`)
     }
 
     log.prefix = ''
-    const waiting = phase === 'startup' ? ` after waiting ${ duration(runtime.zotero) } for zotero` : ''
-    log.info(`orchestrator: ${ action } took ${ duration(runtime.bbt) }${ waiting }`)
+    log.info(`orchestrator: ${action} took ${duration(runtime.bbt)}`)
   }
 
   public async startup(reason: Reason, progress?: Progress): Promise<void> {
     await this.run('startup', reason, progress)
     progress?.('startup', 'ready', 100, 100, 'ready')
+
+    if (this.profiling) {
+      void (async () => {
+        try {
+          await Zotero.Promise.delay(this.profiling * 1000)
+          await profiler.start()
+          await Zotero.Promise.delay(this.profiling * 1000)
+          await profiler.stop('running')
+        }
+        catch (err) {
+          log.error('profiling error:', err)
+        }
+      })()
+    }
   }
 
   public async shutdown(reason: Reason): Promise<void> {

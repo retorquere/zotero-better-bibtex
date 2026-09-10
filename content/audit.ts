@@ -152,30 +152,36 @@ export interface ProfilerOptions {
   features?: string[]
 }
 
-export class Profiler {
-  private readonly interval: number
-  private readonly entries: number
-  private readonly threads: string[]
-  private readonly features: string[]
+export const profiler = new class Profiler {
+  private interval = 10
+  private entries = 100_000_000
+  private threads = ['GeckoMain']
+  private features = [
+    'js',
+    'privacy',
+    'stackwalk',
+    'threads',
+    'leaf',
+    'cpu',
+    'memory',
+    'gc',
+    'cc',
+  ]
+  private logDir = PathUtils.join(PathUtils.tempDir, 'better-bibtex-profiles')
 
   private started = 0
 
-  constructor(options: ProfilerOptions = {}) {
-    this.interval = options.interval ?? 10
-    this.entries = options.entries ?? 50_000_000
-    this.threads = options.threads ?? ['GeckoMain']
+  public readonly logs: Record<string, string> = {}
 
-    this.features = options.features ?? [
-      'js',
-      'privacy',
-      'stackwalk',
-      'threads',
-      'leaf',
-      'cpu',
-      'memory',
-      'gc',
-      'cc',
-    ]
+  constructor() {
+    this.logDir = (Zotero.Prefs.get('translators.better-bibtex.profileDir') as string | undefined) || this.logDir
+  }
+
+  public configure(options: ProfilerOptions) {
+    this.interval = options.interval ?? this.interval
+    this.entries = options.entries ?? this.entries
+    this.threads = options.threads ?? this.threads
+    this.features = options.features ?? this.features
   }
 
   public async start(): Promise<void> {
@@ -188,24 +194,26 @@ export class Profiler {
     this.started = Date.now()
   }
 
-  public async stop(): Promise<string> {
+  public async stop(label: string): Promise<string> {
     if (this.started === 0) {
       throw new Error('[Profiler] Cannot stop session: Profiler is not active.')
     }
+
+    log.debug('profiler:', label, 'ran for', (Date.now() - this.started) / 1000, 's')
 
     const profile = await Services.profiler.getProfileDataAsync()
     await Services.profiler.StopProfiler()
 
     this.started = 0
 
-    const tempDir = PathUtils.join(PathUtils.tempDir, 'zotero-profiles')
-    await IOUtils.makeDirectory(tempDir, {
+    await IOUtils.makeDirectory(this.logDir, {
       ignoreExisting: true,
       createAncestors: true,
     })
 
-    const path = PathUtils.join(tempDir, `profile-${Date.now()}.json`)
+    const path = PathUtils.join(this.logDir, `${label}-${Date.now()}.json`)
     await IOUtils.writeUTF8(path, JSON.stringify(profile))
+    this.logs[label] = path
 
     return path
   }
