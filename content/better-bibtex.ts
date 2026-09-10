@@ -23,6 +23,7 @@ import { TeXstudio } from './tex-studio'
 import { Cache } from './translators/worker'
 import type { ExportedItem, ExportedItemMetadata } from './worker/cache'
 import { Profiler, timeit } from './audit'
+import { release } from '../gen/build'
 
 import { Preference } from './prefs'
 
@@ -559,7 +560,8 @@ export class BetterBibTeX {
   }
 
   public async startup(reason: Reason): Promise<void> {
-    const profiling = Zotero.Prefs.get('translators.better-bibtex.profiling') as number
+    let profiling = Zotero.Prefs.get('translators.better-bibtex.profiling')
+    if (typeof profiling !== 'number') profiling = release ? 0 : 60
     const profiler: Profiler | null = profiling ? new Profiler : null
 
     if (profiler) await profiler.start()
@@ -998,7 +1000,7 @@ export class BetterBibTeX {
           this.profile.startup = await profiler.stop()
           log.debug('profiles:', this.profile)
           await profiler.start()
-          await Zotero.Promise.delay(profiling)
+          await Zotero.Promise.delay(profiling * 1000)
           this.profile.operation = await profiler.stop()
           log.debug('profiles:', this.profile)
         }
