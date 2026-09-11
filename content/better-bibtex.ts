@@ -22,7 +22,6 @@ import { Scheduler } from './scheduler'
 import { TeXstudio } from './tex-studio'
 import { Cache } from './translators/worker'
 import type { ExportedItem, ExportedItemMetadata } from './worker/cache'
-import { timeit } from './audit'
 
 import { Preference } from './prefs'
 
@@ -558,45 +557,35 @@ export class BetterBibTeX {
       id: 'start',
       description: 'foundation',
       startup: async () => {
-        await timeit.Async('Zotero delay', async () => {
-          await Promise.all([
-            Zotero.initializationPromise,
-            Zotero.unlockPromise,
-            // Zotero.uiReadyPromise,
-          ])
+        await Promise.all([
+          Zotero.initializationPromise,
+          Zotero.unlockPromise,
+          // Zotero.uiReadyPromise,
+        ])
+
+        if ((await Translators.needsInstall()).length) await Zotero.Translators.init()
+
+        await l10n.initialize()
+
+        this.dir = PathUtils.join(Zotero.DataDirectory.dir, 'better-bibtex')
+        await IOUtils.makeDirectory(this.dir, { ignoreExisting: true, createAncestors: true })
+        await Preference.startup(this.dir)
+
+        Events.startup()
+        Events.on('export-progress', ({ data: { pct, message } }) => {
+          this.setProgress(pct, message)
         })
 
-        await timeit.Async('Translator installation', async () => {
-          if ((await Translators.needsInstall()).length) await Zotero.Translators.init()
+        Events.on('cache-touch', async ({ data: { itemIDs } }) => {
+          const withParents: Set<number> = new Set(itemIDs)
+          for (const item of await getItemsAsync(itemIDs)) {
+            if (typeof item?.parentID === 'number') withParents.add(item.parentID)
+          }
+          await Cache.touch([...withParents])
         })
-
-        await timeit.Async('l10n', async () => {
-          await l10n.initialize()
-        })
-
-        await timeit.Async('root', async () => {
-          this.dir = PathUtils.join(Zotero.DataDirectory.dir, 'better-bibtex')
-          await IOUtils.makeDirectory(this.dir, { ignoreExisting: true, createAncestors: true })
-          await Preference.startup(this.dir)
-        })
-
-        timeit.Sync('events', () => {
-          Events.startup()
-          Events.on('export-progress', ({ data: { pct, message } }) => {
-            this.setProgress(pct, message)
-          })
-
-          Events.on('cache-touch', async ({ data: { itemIDs } }) => {
-            const withParents: Set<number> = new Set(itemIDs)
-            for (const item of await getItemsAsync(itemIDs)) {
-              if (typeof item?.parentID === 'number') withParents.add(item.parentID)
-            }
-            await Cache.touch([...withParents])
-          })
-          Events.addIdleListener('cache-purge', Preference.autoExportIdleWait)
-          Events.on('idle', async ({ data: state }) => {
-            if (state.topic === 'cache-purge' && Cache.ready) await Cache.Serialized.purge()
-          })
+        Events.addIdleListener('cache-purge', Preference.autoExportIdleWait)
+        Events.on('idle', async ({ data: state }) => {
+          if (state.topic === 'cache-purge' && Cache.ready) await Cache.Serialized.purge()
         })
       },
     })
