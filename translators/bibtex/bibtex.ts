@@ -380,6 +380,7 @@ function addDate(ref: Entry, date: OptionalRichDate, verbatim: string) {
   switch (date?.type) {
     case 'open':
     case null:
+    case undefined:
       if (year(orig)) ref.add({ name: 'year', value: `[${year(orig)}]` })
       return
 
@@ -406,7 +407,7 @@ function addDate(ref: Entry, date: OptionalRichDate, verbatim: string) {
       break
 
     default:
-      log.error(`Unexpected date type for ${JSON.stringify(verbatim)}`)
+      log.error(`Unexpected date type ${date?.type} for ${JSON.stringify(verbatim)}`)
   }
 }
 
