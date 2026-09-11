@@ -103,7 +103,6 @@ export async function startup({ resourceURI, rootURI = resourceURI.spec }: { res
 
     const { FileUtils } = ChromeUtils.importESModule('resource://gre/modules/FileUtils.sys.mjs')
     monkey = new Monkey('better bibtex')
-    const hiddenWindow = Services.appShell?.hiddenDOMWindow as unknown as typeof globalThis
     // Waive Xrays on the sandbox global before assigning properties across compartment boundaries
     Object.assign(Components.utils.waiveXrays(sandbox), {
       monkey,
@@ -118,7 +117,6 @@ export async function startup({ resourceURI, rootURI = resourceURI.spec }: { res
       FileUtils,
       PathUtils,
       IOUtils,
-      DecompressionStream: hiddenWindow?.DecompressionStream ?? Zotero.getMainWindow().DecompressionStream,
     })
 
     Services.scriptloader.loadSubScriptWithOptions(`${rootURI}content/better-bibtex.js`, {

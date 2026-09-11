@@ -1,8 +1,8 @@
 diff --git a/node_modules/kuromoji/src/loader/BrowserDictionaryLoader.js b/node_modules/kuromoji/src/loader/BrowserDictionaryLoader.js
-index 04bfdcd..9f4035b 100644
+index 04bfdcd..ea982da 100644
 --- a/node_modules/kuromoji/src/loader/BrowserDictionaryLoader.js
 +++ b/node_modules/kuromoji/src/loader/BrowserDictionaryLoader.js
-@@ -36,26 +36,25 @@ BrowserDictionaryLoader.prototype = Object.create(DictionaryLoader.prototype);
+@@ -36,26 +36,16 @@ BrowserDictionaryLoader.prototype = Object.create(DictionaryLoader.prototype);
   * @param {string} url Dictionary URL
   * @param {BrowserDictionaryLoader~onLoad} callback Callback function
   */
@@ -16,11 +16,7 @@ index 04bfdcd..9f4035b 100644
 -            return;
 -        }
 -        var arraybuffer = this.response;
-+BrowserDictionaryLoader.prototype.loadArrayBuffer = async function(url, callback) {
-+  try {
-+    url = `chrome://zotero-better-bibtex/content/resource/kuromoji/${url.replace(/.*[\\\/]/, '')}`
-+    Zotero.debug(`BrowserDictionaryLoader.loadArrayBuffer: ${url}`)
- 
+-
 -        var gz = new zlib.Zlib.Gunzip(new Uint8Array(arraybuffer));
 -        var typed_array = gz.decompress();
 -        callback(null, typed_array.buffer);
@@ -30,13 +26,9 @@ index 04bfdcd..9f4035b 100644
 -    };
 -    xhr.send();
 -};
-+    const response = await fetch(url)
-+    if (!response.ok) {
-+      throw new Error(`HTTP ${response.status}: ${response.statusText}`)
-+    }
-+
-+    const decompressedStream = response.body.pipeThrough(new DecompressionStream('gzip'))
-+    const resultBuffer = await new Response(decompressedStream).arrayBuffer()
++BrowserDictionaryLoader.prototype.loadArrayBuffer = async function(url, callback) {
++  try {
++    const resultBuffer = await Zotero.BetterBibTeX.KeyManager.kuromojiLoader.load(url)
 +
 +    callback(null, resultBuffer)
 +  }

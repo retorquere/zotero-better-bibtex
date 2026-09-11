@@ -50,6 +50,7 @@ const config = [
   {
     ignores: [
       'content/key-manager/compile.js',
+      'content/key-manager/kuromoji-worker.js',
       'content/Preferences/ui.js',
       'content/public.ts',
       'eslint.config.mjs',
