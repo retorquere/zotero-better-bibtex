@@ -7,6 +7,8 @@ import { regex as escapeRE } from './escape'
 import { readonly, selectedLibraryID } from './library'
 import { Cache } from './translators/worker'
 
+import { Bundler } from 'zotero-plugin/debug-log'
+
 import { Preference } from './prefs'
 
 import { defaults } from '../gen/preferences/meta'
@@ -256,57 +258,24 @@ export class ErrorReport {
   public zip(saveTo: string): Promise<undefined>
   public async zip(saveTo?: string): Promise<Uint8Array | undefined> {
     const name = this.name()
-    const enc = (new TextEncoder)
 
-    const files: Record<string, string> = {
-      [`${name}/debug.txt`]: this.report.log!,
-    }
+    const bundler = new Bundler
+    await bundler.add(`${name}/debug.txt`, this.report.log!)
 
-    if (this.report.items) files[`${name}/items.json`] = this.report.items
+    if (this.report.items) await bundler.add(`${name}/items.json`, this.report.items)
 
     if (this.config.cache) {
-      files[`${name}/database.json`] = JSON.stringify(KeyManager.all())
-      files[`${name}/cache.json`] = this.report.cache!
+      await bundler.add(`${name}/database.json`, JSON.stringify(KeyManager.all()))
+      await bundler.add(`${name}/cache.json`, this.report.cache!)
     }
 
-    if (this.report.acronyms) files[`${name}/acronyms.csv`] = this.report.acronyms
+    if (this.report.acronyms) await bundler.add(`${name}/acronyms.csv`, this.report.acronyms)
 
     for (const [profile, path] of Object.entries(profiler.logs)) {
-      files[`${name}/profile/${profile}.json`] = await IOUtils.readUTF8(path)
+      await bundler.add(`${name}/profile/${profile}.json`, await IOUtils.readUTF8(path))
     }
 
-    const temporary = !saveTo
-    const zipFile = saveTo ? Zotero.File.pathToFile(saveTo) : Zotero.getTempDirectory().clone()
-    if (temporary) {
-      zipFile.append(`${this.name()}.zip`)
-      zipFile.createUnique(Components.interfaces.nsIFile.NORMAL_FILE_TYPE!, 0o600)
-    }
-
-    try {
-      const zipWriter = Components.classes['@mozilla.org/zipwriter;1'].createInstance(Components.interfaces.nsIZipWriter)
-      zipWriter.open(zipFile, 0x04 + 0x08 + 0x20)
-
-      for (const [path, content] of Object.entries(files)) {
-        const stringInputStream = Components.classes['@mozilla.org/io/string-input-stream;1'].createInstance(Components.interfaces.nsIStringInputStream)
-        const data = enc.encode(content)
-
-        let rawString = ''
-        const chunkSize = 8192
-        for (let i = 0; i < data.length; i += chunkSize) {
-          rawString += String.fromCharCode(...Array.from(data.subarray(i, i + chunkSize)))
-        }
-
-        stringInputStream.setByteStringData(rawString)
-        zipWriter.addEntryStream(path, Date.now() * 1000, Components.interfaces.nsIZipWriter.COMPRESSION_DEFAULT!, stringInputStream, false)
-      }
-
-      zipWriter.close()
-      if (saveTo) return undefined
-      return new Uint8Array(await IOUtils.read(zipFile.path))
-    }
-    finally {
-      if (temporary && zipFile.exists()) zipFile.remove(false)
-    }
+    return saveTo ? bundler.zip(saveTo) : bundler.zip()
   }
 
   public async save(): Promise<void> {
@@ -318,7 +287,7 @@ export class ErrorReport {
 
     const rv = await fp.show()
     const filename = rv === fp.returnOK || rv === fp.returnReplace ? fp.file || '' : ''
-    if (filename) await IOUtils.write(filename, await this.zip(), { tmpPath: filename + '.tmp' })
+    if (filename) await this.zip(filename)
   }
 
   private async ping(region: string) {
