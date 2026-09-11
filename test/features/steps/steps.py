@@ -26,6 +26,7 @@ import requests
 from contextlib import contextmanager
 
 import pathlib
+from pathlib import Path
 for d in pathlib.Path(__file__).resolve().parents:
   if os.path.exists(os.path.join(d, 'behave.ini')):
     ROOT = d
@@ -127,7 +128,6 @@ def step_impl(context, source, target, baseline, n):
     check=True,
     stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True
   )
-  utils.print(result.stdout)
 
   match pathlib.Path(baseline).suffix:
     case '.odt':
@@ -613,3 +613,11 @@ def step_impl(context):
   with rdp.RDPConnection() as zotero:
     serialized = zotero.execute('return Zotero.getActiveZoteroPane().getSelectedItems().map(item => Zotero.Utilities.Internal.itemToExportFormat(item))')
     assert type(serialized) == list, f'Expected serialized object, got {type(serialized)}, {json.dumps(serialized)}'
+
+@step('I clear the performance profiles')
+def step_impl(context):
+  profiles = Path('~/.BBTTEST/zotero/better-bibtex').expanduser()
+  profile = re.compile(r'^\d+-\d+-(startup|shutdown)-[-a-z]+\.json$')
+  for p in profiles.iterdir():
+    if p.is_file() and profile.match(p.name):
+      p.unlink()

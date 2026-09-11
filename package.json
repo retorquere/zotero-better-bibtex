@@ -21,7 +21,7 @@
     "maxVersion": "10.*"
   },
   "scripts": {
-    "mkp": "patch-package zotero-types",
+    "mkp": "patch-package kuromoji",
     "changelog": "auto-changelog",
     "check-env": "node -e 'console.log(process.env)' | grep npm",
     "action": "act -W .github/workflows/ci.yaml",

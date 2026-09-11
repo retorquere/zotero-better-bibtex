@@ -48,7 +48,48 @@ export async function migrate(verbose = false): Promise<void> {
   const readonly: StoredKey[] = []
 
   const { sqlite } = await databases()
+  log.info('migrate: start state', await databases())
   if (!sqlite) return
+
+  let bbt: StoredKey[]
+  try {
+    const db = await Sqlite.openConnection({ path: sqlite })
+    bbt = (await db.execute('SELECT itemID, itemKey, libraryID, citationKey, pinned FROM citationkey'))
+      .map(row => ({
+        itemID: row.getResultByName('itemID'),
+        itemKey: row.getResultByName('itemKey'),
+        libraryID: row.getResultByName('libraryID'),
+        citationKey: row.getResultByName('citationKey'),
+        pinned: row.getResultByName('pinned'),
+      }))
+    await db.close()
+    speaker.say(`BBT keys found: ${bbt.length}`)
+  }
+  catch (err) {
+    speaker.say(`migration error: ${(err as any).message}`)
+    return
+  }
+
+  const rename = async () => {
+    try {
+      const renamed = await Zotero.File.rename(sqlite, 'better-bibtex.migrated', { unique: true })
+      if (renamed) {
+        speaker.say(`migration finished and database renamed to ${renamed}`)
+      }
+      else {
+        speaker.say('error: migration finished but database not renamed')
+      }
+    }
+    catch (err) {
+      speaker.say(`citation key migration error: migration rename error: ${(err as any).message}`)
+    }
+  }
+
+  if (!bbt.length) {
+    log.info('migrate: nothing to do')
+    await rename()
+    return
+  }
 
   while (await Zotero.DB.valueQueryAsync("SELECT COUNT(*) FROM settings WHERE setting='globalSchema' AND key='migrateExtra'")) {
     await new Promise(resolve => setTimeout(resolve, 5000))
@@ -65,18 +106,6 @@ export async function migrate(verbose = false): Promise<void> {
     conflicts: 0,
   }
   try {
-    const db = await Sqlite.openConnection({ path: sqlite })
-    let bbt: StoredKey[] = (await db.execute('SELECT itemID, itemKey, libraryID, citationKey, pinned FROM citationkey'))
-      .map(row => ({
-        itemID: row.getResultByName('itemID'),
-        itemKey: row.getResultByName('itemKey'),
-        libraryID: row.getResultByName('libraryID'),
-        citationKey: row.getResultByName('citationKey'),
-        pinned: row.getResultByName('pinned'),
-      }))
-    await db.close()
-    speaker.say(`BBT keys found: ${bbt.length}`)
-
     await Zotero.DB.executeTransaction(async () => {
       const actualItems = `
         items.itemID NOT IN (SELECT itemID FROM deletedItems)
@@ -86,7 +115,8 @@ export async function migrate(verbose = false): Promise<void> {
         items.itemTypeID NOT IN (SELECT itemTypeID FROM itemTypes WHERE typeName IN ('attachment', 'note', 'annotation'))
       `
       const zotero: { citationKeys: StoredKey[]; itemID: Record<number, { libraryID: number; itemKey: string }> } = {
-        citationKeys: ((await Zotero.DB.queryAsync(`
+        citationKeys: ((await Zotero.DB.queryAsync(
+          `
             SELECT items.itemID, items.key as itemKey, items.libraryID, ck.value AS citationKey, 0 as pinned
             FROM items
             JOIN itemData ckField ON ckField.itemID = items.itemID AND ckField.fieldID IN (SELECT fieldID FROM fields WHERE fieldName = 'citationKey')
@@ -95,7 +125,8 @@ export async function migrate(verbose = false): Promise<void> {
               AND items.itemTypeID NOT IN (SELECT itemTypeID FROM itemTypes WHERE typeName IN ('attachment', 'note', 'annotation'))
               AND items.itemID NOT IN (SELECT itemID from feedItems)
               AND COALESCE(ck.value, '') <> ''
-            `.replace(/\n/g, ' ').trim())) as unknown as StoredKey[])
+            `.replace(/\n/g, ' ').trim()
+        )) as unknown as StoredKey[])
           .map(unpack)
           .filter(key => key.citationKey),
         itemID: (await Zotero.DB.queryAsync(`SELECT items.itemID, items.libraryID, items.key FROM items WHERE ${actualItems}`.replace(/\n/g, ' ')))!
@@ -184,22 +215,11 @@ export async function migrate(verbose = false): Promise<void> {
           }
         }
       }
+      log.info('migrate:', { choice })
 
       if (choice.migrate !== 'postpone') {
         await IOUtils.writeJSON(PathUtils.join(Zotero.BetterBibTeX.dir, 'read-only.json'), readonly)
-
-        try {
-          const renamed = await Zotero.File.rename(sqlite, 'better-bibtex.migrated', { unique: true })
-          if (renamed) {
-            speaker.say(`migration finished and database renamed to ${renamed}`)
-          }
-          else {
-            speaker.say('error: migration finished but database not renamed')
-          }
-        }
-        catch (err) {
-          speaker.say(`citation key migration error: migration rename error: ${(err as any).message}`)
-        }
+        await rename()
       }
     })
   }

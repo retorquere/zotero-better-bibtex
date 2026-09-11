@@ -168,6 +168,7 @@ export const profiler = new class Profiler {
     'cc',
   ]
   private logDir = PathUtils.join(PathUtils.tempDir, 'better-bibtex-profiles')
+  private session = Date.now()
 
   private started = 0
 
@@ -199,6 +200,8 @@ export const profiler = new class Profiler {
       throw new Error('[Profiler] Cannot stop session: Profiler is not active.')
     }
 
+    label = `${Date.now()}-${label}`
+
     log.debug('profiler:', label, 'ran for', (Date.now() - this.started) / 1000, 's')
 
     const profile = await Services.profiler.getProfileDataAsync()
@@ -211,7 +214,7 @@ export const profiler = new class Profiler {
       createAncestors: true,
     })
 
-    const path = PathUtils.join(this.logDir, `${label}-${Date.now()}.json`)
+    const path = PathUtils.join(this.logDir, `${this.session}-${label}.json`)
     await IOUtils.writeUTF8(path, JSON.stringify(profile))
     this.logs[label] = path
 
