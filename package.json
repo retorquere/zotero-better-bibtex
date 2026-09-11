@@ -89,7 +89,7 @@
     "case": "^1.6.3",
     "citeproc": "^2.4.63",
     "clean-deep": "^3.4.0",
-    "compromise": "^14.16.0",
+    "compromise": "^14.17.0",
     "csl-json": "^0.1.0",
     "detect-file-encoding-and-language": "^2.4.0",
     "edtf": "^4.11.1",
@@ -128,7 +128,7 @@
     "turndown": "^7.2.4",
     "uzip": "^0.20201231.0",
     "wasmjieba-web": "^2.0.3",
-    "zotero-plugin": "^11.0.5",
+    "zotero-plugin": "^11.0.6",
     "zotero-plugin-toolkit": "^5.2.0",
     "zotero-types": "^4.1.3"
   },
