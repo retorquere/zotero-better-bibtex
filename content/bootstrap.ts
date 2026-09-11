@@ -117,6 +117,7 @@ export async function startup({ resourceURI, rootURI = resourceURI.spec }: { res
       FileUtils,
       PathUtils,
       IOUtils,
+      DecompressionStream: Zotero.getMainWindow().DecompressionStream,
     })
 
     Services.scriptloader.loadSubScriptWithOptions(`${rootURI}content/better-bibtex.js`, {
