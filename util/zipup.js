@@ -3,7 +3,7 @@
 import * as fs from 'node:fs'
 import * as path from 'node:path'
 import { spawn } from 'node:child_process'
-import { path7za } from '7zip-bin'
+import { path7z } from '7zip-bin-full'
 
 let [, , source, target, plugin] = process.argv
 source = path.join(process.cwd(), source)
@@ -23,12 +23,12 @@ if (!fs.existsSync(path.dirname(xpi))) fs.mkdirSync(path.dirname(xpi))
 async function main() {
   await new Promise((resolve, reject) => {
     const compression = process.env.GITHUB_ACTIONS === 'true' ? ['-mx=9', '-mfb=258', '-mpass=15'] : ['-mx=1']
-    const zip = spawn(path7za, ['a', '-tzip', ...compression, xpi], { cwd: source, stdio: 'inherit' })
+    const zip = spawn(path7z, ['a', '-tzip', ...compression, xpi], { cwd: source, stdio: 'inherit' })
 
     zip.on('error', reject)
     zip.on('exit', code => {
       if (code === 0) resolve()
-      else if (code !== null) reject(new Error(`${path7za} exited with status ${code}`))
+      else if (code !== null) reject(new Error(`${path7z} exited with status ${code}`))
     })
   })
 }
