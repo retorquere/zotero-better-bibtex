@@ -520,7 +520,19 @@ def step_impl(context, action, xpi):
       zotero.execute("""
         const { AddonManager } = ChromeUtils.importESModule('resource://gre/modules/AddonManager.sys.mjs')
         const addon = await AddonManager.getAddonByID(addonID)
+        const lifecycle = action === 'disable' ? 'shutdown' : 'startup'
+        const completed = new Promise(resolve => {
+          const observer = {
+            [lifecycle]({ id }) {
+              if (id !== addonID) return
+              Zotero.Plugins.removeObserver(observer)
+              resolve()
+            },
+          }
+          Zotero.Plugins.addObserver(observer)
+        })
         await addon[action]()
+        await completed
       """, action=action, addonID=xpi)
   else:
     raise ValueError(f'Unsupported extension action {action}')
