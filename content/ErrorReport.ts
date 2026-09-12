@@ -640,6 +640,8 @@ export class ErrorReport {
   }
 
   public async open(items?: string): Promise<void> {
+    if (profiler.active) await profiler.stop('runtime')
+
     let scope: ExportScope | null = null
     switch (items) {
       case 'collection':

@@ -26,12 +26,7 @@ export class Orchestrator {
   private tasks: Partial<Record<Actor, Task>> = {}
   private $ordered!: Task[]
 
-  private profiling: number
-
-  constructor() {
-    const profiling = Zotero.Prefs.get('translators.better-bibtex.profiling')
-    this.profiling = typeof profiling === 'number' ? profiling : (release ? 0 : 60)
-  }
+  private profiling = !release
 
   public add({ description, id, startup, shutdown, needs }: Task): void {
     if (this.$ordered) throw new Error(`orchestrator: add ${ id } after ordered`)
@@ -119,7 +114,7 @@ export class Orchestrator {
     while (tasks.length) {
       const task = tasks.shift()!
 
-      if (this.profiling) await profiler.start()
+      if (phase === 'startup' && this.profiling) await profiler.start()
 
       log.prefix = ` ${ phase }: [${ task.id }`
       if (tasks.length) log.prefix += `+${ tasks.length }`
@@ -145,7 +140,7 @@ export class Orchestrator {
 
       progress?.(phase, task.id, finished.length, total, tasks.length ? tasks.map(t => t.id).join(',') : 'finished')
 
-      if (this.profiling) await profiler.stop(`${phase}-${task.id}`)
+      if (phase === 'startup' && this.profiling) await profiler.stop(`${phase}-${task.id}`)
     }
 
     log.prefix = ''
@@ -155,20 +150,6 @@ export class Orchestrator {
   public async startup(reason: Reason, progress?: Progress): Promise<void> {
     await this.run('startup', reason, progress)
     progress?.('startup', 'ready', 100, 100, 'ready')
-
-    if (this.profiling) {
-      void (async () => {
-        try {
-          await Zotero.Promise.delay(this.profiling * 1000)
-          await profiler.start()
-          await Zotero.Promise.delay(this.profiling * 1000)
-          await profiler.stop('running')
-        }
-        catch (err) {
-          log.error('profiling error:', err)
-        }
-      })()
-    }
   }
 
   public async shutdown(reason: Reason): Promise<void> {

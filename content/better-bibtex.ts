@@ -7,6 +7,7 @@ import { Deferred } from './promise'
 const Ready = new Deferred<boolean>
 
 import { getItemsAsync } from './get-items-async'
+import { profiler } from './audit'
 
 import { DisplayOptions } from '../gen/translators'
 import type { Reason } from './bootstrap'
@@ -950,7 +951,7 @@ export class BetterBibTeX {
 
         await KeyManager.fillMissing()
       },
-      shutdown: async () => { // eslint-disable-line @typescript-eslint/require-await
+      shutdown: async () => {
         Zotero.getMainWindows().forEach(win => {
           this.onMainWindowUnload({ window: win })
         })
@@ -963,6 +964,7 @@ export class BetterBibTeX {
         for (const endpoint of Object.keys(Zotero.Server.Endpoints)) {
           if (endpoint.startsWith('/better-bibtex/')) delete Zotero.Server.Endpoints[endpoint]
         }
+        if (profiler.active) await profiler.stop('shutdown')
       },
     })
 

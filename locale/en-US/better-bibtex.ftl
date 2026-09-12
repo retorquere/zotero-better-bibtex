@@ -407,6 +407,14 @@ better-bibtex_preferences_rescan-citekeys =
 better-bibtex_preferences_reset-cache = 
   .label = Reset cache on next start
 
+better-bibtex_preferences_profiling_start = 
+  .label = Start profiling
+
+better-bibtex_preferences_profiling_stop = 
+  .label = Stop profiling
+
+better-bibtex_preferences_tab_profiling = Profiling
+
 better-bibtex_preferences_tab_auto-export = Automatic export
 
 better-bibtex_preferences_tab_citekey = Citation keys
