@@ -29,9 +29,8 @@ for src in sorted(glob.glob(os.path.join(root, 'node_modules/kuromoji/dict/*.gz'
   print(' ', dict_name)
   tgt = os.path.join(dicts_tgt, dict_name)
   os.makedirs(os.path.dirname(tgt), exist_ok=True)
-  #with gzip.open(src, 'rb') as f_in, open(tgt.replace('.gz', ''), 'wb') as f_out:
-  #  shutil.copyfileobj(f_in, f_out)
-  shutil.copy(src, tgt)
+  with gzip.open(src, 'rb') as f_in, open(tgt.replace('.gz', ''), 'wb') as f_out:
+    shutil.copyfileobj(f_in, f_out)
 
 jieba = os.path.join(root, 'build/content/resource/jieba')
 os.makedirs(jieba, exist_ok=True)
