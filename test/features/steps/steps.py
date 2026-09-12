@@ -516,7 +516,12 @@ def step_impl(context, action, xpi):
     assert len(xpis) == 1, f'multiple candidates for {xpi}'
     context.zotero.execute('await Zotero.DebugBridge.install(xpi)', xpi=os.path.abspath(xpis[0]))
   elif action in ['enable', 'disable']:
-    context.zotero.execute('await Zotero.DebugBridge[action](addon)', action=action, addon=xpi)
+    with rdp.RDPConnection() as zotero:
+      zotero.execute("""
+        const { AddonManager } = ChromeUtils.importESModule('resource://gre/modules/AddonManager.sys.mjs')
+        const addon = await AddonManager.getAddonByID(addonID)
+        await addon[action]()
+      """, action=action, addonID=xpi)
   else:
     raise ValueError(f'Unsupported extension action {action}')
 
