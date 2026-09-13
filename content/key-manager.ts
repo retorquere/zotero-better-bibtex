@@ -29,7 +29,6 @@ import * as l10n from './l10n'
 import { migrate } from './key-manager/migrate'
 import { readonly } from './library'
 import { strcmp } from './string-compare'
-import { KuromojiLoader } from './key-manager/kuromoji-loader'
 
 function scrub(q: string): string {
   return q.replace(/\n/g, ' ').trim()
@@ -179,7 +178,6 @@ class Keys extends TrackedMap<number, CitekeyRecord> {
 }
 
 export const KeyManager = new class _KeyManager {
-  public kuromojiLoader = new KuromojiLoader
   #keys = new Keys
   public started = false
 
@@ -269,7 +267,6 @@ export const KeyManager = new class _KeyManager {
       description: 'keymanager',
       needs: [ 'worker' ],
       startup: async () => {
-        this.kuromojiLoader.start()
         await japanese.init()
         chinese.init()
 
@@ -279,12 +276,11 @@ export const KeyManager = new class _KeyManager {
       },
       shutdown: async () => {
         await this.#keys.flush()
-        this.kuromojiLoader.stop()
       },
     })
   }
 
-  private clear(ids: number[]) {
+  public clear(ids: number[]) { // ONLY CALL FROM TEST-SUPPORT!
     for (const id of ids) {
       this.#keys.delete(id)
     }

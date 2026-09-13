@@ -222,7 +222,14 @@ export const profiler = new class Profiler {
   }
 
   public get active(): boolean {
-    return this.started > 0
+    return Services.profiler.IsActive()
+  }
+
+  public async split(label: string): Promise<void> {
+    if (this.started) {
+      await this.stop(label)
+      await this.start()
+    }
   }
 }
 
