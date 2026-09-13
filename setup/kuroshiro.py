@@ -9,11 +9,6 @@ import json
 
 root = os.path.join(os.path.dirname(__file__), '..')
 
-shutil.copyfile(
-  os.path.join(root, 'content/key-manager/kuromoji-worker.js'),
-  os.path.join(root, 'build/content/key-manager/kuromoji-worker.js'),
-)
-
 dicts_tgt = os.path.join(root, 'build/content/resource/kuromoji')
 os.makedirs(dicts_tgt, exist_ok=True)
 
