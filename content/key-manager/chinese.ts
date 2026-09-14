@@ -14,15 +14,15 @@ class Chinese {
 
   constructor() {
     // this should give jieba time to preload the dicts
-    this.load()
+    void this.load()
   }
 
   public get enabled(): Chinese | null {
-    this.load()
+    void this.load()
     return this.#loaded && Preference.chinese ? this : null
   }
 
-  private load(): void {
+  private async load(): Promise<void> {
     if (!Preference.chinese || this.#loaded || this.#loading) return
 
     this.#loading = true
@@ -33,24 +33,21 @@ class Chinese {
         // ignoreCache: true,
       })
 
-      void this.loadJieba().then(() => {
-        this.#loading = false
-        this.#loaded = true
-        if (this.jieba.error) log.error('jieba.cut failed to load:', this.jieba.error)
-      }, err => {
-        this.#loading = false
-        log.error('jieba.cut failed to load:', err)
-      })
+      await this.loadJieba()
+      this.#loaded = true
+      if (this.jieba.error) log.error('jieba.cut failed to load:', this.jieba.error) // the loader will have disabled `cut` already
     }
     catch (err) {
-      this.#loading = false
       log.error('jieba.cut failed to load:', err)
+    }
+    finally {
+      this.#loading = false
     }
   }
 
   init() {
     Events.on('preference-changed', ({ data: pref }) => {
-      if (pref === 'chinese') this.load()
+      if (pref === 'chinese') void this.load()
     })
   }
 }
