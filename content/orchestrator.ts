@@ -112,7 +112,7 @@ export class Orchestrator {
     log.info(`${ phase } orchestrator started: ${ reason }`)
     const action = phase === 'startup' ? 'starting' : 'shutting down'
     while (tasks.length) {
-      if (this.profiling) await profiler.start()
+      if (phase === 'startup' && this.profiling) await profiler.start()
 
       const task = tasks.shift()!
 
@@ -140,7 +140,7 @@ export class Orchestrator {
 
       progress?.(phase, task.id, finished.length, total, tasks.length ? tasks.map(t => t.id).join(',') : 'finished')
 
-      if (this.profiling) await profiler.stop(`${phase}-${task.id}`)
+      if (phase === 'startup' && this.profiling) await profiler.stop(`${phase}-${task.id}`)
     }
 
     log.prefix = ''
