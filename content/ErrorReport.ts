@@ -257,22 +257,21 @@ export class ErrorReport {
   public zip(): Promise<Uint8Array>
   public zip(saveTo: string): Promise<undefined>
   public async zip(saveTo?: string): Promise<Uint8Array | undefined> {
-    const name = this.name()
-
     const bundler = new Bundler
-    await bundler.add(`${name}/debug.txt`, this.report.log!)
+    bundler.key = this.name()
+    await bundler.add('debug.txt', this.report.log!)
 
-    if (this.report.items) await bundler.add(`${name}/items.json`, this.report.items)
+    if (this.report.items) await bundler.add('items.json', this.report.items)
 
     if (this.config.cache) {
-      await bundler.add(`${name}/database.json`, JSON.stringify(KeyManager.all()))
-      await bundler.add(`${name}/cache.json`, this.report.cache!)
+      await bundler.add('database.json', JSON.stringify(KeyManager.all()))
+      await bundler.add('cache.json', this.report.cache!)
     }
 
-    if (this.report.acronyms) await bundler.add(`${name}/acronyms.csv`, this.report.acronyms)
+    if (this.report.acronyms) await bundler.add('acronyms.csv', this.report.acronyms)
 
     for (const [profile, path] of Object.entries(profiler.logs)) {
-      await bundler.add(`${name}/profile/${profile}.json`, await IOUtils.readUTF8(path))
+      await bundler.add(`profile/${profile}.json`, await IOUtils.readUTF8(path))
     }
 
     return saveTo ? bundler.zip(saveTo) : bundler.zip()
