@@ -235,18 +235,24 @@ export const profiler = new class Profiler {
 
 export const timeit = {
   Sync(label: string, block: () => void): void {
+    this.starting(label)
     const start = Date.now()
     block()
-    this.log(label, start)
+    this.finished(label, start)
   },
 
   async Async(label: string, block: () => Promise<void>): Promise<void> {
+    this.starting(label)
     const start = Date.now()
     await block()
-    this.log(label, start)
+    this.finished(label, start)
   },
 
-  log(label: string, start: number): void {
+  starting(label: string): void {
+    log.info(`measuring ${label}...`)
+  },
+
+  finished(label: string, start: number): void {
     log.info(`Execution time ${label}: ${((Date.now() - start) / 1000).toFixed(3)} s`)
   },
 }
