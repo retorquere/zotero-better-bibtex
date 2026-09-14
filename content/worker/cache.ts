@@ -69,6 +69,8 @@ async function allSettled(promises): Promise<string> {
   }
 }
 
+const bulkLookupThreshold = 1000
+
 export class ExportCache {
   public async touch(itemIDs: number[]): Promise<void> {
     const tx = Cache.db.transaction('Export', 'readwrite')
@@ -187,7 +189,7 @@ class SerializedCache {
   public async missing(itemIDs: number[]): Promise<number[]> {
     const tx = Cache.db.transaction(['Serialized', 'touched'], 'readwrite')
     const store = tx.objectStore('Serialized')
-    const cached = new Set((await Promise.all([...new Set(itemIDs)].map(itemID => store.getKey<number>(itemID)))).filter((itemID): itemID is number => typeof itemID === 'number'))
+    const cached = new Set(await store.getAllKeys<number>())
     const touched = tx.objectStore('touched')
     const purge: Set<number> = new Set(await touched.getAllKeys())
 
@@ -225,10 +227,12 @@ class SerializedCache {
   public async get(ids: number[]): Promise<Serialized.Item[]> {
     const tx = Cache.db.transaction('Serialized', 'readonly')
     const store = tx.objectStore('Serialized')
-    const requested = [...new Set(ids)]
-    const items = (await Promise.all(requested.map(itemID => store.get<Serialized.Item, number>(itemID)))).filter((item): item is Serialized.Item => !!item)
+    const requested = new Set(ids)
+    const items: Serialized.Item[] = requested.size > bulkLookupThreshold
+      ? (await store.getAll<Serialized.Item, number>()).filter(item => requested.has(item.itemID))
+      : (await Promise.all([...requested].map(itemID => store.get<Serialized.Item, number>(itemID)))).filter((item): item is Serialized.Item => !!item)
 
-    if (requested.length !== items.length) log.error(`indexed: failed to fetch ${ requested.length - items.length } items`)
+    if (requested.size !== items.length) log.error(`indexed: failed to fetch ${ requested.size - items.length } items`)
     return items
   }
 
