@@ -280,7 +280,7 @@ export const KeyManager = new class _KeyManager {
     })
   }
 
-  public clear(ids: number[]) { // ONLY CALL FROM TEST-SUPPORT!
+  private clear(ids: number[]) {
     for (const id of ids) {
       this.#keys.delete(id)
     }

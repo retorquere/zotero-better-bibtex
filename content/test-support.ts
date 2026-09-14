@@ -8,6 +8,7 @@ import { AUXScanner } from './aux-scanner'
 import { defaults } from '../gen/preferences/meta'
 import { Preference } from './prefs'
 import { Cache } from './translators/worker'
+import { profiler } from './audit'
 
 // import { Bench } from 'tinybench'
 
@@ -126,6 +127,7 @@ export class TestSupport {
 
     if (Zotero.BetterBibTeX.KeyManager.all().length) {
       log.error(`keystore has ${Zotero.BetterBibTeX.KeyManager.all().length} entries after reset`)
+      // @ts-expect-error TS2341
       Zotero.BetterBibTeX.KeyManager.clear(Zotero.BetterBibTeX.KeyManager.all().map(k => k.itemID))
     }
   }
@@ -401,6 +403,10 @@ export class TestSupport {
         }
       })
     })
+  }
+
+  public async profilerSnapshot(label: string): Promise<void> {
+    await profiler.split(label)
   }
 
   public editAutoExport(field: JobSetting, value: boolean | string): void {

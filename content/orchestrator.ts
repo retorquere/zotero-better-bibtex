@@ -114,8 +114,6 @@ export class Orchestrator {
     while (tasks.length) {
       const task = tasks.shift()!
 
-      if (phase === 'startup' && this.profiling) await profiler.start()
-
       log.prefix = ` ${ phase }: [${ task.id }`
       if (tasks.length) log.prefix += `+${ tasks.length }`
       log.prefix += ']'
@@ -140,7 +138,7 @@ export class Orchestrator {
 
       progress?.(phase, task.id, finished.length, total, tasks.length ? tasks.map(t => t.id).join(',') : 'finished')
 
-      if (phase === 'startup' && this.profiling) await profiler.stop(`${phase}-${task.id}`)
+      if (this.profiling) await profiler.split(`${phase}-${task.id}`)
     }
 
     log.prefix = ''
@@ -148,11 +146,14 @@ export class Orchestrator {
   }
 
   public async startup(reason: Reason, progress?: Progress): Promise<void> {
+    if (this.profiling) await profiler.start()
+
     await this.run('startup', reason, progress)
     progress?.('startup', 'ready', 100, 100, 'ready')
   }
 
   public async shutdown(reason: Reason): Promise<void> {
+    if (this.profiling && profiler.active) await profiler.stop('runtime')
     await this.run('shutdown', reason)
   }
 }

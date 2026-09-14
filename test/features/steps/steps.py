@@ -633,8 +633,12 @@ def step_impl(context):
 
 @step('I clear the performance profiles')
 def step_impl(context):
-  profiles = Path('~/.BBTTEST/zotero/better-bibtex').expanduser()
-  profile = re.compile(r'^\d+-\d+-(startup|shutdown)-[-a-z]+\.json$')
+  profiles = Path('~/.BBTTEST/zotero/better-bibtex/profiling').expanduser()
   for p in profiles.iterdir():
-    if p.is_file() and profile.match(p.name):
+    if p.is_file():
       p.unlink()
+
+@step('I create a performance profile snapshot')
+def step_impl(context):
+  with rdp.RDPConnection() as zotero:
+    zotero.execute("await Zotero.BetterBibTeX.TestSupport.profilerSnapshot('snapshot')")
