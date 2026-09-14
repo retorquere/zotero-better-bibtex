@@ -35,7 +35,7 @@
     "build": "npm run rebuild",
     "postinstall": "patch-package",
     "rebuild": "npm-run-all -p --aggregate-output lint esbuild tsc",
-    "postbuild": "npm run zipup-better-bibtex && npm run zipup-debug-bridge",
+    "postbuild": "npm-run-all -p --aggregate-output zipup-better-bibtex zipup-debug-bridge",
     "tsc": "tsc --noEmit",
     "esbuild": "node esbuild.js",
     "zipup-better-bibtex": "./util/zipup.js build xpi zotero-better-bibtex",
