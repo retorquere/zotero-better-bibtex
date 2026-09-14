@@ -7,7 +7,7 @@ const {
 
 const AsyncFunction = Object.getPrototypeOf(async function(){}).constructor
 
-const { AddonManager } = ChromeUtils.import('resource://gre/modules/AddonManager.jsm')
+const { AddonManager } = ChromeUtils.importESModule('resource://gre/modules/AddonManager.sys.mjs')
 
 if (typeof Zotero == 'undefined') {
   var Zotero
