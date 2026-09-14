@@ -33,11 +33,10 @@ export type Job = {
 }
 
 const url = new URL('chrome://zotero-better-bibtex/content/worker/zotero.js')
-const params = new URLSearchParams({
+url.search = (new URLSearchParams({
   ...(client as unknown as Record<string, string>),
   worker: 'true',
-})
-url.search = params.toString()
+})).toString()
 
 declare class ChromeWorker extends Worker { }
 log.info(`json-rpc: main booting worker ${url.toString()}`)

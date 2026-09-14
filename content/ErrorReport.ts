@@ -257,8 +257,7 @@ export class ErrorReport {
   public zip(): Promise<Uint8Array>
   public zip(saveTo: string): Promise<undefined>
   public async zip(saveTo?: string): Promise<Uint8Array | undefined> {
-    const bundler = new Bundler
-    bundler.key = this.name()
+    const bundler = new Bundler(this.name())
     await bundler.add('debug.txt', this.report.log!)
 
     if (this.report.items) await bundler.add('items.json', this.report.items)

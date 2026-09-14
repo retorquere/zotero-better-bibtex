@@ -128,7 +128,7 @@
     "turndown": "^7.2.4",
     "uzip": "^0.20201231.0",
     "wasmjieba-web": "^2.0.3",
-    "zotero-plugin": "^11.0.8",
+    "zotero-plugin": "^11.0.10",
     "zotero-plugin-toolkit": "^5.2.0",
     "zotero-types": "^4.1.3"
   },
@@ -137,7 +137,7 @@
     "@fluent/bundle": "^0.19.1",
     "@retorquere/bibtex-parser": "^11.0.0",
     "@stylistic/eslint-plugin": "^5.10.0",
-    "@types/node": "^26.5.0",
+    "@types/node": "^26.5.1",
     "@typescript-eslint/eslint-plugin": "^8.70.0",
     "@xmldom/xmldom": "^0.9.12",
     "7zip-bin-full": "^26.3.1",
