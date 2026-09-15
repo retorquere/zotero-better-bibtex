@@ -52,6 +52,7 @@ type EventMap = {
 class Emitter extends Emittery<EventMap> {
   private listeners: any[] = []
   public cacheTouch: (data: CacheTouch) => Promise<void> = () => Promise.resolve()
+  public updateCitationKeys: (data: EventMap['items-changed']) => Promise<void> = () => Promise.resolve()
   public idle: Partial<Record<IdleTopic, IdleState>> = {}
   public syncing: SyncState = 'idle'
   public itemObserverDelay = 5
@@ -71,7 +72,10 @@ class Emitter extends Emittery<EventMap> {
       switch (eventName) {
         case 'items-changed': {
           const d = data as EventMap['items-changed']
-          if (d?.items) await this.cacheTouch({ itemIDs: d.items.map(item => item.id), action: d.action })
+          if (d?.items) {
+            await this.updateCitationKeys(d)
+            await this.cacheTouch({ itemIDs: d.items.map(item => item.id), action: d.action })
+          }
           break
         }
         case 'items-removed': {
