@@ -6,6 +6,7 @@ import { getItemsAsync } from './get-items-async'
 type IdleState = 'active' | 'idle'
 export type SyncState = 'syncing' | 'idle'
 export type Action = 'modify' | 'delete' | 'add'
+export type CacheTouch = { itemIDs: number[]; action: Action }
 
 type IdleObserver = {
   observe: (subject: string, topic: IdleState, data: any) => void
@@ -32,7 +33,6 @@ type EventMap = {
   'collections-changed': number[]
   'collections-removed': number[]
   'export-progress': { pct: number; message: string; ae?: string }
-  'cache-touch': { itemIDs: number[] }
   'items-changed': { items: Zotero.Item[]; action: Action; reason?: Reason; changed?: Record<number, string[]> }
   'items-removed': { itemIDs: number[]; reason?: Reason }
   'libraries-changed': number[]
@@ -51,6 +51,7 @@ type EventMap = {
 
 class Emitter extends Emittery<EventMap> {
   private listeners: any[] = []
+  public cacheTouch: (data: CacheTouch) => Promise<void> = () => Promise.resolve()
   public idle: Partial<Record<IdleTopic, IdleState>> = {}
   public syncing: SyncState = 'idle'
   public itemObserverDelay = 5
@@ -70,12 +71,12 @@ class Emitter extends Emittery<EventMap> {
       switch (eventName) {
         case 'items-changed': {
           const d = data as EventMap['items-changed']
-          if (d?.items) await super.emit('cache-touch', { itemIDs: d.items.map(item => item.id) })
+          if (d?.items) await this.cacheTouch({ itemIDs: d.items.map(item => item.id), action: d.action })
           break
         }
         case 'items-removed': {
           const d = data as EventMap['items-removed']
-          if (d?.itemIDs) await super.emit('cache-touch', { itemIDs: d.itemIDs })
+          if (d?.itemIDs) await this.cacheTouch({ itemIDs: d.itemIDs, action: 'delete' })
           break
         }
       }
@@ -272,6 +273,11 @@ class ItemListener extends ZoteroListener {
       const items = Zotero.Items.get(ids).filter(item => {
         if (item.deleted) touch(item) // because trashing an item *does not* trigger collection-item?!?!
 
+        if (item.isAttachment() || item.isNote() || item.isAnnotation?.()) {
+          if (typeof item.parentID === 'number' && !ids.includes(item.parentID)) parentIDs.add(item.parentID)
+          return action !== 'delete' && typeof item.parentID !== 'number' && !item.isAnnotation?.()
+        }
+
         if (action === 'delete') return false
         // check .deleted for #2401/#2676 -- we're getting *modify* (?!) notifications for trashed items which reinstates them into the BBT DB
         if (action === 'modify' && item.deleted) return false
@@ -279,15 +285,9 @@ class ItemListener extends ZoteroListener {
 
         touch(item)
 
-        if (item.isAttachment() || item.isNote() || item.isAnnotation?.()) { // should I keep top-level notes/attachments for BBT-JSON?
-          if (typeof item.parentID === 'number' && !ids.includes(item.parentID)) parentIDs.add(item.parentID)
-          return false
-        }
-
         return true
       })
 
-      await Events.emit('cache-touch', { itemIDs: ids })
       if (items.length) {
         await Events.emit('items-changed', { items, action, changed })
       }
@@ -297,7 +297,6 @@ class ItemListener extends ZoteroListener {
         for (const item of parents) {
           touch(item)
         }
-        await Events.emit('cache-touch', { itemIDs: parents.map(p => p.id) })
         void Events.emit('items-changed', { items: parents, action: 'modify', reason: `parent-${ action }` })
       }
 

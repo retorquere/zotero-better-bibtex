@@ -112,6 +112,10 @@ better-bibtex_preferences_advanced_export_title-case_warning = If you're dead-se
 better-bibtex_preferences_advanced_export_workers_cache = 
   .label = Enable caching for background exports
 
+better-bibtex_preferences_advanced_export_cache-touch = Update cache
+better-bibtex_preferences_advanced_export_cache-touch_drop = When exporting
+better-bibtex_preferences_advanced_export_cache-touch_fill = When items change
+
 better-bibtex_preferences_advanced_extra-field_as-note = 
   .label = Treat the `extra` field as a note
 

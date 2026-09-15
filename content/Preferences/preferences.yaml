@@ -569,6 +569,13 @@ cache:
     - Better CSL YAML
     - Better Hayagriva
 
+cacheTouch:
+  description: >-
+    How changed items update the serialized export cache. `drop` marks changed
+    items stale and serializes them on the next export; `fill` serializes
+    changed items immediately on cache touch.
+  default: fill
+
 separatorList:
   description: >-
     Separator between list elements in list-type fields. You will need to add

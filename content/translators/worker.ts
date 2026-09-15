@@ -57,6 +57,7 @@ class ExporterClient extends WorkerClient implements ExporterInterface {
 export const Exporter = new ExporterClient
 
 class ExportsCacheClient extends WorkerClient {
+  declare touch: (itemIDs: number[]) => Promise<void>
   declare dropTranslator: (translator: string) => Promise<void>
   declare dropAutoExport: (path: string, deleted: boolean) => Promise<void>
 }
@@ -64,6 +65,8 @@ class ExportsCacheClient extends WorkerClient {
 class SerializedCacheClient extends WorkerClient {
   declare missing: (itemIDs: number[]) => Promise<number[]>
   declare fill: (items: Serialized.Item[]) => Promise<void>
+  declare remove: (itemIDs: number[]) => Promise<void>
+  declare touch: (itemIDs: number[]) => Promise<void>
   declare drop: () => Promise<any>
   declare purge: () => Promise<any>
 }
@@ -78,6 +81,7 @@ class CacheClient extends WorkerClient implements CacheInterface {
 
   declare public count: () => Promise<number>
   declare public touch: (itemIDs: number[]) => Promise<void>
+  declare public updated: () => Promise<void>
   declare public drop: () => Promise<void>
   declare public dump: () => Promise<any>
 

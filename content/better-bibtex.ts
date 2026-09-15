@@ -6,7 +6,6 @@ const pluginID = 'better-bibtex@iris-advies.com'
 import { Deferred } from './promise'
 const Ready = new Deferred<boolean>
 
-import { getItemsAsync } from './get-items-async'
 import { profiler } from './audit'
 
 import { DisplayOptions } from '../gen/translators'
@@ -23,6 +22,7 @@ import { Scheduler } from './scheduler'
 import { TeXstudio } from './tex-studio'
 import { Cache } from './translators/worker'
 import type { ExportedItem, ExportedItemMetadata } from './worker/cache'
+import { startup as cacheStartup } from './cache'
 
 import { Preference } from './prefs'
 
@@ -576,14 +576,7 @@ export class BetterBibTeX {
         Events.on('export-progress', ({ data: { pct, message } }) => {
           this.setProgress(pct, message)
         })
-
-        Events.on('cache-touch', async ({ data: { itemIDs } }) => {
-          const withParents: Set<number> = new Set(itemIDs)
-          for (const item of await getItemsAsync(itemIDs)) {
-            if (typeof item?.parentID === 'number') withParents.add(item.parentID)
-          }
-          await Cache.touch([...withParents])
-        })
+        cacheStartup()
         Events.addIdleListener('cache-purge', Preference.autoExportIdleWait)
         Events.on('idle', async ({ data: state }) => {
           if (state.topic === 'cache-purge' && Cache.ready) await Cache.Serialized.purge()
