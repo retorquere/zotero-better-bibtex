@@ -646,14 +646,13 @@ export class BetterBibTeX {
                 {
                   menuType: 'menuitem',
                   l10nID: 'better-bibtex_profiling_start',
-                  // hidden when runtime profiling is already running because of translators.better-bibtex.profileRuntime
-                  onShowing: (_event, context) => { context.setVisible(!orchestrator.profileRuntime && !profiler.active) },
+                  onShowing: (_event, context) => { context.setVisible(Preference.profile === 'manual' && !profiler.active) },
                   onCommand: (_event, _context) => void profiler.start(),
                 },
                 {
                   menuType: 'menuitem',
                   l10nID: 'better-bibtex_profiling_stop',
-                  onShowing: (_event, context) => { context.setVisible(!orchestrator.profileRuntime && profiler.active) },
+                  onShowing: (_event, context) => { context.setVisible(Preference.profile === 'manual' && profiler.active) },
                   onCommand: (_event, _context) => void profiler.stop('runtime'),
                 },
               ],

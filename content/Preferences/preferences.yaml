@@ -6,6 +6,16 @@ language:
     - Better BibLaTeX
     - Better BibTeX
 
+profile:
+  description: >-
+    Controls performance profiling. Empty disables profiling and the manual toggle.
+    `manual` shows a "Capture/save performance profile" toggle in the Tools menu but
+    does not profile automatically. `startup` always captures a profile of each
+    startup/shutdown task. `runtime` does the same as `startup` and also keeps
+    profiling for the whole session between startup and shutdown. Startup is always
+    profiled on non-release builds regardless of this setting.
+  default: ''
+
 DOIandURL:
   description: >-
     Does what it says on the tin, really. If an item has both a DOI and an URL,

@@ -3,6 +3,7 @@ export type PhaseID = 'startup' | 'shutdown'
 import type { Reason } from './bootstrap'
 import { log } from './logger'
 import { release } from '../gen/build'
+import { Preference } from './prefs'
 type Handler = (reason: Reason, task?: Task) => void | string | Promise<void | string>
 
 interface Task {
@@ -26,10 +27,9 @@ export class Orchestrator {
   private tasks: Partial<Record<Actor, Task>> = {}
   private $ordered!: Task[]
 
-  // dev builds always profile startup; release builds opt in via the hidden pref
-  private profileStartup = !release || Zotero.Prefs.get('translators.better-bibtex.profileStartup') === true
-  // continuous profiling from end-of-startup to shutdown is always opt-in, even on dev builds
-  public readonly profileRuntime = Zotero.Prefs.get('translators.better-bibtex.profileRuntime') === true
+  // startup is always profiled on non-release builds regardless of translators.better-bibtex.profile
+  private profileStartup = !release || Preference.profile === 'startup' || Preference.profile === 'runtime'
+  public readonly profileRuntime = Preference.profile === 'runtime'
 
   public add({ description, id, startup, shutdown, needs }: Task): void {
     if (this.$ordered) throw new Error(`orchestrator: add ${ id } after ordered`)
