@@ -215,12 +215,25 @@ class SerializedCache {
 
   public async fill(items: Serialized.Item[]): Promise<void> {
     if (items.length) {
-      const tx = Cache.db.transaction(['Serialized'], 'readwrite')
+      const tx = Cache.db.transaction(['Serialized', 'touched'], 'readwrite')
       const store = tx.objectStore('Serialized')
-      const puts = items.map(item => store.put(item))
+      const touched = tx.objectStore('touched')
+      const puts = items.flatMap(item => [ store.put(item), touched.delete(item.itemID) ])
       const rejected = await allSettled(puts)
       await tx.commit()
       if (rejected) log.error(`cache: failed to store ${rejected}`)
+    }
+  }
+
+  public async remove(itemIDs: number[]): Promise<void> {
+    if (itemIDs.length) {
+      const tx = Cache.db.transaction(['Serialized', 'touched'], 'readwrite')
+      const serialized = tx.objectStore('Serialized')
+      const touched = tx.objectStore('touched')
+      const deletes = itemIDs.flatMap(itemID => [ serialized.delete(itemID), touched.delete(itemID) ])
+      const rejected = await allSettled(deletes)
+      await tx.commit()
+      if (rejected) log.error(`cache: failed to remove ${rejected}`)
     }
   }
 
@@ -438,15 +451,19 @@ class $Cache implements CacheInterface {
     return true
   }
 
+  public async updated(): Promise<void> {
+    const tx = this.db.transaction('metadata', 'readwrite')
+    const metadata = tx.objectStore('metadata')
+    await metadata.put({ key: 'lastUpdated', value: Zotero.Date.dateToSQL((new Date), true) })
+    await tx.commit()
+  }
+
   public async touch(ids: number[]): Promise<void> {
     if (ids.length) {
       await this.Exports.touch(ids)
       await this.Serialized.touch(ids)
     }
-    const tx = this.db.transaction('metadata', 'readwrite')
-    const metadata = tx.objectStore('metadata')
-    await metadata.put({ key: 'lastUpdated', value: Zotero.Date.dateToSQL((new Date), true) })
-    await tx.commit()
+    await this.updated()
   }
 
   public close(): void {

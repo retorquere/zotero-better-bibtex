@@ -12,7 +12,6 @@ import { Events } from './events'
 import { flash } from './flash'
 import { icons } from './icons'
 import { Cache } from './translators/worker'
-import { profiler } from './audit'
 
 const { FilePicker } = ChromeUtils.importESModule('chrome://zotero/content/modules/filePicker.mjs')
 
@@ -429,22 +428,6 @@ export const PrefPane = new class $PrefPane {
     await Cache.drop()
   }
 
-  public async toggleProfiling(): Promise<void> {
-    if (profiler.active) {
-      await profiler.stop('runtime')
-    }
-    else {
-      await profiler.start()
-    }
-    this.showProfilingState()
-  }
-
-  private showProfilingState() {
-    const button = this.document?.getElementById('bbt-profiling-toggle')
-    if (!button) return
-    button.setAttribute('data-l10n-id', profiler.active ? 'better-bibtex_preferences_profiling_stop' : 'better-bibtex_preferences_profiling_start')
-  }
-
   public load(win: Window): void {
     this.#window = win
 
@@ -481,6 +464,5 @@ export const PrefPane = new class $PrefPane {
     if (!this.window) return
     this.showQuickCopyDetails()
     this.autoexport.refresh()
-    this.showProfilingState()
   }
 }

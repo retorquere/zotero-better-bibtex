@@ -3,6 +3,7 @@ export type PhaseID = 'startup' | 'shutdown'
 import type { Reason } from './bootstrap'
 import { log } from './logger'
 import { release } from '../gen/build'
+import { Preference } from './prefs'
 type Handler = (reason: Reason, task?: Task) => void | string | Promise<void | string>
 
 interface Task {
@@ -26,7 +27,9 @@ export class Orchestrator {
   private tasks: Partial<Record<Actor, Task>> = {}
   private $ordered!: Task[]
 
-  private profiling = !release
+  // startup is always profiled on non-release builds regardless of translators.better-bibtex.profile
+  private profileStartup = !release || Preference.profile === 'startup' || Preference.profile === 'runtime'
+  public readonly profileRuntime = Preference.profile === 'runtime'
 
   public add({ description, id, startup, shutdown, needs }: Task): void {
     if (this.$ordered) throw new Error(`orchestrator: add ${ id } after ordered`)
@@ -112,7 +115,7 @@ export class Orchestrator {
     log.info(`${ phase } orchestrator started: ${ reason }`)
     const action = phase === 'startup' ? 'starting' : 'shutting down'
     while (tasks.length) {
-      if (phase === 'startup' && this.profiling) await profiler.start()
+      if (phase === 'startup' && this.profileStartup) await profiler.start()
 
       const task = tasks.shift()!
 
@@ -140,7 +143,7 @@ export class Orchestrator {
 
       progress?.(phase, task.id, finished.length, total, tasks.length ? tasks.map(t => t.id).join(',') : 'finished')
 
-      if (phase === 'startup' && this.profiling) await profiler.stop(`${phase}-${task.id}`)
+      if (phase === 'startup' && this.profileStartup) await profiler.stop(`${phase}-${task.id}`)
     }
 
     log.prefix = ''
@@ -150,11 +153,11 @@ export class Orchestrator {
   public async startup(reason: Reason, progress?: Progress): Promise<void> {
     await this.run('startup', reason, progress)
     progress?.('startup', 'ready', 100, 100, 'ready')
-    if (this.profiling) await profiler.start()
+    if (this.profileRuntime) await profiler.start()
   }
 
   public async shutdown(reason: Reason): Promise<void> {
-    if (this.profiling && profiler.active) await profiler.stop('runtime')
+    if (this.profileRuntime && profiler.active) await profiler.stop('runtime')
     await this.run('shutdown', reason)
   }
 }

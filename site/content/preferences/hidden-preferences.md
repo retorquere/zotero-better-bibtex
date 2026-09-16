@@ -172,6 +172,11 @@ You can use custom preferences per export directory:
 
 A preferences override will disable caching for that export.
 
+## profile
+
+default: `<not set>`
+
+Controls performance profiling. Empty disables profiling and the manual toggle. `manual` shows a "Capture/save performance profile" toggle in the Tools menu but does not profile automatically. `startup` always captures a profile of each startup/shutdown task. `runtime` does the same as `startup` and also keeps profiling for the whole session between startup and shutdown. Startup is always profiled on non-release builds regardless of this setting.
 ## rawImports
 
 default: `no`

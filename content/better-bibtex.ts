@@ -6,7 +6,6 @@ const pluginID = 'better-bibtex@iris-advies.com'
 import { Deferred } from './promise'
 const Ready = new Deferred<boolean>
 
-import { getItemsAsync } from './get-items-async'
 import { profiler } from './audit'
 
 import { DisplayOptions } from '../gen/translators'
@@ -23,6 +22,7 @@ import { Scheduler } from './scheduler'
 import { TeXstudio } from './tex-studio'
 import { Cache } from './translators/worker'
 import type { ExportedItem, ExportedItemMetadata } from './worker/cache'
+import { startup as cacheStartup } from './cache'
 
 import { Preference } from './prefs'
 
@@ -362,6 +362,15 @@ monkey.patch(Zotero.Translate.Export.prototype, 'translate', original => functio
 })
 
 const scheduler = new Scheduler<'column-refresh'>(500)
+const profileModes = new Set([ 'manual', 'startup', 'runtime' ])
+
+function profilingMenuVisible(manual: boolean, gracePeriodEnd: number, keepVisible: boolean): boolean {
+  return Preference.profile === 'manual' || (!profileModes.has(Preference.profile) && (Date.now() < gracePeriodEnd || keepVisible) && manual)
+}
+
+function keepProfilingMenuVisible(gracePeriodEnd: number): boolean {
+  return !profileModes.has(Preference.profile) && Date.now() < gracePeriodEnd
+}
 
 function autoHide<M extends _ZoteroTypes.MenuManager.MenuData<any>>(config: M): M {
   return {
@@ -576,14 +585,7 @@ export class BetterBibTeX {
         Events.on('export-progress', ({ data: { pct, message } }) => {
           this.setProgress(pct, message)
         })
-
-        Events.on('cache-touch', async ({ data: { itemIDs } }) => {
-          const withParents: Set<number> = new Set(itemIDs)
-          for (const item of await getItemsAsync(itemIDs)) {
-            if (typeof item?.parentID === 'number') withParents.add(item.parentID)
-          }
-          await Cache.touch([...withParents])
-        })
+        cacheStartup()
         Events.addIdleListener('cache-purge', Preference.autoExportIdleWait)
         Events.on('idle', async ({ data: state }) => {
           if (state.topic === 'cache-purge' && Cache.ready) await Cache.Serialized.purge()
@@ -610,6 +612,9 @@ export class BetterBibTeX {
         Zotero.getMainWindows().forEach(win => {
           this.onMainWindowLoad({ window: win })
         })
+
+        const profileMenuGracePeriodEnd = Date.now() + 10000
+        let keepProfileMenuVisible = false
 
         Zotero.MenuManager.registerMenu({
           menuID: `${pluginID}-menu-file`,
@@ -649,6 +654,24 @@ export class BetterBibTeX {
                   l10nID: 'better-bibtex_zotero-pane_tag_duplicates',
                   onShowing: (event, context) => { context.setVisible(Preference.keyScope === 'global') },
                   onCommand: (_event, _context) => void Zotero.BetterBibTeX.KeyManager.tagDuplicates(),
+                },
+                {
+                  menuType: 'menuitem',
+                  l10nID: 'better-bibtex_profiling_start',
+                  onShowing: (_event, context) => { context.setVisible(profilingMenuVisible(!profiler.active, profileMenuGracePeriodEnd, keepProfileMenuVisible)) },
+                  onCommand: (_event, _context) => {
+                    keepProfileMenuVisible ||= keepProfilingMenuVisible(profileMenuGracePeriodEnd)
+                    void profiler.start()
+                  },
+                },
+                {
+                  menuType: 'menuitem',
+                  l10nID: 'better-bibtex_profiling_stop',
+                  onShowing: (_event, context) => { context.setVisible(profilingMenuVisible(profiler.active, profileMenuGracePeriodEnd, keepProfileMenuVisible)) },
+                  onCommand: (_event, _context) => {
+                    keepProfileMenuVisible ||= keepProfilingMenuVisible(profileMenuGracePeriodEnd)
+                    void profiler.stop('runtime')
+                  },
                 },
               ],
             }),
