@@ -483,7 +483,7 @@ def step_impl(context):
 
 @step(u'I copy date-added/date-modified for the selected items from the extra field')
 def step_impl(context):
-  context.zotero.execute('Zotero.BetterBibTeX.MenuHelper.patchDates()')
+  context.zotero.execute('await Zotero.BetterBibTeX.MenuHelper.patchDates()')
 
 @step('I change {param} to {value} on the auto-export')
 def step_impl(context, param, value):
