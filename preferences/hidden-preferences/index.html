@@ -27,7 +27,7 @@ Making any change here will drop your entire export cache. This is usually not a
     <meta itemprop="description" content="The Better BibTeX Configuration can be found under the regular Zotero preferences pane, tab ‘Better BibTeX’.
 The configuration of Better BibTeX is a little baroque compared to the standard Zotero Bib(La)TeX exporters (which only have hidden preferences). The defaults should just work, but here’s an attempt to describe what they do.
 Making any change here will drop your entire export cache. This is usually not a problem unless you have a really large library, but you can read about what is involved here.">
-    <meta itemprop="wordCount" content="1452">
+    <meta itemprop="wordCount" content="1520">
     <title>Hidden preferences :: Better BibTeX for Zotero</title><link rel="icon" href="/zotero-better-bibtex/better-bibtex.ico" type="image/x-icon">
 
     <link href="/zotero-better-bibtex/css/auto-complete/auto-complete.min.css" rel="stylesheet">
@@ -175,6 +175,7 @@ Making any change here will drop your entire export cache. This is usually not a
     <li><a href="#postscript">postscript</a></li>
     <li><a href="#postscriptoverride">postscriptOverride</a></li>
     <li><a href="#preferencesoverride">preferencesOverride</a></li>
+    <li><a href="#profile">profile</a></li>
     <li><a href="#rawimports">rawImports</a></li>
     <li><a href="#rawlatag">rawLaTag</a></li>
     <li><a href="#relativefilepaths">relativeFilePaths</a></li>
@@ -327,6 +328,9 @@ A postscript override will disable caching for that export.</li>
 <li>Export to that directory.</li>
 </ol>
 <p>A preferences override will disable caching for that export.</p>
+<h2 id="profile">profile<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h2>
+<p>default: <code>&lt;not set&gt;</code></p>
+<p>Controls performance profiling. Empty disables profiling and the manual toggle. <code>manual</code> shows a &ldquo;Capture/save performance profile&rdquo; toggle in the Tools menu but does not profile automatically. <code>startup</code> always captures a profile of each startup/shutdown task. <code>runtime</code> does the same as <code>startup</code> and also keeps profiling for the whole session between startup and shutdown. Startup is always profiled on non-release builds regardless of this setting.</p>
 <h2 id="rawimports">rawImports<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h2>
 <p>default: <code>no</code></p>
 <p>When you set this on, BBT will import bib files leaving any LaTeX commands as-is, and add the #LaTeX tag for raw re-exports.</p>

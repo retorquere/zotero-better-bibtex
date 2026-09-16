@@ -27,7 +27,7 @@ Making any change here will drop your entire export cache. This is usually not a
     <meta itemprop="description" content="The Better BibTeX Configuration can be found under the regular Zotero preferences pane, tab ‘Better BibTeX’.
 The configuration of Better BibTeX is a little baroque compared to the standard Zotero Bib(La)TeX exporters (which only have hidden preferences). The defaults should just work, but here’s an attempt to describe what they do.
 Making any change here will drop your entire export cache. This is usually not a problem unless you have a really large library, but you can read about what is involved here.">
-    <meta itemprop="wordCount" content="1239">
+    <meta itemprop="wordCount" content="1279">
     <title>Export :: Better BibTeX for Zotero</title><link rel="icon" href="/zotero-better-bibtex/better-bibtex.ico" type="image/x-icon">
 
     <link href="/zotero-better-bibtex/css/auto-complete/auto-complete.min.css" rel="stylesheet">
@@ -381,6 +381,14 @@ To find out what an item looks like inside the template, export some items as Be
 <h4 id="enable-caching-for-background-exports">Enable caching for background exports<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h4>
 <p>default: <code>yes</code></p>
 <p>Even though BBT exports happen in a separate thread, some work needs to be done before the background export can start. Part of this work is preloading the cache. You can shorten the (blocking) preparation time by turning off the cache, at the cost of longer export times.</p>
+<h4 id="update-cache">Update cache<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h4>
+<p>default: <code>When items change</code></p>
+<p>How changed items update the serialized export cache. <code>drop</code> marks changed items stale and serializes them on the next export; <code>fill</code> serializes changed items immediately on cache touch.</p>
+<p>Options:</p>
+<ul>
+<li>When exporting</li>
+<li>When items change</li>
+</ul>
 
   <footer class="footline">
   </footer>
