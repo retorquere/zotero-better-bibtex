@@ -4,7 +4,6 @@ import { Client as WorkerClient } from '../worker/json-rpc'
 import { Exporter as ExporterInterface, Cache as CacheInterface } from '../worker/interface'
 import { orchestrator } from '../orchestrator'
 import { log } from '../logger'
-import { timeit } from '../audit'
 
 export type Message
 //    { kind: 'initialize', CSL_MAPPINGS: any, dateFormatsJSON: any }
@@ -114,33 +113,20 @@ orchestrator.add({
   startup: async () => {
     const cacheDelete = 'translators.better-bibtex.cacheDelete'
 
-    let cslMappings: any
-    timeit.Sync('worker CSL mappings', () => {
-      cslMappings = Object.entries(Zotero.Schema).reduce((acc, [ k, v ]) => { if (k.startsWith('CSL')) acc[k] = v; return acc }, {})
-    })
-    let dateFormatsJSON: any
-    timeit.Sync('worker date formats', () => {
-      dateFormatsJSON = Zotero.File.getResource('resource://zotero/schema/dateFormats.json')
-    })
-    let lastUpdated: string
-    await timeit.Async('worker last updated', async () => {
-      lastUpdated = Zotero.Prefs.get(cacheDelete) ? 'delete' : await lastModified()
-    })
+    const cslMappings = Object.entries(Zotero.Schema).reduce((acc, [ k, v ]) => { if (k.startsWith('CSL')) acc[k] = v; return acc }, {})
+    const dateFormatsJSON = Zotero.File.getResource('resource://zotero/schema/dateFormats.json')
+    const lastUpdated = Zotero.Prefs.get(cacheDelete) ? 'delete' : await lastModified()
 
     // post dynamically to fix #2485
-    await timeit.Async('worker constants', async () => {
-      await Exporter.initialize({
-        CSL_MAPPINGS: cslMappings,
-        dateFormatsJSON,
-        lastUpdated,
-      })
+    await Exporter.initialize({
+      CSL_MAPPINGS: cslMappings,
+      dateFormatsJSON,
+      lastUpdated,
     })
 
-    timeit.Sync('worker finalization', () => {
-      Zotero.Prefs.clear(cacheDelete)
-      Exporter.ready = true
-      Cache.ready = true
-    })
+    Zotero.Prefs.clear(cacheDelete)
+    Exporter.ready = true
+    Cache.ready = true
   },
   shutdown: async () => {
     Exporter.ready = false
