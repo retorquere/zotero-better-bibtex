@@ -362,15 +362,6 @@ monkey.patch(Zotero.Translate.Export.prototype, 'translate', original => functio
 })
 
 const scheduler = new Scheduler<'column-refresh'>(500)
-const profileModes = new Set([ 'manual', 'startup', 'runtime' ])
-
-function profilingMenuVisible(manual: boolean, gracePeriodEnd: number, keepVisible: boolean): boolean {
-  return Preference.profile === 'manual' || (!profileModes.has(Preference.profile) && (Date.now() < gracePeriodEnd || keepVisible) && manual)
-}
-
-function keepProfilingMenuVisible(gracePeriodEnd: number): boolean {
-  return !profileModes.has(Preference.profile) && Date.now() < gracePeriodEnd
-}
 
 function autoHide<M extends _ZoteroTypes.MenuManager.MenuData<any>>(config: M): M {
   return {
@@ -613,9 +604,6 @@ export class BetterBibTeX {
           this.onMainWindowLoad({ window: win })
         })
 
-        const profileMenuGracePeriodEnd = Date.now() + 10000
-        let keepProfileMenuVisible = false
-
         Zotero.MenuManager.registerMenu({
           menuID: `${pluginID}-menu-file`,
           pluginID,
@@ -654,24 +642,6 @@ export class BetterBibTeX {
                   l10nID: 'better-bibtex_zotero-pane_tag_duplicates',
                   onShowing: (event, context) => { context.setVisible(Preference.keyScope === 'global') },
                   onCommand: (_event, _context) => void Zotero.BetterBibTeX.KeyManager.tagDuplicates(),
-                },
-                {
-                  menuType: 'menuitem',
-                  l10nID: 'better-bibtex_profiling_start',
-                  onShowing: (_event, context) => { context.setVisible(profilingMenuVisible(!profiler.active, profileMenuGracePeriodEnd, keepProfileMenuVisible)) },
-                  onCommand: (_event, _context) => {
-                    keepProfileMenuVisible ||= keepProfilingMenuVisible(profileMenuGracePeriodEnd)
-                    void profiler.start()
-                  },
-                },
-                {
-                  menuType: 'menuitem',
-                  l10nID: 'better-bibtex_profiling_stop',
-                  onShowing: (_event, context) => { context.setVisible(profilingMenuVisible(profiler.active, profileMenuGracePeriodEnd, keepProfileMenuVisible)) },
-                  onCommand: (_event, _context) => {
-                    keepProfileMenuVisible ||= keepProfilingMenuVisible(profileMenuGracePeriodEnd)
-                    void profiler.stop('runtime')
-                  },
                 },
               ],
             }),

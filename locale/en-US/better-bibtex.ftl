@@ -411,11 +411,16 @@ better-bibtex_preferences_rescan-citekeys =
 better-bibtex_preferences_reset-cache = 
   .label = Reset cache on next start
 
-better-bibtex_profiling_start = 
-  .label = Capture performance profile
+better-bibtex_preferences_misc_performance = Performance
 
-better-bibtex_profiling_stop = 
-  .label = Save performance profile
+better-bibtex_preferences_misc_performance_startup = 
+  .label = Collect performance information during startup
+
+better-bibtex_preferences_misc_performance_runtime = Collect performance information while Zotero is running
+
+better-bibtex_preferences_misc_performance_runtime_no = No
+better-bibtex_preferences_misc_performance_runtime_yes = Yes
+better-bibtex_preferences_misc_performance_runtime_except-sync = Yes, except during sync
 
 better-bibtex_preferences_tab_auto-export = Automatic export
 

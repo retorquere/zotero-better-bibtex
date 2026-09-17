@@ -18,6 +18,7 @@ interface Task {
 
 export type Progress = (phase: string, name: string, done: number, total: number, message?: string) => void
 import { profiler } from './audit'
+import { Events } from './events'
 
 export class Orchestrator {
   public id: string = Zotero.Utilities.generateObjectKey()
@@ -27,9 +28,10 @@ export class Orchestrator {
   private tasks: Partial<Record<Actor, Task>> = {}
   private $ordered!: Task[]
 
-  // startup is always profiled on non-release builds regardless of translators.better-bibtex.profile
-  private profileStartup = !release || Preference.profile === 'startup' || Preference.profile === 'runtime'
-  public readonly profileRuntime = Preference.profile === 'runtime'
+  // startup is always profiled on non-release builds regardless of translators.better-bibtex.profileStartup
+  private profileStartup = !release || Preference.profileStartup
+  public readonly profileRuntime = Preference.profileRuntime !== 'no'
+  private pauseProfileDuringSync = Preference.profileRuntime === 'except-sync'
 
   public add({ description, id, startup, shutdown, needs }: Task): void {
     if (this.$ordered) throw new Error(`orchestrator: add ${ id } after ordered`)
@@ -153,7 +155,20 @@ export class Orchestrator {
   public async startup(reason: Reason, progress?: Progress): Promise<void> {
     await this.run('startup', reason, progress)
     progress?.('startup', 'ready', 100, 100, 'ready')
-    if (this.profileRuntime) await profiler.start()
+    if (this.profileRuntime) {
+      await profiler.start()
+
+      if (this.pauseProfileDuringSync) {
+        Events.on('sync', ({ data: { state } }) => {
+          if (state === 'syncing') {
+            if (profiler.active) void profiler.stop('runtime')
+          }
+          else if (!profiler.active) {
+            void profiler.start()
+          }
+        })
+      }
+    }
   }
 
   public async shutdown(reason: Reason): Promise<void> {

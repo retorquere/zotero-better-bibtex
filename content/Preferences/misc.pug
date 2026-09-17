@@ -8,3 +8,20 @@ groupbox.bbt-prefs-subsection
     html:h2(data-l10n-id='better-bibtex_preferences_advanced_tab_strings')
   include misc/strings.pug
 
+groupbox.bbt-prefs-subsection
+  label
+    html:h2(data-l10n-id='better-bibtex_preferences_misc_performance')
+  checkbox(
+    id='bbt-preferences-profile-startup'
+    data-l10n-id='better-bibtex_preferences_misc_performance_startup'
+    preference='extensions.zotero.translators.better-bibtex.profileStartup'
+    native='true'
+  )
+  html:div
+    label(bbt:preference='extensions.zotero.translators.better-bibtex.profileRuntime', data-l10n-id='better-bibtex_preferences_misc_performance_runtime')
+    menulist(native='true', preference='extensions.zotero.translators.better-bibtex.profileRuntime')
+      menupopup
+        menuitem(data-l10n-id='better-bibtex_preferences_misc_performance_runtime_no', value='no')
+        menuitem(data-l10n-id='better-bibtex_preferences_misc_performance_runtime_yes', value='yes')
+        menuitem(data-l10n-id='better-bibtex_preferences_misc_performance_runtime_except-sync', value='except-sync')
+

@@ -6,15 +6,19 @@ language:
     - Better BibLaTeX
     - Better BibTeX
 
-profile:
+profileStartup:
   description: >-
-    Controls performance profiling. Empty disables profiling and the manual toggle.
-    `manual` shows a "Capture/save performance profile" toggle in the Tools menu but
-    does not profile automatically. `startup` always captures a profile of each
-    startup/shutdown task. `runtime` does the same as `startup` and also keeps
-    profiling for the whole session between startup and shutdown. Startup is always
-    profiled on non-release builds regardless of this setting.
-  default: ''
+    Collect performance information during startup, to help diagnose slow
+    starts. Always on for non-release builds.
+  default: false
+
+profileRuntime:
+  description: >-
+    Collect performance information while Zotero is running, to help
+    diagnose slowdowns. "Yes, except during sync" pauses collection for the
+    duration of a sync, since sync activity would otherwise dominate the
+    collected information.
+  default: 'no'
 
 DOIandURL:
   description: >-
