@@ -325,6 +325,36 @@ export const KeyManager = new class _KeyManager {
     await migrate()
     await this.#keys.load()
 
+    Events.updateCitationKeys = async ({ items, reason, changed }) => {
+      if (reason?.startsWith('parent-') || reason === 'tagged') return
+
+      for (const item of items) {
+        if (item.deleted || !item.isRegularItem() || item.isFeedItem) {
+          this.#keys.delete(item.id)
+          continue
+        }
+
+        const nativeCitationKey = this.#getNativeKey(item) || ''
+        if (changed?.[item.id]?.includes('citationKey') && nativeCitationKey) {
+          this.store(item, nativeCitationKey)
+          continue
+        }
+
+        if (changed?.[item.id]?.includes('citationKey') && readonly(item)) {
+          this.#keys.delete(item.id)
+          this.update(item, { replace: true })
+          continue
+        }
+
+        if (this.update(item, { replace: Preference.resetKeyOnChange })) {
+          await item.saveTx({ skipDateModifiedUpdate: true, skipNotifier: true })
+        }
+        else if (!readonly(item)) {
+          this.store(item)
+        }
+      }
+    }
+
     Events.on('preference-changed', ({ data: pref }) => {
       switch (pref) {
         case 'autoAbbrevStyle':
@@ -342,7 +372,7 @@ export const KeyManager = new class _KeyManager {
       this.clear(itemIDs)
     })
 
-    Events.on('items-changed', ({ data: { items, action, reason, changed } }) => {
+    Events.on('items-changed', ({ data: { items, action, reason } }) => {
       log.info('items-changed', { reason })
       if (reason?.startsWith('parent-') || reason === 'tagged') return
 
@@ -357,54 +387,7 @@ export const KeyManager = new class _KeyManager {
         return true
       })
 
-      const update = (item: Zotero.Item) => {
-        const nativeCitationKey = this.#getNativeKey(item) || ''
-        // Handle explicit citationKey edits/notifier updates first so cache state follows the source of truth.
-        if (changed?.[item.id]?.includes('citationKey')) {
-          // Native citationKey is present: mirror it to cache and stop.
-          if (nativeCitationKey) {
-            // For read-only items, changed citationKey notifications must refresh the cache from the native field,
-            // not from the monkey-patched getField('citationKey') view.
-            this.store(item, nativeCitationKey)
-            return
-          }
-
-          // Native citationKey was cleared on a read-only item.
-          if (readonly(item)) {
-            // An emptied native key on a read-only item means the shadow key is no longer authoritative.
-            // Drop the cache entry first, then regenerate a BBT key if read-only support still requires one.
-            this.#keys.delete(item.id)
-            this.update(item, { replace: true })
-            return
-          }
-        }
-
-        // Non-read-only items that got a direct citationKey change should just refresh cache from native value.
-        if (changed?.[item.id]?.includes('citationKey') && nativeCitationKey) {
-          this.store(item, nativeCitationKey)
-          return
-        }
-
-        // Metadata changed (or citationKey empty): let KeyManager decide whether to regenerate and persist.
-        if (this.update(item, { replace: Preference.resetKeyOnChange })) {
-          item
-            .saveTx({ skipDateModifiedUpdate: true })
-            .catch(err => log.error('failed to update', item.id, ':', err))
-        }
-        // No persisted change happened; for writable items, keep cache aligned with current native field.
-        else if (!readonly(item)) {
-          this.store(item)
-        }
-      }
       for (const item of items) {
-        if (Preference.testing) { // race condition for key assignment otherwise
-          update(item)
-        }
-        else {
-          this.autofill.schedule(item.id, () => {
-            update(item)
-          })
-        }
         if (!item.getField('citationKey')) this.#keys.delete(item.id)
 
         if (Preference.warnTitleCased) {

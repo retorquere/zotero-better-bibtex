@@ -45,6 +45,11 @@ groupbox.bbt-prefs-subsection
     preference='extensions.zotero.translators.better-bibtex.cache'
     native='true'
   )
+  label(bbt:preference='extensions.zotero.translators.better-bibtex.cacheTouch', data-l10n-id='better-bibtex_preferences_advanced_export_cache-touch')
+  menulist(native='true', preference='extensions.zotero.translators.better-bibtex.cacheTouch')
+    menupopup
+      menuitem(data-l10n-id='better-bibtex_preferences_advanced_export_cache-touch_drop', value='drop')
+      menuitem(data-l10n-id='better-bibtex_preferences_advanced_export_cache-touch_fill', value='fill')
   button(data-l10n-id='better-bibtex_preferences_reset-cache', oncommand='Zotero.BetterBibTeX.PrefPane.cacheReset()')
   checkbox(
     data-l10n-id='better-bibtex_preferences_advanced_export_reset-cache'

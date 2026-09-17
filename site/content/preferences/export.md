@@ -270,3 +270,15 @@ Even though BBT exports happen in a separate thread, some work needs to be done 
 
 
 
+#### Update cache
+
+default: `When items change`
+
+How changed items update the serialized export cache. `drop` marks changed items stale and serializes them on the next export; `fill` serializes changed items immediately on cache touch.
+
+Options:
+
+* When exporting
+* When items change
+
+

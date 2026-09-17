@@ -4,6 +4,7 @@ import { log } from './logger'
 
 import { Preference } from './prefs'
 import { defaults as preferenceDefaults } from '../gen/preferences/meta'
+import { release } from '../gen/build'
 import { Formatter } from './key-manager/formatter'
 import { AutoExport } from './auto-export'
 import { Translators } from './translators'
@@ -440,6 +441,13 @@ export const PrefPane = new class $PrefPane {
     })
 
     this.document!.getElementById('bbt-chinese-splitname')!.setAttribute('disabled', Preference.chinese ? '' : 'true')
+
+    // startup is always profiled on non-release builds, regardless of the preference
+    if (!release) {
+      const profileStartup = this.document!.getElementById('bbt-preferences-profile-startup') as HTMLInputElement
+      profileStartup.checked = true
+      profileStartup.setAttribute('disabled', 'true')
+    }
 
     this.autoexport.load()
 

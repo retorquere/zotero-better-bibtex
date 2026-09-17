@@ -16,13 +16,6 @@ declare module '*.wasm' {
   export default value
 }
 
-declare module 'wasmjieba-web/wasmjieba-web_bg.wasm' {
-  const wasm: {
-    bytes?: Uint8Array
-  }
-  export default wasm
-}
-
 declare module '*.pem' {
   const value: string
   export default value

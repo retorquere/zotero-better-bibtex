@@ -1,24 +1,25 @@
 import * as client from './client'
-import { Path, File } from './file'
+import { File, Path } from './file'
 import { binaries } from './path-search'
 
-import { Cache } from './translators/worker'
+import { selectedCollection } from './collection'
 import { regex as escapeRE } from './escape'
 import { readonly, selectedLibraryID } from './library'
-import { selectedCollection } from './collection'
+import { Cache } from './translators/worker'
+
+import { Bundler } from 'zotero-plugin/debug-log'
 
 import { Preference } from './prefs'
 
 import { defaults } from '../gen/preferences/meta'
-const supported: string[] = Object.keys(defaults).filter(name => ![ 'client', 'testing', 'platform', 'newTranslatorsAskRestart' ].includes(name))
+const supported: string[] = Object.keys(defaults).filter(name => !['client', 'testing', 'platform', 'newTranslatorsAskRestart'].includes(name))
 
 import { byId } from '../gen/translators'
-import type { ExportScope } from './translators'
-import { log } from './logger'
+import { profiler } from './audit'
 import { AutoExport } from './auto-export'
 import { KeyManager } from './key-manager'
-
-import * as UZip from 'uzip'
+import { log } from './logger'
+import type { ExportScope } from './translators'
 
 const { FilePicker } = ChromeUtils.importESModule('chrome://zotero/content/modules/filePicker.mjs')
 
@@ -56,7 +57,7 @@ type Wizard = HTMLElement & {
   }
 }
 
-import BBT from '../gen/version.cjs'
+import * as BBT from '../gen/build'
 
 type Report = {
   context: string
@@ -155,7 +156,7 @@ class Upgrades {
       try {
         const channel = client.isBeta ? 'beta' : 'release'
         const releases = JSON.parse((await Zotero.HTTP.request('GET', `https://www.zotero.org/download/client/version?channel=${channel}`, { noCache: true })).response)
-        const platform = `${client.platform.replace(/lin/, 'linux')}${ { mac: '', win: '-x64', lin: '-x86_64' }[client.platform] || '' }`
+        const platform = `${client.platform.replace(/lin/, 'linux')}${{ mac: '', win: '-x64', lin: '-x86_64' }[client.platform] || ''}`
         this.zotero.upgrade = releases[platform]
         show(this.zotero)
       }
@@ -167,7 +168,7 @@ class Upgrades {
     await Promise.allSettled([bbt(), zotero()])
   }
 }
-const upgrades = new Upgrades
+const upgrades = (new Upgrades)
 
 export class ErrorReport {
   private previewSize = 3
@@ -196,7 +197,7 @@ export class ErrorReport {
     wizard.getButton('cancel').disabled = true
 
     try {
-      await Zotero.HTTP.request('PUT', `${ this.bucket }/${ this.zipfile() }`, {
+      await Zotero.HTTP.request('PUT', `${this.bucket}/${this.zipfile()}`, {
         noCache: true,
         // followRedirects: true,
         // noCache: true,
@@ -206,17 +207,17 @@ export class ErrorReport {
           'x-amz-acl': 'bucket-owner-full-control',
           'Content-Type': 'application/x-gzip',
         },
-        body: this.zip(),
+        body: await this.zip(),
       })
 
       wizard.advance()
 
-      const id = `${this.name()}/${upgrades.zotero.upgrade || '\u2713'}/${upgrades.bbt.upgrade || '\u2713'}`;
-      (<HTMLInputElement> this.document.getElementById('better-bibtex-report-id')).value = id
+      const id = `${this.name()}/${upgrades.zotero.upgrade || '\u2713'}/${upgrades.bbt.upgrade || '\u2713'}`
+      ;(<HTMLInputElement> this.document.getElementById('better-bibtex-report-id')).value = id
     }
     catch (err) {
       log.error('failed to submit', this.name(), err)
-      alert({ text: `${ err } (${ this.name() }, items: ${ !!this.report.items })`, title: Zotero.getString('general.error') })
+      alert({ text: `${err} (${this.name()}, items: ${!!this.report.items})`, title: Zotero.getString('general.error') })
       if (wizard.rewind) wizard.rewind()
     }
   }
@@ -242,7 +243,10 @@ export class ErrorReport {
       Zotero.getString('zotero.debugOutputLogging.enabledAfterRestart', [Zotero.clientName]),
       buttonFlags,
       Zotero.getString('general.restartNow'),
-      null, Zotero.getString('general.restartLater'), null, { value: false }
+      null,
+      Zotero.getString('general.restartLater'),
+      null,
+      { value: false }
     )
 
     if (index !== 1) Zotero.Prefs.set('debug.store', true)
@@ -250,25 +254,30 @@ export class ErrorReport {
     if (index === 0) Zotero.Utilities.Internal.quit(true)
   }
 
-  public zip(): Uint8Array {
-    const files: Record<string, Uint8Array> = {}
-    const enc = new TextEncoder
-    const name = this.name()
+  public zip(): Promise<Uint8Array>
+  public zip(saveTo: string): Promise<undefined>
+  public async zip(saveTo?: string): Promise<Uint8Array | undefined> {
+    const bundler = new Bundler(this.name())
+    await bundler.add('debug.txt', this.report.log!)
 
-    files[`${ name }/debug.txt`] = enc.encode(this.report.log)
+    if (this.report.items) await bundler.add('items.json', this.report.items)
 
-    if (this.report.items) files[`${ name }/items.json`] = enc.encode(this.report.items)
     if (this.config.cache) {
-      files[`${ name }/database.json`] = enc.encode(JSON.stringify(KeyManager.all()))
-      files[`${ name }/cache.json`] = enc.encode(this.report.cache)
+      await bundler.add('database.json', JSON.stringify(KeyManager.all()))
+      await bundler.add('cache.json', this.report.cache!)
     }
-    if (this.report.acronyms) files[`${ name }/acronyms.csv`] = enc.encode(this.report.acronyms)
 
-    return new Uint8Array(UZip.encode(files) as ArrayBuffer)
+    if (this.report.acronyms) await bundler.add('acronyms.csv', this.report.acronyms)
+
+    for (const [profile, path] of Object.entries(profiler.logs)) {
+      await bundler.add(`profile/${profile}.json`, await IOUtils.readUTF8(path))
+    }
+
+    return saveTo ? bundler.zip(saveTo) : bundler.zip()
   }
 
   public async save(): Promise<void> {
-    const fp = new FilePicker
+    const fp = (new FilePicker)
     fp.init(Zotero.getMainWindow(), 'Logs', fp.modeSave)
     fp.defaultExtension = 'zip'
     fp.defaultString = `${this.name()}.zip`
@@ -276,11 +285,11 @@ export class ErrorReport {
 
     const rv = await fp.show()
     const filename = rv === fp.returnOK || rv === fp.returnReplace ? fp.file || '' : ''
-    if (filename) await IOUtils.write(filename, this.zip(), { tmpPath: filename + '.tmp' })
+    if (filename) await this.zip(filename)
   }
 
   private async ping(region: string) {
-    await Zotero.HTTP.request('GET', `https://s3.${ region }.amazonaws.com${ s3.region[region].tld || '' }/ping`, { noCache: true })
+    await Zotero.HTTP.request('GET', `https://s3.${region}.amazonaws.com${s3.region[region].tld || ''}/ping`, { noCache: true })
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return { region, ...s3.region[region] }
   }
@@ -297,22 +306,24 @@ export class ErrorReport {
   }
 
   private scrub(logging: string[]): string {
-    const ignore = new RegExp([
-      /Addon must include an id, version, and type/,
-      /Could not get children of.*CrashManager.jsm/,
-      /Error: Translate: No RDF found/,
-      /NS_ERROR_FAILURE:.*getHistogramById/,
-      /NS_ERROR_NOT_AVAILABLE.*PartitioningExceptionListService[.]jsm/,
-      /NS_NOINTERFACE.*ComponentUtils[.]jsm/,
-      /PAC file installed from/,
-      /See your zotero[.]org account settings for additional storage options/,
-      /Syntax Error: Couldn't find trailer dictionary/,
-      /Syntax Error: Couldn't read xref table/,
-      /Upload request .* failed/,
-      /You have reached your Zotero File Storage quota/,
-      /pdftotext returned exit status/,
-      /protocol is not allowed for attachments/,
-    ].map(re => re.source).join('|'))
+    const ignore = new RegExp(
+      [
+        /Addon must include an id, version, and type/,
+        /Could not get children of.*CrashManager.jsm/,
+        /Error: Translate: No RDF found/,
+        /NS_ERROR_FAILURE:.*getHistogramById/,
+        /NS_ERROR_NOT_AVAILABLE.*PartitioningExceptionListService[.]jsm/,
+        /NS_NOINTERFACE.*ComponentUtils[.]jsm/,
+        /PAC file installed from/,
+        /See your zotero[.]org account settings for additional storage options/,
+        /Syntax Error: Couldn't find trailer dictionary/,
+        /Syntax Error: Couldn't read xref table/,
+        /Upload request .* failed/,
+        /You have reached your Zotero File Storage quota/,
+        /pdftotext returned exit status/,
+        /protocol is not allowed for attachments/,
+      ].map(re => re.source).join('|')
+    )
 
     return this.unhome(logging.filter(line => !line.match(ignore)).join('\n'))
   }
@@ -350,7 +361,7 @@ export class ErrorReport {
       delete creator.multi
     }
 
-    for (const details of [ 'attachments', 'notes' ]) {
+    for (const details of ['attachments', 'notes']) {
       if (item[details]) {
         item[details] = item[details].filter(detail => this.cleanItem(detail))
       }
@@ -399,7 +410,7 @@ export class ErrorReport {
       if (lib.items) lib.items = lib.items.filter(item => this.cleanItem(item))
 
       if (lib.config.preferences) {
-        for (const [ pref, value ] of Object.entries(lib.config.preferences)) {
+        for (const [pref, value] of Object.entries(lib.config.preferences)) {
           if (!supported.includes(pref) || value === defaults[pref]) delete lib.config.preferences[pref]
         }
       }
@@ -461,7 +472,9 @@ export class ErrorReport {
     wizard.getPageById('page-enable-debug').addEventListener('pageshow', this.show.bind(this))
     wizard.getPageById('page-upgrade').addEventListener('pageshow', this.show.bind(this))
     wizard.getPageById('page-review').addEventListener('pageshow', this.show.bind(this))
-    wizard.getPageById('page-send').addEventListener('pageshow', () => { this.send().catch(err => log.error('could not send debug log:', err)) })
+    wizard.getPageById('page-send').addEventListener('pageshow', () => {
+      this.send().catch(err => log.error('could not send debug log:', err))
+    })
     wizard.getPageById('page-done').addEventListener('pageshow', this.show.bind(this))
 
     for (const cb of Array.from(this.document.getElementsByClassName('better-bibtex-error-report-facet')) as HTMLInputElement[]) {
@@ -493,7 +506,7 @@ export class ErrorReport {
     try {
       // @ts-expect-error zotero-types does not export .any
       this.region = await Zotero.Promise.any(Object.keys(s3.region).map(this.ping.bind(this)))
-      this.bucket = `https://${ s3.bucket }-${ this.region.short }.s3-${ this.region.region }.amazonaws.com${ this.region.tld || '' }`
+      this.bucket = `https://${s3.bucket}-${this.region.short}.s3-${this.region.region}.amazonaws.com${this.region.tld || ''}`
       this.key = Zotero.Utilities.generateObjectKey()
 
       continueButton.disabled = false
@@ -507,20 +520,20 @@ export class ErrorReport {
   }
 
   private name() {
-    return `${ this.key }${ this.report.items ? '-refs' : '' }-${ this.region.short }`
+    return `${this.key}${this.report.items ? '-refs' : ''}-${this.region.short}`
   }
 
   private zipfile() {
-    return `${ this.name() }-${ this.timestamp }.zip`
+    return `${this.name()}-${this.timestamp}.zip`
   }
 
   private preview(input: any): string {
     const previewSize = this.previewSize * kB
-    if (typeof input === 'string') return input.length > previewSize ? `${ input.substr(0, previewSize) } ...` : input
+    if (typeof input === 'string') return input.length > previewSize ? `${input.substr(0, previewSize)} ...` : input
 
     let trail = ''
     if (input.items.length > this.previewSize) {
-      trail = `\n... + ${ input.items.length - this.previewSize } more items`
+      trail = `\n... + ${input.items.length - this.previewSize} more items`
       input = { ...input, items: input.items.slice(0, this.previewSize) }
     }
     return JSON.stringify(input, null, 2) + trail
@@ -531,8 +544,8 @@ export class ErrorReport {
     let context = ''
 
     const appInfo = Components.classes['@mozilla.org/xre/app-info;1'].getService(Components.interfaces.nsIXULAppInfo)
-    context += `Application: ${ appInfo.name } (${ Zotero.clientName }) ${ appInfo.version } ${ Zotero.locale }\n`
-    context += `Platform: ${ client.platform }${(ENV.get('SNAP') && ' snap') || (ENV.get('FLATPAK_SANDBOX_DIR') && ' flatpak') || ''}\n`
+    context += `Application: ${appInfo.name} (${Zotero.clientName}) ${appInfo.version} ${Zotero.locale}\n`
+    context += `Platform: ${client.platform}${(ENV.get('SNAP') && ' snap') || (ENV.get('FLATPAK_SANDBOX_DIR') && ' flatpak') || ''}\n`
 
     if (upgrades.zotero.auto) {
       context += `${upgrades.zotero.program} will update from the ${upgrades.zotero.channel} channel every ${upgrades.zotero.interval}, last update at ${upgrades.zotero.lastUpdate}\n`
@@ -545,17 +558,17 @@ export class ErrorReport {
     if (addons.length) {
       context += 'Addons:\n'
       for (const addon of addons) {
-        context += `  ${ addon }\n`
+        context += `  ${addon}\n`
       }
     }
 
     context += 'Settings:\n'
     const settings = { default: '', set: '' }
-    for (const [ key, value ] of Object.entries(Preference.all)) {
+    for (const [key, value] of Object.entries(Preference.all)) {
       if (key === 'citekeyFormatEditing') continue
 
       if (value === defaults[key]) {
-        settings.default += `  ${key} = ${ JSON.stringify(value) }\n`
+        settings.default += `  ${key} = ${JSON.stringify(value)}\n`
       }
       else {
         settings.set += `  ${key} = ${JSON.stringify(value)} (default: ${JSON.stringify(defaults[key])})\n`
@@ -564,7 +577,7 @@ export class ErrorReport {
     context += settings.set + (settings.default ? `Settings at default:\n${settings.default}` : '')
 
     for (const key of ['export.quickCopy.setting']) {
-      context += `  Zotero: ${ key } = ${ JSON.stringify(Zotero.Prefs.get(key)) }\n`
+      context += `  Zotero: ${key} = ${JSON.stringify(Zotero.Prefs.get(key))}\n`
     }
 
     const autoExports = AutoExport.all()
@@ -597,10 +610,10 @@ export class ErrorReport {
           }
         }
         context += ')\n'
-        for (const [ k, v ] of Object.entries(ae)) {
+        for (const [k, v] of Object.entries(ae)) {
           if (k === 'path') continue
-          context += `    ${ k }: ${ JSON.stringify(v) }`
-          if (k === 'translatorID' && byId[v as string]) context += ` (${ byId[v as string].label })`
+          context += `    ${k}: ${JSON.stringify(v)}`
+          if (k === 'translatorID' && byId[v as string]) context += ` (${byId[v as string].label})`
           context += '\n'
         }
       }
@@ -618,13 +631,15 @@ export class ErrorReport {
       context += `  ${JSON.stringify(lib.name)}, libraryID = ${lib.libraryID}, groupID = ${(lib as unknown as Zotero.Group).groupID ?? false}, read-only: ${readonly(lib)}\n`
     }
 
-    context += `Zotero.Debug.storing: ${ Zotero.Debug.storing }\n`
-    context += `Zotero.Debug.storing at start: ${ Zotero.BetterBibTeX.debugEnabledAtStart }\n`
+    context += `Zotero.Debug.storing: ${Zotero.Debug.storing}\n`
+    context += `Zotero.Debug.storing at start: ${Zotero.BetterBibTeX.debugEnabledAtStart}\n`
 
     return this.unhome(context)
   }
 
   public async open(items?: string): Promise<void> {
+    await profiler.split('runtime')
+
     let scope: ExportScope | null = null
     switch (items) {
       case 'collection':
@@ -678,6 +693,7 @@ export class ErrorReport {
       'chrome://zotero-better-bibtex/content/error-report.xhtml',
       'better-bibtex-error-report',
       'chrome,centerscreen,modal',
-      { wrappedJSObject: { items }})
+      { wrappedJSObject: { items } }
+    )
   }
 }

@@ -112,6 +112,10 @@ better-bibtex_preferences_advanced_export_title-case_warning = If you're dead-se
 better-bibtex_preferences_advanced_export_workers_cache = 
   .label = Enable caching for background exports
 
+better-bibtex_preferences_advanced_export_cache-touch = Update cache
+better-bibtex_preferences_advanced_export_cache-touch_drop = When exporting
+better-bibtex_preferences_advanced_export_cache-touch_fill = When items change
+
 better-bibtex_preferences_advanced_extra-field_as-note = 
   .label = Treat the `extra` field as a note
 
@@ -406,6 +410,17 @@ better-bibtex_preferences_rescan-citekeys =
 
 better-bibtex_preferences_reset-cache = 
   .label = Reset cache on next start
+
+better-bibtex_preferences_misc_performance = Performance
+
+better-bibtex_preferences_misc_performance_startup = 
+  .label = Collect performance information during startup
+
+better-bibtex_preferences_misc_performance_runtime = Collect performance information while Zotero is running
+
+better-bibtex_preferences_misc_performance_runtime_no = No
+better-bibtex_preferences_misc_performance_runtime_yes = Yes
+better-bibtex_preferences_misc_performance_runtime_except-sync = Yes, except during sync
 
 better-bibtex_preferences_tab_auto-export = Automatic export
 

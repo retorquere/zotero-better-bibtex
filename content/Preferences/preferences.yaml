@@ -6,6 +6,20 @@ language:
     - Better BibLaTeX
     - Better BibTeX
 
+profileStartup:
+  description: >-
+    Collect performance information during startup, to help diagnose slow
+    starts. Always on for non-release builds.
+  default: false
+
+profileRuntime:
+  description: >-
+    Collect performance information while Zotero is running, to help
+    diagnose slowdowns. "Yes, except during sync" pauses collection for the
+    duration of a sync, since sync activity would otherwise dominate the
+    collected information.
+  default: 'no'
+
 DOIandURL:
   description: >-
     Does what it says on the tin, really. If an item has both a DOI and an URL,
@@ -568,6 +582,13 @@ cache:
     - Better CSL JSON
     - Better CSL YAML
     - Better Hayagriva
+
+cacheTouch:
+  description: >-
+    How changed items update the serialized export cache. `drop` marks changed
+    items stale and serializes them on the next export; `fill` serializes
+    changed items immediately on cache touch.
+  default: fill
 
 separatorList:
   description: >-

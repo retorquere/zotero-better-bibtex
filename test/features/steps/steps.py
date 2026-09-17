@@ -26,6 +26,7 @@ import requests
 from contextlib import contextmanager
 
 import pathlib
+from pathlib import Path
 for d in pathlib.Path(__file__).resolve().parents:
   if os.path.exists(os.path.join(d, 'behave.ini')):
     ROOT = d
@@ -127,7 +128,6 @@ def step_impl(context, source, target, baseline, n):
     check=True,
     stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True
   )
-  utils.print(result.stdout)
 
   match pathlib.Path(baseline).suffix:
     case '.odt':
@@ -483,7 +483,7 @@ def step_impl(context):
 
 @step(u'I copy date-added/date-modified for the selected items from the extra field')
 def step_impl(context):
-  context.zotero.execute('Zotero.BetterBibTeX.MenuHelper.patchDates()')
+  context.zotero.execute('await Zotero.BetterBibTeX.MenuHelper.patchDates()')
 
 @step('I change {param} to {value} on the auto-export')
 def step_impl(context, param, value):
@@ -516,7 +516,24 @@ def step_impl(context, action, xpi):
     assert len(xpis) == 1, f'multiple candidates for {xpi}'
     context.zotero.execute('await Zotero.DebugBridge.install(xpi)', xpi=os.path.abspath(xpis[0]))
   elif action in ['enable', 'disable']:
-    context.zotero.execute('await Zotero.DebugBridge[action](addon)', action=action, addon=xpi)
+    with rdp.RDPConnection() as zotero:
+      zotero.execute("""
+        const { AddonManager } = ChromeUtils.importESModule('resource://gre/modules/AddonManager.sys.mjs')
+        const addon = await AddonManager.getAddonByID(addonID)
+        const lifecycle = action === 'disable' ? 'shutdown' : 'startup'
+        const completed = new Promise(resolve => {
+          const observer = {
+            [lifecycle]({ id }) {
+              if (id !== addonID) return
+              Zotero.Plugins.removeObserver(observer)
+              resolve()
+            },
+          }
+          Zotero.Plugins.addObserver(observer)
+        })
+        await addon[action]()
+        await completed
+      """, action=action, addonID=xpi)
   else:
     raise ValueError(f'Unsupported extension action {action}')
 
@@ -613,3 +630,15 @@ def step_impl(context):
   with rdp.RDPConnection() as zotero:
     serialized = zotero.execute('return Zotero.getActiveZoteroPane().getSelectedItems().map(item => Zotero.Utilities.Internal.itemToExportFormat(item))')
     assert type(serialized) == list, f'Expected serialized object, got {type(serialized)}, {json.dumps(serialized)}'
+
+@step('I clear the performance profiles')
+def step_impl(context):
+  profiles = Path('~/.BBTTEST/zotero/better-bibtex/profiling').expanduser()
+  for p in profiles.iterdir():
+    if p.is_file():
+      p.unlink()
+
+@step('I create a performance profile snapshot')
+def step_impl(context):
+  with rdp.RDPConnection() as zotero:
+    zotero.execute("await Zotero.BetterBibTeX.TestSupport.profilerSnapshot('snapshot')")
