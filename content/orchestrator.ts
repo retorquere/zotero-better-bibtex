@@ -30,8 +30,34 @@ export class Orchestrator {
 
   // startup is always profiled on non-release builds regardless of translators.better-bibtex.profileStartup
   private profileStartup = !release || Preference.profileStartup
-  public readonly profileRuntime = Preference.profileRuntime !== 'no'
+  private runtimeProfiling = Preference.profileRuntime !== 'no'
   private pauseProfileDuringSync = Preference.profileRuntime === 'except-sync'
+
+  constructor() {
+    Events.on('sync', ({ data: { state } }) => {
+      if (!this.runtimeProfiling || !this.pauseProfileDuringSync) return
+      if (state === 'syncing') {
+        if (profiler.active) void profiler.stop('runtime')
+      }
+      else if (!profiler.active) {
+        void profiler.start()
+      }
+    })
+
+    Events.on('preference-changed', ({ data: pref }) => {
+      if (pref !== 'profileRuntime') return
+
+      this.runtimeProfiling = Preference.profileRuntime !== 'no'
+      this.pauseProfileDuringSync = Preference.profileRuntime === 'except-sync'
+
+      if (this.runtimeProfiling) {
+        if (!profiler.active) void profiler.start()
+      }
+      else if (profiler.active) {
+        void profiler.stop('runtime')
+      }
+    })
+  }
 
   public add({ description, id, startup, shutdown, needs }: Task): void {
     if (this.$ordered) throw new Error(`orchestrator: add ${ id } after ordered`)
@@ -155,24 +181,11 @@ export class Orchestrator {
   public async startup(reason: Reason, progress?: Progress): Promise<void> {
     await this.run('startup', reason, progress)
     progress?.('startup', 'ready', 100, 100, 'ready')
-    if (this.profileRuntime) {
-      await profiler.start()
-
-      if (this.pauseProfileDuringSync) {
-        Events.on('sync', ({ data: { state } }) => {
-          if (state === 'syncing') {
-            if (profiler.active) void profiler.stop('runtime')
-          }
-          else if (!profiler.active) {
-            void profiler.start()
-          }
-        })
-      }
-    }
+    if (this.runtimeProfiling) await profiler.start()
   }
 
   public async shutdown(reason: Reason): Promise<void> {
-    if (this.profileRuntime && profiler.active) await profiler.stop('runtime')
+    if (this.runtimeProfiling && profiler.active) await profiler.stop('runtime')
     await this.run('shutdown', reason)
   }
 }

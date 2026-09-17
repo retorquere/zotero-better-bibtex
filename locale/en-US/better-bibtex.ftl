@@ -55,6 +55,10 @@ better-bibtex_error-report_include-cache =
 better-bibtex_error-report_include-attachments = 
   .label = attachment metadata
 
+better-bibtex_error-report_profiling-active = Better BibTeX is currently collecting performance information.
+better-bibtex_error-report_stop-profiling =
+  .label = Stop collecting performance information
+
 better-bibtex_error-report_items = 
   .label = Items
 

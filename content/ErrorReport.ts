@@ -254,6 +254,11 @@ export class ErrorReport {
     if (index === 0) Zotero.Utilities.Internal.quit(true)
   }
 
+  public stopRuntimeProfiling(): void {
+    Preference.profileRuntime = 'no'
+    this.document.getElementById('better-bibtex-error-report-stop-profiling')!.hidden = true
+  }
+
   public zip(): Promise<Uint8Array>
   public zip(saveTo: string): Promise<undefined>
   public async zip(saveTo?: string): Promise<Uint8Array | undefined> {
@@ -463,6 +468,8 @@ export class ErrorReport {
     wizard.getPageById('page-upgrade').hidden = true
     await upgrades.init(this.document)
     wizard.getPageById('page-upgrade').hidden = !(upgrades.bbt.upgrade || upgrades.zotero.upgrade)
+
+    this.document.getElementById('better-bibtex-error-report-stop-profiling')!.hidden = !profiler.active
 
     this.show()
 
