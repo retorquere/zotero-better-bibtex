@@ -123,6 +123,35 @@ Events.on('error', ({ data: { error, eventName, listener } }) => {
   log.error('[emittery error:] stack trace:', error)
 })
 
+type HeldEvent
+  = { eventName: 'items-changed'; data: EventMap['items-changed'] }
+  | { eventName: 'items-removed'; data: EventMap['items-removed'] }
+  | { eventName: 'collections-changed'; data: EventMap['collections-changed'] }
+  | { eventName: 'collections-removed'; data: EventMap['collections-removed'] }
+  | { eventName: 'libraries-changed'; data: EventMap['libraries-changed'] }
+  | { eventName: 'libraries-removed'; data: EventMap['libraries-removed'] }
+
+// item/collection/library change and removal events are held while syncing and replayed, in order, once sync stops
+const queued = new class HeldEventQueue {
+  private queue: HeldEvent[] = []
+
+  public emit<Name extends HeldEvent['eventName']>(eventName: Name, data: Extract<HeldEvent, { eventName: Name }>['data']): void | Promise<void> {
+    if (Events.syncing === 'syncing') {
+      this.queue.push({ eventName, data } as HeldEvent)
+      return
+    }
+    return Events.emit(eventName, data as EventMap[Name])
+  }
+
+  public async flush(): Promise<void> {
+    const queue = this.queue.splice(0, this.queue.length)
+    for (const { eventName, data } of queue) {
+      await Zotero.Promise.delay(10) // throttle to avoid an update storm blocking the UI
+      await Events.emit(eventName, data)
+    }
+  }
+}
+
 class WindowListener {
   constructor() {
     Services.wm.addListener(this)
@@ -191,6 +220,7 @@ class SyncListener extends ZoteroListener {
     const state: SyncState = action === ('start' as unknown as _ZoteroTypes.Notifier.Type) ? 'syncing' : 'idle' // Zotero fires 'start' and 'finish'
     Events.syncing = state
     void Events.emit('sync', { state })
+    if (state === 'idle') void queued.flush()
   }
 }
 
@@ -250,7 +280,7 @@ class ItemListener extends ZoteroListener {
           }, {} as Record<number, string[]>)
 
       if (action === 'delete') {
-        await Events.emit('items-removed', { itemIDs: ids })
+        await queued.emit('items-removed', { itemIDs: ids })
         if (extraData && typeof extraData === 'object') {
           for (const { libraryID } of Object.values(extraData)) {
             if (typeof libraryID === 'number') touched.libraries.add(libraryID)
@@ -293,7 +323,7 @@ class ItemListener extends ZoteroListener {
       })
 
       if (items.length) {
-        await Events.emit('items-changed', { items, action, changed })
+        await queued.emit('items-changed', { items, action, changed })
       }
 
       if (parentIDs.size) {
@@ -301,12 +331,12 @@ class ItemListener extends ZoteroListener {
         for (const item of parents) {
           touch(item)
         }
-        void Events.emit('items-changed', { items: parents, action: 'modify', reason: `parent-${ action }` })
+        void queued.emit('items-changed', { items: parents, action: 'modify', reason: `parent-${ action }` })
       }
 
       Zotero.Promise.delay(Events.itemObserverDelay).then(() => {
-        if (touched.collections.size) void Events.emit('collections-changed', [...touched.collections])
-        if (touched.libraries.size) void Events.emit('libraries-changed', [...touched.libraries])
+        if (touched.collections.size) void queued.emit('collections-changed', [...touched.collections])
+        if (touched.libraries.size) void queued.emit('libraries-changed', [...touched.libraries])
       })
     }
     catch (err) {
@@ -325,7 +355,7 @@ class TagListener extends ZoteroListener {
       await Zotero.BetterBibTeX.ready
 
       const ids = [...new Set(pairs.map(pair => parseInt(pair.split('-')[0])))]
-      void Events.emit('items-changed', { items: Zotero.Items.get(ids), action: 'modify', reason: 'tagged' })
+      void queued.emit('items-changed', { items: Zotero.Items.get(ids), action: 'modify', reason: 'tagged' })
     }
     catch (err) {
       log.error(`emit logger: error in ${type} ${action} handler for ${JSON.stringify(pairs)}: ${(err as any).message}`)
@@ -341,7 +371,7 @@ class CollectionListener extends ZoteroListener {
   public async notify(action: string, type: string, ids: NotifierIDs) {
     try {
       await Zotero.BetterBibTeX.ready
-      if ((action === 'delete') && ids.length) void Events.emit('collections-removed', ids as number[])
+      if ((action === 'delete') && ids.length) void queued.emit('collections-removed', ids as number[])
     }
     catch (err) {
       log.error(`emit logger: error in ${type} ${action} handler for ${JSON.stringify(ids)}: ${(err as any).message}`)
@@ -370,7 +400,7 @@ class MemberListener extends ZoteroListener {
         }
       }
 
-      if (changed.size) void Events.emit('collections-changed', Array.from(changed))
+      if (changed.size) void queued.emit('collections-changed', Array.from(changed))
     }
     catch (err) {
       log.error(`emit logger: error in ${type} ${action} handler for ${JSON.stringify(pairs)}: ${(err as any).message}`)
@@ -386,7 +416,7 @@ class GroupListener extends ZoteroListener {
   public async notify(action: string, type: string, ids: NotifierIDs) {
     try {
       await Zotero.BetterBibTeX.ready
-      if ((action === 'delete') && ids.length) void Events.emit('libraries-removed', ids as number[])
+      if ((action === 'delete') && ids.length) void queued.emit('libraries-removed', ids as number[])
     }
     catch (err) {
       log.error(`emit logger: error in ${type} ${action} handler for ${JSON.stringify(ids)}: ${(err as any).message}`)
