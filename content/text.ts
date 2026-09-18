@@ -19,7 +19,6 @@ const RE = new class {
   public url = /^(https?|mailto):\/\/[^\s]+/
   public whitespace: RegExp
   public titleCaseKeep: RegExp
-  public singleLetter: RegExp
   public notAlphaNum: RegExp
 
   constructor() {
@@ -37,9 +36,11 @@ const RE = new class {
     this.unprotectedWord = new RegExp(`^[${Char}]+`, 'u')
     this.whitespace = new RegExp(`^[${whitespace}]+`)
 
-    this.titleCaseKeep = new RegExp(`(?:(?:[>:?]?[${whitespace}]+)[${L}][${P}]?(?:[${whitespace}]|$))|(?:(?:<span class="nocase">.*?</span>)|(?:<nc>.*?</nc>))`, 'ugi')
+    // Restore single-letter words and nocase spans after CSL title-casing. The lookbehind/lookahead
+    // keep surrounding separators out of the match so offsets still line up for one-pass restoration.
+    // The first branch preserves the old rule that "a" after :/?/> starts a new title-case phrase.
+    this.titleCaseKeep = new RegExp(`(?:(?<titleCaseSentenceStartA>(?<=[>:?][${whitespace}]+)[aA][${P}]?)(?=[${whitespace}]|$))|(?:(?<=[${whitespace}]+)[${L}][${P}]?(?=[${whitespace}]|$))|(?:(?:<span class="nocase">.*?</span>)|(?:<nc>.*?</nc>))`, 'ugi')
     this.notAlphaNum = new RegExp(`[^${L}\\p{Nd}\\p{Nl}]`, 'u')
-    this.singleLetter = new RegExp(`^([>:?])?[${whitespace}]+(.)`)
   }
 }
 
@@ -68,21 +69,19 @@ const ligatures = {
 }
 
 export function titleCase(text: string): string {
-  let titlecased: string = titleCased(text)
+  const titlecased: string = titleCased(text)
+  let restored = ''
+  let cursor = 0
 
-  // restore single-letter "words". Shame firefox doesn't do lookbehind, but this will work
-  text.replace(RE.titleCaseKeep, (match: string, offset: number) => {
-    if (match[0] !== '<') {
-      const [ , punc, l ] = match.match(RE.singleLetter) as RegExpMatchArray
-      if (punc && (l === 'a' || l === 'A')) {
-        match = match.toUpperCase()
-      }
-    }
-    titlecased = titlecased.substr(0, offset) + match + titlecased.substr(offset + match.length)
+  // Build the restored title once instead of repeatedly splicing the title-cased string.
+  text.replace(RE.titleCaseKeep, (match: string, titleCaseSentenceStartA: string | undefined, offset: number) => {
+    if (titleCaseSentenceStartA) match = match.toUpperCase()
+    restored += titlecased.slice(cursor, offset) + match
+    cursor = offset + match.length
     return match
   })
 
-  return titlecased
+  return restored + titlecased.slice(cursor)
 }
 
 export function sentenceCase(text: string): string {
