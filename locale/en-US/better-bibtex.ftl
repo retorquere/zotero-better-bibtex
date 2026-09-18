@@ -422,9 +422,12 @@ better-bibtex_preferences_misc_performance_startup =
 
 better-bibtex_preferences_misc_performance_runtime = Collect performance information while Zotero is running
 
-better-bibtex_preferences_misc_performance_runtime_no = No
-better-bibtex_preferences_misc_performance_runtime_yes = Yes
-better-bibtex_preferences_misc_performance_runtime_except-sync = Yes, except during sync
+better-bibtex_preferences_misc_performance_runtime_no =
+  .label = No
+better-bibtex_preferences_misc_performance_runtime_yes =
+  .label = Yes
+better-bibtex_preferences_misc_performance_runtime_except-sync =
+  .label = Yes, except during sync
 
 better-bibtex_preferences_tab_auto-export = Automatic export
 
