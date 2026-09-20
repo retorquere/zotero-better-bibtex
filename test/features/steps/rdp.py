@@ -53,22 +53,24 @@ class RDPConnection:
     target = self._send_and_wait({'to': descriptor_actor, 'type': 'getTarget'})
     self.console_actor = target['process']['consoleActor']
 
-  def execute(self, js_code):
+  def execute(self, script, **args):
+    for var, value in args.items():
+      script = f'const {var} = {json.dumps(value)};\n' + script
     escaped_code = (
-      js_code.replace('\\', '\\\\')   # 1. Escape existing backslashes first
+      script.replace('\\', '\\\\')   # 1. Escape existing backslashes first
              .replace('`', '\\`')     # 2. Escape backticks
              .replace('${', '\\${')   # 3. Escape interpolation
     )
     escaped_code = f'`{escaped_code}`'
-    js_code = f"""
+    script = f"""
       Zotero.debug('RDP bridge: executing\\n' + {escaped_code});
-      {js_code}
+      {script}
     """
     
     wrapped = f'''
     (() => {{
       let __fn = async () => {{
-        {js_code}
+        {script}
       }};
 
       let __done = false, __val, __err;

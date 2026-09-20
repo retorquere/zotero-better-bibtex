@@ -5,6 +5,7 @@ declare const Ci: any
 declare const dump: (msg: string) => void
 
 import { alert } from './prompt'
+import { release } from '../gen/build'
 
 import { jwk as pubkey } from './public'
 import { DebugLogSender } from 'zotero-plugin/debug-log'
@@ -68,9 +69,7 @@ export async function startup({ resourceURI, rootURI = resourceURI.spec }: { res
   sender.enabled = true
 
   if (Zotero.BetterBibTeX) throw new Error('Better BibTeX is already started')
-
-  // if (!Zotero.Debug.storing && Zotero.Prefs.get('translators.better-bibtex.forceLogging')) Zotero.Debug.setStore(true)
-  Zotero.Debug.setStore(true)
+  if (!Zotero.Debug.storing && !release) Zotero.Debug.setStore(true)
 
   sandbox = makeSandbox([
     'atob',

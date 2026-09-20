@@ -6,7 +6,8 @@ datta2024a:
     name: Johns Hopkins University
   genre: PhD Dissertation
   date: 2024
-  author: Datta, Rothin
+  author:
+    - Datta, Rothin
 smithMyChapterBook2026:
   type: chapter
   title: My Chapter in Book
@@ -38,7 +39,8 @@ teixeiraPlaceMoneyMarxs2019:
   serial-number:
     doi: 10.1007/978-3-030-23360-0_2
     isbn: 978-3-030-23360-0
-  author: Teixeira, Adriano Lopes Almeida
+  author:
+    - Teixeira, Adriano Lopes Almeida
   editor:
     - Mello, Gustavo Moura de Cavalcanti
     - Sabadini, Mauricio de Souza
@@ -67,4 +69,5 @@ zotero-item-1082:
     title: Boondoggle Conference
     location: New York
   date: 2024
-  author: Jones, Bob
+  author:
+    - Jones, Bob
