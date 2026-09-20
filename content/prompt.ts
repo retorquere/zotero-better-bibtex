@@ -14,3 +14,8 @@ export function prompt({ title, text, value }: { title?: string; text: string; v
     return ''
   }
 }
+
+export function confirm({ title, text }: { title?: string; text: string }): boolean {
+  // @ts-expect-error TS2345 https://github.com/windingwind/zotero-types/issues/97
+  return Services.prompt.confirm(null, title, text)
+}

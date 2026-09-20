@@ -393,6 +393,7 @@ Feature: Export
     Examples:
       | file                                                           | references |
       | Hayagriva export Encyclopedia article doesnt have parent #3585 | 2          |
+      | Hayagriva export retain conference name information #3593      | 2          |
       | Hayagriva format bugs #3579                                    | 5          |
       | Export year ranges from Original Date #3482                    | 1          |
       | Hayagriva date field in wrong format #3562                     | 2          |
@@ -795,7 +796,10 @@ Feature: Export
   @use.with_client=zotero @use.with_whopper=true @timeout=3000 @whopper
   Scenario: Really Big whopping library
     When I restart Zotero with "1287"
-    And I restart Zotero with "1287"
+    And I disable extension better-bibtex@iris-advies.com
+    And I clear the performance profiles
+    And I enable extension better-bibtex@iris-advies.com
+    And I set preference .extraFieldAsNote to true
     And I set preference .DOIandURL to "doi"
     # And I set preference .autoAbbrevStyle to "http://www.zotero.org/styles/cell"
     And I set preference .autoExport to "off"
@@ -814,6 +818,7 @@ Feature: Export
     When I export the library 1 times using "id:bc03b4fe-436d-4a1f-ba59-de4d2d7a63f7"
     #And I wait until Zotero is idle
     Then an export using "Better CSL JSON" with worker on should match "export/*.csl.json"
+    And I create a performance profile snapshot
 
   # @use.with_client=zotero @use.with_slow=true @timeout=300
   # @1296

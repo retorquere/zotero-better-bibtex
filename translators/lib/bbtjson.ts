@@ -4,7 +4,7 @@ import type { Library } from './normalize'
 import { log } from '../../content/logger'
 import { Translation } from './translator'
 import { simplifyForImport, simplifyForExport } from '../../content/item-schema'
-import BBT from '../../gen/version.cjs'
+import * as BBT from '../../gen/build'
 import { Serialized } from '../../gen/typings/serialized'
 import omit from 'lodash.omit'
 
@@ -101,7 +101,9 @@ export function generateBBTJSON(collected: Collected): Translation {
     }
   }
 
-  translation.output.body = JSON.stringify(data, null, 2)
+  translation.output.body = translation.collected.displayOptions.YAML
+    ? Zotero.BetterBibTeX.yamlDump(data)
+    : JSON.stringify(data, null, 2)
 
   return translation
 }

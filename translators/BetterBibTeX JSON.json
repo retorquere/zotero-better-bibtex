@@ -18,7 +18,8 @@
     "Preferences": true,
     "keepUpdated": false,
     "worker": true,
-    "Normalize": false
+    "Normalize": false,
+    "YAML": false
   },
   "translatorType": 3,
   "browserSupport": "gcsv",

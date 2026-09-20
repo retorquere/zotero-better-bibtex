@@ -1,24 +1,19 @@
+/* eslint-disable @typescript-eslint/no-unsafe-return, @typescript-eslint/explicit-module-boundary-types */
 export type YAMLFormat = 'csl' | 'hayagriva' | 'unknown'
 
-export function detectFormat(data: unknown): YAMLFormat {
-  if (!data || typeof data !== 'object' || Array.isArray(data)) return 'unknown'
-
-  const mapped = data as Record<string, unknown>
-  if (Array.isArray(mapped.references)) return 'csl'
-
-  const values = Object.values(mapped)
-  if (!values.length) return 'unknown'
-
-  const hayagriva = values.every(value => {
-    if (!value || typeof value !== 'object' || Array.isArray(value)) return false
-    const record = value as Record<string, unknown>
-    return typeof record.type === 'string' || typeof record.title === 'string'
-  })
-
-  return hayagriva ? 'hayagriva' : 'unknown'
+function isCSL(item): boolean {
+  return item.title || item.id
 }
+function isHayagriva(item): boolean {
+  return item && typeof item === 'object' && (typeof item.type === 'string' || typeof item.title === 'string')
+}
+export function detectFormat(data: any): YAMLFormat {
+  if (!data || typeof data !== 'object') return 'unknown'
 
-export function parse(input: string, yamlLoad: (input: string) => any): any {
-  input = input.replace(/\n---[\r\n]*$/, '\n...\n')
-  return yamlLoad(input)
+  if (Array.isArray(data) && data.every(isCSL)) return 'csl'
+  if (data.references && Array.isArray(data.references) && data.references.every(isCSL)) return 'csl'
+
+  const values = Object.values(data)
+  if (!values.length) return 'unknown'
+  return values.every(isHayagriva) ? 'hayagriva' : 'unknown'
 }

@@ -23,7 +23,7 @@ const cmdMeta = /(["^&|<>()%!])/
 const cmdMetaOrSpace = /[\s"^&|<>()%!]/
 const cmdMetaInsideQuotes = /(["%!])/
 
-type Job = {
+export type Job = {
   enabled: boolean
   type: 'collection' | 'library'
   id: number

@@ -15,7 +15,7 @@ import { strcmp } from './string-compare'
 import { clone } from './object'
 import omit from 'lodash.omit'
 
-import BBT from '../gen/version.cjs'
+import * as BBT from '../gen/build'
 
 import { methods } from '../gen/api/json-rpc'
 

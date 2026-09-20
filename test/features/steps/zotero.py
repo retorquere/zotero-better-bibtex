@@ -513,7 +513,7 @@ class Zotero:
     self.profile = profile = self.create_profile()
     shutil.rmtree(os.path.join(profile.path, self.client, 'better-bibtex'), ignore_errors=True)
 
-    cmd = f'{shlex.quote(profile.binary)} -P {shlex.quote(profile.name)} -jsconsole -purgecaches -ZoteroDebugText {self.redir} {shlex.quote(profile.path + ".log")} 2>&1'
+    cmd = f'{shlex.quote(profile.binary)} -P {shlex.quote(profile.name)} -jsconsole -purgecaches -ZoteroDebugText -start-debugger-server 6000 {self.redir} {shlex.quote(profile.path + ".log")} 2>&1'
     utils.print(f'Starting {self.client}: {cmd}')
     self.proc = subprocess.Popen(cmd, shell=True)
     utils.print(f'{self.client} started: {self.proc.pid}')
@@ -865,6 +865,8 @@ class Zotero:
 
     profile.firefox.set_preference('extensions.zotero.debug.memoryInfo', True)
     profile.firefox.set_preference('extensions.zotero.translators.better-bibtex.testing', self.testing)
+    profile.firefox.set_preference('extensions.zotero.translators.better-bibtex.profiling', 60)
+    profile.firefox.set_preference('extensions.zotero.translators.better-bibtex.profileDir', os.path.join(profile.path, self.client, 'better-bibtex', 'profiling'))
     profile.firefox.set_preference('extensions.zotero.translators.better-bibtex.logEvents', self.testing)
     profile.firefox.set_preference('extensions.zotero.translators.better-bibtex.caching', self.caching)
     profile.firefox.set_preference('extensions.zotero.translators.better-bibtex.scrubDatabase', True)
@@ -884,6 +886,7 @@ class Zotero:
     profile.firefox.set_preference('devtools.debugger.remote-enabled', True) # Enables the remote debugging protocol server
     profile.firefox.set_preference('devtools.chrome.enabled', True) # Allows debugging browser internal/chrome code
     profile.firefox.set_preference('devtools.debugger.prompt-connection', False) # Suppresses the "Incoming connection" UI dialog
+    profile.firefox.set_preference('devtools.debugger.force-local', True) # Binds the RDP server strictly to the local loopback interface (127.0.0.1)
 
     utils.print(f'dom.max_chrome_script_run_time={self.config.timeout}')
 
