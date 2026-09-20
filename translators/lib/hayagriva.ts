@@ -2,16 +2,66 @@ declare const Zotero: any
 
 import * as hg from '../../gen/typings/hayagriva'
 
+import clean from 'clean-deep'
 import * as dateparser from '../../content/dateparser'
-import { Serialized } from '../../gen/typings/serialized'
-import type { Collected } from './collect'
-import { Translation } from './translator'
+import { Fields as ParsedExtraFields, get as getExtra } from '../../content/extra'
 import { Schema, simplifyForExport } from '../../content/item-schema'
 import { log } from '../../content/logger'
-import { Fields as ParsedExtraFields, get as getExtra } from '../../content/extra'
-import { Postscript, postscript as compile, noop } from '../lib/postscript'
 import { clone } from '../../content/object'
-import clean from 'clean-deep'
+import { Serialized } from '../../gen/typings/serialized'
+import { noop, Postscript, postscript as compile } from '../lib/postscript'
+import type { Collected } from './collect'
+import { Translation } from './translator'
+
+import { tokenize } from '@retorquere/bibtex-parser'
+
+const WordBracing = new class WordBrace {
+  private nocase(s: string): string {
+    return `<span class="nocase">${s}</span>`
+  }
+
+  private braced(s: string): string {
+    return s
+      .replace(/<span class="nocase">/ig, '{')
+      .replace(/<\/span>/ig, '}')
+  }
+
+  private title(s: string | undefined): string | undefined {
+    if (!s) return s
+
+    s = tokenize(s)
+      .map(token => {
+        if (token.type !== 'word') return token.text
+
+        if (token.sentenceStart && token.shape.includes('xX')) return this.nocase(token.text)
+        if (!token.sentenceStart && token.shape.includes('X')) return this.nocase(token.text)
+
+        return token.text
+      })
+      .join('')
+    return this.braced(s)
+  }
+
+  public apply(obj: unknown): unknown {
+    if (obj === null || typeof obj !== 'object') return obj
+
+    if (Array.isArray(obj)) return obj.map(e => this.apply(e))
+
+    const entry = obj as Record<string, unknown>
+    const english = typeof entry.language === 'string' ? Boolean(entry.language.match(/^en[-g]/i)) : true
+
+    for (const [k, v] of Object.entries(entry)) {
+      if (k === 'title' && !english && typeof v === 'string') {
+        entry[k] = this.title(v)
+      }
+      else {
+        entry[k] = this.apply(v)
+      }
+    }
+
+    return entry
+  }
+}
 
 function deepHas(obj, targetProp, visited = new WeakSet) {
   if (obj === null || typeof obj !== 'object') return false
@@ -404,7 +454,7 @@ function makeAffiliates(item): hg.AffiliatedPeople | undefined {
   if (item.assignee) {
     affiliates.push({
       role: 'holder',
-      names: [ item.assignee ],
+      names: [item.assignee],
     })
   }
   return affiliates.length ? affiliates as hg.AffiliatedPeople : undefined
@@ -412,24 +462,20 @@ function makeAffiliates(item): hg.AffiliatedPeople | undefined {
 
 export const Hayagriva = new class {
   public fromZotero(item: Serialized.RegularItem, skipField: RegExp): hg.TopLevelEntry {
+    const parent = makeParent(item)
     const entry: hg.BibliographyEntry = {
       type: hayagrivaType[item.itemType] || 'misc',
       title: item.title,
       language: item.language,
-      volume: item.volume,
-      issue: item.issue,
+      volume: asNumber(item.volume),
+      issue: asNumber(item.issue),
       'page-range': normalizePageRange(item.pages),
-      url: {
-        value: item.url,
-        date: dateOnly(item.accessDate),
-      },
-      parent: makeParent(item),
+      url: item.accessDate ? { value: item.url, date: dateOnly(item.accessDate) } : item.url,
       publisher: makePublisher(item),
       genre: item.type,
       affiliated: makeAffiliates(item),
+      parent,
     }
-    const parent = makeParent(item)
-    if (parent) entry.parent = parent
 
     if (item.date) {
       entry.date = dateOnly(item.date, item.originalDate)
@@ -437,17 +483,8 @@ export const Hayagriva = new class {
     else if (item.itemType === 'webpage' && item.accessDate) {
       entry.date = dateOnly(item.accessDate)
     }
-    if (item.language) entry.language = item.language
-    if (item.volume && deepHas(entry.parent, 'volume')) delete entry.volume
-    else if (item.volume) entry.volume = asNumber(item.volume)
-    if (item.issue) entry.issue = asNumber(item.issue)
-    if (item.pages) entry['page-range'] = normalizePageRange(item.pages)
 
-    if (item.url || item.accessDate) {
-      entry.url = item.accessDate
-        ? { value: item.url, date: dateOnly(item.accessDate) }
-        : item.url
-    }
+    if (item.volume && deepHas(entry.parent, 'volume')) delete entry.volume
 
     if (!entry.publisher && !entry.parent && (item.publisher || item.place)) {
       entry.publisher = item.place
@@ -486,7 +523,7 @@ export const Hayagriva = new class {
       }
     }
 
-    for (const [ role, persons ] of Object.entries(creators)) {
+    for (const [role, persons] of Object.entries(creators)) {
       if (persons.length) entry[role] = persons
     }
 
@@ -497,7 +534,7 @@ export const Hayagriva = new class {
       }
     }
 
-    return clean(entry) as hg.TopLevelEntry
+    return WordBracing.apply(clean(entry)) as hg.TopLevelEntry
   }
 
   private compile(postscript?: string): Postscript {
