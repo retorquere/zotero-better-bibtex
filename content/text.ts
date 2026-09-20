@@ -28,7 +28,7 @@ const RE = new class {
     const Char = `\\p{Lu}${char}`
     const whitespace = ' \t\n\r\u00A0'
     const protectedWord = [
-      `[${char}]*[\\p{Lu}][-${Char}]*`,
+      `[${char}]*[\\p{Lu}][${Char}]*`,
     ].join('|')
     const L = '\\p{Lu}\\p{Ll}\\p{Lt}\\p{Lm}\\p{Lo}'
 
