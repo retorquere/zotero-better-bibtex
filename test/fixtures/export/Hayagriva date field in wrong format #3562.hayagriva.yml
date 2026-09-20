@@ -1,17 +1,14 @@
-PDFOvercomingExploration:
-  date: '2026-07-07'
-  language: en
-  parent:
-    title: ResearchGate
-    type: web
-  serial-number:
-    doi: 10.48550/arXiv.1709.10089
-  title: (PDF) Overcoming Exploration in Reinforcement Learning with Demonstrations
-  type: web
-  url:
-    date: '2026-07-07'
-    value: https://www.researchgate.net/publication/320098321_Overcoming_Exploration_in_Reinforcement_Learning_with_Demonstrations
 andrychowiczHindsightExperienceReplay2018:
+  type: report
+  title: Hindsight Experience Replay
+  url:
+    value: http://arxiv.org/abs/1707.01495
+    date: 2026-06-23
+  parent:
+    title: arXiv.org
+  date: 2018-02-23
+  serial-number:
+    doi: 10.48550/arXiv.1707.01495
   author:
     - Andrychowicz, Marcin
     - Wolski, Filip
@@ -23,13 +20,16 @@ andrychowiczHindsightExperienceReplay2018:
     - Tobin, Josh
     - Abbeel, Pieter
     - Zaremba, Wojciech
-  date: '2018-02-23'
-  parent:
-    title: arXiv.org
-  serial-number:
-    doi: 10.48550/arXiv.1707.01495
-  title: Hindsight Experience Replay
-  type: report
+PDFOvercomingExploration:
+  type: web
+  title: (PDF) {Overcoming} {Exploration} in {Reinforcement} {Learning} with {Demonstrations}
+  language: en
   url:
-    date: '2026-06-23'
-    value: http://arxiv.org/abs/1707.01495
+    value: https://www.researchgate.net/publication/320098321_Overcoming_Exploration_in_Reinforcement_Learning_with_Demonstrations
+    date: 2026-07-07
+  parent:
+    type: web
+    title: ResearchGate
+  date: 2026-07-07
+  serial-number:
+    doi: 10.48550/arXiv.1709.10089

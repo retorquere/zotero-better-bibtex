@@ -1,6 +1,6 @@
 Benary1999:
   type: patent
-  title: Arc Thermal Spray Gun and Gas Cap therefor
+  title: Arc {Thermal} {Spray} {Gun} and {Gas} {Cap} therefor
   language: en
   affiliated:
     -
@@ -16,11 +16,11 @@ Benary1999:
 wheelerDirectModelingMicrocollapse2026:
   type: article
   title: Direct Modeling of Microcollapse and Pore Size by Population Balance
+  genre: Oral
   parent:
     title: International Society of Lyophilization and Freeze Drying 2026 Midwest Chapter Conference
     location: Chicago, IL, USA
     type: conference
-  genre: Oral
   date: 2026-04-15
   author:
     - Wheeler, Isaac S

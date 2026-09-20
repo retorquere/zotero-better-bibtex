@@ -33,8 +33,10 @@ const WordBracing = new class WordBrace {
       .map(token => {
         if (token.type !== 'word') return token.text
 
-        if (token.sentenceStart && token.shape.includes('xX')) return this.nocase(token.text)
-        if (!token.sentenceStart && token.shape.includes('X')) return this.nocase(token.text)
+        const sentenceStart = token.sentenceStart || token.subSentenceStart
+
+        if (sentenceStart && token.shape.includes('xX')) return this.nocase(token.text)
+        if (!sentenceStart && token.shape.includes('X')) return this.nocase(token.text)
 
         return token.text
       })
