@@ -33,7 +33,7 @@ const RE = new class {
     const L = '\\p{Lu}\\p{Ll}\\p{Lt}\\p{Lm}\\p{Lo}'
 
     this.leadingUnprotectedWord = new RegExp(`^([\\p{Lu}][${char}]*)[${whitespace}${P}]`, 'u')
-    this.protectedWords = new RegExp(`^(${protectedWord})(([-${whitespace}])(${protectedWord}))*`, 'u')
+    this.protectedWords = new RegExp(`^(${protectedWord})((([-${whitespace}])(${protectedWord}))|(-\\d+))*`, 'u')
     this.unprotectedWord = new RegExp(`^[${Char}]+`, 'u')
     this.whitespace = new RegExp(`^[${whitespace}]+`)
 
@@ -404,7 +404,7 @@ export const HTMLParser = new class {
             continue
           }
 
-          if (this.sentenceStart && (m = RE.leadingUnprotectedWord.exec(`${ text } `))) {
+          if (this.sentenceStart && (m = RE.leadingUnprotectedWord.exec(`${text} `))) {
             this.sentenceStart = false
             this.plaintext(normalized_node.childNodes, m[1], child.sourceCodeLocation.startOffset + (length - text.length))
             text = text.substring(m[1].length)
