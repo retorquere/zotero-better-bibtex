@@ -33,7 +33,7 @@ const RE = new class {
     const L = '\\p{Lu}\\p{Ll}\\p{Lt}\\p{Lm}\\p{Lo}'
 
     this.leadingUnprotectedWord = new RegExp(`^([\\p{Lu}][${char}]*)[${whitespace}${P}]`, 'u')
-    this.protectedWords = new RegExp(`^(${protectedWord})(([${whitespace}])(${protectedWord}))*`, 'u')
+    this.protectedWords = new RegExp(`^(${protectedWord})(([-${whitespace}])(${protectedWord}))*`, 'u')
     this.unprotectedWord = new RegExp(`^[${Char}]+`, 'u')
     this.whitespace = new RegExp(`^[${whitespace}]+`)
 
