@@ -17,8 +17,8 @@ class Serializer {
     return serialized
   }
 
-  private async item(item: Zotero.Item, libraryID: number | undefined): Promise<Serialized.Item> {
-    if (item.libraryID !== libraryID) await item.loadAllData()
+  private async item(item: Zotero.Item): Promise<Serialized.Item> {
+    await Zotero.Items.loadDataTypes([item])
 
     let serialized: Serialized.Item = item.toJSON() as unknown as Serialized.Item
     serialized.uri = Zotero.URI.getItemURI(item)
