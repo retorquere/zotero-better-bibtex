@@ -137,7 +137,7 @@
     "@fluent/bundle": "^0.19.1",
     "@retorquere/bibtex-parser": "^11.0.0",
     "@stylistic/eslint-plugin": "^5.10.0",
-    "@types/node": "^26.5.1",
+    "@types/node": "^26.6.2",
     "@typescript-eslint/eslint-plugin": "^8.70.0",
     "@xmldom/xmldom": "^0.9.12",
     "7zip-bin-full": "^26.3.1",
@@ -154,7 +154,7 @@
     "deep-cleaner": "^1.2.1",
     "diff": "^9.0.0",
     "dom-parser": "^1.1.5",
-    "dotenv": "^17.4.2",
+    "dotenv": "^18.0.1",
     "dprint": "^0.57.4",
     "ejs": "^6.0.1",
     "esbuild": "^0.28.2",
@@ -209,7 +209,7 @@
     "util": "^0.12.5",
     "xml-parser": "^1.2.1",
     "xpath": "^0.0.34",
-    "yargs": "^18.1.0"
+    "yargs": "^18.2.0"
   },
   "repository": {
     "type": "git",
