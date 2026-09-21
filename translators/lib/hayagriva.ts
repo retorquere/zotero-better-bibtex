@@ -13,6 +13,26 @@ import { Postscript, postscript as compile, noop } from '../lib/postscript'
 import { clone } from '../../content/object'
 import clean from 'clean-deep'
 
+function deepHas(obj, targetProp, visited = new WeakSet) {
+  if (obj === null || typeof obj !== 'object') return false
+  if (visited.has(obj)) return false
+  visited.add(obj)
+
+  if (Object.hasOwn(obj, targetProp) && obj[targetProp] !== null) return true
+
+  for (const key in obj) {
+    if (Object.hasOwn(obj, key)) {
+      const child = obj[key]
+
+      if (child !== null && typeof child === 'object') {
+        if (deepHas(child, targetProp, visited)) return true
+      }
+    }
+  }
+
+  return false
+}
+
 type Bibliography = Record<string, hg.TopLevelEntry>
 
 const hayagrivaType: Record<Serialized.RegularItem['itemType'], hg.EntryType> = {
@@ -92,17 +112,22 @@ function sanitizeKey(id: string): string {
   return (id || 'item').replace(/[^a-zA-Z0-9:_-]/g, '_')
 }
 
-function normalizeScalar(value: unknown): string {
-  if (value === null || typeof value === 'undefined') return ''
-  if (typeof value === 'string') return value.trim()
-  if (typeof value === 'number') return `${value}`.trim()
-  if (typeof value === 'boolean') return (value ? 'true' : 'false')
-  if (typeof value === 'bigint') return value.toString().trim()
+function normalizeScalar(v: unknown): string {
+  if (v === null || typeof v === 'undefined') return ''
+  if (typeof v === 'string') return v.trim()
+  if (typeof v === 'number') return `${v}`.trim()
+  if (typeof v === 'boolean') return (v ? 'true' : 'false')
+  if (typeof v === 'bigint') return v.toString().trim()
   return ''
 }
 
-function normalizePageRange(value: unknown): string {
-  const pages = normalizeScalar(value)
+function asNumber(v: string): string | number {
+  return (typeof v === 'string' && v.match(/^\d+$/)) ? parseInt(v, 10) : v
+}
+
+function normalizePageRange(v: unknown): string | number {
+  if (typeof v === 'string' && v.match(/^\d+$/)) return parseInt(v, 10)
+  const pages = normalizeScalar(v)
   if (!pages) return ''
   return pages.replace(/--+/g, '-')
 }
@@ -116,12 +141,12 @@ function formatParsedDate(date: dateparser.RichDate): string | number {
   switch (date.type) {
     case 'date': {
       if (typeof date.year !== 'number') return ''
-      let value = `${date.year}`.padStart(4, '0')
+      let v = `${date.year}`.padStart(4, '0')
       if (typeof date.month === 'number') {
-        value += `-${`${date.month}`.padStart(2, '0')}`
-        if (typeof date.day === 'number') value += `-${`${date.day}`.padStart(2, '0')}`
+        v += `-${`${date.month}`.padStart(2, '0')}`
+        if (typeof date.day === 'number') v += `-${`${date.day}`.padStart(2, '0')}`
       }
-      return maybeNumber(value)
+      return maybeNumber(v)
     }
 
     case 'season':
@@ -147,8 +172,8 @@ function dateOnly(date: string, origDate?: string): string | number {
   return formatParsedDate(parsed) || date
 }
 
-function normalizeType(value: unknown): string {
-  return normalizeScalar(value).toLowerCase()
+function normalizeType(v: unknown): string {
+  return normalizeScalar(v).toLowerCase()
 }
 
 function makePublisher(item: Serialized.RegularItem): hg.Publisher | undefined {
@@ -172,14 +197,11 @@ function makeParent(item: Serialized.RegularItem): hg.ParentEntry | undefined {
       break
 
     case 'bookSection':
-      if (item.publisher) {
+      if (item.publicationTitle) {
         return {
           type: 'book',
           title: item.publicationTitle,
-          publisher: {
-            name: item.publisher,
-            location: item.place,
-          },
+          ...(item.publisher ? { publisher: { name: item.publisher, location: item.place } } : {}),
         }
       }
       break
@@ -207,6 +229,18 @@ function makeParent(item: Serialized.RegularItem): hg.ParentEntry | undefined {
     case 'forumPost':
       if (item.publicationTitle) return { type: 'thread', title: item.publicationTitle }
       break
+
+    case 'encyclopediaArticle':
+      if (!item.publicationTitle) break
+      return {
+        type: 'reference',
+        title: item.publicationTitle,
+        ...(item.publisher ? { publisher: item.publisher } : {}),
+        ...(item.seriesNumber ? { issue: asNumber(item.seriesNumber) } : {}),
+        ...(item.volume ? { volume: asNumber(item.volume) } : {}),
+        ...(item.edition ? { edition: asNumber(item.edition) } : {}),
+        ...(item.series ? { parent: { type: 'reference', title: item.series } } : {}),
+      }
 
     case 'presentation':
       return {
@@ -394,12 +428,31 @@ export const Hayagriva = new class {
       genre: item.type,
       affiliated: makeAffiliates(item),
     }
+    const parent = makeParent(item)
+    if (parent) entry.parent = parent
 
     if (item.date) {
       entry.date = dateOnly(item.date, item.originalDate)
     }
     else if (item.itemType === 'webpage' && item.accessDate) {
       entry.date = dateOnly(item.accessDate)
+    }
+    if (item.language) entry.language = item.language
+    if (item.volume && deepHas(entry.parent, 'volume')) delete entry.volume
+    else if (item.volume) entry.volume = asNumber(item.volume)
+    if (item.issue) entry.issue = asNumber(item.issue)
+    if (item.pages) entry['page-range'] = normalizePageRange(item.pages)
+
+    if (item.url || item.accessDate) {
+      entry.url = item.accessDate
+        ? { value: item.url, date: dateOnly(item.accessDate) }
+        : item.url
+    }
+
+    if (!entry.publisher && !entry.parent && (item.publisher || item.place)) {
+      entry.publisher = item.place
+        ? { name: item.publisher, location: item.place }
+        : item.publisher
     }
 
     const serial = serialNumber(item)
@@ -437,6 +490,7 @@ export const Hayagriva = new class {
       if (persons.length) entry[role] = persons
     }
 
+    if (item.type) entry.genre = item.type
     if (skipField) {
       for (const field of Object.keys(entry)) {
         if (`hayagriva.${entry.type}.${field}`.match(skipField)) delete entry[field]
