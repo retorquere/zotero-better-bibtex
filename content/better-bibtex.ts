@@ -22,7 +22,7 @@ import { Scheduler } from './scheduler'
 import { TeXstudio } from './tex-studio'
 import { Cache } from './translators/worker'
 import type { ExportedItem, ExportedItemMetadata } from './worker/cache'
-import { startup as cacheStartup } from './cache'
+import { fillTouched, startup as cacheStartup } from './cache'
 
 import { Preference } from './prefs'
 
@@ -579,7 +579,10 @@ export class BetterBibTeX {
         cacheStartup()
         Events.addIdleListener('cache-purge', Preference.autoExportIdleWait)
         Events.on('idle', async ({ data: state }) => {
-          if (state.topic === 'cache-purge' && Cache.ready) await Cache.Serialized.purge()
+          if (state.topic === 'cache-purge' && Cache.ready) {
+            await Cache.Serialized.purge()
+            if (Preference.cacheTouch === 'drop') await fillTouched()
+          }
         })
       },
     })
