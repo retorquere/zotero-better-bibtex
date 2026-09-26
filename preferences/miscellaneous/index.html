@@ -27,7 +27,7 @@ Making any change here will drop your entire export cache. This is usually not a
     <meta itemprop="description" content="The Better BibTeX Configuration can be found under the regular Zotero preferences pane, tab ‘Better BibTeX’.
 The configuration of Better BibTeX is a little baroque compared to the standard Zotero Bib(La)TeX exporters (which only have hidden preferences). The defaults should just work, but here’s an attempt to describe what they do.
 Making any change here will drop your entire export cache. This is usually not a problem unless you have a really large library, but you can read about what is involved here.">
-    <meta itemprop="wordCount" content="296">
+    <meta itemprop="wordCount" content="367">
     <title>Miscellaneous :: Better BibTeX for Zotero</title><link rel="icon" href="/zotero-better-bibtex/better-bibtex.ico" type="image/x-icon">
 
     <link href="/zotero-better-bibtex/css/auto-complete/auto-complete.min.css" rel="stylesheet">
@@ -160,6 +160,12 @@ Making any change here will drop your entire export cache. This is usually not a
         <li><a href="#if-a-field-could-be-a-string-reference-export-it-as-an-unbraced-string-reference">If a field could be a @string reference, export it as an unbraced @string reference</a></li>
       </ul>
     </li>
+    <li><a href="#performance">Performance</a>
+      <ul>
+        <li><a href="#collect-performance-information-during-startup">Collect performance information during startup</a></li>
+        <li><a href="#collect-performance-information-while-zotero-is-running">Collect performance information while Zotero is running</a></li>
+      </ul>
+    </li>
   </ul>
 </nav>
                 </div>
@@ -231,6 +237,19 @@ really large library, but you can read about what is involved <a href="/zotero-b
 <li>Assume single-word fields to be @string vars</li>
 <li>Match against the @string declarations below</li>
 <li>Match against the @string declarations and their values below</li>
+</ul>
+<h2 id="performance">Performance<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h2>
+<h3 id="collect-performance-information-during-startup">Collect performance information during startup<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h3>
+<p>default: <code>no</code></p>
+<p>Collect performance information during startup, to help diagnose slow starts. Always on for non-release builds.</p>
+<h3 id="collect-performance-information-while-zotero-is-running">Collect performance information while Zotero is running<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h3>
+<p>default: <code>No</code></p>
+<p>Collect performance information while Zotero is running, to help diagnose slowdowns. &ldquo;Yes, except during sync&rdquo; pauses collection for the duration of a sync, since sync activity would otherwise dominate the collected information.</p>
+<p>Options:</p>
+<ul>
+<li>No</li>
+<li>Yes</li>
+<li>Yes, except during sync</li>
 </ul>
 
   <footer class="footline">
