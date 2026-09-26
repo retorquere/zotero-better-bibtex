@@ -381,8 +381,9 @@ Feature: Export
     Then an export using "Better CSL YAML" should match "export/*.csl.yml"
 
     Examples:
-      | file                                        | references |
-      | Export year ranges from Original Date #3482 | 1          |
+      | file                                                                     | references |
+      | YAML exports every list item of mappings starts with a bare - line #3615 | 1          |
+      | Export year ranges from Original Date #3482                              | 1          |
 
   @hayagriva
   Scenario Outline: Export <references> references for Better Hayagriva to <file>

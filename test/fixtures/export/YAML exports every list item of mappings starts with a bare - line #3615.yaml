@@ -1,0 +1,64 @@
+config:
+  id: 36a3b0b5-bad0-4a04-b79b-441c7cef77db
+  label: BetterBibTeX JSON
+  preferences:
+    autoExportDelay: 2
+    citekeyFormat: auth + shorttitle(3, 3) + year
+    extraMergeCitekeys: true
+    extraMergeCSL: true
+    extraMergeTeX: true
+    fillKeyAfter: 1
+    quickCopyMode: pandoc
+    skipFields: abstract
+    verbatimFields: url,doi,file,eprint,verba,verbb,verbc
+  options: {}
+version:
+  zotero: 10.0.3
+  bbt: 9.0.64
+collections: {}
+items:
+  -
+    key: AZ2HETTE
+    version: 69464
+    itemType: journalArticle
+    url: https://www.jstor.org/stable/43628893
+    volume: '54'
+    issue: '2'
+    pages: 208-31
+    publicationTitle: Medium Ævum
+    ISSN: 00258385 23981423
+    date: '1985'
+    DOI: 10.2307/43628893
+    title: The reliability of the rubrics in the B-text of <i>Piers Plowman</i>
+    shortTitle: Reliability of the Rubrics in the B-Text
+    citationKey: Adams1985ReliabilityRubricsBtext
+    creators:
+      -
+        firstName: Robert
+        lastName: Adams
+        creatorType: author
+    tags:
+      -
+        tag: '#pdf'
+      -
+        tag: '#copy'
+      -
+        tag: Piers Plowman
+      -
+        tag: Middle English
+      -
+        tag: textual criticism
+      -
+        tag: ordinatio
+      -
+        tag: manuscripts
+      -
+        tag: '#bibcheck'
+      -
+        tag: rubrics
+    dateAdded: 2012-11-13T15:37:24Z
+    dateModified: 2025-06-20T19:31:03Z
+    itemID: 4432
+    attachments: []
+    notes: []
+    autoJournalAbbreviation: ''
