@@ -163,31 +163,12 @@ export class NSItem {
     terms: string | ([string] | [string, string] | [string, string, string | number] | [string, string, string | number, boolean])[],
     library?: string | number
   ): Promise<any> {
-    const search = (new Zotero.Search)
+    const search = new Zotero.Search
 
     if (!terms.length) { /* */ }
     else if (typeof terms === 'string') {
       // Custom action for only string.
       // Similar behavior as quicksearch-titleCreateorYear, but search also in citationKey and ignore feeds and attachments
-
-      // Credit #2740
-      const fields = [
-        // search the quicksearch-titleCreatorYear fields
-        'title',
-        'publicationTitle',
-        'shortTitle',
-        'court',
-        'year',
-
-        // plus the citationKey
-        'citationKey',
-      ]
-
-      search.addCondition('blockStart')
-      for (const field of fields) {
-        search.addCondition(field, 'contains', terms, false)
-      }
-      search.addCondition('blockEnd')
 
       // Ignore Feeds
       for (const feed of Zotero.Feeds.getAll()) {
@@ -205,6 +186,26 @@ export class NSItem {
           throw new Error(`library ${ JSON.stringify(library) } not found`)
         }
       }
+
+      // Credit #2740
+      const fields = [
+        // search the quicksearch-titleCreatorYear fields
+        'title',
+        'publicationTitle',
+        'shortTitle',
+        'court',
+        'year',
+
+        // plus the citationKey
+        'citationKey',
+      ]
+
+      search.addCondition('groupStart', 'true', '')
+      search.addCondition('joinMode', 'any')
+      for (const field of fields) {
+        search.addCondition(field, 'contains', terms, false)
+      }
+      search.addCondition('groupEnd', 'true', '')
     }
     else {
       blk: for (const term of terms) {
