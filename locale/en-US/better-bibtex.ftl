@@ -55,6 +55,10 @@ better-bibtex_error-report_include-cache =
 better-bibtex_error-report_include-attachments = 
   .label = attachment metadata
 
+better-bibtex_error-report_profiling-active = Better BibTeX is currently collecting performance information.
+better-bibtex_error-report_stop-profiling =
+  .label = Stop collecting performance information
+
 better-bibtex_error-report_items = 
   .label = Items
 
@@ -111,6 +115,12 @@ better-bibtex_preferences_advanced_export_title-case =
 better-bibtex_preferences_advanced_export_title-case_warning = If you're dead-set on ignoring both BibTeX/BibLaTeX best practice (see the BBT FAQ) and the Zotero recommendations on title/sentence casing, you can turn this off to suppress title casing for English items
 better-bibtex_preferences_advanced_export_workers_cache = 
   .label = Enable caching for background exports
+
+better-bibtex_preferences_advanced_export_cache-touch = Update cache
+better-bibtex_preferences_advanced_export_cache-touch_drop =
+  .label = When exporting
+better-bibtex_preferences_advanced_export_cache-touch_fill =
+  .label = When items change
 
 better-bibtex_preferences_advanced_extra-field_as-note = 
   .label = Treat the `extra` field as a note
@@ -406,6 +416,20 @@ better-bibtex_preferences_rescan-citekeys =
 
 better-bibtex_preferences_reset-cache = 
   .label = Reset cache on next start
+
+better-bibtex_preferences_misc_performance = Performance
+
+better-bibtex_preferences_misc_performance_startup = 
+  .label = Collect performance information during startup
+
+better-bibtex_preferences_misc_performance_runtime = Collect performance information while Zotero is running
+
+better-bibtex_preferences_misc_performance_runtime_no =
+  .label = No
+better-bibtex_preferences_misc_performance_runtime_yes =
+  .label = Yes
+better-bibtex_preferences_misc_performance_runtime_except-sync =
+  .label = Yes, except during sync
 
 better-bibtex_preferences_tab_auto-export = Automatic export
 

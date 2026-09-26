@@ -6,7 +6,7 @@ const pluginID = 'better-bibtex@iris-advies.com'
 import { Deferred } from './promise'
 const Ready = new Deferred<boolean>
 
-import { getItemsAsync } from './get-items-async'
+import { profiler } from './audit'
 
 import { DisplayOptions } from '../gen/translators'
 import type { Reason } from './bootstrap'
@@ -22,6 +22,7 @@ import { Scheduler } from './scheduler'
 import { TeXstudio } from './tex-studio'
 import { Cache } from './translators/worker'
 import type { ExportedItem, ExportedItemMetadata } from './worker/cache'
+import { fillTouched, startup as cacheStartup } from './cache'
 
 import { Preference } from './prefs'
 
@@ -555,20 +556,14 @@ export class BetterBibTeX {
   public async startup(reason: Reason): Promise<void> {
     orchestrator.add({
       id: 'start',
-      description: 'waiting for zotero',
+      description: 'foundation',
       startup: async () => {
-        // https://groups.google.com/d/msg/zotero-dev/QYNGxqTSpaQ/uvGObVNlCgAJ
-        // this is what really takes long
         await Promise.all([
           Zotero.initializationPromise,
           Zotero.unlockPromise,
           // Zotero.uiReadyPromise,
         ])
-        while (await Zotero.DB.valueQueryAsync("SELECT COUNT(*) FROM settings WHERE setting='globalSchema' AND key='migrateExtra'")) {
-          await new Promise(resolve => setTimeout(resolve, 5000))
-        }
 
-        // and this
         if ((await Translators.needsInstall()).length) await Zotero.Translators.init()
 
         await l10n.initialize()
@@ -581,17 +576,13 @@ export class BetterBibTeX {
         Events.on('export-progress', ({ data: { pct, message } }) => {
           this.setProgress(pct, message)
         })
-
-        Events.on('cache-touch', async ({ data: { itemIDs } }) => {
-          const withParents: Set<number> = new Set(itemIDs)
-          for (const item of await getItemsAsync(itemIDs)) {
-            if (typeof item?.parentID === 'number') withParents.add(item.parentID)
-          }
-          await Cache.touch([...withParents])
-        })
+        cacheStartup()
         Events.addIdleListener('cache-purge', Preference.autoExportIdleWait)
         Events.on('idle', async ({ data: state }) => {
-          if (state.topic === 'cache-purge' && Cache.ready) await Cache.Serialized.purge()
+          if (state.topic === 'cache-purge' && Cache.ready) {
+            await Cache.Serialized.purge()
+            if (Preference.cacheTouch === 'drop') await fillTouched()
+          }
         })
       },
     })
@@ -625,10 +616,16 @@ export class BetterBibTeX {
               menuType: 'submenu',
               l10nID: 'better-bibtex',
               menus: [
-                // eslint-disable-next-line @typescript-eslint/no-misused-promises
-                { menuType: 'menuitem', l10nID: 'better-bibtex_aux-scanner', onCommand: (_event, _context) => Zotero.BetterBibTeX.scanAUX('tag') },
-                // eslint-disable-next-line @typescript-eslint/no-misused-promises
-                { menuType: 'menuitem', l10nID: 'better-bibtex_report-errors', onCommand: (_event, _context) => Zotero.BetterBibTeX.ErrorReport.open() },
+                {
+                  menuType: 'menuitem',
+                  l10nID: 'better-bibtex_aux-scanner',
+                  onCommand: (_event, _context) => void Zotero.BetterBibTeX.scanAUX('tag'),
+                },
+                {
+                  menuType: 'menuitem',
+                  l10nID: 'better-bibtex_report-errors',
+                  onCommand: (_event, _context) => void Zotero.BetterBibTeX.ErrorReport.open(),
+                },
               ],
             },
           ],
@@ -659,7 +656,11 @@ export class BetterBibTeX {
           pluginID,
           target: 'main/menubar/help',
           menus: [
-            { menuType: 'menuitem', l10nID: 'better-bibtex_report-errors', onCommand: (_event, _context) => void Zotero.BetterBibTeX.ErrorReport.open() },
+            {
+              menuType: 'menuitem',
+              l10nID: 'better-bibtex_report-errors',
+              onCommand: (_event, _context) => void Zotero.BetterBibTeX.ErrorReport.open(),
+            },
             {
               menuType: 'menuitem',
               l10nID: 'better-bibtex_remigrate',
@@ -765,7 +766,11 @@ export class BetterBibTeX {
                   menuType: 'separator',
                   onShowing: itemsSelected,
                 },
-                { menuType: 'menuitem', l10nID: 'better-bibtex_report-errors', onCommand: (_event, _context) => void Zotero.BetterBibTeX.ErrorReport.open('items') },
+                {
+                  menuType: 'menuitem',
+                  l10nID: 'better-bibtex_report-errors',
+                  onCommand: (_event, _context) => void Zotero.BetterBibTeX.ErrorReport.open('items'),
+                },
               ],
             },
           ],
@@ -942,7 +947,7 @@ export class BetterBibTeX {
 
         await KeyManager.fillMissing()
       },
-      shutdown: async () => { // eslint-disable-line @typescript-eslint/require-await
+      shutdown: async () => {
         Zotero.getMainWindows().forEach(win => {
           this.onMainWindowUnload({ window: win })
         })
@@ -955,6 +960,7 @@ export class BetterBibTeX {
         for (const endpoint of Object.keys(Zotero.Server.Endpoints)) {
           if (endpoint.startsWith('/better-bibtex/')) delete Zotero.Server.Endpoints[endpoint]
         }
+        if (profiler.active) await profiler.stop('shutdown')
       },
     })
 

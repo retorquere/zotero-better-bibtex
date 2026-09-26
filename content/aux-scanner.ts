@@ -12,7 +12,7 @@ import { selectedCollection } from './collection'
 
 const { FilePicker } = ChromeUtils.importESModule('chrome://zotero/content/modules/filePicker.mjs')
 
-import BBT from '../gen/version.cjs'
+import * as BBT from '../gen/build'
 
 type Parsed = {
   source: 'MarkDown' | 'BibTeX AUX'

@@ -4,11 +4,21 @@ import boto3
 import json
 from munch import *
 import os
+import shutil
 import sys
 import tarfile
+import time
 from zipfile import ZipFile
 import requests
 from pathlib import Path
+
+cutoff = time.time() - (4 * 7 * 24 * 60 * 60)
+logs_dir = Path('logs')
+if logs_dir.exists():
+  for log_dir in logs_dir.iterdir():
+    if log_dir.is_dir() and log_dir.stat().st_mtime < cutoff:
+      print(f'removing old log directory {log_dir}')
+      shutil.rmtree(log_dir)
 
 logs = sys.argv[1:]
 if len(logs) == 0:
