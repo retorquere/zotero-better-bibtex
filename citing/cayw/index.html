@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="height=device-height, width=device-width, initial-scale=1.0, minimum-scale=1.0">
     <meta name="generator" content="Hugo 0.166.0">
-    <meta name="generator" content="Relearn 9.1.0+aa16cb1ffeba3d0a07a6b29111eeb8a5d3a62d69">
+    <meta name="generator" content="Relearn 9.1.0+edd32dd46699cf37d4c81be4a1fbeb8bd7112e9e">
     <meta name="description" content="PSA: as of Zotero 5.0.71, access to the CAYW URL will no longer work from the browser for security reasons; curl and other programmatic access such as from editors access will work.
 Good news for TeXnicians and those down with Mark (aka Markdown, RST, whatnot): this is the time to go pester the author of your favorite editor for Zotero integration!
 Editor integration vim Graciously supplied by David Lukes:">
@@ -38,80 +38,43 @@ Editor integration vim Graciously supplied by David Lukes:">
     <script src="/zotero-better-bibtex/js/auto-complete/auto-complete.min.js" defer></script>
     <script src="/zotero-better-bibtex/js/search-lunr.min.js" defer></script>
     <script src="/zotero-better-bibtex/js/search.min.js" defer></script>
-    <script>
-      window.relearn = window.relearn || {};
-      window.relearn.index_js_url="../../"+"searchindex.en.min.js";
-    </script>
+    <script type="application/json" id="R-search-config">{
+      "indexFile": "searchindex.en.min.js"
+    }</script>
     <script src="/zotero-better-bibtex/js/lunr/lunr.min.js" defer></script>
     <script src="/zotero-better-bibtex/js/lunr/lunr.stemmer.support.min.js" defer></script>
     <script src="/zotero-better-bibtex/js/lunr/lunr.multi.min.js" defer></script>
     <script src="/zotero-better-bibtex/js/lunr/lunr.en.min.js" defer></script>
-    <script>
-      window.relearn = window.relearn || {};
-      window.relearn.contentLangs=['en'];
-    </script>
-    <link href="/zotero-better-bibtex/fonts/fontawesome/css/all.min.css" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/zotero-better-bibtex/fonts/fontawesome/css/all.min.css" rel="stylesheet"></noscript>
+    <script type="application/json" id="R-search-lunr-config">{
+      "contentLangs": [
+        "en"
+      ]
+    }</script>
+    <link href="/zotero-better-bibtex/fonts/fontawesome/css/all.min.css" rel="stylesheet" media="print" class="R-async-style"><noscript><link href="/zotero-better-bibtex/fonts/fontawesome/css/all.min.css" rel="stylesheet"></noscript>
     <link href="/zotero-better-bibtex/css/theme.min.css" rel="stylesheet">
     <link href="/zotero-better-bibtex/css/format-html.min.css" rel="stylesheet" id="R-format-style">
-    <script>
-      window.relearn = window.relearn || {};
-      // configuration
-      window.relearn.path='\/citing\/cayw\/index.html';
-      window.relearn.relBasePath='..\/..';
-      window.relearn.relBaseUri='..\/..\/..';
-      window.relearn.absBaseUri='\/zotero-better-bibtex';
-      window.relearn.disableInlineCopyToClipboard=true;
-      window.relearn.enableBlockCodeWrap=true;
-      // translations
-      window.T_Copy_to_clipboard = `Copy text to clipboard`;
-      window.T_Copied_to_clipboard = `Text copied to clipboard!`;
-      window.T_Link_copied_to_clipboard = `Link copied to clipboard!`;
-      window.T_Reset_view = `Reset view`;
-      window.T_View_reset = `View reset!`;
-      window.T_No_results_found = `No results found for "{0}"`;
-      window.T_N_results_found = `{1} results found for "{0}"`;
-      window.T_Browser_unsupported_feature = `This browser doesn't support this feature`;
-      // variant stuff
-      window.relearn.themevariants = [ 'green' ];
-      window.relearn.customvariantprefix = "my-custom-";
-      window.relearn.changeVariant = function(variant) {
-        var oldVariant = document.documentElement.dataset.rThemeVariant;
-        window.localStorage.setItem(window.relearn.absBaseUri + "/variant", variant);
-        document.documentElement.dataset.rThemeVariant = variant;
-        if (oldVariant != variant) {
-          document.dispatchEvent( new CustomEvent('themeVariantLoaded', { detail: { variant, oldVariant } }) );
-          window.relearn.markVariant();
-        }
+    <script type="application/json" id="R-theme-config">{
+      "absBaseUri": "/zotero-better-bibtex",
+      "disableInlineCopyToClipboard": true,
+      "enableBlockCodeWrap": true,
+      "path": "/citing/cayw/index.html",
+      "relBasePath": "../..",
+      "relBaseUri": "../../..",
+      "themevariants": [
+        "green"
+      ],
+      "translations": {
+        "Browser_unsupported_feature": "This browser doesn't support this feature",
+        "Copied_to_clipboard": "Text copied to clipboard!",
+        "Copy_to_clipboard": "Copy text to clipboard",
+        "Link_copied_to_clipboard": "Link copied to clipboard!",
+        "N_results_found": "{1} results found for \"{0}\"",
+        "No_results_found": "No results found for \"{0}\"",
+        "Reset_view": "Reset view",
+        "View_reset": "View reset!"
       }
-      window.relearn.markVariant = function() {
-        var variant = window.localStorage.getItem(window.relearn.absBaseUri + "/variant");
-        document.querySelectorAll(".R-variantswitcher select").forEach((select) => {select.value = variant;});
-      }
-      window.relearn.initVariant = function() {
-        var variant = window.localStorage.getItem(window.relearn.absBaseUri + "/variant") ?? "";
-        if( !variant ||
-            (!variant.startsWith(window.relearn.customvariantprefix) && !window.relearn.themevariants.includes(variant)) ||
-            (variant.startsWith(window.relearn.customvariantprefix) && !window.localStorage.getItem(window.relearn.absBaseUri + "/variantstylesheet-" + variant)) ){
-          variant = window.relearn.themevariants[0];
-          window.localStorage.setItem(window.relearn.absBaseUri + "/variant", variant);
-        }
-        document.documentElement.dataset.rThemeVariant = variant;
-      }
-      window.relearn.initVariant();
-      window.relearn.markVariant();
-      window.relearn.scrollbarSize = (function() {
-        var scrollDiv = document.createElement('div');
-        scrollDiv.className = 'scrollbar-measure';
-        var parent = document.body || document.documentElement;
-        parent.appendChild(scrollDiv);
-        var size = scrollDiv.offsetWidth - scrollDiv.clientWidth;
-        parent.removeChild(scrollDiv);
-        return size;
-      })();
-      if (window.relearn.scrollbarSize) {
-        document.documentElement.classList.add('classic-scrollbars');
-      }
-    </script>
+    }</script>
+    <script src="/zotero-better-bibtex/js/theme-head.min.js"></script>
 <!-- WARNING: this page is generated by https://gohugo.io/ from site/content/citing/cayw.md. DO NOT EDIT BY HAND -->
 <script type="text/javascript">
   if (location.protocol === 'http:' && (location.port === 80 || !location.port)) {
@@ -140,10 +103,10 @@ Editor integration vim Graciously supplied by David Lukes:">
           <div class="topbar-sidebar-divider default-animation"></div>
           <div class="topbar-area topbar-area-start" data-area="start">
             <div class="topbar-button topbar-button-sidebar default-animation" data-content-empty="disable" data-width-s="show" data-width-m="hide" data-width-l="hide">
-<span class="btn cstyle button link noborder notitle interactive"><button onclick="toggleNav()" type="button" title="Menu (CTRL&#43;ALT&#43;n)"><i class="fa-fw fas fa-bars"></i></button></span>
+<span class="btn cstyle button link noborder notitle interactive"><button data-button-action="toggle-nav" type="button" title="Menu (CTRL&#43;ALT&#43;n)"><i class="fa-fw fas fa-bars"></i></button></span>
             </div>
             <div class="topbar-button topbar-button-toc default-animation" data-content-empty="hide" data-width-s="show" data-width-m="show" data-width-l="show">
-<span class="btn cstyle button link noborder notitle interactive"><button onclick="toggleTopbarFlyout(this)" type="button" title="Table of Contents (CTRL&#43;ALT&#43;t)"><i class="fa-fw fas fa-table-list"></i></button></span>
+<span class="btn cstyle button link noborder notitle interactive"><button data-button-action="toggle-flyout" type="button" title="Table of Contents (CTRL&#43;ALT&#43;t)"><i class="fa-fw fas fa-table-list"></i></button></span>
               <div class="topbar-content">
                 <div class="topbar-content-wrapper" tabindex="-1">
 <nav class="TableOfContents">
@@ -180,7 +143,7 @@ Editor integration vim Graciously supplied by David Lukes:">
 <span class="btn cstyle button link noborder notitle interactive"><a href="/zotero-better-bibtex/citing/migrating/index.html" title="Migrating from Word/Libreoffice (🡒)"><i class="fa-fw fas fa-chevron-right"></i></a></span>
             </div>
             <div class="topbar-button topbar-button-more default-animation" data-content-empty="hide" data-width-s="show" data-width-m="show" data-width-l="show">
-<span class="btn cstyle button link noborder notitle interactive"><button onclick="toggleTopbarFlyout(this)" type="button" title="More"><i class="fa-fw fas fa-ellipsis-v"></i></button></span>
+<span class="btn cstyle button link noborder notitle interactive"><button data-button-action="toggle-flyout" type="button" title="More"><i class="fa-fw fas fa-ellipsis-v"></i></button></span>
               <div class="topbar-content">
                 <div class="topbar-content-wrapper" tabindex="-1">
                   <div class="topbar-area topbar-area-more" data-area="more">
@@ -196,7 +159,7 @@ Editor integration vim Graciously supplied by David Lukes:">
         <div class="flex-block-wrapper">
 <article class="default">
   <header class="headline">
-<div class="R-taxonomy taxonomy-tags cstyle tags" title="Tags" style="--VARIABLE-TAGS-BG-color: var(--INTERNAL-TAG-BG-color);">
+<div class="R-taxonomy taxonomy-tags tags" title="Tags">
   <i class="fa-fw fas fa-layer-group"></i>
   <ul>
     <li><a class="term-link" href="/zotero-better-bibtex/tags/citation-keys/index.html">Citation Keys</a></li>
@@ -270,42 +233,42 @@ Editor integration vim Graciously supplied by David Lukes:">
 <p>BBT exposes an URL at http://127.0.0.1:23119/better-bibtex/cayw <sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>. The url accepts
 the following URL parameters:</p>
 <table>
-	<thead>
-			<tr>
-					<th>parameter</th>
-					<th></th>
-			</tr>
-	</thead>
-	<tbody>
-			<tr>
-					<td><code>probe</code></td>
-					<td>If set to any non-empty value, returns <code>ready</code>. You can use this to test whether BBT CAYW picking is live; it will not pop up the picker</td>
-			</tr>
-			<tr>
-					<td><code>format</code></td>
-					<td>Set the output format</td>
-			</tr>
-			<tr>
-					<td><code>clipboard</code></td>
-					<td>Any non-empty value will copy the results to the clipboard</td>
-			</tr>
-			<tr>
-					<td><code>minimize</code></td>
-					<td>Any non-empty value will minimize Zotero windows after a pick</td>
-			</tr>
-			<tr>
-					<td><code>texstudio</code></td>
-					<td>Any non-empty value will try to push the pick to TeXstudio</td>
-			</tr>
-			<tr>
-					<td><code>selected</code></td>
-					<td>Any non-empty value will use the current selection in Zotero rather than popping up the pick window</td>
-			</tr>
-			<tr>
-					<td><code>select</code></td>
-					<td>More of a gimmick than anything else, but if you add select=true, BBT will select the picked items in Zotero.</td>
-			</tr>
-	</tbody>
+  <thead>
+    <tr>
+      <th>parameter</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>probe</code></td>
+      <td>If set to any non-empty value, returns <code>ready</code>. You can use this to test whether BBT CAYW picking is live; it will not pop up the picker</td>
+    </tr>
+    <tr>
+      <td><code>format</code></td>
+      <td>Set the output format</td>
+    </tr>
+    <tr>
+      <td><code>clipboard</code></td>
+      <td>Any non-empty value will copy the results to the clipboard</td>
+    </tr>
+    <tr>
+      <td><code>minimize</code></td>
+      <td>Any non-empty value will minimize Zotero windows after a pick</td>
+    </tr>
+    <tr>
+      <td><code>texstudio</code></td>
+      <td>Any non-empty value will try to push the pick to TeXstudio</td>
+    </tr>
+    <tr>
+      <td><code>selected</code></td>
+      <td>Any non-empty value will use the current selection in Zotero rather than popping up the pick window</td>
+    </tr>
+    <tr>
+      <td><code>select</code></td>
+      <td>More of a gimmick than anything else, but if you add select=true, BBT will select the picked items in Zotero.</td>
+    </tr>
+  </tbody>
 </table>
 <p>The following formats are available:</p>
 <ul>
@@ -346,30 +309,30 @@ the following URL parameters:</p>
 <p>The <code>eta</code> formatter is great for experimentation, but if you need a format for a common target application, feel free to request a change to have that added to this list.</p>
 <p>The picker passes the following data along with your picked items if you filled them out:</p>
 <table>
-	<thead>
-			<tr>
-					<th>field</th>
-					<th></th>
-			</tr>
-	</thead>
-	<tbody>
-			<tr>
-					<td><code>locator</code></td>
-					<td>the place within the work (e.g. page number)</td>
-			</tr>
-			<tr>
-					<td><code>prefix</code></td>
-					<td>for stuff like &ldquo;see &hellip;&rdquo;</td>
-			</tr>
-			<tr>
-					<td><code>suffix</code></td>
-					<td>for stuff after the citations</td>
-			</tr>
-			<tr>
-					<td><code>suppress author</code></td>
-					<td>if you only want the year</td>
-			</tr>
-	</tbody>
+  <thead>
+    <tr>
+      <th>field</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>locator</code></td>
+      <td>the place within the work (e.g. page number)</td>
+    </tr>
+    <tr>
+      <td><code>prefix</code></td>
+      <td>for stuff like &ldquo;see &hellip;&rdquo;</td>
+    </tr>
+    <tr>
+      <td><code>suffix</code></td>
+      <td>for stuff after the citations</td>
+    </tr>
+    <tr>
+      <td><code>suppress author</code></td>
+      <td>if you only want the year</td>
+    </tr>
+  </tbody>
 </table>
 <p>However not all output formats support these. Pandoc and scannable cite are the richest ones, supporting all 4. MultiMarkdown supports
 none. The <code>formatted-</code> formats will ignore these. LaTeX supports all 4, in a way:</p>
@@ -386,102 +349,102 @@ command is generated</li>
 </ul>
 <p>Some of the formatters use abbreviated labels for the results if you include a locator. The defaults are:</p>
 <table>
-	<thead>
-			<tr>
-					<th>locator label</th>
-					<th>abbreviation</th>
-			</tr>
-	</thead>
-	<tbody>
-			<tr>
-					<td>article</td>
-					<td>art.</td>
-			</tr>
-			<tr>
-					<td>chapter</td>
-					<td>ch.</td>
-			</tr>
-			<tr>
-					<td>subchapter</td>
-					<td>subch.</td>
-			</tr>
-			<tr>
-					<td>column</td>
-					<td>col.</td>
-			</tr>
-			<tr>
-					<td>figure</td>
-					<td>fig.</td>
-			</tr>
-			<tr>
-					<td>line</td>
-					<td>l.</td>
-			</tr>
-			<tr>
-					<td>note</td>
-					<td>n.</td>
-			</tr>
-			<tr>
-					<td>issue</td>
-					<td>no.</td>
-			</tr>
-			<tr>
-					<td>opus</td>
-					<td>op.</td>
-			</tr>
-			<tr>
-					<td>page</td>
-					<td>p.</td>
-			</tr>
-			<tr>
-					<td>paragraph</td>
-					<td>para.</td>
-			</tr>
-			<tr>
-					<td>subparagraph</td>
-					<td>subpara.</td>
-			</tr>
-			<tr>
-					<td>part</td>
-					<td>pt.</td>
-			</tr>
-			<tr>
-					<td>rule</td>
-					<td>r.</td>
-			</tr>
-			<tr>
-					<td>section</td>
-					<td>sec.</td>
-			</tr>
-			<tr>
-					<td>subsection</td>
-					<td>subsec.</td>
-			</tr>
-			<tr>
-					<td>Section</td>
-					<td>Sec.</td>
-			</tr>
-			<tr>
-					<td>sub verbo</td>
-					<td>sv.</td>
-			</tr>
-			<tr>
-					<td>schedule</td>
-					<td>sch.</td>
-			</tr>
-			<tr>
-					<td>title</td>
-					<td>tit.</td>
-			</tr>
-			<tr>
-					<td>verse</td>
-					<td>vrs.</td>
-			</tr>
-			<tr>
-					<td>volume</td>
-					<td>vol.</td>
-			</tr>
-	</tbody>
+  <thead>
+    <tr>
+      <th>locator label</th>
+      <th>abbreviation</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>article</td>
+      <td>art.</td>
+    </tr>
+    <tr>
+      <td>chapter</td>
+      <td>ch.</td>
+    </tr>
+    <tr>
+      <td>subchapter</td>
+      <td>subch.</td>
+    </tr>
+    <tr>
+      <td>column</td>
+      <td>col.</td>
+    </tr>
+    <tr>
+      <td>figure</td>
+      <td>fig.</td>
+    </tr>
+    <tr>
+      <td>line</td>
+      <td>l.</td>
+    </tr>
+    <tr>
+      <td>note</td>
+      <td>n.</td>
+    </tr>
+    <tr>
+      <td>issue</td>
+      <td>no.</td>
+    </tr>
+    <tr>
+      <td>opus</td>
+      <td>op.</td>
+    </tr>
+    <tr>
+      <td>page</td>
+      <td>p.</td>
+    </tr>
+    <tr>
+      <td>paragraph</td>
+      <td>para.</td>
+    </tr>
+    <tr>
+      <td>subparagraph</td>
+      <td>subpara.</td>
+    </tr>
+    <tr>
+      <td>part</td>
+      <td>pt.</td>
+    </tr>
+    <tr>
+      <td>rule</td>
+      <td>r.</td>
+    </tr>
+    <tr>
+      <td>section</td>
+      <td>sec.</td>
+    </tr>
+    <tr>
+      <td>subsection</td>
+      <td>subsec.</td>
+    </tr>
+    <tr>
+      <td>Section</td>
+      <td>Sec.</td>
+    </tr>
+    <tr>
+      <td>sub verbo</td>
+      <td>sv.</td>
+    </tr>
+    <tr>
+      <td>schedule</td>
+      <td>sch.</td>
+    </tr>
+    <tr>
+      <td>title</td>
+      <td>tit.</td>
+    </tr>
+    <tr>
+      <td>verse</td>
+      <td>vrs.</td>
+    </tr>
+    <tr>
+      <td>volume</td>
+      <td>vol.</td>
+    </tr>
+  </tbody>
 </table>
 <p>In your call to the CAYW URL, you can override the abbreviations by adding them to the query, e.g. http://127.0.0.1:23119/better-bibtex/cayw?format=mmd&amp;page=&amp;Section=sec., page-picks will have no label, and Section-picks will get <code>sec.</code> rather than <code>Sec.</code>.</p>
 <p>The <code>clipboard</code> option can be used as a workaround for editors that haven&rsquo;t gotten around to integrating this yet. If

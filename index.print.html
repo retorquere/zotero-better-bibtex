@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="height=device-height, width=device-width, initial-scale=1.0, minimum-scale=1.0">
     <meta name="generator" content="Hugo 0.166.0">
-    <meta name="generator" content="Relearn 9.1.0+aa16cb1ffeba3d0a07a6b29111eeb8a5d3a62d69">
+    <meta name="generator" content="Relearn 9.1.0+edd32dd46699cf37d4c81be4a1fbeb8bd7112e9e">
     <meta name="description" content="Better BibTeX (BBT) is an extension for Zotero and (in principle) Juris-M that makes it easier to manage bibliographic data, especially for people authoring documents using text-based toolchains (e.g. based on LaTeX / Markdown).
 Notice With the advent of Zotero 8, items have a Zotero-native citation key field. This has replaced the BBT citation key field.">
     <meta name="author" content="">
@@ -31,80 +31,43 @@ Notice With the advent of Zotero 8, items have a Zotero-native citation key fiel
     <script src="/zotero-better-bibtex/js/auto-complete/auto-complete.min.js" defer></script>
     <script src="/zotero-better-bibtex/js/search-lunr.min.js" defer></script>
     <script src="/zotero-better-bibtex/js/search.min.js" defer></script>
-    <script>
-      window.relearn = window.relearn || {};
-      window.relearn.index_js_url="./"+"searchindex.en.min.js";
-    </script>
+    <script type="application/json" id="R-search-config">{
+      "indexFile": "searchindex.en.min.js"
+    }</script>
     <script src="/zotero-better-bibtex/js/lunr/lunr.min.js" defer></script>
     <script src="/zotero-better-bibtex/js/lunr/lunr.stemmer.support.min.js" defer></script>
     <script src="/zotero-better-bibtex/js/lunr/lunr.multi.min.js" defer></script>
     <script src="/zotero-better-bibtex/js/lunr/lunr.en.min.js" defer></script>
-    <script>
-      window.relearn = window.relearn || {};
-      window.relearn.contentLangs=['en'];
-    </script>
-    <link href="/zotero-better-bibtex/fonts/fontawesome/css/all.min.css" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/zotero-better-bibtex/fonts/fontawesome/css/all.min.css" rel="stylesheet"></noscript>
+    <script type="application/json" id="R-search-lunr-config">{
+      "contentLangs": [
+        "en"
+      ]
+    }</script>
+    <link href="/zotero-better-bibtex/fonts/fontawesome/css/all.min.css" rel="stylesheet" media="print" class="R-async-style"><noscript><link href="/zotero-better-bibtex/fonts/fontawesome/css/all.min.css" rel="stylesheet"></noscript>
     <link href="/zotero-better-bibtex/css/theme.min.css" rel="stylesheet">
     <link href="/zotero-better-bibtex/css/format-print.min.css" rel="stylesheet" id="R-format-style">
-    <script>
-      window.relearn = window.relearn || {};
-      // configuration
-      window.relearn.path='\/index.html';
-      window.relearn.relBasePath='.';
-      window.relearn.relBaseUri='..';
-      window.relearn.absBaseUri='\/zotero-better-bibtex';
-      window.relearn.disableInlineCopyToClipboard=true;
-      window.relearn.enableBlockCodeWrap=true;
-      // translations
-      window.T_Copy_to_clipboard = `Copy text to clipboard`;
-      window.T_Copied_to_clipboard = `Text copied to clipboard!`;
-      window.T_Link_copied_to_clipboard = `Link copied to clipboard!`;
-      window.T_Reset_view = `Reset view`;
-      window.T_View_reset = `View reset!`;
-      window.T_No_results_found = `No results found for "{0}"`;
-      window.T_N_results_found = `{1} results found for "{0}"`;
-      window.T_Browser_unsupported_feature = `This browser doesn't support this feature`;
-      // variant stuff
-      window.relearn.themevariants = [ 'green' ];
-      window.relearn.customvariantprefix = "my-custom-";
-      window.relearn.changeVariant = function(variant) {
-        var oldVariant = document.documentElement.dataset.rThemeVariant;
-        window.localStorage.setItem(window.relearn.absBaseUri + "/variant", variant);
-        document.documentElement.dataset.rThemeVariant = variant;
-        if (oldVariant != variant) {
-          document.dispatchEvent( new CustomEvent('themeVariantLoaded', { detail: { variant, oldVariant } }) );
-          window.relearn.markVariant();
-        }
+    <script type="application/json" id="R-theme-config">{
+      "absBaseUri": "/zotero-better-bibtex",
+      "disableInlineCopyToClipboard": true,
+      "enableBlockCodeWrap": true,
+      "path": "/index.html",
+      "relBasePath": ".",
+      "relBaseUri": "..",
+      "themevariants": [
+        "green"
+      ],
+      "translations": {
+        "Browser_unsupported_feature": "This browser doesn't support this feature",
+        "Copied_to_clipboard": "Text copied to clipboard!",
+        "Copy_to_clipboard": "Copy text to clipboard",
+        "Link_copied_to_clipboard": "Link copied to clipboard!",
+        "N_results_found": "{1} results found for \"{0}\"",
+        "No_results_found": "No results found for \"{0}\"",
+        "Reset_view": "Reset view",
+        "View_reset": "View reset!"
       }
-      window.relearn.markVariant = function() {
-        var variant = window.localStorage.getItem(window.relearn.absBaseUri + "/variant");
-        document.querySelectorAll(".R-variantswitcher select").forEach((select) => {select.value = variant;});
-      }
-      window.relearn.initVariant = function() {
-        var variant = window.localStorage.getItem(window.relearn.absBaseUri + "/variant") ?? "";
-        if( !variant ||
-            (!variant.startsWith(window.relearn.customvariantprefix) && !window.relearn.themevariants.includes(variant)) ||
-            (variant.startsWith(window.relearn.customvariantprefix) && !window.localStorage.getItem(window.relearn.absBaseUri + "/variantstylesheet-" + variant)) ){
-          variant = window.relearn.themevariants[0];
-          window.localStorage.setItem(window.relearn.absBaseUri + "/variant", variant);
-        }
-        document.documentElement.dataset.rThemeVariant = variant;
-      }
-      window.relearn.initVariant();
-      window.relearn.markVariant();
-      window.relearn.scrollbarSize = (function() {
-        var scrollDiv = document.createElement('div');
-        scrollDiv.className = 'scrollbar-measure';
-        var parent = document.body || document.documentElement;
-        parent.appendChild(scrollDiv);
-        var size = scrollDiv.offsetWidth - scrollDiv.clientWidth;
-        parent.removeChild(scrollDiv);
-        return size;
-      })();
-      if (window.relearn.scrollbarSize) {
-        document.documentElement.classList.add('classic-scrollbars');
-      }
-    </script>
+    }</script>
+    <script src="/zotero-better-bibtex/js/theme-head.min.js"></script>
 <!-- WARNING: this page is generated by https://gohugo.io/ from site/content/_index.md. DO NOT EDIT BY HAND -->
 <script type="text/javascript">
   if (location.protocol === 'http:' && (location.port === 80 || !location.port)) {
@@ -133,10 +96,10 @@ Notice With the advent of Zotero 8, items have a Zotero-native citation key fiel
           <div class="topbar-sidebar-divider default-animation"></div>
           <div class="topbar-area topbar-area-start" data-area="start">
             <div class="topbar-button topbar-button-sidebar default-animation" data-content-empty="disable" data-width-s="show" data-width-m="hide" data-width-l="hide">
-<span class="btn cstyle button link noborder notitle interactive"><button onclick="toggleNav()" type="button" title="Menu (CTRL&#43;ALT&#43;n)"><i class="fa-fw fas fa-bars"></i></button></span>
+<span class="btn cstyle button link noborder notitle interactive"><button data-button-action="toggle-nav" type="button" title="Menu (CTRL&#43;ALT&#43;n)"><i class="fa-fw fas fa-bars"></i></button></span>
             </div>
             <div class="topbar-button topbar-button-toc default-animation" data-content-empty="hide" data-width-s="show" data-width-m="show" data-width-l="show">
-<span class="btn cstyle button link noborder notitle interactive"><button onclick="toggleTopbarFlyout(this)" type="button" title="Table of Contents (CTRL&#43;ALT&#43;t)"><i class="fa-fw fas fa-table-list"></i></button></span>
+<span class="btn cstyle button link noborder notitle interactive"><button data-button-action="toggle-flyout" type="button" title="Table of Contents (CTRL&#43;ALT&#43;t)"><i class="fa-fw fas fa-table-list"></i></button></span>
               <div class="topbar-content">
                 <div class="topbar-content-wrapper" tabindex="-1">
 <nav class="TableOfContents">
@@ -174,7 +137,7 @@ Notice With the advent of Zotero 8, items have a Zotero-native citation key fiel
 <span class="btn cstyle button link noborder notitle interactive"><a href="/zotero-better-bibtex/installation/index.html" title="Installation (🡒)"><i class="fa-fw fas fa-chevron-right"></i></a></span>
             </div>
             <div class="topbar-button topbar-button-more default-animation" data-content-empty="hide" data-width-s="show" data-width-m="show" data-width-l="show">
-<span class="btn cstyle button link noborder notitle interactive"><button onclick="toggleTopbarFlyout(this)" type="button" title="More"><i class="fa-fw fas fa-ellipsis-v"></i></button></span>
+<span class="btn cstyle button link noborder notitle interactive"><button data-button-action="toggle-flyout" type="button" title="More"><i class="fa-fw fas fa-ellipsis-v"></i></button></span>
               <div class="topbar-content">
                 <div class="topbar-content-wrapper" tabindex="-1">
                   <div class="topbar-area topbar-area-more" data-area="more">
@@ -292,7 +255,7 @@ I of course prefer very clearly documented issue reports over fuzzy ones, but I 
             <h1 class="a11y-only">Subsections of Installation</h1>
 <article class="default">
   <header class="headline">
-<div class="R-taxonomy taxonomy-tags cstyle tags" title="Tags" style="--VARIABLE-TAGS-BG-color: var(--INTERNAL-TAG-BG-color);">
+<div class="R-taxonomy taxonomy-tags tags" title="Tags">
   <i class="fa-fw fas fa-layer-group"></i>
   <ul>
     <li><a class="term-link" href="/zotero-better-bibtex/tags/export/index.html">Export</a></li>
@@ -836,7 +799,7 @@ A strings override will disable caching for that export.</li>
           </section>
 <article class="default">
   <header class="headline">
-<div class="R-taxonomy taxonomy-tags cstyle tags" title="Tags" style="--VARIABLE-TAGS-BG-color: var(--INTERNAL-TAG-BG-color);">
+<div class="R-taxonomy taxonomy-tags tags" title="Tags">
   <i class="fa-fw fas fa-layer-group"></i>
   <ul>
     <li><a class="term-link" href="/zotero-better-bibtex/tags/export/index.html">Export</a></li>
@@ -893,7 +856,7 @@ I consider it experimental at this stage. If you are experiencing errors,</p>
             <h1 class="a11y-only">Subsections of Exporting</h1>
 <article class="default">
   <header class="headline">
-<div class="R-taxonomy taxonomy-tags cstyle tags" title="Tags" style="--VARIABLE-TAGS-BG-color: var(--INTERNAL-TAG-BG-color);">
+<div class="R-taxonomy taxonomy-tags tags" title="Tags">
   <i class="fa-fw fas fa-layer-group"></i>
   <ul>
     <li><a class="term-link" href="/zotero-better-bibtex/tags/automatic-export/index.html">Automatic Export</a></li>
@@ -1054,7 +1017,7 @@ and you must use ODT.</p>
 </article>
 <article class="default">
   <header class="headline">
-<div class="R-taxonomy taxonomy-tags cstyle tags" title="Tags" style="--VARIABLE-TAGS-BG-color: var(--INTERNAL-TAG-BG-color);">
+<div class="R-taxonomy taxonomy-tags tags" title="Tags">
   <i class="fa-fw fas fa-layer-group"></i>
   <ul>
     <li><a class="term-link" href="/zotero-better-bibtex/tags/export/index.html">Export</a></li>
@@ -1100,7 +1063,7 @@ even more arcane to set up than <a href="/zotero-better-bibtex/exporting/auto/#g
 </article>
 <article class="default">
   <header class="headline">
-<div class="R-taxonomy taxonomy-tags cstyle tags" title="Tags" style="--VARIABLE-TAGS-BG-color: var(--INTERNAL-TAG-BG-color);">
+<div class="R-taxonomy taxonomy-tags tags" title="Tags">
   <i class="fa-fw fas fa-layer-group"></i>
   <ul>
     <li><a class="term-link" href="/zotero-better-bibtex/tags/scripting/index.html">Scripting</a></li>
@@ -12237,7 +12200,7 @@ the id can be retrieve with e.g. item.search(&ldquo;mypdf&rdquo;) -&gt; result[0
           </section>
 <article class="default">
   <header class="headline">
-<div class="R-taxonomy taxonomy-tags cstyle tags" title="Tags" style="--VARIABLE-TAGS-BG-color: var(--INTERNAL-TAG-BG-color);">
+<div class="R-taxonomy taxonomy-tags tags" title="Tags">
   <i class="fa-fw fas fa-layer-group"></i>
   <ul>
     <li><a class="term-link" href="/zotero-better-bibtex/tags/citation-keys/index.html">Citation Keys</a></li>
@@ -12345,7 +12308,7 @@ that yields a non-empty string. If all return a empty string, a random key will 
             <h1 class="a11y-only">Subsections of Citation Keys</h1>
 <article class="default">
   <header class="headline">
-<div class="R-taxonomy taxonomy-tags cstyle tags" title="Tags" style="--VARIABLE-TAGS-BG-color: var(--INTERNAL-TAG-BG-color);">
+<div class="R-taxonomy taxonomy-tags tags" title="Tags">
   <i class="fa-fw fas fa-layer-group"></i>
   <ul>
     <li><a class="term-link" href="/zotero-better-bibtex/tags/citation-keys/index.html">Citation Keys</a></li>
@@ -12656,7 +12619,7 @@ do the job, and for Linux <a href="https://unix.stackexchange.com/questions/4467
 </article>
 <article class="default">
   <header class="headline">
-<div class="R-taxonomy taxonomy-tags cstyle tags" title="Tags" style="--VARIABLE-TAGS-BG-color: var(--INTERNAL-TAG-BG-color);">
+<div class="R-taxonomy taxonomy-tags tags" title="Tags">
   <i class="fa-fw fas fa-layer-group"></i>
   <ul>
     <li><a class="term-link" href="/zotero-better-bibtex/tags/citation-keys/index.html">Citation Keys</a></li>
@@ -12690,7 +12653,7 @@ that is now gone, so you&rsquo;ll have to update the style you used.</p>
 </article>
 <article class="default">
   <header class="headline">
-<div class="R-taxonomy taxonomy-tags cstyle tags" title="Tags" style="--VARIABLE-TAGS-BG-color: var(--INTERNAL-TAG-BG-color);">
+<div class="R-taxonomy taxonomy-tags tags" title="Tags">
   <i class="fa-fw fas fa-layer-group"></i>
   <ul>
     <li><a class="term-link" href="/zotero-better-bibtex/tags/citation-keys/index.html">Citation Keys</a></li>
@@ -12729,7 +12692,7 @@ that you want to include in the collection.</p>
 </article>
 <article class="default">
   <header class="headline">
-<div class="R-taxonomy taxonomy-tags cstyle tags" title="Tags" style="--VARIABLE-TAGS-BG-color: var(--INTERNAL-TAG-BG-color);">
+<div class="R-taxonomy taxonomy-tags tags" title="Tags">
   <i class="fa-fw fas fa-layer-group"></i>
   <ul>
     <li><a class="term-link" href="/zotero-better-bibtex/tags/citation-keys/index.html">Citation Keys</a></li>
@@ -14268,7 +14231,7 @@ that &ldquo;any file triggers it&rdquo; &ndash; I need a <em>specific</em> file 
             <h1 class="a11y-only">Subsections of Support</h1>
 <article class="default">
   <header class="headline">
-<div class="R-taxonomy taxonomy-tags cstyle tags" title="Tags" style="--VARIABLE-TAGS-BG-color: var(--INTERNAL-TAG-BG-color);">
+<div class="R-taxonomy taxonomy-tags tags" title="Tags">
   <i class="fa-fw fas fa-layer-group"></i>
   <ul>
     <li><a class="term-link" href="/zotero-better-bibtex/tags/export/index.html">Export</a></li>
@@ -14494,7 +14457,7 @@ Make sure the latter path is correct, as JabRef might continue finding files and
 </article>
 <article class="default">
   <header class="headline">
-<div class="R-taxonomy taxonomy-tags cstyle tags" title="Tags" style="--VARIABLE-TAGS-BG-color: var(--INTERNAL-TAG-BG-color);">
+<div class="R-taxonomy taxonomy-tags tags" title="Tags">
   <i class="fa-fw fas fa-layer-group"></i>
   <ul>
     <li><a class="term-link" href="/zotero-better-bibtex/tags/cache/index.html">Cache</a></li>
@@ -14830,8 +14793,8 @@ means a lot) so I can save up for a replacement a year or so down
 the line, head on over to <a href="https://www.patreon.com/retorquere" rel="external">Patreon</a>,
 but mind that Patreon takes a fairly large cut of what you give.</p>
 <p>Many, many thanks, also to the existing contributors &ndash; thanks to you I&rsquo;ve hit my first target and have been able to replace my trusty macbook air with a newer macbook pro which has much more breathing room.</p>
-<p><a href="#R-image-251a4684463be28ae6f374e755f9f383" class="lightbox-link"><img alt="My github stats" class="lazy lightbox figure-image" loading="lazy" src="https://github-readme-stats.vercel.app/api?username=retorquere&show_icons=true&hide_border=true&theme=dark" style="height: auto;"></a>
-<a href="javascript:history.back();" class="lightbox-back" id="R-image-251a4684463be28ae6f374e755f9f383"><img alt="My github stats" class="lazy lightbox lightbox-image" loading="lazy" src="https://github-readme-stats.vercel.app/api?username=retorquere&show_icons=true&hide_border=true&theme=dark"></a></p>
+<p><a href="#R-image-bfe10f4694f4ff97858d1345a7925983" class="lightbox-link" id="R-image-bfe10f4694f4ff97858d1345a7925983-link"><img alt="My github stats" class="lazy lightbox figure-image" loading="lazy" src="https://github-readme-stats.vercel.app/api?username=retorquere&show_icons=true&hide_border=true&theme=dark"></a>
+<a href="#R-image-bfe10f4694f4ff97858d1345a7925983-link" class="lightbox-back" id="R-image-bfe10f4694f4ff97858d1345a7925983"><img alt="My github stats" class="lazy lightbox lightbox-image" loading="lazy" src="https://github-readme-stats.vercel.app/api?username=retorquere&show_icons=true&hide_border=true&theme=dark"></a></p>
 <p>I prefer communicating via github issues, but for private information you can reach me on <a href="https://matrix.to/#/@retorquere:utwente.io" rel="external">matrix</a></p>
 
   <footer class="footline">
