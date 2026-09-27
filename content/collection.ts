@@ -90,14 +90,13 @@ export async function get(path: string, create = false): Promise<any> {
 
   let library: Zotero.Library | undefined
   if (libraryID.match(/^\d+$/)) {
-    const lid = parseInt(libraryID)
-    library = Library.get({ libraryID: lid }) || Library.get({ groupID: lid })
+    library = Library.get([{ field: 'libraryID', value: libraryID }, { field: 'groupID', value: libraryID }])
   }
   else if (libraryID) {
-    library = Library.get({ name: libraryID})
+    library = Library.get({ field: 'name', value: libraryID})
   }
   else {
-    library = Library.get({})
+    library = Library.get([])
   }
   if (!library) throw new CollectionError(`Library ${libraryID} not found`, 'notfound')
   return await resolve(library, treepath, create)

@@ -105,16 +105,16 @@ class Handler {
 
       switch (`${m[1]}.${m[2]}`) {
         case 'library.id':
-          library = Library.get({ libraryID: parseInt(m[3]) })
+          library = Library.get({ field: 'libraryID', value: parseInt(m[3]) })
           break
         case 'library.name':
-          library = Library.get({ library: m[3] })
+          library = Library.get({ field: 'library', value: m[3] })
           break
         case 'group.id':
-          library = Library.get({ groupID: parseInt(m[3]) })
+          library = Library.get({ field: 'groupID', value: parseInt(m[3]) })
           break
         case 'group.name':
-          library = Library.get({ group: m[3] })
+          library = Library.get({ field: 'group', value: m[3] })
           break
       }
     }
@@ -186,7 +186,7 @@ class CollectionHandler {
     if (!m) return [ BAD_REQUEST, 'text/plain', `no library/path/translator found in ${urlpath}` ]
     const [ , lib, path, translator ] = m
 
-    const libraryID = (Library.get({ libraryID: lib }) || Library.get({ groupID: lib }))?.libraryID
+    const libraryID = Library.get([ { field: 'libraryID', value: lib }, { field: 'groupID', value: lib } ])?.libraryID
     let collection
 
     try {
@@ -236,7 +236,7 @@ class LibraryHandler {
       if (!m) return [ BAD_REQUEST, 'text/plain', `no library/translator found in ${urlpath}` ]
       const [ , libraryID, translator ] = m
 
-      const library = Library.get({ libraryID, groupID: libraryID })
+      const library = Library.get([{ field: 'libraryID', value: libraryID }, { field: 'groupID', value: libraryID }])
       if (!library) return [ NOT_FOUND, 'text/plain', `Could not export bibliography: library '${ urlpath }' does not exist` ]
 
       return [ OK, 'text/plain', await Translators.exportItems({
@@ -294,7 +294,12 @@ class ItemHandler {
     try {
       const params = Server.queryParams(request)
       const { libraryID, library, groupID, group, translator } = params as unknown as { libraryID?: number; library?: string; groupID?: number; group: string; translator: string }
-      const $libraryID = Library.get({ libraryID, library, groupID, group })?.libraryID
+      const $libraryID = Library.get([
+        { field: 'libraryID', value: libraryID },
+        { field: 'library', value: library },
+        { field: 'groupID', value: groupID },
+        { field: 'group', value: group },
+      ])?.libraryID
 
       if (typeof $libraryID !== 'number') return [ BAD_REQUEST, 'text/plain', `${JSON.stringify({ libraryID, library, groupID, group })} not found` ]
 

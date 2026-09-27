@@ -41,59 +41,83 @@ export function readonly(source: number | Zotero.Item | _ZoteroTypes.Library.Lib
   return lib ? !lib.editable : false
 }
 
-export type Query = {
-  name?: string
-  library?: string
-  group?: string
-  libraryID?: number | string
-  groupID?: number | string
-}
-function isNumber(v: any) {
-  return (typeof v === 'number') && isFinite(v)
-}
-export function get(query: Query, throws = false): Zotero.Library | undefined {
-  function oops(err: string): undefined {
+export type Query
+  = { field: 'name'; value: string | undefined }
+  | { field: 'library'; value: string | undefined }
+  | { field: 'group'; value: string | undefined }
+  | { field: 'libraryID'; value: number | string | undefined }
+  | { field: 'groupID'; value: number | string | undefined }
+
+export function get(query: Query | Query[], throws = false): Zotero.Library | undefined {
+  function oops(err: string): undefined | never {
     log.error(err)
     if (throws) throw new Error(err)
   }
 
-  for (const term of ['libraryID', 'groupID']) {
-    if (typeof query[term] === 'string') {
-      if (!term.match(/^\d+$/)) return oops(`${term} must be numeric`)
-      query[term] = parseInt(query[term], 10)
-    }
-  }
-  for (const alias of ['library', 'group']) {
-    if (typeof query[alias] !== 'undefined') {
-      if (typeof query.name !== 'undefined') return oops(`invalid library search query ${JSON.stringify(query)}`)
-      query.name = query[alias]
-    }
-  }
-  let { name, libraryID, groupID } = query
+  let terms: Query[] = (Array.isArray(query) ? query : [ query ])
+    .flatMap((t: Query) => { // legacy
+      switch (t.field) {
+        case 'group':
+        case 'library':
+          if (typeof t.value === 'string') {
+            return [
+              { field: 'name', value: t.value },
+              { field: `${t.field}ID`, value: t.value.match(/^\d+$/) ? parseInt(t.value, 10) : undefined },
+            ] as Query []
+          }
+          else {
+            return [ { field: `${t.field}ID`, value: t.value } ] as Query[]
+          }
 
-  switch ([name, libraryID, groupID].filter(arg => typeof arg !== 'undefined').length) {
-    case 0:
-      libraryID = Zotero.Libraries.userLibraryID
-    case 1:
-      break
-    default:
-      return oops(`invalid library search query ${JSON.stringify(query)}`)
-  }
+        default:
+          return t
+      }
+    })
+    .filter((t: Query) => {
+      if (typeof t.value === 'undefined') return false
+
+      if (t.field.endsWith('ID')) {
+        switch (typeof t.value) {
+          case 'string':
+            if (t.value.match(/^\d+$/)) {
+              t.value = parseInt(t.value, 10)
+              return true
+            }
+            else {
+              return oops(`library.get: ${t.field} must be numeric, got ${t.value}`)
+            }
+
+          case 'number':
+            return isFinite(t.value) ? true : oops(`library.get: ${t.field} must be numeric, got ${typeof t.value}`)
+
+          default:
+            return oops(`library.get: ${t.field} must be numeric, got ${typeof t.value}`)
+        }
+      }
+      else {
+        return typeof t.value === 'string' ? true : oops(`library.get: ${t.field} must be string, got ${typeof t.value}`)
+      }
+    })
+
+  if (!terms.length) terms = [{ field: 'libraryID', value: Zotero.Libraries.userLibraryID }]
 
   let libraries = Zotero.Libraries.getAll()
+  let hit = ''
 
-  if (typeof name !== 'undefined') {
-    if (typeof name !== 'string') return oops(`invalid library search query ${JSON.stringify(query)}, name must be a string`)
-    libraries = libraries.filter(l => l.name === name)
+  while (terms.length && !hit) {
+    const t = terms.shift()!
+    libraries = libraries.filter(library => {
+      if (library[t.field] === t.value) {
+        hit = t.field
+        return true
+      }
+      else {
+        return false
+      }
+    })
   }
-  else if (typeof libraryID !== 'undefined') {
-    if (!isNumber(libraryID)) return oops(`invalid library search query ${JSON.stringify(query)}, libraryID must be a number`)
-    libraries = libraries.filter(l => l.libraryID === libraryID)
-  }
-  else if (typeof groupID !== 'undefined') {
-    if (!isNumber(groupID)) return oops(`invalid library search query ${JSON.stringify(query)}, groupID must be a number`)
-    libraries = (libraries as unknown as Zotero.Group[]).filter(l => l.groupID === groupID)
-  }
+
+  if (terms.length && hit) log.info('library.get: got hit on', hit, 'ignoring', terms)
 
   switch (libraries.length) {
     case 0:
@@ -101,6 +125,6 @@ export function get(query: Query, throws = false): Zotero.Library | undefined {
     case 1:
       return libraries[0] as unknown as Zotero.Library
     default:
-      return oops(`library search: ${JSON.stringify(query)} is not unique`)
+      return oops(`library.get: ${JSON.stringify(query)} is not unique`)
   }
 }
