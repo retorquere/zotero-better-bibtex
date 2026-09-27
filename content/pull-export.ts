@@ -262,8 +262,8 @@ class SelectedHandler {
     if (!translator) return [ NOT_FOUND, 'text/plain', 'Could not export bibliography: no format' ]
 
     try {
-      const items = Zotero.getActiveZoteroPane()!.getSelectedItems()
-      if (!items.length) return [ NOT_FOUND, 'text/plain', 'Could not export bibliography: no selection' ]
+      const items = Zotero.getActiveZoteroPane()?.getSelectedItems()
+      if (!items?.length) return [ NOT_FOUND, 'text/plain', 'Could not export bibliography: no selection' ]
 
       if (translator === 'quick-copy') {
         const format = Zotero.Prefs.get('export.quickCopy.setting')

@@ -27,7 +27,7 @@ export const TeXstudio = new class {
 
     if (!citation) {
       try {
-        const items = Zotero.getActiveZoteroPane()!.getSelectedItems()
+        const items = Zotero.getActiveZoteroPane()?.getSelectedItems() || []
         citation = items.map(item => Zotero.BetterBibTeX.KeyManager.get(item.id)?.citationKey).filter(citekey => citekey).join(',')
       }
       catch (err) { // zoteroPane.getSelectedItems() doesn't test whether there's a selection and errors out if not

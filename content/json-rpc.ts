@@ -423,7 +423,7 @@ export class NSItem {
     const keys = {}
 
     if (item_keys === 'selected') {
-      for (const item of Zotero.getActiveZoteroPane()!.getSelectedItems()) {
+      for (const item of (Zotero.getActiveZoteroPane()?.getSelectedItems() || [])) {
         if (item.isFeedItem) continue
         if (item.isRegularItem()) {
           keys[item.key] = Zotero.BetterBibTeX.KeyManager.any(_ => _.libraryID === item.libraryID && _.itemKey === item.key)?.citationKey || null

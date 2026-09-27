@@ -6,7 +6,9 @@ export function editable(): Set<number> {
 }
 
 export function selectedLibraryIDs(): number[] {
-  const azp = Zotero.getActiveZoteroPane()!
+  const azp = Zotero.getActiveZoteroPane()
+  if (!azp) return []
+
   if (typeof azp.getSelectedLibraryIDs === 'function') {
     return azp.getSelectedLibraryIDs() as number[]
   }

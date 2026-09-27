@@ -4,7 +4,9 @@ import * as Library from './library'
 export function selectedCollections(asIDs?: false): Zotero.Collection[]
 export function selectedCollections(asIDs: true): number[]
 export function selectedCollections(asIDs = false): Zotero.Collection[] | number[] {
-  const azp = Zotero.getActiveZoteroPane()!
+  const azp = Zotero.getActiveZoteroPane()
+  if (!azp) return []
+
   if (typeof azp.getSelectedCollections === 'function') {
     return azp.getSelectedCollections(asIDs as any) as any[]
   }
