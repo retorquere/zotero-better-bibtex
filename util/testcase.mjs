@@ -322,7 +322,7 @@ const main = async () => {
     const target = `${fixture}${argv.export ? Translator.ext : '.bib'}`
     fixtures.push(target)
 
-    if (Translator.name === 'CSL-JSON') {
+    if (Translator.name.match(/^CSL-/)) {
       fs.writeFileSync(target, '{}', 'utf8')
     }
     else if (!fs.existsSync(target)) {
