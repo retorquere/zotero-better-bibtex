@@ -148,8 +148,8 @@ export const Translators = new class {
     const translation = new Zotero.Translate.Import
     translation.setString(str)
 
-    const zp = Zotero.getActiveZoteroPane()!
-    if (!zp.collectionsView) return
+    const zp = Zotero.getActiveZoteroPane()
+    if (!zp?.collectionsView) return
 
     if (!zp.collectionsView.editable) {
       await zp.collectionsView.selectLibrary()
