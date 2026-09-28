@@ -401,7 +401,7 @@ export function generateBibLaTeX(collected: Collected): Translation {
       entry.add({ name: 'number', value: entry.normalizeDashes(item.seriesNumber) })
       entry.add({
         name: entry.has.number || !looks_like_number_field(item.issue) ? 'issue' : 'number',
-        value: item.issue,
+        value: entry.normalizeDashes(item.issue),
       })
       entry.add({ name: 'eid', value: entry.normalizeDashes(item.number) })
     }
