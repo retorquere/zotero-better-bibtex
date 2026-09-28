@@ -101,12 +101,13 @@ export function get(query: Query | Query[], throws = false): Zotero.Library | un
 
   if (!terms.length) terms = [{ field: 'libraryID', value: Zotero.Libraries.userLibraryID }]
 
-  let libraries = Zotero.Libraries.getAll()
+  const libraries = Zotero.Libraries.getAll()
+  let filtered = libraries
   let hit = ''
 
   while (terms.length && !hit) {
     const t = terms.shift()!
-    libraries = libraries.filter(library => {
+    filtered = libraries.filter(library => {
       if (library[t.field] === t.value) {
         hit = t.field
         return true
@@ -119,7 +120,7 @@ export function get(query: Query | Query[], throws = false): Zotero.Library | un
 
   if (terms.length && hit) log.info('library.get: got hit on', hit, 'ignoring', terms)
 
-  switch (libraries.length) {
+  switch (filtered.length) {
     case 0:
       return oops(`library.get: ${JSON.stringify(query)} not found`)
     case 1:
