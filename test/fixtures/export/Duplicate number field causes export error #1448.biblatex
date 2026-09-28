@@ -10,7 +10,7 @@
   publisher = {Nature Publishing Group},
   issn = {2052-4463},
   doi = {10.1038/sdata.2016.18},
-  issue = {1},
+  eid = {1},
   langid = {english},
   keywords = {data,data-collection,data-gathering,data-generation,data-management,data-quality,methodology,open-acccess}
 }
