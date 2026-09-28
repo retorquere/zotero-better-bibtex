@@ -1,0 +1,10 @@
+@article{lastJournalArticleArticle2000,
+  title = {Journal Article with Article Number},
+  author = {Last, First},
+  date = {2000},
+  journaltitle = {Fake Journal},
+  shortjournal = {Fake J.},
+  volume = {1},
+  number = {2},
+  eid = {3}
+}
