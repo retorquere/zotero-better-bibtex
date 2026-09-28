@@ -405,7 +405,7 @@ export function generateBibLaTeX(collected: Collected): Translation {
         value: entry.normalizeDashes(item.issue),
       })
       entry.add({
-        name: Schema.valid.fields[entry.entrytype]?.eid || entry.has.number ? 'eid' : 'number'
+        name: Schema.valid.fields[entry.entrytype]?.eid || entry.has.number ? 'eid' : 'number',
         value: entry.normalizeDashes(item.number),
       })
     }
