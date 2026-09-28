@@ -3,6 +3,7 @@ import { Translation } from '../lib/translator'
 import { strToISO } from '../../content/dateparser'
 import { qualityReport } from '../../gen/biber-tool'
 import type { Collected } from '../lib/collect'
+import { Schema } from '../../content/item-schema'
 
 import { Entry as BaseEntry, Config } from './entry'
 
@@ -403,7 +404,10 @@ export function generateBibLaTeX(collected: Collected): Translation {
         name: entry.has.number || !looks_like_number_field(item.issue) ? 'issue' : 'number',
         value: entry.normalizeDashes(item.issue),
       })
-      entry.add({ name: 'eid', value: entry.normalizeDashes(item.number) })
+      entry.add({
+        name: Schema.valid.fields[entry.entrytype]?.eid || entry.has.number ? 'eid' : 'number'
+        value: entry.normalizeDashes(item.number),
+      })
     }
 
     const journalAbbreviation = {
