@@ -130,10 +130,19 @@ export class NSUser {
   }
 }
 
+function isNumber(v: string | number | undefined) {
+  switch (typeof v) {
+    case 'number': return true
+    case 'string': return Boolean(v.match(/^\d+$/))
+    default: return false
+  }
+}
 function getLibraryID(term: string | number | undefined): number {
-  const library = Library.get({ name: term as string })
-    || Library.get({ libraryID: term })
-    || Library.get({ groupID: term })
+  const library = Library.get([
+    { field: 'name', value: typeof term === 'string' ? term : undefined },
+    { field: 'libraryID', value: isNumber(term) ? term : undefined },
+    { field: 'groupID', value: isNumber(term) ? term : undefined },
+  ])
   if (!library) throw new Error(`could not find library ${term}`)
   return library.libraryID
 }
@@ -423,7 +432,7 @@ export class NSItem {
     const keys = {}
 
     if (item_keys === 'selected') {
-      for (const item of Zotero.getActiveZoteroPane()!.getSelectedItems()) {
+      for (const item of (Zotero.getActiveZoteroPane()?.getSelectedItems() || [])) {
         if (item.isFeedItem) continue
         if (item.isRegularItem()) {
           keys[item.key] = Zotero.BetterBibTeX.KeyManager.any(_ => _.libraryID === item.libraryID && _.itemKey === item.key)?.citationKey || null

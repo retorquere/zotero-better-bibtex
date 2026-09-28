@@ -5,7 +5,6 @@ import type { Serialized } from '../gen/typings/serialized'
 
 import { JournalAbbrev } from './journal-abbrev'
 import { KeyManager } from './key-manager'
-import { selectedLibraryID } from './library'
 import { clone } from './object'
 
 class Serializer {
@@ -17,9 +16,7 @@ class Serializer {
     return serialized
   }
 
-  private async item(item: Zotero.Item, libraryID: number | undefined): Promise<Serialized.Item> {
-    if (item.libraryID !== libraryID) await item.loadAllData()
-
+  private async item(item: Zotero.Item): Promise<Serialized.Item> {
     let serialized: Serialized.Item = item.toJSON() as unknown as Serialized.Item
     serialized.uri = Zotero.URI.getItemURI(item)
     serialized.itemID = item.id
@@ -45,8 +42,8 @@ class Serializer {
   }
 
   public async serialize(items: Zotero.Item[]): Promise<Serialized.Item[]> {
-    const libraryID = selectedLibraryID() // assume selected library items are all loaded
-    return Promise.all(items.map(item => this.item(item, libraryID)))
+    await Zotero.Items.loadDataTypes(items)
+    return Promise.all(items.map(item => this.item(item)))
   }
 }
 export const serializer = new Serializer

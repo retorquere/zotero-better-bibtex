@@ -105,7 +105,7 @@ export async function pick(options: CAYWOptions): Promise<PickResponse> {
   const output = picked.length ? await formatter(picked, options) : ''
 
   if (options.select && picked.length) {
-    await Zotero.getActiveZoteroPane()!.selectItems(picked.map(item => item.id), true)
+    await Zotero.getActiveZoteroPane()?.selectItems(picked.map(item => item.id), true)
   }
 
   return {
