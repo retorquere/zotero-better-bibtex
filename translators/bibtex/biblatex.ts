@@ -393,21 +393,21 @@ export function generateBibLaTeX(collected: Collected): Translation {
 
     entry.add({ name: 'pagetotal', value: item.numPages })
 
-    if (item.itemType === 'patent') {
-      if (!item.number?.match(/arxiv/i) || !entry.has.eprint) {
+    if (!item.number?.match(/arxiv/i) || !entry.has.eprint) {
+      if (item.itemType === 'patent') {
         entry.add({ name: 'number', value: patent.number(item) || entry.normalizeDashes(item.number) })
       }
-    }
-    else {
-      entry.add({ name: 'number', value: entry.normalizeDashes(item.seriesNumber) })
-      entry.add({
-        name: entry.has.number || !looks_like_number_field(item.issue) ? 'issue' : 'number',
-        value: entry.normalizeDashes(item.issue),
-      })
-      entry.add({
-        name: Schema.valid.fields[entry.entrytype]?.eid || entry.has.number ? 'eid' : 'number',
-        value: entry.normalizeDashes(item.number),
-      })
+      else {
+        entry.add({ name: 'number', value: entry.normalizeDashes(item.seriesNumber) })
+        entry.add({
+          name: entry.has.number || !looks_like_number_field(item.issue) ? 'issue' : 'number',
+          value: entry.normalizeDashes(item.issue),
+        })
+        entry.add({
+          name: Schema.valid.fields[entry.entrytype]?.eid || entry.has.number ? 'eid' : 'number',
+          value: entry.normalizeDashes(item.number),
+        })
+      }
     }
 
     const journalAbbreviation = {
