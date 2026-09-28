@@ -12,6 +12,7 @@ Feature: Export
 
     Examples:
       | file                                                                                                                     | references |
+      | Journal article with volume, issue, and article number (eid) #3609                                                       | 1          |
       | Option to ignore the Journal Abbr field #3451                                                                            | 1          |
       | Problems with Casing of Series Field with Non-English Series Titles #3539                                                | 3          |
       | Unrecognized date crashes export #3533                                                                                   | 1          |

@@ -1,0 +1,54 @@
+config:
+  id: 36a3b0b5-bad0-4a04-b79b-441c7cef77db
+  label: BetterBibTeX JSON
+  preferences:
+    asciiBibTeX: false
+    autoExportDelay: 2
+    citekeyFormat: auth.lower + shorttitle(3, 3) + year
+    extraMergeCitekeys: true
+    extraMergeCSL: true
+    extraMergeTeX: true
+    fillKeyAfter: 1
+    journalAbbreviation: auto
+    skipFields: note
+    verbatimFields: url,doi,file,eprint,verba,verbb,verbc,groups
+  options:
+    exportNotes: false
+    exportFileData: false
+    useJournalAbbreviation: false
+    biblatexAPA: false
+    biblatexChicago: false
+    keepUpdated: false
+    worker: true
+    includeAnnotations: false
+    exportDir: /home/ken/no_backup
+    exportPath: /home/ken/no_backup/Exported Items.bib
+    cache: true
+version:
+  zotero: 10.0.2
+  bbt: 9.0.64
+collections: {}
+items:
+  -
+    key: GRDSZMC6
+    version: 111999
+    itemType: journalArticle
+    title: Journal article with article number
+    date: '2000'
+    extra: "Number: 3"
+    volume: '1'
+    publicationTitle: Fake Journal
+    issue: '2'
+    citationKey: lastJournalArticleArticle2000
+    creators:
+      -
+        firstName: First
+        lastName: Last
+        creatorType: author
+    tags: []
+    dateAdded: 2026-09-14T20:15:45Z
+    dateModified: 2026-09-14T20:37:23Z
+    itemID: 11534
+    attachments: []
+    notes: []
+    autoJournalAbbreviation: Fake J.

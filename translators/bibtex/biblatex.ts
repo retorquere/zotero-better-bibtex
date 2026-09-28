@@ -392,11 +392,19 @@ export function generateBibLaTeX(collected: Collected): Translation {
 
     entry.add({ name: 'pagetotal', value: item.numPages })
 
-    let number_added: string | undefined
-    if (!item.number?.match(/arxiv/i) || !entry.has.eprint) {
-      number_added = entry.add({ name: 'number', value: patent.number(item) || entry.normalizeDashes(item.number || item.seriesNumber) })
+    if (item.itemType === 'patent') {
+      if (!item.number?.match(/arxiv/i) || !entry.has.eprint) {
+        entry.add({ name: 'number', value: patent.number(item) || entry.normalizeDashes(item.number) })
+      }
     }
-    entry.add({ name: !number_added && looks_like_number_field(item.issue) ? 'number' : 'issue', value: entry.normalizeDashes(item.issue) })
+    else {
+      entry.add({ name: 'number', value: entry.normalizeDashes(item.seriesNumber) })
+      entry.add({
+        name: entry.has.number || !looks_like_number_field(item.issue) ? 'issue' : 'number',
+        value: item.issue,
+      })
+      entry.add({ name: 'eid', value: entry.normalizeDashes(item.number) })
+    }
 
     const journalAbbreviation = {
       abbrev: item.journalAbbreviation,
