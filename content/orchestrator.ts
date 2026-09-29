@@ -2,6 +2,8 @@ export type Actor = 'worker' | 'start' | 'done' | 'auto-export' | 'translators' 
 export type PhaseID = 'startup' | 'shutdown'
 import type { Reason } from './bootstrap'
 import { log } from './logger'
+import { release } from '../gen/build'
+import { Preference } from './prefs'
 type Handler = (reason: Reason, task?: Task) => void | string | Promise<void | string>
 
 interface Task {
@@ -15,6 +17,8 @@ interface Task {
 }
 
 export type Progress = (phase: string, name: string, done: number, total: number, message?: string) => void
+import { profiler } from './audit'
+import { Events } from './events'
 
 export class Orchestrator {
   public id: string = Zotero.Utilities.generateObjectKey()
@@ -23,6 +27,37 @@ export class Orchestrator {
   public done: Actor = 'done'
   private tasks: Partial<Record<Actor, Task>> = {}
   private $ordered!: Task[]
+
+  // startup is always profiled on non-release builds regardless of translators.better-bibtex.profileStartup
+  private profileStartup = !release || Preference.profileStartup
+  private runtimeProfiling = Preference.profileRuntime !== 'no'
+  private pauseProfileDuringSync = Preference.profileRuntime === 'except-sync'
+
+  constructor() {
+    Events.on('sync', ({ data: { state } }) => {
+      if (!this.runtimeProfiling || !this.pauseProfileDuringSync) return
+      if (state === 'syncing') {
+        if (profiler.active) void profiler.stop('runtime')
+      }
+      else if (!profiler.active) {
+        void profiler.start()
+      }
+    })
+
+    Events.on('preference-changed', ({ data: pref }) => {
+      if (pref !== 'profileRuntime') return
+
+      this.runtimeProfiling = Preference.profileRuntime !== 'no'
+      this.pauseProfileDuringSync = Preference.profileRuntime === 'except-sync'
+
+      if (this.runtimeProfiling) {
+        if (!profiler.active) void profiler.start()
+      }
+      else if (profiler.active) {
+        void profiler.stop('runtime')
+      }
+    })
+  }
 
   public add({ description, id, startup, shutdown, needs }: Task): void {
     if (this.$ordered) throw new Error(`orchestrator: add ${ id } after ordered`)
@@ -108,6 +143,8 @@ export class Orchestrator {
     log.info(`${ phase } orchestrator started: ${ reason }`)
     const action = phase === 'startup' ? 'starting' : 'shutting down'
     while (tasks.length) {
+      if (phase === 'startup' && this.profileStartup) await profiler.start()
+
       const task = tasks.shift()!
 
       log.prefix = ` ${ phase }: [${ task.id }`
@@ -133,19 +170,22 @@ export class Orchestrator {
       runtime[task.id === 'start' ? 'zotero' : 'bbt'] += task.finished - task.started
 
       progress?.(phase, task.id, finished.length, total, tasks.length ? tasks.map(t => t.id).join(',') : 'finished')
+
+      if (phase === 'startup' && this.profileStartup) await profiler.stop(`${phase}-${task.id}`)
     }
 
     log.prefix = ''
-    const waiting = phase === 'startup' ? ` after waiting ${ duration(runtime.zotero) } for zotero` : ''
-    log.info(`orchestrator: ${ action } took ${ duration(runtime.bbt) }${ waiting }`)
+    log.info(`orchestrator: ${action} took ${duration(runtime.bbt)}`)
   }
 
   public async startup(reason: Reason, progress?: Progress): Promise<void> {
     await this.run('startup', reason, progress)
     progress?.('startup', 'ready', 100, 100, 'ready')
+    if (this.runtimeProfiling) await profiler.start()
   }
 
   public async shutdown(reason: Reason): Promise<void> {
+    if (this.runtimeProfiling && profiler.active) await profiler.stop('runtime')
     await this.run('shutdown', reason)
   }
 }

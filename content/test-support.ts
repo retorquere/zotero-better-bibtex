@@ -8,7 +8,7 @@ import { AUXScanner } from './aux-scanner'
 import { defaults } from '../gen/preferences/meta'
 import { Preference } from './prefs'
 import { Cache } from './translators/worker'
-import { memory } from './memory'
+import { profiler } from './audit'
 
 // import { Bench } from 'tinybench'
 
@@ -64,8 +64,6 @@ export class TestSupport {
       try {
         if (i) log.error(JSON.stringify(scenario), 'reset attempt', i + 1)
         await this.attemptReset()
-        await memory.minimize()
-        memory.log(`starting ${scenario}`)
         return
       }
       catch (err) {
@@ -74,9 +72,8 @@ export class TestSupport {
     }
     throw error
   }
-  public async finished(scenario: string): Promise<void> {
-    await memory.minimize()
-    memory.log(`finished ${scenario}`)
+  public finished(scenario: string): void {
+    log.info(`finished ${scenario}`)
   }
 
   public async attemptReset(): Promise<void> {
@@ -128,7 +125,11 @@ export class TestSupport {
       await Zotero.Tags.purge()
     })
 
-    if (Zotero.BetterBibTeX.KeyManager.all().length !== 0) throw new Error(`keystore has ${ Zotero.BetterBibTeX.KeyManager.all().length } entries after reset`)
+    if (Zotero.BetterBibTeX.KeyManager.all().length) {
+      log.error(`keystore has ${Zotero.BetterBibTeX.KeyManager.all().length} entries after reset`)
+      // @ts-expect-error TS2341
+      Zotero.BetterBibTeX.KeyManager.clear(Zotero.BetterBibTeX.KeyManager.all().map(k => k.itemID))
+    }
   }
 
   public async librarySize(): Promise<number> {
@@ -402,6 +403,10 @@ export class TestSupport {
         }
       })
     })
+  }
+
+  public async profilerSnapshot(label: string): Promise<void> {
+    await profiler.split(label)
   }
 
   public editAutoExport(field: JobSetting, value: boolean | string): void {

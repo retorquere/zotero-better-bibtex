@@ -6,8 +6,7 @@
   date = {2015},
   number = {77},
   institution = {Institution},
-  location = {Place},
-  annotation = {\{:X-genre: xxx\}}
+  location = {Place}
 }
 
 @inreference{Blair2004,
@@ -34,8 +33,7 @@
 }
 
 @inreference{emptybook,
-  editor = {{Xxx}},
-  annotation = {\{:X-genre: xxx\}}
+  editor = {{Xxx}}
 }
 
 @video{friends:leia:dvd,

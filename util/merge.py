@@ -7,6 +7,9 @@ from ruamel.yaml import YAML
 from ruamel.yaml.scalarstring import LiteralScalarString
 
 yaml_loader = YAML(typ='safe')
+yaml_loader.default_flow_style = False
+yaml_loader.constructor.add_constructor('tag:yaml.org,2002:timestamp', lambda loader, node: loader.construct_scalar(node))
+
 yaml_dumper = YAML()
 yaml_dumper.indent(mapping=2, sequence=4, offset=2)
 yaml_dumper.allow_unicode = False

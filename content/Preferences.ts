@@ -4,6 +4,7 @@ import { log } from './logger'
 
 import { Preference } from './prefs'
 import { defaults as preferenceDefaults } from '../gen/preferences/meta'
+import { release } from '../gen/build'
 import { Formatter } from './key-manager/formatter'
 import { AutoExport } from './auto-export'
 import { Translators } from './translators'
@@ -394,13 +395,15 @@ export const PrefPane = new class $PrefPane {
 
     const preview = this.document!.getElementById('bbt-citekey-preview') as HTMLInputElement
     preview.style.display = 'initial'
-    const previews = Zotero
-      .getActiveZoteroPane()!
-      .getSelectedItems()
-      .slice(0, 10)
-      .map(item => Zotero.BetterBibTeX.KeyManager.propose(item))
-      .map(key => key)
-    preview.value = previews.join(', ')
+    const azp = Zotero.getActiveZoteroPane()
+    if (azp) {
+      const previews = azp
+        .getSelectedItems()
+        .slice(0, 10)
+        .map(item => Zotero.BetterBibTeX.KeyManager.propose(item))
+        .map(key => key) || []
+      preview.value = previews.join(', ')
+    }
   }
 
   public checkPostscript(): void {
@@ -440,6 +443,13 @@ export const PrefPane = new class $PrefPane {
     })
 
     this.document!.getElementById('bbt-chinese-splitname')!.setAttribute('disabled', Preference.chinese ? '' : 'true')
+
+    // startup is always profiled on non-release builds, regardless of the preference
+    if (!release) {
+      const profileStartup = this.document!.getElementById('bbt-preferences-profile-startup') as HTMLInputElement
+      profileStartup.checked = true
+      profileStartup.setAttribute('disabled', 'true')
+    }
 
     this.autoexport.load()
 

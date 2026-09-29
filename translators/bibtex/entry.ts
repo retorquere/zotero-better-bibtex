@@ -910,7 +910,9 @@ export class Entry {
       }
     }
 
-    this.add({ name: 'annotation', value: this.item.extra, enc: 'extra' })
+    if (this.translation.collected.preferences.extraFieldAsNote) {
+      this.add({ name: 'annotation', value: this.item.extra, enc: 'extra' })
+    }
 
     if (this.translation.collected.displayOptions.exportNotes) {
       // if bibtexURL === 'note' is active, the note field will have been filled with an URL.

@@ -6,10 +6,10 @@
   eprint = {2123/31137},
   eprinttype = {hdl},
   institution = {University of Sydney},
-  url = {https://hdl.handle.net/2123/31137},
-  annotation = {Accepted: 2023-04-24T06:25:00Z}
+  url = {https://hdl.handle.net/2123/31137}
 }
 % == BibLaTeX quality report for Elman2023:
+% ? unused Extra ("Accepted: 2023-04-24T06:25:00Z")
 % ? unused Language ("en")
 % ? unused Library catalog ("ses.library.usyd.edu.au")
 
@@ -20,11 +20,11 @@
   author = {Naaijkens, Pieter},
   date = {2012},
   institution = {Radboud University},
-  url = {http://repository.ubn.ru.nl/handle/2066/92737},
-  annotation = {Dissertation}
+  url = {http://repository.ubn.ru.nl/handle/2066/92737}
 }
 % == BibLaTeX quality report for Naaijkens2012:
 % ? Title looks like it was stored in title-case in Zotero
+% ? unused Extra ("Dissertation")
 % ? unused Library catalog ("repository.ubn.ru.nl")
 
 @article{Pare1993,

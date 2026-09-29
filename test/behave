@@ -116,7 +116,11 @@ elif args.client.endswith('7'):
   args.legacy = True
 
 if args.build:
-  process = subprocess.Popen(['npm', 'run', 'build'], stdout=subprocess.PIPE)
+  process = subprocess.Popen(
+    ['npm', 'run', 'build'],
+    stdout=subprocess.PIPE,
+    env=os.environ | {'npm_config_audit': 'false'},
+  )
   while True:
     line = process.stdout.readline()
     print(line.decode('utf-8'), end='')

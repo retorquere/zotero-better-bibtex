@@ -6,3 +6,8 @@ export function readFileSync(filename) {
 export function existsSync(filename) {
   throw new Exception('not implemented')
 }
+
+export default {
+  readFileSync,
+  existsSync,
+}

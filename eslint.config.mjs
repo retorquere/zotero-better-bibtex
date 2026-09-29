@@ -50,11 +50,12 @@ const config = [
   {
     ignores: [
       'content/key-manager/compile.js',
+      'content/key-manager/kuromoji-worker.js',
       'content/Preferences/ui.js',
       'content/public.ts',
       'eslint.config.mjs',
       'esbuild.js',
-      'site/**/*.{ts,js,mjs}',
+      'site/**/*.{ts,js,mjs,cjs,mts}',
       'build/**/*.{ts,js}',
       'headless/**/*.{ts,js}',
       'tmp/**/*.{ts,js}',
@@ -489,6 +490,7 @@ const config = [
       'no-restricted-syntax': [branch === 'master' ? 'error' : 'warn',
         { selector: "CallExpression[callee.name='dump']", message: 'use of dump is not allowed' },
         { selector: "CallExpression[callee.name='$dump']", message: 'use of $dump is not allowed' },
+        { selector: "CallExpression[callee.object.name='timeit']", message: 'use of timeit is not allowed' },
         { selector: "CallExpression[callee.object.name='Zotero'][callee.property.name='debug']", message: 'use of Zotero.debug is not allowed' },
         { selector: "CallExpression[callee.object.name='Zotero'][callee.property.name='logError']", message: 'use of Zotero.logError is not allowed' },
         { selector: "CallExpression[callee.object.name='log'][callee.property.name='debug']", message: 'use of log.debug is not allowed' },

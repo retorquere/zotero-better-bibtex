@@ -13,7 +13,7 @@
 }
 
 @unpublished{_preprintwang_on_solving_minimax_optimization_locally_2019,
-  title = {On {{Solving Minimax Optimization Locally}}: {{A Follow-the-Ridge Approach}}},
+  title = {On {{Solving Minimax Optimization Locally}}: {{A Follow}}-the-{{Ridge Approach}}},
   shorttitle = {On {{Solving Minimax Optimization Locally}}},
   author = {Wang, Yuanhao and Zhang, Guodong and Ba, Jimmy},
   date = {2019-11-25},
@@ -35,8 +35,7 @@
   urldate = {2022-02-06},
   abstract = {SGD implicitly performs variational inference; gradient noise is highly non-isotropic, so SGD does not even converge to critical points of the original loss},
   eventtitle = {International {{Conference}} on {{Learning Representations}}},
-  langid = {english},
-  annotation = {00000}
+  langid = {english}
 }
 
 @article{chaudhari_stochastic_gradient_2018a,
@@ -141,7 +140,7 @@
 }
 
 @inproceedings{wang*_solving_minimax_2019,
-  title = {On {{Solving Minimax Optimization Locally}}: {{A Follow-the-Ridge Approach}}},
+  title = {On {{Solving Minimax Optimization Locally}}: {{A Follow}}-the-{{Ridge Approach}}},
   shorttitle = {On {{Solving Minimax Optimization Locally}}},
   author = {Wang*, Yuanhao and Zhang*, Guodong and Ba, Jimmy},
   date = {2019-09-25},
@@ -149,6 +148,5 @@
   urldate = {2022-02-08},
   abstract = {Many tasks in modern machine learning can be formulated as finding equilibria in sequential games. In particular, two-player zero-sum sequential games, also known as minimax optimization, have...},
   eventtitle = {International {{Conference}} on {{Learning Representations}}},
-  langid = {english},
-  annotation = {00060}
+  langid = {english}
 }

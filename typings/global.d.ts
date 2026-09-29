@@ -4,6 +4,8 @@ declare namespace Zotero {
   let write: (body: string) => void // needed in translators
 }
 
+declare const monkey: import('../content/monkey-patch').Monkey
+
 // declare const rootURI: string
 declare const FileUtils: any
 type DedicatedWorkerGlobalScope = any
@@ -12,13 +14,6 @@ declare function importScripts(url: string): void
 declare module '*.wasm' {
   const value: any
   export default value
-}
-
-declare module 'wasmjieba-web/wasmjieba-web_bg.wasm' {
-  const wasm: {
-    bytes?: Uint8Array
-  }
-  export default wasm
 }
 
 declare module '*.pem' {
