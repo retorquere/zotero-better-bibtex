@@ -148,8 +148,8 @@ export const Translators = new class {
     const translation = new Zotero.Translate.Import
     translation.setString(str)
 
-    const zp = Zotero.getActiveZoteroPane()!
-    if (!zp.collectionsView) return
+    const zp = Zotero.getActiveZoteroPane()
+    if (!zp?.collectionsView) return
 
     if (!zp.collectionsView.editable) {
       await zp.collectionsView.selectLibrary()
@@ -241,7 +241,10 @@ export const Translators = new class {
     items = items.filter(item => !item.isAnnotation() && !item.isFeedItem && (item.isRegularItem() || item.isNote() || item.isAttachment()))
     const missing = new Set(await Cache.Serialized.missing(items.map(item => item.id)))
     log.info('json-rpc: cache fill', missing.size, '/', items.length)
-    await Cache.Serialized.fill(await serializer.serialize(items.filter(item => missing.has(item.id))))
+    const pending = items.filter(item => missing.has(item.id))
+    while (pending.length) {
+      await Cache.Serialized.fill(await serializer.serialize(pending.splice(0, 10)))
+    }
 
     config.data.items = items.map(item => item.id)
     if (job.path && job.canceled) return ''

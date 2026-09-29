@@ -395,13 +395,15 @@ export const PrefPane = new class $PrefPane {
 
     const preview = this.document!.getElementById('bbt-citekey-preview') as HTMLInputElement
     preview.style.display = 'initial'
-    const previews = Zotero
-      .getActiveZoteroPane()!
-      .getSelectedItems()
-      .slice(0, 10)
-      .map(item => Zotero.BetterBibTeX.KeyManager.propose(item))
-      .map(key => key)
-    preview.value = previews.join(', ')
+    const azp = Zotero.getActiveZoteroPane()
+    if (azp) {
+      const previews = azp
+        .getSelectedItems()
+        .slice(0, 10)
+        .map(item => Zotero.BetterBibTeX.KeyManager.propose(item))
+        .map(key => key) || []
+      preview.value = previews.join(', ')
+    }
   }
 
   public checkPostscript(): void {

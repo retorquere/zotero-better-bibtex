@@ -4,7 +4,9 @@ import * as Library from './library'
 export function selectedCollections(asIDs?: false): Zotero.Collection[]
 export function selectedCollections(asIDs: true): number[]
 export function selectedCollections(asIDs = false): Zotero.Collection[] | number[] {
-  const azp = Zotero.getActiveZoteroPane()!
+  const azp = Zotero.getActiveZoteroPane()
+  if (!azp) return []
+
   if (typeof azp.getSelectedCollections === 'function') {
     return azp.getSelectedCollections(asIDs as any) as any[]
   }
@@ -88,14 +90,13 @@ export async function get(path: string, create = false): Promise<any> {
 
   let library: Zotero.Library | undefined
   if (libraryID.match(/^\d+$/)) {
-    const lid = parseInt(libraryID)
-    library = Library.get({ libraryID: lid }) || Library.get({ groupID: lid })
+    library = Library.get([{ field: 'libraryID', value: libraryID }, { field: 'groupID', value: libraryID }])
   }
   else if (libraryID) {
-    library = Library.get({ name: libraryID})
+    library = Library.get({ field: 'name', value: libraryID})
   }
   else {
-    library = Library.get({})
+    library = Library.get([])
   }
   if (!library) throw new CollectionError(`Library ${libraryID} not found`, 'notfound')
   return await resolve(library, treepath, create)

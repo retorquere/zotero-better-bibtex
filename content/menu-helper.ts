@@ -9,7 +9,9 @@ import { Translators } from './translators'
 import { parse } from './dateparser'
 
 export async function clipSelected(translatorID: string): Promise<void> {
-  const items = Zotero.getActiveZoteroPane()!.getSelectedItems()
+  const items = Zotero.getActiveZoteroPane()?.getSelectedItems() || []
+  if (!items.length) return
+
   toClipboard(await Translators.queueJob({
     translatorID,
     displayOptions: { worker: true },
@@ -19,7 +21,9 @@ export async function clipSelected(translatorID: string): Promise<void> {
 
 export async function patchDates(): Promise<void> {
   try {
-    const items = Zotero.getActiveZoteroPane()!.getSelectedItems()
+    const items = Zotero.getActiveZoteroPane()?.getSelectedItems() || []
+    if (!items.length) return
+
     const mapping: Record<string, string> = {}
     try {
       for (const assignment of Preference.patchDates.trim().split(/\s*,\s*/)) {
@@ -70,15 +74,17 @@ export async function patchDates(): Promise<void> {
 }
 
 export function selectedItemsHaveCitationKeyInExtra(): boolean {
-  return Zotero.getActiveZoteroPane()!.getSelectedItems().some(item => {
+  return Zotero.getActiveZoteroPane()?.getSelectedItems().some(item => {
     if (item.isFeedItem || !item.isRegularItem()) return false
     return !!Extra.citationKey(item.getField('extra')).citationKey
-  })
+  }) || false
 }
 
 export async function applyCitationKeyFromExtra(move: boolean): Promise<void> {
   try {
-    const items = Zotero.getActiveZoteroPane()!.getSelectedItems()
+    const items = Zotero.getActiveZoteroPane()?.getSelectedItems()
+    if (!items?.length) return
+
     for (const item of items) {
       if (item.isFeedItem || !item.isRegularItem()) continue
 
@@ -97,7 +103,7 @@ export async function applyCitationKeyFromExtra(move: boolean): Promise<void> {
 
 export async function sentenceCase(): Promise<void> {
   try {
-    const items = Zotero.getActiveZoteroPane()!.getSelectedItems()
+    const items = Zotero.getActiveZoteroPane()?.getSelectedItems() || []
     for (const item of items) {
       let save = false
 
@@ -127,7 +133,7 @@ export async function sentenceCase(): Promise<void> {
 
 export async function addCitationLinks(): Promise<void> {
   try {
-    const items = Zotero.getActiveZoteroPane()!.getSelectedItems()
+    const items = Zotero.getActiveZoteroPane()?.getSelectedItems() || []
     if (items.length !== 1) {
       flash('Citation links only works for a single item')
       return

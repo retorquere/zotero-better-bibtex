@@ -657,7 +657,7 @@ export class ErrorReport {
 
       case 'items':
         try {
-          scope = { type: 'items', items: Zotero.getActiveZoteroPane()!.getSelectedItems() }
+          scope = { type: 'items', items: Zotero.getActiveZoteroPane()?.getSelectedItems() || [] }
         }
         catch (err) { // ZoteroPane.getSelectedItems() doesn't test whether there's a selection and errors out if not
           log.error('Could not get selected items:', err)

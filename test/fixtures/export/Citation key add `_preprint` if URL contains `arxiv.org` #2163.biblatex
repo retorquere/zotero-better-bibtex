@@ -13,7 +13,7 @@
 }
 
 @unpublished{_preprintwang_on_solving_minimax_optimization_locally_2019,
-  title = {On {{Solving Minimax Optimization Locally}}: {{A Follow-the-Ridge Approach}}},
+  title = {On {{Solving Minimax Optimization Locally}}: {{A Follow}}-the-{{Ridge Approach}}},
   shorttitle = {On {{Solving Minimax Optimization Locally}}},
   author = {Wang, Yuanhao and Zhang, Guodong and Ba, Jimmy},
   date = {2019-11-25},
@@ -140,7 +140,7 @@
 }
 
 @inproceedings{wang*_solving_minimax_2019,
-  title = {On {{Solving Minimax Optimization Locally}}: {{A Follow-the-Ridge Approach}}},
+  title = {On {{Solving Minimax Optimization Locally}}: {{A Follow}}-the-{{Ridge Approach}}},
   shorttitle = {On {{Solving Minimax Optimization Locally}}},
   author = {Wang*, Yuanhao and Zhang*, Guodong and Ba, Jimmy},
   date = {2019-09-25},
