@@ -45,8 +45,11 @@ const argv = yargs(hideBin(process.argv))
   .option('data', {
     alias: 'd',
     type: 'string',
-    demandOption: true,
     description: 'Path to the data file',
+  })
+  .option('sort', {
+    type: 'boolean',
+    description: 'Sort example tables without adding a testcase',
   })
   .option('feature', {
     alias: 'f',
@@ -151,15 +154,36 @@ const Translator = new class {
   }
 }()
 
+const sortExamples = document => {
+  for (const outline of document.feature.elements.filter(element => element.keyword === 'Scenario Outline')) {
+    for (const examples of outline.examples) {
+      examples.body.sort((left, right) => left.cells[0].value.localeCompare(right.cells[0].value, undefined, { sensitivity: 'base' }))
+    }
+  }
+}
+
 const main = async () => {
   // Validate arguments
+  if (!fs.existsSync(argv.feature)) {
+    console.error(`Error: Feature file does not exist at ${argv.feature}`)
+    process.exit(1)
+  }
+
+  const document = (await read(argv.feature))[0]
+
+  if (argv.sort) {
+    sortExamples(document)
+    fs.writeFileSync(argv.feature, format(document))
+    return
+  }
+
   if (!argv.issue) {
     console.error('Error: no issue number provided.')
     process.exit(1)
   }
 
-  if (!fs.existsSync(argv.feature)) {
-    console.error(`Error: Feature file does not exist at ${argv.feature}`)
+  if (!argv.data) {
+    console.error('Error: no data file provided.')
     process.exit(1)
   }
 
@@ -277,8 +301,6 @@ const main = async () => {
     process.exit(1)
   }
 
-  const document = (await read(argv.feature))[0]
-
   const name = argv.import
     ? /^Import <references> references/
     : new RegExp(`^Export <references> references for ${Translator.name} to`)
@@ -303,6 +325,7 @@ const main = async () => {
   else {
     examples.unshift(new TableRow([new TableCell(argv.title), new TableCell(`${argv.number}`)]))
   }
+  sortExamples(document)
   fs.writeFileSync(argv.feature, format(document))
 
   // Copy/create test fixtures
