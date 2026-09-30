@@ -48,7 +48,6 @@ redo
 reformat_gherkin
 requests
 ruamel.yaml
-selenium<4.50
 snakemake>=7.16
 toml
 xvfbwrapper
