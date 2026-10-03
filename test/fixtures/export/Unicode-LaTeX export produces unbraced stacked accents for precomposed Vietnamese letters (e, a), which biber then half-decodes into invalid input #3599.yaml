@@ -1,0 +1,47 @@
+config:
+  id: 36a3b0b5-bad0-4a04-b79b-441c7cef77db
+  label: BetterBibTeX JSON
+  preferences:
+    citekeyFormat: auth.lower + shorttitle(3, 3) + year
+    fillKeyAfter: 1
+    warnBulkModify: 0
+  options: {}
+version:
+  zotero: 10.0.1
+  bbt: 9.0.63
+collections: {}
+items:
+  -
+    key: XBIVZZRW
+    version: 13365
+    itemType: journalArticle
+    title: 'FRASAD: a framework for model-driven IoT application development'
+    date: '2015'
+    url: https://openalex.org/W2248118469
+    extra: Ajouté par pilotage/scripts/biblio.py
+    DOI: 10.1109/wf-iot.2015.7389085
+    citationKey: nguyenFRASADFrameworkModeldriven2015
+    creators:
+      -
+        firstName: Xuân Thắng
+        lastName: Nguyễn
+        creatorType: author
+      -
+        firstName: Huu Tam
+        lastName: Tran
+        creatorType: author
+      -
+        firstName: Harun
+        lastName: Baraki
+        creatorType: author
+      -
+        firstName: Kurt
+        lastName: Geihs
+        creatorType: author
+    tags: []
+    dateAdded: 2026-08-19T09:11:29Z
+    dateModified: 2026-09-03T08:04:44Z
+    itemID: 12408
+    attachments: []
+    notes: []
+    autoJournalAbbreviation: ''

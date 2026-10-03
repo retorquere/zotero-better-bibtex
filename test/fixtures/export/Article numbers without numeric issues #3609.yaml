@@ -1,0 +1,46 @@
+config:
+  id: 36a3b0b5-bad0-4a04-b79b-441c7cef77db
+  label: BetterBibTeX JSON
+  preferences:
+    citekeyFormat: auth.lower + shorttitle(3, 3) + year
+    journalAbbreviation: abbrev
+    skipFields: note
+items:
+  - itemID: 1
+    itemType: journalArticle
+    title: Journal article with volume and article number, but no issue
+    date: '2000'
+    extra: 'number: 1234'
+    volume: '1'
+    publicationTitle: Fake Journal
+    journalAbbreviation: Fake J.
+    citationKey: lastJournalArticleVolume2000
+    creators:
+      - firstName: First
+        lastName: Last
+        creatorType: author
+  - itemID: 2
+    itemType: journalArticle
+    title: Journal article with a seasonal issue and article number
+    date: '2000'
+    extra: 'Number: 5678'
+    volume: '1'
+    issue: Spring
+    publicationTitle: Fake Journal
+    journalAbbreviation: Fake J.
+    citationKey: lastJournalArticleSeasonal2000
+    creators:
+      - firstName: First
+        lastName: Last
+        creatorType: author
+  - itemID: 3
+    itemType: report
+    title: Report with a number
+    date: '2000'
+    reportNumber: '9012'
+    institution: Fake Institute
+    citationKey: lastReportNumber2000
+    creators:
+      - firstName: First
+        lastName: Last
+        creatorType: author
