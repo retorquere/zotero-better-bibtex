@@ -1,7 +1,7 @@
 import { Exporter as BibTeXExporter } from './exporter'
 import { Translation } from '../lib/translator'
 import { strToISO } from '../../content/dateparser'
-import { qualityReport } from '../../gen/biber-tool'
+import { qualityReport, allows } from '../../gen/biber-tool'
 import type { Collected } from '../lib/collect'
 
 import { Entry as BaseEntry, Config } from './entry'
@@ -403,7 +403,7 @@ export function generateBibLaTeX(collected: Collected): Translation {
           value: entry.normalizeDashes(item.issue),
         })
         entry.add({
-          name: entry.entrytype === 'article' || entry.has.number ? 'eid' : 'number',
+          name: allows(entry.entrytype, 'eid') || entry.has.number ? 'eid' : 'number',
           value: entry.normalizeDashes(item.number),
         })
       }

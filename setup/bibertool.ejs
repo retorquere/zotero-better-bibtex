@@ -13,6 +13,10 @@ const allowed = {
   ],
 <%_ } -%>
 }
+export function allows(type: string, field: string): boolean {
+  return Boolean(allowed[type].find((set: Set<string>) => set.has(field)))
+}
+
 const required = [
   <%_ for (const [, {types, fields}] of Object.entries(required)) { -%>
     {
