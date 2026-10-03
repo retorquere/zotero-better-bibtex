@@ -1,0 +1,28 @@
+@article{lastJournalArticleSeasonal2000,
+  title = {Journal Article with a Seasonal Issue and Article Number},
+  author = {Last, First},
+  date = {2000},
+  journaltitle = {Fake Journal},
+  shortjournal = {Fake J.},
+  volume = {1},
+  eid = {5678},
+  issue = {Spring}
+}
+
+@article{lastJournalArticleVolume2000,
+  title = {Journal Article with Volume and Article Number, but No Issue},
+  author = {Last, First},
+  date = {2000},
+  journaltitle = {Fake Journal},
+  shortjournal = {Fake J.},
+  volume = {1},
+  eid = {1234}
+}
+
+@report{lastReportNumber2000,
+  title = {Report with a Number},
+  author = {Last, First},
+  date = {2000},
+  number = {9012},
+  institution = {Fake Institute}
+}

@@ -23,6 +23,7 @@ Feature: Export
       | Allow explicit field override                                                                                            | 1          |
       | Apply Title Casing to tex.subtitle entry on export #2213                                                                 | 1          |
       | Arabic script letters in citation keys #2403                                                                             | 1          |
+      | Article numbers without numeric issues #3609                                                                           | 3          |
       | auth leaves punctuation in citation key #310                                                                             | 1          |
       | authEtal2(sep='&') + year =  & disappears #2252                                                                          | 1          |
       | authIni Not Working with n = 0 #3479                                                                                     | 1          |
