@@ -151,13 +151,7 @@ items:
     dateAdded: '2022-11-21T02:56:48Z'
     dateModified: '2026-10-03T16:54:28Z'
     itemID: 4211
-    attachments:
-      - itemType: attachment
-        title: Published
-        tags: []
-        dateAdded: '2022-11-21T03:38:16Z'
-        dateModified: '2024-08-18T02:15:41Z'
-        path: STORAGE:45UTGT36/Davenport et al. - 2007 - The smashed filter for compressive classification and target recognition.pdf
+    attachments: []
     notes: []
     autoJournalAbbreviation: Proc. SPIE
     publicationTitle: Proceedings of SPIE
