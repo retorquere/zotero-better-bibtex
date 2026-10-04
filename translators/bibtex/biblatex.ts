@@ -263,27 +263,27 @@ class Entry extends BaseEntry {
 }
 Entry.prototype.lint = qualityReport
 
-function looks_like_number(n): string | boolean {
-  if (n.match(/^(?=[MDCLXVI])M*(C[MD]|D?C*)(X[CL]|L?X*)(I[XV]|V?I*)$/)) return 'roman'
-  if (n.match(/^[A-Z]?[0-9]+(\.[0-9]+)?$/i)) return 'arabic'
-  if (n.match(/^[A-Z]$/i)) return 'arabic'
-  return false
-}
-function looks_like_number_field(n: string): boolean {
-  if (!n) return false
-
-  const ns: string[] = n.trim().split(/\s*-+|–|,|\/\s*/)
-  switch (ns.length) {
-    case 1:
-      return (looks_like_number(ns[0]) as boolean)
-
-    case 2:
-      return (looks_like_number(ns[0]) as boolean) && (looks_like_number(ns[0]) === looks_like_number(ns[1]))
-
-    default:
-      return false
-  }
-}
+// function looks_like_number(n): string | boolean {
+//   if (n.match(/^(?=[MDCLXVI])M*(C[MD]|D?C*)(X[CL]|L?X*)(I[XV]|V?I*)$/)) return 'roman'
+//   if (n.match(/^[A-Z]?[0-9]+(\.[0-9]+)?$/i)) return 'arabic'
+//   if (n.match(/^[A-Z]$/i)) return 'arabic'
+//   return false
+// }
+// function looks_like_number_field(n: string): boolean {
+//   if (!n) return false
+//
+//   const ns: string[] = n.trim().split(/\s*-+|–|,|\/\s*/)
+//   switch (ns.length) {
+//     case 1:
+//       return (looks_like_number(ns[0]) as boolean)
+//
+//     case 2:
+//       return (looks_like_number(ns[0]) as boolean) && (looks_like_number(ns[0]) === looks_like_number(ns[1]))
+//
+//     default:
+//       return false
+//   }
+// }
 
 const patent = new class {
   private countries = [ 'de', 'eu', 'fr', 'uk', 'us' ]
@@ -399,7 +399,7 @@ export function generateBibLaTeX(collected: Collected): Translation {
       else {
         entry.add({ name: 'number', value: entry.normalizeDashes(item.seriesNumber) })
         entry.add({
-          name: entry.has.number || !looks_like_number_field(item.issue) ? 'issue' : 'number',
+          name: allows(entry.entrytype, 'issue') || entry.has.number ? 'issue' : 'number',
           value: entry.normalizeDashes(item.issue),
         })
         entry.add({
