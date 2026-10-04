@@ -23,7 +23,6 @@ Feature: Export
       | Allow explicit field override                                                                                            | 1          |
       | Apply Title Casing to tex.subtitle entry on export #2213                                                                 | 1          |
       | Arabic script letters in citation keys #2403                                                                             | 1          |
-      | Article numbers without numeric issues #3609                                                                           | 3          |
       | auth leaves punctuation in citation key #310                                                                             | 1          |
       | authEtal2(sep='&') + year =  & disappears #2252                                                                          | 1          |
       | authIni Not Working with n = 0 #3479                                                                                     | 1          |
@@ -166,7 +165,7 @@ Feature: Export
       | italics in title - capitalization #541                                                                                   | 1          |
       | Japanese rendered as Chinese in Citekey #979                                                                             | 1          |
       | Journal abbreviation not exported on its own #2443                                                                       | 1          |
-      | Journal article with volume, issue, and article number (eid) #3609                                                       | 1          |
+      | Journal article with volume, issue, and article number (eid) #3609                                                       | 6          |
       | JSTOR eprint data export depends on whether jstor link starts with https vs http #1543                                   | 1          |
       | Juris-M missing multi-lingual fields #482                                                                                | 2          |
       | Kuroshiro hardcoded to apply to all CJK language items when option checked #1928                                         | 2          |

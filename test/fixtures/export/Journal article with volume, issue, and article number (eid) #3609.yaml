@@ -29,26 +29,135 @@ version:
   bbt: 9.0.64
 collections: {}
 items:
-  -
-    key: GRDSZMC6
+  - key: GRDSZMC6
     version: 111999
     itemType: journalArticle
     title: Journal article with article number
     date: '2000'
-    extra: "Number: 3"
+    extra: 'Number: 3'
     volume: '1'
     publicationTitle: Fake Journal
     issue: '2'
     citationKey: lastJournalArticleArticle2000
     creators:
-      -
-        firstName: First
+      - firstName: First
         lastName: Last
         creatorType: author
     tags: []
-    dateAdded: 2026-09-14T20:15:45Z
-    dateModified: 2026-09-14T20:37:23Z
+    dateAdded: '2026-09-14T20:15:45Z'
+    dateModified: '2026-09-14T20:37:23Z'
     itemID: 11534
     attachments: []
     notes: []
     autoJournalAbbreviation: Fake J.
+  - itemID: 1
+    itemType: journalArticle
+    title: Journal article with volume and article number, but no issue
+    date: '2000'
+    extra: 'number: 1234'
+    volume: '1'
+    publicationTitle: Fake Journal
+    journalAbbreviation: Fake J.
+    citationKey: lastJournalArticleVolume2000
+    creators:
+      - firstName: First
+        lastName: Last
+        creatorType: author
+  - itemID: 2
+    itemType: journalArticle
+    title: Journal article with a seasonal issue and article number
+    date: '2000'
+    extra: 'Number: 5678'
+    volume: '1'
+    issue: Spring
+    publicationTitle: Fake Journal
+    journalAbbreviation: Fake J.
+    citationKey: lastJournalArticleSeasonal2000
+    creators:
+      - firstName: First
+        lastName: Last
+        creatorType: author
+  - itemID: 3
+    itemType: report
+    title: Report with a number
+    date: '2000'
+    reportNumber: '9012'
+    institution: Fake Institute
+    citationKey: lastReportNumber2000
+    creators:
+      - firstName: First
+        lastName: Last
+        creatorType: author
+  - key: 5XZ2TZ2H
+    version: 114565
+    itemType: journalArticle
+    title: Journal article with volume and article number, but no issue
+    date: '2000'
+    extra: 'number: 1234'
+    volume: '1'
+    publicationTitle: Fake Journal
+    citationKey: lastJournalArticleVolume2000
+    creators:
+      - firstName: First
+        lastName: Last
+        creatorType: author
+    tags: []
+    dateAdded: '2026-10-02T22:40:15Z'
+    dateModified: '2026-10-03T01:32:46Z'
+    itemID: 11646
+    attachments: []
+    notes: []
+    autoJournalAbbreviation: Fake J.
+  - key: 6DWWYUAX
+    version: 114607
+    itemType: conferencePaper
+    title: The smashed filter for compressive classification and target recognition
+    abstractNote: The theory of compressive sensing (CS) enables the reconstruction of a sparse or compressible image or signal from a small set of linear, non-adaptive (even random) projections. However, in many applications, including object and target recognition, we are ultimately interested in making a decision about an image rather than computing a reconstruction. We propose here a framework for compressive classification that operates directly on the compressive measurements without first reconstructing the image. We dub the resulting dimensionally reduced matched filter the smashed filter. The first part of the theory maps traditional maximum likelihood hypothesis testing into the compressive domain; we find that the number of measurements required for a given classification performance level does not depend on the sparsity or compressibility of the images but only on the noise level. The second part of the theory applies the generalized maximum likelihood method to deal with unknown transformations such as the translation, scale, or viewing angle of a target object. We exploit the fact the set of transformed images forms a low-dimensional, nonlinear manifold in the high-dimensional image space. We find that the number of measurements required for a given classification performance level grows linearly in the dimensionality of the manifold but only logarithmically in the number of pixels/samples and image classes. Using both simulations and measurements from a new single-pixel compressive camera, we demonstrate the effectiveness of the smashed filter for target classification using very few measurements.
+    date: February 28, 2007
+    libraryCatalog: DOI.org (Crossref)
+    url: http://proceedings.spiedigitallibrary.org/proceeding.aspx?doi=10.1117/12.714460
+    accessDate: '2022-11-21T02:56:48Z'
+    extra: 'number: 64980H'
+    volume: '6498'
+    publisher: Society of Photo-Optical Instrumentation Engineers
+    conferenceName: Computational Imaging V
+    DOI: 10.1117/12.714460
+    citationKey: davenportSmashedFilterCompressive2007
+    eventPlace: San Jose, CA, USA
+    creators:
+      - firstName: Mark A.
+        lastName: Davenport
+        creatorType: author
+      - firstName: Marco F.
+        lastName: Duarte
+        creatorType: author
+      - firstName: Michael B.
+        lastName: Wakin
+        creatorType: author
+      - firstName: Jason N.
+        lastName: Laska
+        creatorType: author
+      - firstName: Dharmpal
+        lastName: Takhar
+        creatorType: author
+      - firstName: Kevin F.
+        lastName: Kelly
+        creatorType: author
+      - firstName: Richard G.
+        lastName: Baraniuk
+        creatorType: author
+    tags:
+      - tag: read
+    dateAdded: '2022-11-21T02:56:48Z'
+    dateModified: '2026-10-03T16:54:28Z'
+    itemID: 4211
+    attachments:
+      - itemType: attachment
+        title: Published
+        tags: []
+        dateAdded: '2022-11-21T03:38:16Z'
+        dateModified: '2024-08-18T02:15:41Z'
+        path: STORAGE:45UTGT36/Davenport et al. - 2007 - The smashed filter for compressive classification and target recognition.pdf
+    notes: []
+    autoJournalAbbreviation: Proc. SPIE
+    publicationTitle: Proceedings of SPIE
