@@ -125,6 +125,7 @@ Feature: Export
       | Entries with URL exported with (partial) URL in eprint field #1639                                                       | 2          |
       | error during export; duplicate field note #1636                                                                          | 1          |
       | Error exporting duplicate eprinttype #1128                                                                               | 1          |
+      | Error when starting Zotero with plugin enabled #3625                                                                     | 1          |
       | Exclude series editor for biblatex-apa option #3284                                                                      | 1          |
       | Export article title capitalisation; P-Type vs n-type #1913                                                              | 1          |
       | Export error for items without publicationTitle and Preserve BibTeX variables enabled #201                               | 1          |
@@ -254,94 +255,94 @@ Feature: Export
 
     Examples:
       | file                                                                                                                                                     | references |
-      | Unicode-LaTeX export produces unbraced stacked accents for precomposed Vietnamese letters (e, a), which biber then half-decodes into invalid input #3599 | 1          |
-      | Export fails with Translation using Better BibTeX failed Error normalize EDTF failed to normalize Century #3322                                          | 5          |
-      | Wrong year field in Better BibTeX export #3244                                                                                                           | 1          |
-      | Export field zoteroautoJournalAbbreviation only available when zoterojournalAbbreviation is empty #3046                                                  | 2          |
-      | export langid as language #2909                                                                                                                          | 1          |
-      | Better BibTeX export from Zotero missing Extra fields eg issued #2816                                                                                    | 1          |
-      | formula grouping                                                                                                                                         | 1          |
-      | formula grouping-upgrade                                                                                                                                 | 1          |
+      | [authN_M] citation key syntax has off-by-one error #899                                                                                                  | 1          |
+      | {relax} in author also removes trailing dot '.' #2454                                                                                                    | 1          |
+      | 30-Mar-2020 parsed as literal #1476                                                                                                                      | 1          |
+      | accented character in 'journal' field is not brace protected by bibtex export #2337                                                                      | 1          |
+      | add date, origdate functions, and format-date filter #1488                                                                                               | 4          |
+      | arXiv categories missing in the BibTeX output when stored only in the Extra field #2483                                                                  | 1          |
+      | Author multi-character initial gets shortened #2419                                                                                                      | 1          |
       | BBT does not escape # in first argument of href in note #2617                                                                                            | 2          |
       | BBT does not escape # in first argument of href in note #2617-note                                                                                       | 2          |
-      | Ternary in citekey formula                                                                                                                               | 1          |
-      | LogicalOr in citekey formula                                                                                                                             | 1          |
-      | event-place in extra not exported to address #2533                                                                                                       | 1          |
-      | arXiv categories missing in the BibTeX output when stored only in the Extra field #2483                                                                  | 1          |
-      | missing  before _ in url in .bib file #2466                                                                                                              | 1          |
-      | {relax} in author also removes trailing dot '.' #2454                                                                                                    | 1          |
-      | Author multi-character initial gets shortened #2419                                                                                                      | 1          |
-      | accented character in 'journal' field is not brace protected by bibtex export #2337                                                                      | 1          |
-      | Non-breakable spaces in author fields should be exported as tilde #1430                                                                                  | 1          |
-      | University is exported as publisher as soon as tex.referencetype is specified in Extra field #1965                                                       | 1          |
-      | Debugging translator issue for PhD Dissertation type #1950                                                                                               | 1          |
-      | Customise name-separator and list-separator #1927                                                                                                        | 1          |
-      | citation key format nopunctordash filter list #1880                                                                                                      | 1          |
-      | Export report+type as preprint                                                                                                                           | 1          |
-      | Use creator in extra field when there is no creator in the usual places #1873                                                                            | 1          |
-      | Exporting month = {season} for BibTeX #1810                                                                                                              | 1          |
-      | bibtex does not export season dates                                                                                                                      | 1          |
-      | DOI not escaped using postscript #1803                                                                                                                   | 1          |
-      | Using the Extra field in the exported Citation Key #1571                                                                                                 | 1          |
-      | shortyear adds 00 when date is missing #1769                                                                                                             | 1          |
-      | Word segmentation for Chinese references #1682                                                                                                           | 1          |
-      | Cannot ignore archivePrefix export field #1744                                                                                                           | 1          |
-      | url field is having its special characters escaped in BBT Bibtex #1716                                                                                   | 1          |
-      | Match against @string value for export #1597                                                                                                             | 1          |
-      | BibTeX journal article QR reports missing field number #1589                                                                                             | 2          |
-      | Format disambiguations #1554                                                                                                                             | 2          |
-      | BibTeX Warning for Inbook Entries with Author and Editor Fields #1541                                                                                    | 1          |
-      | Unicode oslash in author name is exported with trailing space which does not work in bibtex #1538                                                        | 1          |
-      | lone ogonek should have brace                                                                                                                            | 1          |
-      | Regression in export to better biblatex #1491                                                                                                            | 1          |
-      | add date, origdate functions, and format-date filter #1488                                                                                               | 4          |
-      | Some Unicode characters converted to LaTeX #1481                                                                                                         | 1          |
-      | Publisher Address of BibTeX Inproceedings Entries #1471                                                                                                  | 1          |
-      | 30-Mar-2020 parsed as literal #1476                                                                                                                      | 1          |
-      | BibTeX Entries with Volume and Number Fields #1475                                                                                                       | 1          |
-      | Exporting Book Sections as Inbook #1474                                                                                                                  | 1          |
-      | Missing $ in TeX export of lt to langle #1469                                                                                                            | 1          |
       | Better BibTeX does not export collections #901                                                                                                           | 36         |
-      | Better BibTeX.027                                                                                                                                        | 1          |
-      | Minimize bibtex export package dependencies #1402                                                                                                        | 1          |
-      | No booktitle field when exporting references from conference proceedings #1069                                                                           | 1          |
-      | Underscores break capital-preservation #300                                                                                                              | 1          |
-      | preserve BibTeX Variables does not check for null values while escaping #337                                                                             | 1          |
-      | veryshorttitle and compound words #551                                                                                                                   | 4          |
-      | error on exporting note with pre tags; duplicate field howpublished #1092                                                                                | 2          |
-      | custom fields should be exported as-is #441                                                                                                              | 1          |
-      | citekey firstpage-lastpage #1147                                                                                                                         | 2          |
-      | capital delta breaks .bib output #141                                                                                                                    | 1          |
-      | bibtex export of phdthesis does not case-protect -type- #435                                                                                             | 1          |
-      | Hyphenated last names not escaped properly (or at all) in BibTeX #976                                                                                    | 1          |
-      | Empty bibtex clause in extra gobbles whatever follows #99                                                                                                | 1          |
-      | Double superscript in title field on export #1217                                                                                                        | 1          |
-      | BetterBibtex export fails for missing last name #978                                                                                                     | 1          |
+      | Better BibTeX export from Zotero missing Extra fields eg issued #2816                                                                                    | 1          |
       | Better BibTeX.018                                                                                                                                        | 1          |
       | Better BibTeX.026                                                                                                                                        | 1          |
+      | Better BibTeX.027                                                                                                                                        | 1          |
+      | BetterBibtex export fails for missing last name #978                                                                                                     | 1          |
+      | bibtex does not export season dates                                                                                                                      | 1          |
+      | BibTeX Entries with Volume and Number Fields #1475                                                                                                       | 1          |
+      | bibtex export of phdthesis does not case-protect -type- #435                                                                                             | 1          |
+      | BibTeX journal article QR reports missing field number #1589                                                                                             | 2          |
+      | BibTeX Warning for Inbook Entries with Author and Editor Fields #1541                                                                                    | 1          |
       | Book chapter citation using p. instead of pp. #1375                                                                                                      | 1          |
-      | Braces around author last name when exporting BibTeX #565                                                                                                | 5          |
-      | Edition Numbers in BibTeX Exports #1446                                                                                                                  | 1          |
-      | Error exporting with custom Extra field #1118                                                                                                            | 1          |
-      | Export C as {v C}, not v{C} #152                                                                                                                         | 1          |
-      | Export of item to Better Bibtex fails for auth3_1 #98                                                                                                    | 1          |
-      | Export unicode as plain text fails for Vietnamese characters #977                                                                                        | 1          |
-      | Exporting to bibtex with unicode as plain-text latex commands does not convert U+2040 #1265                                                              | 1          |
-      | Mismatched conversion of braces in title on export means field never gets closed #1218                                                                   | 1          |
-      | Missing JabRef pattern; authEtAl #554                                                                                                                    | 1          |
-      | Missing JabRef pattern; authorsN+initials #553                                                                                                           | 1          |
-      | No brace protection when suppressTitleCase set to true #1188                                                                                             | 3          |
-      | No space between author first and last name because last char of first name is translated to a latex command #1091                                       | 1          |
-      | Numbers confuse capital-preservation #295                                                                                                                | 1          |
-      | Open date range crashes citekey generator #1227                                                                                                          | 1          |
-      | Replicate Zotero key algorithm #439                                                                                                                      | 3          |
-      | [authN_M] citation key syntax has off-by-one error #899                                                                                                  | 1          |
       | braces after textemdash followed by unicode #980                                                                                                         | 1          |
+      | Braces around author last name when exporting BibTeX #565                                                                                                | 5          |
+      | Cannot ignore archivePrefix export field #1744                                                                                                           | 1          |
+      | capital delta breaks .bib output #141                                                                                                                    | 1          |
+      | citation key format nopunctordash filter list #1880                                                                                                      | 1          |
+      | citekey firstpage-lastpage #1147                                                                                                                         | 2          |
       | creating a key with [authForeIni] and [authN] not working properly #892                                                                                  | 2          |
+      | custom fields should be exported as-is #441                                                                                                              | 1          |
+      | Customise name-separator and list-separator #1927                                                                                                        | 1          |
       | date not always parsed properly into month and year with PubMed #1112                                                                                    | 2          |
       | date ranges #747+#746                                                                                                                                    | 5          |
+      | Debugging translator issue for PhD Dissertation type #1950                                                                                               | 1          |
+      | DOI not escaped using postscript #1803                                                                                                                   | 1          |
+      | Double superscript in title field on export #1217                                                                                                        | 1          |
+      | Edition Numbers in BibTeX Exports #1446                                                                                                                  | 1          |
+      | Empty bibtex clause in extra gobbles whatever follows #99                                                                                                | 1          |
+      | Error exporting with custom Extra field #1118                                                                                                            | 1          |
+      | error on exporting note with pre tags; duplicate field howpublished #1092                                                                                | 2          |
+      | event-place in extra not exported to address #2533                                                                                                       | 1          |
+      | Export C as {v C}, not v{C} #152                                                                                                                         | 1          |
+      | Export fails with Translation using Better BibTeX failed Error normalize EDTF failed to normalize Century #3322                                          | 5          |
+      | Export field zoteroautoJournalAbbreviation only available when zoterojournalAbbreviation is empty #3046                                                  | 2          |
+      | export langid as language #2909                                                                                                                          | 1          |
+      | Export of item to Better Bibtex fails for auth3_1 #98                                                                                                    | 1          |
+      | Export report+type as preprint                                                                                                                           | 1          |
+      | Export unicode as plain text fails for Vietnamese characters #977                                                                                        | 1          |
+      | Exporting Book Sections as Inbook #1474                                                                                                                  | 1          |
+      | Exporting month = {season} for BibTeX #1810                                                                                                              | 1          |
+      | Exporting to bibtex with unicode as plain-text latex commands does not convert U+2040 #1265                                                              | 1          |
+      | Format disambiguations #1554                                                                                                                             | 2          |
+      | formula grouping                                                                                                                                         | 1          |
+      | formula grouping-upgrade                                                                                                                                 | 1          |
+      | Hyphenated last names not escaped properly (or at all) in BibTeX #976                                                                                    | 1          |
+      | LogicalOr in citekey formula                                                                                                                             | 1          |
+      | lone ogonek should have brace                                                                                                                            | 1          |
+      | Match against @string value for export #1597                                                                                                             | 1          |
+      | Minimize bibtex export package dependencies #1402                                                                                                        | 1          |
+      | Mismatched conversion of braces in title on export means field never gets closed #1218                                                                   | 1          |
+      | missing  before _ in url in .bib file #2466                                                                                                              | 1          |
+      | Missing $ in TeX export of lt to langle #1469                                                                                                            | 1          |
+      | Missing JabRef pattern; authEtAl #554                                                                                                                    | 1          |
+      | Missing JabRef pattern; authorsN+initials #553                                                                                                           | 1          |
+      | No booktitle field when exporting references from conference proceedings #1069                                                                           | 1          |
+      | No brace protection when suppressTitleCase set to true #1188                                                                                             | 3          |
+      | No space between author first and last name because last char of first name is translated to a latex command #1091                                       | 1          |
+      | Non-breakable spaces in author fields should be exported as tilde #1430                                                                                  | 1          |
+      | Numbers confuse capital-preservation #295                                                                                                                | 1          |
+      | Open date range crashes citekey generator #1227                                                                                                          | 1          |
       | preserve @strings between import-export #1162                                                                                                            | 1          |
+      | preserve BibTeX Variables does not check for null values while escaping #337                                                                             | 1          |
+      | Publisher Address of BibTeX Inproceedings Entries #1471                                                                                                  | 1          |
+      | Regression in export to better biblatex #1491                                                                                                            | 1          |
+      | Replicate Zotero key algorithm #439                                                                                                                      | 3          |
+      | shortyear adds 00 when date is missing #1769                                                                                                             | 1          |
+      | Some Unicode characters converted to LaTeX #1481                                                                                                         | 1          |
+      | Ternary in citekey formula                                                                                                                               | 1          |
       | titles are title-cased in .bib file #558                                                                                                                 | 2          |
+      | Underscores break capital-preservation #300                                                                                                              | 1          |
+      | Unicode oslash in author name is exported with trailing space which does not work in bibtex #1538                                                        | 1          |
+      | Unicode-LaTeX export produces unbraced stacked accents for precomposed Vietnamese letters (e, a), which biber then half-decodes into invalid input #3599 | 1          |
+      | University is exported as publisher as soon as tex.referencetype is specified in Extra field #1965                                                       | 1          |
+      | url field is having its special characters escaped in BBT Bibtex #1716                                                                                   | 1          |
+      | Use creator in extra field when there is no creator in the usual places #1873                                                                            | 1          |
+      | Using the Extra field in the exported Citation Key #1571                                                                                                 | 1          |
+      | veryshorttitle and compound words #551                                                                                                                   | 4          |
+      | Word segmentation for Chinese references #1682                                                                                                           | 1          |
+      | Wrong year field in Better BibTeX export #3244                                                                                                           | 1          |
 
     @use.with_client=zotero
     Examples:
@@ -354,22 +355,22 @@ Feature: Export
 
     Examples:
       | file                                                                             | references |
-      | Extra field type video not exported #3536                                        | 1          |
-      | Normalizing English language tag #3100                                           | 3          |
-      | Export does not include available-date #3286                                     | 4          |
-      | Page, issue and volume range sign in CSL JSON is hyphen instead of en dash #3327 | 1          |
-      | Export to Better CSL JSON not working in latest built 6600-6700 #3332            | 1          |
-      | Better CSL does not extract extra variables #2963                                | 1          |
-      | Does setting a type via cheater syntax work currently #2473                      | 1          |
       | _eprint in extra causes CSL-JSON export error #2430                              | 1          |
-      | unwanted inclusion of Zotero's internal journal abbreviations in CSL JSON #2375  | 1          |
-      | Export Error Unexpected date type #2303                                          | 1          |
-      | Better CSL JSON does not include authority field #2019                           | 1          |
-      | Multiple creators in Extra not exported in Better CSL JSON #2015                 | 1          |
-      | Deterministic ordering for CSL #1178 #1400                                       | 26         |
-      | CSL exporters; ignore [Fields to omit from export] setting #1179                 | 26         |
-      | Quotes around last names should be removed from citekeys #856                    | 1          |
       | BBT CSL JSON; Do not use shortTitle and journalAbbreviation #372                 | 1          |
+      | Better CSL does not extract extra variables #2963                                | 1          |
+      | Better CSL JSON does not include authority field #2019                           | 1          |
+      | CSL exporters; ignore [Fields to omit from export] setting #1179                 | 26         |
+      | Deterministic ordering for CSL #1178 #1400                                       | 26         |
+      | Does setting a type via cheater syntax work currently #2473                      | 1          |
+      | Export does not include available-date #3286                                     | 4          |
+      | Export Error Unexpected date type #2303                                          | 1          |
+      | Export to Better CSL JSON not working in latest built 6600-6700 #3332            | 1          |
+      | Extra field type video not exported #3536                                        | 1          |
+      | Multiple creators in Extra not exported in Better CSL JSON #2015                 | 1          |
+      | Normalizing English language tag #3100                                           | 3          |
+      | Page, issue and volume range sign in CSL JSON is hyphen instead of en dash #3327 | 1          |
+      | Quotes around last names should be removed from citekeys #856                    | 1          |
+      | unwanted inclusion of Zotero's internal journal abbreviations in CSL JSON #2375  | 1          |
 
     @use.with_client=jurism
     Examples:
@@ -382,8 +383,8 @@ Feature: Export
 
     Examples:
       | file                                                                     | references |
-      | YAML exports every list item of mappings starts with a bare - line #3615 | 1          |
       | Export year ranges from Original Date #3482                              | 1          |
+      | YAML exports every list item of mappings starts with a bare - line #3615 | 1          |
 
   @hayagriva
   Scenario Outline: Export <references> references for Better Hayagriva to <file>
@@ -393,11 +394,11 @@ Feature: Export
 
     Examples:
       | file                                                           | references |
+      | Export year ranges from Original Date #3482                    | 1          |
+      | Hayagriva date field in wrong format #3562                     | 2          |
       | Hayagriva export Encyclopedia article doesnt have parent #3585 | 2          |
       | Hayagriva export retain conference name information #3593      | 2          |
       | Hayagriva format bugs #3579                                    | 5          |
-      | Export year ranges from Original Date #3482                    | 1          |
-      | Hayagriva date field in wrong format #3562                     | 2          |
 
   Scenario: Journal acronym from acronyms list not used in generated citation key #2634
     And I install "export/*.csv" in the better bibtex directory as "acronyms.csv"

@@ -1,0 +1,52 @@
+config:
+  id: 36a3b0b5-bad0-4a04-b79b-441c7cef77db
+  label: BetterBibTeX JSON
+  preferences:
+    citekeyFormat: auth.lower + shorttitle(3, 3) + year
+    fillKeyAfter: 1
+  options: {}
+version:
+  zotero: 10.0.5
+  bbt: 9.0.68
+collections: {}
+items:
+  -
+    key: 85DQVIDM
+    version: 38392
+    itemType: journalArticle
+    title: 'A comprehensive review of electrochemical exfoliation of graphite for tunable graphene architecture: Mechanistic insights, design principles, functional derivatives, and emerging applications'
+    abstractNote: Graphene has attracted considerable attention owing to its exceptional physical and chemical properties, which support a wide range of scientific and technological applications. Although numerous synthesis methods have been developed for scalable production, many conventional techniques involve high temperatures, hazardous reagents, or complex processing steps. As a more sustainable and efficient alternative, electrochemical exfoliation has emerged as a promising approach for graphene synthesis. This review provides a comprehensive overview of electrochemical exfoliation, including its fundamental principles, underlying mechanisms, and the tunability of graphene properties through controllable process parameters. Furthermore, its utility in the synthesis of graphene derivatives and composite materials is discussed, thereby broadening its applicability across various research domains. Recent advances in energy-related and sensing applications are examined, alongside current challenges and future perspectives for establishing electrochemical exfoliation as a practical and scalable method for producing high-quality graphene.
+    date: /26/2014
+    DOI: 10.1016/j.carbon.2025.120888
+    citationKey: limComprehensiveReviewElectrochemical2026
+    url: https://linkinghub.elsevier.com/retrieve/pii/S0008622325009042
+    accessDate: 2025-10-09T21:35:26Z
+    shortTitle: A comprehensive review of electrochemical exfoliation of graphite for tunable graphene architecture
+    language: en
+    libraryCatalog: DOI.org (Crossref)
+    volume: '246'
+    pages: '120888'
+    publicationTitle: Carbon
+    ISSN: '00086223'
+    journalAbbreviation: Carbon
+    creators:
+      -
+        firstName: Sungmook
+        lastName: Lim
+        creatorType: author
+      -
+        firstName: Mincheol
+        lastName: Chang
+        creatorType: author
+      -
+        firstName: Wonoh
+        lastName: Lee
+        creatorType: author
+    tags:
+      -
+        tag: 'Status: Unread'
+    dateAdded: 2025-10-09T21:35:26Z
+    dateModified: 2025-10-09T21:35:35Z
+    itemID: 121
+    notes: []
+    autoJournalAbbreviation: ''

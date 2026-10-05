@@ -655,9 +655,9 @@ export function century(n: number | string): string {
 function selectstart(date: RichDate): RichDate {
   switch (date.type) {
     case 'list':
-      return date.dates.find(d => d.type !== 'open') || date.dates[0]
+      return selectstart(date.dates.find(d => d.type !== 'open') || date.dates[0])
     case 'interval':
-      return [date.from, date.to].find(d => d.type !== 'open') || [date.from, date.to].find(d => d) || { type: 'open' }
+      return selectstart([date.from, date.to].find(d => d.type !== 'open') || [date.from, date.to].find(d => d) || { type: 'open' })
     default:
       return date
   }
