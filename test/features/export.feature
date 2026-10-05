@@ -166,7 +166,7 @@ Feature: Export
       | italics in title - capitalization #541                                                                                   | 1          |
       | Japanese rendered as Chinese in Citekey #979                                                                             | 1          |
       | Journal abbreviation not exported on its own #2443                                                                       | 1          |
-      | Journal article with volume, issue, and article number (eid) #3609                                                       | 1          |
+      | Journal article with volume, issue, and article number (eid) #3609                                                       | 6          |
       | JSTOR eprint data export depends on whether jstor link starts with https vs http #1543                                   | 1          |
       | Juris-M missing multi-lingual fields #482                                                                                | 2          |
       | Kuroshiro hardcoded to apply to all CJK language items when option checked #1928                                         | 2          |
