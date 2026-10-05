@@ -1,3 +1,20 @@
+@inproceedings{davenportSmashedFilterCompressive2007,
+  title = {The Smashed Filter for Compressive Classification and Target Recognition},
+  booktitle = {Proceedings of {{SPIE}}},
+  author = {Davenport, Mark A. and Duarte, Marco F. and Wakin, Michael B. and Laska, Jason N. and Takhar, Dharmpal and Kelly, Kevin F. and Baraniuk, Richard G.},
+  date = {2007-02-28},
+  volume = {6498},
+  publisher = {Society of Photo-Optical Instrumentation Engineers},
+  doi = {10.1117/12.714460},
+  url = {http://proceedings.spiedigitallibrary.org/proceeding.aspx?doi=10.1117/12.714460},
+  urldate = {2022-11-21},
+  abstract = {The theory of compressive sensing (CS) enables the reconstruction of a sparse or compressible image or signal from a small set of linear, non-adaptive (even random) projections. However, in many applications, including object and target recognition, we are ultimately interested in making a decision about an image rather than computing a reconstruction. We propose here a framework for compressive classification that operates directly on the compressive measurements without first reconstructing the image. We dub the resulting dimensionally reduced matched filter the smashed filter. The first part of the theory maps traditional maximum likelihood hypothesis testing into the compressive domain; we find that the number of measurements required for a given classification performance level does not depend on the sparsity or compressibility of the images but only on the noise level. The second part of the theory applies the generalized maximum likelihood method to deal with unknown transformations such as the translation, scale, or viewing angle of a target object. We exploit the fact the set of transformed images forms a low-dimensional, nonlinear manifold in the high-dimensional image space. We find that the number of measurements required for a given classification performance level grows linearly in the dimensionality of the manifold but only logarithmically in the number of pixels/samples and image classes. Using both simulations and measurements from a new single-pixel compressive camera, we demonstrate the effectiveness of the smashed filter for target classification using very few measurements.},
+  eid = {64980H},
+  eventtitle = {Computational {{Imaging V}}},
+  venue = {San Jose, CA, USA},
+  keywords = {read}
+}
+
 @article{lastJournalArticleArticle2000,
   title = {Journal Article with Article Number},
   author = {Last, First},
@@ -8,6 +25,7 @@
   number = {2},
   eid = {3}
 }
+
 @article{lastJournalArticleSeasonal2000,
   title = {Journal Article with a Seasonal Issue and Article Number},
   author = {Last, First},
@@ -29,10 +47,20 @@
   eid = {1234}
 }
 
+@article{lastJournalArticleVolume2000,
+  title = {Journal Article with Volume and Article Number, but No Issue},
+  author = {Last, First},
+  date = {2000},
+  journaltitle = {Fake Journal},
+  shortjournal = {Fake J.},
+  volume = {1},
+  eid = {1234}
+}
+
 @report{lastReportNumber2000,
   title = {Report with a Number},
   author = {Last, First},
   date = {2000},
-  number = {9012},
-  institution = {Fake Institute}
+  institution = {Fake Institute},
+  eid = {9012}
 }

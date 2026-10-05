@@ -13,7 +13,8 @@ const allowed = {
   ],
 <%_ } -%>
 }
-export function allows(type: string, field: string): boolean {
+export function allows(type: string, field: string, dflt = true): boolean {
+  if (!allowed[type]) return dflt
   return Boolean(allowed[type].find((set: Set<string>) => set.has(field)))
 }
 
