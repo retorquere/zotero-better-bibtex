@@ -354,7 +354,7 @@ function Meta(meta)
   if config.transferable and not config.csl_style then
     error('Transferable documents need a CSL style')
   end
-  if config.transferable and not config.scannable_cite then
+  if config.transferable and config.scannable_cite then
     error('Scannable-cite documents are not transferable')
   end
 
