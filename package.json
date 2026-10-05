@@ -138,7 +138,7 @@
     "@retorquere/bibtex-parser": "^11.0.0",
     "@stylistic/eslint-plugin": "^5.10.0",
     "@types/node": "^26.6.4",
-    "@typescript-eslint/eslint-plugin": "^8.71.0",
+    "@typescript-eslint/eslint-plugin": "^8.71.1",
     "@xmldom/xmldom": "^0.9.12",
     "7zip-bin-full": "^26.3.1",
     "ajv-keywords": "^5.1.0",
@@ -180,7 +180,7 @@
     "jsesc": "^3.1.0",
     "json-schema-it": "^1.2.24",
     "json-schema-to-typescript": "^16.0.0",
-    "kuroshiro": "^1.2.0",
+    "kuroshiro": "^1.2.1",
     "kuroshiro-analyzer-kuromoji": "^1.1.0",
     "meriyah": "^7.4.0",
     "moment": "^2.31.0",
@@ -203,7 +203,7 @@
     "ts-node": "^10.9.2",
     "tslib": "^2.8.1",
     "typescript": "npm:@typescript/typescript6@^6.0.2",
-    "typescript-eslint": "^8.71.0",
+    "typescript-eslint": "^8.71.1",
     "unicode2latex": "^7.0.35",
     "uri-templates": "^0.2.0",
     "util": "^0.12.5",
@@ -221,6 +221,6 @@
   "allowScripts": {
     "es5-ext@0.10.64": true,
     "esbuild@0.28.2": true,
-    "dprint@0.57.4": true
+    "dprint@0.60.1": true
   }
 }
