@@ -1,9 +1,9 @@
 
-  print('zotero-live-citations 71cec80')
+  print('zotero-live-citations 4e4da3d')
   local online, mt, latest = pcall(pandoc.mediabag.fetch, 'https://retorque.re/zotero-better-bibtex/exporting/zotero.lua.revision')
   if online then
     latest = string.sub(latest, 1, 10)
-    if '71cec80' ~= latest then
+    if '4e4da3d' ~= latest then
       print('new version "' .. latest .. '" available at https://retorque.re/zotero-better-bibtex/exporting')
     end
   end
@@ -2121,7 +2121,7 @@ function Div(div)
   return pandoc.RawBlock('opendocument', zotero_bibl_odt())
 end
 
-function Doc(doc)
+function Pandoc(doc)
   if config.format ~= 'odt' then return nil end
 
   if config.transferable then
@@ -2140,6 +2140,6 @@ return {
   { Cite = Cite_collect },
   { Cite = Cite_replace },
   { Div = Div },
-  { Doc = Doc },
+  { Pandoc = Pandoc },
 }
 

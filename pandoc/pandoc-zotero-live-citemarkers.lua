@@ -430,7 +430,7 @@ function Div(div)
   return pandoc.RawBlock('opendocument', zotero_bibl_odt())
 end
 
-function Doc(doc)
+function Pandoc(doc)
   if config.format ~= 'odt' then return nil end
 
   if config.transferable then
@@ -449,5 +449,5 @@ return {
   { Cite = Cite_collect },
   { Cite = Cite_replace },
   { Div = Div },
-  { Doc = Doc },
+  { Pandoc = Pandoc },
 }
