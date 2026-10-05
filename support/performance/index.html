@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="height=device-height, width=device-width, initial-scale=1.0, minimum-scale=1.0">
     <meta name="generator" content="Hugo 0.167.0">
-    <meta name="generator" content="Relearn 9.1.0+f0096ea8c391a3404fe56c49eff0898dc5c9ae62">
+    <meta name="generator" content="Relearn 9.1.0+54de122b1167a16811216ea5afb532e2f06d9fd2">
     <meta name="description" content="The Better BibTeX exporters are a lot slower than the standard Zotero Bib(La)TeX exporters. If you have a small library, you will not likely notice this, but if you have several thousand items, and you are in the habit of exporting substantial parts of your library, this gets annoying really fast.
 To deal with this problem, Better BibTeX implements an extensive caching system. With a filled cache, Better BibTeX is substantially faster than the default Zotero exporters. Specifically for automatic background exports, a filled cache is a good thing to have.">
     <meta name="author" content="">
@@ -60,8 +60,11 @@ To deal with this problem, Better BibTeX implements an extensive caching system.
       ],
       "translations": {
         "Browser_unsupported_feature": "This browser doesn't support this feature",
+        "Close_graph": "Close enlarged graph",
         "Copied_to_clipboard": "Text copied to clipboard!",
         "Copy_to_clipboard": "Copy text to clipboard",
+        "Enlarge_graph": "Enlarge graph",
+        "History_cleared": "History cleared",
         "Link_copied_to_clipboard": "Link copied to clipboard!",
         "N_results_found": "{1} results found for \"{0}\"",
         "No_results_found": "No results found for \"{0}\"",
@@ -91,154 +94,7 @@ To deal with this problem, Better BibTeX implements an extensive caching system.
 
   </head>
   <body class="mobile-support html" data-origin="/zotero-better-bibtex/support/performance/index.html">
-    <div id="R-body" class="default-animation">
-      <div id="R-body-overlay"></div>
-      <nav id="R-topbar" class="default-animation">
-        <div class="topbar-wrapper default-animation">
-          <div class="topbar-sidebar-divider default-animation"></div>
-          <div class="topbar-area topbar-area-start" data-area="start">
-            <div class="topbar-button topbar-button-sidebar default-animation" data-content-empty="disable" data-width-s="show" data-width-m="hide" data-width-l="hide">
-<span class="btn cstyle button link noborder notitle interactive"><button data-button-action="toggle-nav" type="button" title="Menu (CTRL&#43;ALT&#43;n)"><i class="fa-fw fas fa-bars"></i></button></span>
-            </div>
-            <div class="topbar-button topbar-button-toc default-animation" data-content-empty="hide" data-width-s="show" data-width-m="show" data-width-l="show">
-<span class="btn cstyle button link noborder notitle interactive"><button data-button-action="toggle-flyout" type="button" title="Table of Contents (CTRL&#43;ALT&#43;t)"><i class="fa-fw fas fa-table-list"></i></button></span>
-              <div class="topbar-content">
-                <div class="topbar-content-wrapper" tabindex="-1">
-<nav class="TableOfContents">
-  <ul>
-    <li>
-      <ul>
-        <li><a href="#tldr">TL;DR</a></li>
-      </ul>
-    </li>
-    <li><a href="#caching">Caching</a>
-      <ul>
-        <li><a href="#initial-state">Initial state</a></li>
-        <li><a href="#cache-refresh">Cache refresh</a></li>
-        <li><a href="#cache-drop">Cache drop</a></li>
-      </ul>
-    </li>
-  </ul>
-</nav>
-                </div>
-              </div>
-            </div>
-          </div>
-          <ol class="topbar-breadcrumbs breadcrumbs highlightable" data-overflow-title="Better BibTeX for Zotero &gt; Support &gt; Performance" itemscope itemtype="http://schema.org/BreadcrumbList"><li itemscope itemtype="https://schema.org/ListItem" itemprop="itemListElement" class=""><a itemprop="item" href="/zotero-better-bibtex/index.html"><span itemprop="name">Better BibTeX for Zotero</span></a><meta itemprop="position" content="1">&nbsp;>&nbsp;</li><li itemscope itemtype="https://schema.org/ListItem" itemprop="itemListElement" class=""><a itemprop="item" href="/zotero-better-bibtex/support/index.html"><span itemprop="name">Support</span></a><meta itemprop="position" content="2">&nbsp;>&nbsp;</li><li itemscope itemtype="https://schema.org/ListItem" itemprop="itemListElement" class=""><span itemprop="name">Performance</span><meta itemprop="position" content="3"></li>
-          </ol>
-          <div class="topbar-area topbar-area-end" data-area="end">
-            <div class="topbar-button topbar-button-edit default-animation" data-content-empty="disable" data-width-s="area-more" data-width-m="show" data-width-l="show">
-<span class="btn cstyle button link noborder notitle interactive"><a href="https://github.com/retorquere/zotero-better-bibtex/edit/master/site/content/support/performance.md" rel="external" title="Edit (CTRL+ALT+w)"><i class="fa-fw fas fa-pen"></i></a></span>
-            </div>
-            <div class="topbar-button topbar-button-prev default-animation" data-content-empty="disable" data-width-s="show" data-width-m="show" data-width-l="show">
-<span class="btn cstyle button link noborder notitle interactive"><a href="/zotero-better-bibtex/support/faq/index.html" title="Frequently Asked Questions (🡐)"><i class="fa-fw fas fa-chevron-left"></i></a></span>
-            </div>
-            <div class="topbar-button topbar-button-next default-animation" data-content-empty="disable" data-width-s="show" data-width-m="show" data-width-l="show">
-<span class="btn cstyle button link noborder notitle interactive"><a href="/zotero-better-bibtex/support/translations/index.html" title="Translations (🡒)"><i class="fa-fw fas fa-chevron-right"></i></a></span>
-            </div>
-            <div class="topbar-button topbar-button-more default-animation" data-content-empty="hide" data-width-s="show" data-width-m="show" data-width-l="show">
-<span class="btn cstyle button link noborder notitle interactive"><button data-button-action="toggle-flyout" type="button" title="More"><i class="fa-fw fas fa-ellipsis-v"></i></button></span>
-              <div class="topbar-content">
-                <div class="topbar-content-wrapper" tabindex="-1">
-                  <div class="topbar-area topbar-area-more" data-area="more">
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </nav>
-      <div id="R-main-overlay"></div>
-      <main id="R-body-inner" class="highlightable support" tabindex="-1">
-        <div class="flex-block-wrapper">
-<article class="default">
-  <header class="headline">
-<div class="R-taxonomy taxonomy-tags tags" title="Tags">
-  <i class="fa-fw fas fa-layer-group"></i>
-  <ul>
-    <li><a class="term-link" href="/zotero-better-bibtex/tags/cache/index.html">Cache</a></li>
-    <li><a class="term-link" href="/zotero-better-bibtex/tags/export/index.html">Export</a></li>
-  </ul>
-</div>
-  </header>
-
-<h1 id="performance">Performance</h1>
-
-<p>The Better BibTeX exporters are a lot slower than the standard Zotero Bib(La)TeX exporters. If you have a small library,
-you will not likely notice this, but if you have several thousand items, and you are in the habit of exporting
-substantial parts of your library, this gets annoying really fast.</p>
-<p>To deal with this problem, Better BibTeX implements an extensive caching system. With a filled cache, Better BibTeX is
-substantially faster than the default Zotero exporters.  Specifically for <a href="/zotero-better-bibtex/exporting/">automatic background exports</a>, a filled cache is
-a good thing to have.</p>
-<p>For technical reasons, if you export the file attachments as part of your export, the cache is skipped altogether, so
-this will always be slow. This is also why you cannot set up auto-exports with file exports.</p>
-<h3 id="tldr">TL;DR<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h3>
-<p>There&rsquo;s a more technical explanation below, but the TL;DR version is that you want to have a filled cache. If you want
-to get it over with, export your entire library (once, no need to tick &lsquo;Keep Updated&rsquo;) using the &lsquo;Better BibTeX&rsquo; format
-and go grab coffee (or lunch, depending on the size of your library). After that, things should be <em>much</em> better.</p>
-<p>Here are some numbers from a test with a library consisting of 86 items, exported 50 times in a row to middle out variances:</p>
-<p>(attachments are not exported for this test, but they still required serialization and handling):</p>
-<table>
-  <thead>
-    <tr>
-      <th>Exporter</th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>Zotero BibTeX</td>
-      <td>3s</td>
-    </tr>
-    <tr>
-      <td>Better BibTeX, empty cache</td>
-      <td>9s</td>
-    </tr>
-    <tr>
-      <td>Better BibTeX, filled cache</td>
-      <td>4s</td>
-    </tr>
-    <tr>
-      <td>Zotero BibLaTeX</td>
-      <td>4s</td>
-    </tr>
-    <tr>
-      <td>Better BibLaTeX, empty cache</td>
-      <td>9s</td>
-    </tr>
-    <tr>
-      <td>Better BibLaTeX, filled cache</td>
-      <td>3s</td>
-    </tr>
-  </tbody>
-</table>
-<p><strong>note</strong>: if you have &lsquo;Export files&rsquo; enabled during export, or set the JabRef export format to <code>4</code>, the cache will not be active. If you do large (auto)exports, avoid these.</p>
-<h2 id="caching">Caching<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h2>
-<h3 id="initial-state">Initial state<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h3>
-<p>Initially, your cache will be empty. The first export of any item using Better BibTeX will therefore be a little
-over twice as slow as subsequent exports. After that, it gets pretty zippy, as the process of exporting a item
-will also cache the output entry for that item <em>for the current export settings</em>. This means if you export once with, and once without
-notes (one of the options in the export popup), you will hit an empty cache twice. If you set up an automatic export,
-the export you do that registers it for auto-update will already be the first export, so if your items weren&rsquo;t
-cached already, they will be before subsequent auto-exports.</p>
-<h3 id="cache-refresh">Cache refresh<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h3>
-<p>The cache entry for a item is retained as long as you do not make any changes to that item. Any change you
-make will drop all cache entries for that item (so all variants you had for different export options). The cache
-for that item will be refreshed as soon as you export it again, either manually or
-<a href="/zotero-better-bibtex/exporting/">automatically</a>.</p>
-<h3 id="cache-drop">Cache drop<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h3>
-<p><em>Any</em> change you make to the Better BibTeX <a href="/zotero-better-bibtex/preferences/">preferences</a> will drop the whole cache. The behavior of
-the Better BibTeX exporters are highly configurable, and it is impossible for me to figure out which entries would be
-affected specifically. Keep this in mind for large libraries; if you want to make changes to your configuration, make them all at once.</p>
-<p>The same applies to upgrades. As the export behavior quite frequently changes between versions, Better BibTeX will drop
-the cache during first startup of the newer version. This can be a nuisance if you have a large library, but it&rsquo;s the only way to keep support feasible.</p>
-
-  <footer class="footline">
-  </footer>
-</article>
-        </div>
-      </main>
-    </div>
+    <a id="R-skip-link" href="#R-body-inner">Skip to main content</a>
     <aside id="R-sidebar" class="default-animation">
       <div id="R-header-topbar" class="default-animation"></div>
       <div id="R-header-wrapper" class="default-animation"><a id="logo" href="/zotero-better-bibtex/">
@@ -853,10 +709,10 @@ Better BibTeX for Zotero
 
         <search><form action="/zotero-better-bibtex/search/index.html" method="get">
           <div class="searchbox default-animation">
-            <button class="search-detail" type="submit" title="Search (CTRL+ALT+f)"><i class="fas fa-fw fa-search"></i></button>
+            <button class="search-detail" type="submit" title="Open search page" aria-label="Open search page"><i class="fas fa-fw fa-search" aria-hidden="true"></i></button>
             <label class="a11y-only" for="R-search-by">Search</label>
-            <input data-search-input id="R-search-by" name="search-by" class="search-by" type="search" placeholder="Search...">
-            <button class="search-clear" type="button" data-search-clear="" title="Clear search"><i class="fas fa-fw fa-times" title="Clear search"></i></button>
+            <input data-search-input id="R-search-by" name="search-by" class="search-by" type="search" placeholder="Search..." title="Search (CTRL+ALT+f)">
+            <button class="search-clear" type="button" data-search-clear="" title="Clear search" aria-label="Clear search"><i class="fas fa-fw fa-times" aria-hidden="true" title="Clear search"></i></button>
           </div>
         </form></search>
       </div>
@@ -866,7 +722,7 @@ Better BibTeX for Zotero
         </div>
         <div class="R-sidebarmenu R-shortcutmenu-homelinks default-animation">
           <ul class="space collapsible-menu">
-            <li class="" data-nav-id="/zotero-better-bibtex/index.html"><a class="padding" href="/zotero-better-bibtex/index.html"><i class="fa-fw fas fa-home"></i> Home</a></li>
+            <li class="" data-nav-id="/zotero-better-bibtex/index.html"><a class="padding" href="/zotero-better-bibtex/index.html"><i class="fa-fw fas fa-home" aria-hidden="true"></i> Home</a></li>
           </ul>
         </div>
         <div class="R-menu-divider default-animation">
@@ -880,7 +736,7 @@ Better BibTeX for Zotero
           <hr class="padding default-animation">
         </div>
       </div>
-      <div id="R-content-wrapper" class="highlightable" tabindex="-1">
+      <nav id="R-content-wrapper" class="highlightable" aria-label="Menu" tabindex="-1">
         <div id="R-scrollbar" aria-hidden="true"><div id="R-scrollbar-thumb"></div></div>
         <div class="R-sidebarmenu R-shortcutmenu-main default-animation">
           <ul class="enlarge morespace collapsible-menu">
@@ -890,7 +746,7 @@ Better BibTeX for Zotero
             <li class="" data-nav-id="/zotero-better-bibtex/citing/index.html"><a class="padding default-animation" href="/zotero-better-bibtex/citing/index.html">Citation Keys</a><ul id="R-subsections-21d11d1b73fd6487fde6cbf6c72fa642" class="collapsible-menu"></ul></li>
             <li class="parent " data-nav-id="/zotero-better-bibtex/support/index.html"><a class="padding default-animation" href="/zotero-better-bibtex/support/index.html">Support</a><ul id="R-subsections-caa68563dfb61577c2c4699e1aa63010" class="collapsible-menu">
             <li class="" data-nav-id="/zotero-better-bibtex/support/faq/index.html"><a class="padding" href="/zotero-better-bibtex/support/faq/index.html">FAQ</a></li>
-            <li class="active " data-nav-id="/zotero-better-bibtex/support/performance/index.html"><a class="padding" href="/zotero-better-bibtex/support/performance/index.html">Performance</a></li>
+            <li class="active " data-nav-id="/zotero-better-bibtex/support/performance/index.html"><a class="padding" href="/zotero-better-bibtex/support/performance/index.html" aria-current="page">Performance</a></li>
             <li class="" data-nav-id="/zotero-better-bibtex/support/translations/index.html"><a class="padding" href="/zotero-better-bibtex/support/translations/index.html">Translations</a></li>
             <li class="" data-nav-id="/zotero-better-bibtex/support/tests/index.html"><a class="padding" href="/zotero-better-bibtex/support/tests/index.html">Testing</a></li></ul></li>
             <li class="" data-nav-id="/zotero-better-bibtex/changelog/index.html"><a class="padding" href="/zotero-better-bibtex/changelog/index.html">Changelog</a></li>
@@ -1028,8 +884,160 @@ Better BibTeX for Zotero
 
 <script async defer src="https://buttons.github.io/buttons.js"></script>
 </div>
-      </div>
+      </nav>
     </aside>
+    <div id="R-body" class="default-animation">
+      <div id="R-body-overlay"></div>
+      <header id="R-topbar" class="default-animation">
+        <div class="topbar-wrapper default-animation">
+          <div class="topbar-sidebar-divider default-animation"></div>
+          <div class="topbar-area topbar-area-start" data-area="start">
+            <div class="topbar-button topbar-button-sidebar default-animation" data-content-empty="disable" data-width-s="show" data-width-m="hide" data-width-l="hide">
+<span class="btn cstyle button link noborder notitle interactive"><button data-button-action="toggle-nav" type="button" title="Menu (CTRL&#43;ALT&#43;n)" aria-label="Menu (CTRL&#43;ALT&#43;n)" aria-expanded="false"><i class="fa-fw fas fa-bars" aria-hidden="true"></i></button></span>
+            </div>
+            <div class="topbar-button topbar-button-toc default-animation" data-content-empty="hide" data-width-s="show" data-width-m="show" data-width-l="show">
+<span class="btn cstyle button link noborder notitle interactive"><button data-button-action="toggle-flyout" type="button" title="Table of Contents (CTRL&#43;ALT&#43;t)" aria-label="Table of Contents (CTRL&#43;ALT&#43;t)" aria-expanded="false"><i class="fa-fw fas fa-table-list" aria-hidden="true"></i></button></span>
+              <div class="topbar-content">
+                <div class="topbar-content-wrapper" tabindex="-1">
+<nav class="TableOfContents" aria-label="Table of Contents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#tldr">TL;DR</a></li>
+      </ul>
+    </li>
+    <li><a href="#caching">Caching</a>
+      <ul>
+        <li><a href="#initial-state">Initial state</a></li>
+        <li><a href="#cache-refresh">Cache refresh</a></li>
+        <li><a href="#cache-drop">Cache drop</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="topbar-area topbar-area-middle" data-area="middle">
+            <nav class="topbar-breadcrumbs breadcrumbs highlightable" aria-label="Breadcrumbs" data-overflow-title="Better BibTeX for Zotero &gt; Support &gt; Performance">
+              <ol itemscope itemtype="http://schema.org/BreadcrumbList"><li itemscope itemtype="https://schema.org/ListItem" itemprop="itemListElement" class=""><a itemprop="item" href="/zotero-better-bibtex/index.html"><span itemprop="name">Better BibTeX for Zotero</span></a><meta itemprop="position" content="1">&nbsp;>&nbsp;</li><li itemscope itemtype="https://schema.org/ListItem" itemprop="itemListElement" class=""><a itemprop="item" href="/zotero-better-bibtex/support/index.html"><span itemprop="name">Support</span></a><meta itemprop="position" content="2">&nbsp;>&nbsp;</li><li itemscope itemtype="https://schema.org/ListItem" itemprop="itemListElement" class="" aria-current="page"><span itemprop="name">Performance</span><meta itemprop="position" content="3"></li>
+              </ol>
+            </nav>
+          </div>
+          <div class="topbar-area topbar-area-end" data-area="end">
+            <div class="topbar-button topbar-button-edit default-animation" data-content-empty="disable" data-width-s="area-more" data-width-m="show" data-width-l="show">
+<span class="btn cstyle button link noborder notitle interactive"><a aria-label="Edit (CTRL+ALT+w)" href="https://github.com/retorquere/zotero-better-bibtex/edit/master/site/content/support/performance.md" rel="external" title="Edit (CTRL+ALT+w)"><i class="fa-fw fas fa-pen" aria-hidden="true"></i></a></span>
+            </div>
+            <div class="topbar-button topbar-button-prev default-animation" data-content-empty="disable" data-width-s="show" data-width-m="show" data-width-l="show">
+<span class="btn cstyle button link noborder notitle interactive"><a aria-label="Frequently Asked Questions (🡐)" href="/zotero-better-bibtex/support/faq/index.html" title="Frequently Asked Questions (🡐)"><i class="fa-fw fas fa-chevron-left" aria-hidden="true"></i></a></span>
+            </div>
+            <div class="topbar-button topbar-button-next default-animation" data-content-empty="disable" data-width-s="show" data-width-m="show" data-width-l="show">
+<span class="btn cstyle button link noborder notitle interactive"><a aria-label="Translations (🡒)" href="/zotero-better-bibtex/support/translations/index.html" title="Translations (🡒)"><i class="fa-fw fas fa-chevron-right" aria-hidden="true"></i></a></span>
+            </div>
+            <div class="topbar-button topbar-button-more default-animation" data-content-empty="hide" data-width-s="show" data-width-m="show" data-width-l="show">
+<span class="btn cstyle button link noborder notitle interactive"><button data-button-action="toggle-flyout" type="button" title="More" aria-label="More" aria-expanded="false"><i class="fa-fw fas fa-ellipsis-v" aria-hidden="true"></i></button></span>
+              <div class="topbar-content">
+                <div class="topbar-content-wrapper" tabindex="-1">
+                  <div class="topbar-area topbar-area-more" data-area="more">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </header>
+      <div id="R-main-overlay"></div>
+      <main id="R-body-inner" class="highlightable support" tabindex="-1">
+        <div class="flex-block-wrapper">
+<article class="default">
+  <header class="headline">
+<div class="R-taxonomy taxonomy-tags tags" title="Tags">
+  <i class="fa-fw fas fa-layer-group" aria-hidden="true"></i>
+  <ul>
+    <li><a class="term-link" href="/zotero-better-bibtex/tags/cache/index.html">Cache</a></li>
+    <li><a class="term-link" href="/zotero-better-bibtex/tags/export/index.html">Export</a></li>
+  </ul>
+</div>
+  </header>
+
+<h1 id="performance">Performance</h1>
+
+<p>The Better BibTeX exporters are a lot slower than the standard Zotero Bib(La)TeX exporters. If you have a small library,
+you will not likely notice this, but if you have several thousand items, and you are in the habit of exporting
+substantial parts of your library, this gets annoying really fast.</p>
+<p>To deal with this problem, Better BibTeX implements an extensive caching system. With a filled cache, Better BibTeX is
+substantially faster than the default Zotero exporters.  Specifically for <a href="/zotero-better-bibtex/exporting/">automatic background exports</a>, a filled cache is
+a good thing to have.</p>
+<p>For technical reasons, if you export the file attachments as part of your export, the cache is skipped altogether, so
+this will always be slow. This is also why you cannot set up auto-exports with file exports.</p>
+<h3 id="tldr">TL;DR<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard" aria-label="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg" aria-hidden="true"></i></button></span></h3>
+<p>There&rsquo;s a more technical explanation below, but the TL;DR version is that you want to have a filled cache. If you want
+to get it over with, export your entire library (once, no need to tick &lsquo;Keep Updated&rsquo;) using the &lsquo;Better BibTeX&rsquo; format
+and go grab coffee (or lunch, depending on the size of your library). After that, things should be <em>much</em> better.</p>
+<p>Here are some numbers from a test with a library consisting of 86 items, exported 50 times in a row to middle out variances:</p>
+<p>(attachments are not exported for this test, but they still required serialization and handling):</p>
+<table>
+  <thead>
+    <tr>
+      <th>Exporter</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Zotero BibTeX</td>
+      <td>3s</td>
+    </tr>
+    <tr>
+      <td>Better BibTeX, empty cache</td>
+      <td>9s</td>
+    </tr>
+    <tr>
+      <td>Better BibTeX, filled cache</td>
+      <td>4s</td>
+    </tr>
+    <tr>
+      <td>Zotero BibLaTeX</td>
+      <td>4s</td>
+    </tr>
+    <tr>
+      <td>Better BibLaTeX, empty cache</td>
+      <td>9s</td>
+    </tr>
+    <tr>
+      <td>Better BibLaTeX, filled cache</td>
+      <td>3s</td>
+    </tr>
+  </tbody>
+</table>
+<p><strong>note</strong>: if you have &lsquo;Export files&rsquo; enabled during export, or set the JabRef export format to <code>4</code>, the cache will not be active. If you do large (auto)exports, avoid these.</p>
+<h2 id="caching">Caching<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard" aria-label="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg" aria-hidden="true"></i></button></span></h2>
+<h3 id="initial-state">Initial state<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard" aria-label="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg" aria-hidden="true"></i></button></span></h3>
+<p>Initially, your cache will be empty. The first export of any item using Better BibTeX will therefore be a little
+over twice as slow as subsequent exports. After that, it gets pretty zippy, as the process of exporting a item
+will also cache the output entry for that item <em>for the current export settings</em>. This means if you export once with, and once without
+notes (one of the options in the export popup), you will hit an empty cache twice. If you set up an automatic export,
+the export you do that registers it for auto-update will already be the first export, so if your items weren&rsquo;t
+cached already, they will be before subsequent auto-exports.</p>
+<h3 id="cache-refresh">Cache refresh<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard" aria-label="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg" aria-hidden="true"></i></button></span></h3>
+<p>The cache entry for a item is retained as long as you do not make any changes to that item. Any change you
+make will drop all cache entries for that item (so all variants you had for different export options). The cache
+for that item will be refreshed as soon as you export it again, either manually or
+<a href="/zotero-better-bibtex/exporting/">automatically</a>.</p>
+<h3 id="cache-drop">Cache drop<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard" aria-label="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg" aria-hidden="true"></i></button></span></h3>
+<p><em>Any</em> change you make to the Better BibTeX <a href="/zotero-better-bibtex/preferences/">preferences</a> will drop the whole cache. The behavior of
+the Better BibTeX exporters are highly configurable, and it is impossible for me to figure out which entries would be
+affected specifically. Keep this in mind for large libraries; if you want to make changes to your configuration, make them all at once.</p>
+<p>The same applies to upgrades. As the export behavior quite frequently changes between versions, Better BibTeX will drop
+the cache during first startup of the newer version. This can be a nuisance if you have a large library, but it&rsquo;s the only way to keep support feasible.</p>
+
+  <footer class="footline">
+  </footer>
+</article>
+        </div>
+      </main>
+    </div>
     <script src="/zotero-better-bibtex/js/theme.min.js" defer></script>
     <div id="toast-container" role="status" aria-live="polite" aria-atomic="false"></div>
   </body>

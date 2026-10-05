@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="height=device-height, width=device-width, initial-scale=1.0, minimum-scale=1.0">
     <meta name="generator" content="Hugo 0.167.0">
-    <meta name="generator" content="Relearn 9.1.0+f0096ea8c391a3404fe56c49eff0898dc5c9ae62">
+    <meta name="generator" content="Relearn 9.1.0+54de122b1167a16811216ea5afb532e2f06d9fd2">
     <meta name="description" content="Add-on could not be installed because it appears to be corrupt. You have downloaded the Better BibTeX plugin by clicking on the download link using Firefox. As Zotero and Firefox use the same plugin technology, Firefox think the BetterBibTeX plugin is intended for itself, tries to install it, and then finds out it won’t work. You need to download the plugin without installinging it into Firefox by right-clicking the download link, choose save-as, and then install it into Zotero using installation instructions to get started with BBT.">
     <meta name="author" content="">
     <meta name="twitter:card" content="summary">
@@ -55,8 +55,11 @@
       ],
       "translations": {
         "Browser_unsupported_feature": "This browser doesn't support this feature",
+        "Close_graph": "Close enlarged graph",
         "Copied_to_clipboard": "Text copied to clipboard!",
         "Copy_to_clipboard": "Copy text to clipboard",
+        "Enlarge_graph": "Enlarge graph",
+        "History_cleared": "History cleared",
         "Link_copied_to_clipboard": "Link copied to clipboard!",
         "N_results_found": "{1} results found for \"{0}\"",
         "No_results_found": "No results found for \"{0}\"",
@@ -86,293 +89,7 @@
 
   </head>
   <body class="mobile-support html" data-origin="/zotero-better-bibtex/support/faq/index.html">
-    <div id="R-body" class="default-animation">
-      <div id="R-body-overlay"></div>
-      <nav id="R-topbar" class="default-animation">
-        <div class="topbar-wrapper default-animation">
-          <div class="topbar-sidebar-divider default-animation"></div>
-          <div class="topbar-area topbar-area-start" data-area="start">
-            <div class="topbar-button topbar-button-sidebar default-animation" data-content-empty="disable" data-width-s="show" data-width-m="hide" data-width-l="hide">
-<span class="btn cstyle button link noborder notitle interactive"><button data-button-action="toggle-nav" type="button" title="Menu (CTRL&#43;ALT&#43;n)"><i class="fa-fw fas fa-bars"></i></button></span>
-            </div>
-            <div class="topbar-button topbar-button-toc default-animation" data-content-empty="hide" data-width-s="show" data-width-m="show" data-width-l="show">
-<span class="btn cstyle button link noborder notitle interactive"><button data-button-action="toggle-flyout" type="button" title="Table of Contents (CTRL&#43;ALT&#43;t)"><i class="fa-fw fas fa-table-list"></i></button></span>
-              <div class="topbar-content">
-                <div class="topbar-content-wrapper" tabindex="-1">
-<nav class="TableOfContents">
-  <ul>
-    <li><a href="#add-on-could-not-be-installed-because-it-appears-to-be-corrupt">Add-on could not be installed because it appears to be corrupt.</a></li>
-    <li><a href="#bbt-is-changing-the-capitalization-of-my-titles--why">BBT is changing the capitalization of my titles &ndash; why?</a></li>
-    <li><a href="#why-the-double-braces">Why the double braces?</a></li>
-    <li><a href="#but-why-so-many-double-braces">But why <em>so many</em> double braces?</a></li>
-    <li><a href="#importing-jabref-databases">Importing JabRef databases</a>
-      <ul>
-        <li><a href="#why-zotero--bbt-instead-of-mendeley">Why Zotero + BBT instead of Mendeley?</a></li>
-      </ul>
-    </li>
-    <li><a href="#exporting-language-fields-in-addition-to-langid">Exporting <code>language</code> fields in addition to <code>langid</code></a></li>
-  </ul>
-</nav>
-                </div>
-              </div>
-            </div>
-          </div>
-          <ol class="topbar-breadcrumbs breadcrumbs highlightable" data-overflow-title="Better BibTeX for Zotero &gt; Support &gt; FAQ" itemscope itemtype="http://schema.org/BreadcrumbList"><li itemscope itemtype="https://schema.org/ListItem" itemprop="itemListElement" class=""><a itemprop="item" href="/zotero-better-bibtex/index.html"><span itemprop="name">Better BibTeX for Zotero</span></a><meta itemprop="position" content="1">&nbsp;>&nbsp;</li><li itemscope itemtype="https://schema.org/ListItem" itemprop="itemListElement" class=""><a itemprop="item" href="/zotero-better-bibtex/support/index.html"><span itemprop="name">Support</span></a><meta itemprop="position" content="2">&nbsp;>&nbsp;</li><li itemscope itemtype="https://schema.org/ListItem" itemprop="itemListElement" class=""><span itemprop="name">FAQ</span><meta itemprop="position" content="3"></li>
-          </ol>
-          <div class="topbar-area topbar-area-end" data-area="end">
-            <div class="topbar-button topbar-button-edit default-animation" data-content-empty="disable" data-width-s="area-more" data-width-m="show" data-width-l="show">
-<span class="btn cstyle button link noborder notitle interactive"><a href="https://github.com/retorquere/zotero-better-bibtex/edit/master/site/content/support/faq.md" rel="external" title="Edit (CTRL+ALT+w)"><i class="fa-fw fas fa-pen"></i></a></span>
-            </div>
-            <div class="topbar-button topbar-button-prev default-animation" data-content-empty="disable" data-width-s="show" data-width-m="show" data-width-l="show">
-<span class="btn cstyle button link noborder notitle interactive"><a href="/zotero-better-bibtex/support/index.html" title="Support (🡐)"><i class="fa-fw fas fa-chevron-left"></i></a></span>
-            </div>
-            <div class="topbar-button topbar-button-next default-animation" data-content-empty="disable" data-width-s="show" data-width-m="show" data-width-l="show">
-<span class="btn cstyle button link noborder notitle interactive"><a href="/zotero-better-bibtex/support/performance/index.html" title="Performance (🡒)"><i class="fa-fw fas fa-chevron-right"></i></a></span>
-            </div>
-            <div class="topbar-button topbar-button-more default-animation" data-content-empty="hide" data-width-s="show" data-width-m="show" data-width-l="show">
-<span class="btn cstyle button link noborder notitle interactive"><button data-button-action="toggle-flyout" type="button" title="More"><i class="fa-fw fas fa-ellipsis-v"></i></button></span>
-              <div class="topbar-content">
-                <div class="topbar-content-wrapper" tabindex="-1">
-                  <div class="topbar-area topbar-area-more" data-area="more">
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </nav>
-      <div id="R-main-overlay"></div>
-      <main id="R-body-inner" class="highlightable support" tabindex="-1">
-        <div class="flex-block-wrapper">
-<article class="default">
-  <header class="headline">
-<div class="R-taxonomy taxonomy-tags tags" title="Tags">
-  <i class="fa-fw fas fa-layer-group"></i>
-  <ul>
-    <li><a class="term-link" href="/zotero-better-bibtex/tags/export/index.html">Export</a></li>
-  </ul>
-</div>
-  </header>
-
-<h1 id="frequently-asked-questions">Frequently Asked Questions</h1>
-
-<h2 id="add-on-could-not-be-installed-because-it-appears-to-be-corrupt">Add-on could not be installed because it appears to be corrupt.<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h2>
-<p>You have downloaded the Better BibTeX plugin by clicking on the
-download link using Firefox. As Zotero and Firefox use the same
-plugin technology, Firefox think the BetterBibTeX plugin is intended
-for itself, tries to install it, and then finds out it won&rsquo;t work.
-You need to download the plugin without installinging it into Firefox
-by right-clicking the download link, choose save-as, and then install
-it into Zotero using <a href="/zotero-better-bibtex/installation/">installation instructions</a> to get started with BBT.</p>
-<h2 id="bbt-is-changing-the-capitalization-of-my-titles--why">BBT is changing the capitalization of my titles &ndash; why?<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h2>
-<p>There isn&rsquo;t a straightforward one-to-one mapping for all Zotero to Bib(La)TeX
-fields. For most I can make reasonable choices, but there are some things where
-Better BibTeX takes a little more liberties with your items in order to get
-sensible output.</p>
-<p>Title fields in particular are a total mess. Zotero <a href="https://zotero-manual.github.io/adding-items/#sentence-and-title-case" rel="external">recommends having your
-titles in sentence
-case</a>
-because that&rsquo;s what the embedded citation processor expects, but of course,
-BibLaTeX expects your titles to be in Title Case&hellip; <em>but only if they&rsquo;re in
-English</em>. Nice. In order to translate the Zotero recommendation into Bib(La)TeX
-best practice, BBT will title-case the titles of English items. English
-items, as far as BBT is concerned, are those items that have their
-language explicitly set to an English language (<code>american</code> counts as English for
-example), and those items that have no explicit language set. To do this,
-BBT uses the same title-caser that Zotero uses to produce title-cased styles
-such as Chicago.</p>
-<p>The titles so modified will then pass through your Bib(La)TeX processor, which
-will in turn try to lowercase or initial-caps some words and not others &ndash; for
-English items. But then sometimes, you want words that have capitals to
-keep. BBT assumes that if a word has at least one capital letter (subject to
-some rather complex exceptions) you meant it to be there, and you want BibTeX to
-leave it alone no matter what. To do that, it wraps those (strings of) words in
-those double braces. This is to let BibTeX know that <code>ISDN</code> may not be changed
-to <code>isdn</code> or <code>Isdn</code>, regardless of the bibliography style in play.</p>
-<p>The simplest approach would be to wrap title fields in extra braces as a whole,
-and some sites will erroneously recommend doing so, but as per Mencken, for
-every complex problem there is an answer that is clear, simple, and wrong; the
-rules for bib(la)tex capitalization are complex, and this is one of those
-answers that gets it entirely wrong, even if it will seem to work. There are
-styles do need to recapitalize parts of the title (for example to selectively
-downcase the titlecasing), and having the whole field so wrapped interferes with
-that. So Better BibTeX wraps individual words &ndash; or strings of those words &ndash;
-that have capitals in them with double braces.</p>
-<p>For English titles BBT will Title Case and brace-protect your titles on output.
-Except, those Title Cased words which BBT changed itself will <em>not</em> be wrapped
-in double-braces, as it <em>is</em> OK for the styles to change casing for those,
-depending on the style at play. So <code>I like ISDN heaps better than dialup</code> would
-output to <code>I Like {{ISDN}} Heaps Better than Dialup</code>. Apparently non-English
-titles are supposed to be in sentence case, so BBT doesn&rsquo;t touch those.</p>
-<p>You can steer this process somewhat by enclosing the parts you don&rsquo;t want case
-manipulation on in <code>&lt;span class=&quot;nocase&quot;&gt;...&lt;/span&gt;</code>. Anything between those
-won&rsquo;t be touched by Zotero or BBT. This is formally supported by Zotero and will
-work in the Word/LibreOffice plugins as well as in the BibTeX export. This will
-be required for words you wish to always keep lowercase, for example. Also, if
-you don&rsquo;t generally use Zotero for generating bibliographies but just for BibTeX
-reference management, you can turn on the hidden preference
-<a href="/zotero-better-bibtex/preferences/hidden-preferences/#suppresstitlecase">suppressTitleCase</a> to keep BBT
-from applying title-casing, but take note that if you do this, the
-bibliographies you get from Zotero and the bibliograhies you get through
-Bib(La)TeX will differ, and you can&rsquo;t complain about this.</p>
-<h2 id="why-the-double-braces">Why the double braces?<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h2>
-<p>But why then the double-braces (<code>{{...}}</code>) rather than the commonly recommended
-single braces (<code>{...}</code>)?</p>
-<p>This is not because of some arcane aesthetic preference, but because the
-Bib(La)TeX case protection rules are incredibly convoluted
-(<a href="https://github.com/retorquere/zotero-better-bibtex/issues/541" rel="external">#541</a>,
-<a href="https://github.com/retorquere/zotero-better-bibtex/issues/383" rel="external">#383</a>). For
-example, here are some &ldquo;interesting&rdquo; cases that BBT has learned to deal with.
-Did you know that</p>
-<ul>
-<li><code>{\emph{Homo sapiens}}</code> <em>un</em>-case-protects <code>Homo sapiens</code>? It sure was a
-surprise to me. So <code>\emph{Homo sapiens}</code> is case-protected (will not be
-recapitalized by Bib(La)TeX), but <code>{\emph{Homo sapiens}}</code> <em>is not</em>
-case-protected so it <em>will</em> be recapitalized. So to get predictable
-behavior, this is written out as <code>{{\emph{Homo sapiens}}}</code>.</li>
-<li>casing behavior over the <em>whole</em> entry field depends on <a href="https://github.com/retorquere/zotero-better-bibtex/issues/541#issuecomment-240156274" rel="external">whether there&rsquo;s
-a slash-command at the first
-position</a>
-of the title?</li>
-<li><a href="https://github.com/retorquere/zotero-better-bibtex/issues/541#issuecomment-240999396" rel="external">apparently</a>,
-to make sure that <code>Reading HLA Hart's: &lt;i&gt;The Concept of Law&lt;/i&gt;</code> renders as
-expected means I have to output the astoundingly ugly <code>{Reading {{HLA Hart}}'s: {{{\emph{The Concept}}}}{\emph{ of }}{{{\emph{Law}}}}}</code>?</li>
-</ul>
-<p>To make matters even more complex, so many people have in the past wrongly
-recommended to &ldquo;just wrap everything in one extra set of braces&rdquo; that biblatex
-now ignores exactly that pattern (see
-<a href="https://tex.stackexchange.com/a/327387/27603" rel="external">here</a> and
-<a href="https://tex.stackexchange.com/a/233976/27603" rel="external">here</a>).</p>
-<p>The double-bracing is the only unambiguous rule I could construct that
-consistently gets the rendered entries right (so far).</p>
-<p>Bib(La)TeX provides a never-ending stream of edge cases, which BBT tries to
-decide algorithmically. I try to keep the resulting file as pretty as I can (I&rsquo;m
-sensitive to the aesthetics myself), but the target is best described as &ldquo;given
-reasonable input, generate well-rendering output&rdquo;, and
-reasonable-to-well-rendering in the BBT case will have to include &ldquo;follows
-Zotero recommendations for storing items&rdquo; and &ldquo;prefer intent-preserving
-LaTeX over pretty-looking LaTeX&rdquo;.</p>
-<p>Bib(La)TeX be crazy.</p>
-<h2 id="but-why-so-many-double-braces">But why <em>so many</em> double braces?<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h2>
-<p>Zotero expects titles to be entered in sentence case; bib(la)tex
-expects them to be entered in Title Case. BBT converts titles to
-title case to compensate for this. Zotero does allow for exceptions
-to the sentence-case rule, which you can mark by surrounding them
-with &lt;span class=&ldquo;nocase&rdquo;&gt; &hellip; &lt;/span&gt;, and BBT will
-take that hint and use double braces (see previous sections) to
-achieve the same effect in bib(la)tex. But BBT does one thing more
-&ndash; if BBT sees a word containing capital letters which is not at
-the start of a (sub)sentence (such as the <code>ISDN</code> in <code>I like ISDN heaps better than dialup</code>), it will assume it is a proper noun
-(otherwise why would a word mid-sentence have a capital letter),
-and <em>also</em> brace-protect it.</p>
-<p>Unfortunately, there is a lot of variation in how titles are offered by the sites Zotero scrapes &ndash; some sentence case, some title case &ndash; so it is not at all uncommon for title-cased titles to (incorrectly) end up in Zotero, and as a result you&rsquo;ll get a lot of unnecesary braces. For example, if you (incorrectly!) have the following in Zotero:</p>
-<blockquote>
-<p>I Like ISDN Heaps Better than Dialup</p>
-</blockquote>
-<p>BBT will export that as</p>
-<blockquote>
-<p><code>title = {I {{Like ISDN Heaps Better}} than {{Dialup}}}</code></p>
-</blockquote>
-<p>which is clearly not correct. The proper way to fix this is to sentence case this in Zotero &ndash; if you generate a bibliography through Zotero itself, there are styles where this title-cased title will not render correctly. But if you have a lot of these, and you do not care about the quality of the bibliographies generated by Zotero itself, you can disable the <a href="/zotero-better-bibtex/preferences/export/#apply-title-casing-to-titles">title-casing</a> and/or the <a href="/zotero-better-bibtex/preferences/export/#apply-case-protection-to-capitalized-words-by-enclosing-them-in-braces">brace protection</a>.</p>
-<h2 id="importing-jabref-databases">Importing JabRef databases<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h2>
-<p>JabRef import works generally well but has a few gotchas:</p>
-<ul>
-<li>If you have dynamic (query-based) groups these will not be imported.</li>
-<li>If you have set a default folder for the PDF files in JabRef
-(<code>Options -&gt; Preferences -&gt; Linked Files -&gt; Main File Directory</code>), the file paths in your JabRef database will be relative to that
-directory, but BBT can&rsquo;t read those preferences, so all attachments would
-fail to import. Make imports work with JabRef&rsquo;s library-specific setting <code>Library -&gt; Library Properties -&gt; General File Directory</code>.
-Make sure the latter path is correct, as JabRef might continue finding files and not notify you if it contains errors.</li>
-</ul>
-<h3 id="why-zotero--bbt-instead-of-mendeley">Why Zotero + BBT instead of Mendeley?<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h3>
-<p>Among the reasons to just prefer Zotero over Mendeley outright you will find:</p>
-<ul>
-<li>Mendeley is owned by Elsevier.</li>
-<li>Mendeley thinks you <a href="https://www.zotero.org/support/kb/mendeley_import#mendeley_database_encryption" rel="external">cannot be trusted with your own data</a></li>
-</ul>
-<p>But wrt bibtex export, I don&rsquo;t think the Mendeley engineers actively use bib(la)tex:</p>
-<ul>
-<li>Mendeley is still double-bracing titles &ndash; a behavior so wrong (yet unfortunately ubiquitous), biblatex started <a href="/zotero-better-bibtex/support/faq/index.html">ignoring double-braced titles</a> (see <a href="https://tex.stackexchange.com/a/327387/27603" rel="external">here</a> and <a href="https://tex.stackexchange.com/a/233976/27603" rel="external">here</a>).</li>
-<li>Mendeley uses CSL, so items should be entered in sentence case (as is the case in Zotero). But bib(la)tex expects title-case, so titles should be converted to title case during export. This is difficult, so Mendeley just doesn&rsquo;t bother doing it.</li>
-<li>Verbatim fields that should per spec be exported as regular fields by Mendeley. This will get you compilation errors.</li>
-</ul>
-<h2 id="exporting-language-fields-in-addition-to-langid">Exporting <code>language</code> fields in addition to <code>langid</code><span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h2>
-<p>Zotero&rsquo;s <code>language</code> field exports to the biblatex field <code>langid</code> only, not bib(la)tex <code>language</code>. Zotero&rsquo;s <code>language</code> field and the biblatex <code>langid</code> field are supposed to contain only language tags that control formatting, e.g. capitalization of titles and hyphenation.</p>
-<p>BibLaTeX&rsquo;s `language&quot; field, by contrast, which has no equivalent in Zotero, is used to generate textual output in a formatted bibliography.</p>
-<p>Exporting Zotero&rsquo;s <code>language</code> field to the biblatex field <code>language</code> would result in what are now merely language-dependent formatting instructions all of a sudden turned into textual output as well, breaking virtually every style on the biblatex side.</p>
-<p>If you want the <code>language</code> field filled nonetheless, you can either use a BBT postscript, or the biblatex <code>langid</code> tags can still be used to selectively generate <code>language</code> fields that produce the output when rendered, assuming the aim is to eg have only items tagged as Japanese, i.e., containing biblatex <code>langid</code> fields whose contents begin with <code>ja</code> receive the string <code>[in Japanese]</code> in the formatted output.</p>
-<p>In the following, biblatex&rsquo;s <code>\DeclareSourcemap</code> mechanism is used to generate such language fields at runtime. Details can be found in the biblatex manual.</p>
-<div class="highlight actionbar-wrapper wrap-code" dir="auto"><pre tabindex="0"><code>\documentclass{article}
-\begin{filecontents}[overwrite]{tmp.bib}
-@article{UseLanguage,
-  title = {Title of UseLanguage},
-  author = {A. U. Thor Language},
-  date = {1986},
-  journaltitle = {Journal of Engineering},
-  volume = {123},
-  number = {28},
-  pages = {1--12},
-  language = {japanese}
-}
-@article{UseLangid,
-  title = {Title of UseLangid},
-  author = {A. U. Thor Langid},
-  date = {1986},
-  journaltitle = {Journal of Engineering},
-  volume = {123},
-  number = {28},
-  pages = {1--12},
-  langid = {Japanese}
-}
-@article{UseLangidAbbrev,
-  title = {Title of UseLangidAbbrev},
-  author = {A. U. Thor LangidAbbrev},
-  date = {1986},
-  journaltitle = {Journal of Engineering},
-  volume = {123},
-  number = {28},
-  pages = {1--12},
-  langid = {ja-JP}
-}
-@article{en,
-  title = {Title of Something Completetly Different in English},
-  author = {Doe, John},
-  date = {2024},
-  journaltitle = {Journal of Whatever},
-  volume = {321},
-  number = {1},
-  pages = {33--77},
-  langid = {en}
-}
-\end{filecontents}
-\usepackage[sorting=none]{biblatex-chicago}
-%\usepackage[sorting=none]{biblatex}
-\addbibresource{tmp.bib}
-
-\DeclareSourcemap{
-  \maps[datatype=bibtex]{\map{
-     \step[fieldsource=langid, matchi=\regexp{^ja},
-   final]
-  \step[fieldset=language, fieldvalue=Japanese]
-    }
-  }
-}
-
-\begin{document}
-\nocite{*}
-\printbibliography
-\end{document}</code></pre></div>
-<p>If you just want the bib(la)tex <code>language</code> field to show whatever is in your Zotero <code>language</code> field, you can do it with this postscript:</p>
-<div class="highlight actionbar-wrapper wrap-code" dir="auto"><pre tabindex="0"><code>if (Translator.BetterTeX) { tex.add({ name: &#39;language&#39;, value: zotero.language }) }</code></pre></div>
-<p>If you want the language field translated (to the best of BBTs abilities) to what would otherwise show up in <code>langid</code>, you can use:</p>
-<div class="highlight actionbar-wrapper wrap-code" dir="auto"><pre tabindex="0"><code>if (Translator.BetterTeX) { tex.add({ name: &#39;language&#39;, value: tex.langid() }) }</code></pre></div>
-
-  <footer class="footline">
-  </footer>
-</article>
-        </div>
-      </main>
-    </div>
+    <a id="R-skip-link" href="#R-body-inner">Skip to main content</a>
     <aside id="R-sidebar" class="default-animation">
       <div id="R-header-topbar" class="default-animation"></div>
       <div id="R-header-wrapper" class="default-animation"><a id="logo" href="/zotero-better-bibtex/">
@@ -987,10 +704,10 @@ Better BibTeX for Zotero
 
         <search><form action="/zotero-better-bibtex/search/index.html" method="get">
           <div class="searchbox default-animation">
-            <button class="search-detail" type="submit" title="Search (CTRL+ALT+f)"><i class="fas fa-fw fa-search"></i></button>
+            <button class="search-detail" type="submit" title="Open search page" aria-label="Open search page"><i class="fas fa-fw fa-search" aria-hidden="true"></i></button>
             <label class="a11y-only" for="R-search-by">Search</label>
-            <input data-search-input id="R-search-by" name="search-by" class="search-by" type="search" placeholder="Search...">
-            <button class="search-clear" type="button" data-search-clear="" title="Clear search"><i class="fas fa-fw fa-times" title="Clear search"></i></button>
+            <input data-search-input id="R-search-by" name="search-by" class="search-by" type="search" placeholder="Search..." title="Search (CTRL+ALT+f)">
+            <button class="search-clear" type="button" data-search-clear="" title="Clear search" aria-label="Clear search"><i class="fas fa-fw fa-times" aria-hidden="true" title="Clear search"></i></button>
           </div>
         </form></search>
       </div>
@@ -1000,7 +717,7 @@ Better BibTeX for Zotero
         </div>
         <div class="R-sidebarmenu R-shortcutmenu-homelinks default-animation">
           <ul class="space collapsible-menu">
-            <li class="" data-nav-id="/zotero-better-bibtex/index.html"><a class="padding" href="/zotero-better-bibtex/index.html"><i class="fa-fw fas fa-home"></i> Home</a></li>
+            <li class="" data-nav-id="/zotero-better-bibtex/index.html"><a class="padding" href="/zotero-better-bibtex/index.html"><i class="fa-fw fas fa-home" aria-hidden="true"></i> Home</a></li>
           </ul>
         </div>
         <div class="R-menu-divider default-animation">
@@ -1014,7 +731,7 @@ Better BibTeX for Zotero
           <hr class="padding default-animation">
         </div>
       </div>
-      <div id="R-content-wrapper" class="highlightable" tabindex="-1">
+      <nav id="R-content-wrapper" class="highlightable" aria-label="Menu" tabindex="-1">
         <div id="R-scrollbar" aria-hidden="true"><div id="R-scrollbar-thumb"></div></div>
         <div class="R-sidebarmenu R-shortcutmenu-main default-animation">
           <ul class="enlarge morespace collapsible-menu">
@@ -1023,7 +740,7 @@ Better BibTeX for Zotero
             <li class="" data-nav-id="/zotero-better-bibtex/exporting/index.html"><a class="padding default-animation" href="/zotero-better-bibtex/exporting/index.html">Exporting</a><ul id="R-subsections-1d584ca98d27013df6242b6c17171d5e" class="collapsible-menu"></ul></li>
             <li class="" data-nav-id="/zotero-better-bibtex/citing/index.html"><a class="padding default-animation" href="/zotero-better-bibtex/citing/index.html">Citation Keys</a><ul id="R-subsections-21d11d1b73fd6487fde6cbf6c72fa642" class="collapsible-menu"></ul></li>
             <li class="parent " data-nav-id="/zotero-better-bibtex/support/index.html"><a class="padding default-animation" href="/zotero-better-bibtex/support/index.html">Support</a><ul id="R-subsections-caa68563dfb61577c2c4699e1aa63010" class="collapsible-menu">
-            <li class="active " data-nav-id="/zotero-better-bibtex/support/faq/index.html"><a class="padding" href="/zotero-better-bibtex/support/faq/index.html">FAQ</a></li>
+            <li class="active " data-nav-id="/zotero-better-bibtex/support/faq/index.html"><a class="padding" href="/zotero-better-bibtex/support/faq/index.html" aria-current="page">FAQ</a></li>
             <li class="" data-nav-id="/zotero-better-bibtex/support/performance/index.html"><a class="padding" href="/zotero-better-bibtex/support/performance/index.html">Performance</a></li>
             <li class="" data-nav-id="/zotero-better-bibtex/support/translations/index.html"><a class="padding" href="/zotero-better-bibtex/support/translations/index.html">Translations</a></li>
             <li class="" data-nav-id="/zotero-better-bibtex/support/tests/index.html"><a class="padding" href="/zotero-better-bibtex/support/tests/index.html">Testing</a></li></ul></li>
@@ -1162,8 +879,299 @@ Better BibTeX for Zotero
 
 <script async defer src="https://buttons.github.io/buttons.js"></script>
 </div>
-      </div>
+      </nav>
     </aside>
+    <div id="R-body" class="default-animation">
+      <div id="R-body-overlay"></div>
+      <header id="R-topbar" class="default-animation">
+        <div class="topbar-wrapper default-animation">
+          <div class="topbar-sidebar-divider default-animation"></div>
+          <div class="topbar-area topbar-area-start" data-area="start">
+            <div class="topbar-button topbar-button-sidebar default-animation" data-content-empty="disable" data-width-s="show" data-width-m="hide" data-width-l="hide">
+<span class="btn cstyle button link noborder notitle interactive"><button data-button-action="toggle-nav" type="button" title="Menu (CTRL&#43;ALT&#43;n)" aria-label="Menu (CTRL&#43;ALT&#43;n)" aria-expanded="false"><i class="fa-fw fas fa-bars" aria-hidden="true"></i></button></span>
+            </div>
+            <div class="topbar-button topbar-button-toc default-animation" data-content-empty="hide" data-width-s="show" data-width-m="show" data-width-l="show">
+<span class="btn cstyle button link noborder notitle interactive"><button data-button-action="toggle-flyout" type="button" title="Table of Contents (CTRL&#43;ALT&#43;t)" aria-label="Table of Contents (CTRL&#43;ALT&#43;t)" aria-expanded="false"><i class="fa-fw fas fa-table-list" aria-hidden="true"></i></button></span>
+              <div class="topbar-content">
+                <div class="topbar-content-wrapper" tabindex="-1">
+<nav class="TableOfContents" aria-label="Table of Contents">
+  <ul>
+    <li><a href="#add-on-could-not-be-installed-because-it-appears-to-be-corrupt">Add-on could not be installed because it appears to be corrupt.</a></li>
+    <li><a href="#bbt-is-changing-the-capitalization-of-my-titles--why">BBT is changing the capitalization of my titles &ndash; why?</a></li>
+    <li><a href="#why-the-double-braces">Why the double braces?</a></li>
+    <li><a href="#but-why-so-many-double-braces">But why <em>so many</em> double braces?</a></li>
+    <li><a href="#importing-jabref-databases">Importing JabRef databases</a>
+      <ul>
+        <li><a href="#why-zotero--bbt-instead-of-mendeley">Why Zotero + BBT instead of Mendeley?</a></li>
+      </ul>
+    </li>
+    <li><a href="#exporting-language-fields-in-addition-to-langid">Exporting <code>language</code> fields in addition to <code>langid</code></a></li>
+  </ul>
+</nav>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="topbar-area topbar-area-middle" data-area="middle">
+            <nav class="topbar-breadcrumbs breadcrumbs highlightable" aria-label="Breadcrumbs" data-overflow-title="Better BibTeX for Zotero &gt; Support &gt; FAQ">
+              <ol itemscope itemtype="http://schema.org/BreadcrumbList"><li itemscope itemtype="https://schema.org/ListItem" itemprop="itemListElement" class=""><a itemprop="item" href="/zotero-better-bibtex/index.html"><span itemprop="name">Better BibTeX for Zotero</span></a><meta itemprop="position" content="1">&nbsp;>&nbsp;</li><li itemscope itemtype="https://schema.org/ListItem" itemprop="itemListElement" class=""><a itemprop="item" href="/zotero-better-bibtex/support/index.html"><span itemprop="name">Support</span></a><meta itemprop="position" content="2">&nbsp;>&nbsp;</li><li itemscope itemtype="https://schema.org/ListItem" itemprop="itemListElement" class="" aria-current="page"><span itemprop="name">FAQ</span><meta itemprop="position" content="3"></li>
+              </ol>
+            </nav>
+          </div>
+          <div class="topbar-area topbar-area-end" data-area="end">
+            <div class="topbar-button topbar-button-edit default-animation" data-content-empty="disable" data-width-s="area-more" data-width-m="show" data-width-l="show">
+<span class="btn cstyle button link noborder notitle interactive"><a aria-label="Edit (CTRL+ALT+w)" href="https://github.com/retorquere/zotero-better-bibtex/edit/master/site/content/support/faq.md" rel="external" title="Edit (CTRL+ALT+w)"><i class="fa-fw fas fa-pen" aria-hidden="true"></i></a></span>
+            </div>
+            <div class="topbar-button topbar-button-prev default-animation" data-content-empty="disable" data-width-s="show" data-width-m="show" data-width-l="show">
+<span class="btn cstyle button link noborder notitle interactive"><a aria-label="Support (🡐)" href="/zotero-better-bibtex/support/index.html" title="Support (🡐)"><i class="fa-fw fas fa-chevron-left" aria-hidden="true"></i></a></span>
+            </div>
+            <div class="topbar-button topbar-button-next default-animation" data-content-empty="disable" data-width-s="show" data-width-m="show" data-width-l="show">
+<span class="btn cstyle button link noborder notitle interactive"><a aria-label="Performance (🡒)" href="/zotero-better-bibtex/support/performance/index.html" title="Performance (🡒)"><i class="fa-fw fas fa-chevron-right" aria-hidden="true"></i></a></span>
+            </div>
+            <div class="topbar-button topbar-button-more default-animation" data-content-empty="hide" data-width-s="show" data-width-m="show" data-width-l="show">
+<span class="btn cstyle button link noborder notitle interactive"><button data-button-action="toggle-flyout" type="button" title="More" aria-label="More" aria-expanded="false"><i class="fa-fw fas fa-ellipsis-v" aria-hidden="true"></i></button></span>
+              <div class="topbar-content">
+                <div class="topbar-content-wrapper" tabindex="-1">
+                  <div class="topbar-area topbar-area-more" data-area="more">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </header>
+      <div id="R-main-overlay"></div>
+      <main id="R-body-inner" class="highlightable support" tabindex="-1">
+        <div class="flex-block-wrapper">
+<article class="default">
+  <header class="headline">
+<div class="R-taxonomy taxonomy-tags tags" title="Tags">
+  <i class="fa-fw fas fa-layer-group" aria-hidden="true"></i>
+  <ul>
+    <li><a class="term-link" href="/zotero-better-bibtex/tags/export/index.html">Export</a></li>
+  </ul>
+</div>
+  </header>
+
+<h1 id="frequently-asked-questions">Frequently Asked Questions</h1>
+
+<h2 id="add-on-could-not-be-installed-because-it-appears-to-be-corrupt">Add-on could not be installed because it appears to be corrupt.<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard" aria-label="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg" aria-hidden="true"></i></button></span></h2>
+<p>You have downloaded the Better BibTeX plugin by clicking on the
+download link using Firefox. As Zotero and Firefox use the same
+plugin technology, Firefox think the BetterBibTeX plugin is intended
+for itself, tries to install it, and then finds out it won&rsquo;t work.
+You need to download the plugin without installinging it into Firefox
+by right-clicking the download link, choose save-as, and then install
+it into Zotero using <a href="/zotero-better-bibtex/installation/">installation instructions</a> to get started with BBT.</p>
+<h2 id="bbt-is-changing-the-capitalization-of-my-titles--why">BBT is changing the capitalization of my titles &ndash; why?<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard" aria-label="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg" aria-hidden="true"></i></button></span></h2>
+<p>There isn&rsquo;t a straightforward one-to-one mapping for all Zotero to Bib(La)TeX
+fields. For most I can make reasonable choices, but there are some things where
+Better BibTeX takes a little more liberties with your items in order to get
+sensible output.</p>
+<p>Title fields in particular are a total mess. Zotero <a href="https://zotero-manual.github.io/adding-items/#sentence-and-title-case" rel="external">recommends having your
+titles in sentence
+case</a>
+because that&rsquo;s what the embedded citation processor expects, but of course,
+BibLaTeX expects your titles to be in Title Case&hellip; <em>but only if they&rsquo;re in
+English</em>. Nice. In order to translate the Zotero recommendation into Bib(La)TeX
+best practice, BBT will title-case the titles of English items. English
+items, as far as BBT is concerned, are those items that have their
+language explicitly set to an English language (<code>american</code> counts as English for
+example), and those items that have no explicit language set. To do this,
+BBT uses the same title-caser that Zotero uses to produce title-cased styles
+such as Chicago.</p>
+<p>The titles so modified will then pass through your Bib(La)TeX processor, which
+will in turn try to lowercase or initial-caps some words and not others &ndash; for
+English items. But then sometimes, you want words that have capitals to
+keep. BBT assumes that if a word has at least one capital letter (subject to
+some rather complex exceptions) you meant it to be there, and you want BibTeX to
+leave it alone no matter what. To do that, it wraps those (strings of) words in
+those double braces. This is to let BibTeX know that <code>ISDN</code> may not be changed
+to <code>isdn</code> or <code>Isdn</code>, regardless of the bibliography style in play.</p>
+<p>The simplest approach would be to wrap title fields in extra braces as a whole,
+and some sites will erroneously recommend doing so, but as per Mencken, for
+every complex problem there is an answer that is clear, simple, and wrong; the
+rules for bib(la)tex capitalization are complex, and this is one of those
+answers that gets it entirely wrong, even if it will seem to work. There are
+styles do need to recapitalize parts of the title (for example to selectively
+downcase the titlecasing), and having the whole field so wrapped interferes with
+that. So Better BibTeX wraps individual words &ndash; or strings of those words &ndash;
+that have capitals in them with double braces.</p>
+<p>For English titles BBT will Title Case and brace-protect your titles on output.
+Except, those Title Cased words which BBT changed itself will <em>not</em> be wrapped
+in double-braces, as it <em>is</em> OK for the styles to change casing for those,
+depending on the style at play. So <code>I like ISDN heaps better than dialup</code> would
+output to <code>I Like {{ISDN}} Heaps Better than Dialup</code>. Apparently non-English
+titles are supposed to be in sentence case, so BBT doesn&rsquo;t touch those.</p>
+<p>You can steer this process somewhat by enclosing the parts you don&rsquo;t want case
+manipulation on in <code>&lt;span class=&quot;nocase&quot;&gt;...&lt;/span&gt;</code>. Anything between those
+won&rsquo;t be touched by Zotero or BBT. This is formally supported by Zotero and will
+work in the Word/LibreOffice plugins as well as in the BibTeX export. This will
+be required for words you wish to always keep lowercase, for example. Also, if
+you don&rsquo;t generally use Zotero for generating bibliographies but just for BibTeX
+reference management, you can turn on the hidden preference
+<a href="/zotero-better-bibtex/preferences/hidden-preferences/#suppresstitlecase">suppressTitleCase</a> to keep BBT
+from applying title-casing, but take note that if you do this, the
+bibliographies you get from Zotero and the bibliograhies you get through
+Bib(La)TeX will differ, and you can&rsquo;t complain about this.</p>
+<h2 id="why-the-double-braces">Why the double braces?<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard" aria-label="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg" aria-hidden="true"></i></button></span></h2>
+<p>But why then the double-braces (<code>{{...}}</code>) rather than the commonly recommended
+single braces (<code>{...}</code>)?</p>
+<p>This is not because of some arcane aesthetic preference, but because the
+Bib(La)TeX case protection rules are incredibly convoluted
+(<a href="https://github.com/retorquere/zotero-better-bibtex/issues/541" rel="external">#541</a>,
+<a href="https://github.com/retorquere/zotero-better-bibtex/issues/383" rel="external">#383</a>). For
+example, here are some &ldquo;interesting&rdquo; cases that BBT has learned to deal with.
+Did you know that</p>
+<ul>
+<li><code>{\emph{Homo sapiens}}</code> <em>un</em>-case-protects <code>Homo sapiens</code>? It sure was a
+surprise to me. So <code>\emph{Homo sapiens}</code> is case-protected (will not be
+recapitalized by Bib(La)TeX), but <code>{\emph{Homo sapiens}}</code> <em>is not</em>
+case-protected so it <em>will</em> be recapitalized. So to get predictable
+behavior, this is written out as <code>{{\emph{Homo sapiens}}}</code>.</li>
+<li>casing behavior over the <em>whole</em> entry field depends on <a href="https://github.com/retorquere/zotero-better-bibtex/issues/541#issuecomment-240156274" rel="external">whether there&rsquo;s
+a slash-command at the first
+position</a>
+of the title?</li>
+<li><a href="https://github.com/retorquere/zotero-better-bibtex/issues/541#issuecomment-240999396" rel="external">apparently</a>,
+to make sure that <code>Reading HLA Hart's: &lt;i&gt;The Concept of Law&lt;/i&gt;</code> renders as
+expected means I have to output the astoundingly ugly <code>{Reading {{HLA Hart}}'s: {{{\emph{The Concept}}}}{\emph{ of }}{{{\emph{Law}}}}}</code>?</li>
+</ul>
+<p>To make matters even more complex, so many people have in the past wrongly
+recommended to &ldquo;just wrap everything in one extra set of braces&rdquo; that biblatex
+now ignores exactly that pattern (see
+<a href="https://tex.stackexchange.com/a/327387/27603" rel="external">here</a> and
+<a href="https://tex.stackexchange.com/a/233976/27603" rel="external">here</a>).</p>
+<p>The double-bracing is the only unambiguous rule I could construct that
+consistently gets the rendered entries right (so far).</p>
+<p>Bib(La)TeX provides a never-ending stream of edge cases, which BBT tries to
+decide algorithmically. I try to keep the resulting file as pretty as I can (I&rsquo;m
+sensitive to the aesthetics myself), but the target is best described as &ldquo;given
+reasonable input, generate well-rendering output&rdquo;, and
+reasonable-to-well-rendering in the BBT case will have to include &ldquo;follows
+Zotero recommendations for storing items&rdquo; and &ldquo;prefer intent-preserving
+LaTeX over pretty-looking LaTeX&rdquo;.</p>
+<p>Bib(La)TeX be crazy.</p>
+<h2 id="but-why-so-many-double-braces">But why <em>so many</em> double braces?<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard" aria-label="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg" aria-hidden="true"></i></button></span></h2>
+<p>Zotero expects titles to be entered in sentence case; bib(la)tex
+expects them to be entered in Title Case. BBT converts titles to
+title case to compensate for this. Zotero does allow for exceptions
+to the sentence-case rule, which you can mark by surrounding them
+with &lt;span class=&ldquo;nocase&rdquo;&gt; &hellip; &lt;/span&gt;, and BBT will
+take that hint and use double braces (see previous sections) to
+achieve the same effect in bib(la)tex. But BBT does one thing more
+&ndash; if BBT sees a word containing capital letters which is not at
+the start of a (sub)sentence (such as the <code>ISDN</code> in <code>I like ISDN heaps better than dialup</code>), it will assume it is a proper noun
+(otherwise why would a word mid-sentence have a capital letter),
+and <em>also</em> brace-protect it.</p>
+<p>Unfortunately, there is a lot of variation in how titles are offered by the sites Zotero scrapes &ndash; some sentence case, some title case &ndash; so it is not at all uncommon for title-cased titles to (incorrectly) end up in Zotero, and as a result you&rsquo;ll get a lot of unnecesary braces. For example, if you (incorrectly!) have the following in Zotero:</p>
+<blockquote>
+<p>I Like ISDN Heaps Better than Dialup</p>
+</blockquote>
+<p>BBT will export that as</p>
+<blockquote>
+<p><code>title = {I {{Like ISDN Heaps Better}} than {{Dialup}}}</code></p>
+</blockquote>
+<p>which is clearly not correct. The proper way to fix this is to sentence case this in Zotero &ndash; if you generate a bibliography through Zotero itself, there are styles where this title-cased title will not render correctly. But if you have a lot of these, and you do not care about the quality of the bibliographies generated by Zotero itself, you can disable the <a href="/zotero-better-bibtex/preferences/export/#apply-title-casing-to-titles">title-casing</a> and/or the <a href="/zotero-better-bibtex/preferences/export/#apply-case-protection-to-capitalized-words-by-enclosing-them-in-braces">brace protection</a>.</p>
+<h2 id="importing-jabref-databases">Importing JabRef databases<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard" aria-label="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg" aria-hidden="true"></i></button></span></h2>
+<p>JabRef import works generally well but has a few gotchas:</p>
+<ul>
+<li>If you have dynamic (query-based) groups these will not be imported.</li>
+<li>If you have set a default folder for the PDF files in JabRef
+(<code>Options -&gt; Preferences -&gt; Linked Files -&gt; Main File Directory</code>), the file paths in your JabRef database will be relative to that
+directory, but BBT can&rsquo;t read those preferences, so all attachments would
+fail to import. Make imports work with JabRef&rsquo;s library-specific setting <code>Library -&gt; Library Properties -&gt; General File Directory</code>.
+Make sure the latter path is correct, as JabRef might continue finding files and not notify you if it contains errors.</li>
+</ul>
+<h3 id="why-zotero--bbt-instead-of-mendeley">Why Zotero + BBT instead of Mendeley?<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard" aria-label="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg" aria-hidden="true"></i></button></span></h3>
+<p>Among the reasons to just prefer Zotero over Mendeley outright you will find:</p>
+<ul>
+<li>Mendeley is owned by Elsevier.</li>
+<li>Mendeley thinks you <a href="https://www.zotero.org/support/kb/mendeley_import#mendeley_database_encryption" rel="external">cannot be trusted with your own data</a></li>
+</ul>
+<p>But wrt bibtex export, I don&rsquo;t think the Mendeley engineers actively use bib(la)tex:</p>
+<ul>
+<li>Mendeley is still double-bracing titles &ndash; a behavior so wrong (yet unfortunately ubiquitous), biblatex started <a href="/zotero-better-bibtex/support/faq/index.html">ignoring double-braced titles</a> (see <a href="https://tex.stackexchange.com/a/327387/27603" rel="external">here</a> and <a href="https://tex.stackexchange.com/a/233976/27603" rel="external">here</a>).</li>
+<li>Mendeley uses CSL, so items should be entered in sentence case (as is the case in Zotero). But bib(la)tex expects title-case, so titles should be converted to title case during export. This is difficult, so Mendeley just doesn&rsquo;t bother doing it.</li>
+<li>Verbatim fields that should per spec be exported as regular fields by Mendeley. This will get you compilation errors.</li>
+</ul>
+<h2 id="exporting-language-fields-in-addition-to-langid">Exporting <code>language</code> fields in addition to <code>langid</code><span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard" aria-label="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg" aria-hidden="true"></i></button></span></h2>
+<p>Zotero&rsquo;s <code>language</code> field exports to the biblatex field <code>langid</code> only, not bib(la)tex <code>language</code>. Zotero&rsquo;s <code>language</code> field and the biblatex <code>langid</code> field are supposed to contain only language tags that control formatting, e.g. capitalization of titles and hyphenation.</p>
+<p>BibLaTeX&rsquo;s `language&quot; field, by contrast, which has no equivalent in Zotero, is used to generate textual output in a formatted bibliography.</p>
+<p>Exporting Zotero&rsquo;s <code>language</code> field to the biblatex field <code>language</code> would result in what are now merely language-dependent formatting instructions all of a sudden turned into textual output as well, breaking virtually every style on the biblatex side.</p>
+<p>If you want the <code>language</code> field filled nonetheless, you can either use a BBT postscript, or the biblatex <code>langid</code> tags can still be used to selectively generate <code>language</code> fields that produce the output when rendered, assuming the aim is to eg have only items tagged as Japanese, i.e., containing biblatex <code>langid</code> fields whose contents begin with <code>ja</code> receive the string <code>[in Japanese]</code> in the formatted output.</p>
+<p>In the following, biblatex&rsquo;s <code>\DeclareSourcemap</code> mechanism is used to generate such language fields at runtime. Details can be found in the biblatex manual.</p>
+<pre><code>\documentclass{article}
+\begin{filecontents}[overwrite]{tmp.bib}
+@article{UseLanguage,
+  title = {Title of UseLanguage},
+  author = {A. U. Thor Language},
+  date = {1986},
+  journaltitle = {Journal of Engineering},
+  volume = {123},
+  number = {28},
+  pages = {1--12},
+  language = {japanese}
+}
+@article{UseLangid,
+  title = {Title of UseLangid},
+  author = {A. U. Thor Langid},
+  date = {1986},
+  journaltitle = {Journal of Engineering},
+  volume = {123},
+  number = {28},
+  pages = {1--12},
+  langid = {Japanese}
+}
+@article{UseLangidAbbrev,
+  title = {Title of UseLangidAbbrev},
+  author = {A. U. Thor LangidAbbrev},
+  date = {1986},
+  journaltitle = {Journal of Engineering},
+  volume = {123},
+  number = {28},
+  pages = {1--12},
+  langid = {ja-JP}
+}
+@article{en,
+  title = {Title of Something Completetly Different in English},
+  author = {Doe, John},
+  date = {2024},
+  journaltitle = {Journal of Whatever},
+  volume = {321},
+  number = {1},
+  pages = {33--77},
+  langid = {en}
+}
+\end{filecontents}
+\usepackage[sorting=none]{biblatex-chicago}
+%\usepackage[sorting=none]{biblatex}
+\addbibresource{tmp.bib}
+
+\DeclareSourcemap{
+  \maps[datatype=bibtex]{\map{
+     \step[fieldsource=langid, matchi=\regexp{^ja},
+   final]
+  \step[fieldset=language, fieldvalue=Japanese]
+    }
+  }
+}
+
+\begin{document}
+\nocite{*}
+\printbibliography
+\end{document}</code></pre>
+<p>If you just want the bib(la)tex <code>language</code> field to show whatever is in your Zotero <code>language</code> field, you can do it with this postscript:</p>
+<pre><code>if (Translator.BetterTeX) { tex.add({ name: &#39;language&#39;, value: zotero.language }) }</code></pre>
+<p>If you want the language field translated (to the best of BBTs abilities) to what would otherwise show up in <code>langid</code>, you can use:</p>
+<pre><code>if (Translator.BetterTeX) { tex.add({ name: &#39;language&#39;, value: tex.langid() }) }</code></pre>
+
+  <footer class="footline">
+  </footer>
+</article>
+        </div>
+      </main>
+    </div>
     <script src="/zotero-better-bibtex/js/theme.min.js" defer></script>
     <div id="toast-container" role="status" aria-live="polite" aria-atomic="false"></div>
   </body>

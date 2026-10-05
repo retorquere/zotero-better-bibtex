@@ -1,95 +1,18 @@
 
-  print('zotero-live-citations 199d652')
+  print('zotero-live-citations 4e4da3d')
   local online, mt, latest = pcall(pandoc.mediabag.fetch, 'https://retorque.re/zotero-better-bibtex/exporting/zotero.lua.revision')
   if online then
     latest = string.sub(latest, 1, 10)
-    if '199d652' ~= latest then
+    if '4e4da3d' ~= latest then
       print('new version "' .. latest .. '" available at https://retorque.re/zotero-better-bibtex/exporting')
     end
   end
 
-do
-local _ENV = _ENV
-package.preload[ "locator" ] = function( ... ) local arg = _G.arg;
-local utils = require('utils')
--- local lpeg = require('lpeg')
+-- Bundled with custom preloader script
+package = package or {}
+package.preload = package.preload or {}
 
-local book = (lpeg.P('book') + lpeg.P('bk.') + lpeg.P('bks.')) / 'book'
-local chapter = (lpeg.P('chapter') + lpeg.P('chap.') + lpeg.P('chaps.')) / 'chapter'
-local column = (lpeg.P('column') + lpeg.P('col.') + lpeg.P('cols.')) / 'column'
-local figure = (lpeg.P('figure') + lpeg.P('fig.') + lpeg.P('figs.')) / 'figure'
-local folio = (lpeg.P('folio') + lpeg.P('fol.') + lpeg.P('fols.')) / 'folio'
-local number = (lpeg.P('number') + lpeg.P('no.') + lpeg.P('nos.')) / 'number'
-local line = (lpeg.P('line') + lpeg.P('l.') + lpeg.P('ll.')) / 'line'
-local note = (lpeg.P('note') + lpeg.P('n.') + lpeg.P('nn.')) / 'note'
-local opus = (lpeg.P('opus') + lpeg.P('op.') + lpeg.P('opp.')) / 'opus'
-local page = (lpeg.P('page') + lpeg.P('p.') + lpeg.P('pp.')) / 'page'
-local paragraph = (lpeg.P('paragraph') + lpeg.P('para.') + lpeg.P('paras.') + lpeg.P('¶¶') + lpeg.P('¶')) / 'paragraph'
-local part = (lpeg.P('part') + lpeg.P('pt.') + lpeg.P('pts.')) / 'part'
-local section = (lpeg.P('section') + lpeg.P('sec.') + lpeg.P('secs.') + lpeg.P('§§') + lpeg.P('§')) / 'section'
-local subverbo = (lpeg.P('sub verbo') + lpeg.P('s.v.') + lpeg.P('s.vv.')) / 'sub verbo'
-local verse = (lpeg.P('verse') + lpeg.P('v.') + lpeg.P('vv.')) / 'verse'
-local volume = (lpeg.P('volume') + lpeg.P('vol.') + lpeg.P('vols.')) / 'volume'
-local label = book + chapter + column + figure + folio + number + line + note + opus + page + paragraph + part + section + subverbo + verse + volume
-
-local whitespace = lpeg.P(' ')^0
-local nonspace = lpeg.P(1) - lpeg.S(' ')
-local nonbrace = lpeg.P(1) - lpeg.S('{}')
-
-local word = nonspace^1 / 1
--- local roman = lpeg.S('IiVvXxLlCcDdMm]')^1
-local number = lpeg.R('09')^1 -- + roman
-
-local numbers = number * (whitespace * lpeg.S('-')^1 * whitespace * number)^-1
-local ranges = (numbers * (whitespace * lpeg.P(',') * whitespace * numbers)^0) / 1
-
--- local braced_locator = lpeg.P('{') * lpeg.Cs(label + lpeg.Cc('page')) * whitespace * lpeg.C(nonbrace^1) * lpeg.P('}')
-local braced_locator = lpeg.P('{') * label * whitespace * lpeg.C(nonbrace^1) * lpeg.P('}')
-local braced_implicit_locator = lpeg.P('{') * lpeg.Cc('page') * lpeg.Cs(numbers) * lpeg.P('}')
-local locator = braced_locator + braced_implicit_locator + (label * whitespace * ranges) + (label * whitespace * word) + (lpeg.Cc('page') * ranges)
-local remainder = lpeg.C(lpeg.P(1)^0)
-
-local suffix = lpeg.C(lpeg.P(',')^-1 * whitespace) * locator * remainder
-
-local pseudo_locator = lpeg.C(lpeg.P(',')^-1 * whitespace) * lpeg.P('{') * lpeg.C(nonbrace^0) * lpeg.P('}') * remainder
-
-local module = {}
-
-function module.parse(input)
-  local parsed, _prefix, _label, _locator, _suffix
-
-  parsed = lpeg.Ct(suffix):match(input)
-  if parsed then
-    _prefix, _label, _locator, _suffix = table.unpack(parsed)
-  else
-    parsed = lpeg.Ct(pseudo_locator):match(input)
-    if parsed then
-      _label = 'page'
-      _prefix, _locator, _suffix = table.unpack(parsed)
-    else
-      return nil, nil, input
-    end
-  end
-
-  if utils.trim(_prefix) == ',' then _prefix = '' end
-  local _space = ''
-  if (utils.trim(_prefix) ~= _prefix) then _space = ' ' end
-
-  _prefix = utils.trim(_prefix)
-  _label = utils.trim(_label)
-  _locator = utils.trim(_locator)
-  _suffix = utils.trim(_suffix)
-
-  return _label, _locator, utils.trim(_prefix .. _space .. _suffix)
-end
-
-return module
-end
-end
-
-do
-local _ENV = _ENV
-package.preload[ "lunajson" ] = function( ... ) local arg = _G.arg;
+package.preload['lunajson'] = function(...)
 local newdecoder = require 'lunajson.decoder'
 local newencoder = require 'lunajson.encoder'
 local sax = require 'lunajson.sax'
@@ -101,12 +24,10 @@ return {
 	newparser = sax.newparser,
 	newfileparser = sax.newfileparser,
 }
-end
+
 end
 
-do
-local _ENV = _ENV
-package.preload[ "lunajson.decoder" ] = function( ... ) local arg = _G.arg;
+package.preload['lunajson.decoder'] = function(...)
 local setmetatable, tonumber, tostring =
       setmetatable, tonumber, tostring
 local floor, inf =
@@ -622,12 +543,10 @@ local function newdecoder()
 end
 
 return newdecoder
-end
+
 end
 
-do
-local _ENV = _ENV
-package.preload[ "lunajson.encoder" ] = function( ... ) local arg = _G.arg;
+package.preload['lunajson.encoder'] = function(...)
 local error = error
 local byte, find, format, gsub, match = string.byte, string.find, string.format,  string.gsub, string.match
 local concat = table.concat
@@ -813,12 +732,10 @@ local function newencoder()
 end
 
 return newencoder
-end
+
 end
 
-do
-local _ENV = _ENV
-package.preload[ "lunajson.sax" ] = function( ... ) local arg = _G.arg;
+package.preload['lunajson.sax'] = function(...)
 local setmetatable, tonumber, tostring =
       setmetatable, tonumber, tostring
 local floor, inf =
@@ -1538,12 +1455,87 @@ return {
 	newparser = newparser,
 	newfileparser = newfileparser
 }
-end
+
 end
 
-do
-local _ENV = _ENV
-package.preload[ "utils" ] = function( ... ) local arg = _G.arg;
+package.preload['locator'] = function(...)
+local utils = require('utils')
+-- local lpeg = require('lpeg')
+
+local book = (lpeg.P('book') + lpeg.P('bk.') + lpeg.P('bks.')) / 'book'
+local chapter = (lpeg.P('chapter') + lpeg.P('chap.') + lpeg.P('chaps.')) / 'chapter'
+local column = (lpeg.P('column') + lpeg.P('col.') + lpeg.P('cols.')) / 'column'
+local figure = (lpeg.P('figure') + lpeg.P('fig.') + lpeg.P('figs.')) / 'figure'
+local folio = (lpeg.P('folio') + lpeg.P('fol.') + lpeg.P('fols.')) / 'folio'
+local number = (lpeg.P('number') + lpeg.P('no.') + lpeg.P('nos.')) / 'number'
+local line = (lpeg.P('line') + lpeg.P('l.') + lpeg.P('ll.')) / 'line'
+local note = (lpeg.P('note') + lpeg.P('n.') + lpeg.P('nn.')) / 'note'
+local opus = (lpeg.P('opus') + lpeg.P('op.') + lpeg.P('opp.')) / 'opus'
+local page = (lpeg.P('page') + lpeg.P('p.') + lpeg.P('pp.')) / 'page'
+local paragraph = (lpeg.P('paragraph') + lpeg.P('para.') + lpeg.P('paras.') + lpeg.P('¶¶') + lpeg.P('¶')) / 'paragraph'
+local part = (lpeg.P('part') + lpeg.P('pt.') + lpeg.P('pts.')) / 'part'
+local section = (lpeg.P('section') + lpeg.P('sec.') + lpeg.P('secs.') + lpeg.P('§§') + lpeg.P('§')) / 'section'
+local subverbo = (lpeg.P('sub verbo') + lpeg.P('s.v.') + lpeg.P('s.vv.')) / 'sub verbo'
+local verse = (lpeg.P('verse') + lpeg.P('v.') + lpeg.P('vv.')) / 'verse'
+local volume = (lpeg.P('volume') + lpeg.P('vol.') + lpeg.P('vols.')) / 'volume'
+local label = book + chapter + column + figure + folio + number + line + note + opus + page + paragraph + part + section + subverbo + verse + volume
+
+local whitespace = lpeg.P(' ')^0
+local nonspace = lpeg.P(1) - lpeg.S(' ')
+local nonbrace = lpeg.P(1) - lpeg.S('{}')
+
+local word = nonspace^1 / 1
+-- local roman = lpeg.S('IiVvXxLlCcDdMm]')^1
+local number = lpeg.R('09')^1 -- + roman
+
+local numbers = number * (whitespace * lpeg.S('-')^1 * whitespace * number)^-1
+local ranges = (numbers * (whitespace * lpeg.P(',') * whitespace * numbers)^0) / 1
+
+-- local braced_locator = lpeg.P('{') * lpeg.Cs(label + lpeg.Cc('page')) * whitespace * lpeg.C(nonbrace^1) * lpeg.P('}')
+local braced_locator = lpeg.P('{') * label * whitespace * lpeg.C(nonbrace^1) * lpeg.P('}')
+local braced_implicit_locator = lpeg.P('{') * lpeg.Cc('page') * lpeg.Cs(numbers) * lpeg.P('}')
+local locator = braced_locator + braced_implicit_locator + (label * whitespace * ranges) + (label * whitespace * word) + (lpeg.Cc('page') * ranges)
+local remainder = lpeg.C(lpeg.P(1)^0)
+
+local suffix = lpeg.C(lpeg.P(',')^-1 * whitespace) * locator * remainder
+
+local pseudo_locator = lpeg.C(lpeg.P(',')^-1 * whitespace) * lpeg.P('{') * lpeg.C(nonbrace^0) * lpeg.P('}') * remainder
+
+local module = {}
+
+function module.parse(input)
+  local parsed, _prefix, _label, _locator, _suffix
+
+  parsed = lpeg.Ct(suffix):match(input)
+  if parsed then
+    _prefix, _label, _locator, _suffix = table.unpack(parsed)
+  else
+    parsed = lpeg.Ct(pseudo_locator):match(input)
+    if parsed then
+      _label = 'page'
+      _prefix, _locator, _suffix = table.unpack(parsed)
+    else
+      return nil, nil, input
+    end
+  end
+
+  if utils.trim(_prefix) == ',' then _prefix = '' end
+  local _space = ''
+  if (utils.trim(_prefix) ~= _prefix) then _space = ' ' end
+
+  _prefix = utils.trim(_prefix)
+  _label = utils.trim(_label)
+  _locator = utils.trim(_locator)
+  _suffix = utils.trim(_suffix)
+
+  return _label, _locator, utils.trim(_prefix .. _space .. _suffix)
+end
+
+return module
+
+end
+
+package.preload['utils'] = function(...)
 local module = {}
 
 function module.tablelength(T)
@@ -1616,12 +1608,10 @@ function module.trim(s)
 end
 
 return module
-end
+
 end
 
-do
-local _ENV = _ENV
-package.preload[ "zotero" ] = function( ... ) local arg = _G.arg;
+package.preload['zotero'] = function(...)
 local module = {}
 
 local utils = require('utils')
@@ -1655,7 +1645,6 @@ local function load_items()
 
   module.request.params.citekeys = citekeys
   local url = module.url .. utils.urlencode(json.encode(module.request))
-  print(url)
   local mt, body = pandoc.mediabag.fetch(url, '.')
   local ok, response = pcall(json.decode, body)
   if not ok then
@@ -1696,9 +1685,10 @@ function module.get(citekey)
 end
 
 return module
-end
+
 end
 
+-- Main Entry Point --
 --
 -- bbt-to-live-doc
 --
@@ -2055,7 +2045,7 @@ function Meta(meta)
   if config.transferable and not config.csl_style then
     error('Transferable documents need a CSL style')
   end
-  if config.transferable and not config.scannable_cite then
+  if config.transferable and config.scannable_cite then
     error('Scannable-cite documents are not transferable')
   end
 
@@ -2131,7 +2121,7 @@ function Div(div)
   return pandoc.RawBlock('opendocument', zotero_bibl_odt())
 end
 
-function Doc(doc)
+function Pandoc(doc)
   if config.format ~= 'odt' then return nil end
 
   if config.transferable then
@@ -2150,6 +2140,6 @@ return {
   { Cite = Cite_collect },
   { Cite = Cite_replace },
   { Div = Div },
-  { Doc = Doc },
+  { Pandoc = Pandoc },
 }
 

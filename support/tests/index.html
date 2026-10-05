@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="height=device-height, width=device-width, initial-scale=1.0, minimum-scale=1.0">
     <meta name="generator" content="Hugo 0.167.0">
-    <meta name="generator" content="Relearn 9.1.0+f0096ea8c391a3404fe56c49eff0898dc5c9ae62">
+    <meta name="generator" content="Relearn 9.1.0+54de122b1167a16811216ea5afb532e2f06d9fd2">
     <meta name="description" content="Please DO NOT DO THIS without an open issue on the github tracker. I’ve been running tests this way for years, but I’d still prefer to guide you through this to prevent any risks to your citation library. The test suite has only been tested on MacOS and Linux. I doubt it’ll run on Windows, and I don’t know what will go wrong when you test. If you’re on Windows, DO NOT run this on the same account that holds your actual Zotero library.">
     <meta name="author" content="">
     <meta name="twitter:card" content="summary">
@@ -53,8 +53,11 @@
       ],
       "translations": {
         "Browser_unsupported_feature": "This browser doesn't support this feature",
+        "Close_graph": "Close enlarged graph",
         "Copied_to_clipboard": "Text copied to clipboard!",
         "Copy_to_clipboard": "Copy text to clipboard",
+        "Enlarge_graph": "Enlarge graph",
+        "History_cleared": "History cleared",
         "Link_copied_to_clipboard": "Link copied to clipboard!",
         "N_results_found": "{1} results found for \"{0}\"",
         "No_results_found": "No results found for \"{0}\"",
@@ -84,97 +87,7 @@
 
   </head>
   <body class="mobile-support html" data-origin="/zotero-better-bibtex/support/tests/index.html">
-    <div id="R-body" class="default-animation">
-      <div id="R-body-overlay"></div>
-      <nav id="R-topbar" class="default-animation">
-        <div class="topbar-wrapper default-animation">
-          <div class="topbar-sidebar-divider default-animation"></div>
-          <div class="topbar-area topbar-area-start" data-area="start">
-            <div class="topbar-button topbar-button-sidebar default-animation" data-content-empty="disable" data-width-s="show" data-width-m="hide" data-width-l="hide">
-<span class="btn cstyle button link noborder notitle interactive"><button data-button-action="toggle-nav" type="button" title="Menu (CTRL&#43;ALT&#43;n)"><i class="fa-fw fas fa-bars"></i></button></span>
-            </div>
-            <div class="topbar-button topbar-button-toc default-animation" data-content-empty="hide" data-width-s="show" data-width-m="show" data-width-l="show">
-<span class="btn cstyle button link noborder notitle interactive"><button data-button-action="toggle-flyout" type="button" title="Table of Contents (CTRL&#43;ALT&#43;t)"><i class="fa-fw fas fa-table-list"></i></button></span>
-              <div class="topbar-content">
-                <div class="topbar-content-wrapper" tabindex="-1"> 
-                </div>
-              </div>
-            </div>
-          </div>
-          <ol class="topbar-breadcrumbs breadcrumbs highlightable" data-overflow-title="Better BibTeX for Zotero &gt; Support &gt; Testing" itemscope itemtype="http://schema.org/BreadcrumbList"><li itemscope itemtype="https://schema.org/ListItem" itemprop="itemListElement" class=""><a itemprop="item" href="/zotero-better-bibtex/index.html"><span itemprop="name">Better BibTeX for Zotero</span></a><meta itemprop="position" content="1">&nbsp;>&nbsp;</li><li itemscope itemtype="https://schema.org/ListItem" itemprop="itemListElement" class=""><a itemprop="item" href="/zotero-better-bibtex/support/index.html"><span itemprop="name">Support</span></a><meta itemprop="position" content="2">&nbsp;>&nbsp;</li><li itemscope itemtype="https://schema.org/ListItem" itemprop="itemListElement" class=""><span itemprop="name">Testing</span><meta itemprop="position" content="3"></li>
-          </ol>
-          <div class="topbar-area topbar-area-end" data-area="end">
-            <div class="topbar-button topbar-button-edit default-animation" data-content-empty="disable" data-width-s="area-more" data-width-m="show" data-width-l="show">
-<span class="btn cstyle button link noborder notitle interactive"><a href="https://github.com/retorquere/zotero-better-bibtex/edit/master/site/content/support/tests.md" rel="external" title="Edit (CTRL+ALT+w)"><i class="fa-fw fas fa-pen"></i></a></span>
-            </div>
-            <div class="topbar-button topbar-button-prev default-animation" data-content-empty="disable" data-width-s="show" data-width-m="show" data-width-l="show">
-<span class="btn cstyle button link noborder notitle interactive"><a href="/zotero-better-bibtex/support/translations/index.html" title="Translations (🡐)"><i class="fa-fw fas fa-chevron-left"></i></a></span>
-            </div>
-            <div class="topbar-button topbar-button-next default-animation" data-content-empty="disable" data-width-s="show" data-width-m="show" data-width-l="show">
-<span class="btn cstyle button link noborder notitle interactive"><a href="/zotero-better-bibtex/changelog/index.html" title="Changelog (🡒)"><i class="fa-fw fas fa-chevron-right"></i></a></span>
-            </div>
-            <div class="topbar-button topbar-button-more default-animation" data-content-empty="hide" data-width-s="show" data-width-m="show" data-width-l="show">
-<span class="btn cstyle button link noborder notitle interactive"><button data-button-action="toggle-flyout" type="button" title="More"><i class="fa-fw fas fa-ellipsis-v"></i></button></span>
-              <div class="topbar-content">
-                <div class="topbar-content-wrapper" tabindex="-1">
-                  <div class="topbar-area topbar-area-more" data-area="more">
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </nav>
-      <div id="R-main-overlay"></div>
-      <main id="R-body-inner" class="highlightable support" tabindex="-1">
-        <div class="flex-block-wrapper">
-<article class="default">
-  <header class="headline">
-  </header>
-
-<h1 id="running-the-bbt-test-suite">Running the BBT test suite</h1>
-
-<p>Please <strong>DO NOT DO THIS</strong> without an open issue on the github tracker. I&rsquo;ve been running tests this way for years, but I&rsquo;d still prefer to guide you through this to prevent any risks to your citation library. The test suite has only been tested on MacOS and Linux. I doubt it&rsquo;ll run on Windows, and I don&rsquo;t know what will go wrong when you test. If you&rsquo;re on Windows, <strong>DO NOT</strong> run this on the same account that holds your actual Zotero library.</p>
-<p>The tests require an installed Zotero, python 3.6+, and node 12+, a working <code>gcc</code>, and libgit. On MacOS, that requires:</p>
-<ul>
-<li><code>brew install libgit2</code></li>
-<li>if <code>xcode-select -p</code> doesn&rsquo;t respond with <code>/Applications/Xcode.app/Contents/Developer</code>: <code>xcode-select --install</code> (select <code>install</code>, not <code>get Xcode</code> in the popup that follows).</li>
-</ul>
-<p>Then:</p>
-<ul>
-<li><code>git clone https://github.com/retorquere/zotero-better-bibtex.git</code></li>
-<li><code>cd zotero-better-bibtex</code></li>
-<li><code>pip3 install -r requirements.txt</code></li>
-</ul>
-<p>then a few things I&rsquo;d really prefer you do before anything else. <strong>In principle</strong> the tests are safe to run on the user account that also has your own library. I&rsquo;ve been doing this for years. Still, it would be good to verify rather than trust this. The next steps are all reversible if things don&rsquo;t go as expected.</p>
-<ul>
-<li>Make sure Zotero is not running. If you&rsquo;re on a Mac, that means <code>cmd-Q</code></li>
-<li>copy the Zotero profiles to a safe place. The profiles live in <code>~/Library/Application\ Support/Zotero</code> if you&rsquo;re on a Mac, <code>~/.zotero</code> if you&rsquo;re on Linux.</li>
-<li><code>mv ~/Zotero ~/Zotero.saved</code></li>
-<li><code>touch ~/Zotero</code></li>
-</ul>
-<p>this is all temporary, and when all is verified to be setup correctly, we&rsquo;ll undo them.</p>
-<p><code>~/Library/Application\ Support/Zotero</code> / <code>~/.zotero</code> holds the administration of your Zotero profiles. The test setup will add a new profile leaving your existing profile(s) untouched. But better safe than sorry, which is why we&rsquo;re holding a copy.</p>
-<p>The <code>mv</code> sets aside your library so that Zotero won&rsquo;t be able to find it. The <code>touch</code> creates an empty file in its place. The tests don&rsquo;t use that location, they use <code>~/.BBTTEST</code> instead, but if for whatever reason that doesn&rsquo;t work, Zotero will try to write to <code>~/Zotero/something</code>, and since <code>~/Zotero</code> is now a file instead of a directory, Zotero will complain loudly if that happens, and we know we must back out.</p>
-<p>Now then:</p>
-<ul>
-<li>make sure you&rsquo;re in <code>zotero-better-bibtex</code></li>
-<li><code>./test/behave --tags @438</code></li>
-</ul>
-<p>and be amazed. Zotero will pop up, load the test library, executes one test, and shuts down. The log file after the tests run will be <code>~/.BBTTEST.log</code>. The tests do not touch your own library.</p>
-<p>To restore access to your regular library so you can run either a test suite or just work with your library (but <strong>not</strong> both at the same time. <strong>always</strong> fully close Zotero between these).</p>
-<ul>
-<li><code>rm ~/Zotero</code></li>
-<li><code>mv ~/Zotero.saved ~/Zotero</code></li>
-</ul>
-<p>and you can remove the copy of the profile administration you made earlier. Zotero should now start again normally opening your library.</p>
-
-  <footer class="footline">
-  </footer>
-</article>
-        </div>
-      </main>
-    </div>
+    <a id="R-skip-link" href="#R-body-inner">Skip to main content</a>
     <aside id="R-sidebar" class="default-animation">
       <div id="R-header-topbar" class="default-animation"></div>
       <div id="R-header-wrapper" class="default-animation"><a id="logo" href="/zotero-better-bibtex/">
@@ -789,10 +702,10 @@ Better BibTeX for Zotero
 
         <search><form action="/zotero-better-bibtex/search/index.html" method="get">
           <div class="searchbox default-animation">
-            <button class="search-detail" type="submit" title="Search (CTRL+ALT+f)"><i class="fas fa-fw fa-search"></i></button>
+            <button class="search-detail" type="submit" title="Open search page" aria-label="Open search page"><i class="fas fa-fw fa-search" aria-hidden="true"></i></button>
             <label class="a11y-only" for="R-search-by">Search</label>
-            <input data-search-input id="R-search-by" name="search-by" class="search-by" type="search" placeholder="Search...">
-            <button class="search-clear" type="button" data-search-clear="" title="Clear search"><i class="fas fa-fw fa-times" title="Clear search"></i></button>
+            <input data-search-input id="R-search-by" name="search-by" class="search-by" type="search" placeholder="Search..." title="Search (CTRL+ALT+f)">
+            <button class="search-clear" type="button" data-search-clear="" title="Clear search" aria-label="Clear search"><i class="fas fa-fw fa-times" aria-hidden="true" title="Clear search"></i></button>
           </div>
         </form></search>
       </div>
@@ -802,7 +715,7 @@ Better BibTeX for Zotero
         </div>
         <div class="R-sidebarmenu R-shortcutmenu-homelinks default-animation">
           <ul class="space collapsible-menu">
-            <li class="" data-nav-id="/zotero-better-bibtex/index.html"><a class="padding" href="/zotero-better-bibtex/index.html"><i class="fa-fw fas fa-home"></i> Home</a></li>
+            <li class="" data-nav-id="/zotero-better-bibtex/index.html"><a class="padding" href="/zotero-better-bibtex/index.html"><i class="fa-fw fas fa-home" aria-hidden="true"></i> Home</a></li>
           </ul>
         </div>
         <div class="R-menu-divider default-animation">
@@ -816,7 +729,7 @@ Better BibTeX for Zotero
           <hr class="padding default-animation">
         </div>
       </div>
-      <div id="R-content-wrapper" class="highlightable" tabindex="-1">
+      <nav id="R-content-wrapper" class="highlightable" aria-label="Menu" tabindex="-1">
         <div id="R-scrollbar" aria-hidden="true"><div id="R-scrollbar-thumb"></div></div>
         <div class="R-sidebarmenu R-shortcutmenu-main default-animation">
           <ul class="enlarge morespace collapsible-menu">
@@ -828,7 +741,7 @@ Better BibTeX for Zotero
             <li class="" data-nav-id="/zotero-better-bibtex/support/faq/index.html"><a class="padding" href="/zotero-better-bibtex/support/faq/index.html">FAQ</a></li>
             <li class="" data-nav-id="/zotero-better-bibtex/support/performance/index.html"><a class="padding" href="/zotero-better-bibtex/support/performance/index.html">Performance</a></li>
             <li class="" data-nav-id="/zotero-better-bibtex/support/translations/index.html"><a class="padding" href="/zotero-better-bibtex/support/translations/index.html">Translations</a></li>
-            <li class="active " data-nav-id="/zotero-better-bibtex/support/tests/index.html"><a class="padding" href="/zotero-better-bibtex/support/tests/index.html">Testing</a></li></ul></li>
+            <li class="active " data-nav-id="/zotero-better-bibtex/support/tests/index.html"><a class="padding" href="/zotero-better-bibtex/support/tests/index.html" aria-current="page">Testing</a></li></ul></li>
             <li class="" data-nav-id="/zotero-better-bibtex/changelog/index.html"><a class="padding" href="/zotero-better-bibtex/changelog/index.html">Changelog</a></li>
             <li class="" data-nav-id="/zotero-better-bibtex/sponsoring/index.html"><a class="padding" href="/zotero-better-bibtex/sponsoring/index.html">Sponsoring BBT</a></li>
           </ul>
@@ -964,8 +877,103 @@ Better BibTeX for Zotero
 
 <script async defer src="https://buttons.github.io/buttons.js"></script>
 </div>
-      </div>
+      </nav>
     </aside>
+    <div id="R-body" class="default-animation">
+      <div id="R-body-overlay"></div>
+      <header id="R-topbar" class="default-animation">
+        <div class="topbar-wrapper default-animation">
+          <div class="topbar-sidebar-divider default-animation"></div>
+          <div class="topbar-area topbar-area-start" data-area="start">
+            <div class="topbar-button topbar-button-sidebar default-animation" data-content-empty="disable" data-width-s="show" data-width-m="hide" data-width-l="hide">
+<span class="btn cstyle button link noborder notitle interactive"><button data-button-action="toggle-nav" type="button" title="Menu (CTRL&#43;ALT&#43;n)" aria-label="Menu (CTRL&#43;ALT&#43;n)" aria-expanded="false"><i class="fa-fw fas fa-bars" aria-hidden="true"></i></button></span>
+            </div>
+            <div class="topbar-button topbar-button-toc default-animation" data-content-empty="hide" data-width-s="show" data-width-m="show" data-width-l="show">
+<span class="btn cstyle button link noborder notitle interactive"><button data-button-action="toggle-flyout" type="button" title="Table of Contents (CTRL&#43;ALT&#43;t)" aria-label="Table of Contents (CTRL&#43;ALT&#43;t)" aria-expanded="false"><i class="fa-fw fas fa-table-list" aria-hidden="true"></i></button></span>
+              <div class="topbar-content">
+                <div class="topbar-content-wrapper" tabindex="-1"> 
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="topbar-area topbar-area-middle" data-area="middle">
+            <nav class="topbar-breadcrumbs breadcrumbs highlightable" aria-label="Breadcrumbs" data-overflow-title="Better BibTeX for Zotero &gt; Support &gt; Testing">
+              <ol itemscope itemtype="http://schema.org/BreadcrumbList"><li itemscope itemtype="https://schema.org/ListItem" itemprop="itemListElement" class=""><a itemprop="item" href="/zotero-better-bibtex/index.html"><span itemprop="name">Better BibTeX for Zotero</span></a><meta itemprop="position" content="1">&nbsp;>&nbsp;</li><li itemscope itemtype="https://schema.org/ListItem" itemprop="itemListElement" class=""><a itemprop="item" href="/zotero-better-bibtex/support/index.html"><span itemprop="name">Support</span></a><meta itemprop="position" content="2">&nbsp;>&nbsp;</li><li itemscope itemtype="https://schema.org/ListItem" itemprop="itemListElement" class="" aria-current="page"><span itemprop="name">Testing</span><meta itemprop="position" content="3"></li>
+              </ol>
+            </nav>
+          </div>
+          <div class="topbar-area topbar-area-end" data-area="end">
+            <div class="topbar-button topbar-button-edit default-animation" data-content-empty="disable" data-width-s="area-more" data-width-m="show" data-width-l="show">
+<span class="btn cstyle button link noborder notitle interactive"><a aria-label="Edit (CTRL+ALT+w)" href="https://github.com/retorquere/zotero-better-bibtex/edit/master/site/content/support/tests.md" rel="external" title="Edit (CTRL+ALT+w)"><i class="fa-fw fas fa-pen" aria-hidden="true"></i></a></span>
+            </div>
+            <div class="topbar-button topbar-button-prev default-animation" data-content-empty="disable" data-width-s="show" data-width-m="show" data-width-l="show">
+<span class="btn cstyle button link noborder notitle interactive"><a aria-label="Translations (🡐)" href="/zotero-better-bibtex/support/translations/index.html" title="Translations (🡐)"><i class="fa-fw fas fa-chevron-left" aria-hidden="true"></i></a></span>
+            </div>
+            <div class="topbar-button topbar-button-next default-animation" data-content-empty="disable" data-width-s="show" data-width-m="show" data-width-l="show">
+<span class="btn cstyle button link noborder notitle interactive"><a aria-label="Changelog (🡒)" href="/zotero-better-bibtex/changelog/index.html" title="Changelog (🡒)"><i class="fa-fw fas fa-chevron-right" aria-hidden="true"></i></a></span>
+            </div>
+            <div class="topbar-button topbar-button-more default-animation" data-content-empty="hide" data-width-s="show" data-width-m="show" data-width-l="show">
+<span class="btn cstyle button link noborder notitle interactive"><button data-button-action="toggle-flyout" type="button" title="More" aria-label="More" aria-expanded="false"><i class="fa-fw fas fa-ellipsis-v" aria-hidden="true"></i></button></span>
+              <div class="topbar-content">
+                <div class="topbar-content-wrapper" tabindex="-1">
+                  <div class="topbar-area topbar-area-more" data-area="more">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </header>
+      <div id="R-main-overlay"></div>
+      <main id="R-body-inner" class="highlightable support" tabindex="-1">
+        <div class="flex-block-wrapper">
+<article class="default">
+  <header class="headline">
+  </header>
+
+<h1 id="running-the-bbt-test-suite">Running the BBT test suite</h1>
+
+<p>Please <strong>DO NOT DO THIS</strong> without an open issue on the github tracker. I&rsquo;ve been running tests this way for years, but I&rsquo;d still prefer to guide you through this to prevent any risks to your citation library. The test suite has only been tested on MacOS and Linux. I doubt it&rsquo;ll run on Windows, and I don&rsquo;t know what will go wrong when you test. If you&rsquo;re on Windows, <strong>DO NOT</strong> run this on the same account that holds your actual Zotero library.</p>
+<p>The tests require an installed Zotero, python 3.6+, and node 12+, a working <code>gcc</code>, and libgit. On MacOS, that requires:</p>
+<ul>
+<li><code>brew install libgit2</code></li>
+<li>if <code>xcode-select -p</code> doesn&rsquo;t respond with <code>/Applications/Xcode.app/Contents/Developer</code>: <code>xcode-select --install</code> (select <code>install</code>, not <code>get Xcode</code> in the popup that follows).</li>
+</ul>
+<p>Then:</p>
+<ul>
+<li><code>git clone https://github.com/retorquere/zotero-better-bibtex.git</code></li>
+<li><code>cd zotero-better-bibtex</code></li>
+<li><code>pip3 install -r requirements.txt</code></li>
+</ul>
+<p>then a few things I&rsquo;d really prefer you do before anything else. <strong>In principle</strong> the tests are safe to run on the user account that also has your own library. I&rsquo;ve been doing this for years. Still, it would be good to verify rather than trust this. The next steps are all reversible if things don&rsquo;t go as expected.</p>
+<ul>
+<li>Make sure Zotero is not running. If you&rsquo;re on a Mac, that means <code>cmd-Q</code></li>
+<li>copy the Zotero profiles to a safe place. The profiles live in <code>~/Library/Application\ Support/Zotero</code> if you&rsquo;re on a Mac, <code>~/.zotero</code> if you&rsquo;re on Linux.</li>
+<li><code>mv ~/Zotero ~/Zotero.saved</code></li>
+<li><code>touch ~/Zotero</code></li>
+</ul>
+<p>this is all temporary, and when all is verified to be setup correctly, we&rsquo;ll undo them.</p>
+<p><code>~/Library/Application\ Support/Zotero</code> / <code>~/.zotero</code> holds the administration of your Zotero profiles. The test setup will add a new profile leaving your existing profile(s) untouched. But better safe than sorry, which is why we&rsquo;re holding a copy.</p>
+<p>The <code>mv</code> sets aside your library so that Zotero won&rsquo;t be able to find it. The <code>touch</code> creates an empty file in its place. The tests don&rsquo;t use that location, they use <code>~/.BBTTEST</code> instead, but if for whatever reason that doesn&rsquo;t work, Zotero will try to write to <code>~/Zotero/something</code>, and since <code>~/Zotero</code> is now a file instead of a directory, Zotero will complain loudly if that happens, and we know we must back out.</p>
+<p>Now then:</p>
+<ul>
+<li>make sure you&rsquo;re in <code>zotero-better-bibtex</code></li>
+<li><code>./test/behave --tags @438</code></li>
+</ul>
+<p>and be amazed. Zotero will pop up, load the test library, executes one test, and shuts down. The log file after the tests run will be <code>~/.BBTTEST.log</code>. The tests do not touch your own library.</p>
+<p>To restore access to your regular library so you can run either a test suite or just work with your library (but <strong>not</strong> both at the same time. <strong>always</strong> fully close Zotero between these).</p>
+<ul>
+<li><code>rm ~/Zotero</code></li>
+<li><code>mv ~/Zotero.saved ~/Zotero</code></li>
+</ul>
+<p>and you can remove the copy of the profile administration you made earlier. Zotero should now start again normally opening your library.</p>
+
+  <footer class="footline">
+  </footer>
+</article>
+        </div>
+      </main>
+    </div>
     <script src="/zotero-better-bibtex/js/theme.min.js" defer></script>
     <div id="toast-container" role="status" aria-live="polite" aria-atomic="false"></div>
   </body>

@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="height=device-height, width=device-width, initial-scale=1.0, minimum-scale=1.0">
     <meta name="generator" content="Hugo 0.167.0">
-    <meta name="generator" content="Relearn 9.1.0+f0096ea8c391a3404fe56c49eff0898dc5c9ae62">
+    <meta name="generator" content="Relearn 9.1.0+54de122b1167a16811216ea5afb532e2f06d9fd2">
     <meta name="description" content="You can fetch your bibliography on the url http://127.0.0.1:23119/better-bibtex/collection?[collectionID].[format] 1. You can get this URL for a group, library or collection by right-clicking it and selecting Download Better BibTeX export...
 You can add options to the export as URL parameters:
 &amp;exportNotes=[true|false] &amp;useJournalAbbreviation=[true|false] You can fetch your library as part of your build, using something like curl from your Makefile, or with a BibLaTeX remote statement like
@@ -67,8 +67,11 @@ You can add options to the export as URL parameters:
       ],
       "translations": {
         "Browser_unsupported_feature": "This browser doesn't support this feature",
+        "Close_graph": "Close enlarged graph",
         "Copied_to_clipboard": "Text copied to clipboard!",
         "Copy_to_clipboard": "Copy text to clipboard",
+        "Enlarge_graph": "Enlarge graph",
+        "History_cleared": "History cleared",
         "Link_copied_to_clipboard": "Link copied to clipboard!",
         "N_results_found": "{1} results found for \"{0}\"",
         "No_results_found": "No results found for \"{0}\"",
@@ -98,99 +101,7 @@ You can add options to the export as URL parameters:
 
   </head>
   <body class="mobile-support html" data-origin="/zotero-better-bibtex/exporting/pull/index.html">
-    <div id="R-body" class="default-animation">
-      <div id="R-body-overlay"></div>
-      <nav id="R-topbar" class="default-animation">
-        <div class="topbar-wrapper default-animation">
-          <div class="topbar-sidebar-divider default-animation"></div>
-          <div class="topbar-area topbar-area-start" data-area="start">
-            <div class="topbar-button topbar-button-sidebar default-animation" data-content-empty="disable" data-width-s="show" data-width-m="hide" data-width-l="hide">
-<span class="btn cstyle button link noborder notitle interactive"><button data-button-action="toggle-nav" type="button" title="Menu (CTRL&#43;ALT&#43;n)"><i class="fa-fw fas fa-bars"></i></button></span>
-            </div>
-            <div class="topbar-button topbar-button-toc default-animation" data-content-empty="hide" data-width-s="show" data-width-m="show" data-width-l="show">
-<span class="btn cstyle button link noborder notitle interactive"><button data-button-action="toggle-flyout" type="button" title="Table of Contents (CTRL&#43;ALT&#43;t)"><i class="fa-fw fas fa-table-list"></i></button></span>
-              <div class="topbar-content">
-                <div class="topbar-content-wrapper" tabindex="-1"> 
-                </div>
-              </div>
-            </div>
-          </div>
-          <ol class="topbar-breadcrumbs breadcrumbs highlightable" data-overflow-title="Better BibTeX for Zotero &gt; Exporting &gt; Pull export" itemscope itemtype="http://schema.org/BreadcrumbList"><li itemscope itemtype="https://schema.org/ListItem" itemprop="itemListElement" class=""><a itemprop="item" href="/zotero-better-bibtex/index.html"><span itemprop="name">Better BibTeX for Zotero</span></a><meta itemprop="position" content="1">&nbsp;>&nbsp;</li><li itemscope itemtype="https://schema.org/ListItem" itemprop="itemListElement" class=""><a itemprop="item" href="/zotero-better-bibtex/exporting/index.html"><span itemprop="name">Exporting</span></a><meta itemprop="position" content="2">&nbsp;>&nbsp;</li><li itemscope itemtype="https://schema.org/ListItem" itemprop="itemListElement" class=""><span itemprop="name">Pull export</span><meta itemprop="position" content="3"></li>
-          </ol>
-          <div class="topbar-area topbar-area-end" data-area="end">
-            <div class="topbar-button topbar-button-edit default-animation" data-content-empty="disable" data-width-s="area-more" data-width-m="show" data-width-l="show">
-<span class="btn cstyle button link noborder notitle interactive"><a href="https://github.com/retorquere/zotero-better-bibtex/edit/master/site/content/exporting/pull.md" rel="external" title="Edit (CTRL+ALT+w)"><i class="fa-fw fas fa-pen"></i></a></span>
-            </div>
-            <div class="topbar-button topbar-button-prev default-animation" data-content-empty="disable" data-width-s="show" data-width-m="show" data-width-l="show">
-<span class="btn cstyle button link noborder notitle interactive"><a href="/zotero-better-bibtex/exporting/pandoc/index.html" title="Markdown/Pandoc (🡐)"><i class="fa-fw fas fa-chevron-left"></i></a></span>
-            </div>
-            <div class="topbar-button topbar-button-next default-animation" data-content-empty="disable" data-width-s="show" data-width-m="show" data-width-l="show">
-<span class="btn cstyle button link noborder notitle interactive"><a href="/zotero-better-bibtex/exporting/scripting/index.html" title="Scripting (🡒)"><i class="fa-fw fas fa-chevron-right"></i></a></span>
-            </div>
-            <div class="topbar-button topbar-button-more default-animation" data-content-empty="hide" data-width-s="show" data-width-m="show" data-width-l="show">
-<span class="btn cstyle button link noborder notitle interactive"><button data-button-action="toggle-flyout" type="button" title="More"><i class="fa-fw fas fa-ellipsis-v"></i></button></span>
-              <div class="topbar-content">
-                <div class="topbar-content-wrapper" tabindex="-1">
-                  <div class="topbar-area topbar-area-more" data-area="more">
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </nav>
-      <div id="R-main-overlay"></div>
-      <main id="R-body-inner" class="highlightable exporting" tabindex="-1">
-        <div class="flex-block-wrapper">
-<article class="default">
-  <header class="headline">
-<div class="R-taxonomy taxonomy-tags tags" title="Tags">
-  <i class="fa-fw fas fa-layer-group"></i>
-  <ul>
-    <li><a class="term-link" href="/zotero-better-bibtex/tags/export/index.html">Export</a></li>
-  </ul>
-</div>
-  </header>
-
-<h1 id="pull-export">Pull export</h1>
-
-<p>You can fetch your bibliography on the url http://127.0.0.1:23119/better-bibtex/collection?<code>[collectionID]</code>.<code>[format]</code> <sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>. You can get this URL for a group, library or collection by right-clicking it and selecting <code>Download Better BibTeX export...</code></p>
-<p>You can add options to the export as URL parameters:</p>
-<ul>
-<li><code>&amp;exportNotes=[true|false]</code></li>
-<li><code>&amp;useJournalAbbreviation=[true|false]</code></li>
-</ul>
-<p>You can fetch your library as part of your build, using something like <code>curl</code> from your Makefile, or with a BibLaTeX remote statement like</p>
-<div class="highlight actionbar-wrapper wrap-code" dir="auto"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-tex" data-lang="tex"><span style="display:flex;"><span><span style="color:#66d9ef">\addbibresource</span><span style="color:#a6e22e">[location=remote]</span>{http://127.0.0.1:23119/better-bibtex/collection?/0/8CV58ZVD.biblatex}</span></span></code></pre></div>
-<p><code>format</code> can be:</p>
-<ul>
-<li><code>bib</code> or <code>biblatex</code> for BibLaTeX</li>
-<li><code>bibtex</code> for BibTeX</li>
-<li><code>json</code> or <code>csljson</code> for CSL-JSON</li>
-<li><code>yaml</code>, <code>yml</code> or <code>cslyaml</code> for CSL-JSON in YAML format</li>
-<li><code>jzon</code> for BetterBibTeX JSON debug format</li>
-<li>the value of <code>translatorID</code> taken from the header of any existing Zotero translator to get an export in that translator format</li>
-</ul>
-<p><strong><code>addbibresource</code> from pull export will <em>only</em> work if you are compiling your document on the
-same system your Zotero client with BBT runs on</strong>. <em>Technically</em>
-it can be made to work for pulling from other systems, but it&rsquo;s
-even more arcane to set up than <a href="/zotero-better-bibtex/exporting/auto/#git-support">git support</a>.</p>
-<p>Note that as of Zotero 5.0.71, access to this URL will no longer work from the browser for security reasons; <code>curl</code> and other programmatic access will work.</p>
-<div class="footnotes" role="doc-endnotes">
-<hr>
-<ol>
-<li id="fn:1">
-<p>Replace portnumber <code>23119</code> with <code>24119</code> for Juris-M.&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
-</li>
-</ol>
-</div>
-
-  <footer class="footline">
-  </footer>
-</article>
-        </div>
-      </main>
-    </div>
+    <a id="R-skip-link" href="#R-body-inner">Skip to main content</a>
     <aside id="R-sidebar" class="default-animation">
       <div id="R-header-topbar" class="default-animation"></div>
       <div id="R-header-wrapper" class="default-animation"><a id="logo" href="/zotero-better-bibtex/">
@@ -805,10 +716,10 @@ Better BibTeX for Zotero
 
         <search><form action="/zotero-better-bibtex/search/index.html" method="get">
           <div class="searchbox default-animation">
-            <button class="search-detail" type="submit" title="Search (CTRL+ALT+f)"><i class="fas fa-fw fa-search"></i></button>
+            <button class="search-detail" type="submit" title="Open search page" aria-label="Open search page"><i class="fas fa-fw fa-search" aria-hidden="true"></i></button>
             <label class="a11y-only" for="R-search-by">Search</label>
-            <input data-search-input id="R-search-by" name="search-by" class="search-by" type="search" placeholder="Search...">
-            <button class="search-clear" type="button" data-search-clear="" title="Clear search"><i class="fas fa-fw fa-times" title="Clear search"></i></button>
+            <input data-search-input id="R-search-by" name="search-by" class="search-by" type="search" placeholder="Search..." title="Search (CTRL+ALT+f)">
+            <button class="search-clear" type="button" data-search-clear="" title="Clear search" aria-label="Clear search"><i class="fas fa-fw fa-times" aria-hidden="true" title="Clear search"></i></button>
           </div>
         </form></search>
       </div>
@@ -818,7 +729,7 @@ Better BibTeX for Zotero
         </div>
         <div class="R-sidebarmenu R-shortcutmenu-homelinks default-animation">
           <ul class="space collapsible-menu">
-            <li class="" data-nav-id="/zotero-better-bibtex/index.html"><a class="padding" href="/zotero-better-bibtex/index.html"><i class="fa-fw fas fa-home"></i> Home</a></li>
+            <li class="" data-nav-id="/zotero-better-bibtex/index.html"><a class="padding" href="/zotero-better-bibtex/index.html"><i class="fa-fw fas fa-home" aria-hidden="true"></i> Home</a></li>
           </ul>
         </div>
         <div class="R-menu-divider default-animation">
@@ -832,7 +743,7 @@ Better BibTeX for Zotero
           <hr class="padding default-animation">
         </div>
       </div>
-      <div id="R-content-wrapper" class="highlightable" tabindex="-1">
+      <nav id="R-content-wrapper" class="highlightable" aria-label="Menu" tabindex="-1">
         <div id="R-scrollbar" aria-hidden="true"><div id="R-scrollbar-thumb"></div></div>
         <div class="R-sidebarmenu R-shortcutmenu-main default-animation">
           <ul class="enlarge morespace collapsible-menu">
@@ -841,7 +752,7 @@ Better BibTeX for Zotero
             <li class="parent " data-nav-id="/zotero-better-bibtex/exporting/index.html"><a class="padding default-animation" href="/zotero-better-bibtex/exporting/index.html">Exporting</a><ul id="R-subsections-1d584ca98d27013df6242b6c17171d5e" class="collapsible-menu">
             <li class="" data-nav-id="/zotero-better-bibtex/exporting/auto/index.html"><a class="padding" href="/zotero-better-bibtex/exporting/auto/index.html">Automatic export</a></li>
             <li class="" data-nav-id="/zotero-better-bibtex/exporting/pandoc/index.html"><a class="padding" href="/zotero-better-bibtex/exporting/pandoc/index.html">Markdown/Pandoc</a></li>
-            <li class="active " data-nav-id="/zotero-better-bibtex/exporting/pull/index.html"><a class="padding" href="/zotero-better-bibtex/exporting/pull/index.html">Pull export</a></li>
+            <li class="active " data-nav-id="/zotero-better-bibtex/exporting/pull/index.html"><a class="padding" href="/zotero-better-bibtex/exporting/pull/index.html" aria-current="page">Pull export</a></li>
             <li class="" data-nav-id="/zotero-better-bibtex/exporting/scripting/index.html"><a class="padding" href="/zotero-better-bibtex/exporting/scripting/index.html">Scripting</a></li>
             <li class="" data-nav-id="/zotero-better-bibtex/exporting/extra-fields/index.html"><a class="padding" href="/zotero-better-bibtex/exporting/extra-fields/index.html">Extra fields</a></li>
             <li class="" data-nav-id="/zotero-better-bibtex/exporting/unicode/index.html"><a class="padding" href="/zotero-better-bibtex/exporting/unicode/index.html">Unicode</a></li>
@@ -984,8 +895,105 @@ Better BibTeX for Zotero
 
 <script async defer src="https://buttons.github.io/buttons.js"></script>
 </div>
-      </div>
+      </nav>
     </aside>
+    <div id="R-body" class="default-animation">
+      <div id="R-body-overlay"></div>
+      <header id="R-topbar" class="default-animation">
+        <div class="topbar-wrapper default-animation">
+          <div class="topbar-sidebar-divider default-animation"></div>
+          <div class="topbar-area topbar-area-start" data-area="start">
+            <div class="topbar-button topbar-button-sidebar default-animation" data-content-empty="disable" data-width-s="show" data-width-m="hide" data-width-l="hide">
+<span class="btn cstyle button link noborder notitle interactive"><button data-button-action="toggle-nav" type="button" title="Menu (CTRL&#43;ALT&#43;n)" aria-label="Menu (CTRL&#43;ALT&#43;n)" aria-expanded="false"><i class="fa-fw fas fa-bars" aria-hidden="true"></i></button></span>
+            </div>
+            <div class="topbar-button topbar-button-toc default-animation" data-content-empty="hide" data-width-s="show" data-width-m="show" data-width-l="show">
+<span class="btn cstyle button link noborder notitle interactive"><button data-button-action="toggle-flyout" type="button" title="Table of Contents (CTRL&#43;ALT&#43;t)" aria-label="Table of Contents (CTRL&#43;ALT&#43;t)" aria-expanded="false"><i class="fa-fw fas fa-table-list" aria-hidden="true"></i></button></span>
+              <div class="topbar-content">
+                <div class="topbar-content-wrapper" tabindex="-1"> 
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="topbar-area topbar-area-middle" data-area="middle">
+            <nav class="topbar-breadcrumbs breadcrumbs highlightable" aria-label="Breadcrumbs" data-overflow-title="Better BibTeX for Zotero &gt; Exporting &gt; Pull export">
+              <ol itemscope itemtype="http://schema.org/BreadcrumbList"><li itemscope itemtype="https://schema.org/ListItem" itemprop="itemListElement" class=""><a itemprop="item" href="/zotero-better-bibtex/index.html"><span itemprop="name">Better BibTeX for Zotero</span></a><meta itemprop="position" content="1">&nbsp;>&nbsp;</li><li itemscope itemtype="https://schema.org/ListItem" itemprop="itemListElement" class=""><a itemprop="item" href="/zotero-better-bibtex/exporting/index.html"><span itemprop="name">Exporting</span></a><meta itemprop="position" content="2">&nbsp;>&nbsp;</li><li itemscope itemtype="https://schema.org/ListItem" itemprop="itemListElement" class="" aria-current="page"><span itemprop="name">Pull export</span><meta itemprop="position" content="3"></li>
+              </ol>
+            </nav>
+          </div>
+          <div class="topbar-area topbar-area-end" data-area="end">
+            <div class="topbar-button topbar-button-edit default-animation" data-content-empty="disable" data-width-s="area-more" data-width-m="show" data-width-l="show">
+<span class="btn cstyle button link noborder notitle interactive"><a aria-label="Edit (CTRL+ALT+w)" href="https://github.com/retorquere/zotero-better-bibtex/edit/master/site/content/exporting/pull.md" rel="external" title="Edit (CTRL+ALT+w)"><i class="fa-fw fas fa-pen" aria-hidden="true"></i></a></span>
+            </div>
+            <div class="topbar-button topbar-button-prev default-animation" data-content-empty="disable" data-width-s="show" data-width-m="show" data-width-l="show">
+<span class="btn cstyle button link noborder notitle interactive"><a aria-label="Markdown/Pandoc (🡐)" href="/zotero-better-bibtex/exporting/pandoc/index.html" title="Markdown/Pandoc (🡐)"><i class="fa-fw fas fa-chevron-left" aria-hidden="true"></i></a></span>
+            </div>
+            <div class="topbar-button topbar-button-next default-animation" data-content-empty="disable" data-width-s="show" data-width-m="show" data-width-l="show">
+<span class="btn cstyle button link noborder notitle interactive"><a aria-label="Scripting (🡒)" href="/zotero-better-bibtex/exporting/scripting/index.html" title="Scripting (🡒)"><i class="fa-fw fas fa-chevron-right" aria-hidden="true"></i></a></span>
+            </div>
+            <div class="topbar-button topbar-button-more default-animation" data-content-empty="hide" data-width-s="show" data-width-m="show" data-width-l="show">
+<span class="btn cstyle button link noborder notitle interactive"><button data-button-action="toggle-flyout" type="button" title="More" aria-label="More" aria-expanded="false"><i class="fa-fw fas fa-ellipsis-v" aria-hidden="true"></i></button></span>
+              <div class="topbar-content">
+                <div class="topbar-content-wrapper" tabindex="-1">
+                  <div class="topbar-area topbar-area-more" data-area="more">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </header>
+      <div id="R-main-overlay"></div>
+      <main id="R-body-inner" class="highlightable exporting" tabindex="-1">
+        <div class="flex-block-wrapper">
+<article class="default">
+  <header class="headline">
+<div class="R-taxonomy taxonomy-tags tags" title="Tags">
+  <i class="fa-fw fas fa-layer-group" aria-hidden="true"></i>
+  <ul>
+    <li><a class="term-link" href="/zotero-better-bibtex/tags/export/index.html">Export</a></li>
+  </ul>
+</div>
+  </header>
+
+<h1 id="pull-export">Pull export</h1>
+
+<p>You can fetch your bibliography on the url http://127.0.0.1:23119/better-bibtex/collection?<code>[collectionID]</code>.<code>[format]</code> <sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>. You can get this URL for a group, library or collection by right-clicking it and selecting <code>Download Better BibTeX export...</code></p>
+<p>You can add options to the export as URL parameters:</p>
+<ul>
+<li><code>&amp;exportNotes=[true|false]</code></li>
+<li><code>&amp;useJournalAbbreviation=[true|false]</code></li>
+</ul>
+<p>You can fetch your library as part of your build, using something like <code>curl</code> from your Makefile, or with a BibLaTeX remote statement like</p>
+<div class="highlight actionbar-wrapper wrap-code" dir="auto"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-tex" data-lang="tex"><span style="display:flex;"><span><span style="color:#66d9ef">\addbibresource</span><span style="color:#a6e22e">[location=remote]</span>{http://127.0.0.1:23119/better-bibtex/collection?/0/8CV58ZVD.biblatex}</span></span></code></pre></div>
+<p><code>format</code> can be:</p>
+<ul>
+<li><code>bib</code> or <code>biblatex</code> for BibLaTeX</li>
+<li><code>bibtex</code> for BibTeX</li>
+<li><code>json</code> or <code>csljson</code> for CSL-JSON</li>
+<li><code>yaml</code>, <code>yml</code> or <code>cslyaml</code> for CSL-JSON in YAML format</li>
+<li><code>jzon</code> for BetterBibTeX JSON debug format</li>
+<li>the value of <code>translatorID</code> taken from the header of any existing Zotero translator to get an export in that translator format</li>
+</ul>
+<p><strong><code>addbibresource</code> from pull export will <em>only</em> work if you are compiling your document on the
+same system your Zotero client with BBT runs on</strong>. <em>Technically</em>
+it can be made to work for pulling from other systems, but it&rsquo;s
+even more arcane to set up than <a href="/zotero-better-bibtex/exporting/auto/#git-support">git support</a>.</p>
+<p>Note that as of Zotero 5.0.71, access to this URL will no longer work from the browser for security reasons; <code>curl</code> and other programmatic access will work.</p>
+<div class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1">
+<p>Replace portnumber <code>23119</code> with <code>24119</code> for Juris-M.&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</div>
+
+  <footer class="footline">
+  </footer>
+</article>
+        </div>
+      </main>
+    </div>
     <script src="/zotero-better-bibtex/js/theme.min.js" defer></script>
     <div id="toast-container" role="status" aria-live="polite" aria-atomic="false"></div>
   </body>

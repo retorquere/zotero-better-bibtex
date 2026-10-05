@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="height=device-height, width=device-width, initial-scale=1.0, minimum-scale=1.0">
     <meta name="generator" content="Hugo 0.167.0">
-    <meta name="generator" content="Relearn 9.1.0+f0096ea8c391a3404fe56c49eff0898dc5c9ae62">
+    <meta name="generator" content="Relearn 9.1.0+54de122b1167a16811216ea5afb532e2f06d9fd2">
     <meta name="description" content="v9.0.21 Hidden preference instructions updated Cloned items have their citation keys cleared automatically to prevent duplicates CAYW works again Date parsing logic was enhanced to support better timezone offset detection and date interval handling Collection path resolution support fixed for library and group IDs in absolute paths Pattern formatting for author initials was updated to correctly handle cases where full names are requested instead of just substrings v9.0.10 Citation key at the top v9.0.8 preference autoPinDelay has been renamed to fillKeyAfter preference autoPinOverwrite has been renamed to resetKeyOnChange native Zotero citation key field is now hidden and replaced with a field at the top v9.0.7 localization cleanup updated language support in the language citekey formatting function and langid output improved test reliability by sending only SIGTERM auto-updates are back in the context menu for libraries/groups v9.0.6 fixed raw encoding for tex.X fields auto-export loading fixed removed obsolete clean_pane_persist v9.0.0 removed lokijs which gave unpredictable errors when storing auto-exports new major (should have been done earlier) as BBT is now strictly Zotero 8&#43; v8.0.40 removed pause-auto-export-during sync. Sync will activate auto-exports and the auto-export debounce will handle the rest Switched key migration to use Sqlite.sys.mjs instead of Zotero.DBConnection. Refactored lokijs object updates re-use objects retrieved from find (spread does not always update) v8.0.38 Context-aware menu visibility: Menu items for citation keys (pin, fill, refresh, copy) now hide automatically when no valid, editable items are selected. Manual “Pin” command: pinning is back for people who have autoPinOverwrite on Citation key pattern update: a new key formula function pinned was added, that’s always prepended Fix: BBT would stall zotero shutdown new translations v8.0.25 fix: read-only groups would error out key migration fix: enable re-migration after start v8.0.22 Re-migration option for citation keys Skip non-editable items Show number of conflicts before migration Migration UI wording improvements v8.0.20 dynamic citation keys are back, option in migration new the pinned function for citation key patterns, which retrieves a pinned citation key from the extra field. autoPinDelay defaults to on (2 seconds) migration uses direct DB read rather than attach/detach, windows too clingy and rename failed v8.0.18 Migration improvements:">
     <meta name="author" content="">
     <meta name="twitter:card" content="summary">
@@ -53,8 +53,11 @@
       ],
       "translations": {
         "Browser_unsupported_feature": "This browser doesn't support this feature",
+        "Close_graph": "Close enlarged graph",
         "Copied_to_clipboard": "Text copied to clipboard!",
         "Copy_to_clipboard": "Copy text to clipboard",
+        "Enlarge_graph": "Enlarge graph",
+        "History_cleared": "History cleared",
         "Link_copied_to_clipboard": "Link copied to clipboard!",
         "N_results_found": "{1} results found for \"{0}\"",
         "No_results_found": "No results found for \"{0}\"",
@@ -84,269 +87,7 @@
 
   </head>
   <body class="mobile-support html" data-origin="/zotero-better-bibtex/changelog/index.html">
-    <div id="R-body" class="default-animation">
-      <div id="R-body-overlay"></div>
-      <nav id="R-topbar" class="default-animation">
-        <div class="topbar-wrapper default-animation">
-          <div class="topbar-sidebar-divider default-animation"></div>
-          <div class="topbar-area topbar-area-start" data-area="start">
-            <div class="topbar-button topbar-button-sidebar default-animation" data-content-empty="disable" data-width-s="show" data-width-m="hide" data-width-l="hide">
-<span class="btn cstyle button link noborder notitle interactive"><button data-button-action="toggle-nav" type="button" title="Menu (CTRL&#43;ALT&#43;n)"><i class="fa-fw fas fa-bars"></i></button></span>
-            </div>
-            <div class="topbar-button topbar-button-toc default-animation" data-content-empty="hide" data-width-s="show" data-width-m="show" data-width-l="show">
-<span class="btn cstyle button link noborder notitle interactive"><button data-button-action="toggle-flyout" type="button" title="Table of Contents (CTRL&#43;ALT&#43;t)"><i class="fa-fw fas fa-table-list"></i></button></span>
-              <div class="topbar-content">
-                <div class="topbar-content-wrapper" tabindex="-1">
-<nav class="TableOfContents">
-  <ul>
-    <li><a href="#v9021">v9.0.21</a></li>
-    <li><a href="#v9010">v9.0.10</a></li>
-    <li><a href="#v908">v9.0.8</a></li>
-    <li><a href="#v907">v9.0.7</a></li>
-    <li><a href="#v906">v9.0.6</a></li>
-    <li><a href="#v900">v9.0.0</a></li>
-    <li><a href="#v8040">v8.0.40</a></li>
-    <li><a href="#v8038">v8.0.38</a></li>
-    <li><a href="#v8025">v8.0.25</a></li>
-    <li><a href="#v8022">v8.0.22</a></li>
-    <li><a href="#v8020">v8.0.20</a></li>
-    <li><a href="#v8018">v8.0.18</a></li>
-    <li><a href="#v8017">v8.0.17</a></li>
-    <li><a href="#v8016">v8.0.16</a></li>
-    <li><a href="#v8015">v8.0.15</a></li>
-    <li><a href="#v8014">v8.0.14</a></li>
-    <li><a href="#v8013">v8.0.13</a></li>
-    <li><a href="#v8012">v8.0.12</a></li>
-    <li><a href="#v8011">v8.0.11</a></li>
-    <li><a href="#v8010">v8.0.10</a></li>
-    <li><a href="#v809">v8.0.9</a></li>
-    <li><a href="#v808">v8.0.8</a></li>
-    <li><a href="#v807">v8.0.7</a></li>
-    <li><a href="#v806">v8.0.6</a></li>
-    <li><a href="#v805">v8.0.5</a></li>
-    <li><a href="#v804">v8.0.4</a></li>
-    <li><a href="#v802">v8.0.2</a></li>
-    <li><a href="#v801">v8.0.1</a></li>
-    <li><a href="#v800-major-release">v8.0.0 (Major Release)</a>
-      <ul>
-        <li><a href="#changes">Changes</a></li>
-      </ul>
-    </li>
-  </ul>
-</nav>
-                </div>
-              </div>
-            </div>
-          </div>
-          <ol class="topbar-breadcrumbs breadcrumbs highlightable" data-overflow-title="Better BibTeX for Zotero &gt; Changelog" itemscope itemtype="http://schema.org/BreadcrumbList"><li itemscope itemtype="https://schema.org/ListItem" itemprop="itemListElement" class=""><a itemprop="item" href="/zotero-better-bibtex/index.html"><span itemprop="name">Better BibTeX for Zotero</span></a><meta itemprop="position" content="1">&nbsp;>&nbsp;</li><li itemscope itemtype="https://schema.org/ListItem" itemprop="itemListElement" class=""><span itemprop="name">Changelog</span><meta itemprop="position" content="2"></li>
-          </ol>
-          <div class="topbar-area topbar-area-end" data-area="end">
-            <div class="topbar-button topbar-button-edit default-animation" data-content-empty="disable" data-width-s="area-more" data-width-m="show" data-width-l="show">
-<span class="btn cstyle button link noborder notitle interactive"><a href="https://github.com/retorquere/zotero-better-bibtex/edit/master/site/content/changelog.md" rel="external" title="Edit (CTRL+ALT+w)"><i class="fa-fw fas fa-pen"></i></a></span>
-            </div>
-            <div class="topbar-button topbar-button-prev default-animation" data-content-empty="disable" data-width-s="show" data-width-m="show" data-width-l="show">
-<span class="btn cstyle button link noborder notitle interactive"><a href="/zotero-better-bibtex/support/tests/index.html" title="Running the BBT test suite (🡐)"><i class="fa-fw fas fa-chevron-left"></i></a></span>
-            </div>
-            <div class="topbar-button topbar-button-next default-animation" data-content-empty="disable" data-width-s="show" data-width-m="show" data-width-l="show">
-<span class="btn cstyle button link noborder notitle interactive"><a href="/zotero-better-bibtex/sponsoring/index.html" title="Sponsoring BBT (🡒)"><i class="fa-fw fas fa-chevron-right"></i></a></span>
-            </div>
-            <div class="topbar-button topbar-button-more default-animation" data-content-empty="hide" data-width-s="show" data-width-m="show" data-width-l="show">
-<span class="btn cstyle button link noborder notitle interactive"><button data-button-action="toggle-flyout" type="button" title="More"><i class="fa-fw fas fa-ellipsis-v"></i></button></span>
-              <div class="topbar-content">
-                <div class="topbar-content-wrapper" tabindex="-1">
-                  <div class="topbar-area topbar-area-more" data-area="more">
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </nav>
-      <div id="R-main-overlay"></div>
-      <main id="R-body-inner" class="highlightable page" tabindex="-1">
-        <div class="flex-block-wrapper">
-<article class="default">
-  <header class="headline">
-  </header>
-
-<h1 id="changelog">Changelog</h1>
-
-<!-- WARNING: GENERATED FROM https://github.com/retorquere/zotero-better-bibtex/blob/master/CHANGELOG.md. EDITS WILL BE OVERWRITTEN -->
-<h2 id="v9021">v9.0.21<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h2>
-<ul>
-<li>Hidden preference instructions updated</li>
-<li>Cloned items have their citation keys cleared automatically to prevent duplicates</li>
-<li>CAYW works again</li>
-<li>Date parsing logic was enhanced to support better timezone offset detection and date interval handling</li>
-<li>Collection path resolution support fixed for library and group IDs in absolute paths</li>
-<li>Pattern formatting for author initials was updated to correctly handle cases where full names are requested instead of just substrings</li>
-</ul>
-<h2 id="v9010">v9.0.10<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h2>
-<ul>
-<li>Citation key at the top</li>
-</ul>
-<h2 id="v908">v9.0.8<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h2>
-<ul>
-<li>preference autoPinDelay has been renamed to fillKeyAfter</li>
-<li>preference autoPinOverwrite has been renamed to resetKeyOnChange</li>
-<li>native Zotero citation key field is now hidden and replaced with a field at the top</li>
-</ul>
-<h2 id="v907">v9.0.7<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h2>
-<ul>
-<li>localization cleanup</li>
-<li>updated language support in the <code>language</code> citekey formatting function and <code>langid</code> output</li>
-<li>improved test reliability by sending only SIGTERM</li>
-<li>auto-updates are back in the context menu for libraries/groups</li>
-</ul>
-<h2 id="v906">v9.0.6<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h2>
-<ul>
-<li>fixed raw encoding for tex.X fields</li>
-<li>auto-export loading fixed</li>
-<li>removed obsolete clean_pane_persist</li>
-</ul>
-<h2 id="v900">v9.0.0<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h2>
-<ul>
-<li>removed lokijs which gave unpredictable errors when storing auto-exports</li>
-<li>new major (should have been done earlier) as BBT is now strictly Zotero 8+</li>
-</ul>
-<h2 id="v8040">v8.0.40<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h2>
-<ul>
-<li>removed pause-auto-export-during sync. Sync will activate auto-exports and the auto-export debounce will handle the rest</li>
-<li>Switched key migration to use Sqlite.sys.mjs instead of Zotero.DBConnection.</li>
-<li>Refactored lokijs object updates re-use objects retrieved from find (spread does not always update)</li>
-</ul>
-<h2 id="v8038">v8.0.38<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h2>
-<ul>
-<li>Context-aware menu visibility: Menu items for citation keys (pin, fill, refresh, copy) now hide automatically when no valid, editable items are selected.</li>
-<li>Manual &ldquo;Pin&rdquo; command: pinning is back for people who have autoPinOverwrite on</li>
-<li>Citation key pattern update: a new key formula function <code>pinned</code> was added, that&rsquo;s always prepended</li>
-<li>Fix: BBT would stall zotero shutdown</li>
-<li>new translations</li>
-</ul>
-<h2 id="v8025">v8.0.25<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h2>
-<ul>
-<li>fix: read-only groups would error out key migration</li>
-<li>fix: enable re-migration after start</li>
-</ul>
-<h2 id="v8022">v8.0.22<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h2>
-<ul>
-<li>Re-migration option for citation keys</li>
-<li>Skip non-editable items</li>
-<li>Show number of conflicts before migration</li>
-<li>Migration UI wording improvements</li>
-</ul>
-<h2 id="v8020">v8.0.20<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h2>
-<ul>
-<li>dynamic citation keys are back, option in migration</li>
-<li>new the <code>pinned</code> function for citation key patterns, which retrieves a pinned citation key from the <code>extra</code> field.</li>
-<li>autoPinDelay defaults to on (2 seconds)</li>
-<li>migration uses direct DB read rather than attach/detach, windows too clingy and rename failed</li>
-</ul>
-<h2 id="v8018">v8.0.18<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h2>
-<p>Migration improvements:</p>
-<ul>
-<li>prevent accidental locking of BBT database during migration</li>
-<li>Performance: adds a skipNotifier flag when saving migrated items, avoiding triggering of auto-exports</li>
-</ul>
-<h2 id="v8017">v8.0.17<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h2>
-<ul>
-<li>Updated terminology changing &ldquo;pin&rdquo; to &ldquo;fill&rdquo; for clarity</li>
-<li>Reliable renaming of the legacy database after a successful migration.</li>
-<li>Auto-export storage fixed (would appear to have been deleted after a restart)</li>
-</ul>
-<h2 id="v8016">v8.0.16<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h2>
-<ul>
-<li>Citekey migration skips the update of the &lsquo;Date Modified&rsquo; field.</li>
-<li>Dependencies, including the zotero-plugin-toolkit and zotero-types, have been updated.</li>
-</ul>
-<h2 id="v8015">v8.0.15<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h2>
-<ul>
-<li>A notification flash has been added to inform users when citation key migration has started.</li>
-</ul>
-<h2 id="v8014">v8.0.14<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h2>
-<ul>
-<li>Internal logic for loading items during migration has been improved.</li>
-<li>Key confict handling removed</li>
-</ul>
-<h2 id="v8013">v8.0.13<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h2>
-<ul>
-<li>Compatibility for Zotero 7.0.32</li>
-</ul>
-<h2 id="v8012">v8.0.12<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h2>
-<ul>
-<li>The minimum required Zotero version was bumped to 7.0.32.</li>
-<li>Plugin testing was expanded to include Zotero 7 specifically.</li>
-</ul>
-<h2 id="v8011">v8.0.11<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h2>
-<ul>
-<li>Dependency versions for libraries like ajv and zotero-plugin were clamped to ensure stability.</li>
-</ul>
-<h2 id="v8010">v8.0.10<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h2>
-<ul>
-<li>Enforcement of the minimum Zotero version 7.0.32 requirement was finalized.</li>
-</ul>
-<h2 id="v809">v8.0.9<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h2>
-<ul>
-<li>UI phrasing was updated in the migration tool to offer a clearer postponement option (&ldquo;Do not migrate; ask me again at next start&rdquo;).</li>
-</ul>
-<h2 id="v808">v8.0.8<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h2>
-<ul>
-<li>A direct link to migration discussions was added to the migration tool to assist users with the transition.</li>
-</ul>
-<h2 id="v807">v8.0.7<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h2>
-<ul>
-<li>Compatibility status was updated: Zotero 8 and 9 beta are fully supported, while Zotero 7.0.32 is now considered legacy and will not receive ongoing support.</li>
-<li>The migration dialog now includes an explanation that Better BibTeX citation keys are unavailable until the migration to the native field is complete.</li>
-</ul>
-<h2 id="v806">v8.0.6<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h2>
-<ul>
-<li>The migration dialog text was further refined for better user understanding.</li>
-</ul>
-<h2 id="v805">v8.0.5<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h2>
-<ul>
-<li>Additional help text was added to the migration UI for users who are unclear about their choices.</li>
-</ul>
-<h2 id="v804">v8.0.4<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h2>
-<ul>
-<li>The migration tool now reports the total count of native Zotero citation keys already present.</li>
-<li>Migration options were clarified to distinguish between moving all keys versus only pinned keys.</li>
-</ul>
-<h2 id="v802">v8.0.2<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h2>
-<ul>
-<li>The plugin manifest was updated to reflect the new supported Zotero version ranges.</li>
-</ul>
-<h2 id="v801">v8.0.1<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h2>
-<ul>
-<li>Handling for legacy imports and configuration modules was improved for better reliability.</li>
-</ul>
-<h2 id="v800-major-release">v8.0.0 (Major Release)<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h2>
-<p><strong>With the advent of Zotero 8, items have a Zotero-native citation key field. This has replaced the BBT citation key field.</strong></p>
-<p><strong>This has caused a few somewhat disruptive changes:</strong></p>
-<ul>
-<li>The citation key no longer sits at the top of the item pane. It now sits somewhere in the middle and you may have to scroll to see it. This placement is not under my control</li>
-<li>Zotero will have moved all pinned keys out of the <code>extra</code> field into the native field</li>
-<li>The concept of pinning keys is gone; keys are <em>always</em> pinned now. Zotero doesn&rsquo;t have a place I can store whether a key is pinned or not.</li>
-<li>The Zotero-native citation keys are stored in another place than the BBT citation keys. If you have no Zotero-native citation keys yet, BBT will silently migrate them to there. If you do have Zotero-native citation keys, and a migration would overwrite them, you will be offered a windows with the choice on how to migrate your citation keys from the BBT storage to the Zotero storage.</li>
-<li>I have enabled auto-pin (what really is auto-fill now) even you had it turned off. You can still turn it back off if you don&rsquo;t want this.</li>
-</ul>
-<p>Upside to all of this is that keys will sync.</p>
-<h3 id="changes">Changes<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h3>
-<ul>
-<li>Zotero 8 Integration: Items now use a native Zotero citation key field, which replaces the legacy BBT citation key field.</li>
-<li>Key Pinning Changes: The concept of pinning is technically gone; because Zotero lacks a specific &ldquo;pinned&rdquo; toggle, keys are now always pinned.</li>
-<li>Feature Renaming: The &ldquo;auto-pin&rdquo; feature has been effectively renamed to &ldquo;auto-fill&rdquo; to align with native Zotero behavior.</li>
-<li>Bug Fixes: Resolved an issue where the originalDate field was not working with citation keys (#3392) and fixed the retrieval of shortjournal abbreviations (#3382).</li>
-<li>Database Migration: The internal database for tracking keys and exports has been migrated to LokiJS.</li>
-<li>Internationalization: Integrated new and updated translations for French, German, Italian, Chinese Simplified, and Brazilian Portuguese.</li>
-<li>Cleanup: The unused Alchemy.js graph editor was removed from the documentation.</li>
-</ul>
-
-  <footer class="footline">
-  </footer>
-</article>
-        </div>
-      </main>
-    </div>
+    <a id="R-skip-link" href="#R-body-inner">Skip to main content</a>
     <aside id="R-sidebar" class="default-animation">
       <div id="R-header-topbar" class="default-animation"></div>
       <div id="R-header-wrapper" class="default-animation"><a id="logo" href="/zotero-better-bibtex/">
@@ -961,10 +702,10 @@ Better BibTeX for Zotero
 
         <search><form action="/zotero-better-bibtex/search/index.html" method="get">
           <div class="searchbox default-animation">
-            <button class="search-detail" type="submit" title="Search (CTRL+ALT+f)"><i class="fas fa-fw fa-search"></i></button>
+            <button class="search-detail" type="submit" title="Open search page" aria-label="Open search page"><i class="fas fa-fw fa-search" aria-hidden="true"></i></button>
             <label class="a11y-only" for="R-search-by">Search</label>
-            <input data-search-input id="R-search-by" name="search-by" class="search-by" type="search" placeholder="Search...">
-            <button class="search-clear" type="button" data-search-clear="" title="Clear search"><i class="fas fa-fw fa-times" title="Clear search"></i></button>
+            <input data-search-input id="R-search-by" name="search-by" class="search-by" type="search" placeholder="Search..." title="Search (CTRL+ALT+f)">
+            <button class="search-clear" type="button" data-search-clear="" title="Clear search" aria-label="Clear search"><i class="fas fa-fw fa-times" aria-hidden="true" title="Clear search"></i></button>
           </div>
         </form></search>
       </div>
@@ -974,7 +715,7 @@ Better BibTeX for Zotero
         </div>
         <div class="R-sidebarmenu R-shortcutmenu-homelinks default-animation">
           <ul class="space collapsible-menu">
-            <li class="" data-nav-id="/zotero-better-bibtex/index.html"><a class="padding" href="/zotero-better-bibtex/index.html"><i class="fa-fw fas fa-home"></i> Home</a></li>
+            <li class="" data-nav-id="/zotero-better-bibtex/index.html"><a class="padding" href="/zotero-better-bibtex/index.html"><i class="fa-fw fas fa-home" aria-hidden="true"></i> Home</a></li>
           </ul>
         </div>
         <div class="R-menu-divider default-animation">
@@ -988,7 +729,7 @@ Better BibTeX for Zotero
           <hr class="padding default-animation">
         </div>
       </div>
-      <div id="R-content-wrapper" class="highlightable" tabindex="-1">
+      <nav id="R-content-wrapper" class="highlightable" aria-label="Menu" tabindex="-1">
         <div id="R-scrollbar" aria-hidden="true"><div id="R-scrollbar-thumb"></div></div>
         <div class="R-sidebarmenu R-shortcutmenu-main default-animation">
           <ul class="enlarge morespace collapsible-menu">
@@ -997,7 +738,7 @@ Better BibTeX for Zotero
             <li class="" data-nav-id="/zotero-better-bibtex/exporting/index.html"><a class="padding default-animation" href="/zotero-better-bibtex/exporting/index.html">Exporting</a><ul id="R-subsections-1d584ca98d27013df6242b6c17171d5e" class="collapsible-menu"></ul></li>
             <li class="" data-nav-id="/zotero-better-bibtex/citing/index.html"><a class="padding default-animation" href="/zotero-better-bibtex/citing/index.html">Citation Keys</a><ul id="R-subsections-21d11d1b73fd6487fde6cbf6c72fa642" class="collapsible-menu"></ul></li>
             <li class="" data-nav-id="/zotero-better-bibtex/support/index.html"><a class="padding default-animation" href="/zotero-better-bibtex/support/index.html">Support</a><ul id="R-subsections-caa68563dfb61577c2c4699e1aa63010" class="collapsible-menu"></ul></li>
-            <li class="active " data-nav-id="/zotero-better-bibtex/changelog/index.html"><a class="padding" href="/zotero-better-bibtex/changelog/index.html">Changelog</a></li>
+            <li class="active " data-nav-id="/zotero-better-bibtex/changelog/index.html"><a class="padding" href="/zotero-better-bibtex/changelog/index.html" aria-current="page">Changelog</a></li>
             <li class="" data-nav-id="/zotero-better-bibtex/sponsoring/index.html"><a class="padding" href="/zotero-better-bibtex/sponsoring/index.html">Sponsoring BBT</a></li>
           </ul>
         </div>
@@ -1132,8 +873,275 @@ Better BibTeX for Zotero
 
 <script async defer src="https://buttons.github.io/buttons.js"></script>
 </div>
-      </div>
+      </nav>
     </aside>
+    <div id="R-body" class="default-animation">
+      <div id="R-body-overlay"></div>
+      <header id="R-topbar" class="default-animation">
+        <div class="topbar-wrapper default-animation">
+          <div class="topbar-sidebar-divider default-animation"></div>
+          <div class="topbar-area topbar-area-start" data-area="start">
+            <div class="topbar-button topbar-button-sidebar default-animation" data-content-empty="disable" data-width-s="show" data-width-m="hide" data-width-l="hide">
+<span class="btn cstyle button link noborder notitle interactive"><button data-button-action="toggle-nav" type="button" title="Menu (CTRL&#43;ALT&#43;n)" aria-label="Menu (CTRL&#43;ALT&#43;n)" aria-expanded="false"><i class="fa-fw fas fa-bars" aria-hidden="true"></i></button></span>
+            </div>
+            <div class="topbar-button topbar-button-toc default-animation" data-content-empty="hide" data-width-s="show" data-width-m="show" data-width-l="show">
+<span class="btn cstyle button link noborder notitle interactive"><button data-button-action="toggle-flyout" type="button" title="Table of Contents (CTRL&#43;ALT&#43;t)" aria-label="Table of Contents (CTRL&#43;ALT&#43;t)" aria-expanded="false"><i class="fa-fw fas fa-table-list" aria-hidden="true"></i></button></span>
+              <div class="topbar-content">
+                <div class="topbar-content-wrapper" tabindex="-1">
+<nav class="TableOfContents" aria-label="Table of Contents">
+  <ul>
+    <li><a href="#v9021">v9.0.21</a></li>
+    <li><a href="#v9010">v9.0.10</a></li>
+    <li><a href="#v908">v9.0.8</a></li>
+    <li><a href="#v907">v9.0.7</a></li>
+    <li><a href="#v906">v9.0.6</a></li>
+    <li><a href="#v900">v9.0.0</a></li>
+    <li><a href="#v8040">v8.0.40</a></li>
+    <li><a href="#v8038">v8.0.38</a></li>
+    <li><a href="#v8025">v8.0.25</a></li>
+    <li><a href="#v8022">v8.0.22</a></li>
+    <li><a href="#v8020">v8.0.20</a></li>
+    <li><a href="#v8018">v8.0.18</a></li>
+    <li><a href="#v8017">v8.0.17</a></li>
+    <li><a href="#v8016">v8.0.16</a></li>
+    <li><a href="#v8015">v8.0.15</a></li>
+    <li><a href="#v8014">v8.0.14</a></li>
+    <li><a href="#v8013">v8.0.13</a></li>
+    <li><a href="#v8012">v8.0.12</a></li>
+    <li><a href="#v8011">v8.0.11</a></li>
+    <li><a href="#v8010">v8.0.10</a></li>
+    <li><a href="#v809">v8.0.9</a></li>
+    <li><a href="#v808">v8.0.8</a></li>
+    <li><a href="#v807">v8.0.7</a></li>
+    <li><a href="#v806">v8.0.6</a></li>
+    <li><a href="#v805">v8.0.5</a></li>
+    <li><a href="#v804">v8.0.4</a></li>
+    <li><a href="#v802">v8.0.2</a></li>
+    <li><a href="#v801">v8.0.1</a></li>
+    <li><a href="#v800-major-release">v8.0.0 (Major Release)</a>
+      <ul>
+        <li><a href="#changes">Changes</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="topbar-area topbar-area-middle" data-area="middle">
+            <nav class="topbar-breadcrumbs breadcrumbs highlightable" aria-label="Breadcrumbs" data-overflow-title="Better BibTeX for Zotero &gt; Changelog">
+              <ol itemscope itemtype="http://schema.org/BreadcrumbList"><li itemscope itemtype="https://schema.org/ListItem" itemprop="itemListElement" class=""><a itemprop="item" href="/zotero-better-bibtex/index.html"><span itemprop="name">Better BibTeX for Zotero</span></a><meta itemprop="position" content="1">&nbsp;>&nbsp;</li><li itemscope itemtype="https://schema.org/ListItem" itemprop="itemListElement" class="" aria-current="page"><span itemprop="name">Changelog</span><meta itemprop="position" content="2"></li>
+              </ol>
+            </nav>
+          </div>
+          <div class="topbar-area topbar-area-end" data-area="end">
+            <div class="topbar-button topbar-button-edit default-animation" data-content-empty="disable" data-width-s="area-more" data-width-m="show" data-width-l="show">
+<span class="btn cstyle button link noborder notitle interactive"><a aria-label="Edit (CTRL+ALT+w)" href="https://github.com/retorquere/zotero-better-bibtex/edit/master/site/content/changelog.md" rel="external" title="Edit (CTRL+ALT+w)"><i class="fa-fw fas fa-pen" aria-hidden="true"></i></a></span>
+            </div>
+            <div class="topbar-button topbar-button-prev default-animation" data-content-empty="disable" data-width-s="show" data-width-m="show" data-width-l="show">
+<span class="btn cstyle button link noborder notitle interactive"><a aria-label="Running the BBT test suite (🡐)" href="/zotero-better-bibtex/support/tests/index.html" title="Running the BBT test suite (🡐)"><i class="fa-fw fas fa-chevron-left" aria-hidden="true"></i></a></span>
+            </div>
+            <div class="topbar-button topbar-button-next default-animation" data-content-empty="disable" data-width-s="show" data-width-m="show" data-width-l="show">
+<span class="btn cstyle button link noborder notitle interactive"><a aria-label="Sponsoring BBT (🡒)" href="/zotero-better-bibtex/sponsoring/index.html" title="Sponsoring BBT (🡒)"><i class="fa-fw fas fa-chevron-right" aria-hidden="true"></i></a></span>
+            </div>
+            <div class="topbar-button topbar-button-more default-animation" data-content-empty="hide" data-width-s="show" data-width-m="show" data-width-l="show">
+<span class="btn cstyle button link noborder notitle interactive"><button data-button-action="toggle-flyout" type="button" title="More" aria-label="More" aria-expanded="false"><i class="fa-fw fas fa-ellipsis-v" aria-hidden="true"></i></button></span>
+              <div class="topbar-content">
+                <div class="topbar-content-wrapper" tabindex="-1">
+                  <div class="topbar-area topbar-area-more" data-area="more">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </header>
+      <div id="R-main-overlay"></div>
+      <main id="R-body-inner" class="highlightable page" tabindex="-1">
+        <div class="flex-block-wrapper">
+<article class="default">
+  <header class="headline">
+  </header>
+
+<h1 id="changelog">Changelog</h1>
+
+<!-- WARNING: GENERATED FROM https://github.com/retorquere/zotero-better-bibtex/blob/master/CHANGELOG.md. EDITS WILL BE OVERWRITTEN -->
+<h2 id="v9021">v9.0.21<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard" aria-label="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg" aria-hidden="true"></i></button></span></h2>
+<ul>
+<li>Hidden preference instructions updated</li>
+<li>Cloned items have their citation keys cleared automatically to prevent duplicates</li>
+<li>CAYW works again</li>
+<li>Date parsing logic was enhanced to support better timezone offset detection and date interval handling</li>
+<li>Collection path resolution support fixed for library and group IDs in absolute paths</li>
+<li>Pattern formatting for author initials was updated to correctly handle cases where full names are requested instead of just substrings</li>
+</ul>
+<h2 id="v9010">v9.0.10<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard" aria-label="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg" aria-hidden="true"></i></button></span></h2>
+<ul>
+<li>Citation key at the top</li>
+</ul>
+<h2 id="v908">v9.0.8<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard" aria-label="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg" aria-hidden="true"></i></button></span></h2>
+<ul>
+<li>preference autoPinDelay has been renamed to fillKeyAfter</li>
+<li>preference autoPinOverwrite has been renamed to resetKeyOnChange</li>
+<li>native Zotero citation key field is now hidden and replaced with a field at the top</li>
+</ul>
+<h2 id="v907">v9.0.7<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard" aria-label="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg" aria-hidden="true"></i></button></span></h2>
+<ul>
+<li>localization cleanup</li>
+<li>updated language support in the <code>language</code> citekey formatting function and <code>langid</code> output</li>
+<li>improved test reliability by sending only SIGTERM</li>
+<li>auto-updates are back in the context menu for libraries/groups</li>
+</ul>
+<h2 id="v906">v9.0.6<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard" aria-label="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg" aria-hidden="true"></i></button></span></h2>
+<ul>
+<li>fixed raw encoding for tex.X fields</li>
+<li>auto-export loading fixed</li>
+<li>removed obsolete clean_pane_persist</li>
+</ul>
+<h2 id="v900">v9.0.0<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard" aria-label="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg" aria-hidden="true"></i></button></span></h2>
+<ul>
+<li>removed lokijs which gave unpredictable errors when storing auto-exports</li>
+<li>new major (should have been done earlier) as BBT is now strictly Zotero 8+</li>
+</ul>
+<h2 id="v8040">v8.0.40<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard" aria-label="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg" aria-hidden="true"></i></button></span></h2>
+<ul>
+<li>removed pause-auto-export-during sync. Sync will activate auto-exports and the auto-export debounce will handle the rest</li>
+<li>Switched key migration to use Sqlite.sys.mjs instead of Zotero.DBConnection.</li>
+<li>Refactored lokijs object updates re-use objects retrieved from find (spread does not always update)</li>
+</ul>
+<h2 id="v8038">v8.0.38<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard" aria-label="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg" aria-hidden="true"></i></button></span></h2>
+<ul>
+<li>Context-aware menu visibility: Menu items for citation keys (pin, fill, refresh, copy) now hide automatically when no valid, editable items are selected.</li>
+<li>Manual &ldquo;Pin&rdquo; command: pinning is back for people who have autoPinOverwrite on</li>
+<li>Citation key pattern update: a new key formula function <code>pinned</code> was added, that&rsquo;s always prepended</li>
+<li>Fix: BBT would stall zotero shutdown</li>
+<li>new translations</li>
+</ul>
+<h2 id="v8025">v8.0.25<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard" aria-label="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg" aria-hidden="true"></i></button></span></h2>
+<ul>
+<li>fix: read-only groups would error out key migration</li>
+<li>fix: enable re-migration after start</li>
+</ul>
+<h2 id="v8022">v8.0.22<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard" aria-label="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg" aria-hidden="true"></i></button></span></h2>
+<ul>
+<li>Re-migration option for citation keys</li>
+<li>Skip non-editable items</li>
+<li>Show number of conflicts before migration</li>
+<li>Migration UI wording improvements</li>
+</ul>
+<h2 id="v8020">v8.0.20<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard" aria-label="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg" aria-hidden="true"></i></button></span></h2>
+<ul>
+<li>dynamic citation keys are back, option in migration</li>
+<li>new the <code>pinned</code> function for citation key patterns, which retrieves a pinned citation key from the <code>extra</code> field.</li>
+<li>autoPinDelay defaults to on (2 seconds)</li>
+<li>migration uses direct DB read rather than attach/detach, windows too clingy and rename failed</li>
+</ul>
+<h2 id="v8018">v8.0.18<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard" aria-label="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg" aria-hidden="true"></i></button></span></h2>
+<p>Migration improvements:</p>
+<ul>
+<li>prevent accidental locking of BBT database during migration</li>
+<li>Performance: adds a skipNotifier flag when saving migrated items, avoiding triggering of auto-exports</li>
+</ul>
+<h2 id="v8017">v8.0.17<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard" aria-label="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg" aria-hidden="true"></i></button></span></h2>
+<ul>
+<li>Updated terminology changing &ldquo;pin&rdquo; to &ldquo;fill&rdquo; for clarity</li>
+<li>Reliable renaming of the legacy database after a successful migration.</li>
+<li>Auto-export storage fixed (would appear to have been deleted after a restart)</li>
+</ul>
+<h2 id="v8016">v8.0.16<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard" aria-label="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg" aria-hidden="true"></i></button></span></h2>
+<ul>
+<li>Citekey migration skips the update of the &lsquo;Date Modified&rsquo; field.</li>
+<li>Dependencies, including the zotero-plugin-toolkit and zotero-types, have been updated.</li>
+</ul>
+<h2 id="v8015">v8.0.15<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard" aria-label="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg" aria-hidden="true"></i></button></span></h2>
+<ul>
+<li>A notification flash has been added to inform users when citation key migration has started.</li>
+</ul>
+<h2 id="v8014">v8.0.14<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard" aria-label="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg" aria-hidden="true"></i></button></span></h2>
+<ul>
+<li>Internal logic for loading items during migration has been improved.</li>
+<li>Key confict handling removed</li>
+</ul>
+<h2 id="v8013">v8.0.13<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard" aria-label="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg" aria-hidden="true"></i></button></span></h2>
+<ul>
+<li>Compatibility for Zotero 7.0.32</li>
+</ul>
+<h2 id="v8012">v8.0.12<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard" aria-label="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg" aria-hidden="true"></i></button></span></h2>
+<ul>
+<li>The minimum required Zotero version was bumped to 7.0.32.</li>
+<li>Plugin testing was expanded to include Zotero 7 specifically.</li>
+</ul>
+<h2 id="v8011">v8.0.11<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard" aria-label="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg" aria-hidden="true"></i></button></span></h2>
+<ul>
+<li>Dependency versions for libraries like ajv and zotero-plugin were clamped to ensure stability.</li>
+</ul>
+<h2 id="v8010">v8.0.10<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard" aria-label="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg" aria-hidden="true"></i></button></span></h2>
+<ul>
+<li>Enforcement of the minimum Zotero version 7.0.32 requirement was finalized.</li>
+</ul>
+<h2 id="v809">v8.0.9<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard" aria-label="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg" aria-hidden="true"></i></button></span></h2>
+<ul>
+<li>UI phrasing was updated in the migration tool to offer a clearer postponement option (&ldquo;Do not migrate; ask me again at next start&rdquo;).</li>
+</ul>
+<h2 id="v808">v8.0.8<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard" aria-label="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg" aria-hidden="true"></i></button></span></h2>
+<ul>
+<li>A direct link to migration discussions was added to the migration tool to assist users with the transition.</li>
+</ul>
+<h2 id="v807">v8.0.7<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard" aria-label="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg" aria-hidden="true"></i></button></span></h2>
+<ul>
+<li>Compatibility status was updated: Zotero 8 and 9 beta are fully supported, while Zotero 7.0.32 is now considered legacy and will not receive ongoing support.</li>
+<li>The migration dialog now includes an explanation that Better BibTeX citation keys are unavailable until the migration to the native field is complete.</li>
+</ul>
+<h2 id="v806">v8.0.6<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard" aria-label="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg" aria-hidden="true"></i></button></span></h2>
+<ul>
+<li>The migration dialog text was further refined for better user understanding.</li>
+</ul>
+<h2 id="v805">v8.0.5<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard" aria-label="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg" aria-hidden="true"></i></button></span></h2>
+<ul>
+<li>Additional help text was added to the migration UI for users who are unclear about their choices.</li>
+</ul>
+<h2 id="v804">v8.0.4<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard" aria-label="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg" aria-hidden="true"></i></button></span></h2>
+<ul>
+<li>The migration tool now reports the total count of native Zotero citation keys already present.</li>
+<li>Migration options were clarified to distinguish between moving all keys versus only pinned keys.</li>
+</ul>
+<h2 id="v802">v8.0.2<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard" aria-label="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg" aria-hidden="true"></i></button></span></h2>
+<ul>
+<li>The plugin manifest was updated to reflect the new supported Zotero version ranges.</li>
+</ul>
+<h2 id="v801">v8.0.1<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard" aria-label="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg" aria-hidden="true"></i></button></span></h2>
+<ul>
+<li>Handling for legacy imports and configuration modules was improved for better reliability.</li>
+</ul>
+<h2 id="v800-major-release">v8.0.0 (Major Release)<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard" aria-label="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg" aria-hidden="true"></i></button></span></h2>
+<p><strong>With the advent of Zotero 8, items have a Zotero-native citation key field. This has replaced the BBT citation key field.</strong></p>
+<p><strong>This has caused a few somewhat disruptive changes:</strong></p>
+<ul>
+<li>The citation key no longer sits at the top of the item pane. It now sits somewhere in the middle and you may have to scroll to see it. This placement is not under my control</li>
+<li>Zotero will have moved all pinned keys out of the <code>extra</code> field into the native field</li>
+<li>The concept of pinning keys is gone; keys are <em>always</em> pinned now. Zotero doesn&rsquo;t have a place I can store whether a key is pinned or not.</li>
+<li>The Zotero-native citation keys are stored in another place than the BBT citation keys. If you have no Zotero-native citation keys yet, BBT will silently migrate them to there. If you do have Zotero-native citation keys, and a migration would overwrite them, you will be offered a windows with the choice on how to migrate your citation keys from the BBT storage to the Zotero storage.</li>
+<li>I have enabled auto-pin (what really is auto-fill now) even you had it turned off. You can still turn it back off if you don&rsquo;t want this.</li>
+</ul>
+<p>Upside to all of this is that keys will sync.</p>
+<h3 id="changes">Changes<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard" aria-label="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg" aria-hidden="true"></i></button></span></h3>
+<ul>
+<li>Zotero 8 Integration: Items now use a native Zotero citation key field, which replaces the legacy BBT citation key field.</li>
+<li>Key Pinning Changes: The concept of pinning is technically gone; because Zotero lacks a specific &ldquo;pinned&rdquo; toggle, keys are now always pinned.</li>
+<li>Feature Renaming: The &ldquo;auto-pin&rdquo; feature has been effectively renamed to &ldquo;auto-fill&rdquo; to align with native Zotero behavior.</li>
+<li>Bug Fixes: Resolved an issue where the originalDate field was not working with citation keys (#3392) and fixed the retrieval of shortjournal abbreviations (#3382).</li>
+<li>Database Migration: The internal database for tracking keys and exports has been migrated to LokiJS.</li>
+<li>Internationalization: Integrated new and updated translations for French, German, Italian, Chinese Simplified, and Brazilian Portuguese.</li>
+<li>Cleanup: The unused Alchemy.js graph editor was removed from the documentation.</li>
+</ul>
+
+  <footer class="footline">
+  </footer>
+</article>
+        </div>
+      </main>
+    </div>
     <script src="/zotero-better-bibtex/js/theme.min.js" defer></script>
     <div id="toast-container" role="status" aria-live="polite" aria-atomic="false"></div>
   </body>

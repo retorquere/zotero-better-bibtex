@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="height=device-height, width=device-width, initial-scale=1.0, minimum-scale=1.0">
     <meta name="generator" content="Hugo 0.167.0">
-    <meta name="generator" content="Relearn 9.1.0+f0096ea8c391a3404fe56c49eff0898dc5c9ae62">
+    <meta name="generator" content="Relearn 9.1.0+54de122b1167a16811216ea5afb532e2f06d9fd2">
     <meta name="description" content="The Better BibTeX Configuration can be found under the regular Zotero preferences pane, tab ‘Better BibTeX’.
 The configuration of Better BibTeX is a little baroque compared to the standard Zotero Bib(La)TeX exporters (which only have hidden preferences). The defaults should just work, but here’s an attempt to describe what they do.
 Making any change here will drop your entire export cache. This is usually not a problem unless you have a really large library, but you can read about what is involved here.">
@@ -61,8 +61,11 @@ Making any change here will drop your entire export cache. This is usually not a
       ],
       "translations": {
         "Browser_unsupported_feature": "This browser doesn't support this feature",
+        "Close_graph": "Close enlarged graph",
         "Copied_to_clipboard": "Text copied to clipboard!",
         "Copy_to_clipboard": "Copy text to clipboard",
+        "Enlarge_graph": "Enlarge graph",
+        "History_cleared": "History cleared",
         "Link_copied_to_clipboard": "Link copied to clipboard!",
         "N_results_found": "{1} results found for \"{0}\"",
         "No_results_found": "No results found for \"{0}\"",
@@ -96,128 +99,7 @@ Making any change here will drop your entire export cache. This is usually not a
 
   </head>
   <body class="mobile-support html" data-origin="/zotero-better-bibtex/preferences/index.html">
-    <div id="R-body" class="default-animation">
-      <div id="R-body-overlay"></div>
-      <nav id="R-topbar" class="default-animation">
-        <div class="topbar-wrapper default-animation">
-          <div class="topbar-sidebar-divider default-animation"></div>
-          <div class="topbar-area topbar-area-start" data-area="start">
-            <div class="topbar-button topbar-button-sidebar default-animation" data-content-empty="disable" data-width-s="show" data-width-m="hide" data-width-l="hide">
-<span class="btn cstyle button link noborder notitle interactive"><button data-button-action="toggle-nav" type="button" title="Menu (CTRL&#43;ALT&#43;n)"><i class="fa-fw fas fa-bars"></i></button></span>
-            </div>
-            <div class="topbar-button topbar-button-toc default-animation" data-content-empty="hide" data-width-s="show" data-width-m="show" data-width-l="show">
-<span class="btn cstyle button link noborder notitle interactive"><button data-button-action="toggle-flyout" type="button" title="Table of Contents (CTRL&#43;ALT&#43;t)"><i class="fa-fw fas fa-table-list"></i></button></span>
-              <div class="topbar-content">
-                <div class="topbar-content-wrapper" tabindex="-1">
-<nav class="TableOfContents">
-  <ul>
-    <li><a href="#active-citation-key-formula">Active citation key formula</a></li>
-    <li><a href="#force-citation-key-to-plain-text">Force citation key to plain text</a></li>
-    <li><a href="#regenerate-citation-key-when-item-changes">Regenerate citation key when item changes</a></li>
-    <li><a href="#automatically-fill-citation-key-after">Automatically fill citation key after</a></li>
-    <li><a href="#keeping-citation-keys-unique">Keeping citation keys unique</a>
-      <ul>
-        <li><a href="#ignore-upperlowercase-when-comparing-for-uniqueness">Ignore upper/lowercase when comparing for uniqueness</a></li>
-        <li><a href="#keep-keys-unique">Keep keys unique</a></li>
-      </ul>
-    </li>
-    <li><a href="#ideographs-in-citekeys">Ideographs in citekeys</a>
-      <ul>
-        <li><a href="#apply-kuroshiro-romajization-in-japanese-namestitles-uses-a-lot-of-memory">Apply kuroshiro romajization in Japanese names/titles. Uses a lot of memory.</a></li>
-        <li><a href="#enable-jiebapinyin-filters-in-citekey-patterns-uses-a-lot-of-memory">Enable &lsquo;jieba&rsquo;/&lsquo;pinyin&rsquo; filters in citekey patterns. Uses a lot of memory.</a></li>
-        <li><a href="#split-all-chinese-like-single-field-names-unless-the-items-language-is-set-to-japanese-and-japanese-support-is-enabled">Split all Chinese-like single-field names, unless the item&rsquo;s language is set to Japanese and Japanese support is enabled.</a></li>
-      </ul>
-    </li>
-    <li><a href="#warn-me-when-changing-citation-keys-in-bulk">Warn me when changing citation keys in bulk</a></li>
-  </ul>
-</nav>
-                </div>
-              </div>
-            </div>
-          </div>
-          <ol class="topbar-breadcrumbs breadcrumbs highlightable" data-overflow-title="Better BibTeX for Zotero &gt; Preferences" itemscope itemtype="http://schema.org/BreadcrumbList"><li itemscope itemtype="https://schema.org/ListItem" itemprop="itemListElement" class=""><a itemprop="item" href="/zotero-better-bibtex/index.html"><span itemprop="name">Better BibTeX for Zotero</span></a><meta itemprop="position" content="1">&nbsp;>&nbsp;</li><li itemscope itemtype="https://schema.org/ListItem" itemprop="itemListElement" class=""><span itemprop="name">Preferences</span><meta itemprop="position" content="2"></li>
-          </ol>
-          <div class="topbar-area topbar-area-end" data-area="end">
-            <div class="topbar-button topbar-button-edit default-animation" data-content-empty="disable" data-width-s="area-more" data-width-m="show" data-width-l="show">
-<span class="btn cstyle button link noborder notitle interactive"><a href="https://github.com/retorquere/zotero-better-bibtex/edit/master/site/content/preferences/_index.md" rel="external" title="Edit (CTRL+ALT+w)"><i class="fa-fw fas fa-pen"></i></a></span>
-            </div>
-            <div class="topbar-button topbar-button-prev default-animation" data-content-empty="disable" data-width-s="show" data-width-m="show" data-width-l="show">
-<span class="btn cstyle button link noborder notitle interactive"><a href="/zotero-better-bibtex/installation/bundled-translators/index.html" title="Bundled translators (🡐)"><i class="fa-fw fas fa-chevron-left"></i></a></span>
-            </div>
-            <div class="topbar-button topbar-button-next default-animation" data-content-empty="disable" data-width-s="show" data-width-m="show" data-width-l="show">
-<span class="btn cstyle button link noborder notitle interactive"><a href="/zotero-better-bibtex/preferences/export/index.html" title="Export (🡒)"><i class="fa-fw fas fa-chevron-right"></i></a></span>
-            </div>
-            <div class="topbar-button topbar-button-more default-animation" data-content-empty="hide" data-width-s="show" data-width-m="show" data-width-l="show">
-<span class="btn cstyle button link noborder notitle interactive"><button data-button-action="toggle-flyout" type="button" title="More"><i class="fa-fw fas fa-ellipsis-v"></i></button></span>
-              <div class="topbar-content">
-                <div class="topbar-content-wrapper" tabindex="-1">
-                  <div class="topbar-area topbar-area-more" data-area="more">
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </nav>
-      <div id="R-main-overlay"></div>
-      <main id="R-body-inner" class="highlightable preferences" tabindex="-1">
-        <div class="flex-block-wrapper">
-<article class="default">
-  <header class="headline">
-  </header>
-
-<h1 id="preferences">Preferences</h1>
-
-<p>The Better BibTeX Configuration can be found under the regular Zotero preferences pane, tab &lsquo;Better BibTeX&rsquo;.</p>
-<p>The configuration of Better BibTeX is a little baroque compared to the standard Zotero Bib(La)TeX exporters (which
-only have hidden preferences). The defaults should just work, but here&rsquo;s an attempt to describe what they do.</p>
-<p><strong>Making any change here will drop your entire export cache.</strong> This is usually not a problem unless you have a
-really large library, but you can read about what is involved <a href="/zotero-better-bibtex/support/performance/">here</a>.</p>
-<h2 id="active-citation-key-formula">Active citation key formula<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h2>
-<p>default: <code> auth.lower + shorttitle(3,3) + year</code></p>
-<p>Set the pattern used to generate citation keys. The format of the keys is documented [here]({{ ref . &ldquo;citing&rdquo; }}).
-Changing this setting <em>does not</em> affect existign keys - for this you would need to select the items and refresh the keys.</p>
-<h2 id="force-citation-key-to-plain-text">Force citation key to plain text<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h2>
-<p>default: <code>yes</code></p>
-<p>If you have deviated from the default citation key format pattern by [specifying your own]({{ ref . &ldquo;citing&rdquo; }}), you may wind up with non-ASCII characters in your citation keys. You can prevent that using the <code>fold</code> function at the appropriate place in your pattern, but checking this checkbox will just apply <code>fold</code> to all your keys.</p>
-<h2 id="regenerate-citation-key-when-item-changes">Regenerate citation key when item changes<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h2>
-<p>default: <code>no</code></p>
-<p>When true, BBT will overwrite existing keys with new keys after an item changes.</p>
-<h2 id="automatically-fill-citation-key-after">Automatically fill citation key after<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h2>
-<p>default: <code>2</code></p>
-<p>When &gt; 0, BBT will automatically fill the citation key for an item that does not currently have one after this many seconds. When 0, keys will only be generated on user request.</p>
-<h2 id="keeping-citation-keys-unique">Keeping citation keys unique<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h2>
-<h3 id="ignore-upperlowercase-when-comparing-for-uniqueness">Ignore upper/lowercase when comparing for uniqueness<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h3>
-<p>default: <code>yes</code></p>
-<p>Treat &ldquo;AugusteComte&rdquo; and &ldquo;augustecomte&rdquo; as the same key when testing for uniqueness</p>
-<h3 id="keep-keys-unique">Keep keys unique<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h3>
-<p>default: <code>within each library</code></p>
-<p>Generated keys automatically get a postfix when they would generate a duplicate. By default, the check for duplicates is restricted to the library/group the item lives in. When set to global, the check will include all libraries/groups, so auto-generated keys would be globally unique. Changing this setting <em>does not</em> affect existign keys - for this you would need to select the items and refresh the keys.</p>
-<p>Options:</p>
-<ul>
-<li>across all libraries</li>
-<li>within each library</li>
-</ul>
-<h2 id="ideographs-in-citekeys">Ideographs in citekeys<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h2>
-<h3 id="apply-kuroshiro-romajization-in-japanese-namestitles-uses-a-lot-of-memory">Apply kuroshiro romajization in Japanese names/titles. Uses a lot of memory.<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h3>
-<p>default: <code>no</code></p>
-<p>When on, BBT will load kuroshiro for romajization in citation keys. This uses a lot of memory, easily 100MB. If you don&rsquo;t have Japanese titles/names, keep this off.</p>
-<h3 id="enable-jiebapinyin-filters-in-citekey-patterns-uses-a-lot-of-memory">Enable &lsquo;jieba&rsquo;/&lsquo;pinyin&rsquo; filters in citekey patterns. Uses a lot of memory.<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h3>
-<p>default: <code>no</code></p>
-<p>When on, BBT will make Chinese word segmentation (jieba) and transliteration (pinyin) available for citation keys generation. This uses a lot of memory, easily 70MB, and adds several seconds to the startup time of BBT. If you don&rsquo;t have Chinese titles/names, keep this off.</p>
-<h3 id="split-all-chinese-like-single-field-names-unless-the-items-language-is-set-to-japanese-and-japanese-support-is-enabled">Split all Chinese-like single-field names, unless the item&rsquo;s language is set to Japanese and Japanese support is enabled.<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h3>
-<p>default: <code>yes</code></p>
-<p>Split all Chinese-like single-field names.</p>
-<h2 id="warn-me-when-changing-citation-keys-in-bulk">Warn me when changing citation keys in bulk<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h2>
-<p>default: <code>10</code></p>
-<p>For those who are curious about what the <code>Clear/Generate BibTeX key</code> right-click options do, this will warn you if you are doing this on more than 10 (default) at the same time, to prevent your curiosity from changing all your citation keys at once.</p>
-
-  <footer class="footline">
-  </footer>
-</article>
-        </div>
-      </main>
-    </div>
+    <a id="R-skip-link" href="#R-body-inner">Skip to main content</a>
     <aside id="R-sidebar" class="default-animation">
       <div id="R-header-topbar" class="default-animation"></div>
       <div id="R-header-wrapper" class="default-animation"><a id="logo" href="/zotero-better-bibtex/">
@@ -832,10 +714,10 @@ Better BibTeX for Zotero
 
         <search><form action="/zotero-better-bibtex/search/index.html" method="get">
           <div class="searchbox default-animation">
-            <button class="search-detail" type="submit" title="Search (CTRL+ALT+f)"><i class="fas fa-fw fa-search"></i></button>
+            <button class="search-detail" type="submit" title="Open search page" aria-label="Open search page"><i class="fas fa-fw fa-search" aria-hidden="true"></i></button>
             <label class="a11y-only" for="R-search-by">Search</label>
-            <input data-search-input id="R-search-by" name="search-by" class="search-by" type="search" placeholder="Search...">
-            <button class="search-clear" type="button" data-search-clear="" title="Clear search"><i class="fas fa-fw fa-times" title="Clear search"></i></button>
+            <input data-search-input id="R-search-by" name="search-by" class="search-by" type="search" placeholder="Search..." title="Search (CTRL+ALT+f)">
+            <button class="search-clear" type="button" data-search-clear="" title="Clear search" aria-label="Clear search"><i class="fas fa-fw fa-times" aria-hidden="true" title="Clear search"></i></button>
           </div>
         </form></search>
       </div>
@@ -845,7 +727,7 @@ Better BibTeX for Zotero
         </div>
         <div class="R-sidebarmenu R-shortcutmenu-homelinks default-animation">
           <ul class="space collapsible-menu">
-            <li class="" data-nav-id="/zotero-better-bibtex/index.html"><a class="padding" href="/zotero-better-bibtex/index.html"><i class="fa-fw fas fa-home"></i> Home</a></li>
+            <li class="" data-nav-id="/zotero-better-bibtex/index.html"><a class="padding" href="/zotero-better-bibtex/index.html"><i class="fa-fw fas fa-home" aria-hidden="true"></i> Home</a></li>
           </ul>
         </div>
         <div class="R-menu-divider default-animation">
@@ -859,12 +741,12 @@ Better BibTeX for Zotero
           <hr class="padding default-animation">
         </div>
       </div>
-      <div id="R-content-wrapper" class="highlightable" tabindex="-1">
+      <nav id="R-content-wrapper" class="highlightable" aria-label="Menu" tabindex="-1">
         <div id="R-scrollbar" aria-hidden="true"><div id="R-scrollbar-thumb"></div></div>
         <div class="R-sidebarmenu R-shortcutmenu-main default-animation">
           <ul class="enlarge morespace collapsible-menu">
             <li class="" data-nav-id="/zotero-better-bibtex/installation/index.html"><a class="padding default-animation" href="/zotero-better-bibtex/installation/index.html">Installation</a><ul id="R-subsections-ff749ccaab053548f690f97bcd6daed0" class="collapsible-menu"></ul></li>
-            <li class="active parent " data-nav-id="/zotero-better-bibtex/preferences/index.html"><a class="padding default-animation" href="/zotero-better-bibtex/preferences/index.html">Preferences</a><ul id="R-subsections-1c1559add52e3008dc9a8d12492194cb" class="collapsible-menu">
+            <li class="active parent " data-nav-id="/zotero-better-bibtex/preferences/index.html"><a class="padding default-animation" href="/zotero-better-bibtex/preferences/index.html" aria-current="page">Preferences</a><ul id="R-subsections-1c1559add52e3008dc9a8d12492194cb" class="collapsible-menu">
             <li class="" data-nav-id="/zotero-better-bibtex/preferences/export/index.html"><a class="padding" href="/zotero-better-bibtex/preferences/export/index.html">Export</a></li>
             <li class="" data-nav-id="/zotero-better-bibtex/preferences/automatic-export/index.html"><a class="padding" href="/zotero-better-bibtex/preferences/automatic-export/index.html">Automatic export</a></li>
             <li class="" data-nav-id="/zotero-better-bibtex/preferences/import/index.html"><a class="padding" href="/zotero-better-bibtex/preferences/import/index.html">Import</a></li>
@@ -1008,8 +890,134 @@ Better BibTeX for Zotero
 
 <script async defer src="https://buttons.github.io/buttons.js"></script>
 </div>
-      </div>
+      </nav>
     </aside>
+    <div id="R-body" class="default-animation">
+      <div id="R-body-overlay"></div>
+      <header id="R-topbar" class="default-animation">
+        <div class="topbar-wrapper default-animation">
+          <div class="topbar-sidebar-divider default-animation"></div>
+          <div class="topbar-area topbar-area-start" data-area="start">
+            <div class="topbar-button topbar-button-sidebar default-animation" data-content-empty="disable" data-width-s="show" data-width-m="hide" data-width-l="hide">
+<span class="btn cstyle button link noborder notitle interactive"><button data-button-action="toggle-nav" type="button" title="Menu (CTRL&#43;ALT&#43;n)" aria-label="Menu (CTRL&#43;ALT&#43;n)" aria-expanded="false"><i class="fa-fw fas fa-bars" aria-hidden="true"></i></button></span>
+            </div>
+            <div class="topbar-button topbar-button-toc default-animation" data-content-empty="hide" data-width-s="show" data-width-m="show" data-width-l="show">
+<span class="btn cstyle button link noborder notitle interactive"><button data-button-action="toggle-flyout" type="button" title="Table of Contents (CTRL&#43;ALT&#43;t)" aria-label="Table of Contents (CTRL&#43;ALT&#43;t)" aria-expanded="false"><i class="fa-fw fas fa-table-list" aria-hidden="true"></i></button></span>
+              <div class="topbar-content">
+                <div class="topbar-content-wrapper" tabindex="-1">
+<nav class="TableOfContents" aria-label="Table of Contents">
+  <ul>
+    <li><a href="#active-citation-key-formula">Active citation key formula</a></li>
+    <li><a href="#force-citation-key-to-plain-text">Force citation key to plain text</a></li>
+    <li><a href="#regenerate-citation-key-when-item-changes">Regenerate citation key when item changes</a></li>
+    <li><a href="#automatically-fill-citation-key-after">Automatically fill citation key after</a></li>
+    <li><a href="#keeping-citation-keys-unique">Keeping citation keys unique</a>
+      <ul>
+        <li><a href="#ignore-upperlowercase-when-comparing-for-uniqueness">Ignore upper/lowercase when comparing for uniqueness</a></li>
+        <li><a href="#keep-keys-unique">Keep keys unique</a></li>
+      </ul>
+    </li>
+    <li><a href="#ideographs-in-citekeys">Ideographs in citekeys</a>
+      <ul>
+        <li><a href="#apply-kuroshiro-romajization-in-japanese-namestitles-uses-a-lot-of-memory">Apply kuroshiro romajization in Japanese names/titles. Uses a lot of memory.</a></li>
+        <li><a href="#enable-jiebapinyin-filters-in-citekey-patterns-uses-a-lot-of-memory">Enable &lsquo;jieba&rsquo;/&lsquo;pinyin&rsquo; filters in citekey patterns. Uses a lot of memory.</a></li>
+        <li><a href="#split-all-chinese-like-single-field-names-unless-the-items-language-is-set-to-japanese-and-japanese-support-is-enabled">Split all Chinese-like single-field names, unless the item&rsquo;s language is set to Japanese and Japanese support is enabled.</a></li>
+      </ul>
+    </li>
+    <li><a href="#warn-me-when-changing-citation-keys-in-bulk">Warn me when changing citation keys in bulk</a></li>
+  </ul>
+</nav>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="topbar-area topbar-area-middle" data-area="middle">
+            <nav class="topbar-breadcrumbs breadcrumbs highlightable" aria-label="Breadcrumbs" data-overflow-title="Better BibTeX for Zotero &gt; Preferences">
+              <ol itemscope itemtype="http://schema.org/BreadcrumbList"><li itemscope itemtype="https://schema.org/ListItem" itemprop="itemListElement" class=""><a itemprop="item" href="/zotero-better-bibtex/index.html"><span itemprop="name">Better BibTeX for Zotero</span></a><meta itemprop="position" content="1">&nbsp;>&nbsp;</li><li itemscope itemtype="https://schema.org/ListItem" itemprop="itemListElement" class="" aria-current="page"><span itemprop="name">Preferences</span><meta itemprop="position" content="2"></li>
+              </ol>
+            </nav>
+          </div>
+          <div class="topbar-area topbar-area-end" data-area="end">
+            <div class="topbar-button topbar-button-edit default-animation" data-content-empty="disable" data-width-s="area-more" data-width-m="show" data-width-l="show">
+<span class="btn cstyle button link noborder notitle interactive"><a aria-label="Edit (CTRL+ALT+w)" href="https://github.com/retorquere/zotero-better-bibtex/edit/master/site/content/preferences/_index.md" rel="external" title="Edit (CTRL+ALT+w)"><i class="fa-fw fas fa-pen" aria-hidden="true"></i></a></span>
+            </div>
+            <div class="topbar-button topbar-button-prev default-animation" data-content-empty="disable" data-width-s="show" data-width-m="show" data-width-l="show">
+<span class="btn cstyle button link noborder notitle interactive"><a aria-label="Bundled translators (🡐)" href="/zotero-better-bibtex/installation/bundled-translators/index.html" title="Bundled translators (🡐)"><i class="fa-fw fas fa-chevron-left" aria-hidden="true"></i></a></span>
+            </div>
+            <div class="topbar-button topbar-button-next default-animation" data-content-empty="disable" data-width-s="show" data-width-m="show" data-width-l="show">
+<span class="btn cstyle button link noborder notitle interactive"><a aria-label="Export (🡒)" href="/zotero-better-bibtex/preferences/export/index.html" title="Export (🡒)"><i class="fa-fw fas fa-chevron-right" aria-hidden="true"></i></a></span>
+            </div>
+            <div class="topbar-button topbar-button-more default-animation" data-content-empty="hide" data-width-s="show" data-width-m="show" data-width-l="show">
+<span class="btn cstyle button link noborder notitle interactive"><button data-button-action="toggle-flyout" type="button" title="More" aria-label="More" aria-expanded="false"><i class="fa-fw fas fa-ellipsis-v" aria-hidden="true"></i></button></span>
+              <div class="topbar-content">
+                <div class="topbar-content-wrapper" tabindex="-1">
+                  <div class="topbar-area topbar-area-more" data-area="more">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </header>
+      <div id="R-main-overlay"></div>
+      <main id="R-body-inner" class="highlightable preferences" tabindex="-1">
+        <div class="flex-block-wrapper">
+<article class="default">
+  <header class="headline">
+  </header>
+
+<h1 id="preferences">Preferences</h1>
+
+<p>The Better BibTeX Configuration can be found under the regular Zotero preferences pane, tab &lsquo;Better BibTeX&rsquo;.</p>
+<p>The configuration of Better BibTeX is a little baroque compared to the standard Zotero Bib(La)TeX exporters (which
+only have hidden preferences). The defaults should just work, but here&rsquo;s an attempt to describe what they do.</p>
+<p><strong>Making any change here will drop your entire export cache.</strong> This is usually not a problem unless you have a
+really large library, but you can read about what is involved <a href="/zotero-better-bibtex/support/performance/">here</a>.</p>
+<h2 id="active-citation-key-formula">Active citation key formula<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard" aria-label="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg" aria-hidden="true"></i></button></span></h2>
+<p>default: <code> auth.lower + shorttitle(3,3) + year</code></p>
+<p>Set the pattern used to generate citation keys. The format of the keys is documented [here]({{ ref . &ldquo;citing&rdquo; }}).
+Changing this setting <em>does not</em> affect existign keys - for this you would need to select the items and refresh the keys.</p>
+<h2 id="force-citation-key-to-plain-text">Force citation key to plain text<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard" aria-label="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg" aria-hidden="true"></i></button></span></h2>
+<p>default: <code>yes</code></p>
+<p>If you have deviated from the default citation key format pattern by [specifying your own]({{ ref . &ldquo;citing&rdquo; }}), you may wind up with non-ASCII characters in your citation keys. You can prevent that using the <code>fold</code> function at the appropriate place in your pattern, but checking this checkbox will just apply <code>fold</code> to all your keys.</p>
+<h2 id="regenerate-citation-key-when-item-changes">Regenerate citation key when item changes<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard" aria-label="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg" aria-hidden="true"></i></button></span></h2>
+<p>default: <code>no</code></p>
+<p>When true, BBT will overwrite existing keys with new keys after an item changes.</p>
+<h2 id="automatically-fill-citation-key-after">Automatically fill citation key after<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard" aria-label="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg" aria-hidden="true"></i></button></span></h2>
+<p>default: <code>2</code></p>
+<p>When &gt; 0, BBT will automatically fill the citation key for an item that does not currently have one after this many seconds. When 0, keys will only be generated on user request.</p>
+<h2 id="keeping-citation-keys-unique">Keeping citation keys unique<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard" aria-label="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg" aria-hidden="true"></i></button></span></h2>
+<h3 id="ignore-upperlowercase-when-comparing-for-uniqueness">Ignore upper/lowercase when comparing for uniqueness<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard" aria-label="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg" aria-hidden="true"></i></button></span></h3>
+<p>default: <code>yes</code></p>
+<p>Treat &ldquo;AugusteComte&rdquo; and &ldquo;augustecomte&rdquo; as the same key when testing for uniqueness</p>
+<h3 id="keep-keys-unique">Keep keys unique<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard" aria-label="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg" aria-hidden="true"></i></button></span></h3>
+<p>default: <code>within each library</code></p>
+<p>Generated keys automatically get a postfix when they would generate a duplicate. By default, the check for duplicates is restricted to the library/group the item lives in. When set to global, the check will include all libraries/groups, so auto-generated keys would be globally unique. Changing this setting <em>does not</em> affect existign keys - for this you would need to select the items and refresh the keys.</p>
+<p>Options:</p>
+<ul>
+<li>across all libraries</li>
+<li>within each library</li>
+</ul>
+<h2 id="ideographs-in-citekeys">Ideographs in citekeys<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard" aria-label="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg" aria-hidden="true"></i></button></span></h2>
+<h3 id="apply-kuroshiro-romajization-in-japanese-namestitles-uses-a-lot-of-memory">Apply kuroshiro romajization in Japanese names/titles. Uses a lot of memory.<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard" aria-label="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg" aria-hidden="true"></i></button></span></h3>
+<p>default: <code>no</code></p>
+<p>When on, BBT will load kuroshiro for romajization in citation keys. This uses a lot of memory, easily 100MB. If you don&rsquo;t have Japanese titles/names, keep this off.</p>
+<h3 id="enable-jiebapinyin-filters-in-citekey-patterns-uses-a-lot-of-memory">Enable &lsquo;jieba&rsquo;/&lsquo;pinyin&rsquo; filters in citekey patterns. Uses a lot of memory.<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard" aria-label="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg" aria-hidden="true"></i></button></span></h3>
+<p>default: <code>no</code></p>
+<p>When on, BBT will make Chinese word segmentation (jieba) and transliteration (pinyin) available for citation keys generation. This uses a lot of memory, easily 70MB, and adds several seconds to the startup time of BBT. If you don&rsquo;t have Chinese titles/names, keep this off.</p>
+<h3 id="split-all-chinese-like-single-field-names-unless-the-items-language-is-set-to-japanese-and-japanese-support-is-enabled">Split all Chinese-like single-field names, unless the item&rsquo;s language is set to Japanese and Japanese support is enabled.<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard" aria-label="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg" aria-hidden="true"></i></button></span></h3>
+<p>default: <code>yes</code></p>
+<p>Split all Chinese-like single-field names.</p>
+<h2 id="warn-me-when-changing-citation-keys-in-bulk">Warn me when changing citation keys in bulk<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard" aria-label="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg" aria-hidden="true"></i></button></span></h2>
+<p>default: <code>10</code></p>
+<p>For those who are curious about what the <code>Clear/Generate BibTeX key</code> right-click options do, this will warn you if you are doing this on more than 10 (default) at the same time, to prevent your curiosity from changing all your citation keys at once.</p>
+
+  <footer class="footline">
+  </footer>
+</article>
+        </div>
+      </main>
+    </div>
     <script src="/zotero-better-bibtex/js/theme.min.js" defer></script>
     <div id="toast-container" role="status" aria-live="polite" aria-atomic="false"></div>
   </body>

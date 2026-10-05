@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="height=device-height, width=device-width, initial-scale=1.0, minimum-scale=1.0">
     <meta name="generator" content="Hugo 0.167.0">
-    <meta name="generator" content="Relearn 9.1.0+f0096ea8c391a3404fe56c49eff0898dc5c9ae62">
+    <meta name="generator" content="Relearn 9.1.0+54de122b1167a16811216ea5afb532e2f06d9fd2">
     <meta name="description" content="You wanted customized… You got customized. If you go into the Export tab of the Better BibTeX preferences, subtab postscript, you will find a text box (empty by default) where you can edit a javascript snippet which will be executed for each entry generated in the Bib(La)TeX exporter. In this code, you have access to the entry just before it will be written out and cached. There is an API to do this, and it’s fairly stable, but usually you can just open a new issue and ask me to write it, and I’ll add it here (it’s how the examples got here). Postscripts are available in 4 of the translators:">
     <meta name="author" content="">
     <meta name="twitter:card" content="summary">
@@ -55,8 +55,11 @@
       ],
       "translations": {
         "Browser_unsupported_feature": "This browser doesn't support this feature",
+        "Close_graph": "Close enlarged graph",
         "Copied_to_clipboard": "Text copied to clipboard!",
         "Copy_to_clipboard": "Copy text to clipboard",
+        "Enlarge_graph": "Enlarge graph",
+        "History_cleared": "History cleared",
         "Link_copied_to_clipboard": "Link copied to clipboard!",
         "N_results_found": "{1} results found for \"{0}\"",
         "No_results_found": "No results found for \"{0}\"",
@@ -86,983 +89,7 @@
 
   </head>
   <body class="mobile-support html" data-origin="/zotero-better-bibtex/exporting/scripting/index.html">
-    <div id="R-body" class="default-animation">
-      <div id="R-body-overlay"></div>
-      <nav id="R-topbar" class="default-animation">
-        <div class="topbar-wrapper default-animation">
-          <div class="topbar-sidebar-divider default-animation"></div>
-          <div class="topbar-area topbar-area-start" data-area="start">
-            <div class="topbar-button topbar-button-sidebar default-animation" data-content-empty="disable" data-width-s="show" data-width-m="hide" data-width-l="hide">
-<span class="btn cstyle button link noborder notitle interactive"><button data-button-action="toggle-nav" type="button" title="Menu (CTRL&#43;ALT&#43;n)"><i class="fa-fw fas fa-bars"></i></button></span>
-            </div>
-            <div class="topbar-button topbar-button-toc default-animation" data-content-empty="hide" data-width-s="show" data-width-m="show" data-width-l="show">
-<span class="btn cstyle button link noborder notitle interactive"><button data-button-action="toggle-flyout" type="button" title="Table of Contents (CTRL&#43;ALT&#43;t)"><i class="fa-fw fas fa-table-list"></i></button></span>
-              <div class="topbar-content">
-                <div class="topbar-content-wrapper" tabindex="-1">
-<nav class="TableOfContents">
-  <ul>
-    <li><a href="#you-wanted-customized">You wanted customized&hellip;</a></li>
-    <li><a href="#the-api-for-better-bibtex-and-better-biblatex">The API for <code>Better BibTeX</code> and <code>Better BibLaTeX</code></a></li>
-    <li><a href="#the-api-for-bettercsljson-and-bettercslyaml">The API for <code>BetterCSLJSON</code> and <code>BetterCSLYAML</code></a></li>
-    <li><a href="#item-types-and-fields">Item types and fields</a></li>
-    <li><a href="#debugging">Debugging</a></li>
-    <li><a href="#samples">Samples</a>
-      <ul>
-        <li><a href="#add-accessdate-url-for-bibtex">Add accessdate, url for BibTeX</a></li>
-        <li><a href="#commas-in-keywords">Comma&rsquo;s in keywords</a></li>
-        <li><a href="#add-doi-in-note-field">Add DOI in note field</a></li>
-        <li><a href="#add-arxiv-data">Add arXiv data</a></li>
-        <li><a href="#custom-field-order">Custom field order</a></li>
-        <li><a href="#case-protect-italicized-text">Case-protect italicized text</a></li>
-        <li><a href="#detect-and-protect-latex-math-formulas">Detect and protect LaTeX math formulas</a></li>
-        <li><a href="#or-detect-and-protect-simple-latex-commands">Or, detect and protect (simple) LaTeX commands</a></li>
-        <li><a href="#detect-and-protect-mathjax">Detect and protect MathJax</a></li>
-        <li><a href="#replace-director-with-author-for-videorecording-and-film-entries">Replace <code>director</code> with <code>author</code> for <code>videoRecording</code> and <code>film</code> entries</a></li>
-        <li><a href="#changing-the-entry-type-from-collection-to-book">Changing the entry type from collection to book</a></li>
-        <li><a href="#set-the-entry-type-to-misc-for-arxiv-preprints-in-bibtex">Set the entry type to <code>misc</code> for arXiv preprints in BibTeX</a></li>
-        <li><a href="#citing-documents-with-a-physical-archive-location">Citing documents with a physical archive location</a></li>
-        <li><a href="#export-season-for-bibtex">Export season for BibTeX</a></li>
-        <li><a href="#adding-rights-field-in-biblatex">Adding rights field in BibLaTeX</a></li>
-        <li><a href="#use--in-file-paths-to-avoid-the-bib-file-being-different-on-different-computers">Use <code>~</code> in file paths to avoid the .bib file being different on different computers</a></li>
-        <li><a href="#adding-file-field-for-csl-json-export">Adding file field for CSL JSON export</a></li>
-        <li><a href="#convert-windows-attachment-paths-to-unix">Convert Windows attachment paths to Unix</a></li>
-      </ul>
-    </li>
-  </ul>
-</nav>
-                </div>
-              </div>
-            </div>
-          </div>
-          <ol class="topbar-breadcrumbs breadcrumbs highlightable" data-overflow-title="Better BibTeX for Zotero &gt; Exporting &gt; Scripting" itemscope itemtype="http://schema.org/BreadcrumbList"><li itemscope itemtype="https://schema.org/ListItem" itemprop="itemListElement" class=""><a itemprop="item" href="/zotero-better-bibtex/index.html"><span itemprop="name">Better BibTeX for Zotero</span></a><meta itemprop="position" content="1">&nbsp;>&nbsp;</li><li itemscope itemtype="https://schema.org/ListItem" itemprop="itemListElement" class=""><a itemprop="item" href="/zotero-better-bibtex/exporting/index.html"><span itemprop="name">Exporting</span></a><meta itemprop="position" content="2">&nbsp;>&nbsp;</li><li itemscope itemtype="https://schema.org/ListItem" itemprop="itemListElement" class=""><span itemprop="name">Scripting</span><meta itemprop="position" content="3"></li>
-          </ol>
-          <div class="topbar-area topbar-area-end" data-area="end">
-            <div class="topbar-button topbar-button-edit default-animation" data-content-empty="disable" data-width-s="area-more" data-width-m="show" data-width-l="show">
-<span class="btn cstyle button link noborder notitle interactive"><a href="https://github.com/retorquere/zotero-better-bibtex/edit/master/site/content/exporting/scripting.md" rel="external" title="Edit (CTRL+ALT+w)"><i class="fa-fw fas fa-pen"></i></a></span>
-            </div>
-            <div class="topbar-button topbar-button-prev default-animation" data-content-empty="disable" data-width-s="show" data-width-m="show" data-width-l="show">
-<span class="btn cstyle button link noborder notitle interactive"><a href="/zotero-better-bibtex/exporting/pull/index.html" title="Pull export (🡐)"><i class="fa-fw fas fa-chevron-left"></i></a></span>
-            </div>
-            <div class="topbar-button topbar-button-next default-animation" data-content-empty="disable" data-width-s="show" data-width-m="show" data-width-l="show">
-<span class="btn cstyle button link noborder notitle interactive"><a href="/zotero-better-bibtex/exporting/extra-fields/index.html" title="Extra fields (🡒)"><i class="fa-fw fas fa-chevron-right"></i></a></span>
-            </div>
-            <div class="topbar-button topbar-button-more default-animation" data-content-empty="hide" data-width-s="show" data-width-m="show" data-width-l="show">
-<span class="btn cstyle button link noborder notitle interactive"><button data-button-action="toggle-flyout" type="button" title="More"><i class="fa-fw fas fa-ellipsis-v"></i></button></span>
-              <div class="topbar-content">
-                <div class="topbar-content-wrapper" tabindex="-1">
-                  <div class="topbar-area topbar-area-more" data-area="more">
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </nav>
-      <div id="R-main-overlay"></div>
-      <main id="R-body-inner" class="highlightable exporting" tabindex="-1">
-        <div class="flex-block-wrapper">
-<article class="default">
-  <header class="headline">
-<div class="R-taxonomy taxonomy-tags tags" title="Tags">
-  <i class="fa-fw fas fa-layer-group"></i>
-  <ul>
-    <li><a class="term-link" href="/zotero-better-bibtex/tags/scripting/index.html">Scripting</a></li>
-  </ul>
-</div>
-  </header>
-
-<h1 id="scripting">Scripting</h1>
-
-<h2 id="you-wanted-customized">You wanted customized&hellip;<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h2>
-<p>You got customized. If you go into the Export tab of the Better BibTeX preferences, subtab postscript, you will find a text box (empty by
-default) where you can edit a javascript snippet which will be executed for each entry generated in the Bib(La)TeX
-exporter. In this code, you have access to the entry just before it will be written out and cached. There is an API
-to do this, and it&rsquo;s fairly stable, but usually you can just open a new issue and ask me to write it, and I&rsquo;ll add it
-here (it&rsquo;s how the examples got here). Postscripts are available in 4 of the translators:</p>
-<ol>
-<li>BetterBibLaTeX</li>
-<li>BetterBibTeX</li>
-<li>BetterCSLJSON</li>
-<li>BetterCSLYAML</li>
-</ol>
-<p>You can (and totally should) check in which translator your postscript is running, which you can do by testing for
-<code>Translator.&lt;id&gt;</code> where <code>&lt;id&gt;</code> is one of these four names, using something like</p>
-<div class="highlight actionbar-wrapper wrap-code" dir="auto"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">Translator</span>.<span style="color:#a6e22e">BetterBibLaTeX</span>) {
-</span></span><span style="display:flex;"><span>  ...
-</span></span><span style="display:flex;"><span>}</span></span></code></pre></div>
-<p>or alternately on the full name using a switch</p>
-<div class="highlight actionbar-wrapper wrap-code" dir="auto"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#66d9ef">switch</span> (<span style="color:#a6e22e">Translator</span>.<span style="color:#a6e22e">header</span>.<span style="color:#a6e22e">label</span>) {
-</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">case</span> <span style="color:#e6db74">&#39;Better BibLaTeX&#39;</span><span style="color:#f92672">:</span>
-</span></span><span style="display:flex;"><span>    ...
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">break</span>;
-</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">case</span> <span style="color:#e6db74">&#39;Better BibTeX&#39;</span><span style="color:#f92672">:</span>
-</span></span><span style="display:flex;"><span>    ...
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">break</span>;
-</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">case</span> <span style="color:#e6db74">&#39;Better CSL JSON&#39;</span><span style="color:#f92672">:</span>
-</span></span><span style="display:flex;"><span>    ...
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">break</span>;
-</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">case</span> <span style="color:#e6db74">&#39;Better CSL YAML&#39;</span><span style="color:#f92672">:</span>
-</span></span><span style="display:flex;"><span>    ...
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">break</span>;
-</span></span><span style="display:flex;"><span>}</span></span></code></pre></div>
-<p>If you want to run a postscript in the CSL translators but don&rsquo;t care whether it will output YAML or JSON, you can test for <code>Translator.BetterCSL</code>, which will be true when either one of <code>BetterCSLJSON</code> or <code>BetterCSLYAML</code> is active. Analogously, <code>Translator.BetterTeX</code> will be true if either of <code>Better BibTeX</code> or <code>Better BibLaTeX</code> is active.</p>
-<p>In the postscript, the entry being built is available as <code>tex</code> (primary), <code>entry</code>, <code>reference</code> and <code>this</code> (legacy) in BetterTeX postscripts, or <code>csl</code> (primary), <code>entry</code>, <code>reference</code> and <code>this</code> in BetterCSL postscripts; the Zotero item it is being built from is available as <code>zotero</code> (primary) or <code>item</code> (legacy).</p>
-<p>You should really test for the translator context in your postscripts using the <code>Translator.&lt;name&gt;</code> tests mentioned above. If you don&rsquo;t because you have a postscript that pre-date postscript CSL support, you will probably be using the legacy use of <code>this</code> to set things on the entry being built, and calling <code>tex.add</code> in those postscripts; since, for CSL postscripts, <code>this</code> is not set, it will make the script will non-fatally error out, so you&rsquo;re very probably good to go as-is. But please fix your postscripts to test for the translator context.</p>
-<h2 id="the-api-for-better-bibtex-and-better-biblatex">The API for <code>Better BibTeX</code> and <code>Better BibLaTeX</code><span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h2>
-<p>The postscript should be a <code>javascript</code> snippet. You can access the data with following objects and methods:</p>
-<ul>
-<li>
-<p><code>zotero</code> is the Zotero item that&rsquo;s the source for the entry being built.</p>
-</li>
-<li>
-<p><code>tex</code> is the BibTeX entry you are building, and the entry has a number of fields.</p>
-<p>e.g. you can access the date in zotero item <code>zotero.date</code>.</p>
-</li>
-<li>
-<p><code>tex.has</code> is a dictionary of fields for output.</p>
-</li>
-<li>
-<p><code>tex.date</code> is the parsed and normalized version of <code>zotero.date</code>.</p>
-<p>e.g. you can see whether the <code>year</code> field has been set by testing for <code>tex.has.year</code>, and when e.g. for a season-date only the year is exported in bibtex, you can find it in <code>tex.date.season</code></p>
-</li>
-<li>
-<p><code>tex.add</code> is the function to add or modify keys in <code>tex.has</code>. It accepts the following named parameters in the form of an object:</p>
-<ul>
-<li><code>name</code>: name of the bib(la)tex field to output</li>
-<li><code>value</code>: the value for the field <em>without</em> LaTeX encoding</li>
-<li><code>bibtex</code>: the value for the field <em>with LaTeX encoding already applied</em>. If both <code>bibtex</code> and <code>value</code> are present, <code>bibtex</code> takes precedence</li>
-<li><code>enc</code>: specifies how to encode the <code>value</code> field. Valid values are:
-<ul>
-<li><code>latex</code>: encode markup and special characters to LaTeX. This is the default, if you don&rsquo;t provide an <code>enc</code> parameter, <code>latex</code> is assumed</li>
-<li><code>verbatim</code>: encode under <code>verbatim</code> rules</li>
-<li><code>literal</code>: encode under <code>literal</code> rules</li>
-<li><code>raw</code>: assume <code>value</code> is already LaTeX-encoded (same as passing the value in <code>bibtex</code>)</li>
-<li><code>url</code>: encode as verbatim url</li>
-</ul>
-</li>
-<li><code>sep</code>: if <code>value</code> is an array, and <code>enc</code> is <code>latex</code>, encode each array element using <code>latex</code> and join the results with the string in <code>sep</code>. Defaults to an empty string.</li>
-<li><code>html</code>: boolean indicating whether the <code>value</code> is full HTML (really only useful for notes)</li>
-<li><code>exportCaseProtection</code>: boolean indicating whether export case-protection processing is applied.</li>
-</ul>
-<p>e.g. change the value of year in output <code>tex.add({name: 'year', value: &quot;your_year_value&quot;})</code></p>
-</li>
-<li>
-<p><code>tex.addCreators</code> adds the contents of <code>zotero.creators</code> to <code>tex</code>.</p>
-<p>author encoding has a fair number of moving bits and generates multiple fields (<code>author</code>, <code>editor</code>, etc), this function is here so you can manipulate <code>zotero.creators</code> and call <code>tex.addCreators</code> to <em>replace</em>
-the existing creator fields on <code>tex</code>.</p>
-</li>
-<li>
-<p><code>tex.remove</code> removes a field previously added by <code>tex.add</code> or <code>tex.addCreators</code></p>
-</li>
-</ul>
-<h2 id="the-api-for-bettercsljson-and-bettercslyaml">The API for <code>BetterCSLJSON</code> and <code>BetterCSLYAML</code><span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h2>
-<ul>
-<li><code>csl</code> is the CSL object being built. Any changes made to this object will directly change the CSL object being output.</li>
-<li><code>zotero</code> is the Zotero item it&rsquo;s being built from.</li>
-</ul>
-<p>There isn&rsquo;t really an API. You can use regular javascript to manipulate the <code>csl</code> object, which is a <a href="http://docs.citationstyles.org/en/stable/specification.html#appendix-iv-variables" rel="external">CSL-JSON</a> object.</p>
-<h2 id="item-types-and-fields">Item types and fields<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h2>
-<p>In a postscript <code>zotero.itemType</code> will have one of these values:</p>
-<table>
-  
-    <tr>
-      
-        <td>annotation<sup>Z</sup></td>
-      
-        <td>artwork</td>
-      
-        <td>attachment</td>
-      
-        <td>audioRecording</td>
-      
-    </tr>
-  
-    <tr>
-      
-        <td>bill</td>
-      
-        <td>blogPost</td>
-      
-        <td>book</td>
-      
-        <td>bookSection</td>
-      
-    </tr>
-  
-    <tr>
-      
-        <td>case</td>
-      
-        <td>classic<sup>JM</sup></td>
-      
-        <td>computerProgram</td>
-      
-        <td>conferencePaper</td>
-      
-    </tr>
-  
-    <tr>
-      
-        <td>dataset<sup>Z</sup></td>
-      
-        <td>dictionaryEntry</td>
-      
-        <td>document</td>
-      
-        <td>email</td>
-      
-    </tr>
-  
-    <tr>
-      
-        <td>encyclopediaArticle</td>
-      
-        <td>film</td>
-      
-        <td>forumPost</td>
-      
-        <td>gazette<sup>JM</sup></td>
-      
-    </tr>
-  
-    <tr>
-      
-        <td>hearing</td>
-      
-        <td>instantMessage</td>
-      
-        <td>interview</td>
-      
-        <td>journalArticle</td>
-      
-    </tr>
-  
-    <tr>
-      
-        <td>legalCommentary<sup>JM</sup></td>
-      
-        <td>letter</td>
-      
-        <td>magazineArticle</td>
-      
-        <td>manuscript</td>
-      
-    </tr>
-  
-    <tr>
-      
-        <td>map</td>
-      
-        <td>newspaperArticle</td>
-      
-        <td>note</td>
-      
-        <td>patent</td>
-      
-    </tr>
-  
-    <tr>
-      
-        <td>podcast</td>
-      
-        <td>preprint<sup>Z</sup></td>
-      
-        <td>presentation</td>
-      
-        <td>radioBroadcast</td>
-      
-    </tr>
-  
-    <tr>
-      
-        <td>regulation<sup>JM</sup></td>
-      
-        <td>report</td>
-      
-        <td>standard</td>
-      
-        <td>statute</td>
-      
-    </tr>
-  
-    <tr>
-      
-        <td>thesis</td>
-      
-        <td>treaty<sup>JM</sup></td>
-      
-        <td>tvBroadcast</td>
-      
-        <td>videoRecording</td>
-      
-    </tr>
-  
-    <tr>
-      
-        <td>webpage</td>
-      
-        <td></td>
-      
-        <td></td>
-      
-        <td></td>
-      
-    </tr>
-  
-</table>
-
-<p>Other fields on the <code>zotero</code> object are:</p>
-<table>
-  
-    <tr>
-      
-        <td>DOI</td>
-      
-        <td>ISBN</td>
-      
-        <td>ISSN</td>
-      
-        <td>abstractNote</td>
-      
-    </tr>
-  
-    <tr>
-      
-        <td>accessDate</td>
-      
-        <td>adminFlag<sup>JM</sup></td>
-      
-        <td>adoptionDate<sup>JM</sup></td>
-      
-        <td>album<sup>JM</sup></td>
-      
-    </tr>
-  
-    <tr>
-      
-        <td>applicationNumber</td>
-      
-        <td>archive</td>
-      
-        <td>archiveCollection<sup>JM</sup></td>
-      
-        <td>archiveID<sup>Z</sup></td>
-      
-    </tr>
-  
-    <tr>
-      
-        <td>archiveLocation</td>
-      
-        <td>artworkMedium</td>
-      
-        <td>artworkSize</td>
-      
-        <td>assemblyNumber<sup>JM</sup></td>
-      
-    </tr>
-  
-    <tr>
-      
-        <td>assignee</td>
-      
-        <td>audioFileType</td>
-      
-        <td>audioRecordingFormat</td>
-      
-        <td>authority<sup>Z</sup></td>
-      
-    </tr>
-  
-    <tr>
-      
-        <td>billNumber</td>
-      
-        <td>blogTitle</td>
-      
-        <td>bookAbbreviation<sup>JM</sup></td>
-      
-        <td>bookTitle</td>
-      
-    </tr>
-  
-    <tr>
-      
-        <td>callNumber</td>
-      
-        <td>caseName</td>
-      
-        <td>code</td>
-      
-        <td>codeNumber</td>
-      
-    </tr>
-  
-    <tr>
-      
-        <td>codePages</td>
-      
-        <td>codeVolume</td>
-      
-        <td>committee</td>
-      
-        <td>company</td>
-      
-    </tr>
-  
-    <tr>
-      
-        <td>conferenceDate<sup>JM</sup></td>
-      
-        <td>conferenceName</td>
-      
-        <td>country</td>
-      
-        <td>court</td>
-      
-    </tr>
-  
-    <tr>
-      
-        <td>date</td>
-      
-        <td>dateAmended<sup>JM</sup></td>
-      
-        <td>dateDecided</td>
-      
-        <td>dateEnacted</td>
-      
-    </tr>
-  
-    <tr>
-      
-        <td>dictionaryTitle</td>
-      
-        <td>distributor</td>
-      
-        <td>division<sup>JM</sup></td>
-      
-        <td>docketNumber</td>
-      
-    </tr>
-  
-    <tr>
-      
-        <td>documentName<sup>JM</sup></td>
-      
-        <td>documentNumber</td>
-      
-        <td>edition</td>
-      
-        <td>encyclopediaTitle</td>
-      
-    </tr>
-  
-    <tr>
-      
-        <td>episodeNumber</td>
-      
-        <td>filingDate</td>
-      
-        <td>firstPage</td>
-      
-        <td>format<sup>Z</sup></td>
-      
-    </tr>
-  
-    <tr>
-      
-        <td>forumTitle</td>
-      
-        <td>gazetteFlag<sup>JM</sup></td>
-      
-        <td>genre</td>
-      
-        <td>history</td>
-      
-    </tr>
-  
-    <tr>
-      
-        <td>identifier<sup>Z</sup></td>
-      
-        <td>institution</td>
-      
-        <td>interviewMedium</td>
-      
-        <td>issue</td>
-      
-    </tr>
-  
-    <tr>
-      
-        <td>issueDate</td>
-      
-        <td>issuingAuthority</td>
-      
-        <td>journalAbbreviation</td>
-      
-        <td>jurisdiction<sup>JM</sup></td>
-      
-    </tr>
-  
-    <tr>
-      
-        <td>label</td>
-      
-        <td>language</td>
-      
-        <td>legalStatus</td>
-      
-        <td>legislativeBody</td>
-      
-    </tr>
-  
-    <tr>
-      
-        <td>letterType</td>
-      
-        <td>libraryCatalog</td>
-      
-        <td>manuscriptType</td>
-      
-        <td>mapType</td>
-      
-    </tr>
-  
-    <tr>
-      
-        <td>medium</td>
-      
-        <td>meetingName</td>
-      
-        <td>meetingNumber<sup>JM</sup></td>
-      
-        <td>nameOfAct</td>
-      
-    </tr>
-  
-    <tr>
-      
-        <td>network</td>
-      
-        <td>newsCaseDate<sup>JM</sup></td>
-      
-        <td>numPages</td>
-      
-        <td>number</td>
-      
-    </tr>
-  
-    <tr>
-      
-        <td>numberOfVolumes</td>
-      
-        <td>openingDate<sup>JM</sup></td>
-      
-        <td>opus<sup>JM</sup></td>
-      
-        <td>organization<sup>Z</sup></td>
-      
-    </tr>
-  
-    <tr>
-      
-        <td>originalDate<sup>JM</sup></td>
-      
-        <td>pages</td>
-      
-        <td>parentTreaty<sup>JM</sup></td>
-      
-        <td>patentNumber</td>
-      
-    </tr>
-  
-    <tr>
-      
-        <td>place</td>
-      
-        <td>postType</td>
-      
-        <td>presentationType</td>
-      
-        <td>priorityDate<sup>JM</sup></td>
-      
-    </tr>
-  
-    <tr>
-      
-        <td>priorityNumbers</td>
-      
-        <td>proceedingsTitle</td>
-      
-        <td>programTitle</td>
-      
-        <td>programmingLanguage</td>
-      
-    </tr>
-  
-    <tr>
-      
-        <td>publicLawNumber</td>
-      
-        <td>publicationDate<sup>JM</sup></td>
-      
-        <td>publicationNumber<sup>JM</sup></td>
-      
-        <td>publicationTitle</td>
-      
-    </tr>
-  
-    <tr>
-      
-        <td>publisher</td>
-      
-        <td>references</td>
-      
-        <td>regnalYear<sup>JM</sup></td>
-      
-        <td>regulationType<sup>JM</sup></td>
-      
-    </tr>
-  
-    <tr>
-      
-        <td>regulatoryBody<sup>JM</sup></td>
-      
-        <td>reign<sup>JM</sup></td>
-      
-        <td>release<sup>JM</sup></td>
-      
-        <td>reportNumber</td>
-      
-    </tr>
-  
-    <tr>
-      
-        <td>reportType</td>
-      
-        <td>reporter</td>
-      
-        <td>reporterVolume</td>
-      
-        <td>repository<sup>Z</sup></td>
-      
-    </tr>
-  
-    <tr>
-      
-        <td>repositoryLocation<sup>Z</sup></td>
-      
-        <td>resolutionLabel<sup>JM</sup></td>
-      
-        <td>rights</td>
-      
-        <td>runningTime</td>
-      
-    </tr>
-  
-    <tr>
-      
-        <td>scale</td>
-      
-        <td>section</td>
-      
-        <td>series</td>
-      
-        <td>seriesNumber</td>
-      
-    </tr>
-  
-    <tr>
-      
-        <td>seriesText</td>
-      
-        <td>seriesTitle</td>
-      
-        <td>session</td>
-      
-        <td>sessionType<sup>JM</sup></td>
-      
-    </tr>
-  
-    <tr>
-      
-        <td>shortTitle</td>
-      
-        <td>signingDate<sup>JM</sup></td>
-      
-        <td>status</td>
-      
-        <td>studio</td>
-      
-    </tr>
-  
-    <tr>
-      
-        <td>subject</td>
-      
-        <td>supplementName<sup>JM</sup></td>
-      
-        <td>system</td>
-      
-        <td>thesisType</td>
-      
-    </tr>
-  
-    <tr>
-      
-        <td>title</td>
-      
-        <td>treatyNumber<sup>JM</sup></td>
-      
-        <td>type</td>
-      
-        <td>university</td>
-      
-    </tr>
-  
-    <tr>
-      
-        <td>url</td>
-      
-        <td>versionNumber</td>
-      
-        <td>videoRecordingFormat</td>
-      
-        <td>volume</td>
-      
-    </tr>
-  
-    <tr>
-      
-        <td>volumeTitle<sup>JM</sup></td>
-      
-        <td>websiteTitle</td>
-      
-        <td>websiteType</td>
-      
-        <td>yearAsVolume<sup>JM</sup></td>
-      
-    </tr>
-  
-</table>
-
-<p>(types/fields marked <sup>Z</sup> are only available in Zotero, fields marked with <sup>JM</sup> are only available in Juris-M).</p>
-<h2 id="debugging">Debugging<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h2>
-<p>There isn&rsquo;t much in place in terms of debugging, as tranlators (and
-thus postscripts) are not allowed to do any UI work. You can do
-old-fashioned <code>printf</code>-style debugging by calling <code>Zotero.debug(...)</code>
-in your postscript &ndash; it will output the string you pass into the
-Zotero debug log which you can inspect from the <code>Help</code> menu. You
-can for example do <code>Zotero.debug(JSON.stringify(item))</code> to see what
-the Zotero item looks like to the translator.</p>
-<h2 id="samples">Samples<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h2>
-<h3 id="add-accessdate-url-for-bibtex">Add accessdate, url for BibTeX<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h3>
-<p>Since BibTeX doesn&rsquo;t really have well-defined behavior across styles the way BibLaTeX does, BBT can&rsquo;t generate URL data which is compatible with all BibTeX styles. If you know the style you use yourself, you can add the data in the format you want using a postscript. The script below will add a note for the last accessed date, and a <code>\url</code> tag within the <code>howpublished</code> field, but only for BibTeX, not for BibLaTeX, and only for <code>webpage</code> entries:</p>
-<div class="highlight actionbar-wrapper wrap-code" dir="auto"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">Translator</span>.<span style="color:#a6e22e">BetterBibTeX</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#a6e22e">zotero</span>.<span style="color:#a6e22e">itemType</span> <span style="color:#f92672">===</span> <span style="color:#e6db74">&#39;webpage&#39;</span>) {
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">zotero</span>.<span style="color:#a6e22e">accessDate</span>) {
-</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">tex</span>.<span style="color:#a6e22e">add</span>({ <span style="color:#a6e22e">name</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;note&#39;</span>, <span style="color:#a6e22e">value</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;(accessed &#34;</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">zotero</span>.<span style="color:#a6e22e">accessDate</span>.<span style="color:#a6e22e">replace</span>(<span style="color:#e6db74">/\s*T?\d+:\d+:\d+.*/</span>, <span style="color:#e6db74">&#39;&#39;</span>) <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;)&#34;</span> });
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">zotero</span>.<span style="color:#a6e22e">url</span>) {
-</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">tex</span>.<span style="color:#a6e22e">add</span>({ <span style="color:#a6e22e">name</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;howpublished&#39;</span>, <span style="color:#a6e22e">bibtex</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;{\\url{&#34;</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">tex</span>.<span style="color:#a6e22e">enc_verbatim</span>({<span style="color:#a6e22e">value</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">zotero</span>.<span style="color:#a6e22e">url</span>}) <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;}}&#34;</span> });
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>  }</span></span></code></pre></div>
-<h3 id="commas-in-keywords">Comma&rsquo;s in keywords<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h3>
-<p>If you want to retain commas in your keywords (e.g. for chemical elements) and separate with a comma-space, you could do:</p>
-<div class="highlight actionbar-wrapper wrap-code" dir="auto"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">Translator</span>.<span style="color:#a6e22e">BetterTeX</span>) {
-</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">tex</span>.<span style="color:#a6e22e">add</span>({ <span style="color:#a6e22e">name</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;keywords&#39;</span>, <span style="color:#a6e22e">value</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">zotero</span>.<span style="color:#a6e22e">tags</span>, <span style="color:#a6e22e">sep</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;, &#39;</span>, <span style="color:#a6e22e">enc</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;tags&#39;</span> });
-</span></span><span style="display:flex;"><span>}</span></span></code></pre></div>
-<p>as the default encoder knows what to do with arrays, if you give it a separator.</p>
-<h3 id="add-doi-in-note-field">Add DOI in note field<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h3>
-<div class="highlight actionbar-wrapper wrap-code" dir="auto"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">Translator</span>.<span style="color:#a6e22e">BetterTeX</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#a6e22e">zotero</span>.<span style="color:#a6e22e">DOI</span>) {
-</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">doi</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">zotero</span>.<span style="color:#a6e22e">DOI</span>;
-</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">doi</span>.<span style="color:#a6e22e">indexOf</span>(<span style="color:#e6db74">&#39;doi:&#39;</span>) <span style="color:#f92672">!=</span> <span style="color:#ae81ff">0</span>) { <span style="color:#a6e22e">doi</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;doi:&#39;</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">doi</span>; }
-</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">tex</span>.<span style="color:#a6e22e">add</span>({ <span style="color:#a6e22e">name</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;note&#39;</span>, <span style="color:#a6e22e">value</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;[&#39;</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">doi</span> <span style="color:#f92672">+</span> <span style="color:#e6db74">&#39;]&#39;</span> });
-</span></span><span style="display:flex;"><span>}</span></span></code></pre></div>
-<h3 id="add-arxiv-data">Add arXiv data<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h3>
-<p>arXiv is a bit of an odd duck. It really isn&rsquo;t a journal, so it shouldn&rsquo;t be the journal title, and their own recommendations on how to include arXiv IDs is a little lacking: <a href="https://arxiv.org/help/faq/references" rel="external">this</a> doesn&rsquo;t say where to include the <code>arXiv:...</code> identfier, and <a href="https://arxiv.org/help/hypertex/bibstyles" rel="external">this</a> says <em>not</em> to include it. Nor does it give any recommendations on how to achieve the <a href="https://arxiv.org/help/faq/references" rel="external">desired output</a>.</p>
-<p>But for arguments&rsquo; sake, let&rsquo;s say you get the desired output by including an empty <code>journaltitle</code> field (ugh) and stuff the <code>arXiv:...</code> ID in the <code>pages</code> field (<em>ugh</em>). You could do that with the following postscript:</p>
-<div class="highlight actionbar-wrapper wrap-code" dir="auto"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">Translator</span>.<span style="color:#a6e22e">BetterTeX</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#a6e22e">zotero</span>.<span style="color:#a6e22e">arXiv</span>) {
-</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">tex</span>.<span style="color:#a6e22e">add</span>({ <span style="color:#a6e22e">name</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;pages&#39;</span>, <span style="color:#a6e22e">value</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">zotero</span>.<span style="color:#a6e22e">arXiv</span>.<span style="color:#a6e22e">id</span> });
-</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span><span style="color:#a6e22e">tex</span>.<span style="color:#a6e22e">has</span>.<span style="color:#a6e22e">journaltitle</span>) { <span style="color:#a6e22e">tex</span>.<span style="color:#a6e22e">add</span>({ <span style="color:#a6e22e">name</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;journaltitle&#39;</span>, <span style="color:#a6e22e">bibtex</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;{}&#39;</span> }); }
-</span></span><span style="display:flex;"><span>}</span></span></code></pre></div>
-<h3 id="custom-field-order">Custom field order<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h3>
-<p>Specify the ordering of the listing of fields in an exported BibLaTeX/BibTeX entry. Your postscript:</p>
-<div class="highlight actionbar-wrapper wrap-code" dir="auto"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">Translator</span>.<span style="color:#a6e22e">BetterTeX</span>) {
-</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// the bib(la)tex fields are ordered according to this array.
-</span></span></span><span style="display:flex;"><span>  <span style="color:#75715e">// If a field is not in this list, it will show up after the ordered fields.
-</span></span></span><span style="display:flex;"><span>  <span style="color:#75715e">// https://github.com/retorquere/zotero-better-bibtex/issues/512
-</span></span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">front</span> <span style="color:#f92672">=</span> [<span style="color:#e6db74">&#39;author&#39;</span>, <span style="color:#e6db74">&#39;date&#39;</span>, <span style="color:#e6db74">&#39;title&#39;</span>, <span style="color:#e6db74">&#39;publisher&#39;</span>]
-</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">order</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">front</span>.<span style="color:#a6e22e">filter</span>(<span style="color:#a6e22e">field</span> =&gt; <span style="color:#a6e22e">tex</span>.<span style="color:#a6e22e">has</span>[<span style="color:#a6e22e">field</span>]).<span style="color:#a6e22e">concat</span>(Object.<span style="color:#a6e22e">keys</span>(<span style="color:#a6e22e">tex</span>.<span style="color:#a6e22e">has</span>).<span style="color:#a6e22e">filter</span>(<span style="color:#a6e22e">field</span> =&gt; <span style="color:#f92672">!</span><span style="color:#a6e22e">front</span>.<span style="color:#a6e22e">includes</span>(<span style="color:#a6e22e">field</span>)))
-</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">const</span> [<span style="color:#a6e22e">field</span>, <span style="color:#a6e22e">value</span>] <span style="color:#66d9ef">of</span> <span style="color:#a6e22e">order</span>.<span style="color:#a6e22e">map</span>(<span style="color:#a6e22e">f</span> =&gt; [<span style="color:#a6e22e">f</span>, <span style="color:#a6e22e">tex</span>.<span style="color:#a6e22e">has</span>[<span style="color:#a6e22e">f</span>]])) {
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">delete</span> <span style="color:#a6e22e">tex</span>.<span style="color:#a6e22e">has</span>[<span style="color:#a6e22e">field</span>]
-</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">tex</span>.<span style="color:#a6e22e">has</span>[<span style="color:#a6e22e">field</span>] <span style="color:#f92672">=</span> <span style="color:#a6e22e">value</span>
-</span></span><span style="display:flex;"><span>  }
-</span></span><span style="display:flex;"><span>}</span></span></code></pre></div>
-<p>In Zotero when using an Export Format of Better BibLaTeX we&rsquo;ll get something like the following entry &hellip;</p>
-<pre><code>@book{nietzsche_1974_gay,
-  <u>author</u> = {Nietzsche, Friedrich Wilhelm},
-  <u>date</u> = {1974-03},
-  <u>title</u> = {The {{Gay Science}}: {{With}} a {{Prelude}} in {{Rhymes}} and an {{Appendix}} of {{Songs}}},
-  <u>publisher</u> = {{Random House}},
-  origdate = {1882},
-  shorthand = {GS},
-  keywords = {Philosophy / General,Philosophy / History  Surveys / Modern},
-  translator = {Kaufmann, Walter},
-  timestamp = {2016-06-05T20:12:28Z},
-  pagetotal = {407},
-  shorttitle = {The {{Gay Science}}},
-  isbn = {0-394-71985-9},
-  edition = {1}
-}
-</code></pre>
-<p>Further details <a href="https://github.com/retorquere/zotero-better-bibtex/issues/512" rel="external">Export to BibLaTeX/BibTeX. Custom field order. #512</a>.</p>
-<h3 id="case-protect-italicized-text">Case-protect italicized text<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h3>
-<div class="highlight actionbar-wrapper wrap-code" dir="auto"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">Translator</span>.<span style="color:#a6e22e">BetterTeX</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#a6e22e">tex</span>.<span style="color:#a6e22e">has</span>.<span style="color:#a6e22e">title</span>) {
-</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">tex</span>.<span style="color:#a6e22e">add</span>({ <span style="color:#a6e22e">name</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;title&#39;</span>, <span style="color:#a6e22e">value</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">zotero</span>.<span style="color:#a6e22e">title</span>.<span style="color:#a6e22e">replace</span>(<span style="color:#e6db74">/(&lt;i&gt;)/ig</span>, <span style="color:#e6db74">&#39;&lt;span class=&#34;nocase&#34;&gt;$1&#39;</span>).<span style="color:#a6e22e">replace</span>(<span style="color:#e6db74">/(&lt;[/]i&gt;)/ig</span>, <span style="color:#e6db74">&#39;$1&lt;/span&gt;&#39;</span>))
-</span></span><span style="display:flex;"><span>}</span></span></code></pre></div>
-<h3 id="detect-and-protect-latex-math-formulas">Detect and protect LaTeX math formulas<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h3>
-<div class="highlight actionbar-wrapper wrap-code" dir="auto"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">Translator</span>.<span style="color:#a6e22e">BetterTeX</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#a6e22e">tex</span>.<span style="color:#a6e22e">has</span>.<span style="color:#a6e22e">title</span>) {
-</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">tex</span>.<span style="color:#a6e22e">add</span>({ <span style="color:#a6e22e">name</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;title&#39;</span>, <span style="color:#a6e22e">value</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">zotero</span>.<span style="color:#a6e22e">title</span>.<span style="color:#a6e22e">replace</span>(<span style="color:#e6db74">/(\$.*?\$)/g</span>, <span style="color:#e6db74">&#39;&lt;script&gt;{$1}&lt;/script&gt;&#39;</span>) });
-</span></span><span style="display:flex;"><span>}</span></span></code></pre></div>
-<h3 id="or-detect-and-protect-simple-latex-commands">Or, detect and protect (simple) LaTeX commands<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h3>
-<div class="highlight actionbar-wrapper wrap-code" dir="auto"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">Translator</span>.<span style="color:#a6e22e">BetterTeX</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#a6e22e">tex</span>.<span style="color:#a6e22e">has</span>.<span style="color:#a6e22e">journal</span>) {
-</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">tex</span>.<span style="color:#a6e22e">add</span>({ <span style="color:#a6e22e">name</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;journal&#39;</span>, <span style="color:#a6e22e">value</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">tex</span>.<span style="color:#a6e22e">has</span>.<span style="color:#a6e22e">journal</span>.<span style="color:#a6e22e">value</span>.<span style="color:#a6e22e">replace</span>(<span style="color:#e6db74">/(\\\w+)/g</span>, <span style="color:#e6db74">&#39;&lt;script&gt;{$1}&lt;/script&gt;&#39;</span>) });
-</span></span><span style="display:flex;"><span>}</span></span></code></pre></div>
-<h3 id="detect-and-protect-mathjax">Detect and protect MathJax<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h3>
-<div class="highlight actionbar-wrapper wrap-code" dir="auto"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">Translator</span>.<span style="color:#a6e22e">BetterTeX</span>) {
-</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// different for bibtex and biblatex exporters
-</span></span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">note</span> <span style="color:#f92672">=</span> [<span style="color:#e6db74">&#39;annotation&#39;</span>, <span style="color:#e6db74">&#39;note&#39;</span>].<span style="color:#a6e22e">find</span>(<span style="color:#a6e22e">field</span> =&gt; <span style="color:#a6e22e">tex</span>.<span style="color:#a6e22e">has</span>[<span style="color:#a6e22e">field</span>])
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">note</span>) {
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">notes</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">zotero</span>.<span style="color:#a6e22e">notes</span>.<span style="color:#a6e22e">map</span>(<span style="color:#a6e22e">note</span> =&gt; <span style="color:#e6db74">`&lt;div&gt;</span><span style="color:#e6db74">${</span><span style="color:#a6e22e">note</span><span style="color:#e6db74">}</span><span style="color:#e6db74">&lt;/div&gt;`</span>).<span style="color:#a6e22e">join</span>(<span style="color:#e6db74">&#39;&#39;</span>)
-</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">notes</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">notes</span>
-</span></span><span style="display:flex;"><span>      .<span style="color:#a6e22e">replace</span>(<span style="color:#e6db74">/(\$\$[\s\S]*?\$\$)/g</span>, <span style="color:#e6db74">&#39;&lt;script&gt;$1&lt;/script&gt;&#39;</span>)
-</span></span><span style="display:flex;"><span>      .<span style="color:#a6e22e">replace</span>(<span style="color:#e6db74">/\\\(/g</span>, <span style="color:#e6db74">&#39;&lt;script&gt;$&#39;</span>)
-</span></span><span style="display:flex;"><span>      .<span style="color:#a6e22e">replace</span>(<span style="color:#e6db74">/\\\)/g</span>, <span style="color:#e6db74">&#39;$&lt;/script&gt;&#39;</span>)
-</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">tex</span>.<span style="color:#a6e22e">add</span>({ <span style="color:#a6e22e">name</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">note</span>, <span style="color:#a6e22e">value</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">notes</span>, <span style="color:#a6e22e">html</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">true</span> });
-</span></span><span style="display:flex;"><span>  }
-</span></span><span style="display:flex;"><span>}</span></span></code></pre></div>
-<h3 id="replace-director-with-author-for-videorecording-and-film-entries">Replace <code>director</code> with <code>author</code> for <code>videoRecording</code> and <code>film</code> entries<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h3>
-<p>Creator handling is fairly complicated, so to change the authors/editors/creators of any kind, you must change them on <code>zotero</code> and then call <code>addCreators</code> to do the needful. <code>addCreators</code> will <em>replace</em> the existing creators that were added to <code>tex</code> with the current state in <code>zotero.creators</code>, however you left it.</p>
-<div class="highlight actionbar-wrapper wrap-code" dir="auto"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">Translator</span>.<span style="color:#a6e22e">BetterBibLaTeX</span>) {
-</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">switch</span> (<span style="color:#a6e22e">zotero</span>.<span style="color:#a6e22e">itemType</span>) {
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">case</span> <span style="color:#e6db74">&#39;videoRecording&#39;</span><span style="color:#f92672">:</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">case</span> <span style="color:#e6db74">&#39;film&#39;</span><span style="color:#f92672">:</span>
-</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">const</span> <span style="color:#a6e22e">creator</span> <span style="color:#66d9ef">of</span> <span style="color:#a6e22e">zotero</span>.<span style="color:#a6e22e">creators</span>) {
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">creator</span>.<span style="color:#a6e22e">creatorType</span> <span style="color:#f92672">===</span> <span style="color:#e6db74">&#39;director&#39;</span>) <span style="color:#a6e22e">creator</span>.<span style="color:#a6e22e">creatorType</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;author&#39;</span>
-</span></span><span style="display:flex;"><span>      }
-</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">tex</span>.<span style="color:#a6e22e">addCreators</span>();
-</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">break</span>;
-</span></span><span style="display:flex;"><span>  }
-</span></span><span style="display:flex;"><span>}</span></span></code></pre></div>
-<h3 id="changing-the-entry-type-from-collection-to-book">Changing the entry type from collection to book<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h3>
-<div class="highlight actionbar-wrapper wrap-code" dir="auto"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">Translator</span>.<span style="color:#a6e22e">BetterBibLaTeX</span>) {
-</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">tex</span>.<span style="color:#a6e22e">entrytype</span> <span style="color:#f92672">===</span> <span style="color:#e6db74">&#39;collection&#39;</span>) <span style="color:#a6e22e">tex</span>.<span style="color:#a6e22e">entrytype</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;book&#39;</span>
-</span></span><span style="display:flex;"><span>}</span></span></code></pre></div>
-<h3 id="set-the-entry-type-to-misc-for-arxiv-preprints-in-bibtex">Set the entry type to <code>misc</code> for arXiv preprints in BibTeX<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h3>
-<div class="highlight actionbar-wrapper wrap-code" dir="auto"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">Translator</span>.<span style="color:#a6e22e">BetterBibTeX</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#a6e22e">tex</span>.<span style="color:#a6e22e">entrytype</span> <span style="color:#f92672">===</span> <span style="color:#e6db74">&#39;article&#39;</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#a6e22e">zotero</span>.<span style="color:#a6e22e">arXiv</span>) {
-</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">tex</span>.<span style="color:#a6e22e">has</span>.<span style="color:#a6e22e">journal</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#a6e22e">zotero</span>.<span style="color:#a6e22e">arXiv</span>.<span style="color:#a6e22e">source</span> <span style="color:#f92672">===</span> <span style="color:#e6db74">&#39;publicationTitle&#39;</span>) {
-</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">tex</span>.<span style="color:#a6e22e">remove</span>(<span style="color:#e6db74">&#39;journal&#39;</span>);
-</span></span><span style="display:flex;"><span>  }
-</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span><span style="color:#a6e22e">tex</span>.<span style="color:#a6e22e">has</span>.<span style="color:#a6e22e">journal</span>) <span style="color:#a6e22e">tex</span>.<span style="color:#a6e22e">entrytype</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;misc&#39;</span>
-</span></span><span style="display:flex;"><span>}</span></span></code></pre></div>
-<h3 id="citing-documents-with-a-physical-archive-location">Citing documents with a physical archive location<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h3>
-<p>This is one area where some of the supposedly most popular packages &ndash; <code>biblatex</code>,
-<code>biblatex-apa</code>, <code>biblatex-chicago</code>, <code>biblatex-mla</code> &ndash; are all over the
-place, if they explicitly support archival material at all. There
-doesn&rsquo;t seem to be a solution that caters for all of these and
-possibly other packages, too. biblatex has no special fields for
-dealing with info about physical archives, even if it does have
-provisions for electronic archives via the fields eprint (<code>identifier</code>),
-eprintclass (<code>section of an archive</code>), and eprinttype (<code>name of the archive</code>).</p>
-<p>Of the packages mentioned above, only one (<code>biblatex-mla</code>) has a
-clear schema of how to record archival information (type <code>@unpublished</code>;
-fields <code>number</code>, <code>library</code>, <code>location</code>). Note that the <code>library</code> field
-is unique to biblatex-mla. (biblatex does define the field, but
-never uses it in its standard styles, and we find no indication
-that either biblatex-apa or biblatex-chicago would use it for a
-physical archive.)</p>
-<p>Given all of this, I&rsquo;m going to leave referencing of physical
-location to postscripts for now. If you enable the <a href="/zotero-better-bibtex/preferences/export/#include-comments-about-potential-problems-with-the-references">quality report</a>, BBT
-will list Zotero fields with data that has not been used in the
-export:</p>
-<div class="highlight actionbar-wrapper wrap-code" dir="auto"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bibtex" data-lang="bibtex"><span style="display:flex;"><span><span style="color:#a6e22e">@letter</span>{MillionDemiInfirmes1968,
-</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">title</span> = <span style="color:#e6db74">{Un Million et Demi d&#39;infirmes, Handicapés Physiques et Mentaux}</span>,
-</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">date</span> = <span style="color:#e6db74">{1968-05-31}</span>,
-</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">url</span> = <span style="color:#e6db74">{https://archives.strasbourg.eu/archive/fonds/FRAM67482_0592_114Z/view:115037}</span>,
-</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">urldate</span> = <span style="color:#e6db74">{2021-04-08}</span>,
-</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">type</span> = <span style="color:#e6db74">{Letter}</span>
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span><span style="color:#75715e">% == BibLaTeX quality report for MillionDemiInfirmes1968:</span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">% Unexpected field &#39;title&#39;</span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">% Unexpected field &#39;type&#39;</span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">% ? Unused archive: Archives de la Ville et l&#39;Eurométropole de Strasbourg</span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">% ? Unused archiveLocation: 114 Z 1 248</span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">% ? Unused callNumber: 114 Z 1 248</span></span></span></code></pre></div>
-<p>if you then apply a postscript such as</p>
-<div class="highlight actionbar-wrapper wrap-code" dir="auto"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">Translator</span>.<span style="color:#a6e22e">BetterBibLaTeX</span>) {
-</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// biblatex-mla
-</span></span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">zotero</span>.<span style="color:#a6e22e">archive</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#a6e22e">zotero</span>.<span style="color:#a6e22e">archiveLocation</span>) {
-</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">tex</span>.<span style="color:#a6e22e">add</span>({ <span style="color:#a6e22e">name</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;type&#39;</span>, <span style="color:#a6e22e">value</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">tex</span>.<span style="color:#a6e22e">entrytype</span> })
-</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">tex</span>.<span style="color:#a6e22e">entrytype</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;unpublished&#39;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">tex</span>.<span style="color:#a6e22e">add</span>({ <span style="color:#a6e22e">name</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;library&#39;</span>, <span style="color:#a6e22e">value</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">zotero</span>.<span style="color:#a6e22e">archive</span>})
-</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">tex</span>.<span style="color:#a6e22e">add</span>({ <span style="color:#a6e22e">name</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;number&#39;</span>, <span style="color:#a6e22e">value</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">zotero</span>.<span style="color:#a6e22e">archiveLocation</span> })
-</span></span><span style="display:flex;"><span>  }
-</span></span><span style="display:flex;"><span>}</span></span></code></pre></div>
-<p>you get</p>
-<div class="highlight actionbar-wrapper wrap-code" dir="auto"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bibtex" data-lang="bibtex"><span style="display:flex;"><span><span style="color:#a6e22e">@unpublished</span>{MillionDemiInfirmes1968,
-</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">title</span> = <span style="color:#e6db74">{Un Million et Demi d&#39;infirmes, Handicapés Physiques et Mentaux}</span>,
-</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">date</span> = <span style="color:#e6db74">{1968-05-31}</span>,
-</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">url</span> = <span style="color:#e6db74">{https://archives.strasbourg.eu/archive/fonds/FRAM67482_0592_114Z/view:115037}</span>,
-</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">urldate</span> = <span style="color:#e6db74">{2021-04-08}</span>,
-</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">type</span> = <span style="color:#e6db74">{letter}</span>,
-</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">library</span> = <span style="color:#e6db74">{Archives de la Ville et l&#39;Eurométropole de Strasbourg}</span>,
-</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">number</span> = <span style="color:#e6db74">{114 Z 1 248}</span>
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span><span style="color:#75715e">% == BibLaTeX quality report for MillionDemiInfirmes1968:</span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">% Unexpected field &#39;number&#39;</span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">% Missing required field &#39;author&#39;</span></span></span></code></pre></div>
-<h3 id="export-season-for-bibtex">Export season for BibTeX<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h3>
-<div class="highlight actionbar-wrapper wrap-code" dir="auto"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">Translator</span>.<span style="color:#a6e22e">BetterBibTeX</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#a6e22e">tex</span>.<span style="color:#a6e22e">date</span>.<span style="color:#a6e22e">type</span> <span style="color:#f92672">===</span> <span style="color:#e6db74">&#39;season&#39;</span>) {
-</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">tex</span>.<span style="color:#a6e22e">add</span>({ <span style="color:#a6e22e">name</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;month&#39;</span>, <span style="color:#a6e22e">value</span><span style="color:#f92672">:</span> [<span style="color:#e6db74">&#39;&#39;</span>, <span style="color:#e6db74">&#39;spring&#39;</span>, <span style="color:#e6db74">&#39;summer&#39;</span>, <span style="color:#e6db74">&#39;fall&#39;</span>, <span style="color:#e6db74">&#39;winter&#39;</span>][<span style="color:#a6e22e">tex</span>.<span style="color:#a6e22e">date</span>.<span style="color:#a6e22e">season</span>] })
-</span></span><span style="display:flex;"><span>}</span></span></code></pre></div>
-<h3 id="adding-rights-field-in-biblatex">Adding rights field in BibLaTeX<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h3>
-<div class="highlight actionbar-wrapper wrap-code" dir="auto"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">Translator</span>.<span style="color:#a6e22e">BetterBibLaTeX</span>) {
-</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">tex</span>.<span style="color:#a6e22e">add</span>({ <span style="color:#a6e22e">name</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;rights&#39;</span>, <span style="color:#a6e22e">value</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">zotero</span>.<span style="color:#a6e22e">rights</span>});
-</span></span><span style="display:flex;"><span>}</span></span></code></pre></div>
-<h3 id="use--in-file-paths-to-avoid-the-bib-file-being-different-on-different-computers">Use <code>~</code> in file paths to avoid the .bib file being different on different computers<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h3>
-<p>For example on a Linux machine you might have <code>/home/myname</code> and on MacOS it is typically <code>/Users/mypossiblyothername</code>. If you sync a bib file on both to a git repo you will see a lot of diffs everytime due to them fighting each other.</p>
-<div class="highlight actionbar-wrapper wrap-code" dir="auto"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">Translator</span>.<span style="color:#a6e22e">BetterTeX</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#f92672">!</span><span style="color:#a6e22e">Translator</span>.<span style="color:#a6e22e">options</span>.<span style="color:#a6e22e">exportFileData</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#a6e22e">zotero</span>.<span style="color:#a6e22e">attachments</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#a6e22e">zotero</span>.<span style="color:#a6e22e">attachments</span>.<span style="color:#a6e22e">length</span>) {
-</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">const</span> <span style="color:#a6e22e">att</span> <span style="color:#66d9ef">of</span> <span style="color:#a6e22e">zotero</span>.<span style="color:#a6e22e">attachments</span>) {
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">att</span>.<span style="color:#a6e22e">localPath</span>) {
-</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">att</span>.<span style="color:#a6e22e">localPath</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">att</span>.<span style="color:#a6e22e">localPath</span>.<span style="color:#a6e22e">replace</span>(<span style="color:#e6db74">/^\/.*?\/.*?\//</span>, <span style="color:#e6db74">&#39;~/&#39;</span>)
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>  }
-</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">tex</span>.<span style="color:#a6e22e">add</span>({ <span style="color:#a6e22e">name</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;file&#39;</span>, <span style="color:#a6e22e">value</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">zotero</span>.<span style="color:#a6e22e">attachments</span>, <span style="color:#a6e22e">enc</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;attachments&#39;</span> })
-</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">return</span> { <span style="color:#a6e22e">cache</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">false</span> }
-</span></span><span style="display:flex;"><span>}</span></span></code></pre></div>
-<p>From <a href="https://forums.zotero.org/discussion/comment/399187#Comment_399187" rel="external">discussion here</a>.</p>
-<h3 id="adding-file-field-for-csl-json-export">Adding file field for CSL JSON export<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h3>
-<p>It can be useful to have paths to attachment files included in json files, which is currently not the case, see <a href="https://github.com/retorquere/zotero-better-bibtex/issues/518" rel="external">issue 518</a>.</p>
-<div class="highlight actionbar-wrapper wrap-code" dir="auto"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">Translator</span>.<span style="color:#a6e22e">BetterCSLJSON</span>) {
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">csl</span>.<span style="color:#a6e22e">file</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">zotero</span>.<span style="color:#a6e22e">attachments</span>.<span style="color:#a6e22e">map</span>(<span style="color:#a6e22e">a</span> =&gt; <span style="color:#a6e22e">a</span>.<span style="color:#a6e22e">localPath</span>).<span style="color:#a6e22e">join</span>(<span style="color:#e6db74">&#34;;&#34;</span>);
-</span></span><span style="display:flex;"><span>}</span></span></code></pre></div>
-<h3 id="convert-windows-attachment-paths-to-unix">Convert Windows attachment paths to Unix<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg"></i></button></span></h3>
-<div class="highlight actionbar-wrapper wrap-code" dir="auto"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">Translator</span>.<span style="color:#a6e22e">BetterTeX</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#f92672">!</span><span style="color:#a6e22e">Translator</span>.<span style="color:#a6e22e">options</span>.<span style="color:#a6e22e">exportFileData</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#a6e22e">zotero</span>.<span style="color:#a6e22e">attachments</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#a6e22e">Translator</span>.<span style="color:#a6e22e">exportPath</span>.<span style="color:#a6e22e">includes</span>(<span style="color:#e6db74">&#39;\\\\&#39;</span>)) {
-</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">zotero</span>.<span style="color:#a6e22e">attachments</span>) {
-</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">tex</span>.<span style="color:#a6e22e">add</span>({ <span style="color:#a6e22e">name</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;file&#39;</span>, <span style="color:#a6e22e">bibtex</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">tex</span>.<span style="color:#a6e22e">enc_attachments</span>({ <span style="color:#a6e22e">value</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">zotero</span>.<span style="color:#a6e22e">attachments</span> }, <span style="color:#a6e22e">path</span> =&gt; <span style="color:#a6e22e">path</span>.<span style="color:#a6e22e">replace</span>(<span style="color:#e6db74">/^[A-Z]:/i</span>, <span style="color:#e6db74">&#39;&#39;</span>).<span style="color:#a6e22e">replace</span>(<span style="color:#e6db74">/\\\\/g</span>, <span style="color:#e6db74">&#39;/&#39;</span>)) })
-</span></span><span style="display:flex;"><span>  }
-</span></span><span style="display:flex;"><span>}</span></span></code></pre></div>
-
-  <footer class="footline">
-  </footer>
-</article>
-        </div>
-      </main>
-    </div>
+    <a id="R-skip-link" href="#R-body-inner">Skip to main content</a>
     <aside id="R-sidebar" class="default-animation">
       <div id="R-header-topbar" class="default-animation"></div>
       <div id="R-header-wrapper" class="default-animation"><a id="logo" href="/zotero-better-bibtex/">
@@ -1677,10 +704,10 @@ Better BibTeX for Zotero
 
         <search><form action="/zotero-better-bibtex/search/index.html" method="get">
           <div class="searchbox default-animation">
-            <button class="search-detail" type="submit" title="Search (CTRL+ALT+f)"><i class="fas fa-fw fa-search"></i></button>
+            <button class="search-detail" type="submit" title="Open search page" aria-label="Open search page"><i class="fas fa-fw fa-search" aria-hidden="true"></i></button>
             <label class="a11y-only" for="R-search-by">Search</label>
-            <input data-search-input id="R-search-by" name="search-by" class="search-by" type="search" placeholder="Search...">
-            <button class="search-clear" type="button" data-search-clear="" title="Clear search"><i class="fas fa-fw fa-times" title="Clear search"></i></button>
+            <input data-search-input id="R-search-by" name="search-by" class="search-by" type="search" placeholder="Search..." title="Search (CTRL+ALT+f)">
+            <button class="search-clear" type="button" data-search-clear="" title="Clear search" aria-label="Clear search"><i class="fas fa-fw fa-times" aria-hidden="true" title="Clear search"></i></button>
           </div>
         </form></search>
       </div>
@@ -1690,7 +717,7 @@ Better BibTeX for Zotero
         </div>
         <div class="R-sidebarmenu R-shortcutmenu-homelinks default-animation">
           <ul class="space collapsible-menu">
-            <li class="" data-nav-id="/zotero-better-bibtex/index.html"><a class="padding" href="/zotero-better-bibtex/index.html"><i class="fa-fw fas fa-home"></i> Home</a></li>
+            <li class="" data-nav-id="/zotero-better-bibtex/index.html"><a class="padding" href="/zotero-better-bibtex/index.html"><i class="fa-fw fas fa-home" aria-hidden="true"></i> Home</a></li>
           </ul>
         </div>
         <div class="R-menu-divider default-animation">
@@ -1704,7 +731,7 @@ Better BibTeX for Zotero
           <hr class="padding default-animation">
         </div>
       </div>
-      <div id="R-content-wrapper" class="highlightable" tabindex="-1">
+      <nav id="R-content-wrapper" class="highlightable" aria-label="Menu" tabindex="-1">
         <div id="R-scrollbar" aria-hidden="true"><div id="R-scrollbar-thumb"></div></div>
         <div class="R-sidebarmenu R-shortcutmenu-main default-animation">
           <ul class="enlarge morespace collapsible-menu">
@@ -1714,7 +741,7 @@ Better BibTeX for Zotero
             <li class="" data-nav-id="/zotero-better-bibtex/exporting/auto/index.html"><a class="padding" href="/zotero-better-bibtex/exporting/auto/index.html">Automatic export</a></li>
             <li class="" data-nav-id="/zotero-better-bibtex/exporting/pandoc/index.html"><a class="padding" href="/zotero-better-bibtex/exporting/pandoc/index.html">Markdown/Pandoc</a></li>
             <li class="" data-nav-id="/zotero-better-bibtex/exporting/pull/index.html"><a class="padding" href="/zotero-better-bibtex/exporting/pull/index.html">Pull export</a></li>
-            <li class="active " data-nav-id="/zotero-better-bibtex/exporting/scripting/index.html"><a class="padding" href="/zotero-better-bibtex/exporting/scripting/index.html">Scripting</a></li>
+            <li class="active " data-nav-id="/zotero-better-bibtex/exporting/scripting/index.html"><a class="padding" href="/zotero-better-bibtex/exporting/scripting/index.html" aria-current="page">Scripting</a></li>
             <li class="" data-nav-id="/zotero-better-bibtex/exporting/extra-fields/index.html"><a class="padding" href="/zotero-better-bibtex/exporting/extra-fields/index.html">Extra fields</a></li>
             <li class="" data-nav-id="/zotero-better-bibtex/exporting/unicode/index.html"><a class="padding" href="/zotero-better-bibtex/exporting/unicode/index.html">Unicode</a></li>
             <li class="" data-nav-id="/zotero-better-bibtex/exporting/advanced/index.html"><a class="padding" href="/zotero-better-bibtex/exporting/advanced/index.html">Advanced</a></li>
@@ -1856,8 +883,989 @@ Better BibTeX for Zotero
 
 <script async defer src="https://buttons.github.io/buttons.js"></script>
 </div>
-      </div>
+      </nav>
     </aside>
+    <div id="R-body" class="default-animation">
+      <div id="R-body-overlay"></div>
+      <header id="R-topbar" class="default-animation">
+        <div class="topbar-wrapper default-animation">
+          <div class="topbar-sidebar-divider default-animation"></div>
+          <div class="topbar-area topbar-area-start" data-area="start">
+            <div class="topbar-button topbar-button-sidebar default-animation" data-content-empty="disable" data-width-s="show" data-width-m="hide" data-width-l="hide">
+<span class="btn cstyle button link noborder notitle interactive"><button data-button-action="toggle-nav" type="button" title="Menu (CTRL&#43;ALT&#43;n)" aria-label="Menu (CTRL&#43;ALT&#43;n)" aria-expanded="false"><i class="fa-fw fas fa-bars" aria-hidden="true"></i></button></span>
+            </div>
+            <div class="topbar-button topbar-button-toc default-animation" data-content-empty="hide" data-width-s="show" data-width-m="show" data-width-l="show">
+<span class="btn cstyle button link noborder notitle interactive"><button data-button-action="toggle-flyout" type="button" title="Table of Contents (CTRL&#43;ALT&#43;t)" aria-label="Table of Contents (CTRL&#43;ALT&#43;t)" aria-expanded="false"><i class="fa-fw fas fa-table-list" aria-hidden="true"></i></button></span>
+              <div class="topbar-content">
+                <div class="topbar-content-wrapper" tabindex="-1">
+<nav class="TableOfContents" aria-label="Table of Contents">
+  <ul>
+    <li><a href="#you-wanted-customized">You wanted customized&hellip;</a></li>
+    <li><a href="#the-api-for-better-bibtex-and-better-biblatex">The API for <code>Better BibTeX</code> and <code>Better BibLaTeX</code></a></li>
+    <li><a href="#the-api-for-bettercsljson-and-bettercslyaml">The API for <code>BetterCSLJSON</code> and <code>BetterCSLYAML</code></a></li>
+    <li><a href="#item-types-and-fields">Item types and fields</a></li>
+    <li><a href="#debugging">Debugging</a></li>
+    <li><a href="#samples">Samples</a>
+      <ul>
+        <li><a href="#add-accessdate-url-for-bibtex">Add accessdate, url for BibTeX</a></li>
+        <li><a href="#commas-in-keywords">Comma&rsquo;s in keywords</a></li>
+        <li><a href="#add-doi-in-note-field">Add DOI in note field</a></li>
+        <li><a href="#add-arxiv-data">Add arXiv data</a></li>
+        <li><a href="#custom-field-order">Custom field order</a></li>
+        <li><a href="#case-protect-italicized-text">Case-protect italicized text</a></li>
+        <li><a href="#detect-and-protect-latex-math-formulas">Detect and protect LaTeX math formulas</a></li>
+        <li><a href="#or-detect-and-protect-simple-latex-commands">Or, detect and protect (simple) LaTeX commands</a></li>
+        <li><a href="#detect-and-protect-mathjax">Detect and protect MathJax</a></li>
+        <li><a href="#replace-director-with-author-for-videorecording-and-film-entries">Replace <code>director</code> with <code>author</code> for <code>videoRecording</code> and <code>film</code> entries</a></li>
+        <li><a href="#changing-the-entry-type-from-collection-to-book">Changing the entry type from collection to book</a></li>
+        <li><a href="#set-the-entry-type-to-misc-for-arxiv-preprints-in-bibtex">Set the entry type to <code>misc</code> for arXiv preprints in BibTeX</a></li>
+        <li><a href="#citing-documents-with-a-physical-archive-location">Citing documents with a physical archive location</a></li>
+        <li><a href="#export-season-for-bibtex">Export season for BibTeX</a></li>
+        <li><a href="#adding-rights-field-in-biblatex">Adding rights field in BibLaTeX</a></li>
+        <li><a href="#use--in-file-paths-to-avoid-the-bib-file-being-different-on-different-computers">Use <code>~</code> in file paths to avoid the .bib file being different on different computers</a></li>
+        <li><a href="#adding-file-field-for-csl-json-export">Adding file field for CSL JSON export</a></li>
+        <li><a href="#convert-windows-attachment-paths-to-unix">Convert Windows attachment paths to Unix</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="topbar-area topbar-area-middle" data-area="middle">
+            <nav class="topbar-breadcrumbs breadcrumbs highlightable" aria-label="Breadcrumbs" data-overflow-title="Better BibTeX for Zotero &gt; Exporting &gt; Scripting">
+              <ol itemscope itemtype="http://schema.org/BreadcrumbList"><li itemscope itemtype="https://schema.org/ListItem" itemprop="itemListElement" class=""><a itemprop="item" href="/zotero-better-bibtex/index.html"><span itemprop="name">Better BibTeX for Zotero</span></a><meta itemprop="position" content="1">&nbsp;>&nbsp;</li><li itemscope itemtype="https://schema.org/ListItem" itemprop="itemListElement" class=""><a itemprop="item" href="/zotero-better-bibtex/exporting/index.html"><span itemprop="name">Exporting</span></a><meta itemprop="position" content="2">&nbsp;>&nbsp;</li><li itemscope itemtype="https://schema.org/ListItem" itemprop="itemListElement" class="" aria-current="page"><span itemprop="name">Scripting</span><meta itemprop="position" content="3"></li>
+              </ol>
+            </nav>
+          </div>
+          <div class="topbar-area topbar-area-end" data-area="end">
+            <div class="topbar-button topbar-button-edit default-animation" data-content-empty="disable" data-width-s="area-more" data-width-m="show" data-width-l="show">
+<span class="btn cstyle button link noborder notitle interactive"><a aria-label="Edit (CTRL+ALT+w)" href="https://github.com/retorquere/zotero-better-bibtex/edit/master/site/content/exporting/scripting.md" rel="external" title="Edit (CTRL+ALT+w)"><i class="fa-fw fas fa-pen" aria-hidden="true"></i></a></span>
+            </div>
+            <div class="topbar-button topbar-button-prev default-animation" data-content-empty="disable" data-width-s="show" data-width-m="show" data-width-l="show">
+<span class="btn cstyle button link noborder notitle interactive"><a aria-label="Pull export (🡐)" href="/zotero-better-bibtex/exporting/pull/index.html" title="Pull export (🡐)"><i class="fa-fw fas fa-chevron-left" aria-hidden="true"></i></a></span>
+            </div>
+            <div class="topbar-button topbar-button-next default-animation" data-content-empty="disable" data-width-s="show" data-width-m="show" data-width-l="show">
+<span class="btn cstyle button link noborder notitle interactive"><a aria-label="Extra fields (🡒)" href="/zotero-better-bibtex/exporting/extra-fields/index.html" title="Extra fields (🡒)"><i class="fa-fw fas fa-chevron-right" aria-hidden="true"></i></a></span>
+            </div>
+            <div class="topbar-button topbar-button-more default-animation" data-content-empty="hide" data-width-s="show" data-width-m="show" data-width-l="show">
+<span class="btn cstyle button link noborder notitle interactive"><button data-button-action="toggle-flyout" type="button" title="More" aria-label="More" aria-expanded="false"><i class="fa-fw fas fa-ellipsis-v" aria-hidden="true"></i></button></span>
+              <div class="topbar-content">
+                <div class="topbar-content-wrapper" tabindex="-1">
+                  <div class="topbar-area topbar-area-more" data-area="more">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </header>
+      <div id="R-main-overlay"></div>
+      <main id="R-body-inner" class="highlightable exporting" tabindex="-1">
+        <div class="flex-block-wrapper">
+<article class="default">
+  <header class="headline">
+<div class="R-taxonomy taxonomy-tags tags" title="Tags">
+  <i class="fa-fw fas fa-layer-group" aria-hidden="true"></i>
+  <ul>
+    <li><a class="term-link" href="/zotero-better-bibtex/tags/scripting/index.html">Scripting</a></li>
+  </ul>
+</div>
+  </header>
+
+<h1 id="scripting">Scripting</h1>
+
+<h2 id="you-wanted-customized">You wanted customized&hellip;<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard" aria-label="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg" aria-hidden="true"></i></button></span></h2>
+<p>You got customized. If you go into the Export tab of the Better BibTeX preferences, subtab postscript, you will find a text box (empty by
+default) where you can edit a javascript snippet which will be executed for each entry generated in the Bib(La)TeX
+exporter. In this code, you have access to the entry just before it will be written out and cached. There is an API
+to do this, and it&rsquo;s fairly stable, but usually you can just open a new issue and ask me to write it, and I&rsquo;ll add it
+here (it&rsquo;s how the examples got here). Postscripts are available in 4 of the translators:</p>
+<ol>
+<li>BetterBibLaTeX</li>
+<li>BetterBibTeX</li>
+<li>BetterCSLJSON</li>
+<li>BetterCSLYAML</li>
+</ol>
+<p>You can (and totally should) check in which translator your postscript is running, which you can do by testing for
+<code>Translator.&lt;id&gt;</code> where <code>&lt;id&gt;</code> is one of these four names, using something like</p>
+<div class="highlight actionbar-wrapper wrap-code" dir="auto"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">Translator</span>.<span style="color:#a6e22e">BetterBibLaTeX</span>) {
+</span></span><span style="display:flex;"><span>  ...
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div>
+<p>or alternately on the full name using a switch</p>
+<div class="highlight actionbar-wrapper wrap-code" dir="auto"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#66d9ef">switch</span> (<span style="color:#a6e22e">Translator</span>.<span style="color:#a6e22e">header</span>.<span style="color:#a6e22e">label</span>) {
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">case</span> <span style="color:#e6db74">&#39;Better BibLaTeX&#39;</span><span style="color:#f92672">:</span>
+</span></span><span style="display:flex;"><span>    ...
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">break</span>;
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">case</span> <span style="color:#e6db74">&#39;Better BibTeX&#39;</span><span style="color:#f92672">:</span>
+</span></span><span style="display:flex;"><span>    ...
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">break</span>;
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">case</span> <span style="color:#e6db74">&#39;Better CSL JSON&#39;</span><span style="color:#f92672">:</span>
+</span></span><span style="display:flex;"><span>    ...
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">break</span>;
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">case</span> <span style="color:#e6db74">&#39;Better CSL YAML&#39;</span><span style="color:#f92672">:</span>
+</span></span><span style="display:flex;"><span>    ...
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">break</span>;
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div>
+<p>If you want to run a postscript in the CSL translators but don&rsquo;t care whether it will output YAML or JSON, you can test for <code>Translator.BetterCSL</code>, which will be true when either one of <code>BetterCSLJSON</code> or <code>BetterCSLYAML</code> is active. Analogously, <code>Translator.BetterTeX</code> will be true if either of <code>Better BibTeX</code> or <code>Better BibLaTeX</code> is active.</p>
+<p>In the postscript, the entry being built is available as <code>tex</code> (primary), <code>entry</code>, <code>reference</code> and <code>this</code> (legacy) in BetterTeX postscripts, or <code>csl</code> (primary), <code>entry</code>, <code>reference</code> and <code>this</code> in BetterCSL postscripts; the Zotero item it is being built from is available as <code>zotero</code> (primary) or <code>item</code> (legacy).</p>
+<p>You should really test for the translator context in your postscripts using the <code>Translator.&lt;name&gt;</code> tests mentioned above. If you don&rsquo;t because you have a postscript that pre-date postscript CSL support, you will probably be using the legacy use of <code>this</code> to set things on the entry being built, and calling <code>tex.add</code> in those postscripts; since, for CSL postscripts, <code>this</code> is not set, it will make the script will non-fatally error out, so you&rsquo;re very probably good to go as-is. But please fix your postscripts to test for the translator context.</p>
+<h2 id="the-api-for-better-bibtex-and-better-biblatex">The API for <code>Better BibTeX</code> and <code>Better BibLaTeX</code><span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard" aria-label="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg" aria-hidden="true"></i></button></span></h2>
+<p>The postscript should be a <code>javascript</code> snippet. You can access the data with following objects and methods:</p>
+<ul>
+<li>
+<p><code>zotero</code> is the Zotero item that&rsquo;s the source for the entry being built.</p>
+</li>
+<li>
+<p><code>tex</code> is the BibTeX entry you are building, and the entry has a number of fields.</p>
+<p>e.g. you can access the date in zotero item <code>zotero.date</code>.</p>
+</li>
+<li>
+<p><code>tex.has</code> is a dictionary of fields for output.</p>
+</li>
+<li>
+<p><code>tex.date</code> is the parsed and normalized version of <code>zotero.date</code>.</p>
+<p>e.g. you can see whether the <code>year</code> field has been set by testing for <code>tex.has.year</code>, and when e.g. for a season-date only the year is exported in bibtex, you can find it in <code>tex.date.season</code></p>
+</li>
+<li>
+<p><code>tex.add</code> is the function to add or modify keys in <code>tex.has</code>. It accepts the following named parameters in the form of an object:</p>
+<ul>
+<li><code>name</code>: name of the bib(la)tex field to output</li>
+<li><code>value</code>: the value for the field <em>without</em> LaTeX encoding</li>
+<li><code>bibtex</code>: the value for the field <em>with LaTeX encoding already applied</em>. If both <code>bibtex</code> and <code>value</code> are present, <code>bibtex</code> takes precedence</li>
+<li><code>enc</code>: specifies how to encode the <code>value</code> field. Valid values are:
+<ul>
+<li><code>latex</code>: encode markup and special characters to LaTeX. This is the default, if you don&rsquo;t provide an <code>enc</code> parameter, <code>latex</code> is assumed</li>
+<li><code>verbatim</code>: encode under <code>verbatim</code> rules</li>
+<li><code>literal</code>: encode under <code>literal</code> rules</li>
+<li><code>raw</code>: assume <code>value</code> is already LaTeX-encoded (same as passing the value in <code>bibtex</code>)</li>
+<li><code>url</code>: encode as verbatim url</li>
+</ul>
+</li>
+<li><code>sep</code>: if <code>value</code> is an array, and <code>enc</code> is <code>latex</code>, encode each array element using <code>latex</code> and join the results with the string in <code>sep</code>. Defaults to an empty string.</li>
+<li><code>html</code>: boolean indicating whether the <code>value</code> is full HTML (really only useful for notes)</li>
+<li><code>exportCaseProtection</code>: boolean indicating whether export case-protection processing is applied.</li>
+</ul>
+<p>e.g. change the value of year in output <code>tex.add({name: 'year', value: &quot;your_year_value&quot;})</code></p>
+</li>
+<li>
+<p><code>tex.addCreators</code> adds the contents of <code>zotero.creators</code> to <code>tex</code>.</p>
+<p>author encoding has a fair number of moving bits and generates multiple fields (<code>author</code>, <code>editor</code>, etc), this function is here so you can manipulate <code>zotero.creators</code> and call <code>tex.addCreators</code> to <em>replace</em>
+the existing creator fields on <code>tex</code>.</p>
+</li>
+<li>
+<p><code>tex.remove</code> removes a field previously added by <code>tex.add</code> or <code>tex.addCreators</code></p>
+</li>
+</ul>
+<h2 id="the-api-for-bettercsljson-and-bettercslyaml">The API for <code>BetterCSLJSON</code> and <code>BetterCSLYAML</code><span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard" aria-label="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg" aria-hidden="true"></i></button></span></h2>
+<ul>
+<li><code>csl</code> is the CSL object being built. Any changes made to this object will directly change the CSL object being output.</li>
+<li><code>zotero</code> is the Zotero item it&rsquo;s being built from.</li>
+</ul>
+<p>There isn&rsquo;t really an API. You can use regular javascript to manipulate the <code>csl</code> object, which is a <a href="http://docs.citationstyles.org/en/stable/specification.html#appendix-iv-variables" rel="external">CSL-JSON</a> object.</p>
+<h2 id="item-types-and-fields">Item types and fields<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard" aria-label="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg" aria-hidden="true"></i></button></span></h2>
+<p>In a postscript <code>zotero.itemType</code> will have one of these values:</p>
+<table>
+  
+    <tr>
+      
+        <td>annotation<sup>Z</sup></td>
+      
+        <td>artwork</td>
+      
+        <td>attachment</td>
+      
+        <td>audioRecording</td>
+      
+    </tr>
+  
+    <tr>
+      
+        <td>bill</td>
+      
+        <td>blogPost</td>
+      
+        <td>book</td>
+      
+        <td>bookSection</td>
+      
+    </tr>
+  
+    <tr>
+      
+        <td>case</td>
+      
+        <td>classic<sup>JM</sup></td>
+      
+        <td>computerProgram</td>
+      
+        <td>conferencePaper</td>
+      
+    </tr>
+  
+    <tr>
+      
+        <td>dataset<sup>Z</sup></td>
+      
+        <td>dictionaryEntry</td>
+      
+        <td>document</td>
+      
+        <td>email</td>
+      
+    </tr>
+  
+    <tr>
+      
+        <td>encyclopediaArticle</td>
+      
+        <td>film</td>
+      
+        <td>forumPost</td>
+      
+        <td>gazette<sup>JM</sup></td>
+      
+    </tr>
+  
+    <tr>
+      
+        <td>hearing</td>
+      
+        <td>instantMessage</td>
+      
+        <td>interview</td>
+      
+        <td>journalArticle</td>
+      
+    </tr>
+  
+    <tr>
+      
+        <td>legalCommentary<sup>JM</sup></td>
+      
+        <td>letter</td>
+      
+        <td>magazineArticle</td>
+      
+        <td>manuscript</td>
+      
+    </tr>
+  
+    <tr>
+      
+        <td>map</td>
+      
+        <td>newspaperArticle</td>
+      
+        <td>note</td>
+      
+        <td>patent</td>
+      
+    </tr>
+  
+    <tr>
+      
+        <td>podcast</td>
+      
+        <td>preprint<sup>Z</sup></td>
+      
+        <td>presentation</td>
+      
+        <td>radioBroadcast</td>
+      
+    </tr>
+  
+    <tr>
+      
+        <td>regulation<sup>JM</sup></td>
+      
+        <td>report</td>
+      
+        <td>standard</td>
+      
+        <td>statute</td>
+      
+    </tr>
+  
+    <tr>
+      
+        <td>thesis</td>
+      
+        <td>treaty<sup>JM</sup></td>
+      
+        <td>tvBroadcast</td>
+      
+        <td>videoRecording</td>
+      
+    </tr>
+  
+    <tr>
+      
+        <td>webpage</td>
+      
+        <td></td>
+      
+        <td></td>
+      
+        <td></td>
+      
+    </tr>
+  
+</table>
+
+<p>Other fields on the <code>zotero</code> object are:</p>
+<table>
+  
+    <tr>
+      
+        <td>DOI</td>
+      
+        <td>ISBN</td>
+      
+        <td>ISSN</td>
+      
+        <td>abstractNote</td>
+      
+    </tr>
+  
+    <tr>
+      
+        <td>accessDate</td>
+      
+        <td>adminFlag<sup>JM</sup></td>
+      
+        <td>adoptionDate<sup>JM</sup></td>
+      
+        <td>album<sup>JM</sup></td>
+      
+    </tr>
+  
+    <tr>
+      
+        <td>applicationNumber</td>
+      
+        <td>archive</td>
+      
+        <td>archiveCollection<sup>JM</sup></td>
+      
+        <td>archiveID<sup>Z</sup></td>
+      
+    </tr>
+  
+    <tr>
+      
+        <td>archiveLocation</td>
+      
+        <td>artworkMedium</td>
+      
+        <td>artworkSize</td>
+      
+        <td>assemblyNumber<sup>JM</sup></td>
+      
+    </tr>
+  
+    <tr>
+      
+        <td>assignee</td>
+      
+        <td>audioFileType</td>
+      
+        <td>audioRecordingFormat</td>
+      
+        <td>authority<sup>Z</sup></td>
+      
+    </tr>
+  
+    <tr>
+      
+        <td>billNumber</td>
+      
+        <td>blogTitle</td>
+      
+        <td>bookAbbreviation<sup>JM</sup></td>
+      
+        <td>bookTitle</td>
+      
+    </tr>
+  
+    <tr>
+      
+        <td>callNumber</td>
+      
+        <td>caseName</td>
+      
+        <td>code</td>
+      
+        <td>codeNumber</td>
+      
+    </tr>
+  
+    <tr>
+      
+        <td>codePages</td>
+      
+        <td>codeVolume</td>
+      
+        <td>committee</td>
+      
+        <td>company</td>
+      
+    </tr>
+  
+    <tr>
+      
+        <td>conferenceDate<sup>JM</sup></td>
+      
+        <td>conferenceName</td>
+      
+        <td>country</td>
+      
+        <td>court</td>
+      
+    </tr>
+  
+    <tr>
+      
+        <td>date</td>
+      
+        <td>dateAmended<sup>JM</sup></td>
+      
+        <td>dateDecided</td>
+      
+        <td>dateEnacted</td>
+      
+    </tr>
+  
+    <tr>
+      
+        <td>dictionaryTitle</td>
+      
+        <td>distributor</td>
+      
+        <td>division<sup>JM</sup></td>
+      
+        <td>docketNumber</td>
+      
+    </tr>
+  
+    <tr>
+      
+        <td>documentName<sup>JM</sup></td>
+      
+        <td>documentNumber</td>
+      
+        <td>edition</td>
+      
+        <td>encyclopediaTitle</td>
+      
+    </tr>
+  
+    <tr>
+      
+        <td>episodeNumber</td>
+      
+        <td>filingDate</td>
+      
+        <td>firstPage</td>
+      
+        <td>format<sup>Z</sup></td>
+      
+    </tr>
+  
+    <tr>
+      
+        <td>forumTitle</td>
+      
+        <td>gazetteFlag<sup>JM</sup></td>
+      
+        <td>genre</td>
+      
+        <td>history</td>
+      
+    </tr>
+  
+    <tr>
+      
+        <td>identifier<sup>Z</sup></td>
+      
+        <td>institution</td>
+      
+        <td>interviewMedium</td>
+      
+        <td>issue</td>
+      
+    </tr>
+  
+    <tr>
+      
+        <td>issueDate</td>
+      
+        <td>issuingAuthority</td>
+      
+        <td>journalAbbreviation</td>
+      
+        <td>jurisdiction<sup>JM</sup></td>
+      
+    </tr>
+  
+    <tr>
+      
+        <td>label</td>
+      
+        <td>language</td>
+      
+        <td>legalStatus</td>
+      
+        <td>legislativeBody</td>
+      
+    </tr>
+  
+    <tr>
+      
+        <td>letterType</td>
+      
+        <td>libraryCatalog</td>
+      
+        <td>manuscriptType</td>
+      
+        <td>mapType</td>
+      
+    </tr>
+  
+    <tr>
+      
+        <td>medium</td>
+      
+        <td>meetingName</td>
+      
+        <td>meetingNumber<sup>JM</sup></td>
+      
+        <td>nameOfAct</td>
+      
+    </tr>
+  
+    <tr>
+      
+        <td>network</td>
+      
+        <td>newsCaseDate<sup>JM</sup></td>
+      
+        <td>numPages</td>
+      
+        <td>number</td>
+      
+    </tr>
+  
+    <tr>
+      
+        <td>numberOfVolumes</td>
+      
+        <td>openingDate<sup>JM</sup></td>
+      
+        <td>opus<sup>JM</sup></td>
+      
+        <td>organization<sup>Z</sup></td>
+      
+    </tr>
+  
+    <tr>
+      
+        <td>originalDate<sup>JM</sup></td>
+      
+        <td>pages</td>
+      
+        <td>parentTreaty<sup>JM</sup></td>
+      
+        <td>patentNumber</td>
+      
+    </tr>
+  
+    <tr>
+      
+        <td>place</td>
+      
+        <td>postType</td>
+      
+        <td>presentationType</td>
+      
+        <td>priorityDate<sup>JM</sup></td>
+      
+    </tr>
+  
+    <tr>
+      
+        <td>priorityNumbers</td>
+      
+        <td>proceedingsTitle</td>
+      
+        <td>programTitle</td>
+      
+        <td>programmingLanguage</td>
+      
+    </tr>
+  
+    <tr>
+      
+        <td>publicLawNumber</td>
+      
+        <td>publicationDate<sup>JM</sup></td>
+      
+        <td>publicationNumber<sup>JM</sup></td>
+      
+        <td>publicationTitle</td>
+      
+    </tr>
+  
+    <tr>
+      
+        <td>publisher</td>
+      
+        <td>references</td>
+      
+        <td>regnalYear<sup>JM</sup></td>
+      
+        <td>regulationType<sup>JM</sup></td>
+      
+    </tr>
+  
+    <tr>
+      
+        <td>regulatoryBody<sup>JM</sup></td>
+      
+        <td>reign<sup>JM</sup></td>
+      
+        <td>release<sup>JM</sup></td>
+      
+        <td>reportNumber</td>
+      
+    </tr>
+  
+    <tr>
+      
+        <td>reportType</td>
+      
+        <td>reporter</td>
+      
+        <td>reporterVolume</td>
+      
+        <td>repository<sup>Z</sup></td>
+      
+    </tr>
+  
+    <tr>
+      
+        <td>repositoryLocation<sup>Z</sup></td>
+      
+        <td>resolutionLabel<sup>JM</sup></td>
+      
+        <td>rights</td>
+      
+        <td>runningTime</td>
+      
+    </tr>
+  
+    <tr>
+      
+        <td>scale</td>
+      
+        <td>section</td>
+      
+        <td>series</td>
+      
+        <td>seriesNumber</td>
+      
+    </tr>
+  
+    <tr>
+      
+        <td>seriesText</td>
+      
+        <td>seriesTitle</td>
+      
+        <td>session</td>
+      
+        <td>sessionType<sup>JM</sup></td>
+      
+    </tr>
+  
+    <tr>
+      
+        <td>shortTitle</td>
+      
+        <td>signingDate<sup>JM</sup></td>
+      
+        <td>status</td>
+      
+        <td>studio</td>
+      
+    </tr>
+  
+    <tr>
+      
+        <td>subject</td>
+      
+        <td>supplementName<sup>JM</sup></td>
+      
+        <td>system</td>
+      
+        <td>thesisType</td>
+      
+    </tr>
+  
+    <tr>
+      
+        <td>title</td>
+      
+        <td>treatyNumber<sup>JM</sup></td>
+      
+        <td>type</td>
+      
+        <td>university</td>
+      
+    </tr>
+  
+    <tr>
+      
+        <td>url</td>
+      
+        <td>versionNumber</td>
+      
+        <td>videoRecordingFormat</td>
+      
+        <td>volume</td>
+      
+    </tr>
+  
+    <tr>
+      
+        <td>volumeTitle<sup>JM</sup></td>
+      
+        <td>websiteTitle</td>
+      
+        <td>websiteType</td>
+      
+        <td>yearAsVolume<sup>JM</sup></td>
+      
+    </tr>
+  
+</table>
+
+<p>(types/fields marked <sup>Z</sup> are only available in Zotero, fields marked with <sup>JM</sup> are only available in Juris-M).</p>
+<h2 id="debugging">Debugging<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard" aria-label="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg" aria-hidden="true"></i></button></span></h2>
+<p>There isn&rsquo;t much in place in terms of debugging, as tranlators (and
+thus postscripts) are not allowed to do any UI work. You can do
+old-fashioned <code>printf</code>-style debugging by calling <code>Zotero.debug(...)</code>
+in your postscript &ndash; it will output the string you pass into the
+Zotero debug log which you can inspect from the <code>Help</code> menu. You
+can for example do <code>Zotero.debug(JSON.stringify(item))</code> to see what
+the Zotero item looks like to the translator.</p>
+<h2 id="samples">Samples<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard" aria-label="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg" aria-hidden="true"></i></button></span></h2>
+<h3 id="add-accessdate-url-for-bibtex">Add accessdate, url for BibTeX<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard" aria-label="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg" aria-hidden="true"></i></button></span></h3>
+<p>Since BibTeX doesn&rsquo;t really have well-defined behavior across styles the way BibLaTeX does, BBT can&rsquo;t generate URL data which is compatible with all BibTeX styles. If you know the style you use yourself, you can add the data in the format you want using a postscript. The script below will add a note for the last accessed date, and a <code>\url</code> tag within the <code>howpublished</code> field, but only for BibTeX, not for BibLaTeX, and only for <code>webpage</code> entries:</p>
+<div class="highlight actionbar-wrapper wrap-code" dir="auto"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">Translator</span>.<span style="color:#a6e22e">BetterBibTeX</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#a6e22e">zotero</span>.<span style="color:#a6e22e">itemType</span> <span style="color:#f92672">===</span> <span style="color:#e6db74">&#39;webpage&#39;</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">zotero</span>.<span style="color:#a6e22e">accessDate</span>) {
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">tex</span>.<span style="color:#a6e22e">add</span>({ <span style="color:#a6e22e">name</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;note&#39;</span>, <span style="color:#a6e22e">value</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;(accessed &#34;</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">zotero</span>.<span style="color:#a6e22e">accessDate</span>.<span style="color:#a6e22e">replace</span>(<span style="color:#e6db74">/\s*T?\d+:\d+:\d+.*/</span>, <span style="color:#e6db74">&#39;&#39;</span>) <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;)&#34;</span> });
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">zotero</span>.<span style="color:#a6e22e">url</span>) {
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">tex</span>.<span style="color:#a6e22e">add</span>({ <span style="color:#a6e22e">name</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;howpublished&#39;</span>, <span style="color:#a6e22e">bibtex</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;{\\url{&#34;</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">tex</span>.<span style="color:#a6e22e">enc_verbatim</span>({<span style="color:#a6e22e">value</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">zotero</span>.<span style="color:#a6e22e">url</span>}) <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;}}&#34;</span> });
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>  }</span></span></code></pre></div>
+<h3 id="commas-in-keywords">Comma&rsquo;s in keywords<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard" aria-label="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg" aria-hidden="true"></i></button></span></h3>
+<p>If you want to retain commas in your keywords (e.g. for chemical elements) and separate with a comma-space, you could do:</p>
+<div class="highlight actionbar-wrapper wrap-code" dir="auto"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">Translator</span>.<span style="color:#a6e22e">BetterTeX</span>) {
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">tex</span>.<span style="color:#a6e22e">add</span>({ <span style="color:#a6e22e">name</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;keywords&#39;</span>, <span style="color:#a6e22e">value</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">zotero</span>.<span style="color:#a6e22e">tags</span>, <span style="color:#a6e22e">sep</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;, &#39;</span>, <span style="color:#a6e22e">enc</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;tags&#39;</span> });
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div>
+<p>as the default encoder knows what to do with arrays, if you give it a separator.</p>
+<h3 id="add-doi-in-note-field">Add DOI in note field<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard" aria-label="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg" aria-hidden="true"></i></button></span></h3>
+<div class="highlight actionbar-wrapper wrap-code" dir="auto"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">Translator</span>.<span style="color:#a6e22e">BetterTeX</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#a6e22e">zotero</span>.<span style="color:#a6e22e">DOI</span>) {
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">doi</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">zotero</span>.<span style="color:#a6e22e">DOI</span>;
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">doi</span>.<span style="color:#a6e22e">indexOf</span>(<span style="color:#e6db74">&#39;doi:&#39;</span>) <span style="color:#f92672">!=</span> <span style="color:#ae81ff">0</span>) { <span style="color:#a6e22e">doi</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;doi:&#39;</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">doi</span>; }
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">tex</span>.<span style="color:#a6e22e">add</span>({ <span style="color:#a6e22e">name</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;note&#39;</span>, <span style="color:#a6e22e">value</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;[&#39;</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">doi</span> <span style="color:#f92672">+</span> <span style="color:#e6db74">&#39;]&#39;</span> });
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div>
+<h3 id="add-arxiv-data">Add arXiv data<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard" aria-label="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg" aria-hidden="true"></i></button></span></h3>
+<p>arXiv is a bit of an odd duck. It really isn&rsquo;t a journal, so it shouldn&rsquo;t be the journal title, and their own recommendations on how to include arXiv IDs is a little lacking: <a href="https://arxiv.org/help/faq/references" rel="external">this</a> doesn&rsquo;t say where to include the <code>arXiv:...</code> identfier, and <a href="https://arxiv.org/help/hypertex/bibstyles" rel="external">this</a> says <em>not</em> to include it. Nor does it give any recommendations on how to achieve the <a href="https://arxiv.org/help/faq/references" rel="external">desired output</a>.</p>
+<p>But for arguments&rsquo; sake, let&rsquo;s say you get the desired output by including an empty <code>journaltitle</code> field (ugh) and stuff the <code>arXiv:...</code> ID in the <code>pages</code> field (<em>ugh</em>). You could do that with the following postscript:</p>
+<div class="highlight actionbar-wrapper wrap-code" dir="auto"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">Translator</span>.<span style="color:#a6e22e">BetterTeX</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#a6e22e">zotero</span>.<span style="color:#a6e22e">arXiv</span>) {
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">tex</span>.<span style="color:#a6e22e">add</span>({ <span style="color:#a6e22e">name</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;pages&#39;</span>, <span style="color:#a6e22e">value</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">zotero</span>.<span style="color:#a6e22e">arXiv</span>.<span style="color:#a6e22e">id</span> });
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span><span style="color:#a6e22e">tex</span>.<span style="color:#a6e22e">has</span>.<span style="color:#a6e22e">journaltitle</span>) { <span style="color:#a6e22e">tex</span>.<span style="color:#a6e22e">add</span>({ <span style="color:#a6e22e">name</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;journaltitle&#39;</span>, <span style="color:#a6e22e">bibtex</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;{}&#39;</span> }); }
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div>
+<h3 id="custom-field-order">Custom field order<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard" aria-label="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg" aria-hidden="true"></i></button></span></h3>
+<p>Specify the ordering of the listing of fields in an exported BibLaTeX/BibTeX entry. Your postscript:</p>
+<div class="highlight actionbar-wrapper wrap-code" dir="auto"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">Translator</span>.<span style="color:#a6e22e">BetterTeX</span>) {
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// the bib(la)tex fields are ordered according to this array.
+</span></span></span><span style="display:flex;"><span>  <span style="color:#75715e">// If a field is not in this list, it will show up after the ordered fields.
+</span></span></span><span style="display:flex;"><span>  <span style="color:#75715e">// https://github.com/retorquere/zotero-better-bibtex/issues/512
+</span></span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">front</span> <span style="color:#f92672">=</span> [<span style="color:#e6db74">&#39;author&#39;</span>, <span style="color:#e6db74">&#39;date&#39;</span>, <span style="color:#e6db74">&#39;title&#39;</span>, <span style="color:#e6db74">&#39;publisher&#39;</span>]
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">order</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">front</span>.<span style="color:#a6e22e">filter</span>(<span style="color:#a6e22e">field</span> =&gt; <span style="color:#a6e22e">tex</span>.<span style="color:#a6e22e">has</span>[<span style="color:#a6e22e">field</span>]).<span style="color:#a6e22e">concat</span>(Object.<span style="color:#a6e22e">keys</span>(<span style="color:#a6e22e">tex</span>.<span style="color:#a6e22e">has</span>).<span style="color:#a6e22e">filter</span>(<span style="color:#a6e22e">field</span> =&gt; <span style="color:#f92672">!</span><span style="color:#a6e22e">front</span>.<span style="color:#a6e22e">includes</span>(<span style="color:#a6e22e">field</span>)))
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">const</span> [<span style="color:#a6e22e">field</span>, <span style="color:#a6e22e">value</span>] <span style="color:#66d9ef">of</span> <span style="color:#a6e22e">order</span>.<span style="color:#a6e22e">map</span>(<span style="color:#a6e22e">f</span> =&gt; [<span style="color:#a6e22e">f</span>, <span style="color:#a6e22e">tex</span>.<span style="color:#a6e22e">has</span>[<span style="color:#a6e22e">f</span>]])) {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">delete</span> <span style="color:#a6e22e">tex</span>.<span style="color:#a6e22e">has</span>[<span style="color:#a6e22e">field</span>]
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">tex</span>.<span style="color:#a6e22e">has</span>[<span style="color:#a6e22e">field</span>] <span style="color:#f92672">=</span> <span style="color:#a6e22e">value</span>
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div>
+<p>In Zotero when using an Export Format of Better BibLaTeX we&rsquo;ll get something like the following entry &hellip;</p>
+<pre><code>@book{nietzsche_1974_gay,
+  <u>author</u> = {Nietzsche, Friedrich Wilhelm},
+  <u>date</u> = {1974-03},
+  <u>title</u> = {The {{Gay Science}}: {{With}} a {{Prelude}} in {{Rhymes}} and an {{Appendix}} of {{Songs}}},
+  <u>publisher</u> = {{Random House}},
+  origdate = {1882},
+  shorthand = {GS},
+  keywords = {Philosophy / General,Philosophy / History  Surveys / Modern},
+  translator = {Kaufmann, Walter},
+  timestamp = {2016-06-05T20:12:28Z},
+  pagetotal = {407},
+  shorttitle = {The {{Gay Science}}},
+  isbn = {0-394-71985-9},
+  edition = {1}
+}
+</code></pre>
+<p>Further details <a href="https://github.com/retorquere/zotero-better-bibtex/issues/512" rel="external">Export to BibLaTeX/BibTeX. Custom field order. #512</a>.</p>
+<h3 id="case-protect-italicized-text">Case-protect italicized text<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard" aria-label="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg" aria-hidden="true"></i></button></span></h3>
+<div class="highlight actionbar-wrapper wrap-code" dir="auto"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">Translator</span>.<span style="color:#a6e22e">BetterTeX</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#a6e22e">tex</span>.<span style="color:#a6e22e">has</span>.<span style="color:#a6e22e">title</span>) {
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">tex</span>.<span style="color:#a6e22e">add</span>({ <span style="color:#a6e22e">name</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;title&#39;</span>, <span style="color:#a6e22e">value</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">zotero</span>.<span style="color:#a6e22e">title</span>.<span style="color:#a6e22e">replace</span>(<span style="color:#e6db74">/(&lt;i&gt;)/ig</span>, <span style="color:#e6db74">&#39;&lt;span class=&#34;nocase&#34;&gt;$1&#39;</span>).<span style="color:#a6e22e">replace</span>(<span style="color:#e6db74">/(&lt;[/]i&gt;)/ig</span>, <span style="color:#e6db74">&#39;$1&lt;/span&gt;&#39;</span>))
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div>
+<h3 id="detect-and-protect-latex-math-formulas">Detect and protect LaTeX math formulas<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard" aria-label="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg" aria-hidden="true"></i></button></span></h3>
+<div class="highlight actionbar-wrapper wrap-code" dir="auto"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">Translator</span>.<span style="color:#a6e22e">BetterTeX</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#a6e22e">tex</span>.<span style="color:#a6e22e">has</span>.<span style="color:#a6e22e">title</span>) {
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">tex</span>.<span style="color:#a6e22e">add</span>({ <span style="color:#a6e22e">name</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;title&#39;</span>, <span style="color:#a6e22e">value</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">zotero</span>.<span style="color:#a6e22e">title</span>.<span style="color:#a6e22e">replace</span>(<span style="color:#e6db74">/(\$.*?\$)/g</span>, <span style="color:#e6db74">&#39;&lt;script&gt;{$1}&lt;/script&gt;&#39;</span>) });
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div>
+<h3 id="or-detect-and-protect-simple-latex-commands">Or, detect and protect (simple) LaTeX commands<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard" aria-label="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg" aria-hidden="true"></i></button></span></h3>
+<div class="highlight actionbar-wrapper wrap-code" dir="auto"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">Translator</span>.<span style="color:#a6e22e">BetterTeX</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#a6e22e">tex</span>.<span style="color:#a6e22e">has</span>.<span style="color:#a6e22e">journal</span>) {
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">tex</span>.<span style="color:#a6e22e">add</span>({ <span style="color:#a6e22e">name</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;journal&#39;</span>, <span style="color:#a6e22e">value</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">tex</span>.<span style="color:#a6e22e">has</span>.<span style="color:#a6e22e">journal</span>.<span style="color:#a6e22e">value</span>.<span style="color:#a6e22e">replace</span>(<span style="color:#e6db74">/(\\\w+)/g</span>, <span style="color:#e6db74">&#39;&lt;script&gt;{$1}&lt;/script&gt;&#39;</span>) });
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div>
+<h3 id="detect-and-protect-mathjax">Detect and protect MathJax<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard" aria-label="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg" aria-hidden="true"></i></button></span></h3>
+<div class="highlight actionbar-wrapper wrap-code" dir="auto"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">Translator</span>.<span style="color:#a6e22e">BetterTeX</span>) {
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// different for bibtex and biblatex exporters
+</span></span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">note</span> <span style="color:#f92672">=</span> [<span style="color:#e6db74">&#39;annotation&#39;</span>, <span style="color:#e6db74">&#39;note&#39;</span>].<span style="color:#a6e22e">find</span>(<span style="color:#a6e22e">field</span> =&gt; <span style="color:#a6e22e">tex</span>.<span style="color:#a6e22e">has</span>[<span style="color:#a6e22e">field</span>])
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">note</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">notes</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">zotero</span>.<span style="color:#a6e22e">notes</span>.<span style="color:#a6e22e">map</span>(<span style="color:#a6e22e">note</span> =&gt; <span style="color:#e6db74">`&lt;div&gt;</span><span style="color:#e6db74">${</span><span style="color:#a6e22e">note</span><span style="color:#e6db74">}</span><span style="color:#e6db74">&lt;/div&gt;`</span>).<span style="color:#a6e22e">join</span>(<span style="color:#e6db74">&#39;&#39;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">notes</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">notes</span>
+</span></span><span style="display:flex;"><span>      .<span style="color:#a6e22e">replace</span>(<span style="color:#e6db74">/(\$\$[\s\S]*?\$\$)/g</span>, <span style="color:#e6db74">&#39;&lt;script&gt;$1&lt;/script&gt;&#39;</span>)
+</span></span><span style="display:flex;"><span>      .<span style="color:#a6e22e">replace</span>(<span style="color:#e6db74">/\\\(/g</span>, <span style="color:#e6db74">&#39;&lt;script&gt;$&#39;</span>)
+</span></span><span style="display:flex;"><span>      .<span style="color:#a6e22e">replace</span>(<span style="color:#e6db74">/\\\)/g</span>, <span style="color:#e6db74">&#39;$&lt;/script&gt;&#39;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">tex</span>.<span style="color:#a6e22e">add</span>({ <span style="color:#a6e22e">name</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">note</span>, <span style="color:#a6e22e">value</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">notes</span>, <span style="color:#a6e22e">html</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">true</span> });
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div>
+<h3 id="replace-director-with-author-for-videorecording-and-film-entries">Replace <code>director</code> with <code>author</code> for <code>videoRecording</code> and <code>film</code> entries<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard" aria-label="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg" aria-hidden="true"></i></button></span></h3>
+<p>Creator handling is fairly complicated, so to change the authors/editors/creators of any kind, you must change them on <code>zotero</code> and then call <code>addCreators</code> to do the needful. <code>addCreators</code> will <em>replace</em> the existing creators that were added to <code>tex</code> with the current state in <code>zotero.creators</code>, however you left it.</p>
+<div class="highlight actionbar-wrapper wrap-code" dir="auto"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">Translator</span>.<span style="color:#a6e22e">BetterBibLaTeX</span>) {
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">switch</span> (<span style="color:#a6e22e">zotero</span>.<span style="color:#a6e22e">itemType</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">case</span> <span style="color:#e6db74">&#39;videoRecording&#39;</span><span style="color:#f92672">:</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">case</span> <span style="color:#e6db74">&#39;film&#39;</span><span style="color:#f92672">:</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">const</span> <span style="color:#a6e22e">creator</span> <span style="color:#66d9ef">of</span> <span style="color:#a6e22e">zotero</span>.<span style="color:#a6e22e">creators</span>) {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">creator</span>.<span style="color:#a6e22e">creatorType</span> <span style="color:#f92672">===</span> <span style="color:#e6db74">&#39;director&#39;</span>) <span style="color:#a6e22e">creator</span>.<span style="color:#a6e22e">creatorType</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;author&#39;</span>
+</span></span><span style="display:flex;"><span>      }
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">tex</span>.<span style="color:#a6e22e">addCreators</span>();
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">break</span>;
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div>
+<h3 id="changing-the-entry-type-from-collection-to-book">Changing the entry type from collection to book<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard" aria-label="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg" aria-hidden="true"></i></button></span></h3>
+<div class="highlight actionbar-wrapper wrap-code" dir="auto"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">Translator</span>.<span style="color:#a6e22e">BetterBibLaTeX</span>) {
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">tex</span>.<span style="color:#a6e22e">entrytype</span> <span style="color:#f92672">===</span> <span style="color:#e6db74">&#39;collection&#39;</span>) <span style="color:#a6e22e">tex</span>.<span style="color:#a6e22e">entrytype</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;book&#39;</span>
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div>
+<h3 id="set-the-entry-type-to-misc-for-arxiv-preprints-in-bibtex">Set the entry type to <code>misc</code> for arXiv preprints in BibTeX<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard" aria-label="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg" aria-hidden="true"></i></button></span></h3>
+<div class="highlight actionbar-wrapper wrap-code" dir="auto"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">Translator</span>.<span style="color:#a6e22e">BetterBibTeX</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#a6e22e">tex</span>.<span style="color:#a6e22e">entrytype</span> <span style="color:#f92672">===</span> <span style="color:#e6db74">&#39;article&#39;</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#a6e22e">zotero</span>.<span style="color:#a6e22e">arXiv</span>) {
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">tex</span>.<span style="color:#a6e22e">has</span>.<span style="color:#a6e22e">journal</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#a6e22e">zotero</span>.<span style="color:#a6e22e">arXiv</span>.<span style="color:#a6e22e">source</span> <span style="color:#f92672">===</span> <span style="color:#e6db74">&#39;publicationTitle&#39;</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">tex</span>.<span style="color:#a6e22e">remove</span>(<span style="color:#e6db74">&#39;journal&#39;</span>);
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span><span style="color:#a6e22e">tex</span>.<span style="color:#a6e22e">has</span>.<span style="color:#a6e22e">journal</span>) <span style="color:#a6e22e">tex</span>.<span style="color:#a6e22e">entrytype</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;misc&#39;</span>
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div>
+<h3 id="citing-documents-with-a-physical-archive-location">Citing documents with a physical archive location<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard" aria-label="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg" aria-hidden="true"></i></button></span></h3>
+<p>This is one area where some of the supposedly most popular packages &ndash; <code>biblatex</code>,
+<code>biblatex-apa</code>, <code>biblatex-chicago</code>, <code>biblatex-mla</code> &ndash; are all over the
+place, if they explicitly support archival material at all. There
+doesn&rsquo;t seem to be a solution that caters for all of these and
+possibly other packages, too. biblatex has no special fields for
+dealing with info about physical archives, even if it does have
+provisions for electronic archives via the fields eprint (<code>identifier</code>),
+eprintclass (<code>section of an archive</code>), and eprinttype (<code>name of the archive</code>).</p>
+<p>Of the packages mentioned above, only one (<code>biblatex-mla</code>) has a
+clear schema of how to record archival information (type <code>@unpublished</code>;
+fields <code>number</code>, <code>library</code>, <code>location</code>). Note that the <code>library</code> field
+is unique to biblatex-mla. (biblatex does define the field, but
+never uses it in its standard styles, and we find no indication
+that either biblatex-apa or biblatex-chicago would use it for a
+physical archive.)</p>
+<p>Given all of this, I&rsquo;m going to leave referencing of physical
+location to postscripts for now. If you enable the <a href="/zotero-better-bibtex/preferences/export/#include-comments-about-potential-problems-with-the-references">quality report</a>, BBT
+will list Zotero fields with data that has not been used in the
+export:</p>
+<div class="highlight actionbar-wrapper wrap-code" dir="auto"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bibtex" data-lang="bibtex"><span style="display:flex;"><span><span style="color:#a6e22e">@letter</span>{MillionDemiInfirmes1968,
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">title</span> = <span style="color:#e6db74">{Un Million et Demi d&#39;infirmes, Handicapés Physiques et Mentaux}</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">date</span> = <span style="color:#e6db74">{1968-05-31}</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">url</span> = <span style="color:#e6db74">{https://archives.strasbourg.eu/archive/fonds/FRAM67482_0592_114Z/view:115037}</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">urldate</span> = <span style="color:#e6db74">{2021-04-08}</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">type</span> = <span style="color:#e6db74">{Letter}</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#75715e">% == BibLaTeX quality report for MillionDemiInfirmes1968:</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">% Unexpected field &#39;title&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">% Unexpected field &#39;type&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">% ? Unused archive: Archives de la Ville et l&#39;Eurométropole de Strasbourg</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">% ? Unused archiveLocation: 114 Z 1 248</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">% ? Unused callNumber: 114 Z 1 248</span></span></span></code></pre></div>
+<p>if you then apply a postscript such as</p>
+<div class="highlight actionbar-wrapper wrap-code" dir="auto"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">Translator</span>.<span style="color:#a6e22e">BetterBibLaTeX</span>) {
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// biblatex-mla
+</span></span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">zotero</span>.<span style="color:#a6e22e">archive</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#a6e22e">zotero</span>.<span style="color:#a6e22e">archiveLocation</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">tex</span>.<span style="color:#a6e22e">add</span>({ <span style="color:#a6e22e">name</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;type&#39;</span>, <span style="color:#a6e22e">value</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">tex</span>.<span style="color:#a6e22e">entrytype</span> })
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">tex</span>.<span style="color:#a6e22e">entrytype</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;unpublished&#39;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">tex</span>.<span style="color:#a6e22e">add</span>({ <span style="color:#a6e22e">name</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;library&#39;</span>, <span style="color:#a6e22e">value</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">zotero</span>.<span style="color:#a6e22e">archive</span>})
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">tex</span>.<span style="color:#a6e22e">add</span>({ <span style="color:#a6e22e">name</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;number&#39;</span>, <span style="color:#a6e22e">value</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">zotero</span>.<span style="color:#a6e22e">archiveLocation</span> })
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div>
+<p>you get</p>
+<div class="highlight actionbar-wrapper wrap-code" dir="auto"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bibtex" data-lang="bibtex"><span style="display:flex;"><span><span style="color:#a6e22e">@unpublished</span>{MillionDemiInfirmes1968,
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">title</span> = <span style="color:#e6db74">{Un Million et Demi d&#39;infirmes, Handicapés Physiques et Mentaux}</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">date</span> = <span style="color:#e6db74">{1968-05-31}</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">url</span> = <span style="color:#e6db74">{https://archives.strasbourg.eu/archive/fonds/FRAM67482_0592_114Z/view:115037}</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">urldate</span> = <span style="color:#e6db74">{2021-04-08}</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">type</span> = <span style="color:#e6db74">{letter}</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">library</span> = <span style="color:#e6db74">{Archives de la Ville et l&#39;Eurométropole de Strasbourg}</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">number</span> = <span style="color:#e6db74">{114 Z 1 248}</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#75715e">% == BibLaTeX quality report for MillionDemiInfirmes1968:</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">% Unexpected field &#39;number&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">% Missing required field &#39;author&#39;</span></span></span></code></pre></div>
+<h3 id="export-season-for-bibtex">Export season for BibTeX<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard" aria-label="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg" aria-hidden="true"></i></button></span></h3>
+<div class="highlight actionbar-wrapper wrap-code" dir="auto"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">Translator</span>.<span style="color:#a6e22e">BetterBibTeX</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#a6e22e">tex</span>.<span style="color:#a6e22e">date</span>.<span style="color:#a6e22e">type</span> <span style="color:#f92672">===</span> <span style="color:#e6db74">&#39;season&#39;</span>) {
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">tex</span>.<span style="color:#a6e22e">add</span>({ <span style="color:#a6e22e">name</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;month&#39;</span>, <span style="color:#a6e22e">value</span><span style="color:#f92672">:</span> [<span style="color:#e6db74">&#39;&#39;</span>, <span style="color:#e6db74">&#39;spring&#39;</span>, <span style="color:#e6db74">&#39;summer&#39;</span>, <span style="color:#e6db74">&#39;fall&#39;</span>, <span style="color:#e6db74">&#39;winter&#39;</span>][<span style="color:#a6e22e">tex</span>.<span style="color:#a6e22e">date</span>.<span style="color:#a6e22e">season</span>] })
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div>
+<h3 id="adding-rights-field-in-biblatex">Adding rights field in BibLaTeX<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard" aria-label="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg" aria-hidden="true"></i></button></span></h3>
+<div class="highlight actionbar-wrapper wrap-code" dir="auto"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">Translator</span>.<span style="color:#a6e22e">BetterBibLaTeX</span>) {
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">tex</span>.<span style="color:#a6e22e">add</span>({ <span style="color:#a6e22e">name</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;rights&#39;</span>, <span style="color:#a6e22e">value</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">zotero</span>.<span style="color:#a6e22e">rights</span>});
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div>
+<h3 id="use--in-file-paths-to-avoid-the-bib-file-being-different-on-different-computers">Use <code>~</code> in file paths to avoid the .bib file being different on different computers<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard" aria-label="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg" aria-hidden="true"></i></button></span></h3>
+<p>For example on a Linux machine you might have <code>/home/myname</code> and on MacOS it is typically <code>/Users/mypossiblyothername</code>. If you sync a bib file on both to a git repo you will see a lot of diffs everytime due to them fighting each other.</p>
+<div class="highlight actionbar-wrapper wrap-code" dir="auto"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">Translator</span>.<span style="color:#a6e22e">BetterTeX</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#f92672">!</span><span style="color:#a6e22e">Translator</span>.<span style="color:#a6e22e">options</span>.<span style="color:#a6e22e">exportFileData</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#a6e22e">zotero</span>.<span style="color:#a6e22e">attachments</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#a6e22e">zotero</span>.<span style="color:#a6e22e">attachments</span>.<span style="color:#a6e22e">length</span>) {
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">const</span> <span style="color:#a6e22e">att</span> <span style="color:#66d9ef">of</span> <span style="color:#a6e22e">zotero</span>.<span style="color:#a6e22e">attachments</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">att</span>.<span style="color:#a6e22e">localPath</span>) {
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">att</span>.<span style="color:#a6e22e">localPath</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">att</span>.<span style="color:#a6e22e">localPath</span>.<span style="color:#a6e22e">replace</span>(<span style="color:#e6db74">/^\/.*?\/.*?\//</span>, <span style="color:#e6db74">&#39;~/&#39;</span>)
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">tex</span>.<span style="color:#a6e22e">add</span>({ <span style="color:#a6e22e">name</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;file&#39;</span>, <span style="color:#a6e22e">value</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">zotero</span>.<span style="color:#a6e22e">attachments</span>, <span style="color:#a6e22e">enc</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;attachments&#39;</span> })
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">return</span> { <span style="color:#a6e22e">cache</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">false</span> }
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div>
+<p>From <a href="https://forums.zotero.org/discussion/comment/399187#Comment_399187" rel="external">discussion here</a>.</p>
+<h3 id="adding-file-field-for-csl-json-export">Adding file field for CSL JSON export<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard" aria-label="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg" aria-hidden="true"></i></button></span></h3>
+<p>It can be useful to have paths to attachment files included in json files, which is currently not the case, see <a href="https://github.com/retorquere/zotero-better-bibtex/issues/518" rel="external">issue 518</a>.</p>
+<div class="highlight actionbar-wrapper wrap-code" dir="auto"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">Translator</span>.<span style="color:#a6e22e">BetterCSLJSON</span>) {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">csl</span>.<span style="color:#a6e22e">file</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">zotero</span>.<span style="color:#a6e22e">attachments</span>.<span style="color:#a6e22e">map</span>(<span style="color:#a6e22e">a</span> =&gt; <span style="color:#a6e22e">a</span>.<span style="color:#a6e22e">localPath</span>).<span style="color:#a6e22e">join</span>(<span style="color:#e6db74">&#34;;&#34;</span>);
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div>
+<h3 id="convert-windows-attachment-paths-to-unix">Convert Windows attachment paths to Unix<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard" aria-label="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg" aria-hidden="true"></i></button></span></h3>
+<div class="highlight actionbar-wrapper wrap-code" dir="auto"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">Translator</span>.<span style="color:#a6e22e">BetterTeX</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#f92672">!</span><span style="color:#a6e22e">Translator</span>.<span style="color:#a6e22e">options</span>.<span style="color:#a6e22e">exportFileData</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#a6e22e">zotero</span>.<span style="color:#a6e22e">attachments</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#a6e22e">Translator</span>.<span style="color:#a6e22e">exportPath</span>.<span style="color:#a6e22e">includes</span>(<span style="color:#e6db74">&#39;\\\\&#39;</span>)) {
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">zotero</span>.<span style="color:#a6e22e">attachments</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">tex</span>.<span style="color:#a6e22e">add</span>({ <span style="color:#a6e22e">name</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;file&#39;</span>, <span style="color:#a6e22e">bibtex</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">tex</span>.<span style="color:#a6e22e">enc_attachments</span>({ <span style="color:#a6e22e">value</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">zotero</span>.<span style="color:#a6e22e">attachments</span> }, <span style="color:#a6e22e">path</span> =&gt; <span style="color:#a6e22e">path</span>.<span style="color:#a6e22e">replace</span>(<span style="color:#e6db74">/^[A-Z]:/i</span>, <span style="color:#e6db74">&#39;&#39;</span>).<span style="color:#a6e22e">replace</span>(<span style="color:#e6db74">/\\\\/g</span>, <span style="color:#e6db74">&#39;/&#39;</span>)) })
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div>
+
+  <footer class="footline">
+  </footer>
+</article>
+        </div>
+      </main>
+    </div>
     <script src="/zotero-better-bibtex/js/theme.min.js" defer></script>
     <div id="toast-container" role="status" aria-live="polite" aria-atomic="false"></div>
   </body>
