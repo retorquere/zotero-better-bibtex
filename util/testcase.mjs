@@ -51,6 +51,10 @@ const argv = yargs(hideBin(process.argv))
     type: 'boolean',
     description: 'Sort example tables without adding a testcase',
   })
+  .option('rename', {
+    type: 'boolean',
+    description: 'Rename the testcase and fixtures for the current issue',
+  })
   .option('feature', {
     alias: 'f',
     type: 'string',
@@ -162,7 +166,88 @@ const sortExamples = document => {
   }
 }
 
+const issueTitle = async issueNumber => {
+  if (!process.env.GITHUB_TOKEN) {
+    console.error('Error: GITHUB_TOKEN environment variable is not set.')
+    process.exit(1)
+  }
+  const octokit = new Octokit({ auth: process.env.GITHUB_TOKEN })
+  try {
+    const { data: issue } = await octokit.rest.issues.get({
+      owner: 'retorquere',
+      repo: 'zotero-better-bibtex',
+      issue_number: issueNumber,
+    })
+
+    let title = issue.title
+      .replace(/^\[[^\]]+\]\s*:/, '')
+      .trim()
+    while (true) {
+      const cleaned = title.replace(/^\s*\[?(Bug|Feature|Request)\]?[/\:\s]*/i, '').trim()
+      if (cleaned.length === title.length) break
+      title = cleaned
+    }
+    return anyAscii(sanitize(`${title} #${issueNumber}`).replace(/[`'"?]/g, ''))
+  }
+  catch (error) {
+    console.error(`Error fetching issue title for #${issueNumber}:`, error.message)
+    process.exit(1)
+  }
+}
+
+const renameTestcase = async () => {
+  if (!issue) {
+    console.error('Error: --rename requires a branch named gh-<number>.')
+    process.exit(1)
+  }
+
+  const feature = path.join(root, 'test', 'features', 'export.feature')
+  if (!fs.existsSync(feature)) {
+    console.error(`Error: Export feature file does not exist at ${feature}`)
+    process.exit(1)
+  }
+
+  const document = (await read(feature))[0]
+  const testcases = document.feature.elements
+    .filter(element => element.keyword === 'Scenario Outline')
+    .flatMap(element => element.examples.flatMap(examples => examples.body))
+  const suffix = new RegExp(`\\s#${issue}$`)
+  const matches = testcases.filter(testcase => {
+    const name = testcase.cells[0].value.trim()
+    return (name.match(/#\d+/g) || []).length === 1 && suffix.test(name)
+  })
+  if (matches.length === 0) {
+    console.error(`Error: No export testcase ending in #${issue} found in ${feature}`)
+    process.exit(1)
+  }
+
+  const title = await issueTitle(issue)
+  const oldNames = [...new Set(matches.map(testcase => testcase.cells[0].value.trim()))]
+  const fixtureDir = path.join(root, 'test', 'fixtures', 'export')
+  const assets = fs.readdirSync(fixtureDir)
+    .filter(asset => oldNames.some(oldName => asset.startsWith(oldName)))
+  const destinations = assets.map(asset => {
+    const oldName = oldNames.find(name => asset.startsWith(name))
+    return path.join(fixtureDir, title + asset.slice(oldName.length))
+  })
+  if (new Set(destinations).size !== destinations.length || destinations.some(destination => fs.existsSync(destination))) {
+    console.error(`Error: Fixture destination already exists for ${title}`)
+    process.exit(1)
+  }
+
+  for (const [index, asset] of assets.entries()) {
+    execFileSync('git', ['mv', path.join(fixtureDir, asset), destinations[index]], { cwd: root, stdio: 'inherit' })
+  }
+  for (const testcase of matches) testcase.cells[0].value = title
+  fs.writeFileSync(feature, format(document))
+}
+
 const main = async () => {
+  if (argv.rename) {
+    await renameTestcase()
+    return
+  }
+
   // Validate arguments
   if (!fs.existsSync(argv.feature)) {
     console.error(`Error: Feature file does not exist at ${argv.feature}`)
@@ -199,32 +284,8 @@ const main = async () => {
   }
 
   if (!argv.title) {
-    // Get issue title from GitHub
-    if (!process.env.GITHUB_TOKEN) {
-      console.error('Error: GITHUB_TOKEN environment variable is not set.')
-      process.exit(1)
-    }
-    const octokit = new Octokit({ auth: process.env.GITHUB_TOKEN })
-    try {
-      const { data: issue } = await octokit.rest.issues.get({
-        owner: 'retorquere',
-        repo: 'zotero-better-bibtex',
-        issue_number: argv.issue,
-      })
-
-      argv.title = issue.title
-        .replace(/^\[[^\]]+\]\s*:/, '')
-        .trim()
-      while (true) {
-        const title = argv.title.replace(/^\s*\[?(Bug|Feature|Request)\]?[/:\s]*/i, '').trim()
-        if (title.length === argv.title.length) break
-        argv.title = title
-      }
-    }
-    catch (error) {
-      console.error(`Error fetching issue title for #${argv.issue}:`, error.message)
-      process.exit(1)
-    }
+    argv.title = await issueTitle(argv.issue)
+    argv.title = argv.title.replace(new RegExp(`\\s#${argv.issue}$`), '')
   }
 
   argv.title += argv.postfix

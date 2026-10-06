@@ -125,7 +125,7 @@ Feature: Export
       | Entries with URL exported with (partial) URL in eprint field #1639                                                       | 2          |
       | error during export; duplicate field note #1636                                                                          | 1          |
       | Error exporting duplicate eprinttype #1128                                                                               | 1          |
-      | Error when starting Zotero with plugin enabled #3625                                                                     | 1          |
+      | Date parsing failure for 262014 #3625                                                                                    | 1          |
       | Exclude series editor for biblatex-apa option #3284                                                                      | 1          |
       | Export article title capitalisation; P-Type vs n-type #1913                                                              | 1          |
       | Export error for items without publicationTitle and Preserve BibTeX variables enabled #201                               | 1          |
