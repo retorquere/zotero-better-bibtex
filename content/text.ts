@@ -105,6 +105,12 @@ export type HTMLParserOptions = {
   exportTitleCase?: boolean
 }
 
+/**
+ * Cache quote matchers for the `csquotes` preference, whose characters alternate
+ * between opening and closing quotes. Opening matchers consume following whitespace;
+ * closing matchers consume preceding whitespace. HTMLParser uses them to mark quoted
+ * text for the Unicode translator's enquote handling.
+ */
 const CSQuotes = new class {
   #cache: Record<string, { open: RegExp; close: RegExp }> = {}
 
@@ -159,11 +165,21 @@ export const HTMLParser = new class {
     this.options = { ...options, exportBraceProtection: options.exportCaseProtection && options.exportBraceProtection }
     this.sentenceStart = true
 
-    // add enquote tags.
+    // Mark preference-defined quote pairs so the Unicode translator can emit enquote commands.
     if (this.options.csquotes) {
+      let hasStraightDoubleQuotes = false
+      const quotes = this.options.csquotes.replace('""', () => {
+        hasStraightDoubleQuotes = true
+        return '“”'
+      })
+
+      if (hasStraightDoubleQuotes) {
+        this.html = this.html.replace(/"([^"]*)"/g, '“$1”')
+      }
+
       this.html = this.html
-        .replace(CSQuotes.open(this.options.csquotes), '<span class="enquote">')
-        .replace(CSQuotes.close(this.options.csquotes), '</span>')
+        .replace(CSQuotes.open(quotes), '<span class="enquote">')
+        .replace(CSQuotes.close(quotes), '</span>')
     }
 
     if (!this.options.html) {
