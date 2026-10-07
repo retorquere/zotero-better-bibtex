@@ -1,0 +1,57 @@
+config:
+  id: 36a3b0b5-bad0-4a04-b79b-441c7cef77db
+  label: BetterBibTeX JSON
+  preferences:
+    asciiBibLaTeX: true
+    autoExport: idle
+    autoExportDelay: 60
+    auxImport: true
+    citekeyFormat: auth(n = 0, m = 1, creator = "*", initials = false).fold.lower + "_" + year + "_" + shorttitle.default("1,0")
+    DOIandURL: doi
+    exportCaseProtection: off
+    exportTitlecase: off
+    fillKeyAfter: 1
+    importCaseProtection: on
+    journalAbbreviation: auto
+    csquotes: '""'
+  options: {}
+version:
+  zotero: 10.0.5
+  bbt: 9.0.68
+collections: {}
+items:
+  -
+    key: JD6QWXBF
+    version: 54096
+    itemType: journalArticle
+    volume: '1'
+    issue: '3'
+    pages: 7-15
+    publicationTitle: Journal für LehrerInnenbildung
+    date: '2001'
+    title: Praxis und Reflexion. Die Notwendigkeit einer "doppelten Professionalisierung" des Lehrers
+    citationKey: helsper_2001_PraxisundReflexion
+    creators:
+      -
+        firstName: Werner
+        lastName: Helsper
+        creatorType: author
+    tags:
+      -
+        tag: Lehrer(aus)bildung
+      -
+        tag: Professionalisierung
+      -
+        tag: Professionswissen
+      -
+        tag: Wissen, Können, Theorie-Praxis-Problem
+      -
+        tag: Genetischer Strukturalismus
+      -
+        tag: Lehrer-Schüler-Beziehung/Arbeitsbündnis
+    dateAdded: 2015-11-19T09:27:28Z
+    dateModified: 2026-02-17T07:57:39Z
+    itemID: 1939
+    attachments: []
+    notes: []
+    autoJournalAbbreviation: J. LehrerInnenbildung

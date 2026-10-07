@@ -102,6 +102,7 @@ Feature: Export
       | customized fields with curly brackets are not exported correctly anymore #775                                            | 1          |
       | date and year are switched #406                                                                                          | 4          |
       | Date parses incorrectly with year 1000 when source Zotero field is in datetime format. #515                              | 1          |
+      | Date parsing failure for 262014 #3625                                                                                    | 1          |
       | date ranges #747+#746                                                                                                    | 5          |
       | date with fractional seconds                                                                                             | 1          |
       | Dateparser does not recognize de in Spanish dates #1513                                                                  | 1          |
@@ -125,7 +126,6 @@ Feature: Export
       | Entries with URL exported with (partial) URL in eprint field #1639                                                       | 2          |
       | error during export; duplicate field note #1636                                                                          | 1          |
       | Error exporting duplicate eprinttype #1128                                                                               | 1          |
-      | Date parsing failure for 262014 #3625                                                                                    | 1          |
       | Exclude series editor for biblatex-apa option #3284                                                                      | 1          |
       | Export article title capitalisation; P-Type vs n-type #1913                                                              | 1          |
       | Export error for items without publicationTitle and Preserve BibTeX variables enabled #201                               | 1          |
@@ -137,6 +137,7 @@ Feature: Export
       | Export of Contributor to WITH #2837                                                                                      | 1          |
       | Export of greek mu incorrect #3276                                                                                       | 1          |
       | Export of hypen for range in the volume field #1929                                                                      | 1          |
+      | Export of quotation marks #3621                                                                                          | 1          |
       | Export Patent Applications as such #1413                                                                                 | 2          |
       | Export to BetterBibTeX .bib no longer works and fails #3352                                                              | 1          |
       | Export unicode character o as latex command broken #2761                                                                 | 1          |

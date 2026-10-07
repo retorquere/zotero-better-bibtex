@@ -105,44 +105,6 @@ export type HTMLParserOptions = {
   exportTitleCase?: boolean
 }
 
-const CSQuotes = new class {
-  #cache: Record<string, { open: RegExp; close: RegExp }> = {}
-
-  public open(quotes: string): RegExp {
-    this.ensure(quotes)
-    return this.#cache[quotes].open
-  }
-
-  public close(quotes: string): RegExp {
-    this.ensure(quotes)
-    return this.#cache[quotes].close
-  }
-
-  private ensure(quotes) {
-    if (!this.#cache[quotes]) {
-      this.#cache[quotes] = {
-        open: this.regex(quotes, 0),
-        close: this.regex(quotes, 1),
-      }
-    }
-  }
-
-  private escape(text: string) {
-    return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&')
-  }
-
-  private regex(str: string, close: 0 | 1): RegExp {
-    let re = this.escape(Array.from(str).filter((_, i) => i % 2 === close).join(''))
-    if (close) {
-      re = `\\s*[${re}]`
-    }
-    else {
-      re = `[${re}]\\s*`
-    }
-    return new RegExp(re, 'g')
-  }
-}
-
 export const HTMLParser = new class {
   private options!: HTMLParserOptions
   private sentenceStart!: boolean
@@ -159,11 +121,17 @@ export const HTMLParser = new class {
     this.options = { ...options, exportBraceProtection: options.exportCaseProtection && options.exportBraceProtection }
     this.sentenceStart = true
 
-    // add enquote tags.
+    // Mark preference-defined quote pairs so the Unicode translator can emit enquote commands.
     if (this.options.csquotes) {
-      this.html = this.html
-        .replace(CSQuotes.open(this.options.csquotes), '<span class="enquote">')
-        .replace(CSQuotes.close(this.options.csquotes), '</span>')
+      const re: string[] = []
+      let repl = '<span class="enquote">'
+      const pairs: string[] = this.options.csquotes.match(/.{1,2}/g) || []
+      for (const pair of pairs) {
+        re.push(`${pair[0]}\\s*([^${pair[1]}]*?)\\s*${pair[1]}`)
+        repl += `$${re.length}`
+      }
+      repl += '</span>'
+      if (re.length) this.html = this.html.replace(new RegExp(re.join('|'), 'g'), repl)
     }
 
     if (!this.options.html) {
