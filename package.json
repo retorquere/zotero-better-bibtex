@@ -89,7 +89,7 @@
     "case": "^1.6.3",
     "citeproc": "^2.4.63",
     "clean-deep": "^3.4.0",
-    "compromise": "^14.17.0",
+    "compromise": "^14.18.0",
     "csl-json": "^0.1.0",
     "detect-file-encoding-and-language": "^2.4.0",
     "edtf": "^4.11.1",
@@ -154,7 +154,7 @@
     "deep-cleaner": "^1.2.1",
     "diff": "^9.0.0",
     "dom-parser": "^1.1.5",
-    "dotenv": "^18.0.5",
+    "dotenv": "^18.0.6",
     "dprint": "^0.60.1",
     "ejs": "^7.0.1",
     "esbuild": "^0.28.2",
@@ -208,7 +208,7 @@
     "uri-templates": "^0.2.0",
     "util": "^0.12.5",
     "xml-parser": "^1.2.1",
-    "xpath": "^0.0.34",
+    "xpath": "^0.0.35",
     "yargs": "^18.2.0"
   },
   "repository": {
