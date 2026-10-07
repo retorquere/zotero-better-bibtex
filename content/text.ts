@@ -127,7 +127,7 @@ export const HTMLParser = new class {
       let repl = '<span class="enquote">'
       const pairs: string[] = this.options.csquotes.match(/.{1,2}/g) || []
       for (const pair of pairs) {
-        re.push(`${pair[0]}\\s*([^${pair[1]}]*?\\s*${pair[1]}`)
+        re.push(`${pair[0]}\\s*([^${pair[1]}]*?)\\s*${pair[1]}`)
         repl += `$${re.length}`
       }
       repl += '</span>'
