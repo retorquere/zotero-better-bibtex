@@ -1,9 +1,9 @@
 
-  print('zotero-live-citations 4e4da3d')
+  print('zotero-live-citations 5904ae6')
   local online, mt, latest = pcall(pandoc.mediabag.fetch, 'https://retorque.re/zotero-better-bibtex/exporting/zotero.lua.revision')
   if online then
     latest = string.sub(latest, 1, 10)
-    if '4e4da3d' ~= latest then
+    if '5904ae6' ~= latest then
       print('new version "' .. latest .. '" available at https://retorque.re/zotero-better-bibtex/exporting')
     end
   end
@@ -1752,15 +1752,9 @@ local function zotero_bibl_odt_banner()
     error('zotero_bibl_odt_banner: This should not happen')
   end
 
-  local banner = ''
+  local header = ''
     .. '<text:p text:style-name="Bibliography_20_1">'
     .. 'ZOTERO_TRANSFER_DOCUMENT'
-    .. '</text:p>'
-    .. '<text:p text:style-name="Bibliography_20_1">'
-    .. 'The Zotero citations in this document have been converted to a format'
-    .. 'that can be safely transferred between word processors. Open this'
-    .. 'document in a supported word processor and press Refresh in the ' .. config.client
-    .. 'plugin to continue working with the citations.'
     .. '</text:p>'
 
   local doc_preferences = ''
@@ -1771,7 +1765,7 @@ local function zotero_bibl_odt_banner()
     .. '</text:a>'
     .. '</text:p>'
 
-  return banner .. doc_preferences
+  return header, doc_preferences
 end
 
 local function zotero_bibl_odt()
@@ -2124,12 +2118,27 @@ end
 function Pandoc(doc)
   if config.format ~= 'odt' then return nil end
 
+  local doc_preferences
   if config.transferable then
-    table.insert(doc.blocks, 1, pandoc.RawBlock('opendocument', zotero_bibl_odt_banner()))
+    local header
+    header, doc_preferences = zotero_bibl_odt_banner()
+    table.insert(doc.blocks, 1, pandoc.RawBlock('opendocument', header))
+    table.insert(doc.blocks, 2, pandoc.RawBlock('opendocument', '<text:p text:style-name="Text_20_body"/>'))
+    table.insert(doc.blocks, 3, pandoc.Para({ pandoc.Str(
+      'The Zotero citations in this document have been converted to a format '
+      .. 'that can be safely transferred between word processors. Open this '
+      .. 'document in a supported word processor and press Refresh in the ' .. config.client .. ' '
+      .. 'plugin to continue working with the citations.'
+    ) }))
+    table.insert(doc.blocks, 4, pandoc.RawBlock('opendocument', '<text:p text:style-name="Text_20_body"/>'))
   end
 
   if config.csl_style and not refsDivSeen then
     table.insert(doc.blocks, pandoc.RawBlock('opendocument', zotero_bibl_odt()))
+  end
+
+  if doc_preferences then
+    table.insert(doc.blocks, pandoc.RawBlock('opendocument', doc_preferences))
   end
 
   return pandoc.Pandoc(doc.blocks, doc.meta)
