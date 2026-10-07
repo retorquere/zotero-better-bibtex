@@ -105,6 +105,10 @@ export type HTMLParserOptions = {
   exportTitleCase?: boolean
 }
 
+type CSQuotes = {
+  re: RegExp
+  repl: string
+}
 export const HTMLParser = new class {
   private options!: HTMLParserOptions
   private sentenceStart!: boolean
@@ -112,6 +116,7 @@ export const HTMLParser = new class {
   private titleCased!: string
   private html!: string
   private ligatures = new RegExp(`[${ Object.keys(ligatures).join('') }]`, 'g')
+  private csquotes: Record<string, CSQuotes> = {}
 
   public parse(html: string, options: HTMLParserOptions): MarkupNode {
     this.html = html
@@ -123,15 +128,22 @@ export const HTMLParser = new class {
 
     // Mark preference-defined quote pairs so the Unicode translator can emit enquote commands.
     if (this.options.csquotes) {
-      const re: string[] = []
-      let repl = '<span class="enquote">'
-      const pairs: string[] = this.options.csquotes.match(/.{1,2}/g) || []
-      for (const pair of pairs) {
-        re.push(`${pair[0]}\\s*([^${pair[1]}]*?)\\s*${pair[1]}`)
-        repl += `$${re.length}`
+      let action: CSQuotes | undefined = this.csquotes[this.options.csquotes]
+      if (!action) {
+        const re: string[] = []
+        let repl = '<span class="enquote">'
+        const pairs: string[] = this.options.csquotes.match(/.{1,2}/g) || []
+        for (const pair of pairs) {
+          re.push(`${pair[0]}\\s*([^${pair[1]}]*?)\\s*${pair[1]}`)
+          repl += `$${re.length}`
+        }
+        repl += '</span>'
+        action = this.csquotes[this.options.csquotes] = {
+          re: new RegExp(re.join('|'), 'g'),
+          repl: re.length ? repl : '',
+        }
       }
-      repl += '</span>'
-      if (re.length) this.html = this.html.replace(new RegExp(re.join('|'), 'g'), repl)
+      if (action.repl) this.html = this.html.replace(action.re, action.repl)
     }
 
     if (!this.options.html) {
