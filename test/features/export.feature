@@ -401,6 +401,13 @@ Feature: Export
       | Hayagriva export retain conference name information #3593      | 2          |
       | Hayagriva format bugs #3579                                    | 5          |
 
+  @hayagriva @postscript
+  Scenario: Hayagriva Export with Postscript
+    Given I import 2 references from "export/*.json"
+    And I set preference .postscript to "export/*.js"
+    Then an export using "Better Hayagriva" should match "export/*.hayagriva.yml"
+    And "export/*.hayagriva.yml" compiles with hayagriva
+
   Scenario: Journal acronym from acronyms list not used in generated citation key #2634
     And I install "export/*.csv" in the better bibtex directory as "acronyms.csv"
     And I import 1 reference from "export/*.json"
