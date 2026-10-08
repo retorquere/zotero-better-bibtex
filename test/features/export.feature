@@ -402,7 +402,7 @@ Feature: Export
       | Hayagriva format bugs #3579                                    | 5          |
 
   @hayagriva @postscript
-  Scenario: Hayagriva Export with Postscript
+  Scenario: Hayagriva Postscript invocation #3627
     Given I import 2 references from "export/*.json"
     And I set preference .postscript to "export/*.js"
     Then an export using "Better Hayagriva" should match "export/*.hayagriva.yml"
