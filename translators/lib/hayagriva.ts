@@ -528,7 +528,7 @@ export const Hayagriva = new class {
         Object.assign(item, getExtra(item.extra, 'zotero'))
         simplifyForExport(item, { clone: false })
         doc[key] = this.fromZotero(item, translation.skipField)
-        postscript(doc[key], item, translation, extraFields)
+        postscript(doc[key], item, translation, Zotero, extraFields)
       }
     }
 
