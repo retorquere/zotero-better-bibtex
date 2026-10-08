@@ -4,13 +4,8 @@ import fs from 'node:fs/promises'
 import { compile } from 'json-schema-to-typescript'
 
 // const SCHEMA_URL = 'https://raw.githubusercontent.com/jassielof/json-schemas/refs/heads/main/docs/hayagriva.yaml'
-const SCHEMA_URL = 'https://raw.githubusercontent.com/mkdjr/hayagriva/4a1c12dd67e8e4efce7c0ecfe4cb401a7802309a/hayagriva.schema.json'
+// const SCHEMA_URL = 'https://raw.githubusercontent.com/mkdjr/hayagriva/4a1c12dd67e8e4efce7c0ecfe4cb401a7802309a/hayagriva.schema.json'
 const TYPEDEF = 'gen/typings/hayagriva.d.ts'
-
-console.log(`Downloading Hayagriva schema from ${SCHEMA_URL}...`)
-const response = await fetch(SCHEMA_URL)
-
-if (!response.ok) throw new Error(`Failed to fetch schema: ${response.status} ${response.statusText}`)
 
 function fix(obj) {
   if (obj?.definitions?.entryType) {
@@ -28,7 +23,7 @@ function fix(obj) {
 
   return obj
 }
-const schemaText = await response.text()
+const schemaText = await fs.readFile('submodules/hayagriva/hayagriva.schema.json', 'utf-8')
 const schemaObj = fix(JSON.parse(schemaText))
 
 console.log('  Generating TypeScript types...')

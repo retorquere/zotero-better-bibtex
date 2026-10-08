@@ -38,3 +38,7 @@
 	path = submodules/translators
 	url = https://github.com/zotero/translators.git
 	branch = master
+[submodule "submodules/hayagriva"]
+	path = submodules/hayagriva
+	url = https://github.com/mkdjr/hayagriva.git
+	branch = main
