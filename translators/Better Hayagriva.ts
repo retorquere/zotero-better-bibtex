@@ -8,6 +8,7 @@ declare var ZOTERO_TRANSLATOR_INFO: Header // eslint-disable-line no-var
 
 export function doExport(): void {
   const translation = Zotero.BetterBibTeX.generateHayagriva(new Collected(ZOTERO_TRANSLATOR_INFO, 'export'))
+  Zotero.debug('3267 final ' + translation.output.body)
   Zotero.write(translation.output.body)
 }
 

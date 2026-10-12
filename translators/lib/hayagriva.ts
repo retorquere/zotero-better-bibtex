@@ -528,6 +528,7 @@ export const Hayagriva = new class {
         Object.assign(item, getExtra(item.extra, 'zotero'))
         simplifyForExport(item, { clone: false })
         doc[key] = this.fromZotero(item, translation.skipField)
+
         postscript(doc[key], item, translation, Zotero, extraFields)
       }
     }
@@ -657,5 +658,6 @@ export const Hayagriva = new class {
 export function generateHayagriva(collected: Collected): Translation {
   const translation = Translation.Export(collected)
   translation.output.body = Hayagriva.export(collected.items.regular, translation)
+  log.debug('3627: output', translation.output.body)
   return translation
 }
