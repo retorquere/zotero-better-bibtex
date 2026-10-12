@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       # 30 days of inactivity => silent close
-      - uses: dessant/lock-threads@v2
+      - uses: dessant/lock-threads@v6
         continue-on-error: true
         with:
           github-token: ${{ github.token }}

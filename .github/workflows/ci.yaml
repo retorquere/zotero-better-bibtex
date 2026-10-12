@@ -44,7 +44,7 @@ jobs:
     - name: get package version
       run: echo "version="`jq -r .version package.json` >> $GITHUB_ENV
     - name: install python
-      uses: actions/setup-python@v6
+      uses: actions/setup-python@v7
       with:
         python-version: '3.12'
         cache: pip
@@ -54,7 +54,7 @@ jobs:
         pip install packaging xvfbwrapper
         pip install -r requirements.txt
     - name: install node
-      uses: actions/setup-node@v6
+      uses: actions/setup-node@v7
       with:
         node-version: 26.x
     - name: install node packages
@@ -154,7 +154,7 @@ jobs:
           'recursive' || 'false' }}
 
     - name: install python
-      uses: actions/setup-python@v6
+      uses: actions/setup-python@v7
       with:
         python-version: '3.12'
         cache: pip
@@ -164,7 +164,7 @@ jobs:
         pip install packaging xvfbwrapper
         pip install -r requirements.txt
     - name: install node
-      uses: actions/setup-node@v6
+      uses: actions/setup-node@v7
       with:
         node-version: 26.x
     - name: install node packages
@@ -222,7 +222,7 @@ jobs:
       with:
         name: build-artifacts
     - name: install python
-      uses: actions/setup-python@v6
+      uses: actions/setup-python@v7
       with:
         python-version: '3.12'
         cache: pip
@@ -336,7 +336,7 @@ jobs:
       with:
         name: build-artifacts
     - name: install python
-      uses: actions/setup-python@v6
+      uses: actions/setup-python@v7
       with:
         python-version: '3.12'
         cache: pip
@@ -346,7 +346,7 @@ jobs:
         pip install packaging xvfbwrapper
         pip install -r requirements.txt
     - name: install node
-      uses: actions/setup-node@v6
+      uses: actions/setup-node@v7
       with:
         node-version: 26.x
     - name: install node packages
@@ -394,7 +394,7 @@ jobs:
           'recursive' || 'false' }}
 
     - name: install python
-      uses: actions/setup-python@v6
+      uses: actions/setup-python@v7
       with:
         python-version: '3.12'
         cache: pip

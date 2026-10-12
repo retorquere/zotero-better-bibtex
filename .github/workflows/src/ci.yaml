@@ -23,13 +23,13 @@ _anchors:
     run: echo "version="`jq -r .version package.json` >> $GITHUB_ENV
   install_python: &install_python
     name: install python
-    uses: actions/setup-python@v6
+    uses: actions/setup-python@v7
     with:
       python-version: '3.12'
       cache: 'pip'
   install_node: &install_node
     name: install node
-    uses: actions/setup-node@v6
+    uses: actions/setup-node@v7
     with:
       node-version: 26.x
   install_python_packages: &install_python_packages
