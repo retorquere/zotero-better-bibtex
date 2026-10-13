@@ -255,7 +255,7 @@ jobs:
           core.setOutput('updated', 'true');
     - name: Create changelog pull request
       if: steps.changelog.outputs.updated == 'true'
-      uses: peter-evans/create-pull-request@v7
+      uses: peter-evans/create-pull-request@v8
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
         add-paths: CHANGELOG.md
