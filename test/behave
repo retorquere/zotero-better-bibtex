@@ -192,10 +192,6 @@ def main():
   config = Configuration()
   sys.exit(run_behave(config, runner_class=InstallLastRunner))
 
-if args.headless:
-  from xvfbwrapper import Xvfb
-  with Xvfb() as xvfb:
-    main()
-else:
-  main()
+if args.headless: os.environ["MOZ_HEADLESS"] = "1"
+main()
 
