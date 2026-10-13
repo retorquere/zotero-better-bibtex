@@ -1,3 +1,215 @@
+## v9.0.72
+
+- Fixed Hayagriva Postscript invocation and made the Zotero API available to Hayagriva postscripts
+- Improved paired-quote handling in text exports
+
+## v9.0.71
+
+- Improved conversion of configured quote pairs during text export
+
+## v9.0.70
+
+- Maintenance release
+
+## v9.0.69
+
+- Improved selection of dates from date intervals
+- Fixed BibLaTeX article-number exports and stopped guessing unsupported fields
+
+## v9.0.68
+
+- Maintenance release
+
+## v9.0.67
+
+- Maintenance and logging updates
+
+## v9.0.66
+
+- Improved BibLaTeX handling of `number`, `issue`, and `eid` fields
+
+## v9.0.65
+
+- Improved startup time for large libraries and export performance
+- Fixed collection/library resolution and behavior when no Zotero pane is active
+
+## v9.0.64
+
+- Added Better BibTeX YAML export and improved CSL YAML format detection and import
+- Expanded Hayagriva support and preserved date-like YAML values
+
+## v9.0.63
+
+- Updated translations
+
+## v9.0.62
+
+- Maintenance release
+
+## v9.0.61
+
+- Updated translations
+
+## v9.0.60
+
+- Added an option to export Extra-field content as a note
+- Fixed duplicate tags in local citation-key scope
+
+## v9.0.59
+
+- Removed the note-picking workaround and made Chinese citation-key segmentation load on demand
+
+## v9.0.58
+
+- Improved Hayagriva export, including creator-role and field handling
+
+## v9.0.57
+
+- Improved date parsing for seasons and expanded Hayagriva field handling
+
+## v9.0.56
+
+- Reduced copying during export to improve performance
+
+## v9.0.55
+
+- Updated translations
+
+## v9.0.54
+
+- Added support for selecting multiple libraries and collections in Zotero
+
+## v9.0.53
+
+- Improved compatibility with Zotero's selected-library APIs
+
+## v9.0.52
+
+- Made collection-path and JSON-RPC lookups safer when collections are missing
+
+## v9.0.51
+
+- Improved export handling of items from the selected library
+
+## v9.0.50
+
+- Updated translations
+
+## v9.0.49
+
+- Applied skip-field rules to Hayagriva exports
+
+## v9.0.48
+
+- Improved parsing of seasonal dates and journal-abbreviation migration
+
+## v9.0.47
+
+- Added a standalone Better Hayagriva translator for import and export
+
+## v9.0.46
+
+- Expanded Hayagriva item-type and identifier support
+
+## v9.0.45
+
+- Improved handling of unresolved libraries in read-only checks
+
+## v9.0.44
+
+- Preserved citation keys when exporting items from read-only libraries
+
+## v9.0.43
+
+- Improved read-only handling for feed items
+
+## v9.0.42
+
+- Maintenance release
+
+## v9.0.41
+
+- Maintenance release
+
+## v9.0.40
+
+- Improved read-only library diagnostics
+
+## v9.0.39
+
+- Stopped restoring citation keys to Extra during key migration
+
+## v9.0.38
+
+- Added initial Hayagriva import support through Better CSL YAML
+
+## v9.0.37
+
+- Added support for read-only libraries and migration of their citation keys
+- Improved CSL YAML export and startup progress reporting
+
+## v9.0.36
+
+- Fixed zero-padding of date fields, including negative years
+
+## v9.0.35
+
+- Corrected BibLaTeX spelling in the export quality report
+
+## v9.0.34
+
+- Fixed HTML conversion in CSL YAML exports
+
+## v9.0.33
+
+- Fixed CSL YAML handling with the YAML library
+
+## v9.0.32
+
+- Maintenance release
+
+## v9.0.31
+
+- Fixed note retrieval in CAYW
+
+## v9.0.30
+
+- Added configurable title casing for exports and improved CSL field and date handling
+
+## v9.0.29
+
+- Improved CAYW note picking and citation context handling
+
+## v9.0.28
+
+- Added CAYW over HTTP and a JSON-RPC method to regenerate citation keys
+- Updated Zotero compatibility, including automatic beta support
+
+## v9.0.27
+
+- Added CSL-specific Extra-field handling and improved language-code handling in CSL exports
+
+## v9.0.26
+
+- Maintenance release
+
+## v9.0.25
+
+- Improved capitalization in citation-key formatting
+
+## v9.0.24
+
+- Improved BibTeX cross-references and date/year handling
+- Merged CSL and Zotero Extra fields when formatting citation keys
+
+## v9.0.23
+
+- Bug fixes and German translation updates
+
+## v9.0.22
+
+- Fixed preference-pane loading
+
 ## v9.0.21
 
 - Hidden preference instructions updated
