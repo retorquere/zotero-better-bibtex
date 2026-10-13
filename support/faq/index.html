@@ -20,7 +20,7 @@
     <meta property="article:tag" content="Export">
     <meta itemprop="name" content="Frequently Asked Questions :: Better BibTeX for Zotero">
     <meta itemprop="description" content="Add-on could not be installed because it appears to be corrupt. You have downloaded the Better BibTeX plugin by clicking on the download link using Firefox. As Zotero and Firefox use the same plugin technology, Firefox think the BetterBibTeX plugin is intended for itself, tries to install it, and then finds out it won’t work. You need to download the plugin without installinging it into Firefox by right-clicking the download link, choose save-as, and then install it into Zotero using installation instructions to get started with BBT.">
-    <meta itemprop="wordCount" content="1899">
+    <meta itemprop="wordCount" content="1931">
     <meta itemprop="keywords" content="Export">
     <title>Frequently Asked Questions :: Better BibTeX for Zotero</title><link rel="icon" href="/zotero-better-bibtex/better-bibtex.ico" type="image/x-icon">
 
@@ -1013,10 +1013,12 @@ won&rsquo;t be touched by Zotero or BBT. This is formally supported by Zotero an
 work in the Word/LibreOffice plugins as well as in the BibTeX export. This will
 be required for words you wish to always keep lowercase, for example. Also, if
 you don&rsquo;t generally use Zotero for generating bibliographies but just for BibTeX
-reference management, you can turn on the hidden preference
-<a href="/zotero-better-bibtex/preferences/hidden-preferences/#suppresstitlecase">suppressTitleCase</a> to keep BBT
-from applying title-casing, but take note that if you do this, the
-bibliographies you get from Zotero and the bibliograhies you get through
+reference management, you can enter <code>off</code> in
+<a href="/zotero-better-bibtex/preferences/export/#apply-title-casing-to-titles">Apply title-casing to titles</a> under Preferences → Export → Miscellaneous
+to keep BBT from applying title-casing. Leave the field empty to use the
+default rules, or use overrides such as <code>-title</code> to disable title-casing
+for individual fields. This does not disable case-protection. Take note that if you do this, the
+bibliographies you get from Zotero and the bibliographies you get through
 Bib(La)TeX will differ, and you can&rsquo;t complain about this.</p>
 <h2 id="why-the-double-braces">Why the double braces?<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard" aria-label="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg" aria-hidden="true"></i></button></span></h2>
 <p>But why then the double-braces (<code>{{...}}</code>) rather than the commonly recommended
