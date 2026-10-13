@@ -85,9 +85,8 @@ better-bibtex_preferences_advanced_export_retain-cache_warning =
     Di default BBT cancella tutte le cache ogni volta che BBT o Zotero sono aggiornati. Poiché non è possibile prevedere quando una modifica in Zotero o in BBT andrà a cambiare l'output generato a partire da un elemento, le cache sono eliminate ogni volta che viene rilevata una nuova versione di uno dei due, così da assicurare che vengano usate le ultime modifiche che riguardano le esportazioni. Tuttavia, se si è in possesso di una libreria molto grande di cui si esporta frequentemente porzioni significative, si può desiderare di mantenere gli elementi nella cache, anche se ciò espone al rischio di non usufruire dei miglioramenti introdotti con gli aggiornamenti più recenti.
     
     Se si riscontra un problema con questa opzione attiva, è necessario cancellare la cache e provare a riprodurre il problema. Il cambiamento di questa opzione causerà la cancellazione della cache.
-better-bibtex_preferences_advanced_export_title-case = 
-    .label = Scrivi i titoli con ogni iniziale maiuscola
-better-bibtex_preferences_advanced_export_title-case_warning = Se si vuole ignorare sia le buone pratiche di BibTeX/BibLaTeX (vedi le FAQ di BBT) e le raccomandazioni di Zotero sulle maiuscole, si può disattivare questa opzione per evitare di applicare l'iniziale maiuscola a tutte le parole negli elementi in inglese.
+better-bibtex_preferences_advanced_export_title-case = Apply title-casing to titles
+better-bibtex_preferences_advanced_export_title-case_warning = Leave empty to use the default title-casing rules for English items, or enter "off" to disable title-casing. To override individual fields, use a comma-separated list such as "-title,+booktitle". Prefix a field with "bibtex." or "biblatex." to restrict the override to that format, for example "-bibtex.title".
 better-bibtex_preferences_advanced_export_workers_cache = 
     .label = Attiva la cache per le esportazioni in background
 better-bibtex_preferences_advanced_export_cache-touch = Update cache
