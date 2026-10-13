@@ -85,9 +85,8 @@ better-bibtex_preferences_advanced_export_retain-cache_warning =
     Par défaut, BBT efface tous les caches chaque fois que lui ou Zotero est mis à jour. Je ne peux pas prédire de manière certaine si un changement dans Zotero ou BBT va affecter la sortie générée pour un élément donné donc, pour être sûr(e) que vous avez toujours les dernières corrections affectant les exportations, les caches sont supprimés lorsqu'une nouvelle version de l'un ou l'autre est détectée. Cependant, si vous avez une très grande bibliothèque dont vous exportez régulièrement des portions significatives, vous pourriez vouloir conserver les éléments mis en cache même si cela comporte le risque que vous obteniez une sortie incorrecte sur l'exportation qui a été corrigée dans l'intervalle.
     
     Si cette option est activée et que vous rencontrez un problème autre que l'annulation du cache lors d'une mise à jour, vous *devez* vider le cache et reproduire le problème. Lorsque vous modifiez ce paramètre, le cache est supprimé (comme c'est le cas pour toute modification de paramètre).
-better-bibtex_preferences_advanced_export_title-case = 
-    .label = Appliquer la capitalisation aux titres
-better-bibtex_preferences_advanced_export_title-case_warning = Si vous n'êtes pas prêt à ignorer à la fois les meilleures pratiques BibTeX/BibLaTeX (voir la FAQ BBT) et les recommandations de Zotero sur la casse des titres/phrases, vous pouvez désactiver cette option pour supprimer la casse de titre pour les entrées en anglais
+better-bibtex_preferences_advanced_export_title-case = Apply title-casing to titles
+better-bibtex_preferences_advanced_export_title-case_warning = Leave empty to use the default title-casing rules for English items, or enter "off" to disable title-casing. To override individual fields, use a comma-separated list such as "-title,+booktitle". Prefix a field with "bibtex." or "biblatex." to restrict the override to that format, for example "-bibtex.title".
 better-bibtex_preferences_advanced_export_workers_cache = 
     .label = Activer la mise en cache pour les exportations en arrière-plan
 better-bibtex_preferences_advanced_export_cache-touch = Mise à jour du cache
