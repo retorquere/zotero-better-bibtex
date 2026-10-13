@@ -3,23 +3,23 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="height=device-height, width=device-width, initial-scale=1.0, minimum-scale=1.0">
-    <meta name="generator" content="Hugo 0.167.0">
+    <meta name="generator" content="Hugo 0.168.0">
     <meta name="generator" content="Relearn 9.1.0+0af4319b67236bb385def8054c0f6ca21b549f2f">
-    <meta name="description" content="v9.0.21 Hidden preference instructions updated Cloned items have their citation keys cleared automatically to prevent duplicates CAYW works again Date parsing logic was enhanced to support better timezone offset detection and date interval handling Collection path resolution support fixed for library and group IDs in absolute paths Pattern formatting for author initials was updated to correctly handle cases where full names are requested instead of just substrings v9.0.10 Citation key at the top v9.0.8 preference autoPinDelay has been renamed to fillKeyAfter preference autoPinOverwrite has been renamed to resetKeyOnChange native Zotero citation key field is now hidden and replaced with a field at the top v9.0.7 localization cleanup updated language support in the language citekey formatting function and langid output improved test reliability by sending only SIGTERM auto-updates are back in the context menu for libraries/groups v9.0.6 fixed raw encoding for tex.X fields auto-export loading fixed removed obsolete clean_pane_persist v9.0.0 removed lokijs which gave unpredictable errors when storing auto-exports new major (should have been done earlier) as BBT is now strictly Zotero 8&#43; v8.0.40 removed pause-auto-export-during sync. Sync will activate auto-exports and the auto-export debounce will handle the rest Switched key migration to use Sqlite.sys.mjs instead of Zotero.DBConnection. Refactored lokijs object updates re-use objects retrieved from find (spread does not always update) v8.0.38 Context-aware menu visibility: Menu items for citation keys (pin, fill, refresh, copy) now hide automatically when no valid, editable items are selected. Manual “Pin” command: pinning is back for people who have autoPinOverwrite on Citation key pattern update: a new key formula function pinned was added, that’s always prepended Fix: BBT would stall zotero shutdown new translations v8.0.25 fix: read-only groups would error out key migration fix: enable re-migration after start v8.0.22 Re-migration option for citation keys Skip non-editable items Show number of conflicts before migration Migration UI wording improvements v8.0.20 dynamic citation keys are back, option in migration new the pinned function for citation key patterns, which retrieves a pinned citation key from the extra field. autoPinDelay defaults to on (2 seconds) migration uses direct DB read rather than attach/detach, windows too clingy and rename failed v8.0.18 Migration improvements:">
+    <meta name="description" content="v9.0.72 Fixed Hayagriva Postscript invocation and made the Zotero API available to Hayagriva postscripts Improved paired-quote handling in text exports v9.0.71 Improved conversion of configured quote pairs during text export v9.0.70 Maintenance release v9.0.69 Improved selection of dates from date intervals Fixed BibLaTeX article-number exports and stopped guessing unsupported fields v9.0.68 Maintenance release v9.0.67 Maintenance and logging updates v9.0.66 Improved BibLaTeX handling of number, issue, and eid fields v9.0.65 Improved startup time for large libraries and export performance Fixed collection/library resolution and behavior when no Zotero pane is active v9.0.64 Added Better BibTeX YAML export and improved CSL YAML format detection and import Expanded Hayagriva support and preserved date-like YAML values v9.0.63 Updated translations v9.0.62 Maintenance release v9.0.61 Updated translations v9.0.60 Added an option to export Extra-field content as a note Fixed duplicate tags in local citation-key scope v9.0.59 Removed the note-picking workaround and made Chinese citation-key segmentation load on demand v9.0.58 Improved Hayagriva export, including creator-role and field handling v9.0.57 Improved date parsing for seasons and expanded Hayagriva field handling v9.0.56 Reduced copying during export to improve performance v9.0.55 Updated translations v9.0.54 Added support for selecting multiple libraries and collections in Zotero v9.0.53 Improved compatibility with Zotero’s selected-library APIs v9.0.52 Made collection-path and JSON-RPC lookups safer when collections are missing v9.0.51 Improved export handling of items from the selected library v9.0.50 Updated translations v9.0.49 Applied skip-field rules to Hayagriva exports v9.0.48 Improved parsing of seasonal dates and journal-abbreviation migration v9.0.47 Added a standalone Better Hayagriva translator for import and export v9.0.46 Expanded Hayagriva item-type and identifier support v9.0.45 Improved handling of unresolved libraries in read-only checks v9.0.44 Preserved citation keys when exporting items from read-only libraries v9.0.43 Improved read-only handling for feed items v9.0.42 Maintenance release v9.0.41 Maintenance release v9.0.40 Improved read-only library diagnostics v9.0.39 Stopped restoring citation keys to Extra during key migration v9.0.38 Added initial Hayagriva import support through Better CSL YAML v9.0.37 Added support for read-only libraries and migration of their citation keys Improved CSL YAML export and startup progress reporting v9.0.36 Fixed zero-padding of date fields, including negative years v9.0.35 Corrected BibLaTeX spelling in the export quality report v9.0.34 Fixed HTML conversion in CSL YAML exports v9.0.33 Fixed CSL YAML handling with the YAML library v9.0.32 Maintenance release v9.0.31 Fixed note retrieval in CAYW v9.0.30 Added configurable title casing for exports and improved CSL field and date handling v9.0.29 Improved CAYW note picking and citation context handling v9.0.28 Added CAYW over HTTP and a JSON-RPC method to regenerate citation keys Updated Zotero compatibility, including automatic beta support v9.0.27 Added CSL-specific Extra-field handling and improved language-code handling in CSL exports v9.0.26 Maintenance release v9.0.25 Improved capitalization in citation-key formatting v9.0.24 Improved BibTeX cross-references and date/year handling Merged CSL and Zotero Extra fields when formatting citation keys v9.0.23 Bug fixes and German translation updates v9.0.22 Fixed preference-pane loading v9.0.21 Hidden preference instructions updated Cloned items have their citation keys cleared automatically to prevent duplicates CAYW works again Date parsing logic was enhanced to support better timezone offset detection and date interval handling Collection path resolution support fixed for library and group IDs in absolute paths Pattern formatting for author initials was updated to correctly handle cases where full names are requested instead of just substrings v9.0.10 Citation key at the top v9.0.8 preference autoPinDelay has been renamed to fillKeyAfter preference autoPinOverwrite has been renamed to resetKeyOnChange native Zotero citation key field is now hidden and replaced with a field at the top v9.0.7 localization cleanup updated language support in the language citekey formatting function and langid output improved test reliability by sending only SIGTERM auto-updates are back in the context menu for libraries/groups v9.0.6 fixed raw encoding for tex.X fields auto-export loading fixed removed obsolete clean_pane_persist v9.0.0 removed lokijs which gave unpredictable errors when storing auto-exports new major (should have been done earlier) as BBT is now strictly Zotero 8&#43; v8.0.40 removed pause-auto-export-during sync. Sync will activate auto-exports and the auto-export debounce will handle the rest Switched key migration to use Sqlite.sys.mjs instead of Zotero.DBConnection. Refactored lokijs object updates re-use objects retrieved from find (spread does not always update) v8.0.38 Context-aware menu visibility: Menu items for citation keys (pin, fill, refresh, copy) now hide automatically when no valid, editable items are selected. Manual “Pin” command: pinning is back for people who have autoPinOverwrite on Citation key pattern update: a new key formula function pinned was added, that’s always prepended Fix: BBT would stall zotero shutdown new translations v8.0.25 fix: read-only groups would error out key migration fix: enable re-migration after start v8.0.22 Re-migration option for citation keys Skip non-editable items Show number of conflicts before migration Migration UI wording improvements v8.0.20 dynamic citation keys are back, option in migration new the pinned function for citation key patterns, which retrieves a pinned citation key from the extra field. autoPinDelay defaults to on (2 seconds) migration uses direct DB read rather than attach/detach, windows too clingy and rename failed v8.0.18 Migration improvements:">
     <meta name="author" content="">
     <meta name="twitter:card" content="summary">
     <meta name="twitter:title" content="Changelog :: Better BibTeX for Zotero">
-    <meta name="twitter:description" content="v9.0.21 Hidden preference instructions updated Cloned items have their citation keys cleared automatically to prevent duplicates CAYW works again Date parsing logic was enhanced to support better timezone offset detection and date interval handling Collection path resolution support fixed for library and group IDs in absolute paths Pattern formatting for author initials was updated to correctly handle cases where full names are requested instead of just substrings v9.0.10 Citation key at the top v9.0.8 preference autoPinDelay has been renamed to fillKeyAfter preference autoPinOverwrite has been renamed to resetKeyOnChange native Zotero citation key field is now hidden and replaced with a field at the top v9.0.7 localization cleanup updated language support in the language citekey formatting function and langid output improved test reliability by sending only SIGTERM auto-updates are back in the context menu for libraries/groups v9.0.6 fixed raw encoding for tex.X fields auto-export loading fixed removed obsolete clean_pane_persist v9.0.0 removed lokijs which gave unpredictable errors when storing auto-exports new major (should have been done earlier) as BBT is now strictly Zotero 8&#43; v8.0.40 removed pause-auto-export-during sync. Sync will activate auto-exports and the auto-export debounce will handle the rest Switched key migration to use Sqlite.sys.mjs instead of Zotero.DBConnection. Refactored lokijs object updates re-use objects retrieved from find (spread does not always update) v8.0.38 Context-aware menu visibility: Menu items for citation keys (pin, fill, refresh, copy) now hide automatically when no valid, editable items are selected. Manual “Pin” command: pinning is back for people who have autoPinOverwrite on Citation key pattern update: a new key formula function pinned was added, that’s always prepended Fix: BBT would stall zotero shutdown new translations v8.0.25 fix: read-only groups would error out key migration fix: enable re-migration after start v8.0.22 Re-migration option for citation keys Skip non-editable items Show number of conflicts before migration Migration UI wording improvements v8.0.20 dynamic citation keys are back, option in migration new the pinned function for citation key patterns, which retrieves a pinned citation key from the extra field. autoPinDelay defaults to on (2 seconds) migration uses direct DB read rather than attach/detach, windows too clingy and rename failed v8.0.18 Migration improvements:">
+    <meta name="twitter:description" content="v9.0.72 Fixed Hayagriva Postscript invocation and made the Zotero API available to Hayagriva postscripts Improved paired-quote handling in text exports v9.0.71 Improved conversion of configured quote pairs during text export v9.0.70 Maintenance release v9.0.69 Improved selection of dates from date intervals Fixed BibLaTeX article-number exports and stopped guessing unsupported fields v9.0.68 Maintenance release v9.0.67 Maintenance and logging updates v9.0.66 Improved BibLaTeX handling of number, issue, and eid fields v9.0.65 Improved startup time for large libraries and export performance Fixed collection/library resolution and behavior when no Zotero pane is active v9.0.64 Added Better BibTeX YAML export and improved CSL YAML format detection and import Expanded Hayagriva support and preserved date-like YAML values v9.0.63 Updated translations v9.0.62 Maintenance release v9.0.61 Updated translations v9.0.60 Added an option to export Extra-field content as a note Fixed duplicate tags in local citation-key scope v9.0.59 Removed the note-picking workaround and made Chinese citation-key segmentation load on demand v9.0.58 Improved Hayagriva export, including creator-role and field handling v9.0.57 Improved date parsing for seasons and expanded Hayagriva field handling v9.0.56 Reduced copying during export to improve performance v9.0.55 Updated translations v9.0.54 Added support for selecting multiple libraries and collections in Zotero v9.0.53 Improved compatibility with Zotero’s selected-library APIs v9.0.52 Made collection-path and JSON-RPC lookups safer when collections are missing v9.0.51 Improved export handling of items from the selected library v9.0.50 Updated translations v9.0.49 Applied skip-field rules to Hayagriva exports v9.0.48 Improved parsing of seasonal dates and journal-abbreviation migration v9.0.47 Added a standalone Better Hayagriva translator for import and export v9.0.46 Expanded Hayagriva item-type and identifier support v9.0.45 Improved handling of unresolved libraries in read-only checks v9.0.44 Preserved citation keys when exporting items from read-only libraries v9.0.43 Improved read-only handling for feed items v9.0.42 Maintenance release v9.0.41 Maintenance release v9.0.40 Improved read-only library diagnostics v9.0.39 Stopped restoring citation keys to Extra during key migration v9.0.38 Added initial Hayagriva import support through Better CSL YAML v9.0.37 Added support for read-only libraries and migration of their citation keys Improved CSL YAML export and startup progress reporting v9.0.36 Fixed zero-padding of date fields, including negative years v9.0.35 Corrected BibLaTeX spelling in the export quality report v9.0.34 Fixed HTML conversion in CSL YAML exports v9.0.33 Fixed CSL YAML handling with the YAML library v9.0.32 Maintenance release v9.0.31 Fixed note retrieval in CAYW v9.0.30 Added configurable title casing for exports and improved CSL field and date handling v9.0.29 Improved CAYW note picking and citation context handling v9.0.28 Added CAYW over HTTP and a JSON-RPC method to regenerate citation keys Updated Zotero compatibility, including automatic beta support v9.0.27 Added CSL-specific Extra-field handling and improved language-code handling in CSL exports v9.0.26 Maintenance release v9.0.25 Improved capitalization in citation-key formatting v9.0.24 Improved BibTeX cross-references and date/year handling Merged CSL and Zotero Extra fields when formatting citation keys v9.0.23 Bug fixes and German translation updates v9.0.22 Fixed preference-pane loading v9.0.21 Hidden preference instructions updated Cloned items have their citation keys cleared automatically to prevent duplicates CAYW works again Date parsing logic was enhanced to support better timezone offset detection and date interval handling Collection path resolution support fixed for library and group IDs in absolute paths Pattern formatting for author initials was updated to correctly handle cases where full names are requested instead of just substrings v9.0.10 Citation key at the top v9.0.8 preference autoPinDelay has been renamed to fillKeyAfter preference autoPinOverwrite has been renamed to resetKeyOnChange native Zotero citation key field is now hidden and replaced with a field at the top v9.0.7 localization cleanup updated language support in the language citekey formatting function and langid output improved test reliability by sending only SIGTERM auto-updates are back in the context menu for libraries/groups v9.0.6 fixed raw encoding for tex.X fields auto-export loading fixed removed obsolete clean_pane_persist v9.0.0 removed lokijs which gave unpredictable errors when storing auto-exports new major (should have been done earlier) as BBT is now strictly Zotero 8&#43; v8.0.40 removed pause-auto-export-during sync. Sync will activate auto-exports and the auto-export debounce will handle the rest Switched key migration to use Sqlite.sys.mjs instead of Zotero.DBConnection. Refactored lokijs object updates re-use objects retrieved from find (spread does not always update) v8.0.38 Context-aware menu visibility: Menu items for citation keys (pin, fill, refresh, copy) now hide automatically when no valid, editable items are selected. Manual “Pin” command: pinning is back for people who have autoPinOverwrite on Citation key pattern update: a new key formula function pinned was added, that’s always prepended Fix: BBT would stall zotero shutdown new translations v8.0.25 fix: read-only groups would error out key migration fix: enable re-migration after start v8.0.22 Re-migration option for citation keys Skip non-editable items Show number of conflicts before migration Migration UI wording improvements v8.0.20 dynamic citation keys are back, option in migration new the pinned function for citation key patterns, which retrieves a pinned citation key from the extra field. autoPinDelay defaults to on (2 seconds) migration uses direct DB read rather than attach/detach, windows too clingy and rename failed v8.0.18 Migration improvements:">
     <meta property="og:url" content="/zotero-better-bibtex/changelog/index.html">
     <meta property="og:site_name" content="Better BibTeX for Zotero">
     <meta property="og:title" content="Changelog :: Better BibTeX for Zotero">
-    <meta property="og:description" content="v9.0.21 Hidden preference instructions updated Cloned items have their citation keys cleared automatically to prevent duplicates CAYW works again Date parsing logic was enhanced to support better timezone offset detection and date interval handling Collection path resolution support fixed for library and group IDs in absolute paths Pattern formatting for author initials was updated to correctly handle cases where full names are requested instead of just substrings v9.0.10 Citation key at the top v9.0.8 preference autoPinDelay has been renamed to fillKeyAfter preference autoPinOverwrite has been renamed to resetKeyOnChange native Zotero citation key field is now hidden and replaced with a field at the top v9.0.7 localization cleanup updated language support in the language citekey formatting function and langid output improved test reliability by sending only SIGTERM auto-updates are back in the context menu for libraries/groups v9.0.6 fixed raw encoding for tex.X fields auto-export loading fixed removed obsolete clean_pane_persist v9.0.0 removed lokijs which gave unpredictable errors when storing auto-exports new major (should have been done earlier) as BBT is now strictly Zotero 8&#43; v8.0.40 removed pause-auto-export-during sync. Sync will activate auto-exports and the auto-export debounce will handle the rest Switched key migration to use Sqlite.sys.mjs instead of Zotero.DBConnection. Refactored lokijs object updates re-use objects retrieved from find (spread does not always update) v8.0.38 Context-aware menu visibility: Menu items for citation keys (pin, fill, refresh, copy) now hide automatically when no valid, editable items are selected. Manual “Pin” command: pinning is back for people who have autoPinOverwrite on Citation key pattern update: a new key formula function pinned was added, that’s always prepended Fix: BBT would stall zotero shutdown new translations v8.0.25 fix: read-only groups would error out key migration fix: enable re-migration after start v8.0.22 Re-migration option for citation keys Skip non-editable items Show number of conflicts before migration Migration UI wording improvements v8.0.20 dynamic citation keys are back, option in migration new the pinned function for citation key patterns, which retrieves a pinned citation key from the extra field. autoPinDelay defaults to on (2 seconds) migration uses direct DB read rather than attach/detach, windows too clingy and rename failed v8.0.18 Migration improvements:">
+    <meta property="og:description" content="v9.0.72 Fixed Hayagriva Postscript invocation and made the Zotero API available to Hayagriva postscripts Improved paired-quote handling in text exports v9.0.71 Improved conversion of configured quote pairs during text export v9.0.70 Maintenance release v9.0.69 Improved selection of dates from date intervals Fixed BibLaTeX article-number exports and stopped guessing unsupported fields v9.0.68 Maintenance release v9.0.67 Maintenance and logging updates v9.0.66 Improved BibLaTeX handling of number, issue, and eid fields v9.0.65 Improved startup time for large libraries and export performance Fixed collection/library resolution and behavior when no Zotero pane is active v9.0.64 Added Better BibTeX YAML export and improved CSL YAML format detection and import Expanded Hayagriva support and preserved date-like YAML values v9.0.63 Updated translations v9.0.62 Maintenance release v9.0.61 Updated translations v9.0.60 Added an option to export Extra-field content as a note Fixed duplicate tags in local citation-key scope v9.0.59 Removed the note-picking workaround and made Chinese citation-key segmentation load on demand v9.0.58 Improved Hayagriva export, including creator-role and field handling v9.0.57 Improved date parsing for seasons and expanded Hayagriva field handling v9.0.56 Reduced copying during export to improve performance v9.0.55 Updated translations v9.0.54 Added support for selecting multiple libraries and collections in Zotero v9.0.53 Improved compatibility with Zotero’s selected-library APIs v9.0.52 Made collection-path and JSON-RPC lookups safer when collections are missing v9.0.51 Improved export handling of items from the selected library v9.0.50 Updated translations v9.0.49 Applied skip-field rules to Hayagriva exports v9.0.48 Improved parsing of seasonal dates and journal-abbreviation migration v9.0.47 Added a standalone Better Hayagriva translator for import and export v9.0.46 Expanded Hayagriva item-type and identifier support v9.0.45 Improved handling of unresolved libraries in read-only checks v9.0.44 Preserved citation keys when exporting items from read-only libraries v9.0.43 Improved read-only handling for feed items v9.0.42 Maintenance release v9.0.41 Maintenance release v9.0.40 Improved read-only library diagnostics v9.0.39 Stopped restoring citation keys to Extra during key migration v9.0.38 Added initial Hayagriva import support through Better CSL YAML v9.0.37 Added support for read-only libraries and migration of their citation keys Improved CSL YAML export and startup progress reporting v9.0.36 Fixed zero-padding of date fields, including negative years v9.0.35 Corrected BibLaTeX spelling in the export quality report v9.0.34 Fixed HTML conversion in CSL YAML exports v9.0.33 Fixed CSL YAML handling with the YAML library v9.0.32 Maintenance release v9.0.31 Fixed note retrieval in CAYW v9.0.30 Added configurable title casing for exports and improved CSL field and date handling v9.0.29 Improved CAYW note picking and citation context handling v9.0.28 Added CAYW over HTTP and a JSON-RPC method to regenerate citation keys Updated Zotero compatibility, including automatic beta support v9.0.27 Added CSL-specific Extra-field handling and improved language-code handling in CSL exports v9.0.26 Maintenance release v9.0.25 Improved capitalization in citation-key formatting v9.0.24 Improved BibTeX cross-references and date/year handling Merged CSL and Zotero Extra fields when formatting citation keys v9.0.23 Bug fixes and German translation updates v9.0.22 Fixed preference-pane loading v9.0.21 Hidden preference instructions updated Cloned items have their citation keys cleared automatically to prevent duplicates CAYW works again Date parsing logic was enhanced to support better timezone offset detection and date interval handling Collection path resolution support fixed for library and group IDs in absolute paths Pattern formatting for author initials was updated to correctly handle cases where full names are requested instead of just substrings v9.0.10 Citation key at the top v9.0.8 preference autoPinDelay has been renamed to fillKeyAfter preference autoPinOverwrite has been renamed to resetKeyOnChange native Zotero citation key field is now hidden and replaced with a field at the top v9.0.7 localization cleanup updated language support in the language citekey formatting function and langid output improved test reliability by sending only SIGTERM auto-updates are back in the context menu for libraries/groups v9.0.6 fixed raw encoding for tex.X fields auto-export loading fixed removed obsolete clean_pane_persist v9.0.0 removed lokijs which gave unpredictable errors when storing auto-exports new major (should have been done earlier) as BBT is now strictly Zotero 8&#43; v8.0.40 removed pause-auto-export-during sync. Sync will activate auto-exports and the auto-export debounce will handle the rest Switched key migration to use Sqlite.sys.mjs instead of Zotero.DBConnection. Refactored lokijs object updates re-use objects retrieved from find (spread does not always update) v8.0.38 Context-aware menu visibility: Menu items for citation keys (pin, fill, refresh, copy) now hide automatically when no valid, editable items are selected. Manual “Pin” command: pinning is back for people who have autoPinOverwrite on Citation key pattern update: a new key formula function pinned was added, that’s always prepended Fix: BBT would stall zotero shutdown new translations v8.0.25 fix: read-only groups would error out key migration fix: enable re-migration after start v8.0.22 Re-migration option for citation keys Skip non-editable items Show number of conflicts before migration Migration UI wording improvements v8.0.20 dynamic citation keys are back, option in migration new the pinned function for citation key patterns, which retrieves a pinned citation key from the extra field. autoPinDelay defaults to on (2 seconds) migration uses direct DB read rather than attach/detach, windows too clingy and rename failed v8.0.18 Migration improvements:">
     <meta property="og:locale" content="en_US">
     <meta property="og:type" content="article">
     <meta property="article:section" content="Better BibTeX for Zotero">
     <meta itemprop="name" content="Changelog :: Better BibTeX for Zotero">
-    <meta itemprop="description" content="v9.0.21 Hidden preference instructions updated Cloned items have their citation keys cleared automatically to prevent duplicates CAYW works again Date parsing logic was enhanced to support better timezone offset detection and date interval handling Collection path resolution support fixed for library and group IDs in absolute paths Pattern formatting for author initials was updated to correctly handle cases where full names are requested instead of just substrings v9.0.10 Citation key at the top v9.0.8 preference autoPinDelay has been renamed to fillKeyAfter preference autoPinOverwrite has been renamed to resetKeyOnChange native Zotero citation key field is now hidden and replaced with a field at the top v9.0.7 localization cleanup updated language support in the language citekey formatting function and langid output improved test reliability by sending only SIGTERM auto-updates are back in the context menu for libraries/groups v9.0.6 fixed raw encoding for tex.X fields auto-export loading fixed removed obsolete clean_pane_persist v9.0.0 removed lokijs which gave unpredictable errors when storing auto-exports new major (should have been done earlier) as BBT is now strictly Zotero 8&#43; v8.0.40 removed pause-auto-export-during sync. Sync will activate auto-exports and the auto-export debounce will handle the rest Switched key migration to use Sqlite.sys.mjs instead of Zotero.DBConnection. Refactored lokijs object updates re-use objects retrieved from find (spread does not always update) v8.0.38 Context-aware menu visibility: Menu items for citation keys (pin, fill, refresh, copy) now hide automatically when no valid, editable items are selected. Manual “Pin” command: pinning is back for people who have autoPinOverwrite on Citation key pattern update: a new key formula function pinned was added, that’s always prepended Fix: BBT would stall zotero shutdown new translations v8.0.25 fix: read-only groups would error out key migration fix: enable re-migration after start v8.0.22 Re-migration option for citation keys Skip non-editable items Show number of conflicts before migration Migration UI wording improvements v8.0.20 dynamic citation keys are back, option in migration new the pinned function for citation key patterns, which retrieves a pinned citation key from the extra field. autoPinDelay defaults to on (2 seconds) migration uses direct DB read rather than attach/detach, windows too clingy and rename failed v8.0.18 Migration improvements:">
-    <meta itemprop="wordCount" content="1022">
+    <meta itemprop="description" content="v9.0.72 Fixed Hayagriva Postscript invocation and made the Zotero API available to Hayagriva postscripts Improved paired-quote handling in text exports v9.0.71 Improved conversion of configured quote pairs during text export v9.0.70 Maintenance release v9.0.69 Improved selection of dates from date intervals Fixed BibLaTeX article-number exports and stopped guessing unsupported fields v9.0.68 Maintenance release v9.0.67 Maintenance and logging updates v9.0.66 Improved BibLaTeX handling of number, issue, and eid fields v9.0.65 Improved startup time for large libraries and export performance Fixed collection/library resolution and behavior when no Zotero pane is active v9.0.64 Added Better BibTeX YAML export and improved CSL YAML format detection and import Expanded Hayagriva support and preserved date-like YAML values v9.0.63 Updated translations v9.0.62 Maintenance release v9.0.61 Updated translations v9.0.60 Added an option to export Extra-field content as a note Fixed duplicate tags in local citation-key scope v9.0.59 Removed the note-picking workaround and made Chinese citation-key segmentation load on demand v9.0.58 Improved Hayagriva export, including creator-role and field handling v9.0.57 Improved date parsing for seasons and expanded Hayagriva field handling v9.0.56 Reduced copying during export to improve performance v9.0.55 Updated translations v9.0.54 Added support for selecting multiple libraries and collections in Zotero v9.0.53 Improved compatibility with Zotero’s selected-library APIs v9.0.52 Made collection-path and JSON-RPC lookups safer when collections are missing v9.0.51 Improved export handling of items from the selected library v9.0.50 Updated translations v9.0.49 Applied skip-field rules to Hayagriva exports v9.0.48 Improved parsing of seasonal dates and journal-abbreviation migration v9.0.47 Added a standalone Better Hayagriva translator for import and export v9.0.46 Expanded Hayagriva item-type and identifier support v9.0.45 Improved handling of unresolved libraries in read-only checks v9.0.44 Preserved citation keys when exporting items from read-only libraries v9.0.43 Improved read-only handling for feed items v9.0.42 Maintenance release v9.0.41 Maintenance release v9.0.40 Improved read-only library diagnostics v9.0.39 Stopped restoring citation keys to Extra during key migration v9.0.38 Added initial Hayagriva import support through Better CSL YAML v9.0.37 Added support for read-only libraries and migration of their citation keys Improved CSL YAML export and startup progress reporting v9.0.36 Fixed zero-padding of date fields, including negative years v9.0.35 Corrected BibLaTeX spelling in the export quality report v9.0.34 Fixed HTML conversion in CSL YAML exports v9.0.33 Fixed CSL YAML handling with the YAML library v9.0.32 Maintenance release v9.0.31 Fixed note retrieval in CAYW v9.0.30 Added configurable title casing for exports and improved CSL field and date handling v9.0.29 Improved CAYW note picking and citation context handling v9.0.28 Added CAYW over HTTP and a JSON-RPC method to regenerate citation keys Updated Zotero compatibility, including automatic beta support v9.0.27 Added CSL-specific Extra-field handling and improved language-code handling in CSL exports v9.0.26 Maintenance release v9.0.25 Improved capitalization in citation-key formatting v9.0.24 Improved BibTeX cross-references and date/year handling Merged CSL and Zotero Extra fields when formatting citation keys v9.0.23 Bug fixes and German translation updates v9.0.22 Fixed preference-pane loading v9.0.21 Hidden preference instructions updated Cloned items have their citation keys cleared automatically to prevent duplicates CAYW works again Date parsing logic was enhanced to support better timezone offset detection and date interval handling Collection path resolution support fixed for library and group IDs in absolute paths Pattern formatting for author initials was updated to correctly handle cases where full names are requested instead of just substrings v9.0.10 Citation key at the top v9.0.8 preference autoPinDelay has been renamed to fillKeyAfter preference autoPinOverwrite has been renamed to resetKeyOnChange native Zotero citation key field is now hidden and replaced with a field at the top v9.0.7 localization cleanup updated language support in the language citekey formatting function and langid output improved test reliability by sending only SIGTERM auto-updates are back in the context menu for libraries/groups v9.0.6 fixed raw encoding for tex.X fields auto-export loading fixed removed obsolete clean_pane_persist v9.0.0 removed lokijs which gave unpredictable errors when storing auto-exports new major (should have been done earlier) as BBT is now strictly Zotero 8&#43; v8.0.40 removed pause-auto-export-during sync. Sync will activate auto-exports and the auto-export debounce will handle the rest Switched key migration to use Sqlite.sys.mjs instead of Zotero.DBConnection. Refactored lokijs object updates re-use objects retrieved from find (spread does not always update) v8.0.38 Context-aware menu visibility: Menu items for citation keys (pin, fill, refresh, copy) now hide automatically when no valid, editable items are selected. Manual “Pin” command: pinning is back for people who have autoPinOverwrite on Citation key pattern update: a new key formula function pinned was added, that’s always prepended Fix: BBT would stall zotero shutdown new translations v8.0.25 fix: read-only groups would error out key migration fix: enable re-migration after start v8.0.22 Re-migration option for citation keys Skip non-editable items Show number of conflicts before migration Migration UI wording improvements v8.0.20 dynamic citation keys are back, option in migration new the pinned function for citation key patterns, which retrieves a pinned citation key from the extra field. autoPinDelay defaults to on (2 seconds) migration uses direct DB read rather than attach/detach, windows too clingy and rename failed v8.0.18 Migration improvements:">
+    <meta itemprop="wordCount" content="1493">
     <title>Changelog :: Better BibTeX for Zotero</title><link rel="icon" href="/zotero-better-bibtex/better-bibtex.ico" type="image/x-icon">
 
     <link href="/zotero-better-bibtex/css/auto-complete/auto-complete.min.css" rel="stylesheet">
@@ -894,6 +894,57 @@ Better BibTeX for Zotero
                 <div class="topbar-content-wrapper" tabindex="-1">
 <nav class="TableOfContents" aria-label="Table of Contents">
   <ul>
+    <li><a href="#v9072">v9.0.72</a></li>
+    <li><a href="#v9071">v9.0.71</a></li>
+    <li><a href="#v9070">v9.0.70</a></li>
+    <li><a href="#v9069">v9.0.69</a></li>
+    <li><a href="#v9068">v9.0.68</a></li>
+    <li><a href="#v9067">v9.0.67</a></li>
+    <li><a href="#v9066">v9.0.66</a></li>
+    <li><a href="#v9065">v9.0.65</a></li>
+    <li><a href="#v9064">v9.0.64</a></li>
+    <li><a href="#v9063">v9.0.63</a></li>
+    <li><a href="#v9062">v9.0.62</a></li>
+    <li><a href="#v9061">v9.0.61</a></li>
+    <li><a href="#v9060">v9.0.60</a></li>
+    <li><a href="#v9059">v9.0.59</a></li>
+    <li><a href="#v9058">v9.0.58</a></li>
+    <li><a href="#v9057">v9.0.57</a></li>
+    <li><a href="#v9056">v9.0.56</a></li>
+    <li><a href="#v9055">v9.0.55</a></li>
+    <li><a href="#v9054">v9.0.54</a></li>
+    <li><a href="#v9053">v9.0.53</a></li>
+    <li><a href="#v9052">v9.0.52</a></li>
+    <li><a href="#v9051">v9.0.51</a></li>
+    <li><a href="#v9050">v9.0.50</a></li>
+    <li><a href="#v9049">v9.0.49</a></li>
+    <li><a href="#v9048">v9.0.48</a></li>
+    <li><a href="#v9047">v9.0.47</a></li>
+    <li><a href="#v9046">v9.0.46</a></li>
+    <li><a href="#v9045">v9.0.45</a></li>
+    <li><a href="#v9044">v9.0.44</a></li>
+    <li><a href="#v9043">v9.0.43</a></li>
+    <li><a href="#v9042">v9.0.42</a></li>
+    <li><a href="#v9041">v9.0.41</a></li>
+    <li><a href="#v9040">v9.0.40</a></li>
+    <li><a href="#v9039">v9.0.39</a></li>
+    <li><a href="#v9038">v9.0.38</a></li>
+    <li><a href="#v9037">v9.0.37</a></li>
+    <li><a href="#v9036">v9.0.36</a></li>
+    <li><a href="#v9035">v9.0.35</a></li>
+    <li><a href="#v9034">v9.0.34</a></li>
+    <li><a href="#v9033">v9.0.33</a></li>
+    <li><a href="#v9032">v9.0.32</a></li>
+    <li><a href="#v9031">v9.0.31</a></li>
+    <li><a href="#v9030">v9.0.30</a></li>
+    <li><a href="#v9029">v9.0.29</a></li>
+    <li><a href="#v9028">v9.0.28</a></li>
+    <li><a href="#v9027">v9.0.27</a></li>
+    <li><a href="#v9026">v9.0.26</a></li>
+    <li><a href="#v9025">v9.0.25</a></li>
+    <li><a href="#v9024">v9.0.24</a></li>
+    <li><a href="#v9023">v9.0.23</a></li>
+    <li><a href="#v9022">v9.0.22</a></li>
     <li><a href="#v9021">v9.0.21</a></li>
     <li><a href="#v9010">v9.0.10</a></li>
     <li><a href="#v908">v9.0.8</a></li>
@@ -971,6 +1022,218 @@ Better BibTeX for Zotero
 <h1 id="changelog">Changelog</h1>
 
 <!-- WARNING: GENERATED FROM https://github.com/retorquere/zotero-better-bibtex/blob/master/CHANGELOG.md. EDITS WILL BE OVERWRITTEN -->
+<h2 id="v9072">v9.0.72<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard" aria-label="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg" aria-hidden="true"></i></button></span></h2>
+<ul>
+<li>Fixed Hayagriva Postscript invocation and made the Zotero API available to Hayagriva postscripts</li>
+<li>Improved paired-quote handling in text exports</li>
+</ul>
+<h2 id="v9071">v9.0.71<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard" aria-label="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg" aria-hidden="true"></i></button></span></h2>
+<ul>
+<li>Improved conversion of configured quote pairs during text export</li>
+</ul>
+<h2 id="v9070">v9.0.70<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard" aria-label="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg" aria-hidden="true"></i></button></span></h2>
+<ul>
+<li>Maintenance release</li>
+</ul>
+<h2 id="v9069">v9.0.69<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard" aria-label="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg" aria-hidden="true"></i></button></span></h2>
+<ul>
+<li>Improved selection of dates from date intervals</li>
+<li>Fixed BibLaTeX article-number exports and stopped guessing unsupported fields</li>
+</ul>
+<h2 id="v9068">v9.0.68<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard" aria-label="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg" aria-hidden="true"></i></button></span></h2>
+<ul>
+<li>Maintenance release</li>
+</ul>
+<h2 id="v9067">v9.0.67<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard" aria-label="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg" aria-hidden="true"></i></button></span></h2>
+<ul>
+<li>Maintenance and logging updates</li>
+</ul>
+<h2 id="v9066">v9.0.66<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard" aria-label="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg" aria-hidden="true"></i></button></span></h2>
+<ul>
+<li>Improved BibLaTeX handling of <code>number</code>, <code>issue</code>, and <code>eid</code> fields</li>
+</ul>
+<h2 id="v9065">v9.0.65<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard" aria-label="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg" aria-hidden="true"></i></button></span></h2>
+<ul>
+<li>Improved startup time for large libraries and export performance</li>
+<li>Fixed collection/library resolution and behavior when no Zotero pane is active</li>
+</ul>
+<h2 id="v9064">v9.0.64<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard" aria-label="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg" aria-hidden="true"></i></button></span></h2>
+<ul>
+<li>Added Better BibTeX YAML export and improved CSL YAML format detection and import</li>
+<li>Expanded Hayagriva support and preserved date-like YAML values</li>
+</ul>
+<h2 id="v9063">v9.0.63<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard" aria-label="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg" aria-hidden="true"></i></button></span></h2>
+<ul>
+<li>Updated translations</li>
+</ul>
+<h2 id="v9062">v9.0.62<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard" aria-label="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg" aria-hidden="true"></i></button></span></h2>
+<ul>
+<li>Maintenance release</li>
+</ul>
+<h2 id="v9061">v9.0.61<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard" aria-label="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg" aria-hidden="true"></i></button></span></h2>
+<ul>
+<li>Updated translations</li>
+</ul>
+<h2 id="v9060">v9.0.60<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard" aria-label="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg" aria-hidden="true"></i></button></span></h2>
+<ul>
+<li>Added an option to export Extra-field content as a note</li>
+<li>Fixed duplicate tags in local citation-key scope</li>
+</ul>
+<h2 id="v9059">v9.0.59<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard" aria-label="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg" aria-hidden="true"></i></button></span></h2>
+<ul>
+<li>Removed the note-picking workaround and made Chinese citation-key segmentation load on demand</li>
+</ul>
+<h2 id="v9058">v9.0.58<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard" aria-label="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg" aria-hidden="true"></i></button></span></h2>
+<ul>
+<li>Improved Hayagriva export, including creator-role and field handling</li>
+</ul>
+<h2 id="v9057">v9.0.57<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard" aria-label="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg" aria-hidden="true"></i></button></span></h2>
+<ul>
+<li>Improved date parsing for seasons and expanded Hayagriva field handling</li>
+</ul>
+<h2 id="v9056">v9.0.56<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard" aria-label="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg" aria-hidden="true"></i></button></span></h2>
+<ul>
+<li>Reduced copying during export to improve performance</li>
+</ul>
+<h2 id="v9055">v9.0.55<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard" aria-label="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg" aria-hidden="true"></i></button></span></h2>
+<ul>
+<li>Updated translations</li>
+</ul>
+<h2 id="v9054">v9.0.54<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard" aria-label="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg" aria-hidden="true"></i></button></span></h2>
+<ul>
+<li>Added support for selecting multiple libraries and collections in Zotero</li>
+</ul>
+<h2 id="v9053">v9.0.53<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard" aria-label="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg" aria-hidden="true"></i></button></span></h2>
+<ul>
+<li>Improved compatibility with Zotero&rsquo;s selected-library APIs</li>
+</ul>
+<h2 id="v9052">v9.0.52<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard" aria-label="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg" aria-hidden="true"></i></button></span></h2>
+<ul>
+<li>Made collection-path and JSON-RPC lookups safer when collections are missing</li>
+</ul>
+<h2 id="v9051">v9.0.51<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard" aria-label="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg" aria-hidden="true"></i></button></span></h2>
+<ul>
+<li>Improved export handling of items from the selected library</li>
+</ul>
+<h2 id="v9050">v9.0.50<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard" aria-label="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg" aria-hidden="true"></i></button></span></h2>
+<ul>
+<li>Updated translations</li>
+</ul>
+<h2 id="v9049">v9.0.49<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard" aria-label="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg" aria-hidden="true"></i></button></span></h2>
+<ul>
+<li>Applied skip-field rules to Hayagriva exports</li>
+</ul>
+<h2 id="v9048">v9.0.48<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard" aria-label="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg" aria-hidden="true"></i></button></span></h2>
+<ul>
+<li>Improved parsing of seasonal dates and journal-abbreviation migration</li>
+</ul>
+<h2 id="v9047">v9.0.47<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard" aria-label="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg" aria-hidden="true"></i></button></span></h2>
+<ul>
+<li>Added a standalone Better Hayagriva translator for import and export</li>
+</ul>
+<h2 id="v9046">v9.0.46<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard" aria-label="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg" aria-hidden="true"></i></button></span></h2>
+<ul>
+<li>Expanded Hayagriva item-type and identifier support</li>
+</ul>
+<h2 id="v9045">v9.0.45<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard" aria-label="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg" aria-hidden="true"></i></button></span></h2>
+<ul>
+<li>Improved handling of unresolved libraries in read-only checks</li>
+</ul>
+<h2 id="v9044">v9.0.44<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard" aria-label="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg" aria-hidden="true"></i></button></span></h2>
+<ul>
+<li>Preserved citation keys when exporting items from read-only libraries</li>
+</ul>
+<h2 id="v9043">v9.0.43<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard" aria-label="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg" aria-hidden="true"></i></button></span></h2>
+<ul>
+<li>Improved read-only handling for feed items</li>
+</ul>
+<h2 id="v9042">v9.0.42<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard" aria-label="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg" aria-hidden="true"></i></button></span></h2>
+<ul>
+<li>Maintenance release</li>
+</ul>
+<h2 id="v9041">v9.0.41<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard" aria-label="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg" aria-hidden="true"></i></button></span></h2>
+<ul>
+<li>Maintenance release</li>
+</ul>
+<h2 id="v9040">v9.0.40<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard" aria-label="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg" aria-hidden="true"></i></button></span></h2>
+<ul>
+<li>Improved read-only library diagnostics</li>
+</ul>
+<h2 id="v9039">v9.0.39<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard" aria-label="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg" aria-hidden="true"></i></button></span></h2>
+<ul>
+<li>Stopped restoring citation keys to Extra during key migration</li>
+</ul>
+<h2 id="v9038">v9.0.38<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard" aria-label="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg" aria-hidden="true"></i></button></span></h2>
+<ul>
+<li>Added initial Hayagriva import support through Better CSL YAML</li>
+</ul>
+<h2 id="v9037">v9.0.37<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard" aria-label="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg" aria-hidden="true"></i></button></span></h2>
+<ul>
+<li>Added support for read-only libraries and migration of their citation keys</li>
+<li>Improved CSL YAML export and startup progress reporting</li>
+</ul>
+<h2 id="v9036">v9.0.36<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard" aria-label="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg" aria-hidden="true"></i></button></span></h2>
+<ul>
+<li>Fixed zero-padding of date fields, including negative years</li>
+</ul>
+<h2 id="v9035">v9.0.35<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard" aria-label="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg" aria-hidden="true"></i></button></span></h2>
+<ul>
+<li>Corrected BibLaTeX spelling in the export quality report</li>
+</ul>
+<h2 id="v9034">v9.0.34<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard" aria-label="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg" aria-hidden="true"></i></button></span></h2>
+<ul>
+<li>Fixed HTML conversion in CSL YAML exports</li>
+</ul>
+<h2 id="v9033">v9.0.33<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard" aria-label="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg" aria-hidden="true"></i></button></span></h2>
+<ul>
+<li>Fixed CSL YAML handling with the YAML library</li>
+</ul>
+<h2 id="v9032">v9.0.32<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard" aria-label="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg" aria-hidden="true"></i></button></span></h2>
+<ul>
+<li>Maintenance release</li>
+</ul>
+<h2 id="v9031">v9.0.31<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard" aria-label="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg" aria-hidden="true"></i></button></span></h2>
+<ul>
+<li>Fixed note retrieval in CAYW</li>
+</ul>
+<h2 id="v9030">v9.0.30<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard" aria-label="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg" aria-hidden="true"></i></button></span></h2>
+<ul>
+<li>Added configurable title casing for exports and improved CSL field and date handling</li>
+</ul>
+<h2 id="v9029">v9.0.29<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard" aria-label="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg" aria-hidden="true"></i></button></span></h2>
+<ul>
+<li>Improved CAYW note picking and citation context handling</li>
+</ul>
+<h2 id="v9028">v9.0.28<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard" aria-label="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg" aria-hidden="true"></i></button></span></h2>
+<ul>
+<li>Added CAYW over HTTP and a JSON-RPC method to regenerate citation keys</li>
+<li>Updated Zotero compatibility, including automatic beta support</li>
+</ul>
+<h2 id="v9027">v9.0.27<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard" aria-label="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg" aria-hidden="true"></i></button></span></h2>
+<ul>
+<li>Added CSL-specific Extra-field handling and improved language-code handling in CSL exports</li>
+</ul>
+<h2 id="v9026">v9.0.26<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard" aria-label="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg" aria-hidden="true"></i></button></span></h2>
+<ul>
+<li>Maintenance release</li>
+</ul>
+<h2 id="v9025">v9.0.25<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard" aria-label="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg" aria-hidden="true"></i></button></span></h2>
+<ul>
+<li>Improved capitalization in citation-key formatting</li>
+</ul>
+<h2 id="v9024">v9.0.24<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard" aria-label="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg" aria-hidden="true"></i></button></span></h2>
+<ul>
+<li>Improved BibTeX cross-references and date/year handling</li>
+<li>Merged CSL and Zotero Extra fields when formatting citation keys</li>
+</ul>
+<h2 id="v9023">v9.0.23<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard" aria-label="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg" aria-hidden="true"></i></button></span></h2>
+<ul>
+<li>Bug fixes and German translation updates</li>
+</ul>
+<h2 id="v9022">v9.0.22<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard" aria-label="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg" aria-hidden="true"></i></button></span></h2>
+<ul>
+<li>Fixed preference-pane loading</li>
+</ul>
 <h2 id="v9021">v9.0.21<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard" aria-label="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg" aria-hidden="true"></i></button></span></h2>
 <ul>
 <li>Hidden preference instructions updated</li>
