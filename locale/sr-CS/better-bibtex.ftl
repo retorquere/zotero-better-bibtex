@@ -85,9 +85,8 @@ better-bibtex_preferences_advanced_export_retain-cache_warning =
     Better BibTeX podrazumevano briše sav keš kada se ažurira Zotero ili sam dodatak. Nije moguće unapred pouzdano znati da li će promena u bilo kom od njih uticati na izvoz određene stavke. Zato se pri otkrivanju nove verzije keš briše, kako biste uvek dobili najnovije ispravke koje utiču na izvoz. Ako imate veoma veliku biblioteku i redovno izvozite njen znatan deo, možda ćete želeti da zadržite keš, uz rizik da izvezete zastarele ili pogrešne podatke koji su u međuvremenu ispravljeni.
     
     Ako uključite ovu opciju i naiđete na bilo kakav problem osim brisanja keša pri ažuriranju, *morate* da obrišete keš i ponovite problem. Keš se briše kada promenite ovu opciju, kao i pri svakoj promeni podešavanja.
-better-bibtex_preferences_advanced_export_title-case = 
-    .label = Pri izvozu oblikuj naslove tako da važnije reči počinju velikim slovom
-better-bibtex_preferences_advanced_export_title-case_warning = Ako ipak želite da zanemarite preporučenu praksu za BibTeX/BibLaTeX (vidite BBT FAQ) i Zotero preporuke za pisanje naslova, isključite ovu opciju da biste sprečili automatsku promenu velikih slova u naslovima stavki na engleskom jeziku.
+better-bibtex_preferences_advanced_export_title-case = Apply title-casing to titles
+better-bibtex_preferences_advanced_export_title-case_warning = Leave empty to use the default title-casing rules for English items, or enter "off" to disable title-casing. To override individual fields, use a comma-separated list such as "-title,+booktitle". Prefix a field with "bibtex." or "biblatex." to restrict the override to that format, for example "-bibtex.title".
 better-bibtex_preferences_advanced_export_workers_cache = 
     .label = Koristi keš pri izvozu u pozadini
 better-bibtex_preferences_advanced_export_cache-touch = Ažuriranje keša
