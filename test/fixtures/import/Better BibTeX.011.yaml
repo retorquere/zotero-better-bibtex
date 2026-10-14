@@ -1,0 +1,81 @@
+config:
+  id: 36a3b0b5-bad0-4a04-b79b-441c7cef77db
+  label: BetterBibTeX JSON
+  preferences:
+    citekeyFormat: auth + year
+    fillKeyAfter: 1
+  options:
+    Items: true
+    Normalize: true
+    Preferences: true
+    YAML: false
+    exportFileData: false
+    exportNotes: true
+    keepUpdated: false
+    worker: true
+version:
+  zotero: 10.0.6
+  bbt: 9.0.71.emile.kiku.local
+collections: {}
+items:
+  -
+    key: ACL5W83T
+    version: 0
+    itemType: note
+    note: 'Import errors found: <ul><li>unhandled macro \allcaps</li></ul>'
+    tags:
+      -
+        tag: '#Better BibTeX import error'
+        type: 1
+    relations: {}
+    dateAdded: 2026-10-14T12:54:57Z
+    dateModified: 2026-10-14T12:54:57Z
+    uri: http://zotero.org/users/8230813/items/ACL5W83T
+    itemID: 175
+    itemKey: ACL5W83T
+    libraryID: 1
+  -
+    key: 4QHD6GGT
+    version: 0
+    itemType: conferencePaper
+    pages: 25-30
+    date: '2010'
+    extra: "tex.bibsource: DBLP, http://dblp.uni-trier.de\ntex.owner: sstudent\ntex.timestamp: 2011.03.22"
+    title: Empirical study of support vector machine kernels with applications to microarray data
+    citationKey: Klassen2010
+    creators:
+      -
+        firstName: Myungsook
+        lastName: Klassen
+        creatorType: author
+      -
+        firstName: Nyunsu
+        lastName: Kim
+        creatorType: author
+      -
+        firstName: Wei Ming
+        lastName: Liu
+        creatorType: author
+    tags: []
+    relations: {}
+    dateAdded: 2026-10-14T12:54:57Z
+    dateModified: 2026-10-14T12:54:57Z
+    uri: http://zotero.org/users/8230813/items/4QHD6GGT
+    itemID: 173
+    attachments: []
+    notes:
+      -
+        key: 7TMBVUDT
+        version: 0
+        itemType: note
+        parentItem: 4QHD6GGT
+        note: svm liniowe najlepsze
+        tags: []
+        relations: {}
+        dateAdded: 2026-10-14T12:54:57Z
+        dateModified: 2026-10-14T12:54:57Z
+        uri: http://zotero.org/users/8230813/items/7TMBVUDT
+    autoJournalAbbreviation: ''
+    itemKey: 4QHD6GGT
+    libraryID: 1
+    publicationTitle: CATA

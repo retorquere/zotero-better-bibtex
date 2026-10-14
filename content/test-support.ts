@@ -160,7 +160,11 @@ export class TestSupport {
 
     if (!path) return 0
 
-    const before = await Zotero.Items.getAll(Zotero.Libraries.userLibraryID, true, false, true)
+    function regular(items: Zotero.Item[]): Zotero.Item[] {
+      return items.filter(item => !item.isFeedItem && item.isRegularItem())
+    }
+
+    const before = regular(await Zotero.Items.getAll(Zotero.Libraries.userLibraryID, true, false))
 
     if (path.endsWith('.aux')) {
       await AUXScanner.scan(path)
@@ -173,7 +177,7 @@ export class TestSupport {
 
     await Zotero.Promise.delay(Zotero.Prefs.get('translators.better-bibtex.itemObserverDelay') as number * 3)
 
-    const after = await Zotero.Items.getAll(Zotero.Libraries.userLibraryID, true, false, true)
+    const after = regular(await Zotero.Items.getAll(Zotero.Libraries.userLibraryID, true, false))
 
     if (bibstyle) {
       const items = await Zotero.Items.getAll(Zotero.Libraries.userLibraryID, true)

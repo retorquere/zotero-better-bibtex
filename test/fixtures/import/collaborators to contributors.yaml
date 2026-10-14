@@ -1,0 +1,133 @@
+config:
+  id: 36a3b0b5-bad0-4a04-b79b-441c7cef77db
+  label: BetterBibTeX JSON
+  preferences:
+    citekeyFormat: auth + year
+    fillKeyAfter: 1
+  options:
+    Items: true
+    Normalize: true
+    Preferences: true
+    YAML: false
+    exportFileData: false
+    exportNotes: true
+    keepUpdated: false
+    worker: true
+version:
+  zotero: 10.0.6
+  bbt: 9.0.71.emile.kiku.local
+collections: {}
+items:
+  -
+    key: TB6KDCTX
+    version: 0
+    itemType: note
+    note: 'Import errors found: <ul><li>unhandled macro \allcaps</li></ul>'
+    tags:
+      -
+        tag: '#Better BibTeX import error'
+        type: 1
+    relations: {}
+    dateAdded: 2026-10-14T12:55:02Z
+    dateModified: 2026-10-14T12:55:02Z
+    uri: http://zotero.org/users/8230813/items/TB6KDCTX
+    itemID: 188
+    itemKey: TB6KDCTX
+    libraryID: 1
+  -
+    key: PWCTU4GS
+    version: 0
+    itemType: document
+    url: https://ausstellungen.deutsche-digitale-bibliothek.de/ieg2020/
+    date: 2020-09
+    extra: 'tex.language: de'
+    language: de
+    abstractNote: Anlässlich seines 70. Jubiläums präsentiert das Leibniz-Institut für Europäische Geschichte (IEG) seit dem 12.09.2020 die Ausstellung »Vom Kalten Krieg zum europäischen Umbruch. Das Institut für Europäische Geschichte 1950–1990«. Die Ausstellung ist gleichzeitig als virtuelle Ausstellung zu sehen. Das IEG wurde fünf Jahre nach Kriegsende 1950 in Mainz gegründet. Ende 1952 konnte es in die für diesen Zweck wiederaufgebaute Domus Universitatis einziehen. Bei der Gründung des Instituts wirkten die »Besatzungsmächte« Frankreich und USA mit dem jungen Land Rheinland-Pfalz zusammen. Denn die französische Militärregierung förderte Einrichtungen, die der »Umerziehung« der Deutschen zur Demokratie und der Verständigung mit Frankreich dienen sollten. Auch die USA unterstützen Einrichtungen, die die junge Demokratie in Westdeutschland stärken sollten. Rheinland-Pfalz übernahm die Trägerschaft und schließlich auch die Finanzierung. Das neue Institut sollte die konfliktreiche historische Entwicklung Europas erforschen und so auf wissenschaftlichem Weg auf Frieden und Verständigung in Europa hinarbeiten. Die Ausstellung geht der Gründungsgeschichte des Instituts und seiner Entwicklung über vier Jahrzehnte nach. Von Anfang an war umstritten, worauf ein friedliches Europa gründen sollte, und welches Geschichtsbild das Institut in der Bundesrepublik befördern sollte. Die Präsentation thematisiert beispielsweise, wie das Institut seine »europäische Mission« legitimierte und mit der »Last« des Nationalsozialismus umging. Von Beginn an machte sich das Institut die Förderung junger Wissenschaftlerinnen und Wissenschaftler aus dem In- und Ausland zur Aufgabe. Das internationale Stipendienprogramm wurde zu einem Pfeiler des IEG. Angesichts der Wohnungsnot im Mainz der Nachkriegszeit war es selbstverständlich, dass das Institutsgebäude neben Bibliothek, Konferenzraum und Büros auch Wohnraum für wissenschaftliche Gäste und für die beiden Direktoren bot. Unter dem Dach der Domus Universitatis entfaltete sich das Arbeiten und Leben der Institutsangehörigen als Arbeits- und Konfliktgemeinschaft. Wie sich das Institut in der westdeutschen und in der internationalen Wissenschaftslandschaft etablierte, und wie es seit den 1960er-Jahren für Wissenschaftler/innen aus dem »Ostblock« ein »Fenster zum Westen« wurde, erzählt die Ausstellung anhand historischer Dokumente und Zeitzeugenberichte.
+    type: Virtuelle Ausstellung
+    title: Vom Kalten Krieg zum europäischen Umbruch. Das Institut für Europäische Geschichte 1950–1990
+    shortTitle: Vom Kalten Krieg zum europäischen Umbruch
+    citationKey: berger_vom_2020
+    creators:
+      -
+        firstName: Joachim
+        lastName: Berger
+        creatorType: author
+      -
+        firstName: Monika
+        lastName: Barget
+        creatorType: contributor
+      -
+        firstName: Leonie
+        lastName: Berger
+        creatorType: contributor
+      -
+        firstName: Fabian
+        lastName: Cremer
+        creatorType: contributor
+      -
+        firstName: Susanne
+        lastName: Hartmann
+        creatorType: contributor
+      -
+        firstName: Anne
+        lastName: Heumann
+        creatorType: contributor
+      -
+        firstName: Percy
+        lastName: Latzke
+        creatorType: contributor
+      -
+        firstName: Stefanie
+        lastName: Mainz
+        creatorType: contributor
+      -
+        firstName: Sabine
+        lastName: Mischner
+        creatorType: contributor
+      -
+        firstName: Barbara
+        lastName: Müller
+        creatorType: contributor
+      -
+        firstName: Markus
+        lastName: Müller
+        creatorType: contributor
+      -
+        firstName: Annette
+        lastName: Reichardt
+        creatorType: contributor
+      -
+        firstName: Juliane
+        lastName: Schwoch
+        creatorType: contributor
+      -
+        firstName: Jannik
+        lastName: Schulze-Selmig
+        creatorType: contributor
+      -
+        firstName: Sophie
+        lastName: Treins
+        creatorType: contributor
+      -
+        firstName: Demival
+        lastName: Vasques Filho
+        creatorType: contributor
+      -
+        firstName: Thomas
+        lastName: Weller
+        creatorType: contributor
+      -
+        firstName: Linda de
+        lastName: Wilde
+        creatorType: contributor
+    tags: []
+    relations: {}
+    dateAdded: 2026-10-14T12:55:02Z
+    dateModified: 2026-10-14T12:55:02Z
+    uri: http://zotero.org/users/8230813/items/PWCTU4GS
+    itemID: 187
+    attachments: []
+    notes: []
+    autoJournalAbbreviation: ''
+    itemKey: PWCTU4GS
+    libraryID: 1

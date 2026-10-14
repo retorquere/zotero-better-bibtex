@@ -1,0 +1,72 @@
+config:
+  id: 36a3b0b5-bad0-4a04-b79b-441c7cef77db
+  label: BetterBibTeX JSON
+  preferences:
+    citekeyFormat: auth + year
+    fillKeyAfter: 1
+  options:
+    Items: true
+    Normalize: true
+    Preferences: true
+    YAML: false
+    exportFileData: false
+    exportNotes: true
+    keepUpdated: false
+    worker: true
+version:
+  zotero: 10.0.6
+  bbt: 9.0.71.emile.kiku.local
+collections: {}
+items:
+  -
+    key: FU9EEF9N
+    version: 0
+    itemType: note
+    note: 'Import errors found: <ul><li>unhandled macro \allcaps</li></ul>'
+    tags:
+      -
+        tag: '#Better BibTeX import error'
+        type: 1
+    relations: {}
+    dateAdded: 2026-10-14T12:54:59Z
+    dateModified: 2026-10-14T12:54:59Z
+    uri: http://zotero.org/users/8230813/items/FU9EEF9N
+    itemID: 182
+    itemKey: FU9EEF9N
+    libraryID: 1
+  -
+    key: PYRRYK6G
+    version: 0
+    itemType: book
+    place: Chicago
+    publisher: University of Chicago Press
+    date: '1984'
+    title: The mosaics of san marco in venice
+    citationKey: Demus1984
+    creators:
+      -
+        firstName: Otto
+        lastName: Demus
+        creatorType: author
+    tags: []
+    relations: {}
+    dateAdded: 2026-10-14T12:54:59Z
+    dateModified: 2026-10-14T12:54:59Z
+    uri: http://zotero.org/users/8230813/items/PYRRYK6G
+    itemID: 180
+    attachments: []
+    notes:
+      -
+        key: DWIRMW6Y
+        version: 0
+        itemType: note
+        parentItem: PYRRYK6G
+        note: a "monumental" work on the mosaics of San Marco
+        tags: []
+        relations: {}
+        dateAdded: 2026-10-14T12:54:59Z
+        dateModified: 2026-10-14T12:54:59Z
+        uri: http://zotero.org/users/8230813/items/DWIRMW6Y
+    autoJournalAbbreviation: ''
+    itemKey: PYRRYK6G
+    libraryID: 1

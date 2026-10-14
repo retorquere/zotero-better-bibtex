@@ -1,0 +1,155 @@
+config:
+  id: 36a3b0b5-bad0-4a04-b79b-441c7cef77db
+  label: BetterBibTeX JSON
+  preferences:
+    citekeyFormat: auth + year
+    fillKeyAfter: 1
+  options:
+    Items: true
+    Normalize: true
+    Preferences: true
+    YAML: false
+    exportFileData: false
+    exportNotes: true
+    keepUpdated: false
+    worker: true
+version:
+  zotero: 10.0.6
+  bbt: 9.0.71.emile.kiku.local
+collections: {}
+items:
+  -
+    key: QCQYQINS
+    version: 0
+    itemType: note
+    note: 'Import errors found: <ul><li>unhandled macro \allcaps</li></ul>'
+    tags:
+      -
+        tag: '#Better BibTeX import error'
+        type: 1
+    relations: {}
+    dateAdded: 2026-10-14T12:55:04Z
+    dateModified: 2026-10-14T12:55:04Z
+    uri: http://zotero.org/users/8230813/items/QCQYQINS
+    itemID: 193
+    itemKey: QCQYQINS
+    libraryID: 1
+  -
+    key: TJP97WTB
+    version: 0
+    itemType: bookSection
+    volume: '2'
+    publisher: Kumarian Press
+    pages: 227–32
+    date: '2004'
+    extra: 'Section: 12'
+    title: Lebanon
+    citationKey: El-HusseiniToeplerSalamon:2004
+    creators:
+      -
+        firstName: Hashem
+        lastName: El-Husseini
+        creatorType: author
+      -
+        firstName: Stefan
+        lastName: Toepler
+        creatorType: author
+      -
+        firstName: Lester M.
+        lastName: Salamon
+        creatorType: author
+      -
+        firstName: Lester M.
+        lastName: Salamon
+        creatorType: editor
+      -
+        firstName: S. Wojciech
+        lastName: Sokolowski
+        creatorType: editor
+    tags: []
+    relations: {}
+    dateAdded: 2026-10-14T12:55:04Z
+    dateModified: 2026-10-14T12:55:04Z
+    uri: http://zotero.org/users/8230813/items/TJP97WTB
+    itemID: 189
+    attachments: []
+    notes: []
+    autoJournalAbbreviation: ''
+    itemKey: TJP97WTB
+    libraryID: 1
+    publicationTitle: 'Global civil society: Dimensions of the nonprofit sector'
+  -
+    key: 24LSLTYJ
+    version: 0
+    itemType: journalArticle
+    url: https://doi.org/10.1111/disa.12301
+    volume: '43'
+    issue: '1'
+    pages: 24–45
+    publicationTitle: Disasters
+    date: 2019-01
+    extra: "tex.date-added: 2020-08-07 09:07:58 -0400\ntex.date-modified: 2020-08-07 09:09:07 -0400"
+    DOI: 10.1111/disa.12301
+    title: 'Between international donors and local faith communities: Intermediaries in humanitarian assistance to Syrian refugees in Jordan and Lebanon'
+    citationKey: KraftSmith:2019
+    creators:
+      -
+        firstName: Kathryn
+        lastName: Kraft
+        creatorType: author
+      -
+        firstName: Jonathan D.
+        lastName: Smith
+        creatorType: author
+    tags:
+      -
+        tag: 000000000000 Read next
+    relations: {}
+    dateAdded: 2026-10-14T12:55:04Z
+    dateModified: 2026-10-14T12:55:04Z
+    uri: http://zotero.org/users/8230813/items/24LSLTYJ
+    itemID: 191
+    attachments:
+      -
+        itemType: attachment
+        title: KraftSmith2019 - Between international donors and local faith communities Intermediaries
+        tags: []
+        relations: {}
+        dateAdded: 2026-10-14T12:55:04Z
+        dateModified: 2026-10-14T12:55:04Z
+        uri: http://zotero.org/users/8230813/items/FC42ZK5J
+        path: /Users/emile/.BBTTEST/zotero/storage/FC42ZK5J/KraftSmith2019 - Between international donors and local faith communities Intermediaries.pdf
+    notes: []
+    autoJournalAbbreviation: ''
+    itemKey: 24LSLTYJ
+    libraryID: 1
+  -
+    key: X57TVSTX
+    version: 0
+    itemType: book
+    volume: '2'
+    place: Bloomfield, CT
+    publisher: Kumarian Press
+    date: '2004'
+    title: 'Global civil society: Dimensions of the nonprofit sector'
+    citationKey: SalamonSokolowski:2004
+    creators:
+      -
+        firstName: Lester M.
+        lastName: Salamon
+        creatorType: editor
+      -
+        firstName: S. Wojciech
+        lastName: Sokolowski
+        creatorType: editor
+    tags: []
+    relations: {}
+    dateAdded: 2026-10-14T12:55:04Z
+    dateModified: 2026-10-14T12:55:04Z
+    uri: http://zotero.org/users/8230813/items/X57TVSTX
+    itemID: 190
+    attachments: []
+    notes: []
+    autoJournalAbbreviation: ''
+    itemKey: X57TVSTX
+    libraryID: 1

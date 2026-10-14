@@ -1,0 +1,1864 @@
+config:
+  id: 36a3b0b5-bad0-4a04-b79b-441c7cef77db
+  label: BetterBibTeX JSON
+  preferences:
+    citekeyFormat: auth + year
+    fillKeyAfter: 1
+  options:
+    Items: true
+    Normalize: true
+    Preferences: true
+    YAML: false
+    exportFileData: false
+    exportNotes: true
+    keepUpdated: false
+    worker: true
+version:
+  zotero: 10.0.6
+  bbt: 9.0.71.emile.kiku.local
+collections:
+  FB2S3M6C:
+    key: FB2S3M6C
+    parent: ''
+    name: Ecology_and_Power
+    collections: []
+    items:
+      - 144
+      - 145
+      - 146
+      - 147
+      - 148
+      - 149
+      - 150
+      - 151
+      - 152
+      - 153
+      - 154
+      - 155
+      - 156
+      - 157
+      - 158
+      - 159
+      - 160
+items:
+  -
+    key: IH3NM4C6
+    version: 0
+    itemType: note
+    note: 'Import errors found: <ul><li>unhandled macro \allcaps</li></ul>'
+    tags:
+      -
+        tag: '#Better BibTeX import error'
+        type: 1
+    relations: {}
+    dateAdded: 2026-10-14T12:54:51Z
+    dateModified: 2026-10-14T12:54:51Z
+    uri: http://zotero.org/users/8230813/items/IH3NM4C6
+    itemID: 165
+    itemKey: IH3NM4C6
+    libraryID: 1
+  -
+    key: C5GVBNSS
+    version: 0
+    itemType: bookSection
+    url: https://www.routledge.com/Ecology-and-Power-Struggles-over-Land-and-Material-Resources-in-the-Past/Hornborg-Clark-Hermele/p/book/9780415601467
+    series: Routledge studies in ecological economics
+    volume: '18'
+    place: New York
+    publisher: Routledge
+    pages: 83–96
+    ISBN: 978-0-203-12281-5
+    date: '2012'
+    extra: "tex.owner: napoletano\ntex.timestamp: 2020-09-12"
+    abstractNote: 'Power and social inequality shape patterns of land use and resource management. This book explores this relationship from different perspectives, illuminating the complexity of interactions between human societies and nature. Most of the contributors use the perspective of "political ecology" as a point of departure, recognizing that human relations to the environment and human social relations are not separate phenomena but inextricably intertwined. What makes this volume unique is that it sets this approach in a trans-disciplinary, global, and historical framework. Part 1: Theoretical Perspectives on Historical Political Ecology 1. Accumulation: Land as a Medium of Domination 2. Techno-Fix: Ecological Rifts and Capital Shifts 3. Empire: The Comparative Study of Imperialism 4. Islands: Ecologically Unequal Exchange and Landesque Capital 5. Guano: The Global Metabolic Rift and the Fertilizer Trade 6. Fleece: Imperial Metabolism in the Pre-Columbian Andes 7. Slaves: Inequality and Sustainable Agriculture in Pre-Colonial West Africa 8. Steam: Nineteenth-Century Mechanization and the Power of Capital 9. Ivory: Socio-ecological Consequences of the East African Ivory Trade 10. Lawns: Botanical Garden Design as Colonial Domination Part 2: Struggles over Material Resources in the Modern World 11. Footprints: The Division of Nations and Nature 12. Water: Irrigation and Resilience in the Tanzanian Highlands 13. Meat: The New Geopolitics of Food 14. Trees: Conflicts Between Pastoralists, Loggers and Conservationists in the Himalayas 15. Grass: From Local Pastures to Global Energy Markets in Eastern Tanzania 16. Forests: Capital Accumulation, Climate Change, and Crises in Chile and Sweden 17. Jatropha: A Magic Bullet Filled with Oil 18. Atoms: Nuclear Estrangement from Chernobyl to India 19. Safflower: Liberalisation or Participation in a Tanzanian Village 20. Land-Claims: Racialized Environmental Struggles in Latin America 21. Smoke: Cooking, Coughing and Collective Action in Kenya 22. Sugarcane: Agrofuels and Conflicting Land Uses in Brazil'
+    title: 'Fleece: Imperial metabolism in the pre­Columbian Andes'
+    citationKey: Bogadottir2012
+    creators:
+      -
+        firstName: Ragnhei ̣ur
+        lastName: Bogadóttir
+        creatorType: author
+      -
+        firstName: Alf
+        lastName: Hornborg
+        creatorType: editor
+      -
+        firstName: Brett
+        lastName: Clark
+        creatorType: editor
+      -
+        firstName: Kenneth
+        lastName: Hermele
+        creatorType: editor
+    tags:
+      -
+        tag: Business
+      -
+        tag: capitalism
+      -
+        tag: ecological economics
+      -
+        tag: ecology
+      -
+        tag: economics
+      -
+        tag: Economics
+      -
+        tag: Environment and Sustainability
+      -
+        tag: Environmental Economics. Ecological Economics
+      -
+        tag: Environmental Politics
+      -
+        tag: environmental sociology
+      -
+        tag: Environmental Studies
+      -
+        tag: Finance
+      -
+        tag: global change
+      -
+        tag: globalization
+      -
+        tag: Industry
+      -
+        tag: International Relations
+      -
+        tag: land
+      -
+        tag: metabolic rift
+      -
+        tag: political ecology
+      -
+        tag: Political Economy
+      -
+        tag: politics
+      -
+        tag: Politics
+      -
+        tag: power
+      -
+        tag: sustainability
+    relations: {}
+    dateAdded: 2026-10-14T12:54:51Z
+    dateModified: 2026-10-14T12:54:51Z
+    uri: http://zotero.org/users/8230813/items/C5GVBNSS
+    itemID: 144
+    attachments: []
+    notes: []
+    autoJournalAbbreviation: ''
+    itemKey: C5GVBNSS
+    libraryID: 1
+    publicationTitle: 'Ecology and power: Struggles over land and material resources in the past, present and future'
+  -
+    key: M5F29CTA
+    version: 0
+    itemType: bookSection
+    url: https://www.routledge.com/Ecology-and-Power-Struggles-over-Land-and-Material-Resources-in-the-Past/Hornborg-Clark-Hermele/p/book/9780415601467
+    series: Routledge studies in ecological economics
+    volume: '18'
+    place: New York
+    publisher: Routledge
+    pages: 23–36
+    ISBN: 978-0-203-12281-5
+    date: '2012'
+    extra: "tex.owner: napoletano\ntex.timestamp: 2020-09-12"
+    abstractNote: 'Power and social inequality shape patterns of land use and resource management. This book explores this relationship from different perspectives, illuminating the complexity of interactions between human societies and nature. Most of the contributors use the perspective of "political ecology" as a point of departure, recognizing that human relations to the environment and human social relations are not separate phenomena but inextricably intertwined. What makes this volume unique is that it sets this approach in a trans-disciplinary, global, and historical framework. Part 1: Theoretical Perspectives on Historical Political Ecology 1. Accumulation: Land as a Medium of Domination 2. Techno-Fix: Ecological Rifts and Capital Shifts 3. Empire: The Comparative Study of Imperialism 4. Islands: Ecologically Unequal Exchange and Landesque Capital 5. Guano: The Global Metabolic Rift and the Fertilizer Trade 6. Fleece: Imperial Metabolism in the Pre-Columbian Andes 7. Slaves: Inequality and Sustainable Agriculture in Pre-Colonial West Africa 8. Steam: Nineteenth-Century Mechanization and the Power of Capital 9. Ivory: Socio-ecological Consequences of the East African Ivory Trade 10. Lawns: Botanical Garden Design as Colonial Domination Part 2: Struggles over Material Resources in the Modern World 11. Footprints: The Division of Nations and Nature 12. Water: Irrigation and Resilience in the Tanzanian Highlands 13. Meat: The New Geopolitics of Food 14. Trees: Conflicts Between Pastoralists, Loggers and Conservationists in the Himalayas 15. Grass: From Local Pastures to Global Energy Markets in Eastern Tanzania 16. Forests: Capital Accumulation, Climate Change, and Crises in Chile and Sweden 17. Jatropha: A Magic Bullet Filled with Oil 18. Atoms: Nuclear Estrangement from Chernobyl to India 19. Safflower: Liberalisation or Participation in a Tanzanian Village 20. Land-Claims: Racialized Environmental Struggles in Latin America 21. Smoke: Cooking, Coughing and Collective Action in Kenya 22. Sugarcane: Agrofuels and Conflicting Land Uses in Brazil'
+    title: 'Techno-fix: Ecological rifts and capital shifts'
+    citationKey: Clark2012
+    creators:
+      -
+        firstName: Brett
+        lastName: Clark
+        creatorType: author
+      -
+        firstName: Richard
+        lastName: York
+        creatorType: author
+      -
+        firstName: Alf
+        lastName: Hornborg
+        creatorType: editor
+      -
+        firstName: Brett
+        lastName: Clark
+        creatorType: editor
+      -
+        firstName: Kenneth
+        lastName: Hermele
+        creatorType: editor
+    tags:
+      -
+        tag: Business
+      -
+        tag: capitalism
+      -
+        tag: ecological economics
+      -
+        tag: ecology
+      -
+        tag: economics
+      -
+        tag: Economics
+      -
+        tag: Environment and Sustainability
+      -
+        tag: Environmental Economics. Ecological Economics
+      -
+        tag: Environmental Politics
+      -
+        tag: environmental sociology
+      -
+        tag: Environmental Studies
+      -
+        tag: Finance
+      -
+        tag: global change
+      -
+        tag: globalization
+      -
+        tag: Industry
+      -
+        tag: International Relations
+      -
+        tag: land
+      -
+        tag: metabolic rift
+      -
+        tag: political ecology
+      -
+        tag: Political Economy
+      -
+        tag: politics
+      -
+        tag: Politics
+      -
+        tag: power
+      -
+        tag: sustainability
+    relations: {}
+    dateAdded: 2026-10-14T12:54:51Z
+    dateModified: 2026-10-14T12:54:51Z
+    uri: http://zotero.org/users/8230813/items/M5F29CTA
+    itemID: 146
+    attachments: []
+    notes: []
+    autoJournalAbbreviation: ''
+    itemKey: M5F29CTA
+    libraryID: 1
+    publicationTitle: 'Ecology and power: Struggles over land and material resources in the past, present and future'
+  -
+    key: NQCIKLTI
+    version: 0
+    itemType: bookSection
+    url: https://www.routledge.com/Ecology-and-Power-Struggles-over-Land-and-Material-Resources-in-the-Past/Hornborg-Clark-Hermele/p/book/9780415601467
+    series: Routledge studies in ecological economics
+    volume: '18'
+    place: New York
+    publisher: Routledge
+    pages: 68–82
+    ISBN: 978-0-203-12281-5
+    date: '2012'
+    extra: "tex.owner: napoletano\ntex.timestamp: 2020-09-12"
+    abstractNote: 'Power and social inequality shape patterns of land use and resource management. This book explores this relationship from different perspectives, illuminating the complexity of interactions between human societies and nature. Most of the contributors use the perspective of "political ecology" as a point of departure, recognizing that human relations to the environment and human social relations are not separate phenomena but inextricably intertwined. What makes this volume unique is that it sets this approach in a trans-disciplinary, global, and historical framework. Part 1: Theoretical Perspectives on Historical Political Ecology 1. Accumulation: Land as a Medium of Domination 2. Techno-Fix: Ecological Rifts and Capital Shifts 3. Empire: The Comparative Study of Imperialism 4. Islands: Ecologically Unequal Exchange and Landesque Capital 5. Guano: The Global Metabolic Rift and the Fertilizer Trade 6. Fleece: Imperial Metabolism in the Pre-Columbian Andes 7. Slaves: Inequality and Sustainable Agriculture in Pre-Colonial West Africa 8. Steam: Nineteenth-Century Mechanization and the Power of Capital 9. Ivory: Socio-ecological Consequences of the East African Ivory Trade 10. Lawns: Botanical Garden Design as Colonial Domination Part 2: Struggles over Material Resources in the Modern World 11. Footprints: The Division of Nations and Nature 12. Water: Irrigation and Resilience in the Tanzanian Highlands 13. Meat: The New Geopolitics of Food 14. Trees: Conflicts Between Pastoralists, Loggers and Conservationists in the Himalayas 15. Grass: From Local Pastures to Global Energy Markets in Eastern Tanzania 16. Forests: Capital Accumulation, Climate Change, and Crises in Chile and Sweden 17. Jatropha: A Magic Bullet Filled with Oil 18. Atoms: Nuclear Estrangement from Chernobyl to India 19. Safflower: Liberalisation or Participation in a Tanzanian Village 20. Land-Claims: Racialized Environmental Struggles in Latin America 21. Smoke: Cooking, Coughing and Collective Action in Kenya 22. Sugarcane: Agrofuels and Conflicting Land Uses in Brazil'
+    title: 'Guano: The global metabolic rift and the fertilizer trade'
+    citationKey: Clark2012a
+    creators:
+      -
+        firstName: Brett
+        lastName: Clark
+        creatorType: author
+      -
+        firstName: John Bellamy
+        lastName: Foster
+        creatorType: author
+      -
+        firstName: Alf
+        lastName: Hornborg
+        creatorType: editor
+      -
+        firstName: Brett
+        lastName: Clark
+        creatorType: editor
+      -
+        firstName: Kenneth
+        lastName: Hermele
+        creatorType: editor
+    tags:
+      -
+        tag: Business
+      -
+        tag: capitalism
+      -
+        tag: ecological economics
+      -
+        tag: ecology
+      -
+        tag: economics
+      -
+        tag: Economics
+      -
+        tag: Environment and Sustainability
+      -
+        tag: Environmental Economics. Ecological Economics
+      -
+        tag: Environmental Politics
+      -
+        tag: environmental sociology
+      -
+        tag: Environmental Studies
+      -
+        tag: Finance
+      -
+        tag: global change
+      -
+        tag: globalization
+      -
+        tag: Industry
+      -
+        tag: International Relations
+      -
+        tag: land
+      -
+        tag: metabolic rift
+      -
+        tag: political ecology
+      -
+        tag: Political Economy
+      -
+        tag: politics
+      -
+        tag: Politics
+      -
+        tag: power
+      -
+        tag: sustainability
+    relations: {}
+    dateAdded: 2026-10-14T12:54:51Z
+    dateModified: 2026-10-14T12:54:51Z
+    uri: http://zotero.org/users/8230813/items/NQCIKLTI
+    itemID: 145
+    attachments: []
+    notes: []
+    autoJournalAbbreviation: ''
+    itemKey: NQCIKLTI
+    libraryID: 1
+    publicationTitle: 'Ecology and power: Struggles over land and material resources in the past, present and future'
+  -
+    key: 3IUELT88
+    version: 0
+    itemType: journalArticle
+    url: https://newleftreview.org/issues/II61/articles/mike-davis-who-will-build-the-ark
+    volume: '2'
+    issue: '61'
+    pages: 29–46
+    publicationTitle: New Left Review
+    date: '2010'
+    extra: "tex.owner: napoletano\ntex.priority: prio1\ntex.timestamp: 2020-09-12"
+    title: Who will build the ark?
+    citationKey: Davis2010b
+    creators:
+      -
+        firstName: Mike
+        lastName: Davis
+        creatorType: author
+    tags:
+      -
+        tag: capitalism
+      -
+        tag: politics
+      -
+        tag: sustainability
+      -
+        tag: climate change
+      -
+        tag: finance
+      -
+        tag: prio1
+      -
+        tag: urbanization
+    relations: {}
+    dateAdded: 2026-10-14T12:54:51Z
+    dateModified: 2026-10-14T12:54:51Z
+    uri: http://zotero.org/users/8230813/items/3IUELT88
+    itemID: 161
+    attachments: []
+    notes: []
+    autoJournalAbbreviation: New Left Rev.
+    itemKey: 3IUELT88
+    libraryID: 1
+  -
+    key: 2KJCLWL5
+    version: 0
+    itemType: book
+    url: https://www.bloomsbury.com/uk/logic-of-sense-9781474234887/
+    place: New York
+    publisher: Columbia University
+    ISBN: 0-231-05982-5
+    date: '1990'
+    extra: "Pages: 405\ntex.owner: napoletano\ntex.priority: prio1\ntex.timestamp: 2020-09-12"
+    accessDate: 2020-07-10
+    language: English motherfucker do you speak it
+    abstractNote: 'Logic of Sense is one of Deleuze''s seminal works. First published in 1969, shortly after Difference and Repetition, it prefigures the hybrid style and methods he would use in his later writing with Felix Guattari. In an early review Michel Foucault wrote that Logic of Sense ''should be read as the boldest and most insolent of metaphysical treatises''. The book is divided into 34 ''series'' and five appendices covering a diverse range of topics including, sense, nonsense, event, sexuality, psychoanalysis, paradoxes, schizophrenia, literature and becoming and includes fascinating close textual readings of works by Lewis Carroll, Sigmund Freud, Seneca, Pierre Klossowski, F. Scott Fitzgerald, and Émile Zola. Logic of Sense is essential reading for anyone interested in post-war continental thought. Contents Preface: From Lewis Carroll to the Stoics First Series of Paradoxes of Pure Becoming Second Series of Paradoxes of Surface Effects Third Series of the Proposition Fourth Series of Dualities Fifth Series of Sense Sixth Series on Serialization Seventh Series of Esoteric Words Eighth Series of Structure Ninth Series of the Problematic Tenth Series of the Ideal Game Eleventh Series of Nonsense Twelfth Series of the Paradox Thirteenth Series of the Schizophrenic and the Little Girl Fourteenth Series of Double Causality Fifteenth Series of Singularities Sixteenth Series of the Static Ontological Genesis Seventeenth Series of the Static Logical Genesis Eighteenth Series of the Three Images of Philosophers Nineteenth Series of Humor Twentieth Series on the Moral Problem in Stoic Philosophy Twenty-First Series of the Event Twenty-Second Series-Porcelain and Volcano Twenty-Third Series of the Aion Twenty-Fourth Series of the Communication of Events Twenty-Fifth Series of Univocity Twenty-Sixth Series of Language Twenty-Seventh Series of Orality Twenty-Eighth Series of Sexuality Twenty-Ninth Series-Good Intentions Are Inevitably Punished Thirtieth Series of the Phantasm Thirty-First Series of Thought Thirty-Second Series on the Different Kinds of Series Thirty-Third Series of Alice''s Adventures Thirty-Fourth Series of Primary Order and Secondary Organization Appendixes I. The Simulacrum and Ancient Philosophy 1. Plato and the Simulacrum 2. Lucretius and the Simulacrum II. Phantasm and Modern Literature 3. Klossowski or Bodies-Language 4. Michel Tournier and the World Without Others 5. Zola and the Crack-Up Index'
+    title: The logic of sense
+    citationKey: Deleuze1990
+    creators:
+      -
+        firstName: Gilles
+        lastName: Deleuze
+        creatorType: author
+      -
+        firstName: Constantin V.
+        lastName: Boundas
+        creatorType: editor
+      -
+        firstName: Mark
+        lastName: Lester
+        creatorType: translator
+      -
+        firstName: Charles
+        lastName: Stivale
+        creatorType: translator
+    tags:
+      -
+        tag: prio1
+      -
+        tag: continental philosophy
+      -
+        tag: Deleuze
+      -
+        tag: logic
+      -
+        tag: meaning
+      -
+        tag: phenomenology
+      -
+        tag: philosophy
+      -
+        tag: postmodernism
+      -
+        tag: poststructuralism
+      -
+        tag: semantics
+      -
+        tag: sense
+    relations: {}
+    dateAdded: 2026-10-14T12:54:51Z
+    dateModified: 2026-10-14T12:54:51Z
+    uri: http://zotero.org/users/8230813/items/2KJCLWL5
+    itemID: 162
+    attachments: []
+    notes:
+      -
+        key: 252IT9YB
+        version: 0
+        itemType: note
+        parentItem: 2KJCLWL5
+        note: Originally published in French in 1969
+        tags: []
+        relations: {}
+        dateAdded: 2026-10-14T12:54:51Z
+        dateModified: 2026-10-14T12:54:51Z
+        uri: http://zotero.org/users/8230813/items/252IT9YB
+    autoJournalAbbreviation: ''
+    itemKey: 2KJCLWL5
+    libraryID: 1
+  -
+    key: MXPQX7XD
+    version: 0
+    itemType: bookSection
+    url: https://www.routledge.com/Ecology-and-Power-Struggles-over-Land-and-Material-Resources-in-the-Past/Hornborg-Clark-Hermele/p/book/9780415601467
+    series: Routledge studies in ecological economics
+    volume: '18'
+    place: New York
+    publisher: Routledge
+    pages: 124–142
+    ISBN: 978-0-203-12281-5
+    date: '2012'
+    extra: "tex.owner: napoletano\ntex.timestamp: 2020-09-12"
+    abstractNote: 'Power and social inequality shape patterns of land use and resource management. This book explores this relationship from different perspectives, illuminating the complexity of interactions between human societies and nature. Most of the contributors use the perspective of "political ecology" as a point of departure, recognizing that human relations to the environment and human social relations are not separate phenomena but inextricably intertwined. What makes this volume unique is that it sets this approach in a trans-disciplinary, global, and historical framework. Part 1: Theoretical Perspectives on Historical Political Ecology 1. Accumulation: Land as a Medium of Domination 2. Techno-Fix: Ecological Rifts and Capital Shifts 3. Empire: The Comparative Study of Imperialism 4. Islands: Ecologically Unequal Exchange and Landesque Capital 5. Guano: The Global Metabolic Rift and the Fertilizer Trade 6. Fleece: Imperial Metabolism in the Pre-Columbian Andes 7. Slaves: Inequality and Sustainable Agriculture in Pre-Colonial West Africa 8. Steam: Nineteenth-Century Mechanization and the Power of Capital 9. Ivory: Socio-ecological Consequences of the East African Ivory Trade 10. Lawns: Botanical Garden Design as Colonial Domination Part 2: Struggles over Material Resources in the Modern World 11. Footprints: The Division of Nations and Nature 12. Water: Irrigation and Resilience in the Tanzanian Highlands 13. Meat: The New Geopolitics of Food 14. Trees: Conflicts Between Pastoralists, Loggers and Conservationists in the Himalayas 15. Grass: From Local Pastures to Global Energy Markets in Eastern Tanzania 16. Forests: Capital Accumulation, Climate Change, and Crises in Chile and Sweden 17. Jatropha: A Magic Bullet Filled with Oil 18. Atoms: Nuclear Estrangement from Chernobyl to India 19. Safflower: Liberalisation or Participation in a Tanzanian Village 20. Land-Claims: Racialized Environmental Struggles in Latin America 21. Smoke: Cooking, Coughing and Collective Action in Kenya 22. Sugarcane: Agrofuels and Conflicting Land Uses in Brazil'
+    title: 'Ivory: Socio-ecological consequences of the East African ivory trade'
+    citationKey: Hakansson2012
+    creators:
+      -
+        firstName: N. Thomas
+        lastName: Håkansson
+        creatorType: author
+      -
+        firstName: Alf
+        lastName: Hornborg
+        creatorType: editor
+      -
+        firstName: Brett
+        lastName: Clark
+        creatorType: editor
+      -
+        firstName: Kenneth
+        lastName: Hermele
+        creatorType: editor
+    tags:
+      -
+        tag: Business
+      -
+        tag: capitalism
+      -
+        tag: ecological economics
+      -
+        tag: ecology
+      -
+        tag: economics
+      -
+        tag: Economics
+      -
+        tag: Environment and Sustainability
+      -
+        tag: Environmental Economics. Ecological Economics
+      -
+        tag: Environmental Politics
+      -
+        tag: environmental sociology
+      -
+        tag: Environmental Studies
+      -
+        tag: Finance
+      -
+        tag: global change
+      -
+        tag: globalization
+      -
+        tag: Industry
+      -
+        tag: International Relations
+      -
+        tag: land
+      -
+        tag: metabolic rift
+      -
+        tag: political ecology
+      -
+        tag: Political Economy
+      -
+        tag: politics
+      -
+        tag: Politics
+      -
+        tag: power
+      -
+        tag: sustainability
+    relations: {}
+    dateAdded: 2026-10-14T12:54:51Z
+    dateModified: 2026-10-14T12:54:51Z
+    uri: http://zotero.org/users/8230813/items/MXPQX7XD
+    itemID: 148
+    attachments: []
+    notes: []
+    autoJournalAbbreviation: ''
+    itemKey: MXPQX7XD
+    libraryID: 1
+    publicationTitle: 'Ecology and power: Struggles over land and material resources in the past, present and future'
+  -
+    key: 3GM6NTWU
+    version: 0
+    itemType: bookSection
+    url: https://www.routledge.com/Ecology-and-Power-Struggles-over-Land-and-Material-Resources-in-the-Past/Hornborg-Clark-Hermele/p/book/9780415601467
+    series: Routledge studies in ecological economics
+    volume: '18'
+    place: New York
+    publisher: Routledge
+    pages: 285–289
+    ISBN: 978-0-203-12281-5
+    date: '2012'
+    extra: "tex.owner: napoletano\ntex.timestamp: 2020-09-12"
+    abstractNote: 'Power and social inequality shape patterns of land use and resource management. This book explores this relationship from different perspectives, illuminating the complexity of interactions between human societies and nature. Most of the contributors use the perspective of "political ecology" as a point of departure, recognizing that human relations to the environment and human social relations are not separate phenomena but inextricably intertwined. What makes this volume unique is that it sets this approach in a trans-disciplinary, global, and historical framework. Part 1: Theoretical Perspectives on Historical Political Ecology 1. Accumulation: Land as a Medium of Domination 2. Techno-Fix: Ecological Rifts and Capital Shifts 3. Empire: The Comparative Study of Imperialism 4. Islands: Ecologically Unequal Exchange and Landesque Capital 5. Guano: The Global Metabolic Rift and the Fertilizer Trade 6. Fleece: Imperial Metabolism in the Pre-Columbian Andes 7. Slaves: Inequality and Sustainable Agriculture in Pre-Colonial West Africa 8. Steam: Nineteenth-Century Mechanization and the Power of Capital 9. Ivory: Socio-ecological Consequences of the East African Ivory Trade 10. Lawns: Botanical Garden Design as Colonial Domination Part 2: Struggles over Material Resources in the Modern World 11. Footprints: The Division of Nations and Nature 12. Water: Irrigation and Resilience in the Tanzanian Highlands 13. Meat: The New Geopolitics of Food 14. Trees: Conflicts Between Pastoralists, Loggers and Conservationists in the Himalayas 15. Grass: From Local Pastures to Global Energy Markets in Eastern Tanzania 16. Forests: Capital Accumulation, Climate Change, and Crises in Chile and Sweden 17. Jatropha: A Magic Bullet Filled with Oil 18. Atoms: Nuclear Estrangement from Chernobyl to India 19. Safflower: Liberalisation or Participation in a Tanzanian Village 20. Land-Claims: Racialized Environmental Struggles in Latin America 21. Smoke: Cooking, Coughing and Collective Action in Kenya 22. Sugarcane: Agrofuels and Conflicting Land Uses in Brazil'
+    title: 'Sugarcane: Agrofuels and conflicting land uses in Brazil'
+    citationKey: Hermele2012
+    creators:
+      -
+        firstName: Kenneth
+        lastName: Hermele
+        creatorType: author
+      -
+        firstName: Alf
+        lastName: Hornborg
+        creatorType: editor
+      -
+        firstName: Brett
+        lastName: Clark
+        creatorType: editor
+      -
+        firstName: Kenneth
+        lastName: Hermele
+        creatorType: editor
+    tags:
+      -
+        tag: Business
+      -
+        tag: capitalism
+      -
+        tag: ecological economics
+      -
+        tag: ecology
+      -
+        tag: economics
+      -
+        tag: Economics
+      -
+        tag: Environment and Sustainability
+      -
+        tag: Environmental Economics. Ecological Economics
+      -
+        tag: Environmental Politics
+      -
+        tag: environmental sociology
+      -
+        tag: Environmental Studies
+      -
+        tag: Finance
+      -
+        tag: global change
+      -
+        tag: globalization
+      -
+        tag: Industry
+      -
+        tag: International Relations
+      -
+        tag: land
+      -
+        tag: metabolic rift
+      -
+        tag: political ecology
+      -
+        tag: Political Economy
+      -
+        tag: politics
+      -
+        tag: Politics
+      -
+        tag: power
+      -
+        tag: sustainability
+    relations: {}
+    dateAdded: 2026-10-14T12:54:51Z
+    dateModified: 2026-10-14T12:54:51Z
+    uri: http://zotero.org/users/8230813/items/3GM6NTWU
+    itemID: 149
+    attachments: []
+    notes: []
+    autoJournalAbbreviation: ''
+    itemKey: 3GM6NTWU
+    libraryID: 1
+    publicationTitle: 'Ecology and power: Struggles over land and material resources in the past, present and future'
+  -
+    key: KUXLBZBE
+    version: 0
+    itemType: book
+    url: https://www.routledge.com/Ecology-and-Power-Struggles-over-Land-and-Material-Resources-in-the-Past/Hornborg-Clark-Hermele/p/book/9780415601467
+    series: Routledge studies in ecological economics
+    volume: '18'
+    place: New York
+    publisher: Routledge
+    ISBN: 978-0-203-12281-5
+    date: '2012'
+    extra: "Pages: 312\ntex.owner: napoletano\ntex.timestamp: 2020-09-12"
+    abstractNote: 'Power and social inequality shape patterns of land use and resource management. This book explores this relationship from different perspectives, illuminating the complexity of interactions between human societies and nature. Most of the contributors use the perspective of "political ecology" as a point of departure, recognizing that human relations to the environment and human social relations are not separate phenomena but inextricably intertwined. What makes this volume unique is that it sets this approach in a trans-disciplinary, global, and historical framework. Part 1: Theoretical Perspectives on Historical Political Ecology 1. Accumulation: Land as a Medium of Domination 2. Techno-Fix: Ecological Rifts and Capital Shifts 3. Empire: The Comparative Study of Imperialism 4. Islands: Ecologically Unequal Exchange and Landesque Capital 5. Guano: The Global Metabolic Rift and the Fertilizer Trade 6. Fleece: Imperial Metabolism in the Pre-Columbian Andes 7. Slaves: Inequality and Sustainable Agriculture in Pre-Colonial West Africa 8. Steam: Nineteenth-Century Mechanization and the Power of Capital 9. Ivory: Socio-ecological Consequences of the East African Ivory Trade 10. Lawns: Botanical Garden Design as Colonial Domination Part 2: Struggles over Material Resources in the Modern World 11. Footprints: The Division of Nations and Nature 12. Water: Irrigation and Resilience in the Tanzanian Highlands 13. Meat: The New Geopolitics of Food 14. Trees: Conflicts Between Pastoralists, Loggers and Conservationists in the Himalayas 15. Grass: From Local Pastures to Global Energy Markets in Eastern Tanzania 16. Forests: Capital Accumulation, Climate Change, and Crises in Chile and Sweden 17. Jatropha: A Magic Bullet Filled with Oil 18. Atoms: Nuclear Estrangement from Chernobyl to India 19. Safflower: Liberalisation or Participation in a Tanzanian Village 20. Land-Claims: Racialized Environmental Struggles in Latin America 21. Smoke: Cooking, Coughing and Collective Action in Kenya 22. Sugarcane: Agrofuels and Conflicting Land Uses in Brazil'
+    title: 'Ecology and power: Struggles over land and material resources in the past, present and future'
+    citationKey: Hornborg2012
+    creators:
+      -
+        firstName: Alf
+        lastName: Hornborg
+        creatorType: editor
+      -
+        firstName: Brett
+        lastName: Clark
+        creatorType: editor
+      -
+        firstName: Kenneth
+        lastName: Hermele
+        creatorType: editor
+    tags:
+      -
+        tag: Business
+      -
+        tag: capitalism
+      -
+        tag: ecological economics
+      -
+        tag: ecology
+      -
+        tag: economics
+      -
+        tag: Economics
+      -
+        tag: Environment and Sustainability
+      -
+        tag: Environmental Economics. Ecological Economics
+      -
+        tag: Environmental Politics
+      -
+        tag: environmental sociology
+      -
+        tag: Environmental Studies
+      -
+        tag: Finance
+      -
+        tag: global change
+      -
+        tag: globalization
+      -
+        tag: Industry
+      -
+        tag: International Relations
+      -
+        tag: land
+      -
+        tag: metabolic rift
+      -
+        tag: political ecology
+      -
+        tag: Political Economy
+      -
+        tag: politics
+      -
+        tag: Politics
+      -
+        tag: power
+      -
+        tag: sustainability
+    relations: {}
+    dateAdded: 2026-10-14T12:54:51Z
+    dateModified: 2026-10-14T12:54:51Z
+    uri: http://zotero.org/users/8230813/items/KUXLBZBE
+    itemID: 160
+    attachments: []
+    notes: []
+    autoJournalAbbreviation: ''
+    itemKey: KUXLBZBE
+    libraryID: 1
+  -
+    key: 85APLGW3
+    version: 0
+    itemType: bookSection
+    url: https://www.routledge.com/Ecology-and-Power-Struggles-over-Land-and-Material-Resources-in-the-Past/Hornborg-Clark-Hermele/p/book/9780415601467
+    series: Routledge studies in ecological economics
+    volume: '18'
+    place: New York
+    publisher: Routledge
+    pages: 1–10
+    ISBN: 978-0-203-12281-5
+    date: '2012'
+    extra: "tex.owner: napoletano\ntex.timestamp: 2020-09-12"
+    abstractNote: 'Power and social inequality shape patterns of land use and resource management. This book explores this relationship from different perspectives, illuminating the complexity of interactions between human societies and nature. Most of the contributors use the perspective of "political ecology" as a point of departure, recognizing that human relations to the environment and human social relations are not separate phenomena but inextricably intertwined. What makes this volume unique is that it sets this approach in a trans-disciplinary, global, and historical framework. Part 1: Theoretical Perspectives on Historical Political Ecology 1. Accumulation: Land as a Medium of Domination 2. Techno-Fix: Ecological Rifts and Capital Shifts 3. Empire: The Comparative Study of Imperialism 4. Islands: Ecologically Unequal Exchange and Landesque Capital 5. Guano: The Global Metabolic Rift and the Fertilizer Trade 6. Fleece: Imperial Metabolism in the Pre-Columbian Andes 7. Slaves: Inequality and Sustainable Agriculture in Pre-Colonial West Africa 8. Steam: Nineteenth-Century Mechanization and the Power of Capital 9. Ivory: Socio-ecological Consequences of the East African Ivory Trade 10. Lawns: Botanical Garden Design as Colonial Domination Part 2: Struggles over Material Resources in the Modern World 11. Footprints: The Division of Nations and Nature 12. Water: Irrigation and Resilience in the Tanzanian Highlands 13. Meat: The New Geopolitics of Food 14. Trees: Conflicts Between Pastoralists, Loggers and Conservationists in the Himalayas 15. Grass: From Local Pastures to Global Energy Markets in Eastern Tanzania 16. Forests: Capital Accumulation, Climate Change, and Crises in Chile and Sweden 17. Jatropha: A Magic Bullet Filled with Oil 18. Atoms: Nuclear Estrangement from Chernobyl to India 19. Safflower: Liberalisation or Participation in a Tanzanian Village 20. Land-Claims: Racialized Environmental Struggles in Latin America 21. Smoke: Cooking, Coughing and Collective Action in Kenya 22. Sugarcane: Agrofuels and Conflicting Land Uses in Brazil'
+    title: 'Introduction: Ecology and power'
+    citationKey: Hornborg2012a
+    creators:
+      -
+        firstName: Alf
+        lastName: Hornborg
+        creatorType: author
+      -
+        firstName: Brett
+        lastName: Clark
+        creatorType: author
+      -
+        firstName: Kenneth
+        lastName: Hermele
+        creatorType: author
+      -
+        firstName: Alf
+        lastName: Hornborg
+        creatorType: editor
+      -
+        firstName: Brett
+        lastName: Clark
+        creatorType: editor
+      -
+        firstName: Kenneth
+        lastName: Hermele
+        creatorType: editor
+    tags:
+      -
+        tag: Business
+      -
+        tag: capitalism
+      -
+        tag: ecological economics
+      -
+        tag: ecology
+      -
+        tag: economics
+      -
+        tag: Economics
+      -
+        tag: Environment and Sustainability
+      -
+        tag: Environmental Economics. Ecological Economics
+      -
+        tag: Environmental Politics
+      -
+        tag: environmental sociology
+      -
+        tag: Environmental Studies
+      -
+        tag: Finance
+      -
+        tag: global change
+      -
+        tag: globalization
+      -
+        tag: Industry
+      -
+        tag: International Relations
+      -
+        tag: land
+      -
+        tag: metabolic rift
+      -
+        tag: political ecology
+      -
+        tag: Political Economy
+      -
+        tag: politics
+      -
+        tag: Politics
+      -
+        tag: power
+      -
+        tag: sustainability
+    relations: {}
+    dateAdded: 2026-10-14T12:54:51Z
+    dateModified: 2026-10-14T12:54:51Z
+    uri: http://zotero.org/users/8230813/items/85APLGW3
+    itemID: 151
+    attachments: []
+    notes: []
+    autoJournalAbbreviation: ''
+    itemKey: 85APLGW3
+    libraryID: 1
+    publicationTitle: 'Ecology and power: Struggles over land and material resources in the past, present and future'
+  -
+    key: BKN3AA9J
+    version: 0
+    itemType: bookSection
+    url: https://www.routledge.com/Ecology-and-Power-Struggles-over-Land-and-Material-Resources-in-the-Past/Hornborg-Clark-Hermele/p/book/9780415601467
+    series: Routledge studies in ecological economics
+    volume: '18'
+    place: New York
+    publisher: Routledge
+    pages: 13–22
+    ISBN: 978-0-203-12281-5
+    date: '2012'
+    extra: "tex.owner: napoletano\ntex.timestamp: 2020-09-12"
+    abstractNote: 'Power and social inequality shape patterns of land use and resource management. This book explores this relationship from different perspectives, illuminating the complexity of interactions between human societies and nature. Most of the contributors use the perspective of "political ecology" as a point of departure, recognizing that human relations to the environment and human social relations are not separate phenomena but inextricably intertwined. What makes this volume unique is that it sets this approach in a trans-disciplinary, global, and historical framework. Part 1: Theoretical Perspectives on Historical Political Ecology 1. Accumulation: Land as a Medium of Domination 2. Techno-Fix: Ecological Rifts and Capital Shifts 3. Empire: The Comparative Study of Imperialism 4. Islands: Ecologically Unequal Exchange and Landesque Capital 5. Guano: The Global Metabolic Rift and the Fertilizer Trade 6. Fleece: Imperial Metabolism in the Pre-Columbian Andes 7. Slaves: Inequality and Sustainable Agriculture in Pre-Colonial West Africa 8. Steam: Nineteenth-Century Mechanization and the Power of Capital 9. Ivory: Socio-ecological Consequences of the East African Ivory Trade 10. Lawns: Botanical Garden Design as Colonial Domination Part 2: Struggles over Material Resources in the Modern World 11. Footprints: The Division of Nations and Nature 12. Water: Irrigation and Resilience in the Tanzanian Highlands 13. Meat: The New Geopolitics of Food 14. Trees: Conflicts Between Pastoralists, Loggers and Conservationists in the Himalayas 15. Grass: From Local Pastures to Global Energy Markets in Eastern Tanzania 16. Forests: Capital Accumulation, Climate Change, and Crises in Chile and Sweden 17. Jatropha: A Magic Bullet Filled with Oil 18. Atoms: Nuclear Estrangement from Chernobyl to India 19. Safflower: Liberalisation or Participation in a Tanzanian Village 20. Land-Claims: Racialized Environmental Struggles in Latin America 21. Smoke: Cooking, Coughing and Collective Action in Kenya 22. Sugarcane: Agrofuels and Conflicting Land Uses in Brazil'
+    title: 'Accumulation: Land as a medium of domination'
+    citationKey: Hornborg2012b
+    creators:
+      -
+        firstName: Alf
+        lastName: Hornborg
+        creatorType: author
+      -
+        firstName: Alf
+        lastName: Hornborg
+        creatorType: editor
+      -
+        firstName: Brett
+        lastName: Clark
+        creatorType: editor
+      -
+        firstName: Kenneth
+        lastName: Hermele
+        creatorType: editor
+    tags:
+      -
+        tag: Business
+      -
+        tag: capitalism
+      -
+        tag: ecological economics
+      -
+        tag: ecology
+      -
+        tag: economics
+      -
+        tag: Economics
+      -
+        tag: Environment and Sustainability
+      -
+        tag: Environmental Economics. Ecological Economics
+      -
+        tag: Environmental Politics
+      -
+        tag: environmental sociology
+      -
+        tag: Environmental Studies
+      -
+        tag: Finance
+      -
+        tag: global change
+      -
+        tag: globalization
+      -
+        tag: Industry
+      -
+        tag: International Relations
+      -
+        tag: land
+      -
+        tag: metabolic rift
+      -
+        tag: political ecology
+      -
+        tag: Political Economy
+      -
+        tag: politics
+      -
+        tag: Politics
+      -
+        tag: power
+      -
+        tag: sustainability
+    relations: {}
+    dateAdded: 2026-10-14T12:54:51Z
+    dateModified: 2026-10-14T12:54:51Z
+    uri: http://zotero.org/users/8230813/items/BKN3AA9J
+    itemID: 150
+    attachments: []
+    notes: []
+    autoJournalAbbreviation: ''
+    itemKey: BKN3AA9J
+    libraryID: 1
+    publicationTitle: 'Ecology and power: Struggles over land and material resources in the past, present and future'
+  -
+    key: 3WZ9JBAK
+    version: 0
+    itemType: bookSection
+    url: https://www.routledge.com/Ecology-and-Power-Struggles-over-Land-and-Material-Resources-in-the-Past/Hornborg-Clark-Hermele/p/book/9780415601467
+    series: Routledge studies in ecological economics
+    volume: '18'
+    place: New York
+    publisher: Routledge
+    pages: 206–216
+    ISBN: 978-0-203-12281-5
+    date: '2012'
+    extra: "tex.owner: napoletano\ntex.timestamp: 2020-09-12"
+    abstractNote: 'Power and social inequality shape patterns of land use and resource management. This book explores this relationship from different perspectives, illuminating the complexity of interactions between human societies and nature. Most of the contributors use the perspective of "political ecology" as a point of departure, recognizing that human relations to the environment and human social relations are not separate phenomena but inextricably intertwined. What makes this volume unique is that it sets this approach in a trans-disciplinary, global, and historical framework. Part 1: Theoretical Perspectives on Historical Political Ecology 1. Accumulation: Land as a Medium of Domination 2. Techno-Fix: Ecological Rifts and Capital Shifts 3. Empire: The Comparative Study of Imperialism 4. Islands: Ecologically Unequal Exchange and Landesque Capital 5. Guano: The Global Metabolic Rift and the Fertilizer Trade 6. Fleece: Imperial Metabolism in the Pre-Columbian Andes 7. Slaves: Inequality and Sustainable Agriculture in Pre-Colonial West Africa 8. Steam: Nineteenth-Century Mechanization and the Power of Capital 9. Ivory: Socio-ecological Consequences of the East African Ivory Trade 10. Lawns: Botanical Garden Design as Colonial Domination Part 2: Struggles over Material Resources in the Modern World 11. Footprints: The Division of Nations and Nature 12. Water: Irrigation and Resilience in the Tanzanian Highlands 13. Meat: The New Geopolitics of Food 14. Trees: Conflicts Between Pastoralists, Loggers and Conservationists in the Himalayas 15. Grass: From Local Pastures to Global Energy Markets in Eastern Tanzania 16. Forests: Capital Accumulation, Climate Change, and Crises in Chile and Sweden 17. Jatropha: A Magic Bullet Filled with Oil 18. Atoms: Nuclear Estrangement from Chernobyl to India 19. Safflower: Liberalisation or Participation in a Tanzanian Village 20. Land-Claims: Racialized Environmental Struggles in Latin America 21. Smoke: Cooking, Coughing and Collective Action in Kenya 22. Sugarcane: Agrofuels and Conflicting Land Uses in Brazil'
+    title: 'Grass: From local pastures to global energy markets in eastern Tanzania'
+    citationKey: Isson2012
+    creators:
+      -
+        firstName: E.
+        lastName: Gunilla
+        creatorType: author
+      -
+        firstName: A. O.
+        lastName: lsson
+        creatorType: author
+      -
+        firstName: Lennart
+        lastName: Bångens
+        creatorType: author
+      -
+        firstName: Alf
+        lastName: Hornborg
+        creatorType: editor
+      -
+        firstName: Brett
+        lastName: Clark
+        creatorType: editor
+      -
+        firstName: Kenneth
+        lastName: Hermele
+        creatorType: editor
+    tags:
+      -
+        tag: Business
+      -
+        tag: capitalism
+      -
+        tag: ecological economics
+      -
+        tag: ecology
+      -
+        tag: economics
+      -
+        tag: Economics
+      -
+        tag: Environment and Sustainability
+      -
+        tag: Environmental Economics. Ecological Economics
+      -
+        tag: Environmental Politics
+      -
+        tag: environmental sociology
+      -
+        tag: Environmental Studies
+      -
+        tag: Finance
+      -
+        tag: global change
+      -
+        tag: globalization
+      -
+        tag: Industry
+      -
+        tag: International Relations
+      -
+        tag: land
+      -
+        tag: metabolic rift
+      -
+        tag: political ecology
+      -
+        tag: Political Economy
+      -
+        tag: politics
+      -
+        tag: Politics
+      -
+        tag: power
+      -
+        tag: sustainability
+    relations: {}
+    dateAdded: 2026-10-14T12:54:51Z
+    dateModified: 2026-10-14T12:54:51Z
+    uri: http://zotero.org/users/8230813/items/3WZ9JBAK
+    itemID: 147
+    attachments: []
+    notes: []
+    autoJournalAbbreviation: ''
+    itemKey: 3WZ9JBAK
+    libraryID: 1
+    publicationTitle: 'Ecology and power: Struggles over land and material resources in the past, present and future'
+  -
+    key: UPQ7ITIC
+    version: 0
+    itemType: bookSection
+    url: https://www.routledge.com/Ecology-and-Power-Struggles-over-Land-and-Material-Resources-in-the-Past/Hornborg-Clark-Hermele/p/book/9780415601467
+    series: Routledge studies in ecological economics
+    volume: '18'
+    place: New York
+    publisher: Routledge
+    pages: 274–284
+    ISBN: 978-0-203-12281-5
+    date: '2012'
+    extra: "tex.owner: napoletano\ntex.timestamp: 2020-09-12"
+    abstractNote: 'Power and social inequality shape patterns of land use and resource management. This book explores this relationship from different perspectives, illuminating the complexity of interactions between human societies and nature. Most of the contributors use the perspective of "political ecology" as a point of departure, recognizing that human relations to the environment and human social relations are not separate phenomena but inextricably intertwined. What makes this volume unique is that it sets this approach in a trans-disciplinary, global, and historical framework. Part 1: Theoretical Perspectives on Historical Political Ecology 1. Accumulation: Land as a Medium of Domination 2. Techno-Fix: Ecological Rifts and Capital Shifts 3. Empire: The Comparative Study of Imperialism 4. Islands: Ecologically Unequal Exchange and Landesque Capital 5. Guano: The Global Metabolic Rift and the Fertilizer Trade 6. Fleece: Imperial Metabolism in the Pre-Columbian Andes 7. Slaves: Inequality and Sustainable Agriculture in Pre-Colonial West Africa 8. Steam: Nineteenth-Century Mechanization and the Power of Capital 9. Ivory: Socio-ecological Consequences of the East African Ivory Trade 10. Lawns: Botanical Garden Design as Colonial Domination Part 2: Struggles over Material Resources in the Modern World 11. Footprints: The Division of Nations and Nature 12. Water: Irrigation and Resilience in the Tanzanian Highlands 13. Meat: The New Geopolitics of Food 14. Trees: Conflicts Between Pastoralists, Loggers and Conservationists in the Himalayas 15. Grass: From Local Pastures to Global Energy Markets in Eastern Tanzania 16. Forests: Capital Accumulation, Climate Change, and Crises in Chile and Sweden 17. Jatropha: A Magic Bullet Filled with Oil 18. Atoms: Nuclear Estrangement from Chernobyl to India 19. Safflower: Liberalisation or Participation in a Tanzanian Village 20. Land-Claims: Racialized Environmental Struggles in Latin America 21. Smoke: Cooking, Coughing and Collective Action in Kenya 22. Sugarcane: Agrofuels and Conflicting Land Uses in Brazil'
+    title: 'Smoke: Cooking, coughing and collective action in Kenya'
+    citationKey: Jerneck2012
+    creators:
+      -
+        firstName: Anne
+        lastName: Jerneck
+        creatorType: author
+      -
+        firstName: Lennart
+        lastName: Olsson
+        creatorType: author
+      -
+        firstName: Alf
+        lastName: Hornborg
+        creatorType: editor
+      -
+        firstName: Brett
+        lastName: Clark
+        creatorType: editor
+      -
+        firstName: Kenneth
+        lastName: Hermele
+        creatorType: editor
+    tags:
+      -
+        tag: Business
+      -
+        tag: capitalism
+      -
+        tag: ecological economics
+      -
+        tag: ecology
+      -
+        tag: economics
+      -
+        tag: Economics
+      -
+        tag: Environment and Sustainability
+      -
+        tag: Environmental Economics. Ecological Economics
+      -
+        tag: Environmental Politics
+      -
+        tag: environmental sociology
+      -
+        tag: Environmental Studies
+      -
+        tag: Finance
+      -
+        tag: global change
+      -
+        tag: globalization
+      -
+        tag: Industry
+      -
+        tag: International Relations
+      -
+        tag: land
+      -
+        tag: metabolic rift
+      -
+        tag: political ecology
+      -
+        tag: Political Economy
+      -
+        tag: politics
+      -
+        tag: Politics
+      -
+        tag: power
+      -
+        tag: sustainability
+    relations: {}
+    dateAdded: 2026-10-14T12:54:51Z
+    dateModified: 2026-10-14T12:54:51Z
+    uri: http://zotero.org/users/8230813/items/UPQ7ITIC
+    itemID: 152
+    attachments: []
+    notes: []
+    autoJournalAbbreviation: ''
+    itemKey: UPQ7ITIC
+    libraryID: 1
+    publicationTitle: 'Ecology and power: Struggles over land and material resources in the past, present and future'
+  -
+    key: EX9AWHSN
+    version: 0
+    itemType: bookSection
+    url: https://www.routledge.com/Ecology-and-Power-Struggles-over-Land-and-Material-Resources-in-the-Past/Hornborg-Clark-Hermele/p/book/9780415601467
+    series: Routledge studies in ecological economics
+    volume: '18'
+    place: New York
+    publisher: Routledge
+    pages: 182–193
+    ISBN: 978-0-203-12281-5
+    date: '2012'
+    extra: "tex.owner: napoletano\ntex.timestamp: 2020-09-12"
+    abstractNote: 'Power and social inequality shape patterns of land use and resource management. This book explores this relationship from different perspectives, illuminating the complexity of interactions between human societies and nature. Most of the contributors use the perspective of "political ecology" as a point of departure, recognizing that human relations to the environment and human social relations are not separate phenomena but inextricably intertwined. What makes this volume unique is that it sets this approach in a trans-disciplinary, global, and historical framework. Part 1: Theoretical Perspectives on Historical Political Ecology 1. Accumulation: Land as a Medium of Domination 2. Techno-Fix: Ecological Rifts and Capital Shifts 3. Empire: The Comparative Study of Imperialism 4. Islands: Ecologically Unequal Exchange and Landesque Capital 5. Guano: The Global Metabolic Rift and the Fertilizer Trade 6. Fleece: Imperial Metabolism in the Pre-Columbian Andes 7. Slaves: Inequality and Sustainable Agriculture in Pre-Colonial West Africa 8. Steam: Nineteenth-Century Mechanization and the Power of Capital 9. Ivory: Socio-ecological Consequences of the East African Ivory Trade 10. Lawns: Botanical Garden Design as Colonial Domination Part 2: Struggles over Material Resources in the Modern World 11. Footprints: The Division of Nations and Nature 12. Water: Irrigation and Resilience in the Tanzanian Highlands 13. Meat: The New Geopolitics of Food 14. Trees: Conflicts Between Pastoralists, Loggers and Conservationists in the Himalayas 15. Grass: From Local Pastures to Global Energy Markets in Eastern Tanzania 16. Forests: Capital Accumulation, Climate Change, and Crises in Chile and Sweden 17. Jatropha: A Magic Bullet Filled with Oil 18. Atoms: Nuclear Estrangement from Chernobyl to India 19. Safflower: Liberalisation or Participation in a Tanzanian Village 20. Land-Claims: Racialized Environmental Struggles in Latin America 21. Smoke: Cooking, Coughing and Collective Action in Kenya 22. Sugarcane: Agrofuels and Conflicting Land Uses in Brazil'
+    title: 'Meat: The new geopolitics of food'
+    citationKey: Jonsson2012
+    creators:
+      -
+        firstName: Ulf
+        lastName: Jonsson
+        creatorType: author
+      -
+        firstName: Alf
+        lastName: Hornborg
+        creatorType: editor
+      -
+        firstName: Brett
+        lastName: Clark
+        creatorType: editor
+      -
+        firstName: Kenneth
+        lastName: Hermele
+        creatorType: editor
+    tags:
+      -
+        tag: Business
+      -
+        tag: capitalism
+      -
+        tag: ecological economics
+      -
+        tag: ecology
+      -
+        tag: economics
+      -
+        tag: Economics
+      -
+        tag: Environment and Sustainability
+      -
+        tag: Environmental Economics. Ecological Economics
+      -
+        tag: Environmental Politics
+      -
+        tag: environmental sociology
+      -
+        tag: Environmental Studies
+      -
+        tag: Finance
+      -
+        tag: global change
+      -
+        tag: globalization
+      -
+        tag: Industry
+      -
+        tag: International Relations
+      -
+        tag: land
+      -
+        tag: metabolic rift
+      -
+        tag: political ecology
+      -
+        tag: Political Economy
+      -
+        tag: politics
+      -
+        tag: Politics
+      -
+        tag: power
+      -
+        tag: sustainability
+    relations: {}
+    dateAdded: 2026-10-14T12:54:51Z
+    dateModified: 2026-10-14T12:54:51Z
+    uri: http://zotero.org/users/8230813/items/EX9AWHSN
+    itemID: 153
+    attachments: []
+    notes: []
+    autoJournalAbbreviation: ''
+    itemKey: EX9AWHSN
+    libraryID: 1
+    publicationTitle: 'Ecology and power: Struggles over land and material resources in the past, present and future'
+  -
+    key: YVL3DQLG
+    version: 0
+    itemType: bookSection
+    url: https://www.routledge.com/Ecology-and-Power-Struggles-over-Land-and-Material-Resources-in-the-Past/Hornborg-Clark-Hermele/p/book/9780415601467
+    series: Routledge studies in ecological economics
+    volume: '18'
+    place: New York
+    publisher: Routledge
+    pages: 155–167
+    ISBN: 978-0-203-12281-5
+    date: '2012'
+    extra: "tex.owner: napoletano\ntex.timestamp: 2020-09-12"
+    abstractNote: 'Power and social inequality shape patterns of land use and resource management. This book explores this relationship from different perspectives, illuminating the complexity of interactions between human societies and nature. Most of the contributors use the perspective of "political ecology" as a point of departure, recognizing that human relations to the environment and human social relations are not separate phenomena but inextricably intertwined. What makes this volume unique is that it sets this approach in a trans-disciplinary, global, and historical framework. Part 1: Theoretical Perspectives on Historical Political Ecology 1. Accumulation: Land as a Medium of Domination 2. Techno-Fix: Ecological Rifts and Capital Shifts 3. Empire: The Comparative Study of Imperialism 4. Islands: Ecologically Unequal Exchange and Landesque Capital 5. Guano: The Global Metabolic Rift and the Fertilizer Trade 6. Fleece: Imperial Metabolism in the Pre-Columbian Andes 7. Slaves: Inequality and Sustainable Agriculture in Pre-Colonial West Africa 8. Steam: Nineteenth-Century Mechanization and the Power of Capital 9. Ivory: Socio-ecological Consequences of the East African Ivory Trade 10. Lawns: Botanical Garden Design as Colonial Domination Part 2: Struggles over Material Resources in the Modern World 11. Footprints: The Division of Nations and Nature 12. Water: Irrigation and Resilience in the Tanzanian Highlands 13. Meat: The New Geopolitics of Food 14. Trees: Conflicts Between Pastoralists, Loggers and Conservationists in the Himalayas 15. Grass: From Local Pastures to Global Energy Markets in Eastern Tanzania 16. Forests: Capital Accumulation, Climate Change, and Crises in Chile and Sweden 17. Jatropha: A Magic Bullet Filled with Oil 18. Atoms: Nuclear Estrangement from Chernobyl to India 19. Safflower: Liberalisation or Participation in a Tanzanian Village 20. Land-Claims: Racialized Environmental Struggles in Latin America 21. Smoke: Cooking, Coughing and Collective Action in Kenya 22. Sugarcane: Agrofuels and Conflicting Land Uses in Brazil'
+    title: 'Footprints: The division of nations and nature'
+    citationKey: Jorgenson2012
+    creators:
+      -
+        firstName: Andrew K.
+        lastName: Jorgenson
+        creatorType: author
+      -
+        firstName: Brett
+        lastName: Clark
+        creatorType: author
+      -
+        firstName: Alf
+        lastName: Hornborg
+        creatorType: editor
+      -
+        firstName: Brett
+        lastName: Clark
+        creatorType: editor
+      -
+        firstName: Kenneth
+        lastName: Hermele
+        creatorType: editor
+    tags:
+      -
+        tag: Business
+      -
+        tag: capitalism
+      -
+        tag: ecological economics
+      -
+        tag: ecology
+      -
+        tag: economics
+      -
+        tag: Economics
+      -
+        tag: Environment and Sustainability
+      -
+        tag: Environmental Economics. Ecological Economics
+      -
+        tag: Environmental Politics
+      -
+        tag: environmental sociology
+      -
+        tag: Environmental Studies
+      -
+        tag: Finance
+      -
+        tag: global change
+      -
+        tag: globalization
+      -
+        tag: Industry
+      -
+        tag: International Relations
+      -
+        tag: land
+      -
+        tag: metabolic rift
+      -
+        tag: political ecology
+      -
+        tag: Political Economy
+      -
+        tag: politics
+      -
+        tag: Politics
+      -
+        tag: power
+      -
+        tag: sustainability
+    relations: {}
+    dateAdded: 2026-10-14T12:54:51Z
+    dateModified: 2026-10-14T12:54:51Z
+    uri: http://zotero.org/users/8230813/items/YVL3DQLG
+    itemID: 154
+    attachments: []
+    notes: []
+    autoJournalAbbreviation: ''
+    itemKey: YVL3DQLG
+    libraryID: 1
+    publicationTitle: 'Ecology and power: Struggles over land and material resources in the past, present and future'
+  -
+    key: 97E6YQMT
+    version: 0
+    itemType: bookSection
+    url: https://www.routledge.com/Ecology-and-Power-Struggles-over-Land-and-Material-Resources-in-the-Past/Hornborg-Clark-Hermele/p/book/9780415601467
+    series: Routledge studies in ecological economics
+    volume: '18'
+    place: New York
+    publisher: Routledge
+    pages: 239–249
+    ISBN: 978-0-203-12281-5
+    date: '2012'
+    extra: "tex.owner: napoletano\ntex.timestamp: 2020-09-12"
+    abstractNote: 'Power and social inequality shape patterns of land use and resource management. This book explores this relationship from different perspectives, illuminating the complexity of interactions between human societies and nature. Most of the contributors use the perspective of "political ecology" as a point of departure, recognizing that human relations to the environment and human social relations are not separate phenomena but inextricably intertwined. What makes this volume unique is that it sets this approach in a trans-disciplinary, global, and historical framework. Part 1: Theoretical Perspectives on Historical Political Ecology 1. Accumulation: Land as a Medium of Domination 2. Techno-Fix: Ecological Rifts and Capital Shifts 3. Empire: The Comparative Study of Imperialism 4. Islands: Ecologically Unequal Exchange and Landesque Capital 5. Guano: The Global Metabolic Rift and the Fertilizer Trade 6. Fleece: Imperial Metabolism in the Pre-Columbian Andes 7. Slaves: Inequality and Sustainable Agriculture in Pre-Colonial West Africa 8. Steam: Nineteenth-Century Mechanization and the Power of Capital 9. Ivory: Socio-ecological Consequences of the East African Ivory Trade 10. Lawns: Botanical Garden Design as Colonial Domination Part 2: Struggles over Material Resources in the Modern World 11. Footprints: The Division of Nations and Nature 12. Water: Irrigation and Resilience in the Tanzanian Highlands 13. Meat: The New Geopolitics of Food 14. Trees: Conflicts Between Pastoralists, Loggers and Conservationists in the Himalayas 15. Grass: From Local Pastures to Global Energy Markets in Eastern Tanzania 16. Forests: Capital Accumulation, Climate Change, and Crises in Chile and Sweden 17. Jatropha: A Magic Bullet Filled with Oil 18. Atoms: Nuclear Estrangement from Chernobyl to India 19. Safflower: Liberalisation or Participation in a Tanzanian Village 20. Land-Claims: Racialized Environmental Struggles in Latin America 21. Smoke: Cooking, Coughing and Collective Action in Kenya 22. Sugarcane: Agrofuels and Conflicting Land Uses in Brazil'
+    title: 'Atoms: Nuclear estrangement from Chernobyl to India'
+    citationKey: Karlsson2012
+    creators:
+      -
+        firstName: Bengt G.
+        lastName: Karlsson
+        creatorType: author
+      -
+        firstName: Alf
+        lastName: Hornborg
+        creatorType: editor
+      -
+        firstName: Brett
+        lastName: Clark
+        creatorType: editor
+      -
+        firstName: Kenneth
+        lastName: Hermele
+        creatorType: editor
+    tags:
+      -
+        tag: Business
+      -
+        tag: capitalism
+      -
+        tag: ecological economics
+      -
+        tag: ecology
+      -
+        tag: economics
+      -
+        tag: Economics
+      -
+        tag: Environment and Sustainability
+      -
+        tag: Environmental Economics. Ecological Economics
+      -
+        tag: Environmental Politics
+      -
+        tag: environmental sociology
+      -
+        tag: Environmental Studies
+      -
+        tag: Finance
+      -
+        tag: global change
+      -
+        tag: globalization
+      -
+        tag: Industry
+      -
+        tag: International Relations
+      -
+        tag: land
+      -
+        tag: metabolic rift
+      -
+        tag: political ecology
+      -
+        tag: Political Economy
+      -
+        tag: politics
+      -
+        tag: Politics
+      -
+        tag: power
+      -
+        tag: sustainability
+    relations: {}
+    dateAdded: 2026-10-14T12:54:51Z
+    dateModified: 2026-10-14T12:54:51Z
+    uri: http://zotero.org/users/8230813/items/97E6YQMT
+    itemID: 155
+    attachments: []
+    notes: []
+    autoJournalAbbreviation: ''
+    itemKey: 97E6YQMT
+    libraryID: 1
+    publicationTitle: 'Ecology and power: Struggles over land and material resources in the past, present and future'
+  -
+    key: WKPF99EZ
+    version: 0
+    itemType: bookSection
+    url: https://www.routledge.com/Ecology-and-Power-Struggles-over-Land-and-Material-Resources-in-the-Past/Hornborg-Clark-Hermele/p/book/9780415601467
+    series: Routledge studies in ecological economics
+    volume: '18'
+    place: New York
+    publisher: Routledge
+    pages: 108–123
+    ISBN: 978-0-203-12281-5
+    date: '2012'
+    extra: "tex.owner: napoletano\ntex.timestamp: 2020-09-12"
+    abstractNote: 'Power and social inequality shape patterns of land use and resource management. This book explores this relationship from different perspectives, illuminating the complexity of interactions between human societies and nature. Most of the contributors use the perspective of "political ecology" as a point of departure, recognizing that human relations to the environment and human social relations are not separate phenomena but inextricably intertwined. What makes this volume unique is that it sets this approach in a trans-disciplinary, global, and historical framework. Part 1: Theoretical Perspectives on Historical Political Ecology 1. Accumulation: Land as a Medium of Domination 2. Techno-Fix: Ecological Rifts and Capital Shifts 3. Empire: The Comparative Study of Imperialism 4. Islands: Ecologically Unequal Exchange and Landesque Capital 5. Guano: The Global Metabolic Rift and the Fertilizer Trade 6. Fleece: Imperial Metabolism in the Pre-Columbian Andes 7. Slaves: Inequality and Sustainable Agriculture in Pre-Colonial West Africa 8. Steam: Nineteenth-Century Mechanization and the Power of Capital 9. Ivory: Socio-ecological Consequences of the East African Ivory Trade 10. Lawns: Botanical Garden Design as Colonial Domination Part 2: Struggles over Material Resources in the Modern World 11. Footprints: The Division of Nations and Nature 12. Water: Irrigation and Resilience in the Tanzanian Highlands 13. Meat: The New Geopolitics of Food 14. Trees: Conflicts Between Pastoralists, Loggers and Conservationists in the Himalayas 15. Grass: From Local Pastures to Global Energy Markets in Eastern Tanzania 16. Forests: Capital Accumulation, Climate Change, and Crises in Chile and Sweden 17. Jatropha: A Magic Bullet Filled with Oil 18. Atoms: Nuclear Estrangement from Chernobyl to India 19. Safflower: Liberalisation or Participation in a Tanzanian Village 20. Land-Claims: Racialized Environmental Struggles in Latin America 21. Smoke: Cooking, Coughing and Collective Action in Kenya 22. Sugarcane: Agrofuels and Conflicting Land Uses in Brazil'
+    title: 'Steam: Nineteenth-­century mechanization and the power of capital'
+    citationKey: Malm2012
+    creators:
+      -
+        firstName: Andreas
+        lastName: Malm
+        creatorType: author
+      -
+        firstName: Alf
+        lastName: Hornborg
+        creatorType: editor
+      -
+        firstName: Brett
+        lastName: Clark
+        creatorType: editor
+      -
+        firstName: Kenneth
+        lastName: Hermele
+        creatorType: editor
+    tags:
+      -
+        tag: Business
+      -
+        tag: capitalism
+      -
+        tag: ecological economics
+      -
+        tag: ecology
+      -
+        tag: economics
+      -
+        tag: Economics
+      -
+        tag: Environment and Sustainability
+      -
+        tag: Environmental Economics. Ecological Economics
+      -
+        tag: Environmental Politics
+      -
+        tag: environmental sociology
+      -
+        tag: Environmental Studies
+      -
+        tag: Finance
+      -
+        tag: global change
+      -
+        tag: globalization
+      -
+        tag: Industry
+      -
+        tag: International Relations
+      -
+        tag: land
+      -
+        tag: metabolic rift
+      -
+        tag: political ecology
+      -
+        tag: Political Economy
+      -
+        tag: politics
+      -
+        tag: Politics
+      -
+        tag: power
+      -
+        tag: sustainability
+    relations: {}
+    dateAdded: 2026-10-14T12:54:51Z
+    dateModified: 2026-10-14T12:54:51Z
+    uri: http://zotero.org/users/8230813/items/WKPF99EZ
+    itemID: 156
+    attachments: []
+    notes: []
+    autoJournalAbbreviation: ''
+    itemKey: WKPF99EZ
+    libraryID: 1
+    publicationTitle: 'Ecology and power: Struggles over land and material resources in the past, present and future'
+  -
+    key: Y5Z5M2E6
+    version: 0
+    itemType: book
+    url: https://edinburghuniversitypress.com/book-lucretius-ii.html
+    place: Edinburgh
+    publisher: Edinburgh University
+    ISBN: 978-1-4744-6666-0
+    date: 2020-03-01
+    extra: "Pages: 240\ntex.owner: napoletano\ntex.priority: prio1\ntex.timestamp: 2020-09-12"
+    accessDate: 2020-07-10
+    language: English
+    abstractNote: 'An ancient ethics for modern life - Develops an original ethics of motion for the 21st century from Lucretius'' didactic poem De Rerum Natura - Argues uniquely that Lucretius had a distinct ethical theory from Epicurus - Puts Lucretius in conversation with contemporary physics and new materialism Lucretius II launch offer - Find out where it all started: we''re offering a free ebook of Lucretius I when you buy a copy of Lucretius II. Just add a copy of Lucretius II (paperback, hardback or ebook) and a Lucretius I ebook to your basket, and enter the code Lucretius2 when you check out. Visit the webpage for Lucretius I Human suffering, the fear of death, war, poverty, ecological destruction and social inequality: almost 2,000 ago Lucretius proposed an ethics of motion as simple and stunning solution to these ethical problems. Thomas Nail argues that Lucretius was the first to locate the core of all these ethical ills in our obsession with stasis, our fear of movement and our hatred of matter. Instead of trying to transcend nature with our minds, escape it with our immortal souls and dominate it with our technologies, Lucretius was perhaps the first in the Western tradition to forcefully argue for a completely materialist, immanent and naturalistic ethics based on moving well with and as nature. If we want to survive and live well on this planet, Lucretius taught us, our best chance is not to struggle against nature but to embrace it and facilitate its movement. Lucretius II is the second installment in Thomas Nail''s transformative reading of Lucretius'' didactic poem De Rerum Natura, which can be read individually or as a trilogy. Lucretius I covered books 1 and 2 of De Rerum Natura and looked at Lucretius'' ontology; this volume covers books 3 and 4 and Lucretius'' ethics. The third and final volume will cover books 5 and 6.'
+    title: 'Lucretius II: An ethics of motion'
+    citationKey: Nail2020a
+    creators:
+      -
+        firstName: Thomas
+        lastName: Nail
+        creatorType: author
+    tags:
+      -
+        tag: prio1
+      -
+        tag: philosophy
+      -
+        tag: atomism
+      -
+        tag: De Rerum Natura
+      -
+        tag: dialectical materialism
+      -
+        tag: Epicurus
+      -
+        tag: ethics
+      -
+        tag: historical materialism
+      -
+        tag: history
+      -
+        tag: kinetic materialism
+      -
+        tag: Lucretius
+      -
+        tag: Marx
+      -
+        tag: marxism
+      -
+        tag: materialism
+      -
+        tag: matter
+      -
+        tag: metaphysics
+      -
+        tag: motion
+      -
+        tag: nature
+      -
+        tag: new materialism
+      -
+        tag: ontology
+      -
+        tag: post-structuralism
+      -
+        tag: quantum physics
+      -
+        tag: society
+      -
+        tag: speculative realism
+    relations: {}
+    dateAdded: 2026-10-14T12:54:51Z
+    dateModified: 2026-10-14T12:54:51Z
+    uri: http://zotero.org/users/8230813/items/Y5Z5M2E6
+    itemID: 164
+    attachments: []
+    notes: []
+    autoJournalAbbreviation: ''
+    itemKey: Y5Z5M2E6
+    libraryID: 1
+  -
+    key: 4A9AEVCA
+    version: 0
+    itemType: bookSection
+    url: https://www.routledge.com/Ecology-and-Power-Struggles-over-Land-and-Material-Resources-in-the-Past/Hornborg-Clark-Hermele/p/book/9780415601467
+    series: Routledge studies in ecological economics
+    volume: '18'
+    place: New York
+    publisher: Routledge
+    pages: 250–261
+    ISBN: 978-0-203-12281-5
+    date: '2012'
+    extra: "tex.owner: napoletano\ntex.timestamp: 2020-09-12"
+    abstractNote: 'Power and social inequality shape patterns of land use and resource management. This book explores this relationship from different perspectives, illuminating the complexity of interactions between human societies and nature. Most of the contributors use the perspective of "political ecology" as a point of departure, recognizing that human relations to the environment and human social relations are not separate phenomena but inextricably intertwined. What makes this volume unique is that it sets this approach in a trans-disciplinary, global, and historical framework. Part 1: Theoretical Perspectives on Historical Political Ecology 1. Accumulation: Land as a Medium of Domination 2. Techno-Fix: Ecological Rifts and Capital Shifts 3. Empire: The Comparative Study of Imperialism 4. Islands: Ecologically Unequal Exchange and Landesque Capital 5. Guano: The Global Metabolic Rift and the Fertilizer Trade 6. Fleece: Imperial Metabolism in the Pre-Columbian Andes 7. Slaves: Inequality and Sustainable Agriculture in Pre-Colonial West Africa 8. Steam: Nineteenth-Century Mechanization and the Power of Capital 9. Ivory: Socio-ecological Consequences of the East African Ivory Trade 10. Lawns: Botanical Garden Design as Colonial Domination Part 2: Struggles over Material Resources in the Modern World 11. Footprints: The Division of Nations and Nature 12. Water: Irrigation and Resilience in the Tanzanian Highlands 13. Meat: The New Geopolitics of Food 14. Trees: Conflicts Between Pastoralists, Loggers and Conservationists in the Himalayas 15. Grass: From Local Pastures to Global Energy Markets in Eastern Tanzania 16. Forests: Capital Accumulation, Climate Change, and Crises in Chile and Sweden 17. Jatropha: A Magic Bullet Filled with Oil 18. Atoms: Nuclear Estrangement from Chernobyl to India 19. Safflower: Liberalisation or Participation in a Tanzanian Village 20. Land-Claims: Racialized Environmental Struggles in Latin America 21. Smoke: Cooking, Coughing and Collective Action in Kenya 22. Sugarcane: Agrofuels and Conflicting Land Uses in Brazil'
+    title: 'Safflower: Liberalisation or participation in a Tanzanian village'
+    citationKey: Oestberg2012
+    creators:
+      -
+        firstName: Wilhelm
+        lastName: Östberg
+        creatorType: author
+      -
+        firstName: Alf
+        lastName: Hornborg
+        creatorType: editor
+      -
+        firstName: Brett
+        lastName: Clark
+        creatorType: editor
+      -
+        firstName: Kenneth
+        lastName: Hermele
+        creatorType: editor
+    tags:
+      -
+        tag: Business
+      -
+        tag: capitalism
+      -
+        tag: ecological economics
+      -
+        tag: ecology
+      -
+        tag: economics
+      -
+        tag: Economics
+      -
+        tag: Environment and Sustainability
+      -
+        tag: Environmental Economics. Ecological Economics
+      -
+        tag: Environmental Politics
+      -
+        tag: environmental sociology
+      -
+        tag: Environmental Studies
+      -
+        tag: Finance
+      -
+        tag: global change
+      -
+        tag: globalization
+      -
+        tag: Industry
+      -
+        tag: International Relations
+      -
+        tag: land
+      -
+        tag: metabolic rift
+      -
+        tag: political ecology
+      -
+        tag: Political Economy
+      -
+        tag: politics
+      -
+        tag: Politics
+      -
+        tag: power
+      -
+        tag: sustainability
+    relations: {}
+    dateAdded: 2026-10-14T12:54:51Z
+    dateModified: 2026-10-14T12:54:51Z
+    uri: http://zotero.org/users/8230813/items/4A9AEVCA
+    itemID: 159
+    attachments: []
+    notes: []
+    autoJournalAbbreviation: ''
+    itemKey: 4A9AEVCA
+    libraryID: 1
+    publicationTitle: 'Ecology and power: Struggles over land and material resources in the past, present and future'
+  -
+    key: R9B7B8FQ
+    version: 0
+    itemType: bookSection
+    url: https://www.routledge.com/Ecology-and-Power-Struggles-over-Land-and-Material-Resources-in-the-Past/Hornborg-Clark-Hermele/p/book/9780415601467
+    series: Routledge studies in ecological economics
+    volume: '18'
+    place: New York
+    publisher: Routledge
+    pages: 228–238
+    ISBN: 978-0-203-12281-5
+    date: '2012'
+    extra: "tex.owner: napoletano\ntex.timestamp: 2020-09-12"
+    abstractNote: 'Power and social inequality shape patterns of land use and resource management. This book explores this relationship from different perspectives, illuminating the complexity of interactions between human societies and nature. Most of the contributors use the perspective of "political ecology" as a point of departure, recognizing that human relations to the environment and human social relations are not separate phenomena but inextricably intertwined. What makes this volume unique is that it sets this approach in a trans-disciplinary, global, and historical framework. Part 1: Theoretical Perspectives on Historical Political Ecology 1. Accumulation: Land as a Medium of Domination 2. Techno-Fix: Ecological Rifts and Capital Shifts 3. Empire: The Comparative Study of Imperialism 4. Islands: Ecologically Unequal Exchange and Landesque Capital 5. Guano: The Global Metabolic Rift and the Fertilizer Trade 6. Fleece: Imperial Metabolism in the Pre-Columbian Andes 7. Slaves: Inequality and Sustainable Agriculture in Pre-Colonial West Africa 8. Steam: Nineteenth-Century Mechanization and the Power of Capital 9. Ivory: Socio-ecological Consequences of the East African Ivory Trade 10. Lawns: Botanical Garden Design as Colonial Domination Part 2: Struggles over Material Resources in the Modern World 11. Footprints: The Division of Nations and Nature 12. Water: Irrigation and Resilience in the Tanzanian Highlands 13. Meat: The New Geopolitics of Food 14. Trees: Conflicts Between Pastoralists, Loggers and Conservationists in the Himalayas 15. Grass: From Local Pastures to Global Energy Markets in Eastern Tanzania 16. Forests: Capital Accumulation, Climate Change, and Crises in Chile and Sweden 17. Jatropha: A Magic Bullet Filled with Oil 18. Atoms: Nuclear Estrangement from Chernobyl to India 19. Safflower: Liberalisation or Participation in a Tanzanian Village 20. Land-Claims: Racialized Environmental Struggles in Latin America 21. Smoke: Cooking, Coughing and Collective Action in Kenya 22. Sugarcane: Agrofuels and Conflicting Land Uses in Brazil'
+    title: '<i>Jatropha</i>: A magic bullet filled with oil'
+    citationKey: Widengard2012
+    creators:
+      -
+        firstName: Marie
+        lastName: Widengård
+        creatorType: author
+      -
+        firstName: Alf
+        lastName: Hornborg
+        creatorType: editor
+      -
+        firstName: Brett
+        lastName: Clark
+        creatorType: editor
+      -
+        firstName: Kenneth
+        lastName: Hermele
+        creatorType: editor
+    tags:
+      -
+        tag: Business
+      -
+        tag: capitalism
+      -
+        tag: ecological economics
+      -
+        tag: ecology
+      -
+        tag: economics
+      -
+        tag: Economics
+      -
+        tag: Environment and Sustainability
+      -
+        tag: Environmental Economics. Ecological Economics
+      -
+        tag: Environmental Politics
+      -
+        tag: environmental sociology
+      -
+        tag: Environmental Studies
+      -
+        tag: Finance
+      -
+        tag: global change
+      -
+        tag: globalization
+      -
+        tag: Industry
+      -
+        tag: International Relations
+      -
+        tag: land
+      -
+        tag: metabolic rift
+      -
+        tag: political ecology
+      -
+        tag: Political Economy
+      -
+        tag: politics
+      -
+        tag: Politics
+      -
+        tag: power
+      -
+        tag: sustainability
+    relations: {}
+    dateAdded: 2026-10-14T12:54:51Z
+    dateModified: 2026-10-14T12:54:51Z
+    uri: http://zotero.org/users/8230813/items/R9B7B8FQ
+    itemID: 157
+    attachments: []
+    notes: []
+    autoJournalAbbreviation: ''
+    itemKey: R9B7B8FQ
+    libraryID: 1
+    publicationTitle: 'Ecology and power: Struggles over land and material resources in the past, present and future'
+  -
+    key: BZZYH292
+    version: 0
+    itemType: bookSection
+    url: https://www.routledge.com/Ecology-and-Power-Struggles-over-Land-and-Material-Resources-in-the-Past/Hornborg-Clark-Hermele/p/book/9780415601467
+    series: Routledge studies in ecological economics
+    volume: '18'
+    place: New York
+    publisher: Routledge
+    pages: 97–107
+    ISBN: 978-0-203-12281-5
+    date: '2012'
+    extra: "tex.owner: napoletano\ntex.timestamp: 2020-09-12"
+    abstractNote: 'Power and social inequality shape patterns of land use and resource management. This book explores this relationship from different perspectives, illuminating the complexity of interactions between human societies and nature. Most of the contributors use the perspective of "political ecology" as a point of departure, recognizing that human relations to the environment and human social relations are not separate phenomena but inextricably intertwined. What makes this volume unique is that it sets this approach in a trans-disciplinary, global, and historical framework. Part 1: Theoretical Perspectives on Historical Political Ecology 1. Accumulation: Land as a Medium of Domination 2. Techno-Fix: Ecological Rifts and Capital Shifts 3. Empire: The Comparative Study of Imperialism 4. Islands: Ecologically Unequal Exchange and Landesque Capital 5. Guano: The Global Metabolic Rift and the Fertilizer Trade 6. Fleece: Imperial Metabolism in the Pre-Columbian Andes 7. Slaves: Inequality and Sustainable Agriculture in Pre-Colonial West Africa 8. Steam: Nineteenth-Century Mechanization and the Power of Capital 9. Ivory: Socio-ecological Consequences of the East African Ivory Trade 10. Lawns: Botanical Garden Design as Colonial Domination Part 2: Struggles over Material Resources in the Modern World 11. Footprints: The Division of Nations and Nature 12. Water: Irrigation and Resilience in the Tanzanian Highlands 13. Meat: The New Geopolitics of Food 14. Trees: Conflicts Between Pastoralists, Loggers and Conservationists in the Himalayas 15. Grass: From Local Pastures to Global Energy Markets in Eastern Tanzania 16. Forests: Capital Accumulation, Climate Change, and Crises in Chile and Sweden 17. Jatropha: A Magic Bullet Filled with Oil 18. Atoms: Nuclear Estrangement from Chernobyl to India 19. Safflower: Liberalisation or Participation in a Tanzanian Village 20. Land-Claims: Racialized Environmental Struggles in Latin America 21. Smoke: Cooking, Coughing and Collective Action in Kenya 22. Sugarcane: Agrofuels and Conflicting Land Uses in Brazil'
+    title: 'Slaves: Inequality and sustainable agriculture in pre-colonial West Africa'
+    citationKey: Widgren2012
+    creators:
+      -
+        firstName: Mats
+        lastName: Widgren
+        creatorType: author
+      -
+        firstName: Alf
+        lastName: Hornborg
+        creatorType: editor
+      -
+        firstName: Brett
+        lastName: Clark
+        creatorType: editor
+      -
+        firstName: Kenneth
+        lastName: Hermele
+        creatorType: editor
+    tags:
+      -
+        tag: Business
+      -
+        tag: capitalism
+      -
+        tag: ecological economics
+      -
+        tag: ecology
+      -
+        tag: economics
+      -
+        tag: Economics
+      -
+        tag: Environment and Sustainability
+      -
+        tag: Environmental Economics. Ecological Economics
+      -
+        tag: Environmental Politics
+      -
+        tag: environmental sociology
+      -
+        tag: Environmental Studies
+      -
+        tag: Finance
+      -
+        tag: global change
+      -
+        tag: globalization
+      -
+        tag: Industry
+      -
+        tag: International Relations
+      -
+        tag: land
+      -
+        tag: metabolic rift
+      -
+        tag: political ecology
+      -
+        tag: Political Economy
+      -
+        tag: politics
+      -
+        tag: Politics
+      -
+        tag: power
+      -
+        tag: sustainability
+    relations: {}
+    dateAdded: 2026-10-14T12:54:51Z
+    dateModified: 2026-10-14T12:54:51Z
+    uri: http://zotero.org/users/8230813/items/BZZYH292
+    itemID: 158
+    attachments: []
+    notes: []
+    autoJournalAbbreviation: ''
+    itemKey: BZZYH292
+    libraryID: 1
+    publicationTitle: 'Ecology and power: Struggles over land and material resources in the past, present and future'

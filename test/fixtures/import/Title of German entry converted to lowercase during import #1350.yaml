@@ -1,0 +1,159 @@
+config:
+  id: 36a3b0b5-bad0-4a04-b79b-441c7cef77db
+  label: BetterBibTeX JSON
+  preferences:
+    citekeyFormat: auth + year
+    fillKeyAfter: 1
+  options:
+    Items: true
+    Normalize: true
+    Preferences: true
+    YAML: false
+    exportFileData: false
+    exportNotes: true
+    keepUpdated: false
+    worker: true
+version:
+  zotero: 10.0.6
+  bbt: 9.0.71.emile.kiku.local
+collections: {}
+items:
+  -
+    key: PV85CLUZ
+    version: 0
+    itemType: note
+    note: 'Import errors found: <ul><li>unhandled macro \allcaps</li></ul>'
+    tags:
+      -
+        tag: '#Better BibTeX import error'
+        type: 1
+    relations: {}
+    dateAdded: 2026-10-14T12:55:22Z
+    dateModified: 2026-10-14T12:55:22Z
+    uri: http://zotero.org/users/8230813/items/PV85CLUZ
+    itemID: 227
+    itemKey: PV85CLUZ
+    libraryID: 1
+  -
+    key: ANHNRQQ7
+    version: 0
+    itemType: bookSection
+    place: Münster
+    publisher: Aschendorff
+    pages: 153 – 163
+    date: '2007'
+    title: Evangelische publizistik
+    citationKey: albrecht2007a
+    creators:
+      -
+        firstName: C.
+        lastName: Albrecht
+        creatorType: author
+      -
+        firstName: J./Rüpke
+        lastName: Malik
+        creatorType: editor
+      -
+        firstName: T.
+        lastName: J./Wobbe
+        creatorType: editor
+    tags: []
+    relations: {}
+    dateAdded: 2026-10-14T12:55:22Z
+    dateModified: 2026-10-14T12:55:22Z
+    uri: http://zotero.org/users/8230813/items/ANHNRQQ7
+    itemID: 224
+    attachments: []
+    notes: []
+    autoJournalAbbreviation: ''
+    itemKey: ANHNRQQ7
+    libraryID: 1
+    publicationTitle: 'Religion und medien: Vom kultbild zum internetritual'
+  -
+    key: 5YL88PML
+    version: 0
+    itemType: bookSection
+    place: Paderborn
+    publisher: Schöningh
+    pages: 93 – 108
+    date: '2008'
+    title: Die Rückkehr der Religionen in der politischen und medialen Öffent­ lichkeit
+    citationKey: gaertner2008a
+    creators:
+      -
+        firstName: C.
+        lastName: Gärtner
+        creatorType: author
+      -
+        firstName: K./Höhn
+        lastName: Gabriel
+        creatorType: editor
+      -
+        name: H.-J.
+        creatorType: editor
+    tags: []
+    relations: {}
+    dateAdded: 2026-10-14T12:55:22Z
+    dateModified: 2026-10-14T12:55:22Z
+    uri: http://zotero.org/users/8230813/items/5YL88PML
+    itemID: 225
+    attachments: []
+    notes: []
+    autoJournalAbbreviation: ''
+    itemKey: 5YL88PML
+    libraryID: 1
+    publicationTitle: 'Religion heute – öffentlich und politisch: Provokationen, Kontroversen, Perspektiven'
+  -
+    key: 3KK8PLIR
+    version: 0
+    itemType: bookSection
+    place: Würzburg
+    publisher: Ergon
+    date: '2005'
+    language: german
+    title: 'Die darstellung des islams in der presse: Sprache, bilder, suggestionen'
+    citationKey: schiffer2005a
+    creators:
+      -
+        firstName: S.
+        lastName: Schiffer
+        creatorType: author
+    tags: []
+    relations: {}
+    dateAdded: 2026-10-14T12:55:22Z
+    dateModified: 2026-10-14T12:55:22Z
+    uri: http://zotero.org/users/8230813/items/3KK8PLIR
+    itemID: 223
+    attachments: []
+    notes: []
+    autoJournalAbbreviation: ''
+    itemKey: 3KK8PLIR
+    libraryID: 1
+    publicationTitle: Eine auswahl von techniken und beispielen
+  -
+    key: 8UUDKVAA
+    version: 0
+    itemType: bookSection
+    place: Würzburg
+    publisher: Ergon
+    date: '2005'
+    language: german
+    title: 'Die darstellung des islams in der presse: Sprache, bilder, suggestionen'
+    citationKey: schiffer2005a
+    creators:
+      -
+        firstName: S.
+        lastName: Schiffer
+        creatorType: author
+    tags: []
+    relations: {}
+    dateAdded: 2026-10-14T12:55:22Z
+    dateModified: 2026-10-14T12:55:22Z
+    uri: http://zotero.org/users/8230813/items/8UUDKVAA
+    itemID: 226
+    attachments: []
+    notes: []
+    autoJournalAbbreviation: ''
+    itemKey: 8UUDKVAA
+    libraryID: 1
+    publicationTitle: Eine auswahl von techniken und beispielen

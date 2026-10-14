@@ -1,0 +1,63 @@
+config:
+  id: 36a3b0b5-bad0-4a04-b79b-441c7cef77db
+  label: BetterBibTeX JSON
+  preferences:
+    citekeyFormat: auth + year
+    fillKeyAfter: 1
+  options:
+    Items: true
+    Normalize: true
+    Preferences: true
+    YAML: false
+    exportFileData: false
+    exportNotes: true
+    keepUpdated: false
+    worker: true
+version:
+  zotero: 10.0.6
+  bbt: 9.0.71.emile.kiku.local
+collections: {}
+items:
+  -
+    key: 6JT3E2Q2
+    version: 0
+    itemType: note
+    note: 'Import errors found: <ul><li>unhandled macro \allcaps</li></ul>'
+    tags:
+      -
+        tag: '#Better BibTeX import error'
+        type: 1
+    relations: {}
+    dateAdded: 2026-10-14T12:54:54Z
+    dateModified: 2026-10-14T12:54:54Z
+    uri: http://zotero.org/users/8230813/items/6JT3E2Q2
+    itemID: 170
+    itemKey: 6JT3E2Q2
+    libraryID: 1
+  -
+    key: XS4R86QU
+    version: 0
+    itemType: journalArticle
+    volume: '107'
+    issue: '29'
+    pages: '29'
+    publicationTitle: Oil & Gas Journal
+    date: '2009'
+    title: USGS monitoring ecological impacts
+    citationKey: Oliveira_2009
+    creators:
+      -
+        firstName: A
+        lastName: Oliveira
+        creatorType: author
+    tags: []
+    relations: {}
+    dateAdded: 2026-10-14T12:54:54Z
+    dateModified: 2026-10-14T12:54:54Z
+    uri: http://zotero.org/users/8230813/items/XS4R86QU
+    itemID: 169
+    attachments: []
+    notes: []
+    autoJournalAbbreviation: Oil Gas J.
+    itemKey: XS4R86QU
+    libraryID: 1

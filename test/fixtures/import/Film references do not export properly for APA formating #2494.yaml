@@ -1,0 +1,148 @@
+config:
+  id: 36a3b0b5-bad0-4a04-b79b-441c7cef77db
+  label: BetterBibTeX JSON
+  preferences:
+    citekeyFormat: auth + year
+    fillKeyAfter: 1
+  options:
+    Items: true
+    Normalize: true
+    Preferences: true
+    YAML: false
+    exportFileData: false
+    exportNotes: true
+    keepUpdated: false
+    worker: true
+version:
+  zotero: 10.0.6
+  bbt: 9.0.71.emile.kiku.local
+collections: {}
+items:
+  -
+    key: GGUQIA8C
+    version: 0
+    itemType: note
+    note: 'Import errors found: <ul><li>unhandled macro \allcaps</li></ul>'
+    tags:
+      -
+        tag: '#Better BibTeX import error'
+        type: 1
+    relations: {}
+    dateAdded: 2026-10-14T12:55:07Z
+    dateModified: 2026-10-14T12:55:07Z
+    uri: http://zotero.org/users/8230813/items/GGUQIA8C
+    itemID: 201
+    itemKey: GGUQIA8C
+    libraryID: 1
+  -
+    key: G7P4Y8RY
+    version: 0
+    itemType: videoRecording
+    date: '1975'
+    title: One flew over the cuckoo's nest
+    citationKey: formanOneFlewCuckoo1975
+    creators:
+      -
+        firstName: Miloš
+        lastName: Forman
+        creatorType: director
+    tags:
+      -
+        tag: Drama
+      -
+        tag: Mentally ill$$QMentally ill
+    relations: {}
+    dateAdded: 2026-10-14T12:55:06Z
+    dateModified: 2026-10-14T12:55:06Z
+    uri: http://zotero.org/users/8230813/items/G7P4Y8RY
+    itemID: 197
+    attachments: []
+    notes: []
+    autoJournalAbbreviation: ''
+    itemKey: G7P4Y8RY
+    libraryID: 1
+    publisher: United Artists
+  -
+    key: VUB3AVZQ
+    version: 0
+    itemType: tvBroadcast
+    date: '1975'
+    title: One flew over the cuckoo's nest
+    citationKey: formanOneFlewCuckoo1975-epi
+    creators:
+      -
+        firstName: Miloš
+        lastName: Forman
+        creatorType: director
+    tags:
+      -
+        tag: Drama
+      -
+        tag: Mentally ill$$QMentally ill
+    relations: {}
+    dateAdded: 2026-10-14T12:55:07Z
+    dateModified: 2026-10-14T12:55:07Z
+    uri: http://zotero.org/users/8230813/items/VUB3AVZQ
+    itemID: 200
+    attachments: []
+    notes: []
+    autoJournalAbbreviation: ''
+    itemKey: VUB3AVZQ
+    libraryID: 1
+    publisher: United Artists
+  -
+    key: J5MF8U6X
+    version: 0
+    itemType: film
+    date: '1975'
+    title: One flew over the cuckoo's nest
+    citationKey: formanOneFlewCuckoo1975-film
+    creators:
+      -
+        firstName: Miloš
+        lastName: Forman
+        creatorType: director
+    tags:
+      -
+        tag: Drama
+      -
+        tag: Mentally ill$$QMentally ill
+    relations: {}
+    dateAdded: 2026-10-14T12:55:07Z
+    dateModified: 2026-10-14T12:55:07Z
+    uri: http://zotero.org/users/8230813/items/J5MF8U6X
+    itemID: 198
+    attachments: []
+    notes: []
+    autoJournalAbbreviation: ''
+    itemKey: J5MF8U6X
+    libraryID: 1
+    publisher: United Artists
+  -
+    key: 8YPV3QAV
+    version: 0
+    itemType: tvBroadcast
+    date: '1975'
+    title: One flew over the cuckoo's nest
+    citationKey: formanOneFlewCuckoo1975-tv
+    creators:
+      -
+        firstName: Miloš
+        lastName: Forman
+        creatorType: director
+    tags:
+      -
+        tag: Drama
+      -
+        tag: Mentally ill$$QMentally ill
+    relations: {}
+    dateAdded: 2026-10-14T12:55:07Z
+    dateModified: 2026-10-14T12:55:07Z
+    uri: http://zotero.org/users/8230813/items/8YPV3QAV
+    itemID: 199
+    attachments: []
+    notes: []
+    autoJournalAbbreviation: ''
+    itemKey: 8YPV3QAV
+    libraryID: 1
+    publisher: United Artists

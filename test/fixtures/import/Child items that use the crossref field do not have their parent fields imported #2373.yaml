@@ -1,0 +1,154 @@
+config:
+  id: 36a3b0b5-bad0-4a04-b79b-441c7cef77db
+  label: BetterBibTeX JSON
+  preferences:
+    citekeyFormat: auth + year
+    fillKeyAfter: 1
+  options:
+    Items: true
+    Normalize: true
+    Preferences: true
+    YAML: false
+    exportFileData: false
+    exportNotes: true
+    keepUpdated: false
+    worker: true
+version:
+  zotero: 10.0.6
+  bbt: 9.0.71.emile.kiku.local
+collections: {}
+items:
+  -
+    key: 9FNBL42V
+    version: 0
+    itemType: note
+    note: 'Import errors found: <ul><li>unhandled macro \allcaps</li></ul>'
+    tags:
+      -
+        tag: '#Better BibTeX import error'
+        type: 1
+    relations: {}
+    dateAdded: 2026-10-14T12:55:01Z
+    dateModified: 2026-10-14T12:55:01Z
+    uri: http://zotero.org/users/8230813/items/9FNBL42V
+    itemID: 186
+    itemKey: 9FNBL42V
+    libraryID: 1
+  -
+    key: HA2CFZA3
+    version: 0
+    itemType: book
+    volume: '2'
+    place: Bloomfield, CT
+    publisher: Kumarian Press
+    date: '2004'
+    title: 'Global civil society: Dimensions of the nonprofit sector'
+    citationKey: book
+    creators:
+      -
+        firstName: Lester M.
+        lastName: Salamon
+        creatorType: editor
+      -
+        firstName: S. Wojciech
+        lastName: Sokolowski
+        creatorType: editor
+    tags: []
+    relations: {}
+    dateAdded: 2026-10-14T12:55:01Z
+    dateModified: 2026-10-14T12:55:01Z
+    uri: http://zotero.org/users/8230813/items/HA2CFZA3
+    itemID: 184
+    attachments: []
+    notes: []
+    autoJournalAbbreviation: ''
+    itemKey: HA2CFZA3
+    libraryID: 1
+  -
+    key: 75M8PYR6
+    version: 0
+    itemType: bookSection
+    volume: '2'
+    publisher: Kumarian Press
+    pages: 227–32
+    date: '2004'
+    extra: 'Section: 12'
+    title: Lebanon
+    citationKey: inbook
+    creators:
+      -
+        firstName: Hashem
+        lastName: El-Husseini
+        creatorType: author
+      -
+        firstName: Stefan
+        lastName: Toepler
+        creatorType: author
+      -
+        firstName: Lester M.
+        lastName: Salamon
+        creatorType: author
+      -
+        firstName: Lester M.
+        lastName: Salamon
+        creatorType: editor
+      -
+        firstName: S. Wojciech
+        lastName: Sokolowski
+        creatorType: editor
+    tags: []
+    relations: {}
+    dateAdded: 2026-10-14T12:55:01Z
+    dateModified: 2026-10-14T12:55:01Z
+    uri: http://zotero.org/users/8230813/items/75M8PYR6
+    itemID: 183
+    attachments: []
+    notes: []
+    autoJournalAbbreviation: ''
+    itemKey: 75M8PYR6
+    libraryID: 1
+    publicationTitle: 'Global civil society: Dimensions of the nonprofit sector'
+  -
+    key: RQSASSIA
+    version: 0
+    itemType: bookSection
+    volume: '2'
+    publisher: Kumarian Press
+    pages: 227–32
+    date: '2004'
+    extra: 'Section: 12'
+    title: Lebanon
+    citationKey: incollection
+    creators:
+      -
+        firstName: Hashem
+        lastName: El-Husseini
+        creatorType: author
+      -
+        firstName: Stefan
+        lastName: Toepler
+        creatorType: author
+      -
+        firstName: Lester M.
+        lastName: Salamon
+        creatorType: author
+      -
+        firstName: Lester M.
+        lastName: Salamon
+        creatorType: editor
+      -
+        firstName: S. Wojciech
+        lastName: Sokolowski
+        creatorType: editor
+    tags: []
+    relations: {}
+    dateAdded: 2026-10-14T12:55:01Z
+    dateModified: 2026-10-14T12:55:01Z
+    uri: http://zotero.org/users/8230813/items/RQSASSIA
+    itemID: 185
+    attachments: []
+    notes: []
+    autoJournalAbbreviation: ''
+    itemKey: RQSASSIA
+    libraryID: 1
+    publicationTitle: 'Global civil society: Dimensions of the nonprofit sector'

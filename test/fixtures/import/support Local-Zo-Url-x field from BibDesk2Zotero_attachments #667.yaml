@@ -1,0 +1,77 @@
+config:
+  id: 36a3b0b5-bad0-4a04-b79b-441c7cef77db
+  label: BetterBibTeX JSON
+  preferences:
+    citekeyFormat: auth + year
+    fillKeyAfter: 1
+  options:
+    Items: true
+    Normalize: true
+    Preferences: true
+    YAML: false
+    exportFileData: false
+    exportNotes: true
+    keepUpdated: false
+    worker: true
+version:
+  zotero: 10.0.6
+  bbt: 9.0.71.emile.kiku.local
+collections: {}
+items:
+  -
+    key: 6DQYRG2F
+    version: 0
+    itemType: note
+    note: 'Import errors found: <ul><li>unhandled macro \allcaps</li></ul>'
+    tags:
+      -
+        tag: '#Better BibTeX import error'
+        type: 1
+    relations: {}
+    dateAdded: 2026-10-14T12:55:20Z
+    dateModified: 2026-10-14T12:55:20Z
+    uri: http://zotero.org/users/8230813/items/6DQYRG2F
+    itemID: 222
+    itemKey: 6DQYRG2F
+    libraryID: 1
+  -
+    key: Q3PY4HE4
+    version: 0
+    itemType: report
+    place: Brussels, Belgium
+    date: '2007'
+    extra: "tex.class: States & Markets 2009, Diss Tax & Democracy 2010ff\ntex.date-modified: 2014-06-14 15:13:01 +0000"
+    title: Are developing countries deterred from using the WTO dispute settlement system? - Participation of developing countries in the DSM in the years 1995-2005
+    citationKey: Abbott-2007-aa
+    creators:
+      -
+        firstName: Roderick
+        lastName: Abbott
+        creatorType: author
+    tags:
+      -
+        tag: Finance
+      -
+        tag: Markets
+      -
+        tag: Political Economy
+    relations: {}
+    dateAdded: 2026-10-14T12:55:20Z
+    dateModified: 2026-10-14T12:55:20Z
+    uri: http://zotero.org/users/8230813/items/Q3PY4HE4
+    itemID: 220
+    attachments:
+      -
+        itemType: attachment
+        title: '1'
+        tags: []
+        relations: {}
+        dateAdded: 2026-10-14T12:55:20Z
+        dateModified: 2026-10-14T12:55:20Z
+        uri: http://zotero.org/users/8230813/items/ART88JN8
+        path: /Users/emile/.BBTTEST/zotero/storage/ART88JN8/1.pdf
+    notes: []
+    autoJournalAbbreviation: ''
+    itemKey: Q3PY4HE4
+    libraryID: 1
+    publisher: European Center for International Political Economy

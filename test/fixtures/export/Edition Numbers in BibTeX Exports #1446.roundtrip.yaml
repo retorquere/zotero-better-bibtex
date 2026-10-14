@@ -1,0 +1,102 @@
+config:
+  id: 36a3b0b5-bad0-4a04-b79b-441c7cef77db
+  label: BetterBibTeX JSON
+  preferences:
+    citekeyFormat: auth + year
+    fillKeyAfter: 1
+  options:
+    Items: true
+    Normalize: true
+    Preferences: true
+    YAML: false
+    exportFileData: false
+    exportNotes: true
+    keepUpdated: false
+    worker: true
+version:
+  zotero: 10.0.6
+  bbt: 9.0.71.emile.kiku.local
+collections: {}
+items:
+  -
+    key: NXIHQXSV
+    version: 0
+    itemType: note
+    note: 'Import errors found: <ul><li>unhandled macro \allcaps</li></ul>'
+    tags:
+      -
+        tag: '#Better BibTeX import error'
+        type: 1
+    relations: {}
+    dateAdded: 2026-10-14T13:37:51Z
+    dateModified: 2026-10-14T13:37:51Z
+    uri: http://zotero.org/users/8230813/items/NXIHQXSV
+    itemID: 113
+    itemKey: NXIHQXSV
+    libraryID: 1
+  -
+    key: V2GIYRG8
+    version: 0
+    itemType: book
+    url: https://www.netlib.org/linalg/html_templates/Templates.html
+    edition: '2'
+    place: Philadelphia, PA
+    publisher: Society for Industrial and Applied Mathematics
+    date: '1994'
+    accessDate: 2020-01-31
+    language: american
+    title: 'Templates for the solution of linear systems: Building blocks for iterative methods'
+    shortTitle: Templates for the solution of linear systems
+    citationKey: barrett1994
+    creators:
+      -
+        firstName: Richard
+        lastName: Barrett
+        creatorType: author
+      -
+        firstName: Michael
+        lastName: Berry
+        creatorType: author
+      -
+        firstName: Tony F.
+        lastName: Chan
+        creatorType: author
+      -
+        firstName: James
+        lastName: Demmel
+        creatorType: author
+      -
+        firstName: June M.
+        lastName: Donato
+        creatorType: author
+      -
+        firstName: Jack
+        lastName: Dongarra
+        creatorType: author
+      -
+        firstName: Victor
+        lastName: Eijkhout
+        creatorType: author
+      -
+        firstName: Roldan
+        lastName: Pozo
+        creatorType: author
+      -
+        firstName: Charles
+        lastName: Romine
+        creatorType: author
+      -
+        firstName: Henk
+        lastName: van der Vorst
+        creatorType: author
+    tags: []
+    relations: {}
+    dateAdded: 2026-10-14T13:37:51Z
+    dateModified: 2026-10-14T13:37:51Z
+    uri: http://zotero.org/users/8230813/items/V2GIYRG8
+    itemID: 112
+    attachments: []
+    notes: []
+    autoJournalAbbreviation: ''
+    itemKey: V2GIYRG8
+    libraryID: 1

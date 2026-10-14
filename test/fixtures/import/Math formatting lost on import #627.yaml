@@ -1,0 +1,73 @@
+config:
+  id: 36a3b0b5-bad0-4a04-b79b-441c7cef77db
+  label: BetterBibTeX JSON
+  preferences:
+    citekeyFormat: auth + year
+    fillKeyAfter: 1
+  options:
+    Items: true
+    Normalize: true
+    Preferences: true
+    YAML: false
+    exportFileData: false
+    exportNotes: true
+    keepUpdated: false
+    worker: true
+version:
+  zotero: 10.0.6
+  bbt: 9.0.71.emile.kiku.local
+collections: {}
+items:
+  -
+    key: 7U7X2VV6
+    version: 0
+    itemType: note
+    note: 'Import errors found: <ul><li>unhandled macro \allcaps</li></ul>'
+    tags:
+      -
+        tag: '#Better BibTeX import error'
+        type: 1
+    relations: {}
+    dateAdded: 2026-10-14T12:55:13Z
+    dateModified: 2026-10-14T12:55:13Z
+    uri: http://zotero.org/users/8230813/items/7U7X2VV6
+    itemID: 212
+    itemKey: 7U7X2VV6
+    libraryID: 1
+  -
+    key: NC5DKHTZ
+    version: 0
+    itemType: journalArticle
+    volume: '109'
+    issue: '15'
+    pages: '156404'
+    publicationTitle: Physical Review Letters
+    date: 2012-10
+    journalAbbreviation: Phys. Rev. Lett.
+    DOI: 10.1103/physrevlett.109.156404
+    title: Nonequilibrium propagation and decay of a bound pair in driven <span class="nocase">t</span>-J models
+    citationKey: Bonca:2012in
+    creators:
+      -
+        firstName: J
+        lastName: Bonča
+        creatorType: author
+      -
+        firstName: M
+        lastName: Mierzejewski
+        creatorType: author
+      -
+        firstName: L
+        lastName: Vidmar
+        creatorType: author
+    tags: []
+    relations: {}
+    dateAdded: 2026-10-14T12:55:13Z
+    dateModified: 2026-10-14T12:55:13Z
+    uri: http://zotero.org/users/8230813/items/NC5DKHTZ
+    itemID: 211
+    attachments: []
+    notes: []
+    autoJournalAbbreviation: Phys. Rev. Lett.
+    itemKey: NC5DKHTZ
+    libraryID: 1

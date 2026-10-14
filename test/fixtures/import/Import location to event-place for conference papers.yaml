@@ -1,0 +1,78 @@
+config:
+  id: 36a3b0b5-bad0-4a04-b79b-441c7cef77db
+  label: BetterBibTeX JSON
+  preferences:
+    citekeyFormat: auth + year
+    fillKeyAfter: 1
+  options:
+    Items: true
+    Normalize: true
+    Preferences: true
+    YAML: false
+    exportFileData: false
+    exportNotes: true
+    keepUpdated: false
+    worker: true
+version:
+  zotero: 10.0.6
+  bbt: 9.0.71.emile.kiku.local
+collections: {}
+items:
+  -
+    key: ID3IFUSX
+    version: 0
+    itemType: note
+    note: 'Import errors found: <ul><li>unhandled macro \allcaps</li></ul>'
+    tags:
+      -
+        tag: '#Better BibTeX import error'
+        type: 1
+    relations: {}
+    dateAdded: 2026-10-14T12:55:08Z
+    dateModified: 2026-10-14T12:55:08Z
+    uri: http://zotero.org/users/8230813/items/ID3IFUSX
+    itemID: 203
+    itemKey: ID3IFUSX
+    libraryID: 1
+  -
+    key: IDFRKIJH
+    version: 0
+    itemType: conferencePaper
+    url: http://doi.acm.org/10.1145/1596655.1596682
+    series: Pppj '09
+    place: Calgary, Alberta, Canada
+    publisher: ACM
+    pages: 162–171
+    ISBN: 978-1-60558-598-7
+    date: '2009'
+    extra: "Number of pages: 10\ntex.acmid: 1596682\ntex.address: New York, NY, USA"
+    DOI: 10.1145/1596655.1596682
+    title: Tracking performance across software revisions
+    citationKey: Mostafa:2009:TPA:1596655.1596682
+    creators:
+      -
+        firstName: Nagy
+        lastName: Mostafa
+        creatorType: author
+      -
+        firstName: Chandra
+        lastName: Krintz
+        creatorType: author
+    tags:
+      -
+        tag: calling context tree
+      -
+        tag: performance-aware revision control
+      -
+        tag: profiling
+    relations: {}
+    dateAdded: 2026-10-14T12:55:08Z
+    dateModified: 2026-10-14T12:55:08Z
+    uri: http://zotero.org/users/8230813/items/IDFRKIJH
+    itemID: 202
+    attachments: []
+    notes: []
+    autoJournalAbbreviation: Proc. 7th Int. Conf. Princ. Pract. Program. Java
+    itemKey: IDFRKIJH
+    libraryID: 1
+    publicationTitle: Proceedings of the 7th international conference on principles and practice of programming in java

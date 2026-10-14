@@ -1,0 +1,88 @@
+config:
+  id: 36a3b0b5-bad0-4a04-b79b-441c7cef77db
+  label: BetterBibTeX JSON
+  preferences:
+    citekeyFormat: auth + year
+    fillKeyAfter: 1
+  options:
+    Items: true
+    Normalize: true
+    Preferences: true
+    YAML: false
+    exportFileData: false
+    exportNotes: true
+    keepUpdated: false
+    worker: true
+version:
+  zotero: 10.0.6
+  bbt: 9.0.71.emile.kiku.local
+collections: {}
+items:
+  -
+    key: 5YP85VYR
+    version: 0
+    itemType: note
+    note: 'Import errors found: <ul><li>unhandled macro \allcaps</li></ul>'
+    tags:
+      -
+        tag: '#Better BibTeX import error'
+        type: 1
+    relations: {}
+    dateAdded: 2026-10-14T12:54:58Z
+    dateModified: 2026-10-14T12:54:58Z
+    uri: http://zotero.org/users/8230813/items/5YP85VYR
+    itemID: 179
+    itemKey: 5YP85VYR
+    libraryID: 1
+  -
+    key: HNAHS4SG
+    version: 0
+    itemType: bookSection
+    publisher: John Wiley & Sons
+    pages: 125-143
+    date: '2007'
+    title: Theories of globalization
+    citationKey: robinson2007theoriesglobalization
+    creators:
+      -
+        firstName: William I
+        lastName: Robinson
+        creatorType: author
+      -
+        firstName: George
+        lastName: Ritzer
+        creatorType: contributor
+    tags:
+      -
+        tag: orphaned
+    relations: {}
+    dateAdded: 2026-10-14T12:54:58Z
+    dateModified: 2026-10-14T12:54:58Z
+    uri: http://zotero.org/users/8230813/items/HNAHS4SG
+    itemID: 176
+    attachments:
+      -
+        itemType: attachment
+        title: Robinson_2007_Theories of globalization.pdf
+        tags: []
+        relations: {}
+        dateAdded: 2026-10-14T12:54:58Z
+        dateModified: 2026-10-14T12:54:58Z
+        uri: http://zotero.org/users/8230813/items/GPJCN5SQ
+        path: /Users/emile/.BBTTEST/zotero/storage/GPJCN5SQ/Robinson_2007_Theories of globalization.pdf
+    notes:
+      -
+        key: R5RG4QTJ
+        version: 0
+        itemType: note
+        parentItem: HNAHS4SG
+        note: 'Extracted Annotations (zondag 17 november 2013 15:45:35) "What is the relationship between globalization and the nation-state? Is the nation-state being undermined?" (Robinson 2007:127) Relatedly, to what extent is the relationship between social structure and territoriality being redefined by globalization? Is there a deterritorialization of social relations under globalization? What is the relationship between the local and the global? How are space and time being reconfigured? (note on p.127) "Relatedly, to what extent is the relationship between social structure and territoriality being redefined by globalization? Is there a deterritorialization of social" (Robinson 2007:127) "relations under globalization? What is the relationship between the local and the global? How are space and time being reconfigured?" (Robinson 2007:128) "THE NETWORK SOCIETY Manuel Castells'' groundbreaking trilogy, The Rise of the Network Society (1996, 1997, 1998), exemplifies a ''technologistic'' approach to globalization" (Robinson 2007:132) "''communication decisively shapes culture because we do not see . . . reality as it ''is'' but as our languages are''. He adds, ''we are not living in a global village, but in customized cottages, globally produced and locally distributed'' (1996: 370)." (Robinson 2007:133)'
+        tags: []
+        relations: {}
+        dateAdded: 2026-10-14T12:54:58Z
+        dateModified: 2026-10-14T12:54:58Z
+        uri: http://zotero.org/users/8230813/items/R5RG4QTJ
+    autoJournalAbbreviation: ''
+    itemKey: HNAHS4SG
+    libraryID: 1
+    publicationTitle: The Blackwell companion to globalization

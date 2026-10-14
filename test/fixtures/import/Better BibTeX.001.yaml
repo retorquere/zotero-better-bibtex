@@ -1,0 +1,120 @@
+config:
+  id: 36a3b0b5-bad0-4a04-b79b-441c7cef77db
+  label: BetterBibTeX JSON
+  preferences:
+    citekeyFormat: auth + year
+    fillKeyAfter: 1
+  options:
+    Items: true
+    Normalize: true
+    Preferences: true
+    YAML: false
+    exportFileData: false
+    exportNotes: true
+    keepUpdated: false
+    worker: true
+version:
+  zotero: 10.0.6
+  bbt: 9.0.71.emile.kiku.local
+collections: {}
+items:
+  -
+    key: MLMPHMKE
+    version: 0
+    itemType: note
+    note: 'Import errors found: <ul><li>unhandled macro \allcaps</li></ul>'
+    tags:
+      -
+        tag: '#Better BibTeX import error'
+        type: 1
+    relations: {}
+    dateAdded: 2026-10-14T12:54:53Z
+    dateModified: 2026-10-14T12:54:53Z
+    uri: http://zotero.org/users/8230813/items/MLMPHMKE
+    itemID: 168
+    itemKey: MLMPHMKE
+    libraryID: 1
+  -
+    key: ZA4WU72U
+    version: 0
+    itemType: journalArticle
+    volume: '62'
+    pages: 493–518
+    publicationTitle: Bulletin of Volcanology
+    date: '2001'
+    title: The physical volcanology of the 1600 eruption of Huaynaputina, southern Peru
+    citationKey: Adams2001
+    creators:
+      -
+        firstName: Nancy K
+        lastName: Adams
+        creatorType: author
+      -
+        firstName: Shanaka L
+        lastName: DeSilva
+        creatorType: author
+      -
+        firstName: Steven
+        lastName: Self
+        creatorType: author
+      -
+        firstName: Guido
+        lastName: Salas
+        creatorType: author
+      -
+        firstName: Steven
+        lastName: Schubring
+        creatorType: author
+      -
+        firstName: Jason L
+        lastName: Permenter
+        creatorType: author
+      -
+        firstName: Kendra
+        lastName: Arbesman
+        creatorType: author
+    tags:
+      -
+        tag: breadcrust
+      -
+        tag: plinian
+      -
+        tag: Vulcanian eruptions
+    relations: {}
+    dateAdded: 2026-10-14T12:54:53Z
+    dateModified: 2026-10-14T12:54:53Z
+    uri: http://zotero.org/users/8230813/items/ZA4WU72U
+    itemID: 166
+    attachments: []
+    notes: []
+    autoJournalAbbreviation: Bull. Volcanol.
+    itemKey: ZA4WU72U
+    libraryID: 1
+  -
+    key: BYRD8DAP
+    version: 0
+    itemType: book
+    edition: 3., erw. und aktualisierte Aufl.
+    publisher: Hanser Fachbuchverlag
+    ISBN: 978-3-446-40695-7
+    date: '2006'
+    extra: 'tex.ppn_gvk: 511633173'
+    title: Technisches schreiben. (nicht nur) für Informatiker
+    numPages: '253'
+    citationKey: Rechenberg2006a
+    creators:
+      -
+        firstName: Peter
+        lastName: Rechenberg
+        creatorType: author
+    tags: []
+    relations: {}
+    dateAdded: 2026-10-14T12:54:53Z
+    dateModified: 2026-10-14T12:54:53Z
+    uri: http://zotero.org/users/8230813/items/BYRD8DAP
+    itemID: 167
+    attachments: []
+    notes: []
+    autoJournalAbbreviation: ''
+    itemKey: BYRD8DAP
+    libraryID: 1

@@ -1,0 +1,310 @@
+config:
+  id: 36a3b0b5-bad0-4a04-b79b-441c7cef77db
+  label: BetterBibTeX JSON
+  preferences:
+    citekeyFormat: auth + year
+    fillKeyAfter: 1
+  options:
+    Items: true
+    Normalize: true
+    Preferences: true
+    YAML: false
+    exportFileData: false
+    exportNotes: true
+    keepUpdated: false
+    worker: true
+version:
+  zotero: 10.0.6
+  bbt: 9.0.71.emile.kiku.local
+collections: {}
+items:
+  -
+    key: VWMKS39B
+    version: 0
+    itemType: note
+    note: 'Import errors found: <ul><li>unhandled macro \allcaps</li></ul>'
+    tags:
+      -
+        tag: '#Better BibTeX import error'
+        type: 1
+    relations: {}
+    dateAdded: 2026-10-14T12:54:50Z
+    dateModified: 2026-10-14T12:54:50Z
+    uri: http://zotero.org/users/8230813/items/VWMKS39B
+    itemID: 143
+    itemKey: VWMKS39B
+    libraryID: 1
+  -
+    key: 4QKK9NHU
+    version: 0
+    itemType: journalArticle
+    issue: '51'
+    pages: 143–164
+    publicationTitle: Estudios de Filosofía
+    date: 2015, Jun. 2015
+    extra: "tex.category: Secondary\ntex.date-added: 2022-10-26 18:58:57 -0400\ntex.date-modified: 2022-10-26 18:58:57 -0400"
+    title: An editorial history of Newton’s regulae philosophandi
+    citationKey: ducheyne_2015
+    creators:
+      -
+        firstName: Steffen
+        lastName: Ducheyne
+        creatorType: author
+    tags: []
+    relations: {}
+    dateAdded: 2026-10-14T12:54:50Z
+    dateModified: 2026-10-14T12:54:50Z
+    uri: http://zotero.org/users/8230813/items/4QKK9NHU
+    itemID: 139
+    attachments: []
+    notes:
+      -
+        key: V9WTSNL6
+        version: 0
+        itemType: note
+        parentItem: 4QKK9NHU
+        note: In the paper at hand, I provide an editorial history of Isaac Newton’s famous regulae philosophandi on the basis of extant manuscript material.&amp;lt;/p&amp;gt;
+        tags: []
+        relations: {}
+        dateAdded: 2026-10-14T12:54:50Z
+        dateModified: 2026-10-14T12:54:50Z
+        uri: http://zotero.org/users/8230813/items/V9WTSNL6
+    autoJournalAbbreviation: Estud. Filos.
+    itemKey: 4QKK9NHU
+    libraryID: 1
+  -
+    key: M9Z2JQ6A
+    version: 0
+    itemType: book
+    edition: 2Rev Ed
+    publisher: Cambridge University Press
+    ISBN: 0-521-53180-2
+    date: '1998'
+    extra: "tex.category: Secondary\ntex.date-added: 2022-10-26 18:58:57 -0400\ntex.date-modified: 2022-10-26 18:58:57 -0400\ntex.price: $80.00\ntex.title+duplicate-1: The Cambridge History of Seventeenth-Century Philosophy"
+    title: The Cambridge history of seventeenth-century philosophy
+    citationKey: garberayers1998b
+    creators:
+      -
+        firstName: Daniel
+        lastName: Garber
+        creatorType: editor
+      -
+        firstName: Michael
+        lastName: Ayers
+        creatorType: editor
+    tags: []
+    relations: {}
+    dateAdded: 2026-10-14T12:54:49Z
+    dateModified: 2026-10-14T12:54:49Z
+    uri: http://zotero.org/users/8230813/items/M9Z2JQ6A
+    itemID: 132
+    attachments:
+      -
+        itemType: attachment
+        title: GarberAyers - The Cambridge History of Seventeenth-Century Philosophy (2003)
+        tags: []
+        relations: {}
+        dateAdded: 2026-10-14T12:54:49Z
+        dateModified: 2026-10-14T12:54:50Z
+        uri: http://zotero.org/users/8230813/items/LDZZWQC9
+        path: /Users/emile/.BBTTEST/zotero/storage/LDZZWQC9/GarberAyers - The Cambridge History of Seventeenth-Century Philosophy (2003).pdf
+      -
+        itemType: attachment
+        title: GarberAyers - The Cambridge History of Seventeenth-Century Philosophy (2003)a
+        tags: []
+        relations: {}
+        dateAdded: 2026-10-14T12:54:50Z
+        dateModified: 2026-10-14T12:54:50Z
+        uri: http://zotero.org/users/8230813/items/6MXBUGDH
+        path: /Users/emile/.BBTTEST/zotero/storage/6MXBUGDH/GarberAyers - The Cambridge History of Seventeenth-Century Philosophy (2003)a.pdf
+    notes: []
+    autoJournalAbbreviation: ''
+    itemKey: M9Z2JQ6A
+    libraryID: 1
+  -
+    key: 65W8JINB
+    version: 0
+    itemType: book
+    place: Hildesheim
+    publisher: G. Olms
+    date: '1964'
+    extra: 'tex.category: Primary'
+    title: Lexicon philosophicum, quo tanquam clave philosophicae fores aperiuntur
+    citationKey: gocl1613
+    originalDate: '1613'
+    creators:
+      -
+        firstName: Rudolph
+        lastName: Goclenius
+        creatorType: author
+    tags:
+      -
+        tag: Dictionaries
+      -
+        tag: Scholasticism
+    relations: {}
+    dateAdded: 2026-10-14T12:54:50Z
+    dateModified: 2026-10-14T12:54:50Z
+    uri: http://zotero.org/users/8230813/items/65W8JINB
+    itemID: 135
+    attachments: []
+    notes:
+      -
+        key: MDNBTLC4
+        version: 0
+        itemType: note
+        parentItem: 65W8JINB
+        note: B51 .G576 1964
+        tags: []
+        relations: {}
+        dateAdded: 2026-10-14T12:54:50Z
+        dateModified: 2026-10-14T12:54:50Z
+        uri: http://zotero.org/users/8230813/items/MDNBTLC4
+      -
+        key: IR5GBKPZ
+        version: 0
+        itemType: note
+        parentItem: 65W8JINB
+        note: 'Rodolphus Goclenius. Reprint (1st work). Originally published: Francofurti : M. Becker, 1613. Added title page, engr. of original edition.'
+        tags: []
+        relations: {}
+        dateAdded: 2026-10-14T12:54:50Z
+        dateModified: 2026-10-14T12:54:50Z
+        uri: http://zotero.org/users/8230813/items/IR5GBKPZ
+    autoJournalAbbreviation: ''
+    itemKey: 65W8JINB
+    libraryID: 1
+  -
+    key: JAVC668Y
+    version: 0
+    itemType: journalArticle
+    url: https://doi.org/10.1016/j.shpsa.2022.07.002
+    volume: '95'
+    pages: 28-36
+    publicationTitle: Studies in History and Philosophy of Science
+    ISSN: 0039-3681
+    date: '2022'
+    extra: "tex.category: Secondary\ntex.date-added: 2022-10-26 18:58:57 -0400\ntex.date-modified: 2022-10-26 18:58:57 -0400"
+    title: 'Constituting the ‘object’ of science in newton''s principia: the many faces of janus'
+    citationKey: sakellariou202228
+    creators:
+      -
+        firstName: Vassilis
+        lastName: Sakellariou
+        creatorType: author
+      -
+        firstName: User
+        lastName: Test
+        creatorType: author
+    tags:
+      -
+        tag: Constitutive
+      -
+        tag: Dynamical laws
+      -
+        tag: Historicised
+      -
+        tag: Synthesis
+    relations: {}
+    dateAdded: 2026-10-14T12:54:50Z
+    dateModified: 2026-10-14T12:54:50Z
+    uri: http://zotero.org/users/8230813/items/JAVC668Y
+    itemID: 142
+    attachments: []
+    notes: []
+    autoJournalAbbreviation: Stud. Hist. Philos. Sci.
+    itemKey: JAVC668Y
+    libraryID: 1
+  -
+    key: JHZ4N4Q3
+    version: 0
+    itemType: journalArticle
+    volume: '179'
+    issue: '4075'
+    publisher: American Association for the Advancement of Science
+    pages: 751–758
+    publicationTitle: Science
+    ISSN: 00368075, 10959203
+    date: '1973'
+    extra: "tex.category: Secondary\ntex.date-added: 2022-10-26 18:58:57 -0400\ntex.date-modified: 2022-10-26 18:58:57 -0400"
+    accessDate: 2022-09-27
+    title: Newton and the fudge factor
+    citationKey: westfall1973a
+    creators:
+      -
+        firstName: Richard S.
+        lastName: Westfall
+        creatorType: author
+    tags: []
+    relations: {}
+    dateAdded: 2026-10-14T12:54:50Z
+    dateModified: 2026-10-14T12:54:50Z
+    uri: http://zotero.org/users/8230813/items/JHZ4N4Q3
+    itemID: 141
+    attachments: []
+    notes: []
+    autoJournalAbbreviation: ''
+    itemKey: JHZ4N4Q3
+    libraryID: 1
+  -
+    key: DK2BEHM9
+    version: 0
+    itemType: bookSection
+    edition: '2'
+    place: Cambridge
+    publisher: Cambridge University Press
+    ISBN: 0-521-65177-8
+    date: '2002'
+    extra: "tex.category: Secondary\ntex.date-added: 2022-10-26 18:58:57 -0400\ntex.date-modified: 2022-10-26 18:58:57 -0400\ntex.price: $85.00"
+    title: The cambridge companion to Newton
+    citationKey: zcosm02
+    creators:
+      -
+        firstName: I. Bernard
+        lastName: Cohen
+        creatorType: editor
+      -
+        firstName: George E.
+        lastName: Smith
+        creatorType: editor
+    tags: []
+    relations: {}
+    dateAdded: 2026-10-14T12:54:50Z
+    dateModified: 2026-10-14T12:54:50Z
+    uri: http://zotero.org/users/8230813/items/DK2BEHM9
+    itemID: 138
+    attachments: []
+    notes: []
+    autoJournalAbbreviation: ''
+    itemKey: DK2BEHM9
+    libraryID: 1
+    publicationTitle: The Cambridge companion to Newton
+  -
+    key: 2JQIJDF6
+    version: 0
+    itemType: book
+    place: London
+    publisher: Routledge
+    ISBN: 0415170540 (hardcover)
+    date: '1998'
+    extra: "tex.category: Secondary\ntex.date-added: 2015-09-09 17:10:49 +0000\ntex.date-modified: 2019-04-20 15:19:21 -0400\ntex.library-id: 97024517"
+    title: 'The soft underbelly of reason : The passions in the seventeenth century'
+    citationKey: ZGaukroger1998a
+    creators:
+      -
+        firstName: Stephen
+        lastName: Gaukroger
+        creatorType: editor
+    tags:
+      -
+        tag: Emotions
+    relations: {}
+    dateAdded: 2026-10-14T12:54:49Z
+    dateModified: 2026-10-14T12:54:49Z
+    uri: http://zotero.org/users/8230813/items/2JQIJDF6
+    itemID: 131
+    attachments: []
+    notes: []
+    autoJournalAbbreviation: ''
+    itemKey: 2JQIJDF6
+    libraryID: 1

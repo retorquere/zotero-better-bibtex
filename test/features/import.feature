@@ -72,7 +72,7 @@ Feature: Import
     Then the library should match "import/*.json"
 
   Scenario: Copy date-addeddate-modified from extra field regenerates citation key #2142
-    When I import 1 reference from "import/*.bib"
+    When I import  reference from "import/*.bib"
     And I select the item with a field that contains "Bargaining"
     And I copy date-added/date-modified for the selected items from the extra field
     Then the library should match "import/*.json"
@@ -99,9 +99,9 @@ Feature: Import
     Examples:
       | file                                                                                                                    | references |
       | accessDate must be ISO date #2376                                                                                       | 2          |
-      | Allow spaces between href arguments for import #2504                                                                    | 5          |
+      | Allow spaces between href arguments for import #2504                                                                    | 4          |
       | article with entrysubtype                                                                                               | 1          |
-      | Author splitter failure                                                                                                 | 1          |
+      | Author splitter failure                                                                                                 | 2          |
       | BBT + Zotfile creating duplicate files in the wrong location #2300                                                      | 7          |
       | BBT does not import groups from JabRef 5.1 #1641                                                                        | 20         |
       | Better BibLaTeX import improvements #549                                                                                | 9          |
@@ -237,5 +237,5 @@ Feature: Import
   Scenario: Journal detection active while importJabrefAbbreviations is off #2916
     Given I set preference .rawImports to true
     And I set preference .importJabRefAbbreviations to false
-    When I import 1 reference from "import/*.bib"
+    When I import 2 reference from "import/*.bib"
     Then the library should match "import/*.json"

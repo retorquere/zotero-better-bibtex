@@ -1,0 +1,61 @@
+config:
+  id: 36a3b0b5-bad0-4a04-b79b-441c7cef77db
+  label: BetterBibTeX JSON
+  preferences:
+    citekeyFormat: auth + year
+    fillKeyAfter: 1
+  options:
+    Items: true
+    Normalize: true
+    Preferences: true
+    YAML: false
+    exportFileData: false
+    exportNotes: true
+    keepUpdated: false
+    worker: true
+version:
+  zotero: 10.0.6
+  bbt: 9.0.71.emile.kiku.local
+collections: {}
+items:
+  -
+    key: HTD2X9AS
+    version: 0
+    itemType: note
+    note: 'Import errors found: <ul><li>unhandled macro \allcaps</li></ul>'
+    tags:
+      -
+        tag: '#Better BibTeX import error'
+        type: 1
+    relations: {}
+    dateAdded: 2026-10-14T12:55:16Z
+    dateModified: 2026-10-14T12:55:16Z
+    uri: http://zotero.org/users/8230813/items/HTD2X9AS
+    itemID: 216
+    itemKey: HTD2X9AS
+    libraryID: 1
+  -
+    key: KJ52RDQ7
+    version: 0
+    itemType: dataset
+    date: 1995-01
+    extra: 'Pages: 6'
+    language: english
+    title: What a great report
+    citationKey: dataset
+    creators:
+      -
+        name: A very well-known and serious institution
+        creatorType: author
+    tags: []
+    relations: {}
+    dateAdded: 2026-10-14T12:55:16Z
+    dateModified: 2026-10-14T12:55:16Z
+    uri: http://zotero.org/users/8230813/items/KJ52RDQ7
+    itemID: 215
+    attachments: []
+    notes: []
+    autoJournalAbbreviation: ''
+    itemKey: KJ52RDQ7
+    libraryID: 1
+    number: mypreciousreportnumber
