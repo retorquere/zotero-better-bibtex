@@ -1,0 +1,60 @@
+#!/usr/bin/env bun
+
+import { defaults } from '../gen/preferences/meta'
+import { parse, stringify } from 'lightning-yaml'
+import fs from 'fs'
+import { execSync } from 'child_process'
+
+let plusOne = false
+for (const fixture of process.argv.slice(2)) {
+  let data
+  const isYaml = fixture.match(/[.](yml|yaml)$/)
+  const isJson = fixture.endsWith('.json')
+
+  if (isYaml) {
+    data = parse(fs.readFileSync(fixture, 'utf-8'))
+  }
+  else if (isJson) {
+    data = JSON.parse(fs.readFileSync(fixture, 'utf-8'))
+  }
+  else if (fixture === '+1') {
+    plusOne = true
+    continue
+  }
+  else {
+    plusOne = plusOne || (fixture === '+1')
+    continue
+  }
+
+  let modified = false
+  if (data?.config?.id !== '36a3b0b5-bad0-4a04-b79b-441c7cef77db') continue
+  if (plusOne) {
+    data.items.push({ itemID: -1, itemType: 'unknown', title: 'unknown' })
+    modified = true
+  }
+
+  if (data.config.preferences) {
+    for (const [k, v] of Object.entries(data.config.preferences)) {
+      if (!(k in defaults) || v === defaults[k]) {
+        delete data.config.preferences[k]
+        modified = true
+      }
+    }
+  }
+
+  if (modified) {
+    const yamlOutput = stringify(data)
+
+    if (isYaml) {
+      fs.writeFileSync(fixture, yamlOutput, 'utf-8')
+      console.log(fixture)
+    }
+    else {
+      // execSync(`git rm "${fixture}"`)
+      const yamlPath = fixture.replace(/\.json$/, '.yaml')
+      fs.writeFileSync(yamlPath, yamlOutput, 'utf-8')
+      // execSync(`git add "${yamlPath}"`)
+      console.log(fixture, '=>', yamlPath)
+    }
+  }
+}

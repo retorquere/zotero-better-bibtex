@@ -1,7 +1,6 @@
 import fs from 'fs-extra'
 import path from 'path'
 import Peggy from 'peggy'
-import shell from 'shelljs'
 import { filePathFilter } from 'file-path-filter'
 import esbuild from 'esbuild'
 import child_process from 'child_process'
