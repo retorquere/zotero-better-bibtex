@@ -50,7 +50,6 @@ requests
 ruamel.yaml
 snakemake>=7.16
 toml
-xvfbwrapper
 rnc2rng
 xmltodict
 colorama
