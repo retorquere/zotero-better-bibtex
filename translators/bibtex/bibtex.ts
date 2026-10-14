@@ -331,9 +331,7 @@ class Importer {
       for (const err of errors) {
         item.note += '<li>'
         item.note += escape.html(err.error)
-        if (err.input) {
-          item.note += `<pre>${ escape.html(err.input) }</pre>`
-        }
+        // if (err.input) item.note += `<pre>${ escape.html(err.input) }</pre>`
         item.note += '</li>'
       }
       item.note += '</ul>'
