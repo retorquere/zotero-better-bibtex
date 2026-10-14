@@ -1,0 +1,95 @@
+config:
+  id: 36a3b0b5-bad0-4a04-b79b-441c7cef77db
+  label: BetterBibTeX JSON
+  preferences:
+    citekeyFormat: auth + year
+    fillKeyAfter: 1
+  options:
+    Items: true
+    Normalize: true
+    Preferences: true
+    YAML: false
+    exportFileData: false
+    exportNotes: true
+    keepUpdated: false
+    worker: true
+version:
+  zotero: 10.0.6
+  bbt: 9.0.71.emile.Mac.fritz.box
+collections: {}
+items:
+  -
+    key: SYAM39AP
+    version: 0
+    itemType: note
+    note: 'Import errors found: <ul><li>unhandled macro \allcaps</li></ul>'
+    tags:
+      -
+        tag: '#Better BibTeX import error'
+        type: 1
+    relations: {}
+    dateAdded: 2026-10-14T20:06:20Z
+    dateModified: 2026-10-14T20:06:20Z
+    uri: http://zotero.org/users/8230813/items/SYAM39AP
+    itemID: 113
+    itemKey: SYAM39AP
+    libraryID: 1
+  -
+    key: YWW9BXRD
+    version: 0
+    itemType: book
+    edition: ninth Dover printing, tenth GPO printing
+    place: New York
+    publisher: Dover
+    date: '1964'
+    title: Handbook of mathematical functions with formulas, graphs, and mathematical tables
+    citationKey: abramowitz+stegun
+    creators:
+      -
+        firstName: Milton
+        lastName: Abramowitz
+        creatorType: author
+      -
+        firstName: Irene A.
+        lastName: Stegun
+        creatorType: author
+    tags: []
+    relations: {}
+    dateAdded: 2026-10-14T20:06:20Z
+    dateModified: 2026-10-14T20:06:20Z
+    uri: http://zotero.org/users/8230813/items/YWW9BXRD
+    itemID: 111
+    attachments: []
+    notes: []
+    autoJournalAbbreviation: ''
+    itemKey: YWW9BXRD
+    libraryID: 1
+  -
+    key: NLZTFGHF
+    version: 0
+    itemType: book
+    publisher: Doubleday
+    ISBN: 0-385-52740-3
+    date: '2008'
+    title: The yankee years
+    citationKey: Torre2008
+    creators:
+      -
+        firstName: Joe
+        lastName: Torre
+        creatorType: author
+      -
+        firstName: Tom
+        lastName: Verducci
+        creatorType: author
+    tags: []
+    relations: {}
+    dateAdded: 2026-10-14T20:06:20Z
+    dateModified: 2026-10-14T20:06:20Z
+    uri: http://zotero.org/users/8230813/items/NLZTFGHF
+    itemID: 112
+    attachments: []
+    notes: []
+    autoJournalAbbreviation: ''
+    itemKey: NLZTFGHF
+    libraryID: 1

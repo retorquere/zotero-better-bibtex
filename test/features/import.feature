@@ -46,7 +46,7 @@ Feature: Import
   Scenario: Math markup to unicode not always imported correctly #472
     When I set preference .importJabRefStrings to false
     And I set preference .importJabRefAbbreviations to false
-    When I import 3 references from "import/*.bib"
+    When I import 2 references from "import/*.bib"
     Then the library should match "import/*.json"
     And I set preference .exportBibTeXStrings to "detect"
     Then an export using "Better BibTeX" should match "import/*.roundtrip.bib"
@@ -79,7 +79,7 @@ Feature: Import
 
   @use.with_slow=true @timeout=3000
   Scenario: Import error with character '+' in BibTeX field name #2660
-    When I import 284 references from "import/*.bib"
+    When I import 283 references from "import/*.bib"
     Then the library should match "import/*.json"
 
   Scenario Outline: Import <references> references from <file>
@@ -101,7 +101,7 @@ Feature: Import
       | accessDate must be ISO date #2376                                                                                       | 2          |
       | Allow spaces between href arguments for import #2504                                                                    | 4          |
       | article with entrysubtype                                                                                               | 1          |
-      | Author splitter failure                                                                                                 | 2          |
+      | Author splitter failure                                                                                                 | 1          |
       | BBT + Zotfile creating duplicate files in the wrong location #2300                                                      | 7          |
       | BBT does not import groups from JabRef 5.1 #1641                                                                        | 20         |
       | Better BibLaTeX import improvements #549                                                                                | 9          |
@@ -172,7 +172,7 @@ Feature: Import
   @use.with_slow=true @timeout=3000
   Scenario: Some bibtex entries quietly discarded on import from bib file #873
     Given I set preference .importDetectURLs to false
-    When I import 989 references from "import/*.bib"
+    When I import 988 references from "import/*.bib"
     Then the library should match "import/*.json"
 
   # | Async import, large library #720                                            | 9057        |
@@ -211,7 +211,7 @@ Feature: Import
 
   @use.with_slow=true @timeout=2400 @1436
   Scenario: Unabbreviate on import #1436-1
-    When I import 507 references from "import/*.bib" into a new collection
+    When I import 506 references from "import/*.bib" into a new collection
     Then the library should match "import/*.json"
 
   # @1436
@@ -231,7 +231,7 @@ Feature: Import
   # https://forums.zotero.org/discussion/comment/371812/#Comment_371812
   @use.with_slow=true @timeout=3000
   Scenario: web_page and other mendeley idiocy
-    When I import 513 references from "import/*.bib" into a new collection
+    When I import 512 references from "import/*.bib" into a new collection
     Then the library should match "import/*.json"
 
   Scenario: Journal detection active while importJabrefAbbreviations is off #2916
