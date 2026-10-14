@@ -6,6 +6,8 @@ import { Exporter as ExporterInterface } from './interface'
 import type { Serialized } from '../../gen/typings/serialized'
 import type { Header } from '../../gen/translators'
 
+declare const dump: (msg: string) => void
+
 import { ExportedItem, ExportedItemMetadata, Cache, Context } from './cache'
 
 declare const IOUtils: any
@@ -456,7 +458,11 @@ class WorkerZotero {
 
     const output = this.output
 
-    if (this.exportFile) await IOUtils.writeUTF8(this.exportFile, output)
+    if (this.exportFile) {
+      dump(`3627: writing ${this.exportFile}`)
+      dump(`${output}\n`)
+      await IOUtils.writeUTF8(this.exportFile, output)
+    }
 
     this.output = ''
     this.running.serialized = []

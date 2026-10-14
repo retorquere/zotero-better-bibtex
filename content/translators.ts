@@ -267,6 +267,7 @@ export const Translators = new class {
         job.translate.string = output // eslint-disable-line id-blacklist
         job.translate.complete(output)
       }
+      log.debug('3627: worker output\n', output)
       return output
     }
     catch (err) {
