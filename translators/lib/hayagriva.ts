@@ -658,6 +658,5 @@ export const Hayagriva = new class {
 export function generateHayagriva(collected: Collected): Translation {
   const translation = Translation.Export(collected)
   translation.output.body = Hayagriva.export(collected.items.regular, translation)
-  log.debug('3627: output', translation.output.body)
   return translation
 }
