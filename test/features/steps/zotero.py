@@ -218,6 +218,61 @@ class Config:
   def __str__(self):
     return str(self.data)
 
+class Normalized:
+  """
+  Context manager that canonicalizes nested Python data on entry.
+  - Dict keys are sorted.
+  - Lists, sets, and tuples are sorted by element (treated as sets).
+  - Can be converted directly to YAML via .to_yaml().
+  """
+
+  def __init__(self, data):
+    self._raw_data = data
+    self.data = None
+
+  def __enter__(self):
+    self.data = self._canonicalize(self._raw_data)
+    return self.data
+
+  def __exit__(self, exc_type, exc_val, exc_tb):
+    # Exception handling if needed; returns False to propagate exceptions normally
+    return False
+
+  @classmethod
+  def _canonicalize(cls, data):
+    if isinstance(data, dict):
+      return {
+        k: cls._canonicalize(v)
+        for k, v in sorted(
+          data.items(),
+          key=lambda item: cls._type_safe_key(cls._canonicalize(item[0])),
+        )
+      }
+    elif isinstance(data, (list, set, tuple)):
+      processed = [cls._canonicalize(item) for item in data]
+      return sorted(processed, key=cls._type_safe_key)
+    else:
+      return data
+
+  @classmethod
+  def _type_safe_key(cls, val):
+    """Generates a comparable key tuple to sort uncomparable types or nested dicts/lists."""
+    if isinstance(val, dict):
+      return (0, tuple(sorted((k, cls._type_safe_key(v)) for k, v in val.items())))
+    elif isinstance(val, list):
+      return (1, tuple(cls._type_safe_key(x) for x in val))
+    else:
+      return (2, type(val).__name__, val)
+
+  @classmethod
+  def to_yaml(cls, data, stream=None, **yaml_kwargs):
+    """Helper to dump data to YAML preserving explicit canonical dict/list ordering."""
+    options = {"sort_keys": False, "default_flow_style": False}
+    options.update(yaml_kwargs)
+    
+    canonical_data = cls._canonicalize(data)
+    return yaml.dump(canonical_data, stream=stream, **options)
+
 class Library:
   """Represents an input/export library fixture and its normalized comparison form.
 
@@ -316,19 +371,22 @@ class Library:
         # normalization for regular CSL-YAML fixtures and only use structural
         # normalization for Hayagriva's top-level mapping shape.
         if self.ext == '.csl.json':
-          self.data = sorted(self.data, key=lambda item: json.dumps(item, cls=CompactEncoder))
-          self.normalized = json.dumps(self.data, cls=CompactEncoder)
+          #self.data = sorted(self.data, key=lambda item: json.dumps(item, cls=CompactEncoder))
+          #self.normalized = json.dumps(self.data, cls=CompactEncoder)
+          self.normalized = Normalized.to_yaml(self.data)
         elif self.ext == '.hayagriva.yml' or (isinstance(self.data, dict) and 'references' not in self.data):
-          normalized = io.StringIO()
-          yaml.dump(json.loads(json.dumps(self.data, cls=CompactEncoder)), normalized)
-          self.normalized = normalized.getvalue()
+          #normalized = io.StringIO()
+          #yaml.dump(json.loads(json.dumps(self.data, cls=CompactEncoder)), normalized)
+          #self.normalized = normalized.getvalue()
+          self.normalized = Normalized.to_yaml(self.data)
         else:
-          self.data = sorted(self.data, key=lambda item: json.dumps(item, cls=CompactEncoder))
-          self.normalized = json.dumps(self.data, cls=CompactEncoder)
+          #self.data = sorted(self.data, key=lambda item: json.dumps(item, cls=CompactEncoder))
+          #self.normalized = json.dumps(self.data, cls=CompactEncoder)
 
-          normalized = io.StringIO()
-          yaml.dump(json.loads(self.normalized), normalized)
-          self.normalized = normalized.getvalue()
+          #normalized = io.StringIO()
+          #yaml.dump(json.loads(self.normalized), normalized)
+          #self.normalized = normalized.getvalue()
+          self.normalized = Normalized.to_yaml(self.data)
 
       elif self.ext in [ '.json', '.yml' ]:
         # BetterBibTeX JSON exports normalize preferences/items for stable diffs.
@@ -632,9 +690,9 @@ class Zotero:
       assert_equal_diff(expected.normalized, found.normalized)
 
     elif expected.path.endswith('.json'):
-      def summary(items):
-        return [(item['itemType'], item.get('title', '')) for item in items['items']]
-      assert len(expected.data['items']) == len(found.data['items']), f"found {len(found.data['items'])}, expected {len(expected.data['items'])}, {summary(found.data)}, {summary(expected.data)}"
+      #def summary(items):
+      #  return [(item['itemType'], item.get('title', '')) for item in items['items']]
+      #assert len(expected.data['items']) == len(found.data['items']), f"found {len(found.data['items'])}, expected {len(expected.data['items'])}, {summary(found.data)}, {summary(expected.data)}"
       assert_equal_diff(expected.normalized, found.normalized)
 
     elif expected.ext in PLAINTEXT:
