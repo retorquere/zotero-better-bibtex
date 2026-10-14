@@ -85,8 +85,8 @@ better-bibtex_preferences_advanced_export_retain-cache_warning =
     默认情况下，升级 BBT 或 Zotero 后 BBT 会清除所有缓存。我无法预测 BBT 或 Zotero 的更改是否会影响条目引用的生成结果，因此，为了确保您能受益于对引用生成有影响的更新和修复，当检测到组件更新时，缓存将被清除。然而，如果您有一个十分庞大的文库，且您经常需要导出其中的大量条目，那么您可能希望保留缓存的引用，即便这将带来在导出时获得（已在更新中修复的）旧有的错误输出的风险。
     
     如果您开启了此选项，并且遇到了任何不是由于升级时缓存被清除而引起的问题，您必须清除缓存后再重现问题。当您更改包括此设置的任何设置后，缓存都将被清除。
-better-bibtex_preferences_advanced_export_title-case = Apply title-casing to titles
-better-bibtex_preferences_advanced_export_title-case_warning = Leave empty to use the default title-casing rules for English items, or enter "off" to disable title-casing. To override individual fields, use a comma-separated list such as "-title,+booktitle". Prefix a field with "bibtex." or "biblatex." to restrict the override to that format, for example "-bibtex.title".
+better-bibtex_preferences_advanced_export_title-case = 对标题应用标题大小写格式
+better-bibtex_preferences_advanced_export_title-case_warning = 留空则对英文条目使用默认的标题大小写规则；输入 `off` 可禁用标题大小写转换。如果要针对单独的字段覆盖此设置，可以输入一个用逗号分隔的字段列表，例如：`-title,+booktitle`在字段名前加上 `bibtex.` 或 `biblatex.`，可以将该覆盖规则仅应用于对应的格式。例如：`-bibtex.title`。
 better-bibtex_preferences_advanced_export_workers_cache = 
     .label = 启用后台导出缓存
 better-bibtex_preferences_advanced_export_cache-touch = 缓存更新时机
