@@ -614,18 +614,7 @@ async function parseBibTeX(translation: Translation): Promise<Library> {
 
   return await parse(translation.collected.input, {
     // we are actually sure it's a valid enum value; stupid workaround for TS2322: Type 'string' is not assignable to type 'boolean | "as-needed" | "strict"'.
-    unsupported: (node, tex: string, _entry) => {
-      switch (translation.collected.preferences.importUnknownTexCommand) {
-        case 'tex':
-          return `<script>${tex}</script>`
-        case 'text':
-          return node.type === 'macro' ? node.content : tex
-        case 'ignore':
-          return ''
-        default:
-          return tex
-      }
-    },
+    unsupported: translation.collected.preferences.importUnknownTexCommand as unknown as 'ignore',
     english: translation.collected.preferences.importSentenceCase !== 'off',
     sentenceCase: {
       guess: translation.collected.preferences.importSentenceCase === 'on+guess',
