@@ -23,7 +23,14 @@ export function postscript(kind: 'csl' | 'tex' | 'hayagriva', main: string, guar
     const entry = target;
     const ${ kind } = target;
 
+    // referencetype is the legacy name of entrytype
+    const entrytype = reference.referencetype = entry.entrytype
+
     const result = (() => { ${ main }; })();
+
+    // entry type change through legacy field
+    if (entry.entrytype === entrytype && reference.referencetype !== entrytype) entry.entrytype = reference.referencetype
+    delete entry.referencetype
 
     switch (typeof result) {
       case 'undefined': return { cache: true, write: true }
