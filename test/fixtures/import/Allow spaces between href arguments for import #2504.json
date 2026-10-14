@@ -2,34 +2,151 @@
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
+    "preferences": {
+      "ascii": "",
+      "asciiBibLaTeX": false,
+      "asciiBibTeX": true,
+      "autoExport": "immediate",
+      "autoExportDelay": 5,
+      "autoExportIdleWait": 10,
+      "autoExportPathReplaceDiacritics": false,
+      "autoExportPathReplaceDirSep": "-",
+      "autoExportPathReplaceSpace": " ",
+      "automaticTags": true,
+      "auxImport": false,
+      "baseAttachmentPath": "",
+      "biblatexExtendedDateFormat": true,
+      "biblatexExtendedNameFormat": true,
+      "biblatexExtractEprint": true,
+      "biblatexUsePrefix": true,
+      "bibtexEditionOrdinal": false,
+      "bibtexParticleNoOp": false,
+      "bibtexURL": "off",
+      "cache": true,
+      "cacheDelete": false,
+      "cacheTouch": "fill",
+      "charmap": "",
+      "chinese": false,
+      "chineseSplitName": true,
+      "citeCommand": "cite",
+      "citekeyCaseInsensitive": true,
+      "citekeyFold": true,
+      "citekeyFormat": "auth + year",
+      "citekeyUnsafeChars": "\\\"#%'(),={}~",
+      "csquotes": "",
+      "DOIandURL": "both",
+      "exportBibTeXStrings": "off",
+      "exportBraceProtection": true,
+      "exportCaseProtection": "",
+      "exportSort": "citekey",
+      "exportTitlecase": "",
+      "extraFieldAsNote": false,
+      "extraMergeCitekeys": false,
+      "extraMergeCSL": false,
+      "extraMergeTeX": false,
+      "fillKeyAfter": 1,
+      "git": "config",
+      "import": true,
+      "importBibTeXStrings": true,
+      "importCaseProtection": "as-needed",
+      "importCitationKey": true,
+      "importDetectURLs": true,
+      "importExtra": true,
+      "importJabRefAbbreviations": true,
+      "importJabRefStrings": true,
+      "importNoteToExtra": "",
+      "importPlaceEvent": "inproceedings,conference,presentation,talk",
+      "importSentenceCase": "on+guess",
+      "importSentenceCaseQuoted": true,
+      "importUnknownTexCommand": "ignore",
+      "itemObserverDelay": 5,
+      "jabrefFormat": 0,
+      "japanese": false,
+      "journalAbbreviation": "abbrev",
+      "keyScope": "library",
+      "language": "langid",
+      "mapMath": "",
+      "mapText": "",
+      "packages": "",
+      "parseParticles": true,
+      "patchDates": "dateadded=dateAdded, date-added=dateAdded, datemodified=dateModified, date-modified=dateModified",
+      "postscript": "",
+      "postscriptOverride": "",
+      "preferencesOverride": "",
+      "profileRuntime": "no",
+      "profileStartup": false,
+      "qualityReport": false,
+      "quickCopyEta": "",
+      "quickCopyMode": "latex",
+      "quickCopyOrgMode": "zotero",
+      "quickCopyPandocBrackets": false,
+      "quickCopySelectLink": "zotero",
+      "rawImports": false,
+      "rawLaTag": "#LaTeX",
+      "relativeFilePaths": false,
+      "remigrate": false,
+      "resetKeyOnChange": false,
+      "separatorList": "and",
+      "separatorNames": "and",
+      "skipFields": "",
+      "skipWords": "a,ab,aboard,about,above,across,after,against,al,along,amid,among,an,and,anti,around,as,at,before,behind,below,beneath,beside,besides,between,beyond,but,by,d,da,das,de,del,dell,dello,dei,degli,della,dell,delle,dem,den,der,des,despite,die,do,down,du,during,ein,eine,einem,einen,einer,eines,el,en,et,except,for,from,gli,i,il,in,inside,into,is,l,la,las,le,les,like,lo,los,near,nor,of,off,on,onto,or,over,past,per,plus,round,save,since,so,some,sur,than,the,through,to,toward,towards,un,una,unas,under,underneath,une,unlike,uno,unos,until,up,upon,versus,via,von,while,with,within,without,yet,zu,zum",
+      "strings": "",
+      "stringsOverride": "",
+      "verbatimFields": "url,doi,file,pdf,ids,eprint,/^verb[a-z]$/,groups,/^citeulike-linkout-[0-9]+$/,/^bdsk-url-[0-9]+$/, keywords",
+      "warnBulkModify": 10,
+      "warnTitleCased": false
+    },
     "options": {
       "Items": true,
+      "Normalize": true,
       "Preferences": true,
-      "exportNotes": true
-    },
-    "preferences": {
-      "citekeyFormat": "auth + year"
+      "YAML": false,
+      "exportFileData": false,
+      "exportNotes": true,
+      "keepUpdated": false,
+      "worker": true
     }
   },
+  "version": {
+    "zotero": "10.0.6",
+    "bbt": "9.0.71.emile.kiku.local"
+  },
+  "collections": {},
   "items": [
     {
+      "key": "4Z33XTKV",
+      "version": 0,
+      "itemType": "note",
+      "note": "Import errors found: <ul><li>unhandled macro \\allcaps</li></ul>",
+      "tags": [
+        {
+          "tag": "#Better BibTeX import error",
+          "type": 1
+        }
+      ],
+      "relations": {},
+      "dateAdded": "2026-10-14T09:49:01Z",
+      "dateModified": "2026-10-14T09:49:01Z",
+      "uri": "http://zotero.org/users/8230813/items/4Z33XTKV",
+      "itemID": 118,
+      "itemKey": "4Z33XTKV",
+      "libraryID": 1
+    },
+    {
+      "key": "3T4AMGFA",
+      "version": 0,
+      "itemType": "document",
+      "url": "https://www.math.uni-bielefeld.de/~gaehler/gap/packages.php",
+      "date": "2022-07",
+      "extra": "tex.printedkey: Gäh22",
+      "title": "CaratInterface, Interface to CARAT, a crystallographic groups package, Version 2.3.4",
       "citationKey": "CaratInterface2.3.4",
       "creators": [
         {
-          "creatorType": "author",
           "firstName": "F.",
-          "lastName": "G\u00e4hler"
+          "lastName": "Gähler",
+          "creatorType": "author"
         }
-      ],
-      "date": "2022-07",
-      "extra": [
-        "Citation Key: CaratInterface2.3.4",
-        "tex.printedkey: G\u00e4h22"
-      ],
-      "itemID": 1,
-      "itemType": "document",
-      "notes": [
-        "Refereed GAP package"
       ],
       "tags": [
         {
@@ -42,47 +159,65 @@
           "tag": "GLnZ"
         }
       ],
-      "title": "CaratInterface, Interface to CARAT, a crystallographic groups package, Version 2.3.4",
-      "url": "https://www.math.uni-bielefeld.de/~gaehler/gap/packages.php"
+      "relations": {},
+      "dateAdded": "2026-10-14T09:49:01Z",
+      "dateModified": "2026-10-14T09:49:01Z",
+      "uri": "http://zotero.org/users/8230813/items/3T4AMGFA",
+      "itemID": 111,
+      "attachments": [],
+      "notes": [
+        {
+          "key": "X8JQBPI9",
+          "version": 0,
+          "itemType": "note",
+          "parentItem": "3T4AMGFA",
+          "note": "Refereed GAP package",
+          "tags": [],
+          "relations": {},
+          "dateAdded": "2026-10-14T09:49:01Z",
+          "dateModified": "2026-10-14T09:49:01Z",
+          "uri": "http://zotero.org/users/8230813/items/X8JQBPI9"
+        }
+      ],
+      "autoJournalAbbreviation": "",
+      "itemKey": "3T4AMGFA",
+      "libraryID": 1
     },
     {
+      "key": "XGAIR6DF",
+      "version": 0,
+      "itemType": "document",
+      "url": "https://www.math.uni-bielefeld.de/~gaehler/gap/packages.php",
+      "date": "2023-04",
+      "extra": "tex.printedkey: EGN23",
+      "title": "Cryst, Computing with crystallographic groups, Version 4.1.26",
       "citationKey": "Cryst4.1.26",
       "creators": [
         {
-          "creatorType": "author",
           "firstName": "B.",
-          "lastName": "Eick"
+          "lastName": "Eick",
+          "creatorType": "author"
         },
         {
-          "creatorType": "author",
           "firstName": "F.",
-          "lastName": "G\u00e4hler"
+          "lastName": "Gähler",
+          "creatorType": "author"
         },
         {
-          "creatorType": "author",
           "firstName": "W.",
-          "lastName": "Nickel"
+          "lastName": "Nickel",
+          "creatorType": "author"
         }
       ],
-      "date": "2023-04",
-      "extra": [
-        "Citation Key: Cryst4.1.26",
-        "tex.printedkey: EGN23"
-      ],
-      "itemID": 2,
-      "itemType": "document",
-      "notes": [
-        "Refereed GAP package"
-      ],
       "tags": [
+        {
+          "tag": "crystallographic groups"
+        },
         {
           "tag": "affine crystallographic groups"
         },
         {
           "tag": "color groups"
-        },
-        {
-          "tag": "crystallographic groups"
         },
         {
           "tag": "International Tables for Crystallography"
@@ -103,32 +238,50 @@
           "tag": "Wyckoff positions"
         }
       ],
-      "title": "Cryst, Computing with crystallographic groups, Version 4.1.26",
-      "url": "https://www.math.uni-bielefeld.de/~gaehler/gap/packages.php"
+      "relations": {},
+      "dateAdded": "2026-10-14T09:49:01Z",
+      "dateModified": "2026-10-14T09:49:01Z",
+      "uri": "http://zotero.org/users/8230813/items/XGAIR6DF",
+      "itemID": 114,
+      "attachments": [],
+      "notes": [
+        {
+          "key": "DB3J2SPB",
+          "version": 0,
+          "itemType": "note",
+          "parentItem": "XGAIR6DF",
+          "note": "Refereed GAP package",
+          "tags": [],
+          "relations": {},
+          "dateAdded": "2026-10-14T09:49:01Z",
+          "dateModified": "2026-10-14T09:49:01Z",
+          "uri": "http://zotero.org/users/8230813/items/DB3J2SPB"
+        }
+      ],
+      "autoJournalAbbreviation": "",
+      "itemKey": "XGAIR6DF",
+      "libraryID": 1
     },
     {
+      "key": "2HKT8JAQ",
+      "version": 0,
+      "itemType": "document",
+      "url": "https://www.math.uni-bielefeld.de/~gaehler/gap/packages.php",
+      "date": "2022-07",
+      "extra": "tex.printedkey: FG22",
+      "title": "CrystCat, The crystallographic groups catalog, Version 1.1.10",
       "citationKey": "CrystCat1.1.10",
       "creators": [
         {
-          "creatorType": "author",
           "firstName": "V.",
-          "lastName": "Felsch"
+          "lastName": "Felsch",
+          "creatorType": "author"
         },
         {
-          "creatorType": "author",
           "firstName": "F.",
-          "lastName": "G\u00e4hler"
+          "lastName": "Gähler",
+          "creatorType": "author"
         }
-      ],
-      "date": "2022-07",
-      "extra": [
-        "Citation Key: CrystCat1.1.10",
-        "tex.printedkey: FG22"
-      ],
-      "itemID": 3,
-      "itemType": "document",
-      "notes": [
-        "Refereed GAP package"
       ],
       "tags": [
         {
@@ -138,18 +291,40 @@
           "tag": "space groups"
         }
       ],
-      "title": "CrystCat, The crystallographic groups catalog, Version 1.1.10",
-      "url": "https://www.math.uni-bielefeld.de/~gaehler/gap/packages.php"
+      "relations": {},
+      "dateAdded": "2026-10-14T09:49:01Z",
+      "dateModified": "2026-10-14T09:49:01Z",
+      "uri": "http://zotero.org/users/8230813/items/2HKT8JAQ",
+      "itemID": 116,
+      "attachments": [],
+      "notes": [
+        {
+          "key": "BRGWSCRF",
+          "version": 0,
+          "itemType": "note",
+          "parentItem": "2HKT8JAQ",
+          "note": "Refereed GAP package",
+          "tags": [],
+          "relations": {},
+          "dateAdded": "2026-10-14T09:49:01Z",
+          "dateModified": "2026-10-14T09:49:01Z",
+          "uri": "http://zotero.org/users/8230813/items/BRGWSCRF"
+        }
+      ],
+      "autoJournalAbbreviation": "",
+      "itemKey": "2HKT8JAQ",
+      "libraryID": 1
     },
     {
-      "citationKey": "GAP4.13dev",
-      "extra": [
-        "Citation Key: GAP4.13dev",
-        "tex.key: GAP"
-      ],
-      "itemID": 4,
+      "key": "M45RN79R",
+      "version": 0,
       "itemType": "document",
+      "url": "https://www.gap-system.org",
       "publisher": "The GAP Group",
+      "extra": "tex.key: GAP",
+      "title": "GAP – Groups, Algorithms, and Programming, Version 4.13dev",
+      "citationKey": "GAP4.13dev",
+      "creators": [],
       "tags": [
         {
           "tag": "*"
@@ -164,8 +339,16 @@
           "tag": "manual"
         }
       ],
-      "title": "GAP \u2013 Groups, Algorithms, and Programming, Version 4.13dev",
-      "url": "https://www.gap-system.org"
+      "relations": {},
+      "dateAdded": "2026-10-14T09:49:01Z",
+      "dateModified": "2026-10-14T09:49:01Z",
+      "uri": "http://zotero.org/users/8230813/items/M45RN79R",
+      "itemID": 113,
+      "attachments": [],
+      "notes": [],
+      "autoJournalAbbreviation": "",
+      "itemKey": "M45RN79R",
+      "libraryID": 1
     }
   ]
 }
