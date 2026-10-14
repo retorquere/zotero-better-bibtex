@@ -12717,7 +12717,7 @@ that you want to include in the collection.</p>
 <p>Note: a number of functions below talk about the author&rsquo;s lastname; you can read that as &ldquo;when available&rdquo;. If you have the name as a single-field name (for entities like <code>International Business Machines</code> or <code>Aristoteles</code>), Zotero doesn&rsquo;t have a last name, and the full single-field name is taken instead.</p>
 <h2 id="functions">Functions<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard" aria-label="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg" aria-hidden="true"></i></button></span></h2>
 
-  <h3><b>auth</b>(n: number=0, m: number=1, creator: &#39;*&#39; | &#39;author&#39; | &#39;collaborator&#39; | &#39;editor&#39; | &#39;translator&#39;=&#39;*&#39;, initials: boolean=false)</h3><p>The first <code>n</code> (default: all) characters of the <code>m</code>th (default: first) author's last name.</p><table>
+  <h3><b>auth</b>(n: number=0, m: number=1, creator: &#39;*&#39; | &#39;author&#39; | &#39;collaborator&#39; | &#39;editor&#39; | &#39;translator&#39;=&#39;*&#39;, initials: boolean=false)</h3><p>The first <code>n</code> (default: all) characters of the <code>m</code>th (default: first) author&#39;s last name.</p><table>
               <tr>
                 <th><b>parameter</b></th>
                 <th/>
@@ -12749,7 +12749,7 @@ that you want to include in the collection.</p>
                 <td>boolean</td>
               </tr></table>
 
-  <h3><b>authAuthEa</b>(creator: &#39;*&#39; | &#39;author&#39; | &#39;collaborator&#39; | &#39;editor&#39; | &#39;translator&#39;=&#39;*&#39;, initials: boolean=false, sep: string=&#39;.&#39;)</h3><p>The last name of the first two authors, and ".ea" if there are more than two.</p><table>
+  <h3><b>authAuthEa</b>(creator: &#39;*&#39; | &#39;author&#39; | &#39;collaborator&#39; | &#39;editor&#39; | &#39;translator&#39;=&#39;*&#39;, initials: boolean=false, sep: string=&#39;.&#39;)</h3><p>The last name of the first two authors, and &quot;.ea&quot; if there are more than two.</p><table>
               <tr>
                 <th><b>parameter</b></th>
                 <th/>
@@ -12776,10 +12776,10 @@ that you want to include in the collection.</p>
               </tr></table>
 
   <h3><b>authEtAl</b>(creator: &#39;*&#39; | &#39;author&#39; | &#39;collaborator&#39; | &#39;editor&#39; | &#39;translator&#39;=&#39;*&#39;, initials: boolean=false, sep: string=&#39; &#39;)</h3><p>The last name of the first author, and the last name of the
-second author if there are two authors or "EtAl" if there are
+second author if there are two authors or &quot;EtAl&quot; if there are
 more than two. This is similar to <code>authEtal2</code>. The difference
-is that the authors are not separated by "." and in case of
-more than 2 authors "EtAl" instead of ".etal" is appended.</p><table>
+is that the authors are not separated by &quot;.&quot; and in case of
+more than 2 authors &quot;EtAl&quot; instead of &quot;.etal&quot; is appended.</p><table>
               <tr>
                 <th><b>parameter</b></th>
                 <th/>
@@ -12805,7 +12805,7 @@ more than 2 authors "EtAl" instead of ".etal" is appended.</p><table>
                 <td>string</td>
               </tr></table>
 
-  <h3><b>authEtal2</b>(creator: &#39;*&#39; | &#39;author&#39; | &#39;collaborator&#39; | &#39;editor&#39; | &#39;translator&#39;=&#39;*&#39;, initials: boolean=false, sep: string=&#39;.&#39;)</h3><p>The last name of the first author, and the last name of the second author if there are two authors or ".etal" if there are more than two.</p><table>
+  <h3><b>authEtal2</b>(creator: &#39;*&#39; | &#39;author&#39; | &#39;collaborator&#39; | &#39;editor&#39; | &#39;translator&#39;=&#39;*&#39;, initials: boolean=false, sep: string=&#39;.&#39;)</h3><p>The last name of the first author, and the last name of the second author if there are two authors or &quot;.etal&quot; if there are more than two.</p><table>
               <tr>
                 <th><b>parameter</b></th>
                 <th/>
@@ -12845,7 +12845,7 @@ more than 2 authors "EtAl" instead of ".etal" is appended.</p><table>
                 <td>'*' | 'author' | 'collaborator' | 'editor' | 'translator'</td>
               </tr></table>
 
-  <h3><b>authIni</b>(n: number=0, creator: &#39;*&#39; | &#39;author&#39; | &#39;collaborator&#39; | &#39;editor&#39; | &#39;translator&#39;=&#39;*&#39;, initials: boolean=false, sep: string=&#39;.&#39;)</h3><p>The beginning of each author's last name, using no more than <code>n</code> characters (0 = all).</p><table>
+  <h3><b>authIni</b>(n: number=0, creator: &#39;*&#39; | &#39;author&#39; | &#39;collaborator&#39; | &#39;editor&#39; | &#39;translator&#39;=&#39;*&#39;, initials: boolean=false, sep: string=&#39;.&#39;)</h3><p>The beginning of each author&#39;s last name, using no more than <code>n</code> characters (0 = all).</p><table>
               <tr>
                 <th><b>parameter</b></th>
                 <th/>
@@ -12877,7 +12877,7 @@ more than 2 authors "EtAl" instead of ".etal" is appended.</p><table>
                 <td>string</td>
               </tr></table>
 
-  <h3><b>authorIni</b>(creator: &#39;*&#39; | &#39;author&#39; | &#39;collaborator&#39; | &#39;editor&#39; | &#39;translator&#39;=&#39;*&#39;, initials: boolean=false, sep: string=&#39;.&#39;)</h3><p>The first 5 characters of the first author's last name, and the last name initials of the remaining authors.</p><table>
+  <h3><b>authorIni</b>(creator: &#39;*&#39; | &#39;author&#39; | &#39;collaborator&#39; | &#39;editor&#39; | &#39;translator&#39;=&#39;*&#39;, initials: boolean=false, sep: string=&#39;.&#39;)</h3><p>The first 5 characters of the first author&#39;s last name, and the last name initials of the remaining authors.</p><table>
               <tr>
                 <th><b>parameter</b></th>
                 <th/>
@@ -12937,8 +12937,8 @@ more than 2 authors "EtAl" instead of ".etal" is appended.</p><table>
                 <td>'*' | 'author' | 'collaborator' | 'editor' | 'translator'</td>
               </tr></table>
 
-  <h3><b>authorsAlpha</b>(creator: &#39;*&#39; | &#39;author&#39; | &#39;collaborator&#39; | &#39;editor&#39; | &#39;translator&#39;=&#39;*&#39;, initials: boolean=false, sep: string=&#39; &#39;)</h3><p>Corresponds to the BibTeX style "alpha". One author: First three letters of the last name. Two to four authors: First letters of last names concatenated.
-More than four authors: First letters of last names of first three authors concatenated. "+" at the end.</p><table>
+  <h3><b>authorsAlpha</b>(creator: &#39;*&#39; | &#39;author&#39; | &#39;collaborator&#39; | &#39;editor&#39; | &#39;translator&#39;=&#39;*&#39;, initials: boolean=false, sep: string=&#39; &#39;)</h3><p>Corresponds to the BibTeX style &quot;alpha&quot;. One author: First three letters of the last name. Two to four authors: First letters of last names concatenated.
+More than four authors: First letters of last names of first three authors concatenated. &quot;+&quot; at the end.</p><table>
               <tr>
                 <th><b>parameter</b></th>
                 <th/>
@@ -12997,7 +12997,7 @@ More than four authors: First letters of last names of first three authors conca
               </tr></table>
 
   <h3><b>authshort</b>(creator: &#39;*&#39; | &#39;author&#39; | &#39;collaborator&#39; | &#39;editor&#39; | &#39;translator&#39;=&#39;*&#39;, initials: boolean=false, sep: string=&#39;.&#39;)</h3><p>The last name if one author/editor is given; the first character
-of up to three authors' last names if more than one author is
+of up to three authors&#39; last names if more than one author is
 given. A plus character is added, if there are more than three
 authors.</p><table>
               <tr>
@@ -13028,11 +13028,11 @@ authors.</p><table>
   <h3><b>creatornames</b>(template?: string containing at least one of &#39;%(F)s&#39;, &#39;%(f)s&#39;, &#39;%(g)s&#39;, &#39;%(i)s&#39;, &#39;%(I)s&#39;, &#39;%(g_zh)s&#39;, &#39;%(f_zh)s&#39;, transliterate?: boolean, space?: string)</h3><p>Sets the defaults for formatting creator names
 in the creator template, you can use:</p>
 <ul>
-<li><code>%(f)s</code>: family ("last") name</li>
-<li><code>%(F)s</code>: family ("last") name without dropping particles</li>
-<li><code>%(f_zh)s</code>: family ("last") name extracted from chinese compound names. Need <code>jieba</code> to be enabled</li>
-<li><code>%(g)s</code>: given ("first") name</li>
-<li><code>%(g_zh)s</code>: given ("first") name extracted from chinese compound names. Need <code>jieba</code> to be enabled</li>
+<li><code>%(f)s</code>: family (&quot;last&quot;) name</li>
+<li><code>%(F)s</code>: family (&quot;last&quot;) name without dropping particles</li>
+<li><code>%(f_zh)s</code>: family (&quot;last&quot;) name extracted from chinese compound names. Need <code>jieba</code> to be enabled</li>
+<li><code>%(g)s</code>: given (&quot;first&quot;) name</li>
+<li><code>%(g_zh)s</code>: given (&quot;first&quot;) name extracted from chinese compound names. Need <code>jieba</code> to be enabled</li>
 <li><code>%(i)s</code>: given-name initials</li>
 <li><code>%(I)s</code>: given-name initials, upper-case</li>
 </ul></p><table>
@@ -13044,7 +13044,7 @@ in the creator template, you can use:</p>
               </tr>
               <tr>
                 <td><code>template</code></td>
-                <td>sprintf-template default for representing creator names. Default is '%(f)s'.</td>
+                <td>sprintf-template default for representing creator names. Default is &#39;%(f)s&#39;.</td>
                 <td>undefined</td>
                 <td>string containing at least one of '%(F)s', '%(f)s', '%(g)s', '%(i)s', '%(I)s', '%(g_zh)s', '%(f_zh)s'</td>
               </tr>
@@ -13064,11 +13064,11 @@ in the creator template, you can use:</p>
   <h3><b>creators</b>(n: number | [ number, number ]=0, type: &#39;artist&#39; | &#39;attorneyAgent&#39; | &#39;author&#39; | &#39;bookAuthor&#39; | &#39;cartographer&#39; | &#39;castMember&#39; | &#39;commenter&#39; | &#39;composer&#39; | &#39;contributor&#39; | &#39;cosponsor&#39; | &#39;counsel&#39; | &#39;director&#39; | &#39;editor&#39; | &#39;guest&#39; | &#39;interviewee&#39; | &#39;interviewer&#39; | &#39;inventor&#39; | &#39;performer&#39; | &#39;podcaster&#39; | &#39;presenter&#39; | &#39;producer&#39; | &#39;programmer&#39; | &#39;recipient&#39; | &#39;reviewedAuthor&#39; | &#39;scriptwriter&#39; | &#39;seriesEditor&#39; | &#39;sponsor&#39; | &#39;translator&#39; | &#39;wordsBy&#39; | (&#39;artist&#39; | &#39;attorneyAgent&#39; | &#39;author&#39; | &#39;bookAuthor&#39; | &#39;cartographer&#39; | &#39;castMember&#39; | &#39;commenter&#39; | &#39;composer&#39; | &#39;contributor&#39; | &#39;cosponsor&#39; | &#39;counsel&#39; | &#39;director&#39; | &#39;editor&#39; | &#39;guest&#39; | &#39;interviewee&#39; | &#39;interviewer&#39; | &#39;inventor&#39; | &#39;performer&#39; | &#39;podcaster&#39; | &#39;presenter&#39; | &#39;producer&#39; | &#39;programmer&#39; | &#39;recipient&#39; | &#39;reviewedAuthor&#39; | &#39;scriptwriter&#39; | &#39;seriesEditor&#39; | &#39;sponsor&#39; | &#39;translator&#39; | &#39;wordsBy&#39;)[] | ((&#39;artist&#39; | &#39;attorneyAgent&#39; | &#39;author&#39; | &#39;bookAuthor&#39; | &#39;cartographer&#39; | &#39;castMember&#39; | &#39;commenter&#39; | &#39;composer&#39; | &#39;contributor&#39; | &#39;cosponsor&#39; | &#39;counsel&#39; | &#39;director&#39; | &#39;editor&#39; | &#39;guest&#39; | &#39;interviewee&#39; | &#39;interviewer&#39; | &#39;inventor&#39; | &#39;performer&#39; | &#39;podcaster&#39; | &#39;presenter&#39; | &#39;producer&#39; | &#39;programmer&#39; | &#39;recipient&#39; | &#39;reviewedAuthor&#39; | &#39;scriptwriter&#39; | &#39;seriesEditor&#39; | &#39;sponsor&#39; | &#39;translator&#39; | &#39;wordsBy&#39; | &#39;*&#39;)[])[] | &#39;*&#39;=[ [ &#39;primary&#39;, &#39;editor&#39;, &#39;translator&#39;, &#39;*&#39; ] ], name: string containing at least one of &#39;%(F)s&#39;, &#39;%(f)s&#39;, &#39;%(g)s&#39;, &#39;%(i)s&#39;, &#39;%(I)s&#39;, &#39;%(g_zh)s&#39;, &#39;%(f_zh)s&#39; | &#39;&#39;=&#39;&#39;, etal: string=&#39;&#39;, sep: string=&#39; &#39;, min: number=0, max: number=0)</h3><p>Author/editor information.
 in the creator template, you can use:</p>
 <ul>
-<li><code>%(f)s</code>: family ("last") name</li>
-<li><code>%(F)s</code>: family ("last") name without dropping particles</li>
-<li><code>%(f_zh)s</code>: family ("last") name extracted from chinese compound names. Need <code>jieba</code> to be enabled</li>
-<li><code>%(g)s</code>: given ("first") name</li>
-<li><code>%(g_zh)s</code>: given ("first") name extracted from chinese compound names. Need <code>jieba</code> to be enabled</li>
+<li><code>%(f)s</code>: family (&quot;last&quot;) name</li>
+<li><code>%(F)s</code>: family (&quot;last&quot;) name without dropping particles</li>
+<li><code>%(f_zh)s</code>: family (&quot;last&quot;) name extracted from chinese compound names. Need <code>jieba</code> to be enabled</li>
+<li><code>%(g)s</code>: given (&quot;first&quot;) name</li>
+<li><code>%(g_zh)s</code>: given (&quot;first&quot;) name extracted from chinese compound names. Need <code>jieba</code> to be enabled</li>
 <li><code>%(i)s</code>: given-name initials</li>
 <li><code>%(I)s</code>: given-name initials, upper-case</li>
 </ul></p><table>
@@ -13080,7 +13080,7 @@ in the creator template, you can use:</p>
               </tr>
               <tr>
                 <td><code>n</code></td>
-                <td>select the first <code>n</code> creators (when passing a number) or the authors in this range (inclusive, when passing two values); negative numbers mean "from the end", default = 0 = all</td>
+                <td>select the first <code>n</code> creators (when passing a number) or the authors in this range (inclusive, when passing two values); negative numbers mean &quot;from the end&quot;, default = 0 = all</td>
                 <td>0</td>
                 <td>number | [ number, number ]</td>
               </tr>
@@ -13153,7 +13153,7 @@ the primary creator-type of the Zotero item under consideration. The list is pre
 
   <h3><b>extra</b>(variable: string)</h3><p>A pseudo-field from the extra field. eg if you have <code>Original date: 1970</code> in your <code>extra</code> field, you can get it as
 <code>extra(originalDate)</code>, or <code>tex.shortauthor: APA</code> which you could
-get with <code>extra('tex.shortauthor')</code>. Any <code>tex.</code> field will be
+get with <code>extra(&#39;tex.shortauthor&#39;)</code>. Any <code>tex.</code> field will be
 picked up, the other fields can be selected from <a href="https://retorque.re/zotero-better-bibtex/exporting/extra-fields/">this list</a>
 of key names.</p><table>
               <tr>
@@ -13187,7 +13187,7 @@ BibTeX allows <code>7,41,73--97</code> or <code>43+</code>.)</p>
                 <td>string</td>
               </tr></table>
 
-  <h3><b>infix</b>(format: string containing at least one of &#39;%(a)s&#39;, &#39;%(A)s&#39;, &#39;%(n)s&#39;=&#39;%(a)s&#39;, start: number | string=0)</h3><p>a pseudo-function that sets the citekey disambiguation infix using an <a href="https://www.npmjs.com/package/sprintf-js">sprintf-js</a> format spec
+  <h3><b>infix</b>(format: string containing at least one of &#39;%(a)s&#39;, &#39;%(A)s&#39;, &#39;%(n)s&#39;=&#39;%(a)s&#39;, start: number | string=0)</h3><p>a pseudo-function that sets the citekey disambiguation infix using an &lt;a href=&quot;https://www.npmjs.com/package/sprintf-js&quot;&gt;sprintf-js&lt;/a&gt; format spec
 for when a key is generated that already exists. The infix charachter appears at the place of this function of the formula instead of at the and (as postfix does).
 You <em>must</em> include <em>exactly one</em> of the placeholders <code>%(n)s</code> (number), <code>%(a)s</code> (alpha, lowercase) or <code>%(A)s</code> (alpha, uppercase).
 For the rest of the disambiguator you can use things like padding and extra text as sprintf-js allows. With start set to <code>1</code> the disambiguator is always included,
@@ -13228,12 +13228,12 @@ in the template, you can use:</p>
               </tr>
               <tr>
                 <td><code>id</code></td>
-                <td>'id': return itemID; 'key': return the item key</td>
+                <td>&#39;id&#39;: return itemID; &#39;key&#39;: return the item key</td>
                 <td>'key'</td>
                 <td>'id' | 'key'</td>
               </tr></table>
 
-  <h3><b>journal</b>(abbrev: &#39;abbrev&#39; | &#39;abbrev+auto&#39; | &#39;auto&#39; | &#39;full&#39; | &#39;off&#39;=&#39;abbrev+auto&#39;)</h3><p>returns the journal abbreviation, or, if not found, the journal title, If 'automatic journal abbreviation' is enabled in the BBT settings,
+  <h3><b>journal</b>(abbrev: &#39;abbrev&#39; | &#39;abbrev+auto&#39; | &#39;auto&#39; | &#39;full&#39; | &#39;off&#39;=&#39;abbrev+auto&#39;)</h3><p>returns the journal abbreviation, or, if not found, the journal title, If &#39;automatic journal abbreviation&#39; is enabled in the BBT settings,
 it will use the same abbreviation filter Zotero uses in the wordprocessor integration. You might want to use the <code>abbr</code> filter on this.
 Abbreviation behavior can be specified as <code>abbrev+auto</code> (the default) which uses the explicit journal abbreviation if present, and tries the automatic
 abbreviator if not (if auto-abbrev is enabled in the preferences), <code>auto</code> (skip explicit journal abbreviation even if present), <code>abbrev</code>
@@ -13293,7 +13293,7 @@ abbreviator if not (if auto-abbrev is enabled in the preferences), <code>auto</c
 <p>Pinned citation keys in Extra are no longer supported, but existing
 formulas may still reference $pinned(). Keep this formatter as a no-op.</p>
 
-  <h3><b>postfix</b>(format: string containing at least one of &#39;%(a)s&#39;, &#39;%(A)s&#39;, &#39;%(n)s&#39;=&#39;%(a)s&#39;, start: number | string=0)</h3><p>a pseudo-function that sets the citekey disambiguation postfix using an <a href="https://www.npmjs.com/package/sprintf-js">sprintf-js</a> format spec
+  <h3><b>postfix</b>(format: string containing at least one of &#39;%(a)s&#39;, &#39;%(A)s&#39;, &#39;%(n)s&#39;=&#39;%(a)s&#39;, start: number | string=0)</h3><p>a pseudo-function that sets the citekey disambiguation postfix using an &lt;a href=&quot;https://www.npmjs.com/package/sprintf-js&quot;&gt;sprintf-js&lt;/a&gt; format spec
 for when a key is generated that already exists. Does not add any text to the citekey otherwise.
 You <em>must</em> include <em>exactly one</em> of the placeholders <code>%(n)s</code> (number), <code>%(a)s</code> (alpha, lowercase) or <code>%(A)s</code> (alpha, uppercase).
 For the rest of the disambiguator you can use things like padding and extra text as sprintf-js allows. With start set to <code>1</code> the disambiguator is always included,
@@ -13347,7 +13347,7 @@ in the template, you can use:</p>
 
   <h3><b>title</b></h3><p>Capitalize all the significant words of the title, and concatenate them. For example, <code>An awesome paper on JabRef</code> will become <code>AnAwesomePaperJabref</code></p>
 
-  <h3><b>transliterate</b>(mode: &#39;ar&#39; | &#39;arabic&#39; | &#39;bg&#39; | &#39;bulgarian&#39; | &#39;chinese&#39; | &#39;chinese-traditional&#39; | &#39;de&#39; | &#39;german&#39; | &#39;ja&#39; | &#39;japanese&#39; | &#39;macedonian&#39; | &#39;mg&#39; | &#39;minimal&#39; | &#39;mk&#39; | &#39;mongolian&#39; | &#39;rs&#39; | &#39;ru&#39; | &#39;russian&#39; | &#39;serbian&#39; | &#39;tw&#39; | &#39;uk&#39; | &#39;ukranian&#39; | &#39;zh&#39; | &#39;zh-hant&#39;)</h3><p>Set the default transliteration mode. If you don't specify a mode, the mode for an entry is derived from the item language field</p><table>
+  <h3><b>transliterate</b>(mode: &#39;ar&#39; | &#39;arabic&#39; | &#39;bg&#39; | &#39;bulgarian&#39; | &#39;chinese&#39; | &#39;chinese-traditional&#39; | &#39;de&#39; | &#39;german&#39; | &#39;ja&#39; | &#39;japanese&#39; | &#39;macedonian&#39; | &#39;mg&#39; | &#39;minimal&#39; | &#39;mk&#39; | &#39;mongolian&#39; | &#39;rs&#39; | &#39;ru&#39; | &#39;russian&#39; | &#39;serbian&#39; | &#39;tw&#39; | &#39;uk&#39; | &#39;ukranian&#39; | &#39;zh&#39; | &#39;zh-hant&#39;)</h3><p>Set the default transliteration mode. If you don&#39;t specify a mode, the mode for an entry is derived from the item language field</p><table>
               <tr>
                 <th><b>parameter</b></th>
                 <th/>
@@ -13908,7 +13908,7 @@ use this if you have existing papers that rely on this behavior.</p>
   <h3><b>.clean</b></h3><p>transliterates the citation key and removes unsafe characters</p>
 
   <h3><b>.condense</b>(sep: string=&#39;&#39;)</h3><p>replaces spaces in the value passed in. You can specify what to replace it with by adding it as a
-parameter, e.g <code>.condense('_')</code> will replace spaces with underscores. Equivalent to <code>.replace(/\s+/g, sep)</code>.</p><table>
+parameter, e.g <code>.condense(&#39;_&#39;)</code> will replace spaces with underscores. Equivalent to <code>.replace(/\s+/g, sep)</code>.</p><table>
               <tr>
                 <th><b>parameter</b></th>
                 <th/>
@@ -14036,14 +14036,14 @@ parameter, e.g <code>.condense('_')</code> will replace spaces with underscores.
                 <td>string</td>
               </tr></table>
 
-  <h3><b>.nopunctordash</b></h3><p>Removes punctuation and word-connecting dashes. alias for <code>nopunct(dash='')</code></p>
+  <h3><b>.nopunctordash</b></h3><p>Removes punctuation and word-connecting dashes. alias for <code>nopunct(dash=&#39;&#39;)</code></p>
 
-  <h3><b>.numeric</b></h3><p>returns the value if it's an integer</p>
+  <h3><b>.numeric</b></h3><p>returns the value if it&#39;s an integer</p>
 
   <h3><b>.pinyin</b></h3><p>transliterates the citation key to pinyin</p>
 
-  <h3><b>.postfix</b>(postfix: string)</h3><p>postfixes with its parameter, so <code>postfix('_')</code> will add an underscore to the end if, and only if, the value
-it is supposed to postfix isn't empty</p><table>
+  <h3><b>.postfix</b>(postfix: string)</h3><p>postfixes with its parameter, so <code>postfix(&#39;_&#39;)</code> will add an underscore to the end if, and only if, the value
+it is supposed to postfix isn&#39;t empty</p><table>
               <tr>
                 <th><b>parameter</b></th>
                 <th/>
@@ -14057,8 +14057,8 @@ it is supposed to postfix isn't empty</p><table>
                 <td>string</td>
               </tr></table>
 
-  <h3><b>.prefix</b>(prefix: string)</h3><p>prefixes with its parameter, so <code>.prefix('_')</code> will add an underscore to the front if, and only if, the value
-it is supposed to prefix isn't empty.</p><table>
+  <h3><b>.prefix</b>(prefix: string)</h3><p>prefixes with its parameter, so <code>.prefix(&#39;_&#39;)</code> will add an underscore to the front if, and only if, the value
+it is supposed to prefix isn&#39;t empty.</p><table>
               <tr>
                 <th><b>parameter</b></th>
                 <th/>
@@ -14074,8 +14074,8 @@ it is supposed to prefix isn't empty.</p><table>
 
   <h3><b>.replace</b>(find: string | RegExp, replace: string)</h3><p>replaces text, for the text to match you can pass either:</p>
 <ul>
-<li>a string: <code>.replace('.etal','&amp;etal')</code> which will match case-insensitive, so will replace <code>.EtAl</code> with <code>&amp;etal</code>.</li>
-<li><a href="https://www.simplilearn.com/tutorials/javascript-tutorial/javascript-regex">javascript regular expression</a>: <code>.replace(/[.]etal/ig, '&amp;etal')</code></li>
+<li>a string: <code>.replace(&#39;.etal&#39;,&#39;&amp;etal&#39;)</code> which will match case-insensitive, so will replace <code>.EtAl</code> with <code>&amp;etal</code>.</li>
+<li><a href="https://www.simplilearn.com/tutorials/javascript-tutorial/javascript-regex">javascript regular expression</a>: <code>.replace(/[.]etal/ig, &#39;&amp;etal&#39;)</code></li>
 </ul></p><table>
               <tr>
                 <th><b>parameter</b></th>
@@ -14118,10 +14118,10 @@ selected.</p><table>
                 <td>number</td>
               </tr></table>
 
-  <h3><b>.skipwords</b>(nopunct: boolean=false)</h3><p>filters out common words like 'of', 'the', … the list of words can be seen and changed by going into
+  <h3><b>.skipwords</b>(nopunct: boolean=false)</h3><p>filters out common words like &#39;of&#39;, &#39;the&#39;, ... the list of words can be seen and changed by going into
 <code>about:config</code> under the key <code>extensions.zotero.translators.better-bibtex.skipWords</code> as a comma-separated,
 case-insensitive list of words.</p>
-<p>If you want to strip words like 'Jr.' from names, you could use something like <code>Auth.nopunct.skipwords.fold</code>
+<p>If you want to strip words like &#39;Jr.&#39; from names, you could use something like <code>Auth.nopunct.skipwords.fold</code>
 after adding <code>jr</code> to the skipWords list.
 Note that this filter is always applied with <code>nopunct</code> on if you use <code>title</code> (which is different from <code>Title</code>) or <code>shorttitle</code>.</p><table>
               <tr>
@@ -14157,7 +14157,7 @@ Note that this filter is always applied with <code>nopunct</code> on if you use 
                 <td>number</td>
               </tr></table>
 
-  <h3><b>.transliterate</b>(mode?: &#39;ar&#39; | &#39;arabic&#39; | &#39;bg&#39; | &#39;bulgarian&#39; | &#39;chinese&#39; | &#39;chinese-traditional&#39; | &#39;de&#39; | &#39;german&#39; | &#39;ja&#39; | &#39;japanese&#39; | &#39;macedonian&#39; | &#39;mg&#39; | &#39;minimal&#39; | &#39;mk&#39; | &#39;mongolian&#39; | &#39;rs&#39; | &#39;ru&#39; | &#39;russian&#39; | &#39;serbian&#39; | &#39;tw&#39; | &#39;uk&#39; | &#39;ukranian&#39; | &#39;zh&#39; | &#39;zh-hant&#39;)</h3><p>transliterates the input. If you don't specify a mode, the mode is derived from the item language field</p><table>
+  <h3><b>.transliterate</b>(mode?: &#39;ar&#39; | &#39;arabic&#39; | &#39;bg&#39; | &#39;bulgarian&#39; | &#39;chinese&#39; | &#39;chinese-traditional&#39; | &#39;de&#39; | &#39;german&#39; | &#39;ja&#39; | &#39;japanese&#39; | &#39;macedonian&#39; | &#39;mg&#39; | &#39;minimal&#39; | &#39;mk&#39; | &#39;mongolian&#39; | &#39;rs&#39; | &#39;ru&#39; | &#39;russian&#39; | &#39;serbian&#39; | &#39;tw&#39; | &#39;uk&#39; | &#39;ukranian&#39; | &#39;zh&#39; | &#39;zh-hant&#39;)</h3><p>transliterates the input. If you don&#39;t specify a mode, the mode is derived from the item language field</p><table>
               <tr>
                 <th><b>parameter</b></th>
                 <th/>
