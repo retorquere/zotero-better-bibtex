@@ -229,6 +229,9 @@ class Normalized:
   def __init__(self, data):
     self._raw_data = data
     self.data = None
+    self.yaml = YAML(typ='safe')
+    self.yaml.default_flow_style = False
+    self.yaml.constructor.add_constructor('tag:yaml.org,2002:timestamp', lambda loader, node: loader.construct_scalar(node))
 
   def __enter__(self):
     self.data = self._canonicalize(self._raw_data)
@@ -267,11 +270,18 @@ class Normalized:
   @classmethod
   def to_yaml(cls, data, stream=None, **yaml_kwargs):
     """Helper to dump data to YAML preserving explicit canonical dict/list ordering."""
-    options = {"sort_keys": False, "default_flow_style": False}
-    options.update(yaml_kwargs)
-    
+    yaml.sort_keys = yaml_kwargs.pop("sort_keys", False)
+    yaml.default_flow_style = yaml_kwargs.pop("default_flow_style", False)
+    for key, value in yaml_kwargs.items():
+      if hasattr(yaml, key):
+        setattr(yaml, key, value)
+
     canonical_data = cls._canonicalize(data)
-    return yaml.dump(canonical_data, stream=stream, **options)
+    if stream is None:
+      stream = io.StringIO()
+      yaml.dump(canonical_data, stream=stream)
+      return stream.getvalue()
+    return yaml.dump(canonical_data, stream=stream)
 
 class Library:
   """Represents an input/export library fixture and its normalized comparison form.
