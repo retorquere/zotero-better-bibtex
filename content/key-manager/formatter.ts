@@ -32,7 +32,7 @@ import { Schema } from '../../content/item-schema'
 
 import { parseFragment } from 'parse5'
 
-import { sprintf } from 'sprintf-js'
+import { sprintf } from '../sprintf'
 
 import { chinese } from './chinese'
 import { japanese } from './japanese'
@@ -1570,7 +1570,7 @@ export class PatternFormatter {
       vars.f = this.transliterate(vars.f)
       vars.g = this.transliterate(vars.g)
     }
-    let name = sprintf(template, vars) as string
+    let name = sprintf(template.toString(), vars)
     if (this.config.creatorNames.space.trim()) {
       name = name.replace(/\s+/, this.config.creatorNames.space)
     }

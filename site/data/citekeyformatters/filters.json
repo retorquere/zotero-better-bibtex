@@ -31,7 +31,7 @@
   },
   {
     "summary": "<b>.condense</b>(sep: string=&#39;&#39;)",
-    "description": "replaces spaces in the value passed in. You can specify what to replace it with by adding it as a\nparameter, e.g <code>.condense('_')</code> will replace spaces with underscores. Equivalent to <code>.replace(/\\s+/g, sep)</code>.",
+    "description": "replaces spaces in the value passed in. You can specify what to replace it with by adding it as a\nparameter, e.g <code>.condense(&#39;_&#39;)</code> will replace spaces with underscores. Equivalent to <code>.replace(/\\s+/g, sep)</code>.",
     "parameters": "<table>\n              <tr>\n                <th><b>parameter</b></th>\n                <th/>\n                <th>value assumed when not provided</th>\n                <th>valid values</th>\n              </tr>\n              <tr>\n                <td><code>sep</code></td>\n                <td>replacement character</td>\n                <td>''</td>\n                <td>string</td>\n              </tr></table>"
   },
   {
@@ -96,12 +96,12 @@
   },
   {
     "summary": "<b>.nopunctordash</b>",
-    "description": "Removes punctuation and word-connecting dashes. alias for <code>nopunct(dash='')</code>",
+    "description": "Removes punctuation and word-connecting dashes. alias for <code>nopunct(dash=&#39;&#39;)</code>",
     "parameters": ""
   },
   {
     "summary": "<b>.numeric</b>",
-    "description": "returns the value if it's an integer",
+    "description": "returns the value if it&#39;s an integer",
     "parameters": ""
   },
   {
@@ -111,17 +111,17 @@
   },
   {
     "summary": "<b>.postfix</b>(postfix: string)",
-    "description": "postfixes with its parameter, so <code>postfix('_')</code> will add an underscore to the end if, and only if, the value\nit is supposed to postfix isn't empty",
+    "description": "postfixes with its parameter, so <code>postfix(&#39;_&#39;)</code> will add an underscore to the end if, and only if, the value\nit is supposed to postfix isn&#39;t empty",
     "parameters": "<table>\n              <tr>\n                <th><b>parameter</b></th>\n                <th/>\n                <th>value assumed when not provided</th>\n                <th>valid values</th>\n              </tr>\n              <tr>\n                <td><code>postfix</code></td>\n                <td>postfix string</td>\n                <td>none; must be provided</td>\n                <td>string</td>\n              </tr></table>"
   },
   {
     "summary": "<b>.prefix</b>(prefix: string)",
-    "description": "prefixes with its parameter, so <code>.prefix('_')</code> will add an underscore to the front if, and only if, the value\nit is supposed to prefix isn't empty.",
+    "description": "prefixes with its parameter, so <code>.prefix(&#39;_&#39;)</code> will add an underscore to the front if, and only if, the value\nit is supposed to prefix isn&#39;t empty.",
     "parameters": "<table>\n              <tr>\n                <th><b>parameter</b></th>\n                <th/>\n                <th>value assumed when not provided</th>\n                <th>valid values</th>\n              </tr>\n              <tr>\n                <td><code>prefix</code></td>\n                <td>prefix string</td>\n                <td>none; must be provided</td>\n                <td>string</td>\n              </tr></table>"
   },
   {
     "summary": "<b>.replace</b>(find: string | RegExp, replace: string)",
-    "description": "replaces text, for the text to match you can pass either:</p>\n<ul>\n<li>a string: <code>.replace('.etal','&amp;etal')</code> which will match case-insensitive, so will replace <code>.EtAl</code> with <code>&amp;etal</code>.</li>\n<li><a href=\"https://www.simplilearn.com/tutorials/javascript-tutorial/javascript-regex\">javascript regular expression</a>: <code>.replace(/[.]etal/ig, '&amp;etal')</code></li>\n</ul>",
+    "description": "replaces text, for the text to match you can pass either:</p>\n<ul>\n<li>a string: <code>.replace(&#39;.etal&#39;,&#39;&amp;etal&#39;)</code> which will match case-insensitive, so will replace <code>.EtAl</code> with <code>&amp;etal</code>.</li>\n<li><a href=\"https://www.simplilearn.com/tutorials/javascript-tutorial/javascript-regex\">javascript regular expression</a>: <code>.replace(/[.]etal/ig, &#39;&amp;etal&#39;)</code></li>\n</ul>",
     "parameters": "<table>\n              <tr>\n                <th><b>parameter</b></th>\n                <th/>\n                <th>value assumed when not provided</th>\n                <th>valid values</th>\n              </tr>\n              <tr>\n                <td><code>find</code></td>\n                <td>string or regex to match. String matches are case-insensitive</td>\n                <td>none; must be provided</td>\n                <td>string | RegExp</td>\n              </tr>\n              <tr>\n                <td><code>replace</code></td>\n                <td>literal text to replace the match with</td>\n                <td>none; must be provided</td>\n                <td>string</td>\n              </tr></table>"
   },
   {
@@ -131,7 +131,7 @@
   },
   {
     "summary": "<b>.skipwords</b>(nopunct: boolean=false)",
-    "description": "filters out common words like 'of', 'the', … the list of words can be seen and changed by going into\n<code>about:config</code> under the key <code>extensions.zotero.translators.better-bibtex.skipWords</code> as a comma-separated,\ncase-insensitive list of words.</p>\n<p>If you want to strip words like 'Jr.' from names, you could use something like <code>Auth.nopunct.skipwords.fold</code>\nafter adding <code>jr</code> to the skipWords list.\nNote that this filter is always applied with <code>nopunct</code> on if you use <code>title</code> (which is different from <code>Title</code>) or <code>shorttitle</code>.",
+    "description": "filters out common words like &#39;of&#39;, &#39;the&#39;, ... the list of words can be seen and changed by going into\n<code>about:config</code> under the key <code>extensions.zotero.translators.better-bibtex.skipWords</code> as a comma-separated,\ncase-insensitive list of words.</p>\n<p>If you want to strip words like &#39;Jr.&#39; from names, you could use something like <code>Auth.nopunct.skipwords.fold</code>\nafter adding <code>jr</code> to the skipWords list.\nNote that this filter is always applied with <code>nopunct</code> on if you use <code>title</code> (which is different from <code>Title</code>) or <code>shorttitle</code>.",
     "parameters": "<table>\n              <tr>\n                <th><b>parameter</b></th>\n                <th/>\n                <th>value assumed when not provided</th>\n                <th>valid values</th>\n              </tr>\n              <tr>\n                <td><code>nopunct</code></td>\n                <td>remove punctuation from words</td>\n                <td>false</td>\n                <td>boolean</td>\n              </tr></table>"
   },
   {
@@ -141,7 +141,7 @@
   },
   {
     "summary": "<b>.transliterate</b>(mode?: &#39;ar&#39; | &#39;arabic&#39; | &#39;bg&#39; | &#39;bulgarian&#39; | &#39;chinese&#39; | &#39;chinese-traditional&#39; | &#39;de&#39; | &#39;german&#39; | &#39;ja&#39; | &#39;japanese&#39; | &#39;macedonian&#39; | &#39;mg&#39; | &#39;minimal&#39; | &#39;mk&#39; | &#39;mongolian&#39; | &#39;rs&#39; | &#39;ru&#39; | &#39;russian&#39; | &#39;serbian&#39; | &#39;tw&#39; | &#39;uk&#39; | &#39;ukranian&#39; | &#39;zh&#39; | &#39;zh-hant&#39;)",
-    "description": "transliterates the input. If you don't specify a mode, the mode is derived from the item language field",
+    "description": "transliterates the input. If you don&#39;t specify a mode, the mode is derived from the item language field",
     "parameters": "<table>\n              <tr>\n                <th><b>parameter</b></th>\n                <th/>\n                <th>value assumed when not provided</th>\n                <th>valid values</th>\n              </tr>\n              <tr>\n                <td><code>mode</code></td>\n                <td>specialized translateration modes for german, japanese or chinese.</td>\n                <td>undefined</td>\n                <td>'ar' | 'arabic' | 'bg' | 'bulgarian' | 'chinese' | 'chinese-traditional' | 'de' | 'german' | 'ja' | 'japanese' | 'macedonian' | 'mg' | 'minimal' | 'mk' | 'mongolian' | 'rs' | 'ru' | 'russian' | 'serbian' | 'tw' | 'uk' | 'ukranian' | 'zh' | 'zh-hant'</td>\n              </tr></table>"
   },
   {

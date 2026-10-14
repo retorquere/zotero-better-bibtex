@@ -22,7 +22,7 @@ import { Formatter } from './key-manager/formatter'
 
 import { Cache } from './translators/worker'
 
-import { sprintf } from 'sprintf-js'
+import { sprintf } from './sprintf'
 
 import * as l10n from './l10n'
 
