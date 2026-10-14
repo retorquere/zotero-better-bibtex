@@ -21,10 +21,10 @@ checkbox(
 html:div
   label(bbt:preference='extensions.zotero.translators.better-bibtex.exportTitlecase', data-l10n-id='better-bibtex_preferences_advanced_export_title-case')
   html:div(style='display:flex;align-items:center;gap:4px')
-    textbox(
+    html:input(
       preference='extensions.zotero.translators.better-bibtex.exportTitlecase'
       placeholder='title, series, shorttitle, booktitle, origtitle, maintitle, eventtitle, bibtex.type, biblatex.subtitle, biblatex.origsubtitle, biblatex.booksubtitle, biblatex.mainsubtitle, biblatex.eventsubtitle'
-      native='true'
+      type='text'
       style='flex:1'
     )
     img(src='chrome://zotero-better-bibtex/content/skin/attention.svg', style='width:16px;height:16px', tooltip='bbt-tooltip-exportTitlecase')
