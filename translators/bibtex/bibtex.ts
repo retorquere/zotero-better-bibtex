@@ -124,6 +124,7 @@ const config: Config = {
       presentation: 'misc',
       radioBroadcast: 'misc',
       report: 'techreport',
+      standard: 'standard',
       statute: 'misc',
       thesis: 'phdthesis',
       tvBroadcast: 'misc',
@@ -314,6 +315,7 @@ class Importer {
         if (builder.import(errors)) await item.complete()
       }
       catch (err) {
+        log.error('import error:', err)
         errors.push({ error: (err as Error).message, input: '' })
       }
 
@@ -656,6 +658,7 @@ class ZoteroItem {
     software: 'computerProgram',
     softwaremodule: 'computerProgram',
     softwareversion: 'computerProgram',
+    standard: 'standard',
     talk: 'presentation',
     techreport: 'report',
     thesis: 'thesis',
@@ -1322,12 +1325,13 @@ class ZoteroItem {
 
     this.bibtex.type = this.bibtex.type.toLowerCase()
     this.item.itemType = this.typeMap[this.bibtex.type] || '$'
+    log.debug('standard:', { itemType: this.item.itemType, type: this.bibtex.type })
     if (this.item.itemType[0] === '$') {
       const unknown = this.item.itemType === '$'
       this.item.itemType = this.item.itemType.substr(1) || 'document'
 
       if (unknown) {
-        const msg = `Don't know what Zotero type to make of '${this.bibtex.type}' for ${ this.bibtex.key ? `@${ this.bibtex.key }` : 'unnamed item' }, importing as ${ this.item.itemType }`
+        const msg = `don't know what Zotero type to make of '${this.bibtex.type}' for ${this.bibtex.key ? `@${this.bibtex.key}` : 'unnamed item'}, importing as ${this.item.itemType}`
         log.info(msg)
         if (this.translation.collected.preferences.testing) throw new Error(msg)
         errors.push({ error: msg, input: this.bibtex.input })

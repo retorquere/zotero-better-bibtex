@@ -2,37 +2,44 @@ config:
   id: 36a3b0b5-bad0-4a04-b79b-441c7cef77db
   label: BetterBibTeX JSON
   preferences:
-    fillKeyAfter: 0
     citekeyFormat: auth + year
-    verbatimFields: url,doi,file,pdf,ids,eprint,/^verb[a-z]$/,groups,/^citeulike-linkout-[0-9]+$/, /^bdsk-url-[0-9]+$/, keywords
-    journalAbbreviation: auto
+    fillKeyAfter: 1
   options:
     Items: true
     Normalize: true
     Preferences: true
+    YAML: false
     exportFileData: false
     exportNotes: true
     keepUpdated: false
-    worker: false
+    worker: true
 version:
-  zotero: 7.0.11
-  bbt: 7.0.5.emile.kiku.local
+  zotero: 10.0.6
+  bbt: 9.0.71.emile.kiku.local
 collections: {}
 items:
   -
+    key: SHPC869V
     version: 0
-    itemType: note
-    note: 'Import errors found: <ul><li>Don&#39;t know what Zotero type to make of &#39;standard&#39; for @standard, importing as document</li></ul>'
-    tags:
+    itemType: standard
+    date: 1995-01
+    extra: 'Pages: 6'
+    number: mypreciousreportnumber
+    language: english
+    title: What a great report
+    citationKey: standard
+    creators:
       -
-        tag: '#Better BibTeX import error'
-        type: 1
-    collections: []
+        name: A very well-known and serious institution
+        creatorType: author
+    tags: []
     relations: {}
-    dateAdded: 2025-01-28T20:42:39Z
-    dateModified: 2025-01-28T20:42:39Z
-    uri: http://zotero.org/users/8230813/items/K7F4UWWS
-    itemID: 109
-    itemKey: K7F4UWWS
-    libraryID: 1
+    dateAdded: 2026-10-15T20:00:22Z
+    dateModified: 2026-10-15T20:00:22Z
+    uri: http://zotero.org/users/8230813/items/SHPC869V
+    itemID: 111
     attachments: []
+    notes: []
+    autoJournalAbbreviation: ''
+    itemKey: SHPC869V
+    libraryID: 1
