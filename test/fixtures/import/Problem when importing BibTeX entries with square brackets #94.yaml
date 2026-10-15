@@ -19,22 +19,6 @@ version:
 collections: {}
 items:
   -
-    key: B8ULR2XM
-    version: 0
-    itemType: note
-    note: 'Import errors found: <ul><li>unhandled macro \allcaps</li></ul>'
-    tags:
-      -
-        tag: '#Better BibTeX import error'
-        type: 1
-    relations: {}
-    dateAdded: 2026-10-14T12:55:15Z
-    dateModified: 2026-10-14T12:55:15Z
-    uri: http://zotero.org/users/8230813/items/B8ULR2XM
-    itemID: 214
-    itemKey: B8ULR2XM
-    libraryID: 1
-  -
     key: KMBX6I28
     version: 0
     itemType: journalArticle

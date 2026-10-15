@@ -72,7 +72,7 @@ Feature: Import
     Then the library should match "import/*.json"
 
   Scenario: Copy date-addeddate-modified from extra field regenerates citation key #2142
-    When I import  reference from "import/*.bib"
+    When I import 1 reference from "import/*.bib"
     And I select the item with a field that contains "Bargaining"
     And I copy date-added/date-modified for the selected items from the extra field
     Then the library should match "import/*.json"
@@ -237,5 +237,5 @@ Feature: Import
   Scenario: Journal detection active while importJabrefAbbreviations is off #2916
     Given I set preference .rawImports to true
     And I set preference .importJabRefAbbreviations to false
-    When I import 2 reference from "import/*.bib"
+    When I import 2 references from "import/*.bib"
     Then the library should match "import/*.json"

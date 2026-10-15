@@ -195,7 +195,6 @@ export const AUXScanner = new class {
     while (aux = Object.keys(parsed).find(path => !parsed[path])) {
       parsed[aux] = true
       if (!await File.exists(aux)) {
-        log.info('aux scanner:', aux, 'does not exist')
         continue
       }
 
@@ -204,7 +203,6 @@ export const AUXScanner = new class {
 
       for (let [ , command, arg, arg2 ] of contents.matchAll(/(\\citation|\\abx@aux@cite|@cite|\\bibdata|\\@input)\s*\{(.*?)\}(?:\{(.*?)\})?/g)) {
         if (command === '\\abx@aux@cite' && arg.match(/^\d+$/) && arg2) arg = arg2
-        log.info('aux scanner:', { command, arg })
         arg = arg.trim()
         if (!arg) continue
 

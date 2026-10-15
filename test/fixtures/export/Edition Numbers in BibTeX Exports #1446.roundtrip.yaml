@@ -19,22 +19,6 @@ version:
 collections: {}
 items:
   -
-    key: NXIHQXSV
-    version: 0
-    itemType: note
-    note: 'Import errors found: <ul><li>unhandled macro \allcaps</li></ul>'
-    tags:
-      -
-        tag: '#Better BibTeX import error'
-        type: 1
-    relations: {}
-    dateAdded: 2026-10-14T13:37:51Z
-    dateModified: 2026-10-14T13:37:51Z
-    uri: http://zotero.org/users/8230813/items/NXIHQXSV
-    itemID: 113
-    itemKey: NXIHQXSV
-    libraryID: 1
-  -
     key: V2GIYRG8
     version: 0
     itemType: book
