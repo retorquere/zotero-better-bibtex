@@ -111,7 +111,7 @@ Feature: Import
       | Better BibTeX.005                                                                                                       | 1          |
       | Better BibTeX.006                                                                                                       | 1          |
       | Better BibTeX.008                                                                                                       | 1          |
-      | Better BibTeX.009                                                                                                       | 3          |
+      | Better BibTeX.009                                                                                                       | 2          |
       | Better BibTeX.010                                                                                                       | 1          |
       | Better BibTeX.011                                                                                                       | 1          |
       | Better BibTeX.012                                                                                                       | 1          |
