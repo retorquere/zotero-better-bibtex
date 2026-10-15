@@ -19,22 +19,6 @@ version:
 collections: {}
 items:
   -
-    key: HTD2X9AS
-    version: 0
-    itemType: note
-    note: 'Import errors found: <ul><li>unhandled macro \allcaps</li></ul>'
-    tags:
-      -
-        tag: '#Better BibTeX import error'
-        type: 1
-    relations: {}
-    dateAdded: 2026-10-14T12:55:16Z
-    dateModified: 2026-10-14T12:55:16Z
-    uri: http://zotero.org/users/8230813/items/HTD2X9AS
-    itemID: 216
-    itemKey: HTD2X9AS
-    libraryID: 1
-  -
     key: KJ52RDQ7
     version: 0
     itemType: dataset

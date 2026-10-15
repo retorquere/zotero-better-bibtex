@@ -19,22 +19,6 @@ version:
 collections: {}
 items:
   -
-    key: Q6AMQSFC
-    version: 0
-    itemType: note
-    note: 'Import errors found: <ul><li>unhandled macro \allcaps</li></ul>'
-    tags:
-      -
-        tag: '#Better BibTeX import error'
-        type: 1
-    relations: {}
-    dateAdded: 2026-10-14T12:55:05Z
-    dateModified: 2026-10-14T12:55:05Z
-    uri: http://zotero.org/users/8230813/items/Q6AMQSFC
-    itemID: 196
-    itemKey: Q6AMQSFC
-    libraryID: 1
-  -
     key: A295PKD7
     version: 0
     itemType: journalArticle

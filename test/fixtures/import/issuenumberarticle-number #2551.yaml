@@ -19,22 +19,6 @@ version:
 collections: {}
 items:
   -
-    key: VWSIWTJW
-    version: 0
-    itemType: note
-    note: 'Import errors found: <ul><li>unhandled macro \allcaps</li></ul>'
-    tags:
-      -
-        tag: '#Better BibTeX import error'
-        type: 1
-    relations: {}
-    dateAdded: 2026-10-14T12:55:11Z
-    dateModified: 2026-10-14T12:55:11Z
-    uri: http://zotero.org/users/8230813/items/VWSIWTJW
-    itemID: 207
-    itemKey: VWSIWTJW
-    libraryID: 1
-  -
     key: DEZIA34D
     version: 0
     itemType: journalArticle

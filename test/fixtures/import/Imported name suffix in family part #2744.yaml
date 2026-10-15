@@ -19,22 +19,6 @@ version:
 collections: {}
 items:
   -
-    key: C3FEWHTR
-    version: 0
-    itemType: note
-    note: 'Import errors found: <ul><li>unhandled macro \allcaps</li></ul>'
-    tags:
-      -
-        tag: '#Better BibTeX import error'
-        type: 1
-    relations: {}
-    dateAdded: 2026-10-14T12:55:09Z
-    dateModified: 2026-10-14T12:55:09Z
-    uri: http://zotero.org/users/8230813/items/C3FEWHTR
-    itemID: 205
-    itemKey: C3FEWHTR
-    libraryID: 1
-  -
     key: YWVPKZYE
     version: 0
     itemType: book

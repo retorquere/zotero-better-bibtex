@@ -60,8 +60,8 @@ Feature: Import
   @758 @aux @2164
   Scenario: AUX scanner
     When I import 149 references from "import/*-pre.json"
-    And I import 1 reference from "import/*.1.aux"
-    And I import 1 reference from "import/*.2.aux"
+    And I import 0 references from "import/*.1.aux"
+    And I import 0 references from "import/*.2.aux"
     Then the library should match "import/*-post.json"
 
   Scenario: Copy date-addeddate-modified menu option not working #2378

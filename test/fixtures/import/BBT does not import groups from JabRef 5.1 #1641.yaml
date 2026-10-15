@@ -42,22 +42,6 @@ collections:
       - 160
 items:
   -
-    key: IH3NM4C6
-    version: 0
-    itemType: note
-    note: 'Import errors found: <ul><li>unhandled macro \allcaps</li></ul>'
-    tags:
-      -
-        tag: '#Better BibTeX import error'
-        type: 1
-    relations: {}
-    dateAdded: 2026-10-14T12:54:51Z
-    dateModified: 2026-10-14T12:54:51Z
-    uri: http://zotero.org/users/8230813/items/IH3NM4C6
-    itemID: 165
-    itemKey: IH3NM4C6
-    libraryID: 1
-  -
     key: C5GVBNSS
     version: 0
     itemType: bookSection

@@ -204,6 +204,7 @@ export const AUXScanner = new class {
 
       for (let [ , command, arg, arg2 ] of contents.matchAll(/(\\citation|\\abx@aux@cite|@cite|\\bibdata|\\@input)\s*\{(.*?)\}(?:\{(.*?)\})?/g)) {
         if (command === '\\abx@aux@cite' && arg.match(/^\d+$/) && arg2) arg = arg2
+        log.info('aux scanner:', { command, arg })
         arg = arg.trim()
         if (!arg) continue
 

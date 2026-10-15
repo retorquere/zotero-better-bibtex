@@ -19,22 +19,6 @@ version:
 collections: {}
 items:
   -
-    key: QCQYQINS
-    version: 0
-    itemType: note
-    note: 'Import errors found: <ul><li>unhandled macro \allcaps</li></ul>'
-    tags:
-      -
-        tag: '#Better BibTeX import error'
-        type: 1
-    relations: {}
-    dateAdded: 2026-10-14T12:55:04Z
-    dateModified: 2026-10-14T12:55:04Z
-    uri: http://zotero.org/users/8230813/items/QCQYQINS
-    itemID: 193
-    itemKey: QCQYQINS
-    libraryID: 1
-  -
     key: TJP97WTB
     version: 0
     itemType: bookSection

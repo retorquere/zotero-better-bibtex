@@ -164,7 +164,7 @@ export class TestSupport {
       return items.filter(item => !item.isFeedItem && item.isRegularItem())
     }
 
-    const before = regular(await Zotero.Items.getAll(Zotero.Libraries.userLibraryID, true, false))
+    const before = regular(await Zotero.Items.getAll(Zotero.Libraries.userLibraryID))
 
     if (path.endsWith('.aux')) {
       await AUXScanner.scan(path)
@@ -177,7 +177,7 @@ export class TestSupport {
 
     await Zotero.Promise.delay(Zotero.Prefs.get('translators.better-bibtex.itemObserverDelay') as number * 3)
 
-    const after = regular(await Zotero.Items.getAll(Zotero.Libraries.userLibraryID, true, false))
+    const after = regular(await Zotero.Items.getAll(Zotero.Libraries.userLibraryID))
 
     if (bibstyle) {
       const items = await Zotero.Items.getAll(Zotero.Libraries.userLibraryID, true)

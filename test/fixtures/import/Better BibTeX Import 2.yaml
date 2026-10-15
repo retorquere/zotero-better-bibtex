@@ -19,22 +19,6 @@ version:
 collections: {}
 items:
   -
-    key: SYAM39AP
-    version: 0
-    itemType: note
-    note: 'Import errors found: <ul><li>unhandled macro \allcaps</li></ul>'
-    tags:
-      -
-        tag: '#Better BibTeX import error'
-        type: 1
-    relations: {}
-    dateAdded: 2026-10-14T20:06:20Z
-    dateModified: 2026-10-14T20:06:20Z
-    uri: http://zotero.org/users/8230813/items/SYAM39AP
-    itemID: 113
-    itemKey: SYAM39AP
-    libraryID: 1
-  -
     key: YWW9BXRD
     version: 0
     itemType: book

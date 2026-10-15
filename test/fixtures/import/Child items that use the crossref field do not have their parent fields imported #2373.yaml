@@ -19,22 +19,6 @@ version:
 collections: {}
 items:
   -
-    key: 9FNBL42V
-    version: 0
-    itemType: note
-    note: 'Import errors found: <ul><li>unhandled macro \allcaps</li></ul>'
-    tags:
-      -
-        tag: '#Better BibTeX import error'
-        type: 1
-    relations: {}
-    dateAdded: 2026-10-14T12:55:01Z
-    dateModified: 2026-10-14T12:55:01Z
-    uri: http://zotero.org/users/8230813/items/9FNBL42V
-    itemID: 186
-    itemKey: 9FNBL42V
-    libraryID: 1
-  -
     key: HA2CFZA3
     version: 0
     itemType: book

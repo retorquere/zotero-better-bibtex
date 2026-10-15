@@ -19,22 +19,6 @@ version:
 collections: {}
 items:
   -
-    key: 5YP85VYR
-    version: 0
-    itemType: note
-    note: 'Import errors found: <ul><li>unhandled macro \allcaps</li></ul>'
-    tags:
-      -
-        tag: '#Better BibTeX import error'
-        type: 1
-    relations: {}
-    dateAdded: 2026-10-14T12:54:58Z
-    dateModified: 2026-10-14T12:54:58Z
-    uri: http://zotero.org/users/8230813/items/5YP85VYR
-    itemID: 179
-    itemKey: 5YP85VYR
-    libraryID: 1
-  -
     key: HNAHS4SG
     version: 0
     itemType: bookSection

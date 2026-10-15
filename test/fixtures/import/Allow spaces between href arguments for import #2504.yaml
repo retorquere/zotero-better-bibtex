@@ -19,22 +19,6 @@ version:
 collections: {}
 items:
   -
-    key: 4Z33XTKV
-    version: 0
-    itemType: note
-    note: 'Import errors found: <ul><li>unhandled macro \allcaps</li></ul>'
-    tags:
-      -
-        tag: '#Better BibTeX import error'
-        type: 1
-    relations: {}
-    dateAdded: 2026-10-14T09:49:01Z
-    dateModified: 2026-10-14T09:49:01Z
-    uri: http://zotero.org/users/8230813/items/4Z33XTKV
-    itemID: 118
-    itemKey: 4Z33XTKV
-    libraryID: 1
-  -
     key: 3T4AMGFA
     version: 0
     itemType: document
@@ -211,7 +195,3 @@ items:
     autoJournalAbbreviation: ''
     itemKey: M45RN79R
     libraryID: 1
-  -
-    itemID: -1
-    itemType: unknown
-    title: unknown

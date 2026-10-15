@@ -19,22 +19,6 @@ version:
 collections: {}
 items:
   -
-    key: GI3V9ZM3
-    version: 0
-    itemType: note
-    note: 'Import errors found: <ul><li>unhandled macro \allcaps</li></ul>'
-    tags:
-      -
-        tag: '#Better BibTeX import error'
-        type: 1
-    relations: {}
-    dateAdded: 2026-10-14T12:55:12Z
-    dateModified: 2026-10-14T12:55:12Z
-    uri: http://zotero.org/users/8230813/items/GI3V9ZM3
-    itemID: 210
-    itemKey: GI3V9ZM3
-    libraryID: 1
-  -
     key: 356UEB4F
     version: 0
     itemType: journalArticle
