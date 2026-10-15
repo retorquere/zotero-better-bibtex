@@ -1325,7 +1325,6 @@ class ZoteroItem {
 
     this.bibtex.type = this.bibtex.type.toLowerCase()
     this.item.itemType = this.typeMap[this.bibtex.type] || '$'
-    log.debug('standard:', { itemType: this.item.itemType, type: this.bibtex.type })
     if (this.item.itemType[0] === '$') {
       const unknown = this.item.itemType === '$'
       this.item.itemType = this.item.itemType.substr(1) || 'document'
