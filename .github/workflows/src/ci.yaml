@@ -340,6 +340,7 @@ jobs:
         set -e
 
         pandoc -v
+        pandoc -f html -t markdown https://httpbin.org/html
         hayagriva --version
 
         curl -sL https://raw.githubusercontent.com/retorquere/zotero-deb/master/install.sh | sudo bash
