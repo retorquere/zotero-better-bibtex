@@ -690,6 +690,7 @@ Feature: Export
     Then an export using "Better BibLaTeX" should match "export/*.off.biblatex"
 
   # @retries=5
+  @ae1
   Scenario: auto-export
     Given I import 3 references with 2 attachments from "export/*.json" into a new collection
     And I set preference .autoExport to "immediate"
@@ -703,7 +704,7 @@ Feature: Export
     And "~/autoexport.coll.bib" should match "export/*.after.coll.biblatex"
 
   # for idle
-  @use.with_client=zotero @use.with_slow=true @timeout=3000
+  @use.with_client=zotero @use.with_slow=true @timeout=3000 @ae2
   Scenario: auto-export
     Given I import 3 references with 2 attachments from "export/*.json" into a new collection
     And I set preference .autoExport to "idle"
@@ -882,7 +883,7 @@ Feature: Export
     Then an export using "Better BibTeX" should match "export/*.bibtex"
 
   @use.with_client=zotero
-  Scenario: Using zotero.lua .md to .docx to add canonic number after comma without 'p.' #2248
+  Scenario: Using zotero.lua .md to .docx to add canonic number after comma without p. #2248
     Given I import 2 references from "export/*.json"
     When I compile "export/*.md" to "~/*.odt" it should match "export/*.odt" with 22 citations
     When I compile "export/*.md" to "~/*.docx" it should match "export/*.docx" with 22 citations
