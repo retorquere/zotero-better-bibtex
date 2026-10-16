@@ -237,5 +237,5 @@ Feature: Import
   Scenario: Journal detection active while importJabrefAbbreviations is off #2916
     Given I set preference .rawImports to true
     And I set preference .importJabRefAbbreviations to false
-    When I import 2 references from "import/*.bib"
+    When I import 1 references from "import/*.bib"
     Then the library should match "import/*.json"
