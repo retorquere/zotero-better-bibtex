@@ -17,7 +17,7 @@ if github.event_name == 'push':
   elif github.ref_name in ['master'] : # builds on master.
     print(github.ref_name)
     flags.add('slow')
-    #flags.add('beta')
+    flags.add('beta')
     flags.add('whopper')
   else:
     print('debug build')
