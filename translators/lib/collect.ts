@@ -91,7 +91,9 @@ export class Collections {
 
   constructor(private items: Items) {
     let collection: any
+    Zotero.debug('collections: start')
     while (collection = Zotero.nextCollection()) {
+      Zotero.debug(`  collections: ${JSON.stringify(collection)}`)
       this.registerCollection(collection, '')
     }
   }
