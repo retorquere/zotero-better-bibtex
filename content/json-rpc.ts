@@ -653,7 +653,12 @@ export class NSItem {
         }
       }
 
-      citeproc.free?.()
+      try {
+        citeproc.free()
+      }
+      catch (err) {
+        log.error('pandoc_filter: soft error on citeproc.free()', err)
+      }
     }
     else {
       for (const item of items.map(i => Zotero.Utilities.Internal.itemToExportFormat(i, false, true))) {
