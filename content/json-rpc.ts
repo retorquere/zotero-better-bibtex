@@ -653,7 +653,7 @@ export class NSItem {
         }
       }
 
-      citeproc.free()
+      citeproc.free?.()
     }
     else {
       for (const item of items.map(i => Zotero.Utilities.Internal.itemToExportFormat(i, false, true))) {
