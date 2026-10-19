@@ -71,13 +71,13 @@
   },
   "dependencies": {
     "@artsy/to-title-case": "^1.2.0",
-    "@ast-grep/napi": "^0.50.0",
+    "@ast-grep/napi": "^0.51.0",
     "@caeser1996/titlecase": "^3.0.2",
     "@henrygd/queue": "^1.2.0",
     "@idxdb/promised": "^4.1.0",
     "@insomnia-dev/words-to-numbers": "^2.2.0",
     "@lifeparticle/ap-style-title-case": "^1.5.0",
-    "@retorquere/bibtex-parser": "^12.1.9",
+    "@retorquere/bibtex-parser": "^12.1.10",
     "@stdlib/string-format": "^0.2.3",
     "@stdlib/utils-escape-regexp-string": "^0.2.3",
     "@stefanstefanovski/transliterate-cyrillic": "^1.0.0",
@@ -86,12 +86,12 @@
     "astring": "^1.9.0",
     "auto-changelog": "^2.7.0",
     "base64-js": "^1.5.1",
-    "better-ajv-errors": "^3.0.2",
+    "better-ajv-errors": "^3.0.3",
     "bplist-parser": "^0.5.0",
     "case": "^1.6.3",
     "citeproc": "^2.4.63",
     "clean-deep": "^3.4.0",
-    "compromise": "^14.18.0",
+    "compromise": "^14.19.0",
     "csl-json": "^0.1.0",
     "detect-file-encoding-and-language": "^2.4.0",
     "edtf": "^4.11.1",
@@ -139,7 +139,7 @@
     "@stylistic/eslint-plugin": "^5.10.0",
     "@tanstack/markdown": "^1.0.0",
     "@types/node": "^26.6.5",
-    "@typescript-eslint/eslint-plugin": "^8.71.2",
+    "@typescript-eslint/eslint-plugin": "^8.72.0",
     "@xmldom/xmldom": "^0.9.12",
     "7zip-bin-full": "^26.4.1",
     "ajv-keywords": "^5.1.0",
@@ -156,8 +156,8 @@
     "diff": "^9.0.0",
     "dom-parser": "^1.1.5",
     "dotenv": "^18.0.8",
-    "dprint": "^0.63.0",
-    "ejs": "^7.0.1",
+    "dprint": "^0.64.0",
+    "ejs": "^7.0.2",
     "esbuild": "^0.28.2",
     "eslint": "^9.39.5",
     "eslint-plugin-import": "^2.32.0",
@@ -219,6 +219,6 @@
   "allowScripts": {
     "es5-ext@0.10.64": true,
     "esbuild@0.28.2": true,
-    "dprint@0.63.0": true
+    "dprint@0.64.0": true
   }
 }
