@@ -19,7 +19,7 @@ import { Translation } from '../lib/translator'
 
 import { Entry as BaseEntry, Config } from './entry'
 
-import { Library, Entry as BibTeXEntry, JabRefMetadata, ParseError, Creator, parseAsync as parse } from '@retorquere/bibtex-parser'
+import { english, Library, Entry as BibTeXEntry, JabRefMetadata, ParseError, Creator, parseAsync as parse } from '@retorquere/bibtex-parser/wasm'
 
 function unique(value, index, self) {
   return self.indexOf(value) === index
@@ -600,7 +600,7 @@ async function parseBibTeX(translation: Translation): Promise<Library> {
   return await parse(translation.collected.input, {
     // we are actually sure it's a valid enum value; stupid workaround for TS2322: Type 'string' is not assignable to type 'boolean | "as-needed" | "strict"'.
     unsupported: translation.collected.preferences.importUnknownTexCommand as unknown as 'ignore',
-    english: translation.collected.preferences.importSentenceCase !== 'off',
+    english: translation.collected.preferences.importSentenceCase === 'off' ? [] : english,
     sentenceCase: {
       guess: translation.collected.preferences.importSentenceCase === 'on+guess',
       preserveQuoted: !translation.collected.preferences.importSentenceCaseQuoted,
@@ -703,7 +703,7 @@ class ZoteroItem {
   protected $titleaddon(): boolean { return this.$title() }
   protected $subtitle(): boolean { return this.$title() }
   protected $title(): boolean {
-    const title = [ ...asarray(this.bibtex.fields.title), ...asarray(this.bibtex.fields.titleaddon), ...asarray(this.bibtex.fields.subtitle) ].filter(unique).join('. ')
+    const title = [ this.bibtex.fields.title, this.bibtex.fields.titleaddon, this.bibtex.fields.subtitle ].filter(Boolean).filter(unique).join('. ')
     return this.set(this.bibtex.fields.lista && this.validFields.publicationTitle ? 'publicationTitle' : 'title', title)
   }
 
