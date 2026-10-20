@@ -323,6 +323,8 @@ class Importer {
       collected.progress(imported / bib.entries.length * 100)
     }
 
+    log.debug('1641: groups', bib.jabref)
+    log.debug('1641: itemIDs', this.itemIDs)
     for (const group of bib.jabref.root || []) {
       this.importGroup(group, true)
     }
@@ -1251,7 +1253,7 @@ class ZoteroItem {
   // horrid jabref 3.8+ groups format
   protected $groups(value: string): boolean {
     for (const group of value.split(/\s*,\s*/)) {
-      if (this.jabref.groups[group] && !this.jabref.groups[group].entries.includes(this.bibtex.key)) this.jabref.groups[group].entries.push(this.bibtex.key)
+      this.jabref.addEntry(group, this.bibtex.key)
     }
     return true
   }
