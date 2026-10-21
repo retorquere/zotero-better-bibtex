@@ -323,8 +323,6 @@ class Importer {
       collected.progress(imported / bib.entries.length * 100)
     }
 
-    log.debug('1641: groups', bib.jabref)
-    log.debug('1641: itemIDs', this.itemIDs)
     for (const group of bib.jabref.root || []) {
       this.importGroup(group, true)
     }
