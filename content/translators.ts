@@ -34,7 +34,12 @@ class TimeoutError extends Error {
   }
 }
 
-export type ExportScope = { type: 'items'; items: any[] } | { type: 'library'; id: number } | { type: 'collection'; collection: any }
+export type ExportScope
+  = { type: 'items'; items: any[] }
+  | { type: 'library'; id: number }
+  | { type: 'collection'; collection: any }
+  | { type: 'collections'; collections: any[] }
+
 export type ExportJob = {
   translatorID: string
   displayOptions: Record<string, boolean>
@@ -215,24 +220,33 @@ export const Translators = new class {
     switch (scope.type) {
       case 'library':
         items = await Zotero.Items.getAll(scope.id, true)
-        collections = Zotero.Collections.getByLibrary(scope.id) // , true)
+        collections = Zotero.Collections.getByLibrary(scope.id)
         break
 
       case 'items':
         items = scope.items
         break
 
-      case 'collection':
-        collections = Zotero.Collections.getByParent(scope.collection.id, true)
-        const items_with_duplicates = new Set(scope.collection.getChildItems())
+      case 'collections':
+      case 'collection': {
+        if (scope.type === 'collections') { // beta
+          collections = scope.collections
+            .map(coll => (coll.parent === false ? Zotero.Collections.getByLibrary(coll.libraryID) : Zotero.Collections.getByParent(coll.parent)).find(_ => _.id === coll.id))
+            .filter(Boolean)
+        }
+        else {
+          collections = Zotero.Collections.getByParent(scope.collection.id)
+        }
+
+        const unique = new Map<number, any>
         for (const collection of collections) {
           for (const item of collection.getChildItems()) {
-            items_with_duplicates.add(item) // sure hope getChildItems doesn't return a new object?!
+            unique.set(item.id, item)
           }
         }
-        items = Array.from(items_with_duplicates.values())
+        items = Array.from(unique.values())
         break
-
+      }
       default:
         throw new Error(`Unexpected scope: ${ Object.keys(scope) }`)
     }
@@ -473,15 +487,18 @@ export const Translators = new class {
   private exportScope(scope: ExportScope): ExportScope {
     if (!scope) scope = { type: 'library', id: Zotero.Libraries.userLibraryID }
 
-    if (scope.type === 'collection' && typeof scope.collection === 'number') {
-      return { type: 'collection', collection: Zotero.Collections.get(scope.collection) }
-    }
-
     switch (scope.type) {
       case 'items':
         if (!scope.items?.length) throw new Error(`invalid scope: ${ JSON.stringify(scope) }`)
         break
+      case 'collections':
+        scope.collections = scope.collections.map(coll => typeof coll === 'number' ? Zotero.Collections.get(coll) : coll)
+        if (scope.collections.find(coll => typeof coll?.id !== 'number')) throw new Error(`invalid scope: ${ JSON.stringify(scope) }`)
+        break
       case 'collection':
+        if (scope.type === 'collection' && typeof scope.collection === 'number') {
+          scope = { type: 'collection', collection: Zotero.Collections.get(scope.collection) }
+        }
         if (typeof scope.collection?.id !== 'number') throw new Error(`invalid scope: ${ JSON.stringify(scope) }`)
         break
       case 'library':

@@ -48,7 +48,7 @@ import { CitekeyRecord, KeyManager } from './key-manager'
 import { remigrate } from './key-manager/migrate'
 import * as l10n from './l10n'
 import { TestSupport } from './test-support'
-import { Translators } from './translators'
+import { ExportScope, Translators } from './translators'
 import { Exporter } from './translators/worker'
 
 import { generateBibLaTeX } from '../translators/bibtex/biblatex'
@@ -328,15 +328,32 @@ monkey.patch(Zotero.Translate.Export.prototype, 'translate', original => functio
     }
   }
 
+  // {"type":"collections","collections":[{"key":"KZR573XL","version":0,"name":"coll2","parentCollection":false,"relations":{}}]}
   if (this._export && displayOptions.keepUpdated) {
-    void AutoExport.register({
-      translatorID,
-      displayOptions,
-      scope: this._export.type === 'collection'
-        ? { type: 'collection', collection: this._export.collection }
-        : { type: this._export.type as 'library', id: this._export.id },
-      path: this.location.path,
-    })
+    let scope: ExportScope
+    switch (this._export.type) {
+      case 'collection':
+        scope = { type: 'collection', collection: this._export.collection }
+        break
+      case 'collections':
+        if (this._export.collections.length === 1) {
+          scope = { type: 'collection', collection: this._export.collections[0] }
+        }
+        else {
+          scope = { type: 'collections', collections: this._export.collections }
+        }
+        break
+      default:
+        scope = { type: this._export.type as 'library', id: this._export.id }
+        break
+    }
+
+    if (scope.type === 'collections') {
+      flash('Auto-export of multiple collections at once is not supported')
+    }
+    else {
+      void AutoExport.register({ translatorID, displayOptions, scope, path: this.location.path })
+    }
   }
 
   let useWorker = typeof translator.displayOptions!.worker === 'boolean' && displayOptions.worker
@@ -352,7 +369,7 @@ monkey.patch(Zotero.Translate.Export.prototype, 'translate', original => functio
       translatorID,
       displayOptions: { ...displayOptions, worker: true },
       translate: this,
-      scope: { ...this._export, getter: this._itemGetter },
+      scope: this._export,
       path: this.location?.path,
     })
   }
