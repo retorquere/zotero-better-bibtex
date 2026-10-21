@@ -1251,7 +1251,7 @@ class ZoteroItem {
   // horrid jabref 3.8+ groups format
   protected $groups(value: string): boolean {
     for (const group of value.split(/\s*,\s*/)) {
-      if (this.jabref.groups[group] && !this.jabref.groups[group].entries.includes(this.bibtex.key)) this.jabref.groups[group].entries.push(this.bibtex.key)
+      this.jabref.addEntry(group, this.bibtex.key)
     }
     return true
   }
@@ -1498,7 +1498,10 @@ class ZoteroItem {
         if (field.match(/^(local-zo-url-[0-9]+|file-[0-9]+)$/) || field.match(/^file[+]duplicate-\d+$/)) {
           if (this.$file(value)) continue
         }
-        else if (field.match(/^(bdsk-url-[0-9]+|url|howpublished|remote-url)$/)) {
+        else if (field.match(/^bdsk-url-[0-9]+$/)) {
+          this.item.attachments.push({ itemType: 'attachment', value, field, linkMode: 'linked_url' })
+        }
+        else if (field.match(/^(url|howpublished|remote-url)$/)) {
           if (this.$url(value, field, urls)) continue
         }
         else if (field.match(/^bdsk-file-[0-9]+$/)) {
