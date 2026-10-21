@@ -161,9 +161,33 @@ const Translator = new class {
 const sortExamples = document => {
   for (const outline of document.feature.elements.filter(element => element.keyword === 'Scenario Outline')) {
     for (const examples of outline.examples) {
-      examples.body.sort((left, right) => left.cells[0].value.localeCompare(right.cells[0].value, undefined, { sensitivity: 'base' }))
+      const file = Math.max(0, examples.header.cells.findIndex(cell => cell.value === 'file'))
+      examples.body.sort((left, right) => left.cells[file].value.localeCompare(right.cells[file].value, undefined, { sensitivity: 'base' }))
     }
   }
+}
+
+const formatExamples = document => {
+  for (const outline of document.feature.elements.filter(element => element.keyword === 'Scenario Outline')) {
+    for (const examples of outline.examples) {
+      const columns = examples.header.cells.map(cell => cell.value)
+      if (columns.length !== 2 || !columns.includes('references') || !columns.includes('file')) continue
+      const order = ['references', 'file'].map(column => columns.indexOf(column))
+      for (const row of [examples.header, ...examples.body]) {
+        row.cells = order.map(index => row.cells[index])
+      }
+    }
+  }
+
+  let ragged = false
+  return format(document).split('\n').map(line => {
+    if (!/^\s*\|/.test(line)) {
+      if (!/^\s*#/.test(line)) ragged = false
+      return line
+    }
+    if (/^\s*\| references\s+\| file\s+\|$/.test(line)) ragged = true
+    return ragged ? line.replace(/ +\|$/, ' |') : line
+  }).join('\n')
 }
 
 const issueTitle = async issueNumber => {
@@ -210,10 +234,13 @@ const renameTestcase = async () => {
   const document = (await read(feature))[0]
   const testcases = document.feature.elements
     .filter(element => element.keyword === 'Scenario Outline')
-    .flatMap(element => element.examples.flatMap(examples => examples.body))
+    .flatMap(element => element.examples.flatMap(examples => {
+      const file = Math.max(0, examples.header.cells.findIndex(cell => cell.value === 'file'))
+      return examples.body.map(testcase => testcase.cells[file])
+    }))
   const suffix = new RegExp(`\\s#${issue}$`)
   const matches = testcases.filter(testcase => {
-    const name = testcase.cells[0].value.trim()
+    const name = testcase.value.trim()
     return (name.match(/#\d+/g) || []).length === 1 && suffix.test(name)
   })
   if (matches.length === 0) {
@@ -222,7 +249,7 @@ const renameTestcase = async () => {
   }
 
   const title = await issueTitle(issue)
-  const oldNames = [...new Set(matches.map(testcase => testcase.cells[0].value.trim()))]
+  const oldNames = [...new Set(matches.map(testcase => testcase.value.trim()))]
   const fixtureDir = path.join(root, 'test', 'fixtures', 'export')
   const assets = fs.readdirSync(fixtureDir)
     .filter(asset => oldNames.some(oldName => asset.startsWith(oldName)))
@@ -238,8 +265,8 @@ const renameTestcase = async () => {
   for (const [index, asset] of assets.entries()) {
     execFileSync('git', ['mv', path.join(fixtureDir, asset), destinations[index]], { cwd: root, stdio: 'inherit' })
   }
-  for (const testcase of matches) testcase.cells[0].value = title
-  fs.writeFileSync(feature, format(document))
+  for (const testcase of matches) testcase.value = title
+  fs.writeFileSync(feature, formatExamples(document))
 }
 
 const main = async () => {
@@ -258,7 +285,7 @@ const main = async () => {
 
   if (argv.sort) {
     sortExamples(document)
-    fs.writeFileSync(argv.feature, format(document))
+    fs.writeFileSync(argv.feature, formatExamples(document))
     return
   }
 
@@ -374,20 +401,23 @@ const main = async () => {
   }
 
   const outline = outlines[0]
-  const examples = outlines[0].examples[0].body
-  const existing = examples.find(example => example.cells[0].value === argv.title)
+  const table = outline.examples[0]
+  const examples = table.body
+  const file = table.header.cells.findIndex(cell => cell.value === 'file')
+  const references = table.header.cells.findIndex(cell => cell.value === 'references')
+  const existing = examples.find(example => example.cells[file].value === argv.title)
   if (argv.export) {
     const data = JSON.parse(fs.readFileSync(argv.data, 'utf8'))
     argv.number = data.items.length
   }
   if (existing) {
-    existing.cells[1] = new TableCell(`${argv.number}`)
+    existing.cells[references] = new TableCell(`${argv.number}`)
   }
   else {
-    examples.unshift(new TableRow([new TableCell(argv.title), new TableCell(`${argv.number}`)]))
+    examples.unshift(new TableRow(table.header.cells.map(cell => new TableCell(cell.value === 'file' ? argv.title : `${argv.number}`))))
   }
   sortExamples(document)
-  fs.writeFileSync(argv.feature, format(document))
+  fs.writeFileSync(argv.feature, formatExamples(document))
 
   // Copy/create test fixtures
   const fixtures = []
