@@ -1,0 +1,72 @@
+config:
+  id: 36a3b0b5-bad0-4a04-b79b-441c7cef77db
+  label: BetterBibTeX JSON
+  preferences:
+    citekeyFormat: auth + year
+    fillKeyAfter: 1
+  options:
+    Items: true
+    Normalize: true
+    Preferences: true
+    YAML: false
+    exportFileData: false
+    exportNotes: true
+    keepUpdated: false
+    worker: true
+version:
+  zotero: 10.0.6
+  bbt: 9.0.71.emile.kiku.local
+collections: {}
+items:
+  -
+    key: NWYC9Q8G
+    version: 0
+    itemType: journalArticle
+    url: http://www.sciencedirect.com/science/article/pii/S014759670300101X
+    volume: '31'
+    issue: '4'
+    pages: 620 - 652
+    publicationTitle: Journal of Comparative Economics
+    ISSN: 0147-5967
+    date: '2003'
+    extra: "tex.date-added: 2015-04-15 15:21:27 +0000\ntex.date-modified: 2017-05-15 14:14:57 +0000\ntex.jlprojects: spatial_elections, continuous_opinion_dynamics\ntex.project: ODCD\ntex.rating: 4\ntex.timestamp: 2011.06.01"
+    DOI: 10.1016/j.jce.2003.09.003
+    abstractNote: Do societies choose inefficient policies and institutions? An extension of the Coase theorem to politics would suggest the answer is no. This paper discusses various approaches to political economy and develops the argument that there are strong empirical and theoretical grounds for believing that inefficient policies and institutions are prevalent. We conclude that these inefficient institutions and policies are chosen because they serve the interests of politicians or social groups that hold political power at the expense of the rest. The theoretical case depends on commitment problems inherent in politics; parties holding political power cannot make commitments to bind their future actions because there is no outside agency with the coercive capacity to enforce such arrangements. Journal of Comparative Economics 31 (4) (2003) 620-652.
+    title: Why not a political Coase theorem? Social conflict, commitment, and politics
+    citationKey: Acemoglu2003Whynotpolitical
+    creators:
+      -
+        firstName: Daron
+        lastName: Acemoglu
+        creatorType: author
+    tags:
+      -
+        tag: Political economy
+    relations: {}
+    dateAdded: 2026-10-21T06:37:50Z
+    dateModified: 2026-10-21T06:37:50Z
+    uri: http://zotero.org/users/8230813/items/NWYC9Q8G
+    itemID: 111
+    attachments:
+      -
+        itemType: attachment
+        url: http://www.sciencedirect.com/science/article/pii/S014759670300101X
+        title: bdsk-url-1
+        tags: []
+        relations: {}
+        dateAdded: 2026-10-21T06:37:50Z
+        dateModified: 2026-10-21T06:37:50Z
+        uri: http://zotero.org/users/8230813/items/RV23PTWR
+      -
+        itemType: attachment
+        url: http://dx.doi.org/10.1016/j.jce.2003.09.003
+        title: bdsk-url-2
+        tags: []
+        relations: {}
+        dateAdded: 2026-10-21T06:37:50Z
+        dateModified: 2026-10-21T06:37:50Z
+        uri: http://zotero.org/users/8230813/items/R9QFJJSF
+    notes: []
+    autoJournalAbbreviation: J. Comp. Econ.
+    itemKey: NWYC9Q8G
+    libraryID: 1
