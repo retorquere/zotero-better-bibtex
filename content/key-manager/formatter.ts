@@ -648,7 +648,6 @@ export class PatternFormatter {
     if (typeof template !== 'undefined') this.config.creatorNames.template = template
     if (typeof transliterate !== 'undefined') this.config.creatorNames.transliterate = transliterate
     if (typeof space !== 'undefined') this.config.creatorNames.space = space
-    log.debug('3460: creatornames:', this.config.creatorNames)
     return ''
   }
 
@@ -799,7 +798,6 @@ export class PatternFormatter {
    * @param sep     use this character between authors
    */
   public $authEtal2(creator: AuthorType = '*', initials = false, sep = '.'): string {
-    log.debug('3640: authEtal2:', creator)
     const authors = this.creators(creator, initials ? `${this.config.creatorNames.template}%(I)s` : this.config.creatorNames.template)
     if (!authors.length) return ''
 
@@ -1573,10 +1571,8 @@ export class PatternFormatter {
       vars.g = this.transliterate(vars.g)
     }
     let name = sprintf(template.toString(), vars)
-    log.debug('3640: name:', name)
     if (this.config.creatorNames.space.trim()) {
       name = name.replace(/\s+/g, this.config.creatorNames.space)
-      log.debug('3640: name now:', name)
     }
     return name
   }
@@ -1591,8 +1587,6 @@ export class PatternFormatter {
       translator: [] as string[],
       collaborator: [] as string[],
     }
-
-    log.debug('3640: creators:', select)
 
     for (const creator of this.item.creators) {
       const name = this.name(creator, template)
