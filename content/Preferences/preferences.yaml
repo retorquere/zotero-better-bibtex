@@ -683,7 +683,7 @@ exportTitlecase:
     - Better BibTeX
 
 exportCaseProtection:
-  tooltip: >-
+  description: >-
     This is a comma-separated list of export case-protection overrides for
     English items. Prefix fields with "+" to force case-protection and "-"
     to disable case-protection. Use just the field name to apply to both
