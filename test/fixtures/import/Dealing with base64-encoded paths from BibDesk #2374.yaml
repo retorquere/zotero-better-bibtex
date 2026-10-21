@@ -19,7 +19,7 @@ version:
 collections: {}
 items:
   -
-    key: TJP97WTB
+    key: NMW3666M
     version: 0
     itemType: bookSection
     volume: '2'
@@ -52,21 +52,20 @@ items:
         creatorType: editor
     tags: []
     relations: {}
-    dateAdded: 2026-10-14T12:55:04Z
-    dateModified: 2026-10-14T12:55:04Z
-    uri: http://zotero.org/users/8230813/items/TJP97WTB
-    itemID: 189
+    dateAdded: 2026-10-21T07:13:57Z
+    dateModified: 2026-10-21T07:13:57Z
+    uri: http://zotero.org/users/8230813/items/NMW3666M
+    itemID: 120
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: TJP97WTB
+    itemKey: NMW3666M
     libraryID: 1
     publicationTitle: 'Global civil society: Dimensions of the nonprofit sector'
   -
-    key: 24LSLTYJ
+    key: B4MRK2N7
     version: 0
     itemType: journalArticle
-    url: https://doi.org/10.1111/disa.12301
     volume: '43'
     issue: '1'
     pages: 24–45
@@ -89,26 +88,35 @@ items:
       -
         tag: 000000000000 Read next
     relations: {}
-    dateAdded: 2026-10-14T12:55:04Z
-    dateModified: 2026-10-14T12:55:04Z
-    uri: http://zotero.org/users/8230813/items/24LSLTYJ
-    itemID: 191
+    dateAdded: 2026-10-21T07:13:57Z
+    dateModified: 2026-10-21T07:13:57Z
+    uri: http://zotero.org/users/8230813/items/B4MRK2N7
+    itemID: 122
     attachments:
+      -
+        itemType: attachment
+        url: https://doi.org/10.1111/disa.12301
+        title: bdsk-url-1
+        tags: []
+        relations: {}
+        dateAdded: 2026-10-21T07:13:57Z
+        dateModified: 2026-10-21T07:13:57Z
+        uri: http://zotero.org/users/8230813/items/Q2GXGGTK
       -
         itemType: attachment
         title: KraftSmith2019 - Between international donors and local faith communities Intermediaries
         tags: []
         relations: {}
-        dateAdded: 2026-10-14T12:55:04Z
-        dateModified: 2026-10-14T12:55:04Z
-        uri: http://zotero.org/users/8230813/items/FC42ZK5J
-        path: /Users/emile/.BBTTEST/zotero/storage/FC42ZK5J/KraftSmith2019 - Between international donors and local faith communities Intermediaries.pdf
+        dateAdded: 2026-10-21T07:13:57Z
+        dateModified: 2026-10-21T07:13:57Z
+        uri: http://zotero.org/users/8230813/items/B5XSIRSN
+        path: /Users/emile/.BBTTEST/zotero/storage/B5XSIRSN/KraftSmith2019 - Between international donors and local faith communities Intermediaries.pdf
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: 24LSLTYJ
+    itemKey: B4MRK2N7
     libraryID: 1
   -
-    key: X57TVSTX
+    key: JEXM6SEX
     version: 0
     itemType: book
     volume: '2'
@@ -128,12 +136,12 @@ items:
         creatorType: editor
     tags: []
     relations: {}
-    dateAdded: 2026-10-14T12:55:04Z
-    dateModified: 2026-10-14T12:55:04Z
-    uri: http://zotero.org/users/8230813/items/X57TVSTX
-    itemID: 190
+    dateAdded: 2026-10-21T07:13:57Z
+    dateModified: 2026-10-21T07:13:57Z
+    uri: http://zotero.org/users/8230813/items/JEXM6SEX
+    itemID: 121
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: X57TVSTX
+    itemKey: JEXM6SEX
     libraryID: 1
