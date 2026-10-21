@@ -5,6 +5,7 @@ import { Cache } from './translators/worker'
 import { serializer } from './item-export-format'
 
 const { ZOTERO_CONFIG } = ChromeUtils.importESModule('resource://zotero/config.mjs')
+import init from '@retorquere/bibtex-parser/wasm'
 
 import { Preference } from './prefs'
 import { affects, Preferences } from '../gen/preferences/meta'
@@ -72,6 +73,8 @@ export const Translators = new class {
       description: 'translators',
       needs: [ 'worker', 'keymanager' ],
       startup: async () => {
+        await init({ module_or_path: 'chrome://zotero-better-bibtex/content/resource/bibtex_parser_bg.wasm' })
+
         worker.addEventListener('message', (e: Event) => {
           const data = (e as MessageEvent).data as Message
           if (!data || (data as unknown as any).id) return // data.id means it is a JSON-RPC message
