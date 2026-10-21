@@ -690,7 +690,7 @@ exportCaseProtection:
     bibtex and biblatex, or prefix with "bibtex." or "biblatex."
     to restrict to one. The defaults in BBT adhere to BibTeX/BibLaTeX best
     practice, but if you are dead-set on ignoring these, you can override them
-    here.
+    here. `off` turns it off for all fields.
   default: ''
   affects:
     - Better BibLaTeX
