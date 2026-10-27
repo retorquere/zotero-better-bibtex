@@ -332,9 +332,7 @@ monkey.patch(Zotero.Translate.Export.prototype, 'translate', original => functio
     void AutoExport.register({
       translatorID,
       displayOptions,
-      scope: this._export.type === 'collection'
-        ? { type: 'collection', collection: this._export.collection }
-        : { type: this._export.type as 'library', id: this._export.id },
+      scope: this._export, // Zotero's export setup already has the shape of an ExportScope
       path: this.location.path,
     })
   }
