@@ -240,13 +240,22 @@ export const Translators = new class {
         else {
           collections = Zotero.Collections.getByParent(scope.collection.id)
         }
+        log.debug('3258:', collections)
 
         const unique = new Map<number, any>
-        for (const collection of collections) {
+        function collect(collection: Zotero.Collection): void {
           for (const item of collection.getChildItems()) {
+            log.debug('3258:', item.id)
             unique.set(item.id, item)
           }
+          for (const sub of collection.getChildCollections()) {
+            collect(sub)
+          }
         }
+        for (const collection of collections) {
+          collect(collection)
+        }
+        log.debug('3258:', [...unique.values()])
         items = Array.from(unique.values())
         break
       }

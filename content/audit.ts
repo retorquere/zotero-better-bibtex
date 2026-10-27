@@ -158,7 +158,6 @@ export const profiler = new class Profiler {
   private threads = ['GeckoMain']
   private features = [
     'js',
-    'privacy',
     'stackwalk',
     'threads',
     'leaf',
