@@ -86,5 +86,4 @@ publish('bin_ids', json.dumps(list(range(max(len(Tests.bins), 1)))))
 publish('bins', args.bins)
 
 clients = [ 'zotero', 'zotero-beta' ]
-clients = [ 'zotero' ]
 publish('clients', json.dumps(clients))
