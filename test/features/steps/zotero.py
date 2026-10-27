@@ -287,7 +287,7 @@ class Library:
   """Represents an input/export library fixture and its normalized comparison form.
 
   The constructor resolves where content comes from (path/body), optionally applies
-  client-specific patches, parses by extension, and prepares normalized content used
+  client- and beta-specific patches, parses by extension, and prepares normalized content used
   by test assertions.
   """
 
@@ -325,8 +325,9 @@ class Library:
       # fixture patch exists for this client/variant.
       self.path = self.base
 
-      # Prefer client+variant patch, then plain client patch.
+      # Prefer the combined client+variant patch, then beta-only, then plain client.
       patches = [ self.base + '.' + client + variant + '.patch' ]
+      if variant == '-beta': patches.append(self.base + '.beta.patch')
       if len(variant) > 0: patches.append(self.base + '.' + self.client + '.patch')
       self.patch = next((patch for patch in patches if os.path.exists(patch)), None)
       if self.patch:

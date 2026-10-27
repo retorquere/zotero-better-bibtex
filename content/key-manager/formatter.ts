@@ -1572,7 +1572,7 @@ export class PatternFormatter {
     }
     let name = sprintf(template.toString(), vars)
     if (this.config.creatorNames.space.trim()) {
-      name = name.replace(/\s+/, this.config.creatorNames.space)
+      name = name.replace(/\s+/g, this.config.creatorNames.space)
     }
     return name
   }

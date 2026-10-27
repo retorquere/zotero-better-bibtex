@@ -363,8 +363,8 @@ const main = async () => {
   }
 
   const name = argv.import
-    ? /^Import <references> references/
-    : new RegExp(`^Export <references> references for ${Translator.name} to`)
+    ? /^Import <refs> references/
+    : new RegExp(`^Export <refs> references for ${Translator.name} to`)
   const outlines = document.feature.elements
     .filter(_ => _.keyword === 'Scenario Outline' && _.name.match(name))
 
