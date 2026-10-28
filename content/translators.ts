@@ -377,7 +377,16 @@ export const Translators = new class {
         break
 
       case 'collection':
-        translation.setCollection(scope.collection)
+        if (translation.setCollections) {
+          translation.setCollections([scope.collection])
+        }
+        else {
+          translation.setCollection(scope.collection)
+        }
+        break
+
+      case 'collections':
+        translation.setCollections(scope.collections)
         break
 
       default:

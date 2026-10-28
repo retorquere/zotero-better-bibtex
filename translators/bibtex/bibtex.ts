@@ -274,6 +274,7 @@ class Importer {
     collection.type = 'collection'
     collection.name = group.name
     collection.children = group.entries.filter(citekey => this.itemIDs[citekey]).map(citekey => ({ type: 'item', id: this.itemIDs[citekey] }))
+    log.debug('1730: import group', group, { children: collection.children })
 
     for (const subgroup of group.groups || []) {
       collection.children.push(this.importGroup(subgroup))
@@ -310,7 +311,7 @@ class Importer {
 
       try {
         const item = collected.item('journalArticle')
-        item.itemID = id
+        item.itemID = item.id = id
         const builder = new ZoteroItem(this.translation, item, bibtex, bib.jabref)
         if (builder.import(errors)) await item.complete()
       }
@@ -323,8 +324,11 @@ class Importer {
       collected.progress(imported / bib.entries.length * 100)
     }
 
-    for (const group of bib.jabref.root || []) {
-      this.importGroup(group, true)
+    if (bib.jabref.root?.length) {
+      log.debug('1730: groups:', bib.jabref.root?.length)
+      for (const group of bib.jabref.root) {
+        this.importGroup(group, true)
+      }
     }
 
     if (errors.length) {
