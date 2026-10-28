@@ -3,6 +3,7 @@
 import merge from 'lodash.merge'
 import { Cache } from './translators/worker'
 import { serializer } from './item-export-format'
+import { isBeta } from './client'
 
 const { ZOTERO_CONFIG } = ChromeUtils.importESModule('resource://zotero/config.mjs')
 import init from '@retorquere/bibtex-parser/wasm'
@@ -54,7 +55,6 @@ export type ExportJob = {
   timeout?: number
 }
 
-// export singleton: https://k94n.com/es6-modules-single-instance-pattern
 export const Translators = new class {
   public byId: Record<string, Header> = {}
   public byLabel: Record<string, Header> = {}
@@ -237,25 +237,19 @@ export const Translators = new class {
             .map(coll => (coll.parent === false ? Zotero.Collections.getByLibrary(coll.libraryID) : Zotero.Collections.getByParent(coll.parent)).find(_ => _.id === coll.id))
             .filter(Boolean)
         }
+        else if (isBeta) {
+          collections = [ scope.collection ]
+        }
         else {
           collections = Zotero.Collections.getByParent(scope.collection.id)
         }
-        log.debug('3258:', collections)
 
         const unique = new Map<number, any>
-        function collect(collection: Zotero.Collection): void {
+        for (const collection of (scope.type === 'collection' ? [ scope.collection] : scope.collections)) {
           for (const item of collection.getChildItems()) {
-            log.debug('3258:', item.id)
             unique.set(item.id, item)
           }
-          for (const sub of collection.getChildCollections()) {
-            collect(sub)
-          }
         }
-        for (const collection of collections) {
-          collect(collection)
-        }
-        log.debug('3258:', [...unique.values()])
         items = Array.from(unique.values())
         break
       }
