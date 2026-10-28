@@ -553,7 +553,16 @@ export const AutoExport = new class $AutoExport {
       return
     }
 
-    if (job.scope.type !== 'library' && job.scope.type !== 'collection') {
+    let scope = job.scope
+    // Zotero 11 sets up the export of a single collection as a list of one
+    if (scope.type === 'collections' && scope.collections.length === 1) scope = { type: 'collection', collection: scope.collections[0] }
+
+    if (scope.type === 'collections') {
+      flash('Auto-export not registered', 'Auto-export only supported for a single collection, not several at once')
+      return
+    }
+
+    if (scope.type !== 'library' && scope.type !== 'collection') {
       flash('Auto-export not registered', 'Auto-export only supported for groups, collections and libraries')
       return
     }
@@ -561,8 +570,8 @@ export const AutoExport = new class $AutoExport {
     await this.add({
       enabled: true,
       path: job.path,
-      type: job.scope.type,
-      id: job.scope.type === 'library' ? job.scope.id : job.scope.collection.id,
+      type: scope.type,
+      id: scope.type === 'library' ? scope.id : scope.collection.id,
       recursive: false,
       error: '',
       created: Date.now(),

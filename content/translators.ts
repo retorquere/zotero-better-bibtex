@@ -1,4 +1,4 @@
-/* eslint-disable no-case-declarations, @typescript-eslint/no-unsafe-return */
+/* eslint-disable @typescript-eslint/no-unsafe-return */
 
 import merge from 'lodash.merge'
 import { Cache } from './translators/worker'
@@ -35,7 +35,9 @@ class TimeoutError extends Error {
   }
 }
 
-export type ExportScope = { type: 'items'; items: any[] } | { type: 'library'; id: number } | { type: 'collection'; collection: any }
+// Zotero 11 sets up collection exports as 'collections', earlier versions as 'collection'
+type CollectionScope = { type: 'collection'; collection: any } | { type: 'collections'; collections: any[] }
+export type ExportScope = { type: 'items'; items: any[] } | { type: 'library'; id: number } | CollectionScope
 export type ExportJob = {
   translatorID: string
   displayOptions: Record<string, boolean>
@@ -226,14 +228,8 @@ export const Translators = new class {
         break
 
       case 'collection':
-        collections = Zotero.Collections.getByParent(scope.collection.id, true)
-        const items_with_duplicates = new Set(scope.collection.getChildItems())
-        for (const collection of collections) {
-          for (const item of collection.getChildItems()) {
-            items_with_duplicates.add(item) // sure hope getChildItems doesn't return a new object?!
-          }
-        }
-        items = Array.from(items_with_duplicates.values())
+      case 'collections':
+        ({ items, collections } = this.collectionContents(scope))
         break
 
       default:
@@ -299,13 +295,8 @@ export const Translators = new class {
         break
 
       case 'collection':
-        const withDuplicates = new Set(scope.collection.getChildItems())
-        for (const collection of Zotero.Collections.getByParent(scope.collection.id, true)) {
-          for (const item of collection.getChildItems()) {
-            withDuplicates.add(item)
-          }
-        }
-        items = Array.from(withDuplicates.values())
+      case 'collections':
+        items = this.collectionContents(scope).items
         break
 
       default:
@@ -361,6 +352,10 @@ export const Translators = new class {
 
       case 'collection':
         translation.setCollection(scope.collection)
+        break
+
+      case 'collections': // Zotero 11 and later
+        translation.setCollections(scope.collections)
         break
 
       default:
@@ -487,6 +482,9 @@ export const Translators = new class {
       case 'collection':
         if (typeof scope.collection?.id !== 'number') throw new Error(`invalid scope: ${ JSON.stringify(scope) }`)
         break
+      case 'collections':
+        if (!scope.collections?.length || scope.collections.some(coll => typeof coll?.id !== 'number')) throw new Error(`invalid scope: ${ JSON.stringify(scope) }`)
+        break
       case 'library':
         if (typeof scope.id !== 'number') throw new Error(`invalid scope: ${ JSON.stringify(scope) }`)
         break
@@ -495,5 +493,35 @@ export const Translators = new class {
     }
 
     return scope
+  }
+
+  // Zotero 11 exports the selected collections themselves, earlier versions only the collections below them;
+  // follow the running Zotero so worker exports, auto-exports included, match what Zotero itself exports
+  private collectionContents(scope: CollectionScope): { items: any[]; collections: any[] } {
+    const selected: any[] = scope.type === 'collection' ? [scope.collection] : scope.collections
+
+    // as in Zotero, a selected collection below another selected collection is exported as part of that one
+    const ids = new Set(selected.map(coll => coll.id))
+    const roots = selected.filter(coll => {
+      for (let parent = coll; typeof parent?.parentID === 'number'; parent = Zotero.Collections.get(parent.parentID)) {
+        if (ids.has(parent.parentID)) return false
+      }
+      return true
+    })
+
+    const items = new Map<number, any>
+    const descendants: any[] = []
+    for (const root of roots) {
+      for (const item of root.getChildItems()) items.set(item.id, item)
+      for (const collection of Zotero.Collections.getByParent(root.id, true)) {
+        descendants.push(collection)
+        for (const item of collection.getChildItems()) items.set(item.id, item)
+      }
+    }
+
+    return {
+      items: Array.from(items.values()),
+      collections: 'setCollections' in Zotero.Translate.Export.prototype ? roots : descendants,
+    }
   }
 }
