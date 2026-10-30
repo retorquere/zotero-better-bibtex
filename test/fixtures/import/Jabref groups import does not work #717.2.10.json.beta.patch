@@ -1,0 +1,7 @@
+[
+  {
+    "op": "replace",
+    "path": "/collections/coll:00000/items",
+    "value": [3]
+  }
+]
