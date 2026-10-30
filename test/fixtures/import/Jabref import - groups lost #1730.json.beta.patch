@@ -1,0 +1,12 @@
+[
+  {
+    "op": "replace",
+    "path": "/collections/coll:00003/items",
+    "value": []
+  },
+  {
+    "op": "replace",
+    "path": "/collections/coll:00004/items",
+    "value": []
+  }
+]

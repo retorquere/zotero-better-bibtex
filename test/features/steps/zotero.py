@@ -375,7 +375,8 @@ class Library:
 
       if self.patch:
         # JSON patch mutates parsed data before normalization.
-        self.data = jsonpatch.JsonPatch(json.load(f)).apply(self.data)
+        with open(self.patch) as patch:
+          self.data = jsonpatch.JsonPatch(json.load(patch)).apply(self.data)
 
       if self.ext in ['.csl.json', '.csl.yml', '.hayagriva.yml']:
         # CSL-JSON stays list-based. For .csl.yml, preserve the legacy
