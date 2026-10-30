@@ -332,7 +332,7 @@ verbatimFields:
     list of fields to treat as verbatim during import. If you're importing e.g.
     Mendeley-generated BibTeX, which is out of spec in various ways, try
     removing `file` from this list before import.
-  default: url,doi,file,pdf,ids,eprint,/^verb[a-z]$/,groups,/^citeulike-linkout-[0-9]+$/,/^bdsk-url-[0-9]+$/, keywords
+  default: url,doi,file,pdf,ids,eprint,verb?,groups,citeulike-linkout-*,bdsk-url-*, keywords
   affects:
     - Better BibLaTeX
     - Better BibTeX

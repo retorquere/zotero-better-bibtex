@@ -6,7 +6,7 @@ import { serializer } from './item-export-format'
 import { isBeta } from './client'
 
 const { ZOTERO_CONFIG } = ChromeUtils.importESModule('resource://zotero/config.mjs')
-import init from '@retorquere/bibtex-parser/wasm'
+import init from '@retorquere/bibtex-parser'
 
 import { Preference } from './prefs'
 import { affects, Preferences } from '../gen/preferences/meta'

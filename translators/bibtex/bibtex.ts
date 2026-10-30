@@ -19,7 +19,7 @@ import { Translation } from '../lib/translator'
 
 import { Entry as BaseEntry, Config } from './entry'
 
-import { english, Library, Entry as BibTeXEntry, JabRefMetadata, ParseError, Creator, parseAsync as parse } from '@retorquere/bibtex-parser/wasm'
+import { english, Library, Entry as BibTeXEntry, JabRefMetadata, ParseError, Creator, parseAsync as parse } from '@retorquere/bibtex-parser'
 
 function unique(value, index, self) {
   return self.indexOf(value) === index
@@ -263,7 +263,6 @@ class Entry extends BaseEntry {
 
 class Importer {
   private translation: Translation
-  private itemIDs: Record<string, number> = {}
 
   constructor(collected: Collected) {
     this.translation = Translation.Import(collected)
@@ -273,8 +272,7 @@ class Importer {
     const collection = this.translation.collected.collection()
     collection.type = 'collection'
     collection.name = group.name
-    collection.children = group.entries.filter(citekey => this.itemIDs[citekey]).map(citekey => ({ type: 'item', id: this.itemIDs[citekey] }))
-    log.debug('1730: import group', group, { children: collection.children })
+    collection.children = group.entries.map(citekey => ({ type: 'item', id: citekey }))
 
     for (const subgroup of group.groups || []) {
       collection.children.push(this.importGroup(subgroup))
@@ -300,18 +298,19 @@ class Importer {
       .map((comment: string) => comment.toLowerCase().replace(/\s/g, '').split(':').pop()!.split(',').filter((key: string) => key))[0]
 
     let imported = 0
-    let id = 0
+    let wait = Date.now() + 2000
     for (const bibtex of bib.entries) {
       if (bibtex.key && whitelist && !whitelist.includes(bibtex.key.toLowerCase())) continue
 
-      id++
-      if ((id % 1000) === 0) await new Promise(resolve => setTimeout(resolve, 0))
-
-      if (bibtex.key) this.itemIDs[bibtex.key] = id // Endnote has no citation keys
+      if (Date.now() > wait) {
+        wait += 2000
+        await new Promise(resolve => setTimeout(resolve, 0))
+      }
 
       try {
         const item = collected.item('journalArticle')
-        item.itemID = item.id = id
+        // Endnote has no citation keys
+        item.itemID = bibtex.key || ''
         const builder = new ZoteroItem(this.translation, item, bibtex, bib.jabref)
         if (builder.import(errors)) await item.complete()
       }
@@ -327,6 +326,7 @@ class Importer {
     if (bib.jabref.root?.length) {
       log.debug('1730: groups:', bib.jabref.root?.length)
       for (const group of bib.jabref.root) {
+        log.debug('1730: group:', group)
         this.importGroup(group, true)
       }
     }
@@ -1252,11 +1252,8 @@ class ZoteroItem {
     return this.bibtex.fields.series ? (this.bibtex.fields.series.toLowerCase() === value.toLowerCase()) : this.$series(value)
   }
 
-  // horrid jabref 3.8+ groups format
-  protected $groups(value: string): boolean {
-    for (const group of value.split(/\s*,\s*/)) {
-      this.jabref.addEntry(group, this.bibtex.key)
-    }
+  // horrid jabref 3.8+ groups format, handled in the bibtex parser itself
+  protected $groups(_value: string): boolean {
     return true
   }
 

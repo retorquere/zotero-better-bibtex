@@ -168,6 +168,16 @@ export const Preference = new class PreferenceManager extends PreferenceManagerB
     this.move('jieba', 'chinese', old => !!old)
     this.move('kuroshiro', 'japanese', old => !!old)
 
+    const verbatimFields = Zotero.Prefs.get(key = `${this.prefix}verbatimFields`) as string
+    if (verbatimFields?.includes('/')) {
+      const glob = verbatimFields
+        .trim()
+        .split(/\s*,\s*/)
+        .map(field => field.trim().match(/^\/(.+)\/$/) ? this.regex2glob(field.slice(1, -1)) : field)
+        .join(',')
+      if (glob !== verbatimFields) Zotero.Prefs.set(key, glob)
+    }
+
     // put this in a preference so that translators can access this.
     this.platform = client.platform
 
@@ -192,6 +202,28 @@ export const Preference = new class PreferenceManager extends PreferenceManagerB
       if (!Zotero.Prefs.get(key = 'translators.better-bibtex.fillKeyAfter')) Zotero.Prefs.set(key, autoExportDelay > 2 ? 2 : 1)
       Zotero.Prefs.set(migrated, true)
     }
+  }
+
+  /** Convert simple regexes to wildflower globs; leave unsupported syntax unchanged. */
+  private regex2glob(regex: string): string {
+    // Accept optional ^/$ anchors around word characters, hyphens, colons, dots, and
+    // simple classes such as [a-z0-9_]. Only dots and classes may have * or + suffixes.
+    // Accepted: ^verb[a-z]$, title.*, [0-9]+. Unchanged: (foo|bar), x{2}, foo?.
+    if (!/^\^?(?:[-\w:]|\.[*+]?|\[[\w-]+\][*+]?)+\$?$/.test(regex)) return regex
+
+    const glob = regex
+      // Remove only the leading ^ and trailing $ anchors.
+      // Examples: ^title$ -> title, ^title -> title, title$ -> title.
+      .replace(/^\^|\$$/g, '')
+      // Match a dot or class and capture its optional repetition suffix:
+      // one character becomes ?, zero-or-more becomes *, and one-or-more becomes ?*.
+      // Classes lose their character restrictions because wildflower has no classes.
+      // Examples: verb[a-z] -> verb?, file.* -> file*, [0-9]+ -> ?*, [a-z]* -> *.
+      .replace(/(?:\.|\[[\w-]+\])([*+]?)/g, (_token: string, repeat: string) => repeat === '*' ? '*' : repeat === '+' ? '?*' : '?')
+
+    // Unanchored ends retain substring matching; collapse runs of * into a single *.
+    // Examples: title -> *title*, ^title -> title*, title$ -> *title, .* -> *** -> *.
+    return `${ regex.startsWith('^') ? '' : '*' }${ glob }${ regex.endsWith('$') ? '' : '*' }`.replace(/\*+/g, '*')
   }
 
   private move(ist: string, soll: string, convert: (v: any) => any) {

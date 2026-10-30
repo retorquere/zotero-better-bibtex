@@ -84,7 +84,7 @@ export class Translation {
   public importToExtra!: Record<string, 'plain' | 'force'>
   public skipFields!: string[]
   public skipField!: RegExp
-  public verbatimFields?: (string | RegExp)[]
+  public verbatimFields?: string[]
   public csquotes?: { open: string; close: string }
   public export: { dir?: string; path?: string } = {
     dir: undefined,
@@ -311,9 +311,8 @@ export class Translation {
 
     this.verbatimFields = this.collected.preferences.verbatimFields
       .toLowerCase()
-      .split(',')
-      .map(field => (m = field.trim().match(/^[/](.+)[/]$/)) ? new RegExp(m[1], 'i') : this.typefield(field))
-      .filter((s: string | RegExp) => s)
+      .split(/\s*,\s*/)
+      .filter(Boolean)
 
     if (!this.verbatimFields.length) delete this.verbatimFields
     this.csquotes = this.collected.preferences.csquotes
