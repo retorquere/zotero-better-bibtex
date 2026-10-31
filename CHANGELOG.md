@@ -1,3 +1,7 @@
+## v9.0.74
+
+- Maintenance release
+
 ## v9.0.72
 
 - Fixed Hayagriva Postscript invocation and made the Zotero API available to Hayagriva postscripts
