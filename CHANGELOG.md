@@ -1,3 +1,17 @@
+## v9.0.74
+
+- The CI workflow scripts now enhance error handling for Groq API calls: when a request fails, the script parses the JSON error response (if any) and includes the model name and detailed error message in the thrown exception, instead of only reporting the HTTP status and generic status text.
+
+## v9.0.73
+
+- The library loading step now filters collection item references to include only IDs that actually exist, preventing attempts to sort or process missing items and avoiding related runtime errors.
+- A new test case for the "Export Hangs on beta11" scenario (issue #3642) was added, expanding the test suite to cover this export failure condition.
+- Parsing of author name components now respects explicit family, given, prefix, and useprefix fields, enabling correct handling of name prefixes such as "de" in exported citations.
+- Support for the CSL fields shorttitle, shortjournal, and volumes was added, allowing these abbreviated titles and volume counts to be retained in exported BibTeX entries.
+- Handling of the langid field was implemented to preserve language identification metadata during import and export.
+- Support for the pagetotal field was added, enabling total page counts to be captured in bibliography records.
+- Processing of online resource entries was improved by recognizing url and urldate fields for accurate citation of web resources.
+
 ## v9.0.72
 
 - Fixed Hayagriva Postscript invocation and made the Zotero API available to Hayagriva postscripts
