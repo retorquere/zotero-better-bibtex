@@ -235,7 +235,11 @@ jobs:
               ],
             }),
           });
-          if (!response.ok) throw new Error(`Groq request failed: HTTP ${response.status} ${response.statusText}`);
+          if (!response.ok) {
+            const failure = await response.json().catch(() => null);
+            const detail = failure?.error?.message || response.statusText;
+            throw new Error(`Groq request failed for model ${process.env.GROQ_MODEL}: HTTP ${response.status}: ${detail}`);
+          }
           const result = await response.json();
           const choice = result.choices?.[0];
           const entry = choice?.message?.content?.trim();
