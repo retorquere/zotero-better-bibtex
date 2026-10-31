@@ -260,12 +260,25 @@ jobs:
             const diff = await boundedGit(96000, 'diff', '--no-ext-diff', '--no-color', '--unified=3', base, current, '--', ...paths);
             core.info(`Generating changelog for ${previous || 'initial release'} -> ${tag}`);
 
-            // Budget prompt and output together below 8,000 TPM; serialize calls and retry transient throttling.
-            async function requestNotes(content, task) {
+            // Budget prompt and output together; retry truncated evidence in smaller pieces without losing changes.
+            async function requestNotes(content, task, depth = 0) {
               const request = {
                 model: process.env.GROQ_MODEL,
                 temperature: 0.2,
                 max_completion_tokens: 2048,
+                response_format: {
+                  type: 'json_schema',
+                  json_schema: {
+                    name: 'release_notes',
+                    strict: true,
+                    schema: {
+                      type: 'object',
+                      properties: { entries: { type: 'array', items: { type: 'string' } } },
+                      required: ['entries'],
+                      additionalProperties: false,
+                    },
+                  },
+                },
                 ...(process.env.GROQ_MODEL.startsWith('openai/gpt-oss-') ? { reasoning_effort: 'low' } : {}),
                 messages: [
                   {
@@ -275,7 +288,7 @@ jobs:
                       'Cover every distinct substantive change. For each change, name the affected feature, export format, setting, API, or workflow; explain the specific behavior that changed and, when evidenced, the previous problem, triggering conditions, and practical effect. Preserve exact field names, options, and compatibility requirements when useful. Use one to three informative sentences per bullet, not terse labels.',
                       'Consolidate only changes that address the same behavior. Do not collapse unrelated fixes into broad claims such as "improved exports" or "maintenance release". If changes affect only CI, tests, dependencies, or developer tooling, describe those actual changes rather than dismissing them as maintenance.',
                       'Omit version bumps, release bookkeeping, unchanged context, and duplicate generated copies of the same change. Do not invent behavior, benefits, links, or issue/PR references. A truncated input is incomplete evidence: do not infer unseen changes. If no substantive changes are evidenced, say "- Release bookkeeping only; no substantive code changes are evidenced in the supplied commits and diff."',
-                      'Output only Markdown bullets, one line per bullet starting with "- ", with no headings, code fences, or commentary.',
+                      'Return a JSON object with an entries array containing one nonempty string per release note. Do not include bullet markers, headings, code fences, or commentary; Markdown bullet formatting is added separately.',
                       task,
                     ].join('\n'),
                   },
@@ -286,6 +299,8 @@ jobs:
                 ],
               };
               const inputTokens = request.messages.reduce((total, message) => total + tokenizer.encode(message.content).length + 64, 256);
+              request.max_completion_tokens = Math.min(4096, 7500 - inputTokens);
+              if (request.max_completion_tokens < 2048) throw new Error('Changelog request leaves insufficient output budget');
               if (inputTokens + request.max_completion_tokens > 7500) throw new Error('Changelog request exceeds the safe 8,000 TPM budget');
               let response;
               for (let attempt = 0; attempt < 4; attempt++) {
@@ -316,11 +331,26 @@ jobs:
               }
               const result = await response.json();
               const choice = result.choices?.[0];
-              const entry = choice?.message?.content?.trim();
-              if (choice?.finish_reason !== 'stop' || !entry || !entry.split('\n').every(line => /^- \S/.test(line)) || entry.includes('```')) {
-                throw new Error('Groq did not return a complete Markdown bullet list');
+              const characters = Array.from(content);
+              // Never publish partial output; regenerate both halves with fresh budgets, up to three splits.
+              if (choice?.finish_reason === 'length' && depth < 3 && characters.length > 1) {
+                const middle = Math.floor(characters.length / 2);
+                const partialTask = `${task}\nThis is one part of a larger evidence fragment; describe only changes supported by this part.`;
+                core.info(`Groq truncated ${tag} notes; splitting the evidence at recovery depth ${depth + 1}`);
+                const first = await requestNotes(characters.slice(0, middle).join(''), partialTask, depth + 1);
+                const second = await requestNotes(characters.slice(middle).join(''), partialTask, depth + 1);
+                return `${first}\n${second}`;
               }
-              return entry;
+              let notes;
+              try {
+                notes = JSON.parse(choice?.message?.content || 'null')?.entries;
+              } catch {
+                notes = null;
+              }
+              if (choice?.finish_reason !== 'stop' || !Array.isArray(notes) || !notes.length || !notes.every(note => typeof note === 'string' && note.trim() && !note.includes('```'))) {
+                throw new Error(`Groq returned invalid release notes for ${tag}: finish_reason=${choice?.finish_reason || 'missing'}, usage=${JSON.stringify(result.usage || {})}, content_length=${choice?.message?.content?.length || 0}, recovery_depth=${depth}`);
+              }
+              return notes.map(note => `- ${note.trim().replace(/\s+/g, ' ').replace(/^[-*+]\s+/, '')}`).join('\n');
             }
             const evidence = JSON.stringify({ release: tag, previous: previous || null, commits, summary, diff });
             const chunks = splitEvidence(evidence);
