@@ -130,6 +130,7 @@ Feature: Export
       | 1    | Export fails for duplicate extra field #1739 |
       | 5    | Export fails with Translation using Better BibTeX failed Error normalize EDTF failed to normalize Century #3322 |
       | 1    | Export Forthcoming as Forthcoming |
+      | 705  | Export Hangs on beta11 #3642 |
       | 1    | Export mapping for reporter field #219 |
       | 1    | Export Newspaper Article misses section field #132 |
       | 1    | Export of Contributor to WITH #2837 |
@@ -255,9 +256,8 @@ Feature: Export
 
     Examples:
       | refs | file |
-      | 1    | [authN_M] citation key syntax has off-by-one error #899 |
-      | 1    | {relax} in author also removes trailing dot '.' #2454 |
       | 1    | 30-Mar-2020 parsed as literal #1476 |
+      | 1    | [authN_M] citation key syntax has off-by-one error #899 |
       | 1    | accented character in 'journal' field is not brace protected by bibtex export #2337 |
       | 4    | add date, origdate functions, and format-date filter #1488 |
       | 1    | arXiv categories missing in the BibTeX output when stored only in the Extra field #2483 |
@@ -343,6 +343,7 @@ Feature: Export
       | 4    | veryshorttitle and compound words #551 |
       | 1    | Word segmentation for Chinese references #1682 |
       | 1    | Wrong year field in Better BibTeX export #3244 |
+      | 1    | {relax} in author also removes trailing dot '.' #2454 |
 
     @use.with_client=zotero
     Examples:

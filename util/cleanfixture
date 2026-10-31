@@ -6,7 +6,12 @@ import fs from 'fs'
 import { execSync } from 'child_process'
 
 let plusOne = false
+let strip = false
 for (const fixture of process.argv.slice(2)) {
+  if (fixture === '--strip-attachments') {
+    strip = true
+    continue
+  }
   let data
   const isYaml = fixture.match(/[.](yml|yaml)$/)
   const isJson = fixture.endsWith('.json')
@@ -27,6 +32,22 @@ for (const fixture of process.argv.slice(2)) {
   }
 
   let modified = false
+  if (strip) {
+    data.items = data.items.filter(item => {
+      if (item.attachments) {
+        delete item.attachments
+        modified = true
+      }
+
+      if (item.itemType === 'attachment') {
+        modified = true
+        return false
+      }
+      else {
+        return true
+      }
+    })
+  }
   if (data?.config?.id !== '36a3b0b5-bad0-4a04-b79b-441c7cef77db') continue
   if (plusOne) {
     data.items.push({ itemID: -1, itemType: 'unknown', title: 'unknown' })
