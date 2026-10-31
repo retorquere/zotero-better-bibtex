@@ -324,9 +324,7 @@ class Importer {
     }
 
     if (bib.jabref.root?.length) {
-      log.debug('1730: groups:', bib.jabref.root?.length)
       for (const group of bib.jabref.root) {
-        log.debug('1730: group:', group)
         this.importGroup(group, true)
       }
     }
