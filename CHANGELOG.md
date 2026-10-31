@@ -1,3 +1,7 @@
+## v9.0.74
+
+- CI workflow scripts (`.github/workflows/ci.yaml` and `.github/workflows/src/ci.yaml`) now enhance Groq request error handling: when a response is not OK, they attempt to parse the JSON error body, extract the message, and throw an error that includes the model name (`process.env.GROQ_MODEL`) and the detailed message, instead of a generic HTTP status error.
+
 ## v9.0.72
 
 - Fixed Hayagriva Postscript invocation and made the Zotero API available to Hayagriva postscripts
