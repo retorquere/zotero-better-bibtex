@@ -133,12 +133,16 @@ jobs:
         retention-days: 1
 
   changelog-pr:
-    if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v')
+    if: >-
+      !cancelled() &&
+      (needs.build.result == 'success' || needs.build.result == 'skipped') &&
+      github.event_name == 'push' &&
+      (startsWith(github.ref, 'refs/tags/v') || contains(github.event.head_commit.message, '#changelog'))
     needs: build
     runs-on: ubuntu-latest
     timeout-minutes: 10
     concurrency:
-      group: changelog-${{ github.ref }}
+      group: changelog-${{ github.repository }}
       cancel-in-progress: false
     permissions:
       contents: write
@@ -154,19 +158,25 @@ jobs:
       id: changelog
       uses: actions/github-script@v9
       env:
-        TAG_NAME: ${{ github.ref_name }}
+        TAG_NAME: ${{ github.ref_type == 'tag' && github.ref_name || '' }}
+        COMMIT_SHA: ${{ github.sha }}
         GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
-        GROQ_MODEL: ${{ vars.GROQ_MODEL || 'llama-3.3-70b-versatile' }}
+        GROQ_MODEL: ${{ vars.GROQ_MODEL || 'openai/gpt-oss-120b' }}
       with:
         script: |
           const fs = require('node:fs');
           const { execFileSync, spawn } = require('node:child_process');
-          const tag = process.env.TAG_NAME;
+          const git = (...args) => execFileSync('git', args, { encoding: 'utf8', maxBuffer: 64 * 1024 * 1024 });
+          // Explicit tags take precedence; commit-triggered retries target the newest reachable stable release.
+          const tag = process.env.TAG_NAME || git('tag', '--merged', process.env.COMMIT_SHA, '--sort=-version:refname', '--list', 'v*')
+            .split(/\r?\n/).find(candidate => /^v\d+\.\d+\.\d+$/.test(candidate));
+          if (!tag) throw new Error('No stable release tag is reachable from the triggering commit');
           if (!/^v\d+\.\d+\.\d+$/.test(tag)) {
             core.info(`Skipping non-release tag ${tag}`);
             core.setOutput('updated', 'false');
             return;
           }
+          core.setOutput('tag', tag);
 
           const heading = `## ${tag}`;
           const changelog = fs.existsSync('CHANGELOG.md') ? fs.readFileSync('CHANGELOG.md', 'utf8') : '';
@@ -177,7 +187,6 @@ jobs:
           }
           if (!process.env.GROQ_API_KEY) throw new Error('Configure the GROQ_API_KEY repository secret');
 
-          const git = (...args) => execFileSync('git', args, { encoding: 'utf8', maxBuffer: 64 * 1024 * 1024 });
           const current = git('rev-parse', '--verify', `refs/tags/${tag}^{commit}`).trim();
           let previous = '';
           if (git('rev-list', '--parents', '-n', '1', current).trim().split(' ').length > 1) {
@@ -222,7 +231,7 @@ jobs:
             body: JSON.stringify({
               model: process.env.GROQ_MODEL,
               temperature: 0.2,
-              max_tokens: 2048,
+              max_completion_tokens: 8192,
               messages: [
                 {
                   role: 'system',
@@ -254,13 +263,13 @@ jobs:
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
         add-paths: CHANGELOG.md
-        commit-message: 'docs: update changelog for ${{ github.ref_name }}'
-        title: 'docs: update changelog for ${{ github.ref_name }}'
+        commit-message: 'docs: update changelog for ${{ steps.changelog.outputs.tag }}'
+        title: 'docs: update changelog for ${{ steps.changelog.outputs.tag }}'
         body: |
-          AI-generated release notes for `${{ github.ref_name }}`, using Groq and the commit messages and code diff since the previous release tag.
+          AI-generated release notes for `${{ steps.changelog.outputs.tag }}`, using Groq and the commit messages and code diff since the previous release tag.
 
           Review for accuracy before merging.
-        branch: changelog/update-${{ github.ref_name }}
+        branch: changelog/update-${{ steps.changelog.outputs.tag }}
         base: ${{ github.event.repository.default_branch }}
 
   site:
