@@ -420,7 +420,6 @@ export function generateBibTeX(collected: Collected): Translation {
   translation.bibtex = new BibTeXExporter(translation)
 
   Entry.installPostscript(translation)
-  translation.bibtex.prepare_strings()
 
   // translation.output += `\n% ${translation.header.label}\n`
 

@@ -6,7 +6,8 @@ import { serializer } from './item-export-format'
 import { isBeta } from './client'
 
 const { ZOTERO_CONFIG } = ChromeUtils.importESModule('resource://zotero/config.mjs')
-import init from '@retorquere/bibtex-parser'
+import init, { parse } from '@retorquere/bibtex-parser'
+import { Exporter as TeXExporter } from '../translators/bibtex/exporter'
 
 import { Preference } from './prefs'
 import { affects, Preferences } from '../gen/preferences/meta'
@@ -20,6 +21,8 @@ import { Job, worker, Exporter, Message } from './translators/worker'
 import { selectedLibraryID } from './library'
 
 Events.on('preference-changed', async ({ data: pref }) => {
+  if (pref === 'strings') await Translators.cacheStrings()
+
   for (const translator of (affects[pref] || [])) {
     await Cache.Exports.dropTranslator(translator)
   }
@@ -74,6 +77,7 @@ export const Translators = new class {
       needs: [ 'worker', 'keymanager' ],
       startup: async () => {
         await init({ module_or_path: 'chrome://zotero-better-bibtex/content/resource/bibtex_parser_bg.wasm' })
+        await this.cacheStrings()
 
         worker.addEventListener('message', (e: Event) => {
           const data = (e as MessageEvent).data as Message
@@ -122,6 +126,13 @@ export const Translators = new class {
         await Zotero.Translators.reinit()
       },
     })
+  }
+
+  /** Refresh both export contexts only when the strings preference changes. */
+  public async cacheStrings(): Promise<void> {
+    const strings: Record<string, string> = Preference.strings ? parse(Preference.strings).strings : {}
+    TeXExporter.setStrings(strings)
+    await Exporter.setStrings(strings)
   }
 
   public getTranslatorId(name: string): string {

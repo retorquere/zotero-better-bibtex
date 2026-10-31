@@ -46,6 +46,7 @@ log.info('json-rpc: main worker started')
 class ExporterClient extends WorkerClient implements ExporterInterface {
   public ready = false
   declare public initialize: (config: { CSL_MAPPINGS: any; dateFormatsJSON: any; lastUpdated: string }) => Promise<void>
+  declare public setStrings: (strings: Record<string, string>) => Promise<void>
   declare public terminate: () => Promise<void>
   declare public start: (config: Job) => Promise<{ cacheRate: number; output: string }>
 

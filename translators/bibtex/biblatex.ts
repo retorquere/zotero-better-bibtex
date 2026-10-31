@@ -338,7 +338,6 @@ export function generateBibLaTeX(collected: Collected): Translation {
   translation.bibtex = new BibTeXExporter(translation)
 
   Entry.installPostscript(translation)
-  translation.bibtex.prepare_strings()
 
   for (const item of translation.bibtex.items) {
     const entry = new Entry(item, config, translation)
