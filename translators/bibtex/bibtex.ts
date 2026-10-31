@@ -613,7 +613,7 @@ async function parseBibTeX(translation: Translation): Promise<Library> {
     verbatimFields: translation.verbatimFields,
     raw: translation.collected.preferences.rawImports,
     strings: preloadedStrings.enabled ? preloadedStrings.strings : '',
-    removeOuterBraces: [ 'doi', 'publisher', 'location', 'title', 'booktitle' ],
+    removeOuterBraces: [ 'keywords', 'doi', 'publisher', 'location', 'title', 'booktitle' ],
   })
 }
 
