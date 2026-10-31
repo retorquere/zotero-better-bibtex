@@ -230,7 +230,7 @@ jobs:
           if (!process.env.GROQ_API_KEY) throw new Error('Configure the GROQ_API_KEY repository secret');
 
           // Generate separate entries so each release is described using only its own changes.
-          for (const tag of pending) {
+          for (const [releaseIndex, tag] of pending.entries()) {
             const heading = `## ${tag}`;
             const current = git('rev-parse', '--verify', `refs/tags/${tag}^{commit}`).trim();
             let previous = '';
@@ -264,10 +264,10 @@ jobs:
             const commits = await boundedGit(24000, 'log', '--reverse', '--format=%h %s%n%b', range, '--');
             const summary = await boundedGit(12000, 'diff', '--stat', base, current, '--', ...paths);
             const diff = await boundedGit(96000, 'diff', '--no-ext-diff', '--no-color', '--unified=3', base, current, '--', ...paths);
-            core.info(`Generating changelog for ${previous || 'initial release'} -> ${tag}`);
+            core.info(`Release ${releaseIndex + 1}/${pending.length}: generating changelog for ${previous || 'initial release'} -> ${tag}`);
 
             // Budget prompt and output together; retry truncated evidence in smaller pieces without losing changes.
-            async function requestNotes(content, task, depth = 0) {
+            async function requestNotes(content, task, depth = 0, label = 'notes') {
               const request = {
                 model: process.env.GROQ_MODEL,
                 temperature: 0.2,
@@ -310,9 +310,12 @@ jobs:
               if (inputTokens + request.max_completion_tokens > 7500) throw new Error('Changelog request exceeds the safe 8,000 TPM budget');
               let response;
               for (let attempt = 0; attempt < 4; attempt++) {
-                await delay(Math.max(0, nextRequestAt - Date.now()));
+                const wait = Math.max(0, nextRequestAt - Date.now());
+                if (wait) core.info(`${tag} ${label}: waiting ${Math.ceil(wait / 1000)}s for the rate-limit budget`);
+                await delay(wait);
+                const startedAt = Date.now();
                 nextRequestAt = Date.now() + 61000;
-                core.info(`Requesting ${tag} notes with approximately ${inputTokens} input tokens (attempt ${attempt + 1})`);
+                core.info(`${tag} ${label}: requesting approximately ${inputTokens} input tokens, up to ${request.max_completion_tokens} output tokens (attempt ${attempt + 1}/4)`);
                 response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
                   method: 'POST',
                   signal: AbortSignal.timeout(120000),
@@ -322,13 +325,14 @@ jobs:
                   },
                   body: JSON.stringify(request),
                 });
+                core.info(`${tag} ${label}: received HTTP ${response.status} after ${((Date.now() - startedAt) / 1000).toFixed(1)}s`);
                 if (response.status !== 429 || attempt === 3) break;
                 const retryAfter = response.headers.get('retry-after');
                 const retryAt = retryAfter && (Number.isFinite(Number(retryAfter))
                   ? Date.now() + Number(retryAfter) * 1000 : Date.parse(retryAfter));
                 nextRequestAt = Math.max(nextRequestAt, Number.isFinite(retryAt) ? retryAt : Date.now() + 61000);
                 await response.text();
-                core.info('Groq rate limit reached; waiting before retrying');
+                core.info(`${tag} ${label}: Groq rate limit reached; retrying after the budget resets`);
               }
               if (!response.ok) {
                 const failure = await response.json().catch(() => null);
@@ -342,9 +346,9 @@ jobs:
               if (choice?.finish_reason === 'length' && depth < 3 && characters.length > 1) {
                 const middle = Math.floor(characters.length / 2);
                 const partialTask = `${task}\nThis is one part of a larger evidence fragment; describe only changes supported by this part.`;
-                core.info(`Groq truncated ${tag} notes; splitting the evidence at recovery depth ${depth + 1}`);
-                const first = await requestNotes(characters.slice(0, middle).join(''), partialTask, depth + 1);
-                const second = await requestNotes(characters.slice(middle).join(''), partialTask, depth + 1);
+                core.info(`${tag} ${label}: output truncated; splitting into two recovery parts at depth ${depth + 1}`);
+                const first = await requestNotes(characters.slice(0, middle).join(''), partialTask, depth + 1, `${label}/part 1`);
+                const second = await requestNotes(characters.slice(middle).join(''), partialTask, depth + 1, `${label}/part 2`);
                 return `${first}\n${second}`;
               }
               let notes;
@@ -356,18 +360,20 @@ jobs:
               if (choice?.finish_reason !== 'stop' || !Array.isArray(notes) || !notes.length || !notes.every(note => typeof note === 'string' && note.trim() && !note.includes('```'))) {
                 throw new Error(`Groq returned invalid release notes for ${tag}: finish_reason=${choice?.finish_reason || 'missing'}, usage=${JSON.stringify(result.usage || {})}, content_length=${choice?.message?.content?.length || 0}, recovery_depth=${depth}`);
               }
+              core.info(`${tag} ${label}: completed (${notes.length} notes)`);
               return notes.map(note => `- ${note.trim().replace(/\s+/g, ' ').replace(/^[-*+]\s+/, '')}`).join('\n');
             }
             const evidence = JSON.stringify({ release: tag, previous: previous || null, commits, summary, diff });
             const chunks = splitEvidence(evidence);
+            core.info(`${tag}: ${chunks.length} evidence chunks to process; requests are paced at least 61s apart`);
             const entries = [];
             for (const [index, chunk] of chunks.entries()) {
-              entries.push(await requestNotes(chunk, `This is evidence fragment ${index + 1} of ${chunks.length} for ${tag}, following ${previous || 'the initial commit'}. Describe only changes evidenced in this fragment; other fragments are handled separately.`));
+              entries.push(await requestNotes(chunk, `This is evidence fragment ${index + 1} of ${chunks.length} for ${tag}, following ${previous || 'the initial commit'}. Describe only changes evidenced in this fragment; other fragments are handled separately.`, 0, `chunk ${index + 1}/${chunks.length}`));
             }
             let entry = entries.join('\n');
             // Consolidate when it fits; otherwise preserve details rather than truncate the collected notes.
             if (entries.length > 1 && splitEvidence(entry).length === 1) {
-              entry = await requestNotes(entry, `Consolidate these draft notes for ${tag}. Remove duplicate changes and bookkeeping-only placeholders when substantive changes exist. Preserve distinct changes and their specific details.`);
+              entry = await requestNotes(entry, `Consolidate these draft notes for ${tag}. Remove duplicate changes and bookkeeping-only placeholders when substantive changes exist. Preserve distinct changes and their specific details.`, 0, 'consolidation');
             } else if (entries.length > 1) {
               const lines = [...new Set(entry.split('\n'))];
               const substantive = lines.filter(line => !line.startsWith('- Release bookkeeping only;'));
@@ -376,9 +382,11 @@ jobs:
             const next = releases.slice(releases.indexOf(tag) + 1).find(release => documented.has(release));
             const insertion = next ? changelog.search(new RegExp(`^## ${next.replaceAll('.', '\\.')}\\s*$`, 'm')) : changelog.length;
             changelog = `${changelog.slice(0, insertion)}${heading}\n\n${entry}\n\n${changelog.slice(insertion)}`;
+            core.info(`Completed release ${releaseIndex + 1}/${pending.length}: ${tag}`);
           }
           // Commit the file only after all requests succeed, avoiding partially generated backfills.
           fs.writeFileSync('CHANGELOG.md', changelog);
+          core.info(`Wrote ${pending.length} release entries to CHANGELOG.md`);
           core.setOutput('updated', 'true');
     - name: Create changelog pull request
       if: steps.changelog.outputs.updated == 'true'
