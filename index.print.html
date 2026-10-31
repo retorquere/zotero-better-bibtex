@@ -15238,6 +15238,20 @@ the cache during first startup of the newer version. This can be a nuisance if y
 <h1 id="changelog">Changelog</h1>
 
 <!-- WARNING: GENERATED FROM https://github.com/retorquere/zotero-better-bibtex/blob/master/CHANGELOG.md. EDITS WILL BE OVERWRITTEN -->
+<h2 id="v9074">v9.0.74<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard" aria-label="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg" aria-hidden="true"></i></button></span></h2>
+<ul>
+<li>The CI workflow scripts now enhance error handling for Groq API calls: when a request fails, the script parses the JSON error response (if any) and includes the model name and detailed error message in the thrown exception, instead of only reporting the HTTP status and generic status text.</li>
+</ul>
+<h2 id="v9073">v9.0.73<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard" aria-label="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg" aria-hidden="true"></i></button></span></h2>
+<ul>
+<li>The library loading step now filters collection item references to include only IDs that actually exist, preventing attempts to sort or process missing items and avoiding related runtime errors.</li>
+<li>A new test case for the &ldquo;Export Hangs on beta11&rdquo; scenario (issue #3642) was added, expanding the test suite to cover this export failure condition.</li>
+<li>Parsing of author name components now respects explicit family, given, prefix, and useprefix fields, enabling correct handling of name prefixes such as &ldquo;de&rdquo; in exported citations.</li>
+<li>Support for the CSL fields shorttitle, shortjournal, and volumes was added, allowing these abbreviated titles and volume counts to be retained in exported BibTeX entries.</li>
+<li>Handling of the langid field was implemented to preserve language identification metadata during import and export.</li>
+<li>Support for the pagetotal field was added, enabling total page counts to be captured in bibliography records.</li>
+<li>Processing of online resource entries was improved by recognizing url and urldate fields for accurate citation of web resources.</li>
+</ul>
 <h2 id="v9072">v9.0.72<span class="btn cstyle anchor copyanchor scrollanchor link noborder notitle interactive"><button type="button" title="Copy link to clipboard" aria-label="Copy link to clipboard"><i class="fa-fw fas fa-link fa-lg" aria-hidden="true"></i></button></span></h2>
 <ul>
 <li>Fixed Hayagriva Postscript invocation and made the Zotero API available to Hayagriva postscripts</li>
