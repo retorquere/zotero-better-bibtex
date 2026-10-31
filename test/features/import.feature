@@ -28,7 +28,7 @@ Feature: Import
     And an export using "Better BibLaTeX" should match "import/*.roundtrip.bib"
 
   Scenario: detect-urls
-    When I set preference .verbatimFields to "url,doi,file,pdf,ids,eprint,/^verb[a-z]$/,groups,/^citeulike-linkout-[0-9]+$/,/^bdsk-url-[0-9]+$/, /^url_/"
+    When I set preference .verbatimFields to "url,doi,file,pdf,ids,eprint,verb?,groups,citeulike-linkout-*,bdsk-url-*,url_*"
     And I import 1 reference from "import/*.bib"
     Then the library should match "import/*.json"
 

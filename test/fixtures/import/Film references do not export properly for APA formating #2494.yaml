@@ -15,11 +15,11 @@ config:
     worker: true
 version:
   zotero: 10.0.6
-  bbt: 9.0.71.emile.kiku.local
+  bbt: 9.0.71.emile.Mac.fritz.box
 collections: {}
 items:
   -
-    key: G7P4Y8RY
+    key: VYZSEIWA
     version: 0
     itemType: videoRecording
     date: '1975'
@@ -34,20 +34,20 @@ items:
       -
         tag: Drama
       -
-        tag: Mentally ill$$QMentally ill
+        tag: Mentally illQMentally ill
     relations: {}
-    dateAdded: 2026-10-14T12:55:06Z
-    dateModified: 2026-10-14T12:55:06Z
-    uri: http://zotero.org/users/8230813/items/G7P4Y8RY
-    itemID: 197
+    dateAdded: 2026-10-31T07:10:35Z
+    dateModified: 2026-10-31T07:10:35Z
+    uri: http://zotero.org/users/8230813/items/VYZSEIWA
+    itemID: 114
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: G7P4Y8RY
+    itemKey: VYZSEIWA
     libraryID: 1
     publisher: United Artists
   -
-    key: VUB3AVZQ
+    key: 9FELUNXN
     version: 0
     itemType: tvBroadcast
     date: '1975'
@@ -62,20 +62,20 @@ items:
       -
         tag: Drama
       -
-        tag: Mentally ill$$QMentally ill
+        tag: Mentally illQMentally ill
     relations: {}
-    dateAdded: 2026-10-14T12:55:07Z
-    dateModified: 2026-10-14T12:55:07Z
-    uri: http://zotero.org/users/8230813/items/VUB3AVZQ
-    itemID: 200
+    dateAdded: 2026-10-31T07:10:35Z
+    dateModified: 2026-10-31T07:10:35Z
+    uri: http://zotero.org/users/8230813/items/9FELUNXN
+    itemID: 117
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: VUB3AVZQ
+    itemKey: 9FELUNXN
     libraryID: 1
     publisher: United Artists
   -
-    key: J5MF8U6X
+    key: VIRS49K6
     version: 0
     itemType: film
     date: '1975'
@@ -90,20 +90,20 @@ items:
       -
         tag: Drama
       -
-        tag: Mentally ill$$QMentally ill
+        tag: Mentally illQMentally ill
     relations: {}
-    dateAdded: 2026-10-14T12:55:07Z
-    dateModified: 2026-10-14T12:55:07Z
-    uri: http://zotero.org/users/8230813/items/J5MF8U6X
-    itemID: 198
+    dateAdded: 2026-10-31T07:10:35Z
+    dateModified: 2026-10-31T07:10:35Z
+    uri: http://zotero.org/users/8230813/items/VIRS49K6
+    itemID: 115
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: J5MF8U6X
+    itemKey: VIRS49K6
     libraryID: 1
     publisher: United Artists
   -
-    key: 8YPV3QAV
+    key: PLYFGFDU
     version: 0
     itemType: tvBroadcast
     date: '1975'
@@ -118,15 +118,15 @@ items:
       -
         tag: Drama
       -
-        tag: Mentally ill$$QMentally ill
+        tag: Mentally illQMentally ill
     relations: {}
-    dateAdded: 2026-10-14T12:55:07Z
-    dateModified: 2026-10-14T12:55:07Z
-    uri: http://zotero.org/users/8230813/items/8YPV3QAV
-    itemID: 199
+    dateAdded: 2026-10-31T07:10:35Z
+    dateModified: 2026-10-31T07:10:35Z
+    uri: http://zotero.org/users/8230813/items/PLYFGFDU
+    itemID: 116
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: 8YPV3QAV
+    itemKey: PLYFGFDU
     libraryID: 1
     publisher: United Artists
