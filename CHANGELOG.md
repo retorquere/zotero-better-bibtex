@@ -1,3 +1,26 @@
+## v9.0.75
+
+- The CI workflow’s changelog‑PR job now triggers on pushes that create a version tag or contain “#changelog” in the commit message, uses a 120‑minute timeout, and employs a repository‑wide concurrency key instead of per‑ref grouping to avoid cancelling parallel runs.
+- The changelog generation step now installs the js‑tiktoken tokenizer and splits the evidence JSON into token‑budgeted chunks, ensuring each AI request stays within model limits and improving handling of large commit histories.
+- Tag detection was enhanced so that an explicit TAG_NAME takes precedence; if absent, the job finds the newest reachable stable release tag from the triggering commit and aborts with an error when no such tag exists.
+- The script now tracks which releases are already documented in CHANGELOG.md and generates entries for up to the ten most recent undocumented stable releases, preserving existing entries and leaving older gaps untouched.
+- Git data collection now uses bounded reads with configurable size limits, reports when data is truncated, processes commits in reverse order, and increases token limits for commits, diff stats, and full diffs (up to 96 KB) to capture larger change sets.
+- The default LLM model for generating release notes was switched from a Llama model to OpenAI’s gpt‑oss‑120b, and the request payload now uses the newer JSON‑schema response format with a max_completion_tokens field.
+- Environment variables for the commit SHA and conditional tag handling were added, and the script now sets an explicit output variable for the tag being processed.
+- The Groq model default was changed from llama‑3.3‑70b‑versatile to openai/gpt‑oss‑120b; request logic now adds a low‑effort flag for OSS models, dynamically adjusts max output tokens based on input size, and enforces a minimum output budget for more reliable AI‑generated notes.
+- Rate‑limit handling was added: the action enforces a 61‑second minimum interval between requests, retries up to four times on HTTP 429 responses, and logs detailed timing and token‑usage information to reduce throttling failures.
+- The changelog generation script now validates that the AI response is a proper JSON array of note strings, rejects malformed or incomplete outputs, consolidates fragments, removes duplicate or bookkeeping‑only entries, and then writes the cleaned notes to CHANGELOG.md.
+- Pull‑request creation now uses the actual generated tag (or an empty string when not a tag) for the commit message, title, branch name, and body, with the body clarifying that the notes fill missing entries among the latest ten stable releases.
+- The Better BibTeX changelog action now processes up to ten recent release tags, skips any versions already present in CHANGELOG.md, and creates a separate changelog entry for each pending release instead of a single combined entry.
+- Prompt construction for the Groq LLM was overhauled to request a JSON‑schema response, include detailed system instructions, budget input and output tokens dynamically, and add a low‑effort flag for open‑source GPT models.
+- Environment handling was refined: the action prefers an explicit TAG_NAME, falls back to the newest reachable stable tag, and validates that the tag matches the vX.Y.Z pattern before proceeding.
+- The workflow now batches AI requests, writes the CHANGELOG file only after all Groq requests succeed, and updates commit messages, PR titles, branch names, and PR descriptions to reference the actual release tag output rather than the Git ref name.
+- In the translators module, collection export handling was refactored with a new private helper `collectionContents` that resolves selected collections to root collections and their descendants, returning version‑appropriate rows (roots for Zotero 11, descendants for older versions) to improve compatibility across Zotero versions.
+- The translators module now validates collection scopes more strictly, throwing an error when the collection list is empty or contains invalid IDs, and removed the beta‑specific `isBeta` import and related conditional logic.
+- A new type alias `CollectionScope` was introduced to represent collection‑type export scopes, and the export job now uses this type for clearer type safety.
+- The release‑message template was updated to state compatibility with Zotero 10 and Zotero 11 beta, reflecting the supported Zotero versions for this release.
+- Debug logging of Jabref group import details in the BibTeX importer was removed, cleaning up console output during import.
+
 ## v9.0.74
 
 - The CI workflow scripts now enhance error handling for Groq API calls: when a request fails, the script parses the JSON error response (if any) and includes the model name and detailed error message in the thrown exception, instead of only reporting the HTTP status and generic status text.
