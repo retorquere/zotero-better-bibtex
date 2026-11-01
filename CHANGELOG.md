@@ -1,3 +1,9 @@
+## v9.0.76
+
+- Collection export now includes only root collections when running under Zotero 11, while retaining the previous behavior for earlier Zotero versions; the exported items and collection rows are resolved according to the version‑specific expectations.
+- Export of collections now validates that the collections list is non‑empty and that all IDs are numeric, throwing an error if the scope is invalid.
+- Better BibTeX’s supported Zotero versions notice has been updated to declare compatibility with Zotero 10 and Zotero 11 beta.
+
 ## v9.0.74
 
 - The CI workflow scripts now enhance error handling for Groq API calls: when a request fails, the script parses the JSON error response (if any) and includes the model name and detailed error message in the thrown exception, instead of only reporting the HTTP status and generic status text.
