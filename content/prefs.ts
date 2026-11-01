@@ -161,10 +161,16 @@ export const Preference = new class PreferenceManager extends PreferenceManagerB
     this.move('suppressSentenceCase', 'importSentenceCase', old => old ? 'off' : 'on+guess')
     this.move('suppressBraceProtection', 'exportBraceProtection', old => !old)
     this.move('suppressTitleCase', 'exportTitleCase', old => !old)
-    this.move('exportTitleCase', 'exportTitlecase', (old: boolean) => {
-      Zotero.Prefs.set('translators.better-bibtex.exportCaseProtection', old ? '' : 'off')
-      return old ? '' : 'off'
-    })
+    const legacyTitlecasePref = `${this.prefix}exportTitleCase`
+    const titlecasePref = `${this.prefix}exportTitlecase`
+    const legacyTitlecase = Zotero.Prefs.get(legacyTitlecasePref) as boolean | undefined
+    if (typeof legacyTitlecase !== 'undefined') {
+      Zotero.Prefs.clear(legacyTitlecasePref)
+      // The new title-casing and case-protection settings are independent; only migrate title-casing.
+      if (!Services.prefs.prefHasUserValue(`extensions.zotero.${titlecasePref}`)) {
+        Zotero.Prefs.set(titlecasePref, legacyTitlecase ? '' : 'off')
+      }
+    }
     this.move('jieba', 'chinese', old => !!old)
     this.move('kuroshiro', 'japanese', old => !!old)
 
