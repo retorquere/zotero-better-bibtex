@@ -58,6 +58,7 @@ Feature: Export
       | 6    | Better BibLaTeX.stable-keys |
       | 1    | Better BibTeX does not use biblatex fields eprint and eprinttype #170 |
       | 1    | Better BibTeX export from Zotero missing Extra fields eg issued #2816 |
+      | 1    | Better BibTeX TeX.subtitle not applying title casing #3637 |
       | 1    | Better control of citation key capitalization #3492 |
       | 3    | BetterBibLaTeX exports articles as online #2058 |
       | 1    | BetterBibLaTeX sets option useprefixtrue with no way to turn off #3281-1 |
@@ -397,7 +398,7 @@ Feature: Export
 
     Examples:
       | refs | file |
-        | 1    | Better Hayagriva export drops the Number field of Standard items #3636 |
+      | 1    | Better Hayagriva export drops the Number field of Standard items #3636 |
       | 1    | Export year ranges from Original Date #3482 |
       | 2    | Hayagriva date field in wrong format #3562 |
       | 2    | Hayagriva export drops the Edition field for books #3634 |

@@ -1,0 +1,52 @@
+config:
+  id: 36a3b0b5-bad0-4a04-b79b-441c7cef77db
+  label: BetterBibTeX JSON
+  preferences:
+    asciiBibLaTeX: true
+    citekeyFormat: auth + ":" + shorttitle(2, 2) + ":" + year
+    DOIandURL: doi
+    fillKeyAfter: 1
+    journalAbbreviation: auto
+    skipFields: file, abstract, urldate, copyright, keywords
+  options: {}
+version:
+  zotero: 10.0.6
+  bbt: 9.0.71
+collections: {}
+items:
+  -
+    key: XBS6FLL3
+    version: 17512
+    itemType: journalArticle
+    title: 'Topological Mixed States: Phases of Matter from Axiomatic Approaches'
+    date: 2026-10-2
+    url: https://doi.org/10.1103/3bpt-f9pd
+    extra: "arXiv:2506.04221 [cond-mat.str-el]\n\nTeX.title: Topological mixed states\nTeX.subtitle: Phases of matter from axiomatic approaches"
+    volume: '16'
+    publisher: American Physical Society
+    pages: '041002'
+    publicationTitle: Physical Review X
+    DOI: 10.1103/3bpt-f9pd
+    citationKey: Yang:TopologicalMixed:2026
+    issue: '4'
+    journalAbbreviation: Phys. Rev. X
+    ISSN: 2160-3308
+    creators:
+      -
+        firstName: Tai-Hsuan
+        lastName: Yang
+        creatorType: author
+      -
+        firstName: Bowen
+        lastName: Shi
+        creatorType: author
+      -
+        firstName: Jong Yeon
+        lastName: Lee
+        creatorType: author
+    tags: []
+    dateAdded: 2026-10-15T19:35:31Z
+    dateModified: 2026-10-15T19:43:16Z
+    itemID: 1753
+    notes: []
+    autoJournalAbbreviation: Phys. Rev. X

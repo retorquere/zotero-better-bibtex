@@ -73,7 +73,7 @@ tex.corp= Black & Decker
 tex.formula: $\sum\limits_{i=1}^{n} -p(m_{i})\log_{2}(p(m_{i}))$
 ```
 
-BBT will apply case-protection rules for non-raw fields by including capitals in the prefix, eg
+BBT will apply title-casing and case-protection rules for non-raw fields by including capitals in the prefix, eg
 
 ```
 TeX.corp: Black & Decker
