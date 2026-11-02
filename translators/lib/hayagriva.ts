@@ -291,6 +291,7 @@ function parseExtraSerialNumbers(extra: unknown): SerialNumberObject {
   return serial
 }
 
+/** Map Zotero identifiers and item-specific numbers to Hayagriva's serial-number object. */
 function serialNumber(item: Serialized.RegularItem): SerialNumberObject {
   const serial: SerialNumberObject = {
     doi: item.DOI,
@@ -302,6 +303,7 @@ function serialNumber(item: Serialized.RegularItem): SerialNumberObject {
 
   switch (item.itemType) {
     case 'report':
+    case 'standard':
     case 'patent':
     case 'case':
       serial.serial = item.number
