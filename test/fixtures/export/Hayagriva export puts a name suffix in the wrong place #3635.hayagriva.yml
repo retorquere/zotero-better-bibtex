@@ -1,0 +1,19 @@
+lienhard2024:
+  author:
+  - given-name: John H.
+    name: Lienhard
+    suffix: IV
+  - given-name: John H.
+    name: Lienhard
+    suffix: V
+  date: 2024
+  edition: 6
+  language: en
+  publisher:
+    location: Cambridge, Massachusetts
+    name: Phlogiston Press
+  title: A heat transfer textbook
+  type: book
+  url:
+    date: '2026-10-15'
+    value: https://ahtt.mit.edu/

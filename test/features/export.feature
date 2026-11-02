@@ -401,6 +401,7 @@ Feature: Export
       | 2    | Hayagriva date field in wrong format #3562 |
       | 2    | Hayagriva export drops the Edition field for books #3634 |
       | 2    | Hayagriva export Encyclopedia article doesnt have parent #3585 |
+      | 1    | Hayagriva export puts a name suffix in the wrong place #3635 |
       | 2    | Hayagriva export retain conference name information #3593 |
       | 5    | Hayagriva format bugs #3579 |
 

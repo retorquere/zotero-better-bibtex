@@ -1,0 +1,46 @@
+config:
+  id: 36a3b0b5-bad0-4a04-b79b-441c7cef77db
+  label: BetterBibTeX JSON
+  preferences:
+    biblatexExtendedNameFormat: false
+    biblatexUsePrefix: false
+    citekeyFormat: auth.lower + year
+    exportBraceProtection: false
+    exportTitlecase: off
+    fillKeyAfter: 1
+    skipFields: file
+    warnBulkModify: 0
+  options: {}
+version:
+  zotero: 10.0.6
+  bbt: 9.0.71
+collections: {}
+items:
+  -
+    key: SALYJH3T
+    version: 118
+    itemType: book
+    title: A heat transfer textbook
+    date: '2024'
+    citationKey: lienhard2024
+    url: https://ahtt.mit.edu/
+    accessDate: 2026-10-15
+    language: en
+    publisher: Phlogiston Press
+    place: Cambridge, Massachusetts
+    edition: '6'
+    creators:
+      -
+        firstName: John H., V
+        lastName: Lienhard
+        creatorType: author
+      -
+        firstName: John H., IV
+        lastName: Lienhard
+        creatorType: author
+    tags: []
+    dateAdded: 2026-10-15T09:54:44Z
+    dateModified: 2026-10-15T09:58:45Z
+    itemID: 40
+    notes: []
+    autoJournalAbbreviation: ''
