@@ -740,39 +740,8 @@ class ZoteroItem {
     return false
   }
 
-  protected $publisher(value: string, field: string): boolean {
-    // difference between jurism and zotero. Prepending 'field' makes the import prefer exact matches to the input
-    const candidates = [field].concat(['institution', 'publisher'])
-    field = candidates.find(f => this.validFields[f]) as string
-    if (!field) return this.fallback(candidates, value)
-
-    const flatten = (v): string => typeof v === 'string' ? v : Array.isArray(v) ? v.join(' and ') : ''
-
-    this.item[field] = [
-      flatten(this.bibtex.fields.publisher),
-      flatten(this.bibtex.fields.institution),
-      flatten(this.bibtex.fields.school),
-      flatten(this.bibtex.fields.organization),
-    ].filter(v => v.replace(/[ \t\r\n]+/g, ' ').trim()).join(' / ')
-
-    return true
-  }
-
-  protected $institution(value: string, field: string): boolean {
-    return this.$publisher(value, field)
-  }
-  protected $school(value: string, field: string): boolean {
-    return this.$publisher(value, field)
-  }
-  protected $organization(value: string, field: string): boolean {
-    return this.$publisher(value, field)
-  }
-
-  protected $address(value: string, field: string): boolean {
-    return this.$location(value, field)
-  }
-
-  protected $location(_value: string, _field: string): boolean {
+  /** Resolve place from location/address lists and consume the handled source fields. */
+  private $location(): void {
     const clean = (a: string[]) => a.map((v: string) => v.replace(/[\n ]+/g, ' ').trim()).filter(_ => _).join(' and ')
     const location = {
       source: 'location',
@@ -782,6 +751,7 @@ class ZoteroItem {
       source: 'address',
       value: clean(asarray(this.bibtex.fields.address)),
     }
+    // Prefer location for event types, address otherwise; retain the other value in Extra.
     const place = this.event.size && this.event.has(this.bibtex.type) // #3287
       ? { field: location, extra: address }
       : { extra: location, field: address }
@@ -795,8 +765,6 @@ class ZoteroItem {
       delete this.bibtex.fields.location
       delete this.bibtex.fields.address
     }
-
-    return true
   }
 
   protected '$call-number'(value: string): boolean {
@@ -1141,8 +1109,6 @@ class ZoteroItem {
         this.addAttachment({ path: att })
       }
     }
-
-    log.info('attempting import of', this.item.attachments)
 
     return true
   }
@@ -1548,7 +1514,7 @@ class ZoteroItem {
       }[this.bibtex.fields.type.toLowerCase()] || ''
     }
 
-    for (const field of ['keywords', 'keyword', 'mesh', 'tags']) {
+    for (const field of ['keywords', 'keyword', 'mesh', 'tags', 'mendeley-tags']) {
       const value = this.bibtex.fields[field]
       if (value) {
         const tags = Array.isArray(value) ? value : value.split(/\s*[,;]\s*/)
@@ -1556,6 +1522,19 @@ class ZoteroItem {
       }
       delete this.bibtex.fields[field]
     }
+
+    const publishers: string[] = []
+    for (const field of ['publisher', 'institution', 'school', 'organization']) {
+      const value = this.bibtex.fields[field]
+      if (value) publishers.push(...(Array.isArray(value) ? value : [value]))
+      delete this.bibtex.fields[field]
+    }
+    if (publishers.length) {
+      // Preserve publisher data in Extra when the item type has no publisher field.
+      this.set(['publisher', 'institution'].find(candidate => this.validFields[candidate]) || 'publisher', publishers.join(' / '), ['publisher', 'institution'])
+    }
+
+    this.$location()
 
     const urls: Set<string> = (new Set)
     for (let [field, value] of Object.entries(this.bibtex.fields)) {
@@ -1582,7 +1561,7 @@ class ZoteroItem {
           if (this.$file(value)) continue
         }
         else if (field.match(/^bdsk-url-[0-9]+$/)) {
-          this.item.attachments.push({ itemType: 'attachment', value, field, linkMode: 'linked_url' })
+          this.item.attachments.push({ itemType: 'attachment', url: value, title: field, linkMode: 'linked_url' })
           continue
         }
         else if (field.match(/^(url|howpublished|remote-url)$/)) {
