@@ -1,0 +1,404 @@
+config:
+  id: 36a3b0b5-bad0-4a04-b79b-441c7cef77db
+  label: BetterBibTeX JSON
+  preferences:
+    citekeyFold: false
+    citekeyFormat: postfix("_%(n)s") + (auth.postfix("_") + year.postfix("_") + (Title || "untitled")).lower.replace(/[^\p{L}\p{N}_-]+/gu, "_").replace(/^_+|_+$/g, "").substring(1, 40)
+    fillKeyAfter: 1
+    japanese: true
+  options:
+    keepUpdated: false
+    worker: true
+    exportDir: /Users/minimarimo/Downloads
+    exportPath: /Users/minimarimo/Downloads/民間伝承_桃娘.yaml
+    cache: true
+version:
+  zotero: 10.0.6
+  bbt: 9.0.71
+collections: {}
+items:
+  -
+    key: 7GS4WIZ3
+    version: 4550
+    itemType: webpage
+    title: 中国の宦官について
+    abstractNote: 中国の宦官ってチンポ切ってたんでしょう？恐くない？
+    date: 2000-07-31
+    citationKey: 2000_中国の宦官について
+    url: http://mimizun.com/log/2ch/occult/965023913/
+    accessDate: 2026-09-05T07:46:51Z
+    language: ja
+    creators: []
+    tags: []
+    dateAdded: 2026-09-05T07:46:51Z
+    dateModified: 2026-09-05T07:46:51Z
+    itemID: 575
+    notes: []
+    autoJournalAbbreviation: ''
+    publicationTitle: みみずん検索
+  -
+    key: 5MLSRJ7M
+    version: 4550
+    itemType: webpage
+    title: 桃娘って
+    abstractNote: オカルト板で聞いたんですが、世界史板に行けと言われました。桃娘とは何でしょうか？教えてください！
+    date: 2000-08-03
+    citationKey: 2000_桃娘って
+    url: http://mimizun.com/log/2ch/whis/965238288/
+    accessDate: 2026-09-05T07:46:58Z
+    language: ja
+    creators: []
+    tags: []
+    dateAdded: 2026-09-05T07:46:58Z
+    dateModified: 2026-09-05T07:46:58Z
+    itemID: 578
+    notes: []
+    autoJournalAbbreviation: ''
+    publicationTitle: みみずん検索
+  -
+    key: HP98ZAXZ
+    version: 4550
+    itemType: webpage
+    title: 桃娘の作り方
+    abstractNote: 「中国の宦官について」というスレに出ていました。かなり気になります。検索エンジンでも発見できなかったので、情報をください。
+    date: 2000-08-02
+    citationKey: 2000_桃娘の作り方
+    url: http://mimizun.com/log/2ch/occult/965209350/
+    accessDate: 2026-09-05T07:46:56Z
+    language: ja
+    creators: []
+    tags: []
+    dateAdded: 2026-09-05T07:46:56Z
+    dateModified: 2026-09-05T07:46:56Z
+    itemID: 577
+    notes: []
+    autoJournalAbbreviation: ''
+    publicationTitle: みみずん検索
+  -
+    key: WZ6XKK89
+    version: 4501
+    itemType: webpage
+    title: 'Xユーザーのシキ🌈🎁✨さん: 「桃娘（たおにゃん）てやつやね 曰く、桃娘は華奢で美しく体液だけでなくその身までもが美味だったとか」 / X'
+    date: 2026-08-15
+    citationKey: 2026_xユーザーのシキ_さん_桃娘_たおにゃん_てやつやね_曰く_桃娘は華奢
+    url: https://x.com/fgo_shiki_0125/status/2088882069732798652
+    accessDate: 2026-08-17T13:35:57Z
+    shortTitle: Xユーザーのシキ🌈🎁✨さん
+    language: ja
+    creators: []
+    tags: []
+    dateAdded: 2026-08-17T13:35:57Z
+    dateModified: 2026-08-17T13:35:57Z
+    itemID: 543
+    notes: []
+    autoJournalAbbreviation: ''
+    publicationTitle: X (formerly Twitter)
+  -
+    key: UWP5EXRG
+    version: 4501
+    itemType: webpage
+    title: 'Xユーザーのびっくりまんさん: 「これ中学生の頃の歴史の教科書に載ってたんだけどデマなの？確か「桃娘」って名前だった気がするけど」 / X'
+    date: 2026-08-15
+    citationKey: 2026_xユーザーのびっくりまんさん_これ中学生の頃の歴史の教科書に載ってたん
+    url: https://x.com/chrome_walk/status/2088869955815227558
+    accessDate: 2026-08-17T13:19:43Z
+    shortTitle: Xユーザーのびっくりまんさん
+    language: ja
+    creators: []
+    tags: []
+    dateAdded: 2026-08-17T13:19:43Z
+    dateModified: 2026-08-17T13:19:43Z
+    itemID: 539
+    notes: []
+    autoJournalAbbreviation: ''
+    publicationTitle: X (formerly Twitter)
+  -
+    key: 7ZMGPGMI
+    version: 4501
+    itemType: webpage
+    title: 'Xユーザーのぶるぱたさん: 「桃娘(タオニャン)とごちゃってるなこれ」 / X'
+    date: 2026-08-15
+    citationKey: 2026_xユーザーのぶるぱたさん_桃娘_タオニャン_とごちゃってるなこれ_x
+    url: https://x.com/brrbrrPatapim05/status/2088885245152231870
+    accessDate: 2026-08-17T13:24:18Z
+    shortTitle: Xユーザーのぶるぱたさん
+    language: ja
+    creators: []
+    tags: []
+    dateAdded: 2026-08-17T13:24:18Z
+    dateModified: 2026-08-17T13:24:18Z
+    itemID: 541
+    notes: []
+    autoJournalAbbreviation: ''
+    publicationTitle: X (formerly Twitter)
+  -
+    key: GVXE38JD
+    version: 4501
+    itemType: webpage
+    title: 'Xユーザーのもん 着物好き♥さん: 「桃娘？何やったっけ？ 小さい頃から桃だけ食べさせて成長させるの某国であったよね？ 桃源郷じゃなかったと思うよ。 なおその娘達は長生きはできなかった模様。 体臭も桃の香りとな。なにかの文献で見たわ。」 / X'
+    date: 2026-08-15
+    citationKey: 2026_xユーザーのもん_着物好き_さん_桃娘_何やったっけ_小さい頃から桃だ
+    url: https://x.com/qHNCPzFoaOOboh8/status/2088880778449174682
+    accessDate: 2026-08-17T13:19:31Z
+    shortTitle: Xユーザーのもん 着物好き♥さん
+    language: ja
+    creators: []
+    tags: []
+    dateAdded: 2026-08-17T13:19:31Z
+    dateModified: 2026-08-17T13:19:31Z
+    itemID: 537
+    notes: []
+    autoJournalAbbreviation: ''
+    publicationTitle: X (formerly Twitter)
+  -
+    key: GX5T59XY
+    version: 4509
+    itemType: webpage
+    title: 9. 本草綱目｜東京都立図書館
+    abstractNote: 中央図書館（港区）、多摩図書館（国分寺市）。蔵書検索、都内の公立図書館等の統合検索。江戸から明治期の刊本、写本、古地図、錦絵、漢籍。 浮世絵と江戸城造営関係資料のデジタルアーカイブ。
+    citationKey: 9_本草綱目_東京都立図書館
+    url: https://www.library.metro.tokyo.lg.jp/collection/features/digital_showcase/016/09/index.html#:~:text=%E6%98%8E%E3%81%AE%E8%90%AC%E6%9A%A624%E5%B9%B4%EF%BC%881596%EF%BC%89%E9%A0%83%E3%81%AB%E3%80%81%E7%8F%BE%E5%9C%A8%E3%81%AE%E6%B9%96%E5%8C%97%E7%9C%81%E3%81%AE%E5%8C%BB%E8%80%85%E6%9D%8E%E6%99%82%E7%8F%8D%E3%81%AE%E8%91%97%E3%81%97%E3%81%9F%E6%9C%AC%E8%8D%89%E6%9B%B8%E3%80%82%E6%9C%AC%E8%8D%89%E3%81%A8%E3%81%AF%E3%80%81%E4%B8%AD%E5%9B%BD%E3%81%8A%E3%82%88%E3%81%B3%E6%97%A5%E6%9C%AC%E3%81%AE%E4%BC%9D%E7%B5%B1%E7%9A%84%E3%81%AA%E8%96%AC%E7%89%A9%E5%AD%A6%E3%80%81%E3%81%82%E3%82%8B%E3%81%84%E3%81%AF%E5%92%8C%E6%BC%A2%E8%96%AC%E3%82%84%E3%81%9D%E3%82%8C%E3%82%92%E8%A8%98%E3%81%97%E3%81%9F%E6%9B%B8%E7%89%A9
+    accessDate: 2026-08-18T09:23:38Z
+    language: ja
+    creators: []
+    tags: []
+    dateAdded: 2026-08-18T09:23:38Z
+    dateModified: 2026-08-18T09:23:58Z
+    itemID: 566
+    notes: []
+    autoJournalAbbreviation: ''
+    publicationTitle: 東京都立図書館
+  -
+    key: LRUNQBAL
+    version: 4501
+    itemType: webpage
+    title: e国宝 - 医心方
+    citationKey: e国宝_-_医心方
+    url: https://emuseum.nich.go.jp/detail?langId=ja&webView=&content_base_id=100173&content_part_id=0&content_pict_id=0#:~:text=%E6%97%A5%E6%9C%AC%E3%81%AB%E7%8F%BE%E5%AD%98%E3%81%99%E3%82%8B%E6%9C%80%E5%8F%A4%E3%81%AE%E5%8C%BB%E5%AD%A6%E6%9B%B8%E3%80%82%E6%B0%B8%E8%A6%B32%E5%B9%B4%EF%BC%88984%EF%BC%89%E3%81%AB%E4%B8%B9%E6%B3%A2%E5%BA%B7%E9%A0%BC%EF%BC%88%E3%81%9F%E3%82%93%E3%81%B0%E3%81%AE%E3%82%84%E3%81%99%E3%82%88%E3%82%8A%E3%80%80912%2D995%EF%BC%89%E3%81%8C%E3%80%81%E4%B8%AD%E5%9B%BD%E3%81%AE%E5%A4%9A%E3%81%8F%E3%81%AE%E5%8C%BB%E6%9B%B8%E3%82%92%E5%BC%95%E7%94%A8%E3%81%97%E3%81%A6%E7%97%85%E6%B0%97%E3%81%AE%E5%8E%9F%E5%9B%A0%E3%82%84%E6%B2%BB%E7%99%82%E6%B3%95%E3%82%92%E8%BF%B0%E3%81%B9%E3%81%9F%E3%82%82%E3%81%AE
+    accessDate: 2026-08-18T07:27:06Z
+    creators: []
+    tags: []
+    dateAdded: 2026-08-18T07:27:06Z
+    dateModified: 2026-08-18T07:27:37Z
+    itemID: 554
+    notes: []
+    autoJournalAbbreviation: ''
+  -
+    key: 3LDCY9PM
+    version: 4509
+    itemType: webpage
+    title: k-state.edu/chinainfo/jinyong/shujian2.txt
+    citationKey: k-state_edu_chinainfo_jinyong_shujian2_t
+    url: https://www.k-state.edu/chinainfo/jinyong/shujian2.txt
+    accessDate: 2026-08-18T08:57:49Z
+    creators: []
+    tags: []
+    dateAdded: 2026-08-18T08:57:49Z
+    dateModified: 2026-08-18T08:57:49Z
+    itemID: 564
+    notes: []
+    autoJournalAbbreviation: ''
+  -
+    key: Y9N4JJE6
+    version: 4509
+    itemType: webpage
+    title: '太平廣記 : 婦人三 : 浙東舞女 - 中國哲學書電子化計劃'
+    abstractNote: 浙東舞女電子全文，全文檢索、相關於浙東舞女的討論及參考資料。有簡體字版、繁體字版、英文版本。
+    citationKey: sturgeon_太平廣記_婦人三_浙東舞女_-_中國哲學書電子化計劃
+    url: https://ctext.org/taiping-guangji/272/zhedongwunv/zh
+    accessDate: 2026-08-18T08:01:39Z
+    shortTitle: 太平廣記
+    language: zh-TW
+    creators:
+      -
+        firstName: Donald
+        lastName: Sturgeon
+        creatorType: author
+    tags: []
+    dateAdded: 2026-08-18T08:01:39Z
+    dateModified: 2026-08-18T08:01:39Z
+    itemID: 558
+    notes: []
+    autoJournalAbbreviation: ''
+  -
+    key: SQWN6RQ6
+    version: 4501
+    itemType: journalArticle
+    title: '桃の民俗誌 : そのシンボリズム（その二）'
+    abstractNote: "国際日本文化研究センターの研究成果を蓄積し, 公開しています.\nThe research results of the International Research Center for Japanese Studies are accumulated and published."
+    date: 1999-06-30
+    citationKey: 王_1999_桃の民俗誌_そのシンボリズム_その二
+    url: https://nichibun.repo.nii.ac.jp/records/741
+    accessDate: 2026-08-17T14:51:16Z
+    shortTitle: 桃の民俗誌
+    language: ja
+    libraryCatalog: nichibun.repo.nii.ac.jp
+    volume: '19'
+    publisher: 国際日本文化研究センター
+    pages: 123-158
+    publicationTitle: '日本研究 : 国際日本文化研究センター紀要'
+    creators:
+      -
+        firstName: 秀文
+        lastName: 王
+        creatorType: author
+    tags: []
+    dateAdded: 2026-08-17T14:51:16Z
+    dateModified: 2026-08-17T14:51:16Z
+    itemID: 545
+    notes: []
+    autoJournalAbbreviation: 日本研究 国際日本文化研究センター紀要
+  -
+    key: YEDBVVRF
+    version: 4509
+    itemType: webpage
+    title: 沙棗 SASO / 沙棗 オードパルファム｜クチコミ数473件｜注目人数521人｜@cosme
+    abstractNote: 【商品説明】香妃伝説の沙棗花の、甘く神秘的な香りが魅惑するフレグランス。
+    citationKey: 沙棗_saso_沙棗_オードパルファム_クチコミ数473件_注目人数521人_c
+    url: https://www.cosme.net/products/3927/
+    accessDate: 2026-08-18T08:52:11Z
+    language: ja
+    creators: []
+    tags: []
+    dateAdded: 2026-08-18T08:52:11Z
+    dateModified: 2026-08-18T08:52:11Z
+    itemID: 562
+    notes: []
+    autoJournalAbbreviation: ''
+  -
+    key: 85WM2M3B
+    version: 4509
+    itemType: webpage
+    title: 春來花可餐/林 玲 - 大公報
+    abstractNote: 春來食花也是一件風雅事/作者供圖。興趣愛好是吃花。「有許多許多好看的花。鮮花一直開到天邊。「想是因為我愛吃花。不僅是吃花的傻氣。哪怕是國色牡丹皆可食。「明日春陰花未老。」蘇東坡在《雨中明慶賞牡丹》中提到的「著酥煎」。但花食。打開後驚喜地發現竟是滿滿的一罎桂花。這不禁勾起我對桂花的甜美記憶來。她會把桂花曬乾後裝在枕芯裏。桂花雖是秋來之物。春來花可餐。
+    citationKey: 春來花可餐_林_玲_-_大公報
+    url: https://www.tkww.hk/epaper/view/newsDetail/1347803333791977472.html
+    accessDate: 2026-08-18T08:50:12Z
+    creators: []
+    tags: []
+    dateAdded: 2026-08-18T08:50:12Z
+    dateModified: 2026-08-18T08:50:12Z
+    itemID: 560
+    notes: []
+    autoJournalAbbreviation: ''
+    publicationTitle: 大公文匯 www.tkww.hk
+  -
+    key: ENMRPEQK
+    version: 4557
+    itemType: webpage
+    title: 桃娘
+    abstractNote: "桃娘とは、\n\n1：中国の都市伝説\n2：岡山県のキャンペーンガール\n\nここでは1について解説する。"
+    citationKey: 桃娘
+    url: https://dic.pixiv.net/a/%E6%A1%83%E5%A8%98
+    accessDate: 2026-09-05T07:59:48Z
+    language: ja
+    creators: []
+    tags: []
+    dateAdded: 2026-09-05T07:59:48Z
+    dateModified: 2026-09-05T07:59:48Z
+    itemID: 581
+    notes: []
+    autoJournalAbbreviation: ''
+    publicationTitle: ピクシブ百科事典
+  -
+    key: 9YF8YJ7X
+    version: 4566
+    itemType: webpage
+    title: 桃娘 (たおにゃん)の編集履歴 - 2024/01/31 19:53:17 版（原文）【ピクシブ百科事典】
+    abstractNote: ピクシブ百科事典はアニメやマンガ、ゲームからデザイン・アートまであらゆる言葉・現象・文化・作品を解説するみんなでつくる百科事典です。
+    citationKey: 桃娘_たおにゃん_の編集履歴_-_2024_01_31_19_53_17_版_原
+    url: https://dic.pixiv.net/history/%E6%A1%83%E5%A8%98/6241228/source
+    accessDate: 2026-09-05T08:09:57Z
+    shortTitle: 桃娘 (たおにゃん)の編集履歴 - 2024/01/31 19
+    language: ja
+    creators: []
+    tags: []
+    dateAdded: 2026-09-05T08:09:57Z
+    dateModified: 2026-09-05T08:09:57Z
+    itemID: 585
+    notes: []
+    autoJournalAbbreviation: ''
+    publicationTitle: ピクシブ百科事典
+  -
+    key: K78LEG52
+    version: 4509
+    itemType: webpage
+    title: 排水口「東方グロ・猟奇ネタ総合隔離所」弐符
+    citationKey: 排水口_東方グロ_猟奇ネタ総合隔離所_弐符
+    url: https://jbbs.shitaraba.net/bbs/read_archive.cgi/otaku/11514/1234279168/#:~:text=%E3%81%A0%E3%81%AA%E3%80%82%0A%0A%E3%83%BB-,%E6%A1%83%E5%A8%98%EF%BC%88%E3%83%88%E3%82%A6%E3%83%8B%E3%83%A3%E3%83%B3%EF%BC%89,-%E4%B8%AD%E5%9B%BD%E3%81%AB%E7%A7%A6
+    accessDate: 2026-08-25T15:20:52Z
+    creators: []
+    tags: []
+    dateAdded: 2026-08-25T15:20:52Z
+    dateModified: 2026-08-25T15:21:03Z
+    itemID: 570
+    notes: []
+    autoJournalAbbreviation: ''
+  -
+    key: 6XP2XNCV
+    version: 4509
+    itemType: webpage
+    title: 本草綱目/人部 - 维基文库，自由的图书馆
+    citationKey: 本草綱目_人部_-_维基文库_自由的图书馆
+    url: https://zh.wikisource.org/wiki/%E6%9C%AC%E8%8D%89%E7%B6%B1%E7%9B%AE/%E4%BA%BA%E9%83%A8
+    accessDate: 2026-08-18T09:24:55Z
+    language: zh
+    creators: []
+    tags: []
+    dateAdded: 2026-08-18T09:24:55Z
+    dateModified: 2026-08-18T09:24:55Z
+    itemID: 568
+    notes: []
+    autoJournalAbbreviation: ''
+  -
+    key: JFU7IY6L
+    version: 4501
+    itemType: artwork
+    title: 西行亂唱
+    citationKey: 梁寒操_西行亂唱
+    url: https://commons.wikimedia.org/w/index.php?title=File%3ACADAL3007619_%E8%A5%BF%E8%A1%8C%E4%BA%82%E5%94%B1.djvu&page=25
+    accessDate: 2026-08-18T07:00:53Z
+    archive: '大学数字图书馆国际合作计划 编号：3007619  Jilin University    Parent institution Association of Sino-Russian Technical Universities  Location Changchun , People''s Republic of China Coordinates 43° 52′ 48″ N, 125° 18′ 04″ E    Established 1946  Website www.jlu.edu.cn  Authority file : Q1432030 VIAF: 146549583 ISNI: 0000000417605735 LCCN: n50053487 GND: 133648-4 SUDOC: 179916718 WorldCat institution QS:P195,Q1432030'
+    libraryCatalog: Wikimedia Commons
+    rights: Public domain
+    creators:
+      -
+        name: 梁寒操
+        creatorType: artist
+    tags: []
+    dateAdded: 2026-08-18T07:00:53Z
+    dateModified: 2026-08-18T07:00:53Z
+    itemID: 552
+    notes: []
+    autoJournalAbbreviation: ''
+  -
+    key: FMYIFMQM
+    version: 4509
+    itemType: webpage
+    title: 醫心方/卷二十六 - 维基文库，自由的图书馆
+    citationKey: 醫心方_卷二十六_-_维基文库_自由的图书馆
+    url: https://zh.wikisource.org/wiki/%E9%86%AB%E5%BF%83%E6%96%B9/%E5%8D%B7%E4%BA%8C%E5%8D%81%E5%85%AD
+    accessDate: 2026-08-18T07:29:35Z
+    language: zh
+    creators: []
+    tags: []
+    dateAdded: 2026-08-18T07:29:35Z
+    dateModified: 2026-08-18T07:29:35Z
+    itemID: 556
+    notes: []
+    autoJournalAbbreviation: ''
+  -
+    key: FNBVP2XK
+    version: 4501
+    itemType: webpage
+    title: 专家称香妃本名奥斯曼 常佩香袋 身上散发浓香(2)-中新网
+    citationKey: 专家称香妃本名奥斯曼_常佩香袋_身上散发浓香_2_-中新网
+    url: https://www.chinanews.com.cn/cul/2013/07-08/5016344_2.shtml
+    accessDate: 2026-08-18T05:43:07Z
+    creators: []
+    tags: []
+    dateAdded: 2026-08-18T05:43:07Z
+    dateModified: 2026-08-18T05:43:07Z
+    itemID: 550
+    notes: []
+    autoJournalAbbreviation: ''

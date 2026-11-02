@@ -108,8 +108,9 @@ const zoteroType: Record<hg.EntryType, Serialized.RegularItem['itemType']> = {
   web: 'webpage',
 }
 
+/** Preserve Unicode letters and numbers while replacing unsupported key characters. */
 function sanitizeKey(id: string): string {
-  return (id || 'item').replace(/[^a-zA-Z0-9:_-]/g, '_')
+  return (id || 'item').replace(/[^\p{L}\p{N}:_-]/gu, '_')
 }
 
 function normalizeScalar(v: unknown): string {

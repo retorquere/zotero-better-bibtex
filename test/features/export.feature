@@ -397,7 +397,8 @@ Feature: Export
 
     Examples:
       | refs | file |
-        | 1    | Better Hayagriva export drops the Number field of Standard items #3636 |
+      | 1    | Better Hayagriva export drops the Number field of Standard items #3636 |
+      | 21   | Better Hayagriva export replaces Unicode citation keys with underscores and drops entries #3644 |
       | 1    | Export year ranges from Original Date #3482 |
       | 2    | Hayagriva date field in wrong format #3562 |
       | 2    | Hayagriva export drops the Edition field for books #3634 |
