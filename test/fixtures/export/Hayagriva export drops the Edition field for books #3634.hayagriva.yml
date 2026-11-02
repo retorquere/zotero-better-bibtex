@@ -27,5 +27,9 @@ lienhard2024:
   date: 2024
   edition: 6
   author:
-    - Lienhard, John H., V
-    - Lienhard, John H., IV
+    - name: Lienhard
+      given-name: John H.
+      suffix: V
+    - name: Lienhard
+      given-name: John H.
+      suffix: IV
