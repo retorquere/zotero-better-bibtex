@@ -58,6 +58,7 @@ Feature: Export
       | 6    | Better BibLaTeX.stable-keys |
       | 1    | Better BibTeX does not use biblatex fields eprint and eprinttype #170 |
       | 1    | Better BibTeX export from Zotero missing Extra fields eg issued #2816 |
+      | 1    | Better BibTeX TeX.subtitle not applying title casing #3637 |
       | 1    | Better control of citation key capitalization #3492 |
       | 3    | BetterBibLaTeX exports articles as online #2058 |
       | 1    | BetterBibLaTeX sets option useprefixtrue with no way to turn off #3281-1 |
