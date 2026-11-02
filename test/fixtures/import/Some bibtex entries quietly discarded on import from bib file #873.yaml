@@ -6753,7 +6753,7 @@ items:
     version: 0
     itemType: conferencePaper
     series: AAAI technical report
-    publisher: AAAI Press / AAAI
+    publisher: AAAI Press and AAAI
     date: '1998'
     extra: 'Number: WS-98-15'
     title: 'Hybrid planning: An approach to integrating generative and case-based planning'
