@@ -350,6 +350,7 @@ function parseAffiliated(entry: hg.BibliographyEntry): Array<{ creatorType: stri
   })
 }
 
+/** Convert Hayagriva's separated name parts to Zotero's comma-encoded creator fields. */
 function parsePerson(person: hg.Person): { firstName?: string; lastName?: string; name?: string; fieldMode?: number } {
   if (typeof person === 'string') {
     const parts = person.split(',').map(part => part.trim()).filter(Boolean)
@@ -357,7 +358,12 @@ function parsePerson(person: hg.Person): { firstName?: string; lastName?: string
     if (parts.length === 1) return { name: parts[0], fieldMode: 1 }
   }
   else {
-    if (person['given-name']) return { lastName: person.name || '', firstName: person['given-name'] || '' }
+    if (person['given-name']) {
+      return {
+        lastName: person.name || '',
+        firstName: [person['given-name'], person.suffix].filter(Boolean).join(', '),
+      }
+    }
     if (person.name) return { name: person.name, fieldMode: 1 }
   }
 
@@ -460,14 +466,24 @@ export const Hayagriva = new class {
     if (hasContent(serial)) entry['serial-number'] = serial
 
     const primary = Schema.primaryCreator[item.itemType] || 'author'
-    const creators: Record<string, string[]> = {
+    const creators: Record<string, hg.Person[]> = {
       author: [],
       editor: [],
       translator: [],
       collaborator: [],
     }
     for (const creator of item.creators || []) {
-      const name = creator.name || [creator.lastName, creator.firstName].filter(part => part).join(', ')
+      const firstName = creator.firstName || ''
+      const [givenName, ...suffix] = firstName.split(',')
+      let name: hg.Person = creator.name || [creator.lastName, creator.firstName].filter(part => part).join(', ')
+      // Zotero stores suffixes after a comma in firstName; represent those parts explicitly in Hayagriva.
+      if (!creator.name && creator.lastName && suffix.some(part => part.trim())) {
+        name = {
+          name: creator.lastName,
+          'given-name': givenName.trim(),
+          suffix: suffix.join(',').trim(),
+        }
+      }
       if (!name) continue
 
       switch (creator.creatorType) {
