@@ -1531,7 +1531,7 @@ class ZoteroItem {
     }
     if (publishers.length) {
       // Preserve publisher data in Extra when the item type has no publisher field.
-      this.set(['publisher', 'institution'].find(candidate => this.validFields[candidate]) || 'publisher', publishers.join(' / '), ['publisher', 'institution'])
+      this.set(['publisher', 'institution', 'court'].find(candidate => this.validFields[candidate]) || 'publisher', publishers.join(' and '), ['publisher', 'institution'])
     }
 
     this.$location()

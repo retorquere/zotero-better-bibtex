@@ -19,7 +19,7 @@ version:
 collections: {}
 items:
   -
-    key: ICN5PAZA
+    key: P4KTKVRT
     version: 0
     itemType: journalArticle
     url: http://some.url
@@ -42,17 +42,17 @@ items:
         creatorType: author
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/ICN5PAZA
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/P4KTKVRT
     itemID: 193
     attachments: []
     notes: []
     autoJournalAbbreviation: Psychol. Rev.
-    itemKey: ICN5PAZA
+    itemKey: P4KTKVRT
     libraryID: 1
   -
-    key: J3E6TZJR
+    key: E5C6PC89
     version: 0
     itemType: journalArticle
     volume: '15'
@@ -79,17 +79,17 @@ items:
         creatorType: translator
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/J3E6TZJR
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/E5C6PC89
     itemID: 203
     attachments: []
     notes: []
     autoJournalAbbreviation: Hum. Dev.
-    itemKey: J3E6TZJR
+    itemKey: E5C6PC89
     libraryID: 1
   -
-    key: LGAEAEC4
+    key: HWJQA49H
     version: 0
     itemType: journalArticle
     volume: '84'
@@ -108,17 +108,17 @@ items:
         creatorType: author
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/LGAEAEC4
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/HWJQA49H
     itemID: 204
     attachments: []
     notes: []
     autoJournalAbbreviation: Am. J. Orthopsychiatry
-    itemKey: LGAEAEC4
+    itemKey: HWJQA49H
     libraryID: 1
   -
-    key: 9CC2XHJZ
+    key: XYF6XWX7
     version: 0
     itemType: journalArticle
     volume: '51'
@@ -132,17 +132,17 @@ items:
     creators: []
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/9CC2XHJZ
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/XYF6XWX7
     itemID: 205
     attachments: []
     notes: []
     autoJournalAbbreviation: Am. J. Orthopsychiatry
-    itemKey: 9CC2XHJZ
+    itemKey: XYF6XWX7
     libraryID: 1
   -
-    key: 3SPGLVG3
+    key: LBMBGX7N
     version: 0
     itemType: document
     date: '2018'
@@ -157,17 +157,17 @@ items:
         creatorType: editor
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/3SPGLVG3
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/LBMBGX7N
     itemID: 206
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: 3SPGLVG3
+    itemKey: LBMBGX7N
     libraryID: 1
   -
-    key: HMPDIJMS
+    key: UFTUNKS8
     version: 0
     itemType: document
     date: '2018'
@@ -190,17 +190,17 @@ items:
         creatorType: editor
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/HMPDIJMS
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/UFTUNKS8
     itemID: 207
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: HMPDIJMS
+    itemKey: UFTUNKS8
     libraryID: 1
   -
-    key: IBFEGYET
+    key: BRL8XR9A
     version: 0
     itemType: journalArticle
     publicationTitle: Cochrane Database of Systematic Reviews
@@ -231,17 +231,17 @@ items:
         creatorType: author
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/IBFEGYET
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/BRL8XR9A
     itemID: 208
     attachments: []
     notes: []
     autoJournalAbbreviation: Cochrane Database Syst. Rev.
-    itemKey: IBFEGYET
+    itemKey: BRL8XR9A
     libraryID: 1
   -
-    key: ITC2I8HK
+    key: 2V8GNAQH
     version: 0
     itemType: journalArticle
     url: https://www.uptodate.com/contents/physical-activity-and-exercise-in-older-adults
@@ -257,17 +257,17 @@ items:
         creatorType: author
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/ITC2I8HK
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/2V8GNAQH
     itemID: 209
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: ITC2I8HK
+    itemKey: 2V8GNAQH
     libraryID: 1
   -
-    key: 3HYCQZUV
+    key: A7PYNYMW
     version: 0
     itemType: journalArticle
     volume: '363'
@@ -286,17 +286,17 @@ items:
         creatorType: author
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/3HYCQZUV
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/A7PYNYMW
     itemID: 210
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: 3HYCQZUV
+    itemKey: A7PYNYMW
     libraryID: 1
   -
-    key: 9WJE86GW
+    key: 64DAKNZC
     version: 0
     itemType: journalArticle
     url: https://www.newyorker.com/books/page-turner/on-video-games-and-storytelling-an-interview-with-tom-bissell
@@ -312,17 +312,17 @@ items:
         creatorType: author
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/9WJE86GW
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/64DAKNZC
     itemID: 211
     attachments: []
     notes: []
     autoJournalAbbreviation: New Yorker
-    itemKey: 9WJE86GW
+    itemKey: 64DAKNZC
     libraryID: 1
   -
-    key: CH4K7KGG
+    key: PNF72QYB
     version: 0
     itemType: journalArticle
     volume: '48'
@@ -340,17 +340,17 @@ items:
         creatorType: author
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/CH4K7KGG
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/PNF72QYB
     itemID: 212
     attachments: []
     notes: []
     autoJournalAbbreviation: Monit. Psychol.
-    itemKey: CH4K7KGG
+    itemKey: PNF72QYB
     libraryID: 1
   -
-    key: F8YLTGP3
+    key: RLR4XFPY
     version: 0
     itemType: journalArticle
     url: https://www.washingtonpost.com/news/speaking-of-science/wp/2017/12/04/how-will-humanity-react-to-alien-life-psychologists-have-some-predictions
@@ -366,17 +366,17 @@ items:
         creatorType: author
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/F8YLTGP3
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/RLR4XFPY
     itemID: 213
     attachments: []
     notes: []
     autoJournalAbbreviation: Wash. Post
-    itemKey: F8YLTGP3
+    itemKey: RLR4XFPY
     libraryID: 1
   -
-    key: VPPRFTBQ
+    key: QBEE8KG2
     version: 0
     itemType: journalArticle
     pages: C1
@@ -392,17 +392,17 @@ items:
         creatorType: author
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/VPPRFTBQ
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/QBEE8KG2
     itemID: 214
     attachments: []
     notes: []
     autoJournalAbbreviation: N. Y. Times
-    itemKey: VPPRFTBQ
+    itemKey: QBEE8KG2
     libraryID: 1
   -
-    key: PBDMK8GB
+    key: V4HT7V9Z
     version: 0
     itemType: document
     url: https://blogs.plos.org/scied/2018/09/15/can-we-talk-scientifically-about-free-will/
@@ -417,17 +417,17 @@ items:
         creatorType: author
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/PBDMK8GB
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/V4HT7V9Z
     itemID: 215
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: PBDMK8GB
+    itemKey: V4HT7V9Z
     libraryID: 1
   -
-    key: XMSLMJQL
+    key: PWYVR8QN
     version: 0
     itemType: journalArticle
     url: https://wapo.st/2HDToGJ
@@ -442,17 +442,17 @@ items:
         creatorType: author
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/XMSLMJQL
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/PWYVR8QN
     itemID: 216
     attachments: []
     notes: []
     autoJournalAbbreviation: Wash. Post
-    itemKey: XMSLMJQL
+    itemKey: PWYVR8QN
     libraryID: 1
   -
-    key: 8MI4SP7S
+    key: D83JWIDG
     version: 0
     itemType: journalArticle
     publicationTitle: The Washington Post
@@ -466,17 +466,17 @@ items:
         creatorType: author
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/8MI4SP7S
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/D83JWIDG
     itemID: 217
     attachments: []
     notes: []
     autoJournalAbbreviation: Wash. Post
-    itemKey: 8MI4SP7S
+    itemKey: D83JWIDG
     libraryID: 1
   -
-    key: H6UAIWE4
+    key: SV6NWAL6
     version: 0
     itemType: journalArticle
     volume: '27'
@@ -494,17 +494,17 @@ items:
         creatorType: author
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/H6UAIWE4
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/SV6NWAL6
     itemID: 218
     attachments: []
     notes: []
     autoJournalAbbreviation: J. Transcult. Nurs.
-    itemKey: H6UAIWE4
+    itemKey: SV6NWAL6
     libraryID: 1
   -
-    key: QGV7Y7C4
+    key: 74J43HT4
     version: 0
     itemType: journalArticle
     url: https://www.ahead.org/professional-resources/publications/jped/archived-jped/jped-volume-31
@@ -534,17 +534,17 @@ items:
         creatorType: author
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/QGV7Y7C4
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/74J43HT4
     itemID: 194
     attachments: []
     notes: []
     autoJournalAbbreviation: J. Postsecond. Educ. Disabil.
-    itemKey: QGV7Y7C4
+    itemKey: 74J43HT4
     libraryID: 1
   -
-    key: 5MEMYMUA
+    key: RSXJVAJF
     version: 0
     itemType: journalArticle
     volume: '76'
@@ -561,17 +561,17 @@ items:
         creatorType: author
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/5MEMYMUA
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/RSXJVAJF
     itemID: 195
     attachments: []
     notes: []
     autoJournalAbbreviation: Educ. Leadersh.
-    itemKey: 5MEMYMUA
+    itemKey: RSXJVAJF
     libraryID: 1
   -
-    key: USLGZLIQ
+    key: 2VWHRFYG
     version: 0
     itemType: journalArticle
     publicationTitle: Chicago Tribune
@@ -586,17 +586,17 @@ items:
         creatorType: author
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/USLGZLIQ
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/2VWHRFYG
     itemID: 196
     attachments: []
     notes: []
     autoJournalAbbreviation: Chic. Trib.
-    itemKey: USLGZLIQ
+    itemKey: 2VWHRFYG
     libraryID: 1
   -
-    key: XNHH4HY2
+    key: 7ZFDWFNN
     version: 0
     itemType: journalArticle
     volume: '77'
@@ -698,17 +698,17 @@ items:
         creatorType: author
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/XNHH4HY2
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/7ZFDWFNN
     itemID: 197
     attachments: []
     notes: []
     autoJournalAbbreviation: Bull. Am. Meteorol. Soc.
-    itemKey: XNHH4HY2
+    itemKey: 7ZFDWFNN
     libraryID: 1
   -
-    key: 2BGXNZSB
+    key: IJLBVD4Z
     version: 0
     itemType: journalArticle
     volume: '29'
@@ -737,17 +737,17 @@ items:
         creatorType: author
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/2BGXNZSB
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/IJLBVD4Z
     itemID: 198
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: 2BGXNZSB
+    itemKey: IJLBVD4Z
     libraryID: 1
   -
-    key: HILEF66T
+    key: FWLM2NE8
     version: 0
     itemType: journalArticle
     volume: '14'
@@ -781,17 +781,17 @@ items:
         creatorType: author
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/HILEF66T
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/FWLM2NE8
     itemID: 199
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: HILEF66T
+    itemKey: FWLM2NE8
     libraryID: 1
   -
-    key: LKGNUJA4
+    key: 4ZMNMVHL
     version: 0
     itemType: journalArticle
     publicationTitle: Experimental Psychology
@@ -815,17 +815,17 @@ items:
         creatorType: author
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/LKGNUJA4
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/4ZMNMVHL
     itemID: 200
     attachments: []
     notes: []
     autoJournalAbbreviation: Exp. Psychol.
-    itemKey: LKGNUJA4
+    itemKey: 4ZMNMVHL
     libraryID: 1
   -
-    key: UQDC5JAG
+    key: Q5KT3GTI
     version: 0
     itemType: journalArticle
     publicationTitle: Psychonomic Bulletin & Review
@@ -843,17 +843,17 @@ items:
         creatorType: author
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/UQDC5JAG
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/Q5KT3GTI
     itemID: 201
     attachments: []
     notes: []
     autoJournalAbbreviation: Psychon. Bull. Rev.
-    itemKey: UQDC5JAG
+    itemKey: Q5KT3GTI
     libraryID: 1
   -
-    key: K5FWDMZY
+    key: K6NEZGSE
     version: 0
     itemType: journalArticle
     volume: '28'
@@ -900,17 +900,17 @@ items:
         creatorType: author
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/K5FWDMZY
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/K6NEZGSE
     itemID: 202
     attachments: []
     notes: []
     autoJournalAbbreviation: Clínica Salud
-    itemKey: K5FWDMZY
+    itemKey: K6NEZGSE
     libraryID: 1
   -
-    key: WY4VZJIM
+    key: QE9PWEAW
     version: 0
     itemType: computerProgram
     url: https://www.meta-analysis.com/
@@ -938,18 +938,18 @@ items:
         creatorType: programmer
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/WY4VZJIM
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/QE9PWEAW
     itemID: 305
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: WY4VZJIM
+    itemKey: QE9PWEAW
     libraryID: 1
     publisher: Biostat
   -
-    key: KMTXHZ63
+    key: TEKAGH32
     version: 0
     itemType: computerProgram
     url: https://www.sr-research.com/eyelink1000plus.html
@@ -963,17 +963,17 @@ items:
         creatorType: programmer
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/KMTXHZ63
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/TEKAGH32
     itemID: 306
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: KMTXHZ63
+    itemKey: TEKAGH32
     libraryID: 1
   -
-    key: 2C648Z6S
+    key: BTFKH96V
     version: 0
     itemType: computerProgram
     url: https://www.tactilelabs.com/products/haptics/latero-tactile-display/
@@ -987,17 +987,17 @@ items:
         creatorType: programmer
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/2C648Z6S
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/BTFKH96V
     itemID: 307
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: 2C648Z6S
+    itemKey: BTFKH96V
     libraryID: 1
   -
-    key: DEY5SIJF
+    key: J2WX2PHZ
     version: 0
     itemType: computerProgram
     url: https://itunes.apple.com/us/app/epocrates/id281935788?mt=8
@@ -1012,18 +1012,18 @@ items:
         creatorType: programmer
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/DEY5SIJF
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/J2WX2PHZ
     itemID: 308
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: DEY5SIJF
+    itemKey: J2WX2PHZ
     libraryID: 1
     publisher: App Store
   -
-    key: JLX5QG6R
+    key: PXG7UWTR
     version: 0
     itemType: computerProgram
     url: https://play.google.com/store/apps/details?id=com.epocrates&hl=en_US
@@ -1038,18 +1038,18 @@ items:
         creatorType: programmer
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/JLX5QG6R
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/PXG7UWTR
     itemID: 309
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: JLX5QG6R
+    itemKey: PXG7UWTR
     libraryID: 1
     publisher: Google Play Store
   -
-    key: P9DM9GZB
+    key: RYN53RPH
     version: 0
     itemType: report
     date: '2011'
@@ -1066,19 +1066,19 @@ items:
         creatorType: author
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/P9DM9GZB
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/RYN53RPH
     itemID: 310
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: P9DM9GZB
+    itemKey: RYN53RPH
     libraryID: 1
     type: manual
     publisher: Pearson
   -
-    key: KPKJIWIN
+    key: GTMVV3IS
     version: 0
     itemType: computerProgram
     url: https://implicit.harvard.edi/implicit/takeatest.html
@@ -1090,17 +1090,17 @@ items:
         creatorType: programmer
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/KPKJIWIN
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/GTMVV3IS
     itemID: 311
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: KPKJIWIN
+    itemKey: GTMVV3IS
     libraryID: 1
   -
-    key: JYLXK5Z7
+    key: VWLHIRZR
     version: 0
     itemType: computerProgram
     date: '2018'
@@ -1131,18 +1131,18 @@ items:
         creatorType: programmer
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/JYLXK5Z7
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/VWLHIRZR
     itemID: 312
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: JYLXK5Z7
+    itemKey: VWLHIRZR
     libraryID: 1
     publisher: PsycTESTS
   -
-    key: ZZXMI8FY
+    key: QWIN2Z8D
     version: 0
     itemType: computerProgram
     date: '2000'
@@ -1168,18 +1168,18 @@ items:
         creatorType: programmer
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:46Z
-    dateModified: 2026-11-02T07:17:46Z
-    uri: http://zotero.org/users/8230813/items/ZZXMI8FY
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/QWIN2Z8D
     itemID: 313
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: ZZXMI8FY
+    itemKey: QWIN2Z8D
     libraryID: 1
     publisher: ETS TestLink
   -
-    key: PHKUYGG2
+    key: 8L6B5FYZ
     version: 0
     itemType: film
     date: '1975'
@@ -1193,18 +1193,18 @@ items:
         creatorType: director
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:46Z
-    dateModified: 2026-11-02T07:17:46Z
-    uri: http://zotero.org/users/8230813/items/PHKUYGG2
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/8L6B5FYZ
     itemID: 314
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: PHKUYGG2
+    itemKey: 8L6B5FYZ
     libraryID: 1
     publisher: United Artists
   -
-    key: 5Q4X9QA9
+    key: NYXC9Q7V
     version: 0
     itemType: film
     url: http://www.apa.org/pubs/videos/4310958.aspx
@@ -1223,29 +1223,29 @@ items:
         creatorType: director
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:46Z
-    dateModified: 2026-11-02T07:17:46Z
-    uri: http://zotero.org/users/8230813/items/5Q4X9QA9
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/NYXC9Q7V
     itemID: 315
     attachments: []
     notes:
       -
-        key: 9SRFY2NM
+        key: VFFGRJDJ
         version: 0
         itemType: note
-        parentItem: 5Q4X9QA9
+        parentItem: NYXC9Q7V
         note: educational DVD
         tags: []
         relations: {}
-        dateAdded: 2026-11-02T07:17:46Z
-        dateModified: 2026-11-02T07:17:46Z
-        uri: http://zotero.org/users/8230813/items/9SRFY2NM
+        dateAdded: 2026-11-02T09:05:40Z
+        dateModified: 2026-11-02T09:05:40Z
+        uri: http://zotero.org/users/8230813/items/VFFGRJDJ
     autoJournalAbbreviation: ''
-    itemKey: 5Q4X9QA9
+    itemKey: NYXC9Q7V
     libraryID: 1
     publisher: American Pychological Association
   -
-    key: AK3BYMH4
+    key: MMN5WAK4
     version: 0
     itemType: film
     date: '2001'
@@ -1259,29 +1259,29 @@ items:
         creatorType: director
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:46Z
-    dateModified: 2026-11-02T07:17:46Z
-    uri: http://zotero.org/users/8230813/items/AK3BYMH4
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/MMN5WAK4
     itemID: 317
     attachments: []
     notes:
       -
-        key: BXCPJL5A
+        key: N5SQGWFL
         version: 0
         itemType: note
-        parentItem: AK3BYMH4
+        parentItem: MMN5WAK4
         note: four-disc special extended ed. on DVD
         tags: []
         relations: {}
-        dateAdded: 2026-11-02T07:17:46Z
-        dateModified: 2026-11-02T07:17:46Z
-        uri: http://zotero.org/users/8230813/items/BXCPJL5A
+        dateAdded: 2026-11-02T09:05:40Z
+        dateModified: 2026-11-02T09:05:40Z
+        uri: http://zotero.org/users/8230813/items/N5SQGWFL
     autoJournalAbbreviation: ''
-    itemKey: AK3BYMH4
+    itemKey: MMN5WAK4
     libraryID: 1
     publisher: WingNut Films and The Saul Zaentz Company
   -
-    key: FW9XB5QT
+    key: 7W9SSFP2
     version: 0
     itemType: film
     date: '1987'
@@ -1295,18 +1295,18 @@ items:
         creatorType: director
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:46Z
-    dateModified: 2026-11-02T07:17:46Z
-    uri: http://zotero.org/users/8230813/items/FW9XB5QT
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/7W9SSFP2
     itemID: 319
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: FW9XB5QT
+    itemKey: 7W9SSFP2
     libraryID: 1
     publisher: Nouvelles Éditions de Films
   -
-    key: ASA9W67B
+    key: 2EHI3BTT
     version: 0
     itemType: videoRecording
     date: 2002/2008
@@ -1328,18 +1328,18 @@ items:
         creatorType: director
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:46Z
-    dateModified: 2026-11-02T07:17:46Z
-    uri: http://zotero.org/users/8230813/items/ASA9W67B
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/2EHI3BTT
     itemID: 320
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: ASA9W67B
+    itemKey: 2EHI3BTT
     libraryID: 1
     publisher: Blown Deadline Productions and HBO
   -
-    key: 9KSMIM5E
+    key: 2FKZYF8J
     version: 0
     itemType: tvBroadcast
     date: 2017-01-11
@@ -1353,18 +1353,18 @@ items:
         creatorType: director
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:46Z
-    dateModified: 2026-11-02T07:17:46Z
-    uri: http://zotero.org/users/8230813/items/9KSMIM5E
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/2FKZYF8J
     itemID: 321
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: 9KSMIM5E
+    itemKey: 2FKZYF8J
     libraryID: 1
     publisher: Wilmore Films and Artists First and Cinema Gypsy Productions and ABC Studios
   -
-    key: CGZJCI4E
+    key: XLVI4G6Z
     version: 0
     itemType: tvBroadcast
     date: 1995-05-21
@@ -1386,18 +1386,18 @@ items:
         creatorType: director
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:46Z
-    dateModified: 2026-11-02T07:17:46Z
-    uri: http://zotero.org/users/8230813/items/CGZJCI4E
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/XLVI4G6Z
     itemID: 322
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: CGZJCI4E
+    itemKey: XLVI4G6Z
     libraryID: 1
     publisher: Gracie Films and Twentieth Century Fox Film Corporation
   -
-    key: BV2AS658
+    key: NPK47TYB
     version: 0
     itemType: videoRecording
     url: https://www.ted.com/talks/simone_giertz_why_you_should_make_useless_things
@@ -1412,18 +1412,18 @@ items:
         creatorType: director
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:46Z
-    dateModified: 2026-11-02T07:17:46Z
-    uri: http://zotero.org/users/8230813/items/BV2AS658
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/NPK47TYB
     itemID: 323
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: BV2AS658
+    itemKey: NPK47TYB
     libraryID: 1
     publisher: TED Conferences
   -
-    key: TQYDV9ZQ
+    key: ZI98F7KF
     version: 0
     itemType: videoRecording
     url: https://www.youtube.com/watch?v=psN1DORYYV0
@@ -1437,18 +1437,18 @@ items:
         creatorType: director
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:46Z
-    dateModified: 2026-11-02T07:17:46Z
-    uri: http://zotero.org/users/8230813/items/TQYDV9ZQ
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/ZI98F7KF
     itemID: 324
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: TQYDV9ZQ
+    itemKey: ZI98F7KF
     libraryID: 1
     publisher: YouTube
   -
-    key: CKKL7TBD
+    key: D99KQYNM
     version: 0
     itemType: videoRecording
     url: https://education.psychiatry.org/Users/ProductDetails.aspx?ActivityID=6172
@@ -1463,18 +1463,18 @@ items:
         creatorType: director
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:46Z
-    dateModified: 2026-11-02T07:17:46Z
-    uri: http://zotero.org/users/8230813/items/CKKL7TBD
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/D99KQYNM
     itemID: 325
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: CKKL7TBD
+    itemKey: D99KQYNM
     libraryID: 1
     publisher: American Psychiatric Association
   -
-    key: QYD47DC8
+    key: IVS5RWRT
     version: 0
     itemType: videoRecording
     url: https://vimeo.com/244405542
@@ -1489,18 +1489,18 @@ items:
         creatorType: director
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:46Z
-    dateModified: 2026-11-02T07:17:46Z
-    uri: http://zotero.org/users/8230813/items/QYD47DC8
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/IVS5RWRT
     itemID: 326
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: QYD47DC8
+    itemKey: IVS5RWRT
     libraryID: 1
     publisher: Vimeo
   -
-    key: G7HLJY5D
+    key: MR7TR8Y6
     version: 0
     itemType: videoRecording
     url: https://youtube.be/deiEY5Yq1ql
@@ -1515,18 +1515,18 @@ items:
         creatorType: director
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:46Z
-    dateModified: 2026-11-02T07:17:46Z
-    uri: http://zotero.org/users/8230813/items/G7HLJY5D
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/MR7TR8Y6
     itemID: 327
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: G7HLJY5D
+    itemKey: MR7TR8Y6
     libraryID: 1
     publisher: YouTube
   -
-    key: DDMQ4BRG
+    key: EPTZ8WSC
     version: 0
     itemType: videoRecording
     url: https://www.youtube.com/watch?v=qm1xGfOZJc8
@@ -1540,18 +1540,18 @@ items:
         creatorType: director
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:46Z
-    dateModified: 2026-11-02T07:17:46Z
-    uri: http://zotero.org/users/8230813/items/DDMQ4BRG
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/EPTZ8WSC
     itemID: 328
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: DDMQ4BRG
+    itemKey: EPTZ8WSC
     libraryID: 1
     publisher: YouTube
   -
-    key: XXJ3LBCP
+    key: SYUBK5Q2
     version: 0
     itemType: audioRecording
     date: '2010'
@@ -1565,18 +1565,18 @@ items:
         creatorType: contributor
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:46Z
-    dateModified: 2026-11-02T07:17:46Z
-    uri: http://zotero.org/users/8230813/items/XXJ3LBCP
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/SYUBK5Q2
     itemID: 329
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: XXJ3LBCP
+    itemKey: SYUBK5Q2
     libraryID: 1
     publisher: Decca
   -
-    key: NY3LVQX2
+    key: SM6IDUBZ
     version: 0
     itemType: audioRecording
     date: '2016'
@@ -1590,18 +1590,18 @@ items:
         creatorType: contributor
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:46Z
-    dateModified: 2026-11-02T07:17:46Z
-    uri: http://zotero.org/users/8230813/items/NY3LVQX2
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/SM6IDUBZ
     itemID: 330
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: NY3LVQX2
+    itemKey: SM6IDUBZ
     libraryID: 1
     publisher: Columbia
   -
-    key: 6HR7YJP8
+    key: TNJ99UFT
     version: 0
     itemType: audioRecording
     date: '2012'
@@ -1615,18 +1615,18 @@ items:
         creatorType: contributor
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:46Z
-    dateModified: 2026-11-02T07:17:46Z
-    uri: http://zotero.org/users/8230813/items/6HR7YJP8
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/TNJ99UFT
     itemID: 331
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: 6HR7YJP8
+    itemKey: TNJ99UFT
     libraryID: 1
     publisher: Brilliant Classics
   -
-    key: CTSSIETM
+    key: UPA3PKCV
     version: 0
     itemType: audioRecording
     date: '2016'
@@ -1639,18 +1639,18 @@ items:
         creatorType: contributor
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:46Z
-    dateModified: 2026-11-02T07:17:46Z
-    uri: http://zotero.org/users/8230813/items/CTSSIETM
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/UPA3PKCV
     itemID: 332
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: CTSSIETM
+    itemKey: UPA3PKCV
     libraryID: 1
     publisher: Parkwood and Columbia
   -
-    key: WDCVM3SE
+    key: WJB99M24
     version: 0
     itemType: audioRecording
     date: '2018'
@@ -1663,18 +1663,18 @@ items:
         creatorType: contributor
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:46Z
-    dateModified: 2026-11-02T07:17:46Z
-    uri: http://zotero.org/users/8230813/items/WDCVM3SE
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/WJB99M24
     itemID: 333
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: WDCVM3SE
+    itemKey: WJB99M24
     libraryID: 1
     publisher: mcDJ and RCA
   -
-    key: 8MT5CJAP
+    key: SHNRWTW3
     version: 0
     itemType: audioRecording
     date: '2017'
@@ -1688,18 +1688,18 @@ items:
         creatorType: contributor
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:46Z
-    dateModified: 2026-11-02T07:17:46Z
-    uri: http://zotero.org/users/8230813/items/8MT5CJAP
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/SHNRWTW3
     itemID: 334
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: 8MT5CJAP
+    itemKey: SHNRWTW3
     libraryID: 1
     publisher: Aftermath Entertainment and Interscope Records and Top Dawg Entertainment
   -
-    key: 9DJ3P2N7
+    key: 4LYPIS3C
     version: 0
     itemType: audioRecording
     url: https://www.npr.org/series/423302056/hidden-brain
@@ -1714,18 +1714,18 @@ items:
         creatorType: contributor
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:46Z
-    dateModified: 2026-11-02T07:17:46Z
-    uri: http://zotero.org/users/8230813/items/9DJ3P2N7
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/4LYPIS3C
     itemID: 335
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: 9DJ3P2N7
+    itemKey: 4LYPIS3C
     libraryID: 1
     publisher: NPR
   -
-    key: YKYNM7ZN
+    key: T6XQHRY4
     version: 0
     itemType: audioRecording
     url: https://www.thisamericanlife.org/radio-archives/episode/443/amusement-park
@@ -1740,18 +1740,18 @@ items:
         creatorType: contributor
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:46Z
-    dateModified: 2026-11-02T07:17:46Z
-    uri: http://zotero.org/users/8230813/items/YKYNM7ZN
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/T6XQHRY4
     itemID: 336
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: YKYNM7ZN
+    itemKey: T6XQHRY4
     libraryID: 1
     publisher: WBEZ Chicago
   -
-    key: HDBB3EC5
+    key: UCIYAGMN
     version: 0
     itemType: audioRecording
     url: https://studsterkel.wfmt.com/programs/simone-de-beauvoir-discusses-art-writing
@@ -1766,18 +1766,18 @@ items:
         creatorType: contributor
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:46Z
-    dateModified: 2026-11-02T07:17:46Z
-    uri: http://zotero.org/users/8230813/items/HDBB3EC5
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/UCIYAGMN
     itemID: 337
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: HDBB3EC5
+    itemKey: UCIYAGMN
     libraryID: 1
     publisher: Studs Terkel Radio Archive and The Chicago History Museum
   -
-    key: 69WT2QRX
+    key: AAPPBFTA
     version: 0
     itemType: audioRecording
     url: https://www.americanrhetoric.com/speeches/mlkihaveadream.htm
@@ -1792,18 +1792,18 @@ items:
         creatorType: contributor
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:46Z
-    dateModified: 2026-11-02T07:17:46Z
-    uri: http://zotero.org/users/8230813/items/69WT2QRX
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/AAPPBFTA
     itemID: 338
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: 69WT2QRX
+    itemKey: AAPPBFTA
     libraryID: 1
     publisher: American Rhetoric
   -
-    key: 3CAUYL5D
+    key: ZPKGXUU3
     version: 0
     itemType: artwork
     url: https://demographics.coopercenter.org/Racial-Dot-Map
@@ -1818,17 +1818,17 @@ items:
         creatorType: contributor
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:46Z
-    dateModified: 2026-11-02T07:17:46Z
-    uri: http://zotero.org/users/8230813/items/3CAUYL5D
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/ZPKGXUU3
     itemID: 343
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: 3CAUYL5D
+    itemKey: ZPKGXUU3
     libraryID: 1
   -
-    key: W4T28ZTS
+    key: 6LA899YA
     version: 0
     itemType: artwork
     url: https://goo.gl/YYE3GR
@@ -1841,17 +1841,17 @@ items:
         creatorType: contributor
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:46Z
-    dateModified: 2026-11-02T07:17:46Z
-    uri: http://zotero.org/users/8230813/items/W4T28ZTS
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/6LA899YA
     itemID: 344
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: W4T28ZTS
+    itemKey: 6LA899YA
     libraryID: 1
   -
-    key: 8IYCSEL2
+    key: UD2N3V6R
     version: 0
     itemType: artwork
     url: https://www.nationalgeographic.com/magazine/national-geographic-magazine-50-years-of-covers/#/ngm-1985-jun-714.jpg
@@ -1866,17 +1866,17 @@ items:
         creatorType: contributor
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:46Z
-    dateModified: 2026-11-02T07:17:46Z
-    uri: http://zotero.org/users/8230813/items/8IYCSEL2
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/UD2N3V6R
     itemID: 345
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: 8IYCSEL2
+    itemKey: UD2N3V6R
     libraryID: 1
   -
-    key: V8CZ8Q3K
+    key: FEJPXW2I
     version: 0
     itemType: artwork
     url: https://www.pulitzer.org/winners/jessica-rinaldi
@@ -1891,17 +1891,17 @@ items:
         creatorType: contributor
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:46Z
-    dateModified: 2026-11-02T07:17:46Z
-    uri: http://zotero.org/users/8230813/items/V8CZ8Q3K
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/FEJPXW2I
     itemID: 346
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: V8CZ8Q3K
+    itemKey: FEJPXW2I
     libraryID: 1
   -
-    key: VG8MT7CT
+    key: 2YDBZL24
     version: 0
     itemType: artwork
     url: https://uchilefau.academia.edu/ElseZCanan
@@ -1920,17 +1920,17 @@ items:
         creatorType: contributor
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:46Z
-    dateModified: 2026-11-02T07:17:46Z
-    uri: http://zotero.org/users/8230813/items/VG8MT7CT
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/2YDBZL24
     itemID: 347
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: VG8MT7CT
+    itemKey: 2YDBZL24
     libraryID: 1
   -
-    key: ULDC898I
+    key: G4KKHUMP
     version: 0
     itemType: artwork
     url: https://www.slideshare.net/brianhousand/game-on-iagc-2016/
@@ -1945,17 +1945,17 @@ items:
         creatorType: contributor
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:46Z
-    dateModified: 2026-11-02T07:17:46Z
-    uri: http://zotero.org/users/8230813/items/ULDC898I
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/G4KKHUMP
     itemID: 348
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: ULDC898I
+    itemKey: G4KKHUMP
     libraryID: 1
   -
-    key: CHXRITBX
+    key: 94T8NIUK
     version: 0
     itemType: artwork
     url: https://fnu.onelogin.com/login
@@ -1974,17 +1974,17 @@ items:
         creatorType: contributor
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:46Z
-    dateModified: 2026-11-02T07:17:46Z
-    uri: http://zotero.org/users/8230813/items/CHXRITBX
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/94T8NIUK
     itemID: 349
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: CHXRITBX
+    itemKey: 94T8NIUK
     libraryID: 1
   -
-    key: V7K89ASD
+    key: 4KCLCJNP
     version: 0
     itemType: artwork
     date: 1826/1827
@@ -1998,17 +1998,17 @@ items:
         creatorType: contributor
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:46Z
-    dateModified: 2026-11-02T07:17:46Z
-    uri: http://zotero.org/users/8230813/items/V7K89ASD
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/4KCLCJNP
     itemID: 339
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: V7K89ASD
+    itemKey: 4KCLCJNP
     libraryID: 1
   -
-    key: AFYUW55G
+    key: NTN7PWGI
     version: 0
     itemType: artwork
     url: https://www.artic.edu/aic/collections/artwork/6565
@@ -2023,17 +2023,17 @@ items:
         creatorType: contributor
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:46Z
-    dateModified: 2026-11-02T07:17:46Z
-    uri: http://zotero.org/users/8230813/items/AFYUW55G
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/NTN7PWGI
     itemID: 340
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: AFYUW55G
+    itemKey: NTN7PWGI
     libraryID: 1
   -
-    key: BGNZ7WJC
+    key: LC2S3HLE
     version: 0
     itemType: artwork
     url: https://openclipart.org/detail/309343/neural-network-deep-learning-prismatic
@@ -2047,17 +2047,17 @@ items:
         creatorType: contributor
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:46Z
-    dateModified: 2026-11-02T07:17:46Z
-    uri: http://zotero.org/users/8230813/items/BGNZ7WJC
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/LC2S3HLE
     itemID: 341
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: BGNZ7WJC
+    itemKey: LC2S3HLE
     libraryID: 1
   -
-    key: 2EFWFNYK
+    key: M4DY9AGR
     version: 0
     itemType: artwork
     url: https://www.worldsciencefestival.com/2015/11/space-junk-infographic/
@@ -2076,17 +2076,17 @@ items:
         creatorType: contributor
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:46Z
-    dateModified: 2026-11-02T07:17:46Z
-    uri: http://zotero.org/users/8230813/items/2EFWFNYK
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/M4DY9AGR
     itemID: 342
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: 2EFWFNYK
+    itemKey: M4DY9AGR
     libraryID: 1
   -
-    key: 3BGXNLYG
+    key: EK3P3JMU
     version: 0
     itemType: webpage
     url: https://twitter.com/apaeducation/status/1012810490530140161
@@ -2100,17 +2100,17 @@ items:
         creatorType: author
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:46Z
-    dateModified: 2026-11-02T07:17:46Z
-    uri: http://zotero.org/users/8230813/items/3BGXNLYG
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/EK3P3JMU
     itemID: 350
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: 3BGXNLYG
+    itemKey: EK3P3JMU
     libraryID: 1
   -
-    key: R5TMDUMV
+    key: 8DKJ39RE
     version: 0
     itemType: webpage
     url: https://twitter.com/BadlandsNPS/status/968196500412133379
@@ -2124,17 +2124,17 @@ items:
         creatorType: author
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:46Z
-    dateModified: 2026-11-02T07:17:46Z
-    uri: http://zotero.org/users/8230813/items/R5TMDUMV
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/8DKJ39RE
     itemID: 351
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: R5TMDUMV
+    itemKey: 8DKJ39RE
     libraryID: 1
   -
-    key: D3EIVTXY
+    key: 8VKFJYZ2
     version: 0
     itemType: webpage
     url: https://twitter.com/BettyMWhite/status/1009951892846227456
@@ -2149,17 +2149,17 @@ items:
         creatorType: author
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:46Z
-    dateModified: 2026-11-02T07:17:46Z
-    uri: http://zotero.org/users/8230813/items/D3EIVTXY
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/8VKFJYZ2
     itemID: 352
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: D3EIVTXY
+    itemKey: 8VKFJYZ2
     libraryID: 1
   -
-    key: UE6J6XNE
+    key: MX9MXMBZ
     version: 0
     itemType: webpage
     url: https://twitter.com/APA_Style
@@ -2173,17 +2173,17 @@ items:
         creatorType: author
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:46Z
-    dateModified: 2026-11-02T07:17:46Z
-    uri: http://zotero.org/users/8230813/items/UE6J6XNE
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/MX9MXMBZ
     itemID: 353
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: UE6J6XNE
+    itemKey: MX9MXMBZ
     libraryID: 1
   -
-    key: YHMSB5C4
+    key: P3XTUTWN
     version: 0
     itemType: webpage
     url: http://bit.ly/2JQxPAD
@@ -2198,17 +2198,17 @@ items:
         creatorType: author
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:46Z
-    dateModified: 2026-11-02T07:17:46Z
-    uri: http://zotero.org/users/8230813/items/YHMSB5C4
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/P3XTUTWN
     itemID: 354
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: YHMSB5C4
+    itemKey: P3XTUTWN
     libraryID: 1
   -
-    key: 2D6GHZPW
+    key: 6ZYLUMQR
     version: 0
     itemType: webpage
     url: http://bit.ly/321Qstq
@@ -2222,17 +2222,17 @@ items:
         creatorType: author
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:46Z
-    dateModified: 2026-11-02T07:17:46Z
-    uri: http://zotero.org/users/8230813/items/2D6GHZPW
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/6ZYLUMQR
     itemID: 355
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: 2D6GHZPW
+    itemKey: 6ZYLUMQR
     libraryID: 1
   -
-    key: 9N6H7L5I
+    key: ILAMRUP6
     version: 0
     itemType: webpage
     url: https://www.facebook.com/ScienceNOW/videos/10155508587605108
@@ -2246,17 +2246,17 @@ items:
         creatorType: author
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:46Z
-    dateModified: 2026-11-02T07:17:46Z
-    uri: http://zotero.org/users/8230813/items/9N6H7L5I
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/ILAMRUP6
     itemID: 356
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: 9N6H7L5I
+    itemKey: ILAMRUP6
     libraryID: 1
   -
-    key: Z2N8HKR3
+    key: NBGR7HRZ
     version: 0
     itemType: webpage
     url: https://www.facebookcom/nationalzoo
@@ -2270,17 +2270,17 @@ items:
         creatorType: author
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:46Z
-    dateModified: 2026-11-02T07:17:46Z
-    uri: http://zotero.org/users/8230813/items/Z2N8HKR3
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/NBGR7HRZ
     itemID: 357
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: Z2N8HKR3
+    itemKey: NBGR7HRZ
     libraryID: 1
   -
-    key: 2AIJ7PWW
+    key: WWNAGEGK
     version: 0
     itemType: webpage
     url: https://www.instagram.com/p/BqpHpjFBs3b
@@ -2294,17 +2294,17 @@ items:
         creatorType: author
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:46Z
-    dateModified: 2026-11-02T07:17:46Z
-    uri: http://zotero.org/users/8230813/items/2AIJ7PWW
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/WWNAGEGK
     itemID: 358
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: 2AIJ7PWW
+    itemKey: WWNAGEGK
     libraryID: 1
   -
-    key: AJHLEVU9
+    key: XMZBD9XA
     version: 0
     itemType: webpage
     url: https://bitly.com/2FV8bu3
@@ -2318,17 +2318,17 @@ items:
         creatorType: author
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:46Z
-    dateModified: 2026-11-02T07:17:46Z
-    uri: http://zotero.org/users/8230813/items/AJHLEVU9
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/XMZBD9XA
     itemID: 359
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: AJHLEVU9
+    itemKey: XMZBD9XA
     libraryID: 1
   -
-    key: EUXCWIYT
+    key: AGXLTY5C
     version: 0
     itemType: webpage
     url: https://www.reddit.com/r/IAmA/comments/9fagqy/im_nasa_astronaut_scott_tingle_ask_me_anything/
@@ -2342,17 +2342,17 @@ items:
         creatorType: author
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:46Z
-    dateModified: 2026-11-02T07:17:46Z
-    uri: http://zotero.org/users/8230813/items/EUXCWIYT
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/AGXLTY5C
     itemID: 360
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: EUXCWIYT
+    itemKey: AGXLTY5C
     libraryID: 1
   -
-    key: I8LNMRAD
+    key: DKXJWIPG
     version: 0
     itemType: webpage
     url: https://www.cnn.com/2019/01/03/health/respect-towards-elderly-leads-to-long-life-intl/index.html
@@ -2367,17 +2367,17 @@ items:
         creatorType: author
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:46Z
-    dateModified: 2026-11-02T07:17:46Z
-    uri: http://zotero.org/users/8230813/items/I8LNMRAD
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/DKXJWIPG
     itemID: 361
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: I8LNMRAD
+    itemKey: DKXJWIPG
     libraryID: 1
   -
-    key: 98FKPRHX
+    key: R9CTHV42
     version: 0
     itemType: webpage
     url: https://www.huffingtonpost.com/entry/what-happens-mind-body-homesick_us_5b201ebde4b09d7a3d77eee1
@@ -2392,17 +2392,17 @@ items:
         creatorType: author
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:46Z
-    dateModified: 2026-11-02T07:17:46Z
-    uri: http://zotero.org/users/8230813/items/98FKPRHX
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/R9CTHV42
     itemID: 362
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: 98FKPRHX
+    itemKey: R9CTHV42
     libraryID: 1
   -
-    key: T28H43ZU
+    key: HA3GR65D
     version: 0
     itemType: webpage
     url: https://www.cdc.gov/flu/about/disease/high_risk.htm
@@ -2415,17 +2415,17 @@ items:
         creatorType: author
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:46Z
-    dateModified: 2026-11-02T07:17:46Z
-    uri: http://zotero.org/users/8230813/items/T28H43ZU
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/HA3GR65D
     itemID: 363
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: T28H43ZU
+    itemKey: HA3GR65D
     libraryID: 1
   -
-    key: WIHMA8ZJ
+    key: P3IEXWQG
     version: 0
     itemType: webpage
     url: https://www.who.int/features/qa/84/en/
@@ -2438,17 +2438,17 @@ items:
         creatorType: author
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:46Z
-    dateModified: 2026-11-02T07:17:46Z
-    uri: http://zotero.org/users/8230813/items/WIHMA8ZJ
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/P3IEXWQG
     itemID: 364
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: WIHMA8ZJ
+    itemKey: P3IEXWQG
     libraryID: 1
   -
-    key: WAT3CGU2
+    key: LDDL8A6I
     version: 0
     itemType: webpage
     url: https://www.mayoclinic.org/healthy-lifestyle/adult-health/in-depth/self-compassion-can-improve-your-resiliency/art-20267193
@@ -2463,17 +2463,17 @@ items:
         creatorType: author
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:46Z
-    dateModified: 2026-11-02T07:17:46Z
-    uri: http://zotero.org/users/8230813/items/WAT3CGU2
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/LDDL8A6I
     itemID: 365
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: WAT3CGU2
+    itemKey: LDDL8A6I
     libraryID: 1
   -
-    key: PNIMXQYN
+    key: T9VP7CH4
     version: 0
     itemType: webpage
     url: http://www.ethicsguidebook.ac.uk/EthicsPrinciples
@@ -2511,17 +2511,17 @@ items:
         creatorType: author
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:46Z
-    dateModified: 2026-11-02T07:17:46Z
-    uri: http://zotero.org/users/8230813/items/PNIMXQYN
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/T9VP7CH4
     itemID: 366
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: PNIMXQYN
+    itemKey: T9VP7CH4
     libraryID: 1
   -
-    key: MV6X88W5
+    key: G3Q4E354
     version: 0
     itemType: webpage
     url: https://www.nationalnursesunited.org/pages/what-employers-should-do-to-protect-rns-from-zika
@@ -2533,17 +2533,17 @@ items:
         creatorType: author
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:46Z
-    dateModified: 2026-11-02T07:17:46Z
-    uri: http://zotero.org/users/8230813/items/MV6X88W5
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/G3Q4E354
     itemID: 367
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: MV6X88W5
+    itemKey: G3Q4E354
     libraryID: 1
   -
-    key: KS7Y3AQD
+    key: BZ6I5M9A
     version: 0
     itemType: webpage
     url: https://www.census.gov/popclock/
@@ -2557,17 +2557,17 @@ items:
         creatorType: author
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:46Z
-    dateModified: 2026-11-02T07:17:46Z
-    uri: http://zotero.org/users/8230813/items/KS7Y3AQD
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/BZ6I5M9A
     itemID: 368
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: KS7Y3AQD
+    itemKey: BZ6I5M9A
     libraryID: 1
   -
-    key: BUG4L84T
+    key: MLFEVFFX
     version: 0
     itemType: book
     edition: '2'
@@ -2583,17 +2583,17 @@ items:
         creatorType: author
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/BUG4L84T
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/MLFEVFFX
     itemID: 219
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: BUG4L84T
+    itemKey: MLFEVFFX
     libraryID: 1
   -
-    key: TIEWK6A7
+    key: 5DZIAHUX
     version: 0
     itemType: book
     publisher: Routledge
@@ -2607,17 +2607,17 @@ items:
         creatorType: author
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/TIEWK6A7
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/5DZIAHUX
     itemID: 220
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: TIEWK6A7
+    itemKey: 5DZIAHUX
     libraryID: 1
   -
-    key: XI8Y2C46
+    key: KMGJDWW3
     version: 0
     itemType: book
     url: http://bit.ly/2GOBpbl
@@ -2633,17 +2633,17 @@ items:
         creatorType: author
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/XI8Y2C46
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/KMGJDWW3
     itemID: 221
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: XI8Y2C46
+    itemKey: KMGJDWW3
     libraryID: 1
   -
-    key: E9RVXYRP
+    key: BNUQ5EZA
     version: 0
     itemType: book
     url: http://a.co/7qGBZAk
@@ -2662,17 +2662,17 @@ items:
         creatorType: author
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/E9RVXYRP
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/BNUQ5EZA
     itemID: 222
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: E9RVXYRP
+    itemKey: BNUQ5EZA
     libraryID: 1
   -
-    key: H7NJETYA
+    key: VRDW2MEQ
     version: 0
     itemType: book
     publisher: Chelsea Green Publishing
@@ -2690,17 +2690,17 @@ items:
         creatorType: editor
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/H7NJETYA
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/VRDW2MEQ
     itemID: 223
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: H7NJETYA
+    itemKey: VRDW2MEQ
     libraryID: 1
   -
-    key: F6V6I2M2
+    key: 4883BCSN
     version: 0
     itemType: book
     publisher: American Psychological Association and De Gruyter Mouton
@@ -2715,17 +2715,17 @@ items:
         creatorType: editor
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/F6V6I2M2
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/4883BCSN
     itemID: 224
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: F6V6I2M2
+    itemKey: 4883BCSN
     libraryID: 1
   -
-    key: 979HCUYL
+    key: QRARGJD4
     version: 0
     itemType: book
     publisher: Routledge
@@ -2739,17 +2739,17 @@ items:
         creatorType: editor
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/979HCUYL
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/QRARGJD4
     itemID: 225
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: 979HCUYL
+    itemKey: QRARGJD4
     libraryID: 1
   -
-    key: 6RAR7QD4
+    key: 9BZ4ZL65
     version: 0
     itemType: book
     url: http://a.co/0IAiVgt
@@ -2772,17 +2772,17 @@ items:
         creatorType: editor
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/6RAR7QD4
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/9BZ4ZL65
     itemID: 226
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: 6RAR7QD4
+    itemKey: 9BZ4ZL65
     libraryID: 1
   -
-    key: FW36CV9R
+    key: 9BRC2EAU
     version: 0
     itemType: book
     volume: '7'
@@ -2802,17 +2802,17 @@ items:
         creatorType: author
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/FW36CV9R
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/9BRC2EAU
     itemID: 227
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: FW36CV9R
+    itemKey: 9BRC2EAU
     libraryID: 1
   -
-    key: 7YPUKLWA
+    key: TIZWHFGU
     version: 0
     itemType: book
     publisher: Quadrige
@@ -2831,17 +2831,17 @@ items:
         creatorType: author
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/7YPUKLWA
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/TIZWHFGU
     itemID: 228
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: 7YPUKLWA
+    itemKey: TIZWHFGU
     libraryID: 1
   -
-    key: MYK6S2KL
+    key: AYDF633A
     version: 0
     itemType: book
     edition: '2'
@@ -2865,17 +2865,17 @@ items:
         creatorType: translator
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/MYK6S2KL
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/AYDF633A
     itemID: 229
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: MYK6S2KL
+    itemKey: AYDF633A
     libraryID: 1
   -
-    key: 976TZV7M
+    key: QAQLZP9J
     version: 0
     itemType: book
     publisher: Basic Books
@@ -2898,17 +2898,17 @@ items:
         creatorType: translator
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/976TZV7M
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/QAQLZP9J
     itemID: 230
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: 976TZV7M
+    itemKey: QAQLZP9J
     libraryID: 1
   -
-    key: TPSKMRRF
+    key: 5FLVYDGC
     version: 0
     itemType: book
     url: http://bit.ly/2TcHchx
@@ -2925,17 +2925,17 @@ items:
         creatorType: author
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/TPSKMRRF
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/5FLVYDGC
     itemID: 231
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: TPSKMRRF
+    itemKey: 5FLVYDGC
     libraryID: 1
   -
-    key: K7QI6CY7
+    key: 7V2QX9VV
     version: 0
     itemType: book
     volume: '1'
@@ -2960,17 +2960,17 @@ items:
         creatorType: author
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/K7QI6CY7
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/7V2QX9VV
     itemID: 232
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: K7QI6CY7
+    itemKey: 7V2QX9VV
     libraryID: 1
   -
-    key: Z5CCA2WA
+    key: YGE3QVMN
     version: 0
     itemType: book
     publisher: American Psychological Association
@@ -2989,17 +2989,17 @@ items:
         creatorType: editor
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/Z5CCA2WA
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/YGE3QVMN
     itemID: 233
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: Z5CCA2WA
+    itemKey: YGE3QVMN
     libraryID: 1
   -
-    key: RHDAK75T
+    key: D5GX6GYS
     version: 0
     itemType: book
     series: Theories of psychotherapy series
@@ -3016,17 +3016,17 @@ items:
         creatorType: author
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/RHDAK75T
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/D5GX6GYS
     itemID: 234
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: RHDAK75T
+    itemKey: D5GX6GYS
     libraryID: 1
   -
-    key: 4YKIVZTF
+    key: II4HT8YK
     version: 0
     itemType: report
     date: '2013'
@@ -3040,19 +3040,19 @@ items:
         creatorType: author
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/4YKIVZTF
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/II4HT8YK
     itemID: 235
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: 4YKIVZTF
+    itemKey: II4HT8YK
     libraryID: 1
     type: manual
     publisher: American Psychiatric Association
   -
-    key: LFZ3BTB5
+    key: 3WLMJSAV
     version: 0
     itemType: report
     url: https://icd.who.int/
@@ -3066,19 +3066,19 @@ items:
         creatorType: author
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/LFZ3BTB5
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/3WLMJSAV
     itemID: 236
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: LFZ3BTB5
+    itemKey: 3WLMJSAV
     libraryID: 1
     type: manual
     publisher: World Health Organization
   -
-    key: KC85SZAL
+    key: YJM5258V
     version: 0
     itemType: book
     url: https://dictionary.apa.org/
@@ -3091,17 +3091,17 @@ items:
         creatorType: author
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/KC85SZAL
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/YJM5258V
     itemID: 237
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: KC85SZAL
+    itemKey: YJM5258V
     libraryID: 1
   -
-    key: T7LUD4C5
+    key: JWFETP96
     version: 0
     itemType: book
     url: https://www.merriam-webster.com/
@@ -3114,17 +3114,17 @@ items:
         creatorType: author
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/T7LUD4C5
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/JWFETP96
     itemID: 238
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: T7LUD4C5
+    itemKey: JWFETP96
     libraryID: 1
   -
-    key: T6DKZAAA
+    key: ZMM52E3G
     version: 0
     itemType: book
     url: https://plato.stanford.edu/archives/sum2019/
@@ -3140,17 +3140,17 @@ items:
         creatorType: editor
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/T6DKZAAA
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/ZMM52E3G
     itemID: 239
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: T6DKZAAA
+    itemKey: ZMM52E3G
     libraryID: 1
   -
-    key: WCBDXN8G
+    key: LKNMHNQ4
     version: 0
     itemType: book
     publisher: American Psychological Association
@@ -3165,17 +3165,17 @@ items:
         creatorType: editor
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/WCBDXN8G
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/LKNMHNQ4
     itemID: 240
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: WCBDXN8G
+    itemKey: LKNMHNQ4
     libraryID: 1
   -
-    key: WT4QR3IF
+    key: AWYDRZT6
     version: 0
     itemType: book
     url: https://www.kingjamesbibleonline.org/
@@ -3187,17 +3187,17 @@ items:
     creators: []
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/WT4QR3IF
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/AWYDRZT6
     itemID: 241
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: WT4QR3IF
+    itemKey: AWYDRZT6
     libraryID: 1
   -
-    key: 2JN26QJ9
+    key: A4S2QWF3
     version: 0
     itemType: book
     publisher: Oxford University Press
@@ -3211,17 +3211,17 @@ items:
         creatorType: translator
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/2JN26QJ9
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/A4S2QWF3
     itemID: 242
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: 2JN26QJ9
+    itemKey: A4S2QWF3
     libraryID: 1
   -
-    key: TEZT2ELD
+    key: 7S3WSWHX
     version: 0
     itemType: book
     edition: '3'
@@ -3233,17 +3233,17 @@ items:
     creators: []
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/TEZT2ELD
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/7S3WSWHX
     itemID: 243
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: TEZT2ELD
+    itemKey: 7S3WSWHX
     libraryID: 1
   -
-    key: ISSMY478
+    key: UU7TFNQI
     version: 0
     itemType: encyclopediaArticle
     publisher: Case Western Reserve University
@@ -3257,18 +3257,18 @@ items:
         creatorType: editor
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/ISSMY478
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/UU7TFNQI
     itemID: 244
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: ISSMY478
+    itemKey: UU7TFNQI
     libraryID: 1
     publicationTitle: Encyclopedia of Cleveland history
   -
-    key: XZZA4QM3
+    key: KA2ZGFZF
     version: 0
     itemType: book
     url: http://classics.mit.edu/Aristotle/poetics.html
@@ -3287,17 +3287,17 @@ items:
         creatorType: translator
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/XZZA4QM3
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/KA2ZGFZF
     itemID: 245
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: XZZA4QM3
+    itemKey: KA2ZGFZF
     libraryID: 1
   -
-    key: NU8ERL2W
+    key: 8FVAI2GJ
     version: 0
     itemType: book
     publisher: Washington Square Press
@@ -3320,17 +3320,17 @@ items:
         creatorType: editor
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/NU8ERL2W
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/8FVAI2GJ
     itemID: 246
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: NU8ERL2W
+    itemKey: 8FVAI2GJ
     libraryID: 1
   -
-    key: KERN5ZU4
+    key: I2D5WKCS
     version: 0
     itemType: bookSection
     edition: '2'
@@ -3368,18 +3368,18 @@ items:
         creatorType: editor
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/KERN5ZU4
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/I2D5WKCS
     itemID: 247
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: KERN5ZU4
+    itemKey: I2D5WKCS
     libraryID: 1
     publicationTitle: Culturally responsive cognitive behaviour therapy
   -
-    key: 2X92EZYM
+    key: HSTR3JRG
     version: 0
     itemType: bookSection
     edition: '2'
@@ -3407,18 +3407,18 @@ items:
         creatorType: editor
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/2X92EZYM
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/HSTR3JRG
     itemID: 248
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: 2X92EZYM
+    itemKey: HSTR3JRG
     libraryID: 1
     publicationTitle: Principles and practise of forensic psychiatry
   -
-    key: F6A4NAYS
+    key: TERYUPLX
     version: 0
     itemType: bookSection
     url: http://a.co/36xRhBT
@@ -3451,18 +3451,18 @@ items:
         creatorType: editor
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/F6A4NAYS
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/TERYUPLX
     itemID: 249
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: F6A4NAYS
+    itemKey: TERYUPLX
     libraryID: 1
     publicationTitle: Ethnicity and family therapy
   -
-    key: IETZY3SC
+    key: RJWZRNG7
     version: 0
     itemType: bookSection
     url: http://www.sintesis.com/guias-profesionales-203/guia-practica-de-terapias-estimulativas-en-el-alzheimer-libro-1943.html
@@ -3483,18 +3483,18 @@ items:
         creatorType: editor
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/IETZY3SC
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/RJWZRNG7
     itemID: 250
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: IETZY3SC
+    itemKey: RJWZRNG7
     libraryID: 1
     publicationTitle: Guía práctica de terapias estimulativas en el Alzhéimer
   -
-    key: C8TVMXVA
+    key: 7T7LNP7E
     version: 0
     itemType: bookSection
     publisher: Harper Perennial Modern Thought
@@ -3518,18 +3518,18 @@ items:
         creatorType: translator
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/C8TVMXVA
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/7T7LNP7E
     itemID: 251
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: C8TVMXVA
+    itemKey: 7T7LNP7E
     libraryID: 1
     publicationTitle: Basic writings
   -
-    key: LCREMVDG
+    key: BKFU24XG
     version: 0
     itemType: bookSection
     publisher: Psychology Press
@@ -3557,18 +3557,18 @@ items:
         creatorType: editor
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/LCREMVDG
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/BKFU24XG
     itemID: 252
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: LCREMVDG
+    itemKey: BKFU24XG
     libraryID: 1
     publicationTitle: Cognitive psychology
   -
-    key: V2T3IND5
+    key: L87L4D8D
     version: 0
     itemType: journalArticle
     volume: '9'
@@ -3590,17 +3590,17 @@ items:
         creatorType: author
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/V2T3IND5
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/L87L4D8D
     itemID: 253
     attachments: []
     notes: []
     autoJournalAbbreviation: Cogn. Neuropsychol.
-    itemKey: V2T3IND5
+    itemKey: L87L4D8D
     libraryID: 1
   -
-    key: T6QPX3N4
+    key: JB4BASZP
     version: 0
     itemType: bookSection
     publisher: SAGE Publications
@@ -3620,18 +3620,18 @@ items:
         creatorType: editor
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/T6QPX3N4
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/JB4BASZP
     itemID: 254
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: T6QPX3N4
+    itemKey: JB4BASZP
     libraryID: 1
     publicationTitle: Making human beings human
   -
-    key: 3MPDDD6Y
+    key: 46VHJ72F
     version: 0
     itemType: book
     publisher: National Education Press
@@ -3646,17 +3646,17 @@ items:
         creatorType: editor
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/3MPDDD6Y
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/46VHJ72F
     itemID: 255
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: 3MPDDD6Y
+    itemKey: 46VHJ72F
     libraryID: 1
   -
-    key: AUTSEMT9
+    key: H8Z9Y7HY
     version: 0
     itemType: bookSection
     edition: '7'
@@ -3682,18 +3682,18 @@ items:
         creatorType: editor
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/AUTSEMT9
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/H8Z9Y7HY
     itemID: 256
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: AUTSEMT9
+    itemKey: H8Z9Y7HY
     libraryID: 1
     publicationTitle: Handbook of child psychology and developmental science
   -
-    key: Z2SXQMNY
+    key: E8RDSTBT
     version: 0
     itemType: bookSection
     publisher: American Psychological Association
@@ -3715,18 +3715,18 @@ items:
         creatorType: editor
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/Z2SXQMNY
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/E8RDSTBT
     itemID: 257
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: Z2SXQMNY
+    itemKey: E8RDSTBT
     libraryID: 1
     publicationTitle: The complete social scientist
   -
-    key: RA2DZ3TU
+    key: TC8I7R7I
     version: 0
     itemType: bookSection
     url: https://dictionary.apa.org/positive-transference
@@ -3739,18 +3739,18 @@ items:
         creatorType: author
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/RA2DZ3TU
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/TC8I7R7I
     itemID: 258
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: RA2DZ3TU
+    itemKey: TC8I7R7I
     libraryID: 1
     publicationTitle: APA dictionary of psychology
   -
-    key: DXUM5BXZ
+    key: YC9JSYF8
     version: 0
     itemType: bookSection
     url: https://www.merriam-webster.com/dictionary/self-report
@@ -3763,18 +3763,18 @@ items:
         creatorType: author
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/DXUM5BXZ
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/YC9JSYF8
     itemID: 259
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: DXUM5BXZ
+    itemKey: YC9JSYF8
     libraryID: 1
     publicationTitle: Merriam-Webster.com dictionary
   -
-    key: 973KER9H
+    key: ZJWBMRPK
     version: 0
     itemType: encyclopediaArticle
     url: https://plato.stanford.edu/archives/sum2019/entries/behaviourism
@@ -3794,18 +3794,18 @@ items:
         creatorType: editor
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/973KER9H
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/ZJWBMRPK
     itemID: 260
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: 973KER9H
+    itemKey: ZJWBMRPK
     libraryID: 1
     publicationTitle: The Stanford encyclopedia of philosophy
   -
-    key: 3E4FWKGS
+    key: 996RGLN6
     version: 0
     itemType: bookSection
     url: https://en.wikipedia.org/w/index.php?title=List_of_oldest_companies&oldid=878158136
@@ -3815,18 +3815,18 @@ items:
     creators: []
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/3E4FWKGS
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/996RGLN6
     itemID: 261
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: 3E4FWKGS
+    itemKey: 996RGLN6
     libraryID: 1
     publicationTitle: Wikipedia
   -
-    key: Z6GT6YRP
+    key: DRGXU28J
     version: 0
     itemType: report
     url: https://www.pc.gov.au/inquiries/completed/australia-new-zealand/report/trans-tasman.pdf
@@ -3842,17 +3842,17 @@ items:
         creatorType: author
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/Z6GT6YRP
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/DRGXU28J
     itemID: 262
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: Z6GT6YRP
+    itemKey: DRGXU28J
     libraryID: 1
   -
-    key: X9UB3NQU
+    key: R6DL67VC
     version: 0
     itemType: report
     url: http://publications.gc.ca/collections/collection_2017/canadacouncil/K23-65-2013-eng.pdf
@@ -3865,17 +3865,17 @@ items:
         creatorType: author
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/X9UB3NQU
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/R6DL67VC
     itemID: 263
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: X9UB3NQU
+    itemKey: R6DL67VC
     libraryID: 1
   -
-    key: JUMJ2J8B
+    key: UNEC9848
     version: 0
     itemType: report
     url: https://www.cancer.gov/publications/patient-education/life-after-cancer-treatment.pdf
@@ -3888,19 +3888,19 @@ items:
         creatorType: author
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/JUMJ2J8B
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/UNEC9848
     itemID: 264
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: JUMJ2J8B
+    itemKey: UNEC9848
     libraryID: 1
     number: 18-2424
     type: NIH Publication
   -
-    key: KPT3SL3W
+    key: 9EHL7M28
     version: 0
     itemType: report
     url: https://www.atlantic.org/images/publications/Democratic_Defense_Against_Disinformation_FINAL.pdf
@@ -3918,18 +3918,18 @@ items:
         creatorType: author
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/KPT3SL3W
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/9EHL7M28
     itemID: 265
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: KPT3SL3W
+    itemKey: 9EHL7M28
     libraryID: 1
     publisher: Atlantic Council
   -
-    key: S5L54EHN
+    key: NCA54XUR
     version: 0
     itemType: report
     url: https://www.canada.ca/en/employment-social-development/programs/communities/homelessness/publications-bulletins/veterans-report.html
@@ -3947,18 +3947,18 @@ items:
         creatorType: author
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/S5L54EHN
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/NCA54XUR
     itemID: 266
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: S5L54EHN
+    itemKey: NCA54XUR
     libraryID: 1
     publisher: Employment and Social Development Canada
   -
-    key: 49QDYISC
+    key: RCIK843M
     version: 0
     itemType: report
     url: https://www.atlantic.org/images/publications/Democratic_Defense_Against_Disinformation_FINAL.pdf
@@ -3981,19 +3981,19 @@ items:
         creatorType: author
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/49QDYISC
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/RCIK843M
     itemID: 267
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: 49QDYISC
+    itemKey: RCIK843M
     libraryID: 1
     number: 10, Issue 260
     publisher: Centers for Disease Control and Prevention
   -
-    key: QNEXEEZN
+    key: 99YLJG4I
     version: 0
     itemType: report
     url: http://www.bcs.com/documents/BCSOOHWP_Final_Report_05092016.pdf
@@ -4006,18 +4006,18 @@ items:
         creatorType: author
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/QNEXEEZN
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/99YLJG4I
     itemID: 268
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: QNEXEEZN
+    itemKey: 99YLJG4I
     libraryID: 1
     publisher: British Cardiovascular Society
   -
-    key: AATMLDUF
+    key: FF9GKL7Y
     version: 0
     itemType: report
     url: https://www.sec.gov/files/sec-2017-agency-financial-report.pdf
@@ -4030,17 +4030,17 @@ items:
         creatorType: author
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/AATMLDUF
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/FF9GKL7Y
     itemID: 269
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: AATMLDUF
+    itemKey: FF9GKL7Y
     libraryID: 1
   -
-    key: Q9JXWINN
+    key: LU222Z62
     version: 0
     itemType: report
     url: https://www.counseling.org/knowledge-center
@@ -4053,17 +4053,17 @@ items:
         creatorType: author
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/Q9JXWINN
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/LU222Z62
     itemID: 270
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: Q9JXWINN
+    itemKey: LU222Z62
     libraryID: 1
   -
-    key: S3T8QVF6
+    key: QT5LT5M6
     version: 0
     itemType: report
     url: https://www.nursingworld.org/coe-view-only
@@ -4076,17 +4076,17 @@ items:
         creatorType: author
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/S3T8QVF6
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/QT5LT5M6
     itemID: 271
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: S3T8QVF6
+    itemKey: QT5LT5M6
     libraryID: 1
   -
-    key: HSWG89MF
+    key: 3H43IC9G
     version: 0
     itemType: report
     url: https://www.apa.org/ethics/code/index.aspx
@@ -4099,28 +4099,28 @@ items:
         creatorType: author
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/HSWG89MF
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/3H43IC9G
     itemID: 272
     attachments: []
     notes:
       -
-        key: 5SS7FBAZ
+        key: K5BBP3N3
         version: 0
         itemType: note
-        parentItem: HSWG89MF
+        parentItem: 3H43IC9G
         note: 2002, amended effective June 1, 2010, and January 1, 2017
         tags: []
         relations: {}
-        dateAdded: 2026-11-02T07:17:45Z
-        dateModified: 2026-11-02T07:17:45Z
-        uri: http://zotero.org/users/8230813/items/5SS7FBAZ
+        dateAdded: 2026-11-02T09:05:40Z
+        dateModified: 2026-11-02T09:05:40Z
+        uri: http://zotero.org/users/8230813/items/K5BBP3N3
     autoJournalAbbreviation: ''
-    itemKey: HSWG89MF
+    itemKey: 3H43IC9G
     libraryID: 1
   -
-    key: 8G6UL744
+    key: 7UA5J9EI
     version: 0
     itemType: report
     url: https://projectreporter.nih.gov/project_info_details.cfm?aid=9473071&icde=40092311
@@ -4135,20 +4135,20 @@ items:
         creatorType: author
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/8G6UL744
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/7UA5J9EI
     itemID: 274
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: 8G6UL744
+    itemKey: 7UA5J9EI
     libraryID: 1
     number: 5R01HD081252-04
     type: Project
     publisher: Eunice Kennedy Shriver National Institute of Child Health & Human Development
   -
-    key: PHQXGKR6
+    key: J4GYVJBJ
     version: 0
     itemType: report
     url: https://www.sba.org/sites/default/files/Issue%20Brief%201,%20Veteran%20Business%20Owners.pdf
@@ -4162,20 +4162,20 @@ items:
         creatorType: author
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/PHQXGKR6
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/J4GYVJBJ
     itemID: 275
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: PHQXGKR6
+    itemKey: J4GYVJBJ
     libraryID: 1
     number: '1'
     type: Issue Brief
     publisher: U.S. Small Business Administration, Office of Advocacy
   -
-    key: JA5P4PBW
+    key: QJWSG785
     version: 0
     itemType: report
     url: https://nepc.colorado.edu/publication/SES
@@ -4189,18 +4189,18 @@ items:
         creatorType: author
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/JA5P4PBW
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/QJWSG785
     itemID: 276
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: JA5P4PBW
+    itemKey: QJWSG785
     libraryID: 1
     publisher: National Education Policy Center
   -
-    key: 5QLHRCKY
+    key: CTCLEUV9
     version: 0
     itemType: report
     url: https://www.fds.gov/NewsEvents/Newsroom/PressAnnouncements/ucm631412.htm
@@ -4213,18 +4213,18 @@ items:
         creatorType: author
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/5QLHRCKY
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/CTCLEUV9
     itemID: 277
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: 5QLHRCKY
+    itemKey: CTCLEUV9
     libraryID: 1
     publisher: U.S. Food and Drug Administration
   -
-    key: XAH724KB
+    key: FU4PU6TE
     version: 0
     itemType: presentation
     url: https://asa.confex.com/asa/2017/webprogramarchives/Session9517.html
@@ -4248,17 +4248,17 @@ items:
         creatorType: contributor
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/XAH724KB
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/FU4PU6TE
     itemID: 278
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: XAH724KB
+    itemKey: FU4PU6TE
     libraryID: 1
   -
-    key: EB55GPU4
+    key: A3AQ8QMJ
     version: 0
     itemType: presentation
     place: New Orleans, LA, United States
@@ -4285,17 +4285,17 @@ items:
         creatorType: contributor
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/EB55GPU4
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/A3AQ8QMJ
     itemID: 279
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: EB55GPU4
+    itemKey: A3AQ8QMJ
     libraryID: 1
   -
-    key: DYCFC9TQ
+    key: FM3STGUZ
     version: 0
     itemType: presentation
     url: http://bit.ly/2XGSThP
@@ -4311,17 +4311,17 @@ items:
         creatorType: contributor
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/DYCFC9TQ
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/FM3STGUZ
     itemID: 280
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: DYCFC9TQ
+    itemKey: FM3STGUZ
     libraryID: 1
   -
-    key: YRYHIVMK
+    key: 74BB6RMB
     version: 0
     itemType: presentation
     place: Portland, OR, United States
@@ -4349,17 +4349,17 @@ items:
         creatorType: contributor
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/YRYHIVMK
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/74BB6RMB
     itemID: 281
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: YRYHIVMK
+    itemKey: 74BB6RMB
     libraryID: 1
   -
-    key: S5FFH8B3
+    key: BLNV7HEN
     version: 0
     itemType: conferencePaper
     volume: '116'
@@ -4396,18 +4396,18 @@ items:
         creatorType: author
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/S5FFH8B3
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/BLNV7HEN
     itemID: 282
     attachments: []
     notes: []
     autoJournalAbbreviation: Proc. Natl. Acad. Sci. USA
-    itemKey: S5FFH8B3
+    itemKey: BLNV7HEN
     libraryID: 1
     publicationTitle: Proceedings of the national academy of sciences, USA
   -
-    key: GKUVDX4S
+    key: CCC3TAI2
     version: 0
     itemType: book
     publisher: Springer
@@ -4427,17 +4427,17 @@ items:
         creatorType: editor
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/GKUVDX4S
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/CCC3TAI2
     itemID: 283
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: GKUVDX4S
+    itemKey: CCC3TAI2
     libraryID: 1
   -
-    key: JXKWFRFJ
+    key: AB3UB45V
     version: 0
     itemType: conferencePaper
     publisher: Springer
@@ -4478,18 +4478,18 @@ items:
         creatorType: editor
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/JXKWFRFJ
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/AB3UB45V
     itemID: 284
     attachments: []
     notes: []
     autoJournalAbbreviation: Learn. Intell. Optim.
-    itemKey: JXKWFRFJ
+    itemKey: AB3UB45V
     libraryID: 1
     publicationTitle: Learning and intelligent optimization
   -
-    key: GQ3QXJ5U
+    key: 7KUHCWDM
     version: 0
     itemType: thesis
     date: '2014'
@@ -4502,19 +4502,19 @@ items:
         creatorType: author
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/GQ3QXJ5U
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/7KUHCWDM
     itemID: 285
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: GQ3QXJ5U
+    itemKey: 7KUHCWDM
     libraryID: 1
     type: Unpublished doctoral dissertation
     publisher: University of Virginia
   -
-    key: FBDJLZ5U
+    key: N98NEF5J
     version: 0
     itemType: thesis
     date: '2017'
@@ -4528,19 +4528,19 @@ items:
         creatorType: author
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/FBDJLZ5U
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/N98NEF5J
     itemID: 286
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: FBDJLZ5U
+    itemKey: N98NEF5J
     libraryID: 1
     type: phd
-    publisher: ProQuest Dissertations and Theses Global / University of Wisconsin–Madison
+    publisher: ProQuest Dissertations and Theses Global and University of Wisconsin–Madison
   -
-    key: SWMHY6U5
+    key: DDT6G98L
     version: 0
     itemType: thesis
     url: https://digitalarchive.wm.edu/bitstream/handle/10288/16594/HutchesonVirginia2012.pdf
@@ -4554,19 +4554,19 @@ items:
         creatorType: author
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/SWMHY6U5
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/DDT6G98L
     itemID: 287
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: SWMHY6U5
+    itemKey: DDT6G98L
     libraryID: 1
     type: master
-    publisher: William & Mary Digital Archive / The College of William & Mary
+    publisher: William & Mary Digital Archive and The College of William & Mary
   -
-    key: WGJYK7BU
+    key: JG6VGC4D
     version: 0
     itemType: journalArticle
     volume: '3'
@@ -4589,17 +4589,17 @@ items:
         creatorType: author
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/WGJYK7BU
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/JG6VGC4D
     itemID: 288
     attachments: []
     notes: []
     autoJournalAbbreviation: Psychol. Sex. Orientat. Gend. Divers.
-    itemKey: WGJYK7BU
+    itemKey: JG6VGC4D
     libraryID: 1
   -
-    key: 37UNF9Z7
+    key: 848HTBJ7
     version: 0
     itemType: film
     date: '2016'
@@ -4613,17 +4613,17 @@ items:
         creatorType: director
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/37UNF9Z7
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/848HTBJ7
     itemID: 289
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: 37UNF9Z7
+    itemKey: 848HTBJ7
     libraryID: 1
   -
-    key: NATHN6KK
+    key: XDLIYD4J
     version: 0
     itemType: journalArticle
     url: https://nyt.ms/2Hlgjk3
@@ -4639,17 +4639,17 @@ items:
         creatorType: author
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/NATHN6KK
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/XDLIYD4J
     itemID: 290
     attachments: []
     notes: []
     autoJournalAbbreviation: N. Y. Times
-    itemKey: NATHN6KK
+    itemKey: XDLIYD4J
     libraryID: 1
   -
-    key: PPNAW3IZ
+    key: B9DRJ6FH
     version: 0
     itemType: book
     date: '2016'
@@ -4662,17 +4662,17 @@ items:
         creatorType: author
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/PPNAW3IZ
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/B9DRJ6FH
     itemID: 291
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: PPNAW3IZ
+    itemKey: B9DRJ6FH
     libraryID: 1
   -
-    key: BM6MKJRD
+    key: 39DKCYVS
     version: 0
     itemType: webpage
     url: https://www.avclub.com/the-good-place-ends-its-remarkable-second-season-with-i-1822649316
@@ -4687,17 +4687,17 @@ items:
         creatorType: author
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/BM6MKJRD
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/39DKCYVS
     itemID: 292
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: BM6MKJRD
+    itemKey: 39DKCYVS
     libraryID: 1
   -
-    key: 5WN3WLC4
+    key: RTH3KBUR
     version: 0
     itemType: tvBroadcast
     date: '2018'
@@ -4711,17 +4711,17 @@ items:
         creatorType: director
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/5WN3WLC4
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/RTH3KBUR
     itemID: 293
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: 5WN3WLC4
+    itemKey: RTH3KBUR
     libraryID: 1
   -
-    key: GF28UQRM
+    key: NIU4TBVW
     version: 0
     itemType: manuscript
     place: Department of Psychology
@@ -4748,18 +4748,18 @@ items:
         creatorType: author
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/GF28UQRM
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/NIU4TBVW
     itemID: 294
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: GF28UQRM
+    itemKey: NIU4TBVW
     libraryID: 1
     publisher: University of Wisconsin-Madison
   -
-    key: L6394KYE
+    key: IHEGBH38
     version: 0
     itemType: manuscript
     place: Department of Management
@@ -4774,18 +4774,18 @@ items:
         creatorType: author
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/L6394KYE
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/IHEGBH38
     itemID: 295
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: L6394KYE
+    itemKey: IHEGBH38
     libraryID: 1
     publisher: University of Kansas
   -
-    key: LRJHTNXP
+    key: SQH6S458
     version: 0
     itemType: manuscript
     place: Department of Psychology
@@ -4804,18 +4804,18 @@ items:
         creatorType: author
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/LRJHTNXP
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/SQH6S458
     itemID: 296
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: LRJHTNXP
+    itemKey: SQH6S458
     libraryID: 1
     publisher: University of Washington
   -
-    key: 8BCQ2E2N
+    key: AC7UVHY5
     version: 0
     itemType: webpage
     date: '2018'
@@ -4842,17 +4842,17 @@ items:
         creatorType: author
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/8BCQ2E2N
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/AC7UVHY5
     itemID: 297
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: 8BCQ2E2N
+    itemKey: AC7UVHY5
     libraryID: 1
   -
-    key: EN599XUX
+    key: Z74DBCQN
     version: 0
     itemType: webpage
     url: https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3894304
@@ -4871,17 +4871,17 @@ items:
         creatorType: author
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/EN599XUX
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/Z74DBCQN
     itemID: 298
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: EN599XUX
+    itemKey: Z74DBCQN
     libraryID: 1
   -
-    key: 438QNJXD
+    key: 72CKF85U
     version: 0
     itemType: webpage
     url: https://files.eric.ed.gov/fulltext/ED545393.pdf
@@ -4896,17 +4896,17 @@ items:
         creatorType: author
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/438QNJXD
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/72CKF85U
     itemID: 299
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: 438QNJXD
+    itemKey: 72CKF85U
     libraryID: 1
   -
-    key: AKWVE2GC
+    key: V2JN6AB2
     version: 0
     itemType: dataset
     date: '2018'
@@ -4926,19 +4926,19 @@ items:
         creatorType: author
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/AKWVE2GC
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/V2JN6AB2
     itemID: 300
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: AKWVE2GC
+    itemKey: V2JN6AB2
     libraryID: 1
     number: ICPSR 37080
     publisher: ICPSR
   -
-    key: SH55QHXN
+    key: AJQGIPHA
     version: 0
     itemType: dataset
     date: '2016'
@@ -4953,19 +4953,19 @@ items:
         creatorType: author
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/SH55QHXN
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/AJQGIPHA
     itemID: 301
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: SH55QHXN
+    itemKey: AJQGIPHA
     libraryID: 1
     number: ICPSR 35531
     publisher: National Archive of Data on Arts and Culture
   -
-    key: 2HS5NXM6
+    key: MA5QCY9H
     version: 0
     itemType: dataset
     url: https://www.pewsocialtrends.org/dataset/american-trends-panel-wave-26/
@@ -4979,17 +4979,17 @@ items:
         creatorType: author
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/2HS5NXM6
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/MA5QCY9H
     itemID: 302
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: 2HS5NXM6
+    itemKey: MA5QCY9H
     libraryID: 1
   -
-    key: BI6P45U9
+    key: 2F8QB647
     version: 0
     itemType: dataset
     date: '2015'
@@ -5002,18 +5002,18 @@ items:
         creatorType: author
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/BI6P45U9
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/2F8QB647
     itemID: 303
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: BI6P45U9
+    itemKey: 2F8QB647
     libraryID: 1
     publisher: University of Kentucky
   -
-    key: U2PD5I4W
+    key: AWIGY7LV
     version: 0
     itemType: dataset
     date: '2011'
@@ -5026,17 +5026,17 @@ items:
         creatorType: author
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/U2PD5I4W
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/AWIGY7LV
     itemID: 304
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: U2PD5I4W
+    itemKey: AWIGY7LV
     libraryID: 1
   -
-    key: 6ZRATT6X
+    key: EWNGYR29
     version: 0
     itemType: statute
     url: https://www.ohchr.org/en/professionalinterest/pages/crc.aspx
@@ -5045,19 +5045,19 @@ items:
     creators: []
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:46Z
-    dateModified: 2026-11-02T07:17:46Z
-    uri: http://zotero.org/users/8230813/items/6ZRATT6X
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/EWNGYR29
     itemID: 400
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: 6ZRATT6X
+    itemKey: EWNGYR29
     libraryID: 1
     title: United nations convention on the rights of the child
     date: 1989-11-20
   -
-    key: 6F6V29BD
+    key: ST2SFRN9
     version: 0
     itemType: case
     url: http://www.oyez.org/cases/1940-1955/347us483
@@ -5066,19 +5066,19 @@ items:
     creators: []
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:46Z
-    dateModified: 2026-11-02T07:17:46Z
-    uri: http://zotero.org/users/8230813/items/6F6V29BD
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/ST2SFRN9
     itemID: 369
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: 6F6V29BD
+    itemKey: ST2SFRN9
     libraryID: 1
     title: Brown v. board of education
     date: '1954'
   -
-    key: RYLWMUMW
+    key: T6HRSHRC
     version: 0
     itemType: case
     url: https://www.supremecourt.gov/opinions/14pdf/14-556_3204.pdf
@@ -5087,19 +5087,19 @@ items:
     creators: []
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:46Z
-    dateModified: 2026-11-02T07:17:46Z
-    uri: http://zotero.org/users/8230813/items/RYLWMUMW
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/T6HRSHRC
     itemID: 370
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: RYLWMUMW
+    itemKey: T6HRSHRC
     libraryID: 1
     title: Obergefell v. hodges
     date: '2015'
   -
-    key: MTJN5QMG
+    key: TDL8F45H
     version: 0
     itemType: case
     url: https://openjurist.org/951/f2d/1128/william-dabert-v-merrell-dow-pharmaceuticals
@@ -5108,19 +5108,20 @@ items:
     creators: []
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:46Z
-    dateModified: 2026-11-02T07:17:46Z
-    uri: http://zotero.org/users/8230813/items/MTJN5QMG
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/TDL8F45H
     itemID: 371
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: MTJN5QMG
+    itemKey: TDL8F45H
     libraryID: 1
     title: Daubert v. merrell dow pharmaceuticals, inc.
+    authority: 9th Cir.
     date: '1991'
   -
-    key: GXWUABBX
+    key: ZIZIVYHY
     version: 0
     itemType: case
     url: https://law.justia.com/cases/federal/district-courts/FSupp2/133/1034/2293141/
@@ -5129,19 +5130,20 @@ items:
     creators: []
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:46Z
-    dateModified: 2026-11-02T07:17:46Z
-    uri: http://zotero.org/users/8230813/items/GXWUABBX
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/ZIZIVYHY
     itemID: 372
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: GXWUABBX
+    itemKey: ZIZIVYHY
     libraryID: 1
     title: Burriola v. greater toledo YMCA
+    authority: N.D. Ohio
     date: '2001'
   -
-    key: 4ATV46UN
+    key: F3N7BISG
     version: 0
     itemType: case
     url: https://openjurist.org/727/f2d/888/durflinger-v-artiles
@@ -5150,19 +5152,19 @@ items:
     creators: []
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:46Z
-    dateModified: 2026-11-02T07:17:46Z
-    uri: http://zotero.org/users/8230813/items/4ATV46UN
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/F3N7BISG
     itemID: 373
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: 4ATV46UN
+    itemKey: F3N7BISG
     libraryID: 1
     title: Durflinger v. artiles
     date: '1984'
   -
-    key: WYT354MU
+    key: GBHTDYLC
     version: 0
     itemType: case
     url: https://www.casebriefs.com/blog/law/torts/tors-keyed-to-dobbs/the-duty-to-protect-from-third-persons/tarasoff-v-regents-of-university-of-california
@@ -5171,19 +5173,19 @@ items:
     creators: []
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:46Z
-    dateModified: 2026-11-02T07:17:46Z
-    uri: http://zotero.org/users/8230813/items/WYT354MU
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/GBHTDYLC
     itemID: 374
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: WYT354MU
+    itemKey: GBHTDYLC
     libraryID: 1
     title: Tarasoff v. regents of the university of california
     date: '1976'
   -
-    key: ZCXQHZ8U
+    key: 24CQBH23
     version: 0
     itemType: case
     url: https://www.leagle.com/decision/19921027826sw2d20111010
@@ -5192,19 +5194,19 @@ items:
     creators: []
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:46Z
-    dateModified: 2026-11-02T07:17:46Z
-    uri: http://zotero.org/users/8230813/items/ZCXQHZ8U
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/24CQBH23
     itemID: 375
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: ZCXQHZ8U
+    itemKey: 24CQBH23
     libraryID: 1
     title: Texas v. morales
     date: '1992'
   -
-    key: Q3Q5VFDY
+    key: G82NGCWH
     version: 0
     itemType: statute
     url: https://www.congress.gov/114/plaws/publ95/PLAW-114publ95.pdf
@@ -5213,19 +5215,19 @@ items:
     creators: []
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:46Z
-    dateModified: 2026-11-02T07:17:46Z
-    uri: http://zotero.org/users/8230813/items/Q3Q5VFDY
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/G82NGCWH
     itemID: 378
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: Q3Q5VFDY
+    itemKey: G82NGCWH
     libraryID: 1
     title: Every student succeeds act
     date: '2015'
   -
-    key: UTWBKY74
+    key: RMDZJCWW
     version: 0
     itemType: statute
     url: https://www.govinfo.gov/content/pkg/PLAW-111publ2/pdf/PLAW-111publ2.pdf
@@ -5234,19 +5236,19 @@ items:
     creators: []
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:46Z
-    dateModified: 2026-11-02T07:17:46Z
-    uri: http://zotero.org/users/8230813/items/UTWBKY74
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/RMDZJCWW
     itemID: 379
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: UTWBKY74
+    itemKey: RMDZJCWW
     libraryID: 1
     title: Lilly leadbetter fair play act. of 2009
     date: '2009'
   -
-    key: 4V5W7IAL
+    key: JJWJR6KK
     version: 0
     itemType: statute
     url: https://www.justice.org/crt/title-ix-education-amendments-1972
@@ -5255,19 +5257,19 @@ items:
     creators: []
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:46Z
-    dateModified: 2026-11-02T07:17:46Z
-    uri: http://zotero.org/users/8230813/items/4V5W7IAL
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/JJWJR6KK
     itemID: 380
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: 4V5W7IAL
+    itemKey: JJWJR6KK
     libraryID: 1
     title: Patsy mink equal opportunity in education act
     date: '1972'
   -
-    key: 39SSBYN7
+    key: 9NCI2EY8
     version: 0
     itemType: statute
     url: http://www.leg.state.fl.us/statues/index.cfm?App_mode=Display_Statute&URL=0300-0399/0394/0394.html
@@ -5276,19 +5278,19 @@ items:
     creators: []
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:46Z
-    dateModified: 2026-11-02T07:17:46Z
-    uri: http://zotero.org/users/8230813/items/39SSBYN7
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/9NCI2EY8
     itemID: 381
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: 39SSBYN7
+    itemKey: 9NCI2EY8
     libraryID: 1
     title: Florida mental health act
     date: '2009'
   -
-    key: TUN9XJIG
+    key: 3VWEJDVV
     version: 0
     itemType: statute
     url: https://www.ada.gov/pubs/adastatute08.htm
@@ -5297,19 +5299,19 @@ items:
     creators: []
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:46Z
-    dateModified: 2026-11-02T07:17:46Z
-    uri: http://zotero.org/users/8230813/items/TUN9XJIG
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/3VWEJDVV
     itemID: 376
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: TUN9XJIG
+    itemKey: 3VWEJDVV
     libraryID: 1
     title: American with disabilities act. of 1990
     date: '1990'
   -
-    key: 5AMR3629
+    key: 4YXN35ZP
     version: 0
     itemType: statute
     url: https://www.govinfo.gov/content/pkg/STATUE-78/pdf/STATUTE-78-Pg241.pdf
@@ -5318,19 +5320,19 @@ items:
     creators: []
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:46Z
-    dateModified: 2026-11-02T07:17:46Z
-    uri: http://zotero.org/users/8230813/items/5AMR3629
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/4YXN35ZP
     itemID: 377
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: 5AMR3629
+    itemKey: 4YXN35ZP
     libraryID: 1
     title: Civil rights act. of 1964
     date: '1964'
   -
-    key: 2FKFR2MJ
+    key: LNAP3U75
     version: 0
     itemType: bill
     url: http://www.gsa.gov/portal/content/233107
@@ -5341,28 +5343,28 @@ items:
     creators: []
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:46Z
-    dateModified: 2026-11-02T07:17:46Z
-    uri: http://zotero.org/users/8230813/items/2FKFR2MJ
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/LNAP3U75
     itemID: 382
     attachments: []
     notes:
       -
-        key: MX8XNLUN
+        key: M6XYDWGC
         version: 0
         itemType: note
-        parentItem: 2FKFR2MJ
+        parentItem: LNAP3U75
         note: testimony of Norman Dong
         tags: []
         relations: {}
-        dateAdded: 2026-11-02T07:17:46Z
-        dateModified: 2026-11-02T07:17:46Z
-        uri: http://zotero.org/users/8230813/items/MX8XNLUN
+        dateAdded: 2026-11-02T09:05:40Z
+        dateModified: 2026-11-02T09:05:40Z
+        uri: http://zotero.org/users/8230813/items/M6XYDWGC
     autoJournalAbbreviation: ''
-    itemKey: 2FKFR2MJ
+    itemKey: LNAP3U75
     libraryID: 1
   -
-    key: TJTR6KR9
+    key: UBRUSCTX
     version: 0
     itemType: bill
     url: https://www.help.senate.gov/hearings/strengthening-the-federal-student-load-program-for-borrowers
@@ -5374,17 +5376,17 @@ items:
     creators: []
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:46Z
-    dateModified: 2026-11-02T07:17:46Z
-    uri: http://zotero.org/users/8230813/items/TJTR6KR9
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/UBRUSCTX
     itemID: 384
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: TJTR6KR9
+    itemKey: UBRUSCTX
     libraryID: 1
   -
-    key: 2RWK5V6Z
+    key: 8YT8EVEQ
     version: 0
     itemType: statute
     url: https://www.congress.gov/bill/113th-congress/house-bill/1100
@@ -5393,19 +5395,19 @@ items:
     creators: []
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:46Z
-    dateModified: 2026-11-02T07:17:46Z
-    uri: http://zotero.org/users/8230813/items/2RWK5V6Z
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/8YT8EVEQ
     itemID: 385
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: 2RWK5V6Z
+    itemKey: 8YT8EVEQ
     libraryID: 1
     title: Mental health on campus improvement act
     date: '2013'
   -
-    key: A7NDV44E
+    key: CAW5WUV8
     version: 0
     itemType: bill
     url: https://www.congress.gov/congressional-record/2016/04/21/senate-section/article/S2394-2
@@ -5415,29 +5417,29 @@ items:
     creators: []
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:46Z
-    dateModified: 2026-11-02T07:17:46Z
-    uri: http://zotero.org/users/8230813/items/A7NDV44E
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/CAW5WUV8
     itemID: 386
     attachments: []
     notes:
       -
-        key: CXQM8RZS
+        key: SFYZESKM
         version: 0
         itemType: note
-        parentItem: A7NDV44E
+        parentItem: CAW5WUV8
         note: enacted
         tags: []
         relations: {}
-        dateAdded: 2026-11-02T07:17:46Z
-        dateModified: 2026-11-02T07:17:46Z
-        uri: http://zotero.org/users/8230813/items/CXQM8RZS
+        dateAdded: 2026-11-02T09:05:40Z
+        dateModified: 2026-11-02T09:05:40Z
+        uri: http://zotero.org/users/8230813/items/SFYZESKM
     autoJournalAbbreviation: ''
-    itemKey: A7NDV44E
+    itemKey: CAW5WUV8
     libraryID: 1
     number: '438'
   -
-    key: AC9JZ62N
+    key: CMFULR7E
     version: 0
     itemType: report
     url: https://www.gpo.gov/fdsys/pkg/CRPT-114rpt358/pdf/CRPT-114hrpt358.pdf
@@ -5447,18 +5449,18 @@ items:
     creators: []
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:46Z
-    dateModified: 2026-11-02T07:17:46Z
-    uri: http://zotero.org/users/8230813/items/AC9JZ62N
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/CMFULR7E
     itemID: 388
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: AC9JZ62N
+    itemKey: CMFULR7E
     libraryID: 1
     number: 114-358
   -
-    key: ZW9FDDWJ
+    key: ABHYYUIL
     version: 0
     itemType: statute
     url: https://www.hhs.gov/ohrp/sites/default/files/ohrp/policy/ohrpregulations.pdf
@@ -5467,19 +5469,19 @@ items:
     creators: []
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:46Z
-    dateModified: 2026-11-02T07:17:46Z
-    uri: http://zotero.org/users/8230813/items/ZW9FDDWJ
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/ABHYYUIL
     itemID: 389
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: ZW9FDDWJ
+    itemKey: ABHYYUIL
     libraryID: 1
     title: Protection of human subjects
     date: '2009'
   -
-    key: GBWBJBFC
+    key: LIACJSG3
     version: 0
     itemType: statute
     url: https://www.federalregister.gov/articles/2016/05/23/2016-11754/defining-and-delimiting-the-exemptions-for-executive-administrative-professional-outside-sales-and
@@ -5491,30 +5493,30 @@ items:
       -
         tag: proposed
     relations: {}
-    dateAdded: 2026-11-02T07:17:46Z
-    dateModified: 2026-11-02T07:17:46Z
-    uri: http://zotero.org/users/8230813/items/GBWBJBFC
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/LIACJSG3
     itemID: 390
     attachments: []
     notes:
       -
-        key: 5FZBXHYA
+        key: BKH5ESDK
         version: 0
         itemType: note
-        parentItem: GBWBJBFC
+        parentItem: LIACJSG3
         note: to be codified at 29 C.F.R. § 541
         tags: []
         relations: {}
-        dateAdded: 2026-11-02T07:17:46Z
-        dateModified: 2026-11-02T07:17:46Z
-        uri: http://zotero.org/users/8230813/items/5FZBXHYA
+        dateAdded: 2026-11-02T09:05:40Z
+        dateModified: 2026-11-02T09:05:40Z
+        uri: http://zotero.org/users/8230813/items/BKH5ESDK
     autoJournalAbbreviation: ''
-    itemKey: GBWBJBFC
+    itemKey: LIACJSG3
     libraryID: 1
     title: Defining and delimiting the exemptions for executive, administrative, professional, outside sales and computer employees
     date: 2016-05-23
   -
-    key: MQ4I2WPS
+    key: J7L3XZEA
     version: 0
     itemType: statute
     url: https://www.govinfo.gov/content/pkg/CFR-2015-title3-vol1/pdf/CFR-2015-title3-vol1-eo13676.pdf
@@ -5523,19 +5525,19 @@ items:
     creators: []
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:46Z
-    dateModified: 2026-11-02T07:17:46Z
-    uri: http://zotero.org/users/8230813/items/MQ4I2WPS
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/J7L3XZEA
     itemID: 392
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: MQ4I2WPS
+    itemKey: J7L3XZEA
     libraryID: 1
     number: 13,676
     date: '2014'
   -
-    key: 3KLH59VK
+    key: KQXVF8HA
     version: 0
     itemType: patent
     url: http://patft.uspto.gov/netacgi/nph-Parser?patentnumber=9367592
@@ -5561,19 +5563,19 @@ items:
         creatorType: inventor
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:46Z
-    dateModified: 2026-11-02T07:17:46Z
-    uri: http://zotero.org/users/8230813/items/3KLH59VK
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/KQXVF8HA
     itemID: 393
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: 3KLH59VK
+    itemKey: KQXVF8HA
     libraryID: 1
     number: 9,367,592
     date: '2016'
   -
-    key: FGYQH7VW
+    key: CM5JINUP
     version: 0
     itemType: statute
     section: '3'
@@ -5582,17 +5584,17 @@ items:
     creators: []
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:46Z
-    dateModified: 2026-11-02T07:17:46Z
-    uri: http://zotero.org/users/8230813/items/FGYQH7VW
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/CM5JINUP
     itemID: 394
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: FGYQH7VW
+    itemKey: CM5JINUP
     libraryID: 1
   -
-    key: 9KJ7HCKH
+    key: EBBCLYHH
     version: 0
     itemType: statute
     section: '3'
@@ -5601,17 +5603,17 @@ items:
     creators: []
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:46Z
-    dateModified: 2026-11-02T07:17:46Z
-    uri: http://zotero.org/users/8230813/items/9KJ7HCKH
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/EBBCLYHH
     itemID: 395
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: 9KJ7HCKH
+    itemKey: EBBCLYHH
     libraryID: 1
   -
-    key: JKGGN58V
+    key: YFWI4KIM
     version: 0
     itemType: statute
     extra: "Type: constitution\ntex.amendment: XIX\ntex.source: us"
@@ -5619,17 +5621,17 @@ items:
     creators: []
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:46Z
-    dateModified: 2026-11-02T07:17:46Z
-    uri: http://zotero.org/users/8230813/items/JKGGN58V
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/YFWI4KIM
     itemID: 396
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: JKGGN58V
+    itemKey: YFWI4KIM
     libraryID: 1
   -
-    key: L9YMY86M
+    key: 3U4Z5XK4
     version: 0
     itemType: statute
     extra: "Type: constitution\ntex.amendment: XIX\ntex.source: us"
@@ -5639,18 +5641,18 @@ items:
       -
         tag: repealed
     relations: {}
-    dateAdded: 2026-11-02T07:17:46Z
-    dateModified: 2026-11-02T07:17:46Z
-    uri: http://zotero.org/users/8230813/items/L9YMY86M
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/3U4Z5XK4
     itemID: 397
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: L9YMY86M
+    itemKey: 3U4Z5XK4
     libraryID: 1
     date: '1933'
   -
-    key: CPXFMJ3E
+    key: AGDAVCJS
     version: 0
     itemType: statute
     extra: "Type: constitution\ntex.amendment: I–X\ntex.source: us"
@@ -5658,17 +5660,17 @@ items:
     creators: []
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:46Z
-    dateModified: 2026-11-02T07:17:46Z
-    uri: http://zotero.org/users/8230813/items/CPXFMJ3E
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/AGDAVCJS
     itemID: 398
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: CPXFMJ3E
+    itemKey: AGDAVCJS
     libraryID: 1
   -
-    key: RLHKF2FI
+    key: WWNJ69GM
     version: 0
     itemType: statute
     extra: "Type: charter\ntex.article: 1\ntex.part: 3\ntex.source: unitednations"
@@ -5676,17 +5678,17 @@ items:
     creators: []
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:46Z
-    dateModified: 2026-11-02T07:17:46Z
-    uri: http://zotero.org/users/8230813/items/RLHKF2FI
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/WWNJ69GM
     itemID: 399
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: RLHKF2FI
+    itemKey: WWNJ69GM
     libraryID: 1
   -
-    key: G9LU2EBB
+    key: 9D69KU9C
     version: 0
     itemType: journalArticle
     volume: '33'
@@ -5702,17 +5704,17 @@ items:
         creatorType: author
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/G9LU2EBB
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/9D69KU9C
     itemID: 121
     attachments: []
     notes: []
     autoJournalAbbreviation: Seas. J.
-    itemKey: G9LU2EBB
+    itemKey: 9D69KU9C
     libraryID: 1
   -
-    key: NTCQDFU5
+    key: H3MW845D
     version: 0
     itemType: journalArticle
     volume: '34'
@@ -5728,17 +5730,17 @@ items:
         creatorType: author
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/NTCQDFU5
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/H3MW845D
     itemID: 122
     attachments: []
     notes: []
     autoJournalAbbreviation: Seas. J.
-    itemKey: NTCQDFU5
+    itemKey: H3MW845D
     libraryID: 1
   -
-    key: EA7W6DQJ
+    key: 7YCYVHUZ
     version: 0
     itemType: document
     extra: 'tex.entrytype: nameonly'
@@ -5750,17 +5752,17 @@ items:
         creatorType: author
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/EA7W6DQJ
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/7YCYVHUZ
     itemID: 144
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: EA7W6DQJ
+    itemKey: 7YCYVHUZ
     libraryID: 1
   -
-    key: N4FIX2DU
+    key: ZHJXBN4J
     version: 0
     itemType: document
     extra: 'tex.entrytype: nameonly'
@@ -5772,17 +5774,17 @@ items:
         creatorType: author
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/N4FIX2DU
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/ZHJXBN4J
     itemID: 145
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: N4FIX2DU
+    itemKey: ZHJXBN4J
     libraryID: 1
   -
-    key: U5ENNNJR
+    key: CUR9PJCH
     version: 0
     itemType: document
     extra: 'tex.entrytype: nameonly'
@@ -5794,17 +5796,17 @@ items:
         creatorType: author
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/U5ENNNJR
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/CUR9PJCH
     itemID: 146
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: U5ENNNJR
+    itemKey: CUR9PJCH
     libraryID: 1
   -
-    key: KTXAWAWK
+    key: 36BB8NFF
     version: 0
     itemType: document
     extra: "tex.entrytype: nameonly\ntex.sortname= SantiagoJ1"
@@ -5816,17 +5818,17 @@ items:
         creatorType: author
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/KTXAWAWK
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/36BB8NFF
     itemID: 147
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: KTXAWAWK
+    itemKey: 36BB8NFF
     libraryID: 1
   -
-    key: MKTFIWPJ
+    key: 4IJ4XU87
     version: 0
     itemType: document
     extra: "tex.entrytype: nameonly\ntex.sortname= SantiagoJ2"
@@ -5838,17 +5840,17 @@ items:
         creatorType: author
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/MKTFIWPJ
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/4IJ4XU87
     itemID: 148
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: MKTFIWPJ
+    itemKey: 4IJ4XU87
     libraryID: 1
   -
-    key: 4MIPU4CM
+    key: JW78GJYN
     version: 0
     itemType: document
     extra: 'tex.entrytype: nameonly'
@@ -5860,17 +5862,17 @@ items:
         creatorType: author
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/4MIPU4CM
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/JW78GJYN
     itemID: 149
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: 4MIPU4CM
+    itemKey: JW78GJYN
     libraryID: 1
   -
-    key: 5GG29X6U
+    key: HLLJPBZP
     version: 0
     itemType: document
     extra: 'tex.entrytype: nameonly'
@@ -5882,17 +5884,17 @@ items:
         creatorType: author
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/5GG29X6U
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/HLLJPBZP
     itemID: 150
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: 5GG29X6U
+    itemKey: HLLJPBZP
     libraryID: 1
   -
-    key: FYXZJR4W
+    key: B9F3VX7U
     version: 0
     itemType: document
     extra: 'tex.entrytype: nameonly'
@@ -5904,17 +5906,17 @@ items:
         creatorType: author
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/FYXZJR4W
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/B9F3VX7U
     itemID: 123
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: FYXZJR4W
+    itemKey: B9F3VX7U
     libraryID: 1
   -
-    key: PL599YMZ
+    key: ECRZNWTL
     version: 0
     itemType: document
     extra: 'tex.entrytype: nameonly'
@@ -5926,17 +5928,17 @@ items:
         creatorType: author
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/PL599YMZ
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/ECRZNWTL
     itemID: 124
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: PL599YMZ
+    itemKey: ECRZNWTL
     libraryID: 1
   -
-    key: 2WWEGSZ4
+    key: JU5FE6YB
     version: 0
     itemType: document
     extra: 'tex.entrytype: nameonly'
@@ -5948,17 +5950,17 @@ items:
         creatorType: author
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/2WWEGSZ4
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/JU5FE6YB
     itemID: 125
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: 2WWEGSZ4
+    itemKey: JU5FE6YB
     libraryID: 1
   -
-    key: WUPNPYF3
+    key: F39U4F6Q
     version: 0
     itemType: document
     extra: 'tex.entrytype: nameonly'
@@ -5970,17 +5972,17 @@ items:
         creatorType: author
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/WUPNPYF3
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/F39U4F6Q
     itemID: 126
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: WUPNPYF3
+    itemKey: F39U4F6Q
     libraryID: 1
   -
-    key: CELXIGLY
+    key: 2FVI9PJD
     version: 0
     itemType: document
     extra: 'tex.entrytype: nameonly'
@@ -5992,17 +5994,17 @@ items:
         creatorType: author
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/CELXIGLY
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/2FVI9PJD
     itemID: 127
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: CELXIGLY
+    itemKey: 2FVI9PJD
     libraryID: 1
   -
-    key: WZXHISET
+    key: 3GVJW8XD
     version: 0
     itemType: document
     extra: 'tex.entrytype: nameonly'
@@ -6014,17 +6016,17 @@ items:
         creatorType: author
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/WZXHISET
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/3GVJW8XD
     itemID: 128
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: WZXHISET
+    itemKey: 3GVJW8XD
     libraryID: 1
   -
-    key: VDP2CBRU
+    key: 6L7TZZJI
     version: 0
     itemType: document
     extra: 'tex.entrytype: nameonly'
@@ -6036,17 +6038,17 @@ items:
         creatorType: author
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/VDP2CBRU
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/6L7TZZJI
     itemID: 129
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: VDP2CBRU
+    itemKey: 6L7TZZJI
     libraryID: 1
   -
-    key: FYKPV8IV
+    key: SNMEHPZG
     version: 0
     itemType: document
     extra: 'tex.entrytype: nameonly'
@@ -6058,17 +6060,17 @@ items:
         creatorType: author
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/FYKPV8IV
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/SNMEHPZG
     itemID: 130
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: FYKPV8IV
+    itemKey: SNMEHPZG
     libraryID: 1
   -
-    key: 8QBIZWDP
+    key: LWSSBX37
     version: 0
     itemType: document
     extra: 'tex.entrytype: nameonly'
@@ -6080,17 +6082,17 @@ items:
         creatorType: author
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/8QBIZWDP
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/LWSSBX37
     itemID: 131
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: 8QBIZWDP
+    itemKey: LWSSBX37
     libraryID: 1
   -
-    key: GLR7XLXZ
+    key: MEVC3I2A
     version: 0
     itemType: document
     extra: 'tex.entrytype: nameonly'
@@ -6102,17 +6104,17 @@ items:
         creatorType: author
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/GLR7XLXZ
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/MEVC3I2A
     itemID: 132
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: GLR7XLXZ
+    itemKey: MEVC3I2A
     libraryID: 1
   -
-    key: P87J3HFI
+    key: XE78BQYS
     version: 0
     itemType: document
     extra: 'tex.entrytype: nameonly'
@@ -6124,17 +6126,17 @@ items:
         creatorType: author
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/P87J3HFI
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/XE78BQYS
     itemID: 133
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: P87J3HFI
+    itemKey: XE78BQYS
     libraryID: 1
   -
-    key: LA43DUBA
+    key: I7KBGREG
     version: 0
     itemType: document
     extra: 'tex.entrytype: nameonly'
@@ -6146,17 +6148,17 @@ items:
         creatorType: author
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/LA43DUBA
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/I7KBGREG
     itemID: 134
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: LA43DUBA
+    itemKey: I7KBGREG
     libraryID: 1
   -
-    key: LVS9CSFY
+    key: 9VDMY6FX
     version: 0
     itemType: document
     extra: 'tex.entrytype: nameonly'
@@ -6168,17 +6170,17 @@ items:
         creatorType: author
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/LVS9CSFY
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/9VDMY6FX
     itemID: 135
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: LVS9CSFY
+    itemKey: 9VDMY6FX
     libraryID: 1
   -
-    key: WBBP4EN6
+    key: 2YG6DEUY
     version: 0
     itemType: document
     extra: 'tex.entrytype: nameonly'
@@ -6190,17 +6192,17 @@ items:
         creatorType: author
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/WBBP4EN6
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/2YG6DEUY
     itemID: 136
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: WBBP4EN6
+    itemKey: 2YG6DEUY
     libraryID: 1
   -
-    key: XX5K695L
+    key: D8Z2Q7H5
     version: 0
     itemType: document
     extra: 'tex.entrytype: nameonly'
@@ -6212,17 +6214,17 @@ items:
         creatorType: author
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/XX5K695L
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/D8Z2Q7H5
     itemID: 137
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: XX5K695L
+    itemKey: D8Z2Q7H5
     libraryID: 1
   -
-    key: XP44KAJP
+    key: E9LUM2YP
     version: 0
     itemType: document
     extra: 'tex.entrytype: nameonly'
@@ -6234,17 +6236,17 @@ items:
         creatorType: author
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/XP44KAJP
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/E9LUM2YP
     itemID: 138
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: XP44KAJP
+    itemKey: E9LUM2YP
     libraryID: 1
   -
-    key: 99LKAWYY
+    key: UZTW7DT9
     version: 0
     itemType: document
     extra: 'tex.entrytype: nameonly'
@@ -6256,17 +6258,17 @@ items:
         creatorType: author
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/99LKAWYY
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/UZTW7DT9
     itemID: 139
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: 99LKAWYY
+    itemKey: UZTW7DT9
     libraryID: 1
   -
-    key: UFRA9L3W
+    key: W7IWDCGS
     version: 0
     itemType: document
     extra: 'tex.entrytype: nameonly'
@@ -6278,17 +6280,17 @@ items:
         creatorType: author
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/UFRA9L3W
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/W7IWDCGS
     itemID: 140
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: UFRA9L3W
+    itemKey: W7IWDCGS
     libraryID: 1
   -
-    key: D7CIZ29P
+    key: TU2X6HGB
     version: 0
     itemType: document
     extra: 'tex.entrytype: nameonly'
@@ -6300,17 +6302,17 @@ items:
         creatorType: author
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/D7CIZ29P
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/TU2X6HGB
     itemID: 141
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: D7CIZ29P
+    itemKey: TU2X6HGB
     libraryID: 1
   -
-    key: MNIX3JBT
+    key: HZKY6YMA
     version: 0
     itemType: document
     extra: 'tex.entrytype: nameonly'
@@ -6322,17 +6324,17 @@ items:
         creatorType: author
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/MNIX3JBT
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/HZKY6YMA
     itemID: 142
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: MNIX3JBT
+    itemKey: HZKY6YMA
     libraryID: 1
   -
-    key: Z2ABM6DW
+    key: YRESDQNB
     version: 0
     itemType: document
     extra: 'tex.entrytype: nameonly'
@@ -6343,17 +6345,17 @@ items:
         creatorType: author
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/Z2ABM6DW
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/YRESDQNB
     itemID: 143
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: Z2ABM6DW
+    itemKey: YRESDQNB
     libraryID: 1
   -
-    key: F8NYNYBE
+    key: T4MI7BRY
     version: 0
     itemType: book
     citationKey: 9.46:1
@@ -6364,17 +6366,17 @@ items:
         creatorType: author
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/F8NYNYBE
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/T4MI7BRY
     itemID: 151
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: F8NYNYBE
+    itemKey: T4MI7BRY
     libraryID: 1
   -
-    key: 4IG6K6RU
+    key: 3VQZDRU5
     version: 0
     itemType: book
     date: '2019'
@@ -6394,17 +6396,17 @@ items:
         creatorType: author
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/4IG6K6RU
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/3VQZDRU5
     itemID: 160
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: 4IG6K6RU
+    itemKey: 3VQZDRU5
     libraryID: 1
   -
-    key: TQHMQ3BB
+    key: AFDUM9YI
     version: 0
     itemType: book
     date: '2017'
@@ -6420,17 +6422,17 @@ items:
         creatorType: author
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/TQHMQ3BB
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/AFDUM9YI
     itemID: 161
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: TQHMQ3BB
+    itemKey: AFDUM9YI
     libraryID: 1
   -
-    key: 895K82N3
+    key: 8ZLHAVQ7
     version: 0
     itemType: book
     date: '2018'
@@ -6450,17 +6452,17 @@ items:
         creatorType: author
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/895K82N3
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/8ZLHAVQ7
     itemID: 162
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: 895K82N3
+    itemKey: 8ZLHAVQ7
     libraryID: 1
   -
-    key: 8JF73F87
+    key: D2BRIJGK
     version: 0
     itemType: book
     date: '2018'
@@ -6480,17 +6482,17 @@ items:
         creatorType: author
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/8JF73F87
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/D2BRIJGK
     itemID: 163
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: 8JF73F87
+    itemKey: D2BRIJGK
     libraryID: 1
   -
-    key: F2BZRMXB
+    key: XY8D96XS
     version: 0
     itemType: book
     date: '2016'
@@ -6502,17 +6504,17 @@ items:
         creatorType: author
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/F2BZRMXB
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/XY8D96XS
     itemID: 152
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: F2BZRMXB
+    itemKey: XY8D96XS
     libraryID: 1
   -
-    key: YEW2DDJW
+    key: Z5HC9DY4
     version: 0
     itemType: book
     date: '2020'
@@ -6524,17 +6526,17 @@ items:
         creatorType: author
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/YEW2DDJW
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/Z5HC9DY4
     itemID: 153
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: YEW2DDJW
+    itemKey: Z5HC9DY4
     libraryID: 1
   -
-    key: 4LPPEJQZ
+    key: LU7RBBSK
     version: 0
     itemType: book
     date: 2020-04
@@ -6546,17 +6548,17 @@ items:
         creatorType: author
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/4LPPEJQZ
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/LU7RBBSK
     itemID: 154
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: 4LPPEJQZ
+    itemKey: LU7RBBSK
     libraryID: 1
   -
-    key: 4YL923UX
+    key: D6MSPKQX
     version: 0
     itemType: book
     extra: 'tex.pubstate: inpress'
@@ -6568,17 +6570,17 @@ items:
         creatorType: author
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/4YL923UX
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/D6MSPKQX
     itemID: 155
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: 4YL923UX
+    itemKey: D6MSPKQX
     libraryID: 1
   -
-    key: I2WYX8HU
+    key: 43IMZ6C9
     version: 0
     itemType: book
     date: '2019'
@@ -6590,17 +6592,17 @@ items:
         creatorType: author
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/I2WYX8HU
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/43IMZ6C9
     itemID: 156
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: I2WYX8HU
+    itemKey: 43IMZ6C9
     libraryID: 1
   -
-    key: PUPYJ4QQ
+    key: FCVICW2J
     version: 0
     itemType: book
     date: '2015'
@@ -6616,17 +6618,17 @@ items:
         creatorType: author
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/PUPYJ4QQ
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/FCVICW2J
     itemID: 157
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: PUPYJ4QQ
+    itemKey: FCVICW2J
     libraryID: 1
   -
-    key: SX6TVWXW
+    key: 9S68SZCX
     version: 0
     itemType: book
     date: '2013'
@@ -6642,17 +6644,17 @@ items:
         creatorType: author
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/SX6TVWXW
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/9S68SZCX
     itemID: 158
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: SX6TVWXW
+    itemKey: 9S68SZCX
     libraryID: 1
   -
-    key: FQWWUHQK
+    key: YCH58K5W
     version: 0
     itemType: book
     date: '2014'
@@ -6668,17 +6670,17 @@ items:
         creatorType: author
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/FQWWUHQK
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/YCH58K5W
     itemID: 159
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: FQWWUHQK
+    itemKey: YCH58K5W
     libraryID: 1
   -
-    key: ETQDT28B
+    key: 3FNE36J5
     version: 0
     itemType: book
     date: '2020'
@@ -6694,17 +6696,17 @@ items:
         creatorType: author
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/ETQDT28B
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/3FNE36J5
     itemID: 164
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: ETQDT28B
+    itemKey: 3FNE36J5
     libraryID: 1
   -
-    key: Y2LDI4XG
+    key: CSVNAPR7
     version: 0
     itemType: book
     citationKey: 9.47:10
@@ -6715,17 +6717,17 @@ items:
         creatorType: author
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/Y2LDI4XG
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/CSVNAPR7
     itemID: 173
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: Y2LDI4XG
+    itemKey: CSVNAPR7
     libraryID: 1
   -
-    key: IZQ96IPR
+    key: GPKK5KNJ
     version: 0
     itemType: book
     citationKey: 9.47:11
@@ -6736,17 +6738,17 @@ items:
         creatorType: author
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/IZQ96IPR
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/GPKK5KNJ
     itemID: 174
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: IZQ96IPR
+    itemKey: GPKK5KNJ
     libraryID: 1
   -
-    key: Z3NAGRT3
+    key: RETIQNIV
     version: 0
     itemType: book
     extra: 'tex.pubstate: inpress'
@@ -6758,17 +6760,17 @@ items:
         creatorType: author
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/Z3NAGRT3
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/RETIQNIV
     itemID: 175
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: Z3NAGRT3
+    itemKey: RETIQNIV
     libraryID: 1
   -
-    key: IMEJ5WVZ
+    key: LHJXVW8M
     version: 0
     itemType: book
     extra: 'tex.pubstate: inpress'
@@ -6780,17 +6782,17 @@ items:
         creatorType: author
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/IMEJ5WVZ
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/LHJXVW8M
     itemID: 176
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: IMEJ5WVZ
+    itemKey: LHJXVW8M
     libraryID: 1
   -
-    key: EC3KQ5GZ
+    key: 989PIUW6
     version: 0
     itemType: book
     date: 2020-03-26
@@ -6806,17 +6808,17 @@ items:
         creatorType: author
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/EC3KQ5GZ
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/989PIUW6
     itemID: 165
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: EC3KQ5GZ
+    itemKey: 989PIUW6
     libraryID: 1
   -
-    key: 7DHN5Y9Q
+    key: 7KESDKXC
     version: 0
     itemType: book
     date: 2020-04-02
@@ -6832,17 +6834,17 @@ items:
         creatorType: author
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/7DHN5Y9Q
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/7KESDKXC
     itemID: 166
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: 7DHN5Y9Q
+    itemKey: 7KESDKXC
     libraryID: 1
   -
-    key: 5BICZBLQ
+    key: I24UN229
     version: 0
     itemType: journalArticle
     volume: '33'
@@ -6864,17 +6866,17 @@ items:
         creatorType: author
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/5BICZBLQ
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/I24UN229
     itemID: 167
     attachments: []
     notes: []
     autoJournalAbbreviation: Organ. Behav.
-    itemKey: 5BICZBLQ
+    itemKey: I24UN229
     libraryID: 1
   -
-    key: WTSJG3VY
+    key: I2TZUP6E
     version: 0
     itemType: journalArticle
     volume: '97'
@@ -6896,17 +6898,17 @@ items:
         creatorType: author
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/WTSJG3VY
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/I2TZUP6E
     itemID: 168
     attachments: []
     notes: []
     autoJournalAbbreviation: J. Appl. Psychol.
-    itemKey: WTSJG3VY
+    itemKey: I2TZUP6E
     libraryID: 1
   -
-    key: M96Y9W6S
+    key: K29CSCWA
     version: 0
     itemType: book
     date: '2014'
@@ -6919,17 +6921,17 @@ items:
         creatorType: author
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/M96Y9W6S
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/K29CSCWA
     itemID: 169
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: M96Y9W6S
+    itemKey: K29CSCWA
     libraryID: 1
   -
-    key: W29A2TGB
+    key: ARCD7QUF
     version: 0
     itemType: book
     date: '2014'
@@ -6942,17 +6944,17 @@ items:
         creatorType: author
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/W29A2TGB
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/ARCD7QUF
     itemID: 170
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: W29A2TGB
+    itemKey: ARCD7QUF
     libraryID: 1
   -
-    key: 2NM9AMAP
+    key: SVNZN8WG
     version: 0
     itemType: book
     date: '2014'
@@ -6965,17 +6967,17 @@ items:
         creatorType: author
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/2NM9AMAP
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/SVNZN8WG
     itemID: 171
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: 2NM9AMAP
+    itemKey: SVNZN8WG
     libraryID: 1
   -
-    key: P9WH4A8C
+    key: QCG4NCT3
     version: 0
     itemType: book
     date: '2014'
@@ -6988,17 +6990,17 @@ items:
         creatorType: author
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/P9WH4A8C
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/QCG4NCT3
     itemID: 172
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: P9WH4A8C
+    itemKey: QCG4NCT3
     libraryID: 1
   -
-    key: 2TIBNWCD
+    key: ZPDG3CV3
     version: 0
     itemType: book
     date: '2015'
@@ -7014,17 +7016,17 @@ items:
         creatorType: author
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/2TIBNWCD
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/ZPDG3CV3
     itemID: 177
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: 2TIBNWCD
+    itemKey: ZPDG3CV3
     libraryID: 1
   -
-    key: P646QBGX
+    key: KLE5UBUA
     version: 0
     itemType: book
     date: '2014'
@@ -7036,17 +7038,17 @@ items:
         creatorType: author
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/P646QBGX
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/KLE5UBUA
     itemID: 178
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: P646QBGX
+    itemKey: KLE5UBUA
     libraryID: 1
   -
-    key: EJ5C687F
+    key: VMLNEUEB
     version: 0
     itemType: book
     date: '-3000'
@@ -7058,17 +7060,17 @@ items:
         creatorType: author
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/EJ5C687F
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/VMLNEUEB
     itemID: 179
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: EJ5C687F
+    itemKey: VMLNEUEB
     libraryID: 1
   -
-    key: JSNZVG3C
+    key: 7UHGZ5II
     version: 0
     itemType: book
     date: '-2000'
@@ -7077,17 +7079,17 @@ items:
     creators: []
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/JSNZVG3C
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/7UHGZ5II
     itemID: 180
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: JSNZVG3C
+    itemKey: 7UHGZ5II
     libraryID: 1
   -
-    key: P7A6AJ6Z
+    key: TNAYABW7
     version: 0
     itemType: book
     date: '2019'
@@ -7101,17 +7103,17 @@ items:
         creatorType: author
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/P7A6AJ6Z
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/TNAYABW7
     itemID: 181
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: P7A6AJ6Z
+    itemKey: TNAYABW7
     libraryID: 1
   -
-    key: 2FBPLD4H
+    key: C82XDGEL
     version: 0
     itemType: book
     date: '2019'
@@ -7125,17 +7127,17 @@ items:
         creatorType: author
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/2FBPLD4H
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/C82XDGEL
     itemID: 182
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: 2FBPLD4H
+    itemKey: C82XDGEL
     libraryID: 1
   -
-    key: MPDNIUQF
+    key: L7HYANL2
     version: 0
     itemType: journalArticle
     publicationTitle: Journal of the Decline of Academia
@@ -7150,17 +7152,17 @@ items:
         creatorType: author
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/MPDNIUQF
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/L7HYANL2
     itemID: 183
     attachments: []
     notes: []
     autoJournalAbbreviation: J. Decline Acad.
-    itemKey: MPDNIUQF
+    itemKey: L7HYANL2
     libraryID: 1
   -
-    key: KQJA6C6R
+    key: GJQS97IT
     version: 0
     itemType: journalArticle
     publicationTitle: Journal of the Decline of Academia
@@ -7175,17 +7177,17 @@ items:
         creatorType: author
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/KQJA6C6R
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/GJQS97IT
     itemID: 184
     attachments: []
     notes: []
     autoJournalAbbreviation: J. Decline Acad.
-    itemKey: KQJA6C6R
+    itemKey: GJQS97IT
     libraryID: 1
   -
-    key: GNCXUAS9
+    key: NJ8JZD49
     version: 0
     itemType: bookSection
     publisher: American Psychological Association
@@ -7218,29 +7220,29 @@ items:
         creatorType: editor
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/GNCXUAS9
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/NJ8JZD49
     itemID: 185
     attachments: []
     notes:
       -
-        key: LZKZY9DL
+        key: TYXMS66X
         version: 0
         itemType: note
-        parentItem: GNCXUAS9
+        parentItem: NJ8JZD49
         note: This book chapter provides an overview of the psychosociological concept of work-life balance. The authors discuss findings from studies showing harmful effects of work-life conflict on psychological and behavioural health as well as beneficial effects of work-life facilitation, wherein one role makes a positive contribution to the other. The chapter concludes with a description of work-life balance initiatives that organizations have adopted to help employees manage their dual work and nonwork obligations and some of the key factors influencing their effectiveness.
         tags: []
         relations: {}
-        dateAdded: 2026-11-02T07:17:45Z
-        dateModified: 2026-11-02T07:17:45Z
-        uri: http://zotero.org/users/8230813/items/LZKZY9DL
+        dateAdded: 2026-11-02T09:05:40Z
+        dateModified: 2026-11-02T09:05:40Z
+        uri: http://zotero.org/users/8230813/items/TYXMS66X
     autoJournalAbbreviation: ''
-    itemKey: GNCXUAS9
+    itemKey: NJ8JZD49
     libraryID: 1
     publicationTitle: The psychologically healthy workplace
   -
-    key: CYRB69X9
+    key: ZYISAHJE
     version: 0
     itemType: journalArticle
     volume: '104'
@@ -7266,28 +7268,28 @@ items:
         creatorType: author
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/CYRB69X9
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/ZYISAHJE
     itemID: 187
     attachments: []
     notes:
       -
-        key: NLP3788M
+        key: H296JPUC
         version: 0
         itemType: note
-        parentItem: CYRB69X9
+        parentItem: ZYISAHJE
         note: 9.51:2 conducted an empirical study to examine the multiple paths through which work and family variables can affect work outcomes. Whereas 9.51:1 explored how work obligations can increase stress or enhance fulfillment at home, 9.51:2 viewed work demands as raising family stress, with potential negative consequences on work performance. Results supported a model in which direct effects of work demands and spillover effects of work demands to work-to-family conflict led to a lower job satisfaction and affective commitment, as well as crossover effects of work-to-family conflict, spousal stress transmission, and later family-to-work conflict on organizational citizenship and absenteeism. Overall, the study demonstrated a link from work demands to work outcomes when considering the family, but those paths differed depending on whether attitudinal or behavioural work outcomes were examined.
         tags: []
         relations: {}
-        dateAdded: 2026-11-02T07:17:45Z
-        dateModified: 2026-11-02T07:17:45Z
-        uri: http://zotero.org/users/8230813/items/NLP3788M
+        dateAdded: 2026-11-02T09:05:40Z
+        dateModified: 2026-11-02T09:05:40Z
+        uri: http://zotero.org/users/8230813/items/H296JPUC
     autoJournalAbbreviation: J. Appl. Psychol.
-    itemKey: CYRB69X9
+    itemKey: ZYISAHJE
     libraryID: 1
   -
-    key: USE9XH98
+    key: QGR649NK
     version: 0
     itemType: journalArticle
     volume: '49'
@@ -7340,17 +7342,17 @@ items:
       -
         tag: meta
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/USE9XH98
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/QGR649NK
     itemID: 189
     attachments: []
     notes: []
     autoJournalAbbreviation: Cortex J. Devoted Study Nerv. Syst. Behav.
-    itemKey: USE9XH98
+    itemKey: QGR649NK
     libraryID: 1
   -
-    key: PD7HCIBG
+    key: SZB6KVQM
     version: 0
     itemType: bookSection
     publisher: Springer
@@ -7383,18 +7385,18 @@ items:
         creatorType: editor
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/PD7HCIBG
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/SZB6KVQM
     itemID: 190
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: PD7HCIBG
+    itemKey: SZB6KVQM
     libraryID: 1
     publicationTitle: New science of learning
   -
-    key: Z5YGEIA3
+    key: BBDIHYY5
     version: 0
     itemType: journalArticle
     volume: '32'
@@ -7454,17 +7456,17 @@ items:
       -
         tag: meta
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/Z5YGEIA3
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/BBDIHYY5
     itemID: 191
     attachments: []
     notes: []
     autoJournalAbbreviation: Neurol. Sci.
-    itemKey: Z5YGEIA3
+    itemKey: BBDIHYY5
     libraryID: 1
   -
-    key: 6CFW6D3T
+    key: LLEVZKSW
     version: 0
     itemType: journalArticle
     volume: '26'
@@ -7487,17 +7489,17 @@ items:
         creatorType: author
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/6CFW6D3T
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/LLEVZKSW
     itemID: 192
     attachments: []
     notes: []
     autoJournalAbbreviation: Mem. Hove Engl.
-    itemKey: 6CFW6D3T
+    itemKey: LLEVZKSW
     libraryID: 1
   -
-    key: M8U6UWTJ
+    key: PHB9WLTD
     version: 0
     itemType: book
     date: '2014'
@@ -7513,17 +7515,17 @@ items:
         creatorType: author
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/M8U6UWTJ
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/PHB9WLTD
     itemID: 110
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: M8U6UWTJ
+    itemKey: PHB9WLTD
     libraryID: 1
   -
-    key: DQ7VMAFE
+    key: 2Y9EKL62
     version: 0
     itemType: book
     date: '2014'
@@ -7534,17 +7536,17 @@ items:
         creatorType: author
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/DQ7VMAFE
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/2Y9EKL62
     itemID: 119
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: DQ7VMAFE
+    itemKey: 2Y9EKL62
     libraryID: 1
   -
-    key: HJJJ8GUS
+    key: S569NJT7
     version: 0
     itemType: book
     date: '2014'
@@ -7557,17 +7559,17 @@ items:
         creatorType: author
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/HJJJ8GUS
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/S569NJT7
     itemID: 120
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: HJJJ8GUS
+    itemKey: S569NJT7
     libraryID: 1
   -
-    key: FKSLD79J
+    key: 4DRJDGJT
     version: 0
     itemType: book
     date: '2014'
@@ -7581,17 +7583,17 @@ items:
         creatorType: author
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/FKSLD79J
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/4DRJDGJT
     itemID: 111
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: FKSLD79J
+    itemKey: 4DRJDGJT
     libraryID: 1
   -
-    key: 6QZMANSL
+    key: Z7V4EHWT
     version: 0
     itemType: book
     date: '2014'
@@ -7611,17 +7613,17 @@ items:
         creatorType: author
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/6QZMANSL
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/Z7V4EHWT
     itemID: 112
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: 6QZMANSL
+    itemKey: Z7V4EHWT
     libraryID: 1
   -
-    key: 5R9MT5ZD
+    key: X7LY4YLC
     version: 0
     itemType: book
     date: '2014'
@@ -7689,17 +7691,17 @@ items:
         creatorType: author
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/5R9MT5ZD
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/X7LY4YLC
     itemID: 113
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: 5R9MT5ZD
+    itemKey: X7LY4YLC
     libraryID: 1
   -
-    key: JAIYNXTR
+    key: MKBZDELJ
     version: 0
     itemType: book
     date: '2014'
@@ -7773,17 +7775,17 @@ items:
         creatorType: author
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/JAIYNXTR
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/MKBZDELJ
     itemID: 114
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: JAIYNXTR
+    itemKey: MKBZDELJ
     libraryID: 1
   -
-    key: I29UHKIC
+    key: ILBU2NNL
     version: 0
     itemType: book
     date: '2014'
@@ -7795,17 +7797,17 @@ items:
         creatorType: author
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/I29UHKIC
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/ILBU2NNL
     itemID: 115
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: I29UHKIC
+    itemKey: ILBU2NNL
     libraryID: 1
   -
-    key: N2IRB8VX
+    key: VRGXDMH5
     version: 0
     itemType: book
     date: '2014'
@@ -7817,17 +7819,17 @@ items:
         creatorType: author
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/N2IRB8VX
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/VRGXDMH5
     itemID: 116
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: N2IRB8VX
+    itemKey: VRGXDMH5
     libraryID: 1
   -
-    key: QM27SW49
+    key: N7Z8SY8C
     version: 0
     itemType: book
     date: '2014'
@@ -7843,17 +7845,17 @@ items:
         creatorType: author
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/QM27SW49
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/N7Z8SY8C
     itemID: 117
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: QM27SW49
+    itemKey: N7Z8SY8C
     libraryID: 1
   -
-    key: MH9IE76U
+    key: 2W8BIJT7
     version: 0
     itemType: book
     date: '2014'
@@ -7867,12 +7869,12 @@ items:
         creatorType: author
     tags: []
     relations: {}
-    dateAdded: 2026-11-02T07:17:45Z
-    dateModified: 2026-11-02T07:17:45Z
-    uri: http://zotero.org/users/8230813/items/MH9IE76U
+    dateAdded: 2026-11-02T09:05:40Z
+    dateModified: 2026-11-02T09:05:40Z
+    uri: http://zotero.org/users/8230813/items/2W8BIJT7
     itemID: 118
     attachments: []
     notes: []
     autoJournalAbbreviation: ''
-    itemKey: MH9IE76U
+    itemKey: 2W8BIJT7
     libraryID: 1
