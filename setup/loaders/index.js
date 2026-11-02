@@ -7,6 +7,23 @@ import child_process from 'child_process'
 import jsesc from 'jsesc'
 import Pug from 'pug'
 
+export const bibtexWasm = {
+  name: 'bibtex-wasm',
+  /** Disable only the unused WASM URL fallback in the parser's IIFE builds. */
+  setup(build) {
+    if (build.initialOptions.format !== 'iife') return
+
+    build.onLoad({ filter: /[/\\]bibtex[/\\]dist[/\\]wasm[/\\]bibtex_parser\.js$/, namespace: 'file' }, async (args) => {
+      const { code, warnings } = await esbuild.transform(await fs.promises.readFile(args.path, 'utf-8'), {
+        loader: 'js',
+        sourcefile: args.path,
+        define: { 'import.meta.url': 'undefined' },
+      })
+      return { contents: code, loader: 'js', warnings }
+    })
+  }
+}
+
 export const text = {
   name: 'text',
   setup(build) {
