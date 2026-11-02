@@ -5,13 +5,11 @@ import { parse, stringify } from 'lightning-yaml'
 import fs from 'fs'
 import { execSync } from 'child_process'
 
-let plusOne = false
-let strip = false
-for (const fixture of process.argv.slice(2)) {
-  if (fixture === '--strip-attachments') {
-    strip = true
-    continue
-  }
+const args = process.argv.slice(2)
+const plusOne = args.includes('+1')
+const strip = args.includes('--strip-attachments')
+for (const fixture of args) {
+  if (fixture === '--strip-attachments' || fixture === '+1') continue
   let data
   const isYaml = fixture.match(/[.](yml|yaml)$/)
   const isJson = fixture.endsWith('.json')
@@ -22,12 +20,7 @@ for (const fixture of process.argv.slice(2)) {
   else if (isJson) {
     data = JSON.parse(fs.readFileSync(fixture, 'utf-8'))
   }
-  else if (fixture === '+1') {
-    plusOne = true
-    continue
-  }
   else {
-    plusOne = plusOne || (fixture === '+1')
     continue
   }
 
@@ -63,7 +56,8 @@ for (const fixture of process.argv.slice(2)) {
     }
   }
 
-  if (modified) {
+  // JSON inputs always produce a YAML fixture, even when no normalization was needed.
+  if (modified || isJson) {
     const yamlOutput = stringify(data)
 
     if (isYaml) {

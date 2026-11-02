@@ -399,6 +399,7 @@ Feature: Export
       | refs | file |
       | 1    | Export year ranges from Original Date #3482 |
       | 2    | Hayagriva date field in wrong format #3562 |
+      | 2    | Hayagriva export drops the Edition field for books #3634 |
       | 2    | Hayagriva export Encyclopedia article doesnt have parent #3585 |
       | 2    | Hayagriva export retain conference name information #3593 |
       | 5    | Hayagriva format bugs #3579 |

@@ -441,6 +441,7 @@ export const Hayagriva = new class {
     if (item.volume && deepHas(entry.parent, 'volume')) delete entry.volume
     else if (item.volume) entry.volume = asNumber(item.volume)
     if (item.issue) entry.issue = asNumber(item.issue)
+    if (item.edition) entry.edition = asNumber(item.edition)
     if (item.pages) entry['page-range'] = normalizePageRange(item.pages)
 
     if (item.url || item.accessDate) {
