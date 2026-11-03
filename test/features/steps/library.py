@@ -216,7 +216,7 @@ def load(lib):
     coll['key'] = collKey
   for coll in list(lib['collections'].values()):
     if 'items' not in coll: coll['items'] = []
-    coll['items'] = sorted([itemIDs[i] for i in coll['items']])
+    coll['items'] = sorted([itemIDs[i] for i in coll['items'] if i in itemIDs])
 
     if 'collections' not in coll: coll['collections'] = []
     coll['collections'] = sorted([collectionKeys[k] for k in coll['collections']])

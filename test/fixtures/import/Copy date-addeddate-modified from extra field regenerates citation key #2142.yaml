@@ -1,0 +1,103 @@
+config:
+  id: 36a3b0b5-bad0-4a04-b79b-441c7cef77db
+  label: BetterBibTeX JSON
+  preferences:
+    citekeyFormat: auth + year
+    fillKeyAfter: 1
+  options:
+    Items: true
+    Normalize: true
+    Preferences: true
+    YAML: false
+    exportFileData: false
+    exportNotes: true
+    keepUpdated: false
+    worker: true
+version:
+  zotero: 10.0.6
+  bbt: 9.0.71.emile.kiku.local
+collections: {}
+items:
+  -
+    key: CV9AWYCT
+    version: 0
+    itemType: journalArticle
+    url: http://journals.cambridge.org/article_S0022381608081152
+    volume: '70'
+    issue: '4'
+    pages: 1203-1216
+    publicationTitle: The Journal of Politics
+    ISSN: 1468-2508
+    date: 2008-10
+    extra: 'tex.local-url: War/Bargain/ReedClark2008War-Power.pdf'
+    DOI: 10.1017/S0022381608081152
+    accessDate: 2015-07-25
+    abstractNote: Existing research on power and war contends that the distribution of power exerts an independent effect on the chances of armed conflict. However, theories of bargaining indicate that power's influence on war depends on the ex ante distribution of benefits and has a specific functional form. We test that claim, showing that the effect of power on war rests heavily on the distribution of benefits. Our findings strongly suggest bargaining explanations may subsume other arguments about power and war both theoretically and empirically.
+    title: War, Power, and Bargaining
+    citationKey: ReedClark2008War-Power
+    creators:
+      -
+        firstName: William
+        lastName: Reed
+        creatorType: author
+      -
+        firstName: David H.
+        lastName: Clark
+        creatorType: author
+      -
+        firstName: Timothy
+        lastName: Nordstrom
+        creatorType: author
+      -
+        firstName: Wonjae
+        lastName: Hwang
+        creatorType: author
+    tags:
+      -
+        tag: War/Bargain
+    relations: {}
+    dateAdded: 2022-05-05T11:53:38Z
+    dateModified: 2022-05-05T11:54:51Z
+    uri: http://zotero.org/users/8230813/items/CV9AWYCT
+    itemID: 115
+    attachments:
+      -
+        itemType: attachment
+        url: http://journals.cambridge.org/article_S0022381608081152
+        title: bdsk-url-1
+        tags: []
+        relations: {}
+        dateAdded: 2026-10-21T07:13:52Z
+        dateModified: 2026-10-21T07:13:52Z
+        uri: http://zotero.org/users/8230813/items/FMTVQHNW
+      -
+        itemType: attachment
+        url: http://dx.doi.org/10.1017/S0022381608081152
+        title: bdsk-url-2
+        tags: []
+        relations: {}
+        dateAdded: 2026-10-21T07:13:52Z
+        dateModified: 2026-10-21T07:13:52Z
+        uri: http://zotero.org/users/8230813/items/JHKZJUHU
+      -
+        itemType: attachment
+        url: http://dx.doi.org/10.1017/S0022381608081152
+        title: bdsk-url-3
+        tags: []
+        relations: {}
+        dateAdded: 2026-10-21T07:13:52Z
+        dateModified: 2026-10-21T07:13:52Z
+        uri: http://zotero.org/users/8230813/items/IL5VYQL5
+      -
+        itemType: attachment
+        url: http://dx.doi.org/10.1017/S0022381608081152
+        title: bdsk-url-4
+        tags: []
+        relations: {}
+        dateAdded: 2026-10-21T07:13:52Z
+        dateModified: 2026-10-21T07:13:52Z
+        uri: http://zotero.org/users/8230813/items/VWIJ8J7J
+    notes: []
+    autoJournalAbbreviation: J. Polit.
+    itemKey: CV9AWYCT
+    libraryID: 1

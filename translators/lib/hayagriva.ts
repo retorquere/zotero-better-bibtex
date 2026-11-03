@@ -160,8 +160,9 @@ const zoteroType: Record<hg.EntryType, Serialized.RegularItem['itemType']> = {
   web: 'webpage',
 }
 
+/** Preserve Unicode letters and numbers while replacing unsupported key characters. */
 function sanitizeKey(id: string): string {
-  return (id || 'item').replace(/[^a-zA-Z0-9:_-]/g, '_')
+  return (id || 'item').replace(/[^\p{L}\p{N}:_-]/gu, '_')
 }
 
 function normalizeScalar(v: unknown): string {
@@ -343,6 +344,7 @@ function parseExtraSerialNumbers(extra: unknown): SerialNumberObject {
   return serial
 }
 
+/** Map Zotero identifiers and item-specific numbers to Hayagriva's serial-number object. */
 function serialNumber(item: Serialized.RegularItem): SerialNumberObject {
   const serial: SerialNumberObject = {
     doi: item.DOI,
@@ -354,6 +356,7 @@ function serialNumber(item: Serialized.RegularItem): SerialNumberObject {
 
   switch (item.itemType) {
     case 'report':
+    case 'standard':
     case 'patent':
     case 'case':
       serial.serial = item.number
@@ -402,6 +405,7 @@ function parseAffiliated(entry: hg.BibliographyEntry): Array<{ creatorType: stri
   })
 }
 
+/** Convert Hayagriva's separated name parts to Zotero's comma-encoded creator fields. */
 function parsePerson(person: hg.Person): { firstName?: string; lastName?: string; name?: string; fieldMode?: number } {
   if (typeof person === 'string') {
     const parts = person.split(',').map(part => part.trim()).filter(Boolean)
@@ -409,7 +413,12 @@ function parsePerson(person: hg.Person): { firstName?: string; lastName?: string
     if (parts.length === 1) return { name: parts[0], fieldMode: 1 }
   }
   else {
-    if (person['given-name']) return { lastName: person.name || '', firstName: person['given-name'] || '' }
+    if (person['given-name']) {
+      return {
+        lastName: person.name || '',
+        firstName: [person['given-name'], person.suffix].filter(Boolean).join(', '),
+      }
+    }
     if (person.name) return { name: person.name, fieldMode: 1 }
   }
 
@@ -485,6 +494,12 @@ export const Hayagriva = new class {
     else if (item.itemType === 'webpage' && item.accessDate) {
       entry.date = dateOnly(item.accessDate)
     }
+    if (item.language) entry.language = item.language
+    if (item.volume && deepHas(entry.parent, 'volume')) delete entry.volume
+    else if (item.volume) entry.volume = asNumber(item.volume)
+    if (item.issue) entry.issue = asNumber(item.issue)
+    if (item.edition) entry.edition = asNumber(item.edition)
+    if (item.pages) entry['page-range'] = normalizePageRange(item.pages)
 
     if (item.volume && deepHas(entry.parent, 'volume')) delete entry.volume
 
@@ -498,14 +513,24 @@ export const Hayagriva = new class {
     if (hasContent(serial)) entry['serial-number'] = serial
 
     const primary = Schema.primaryCreator[item.itemType] || 'author'
-    const creators: Record<string, string[]> = {
+    const creators: Record<string, hg.Person[]> = {
       author: [],
       editor: [],
       translator: [],
       collaborator: [],
     }
     for (const creator of item.creators || []) {
-      const name = creator.name || [creator.lastName, creator.firstName].filter(part => part).join(', ')
+      const firstName = creator.firstName || ''
+      const [givenName, ...suffix] = firstName.split(',')
+      let name: hg.Person = creator.name || [creator.lastName, creator.firstName].filter(part => part).join(', ')
+      // Zotero stores suffixes after a comma in firstName; represent those parts explicitly in Hayagriva.
+      if (!creator.name && creator.lastName && suffix.some(part => part.trim())) {
+        name = {
+          name: creator.lastName,
+          'given-name': givenName.trim(),
+          suffix: suffix.join(',').trim(),
+        }
+      }
       if (!name) continue
 
       switch (creator.creatorType) {
@@ -567,7 +592,8 @@ export const Hayagriva = new class {
         Object.assign(item, getExtra(item.extra, 'zotero'))
         simplifyForExport(item, { clone: false })
         doc[key] = this.fromZotero(item, translation.skipField)
-        postscript(doc[key], item, translation, extraFields)
+
+        postscript(doc[key], item, translation, Zotero, extraFields)
       }
     }
 

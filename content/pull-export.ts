@@ -149,7 +149,7 @@ class Handler {
           'Content-Disposition': `attachment; filename=${JSON.stringify(collection.name + '.' + ext)}`,
           'Content-Type': 'text/plain',
         },
-        await Translators.exportItems({
+        await Translators.queueJob({
           translatorID,
           displayOptions: displayOptions(request),
           preferences: exportPreferences(request),

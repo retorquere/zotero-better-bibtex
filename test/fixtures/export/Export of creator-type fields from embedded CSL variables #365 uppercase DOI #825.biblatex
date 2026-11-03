@@ -4,9 +4,9 @@
   author = {Author, Ann},
   editor = {Editrix, Emma and Editor, Ed},
   date = {2015},
-  number = {77},
   institution = {Institution},
-  location = {Place}
+  location = {Place},
+  eid = {77}
 }
 
 @inreference{Blair2004,

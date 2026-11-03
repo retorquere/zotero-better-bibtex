@@ -12,14 +12,10 @@ function generateSchema(value) {
   return jsonschema.generateSchema(value)
 }
 
-import Showdown from 'showdown'
+import { renderHtml } from '@tanstack/markdown/html'
 const Markdown = new class {
-  constructor() {
-    this.showdown = new Showdown.Converter()
-  }
-
   render(md) {
-    return this.showdown.makeHtml(md).replace(/^<p>/, '').replace(/<\/p>$/, '')
+    return renderHtml(md).replace(/^<p>/, '').replace(/<\/p>$/, '')
   }
 }()
 

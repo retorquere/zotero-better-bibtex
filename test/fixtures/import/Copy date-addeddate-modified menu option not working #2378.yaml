@@ -1,0 +1,102 @@
+config:
+  id: 36a3b0b5-bad0-4a04-b79b-441c7cef77db
+  label: BetterBibTeX JSON
+  preferences:
+    citekeyFormat: auth + year
+    fillKeyAfter: 1
+  options:
+    Items: true
+    Normalize: true
+    Preferences: true
+    YAML: false
+    exportFileData: false
+    exportNotes: true
+    keepUpdated: false
+    worker: true
+version:
+  zotero: 10.0.6
+  bbt: 9.0.71.emile.kiku.local
+collections: {}
+items:
+  -
+    key: GL3YV2IQ
+    version: 0
+    itemType: journalArticle
+    volume: '42'
+    issue: '1'
+    pages: 3–32
+    publicationTitle: The Journal of Conflict Resolution
+    date: 1998-02
+    DOI: 10.1177/0022002798042001001
+    title: Why states act through formal international organizations
+    citationKey: AbbottSnidal
+    creators:
+      -
+        firstName: Kenneth W.
+        lastName: Abbott
+        creatorType: author
+      -
+        firstName: Duncan
+        lastName: Snidal
+        creatorType: author
+    tags: []
+    relations: {}
+    dateAdded: 2016-07-25T15:30:17Z
+    dateModified: 2020-07-20T13:34:24Z
+    uri: http://zotero.org/users/8230813/items/GL3YV2IQ
+    itemID: 113
+    attachments:
+      -
+        itemType: attachment
+        url: http://dx.doi.org/10.1177/0022002798042001001
+        title: bdsk-url-1
+        tags: []
+        relations: {}
+        dateAdded: 2026-10-21T07:13:46Z
+        dateModified: 2026-10-21T07:13:46Z
+        uri: http://zotero.org/users/8230813/items/RQXLIPI8
+    notes: []
+    autoJournalAbbreviation: J. Confl. Resolut.
+    itemKey: GL3YV2IQ
+    libraryID: 1
+  -
+    key: EYGHHXUQ
+    version: 0
+    itemType: journalArticle
+    volume: '42'
+    issue: '1'
+    pages: 3–32
+    publicationTitle: The Journal of Conflict Resolution
+    date: 1998-02
+    DOI: 10.1177/0022002798042001001
+    title: Why states act through formal international organizations
+    citationKey: AbbottSnidal:1998
+    creators:
+      -
+        firstName: Kenneth W.
+        lastName: Abbott
+        creatorType: author
+      -
+        firstName: Duncan
+        lastName: Snidal
+        creatorType: author
+    tags: []
+    relations: {}
+    dateAdded: 2016-07-25T15:30:17Z
+    dateModified: 2016-07-25T15:30:57Z
+    uri: http://zotero.org/users/8230813/items/EYGHHXUQ
+    itemID: 111
+    attachments:
+      -
+        itemType: attachment
+        url: http://dx.doi.org/10.1177/0022002798042001001
+        title: bdsk-url-1
+        tags: []
+        relations: {}
+        dateAdded: 2026-10-21T07:13:46Z
+        dateModified: 2026-10-21T07:13:46Z
+        uri: http://zotero.org/users/8230813/items/QZGR2B72
+    notes: []
+    autoJournalAbbreviation: J. Confl. Resolut.
+    itemKey: EYGHHXUQ
+    libraryID: 1

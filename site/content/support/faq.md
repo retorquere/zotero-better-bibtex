@@ -74,11 +74,13 @@ won't be touched by Zotero or BBT. This is formally supported by Zotero and will
 work in the Word/LibreOffice plugins as well as in the BibTeX export. This will
 be required for words you wish to always keep lowercase, for example. Also, if
 you don't generally use Zotero for generating bibliographies but just for BibTeX
-reference management, you can turn on the hidden preference
-[suppressTitleCase]({{% ref
-"preferences/hidden-preferences#suppresstitlecase" %}}) to keep BBT
-from applying title-casing, but take note that if you do this, the
-bibliographies you get from Zotero and the bibliograhies you get through
+reference management, you can enter `off` in
+[Apply title-casing to titles]({{% ref
+"preferences/export#apply-title-casing-to-titles" %}}) under Preferences → Export → Miscellaneous
+to keep BBT from applying title-casing. Leave the field empty to use the
+default rules, or use overrides such as `-title` to disable title-casing
+for individual fields. This does not disable case-protection. Take note that if you do this, the
+bibliographies you get from Zotero and the bibliographies you get through
 Bib(La)TeX will differ, and you can't complain about this.
 
 ## Why the double braces?

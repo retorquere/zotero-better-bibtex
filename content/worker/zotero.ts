@@ -18,6 +18,7 @@ const ctx: DedicatedWorkerGlobalScope = self as any
 import type { Message, Job } from '../translators/worker'
 import { generateBibLaTeX } from '../../translators/bibtex/biblatex'
 import { generateBibTeX } from '../../translators/bibtex/bibtex'
+import { Exporter } from '../../translators/bibtex/exporter'
 import { generateCSLJSON } from '../../translators/csl/json'
 import { generateCSLYAML } from '../../translators/csl/yaml'
 import { generateHayagriva } from '../../translators/lib/hayagriva'
@@ -456,7 +457,9 @@ class WorkerZotero {
 
     const output = this.output
 
-    if (this.exportFile) await IOUtils.writeUTF8(this.exportFile, output)
+    if (this.exportFile) {
+      await IOUtils.writeUTF8(this.exportFile, output)
+    }
 
     this.output = ''
     this.running.serialized = []
@@ -529,6 +532,11 @@ export var Zotero = new WorkerZotero // eslint-disable-line no-var
 
 class WorkerServer extends WorkerServerBase implements ExporterInterface {
   public Cache = Cache
+
+  /** Keep parsed strings in the worker between export jobs. */
+  async setStrings(strings: Record<string, string>): Promise<void> { // eslint-disable-line @typescript-eslint/require-await
+    Exporter.setStrings(strings)
+  }
 
   async initialize(config: { CSL_MAPPINGS: any; dateFormatsJSON: any; lastUpdated: string }): Promise<void> {
     Zotero.Schema = { ...config.CSL_MAPPINGS }

@@ -1,20 +1,17 @@
 LeadLeadDating2025:
-  date: '2025-03-24'
-  language: en
-  parent:
-    title: Wikipedia
-    type: reference
+  type: entry
   title: Lead–lead dating
-  type: entry
+  language: en
   url:
-    date: '2026-08-22'
     value: https://en.wikipedia.org/w/index.php?title=Lead%E2%80%93lead_dating&oldid=1282108712
+    date: 2026-08-22
+  parent:
+    type: reference
+    title: Wikipedia
+  date: 2025-03-24
 zotero-item-8762:
-  author:
-    - Mustermann, Max
-  date: 2024-03-24
-  title: Dummy Item
   type: entry
+  title: Dummy Item
   url: https://example.org
   parent:
     type: reference
@@ -26,3 +23,7 @@ zotero-item-8762:
     parent:
       type: reference
       title: WikiSeries
+  date: 2024-03-24
+  edition: 3
+  author:
+    - Mustermann, Max

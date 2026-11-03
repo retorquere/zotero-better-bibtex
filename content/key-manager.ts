@@ -22,7 +22,7 @@ import { Formatter } from './key-manager/formatter'
 
 import { Cache } from './translators/worker'
 
-import { sprintf } from 'sprintf-js'
+import { sprintf } from './sprintf'
 
 import * as l10n from './l10n'
 
@@ -79,6 +79,9 @@ class Progress {
   private progress: any
   private eta: ETA
 
+  /**
+   * Shows progress for both key generation and item persistence.
+   */
   constructor(total: number, message: string) {
     this.win = new Zotero.ProgressWindow({ closeOnClick: false })
     this.win.changeHeadline(`Better BibTeX: ${ message }`)
@@ -86,22 +89,29 @@ class Progress {
     this.progress = new this.win.ItemProgress(icon, message)
     this.win.show()
 
-    this.eta = new ETA(total, { autoStart: true })
+    this.eta = new ETA(total * 2, { autoStart: true })
   }
 
-  next() {
+  /**
+   * Updates the active phase and yields periodically so Zotero can repaint the window.
+   */
+  async next(phase: string, done: number, total: number) {
     this.eta.iterate()
 
-    if ((this.eta.done % 10) === 1) {
+    if (this.eta.done === 1 || (this.eta.done % 10) === 0) {
       this.progress.setProgress((this.eta.done * 100) / this.eta.count)
-      this.progress.setText(this.eta.format(`${ this.eta.done } / ${ this.eta.count }, {{etah}} remaining`))
+      this.progress.setText(this.eta.format(`${ phase }: ${ done } / ${ total }, {{etah}} remaining`))
+      await Zotero.Promise.delay(10)
     }
   }
 
+  /**
+   * Leaves a brief completion message before closing the progress window.
+   */
   done() {
     this.progress.setProgress(100)
     this.progress.setText('Ready')
-    this.win.close()
+    this.win.startCloseTimer(2000)
   }
 }
 
@@ -183,6 +193,10 @@ export const KeyManager = new class _KeyManager {
 
   public autofill: Scheduler<number> = new Scheduler<number>('fillKeyAfter', 1000)
 
+  /**
+   * Generates missing or replacement citation keys and persists writable items.
+   * Bulk progress spans both the generation and persistence phases.
+   */
   public async fill(ids: 'selected' | number | number[], { warn = false, replace = false, inspireHEP = false }: { warn?: boolean; replace?: boolean; inspireHEP?: boolean } = {}): Promise<void> {
     ids = this.expandSelection(ids)
     const selected: Set<number> = new Set(ids)
@@ -222,37 +236,50 @@ export const KeyManager = new class _KeyManager {
     this.clear(items.map(item => item.id as number))
 
     const progress: Progress | undefined = items.length > 10 ? new Progress(items.length, 'Refreshing citation keys') : undefined
+    let refreshed = 0
     for (const item of items) {
-      if (!this.update(item, { replace, inspireHEP: inspireHEP ? (await fetchInspireHEP(item)) || '' : undefined })) {
-        if (!readonly(item)) this.store(item)
-        continue
-      }
-
-      const citationKey = item.getField('citationKey')
-      if (!citationKey) continue
-
-      // remove the new citekey from the aliases if present
-      const aliases = Extra.get(item.getField('extra'), 'zotero', { aliases: true })
-      if (aliases.extraFields.aliases?.includes(citationKey)) {
-        aliases.extraFields.aliases = aliases.extraFields.aliases.filter(alias => alias !== citationKey)
-
-        if (aliases.extraFields.aliases.length) {
-          item.setField('extra', Extra.set(aliases.extra, { aliases: aliases.extraFields.aliases }))
+      try {
+        if (!this.update(item, { replace, inspireHEP: inspireHEP ? (await fetchInspireHEP(item)) || '' : undefined })) {
+          if (!readonly(item)) this.store(item)
+          continue
         }
-        else {
-          item.setField('extra', aliases.extra)
+
+        const citationKey = item.getField('citationKey')
+        if (!citationKey) continue
+
+        // remove the new citekey from the aliases if present
+        const aliases = Extra.get(item.getField('extra'), 'zotero', { aliases: true })
+        if (aliases.extraFields.aliases?.includes(citationKey)) {
+          aliases.extraFields.aliases = aliases.extraFields.aliases.filter(alias => alias !== citationKey)
+
+          if (aliases.extraFields.aliases.length) {
+            item.setField('extra', Extra.set(aliases.extra, { aliases: aliases.extraFields.aliases }))
+          }
+          else {
+            item.setField('extra', aliases.extra)
+          }
         }
       }
+      finally {
+        refreshed++
+        if (progress) await progress.next('Generating keys', refreshed, items.length)
+      }
+    }
 
-      progress?.next()
+    let saved = 0
+    for (const item of items) {
+      try {
+        if (!readonly(item)) { // keys for read-only items are cached only, never written back
+          await item.saveTx({ skipDateModifiedUpdate: true })
+          await Zotero.Promise.delay(10)
+        }
+      }
+      finally {
+        saved++
+        if (progress) await progress.next('Saving items', saved, items.length)
+      }
     }
     progress?.done()
-
-    for (const item of items) {
-      if (readonly(item)) continue // keys for read-only items are cached only, never written back
-      await item.saveTx({ skipDateModifiedUpdate: true })
-      await Zotero.Promise.delay(10)
-    }
   }
 
   // eslint-disable-next-line @typescript-eslint/unbound-method

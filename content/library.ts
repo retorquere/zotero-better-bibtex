@@ -124,7 +124,7 @@ export function get(query: Query | Query[], throws = false): Zotero.Library | un
     case 0:
       return oops(`library.get: ${JSON.stringify(query)} not found`)
     case 1:
-      return libraries[0] as unknown as Zotero.Library
+      return filtered[0] as unknown as Zotero.Library
     default:
       return oops(`library.get: ${JSON.stringify(query)} is not unique`)
   }

@@ -7,7 +7,7 @@ import type { Translation } from '../lib/translator'
 import type { Fields as ExtraFields } from '../../content/extra'
 import { log } from '../../content/logger'
 
-export type Postscript = (target: any, source: any, translator: Translation, extra: ExtraFields) => Allow
+export type Postscript = (target: any, source: any, translator: Translation, zotero: typeof Zotero, extra: ExtraFields) => Allow
 
 export function postscript(kind: 'csl' | 'tex' | 'hayagriva', main: string, guard?: string): Postscript {
   let body = `
@@ -49,6 +49,6 @@ export function postscript(kind: 'csl' | 'tex' | 'hayagriva', main: string, guar
   return new Function('target', 'source', 'Translator', 'Zotero', 'extra', body) as Postscript
 }
 
-export const noop: Postscript = function(_entry: any, _item: any, _translator: Translation, _extra: ExtraFields): Allow {
+export const noop: Postscript = function noop(_entry: any, _item: any, _translator: Translation, _zotero: typeof Zotero, _extra: ExtraFields): Allow {
   return { cache: true, write: true }
 }

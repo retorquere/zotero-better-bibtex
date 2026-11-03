@@ -250,7 +250,7 @@ Some importers or Zotero extensions (such as the ShortDOI manager for example) c
 
 default: `<not set>`
 
-If you're dead-set on ignoring both BibTeX/BibLaTeX best practice (see the BBT FAQ) and the Zotero recommendations on title/sentence casing, you can turn this off to suppress title casing for English items
+Leave empty to use the default title-casing rules for English items, or enter "off" to disable title-casing. To override individual fields, use a comma-separated list such as "-title,+booktitle". Prefix a field with "bibtex." or "biblatex." to restrict the override to that format, for example "-bibtex.title".
 
 
 ### Apply case-protection to capitalized words by enclosing them in braces

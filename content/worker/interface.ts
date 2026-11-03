@@ -22,6 +22,7 @@ export interface Cache {
 
 export interface Exporter {
   initialize(config: { CSL_MAPPINGS: any; dateFormatsJSON: any; lastUpdated: string }): Promise<void>
+  setStrings(strings: Record<string, string>): Promise<void>
   terminate(): Promise<void>
   start(config: Job): Promise<{ cacheRate: number; output: string }>
 }

@@ -1,35 +1,17 @@
 // tslint:disable:no-console
 
-const bibtexParser = require('biblatex-csl-converter').BibLatexParser
+// const bibtexParser = require('biblatex-csl-converter').BibLatexParser
 // BibTeXParser = require('../../biblatex-csl-converter').BibLatexParser
-import fs = require('fs')
 
-function importReferences(input) {
-  const parser = new bibtexParser(input, {
-    rawFields: true,
-    processUnexpected: true,
-    processUnknown: {
-      comment: 'f_verbatim',
-    },
-  })
+import { writeFile, readFile } from 'node:fs/promises'
+import init, { parse } from '@retorquere/bibtex-parser/wasm'
 
-  /* this must be called before requesting warnings or errors -- this really, really weirds me out */
-  const references = parser.output
+const binary = new URL(import.meta.resolve('@retorquere/bibtex-parser/wasm/bibtex_parser_bg.wasm'))
+await init({ module_or_path: await readFile(binary) })
+const library = parse(await readFile('test/fixtures/import/Some bibtex entries quietly discarded on import from bib file #873.bib', 'utf-8'))
 
-  /* relies on side effect of calling '.output' */
-  return {
-    references,
-    groups: parser.groups,
-    errors: parser.errors,
-    warnings: parser.warnings,
-  }
-}
+await writeFile('parsed.json', JSON.stringify(library.entries.map(entry => entry.key.toLowerCase())))
+await writeFile('library.json', JSON.stringify(library))
 
-for (const bib of process.argv.slice(2)) {
-  try {
-    const parsed = importReferences(fs.readFileSync(bib, 'utf8'))
-    console.log(JSON.stringify(parsed, null, 2))
-  } catch (err) {
-    console.log(bib, err)
-  }
+for (const entry of library.entries) {
 }

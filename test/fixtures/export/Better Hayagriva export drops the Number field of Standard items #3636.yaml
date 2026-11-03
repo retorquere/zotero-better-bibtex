@@ -1,0 +1,41 @@
+config:
+  id: 36a3b0b5-bad0-4a04-b79b-441c7cef77db
+  label: BetterBibTeX JSON
+  preferences:
+    biblatexExtendedNameFormat: false
+    biblatexUsePrefix: false
+    citekeyFormat: auth.lower + year
+    exportBraceProtection: false
+    exportTitlecase: off
+    fillKeyAfter: 1
+    skipFields: file
+    warnBulkModify: 0
+  options: {}
+version:
+  zotero: 10.0.6
+  bbt: 9.0.71
+collections: {}
+items:
+  -
+    key: HMXSUWAZ
+    version: 146
+    itemType: standard
+    title: Varmatap húsa - útreikningar
+    date: 2016-05-25
+    citationKey: ist-66-2016
+    url: https://www.stadlar.is/stadlabudin/vara/?ProductName=IST-66-2016
+    accessDate: 2026-10-15
+    language: is
+    publisher: Staðlaráð Íslands
+    place: Kópavogur
+    number: ÍST 66:2016
+    edition: '2'
+    numPages: '26'
+    committee: Byggingarstaðlaráð
+    creators: []
+    tags: []
+    dateAdded: 2026-10-15T12:53:12Z
+    dateModified: 2026-10-15T12:56:09Z
+    itemID: 42
+    notes: []
+    authority: Staðlaráð Íslands

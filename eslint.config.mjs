@@ -1,7 +1,6 @@
 import eslint from '@eslint/js'
 import tsPlugin from '@typescript-eslint/eslint-plugin'
 import globals from 'globals'
-import tseslint from 'typescript-eslint'
 
 import { fixupPluginRules } from '@eslint/compat'
 import { FlatCompat } from '@eslint/eslintrc'

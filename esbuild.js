@@ -149,6 +149,7 @@ async function bundle(config) {
     drop: ['console'],
     ...config,
   }
+  if (!config.plugins.includes(loader.bibtexWasm)) config.plugins.unshift(loader.bibtexWasm)
   if (!config.plugins.includes(loader.json)) config.plugins.push(loader.json)
 
   let target

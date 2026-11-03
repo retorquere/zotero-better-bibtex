@@ -84,7 +84,7 @@ export class Translation {
   public importToExtra!: Record<string, 'plain' | 'force'>
   public skipFields!: string[]
   public skipField!: RegExp
-  public verbatimFields?: (string | RegExp)[]
+  public verbatimFields?: string[]
   public csquotes?: { open: string; close: string }
   public export: { dir?: string; path?: string } = {
     dir: undefined,
@@ -94,12 +94,19 @@ export class Translation {
   public charmap!: CharMap
 
   public BetterBibLaTeX?: boolean
+  public BibLaTeX?: boolean
   public BetterBibTeX?: boolean
+  public BibTeX?: boolean
   public BetterTeX: boolean
+  public TeX: boolean
   public BetterCSLJSON?: boolean
+  public CSLJSON?: boolean
   public BetterCSLYAML?: boolean
+  public CSLYAML?: boolean
   public BetterHayagriva?: boolean
+  public Hayagriva?: boolean
   public BetterCSL?: boolean
+  public CSL?: boolean
   public BetterBibTeXCitationKeyQuickCopy?: boolean
   public BetterBibTeXJSON?: boolean
   public Citationgraph?: boolean
@@ -234,9 +241,10 @@ export class Translation {
   }
 
   private constructor(public collected: Collected, private mode: 'import' | 'export') {
-    this[collected.translator.label.replace(/[^a-z]/ig, '')] = true
-    this.BetterTeX = this.BetterBibTeX || this.BetterBibLaTeX || false
-    this.BetterCSL = this.BetterCSLJSON || this.BetterCSLYAML || false
+    const label = collected.translator.label
+    this[label.replace(/[^a-z]/ig, '')] = this[label.replace(/^Better /, '').replace(/[^a-z]/ig, '')] = true
+    this.TeX = this.BetterTeX = this.BetterBibTeX || this.BetterBibLaTeX || false
+    this.CSL = this.BetterCSL = this.BetterCSLJSON || this.BetterCSLYAML || false
 
     this.options = { ...collected.displayOptions } // for backwards compat
     this.preferences = { ...collected.preferences } // for backwards compat
@@ -303,9 +311,8 @@ export class Translation {
 
     this.verbatimFields = this.collected.preferences.verbatimFields
       .toLowerCase()
-      .split(',')
-      .map(field => (m = field.trim().match(/^[/](.+)[/]$/)) ? new RegExp(m[1], 'i') : this.typefield(field))
-      .filter((s: string | RegExp) => s)
+      .split(/\s*,\s*/)
+      .filter(Boolean)
 
     if (!this.verbatimFields.length) delete this.verbatimFields
     this.csquotes = this.collected.preferences.csquotes

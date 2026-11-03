@@ -1,7 +1,7 @@
 import { Exporter as BibTeXExporter } from './exporter'
 import { Translation } from '../lib/translator'
 import { strToISO } from '../../content/dateparser'
-import { qualityReport } from '../../gen/biber-tool'
+import { qualityReport, allows } from '../../gen/biber-tool'
 import type { Collected } from '../lib/collect'
 
 import { Entry as BaseEntry, Config } from './entry'
@@ -338,7 +338,6 @@ export function generateBibLaTeX(collected: Collected): Translation {
   translation.bibtex = new BibTeXExporter(translation)
 
   Entry.installPostscript(translation)
-  translation.bibtex.prepare_strings()
 
   for (const item of translation.bibtex.items) {
     const entry = new Entry(item, config, translation)
@@ -392,11 +391,61 @@ export function generateBibLaTeX(collected: Collected): Translation {
 
     entry.add({ name: 'pagetotal', value: item.numPages })
 
-    let number_added: string | undefined
+    /*
+      eid field (literal)
+
+      The electronic identifier of an @article or chapter-like section of a larger work often
+      called ‘article number’, ‘paper number’ or the like. This field may replace the pages
+      field for journals deviating from the classic pagination scheme of printed journals by
+      only enumerating articles or papers and not pages.
+
+      Not to be confused with number, which for @articles subdivides the volume.
+
+      number field (literal)
+
+      The number of a journal or the volume/number of a book in a series. See also issue
+      as well as §§ 2.3.7, 2.3.10, 2.3.11. With @patent entries, this is the number or record
+      token of a patent or patent request. Normally this field will be an integer or an
+      integer range, but it may also be a short designator that is not entirely numeric such
+      as “S1”, “Suppl. 2”, “3es”. In these cases the output should be scrutinised carefully.
+
+      Since number is—maybe counterintuitively given its name—a literal field, sorting
+      templates will not treat its contents as integers, but as literal strings, which means
+      that “11” may sort between “1” and “2”. If integer sorting is desired, the field can be
+      declared an integer field in a custom data model (see § 4.5.4). But then the sorting of
+      non-integer values is not well defined.
+      The ‘article number’ or ‘paper number’, which can be used instead of—or along
+      with—a page range to pinpoint a specific article within another work, goes into the
+      eid field.
+
+      issue field (literal)
+
+      The issue of a journal. This field is intended for journals whose individual issues are
+      identified by a designation such as ‘Spring’ or ‘Summer’ rather than the month or a
+      number. The placement of issue is similar to month and number. Integer ranges and
+      short designators are better written to the number field. See also month, number and
+      §§ 2.3.10 and 2.3.11.
+    */
     if (!item.number?.match(/arxiv/i) || !entry.has.eprint) {
-      number_added = entry.add({ name: 'number', value: patent.number(item) || entry.normalizeDashes(item.number || item.seriesNumber) })
+      if (item.itemType === 'patent') {
+        entry.add({ name: 'number', value: patent.number(item) || entry.normalizeDashes(item.number) })
+      }
+      else {
+        entry.add({ name: 'number', value: entry.normalizeDashes(item.seriesNumber) })
+
+        entry.add({
+          name: allows(entry.entrytype, 'issue') && !(looks_like_number_field(item.issue) && !entry.has.number)
+            ? 'issue'
+            : 'number',
+          value: entry.normalizeDashes(item.issue),
+        })
+
+        entry.add({
+          name: allows(entry.entrytype, 'eid') || entry.has.number ? 'eid' : 'number',
+          value: entry.normalizeDashes(item.number),
+        })
+      }
     }
-    entry.add({ name: !number_added && looks_like_number_field(item.issue) ? 'number' : 'issue', value: entry.normalizeDashes(item.issue) })
 
     const journalAbbreviation = {
       abbrev: item.journalAbbreviation,

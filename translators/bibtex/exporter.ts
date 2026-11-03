@@ -7,13 +7,24 @@ import { Serialized } from '../../gen/typings/serialized'
 
 import { JabRef } from '../bibtex/jabref'
 import { simplifyForExport } from '../../content/item-schema'
-import * as bibtexParser from '@retorquere/bibtex-parser'
 import { Postfix } from './postfix'
 import * as Extra from '../../content/extra'
 import type { ExportedItem } from '../../content/worker/cache'
 import { HTMLConverter, ConverterOptions, TeX } from './unicode_translator'
 
 export class Exporter {
+  private static strings: Record<string, string> = {}
+  private static strings_reverse: Record<string, string> = {}
+
+  /** Replace the shared matching maps, including clearing removed strings. */
+  public static setStrings(strings: Record<string, string>): void {
+    Exporter.strings = strings
+    Exporter.strings_reverse = {}
+    for (const [ key, value ] of Object.entries(strings)) {
+      Exporter.strings_reverse[value.toUpperCase()] = key.toUpperCase()
+    }
+  }
+
   public postfix?: Postfix
   public jabref: JabRef
   public strings: Record<string, string> = {}
@@ -23,20 +34,15 @@ export class Exporter {
   private translation: Translation
   private tx!: HTMLConverter
 
+  /** Use the shared maps only when this export enables string matching. */
   constructor(translation: Translation) {
     this.translation = translation
     this.jabref = new JabRef(translation)
     // this.htmlconverterMode = translation.unicode ? 'minimal' : (translation.BetterBibTeX ? 'bibtex' : 'biblatex')
-  }
 
-  public prepare_strings(): void {
-    if (!this.translation.BetterTeX || !this.translation.collected.preferences.strings) return
-
-    if (this.translation.BetterTeX && this.translation.collected.preferences.exportBibTeXStrings.startsWith('match')) {
-      this.strings = bibtexParser.parse(this.translation.collected.preferences.strings).strings
-      for (const [ k, v ] of Object.entries(this.strings)) {
-        this.strings_reverse[v.toUpperCase()] = k.toUpperCase()
-      }
+    if (translation.BetterTeX && translation.collected.preferences.exportBibTeXStrings.startsWith('match')) {
+      this.strings = Exporter.strings
+      this.strings_reverse = Exporter.strings_reverse
     }
   }
 

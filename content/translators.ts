@@ -1,10 +1,12 @@
-/* eslint-disable no-case-declarations, @typescript-eslint/no-unsafe-return */
+/* eslint-disable @typescript-eslint/no-unsafe-return */
 
 import merge from 'lodash.merge'
 import { Cache } from './translators/worker'
 import { serializer } from './item-export-format'
 
 const { ZOTERO_CONFIG } = ChromeUtils.importESModule('resource://zotero/config.mjs')
+import init, { parse } from '@retorquere/bibtex-parser'
+import { Exporter as TeXExporter } from '../translators/bibtex/exporter'
 
 import { Preference } from './prefs'
 import { affects, Preferences } from '../gen/preferences/meta'
@@ -18,6 +20,8 @@ import { Job, worker, Exporter, Message } from './translators/worker'
 import { selectedLibraryID } from './library'
 
 Events.on('preference-changed', async ({ data: pref }) => {
+  if (pref === 'strings') await Translators.cacheStrings()
+
   for (const translator of (affects[pref] || [])) {
     await Cache.Exports.dropTranslator(translator)
   }
@@ -34,7 +38,14 @@ class TimeoutError extends Error {
   }
 }
 
-export type ExportScope = { type: 'items'; items: any[] } | { type: 'library'; id: number } | { type: 'collection'; collection: any }
+export type ExportScope
+  = { type: 'items'; items: any[] }
+  | { type: 'library'; id: number }
+  | { type: 'collection'; collection: any }
+  | { type: 'collections'; collections: any[] }
+
+type CollectionScope = Extract<ExportScope, { type: 'collection' | 'collections' }>
+
 export type ExportJob = {
   translatorID: string
   displayOptions: Record<string, boolean>
@@ -48,7 +59,6 @@ export type ExportJob = {
   timeout?: number
 }
 
-// export singleton: https://k94n.com/es6-modules-single-instance-pattern
 export const Translators = new class {
   public byId: Record<string, Header> = {}
   public byLabel: Record<string, Header> = {}
@@ -67,6 +77,9 @@ export const Translators = new class {
       description: 'translators',
       needs: [ 'worker', 'keymanager' ],
       startup: async () => {
+        await init({ module_or_path: 'chrome://zotero-better-bibtex/content/resource/bibtex_parser_bg.wasm' })
+        await this.cacheStrings()
+
         worker.addEventListener('message', (e: Event) => {
           const data = (e as MessageEvent).data as Message
           if (!data || (data as unknown as any).id) return // data.id means it is a JSON-RPC message
@@ -114,6 +127,13 @@ export const Translators = new class {
         await Zotero.Translators.reinit()
       },
     })
+  }
+
+  /** Refresh both export contexts only when the strings preference changes. */
+  public async cacheStrings(): Promise<void> {
+    const strings: Record<string, string> = Preference.strings ? parse(Preference.strings).strings : {}
+    TeXExporter.setStrings(strings)
+    await Exporter.setStrings(strings)
   }
 
   public getTranslatorId(name: string): string {
@@ -215,24 +235,18 @@ export const Translators = new class {
     switch (scope.type) {
       case 'library':
         items = await Zotero.Items.getAll(scope.id, true)
-        collections = Zotero.Collections.getByLibrary(scope.id) // , true)
+        collections = Zotero.Collections.getByLibrary(scope.id)
         break
 
       case 'items':
         items = scope.items
         break
 
-      case 'collection':
-        collections = Zotero.Collections.getByParent(scope.collection.id, true)
-        const items_with_duplicates = new Set(scope.collection.getChildItems())
-        for (const collection of collections) {
-          for (const item of collection.getChildItems()) {
-            items_with_duplicates.add(item) // sure hope getChildItems doesn't return a new object?!
-          }
-        }
-        items = Array.from(items_with_duplicates.values())
+      case 'collections':
+      case 'collection': {
+        ({ items, collections } = this.collectionContents(scope))
         break
-
+      }
       default:
         throw new Error(`Unexpected scope: ${ Object.keys(scope) }`)
     }
@@ -295,14 +309,9 @@ export const Translators = new class {
         items = scope.items
         break
 
+      case 'collections':
       case 'collection':
-        const withDuplicates = new Set(scope.collection.getChildItems())
-        for (const collection of Zotero.Collections.getByParent(scope.collection.id, true)) {
-          for (const item of collection.getChildItems()) {
-            withDuplicates.add(item)
-          }
-        }
-        items = Array.from(withDuplicates.values())
+        items = this.collectionContents(scope).items
         break
 
       default:
@@ -357,7 +366,16 @@ export const Translators = new class {
         break
 
       case 'collection':
-        translation.setCollection(scope.collection)
+        if (translation.setCollections) {
+          translation.setCollections([scope.collection])
+        }
+        else {
+          translation.setCollection(scope.collection)
+        }
+        break
+
+      case 'collections':
+        translation.setCollections(scope.collections)
         break
 
       default:
@@ -473,15 +491,18 @@ export const Translators = new class {
   private exportScope(scope: ExportScope): ExportScope {
     if (!scope) scope = { type: 'library', id: Zotero.Libraries.userLibraryID }
 
-    if (scope.type === 'collection' && typeof scope.collection === 'number') {
-      return { type: 'collection', collection: Zotero.Collections.get(scope.collection) }
-    }
-
     switch (scope.type) {
       case 'items':
         if (!scope.items?.length) throw new Error(`invalid scope: ${ JSON.stringify(scope) }`)
         break
+      case 'collections':
+        scope.collections = scope.collections.map(coll => typeof coll === 'number' ? Zotero.Collections.get(coll) : coll)
+        if (!scope.collections.length || scope.collections.find(coll => typeof coll?.id !== 'number')) throw new Error(`invalid scope: ${ JSON.stringify(scope) }`)
+        break
       case 'collection':
+        if (scope.type === 'collection' && typeof scope.collection === 'number') {
+          scope = { type: 'collection', collection: Zotero.Collections.get(scope.collection) }
+        }
         if (typeof scope.collection?.id !== 'number') throw new Error(`invalid scope: ${ JSON.stringify(scope) }`)
         break
       case 'library':
@@ -492,5 +513,38 @@ export const Translators = new class {
     }
 
     return scope
+  }
+
+  /**
+   * Resolve selected collections to roots, their items, and version-appropriate collection rows.
+   * Zotero 11 exports selected roots; older versions expect only their descendants.
+   */
+  private collectionContents(scope: CollectionScope): { items: any[]; collections: any[] } {
+    const selected = scope.type === 'collection' ? [ scope.collection ] : scope.collections
+    const selectedIDs = new Set(selected.map(collection => collection.id))
+    const roots = selected.filter(collection => {
+      let parentID = collection.parentID
+      while (typeof parentID === 'number') {
+        if (selectedIDs.has(parentID)) return false
+        const parent = Zotero.Collections.get(parentID)
+        parentID = parent ? parent.parentID : false
+      }
+      return true
+    })
+
+    const items = new Map<number, any>
+    const descendants: any[] = []
+    for (const root of roots) {
+      for (const item of root.getChildItems()) items.set(item.id, item)
+      for (const collection of Zotero.Collections.getByParent(root.id, true)) {
+        descendants.push(collection)
+        for (const item of collection.getChildItems()) items.set(item.id, item)
+      }
+    }
+
+    return {
+      items: Array.from(items.values()),
+      collections: typeof Zotero.Translate.Export.prototype.setCollections === 'function' ? roots : descendants,
+    }
   }
 }

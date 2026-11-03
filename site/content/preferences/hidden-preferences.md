@@ -49,6 +49,11 @@ default: `<not set>`
 
 if you set `csquotes` to a string of character pairs, each pair will be assumed to be the open and close parts of a pair and will be replaced with a `\\enquote{...}` construct.
 
+## exportCaseProtection
+
+default: `<not set>`
+
+This is a comma-separated list of export case-protection overrides for English items. Prefix fields with "+" to force case-protection and "-" to disable case-protection. Use just the field name to apply to both bibtex and biblatex, or prefix with "bibtex." or "biblatex." to restrict to one. The defaults in BBT adhere to BibTeX/BibLaTeX best practice, but if you are dead-set on ignoring these, you can override them here. `off` turns it off for all fields.
 ## git
 
 default: `config`
@@ -223,7 +228,7 @@ A strings override will disable caching for that export.
 
 ## verbatimFields
 
-default: `url,doi,file,pdf,ids,eprint,/^verb[a-z]$/,groups,/^citeulike-linkout-[0-9]+$/,/^bdsk-url-[0-9]+$/, keywords`
+default: `url,doi,file,pdf,ids,eprint,verb?,groups,citeulike-linkout-*,bdsk-url-*, keywords`
 
 list of fields to treat as verbatim during import. If you're importing e.g. Mendeley-generated BibTeX, which is out of spec in various ways, try removing `file` from this list before import.
 ## warnTitleCased

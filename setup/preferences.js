@@ -8,11 +8,12 @@ import * as pug from 'pug'
 import * as fs from 'fs'
 import * as path from 'path'
 import * as glob from 'glob'
-import frontmatter from 'gray-matter'
+import frontmatter from 'lite-matter'
 import _ from 'lodash'
 import { walk, Lint, ASTWalker as BaseASTWalker } from './pug-ast-walker.js'
 import { FluentBundle, FluentResource } from '@fluent/bundle'
 import * as yaml from 'lightning-yaml'
+import { stringify as stringifyYAML } from 'yaml'
 
 import { Eta } from 'eta'
 const eta = new Eta
@@ -334,7 +335,7 @@ The Better BibTeX hidden preferences are preceded by “extensions.zotero.transl
       // console.info(page.matter.data)
       page.matter.content = eta.renderString(`\n\n{{% preferences/header %}}\n\n${ page.content }`, prefs)
       ensureDir(page.path)
-      fs.writeFileSync(page.path, page.matter.stringify())
+      fs.writeFileSync(page.path, `---\n${ stringifyYAML(page.matter.data) }---\n${ page.matter.content }`)
     }
   }
 

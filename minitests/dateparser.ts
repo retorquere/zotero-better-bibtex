@@ -25,8 +25,11 @@ function date2csl(date) {
   }
 }
 
-import { parse, simplify } from '../content/dateparser'
+import { start, parse, simplify } from '../content/dateparser'
 
 for (const value of process.argv.slice(2)) {
-  console.log(value, '=>', parse(value), '/', simplify(parse(value)))
+  console.log(value)
+  console.log('  parsed:', parse(value))
+  console.log('  simplified:', simplify(parse(value)))
+  console.log('  start', start(parse(value)))
 }

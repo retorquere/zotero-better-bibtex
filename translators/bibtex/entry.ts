@@ -22,6 +22,7 @@ export type Field = {
   fallback?: boolean
 
   html?: boolean
+  caseConversion?: boolean
 
   bibtex?: string
 }
@@ -932,7 +933,7 @@ export class Entry {
           continue
         }
 
-        const mode = ({ raw: { raw: true }, cased: {} }[field.mode!]) || {}
+        const mode = ({ raw: { raw: true }, cased: { caseConversion: true } }[field.mode!]) || {}
 
         switch (name) {
           case 'mr':
@@ -1236,8 +1237,8 @@ export class Entry {
 
     if (f.raw || options.raw) return f.value
 
-    const titlecase = this.titlecaseFields.has(f.name)
-    const exportCaseProtection = this.caseProtectionFields.has(f.name)
+    const titlecase = f.caseConversion ?? this.titlecaseFields.has(f.name)
+    const exportCaseProtection = f.caseConversion ?? this.caseProtectionFields.has(f.name)
     const { latex, packages, raw } = this.translation.bibtex
       .text2latex(f.value, {
         html: f.html,

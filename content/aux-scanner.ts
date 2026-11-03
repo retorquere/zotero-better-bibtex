@@ -195,7 +195,6 @@ export const AUXScanner = new class {
     while (aux = Object.keys(parsed).find(path => !parsed[path])) {
       parsed[aux] = true
       if (!await File.exists(aux)) {
-        log.info('aux scanner:', aux, 'does not exist')
         continue
       }
 

@@ -1,0 +1,147 @@
+config:
+  id: 36a3b0b5-bad0-4a04-b79b-441c7cef77db
+  label: BetterBibTeX JSON
+  preferences:
+    citekeyFormat: auth + year
+    fillKeyAfter: 1
+  options:
+    Items: true
+    Normalize: true
+    Preferences: true
+    YAML: false
+    exportFileData: false
+    exportNotes: true
+    keepUpdated: false
+    worker: true
+version:
+  zotero: 10.0.6
+  bbt: 9.0.71.emile.kiku.local
+collections: {}
+items:
+  -
+    key: NMW3666M
+    version: 0
+    itemType: bookSection
+    volume: '2'
+    publisher: Kumarian Press
+    pages: 227–32
+    date: '2004'
+    extra: 'Section: 12'
+    title: Lebanon
+    citationKey: El-HusseiniToeplerSalamon:2004
+    creators:
+      -
+        firstName: Hashem
+        lastName: El-Husseini
+        creatorType: author
+      -
+        firstName: Stefan
+        lastName: Toepler
+        creatorType: author
+      -
+        firstName: Lester M.
+        lastName: Salamon
+        creatorType: author
+      -
+        firstName: Lester M.
+        lastName: Salamon
+        creatorType: editor
+      -
+        firstName: S. Wojciech
+        lastName: Sokolowski
+        creatorType: editor
+    tags: []
+    relations: {}
+    dateAdded: 2026-10-21T07:13:57Z
+    dateModified: 2026-10-21T07:13:57Z
+    uri: http://zotero.org/users/8230813/items/NMW3666M
+    itemID: 120
+    attachments: []
+    notes: []
+    autoJournalAbbreviation: ''
+    itemKey: NMW3666M
+    libraryID: 1
+    publicationTitle: 'Global civil society: Dimensions of the nonprofit sector'
+  -
+    key: B4MRK2N7
+    version: 0
+    itemType: journalArticle
+    volume: '43'
+    issue: '1'
+    pages: 24–45
+    publicationTitle: Disasters
+    date: 2019-01
+    extra: "tex.date-added: 2020-08-07 09:07:58 -0400\ntex.date-modified: 2020-08-07 09:09:07 -0400"
+    DOI: 10.1111/disa.12301
+    title: 'Between international donors and local faith communities: Intermediaries in humanitarian assistance to Syrian refugees in Jordan and Lebanon'
+    citationKey: KraftSmith:2019
+    creators:
+      -
+        firstName: Kathryn
+        lastName: Kraft
+        creatorType: author
+      -
+        firstName: Jonathan D.
+        lastName: Smith
+        creatorType: author
+    tags:
+      -
+        tag: 000000000000 Read next
+    relations: {}
+    dateAdded: 2026-10-21T07:13:57Z
+    dateModified: 2026-10-21T07:13:57Z
+    uri: http://zotero.org/users/8230813/items/B4MRK2N7
+    itemID: 122
+    attachments:
+      -
+        itemType: attachment
+        url: https://doi.org/10.1111/disa.12301
+        title: bdsk-url-1
+        tags: []
+        relations: {}
+        dateAdded: 2026-10-21T07:13:57Z
+        dateModified: 2026-10-21T07:13:57Z
+        uri: http://zotero.org/users/8230813/items/Q2GXGGTK
+      -
+        itemType: attachment
+        title: KraftSmith2019 - Between international donors and local faith communities Intermediaries
+        tags: []
+        relations: {}
+        dateAdded: 2026-10-21T07:13:57Z
+        dateModified: 2026-10-21T07:13:57Z
+        uri: http://zotero.org/users/8230813/items/B5XSIRSN
+        path: /Users/emile/.BBTTEST/zotero/storage/B5XSIRSN/KraftSmith2019 - Between international donors and local faith communities Intermediaries.pdf
+    notes: []
+    autoJournalAbbreviation: ''
+    itemKey: B4MRK2N7
+    libraryID: 1
+  -
+    key: JEXM6SEX
+    version: 0
+    itemType: book
+    volume: '2'
+    place: Bloomfield, CT
+    publisher: Kumarian Press
+    date: '2004'
+    title: 'Global civil society: Dimensions of the nonprofit sector'
+    citationKey: SalamonSokolowski:2004
+    creators:
+      -
+        firstName: Lester M.
+        lastName: Salamon
+        creatorType: editor
+      -
+        firstName: S. Wojciech
+        lastName: Sokolowski
+        creatorType: editor
+    tags: []
+    relations: {}
+    dateAdded: 2026-10-21T07:13:57Z
+    dateModified: 2026-10-21T07:13:57Z
+    uri: http://zotero.org/users/8230813/items/JEXM6SEX
+    itemID: 121
+    attachments: []
+    notes: []
+    autoJournalAbbreviation: ''
+    itemKey: JEXM6SEX
+    libraryID: 1

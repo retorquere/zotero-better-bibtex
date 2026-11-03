@@ -1,4 +1,4 @@
-This release is compatible with Zotero 8 and Zotero 9 beta. Per BBT 8.0.26, Zotero 7 is no longer supported.
+This release is compatible with Zotero 10 and Zotero 11 beta.
 
 If you use Firefox, make sure to right-click and save the XPI file, not just clicking it.
 

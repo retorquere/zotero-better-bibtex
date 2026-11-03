@@ -1,0 +1,45 @@
+config:
+  id: 36a3b0b5-bad0-4a04-b79b-441c7cef77db
+  label: BetterBibTeX JSON
+  preferences:
+    fillKeyAfter: 0
+    citekeyFormat: auth + year
+    verbatimFields: url,doi,file,pdf,ids,eprint,/^verb[a-z]$/,groups,/^citeulike-linkout-[0-9]+$/, /^bdsk-url-[0-9]+$/, keywords
+    journalAbbreviation: auto
+  options:
+    Items: true
+    Normalize: true
+    Preferences: true
+    exportFileData: false
+    exportNotes: true
+    keepUpdated: false
+    worker: false
+version:
+  zotero: 7.0.11
+  bbt: 7.0.5.emile.kiku.local
+collections: {}
+items:
+  -
+    version: 0
+    itemType: patent
+    pages: '6'
+    extra: 'Citation Key: patent'
+    language: english
+    title: What a great report
+    creators:
+      -
+        name: A very well-known and serious institution
+        creatorType: inventor
+    tags: []
+    relations: {}
+    dateAdded: 2025-01-29T17:47:19Z
+    dateModified: 2025-01-29T17:47:19Z
+    uri: http://zotero.org/users/8230813/items/9GCIH2XU
+    attachments: []
+    notes: []
+    citationKey: patent
+    itemID: 109
+    itemKey: 9GCIH2XU
+    libraryID: 1
+    date: 1995-01
+    number: mypreciousreportnumber
