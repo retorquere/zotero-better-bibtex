@@ -13,7 +13,7 @@ import { noop, Postscript, postscript as compile } from '../lib/postscript'
 import type { Collected } from './collect'
 import { Translation } from './translator'
 
-import { tokenize } from '@retorquere/bibtex-parser'
+import { tokenize } from '@retorquere/bibtex-parser/tokenizer'
 
 const WordBracing = new class WordBrace {
   private nocase(s: string): string {
