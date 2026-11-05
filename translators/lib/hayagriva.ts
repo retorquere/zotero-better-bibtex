@@ -483,6 +483,7 @@ export const Hayagriva = new class {
       language: item.language,
       volume: asNumber(item.volume),
       issue: asNumber(item.issue),
+      edition: asNumber(item.edition),
       'page-range': normalizePageRange(item.pages),
       url: item.accessDate ? { value: item.url, date: dateOnly(item.accessDate) } : item.url,
       publisher: makePublisher(item),
@@ -497,11 +498,14 @@ export const Hayagriva = new class {
     else if (item.itemType === 'webpage' && item.accessDate) {
       entry.date = dateOnly(item.accessDate)
     }
-    if (item.language) entry.language = item.language
-    if (item.volume && deepHas(entry.parent, 'volume')) delete entry.volume
-    else if (item.volume) entry.volume = asNumber(item.volume)
-    if (item.issue) entry.issue = asNumber(item.issue)
-    if (item.edition) entry.edition = asNumber(item.edition)
+
+    if (item.volume && deepHas(entry.parent, 'volume')) {
+      delete entry.volume
+    }
+    else if (item.volume) {
+      entry.volume = asNumber(item.volume)
+    }
+
     if (item.pages) entry['page-range'] = normalizePageRange(item.pages)
 
     if (item.volume && deepHas(entry.parent, 'volume')) delete entry.volume
@@ -557,7 +561,6 @@ export const Hayagriva = new class {
       if (persons.length) entry[role] = persons
     }
 
-    if (item.type) entry.genre = item.type
     if (skipField) {
       for (const field of Object.keys(entry)) {
         if (`hayagriva.${entry.type}.${field}`.match(skipField)) delete entry[field]
