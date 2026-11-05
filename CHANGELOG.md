@@ -1,3 +1,21 @@
+## v9.0.77
+
+- The progress window now shows two phases – key generation and item persistence – by initializing the ETA counter with twice the total count, displays a formatted phase label with done/total and estimated time, and stays open with a “Ready” message before automatically closing after a short timeout, improving user feedback during large operations.
+- Refreshing citation keys and saving refreshed items now display separate progress indicators that count refreshed and saved items respectively, giving clear status updates for each step of the refresh workflow.
+- The legacy preference "exportTitleCase" is automatically migrated to the new "exportTitlecase" setting; the old preference is cleared, the title‑casing option is transferred, and case‑protection remains independent, ensuring consistent title‑casing behavior after upgrade.
+- Subtitle fields now receive title‑casing during export to Better BibTeX and respect the exportTitlecase setting, fixing previous cases where subtitles were left un‑cased.
+- Citation key generation now sanitizes Unicode characters by replacing non‑letter/number symbols with underscores, applies a length limit, and guarantees non‑empty keys, preventing invalid keys and entry loss during export.
+- Hayagriva export has been overhauled: the Number field is dropped for Standard items, citation keys are normalized by replacing non‑ASCII characters with underscores (omitting duplicates), the Edition field is included for books, name suffixes are positioned correctly, author order is preserved, fields are reordered to match Hayagriva schema, and parent reference information is exported, resulting in valid and correctly formatted Hayagriva YAML output.
+- Import now tolerates BibTeX field names containing a plus sign (+) without raising errors, allowing custom fields such as "+extra" to be imported successfully.
+- The syntax for custom extra fields that map author roles has been updated to use an equals sign after the field name (e.g., tex."author+an:role"=1=director) instead of a colon, fixing role parsing for items like films and video recordings.
+- Exported JSON now records the correct Zotero itemKey for each entry and includes accurate dateAdded and dateModified timestamps reflecting the true modification times of items.
+
+## v9.0.76
+
+- Exporting collections now resolves selected collections to their root collections and includes items accordingly: Zotero 11 exports the selected root collections, while older Zotero versions export only the descendant collections, ensuring correct item inclusion across Zotero versions.
+- When exporting collections, providing an empty or invalid collection list now triggers a clear error instead of silently proceeding, improving feedback for mis‑specified export scopes.
+- The BibTeX importer no longer outputs debug information about Jabref groups, reducing console noise during import operations.
+
 ## v9.0.74
 
 - The CI workflow scripts now enhance error handling for Groq API calls: when a request fails, the script parses the JSON error response (if any) and includes the model name and detailed error message in the thrown exception, instead of only reporting the HTTP status and generic status text.
