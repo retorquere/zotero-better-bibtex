@@ -291,6 +291,9 @@ async fn add(args: AddArgs) -> Result<(), Box<dyn std::error::Error>> {
         ).into());
     }
 
+    if let Some(preferences) = library.pointer_mut("/config/preferences").and_then(serde_json::Value::as_object_mut) {
+        preferences.remove("baseAttachmentPath");
+    }
     fs::create_dir_all(&fixtures)?;
     serde_yaml::to_writer(fs::File::create(fixtures.join(&title).with_extension("yml"))?, &library)?;
 
