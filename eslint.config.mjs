@@ -107,10 +107,6 @@ const config = [
 
       '@stylistic/block-spacing': ['error', 'always'],
 
-      '@stylistic/brace-style': ['error', 'stroustrup', {
-        allowSingleLine: true,
-      }],
-
       '@stylistic/comma-spacing': ['error', {
         after: true,
         before: false,
@@ -215,7 +211,6 @@ const config = [
       }],
 
       '@stylistic/no-tabs': 'error',
-      '@stylistic/no-trailing-spaces': 'error',
       '@stylistic/no-whitespace-before-property': 'error',
       '@stylistic/object-curly-spacing': 'off',
       '@stylistic/operator-linebreak': ['error', 'before'],
@@ -254,19 +249,6 @@ const config = [
       '@stylistic/space-unary-ops': ['error', {
         nonwords: false,
         words: true,
-      }],
-
-      '@stylistic/spaced-comment': ['error', 'always', {
-        block: {
-          balanced: true,
-          exceptions: ['*'],
-          markers: ['!'],
-        },
-
-        line: {
-          exceptions: ['/', '#'],
-          markers: ['/'],
-        },
       }],
 
       '@stylistic/template-curly-spacing': 'off',
