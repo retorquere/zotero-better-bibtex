@@ -54,7 +54,7 @@ pub(crate) struct AddArgs {
     /// Title for the new test.
     #[arg(long)]
     title: Option<String>,
-    
+
     /// Allow attachments for the test.
     #[arg(long="attachments", conflicts_with = "no_attachments")]
     keep_attachments: bool,
@@ -217,7 +217,7 @@ async fn add(args: AddArgs) -> Result<(), Box<dyn std::error::Error>> {
     let keep_attachments= args.attachments();
     let feature: String = if args.translator == Translator::Import { "import.feature" } else { "export.feature" }.to_string();
     let (feature_path, mut feature) = load_feature(&feature)?;
-    
+
     let issue = args.issue.or_else(issue_from_branch);
 
     let mut title = match args.title {
@@ -240,7 +240,7 @@ async fn add(args: AddArgs) -> Result<(), Box<dyn std::error::Error>> {
             format!("{} does not contain items", args.debug_log)
         ).into());
     }
-    
+
     if !Path::new("logs").join(&args.debug_log).is_dir() {
         if !download_debug_log(&args.debug_log).await? {
             return Err(std::io::Error::new(
@@ -272,7 +272,7 @@ async fn add(args: AddArgs) -> Result<(), Box<dyn std::error::Error>> {
         Some(false) => {
             detect_attachments(&mut library, &fixtures, true);
         },
-        
+
         None => {
             if detect_attachments(&mut library, &fixtures, false) {
                 return Err(std::io::Error::new(
@@ -408,13 +408,13 @@ async fn download_debug_log(id: &str) -> Result<bool, Box<dyn std::error::Error>
         })
         .unwrap_or_default();
     let mut downloaded = false;
-    let target = format!("logs/{}.zip", id);
+    let zipfile = format!("logs/{}.zip", id);
     fs::create_dir_all("logs")?;
     let credentials = Credentials::default()?;
     for (postfix, region) in &postfixes {
         let bucket_name = format!("{}-{}", bucket, postfix);
         let bucket = Bucket::new(&bucket_name, region.parse::<Region>()?, credentials.clone())?;
-        let matching_key = bucket
+        let key = bucket
             .list(id.to_string(), None)
             .await
             .map_err(|error| {
@@ -427,11 +427,13 @@ async fn download_debug_log(id: &str) -> Result<bool, Box<dyn std::error::Error>
             .flat_map(|listing| listing.contents)
             .map(|object| object.key)
             .find(|key| key.ends_with(".zip"));
-        let Some(key) = matching_key else {
+        let Some(key) = key else {
             continue;
         };
 
-        let mut output = File::create(&target).await?;
+        println!("Downloading {zipfile}");
+
+        let mut output = File::create(&zipfile).await?;
         let status = bucket
             .get_object_to_writer(&key, &mut output)
             .await
@@ -454,10 +456,10 @@ async fn download_debug_log(id: &str) -> Result<bool, Box<dyn std::error::Error>
     }
     if downloaded {
         let logs = Path::new("logs");
-        let mut zip = ZipArchive::new(fs::File::open(&target)?)?;
+        let mut zip = ZipArchive::new(fs::File::open(&zipfile)?)?;
         for i in 0..zip.len() {
             let mut entry = zip.by_index(i)?;
-        
+
             let path = match entry.enclosed_name() {
                 Some(path) => logs.join(path),
                 None => continue, // Skip suspicious paths (Zip Slip protection)
@@ -480,7 +482,7 @@ async fn download_debug_log(id: &str) -> Result<bool, Box<dyn std::error::Error>
             }
         }
         drop(zip);
-        fs::remove_file(&target)?;
+        fs::remove_file(&zipfile)?;
     }
     Ok(downloaded)
 }
