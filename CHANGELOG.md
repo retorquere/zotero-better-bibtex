@@ -1,3 +1,27 @@
+## v9.0.77
+
+- The progress window for citation‑key generation now reports both the generation and the item‑persistence phases, using a doubled total count, showing the current phase, items processed and an estimated time remaining, briefly yields to allow Zotero to repaint, and displays a brief “Ready” message before automatically closing after two seconds.
+- Refreshing citation keys now displays a progress bar with separate stages for generating keys and saving items, and ensures progress updates even when errors occur during key generation or saving.
+- The legacy exportTitleCase preference has been migrated to the new exportTitlecase setting, making title‑casing and case‑protection independent options.
+- A new build loader for the bibtex‑wasm module guarantees that the WASM parser is included in the bundled extension.
+- Documentation now states that Better BibTeX applies both title‑casing and case‑protection to non‑raw fields, adding capitals to the prefix where appropriate.
+- The TeX.subtitle field is now subject to title‑casing during export, fixing cases where subtitle capitalization was previously omitted.
+- The subtitle field now follows the title‑case setting when exporting to Better BibTeX, ensuring subtitles are capitalised when title‑case is enabled.
+- The language field is now exported, preserving language codes such as "ja", "zh‑TW", and others in the exported data.
+- The shortTitle field is now exported for items that define it, allowing a concise title to be retained in the Better BibTeX output.
+- Even when empty, the autoJournalAbbreviation field is now present in the exported record, ensuring the field is consistently included.
+- Hayagriva export now replaces Unicode characters in citation keys with underscores and omits entries whose keys cannot be safely transformed, preventing export failures due to unsupported characters.
+- When exporting Standard items to Hayagriva, the Number field is now mapped to the appropriate serial‑number entry instead of being omitted, preserving identifier information in the output.
+- Hayagriva export now includes the edition field for book entries, preserving edition information that was previously omitted.
+- Hayagriva export now places author suffixes in the correct position, fixing cases where suffixes such as "IV" or "V" were incorrectly ordered.
+- The syntax for role annotations in the extra field has been corrected: tex."author+an:role" now uses an equals sign (e.g., tex."author+an:role"=1=director) instead of a colon, aligning the exported BibTeX with the expected format for author role specifications.
+
+## v9.0.76
+
+- The release compatibility notice now states that this version works with Zotero 10 and Zotero 11 beta, and it no longer mentions Zotero 7 support.
+- Export jobs that use the "collections" scope now require the collection list to be non‑empty and will throw an error if any entry lacks a numeric ID, providing stricter input validation.
+- The handling of "collection" and "collections" export scopes has been updated to use a new helper that resolves collection scopes to root collections (for Zotero 11) or all descendant collections (for older Zotero versions), ensuring items are gathered without duplicates and that the appropriate collection rows are supplied for the target Zotero version.
+
 ## v9.0.74
 
 - The CI workflow scripts now enhance error handling for Groq API calls: when a request fails, the script parses the JSON error response (if any) and includes the model name and detailed error message in the thrown exception, instead of only reporting the HTTP status and generic status text.
