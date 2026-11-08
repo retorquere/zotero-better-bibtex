@@ -1,3 +1,30 @@
+## v9.0.77
+
+- The progress window now shows two phases (key generation and item persistence) with a combined ETA counter, phase labels, numeric progress counts, brief UI yields, and a “Ready” message before auto‑closing after a short delay.
+- Refreshing citation keys displays a separate progress indicator for key‑generation and item‑saving phases, showing the number of items processed in each step.
+- Legacy "exportTitleCase" preferences are automatically migrated to the new "exportTitlecase" setting, preserving the user’s previous title‑casing choice while keeping the independent case‑protection option unchanged.
+- When a citation key is regenerated, any existing alias for that key in the Extra field is automatically removed, preventing duplicate aliases from persisting.
+- The TeX subtitle field now follows the exportTitlecase setting, applying title‑case conversion when enabled.
+- Hayagriva export now emits the Zotero ‘number’ field as a ‘serial-number’ entry, includes the edition field for books, and reorders fields so the title appears before language and the URL date follows the URL value.
+- Hayagriva export sanitises citation keys containing non‑ASCII characters by replacing them with underscores, skips entries that would result in duplicate keys, and omits entries lacking a valid key after sanitisation, ensuring compatibility with Hayagriva’s citation‑key requirements.
+- Webpage items now retain the language field, allowing language codes such as "ja" or "zh‑TW" to be exported and used in citations.
+- The shortTitle field is now exported when set, providing a concise title in generated citations.
+- Access dates are exported as full ISO‑8601 timestamps (e.g., "2026-08-18T08:57:49Z"), preserving precise access times for webpages.
+- Import now supports BibTeX field names containing the '+' character, preventing errors with such fields.
+- The "tex." extra‑field syntax now requires an equals sign (e.g., tex."author+an:role"= 1=director) instead of the previous colon format, affecting parsing of role annotations and other tex‑prefixed fields.
+- Exported JSON now includes the correct Zotero itemKey for each item and sets dateAdded and dateModified timestamps to the current export time.
+
+## v9.0.76
+
+- The changelog generation workflow now also runs when a push commit message contains “#changelog”, not only on tag pushes, allowing manual back‑fill of missing entries.
+- The workflow timeout for changelog generation was increased from 10 minutes to 120 minutes, giving the AI‑driven process more time to complete for large releases.
+- The default AI model for generating release notes was changed to “openai/gpt‑oss‑120b”, improving the quality and consistency of the generated notes.
+- A token‑based splitter using the js‑tiktoken library was added to the changelog script, enabling large evidence payloads to be broken into smaller chunks that respect token limits.
+- The CI now installs the js‑tiktoken tokenizer at runtime, ensuring the splitting logic is available without requiring a pre‑installed dependency.
+- The changelog pull‑request commit message, title, and branch name now reference the actual generated tag (steps.changelog.outputs.tag) instead of the raw Git reference, improving clarity of the PR.
+- The collection export logic has been rewritten to resolve selected collections to their root collections and include all descendant items without duplicates; on Zotero 11 it exports only the root collections, while on older versions it exports all descendant collections, fixing previous issues with duplicate items and incorrect collection rows.
+- Support for Zotero 7 has been dropped; this release is now compatible with Zotero 10 and Zotero 11 beta.
+
 ## v9.0.74
 
 - The CI workflow scripts now enhance error handling for Groq API calls: when a request fails, the script parses the JSON error response (if any) and includes the model name and detailed error message in the thrown exception, instead of only reporting the HTTP status and generic status text.
