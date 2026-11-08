@@ -18,12 +18,18 @@ enum Command {
 }
 
 #[tokio::main]
-async fn main() -> Result<(), Box<dyn std::error::Error>> {
+async fn main() -> std::process::ExitCode {
     dotenvy::dotenv().ok();
 
-    match Cli::parse().command {
-        Command::Test { command } => test::run(command).await?,
-    }
+    let result = match Cli::parse().command {
+        Command::Test { command } => test::run(command).await,
+    };
 
-    Ok(())
+    match result {
+        Ok(()) => std::process::ExitCode::SUCCESS,
+        Err(error) => {
+            eprintln!("Error: {error}");
+            std::process::ExitCode::FAILURE
+        }
+    }
 }
