@@ -2,7 +2,7 @@ import * as client from './client'
 import { File } from './file'
 
 import { Events } from './events'
-import type { CharMap } from 'unicode2latex'
+import type { CharMap } from '@retorquere/bibtex-parser'
 
 import { Preferences as $Preferences, PreferenceName, defaults } from '../gen/preferences/meta'
 import { PreferenceManager as PreferenceManagerBase } from '../gen/preferences'

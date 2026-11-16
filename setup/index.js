@@ -12,8 +12,8 @@ import './bibertool.js'
 import './apis.js'
 import './hayagriva.js'
 
-fs.copyFileSync('node_modules/@retorquere/bibtex-parser/dist/data/unabbrev.json', 'build/content/resource/bibtex/unabbrev.json')
-fs.copyFileSync('node_modules/@retorquere/bibtex-parser/dist/data/strings.bib', 'build/content/resource/bibtex/strings.bib')
+fs.copyFileSync('node_modules/@retorquere/bibtex-parser/dist/data/unabbreviate/unabbreviate.json', 'build/content/resource/bibtex/unabbreviate.json')
+fs.copyFileSync('node_modules/@retorquere/bibtex-parser/dist/data/unabbreviate/strings.json', 'build/content/resource/bibtex/strings.json')
 // const manifest = JSON.parse(fs.readFileSync('build/manifest.json', 'utf-8'))
 // manifest.applications.zotero.strict_min_version = '8.0.1'
 // manifest.applications.zotero.strict_max_version = '9.*'

@@ -16,5 +16,4 @@ import shutil
 with open('submodules/zotero/chrome/content/zotero/osfile.mjs') as i, open('gen/osfile.js', 'w') as o:
   o.write(''.join([line for line in i.readlines() if 'Cu.reportError' not in line]))
 
-shutil.copyfile('node_modules/@retorquere/bibtex-parser/dist/wasm/bibtex_parser_bg.wasm', 'build/content/resource/bibtex_parser_bg.wasm')
-shutil.copyfile('node_modules/@retorquere/bibtex-parser/dist/tokenizer/bibtex_tokenizer_bg.wasm', 'build/content/resource/bibtex_tokenizer_bg.wasm')
+shutil.copyfile('node_modules/@retorquere/bibtex-parser/dist/bibtex_parser_bg.wasm', 'build/content/resource/bibtex_parser_bg.wasm')

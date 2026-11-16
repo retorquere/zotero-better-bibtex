@@ -59,6 +59,7 @@ import { generateHayagriva } from '../translators/lib/hayagriva'
 import { generateBBTJSON, importBBTJSON } from '../translators/lib/bbtjson'
 import type { Collected } from '../translators/lib/collect'
 import * as yaml from './yaml'
+import init from '@retorquere/bibtex-parser'
 
 // MONKEY PATCHES
 
@@ -575,6 +576,9 @@ export class BetterBibTeX {
       id: 'start',
       description: 'foundation',
       startup: async () => {
+        log.debug('loading latex')
+        await init({ module_or_path: 'chrome://zotero-better-bibtex/content/resource/bibtex_parser_bg.wasm' })
+        log.debug('latex initialized')
         await Promise.all([
           Zotero.initializationPromise,
           Zotero.unlockPromise,

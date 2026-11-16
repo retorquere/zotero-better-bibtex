@@ -140,7 +140,10 @@ async function bundle(config) {
   config = {
     bundle: true,
     format: 'iife',
-    target: ['firefox115'],
+    define: {
+      'import.meta.url': '""', // hush esbuild about missing import.meta.urls
+    },
+    target: ['firefox140'],
     inject: [],
     treeShaking: true,
     plugins: [],

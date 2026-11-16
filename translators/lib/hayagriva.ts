@@ -13,8 +13,7 @@ import { noop, Postscript, postscript as compile } from '../lib/postscript'
 import type { Collected } from './collect'
 import { Translation } from './translator'
 
-import { tokenize as tokenizeStandalone } from '@retorquere/bibtex-parser/tokenizer'
-import { tokenize as tokenizeIntegrated } from '@retorquere/bibtex-parser'
+import { tokenize } from '@retorquere/bibtex-parser'
 
 const WordBracing = new class WordBrace {
   private nocase(s: string): string {
@@ -29,8 +28,6 @@ const WordBracing = new class WordBrace {
 
   private title(s: string | undefined): string | undefined {
     if (!s) return s
-
-    const tokenize = Zotero.BetterBibTeX.worker ? tokenizeStandalone : tokenizeIntegrated
 
     s = tokenize(s)
       .map(token => {

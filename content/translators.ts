@@ -5,7 +5,7 @@ import { Cache } from './translators/worker'
 import { serializer } from './item-export-format'
 
 const { ZOTERO_CONFIG } = ChromeUtils.importESModule('resource://zotero/config.mjs')
-import init, { parse } from '@retorquere/bibtex-parser'
+import { parse } from '@retorquere/bibtex-parser'
 import { Exporter as TeXExporter } from '../translators/bibtex/exporter'
 
 import { Preference } from './prefs'
@@ -77,7 +77,6 @@ export const Translators = new class {
       description: 'translators',
       needs: [ 'worker', 'keymanager' ],
       startup: async () => {
-        await init({ module_or_path: 'chrome://zotero-better-bibtex/content/resource/bibtex_parser_bg.wasm' })
         await this.cacheStrings()
 
         worker.addEventListener('message', (e: Event) => {

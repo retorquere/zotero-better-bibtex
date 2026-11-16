@@ -11,7 +11,7 @@ import { Eta } from 'eta'
 const eta = new Eta({ autoEscape: true })
 import { simplifyForExport } from '../item-schema'
 
-import { Transform } from 'unicode2latex'
+import { Transform } from '@retorquere/bibtex-parser'
 
 function acceptsNotes<This, Args extends any[], Return>(formatter: (this: This, ...args: Args) => Return, _context: ClassMethodDecoratorContext<This, (this: This, ...args: Args) => Return>): void {
   (formatter as typeof formatter & { acceptsNotes?: boolean }).acceptsNotes = true
@@ -56,8 +56,9 @@ function shortLabel(label: string, options): string {
   }[label] || label
 }
 
-const latextx = new Transform('minimal')
+let latextx: Transform | undefined
 function citation2latex(citation, options) {
+  latextx ??= new Transform('minimal')
   let formatted = ''
   // despite Mozilla's claim that trimStart === trimLeft, and that trimStart should be preferred, trimStart does not seem to exist in FF chrome code.
   const label = (`${ shortLabel(citation.label, { page: '', ...options }) } `).trimLeft()

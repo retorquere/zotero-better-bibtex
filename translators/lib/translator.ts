@@ -9,7 +9,7 @@ import { DisplayOptions } from '../../gen/translators'
 import { regex as escapeRE } from '../../content/escape'
 import { Serialized } from '../../gen/typings/serialized'
 import type { Exporter as BibTeXExporter } from '../bibtex/exporter'
-import type { CharMap } from 'unicode2latex'
+import type { CharMap } from '@retorquere/bibtex-parser'
 import { log } from '../../content/logger'
 import type { Collected } from './collect'
 

@@ -29,9 +29,9 @@ import { DOMParser as XMLDOMParser } from '@xmldom/xmldom'
 import { Schema } from '../item-schema'
 
 import * as yaml from '../yaml'
-import initTokenizer from '@retorquere/bibtex-parser/tokenizer'
 
-const tokenizerReady = initTokenizer({ module_or_path: 'chrome://zotero-better-bibtex/content/resource/bibtex_tokenizer_bg.wasm' })
+import init from '@retorquere/bibtex-parser'
+const ready = init({ module_or_path: 'chrome://zotero-better-bibtex/content/resource/bibtex_parser_bg.wasm' })
 
 declare var ZOTERO_TRANSLATOR_INFO: Header // eslint-disable-line no-var
 
@@ -543,7 +543,7 @@ class WorkerServer extends WorkerServerBase implements ExporterInterface {
 
   /** Initialize export dependencies before the worker accepts jobs. */
   async initialize(config: { CSL_MAPPINGS: any; dateFormatsJSON: any; lastUpdated: string }): Promise<void> {
-    await tokenizerReady
+    await ready
     Zotero.Schema = { ...config.CSL_MAPPINGS }
     ZD.init(config.dateFormatsJSON)
     await Cache.open(config.lastUpdated)

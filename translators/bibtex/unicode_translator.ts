@@ -5,7 +5,7 @@ import type { MarkupNode } from '../../typings/markup'
 
 import { log } from '../../content/logger'
 import { decodeHTMLAttribute } from 'entities'
-import { Transform } from 'unicode2latex'
+import { Transform } from '@retorquere/bibtex-parser'
 
 export type ConverterOptions = {
   exportCaseProtection?: boolean
