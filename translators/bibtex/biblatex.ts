@@ -1,10 +1,10 @@
-import { Exporter as BibTeXExporter } from './exporter'
-import { Translation } from '../lib/translator'
 import { strToISO } from '../../content/dateparser'
-import { qualityReport, allows } from '../../gen/biber-tool'
+import { allows, qualityReport } from '../../gen/biber-tool'
 import type { Collected } from '../lib/collect'
+import { Translation } from '../lib/translator'
+import { Exporter as BibTeXExporter } from './exporter'
 
-import { Entry as BaseEntry, Config } from './entry'
+import { Config, Entry as BaseEntry } from './entry'
 
 const config: Config = {
   exportCaseDefaults: {
@@ -130,8 +130,8 @@ class CreatorTypeMap {
   public type: Record<string, string> = {}
   private registered: Record<string, string> = {}
   private static extension = {
-    editor: [ '', 'a', 'b', 'c' ],
-    name: [ 'a', 'b', 'c' ],
+    editor: ['', 'a', 'b', 'c'],
+    name: ['a', 'b', 'c'],
   }
 
   constructor(private hasEditor: boolean) {
@@ -141,7 +141,7 @@ class CreatorTypeMap {
     type = type.toLowerCase()
     if (!this.registered[type]) {
       for (const postfix of CreatorTypeMap.extension[base]) {
-        const candidate = `${ base }${ postfix }`
+        const candidate = `${base}${postfix}`
         if (this.hasEditor && candidate === 'editor' && type !== 'editor') continue
         if (this.type[candidate] && postfix !== 'c') continue
         this.type[candidate] = type
@@ -177,7 +177,7 @@ class Entry extends BaseEntry {
     }
 
     const creatorType = new CreatorTypeMap(!!this.item.creators.find(cr => cr.creatorType === 'editor'))
-    const video = [ 'video', 'movie' ].includes(this.entrytype)
+    const video = ['video', 'movie'].includes(this.entrytype)
     if (video) creatorType.register('editor', 'director')
 
     for (const creator of this.item.creators) {
@@ -250,14 +250,14 @@ class Entry extends BaseEntry {
       }
     }
 
-    for (const [ field, value ] of Object.entries(creators)) {
+    for (const [field, value] of Object.entries(creators)) {
       this.remove(field)
-      this.remove(`${ field }type`)
+      this.remove(`${field}type`)
 
       if (!value.length) continue
 
       this.add({ name: field, value, enc: 'creators' })
-      this.add({ name: `${ field }type`, value: creatorType.type[field] })
+      this.add({ name: `${field}type`, value: creatorType.type[field] })
     }
   }
 }
@@ -275,7 +275,7 @@ function looks_like_number_field(n: string): boolean {
   const ns: string[] = n.trim().split(/\s*-+|–|,|\/\s*/)
   switch (ns.length) {
     case 1:
-      return (looks_like_number(ns[0]) as boolean)
+      return looks_like_number(ns[0]) as boolean
 
     case 2:
       return (looks_like_number(ns[0]) as boolean) && (looks_like_number(ns[0]) === looks_like_number(ns[1]))
@@ -286,7 +286,7 @@ function looks_like_number_field(n: string): boolean {
 }
 
 const patent = new class {
-  private countries = [ 'de', 'eu', 'fr', 'uk', 'us' ]
+  private countries = ['de', 'eu', 'fr', 'uk', 'us']
   private prefix = { us: 'us', ep: 'eu', gb: 'uk', de: 'de', fr: 'fr' }
 
   public region(item): string {
@@ -297,7 +297,7 @@ const patent = new class {
       if (this.countries.includes(country)) return country
     }
 
-    for (const patentNumber of [ item.number, item.applicationNumber ]) {
+    for (const patentNumber of [item.number, item.applicationNumber]) {
       if (patentNumber) {
         const prefix: string = this.prefix[patentNumber.substr(0, 2).toLowerCase()]
         if (prefix) return prefix
@@ -311,7 +311,7 @@ const patent = new class {
   public number(item): string {
     if (item.itemType !== 'patent' || (!item.number && !item.applicationNumber)) return ''
 
-    for (const patentNumber of ([ item.number, item.applicationNumber ] as string[])) {
+    for (const patentNumber of ([item.number, item.applicationNumber] as string[])) {
       if (patentNumber) {
         const country = patentNumber.substr(0, 2).toLowerCase()
         if (this.prefix[country]) return patentNumber.substr(country.length)
@@ -326,8 +326,8 @@ const patent = new class {
 
     const region = this.region(item)
 
-    if (region && item.number) return `patent${ region }`
-    if (region && item.applicationNumber) return `patreq${ region }`
+    if (region && item.number) return `patent${region}`
+    if (region && item.applicationNumber) return `patreq${region}`
 
     return 'patent'
   }
@@ -523,7 +523,7 @@ export function generateBibLaTeX(collected: Collected): Translation {
       })
       for (let i = 0; i < languages.length; i++) {
         entry.add({
-          name: i === 0 ? 'titleaddon' : `user${ String.fromCharCode('d'.charCodeAt(0) + i) }`,
+          name: i === 0 ? 'titleaddon' : `user${String.fromCharCode('d'.charCodeAt(0) + i)}`,
           // eslint-disable-next-line no-underscore-dangle
           value: item.multi._keys.title[languages[i]],
         })
@@ -624,23 +624,23 @@ export function generateBibLaTeX(collected: Collected): Translation {
     if (item.volumeTitle) { // #381
       if (entry.entrytype === 'book' && entry.has.title) {
         // @ts-expect-error jurism
-        entry.add({ name: 'maintitle', value: item.volumeTitle }); // ; to prevent chaining
-        [ entry.has.title.bibtex, entry.has.maintitle.bibtex ] = [ entry.has.maintitle.bibtex, entry.has.title.bibtex ]; // ; to prevent chaining
-        [ entry.has.title.value, entry.has.maintitle.value ] = [ entry.has.maintitle.value, entry.has.title.value ]
+        entry.add({ name: 'maintitle', value: item.volumeTitle }) // ; to prevent chaining
+        ;[entry.has.title.bibtex, entry.has.maintitle.bibtex] = [entry.has.maintitle.bibtex, entry.has.title.bibtex] // ; to prevent chaining
+        ;[entry.has.title.value, entry.has.maintitle.value] = [entry.has.maintitle.value, entry.has.title.value]
       }
 
-      if ([ 'incollection', 'chapter' ].includes(entry.entrytype) && entry.has.booktitle) {
+      if (['incollection', 'chapter'].includes(entry.entrytype) && entry.has.booktitle) {
         // @ts-expect-error jurism
-        entry.add({ name: 'maintitle', value: item.volumeTitle }); // ; to prevent chaining
-        [ entry.has.booktitle.bibtex, entry.has.maintitle.bibtex ] = [ entry.has.maintitle.bibtex, entry.has.booktitle.bibtex ]; // ; to preven chaining
-        [ entry.has.booktitle.value, entry.has.maintitle.value ] = [ entry.has.maintitle.value, entry.has.booktitle.value ]
+        entry.add({ name: 'maintitle', value: item.volumeTitle }) // ; to prevent chaining
+        ;[entry.has.booktitle.bibtex, entry.has.maintitle.bibtex] = [entry.has.maintitle.bibtex, entry.has.booktitle.bibtex] // ; to preven chaining
+        ;[entry.has.booktitle.value, entry.has.maintitle.value] = [entry.has.maintitle.value, entry.has.booktitle.value]
       }
     }
 
     entry.add({ name: 'pmid', value: item.PMID })
     entry.add({ name: 'pmcid', value: item.PMCID })
 
-    for (const eprinttype of [ 'pmid', 'arxiv', 'jstor', 'hdl', 'googlebooks' ]) {
+    for (const eprinttype of ['pmid', 'arxiv', 'jstor', 'hdl', 'googlebooks']) {
       if (entry.has.eprinttype) break
 
       if (entry.has[eprinttype]) {

@@ -113,8 +113,8 @@ export interface ListDate extends DateFlags {
   dates: RichDate[]
 }
 
-export type RichDate
-  = | SimpleDate
+export type RichDate =
+  | SimpleDate
   | OpenDate
   | VerbatimDate
   | SeasonDate
@@ -593,7 +593,7 @@ class DateParser {
   }
 }
 
-const parser = new DateParser
+const parser = (new DateParser)
 
 export function parse(date: string, orig = ''): RichDate {
   return parser.parse(date, orig)
@@ -601,7 +601,7 @@ export function parse(date: string, orig = ''): RichDate {
 
 function testEDTF(value: string): boolean {
   try {
-    return (EDTF(value, { level: 1 }) as boolean)
+    return EDTF(value, { level: 1 }) as boolean
   }
   catch {
     return false
@@ -676,7 +676,7 @@ export function start(date: OptionalRichDate): OptionalRichDate {
 export function simplify(date: OptionalRichDate): OptionalRichDate {
   if (!date) return
   if (!date.type) return simplify(date.orig)
-  if (date.type === 'interval') return simplify({ type: 'list', dates: [ date.from, date.to ] })
+  if (date.type === 'interval') return simplify({ type: 'list', dates: [date.from, date.to] })
   if (date.type === 'list') return date.dates.map(simplify).find(d => d && d.type && d.type !== 'open' && d.type !== 'verbatim')
   return date.type === 'open' ? undefined : date
 }

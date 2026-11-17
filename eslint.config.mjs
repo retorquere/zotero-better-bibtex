@@ -254,7 +254,6 @@ const config = [
       '@stylistic/template-curly-spacing': 'off',
       '@stylistic/template-tag-spacing': ['error', 'never'],
       '@stylistic/type-annotation-spacing': ['error', {}],
-      '@stylistic/type-generic-spacing': 'error',
       '@stylistic/type-named-tuple-spacing': 'error',
 
       '@stylistic/wrap-iife': ['error', 'any', {

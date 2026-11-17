@@ -606,7 +606,7 @@ async function parseBibTeX(translation: Translation): Promise<Library> {
       guess: translation.collected.preferences.importSentenceCase === 'on+guess',
       preserveQuoted: !translation.collected.preferences.importSentenceCaseQuoted,
     },
-    caseProtection: (translation.collected.preferences.importCaseProtection as 'as-needed'),
+    caseProtection: translation.collected.preferences.importCaseProtection as 'as-needed',
     verbatimFields: translation.verbatimFields,
     raw: translation.collected.preferences.rawImports,
     strings: preloadedStrings.enabled ? preloadedStrings.strings : '',

@@ -5,11 +5,11 @@ const pluginID = 'better-bibtex@iris-advies.com'
 
 import { Deferred } from './promise'
 const Ready = new Deferred<boolean>
-
 import { profiler } from './audit'
 
 import { DisplayOptions } from '../gen/translators'
 import type { Reason } from './bootstrap'
+import { fillTouched, startup as cacheStartup } from './cache'
 import { Elements } from './create-element'
 import { ErrorReport } from './ErrorReport'
 import * as ExportOptions from './ExportOptions'
@@ -22,7 +22,6 @@ import { Scheduler } from './scheduler'
 import { TeXstudio } from './tex-studio'
 import { Cache } from './translators/worker'
 import type { ExportedItem, ExportedItemMetadata } from './worker/cache'
-import { fillTouched, startup as cacheStartup } from './cache'
 
 import { Preference } from './prefs'
 
@@ -51,15 +50,15 @@ import { TestSupport } from './test-support'
 import { ExportScope, Translators } from './translators'
 import { Exporter } from './translators/worker'
 
+import init from '@retorquere/bibtex-parser'
 import { generateBibLaTeX } from '../translators/bibtex/biblatex'
 import { generateBibTeX, importBibTeX } from '../translators/bibtex/bibtex'
 import { generateCSLJSON } from '../translators/csl/json'
 import { generateCSLYAML } from '../translators/csl/yaml'
-import { generateHayagriva } from '../translators/lib/hayagriva'
 import { generateBBTJSON, importBBTJSON } from '../translators/lib/bbtjson'
 import type { Collected } from '../translators/lib/collect'
+import { generateHayagriva } from '../translators/lib/hayagriva'
 import * as yaml from './yaml'
-import init from '@retorquere/bibtex-parser'
 
 // MONKEY PATCHES
 
@@ -84,84 +83,89 @@ monkey.patch(Zotero.Utilities.Item?.itemToCSLJSON ? Zotero.Utilities.Item : Zote
 })
 */
 
-import { readonly } from './library'
 import { selectedCollection } from './collection'
+import { readonly } from './library'
 
-monkey.patch(Zotero.Item.prototype, 'clone', original => function Zotero_Item_prototype_clone(this: Zotero.Item) {
-  const clone: Zotero.Item = original.apply(this, arguments)
-  if (this.isRegularItem()) clone.setField('citationKey', '')
-  return clone
-})
+monkey.patch(Zotero.Item.prototype, 'clone', original =>
+  function Zotero_Item_prototype_clone(this: Zotero.Item) {
+    const clone: Zotero.Item = original.apply(this, arguments)
+    if (this.isRegularItem()) clone.setField('citationKey', '')
+    return clone
+  })
 
 // https://github.com/retorquere/zotero-better-bibtex/issues/1221
-monkey.patch(Zotero.Items, 'merge', original => async function Zotero_Items_merge(this: any, item: Zotero.Item, otherItems: Zotero.Item[]) {
-  try {
-    // log.verbose = true
-    const merge = {
-      citationKey: Preference.extraMergeCitekeys,
-      tex: Preference.extraMergeTeX,
-      kv: Preference.extraMergeCSL,
-    }
-
-    if (merge.citationKey || merge.tex || merge.kv) {
-      const extra = Extra.get(item.getField('extra'), 'zotero', { aliases: merge.citationKey, tex: merge.tex, kv: merge.kv })
-      // get citekeys of other items
-      if (merge.citationKey) {
-        const otherIDs = otherItems.map(i => i.id)
-        extra.extraFields.aliases = [
-          ...extra.extraFields.aliases!,
-          ...Zotero.BetterBibTeX.KeyManager.all(_ => otherIDs.includes(_.itemID)).map((key: CitekeyRecord) => key.citationKey),
-        ]
+monkey.patch(Zotero.Items, 'merge', original =>
+  async function Zotero_Items_merge(this: any, item: Zotero.Item, otherItems: Zotero.Item[]) {
+    try {
+      // log.verbose = true
+      const merge = {
+        citationKey: Preference.extraMergeCitekeys,
+        tex: Preference.extraMergeTeX,
+        kv: Preference.extraMergeCSL,
       }
 
-      // add any aliases they were already holding
-      for (const i of otherItems) {
-        const otherExtra = Extra.get(i.getField('extra'), 'zotero', { aliases: merge.citationKey, tex: merge.tex, kv: merge.kv })
-
+      if (merge.citationKey || merge.tex || merge.kv) {
+        const extra = Extra.get(item.getField('extra'), 'zotero', { aliases: merge.citationKey, tex: merge.tex, kv: merge.kv })
+        // get citekeys of other items
         if (merge.citationKey) {
-          extra.extraFields.aliases = [...extra.extraFields.aliases!, ...otherExtra.extraFields.aliases!]
+          const otherIDs = otherItems.map(i => i.id)
+          extra.extraFields.aliases = [
+            ...extra.extraFields.aliases!,
+            ...Zotero.BetterBibTeX.KeyManager.all(_ => otherIDs.includes(_.itemID)).map((key: CitekeyRecord) => key.citationKey),
+          ]
         }
 
-        if (merge.tex) {
-          for (const [name, value] of Object.entries(otherExtra.extraFields.tex!)) {
-            if (!extra.extraFields.tex![name]) extra.extraFields.tex![name] = value
+        // add any aliases they were already holding
+        for (const i of otherItems) {
+          const otherExtra = Extra.get(i.getField('extra'), 'zotero', { aliases: merge.citationKey, tex: merge.tex, kv: merge.kv })
+
+          if (merge.citationKey) {
+            extra.extraFields.aliases = [...extra.extraFields.aliases!, ...otherExtra.extraFields.aliases!]
           }
-        }
 
-        if (extra.extraFields.kv) {
-          for (const [name, value] of Object.entries(otherExtra.extraFields.kv!)) {
-            const existing = extra.extraFields.kv[name]
-            if (!existing) {
-              extra.extraFields.kv[name] = value
+          if (merge.tex) {
+            for (const [name, value] of Object.entries(otherExtra.extraFields.tex!)) {
+              if (!extra.extraFields.tex![name]) extra.extraFields.tex![name] = value
             }
-            else if (Array.isArray(existing) && Array.isArray(value)) {
-              for (const creator of value) {
-                if (!existing.includes(creator)) existing.push(creator)
+          }
+
+          if (extra.extraFields.kv) {
+            for (const [name, value] of Object.entries(otherExtra.extraFields.kv!)) {
+              const existing = extra.extraFields.kv[name]
+              if (!existing) {
+                extra.extraFields.kv[name] = value
+              }
+              else if (Array.isArray(existing) && Array.isArray(value)) {
+                for (const creator of value) {
+                  if (!existing.includes(creator)) existing.push(creator)
+                }
               }
             }
           }
         }
-      }
 
-      if (extra.extraFields.aliases) {
-        const citekey = Zotero.BetterBibTeX.KeyManager.get(item.id)?.citationKey
-        extra.extraFields.aliases = extra.extraFields.aliases.filter(alias => alias !== citekey)
-      }
+        if (extra.extraFields.aliases) {
+          const citekey = Zotero.BetterBibTeX.KeyManager.get(item.id)?.citationKey
+          extra.extraFields.aliases = extra.extraFields.aliases.filter(alias => alias !== citekey)
+        }
 
-      item.setField('extra', Extra.set(extra.extra, {
-        aliases: merge.citationKey ? extra.extraFields.aliases : undefined,
-        tex: merge.tex ? extra.extraFields.tex : undefined,
-        kv: merge.kv ? extra.extraFields.kv : undefined,
-      }))
+        item.setField(
+          'extra',
+          Extra.set(extra.extra, {
+            aliases: merge.citationKey ? extra.extraFields.aliases : undefined,
+            tex: merge.tex ? extra.extraFields.tex : undefined,
+            kv: merge.kv ? extra.extraFields.kv : undefined,
+          })
+        )
+      }
     }
-  }
-  catch (err) {
-    log.error('Zotero.Items.merge:', err)
-  }
+    catch (err) {
+      log.error('Zotero.Items.merge:', err)
+    }
 
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-  return await original.apply(this, arguments)
-})
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+    return await original.apply(this, arguments)
+  })
 
 // https://github.com/retorquere/zotero-better-bibtex/issues/769
 function parseLibraryKeyFromCitekey(libraryKey) {
@@ -176,39 +180,42 @@ function parseLibraryKeyFromCitekey(libraryKey) {
   return item ? { libraryID: item.libraryID, key: item.itemKey } : false
 }
 
-monkey.patch(Zotero.API, 'getResultsFromParams', original => function Zotero_API_getResultsFromParams(this: any, params: Record<string, any>) {
-  const libraryID = params.libraryID || Zotero.Libraries.userLibraryID
-  function ck(key: string): string {
-    const m = key.match(/^(bbt:|@)(.+)/)
-    if (!m) return key
-    const citekey: CitekeyRecord | undefined = Zotero.BetterBibTeX.KeyManager.any(_ => _.libraryID === libraryID && _.citationKey === m[2])
-    return citekey ? citekey.itemKey : key
-  }
+monkey.patch(Zotero.API, 'getResultsFromParams', original =>
+  function Zotero_API_getResultsFromParams(this: any, params: Record<string, any>) {
+    const libraryID = params.libraryID || Zotero.Libraries.userLibraryID
+    function ck(key: string): string {
+      const m = key.match(/^(bbt:|@)(.+)/)
+      if (!m) return key
+      const citekey: CitekeyRecord | undefined = Zotero.BetterBibTeX.KeyManager.any(_ => _.libraryID === libraryID && _.citationKey === m[2])
+      return citekey ? citekey.itemKey : key
+    }
 
-  if (params.objectType === 'item' && params.objectKey) {
-    params.objectKey = ck(params.objectKey)
-  }
-  else if (Array.isArray(params.itemKey)) {
-    params.itemKey = params.itemKey.map(ck)
-    params.url = params.url.replace(/itemKey=.*/, `itemKey=${params.itemKey.join(',')}`)
-  }
+    if (params.objectType === 'item' && params.objectKey) {
+      params.objectKey = ck(params.objectKey)
+    }
+    else if (Array.isArray(params.itemKey)) {
+      params.itemKey = params.itemKey.map(ck)
+      params.url = params.url.replace(/itemKey=.*/, `itemKey=${params.itemKey.join(',')}`)
+    }
 
-  return original.apply(this, arguments) as Record<string, any>
-})
-
-// @ts-expect-error TS2339 not defined in zotero-types
-monkey.patch(Zotero.DataObjects.prototype, 'parseLibraryKeyHash', original => function Zotero_DataObjects_prototype_parseLibraryKeyHash(this: any, libraryKey: string) {
-  const item = parseLibraryKeyFromCitekey(libraryKey)
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-  return typeof item === 'undefined' ? original.apply(this, arguments) : item
-})
+    return original.apply(this, arguments) as Record<string, any>
+  })
 
 // @ts-expect-error TS2339 not defined in zotero-types
-monkey.patch(Zotero.DataObjects.prototype, 'parseLibraryKey', original => function Zotero_DataObjects_prototype_parseLibraryKey(this: any, libraryKey: string) {
-  const item = parseLibraryKeyFromCitekey(libraryKey)
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-  return typeof item === 'undefined' ? original.apply(this, arguments) : item
-})
+monkey.patch(Zotero.DataObjects.prototype, 'parseLibraryKeyHash', original =>
+  function Zotero_DataObjects_prototype_parseLibraryKeyHash(this: any, libraryKey: string) {
+    const item = parseLibraryKeyFromCitekey(libraryKey)
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+    return typeof item === 'undefined' ? original.apply(this, arguments) : item
+  })
+
+// @ts-expect-error TS2339 not defined in zotero-types
+monkey.patch(Zotero.DataObjects.prototype, 'parseLibraryKey', original =>
+  function Zotero_DataObjects_prototype_parseLibraryKey(this: any, libraryKey: string) {
+    const item = parseLibraryKeyFromCitekey(libraryKey)
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+    return typeof item === 'undefined' ? original.apply(this, arguments) : item
+  })
 
 import * as DateParser from './dateparser'
 import type { RichDate } from './dateparser'
@@ -287,97 +294,100 @@ Zotero.Translate.Import.prototype.Sandbox.BetterBibTeX = {
   },
 }
 
-monkey.patch(Zotero.Utilities.Internal, 'itemToExportFormat', original => function Zotero_Utilities_Internal_itemToExportFormat(this: any, zoteroItem: any, _legacy: any, _skipChildItems: any) {
-  const serialized = original.apply(this, arguments)
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-  return typeof zoteroItem.id === 'number' ? fixExportFormat(serialized, zoteroItem) : serialized
-})
+monkey.patch(Zotero.Utilities.Internal, 'itemToExportFormat', original =>
+  function Zotero_Utilities_Internal_itemToExportFormat(this: any, zoteroItem: any, _legacy: any, _skipChildItems: any) {
+    const serialized = original.apply(this, arguments)
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+    return typeof zoteroItem.id === 'number' ? fixExportFormat(serialized, zoteroItem) : serialized
+  })
 
 // so BBT-JSON can be imported without extra-field meddling
-monkey.patch(Zotero.Utilities.Internal, 'extractExtraFields', original => function Zotero_Utilities_Internal_extractExtraFields(this: any, extra: string, _item: any, _additionalFields: any) {
-  if (extra && extra.startsWith('\x1BBBT\x1B')) {
-    return { itemType: null, fields: new Map, creators: [], extra: extra.replace('\x1BBBT\x1B', '') }
-  }
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-  return original.apply(this, arguments)
-})
-
-monkey.patch(Zotero.Translate.Export.prototype, 'translate', original => function Zotero_Translate_Export_prototype_translate(this: any) {
-  let translatorID = this.translator[0]
-  if (translatorID.translatorID) translatorID = translatorID.translatorID
-  // requested translator
-  const translator = Translators.byId[translatorID]
-  if (this.noWait || !translator) {
+monkey.patch(Zotero.Utilities.Internal, 'extractExtraFields', original =>
+  function Zotero_Utilities_Internal_extractExtraFields(this: any, extra: string, _item: any, _additionalFields: any) {
+    if (extra && extra.startsWith('\x1BBBT\x1B')) {
+      return { itemType: null, fields: new Map, creators: [], extra: extra.replace('\x1BBBT\x1B', '') }
+    }
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return original.apply(this, arguments)
-  }
+  })
 
-  const displayOptions = this._displayOptions = this._displayOptions || {}
+monkey.patch(Zotero.Translate.Export.prototype, 'translate', original =>
+  function Zotero_Translate_Export_prototype_translate(this: any) {
+    let translatorID = this.translator[0]
+    if (translatorID.translatorID) translatorID = translatorID.translatorID
+    // requested translator
+    const translator = Translators.byId[translatorID]
+    if (this.noWait || !translator) {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+      return original.apply(this, arguments)
+    }
 
-  Zotero.BetterBibTeX.exportOptions = [ ...Zotero.BetterBibTeX.exportOptions, { translatorID, displayOptions } ].slice(-5)
+    const displayOptions = this._displayOptions = this._displayOptions || {}
 
-  if (this.location) {
-    if (displayOptions.exportFileData) { // when exporting file data, the user was asked to pick a directory rather than a file
-      displayOptions.exportDir = this.location.path
-      displayOptions.exportPath = PathUtils.join(this.location.path, `${this.location.leafName}.${translator.target}`)
-      displayOptions.cache = false
+    Zotero.BetterBibTeX.exportOptions = [...Zotero.BetterBibTeX.exportOptions, { translatorID, displayOptions }].slice(-5)
+
+    if (this.location) {
+      if (displayOptions.exportFileData) { // when exporting file data, the user was asked to pick a directory rather than a file
+        displayOptions.exportDir = this.location.path
+        displayOptions.exportPath = PathUtils.join(this.location.path, `${this.location.leafName}.${translator.target}`)
+        displayOptions.cache = false
+      }
+      else {
+        displayOptions.exportDir = this.location.parent.path
+        displayOptions.exportPath = this.location.path
+        displayOptions.cache = true
+      }
+    }
+
+    // {"type":"collections","collections":[{"key":"KZR573XL","version":0,"name":"coll2","parentCollection":false,"relations":{}}]}
+    if (this._export && displayOptions.keepUpdated) {
+      let scope: ExportScope
+      switch (this._export.type) {
+        case 'collection':
+          scope = { type: 'collection', collection: this._export.collection }
+          break
+        case 'collections':
+          if (this._export.collections.length === 1) {
+            scope = { type: 'collection', collection: this._export.collections[0] }
+          }
+          else {
+            scope = { type: 'collections', collections: this._export.collections }
+          }
+          break
+        default:
+          scope = { type: this._export.type as 'library', id: this._export.id }
+          break
+      }
+
+      if (scope.type === 'collections') {
+        flash('Auto-export of multiple collections at once is not supported')
+      }
+      else {
+        void AutoExport.register({ translatorID, displayOptions, scope, path: this.location.path })
+      }
+    }
+
+    let useWorker = typeof translator.displayOptions!.worker === 'boolean' && displayOptions.worker
+
+    if (useWorker && !Exporter.ready) {
+      // there wasn't an error starting a worker earlier
+      flash('failed to start a chromeworker')
+      useWorker = false
+    }
+
+    if (useWorker) {
+      return Translators.queueJob({
+        translatorID,
+        displayOptions: { ...displayOptions, worker: true },
+        translate: this,
+        scope: this._export,
+        path: this.location?.path,
+      })
     }
     else {
-      displayOptions.exportDir = this.location.parent.path
-      displayOptions.exportPath = this.location.path
-      displayOptions.cache = true
+      return original.apply(this, arguments) // eslint-disable-line @typescript-eslint/no-unsafe-return
     }
-  }
-
-  // {"type":"collections","collections":[{"key":"KZR573XL","version":0,"name":"coll2","parentCollection":false,"relations":{}}]}
-  if (this._export && displayOptions.keepUpdated) {
-    let scope: ExportScope
-    switch (this._export.type) {
-      case 'collection':
-        scope = { type: 'collection', collection: this._export.collection }
-        break
-      case 'collections':
-        if (this._export.collections.length === 1) {
-          scope = { type: 'collection', collection: this._export.collections[0] }
-        }
-        else {
-          scope = { type: 'collections', collections: this._export.collections }
-        }
-        break
-      default:
-        scope = { type: this._export.type as 'library', id: this._export.id }
-        break
-    }
-
-    if (scope.type === 'collections') {
-      flash('Auto-export of multiple collections at once is not supported')
-    }
-    else {
-      void AutoExport.register({ translatorID, displayOptions, scope, path: this.location.path })
-    }
-  }
-
-  let useWorker = typeof translator.displayOptions!.worker === 'boolean' && displayOptions.worker
-
-  if (useWorker && !Exporter.ready) {
-    // there wasn't an error starting a worker earlier
-    flash('failed to start a chromeworker')
-    useWorker = false
-  }
-
-  if (useWorker) {
-    return Translators.queueJob({
-      translatorID,
-      displayOptions: { ...displayOptions, worker: true },
-      translate: this,
-      scope: this._export,
-      path: this.location?.path,
-    })
-  }
-  else {
-    return original.apply(this, arguments) // eslint-disable-line @typescript-eslint/no-unsafe-return
-  }
-})
+  })
 
 const scheduler = new Scheduler<'column-refresh'>(500)
 
@@ -576,9 +586,7 @@ export class BetterBibTeX {
       id: 'start',
       description: 'foundation',
       startup: async () => {
-        log.debug('loading latex')
         await init({ module_or_path: 'chrome://zotero-better-bibtex/content/resource/bibtex_parser_bg.wasm' })
-        log.debug('latex initialized')
         await Promise.all([
           Zotero.initializationPromise,
           Zotero.unlockPromise,
@@ -664,7 +672,9 @@ export class BetterBibTeX {
                 {
                   menuType: 'menuitem',
                   l10nID: 'better-bibtex_zotero-pane_tag_duplicates',
-                  onShowing: (event, context) => { context.setVisible(Preference.keyScope === 'global') },
+                  onShowing: (event, context) => {
+                    context.setVisible(Preference.keyScope === 'global')
+                  },
                   onCommand: (_event, _context) => void Zotero.BetterBibTeX.KeyManager.tagDuplicates(),
                 },
               ],
@@ -926,7 +936,9 @@ export class BetterBibTeX {
                 {
                   menuType: 'menuitem',
                   l10nID: 'better-bibtex_zotero-pane_tag_duplicates',
-                  onShowing: (_event, context) => { context.setVisible(Preference.keyScope === 'library' && Row.isLibrary(context)) },
+                  onShowing: (_event, context) => {
+                    context.setVisible(Preference.keyScope === 'library' && Row.isLibrary(context))
+                  },
                   onCommand: (_event, context) => void Zotero.BetterBibTeX.KeyManager.tagDuplicates(Row.library(context)),
                 },
                 {
@@ -958,7 +970,7 @@ export class BetterBibTeX {
               void item.saveTx()
             }
           },
-          onItemChange: ({ item, setEnabled, setEditable}) => {
+          onItemChange: ({ item, setEnabled, setEditable }) => {
             setEnabled(!item.isFeedItem && item.isRegularItem())
             setEditable(!readonly(item.libraryID))
           },

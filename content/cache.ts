@@ -1,8 +1,8 @@
-import { serializer } from './item-export-format'
+import { CacheTouch, Events } from './events'
 import { getItemsAsync } from './get-items-async'
+import { serializer } from './item-export-format'
 import { Preference } from './prefs'
 import { Cache } from './translators/worker'
-import { CacheTouch, Events } from './events'
 
 const serializeWhenIdle = new Set<number>
 

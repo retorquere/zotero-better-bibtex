@@ -1,12 +1,12 @@
 import type { Collected } from './collect'
 import type { Library } from './normalize'
 
+import omit from 'lodash.omit'
+import { simplifyForExport, simplifyForImport } from '../../content/item-schema'
 import { log } from '../../content/logger'
-import { Translation } from './translator'
-import { simplifyForImport, simplifyForExport } from '../../content/item-schema'
 import * as BBT from '../../gen/build'
 import { Serialized } from '../../gen/typings/serialized'
-import omit from 'lodash.omit'
+import { Translation } from './translator'
 
 import { citationKey as extract } from '../../content/extra'
 
@@ -15,8 +15,8 @@ import { citationKey as extract } from '../../content/extra'
 
 function addSelect(item: any, translation: Translation) {
   if (translation.collected.preferences.testing) return
-  const [ , kind, lib, key ] = item.uri.match(/^https?:\/\/zotero\.org\/(users|groups)\/((?:local\/)?[^/]+)\/items\/(.+)/)
-  item.select = (kind === 'users') ? `zotero://select/library/items/${ key }` : `zotero://select/groups/${ lib }/items/${ key }`
+  const [, kind, lib, key] = item.uri.match(/^https?:\/\/zotero\.org\/(users|groups)\/((?:local\/)?[^/]+)\/items\/(.+)/)
+  item.select = (kind === 'users') ? `zotero://select/library/items/${key}` : `zotero://select/groups/${lib}/items/${key}`
 }
 
 const validAttachmentFields = new Set([
@@ -115,7 +115,7 @@ export async function importBBTJSON(collected: Collected): Promise<void> {
   data.collections ??= {}
   if (data.config?.preferences) delete data.config.preferences.keyConflictPolicy
 
-  const items = new Set<number>
+  const items = (new Set<number>)
   for (const source of (data.items as any[])) {
     simplifyForImport(source)
 
@@ -142,7 +142,7 @@ export async function importBBTJSON(collected: Collected): Promise<void> {
     }
 
     // clear out junk data
-    for (const [ field, value ] of Object.entries(source)) {
+    for (const [field, value] of Object.entries(source)) {
       if ((value ?? '') === '') delete source[field]
     }
     // validate tests for strings
@@ -152,7 +152,7 @@ export async function importBBTJSON(collected: Collected): Promise<void> {
     source.extra = extra
 
     // marker so BBT-JSON can be imported without extra-field meddling
-    if (source.extra) source.extra = `\x1BBBT\x1B${ source.extra }`
+    if (source.extra) source.extra = `\x1BBBT\x1B${source.extra}`
 
     // const error = validItem(source)
     // if (error) throw new Error(error)
@@ -178,16 +178,16 @@ export async function importBBTJSON(collected: Collected): Promise<void> {
     collection.zoteroCollection.name = collection.name
     collection.zoteroCollection.children = collection.items.filter(id => {
       if (items.has(id)) return true
-      log.error(`Collection ${ collection.key } has non-existent item ${ id }`)
+      log.error(`Collection ${collection.key} has non-existent item ${id}`)
       return false
     }).map(id => ({ type: 'item', id }))
   }
   for (const collection of collections) {
     if (collection.parent && data.collections[collection.parent]) {
-      (data.collections[collection.parent] as unknown as any).zoteroCollection.children.push(collection.zoteroCollection)
+      ;(data.collections[collection.parent] as unknown as any).zoteroCollection.children.push(collection.zoteroCollection)
     }
     else {
-      if (collection.parent) log.error(`Collection ${ collection.key } has non-existent parent ${ collection.parent }`)
+      if (collection.parent) log.error(`Collection ${collection.key} has non-existent parent ${collection.parent}`)
       collection.parent = false
     }
   }

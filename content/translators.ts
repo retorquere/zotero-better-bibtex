@@ -1,23 +1,23 @@
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 
 import merge from 'lodash.merge'
-import { Cache } from './translators/worker'
 import { serializer } from './item-export-format'
+import { Cache } from './translators/worker'
 
 const { ZOTERO_CONFIG } = ChromeUtils.importESModule('resource://zotero/config.mjs')
 import { parse } from '@retorquere/bibtex-parser'
 import { Exporter as TeXExporter } from '../translators/bibtex/exporter'
 
-import { Preference } from './prefs'
-import { affects, Preferences } from '../gen/preferences/meta'
-import { log } from './logger'
-import { Events } from './events'
 import { newQueue } from '@henrygd/queue'
-import { orchestrator } from './orchestrator'
+import { affects, Preferences } from '../gen/preferences/meta'
+import { byId, byLabel, bySlug, Header, headers as Headers } from '../gen/translators'
 import type { Reason } from './bootstrap'
-import { Header, headers as Headers, byLabel, byId, bySlug } from '../gen/translators'
-import { Job, worker, Exporter, Message } from './translators/worker'
+import { Events } from './events'
 import { selectedLibraryID } from './library'
+import { log } from './logger'
+import { orchestrator } from './orchestrator'
+import { Preference } from './prefs'
+import { Exporter, Job, Message, worker } from './translators/worker'
 
 Events.on('preference-changed', async ({ data: pref }) => {
   if (pref === 'strings') await Translators.cacheStrings()
@@ -38,8 +38,8 @@ class TimeoutError extends Error {
   }
 }
 
-export type ExportScope
-  = { type: 'items'; items: any[] }
+export type ExportScope =
+  | { type: 'items'; items: any[] }
   | { type: 'library'; id: number }
   | { type: 'collection'; collection: any }
   | { type: 'collections'; collections: any[] }
@@ -75,7 +75,7 @@ export const Translators = new class {
     orchestrator.add({
       id: 'translators',
       description: 'translators',
-      needs: [ 'worker', 'keymanager' ],
+      needs: ['worker', 'keymanager'],
       startup: async () => {
         await this.cacheStrings()
 
@@ -115,7 +115,7 @@ export const Translators = new class {
 
         const quickCopy = Zotero.Prefs.get('export.quickCopy.setting')
         for (const header of Headers) {
-          if (quickCopy === `export=${ header.translatorID }`) Zotero.Prefs.clear('export.quickCopy.setting')
+          if (quickCopy === `export=${header.translatorID}`) Zotero.Prefs.clear('export.quickCopy.setting')
 
           try {
             Translators.uninstall(header.label)
@@ -153,13 +153,13 @@ export const Translators = new class {
         return this.bySlug.BetterBibTeX.translatorID
     }
 
-    for (const [ id, translator ] of (Object.entries(this.byId))) {
-      if (name_lc === translator.label.toLowerCase().replace(/ /g, '') && [ 'yaml', 'json', 'bib' ].includes(translator.target)) return id
+    for (const [id, translator] of (Object.entries(this.byId))) {
+      if (name_lc === translator.label.toLowerCase().replace(/ /g, '') && ['yaml', 'json', 'bib'].includes(translator.target)) return id
     }
 
     if (typeof name === 'string' && name.match(/^[0-9a-fA-F]{8}-([0-9a-fA-F]{4}-){3}[0-9a-fA-F]{12}?$/)) return name
 
-    throw new Error(`getTranslatorId: ${ JSON.stringify(name) } could not be resolved to a translator`)
+    throw new Error(`getTranslatorId: ${JSON.stringify(name)} could not be resolved to a translator`)
   }
 
   public async importString(str) {
@@ -243,11 +243,11 @@ export const Translators = new class {
 
       case 'collections':
       case 'collection': {
-        ({ items, collections } = this.collectionContents(scope))
+        ;({ items, collections } = this.collectionContents(scope))
         break
       }
       default:
-        throw new Error(`Unexpected scope: ${ Object.keys(scope) }`)
+        throw new Error(`Unexpected scope: ${Object.keys(scope)}`)
     }
     if (job.path && job.canceled) return ''
 
@@ -314,7 +314,7 @@ export const Translators = new class {
         break
 
       default:
-        throw new Error(`Unexpected scope: ${ Object.keys(scope) }`)
+        throw new Error(`Unexpected scope: ${Object.keys(scope)}`)
     }
 
     const ids = items
@@ -329,17 +329,11 @@ export const Translators = new class {
 
     await Zotero.Items.loadDataTypes(topLevelItems)
 
-    const childIDs = new Set<number>
-    for (const item of topLevelItems) {
-      if (!item.isRegularItem()) continue
-      for (const id of item.getAttachments()) childIDs.add(id)
-      for (const id of item.getNotes()) childIDs.add(id)
+    const childIDs = topLevelItems.filter(item => item.isRegularItem()).flatMap(item => [ ...item.getAttachments(), ...item.getNotes() ])
+    if (childIDs.length) {
+      const childItems = await Zotero.Items.getAsync(childIDs)
+      await Zotero.Items.loadDataTypes(childItems)
     }
-
-    if (!childIDs.size) return
-
-    const childItems = await Zotero.Items.getAsync([ ...childIDs ])
-    if (childItems.length) await Zotero.Items.loadDataTypes(childItems)
   }
 
   public async exportItems(job: ExportJob): Promise<string> {
@@ -378,7 +372,7 @@ export const Translators = new class {
         break
 
       default:
-        throw new Error(`Unexpected scope: ${ Object.keys(scope) }`)
+        throw new Error(`Unexpected scope: ${Object.keys(scope)}`)
     }
 
     translation.setTranslator(job.translatorID)
@@ -415,7 +409,7 @@ export const Translators = new class {
       const timeout = async () => {
         await Zotero.Promise.delay(job.timeout! * 1000)
         if (!finished) {
-          const err = new TimeoutError(`translation timeout after ${ job.timeout } seconds`, { timeout: job.timeout! })
+          const err = new TimeoutError(`translation timeout after ${job.timeout} seconds`, { timeout: job.timeout! })
           log.error(err)
           throw err
         }
@@ -431,7 +425,7 @@ export const Translators = new class {
   public uninstall(label) {
     try {
       const destFile = Zotero.getTranslatorsDirectory()
-      destFile.append(`${ label }.js`)
+      destFile.append(`${label}.js`)
       if (destFile.exists()) {
         destFile.remove(false)
         return true
@@ -492,23 +486,23 @@ export const Translators = new class {
 
     switch (scope.type) {
       case 'items':
-        if (!scope.items?.length) throw new Error(`invalid scope: ${ JSON.stringify(scope) }`)
+        if (!scope.items?.length) throw new Error(`invalid scope: ${JSON.stringify(scope)}`)
         break
       case 'collections':
         scope.collections = scope.collections.map(coll => typeof coll === 'number' ? Zotero.Collections.get(coll) : coll)
-        if (!scope.collections.length || scope.collections.find(coll => typeof coll?.id !== 'number')) throw new Error(`invalid scope: ${ JSON.stringify(scope) }`)
+        if (!scope.collections.length || scope.collections.find(coll => typeof coll?.id !== 'number')) throw new Error(`invalid scope: ${JSON.stringify(scope)}`)
         break
       case 'collection':
         if (scope.type === 'collection' && typeof scope.collection === 'number') {
           scope = { type: 'collection', collection: Zotero.Collections.get(scope.collection) }
         }
-        if (typeof scope.collection?.id !== 'number') throw new Error(`invalid scope: ${ JSON.stringify(scope) }`)
+        if (typeof scope.collection?.id !== 'number') throw new Error(`invalid scope: ${JSON.stringify(scope)}`)
         break
       case 'library':
-        if (typeof scope.id !== 'number') throw new Error(`invalid scope: ${ JSON.stringify(scope) }`)
+        if (typeof scope.id !== 'number') throw new Error(`invalid scope: ${JSON.stringify(scope)}`)
         break
       default:
-        throw new Error(`invalid scope: ${ JSON.stringify(scope) }`)
+        throw new Error(`invalid scope: ${JSON.stringify(scope)}`)
     }
 
     return scope
@@ -519,7 +513,7 @@ export const Translators = new class {
    * Zotero 11 exports selected roots; older versions expect only their descendants.
    */
   private collectionContents(scope: CollectionScope): { items: any[]; collections: any[] } {
-    const selected = scope.type === 'collection' ? [ scope.collection ] : scope.collections
+    const selected = scope.type === 'collection' ? [scope.collection] : scope.collections
     const selectedIDs = new Set(selected.map(collection => collection.id))
     const roots = selected.filter(collection => {
       let parentID = collection.parentID

@@ -516,7 +516,8 @@ export class Entry {
       .replace(/\u2053/g, '~')
       .replace(/[\u2014\u2015]/g, '---') // em-dash
       .replace(/[\u2012\u2013]/g, '--') // en-dash
-      .split(/(,\s*)/).map(range => {
+      .split(/(,\s*)/)
+      .map(range => {
         if (range.match(/^,\s+/)) return ', '
         if (range === ',') return range
 
