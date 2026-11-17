@@ -563,7 +563,7 @@ export function generateBibTeX(collected: Collected): Translation {
 }
 
 const preloadedStrings = (new class PreloadedStrings {
-  public strings = ''
+  public strings: Record<string, string> = {}
   public enabled = false
 
   private loaded = false
@@ -573,7 +573,7 @@ const preloadedStrings = (new class PreloadedStrings {
 
     if (this.enabled && !this.loaded) {
       this.loaded = true
-      this.strings = Zotero.File.getContentsFromURL('chrome://zotero-better-bibtex/content/resource/bibtex/strings.bib')
+      this.strings = JSON.parse(Zotero.File.getContentsFromURL('chrome://zotero-better-bibtex/content/resource/bibtex/strings.json'))
     }
   }
 })
@@ -589,7 +589,7 @@ const unabbreviations = (new class Unabbreviations {
 
     if (this.enabled && !this.loaded) {
       this.loaded = true
-      this.unabbr = JSON.parse(Zotero.File.getContentsFromURL('chrome://zotero-better-bibtex/content/resource/bibtex/unabbrev.json'))
+      this.unabbr = JSON.parse(Zotero.File.getContentsFromURL('chrome://zotero-better-bibtex/content/resource/bibtex/unabbreviate.json'))
     }
   }
 })
