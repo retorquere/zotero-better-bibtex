@@ -58,3 +58,4 @@ cpu_usage.csv
 cache.json
 
 debug-log.pem
+target/
