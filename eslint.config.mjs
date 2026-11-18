@@ -66,6 +66,7 @@ const config = [
       'setup/**/*.{ts,js}',
       'util/*.{js,ts,mjs}',
       'minitests/**/*.{ts,js}',
+      'crates/**/*.{ts,js,mjs}',
     ],
   },
   ...compat.extends(

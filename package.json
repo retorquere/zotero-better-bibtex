@@ -211,6 +211,6 @@
   "allowScripts": {
     "es5-ext@0.10.64": true,
     "esbuild@0.28.2": true,
-    "dprint@0.64.3": true
+    "dprint@0.65.0": true
   }
 }
