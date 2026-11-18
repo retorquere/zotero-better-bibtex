@@ -201,11 +201,11 @@ class Entry extends BaseEntry {
 
         case 'author':
         case 'inventor':
-        case 'interviewer':
         case 'programmer':
         case 'artist':
         case 'podcaster':
         case 'presenter':
+        case 'interviewee':
           creators.author.push(creator)
           break
 
@@ -218,6 +218,7 @@ class Entry extends BaseEntry {
           break
 
         case 'editor':
+        case 'interviewer':
           creators.editor.push(creator)
           break
 
