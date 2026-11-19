@@ -136,7 +136,7 @@
     "@eslint/compat": "^2.1.1",
     "@fluent/bundle": "^0.19.1",
     "@stylistic/eslint-plugin": "^6.0.1",
-    "@tanstack/markdown": "^1.2.0",
+    "@tanstack/markdown": "^1.2.1",
     "@types/node": "^26.6.6",
     "@typescript-eslint/eslint-plugin": "^8.73.0",
     "@xmldom/xmldom": "^0.9.12",
