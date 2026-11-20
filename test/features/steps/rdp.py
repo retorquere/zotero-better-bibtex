@@ -43,6 +43,26 @@ class RDPConnection:
         continue
       return res
 
+  def _get_longstring_value(self, longstring_obj):
+    """Fetch the full value of a longString object from RDP."""
+    if not isinstance(longstring_obj, dict) or longstring_obj.get('type') != 'longString':
+      return longstring_obj
+    
+    actor = longstring_obj.get('actor')
+    initial = longstring_obj.get('initial', '')
+    if not actor or len(initial) >= longstring_obj.get('length', 0):
+      return initial
+    
+    # Request the substring after the initial part
+    start = len(initial)
+    res = self._send_and_wait({
+      'to': actor,
+      'type': 'substring',
+      'start': start,
+      'end': longstring_obj.get('length')
+    })
+    return initial + res.get('substring', '')
+
   def connect(self):
     self.sock = socket.create_connection((self.host, self.port), timeout=self.timeout)
     self._read_frame()  # Connection greeting
@@ -104,6 +124,9 @@ class RDPConnection:
 
     while True:
       msg = self._read_frame()
+      # Skip background telemetry and console logs that may interleave with our result
+      if 'type' in msg and msg['type'] in [ 'consoleAPICall', 'pageError', 'tabListChanged', 'target-available-form', 'frameUpdate' ]:
+        continue
       if (msg.get('type') == 'evaluationResult' and msg.get('resultID') == result_id):
         if msg.get('exception'):
           err = msg.get('exceptionMessage', msg.get('exception'))
@@ -115,12 +138,19 @@ class RDPConnection:
           msg_text = raw_res.get('preview', {}).get('message', 'Unknown error')
           raise RuntimeError(f'Zotero JS Error: {msg_text}')
 
+        # Handle longString objects from RDP (large strings are returned as dicts)
+        if isinstance(raw_res, dict) and raw_res.get('type') == 'longString':
+          raw_res = self._get_longstring_value(raw_res)
+
+        # The wrapper in execute() calls JSON.stringify(__val), so raw_res should be a string
+        # Try to parse it as JSON to match debug-bridge behavior which returned resp.json()
         if isinstance(raw_res, str):
           if raw_res == 'undefined':
             return None
           try:
             return json.loads(raw_res)
           except json.JSONDecodeError:
+            # If it's not valid JSON, return the string as-is
             return raw_res
 
         return raw_res
