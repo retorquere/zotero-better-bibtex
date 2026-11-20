@@ -49,6 +49,7 @@ export namespace Serialized {
     lastName?: string
     fieldMode?: number
     source?: string
+    useprefix?: boolean
   }
 
   interface ItemBase {

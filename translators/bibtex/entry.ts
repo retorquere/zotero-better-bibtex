@@ -10,7 +10,7 @@ import { Serialized } from '../../gen/typings/serialized'
 export type Field = {
   name: string // Bib(La)TeX field name to emit.
   // Source value to encode; may be omitted when bibtex is supplied.
-  value: string | string[] | number | Serialized.Attachment[] | Serialized.Tag[] | Serialized.Creator[] | undefined
+  value: string | String | string[] | number | Serialized.Attachment[] | Serialized.Tag[] | Serialized.Creator[] | undefined
   // How to encode value; defaults to the configured field encoding or literal.
   enc?: 'raw' | 'url' | 'verbatim' | 'creators' | 'literal' | 'literal_list' | 'latex' | 'tags' | 'attachments' | 'date' | 'minimal' | 'bibtex' | 'biblatex' | 'extra'
   raw?: boolean
@@ -31,7 +31,10 @@ export type Field = {
 
   replace?: boolean
   fallback?: boolean
+  juniorcomma?: boolean
 }
+
+type Creator = Serialized.Creator
 
 import fold2ascii from 'fold-to-ascii'
 import * as DateParser from '../../content/dateparser'
@@ -1070,13 +1073,20 @@ export class Entry {
    * @param {field} field to encode
    * @return {String} field.value encoded as verbatim LaTeX string (minimal escaping). If in Better BibTeX, wraps return value in `\url{string}`
    */
-  protected enc_url(f): string {
+  protected enc_url(f: Field): string | undefined {
     if (this.translation.BetterBibTeX && this.translation.collected.preferences.bibtexURL.endsWith('-ish')) {
-      return (f.value || '').replace(/([#\\%&{}])/g, '\\$1')
+      if (typeof f.value !== 'string') {
+        if (f.value !== undefined) {
+          log.error(`enc_url called with non-string value for field ${f.name}: ${typeof f.value}`)
+        }
+        return undefined
+      }
+      return f.value.replace(/([#\\%&{}])/g, '\\$1')
     }
     else if (this.translation.BetterBibTeX && this.translation.collected.preferences.bibtexURL === 'note') {
       // https://github.com/retorquere/zotero-better-bibtex/issues/2617
-      return `\\url{${this.enc_verbatim(f).replace(/([\\%#])/g, '\\$1')}}`
+      const verbatim = this.enc_verbatim(f)
+      return verbatim ? `\\url{${verbatim.replace(/([\\%#])/g, '\\$1')}}` : undefined
     }
     else {
       return this.enc_verbatim(f)
@@ -1089,9 +1099,14 @@ export class Entry {
    * @param {field} field to encode
    * @return {String} field.value encoded as verbatim LaTeX string (minimal escaping).
    */
-  protected enc_verbatim(f): string {
-    let value: string = f.value || ''
-    // if (!this.translation.unicode) value = value.replace(/[^\x20-\x7E]/g, (chr => `\\%${`00${chr.charCodeAt(0).toString(16).slice(-2)}`}`))
+  protected enc_verbatim(f: Field): string | undefined {
+    if (typeof f.value !== 'string') {
+      if (f.value !== undefined) {
+        log.error(`enc_verbatim called with non-string value for field ${f.name}: ${typeof f.value}`)
+      }
+      return undefined
+    }
+    let value: string = f.value
 
     // remove unbalanced braces
     const braces: { c: string; pos: number }[] = []
@@ -1130,17 +1145,23 @@ export class Entry {
    * @return {String} field.value encoded as author-style value
    */
   protected enc_creators(f: Field, raw: boolean): string | undefined {
+    if (!Array.isArray(f.value)) {
+      if (f.value !== undefined) {
+        log.error(`enc_creators called with non-array value for field ${f.name}: ${typeof f.value}`)
+      }
+      return undefined
+    }
     if (f.value.length === 0) return undefined
 
     const encoded: string[] = []
-    for (const creator of f.value) {
+    for (const creator of f.value as Creator[]) {
       let name
       if (creator.name && raw) {
         name = creator.name
       }
       else if (creator.name || (creator.lastName && (creator.fieldMode === 1))) {
         name = creator.name || creator.lastName
-        if (name !== 'others') name = raw ? `{${name}}` : this.enc_literal({ value: new String(this._enc_creators_scrub_name(name)) })
+        if (name !== 'others') name = raw ? `{${name}}` : this.enc_literal({ name: f.name, value: new String(this._enc_creators_scrub_name(name)) })
       }
       else if (raw) {
         name = [creator.lastName || '', creator.firstName || ''].join(', ')
@@ -1198,8 +1219,15 @@ export class Entry {
    * @param {field} field to encode.
    * @return {String} field.value encoded as latex
    */
-  protected enc_extra(f) {
-    return this.enc_literal({ value: f.value.replace(/\n/g, '\x0E') }).replace(/\x0E/g, newlines => newlines.length === 1 ? '\\\\\n' : '\n\n') // eslint-disable-line no-control-regex
+  protected enc_extra(f: Field): string | undefined {
+    if (!f.value) return undefined
+    if (typeof f.value !== 'string') {
+      log.error(`enc_extra called with non-string value for field ${f.name}: ${typeof f.value}`)
+      return undefined
+    }
+    const value = f.value.replace(/\n/g, '\x0E')
+    const result = this.enc_literal({ ...f, value })
+    return result ? String(result).replace(/\x0E/g, newlines => newlines.length === 1 ? '\\\\\n' : '\n\n') : undefined // eslint-disable-line no-control-regex
   }
 
   /*
@@ -1211,17 +1239,18 @@ export class Entry {
    * @param {field} field to encode.
    * @return {String} field.value encoded as list of literals
    */
-  protected enc_literal_list(f: Field, options: { raw?: boolean } = {}) {
+  protected enc_literal_list(f: Field, options: { raw?: boolean } = {}): string | undefined {
     const list = Array.isArray(f.value) ? f.value : [f.value]
-    if (!list.length) return null
+    if (!list.length) return undefined
     return list
       .map(elt => typeof elt === 'string' ? elt : `${elt}`)
       .map(elt => this.enc_literal({ ...f, value: elt.match(/(^| )and( |$)/) ? new String(elt) : elt }, options))
+      .filter(v => v !== undefined)
       .join(' and ')
   }
 
   // legacy support
-  protected enc_latex(f: Field, options: { raw?: boolean; creator?: boolean } = {}) {
+  protected enc_latex(f: Field, options: { raw?: boolean; creator?: boolean } = {}): string | undefined {
     return this.enc_literal(f, options)
   }
 
@@ -1233,21 +1262,21 @@ export class Entry {
    * @param {field} field to encode.
    * @return {String} field.value encoded as author-style value
    */
-  protected enc_literal(f: Field, options: { raw?: boolean; creator?: boolean } = {}) {
-    if (typeof f.value === 'number') return f.value
-    if (!f.value) return null
+  protected enc_literal(f: Field, options: { raw?: boolean; creator?: boolean } = {}): string | undefined {
+    if (typeof f.value === 'number') return String(f.value)
+    if (!f.value) return undefined
 
     if (Array.isArray(f.value)) {
-      if (f.value.length === 0) return null
-      return f.value.map(elt => this.enc_literal({ ...f, bibtex: undefined, value: elt }, options)).join(f.sep || '')
+      if (f.value.length === 0) return undefined
+      return f.value.map(elt => this.enc_literal({ ...f, bibtex: undefined, value: elt }, options)).filter(v => v !== undefined).join(f.sep || '')
     }
 
-    if (f.raw || options.raw) return f.value
+    if (f.raw || options.raw) return String(f.value)
 
     const titlecase = f.caseConversion ?? this.titlecaseFields.has(f.name)
     const exportCaseProtection = f.caseConversion ?? this.caseProtectionFields.has(f.name)
     const { latex, packages, raw } = this.translation.bibtex
-      .text2latex(f.value, {
+      .text2latex(String(f.value), {
         html: f.html,
         exportCaseProtection: exportCaseProtection && this.english,
         exportTitleCase: titlecase,
@@ -1269,13 +1298,19 @@ export class Entry {
     if (exportCaseProtection && this.translation.BetterBibTeX && !this.english && this.translation.collected.preferences.exportBraceProtection) value = `{${value}}`
 
     if (f.value instanceof String && !raw) value = new String(`{${value}}`)
-    return value
+    return value as string | undefined
   }
 
-  protected enc_tags(f): string | undefined {
+  protected enc_tags(f: Field): string | undefined {
+    if (!Array.isArray(f.value)) {
+      if (f.value !== undefined) {
+        log.error(`enc_tags called with non-array value for field ${f.name}: ${typeof f.value}`)
+      }
+      return undefined
+    }
     const verbatim = this.translation.isVerbatimField(f.name)
     const unicode = this.translation.unicode
-    const tags = f.value
+    const tags = (f.value as Serialized.Tag[])
       .map(tag => (typeof tag === 'string' ? { tag } : tag))
       .filter(tag => (this.translation.collected.preferences.automaticTags || (tag.type !== 1)) && tag.tag !== this.translation.collected.preferences.rawLaTag)
       .map(tag => ({ ...tag, tag: tag.tag.replace(/[#%]/g, '') }))
@@ -1285,10 +1320,12 @@ export class Entry {
     const encoded: Set<string> = new Set
     for (const tag of tags) {
       if (verbatim) {
-        encoded.add(this.enc_verbatim({ value: (unicode ? tag.tag : fold2ascii.foldReplacing(tag.tag)).replace(/[{,}]/g, '').trim() }))
+        const result = this.enc_verbatim({ name: f.name, value: (unicode ? tag.tag : fold2ascii.foldReplacing(tag.tag)).replace(/[{,}]/g, '').trim() })
+        if (result) encoded.add(result)
       }
       else {
-        encoded.add(this.enc_literal({ value: tag.tag.includes(',') ? new String(tag.tag) : tag.tag }))
+        const result = this.enc_literal({ name: f.name, value: tag.tag.includes(',') ? new String(tag.tag) : tag.tag })
+        if (result) encoded.add(result)
       }
     }
 
@@ -1312,50 +1349,54 @@ export class Entry {
   }
 
   protected enc_attachments(f: Field, modify?: (path: string) => string): string | undefined {
-    if (!f.value || (f.value.length === 0)) return undefined
+    if (!Array.isArray(f.value)) {
+      if (f.value !== undefined) {
+        log.error(`enc_attachments called with non-array value for field ${f.name}: ${typeof f.value}`)
+      }
+      return undefined
+    }
+    if (f.value.length === 0) return undefined
     const attachments: { title: string; mimetype: string; path: string }[] = []
 
     // #1939
     if (modify) this.item.$cacheable = false
 
-    for (const attachment of f.value) {
-      const att = {
-        title: attachment.title,
-        mimetype: attachment.contentType || '',
-        path: '',
-      }
+    for (const attachment of f.value as Serialized.Attachment[]) {
+      let title = attachment.title || ''
+      let mimetype = attachment.contentType || ''
+      let path = ''
 
       if (this.translation.collected.displayOptions.exportFileData) {
-        att.path = attachment.saveFile ? attachment.defaultPath : ''
+        path = (attachment.saveFile !== undefined) ? (attachment.defaultPath || '') : ''
       }
       else if (attachment.localPath) {
-        att.path = attachment.localPath
+        path = attachment.localPath
       }
 
-      if (!att.path) continue // amazon/googlebooks etc links show up as atachments without a path
-      // att.path = att.path.replace(/^storage:/, '')
-      att.path = att.path.replace(/(?:\s*[{}]+)+\s*/g, ' ')
+      if (!path) continue // amazon/googlebooks etc links show up as atachments without a path
+      // path = path.replace(/^storage:/, '')
+      path = path.replace(/(?:\s*[{}]+)+\s*/g, ' ')
 
-      if (this.translation.collected.displayOptions.exportFileData && attachment.saveFile) {
+      if (this.translation.collected.displayOptions.exportFileData && (attachment.saveFile !== undefined)) {
         this.translation.output.attachments.push(attachment)
         // attachment.saveFile(attachment.defaultPath, true)
       }
 
-      if (!att.title) att.title = att.path.replace(/.*[\\/]/, '') || 'attachment'
+      if (!title) title = path.replace(/.*[\\/]/, '') || 'attachment'
 
-      if (!att.mimetype && (att.path.slice(-4).toLowerCase() === '.pdf')) att.mimetype = 'application/pdf'
+      if (!mimetype && (path.slice(-4).toLowerCase() === '.pdf')) mimetype = 'application/pdf'
 
       if (this.translation.collected.preferences.relativeFilePaths && this.translation.export.dir) {
-        const relative = this.relPath(att.path)
-        if (relative !== att.path) {
+        const relative = this.relPath(path)
+        if (relative !== path) {
           this.item.$cacheable = false
-          att.path = relative
+          path = relative
         }
       }
-      if (this.translation.collected.preferences.testing) att.path = att.path.replace(/.*[.]BBTTEST\/(zotero|jurism)\//, '~/BBTTEST/').replace(/\/storage\/[^/]+\//, '/storage/')
+      if (this.translation.collected.preferences.testing) path = path.replace(/.*[.]BBTTEST\/(zotero|jurism)\//, '~/BBTTEST/').replace(/\/storage\/[^/]+\//, '/storage/')
 
-      if (modify) att.path = modify(att.path)
-      attachments.push(att)
+      if (modify) path = modify(path)
+      attachments.push({ title, mimetype, path })
     }
 
     if (attachments.length === 0) return undefined
@@ -1371,7 +1412,7 @@ export class Entry {
       return attachments.map(att => [att.title, att.path, att.mimetype].map(part => part.replace(/([\\{}:;])/g, '\\$1')).join(':')).join(';')
     }
     if (attachments.length > 1) return attachments.map(att => att.path.replace(/([\\{}:;])/g, '\\$1')).join(';')
-    return this.enc_verbatim({ value: attachments[0].path })
+    return this.enc_verbatim({ name: f.name, value: attachments[0].path })
   }
 
   private _enc_creators_pad_particle(particle: string, relax = false): string {
