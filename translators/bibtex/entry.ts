@@ -148,7 +148,7 @@ const enc_creators_marker = {
 const isBibString = /^[a-z][-a-z0-9_]*$/i
 
 export type Config = {
-  fieldEncoding: Record<string, 'raw' | 'url' | 'verbatim' | 'creators' | 'literal' | 'literal_list' | 'tags' | 'attachments' | 'date' | 'extra'>
+  fieldEncoding: Record<string, 'raw' | 'url' | 'verbatim' | 'creators' | 'literal' | 'literal_list' | 'tags' | 'attachments' | 'date' | 'extra' | 'note'>
   exportCaseDefaults: Record<string, boolean>
   typeMap: {
     csl: Record<string, string | { type: string; subtype?: string }>
@@ -1245,7 +1245,7 @@ export class Entry {
     const exportCaseProtection = f.caseConversion ?? this.caseProtectionFields.has(f.name)
     const { latex, packages, raw } = this.translation.bibtex
       .text2latex(String(f.value), {
-        html: f.enc === 'note',
+        html: f.name === 'note',
         exportCaseProtection: exportCaseProtection && this.english,
         exportTitleCase: titlecase,
         creator: options.creator,
