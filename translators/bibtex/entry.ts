@@ -29,8 +29,6 @@ export type Field = {
 
   bibtex?: string // Pre-encoded Bib(La)TeX value; when supplied, bypasses encoding value.
 
-  replace?: boolean
-  fallback?: boolean
   juniorcomma?: boolean
 }
 
@@ -587,12 +585,6 @@ export class Entry {
       return field.name
     }
 
-    if (field.fallback && field.replace) throw new Error('pick fallback or replace, buddy')
-    if (field.fallback && this.has[field.name]) {
-      log.error(`add: fallback already filled for ${field.name}`)
-      return undefined
-    }
-
     // legacy field addition
     if (!field.name) {
       log.error(`add: empty legacy object ${field.name}`)
@@ -608,17 +600,15 @@ export class Entry {
     if (this.has[field.name]) {
       if (!Array.isArray(field.value) && this.has[field.name].value === field.value && this.has[field.name].enc === field.enc) return undefined
 
-      if (!field.replace) {
-        let v_old = this.has[field.name].value
-        let v_new = field.value
-        if (typeof v_old === 'string' && typeof v_new === 'string') {
-          v_old = v_old.toLowerCase()
-          v_new = v_new.toLowerCase()
-        }
-        if (v_old !== v_new) {
-          if (typeof v_old === 'string') v_old = v_old.replace(/[\r\n]+/g, ' ')
-          this.quality_report.push(`duplicate "${field.name}" ("${v_old}") ignored`)
-        }
+      let v_old = this.has[field.name].value
+      let v_new = field.value
+      if (typeof v_old === 'string' && typeof v_new === 'string') {
+        v_old = v_old.toLowerCase()
+        v_new = v_new.toLowerCase()
+      }
+      if (v_old !== v_new) {
+        if (typeof v_old === 'string') v_old = v_old.replace(/[\r\n]+/g, ' ')
+        this.quality_report.push(`duplicate "${field.name}" ("${v_old}") ignored`)
       }
 
       delete this.has[field.name]
@@ -735,25 +725,6 @@ export class Entry {
     return (this.item.creators || []).some(creator => creator.creatorType === type)
   }
 
-  public override(field: Field): void {
-    const itemtype_name = field.name.split('.')
-    let name
-    if (itemtype_name.length === 2) {
-      if (this.entrytype !== itemtype_name[0]) return
-      name = itemtype_name[1]
-    }
-    else {
-      name = field.name
-    }
-
-    if ((typeof field.value === 'string') && (field.value.trim() === '')) {
-      this.remove(name)
-      return
-    }
-
-    this.add({ ...field, name, replace: (typeof field.replace !== 'boolean' && typeof field.fallback !== 'boolean') || field.replace })
-  }
-
   public langid(): string {
     return langCode(this.item.language)
   }
@@ -784,7 +755,6 @@ export class Entry {
 
       const type = Schema.type.zotero[key]
       let enc: Field['enc'] = ({ name: 'creator', text: 'literal' }[type] || type) as Field['enc']
-      const replace = type === 'date'
       // these are handled just like 'arXiv' and 'lccn', respectively
       if (['PMID', 'PMCID'].includes(key) && typeof value === 'string') {
         if (!this.item.extraFields.tex) this.item.extraFields.tex = {}
@@ -900,7 +870,7 @@ export class Entry {
       }
 
       if (name) {
-        this.override({ name, verbatim: name, orig: { inherit: true }, value, enc, replace, fallback: !replace })
+        this.add({ name, verbatim: name, orig: { inherit: true }, value, enc })
       }
       else {
         log.error(`Unmapped extra field ${key}=${value}`)
@@ -933,42 +903,42 @@ export class Entry {
 
         switch (name) {
           case 'mr':
-            this.override({ name: 'mrnumber', value: field.value, ...mode })
+            this.add({ name: 'mrnumber', value: field.value, ...mode })
             break
           case 'zbl':
-            this.override({ name: 'zmnumber', value: field.value, ...mode })
+            this.add({ name: 'zmnumber', value: field.value, ...mode })
             break
           case 'lccn':
           case 'pmcid':
-            this.override({ name, value: field.value, ...mode })
+            this.add({ name, value: field.value, ...mode })
             break
           case 'pmid':
           case 'arxiv':
           case 'jstor':
           case 'hdl':
             if (this.translation.BetterBibLaTeX && !this.has.eprinttype) {
-              this.override({ name: 'eprinttype', value: this.eprintType[name] || name })
-              this.override({ name: 'eprint', value: field.value, ...mode })
+              this.add({ name: 'eprinttype', value: this.eprintType[name] || name })
+              this.add({ name: 'eprint', value: field.value, ...mode })
             }
             else {
-              this.override({ name, value: field.value, ...mode })
+              this.add({ name, value: field.value, ...mode })
             }
             break
           case 'googlebooksid':
             if (this.translation.BetterBibLaTeX && !this.has.eprinttype) {
-              this.override({ name: 'eprinttype', value: 'googlebooks' })
-              this.override({ name: 'eprint', value: field.value, ...mode })
+              this.add({ name: 'eprinttype', value: 'googlebooks' })
+              this.add({ name: 'eprint', value: field.value, ...mode })
             }
             else {
-              this.override({ name: 'googlebooks', value: field.value, ...mode })
+              this.add({ name: 'googlebooks', value: field.value, ...mode })
             }
             break
           case 'xref':
-            this.override({ name, value: field.value, ...mode })
+            this.add({ name, value: field.value, ...mode })
             break
 
           default:
-            this.override({ name, value: field.value, bibtexStrings, ...mode })
+            this.add({ name, value: field.value, bibtexStrings, ...mode })
             break
         }
       }
