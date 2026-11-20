@@ -188,7 +188,6 @@ export class Entry {
 
   public config: Config
 
-  private inPostscript = false
   private quality_report: string[] = []
   private extraFields: ParsedExtraFields
 
@@ -223,8 +222,7 @@ export class Entry {
       if (translation.collected.preferences.postscript.trim()) {
         Entry.prototype.postscript = postscript.postscript(
           'tex',
-          translation.collected.preferences.postscript,
-          'this.inPostscript' // workaround for https://github.com/Juris-M/zotero/issues/65
+          translation.collected.preferences.postscript
         )
       }
       else {
@@ -548,14 +546,7 @@ export class Entry {
   public add(field: Field): string | undefined {
     if (!field.name) return undefined
 
-    if (this.translation.collected.preferences.testing && !this.inPostscript && field.name !== field.name.toLowerCase()) {
-      throw new Error(`Do not add mixed-case field ${field.name}`)
-    }
-
-    if (!field.value && !field.bibtex && this.inPostscript) {
-      delete this.has[field.name]
-      return undefined
-    }
+    if (!field.value && !field.bibtex) return undefined
 
     if (this.translation.skipField?.exec(`${this.translation.BetterBibTeX ? 'bibtex' : 'biblatex'}.${this.entrytype}.${field.name}`)) return undefined
 
@@ -616,11 +607,6 @@ export class Entry {
 
     if (this.has[field.name]) {
       if (!Array.isArray(field.value) && this.has[field.name].value === field.value && this.has[field.name].enc === field.enc) return undefined
-
-      if (!this.inPostscript && !field.replace) {
-        const value = field.bibtex ? 'bibtex' : 'value'
-        throw new Error(`duplicate field '${field.name}' for ${this.item.citationKey}: old: ${this.has[field.name][value]}, new: ${field[value]! as string}`)
-      }
 
       if (!field.replace) {
         let v_old = this.has[field.name].value
