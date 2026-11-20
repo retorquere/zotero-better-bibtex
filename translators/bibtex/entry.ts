@@ -725,6 +725,13 @@ export class Entry {
     return (this.item.creators || []).some(creator => creator.creatorType === type)
   }
 
+  public override(field: Field): void { // for postscripts
+    const [itemtype, fieldname] = field.name.split('.')
+    if (fieldname && itemtype !== this.entrytype) return
+
+    this.add({ ...field, name: fieldname ?? field.name })
+  }
+
   public langid(): string {
     return langCode(this.item.language)
   }
@@ -896,6 +903,11 @@ export class Entry {
         // psuedo-var, sets the entry type. Repeat application here because this needs to override all else.
         if (name === 'entrytype' || name === 'referencetype') { // phase out reference
           this.entrytype = field.value
+          continue
+        }
+
+        if (!field.value || (typeof field.value === 'string' && field.value.trim() === '')) {
+          delete this.has[name]
           continue
         }
 
