@@ -12,9 +12,8 @@ export type Field = {
   // Source value to encode; may be omitted when bibtex is supplied.
   value: string | String | string[] | number | Serialized.Attachment[] | Serialized.Tag[] | Serialized.Creator[] | undefined
   // How to encode value; defaults to the configured field encoding or literal.
-  enc?: 'raw' | 'url' | 'verbatim' | 'creators' | 'literal' | 'literal_list' | 'latex' | 'tags' | 'attachments' | 'date' | 'minimal' | 'bibtex' | 'biblatex' | 'extra'
+  enc?: 'raw' | 'url' | 'verbatim' | 'creators' | 'literal' | 'literal_list' | 'latex' | 'tags' | 'attachments' | 'date' | 'minimal' | 'bibtex' | 'biblatex' | 'extra' | 'note'
   raw?: boolean
-  html?: boolean
   caseConversion?: boolean
   sep?: string
 
@@ -660,6 +659,7 @@ export class Entry {
           case 'minimal':
           case 'bibtex':
           case 'biblatex':
+          case 'note':
             field.bibtex = this.enc_literal(field, { raw: this.item.raw })
             break
 
@@ -892,7 +892,7 @@ export class Entry {
       // if bibtexURL === 'note' is active, the note field will have been filled with an URL.
       // In all other cases, if this is attempting to overwrite the 'note' field, I want the test suite to throw an error
       if (!(this.translation.BetterBibTeX && this.translation.collected.preferences.bibtexURL === 'note')) {
-        this.add({ name: 'note', value: this.item.notes?.map((note: { note: string }) => note.note).join('</p><p>'), html: true })
+        this.add({ name: 'note', value: this.item.notes?.map((note: { note: string }) => note.note).join('</p><p>'), enc: 'note' })
       }
     }
 
@@ -1245,7 +1245,7 @@ export class Entry {
     const exportCaseProtection = f.caseConversion ?? this.caseProtectionFields.has(f.name)
     const { latex, packages, raw } = this.translation.bibtex
       .text2latex(String(f.value), {
-        html: f.html,
+        html: f.enc === 'note',
         exportCaseProtection: exportCaseProtection && this.english,
         exportTitleCase: titlecase,
         creator: options.creator,
