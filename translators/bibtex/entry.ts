@@ -8,23 +8,29 @@ import { clone } from '../../content/object'
 import { Serialized } from '../../gen/typings/serialized'
 
 export type Field = {
-  name: string
-  verbatim?: string
+  name: string // Bib(La)TeX field name to emit.
+  // Source value to encode; may be omitted when bibtex is supplied.
   value: string | string[] | number | Serialized.Attachment[] | Serialized.Tag[] | Serialized.Creator[] | undefined
+  // How to encode value; defaults to the configured field encoding or literal.
   enc?: 'raw' | 'url' | 'verbatim' | 'creators' | 'literal' | 'literal_list' | 'latex' | 'tags' | 'attachments' | 'date' | 'minimal' | 'bibtex' | 'biblatex' | 'extra'
-  orig?: { name?: string; verbatim?: string; inherit?: boolean }
-  bibtexStrings?: boolean
-  bare?: boolean
   raw?: boolean
-
-  // kept as seperate booleans for backwards compat
-  replace?: boolean
-  fallback?: boolean
-
   html?: boolean
   caseConversion?: boolean
+  sep?: string
 
-  bibtex?: string
+  verbatim?: string // Field name to use for a date value the date parser cannot parse.
+  bare?: boolean // Leave the encoded value unbraced when it contains no whitespace.
+  bibtexStrings?: boolean // Use a matching BibTeX string macro instead of the field value when available.
+  orig?: { // Controls output of an original date extracted by the date parser.
+    name?: string // Field name for the original date.
+    verbatim?: string // Field name to use if the original date cannot be parsed.
+    inherit?: boolean // Prefix the parent field and verbatim names with "orig" for the original date.
+  }
+
+  bibtex?: string // Pre-encoded Bib(La)TeX value; when supplied, bypasses encoding value.
+
+  replace?: boolean
+  fallback?: boolean
 }
 
 import fold2ascii from 'fold-to-ascii'
@@ -1123,7 +1129,7 @@ export class Entry {
    * @param {field} field to encode. The 'value' must be an array of Zotero-serialized `creator` objects.
    * @return {String} field.value encoded as author-style value
    */
-  protected enc_creators(f, raw: boolean): string | undefined {
+  protected enc_creators(f: Field, raw: boolean): string | undefined {
     if (f.value.length === 0) return undefined
 
     const encoded: string[] = []
@@ -1205,7 +1211,7 @@ export class Entry {
    * @param {field} field to encode.
    * @return {String} field.value encoded as list of literals
    */
-  protected enc_literal_list(f, options: { raw?: boolean } = {}) {
+  protected enc_literal_list(f: Field, options: { raw?: boolean } = {}) {
     const list = Array.isArray(f.value) ? f.value : [f.value]
     if (!list.length) return null
     return list
@@ -1215,7 +1221,7 @@ export class Entry {
   }
 
   // legacy support
-  protected enc_latex(f, options: { raw?: boolean; creator?: boolean } = {}) {
+  protected enc_latex(f: Field, options: { raw?: boolean; creator?: boolean } = {}) {
     return this.enc_literal(f, options)
   }
 
@@ -1227,7 +1233,7 @@ export class Entry {
    * @param {field} field to encode.
    * @return {String} field.value encoded as author-style value
    */
-  protected enc_literal(f, options: { raw?: boolean; creator?: boolean } = {}) {
+  protected enc_literal(f: Field, options: { raw?: boolean; creator?: boolean } = {}) {
     if (typeof f.value === 'number') return f.value
     if (!f.value) return null
 
@@ -1305,7 +1311,7 @@ export class Entry {
     return `..${this.translation.paths.sep}`.repeat(from.length) + to.join(this.translation.paths.sep)
   }
 
-  protected enc_attachments(f, modify?: (path: string) => string): string | undefined {
+  protected enc_attachments(f: Field, modify?: (path: string) => string): string | undefined {
     if (!f.value || (f.value.length === 0)) return undefined
     const attachments: { title: string; mimetype: string; path: string }[] = []
 
