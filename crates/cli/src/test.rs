@@ -302,7 +302,7 @@ async fn add(args: AddArgs) -> Result<(), Box<dyn std::error::Error>> {
         preferences.remove("baseAttachmentPath");
     }
     fs::create_dir_all(&fixtures)?;
-    serde_yaml::to_writer(fs::File::create(fixtures.join(&title).with_extension("yml"))?, &library)?;
+    fs::write(fixtures.join(&title).with_extension("yml"), library_yaml(&library)?)?;
 
     fn create(fixtures: &PathBuf, title: &str, ext: &str,contents: &str) -> Result<(), Box<dyn std::error::Error>> {
         let filename = fixtures.join(title).with_extension(ext);
@@ -517,6 +517,41 @@ fn write_feature(path: &str, feature: &Feature) -> Result<(), Box<dyn std::error
     Ok(())
 }
 
+/// Emits multiline values as literal blocks, including lines with trailing spaces.
+fn library_yaml(value: &serde_json::Value) -> Result<String, saphyr::EmitError> {
+    use saphyr::{Scalar, ScalarStyle, Yaml, YamlEmitter};
+
+    fn node(value: &serde_json::Value) -> Yaml<'_> {
+        match value {
+            serde_json::Value::Null => Yaml::Value(Scalar::Null),
+            serde_json::Value::Bool(value) => Yaml::Value(Scalar::Boolean(*value)),
+            serde_json::Value::Number(value) => {
+                Yaml::Representation(value.to_string().into(), ScalarStyle::Plain, None)
+            },
+            serde_json::Value::String(value) => {
+                Yaml::Value(Scalar::String(value.as_str().into()))
+            },
+            serde_json::Value::Array(values) => {
+                Yaml::Sequence(values.iter().map(node).collect())
+            },
+            serde_json::Value::Object(values) => Yaml::Mapping(
+                values.iter().map(|(key, value)| {
+                    (Yaml::Value(Scalar::String(key.as_str().into())), node(value))
+                }).collect(),
+            ),
+        }
+    }
+
+    let mut output = String::new();
+    let mut emitter = YamlEmitter::new(&mut output);
+    emitter.multiline(true);
+    emitter.dump(&node(value))?;
+    if !output.ends_with('\n') {
+        output.push('\n');
+    }
+    Ok(output)
+}
+
 fn clean(args: CleanArgs) -> Result<(), Box<dyn std::error::Error>> {
     let mut debug_log: serde_json::Value = if args.debug_log.ends_with(".yaml") {
         serde_yaml::from_str(&fs::read_to_string(&args.debug_log)?)?
@@ -560,7 +595,7 @@ fn clean(args: CleanArgs) -> Result<(), Box<dyn std::error::Error>> {
             .collect::<Result<_, _>>()?;
     }
 
-    fs::write(Path::new(&args.debug_log).with_extension("yaml"), serde_yaml::to_string(&debug_log)?)?;
+    fs::write(Path::new(&args.debug_log).with_extension("yaml"), library_yaml(&debug_log)?)?;
 
     Ok(())
 }
@@ -572,5 +607,48 @@ fn values_have_same_type(a: &serde_json::Value, b: &serde_json::Value) -> bool {
         (serde_json::Value::Number(_), serde_json::Value::Number(_)) => true,
         (serde_json::Value::String(_), serde_json::Value::String(_)) => true,
         _ => false,
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::library_yaml;
+    use serde_json::json;
+
+    #[test]
+    fn yaml_uses_literal_blocks_without_changing_values() {
+        for multiline in [
+            "first \nsecond",
+            "first\nsecond ",
+            "first\nsecond\n",
+            "first\nsecond\n\n",
+            "\n  indented\ntext",
+        ] {
+            let value = json!({
+                "multiline": multiline,
+                "single": "single line",
+                "nested": [{"text": multiline}],
+                "number": u64::MAX,
+                "float": 1.5,
+                "boolean": true,
+                "null": null,
+            });
+            let yaml = library_yaml(&value).unwrap();
+            assert!(yaml.contains("multiline: |"), "{yaml}");
+            assert!(yaml.contains("single: single line\n"), "{yaml}");
+            assert!(yaml.contains("text: |"), "{yaml}");
+            assert_eq!(serde_yaml::from_str::<serde_json::Value>(&yaml).unwrap(), value);
+        }
+    }
+
+    #[test]
+    fn yaml_formats_issue_3472_postscript_as_a_literal_block() {
+        let value: serde_json::Value = serde_yaml::from_str(include_str!(
+            "../../../test/fixtures/export/tex.pages= in Extra field not exporting as LaTeX, Language = de exporting as german, not ngerman #3472.yaml"
+        )).unwrap();
+        let yaml = library_yaml(&value).unwrap();
+
+        assert!(yaml.contains("postscript: |\n"), "{yaml}");
+        assert_eq!(serde_yaml::from_str::<serde_json::Value>(&yaml).unwrap(), value);
     }
 }

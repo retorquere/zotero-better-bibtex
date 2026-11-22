@@ -595,23 +595,6 @@ export class Entry {
       if (Array.isArray(field.value) && (field.value.length === 0)) return undefined
     }
 
-    if (this.has[field.name]) {
-      if (!field.bibtex && !Array.isArray(field.value) && this.has[field.name].value === field.value && this.has[field.name].enc === field.enc) return undefined
-
-      let v_old = this.has[field.name].value
-      let v_new = field.value
-      if (typeof v_old === 'string' && typeof v_new === 'string') {
-        v_old = v_old.toLowerCase()
-        v_new = v_new.toLowerCase()
-      }
-      if (v_old !== v_new) {
-        if (typeof v_old === 'string') v_old = v_old.replace(/[\r\n]+/g, ' ')
-        this.quality_report.push(`duplicate "${field.name}" ("${v_old}") ignored`)
-      }
-
-      delete this.has[field.name]
-    }
-
     if (!field.bibtex) {
       let bibstring = ''
       if ((typeof field.value === 'number') || (field.bibtexStrings && (bibstring = this.getBibString(field.value as string)))) {
@@ -619,6 +602,10 @@ export class Entry {
       }
       else {
         switch (field.enc) {
+          case 'raw' as unknown as 'verbatim': // for postscripts
+            field.bibtex = typeof field.value === 'string' ? `{${field.value}}` : undefined
+            break
+
           case 'extra':
             field.bibtex = this.enc_extra(field)
             break
@@ -675,7 +662,14 @@ export class Entry {
       }
     }
 
-    this.has[field.name] = field
+    if (this.has[field.name]) {
+      // replaces the existing field with the new field, preserving the iteration order for the write-out
+      for (const k of Object.keys(this.has[field.name])) delete this.has[field.name][k]
+      Object.assign(this.has[field.name], field)
+    }
+    else {
+      this.has[field.name] = field
+    }
 
     return field.name
   }
