@@ -8,8 +8,7 @@
       "exportNotes": true
     },
     "preferences": {
-      "citekeyFormat": "auth + year",
-      "rawImports": true
+      "citekeyFormat": "auth + year"
     }
   },
   "items": [
