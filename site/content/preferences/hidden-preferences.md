@@ -177,6 +177,11 @@ You can use custom preferences per export directory:
 
 A preferences override will disable caching for that export.
 
+## rawImports
+
+default: `no`
+
+On import, preserve fields containing a backslash or at least two dollar signs as raw TeX in Extra (for example, `tex.title= ...`), alongside their normally imported values.
 ## relativeFilePaths
 
 default: `no`

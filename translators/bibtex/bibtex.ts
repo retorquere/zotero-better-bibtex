@@ -673,10 +673,12 @@ class ZoteroItem {
 
   private extra: string[] = []
   private eprint: Record<string, string> = {}
+  private rawFields: Record<string, string>
   private validFields!: Record<string, boolean>
   private patentNumberPrefix = ''
 
   constructor(private translation: Translation, private item: any, private bibtex: BibTeXEntry, private jabref: JabRefMetadata) {
+    this.rawFields = this.translation.collected.preferences.rawImports ? this.bibtex.verbatim : {}
     // hard for users to debug, replace with regular spaces
     this.bibtex = JSON.parse(JSON.stringify(this.bibtex, (k, v) => (typeof v === 'string' ? v.replace(/\u00A0/g, ' ').trim() : v) as string))
     this.event = new Set(translation.collected.preferences.importPlaceEvent.trim().split(/\s*,\s*/).filter(_ => _))
@@ -1681,6 +1683,12 @@ class ZoteroItem {
       if (line.startsWith('tex.')) return this.translation.collected.preferences.importExtra
       return true
     })
+    for (const [field, value] of Object.entries(this.rawFields)) {
+      if (/\\|\$[\s\S]*\$/.test(value)) {
+        const name = field.match(/[:=]/) ? `"${field}"` : field
+        this.extra.push(`tex.${name}= ${value}`)
+      }
+    }
     if (this.extra.length > 0) {
       this.extra.sort((a, b) => {
         a = a.toLowerCase()

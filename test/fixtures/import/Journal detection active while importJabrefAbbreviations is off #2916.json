@@ -9,7 +9,8 @@
     },
     "preferences": {
       "citekeyFormat": "auth + year",
-      "importJabRefAbbreviations": false
+      "importJabRefAbbreviations": false,
+      "rawImports": true
     }
   },
   "items": [
