@@ -603,7 +603,7 @@ export class Entry {
       else {
         switch (field.enc) {
           case 'raw' as unknown as 'verbatim': // for postscripts
-            field.bibtex = typeof field.value === 'string' ? `{${field.value}}` : undefined
+            field.bibtex = typeof field.value === 'string' ? field.value : undefined
             break
 
           case 'extra':
@@ -663,6 +663,7 @@ export class Entry {
     }
 
     if (this.has[field.name]) {
+      this.quality_report.push(`duplicate "${field.name}" (${field.value || field.bibtex})`)
       // replaces the existing field with the new field, preserving the iteration order for the write-out
       for (const k of Object.keys(this.has[field.name])) delete this.has[field.name][k]
       Object.assign(this.has[field.name], field)

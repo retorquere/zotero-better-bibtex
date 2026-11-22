@@ -29,7 +29,6 @@ Feature: Export
       | 1    | AuthorsAlpha cannot properly deal with lastname with prefix like von van de  when generating a citekey #3272 |
       | 9    | BBT does not recognize zh-CN #2391 |
       | 3    | BBT export of square brackets in date #245 -- xref should not be escaped #246 |
-      | 1    | BBT yields error with quality report #1387 |
       | 1    | Be robust against misconfigured journal abbreviator #127 |
       | 1    | Better BibLatex copied year column as string if  character is found #3067 |
       | 1    | Better Biblatex export generates invalid latex when processing zero-width spaces #1892 |
@@ -153,7 +152,6 @@ Feature: Export
       | 1    | Generating citation keys and special letters (i.e. o, u, a) #3351 |
       | 1    | German Umlaut separated by brackets #146 |
       | 2    | google-scholar like references #1705 |
-      | 4    | Handle HDL not included as eprint for biblatex #3250 |
       | 2    | Hang on non-file attachment export #112 - URL export broken #114 |
       | 1    | How to export bib without month and date in year item (Using better bibtex) #2022 |
       | 1    | How to use the last word of the title #1746 |
@@ -179,7 +177,6 @@ Feature: Export
       | 1    | Malformed HTML |
       | 2    | map csl-json variables #293 |
       | 2    | markup small-caps, superscript, italics #301 |
-      | 1    | Math parts in title #113 |
       | 2    | micro sign (unicode B5) export seems wrong and span in title #1434 |
       | 1    | Month showing up in year field on export #889 |
       | 1    | Multiple locations and-or publishers and BibLaTeX export #689 |
@@ -250,11 +247,17 @@ Feature: Export
       | 1    | Zotero's Manuscript 'Type' is mapped to both biblatex's 'type' and 'howpublished' #2114 |
 
   @biblatex
-  Scenario: Wrong performance for exports Bibtex a becomes textbackslash a #3184
-    When I import 1 reference from "export/*.json"
-    And I select the item with a field that contains "Title with"
+  Scenario Outline: Export <refs> references for BibLaTeX to <file>
+    When I import <refs> references from "export/<file>.json"
+    And I select all items
     And I migrate TeX to extra for the selected items
     Then an export using "Better BibLaTeX" should match "export/*.biblatex"
+
+    Examples:
+      | 1    | Wrong performance for exports Bibtex a becomes textbackslash a #3184 |
+      | 1    | Math parts in title #113 |
+      | 1    | BBT yields error with quality report #1387 |
+      | 4    | Handle HDL not included as eprint for biblatex #3250 |
 
   @bibtex
   Scenario Outline: Export <refs> references for BibTeX to <file>
