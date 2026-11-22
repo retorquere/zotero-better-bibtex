@@ -248,6 +248,12 @@ export class TestSupport {
     throw new Error(`failed to select ${ ids }`)
   }
 
+  public async migrateTeX(): Promise<void> {
+    const pane = Zotero.getActiveZoteroPane()
+    if (!pane) throw new Error('Cannot migrate TeX: no active Zotero pane')
+    await Zotero.BetterBibTeX.MenuHelper.migrateTeX(pane.getSelectedItems())
+  }
+
   public async find(query: { contains: string; is: string }, expected = 1): Promise<number[]> {
     if (!Object.keys(query).length) throw new Error(`empty query ${ JSON.stringify(query) }`)
 

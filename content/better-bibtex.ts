@@ -771,6 +771,15 @@ export class BetterBibTeX {
                 },
                 {
                   menuType: 'menuitem',
+                  l10nID: 'better-bibtex_zotero-pane_migrate-tex',
+                  onShowing: itemsSelected,
+                  onCommand: (_event, _context) => void Zotero.BetterBibTeX.MenuHelper.migrateTeX(selectedItems()).catch((err: Error) => {
+                    log.error('migrateTeX:', err)
+                    flash('Migrate TeX to extra failed', err.message)
+                  }),
+                },
+                {
+                  menuType: 'menuitem',
                   l10nID: 'better-bibtex_zotero-pane_sentence-case',
                   onShowing: itemsSelected,
                   onCommand: (_event, _context) => void Zotero.BetterBibTeX.MenuHelper.sentenceCase(),

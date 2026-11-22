@@ -30,10 +30,16 @@ pub(crate) enum Command {
     Fmt(FormatArgs),
     Rename(RenameArgs),
     Get(GetArgs),
+    Clean(CleanArgs),
 }
 
 #[derive(Args)]
 pub(crate) struct GetArgs {
+    debug_log: String,
+}
+
+#[derive(Args)]
+pub(crate) struct CleanArgs {
     debug_log: String,
 }
 
@@ -118,6 +124,7 @@ pub async fn run(command: Command) -> Result<(), Box<dyn std::error::Error>> {
         Command::Fmt(args) => fmt(args),
         Command::Rename(args) => rename(args),
         Command::Get(args) => get(args).await,
+        Command::Clean(args) => clean(args),
     }
 }
 
@@ -508,4 +515,62 @@ fn write_feature(path: &str, feature: &Feature) -> Result<(), Box<dyn std::error
     fs::write(path, feature_to_string(feature))?;
 
     Ok(())
+}
+
+fn clean(args: CleanArgs) -> Result<(), Box<dyn std::error::Error>> {
+    let mut debug_log: serde_json::Value = if args.debug_log.ends_with(".yaml") {
+        serde_yaml::from_str(&fs::read_to_string(&args.debug_log)?)?
+    } else if args.debug_log.ends_with(".json") {
+        serde_json::from_slice(&fs::read(&args.debug_log)?)?
+    } else {
+        return Err("File must have .yaml or .json extension".into());
+    };
+
+    if !debug_log.is_object() {
+        return Err(std::io::Error::new(
+            std::io::ErrorKind::InvalidData,
+            format!("{} is not a library", args.debug_log),
+        ).into());
+    }
+
+    if debug_log.pointer("/config/id").and_then(serde_json::Value::as_str) != Some("36a3b0b5-bad0-4a04-b79b-441c7cef77db") {
+        return Err(std::io::Error::new(
+            std::io::ErrorKind::InvalidData,
+            format!("{} is not a library", args.debug_log),
+        ).into());
+    }
+
+    let reference_prefs: serde_json::Value = serde_yaml::from_str(&fs::read_to_string("content/Preferences/preferences.yaml")?)?;
+
+    if let Some(preferences) = debug_log.pointer_mut("/config/preferences").and_then(serde_json::Value::as_object_mut) {
+        *preferences = std::mem::take(preferences)
+            .into_iter()
+            .filter_map(|(key, value)| {
+                match reference_prefs.get(&key).and_then(|pref| pref.get("default")) {
+                    Some(default_value) if !values_have_same_type(&value, default_value) => {
+                        Some(Err(std::io::Error::new(
+                            std::io::ErrorKind::InvalidData,
+                            format!("Preference {} has mismatched type", key),
+                        )))
+                    }
+                    Some(default_value) if &value == default_value => None,
+                    _ => Some(Ok((key, value))),
+                }
+            })
+            .collect::<Result<_, _>>()?;
+    }
+
+    fs::write(Path::new(&args.debug_log).with_extension("yaml"), serde_yaml::to_string(&debug_log)?)?;
+
+    Ok(())
+}
+
+fn values_have_same_type(a: &serde_json::Value, b: &serde_json::Value) -> bool {
+    match (a, b) {
+        (serde_json::Value::Null, serde_json::Value::Null) => true,
+        (serde_json::Value::Bool(_), serde_json::Value::Bool(_)) => true,
+        (serde_json::Value::Number(_), serde_json::Value::Number(_)) => true,
+        (serde_json::Value::String(_), serde_json::Value::String(_)) => true,
+        _ => false,
+    }
 }

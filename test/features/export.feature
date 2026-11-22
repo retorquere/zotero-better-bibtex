@@ -247,8 +247,14 @@ Feature: Export
       | 1    | Use nonacademic entrysubtype in place of newspapermagazine for biblatex-apa #2987 |
       | 1    | Use prepublished as default pubstate for arXiV articles #2911 |
       | 1    | When exporting notes, also handle the blockquote tag #1656 |
-      | 1    | Wrong performance for exports Bibtex a becomes textbackslash a #3184 |
       | 1    | Zotero's Manuscript 'Type' is mapped to both biblatex's 'type' and 'howpublished' #2114 |
+
+  @biblatex
+  Scenario: Wrong performance for exports Bibtex a becomes textbackslash a #3184
+    When I import 1 reference from "export/*.json"
+    And I select the item with a field that contains "Title with"
+    And I migrate TeX to extra for the selected items
+    Then an export using "Better BibLaTeX" should match "export/*.biblatex"
 
   @bibtex
   Scenario Outline: Export <refs> references for BibTeX to <file>

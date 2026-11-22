@@ -485,6 +485,11 @@ def step_impl(context):
 def step_impl(context):
   context.zotero.execute('await Zotero.BetterBibTeX.MenuHelper.patchDates()')
 
+@step(u'I migrate TeX to extra for the selected items')
+def step_impl(context):
+  assert context.selected, 'No items selected for TeX migration'
+  context.zotero.execute('await Zotero.BetterBibTeX.TestSupport.migrateTeX()')
+
 @step('I change {param} to {value} on the auto-export')
 def step_impl(context, param, value):
   value = json.loads(value)

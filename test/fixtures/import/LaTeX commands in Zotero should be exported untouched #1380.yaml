@@ -1,0 +1,69 @@
+collections: {}
+config:
+  id: 36a3b0b5-bad0-4a04-b79b-441c7cef77db
+  label: BetterBibTeX JSON
+  options:
+    Items: true
+    Normalize: true
+    Preferences: true
+    YAML: false
+    exportFileData: false
+    exportNotes: true
+    keepUpdated: false
+    worker: true
+  preferences:
+    citekeyFormat: auth + year
+    fillKeyAfter: 1
+    rawImports: true
+items:
+- ISBN: 978-2-7440-7182-9
+  attachments: []
+  autoJournalAbbreviation: ''
+  citationKey: MittelbachLaTeXCompanion2006
+  creators:
+  - creatorType: author
+    firstName: Frank
+    lastName: Mittelbach
+  - creatorType: author
+    firstName: Michel
+    lastName: Goossens
+  - creatorType: translator
+    firstName: Jacques
+    lastName: André
+  - creatorType: translator
+    firstName: Benoît
+    lastName: Bellet
+  - creatorType: translator
+    firstName: Jean-Côme
+    lastName: Charpentier
+  - creatorType: translator
+    firstName: Jean-Michel
+    lastName: Hufflen
+  - creatorType: translator
+    firstName: Yves
+    lastName: Soulet
+  date: 2006-02
+  dateAdded: 2026-11-22T21:24:10Z
+  dateModified: 2026-11-22T21:24:10Z
+  edition: '2'
+  extra: |-
+    tex.title= \LaTeX{} Companion
+    tex.translator= Andr\'e, Jacques and Bellet, Benoît and Charpentier, Jean-Côme and Hufflen, Jean-Michel and Soulet, Yves
+  itemID: 111
+  itemKey: UIH4A8MQ
+  itemType: book
+  key: UIH4A8MQ
+  language: french
+  libraryID: 1
+  notes: []
+  numPages: '1008'
+  place: Paris
+  publisher: Pearson Education France
+  relations: {}
+  tags: []
+  title: LᴬT<sub>E</sub>X Companion
+  uri: http://zotero.org/users/8230813/items/UIH4A8MQ
+  version: 0
+version:
+  bbt: 9.0.77.emile.Mac.fritz.box
+  zotero: 10.0.6
