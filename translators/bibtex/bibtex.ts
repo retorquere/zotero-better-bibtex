@@ -608,7 +608,6 @@ async function parseBibTeX(translation: Translation): Promise<Library> {
     },
     caseProtection: translation.collected.preferences.importCaseProtection as 'as-needed',
     verbatimFields: translation.verbatimFields,
-    raw: translation.collected.preferences.rawImports,
     strings: preloadedStrings.enabled ? preloadedStrings.strings : '',
     removeOuterBraces: ['keywords', 'doi', 'publisher', 'location', 'title', 'booktitle'],
   })
@@ -1646,11 +1645,6 @@ class ZoteroItem {
             log.error('unhandled field:', { field, mode: this.bibtex.mode[field] || 'unknown', value })
           }
       }
-    }
-
-    if (this.translation.collected.preferences.rawImports && this.translation.collected.preferences.rawLaTag !== '*') {
-      if (!this.item.tags) this.item.tags = []
-      this.item.tags.push({ tag: this.translation.collected.preferences.rawLaTag, type: 1 })
     }
 
     // Endnote has no citation keys in their bibtex

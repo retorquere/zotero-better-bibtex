@@ -12,8 +12,8 @@ export type Field = {
   // Source value to encode; may be omitted when bibtex is supplied.
   value: string | String | string[] | number | Serialized.Attachment[] | Serialized.Tag[] | Serialized.Creator[] | undefined
   // How to encode value; defaults to the configured field encoding or literal.
-  enc?: 'raw' | 'url' | 'verbatim' | 'creators' | 'literal' | 'literal_list' | 'latex' | 'tags' | 'attachments' | 'date' | 'minimal' | 'bibtex' | 'biblatex' | 'extra' | 'note'
-  raw?: boolean
+  enc?: 'url' | 'verbatim' | 'creators' | 'literal' | 'literal_list' | 'latex' | 'tags' | 'attachments' | 'date' | 'minimal' | 'bibtex' | 'biblatex' | 'extra' | 'note'
+  // raw?: boolean
   caseConversion?: boolean
   sep?: string
 
@@ -148,7 +148,7 @@ const enc_creators_marker = {
 const isBibString = /^[a-z][-a-z0-9_]*$/i
 
 export type Config = {
-  fieldEncoding: Record<string, 'raw' | 'url' | 'verbatim' | 'creators' | 'literal' | 'literal_list' | 'tags' | 'attachments' | 'date' | 'extra' | 'note'>
+  fieldEncoding: Record<string, 'url' | 'verbatim' | 'creators' | 'literal' | 'literal_list' | 'tags' | 'attachments' | 'date' | 'extra' | 'note'>
   exportCaseDefaults: Record<string, boolean>
   typeMap: {
     csl: Record<string, string | { type: string; subtype?: string }>
@@ -547,10 +547,9 @@ export class Entry {
 
     if (this.translation.skipField?.exec(`${this.translation.BetterBibTeX ? 'bibtex' : 'biblatex'}.${this.entrytype}.${field.name}`)) return undefined
 
-    // field.enc = field.raw ? 'raw' : (field.enc || this.config.fieldEncoding[field.name] || 'literal')
-    field.enc = field.enc || this.config.fieldEncoding[field.name] || (field.raw ? 'raw' : 'literal')
+    field.enc = field.enc || this.config.fieldEncoding[field.name] || 'literal'
 
-    if (field.enc === 'date') {
+    if (field.enc === 'date' && !field.bibtex) {
       if (!field.value) return undefined
 
       if (field.value === 'today') {
@@ -597,7 +596,7 @@ export class Entry {
     }
 
     if (this.has[field.name]) {
-      if (!Array.isArray(field.value) && this.has[field.name].value === field.value && this.has[field.name].enc === field.enc) return undefined
+      if (!field.bibtex && !Array.isArray(field.value) && this.has[field.name].value === field.value && this.has[field.name].enc === field.enc) return undefined
 
       let v_old = this.has[field.name].value
       let v_new = field.value
@@ -630,10 +629,6 @@ export class Entry {
 
           case 'literal':
             field.bibtex = this.enc_literal(field, { raw: this.item.raw })
-            break
-
-          case 'raw':
-            field.bibtex = this.enc_raw(field)
             break
 
           case 'url':
@@ -911,7 +906,9 @@ export class Entry {
           continue
         }
 
-        const mode = ({ raw: { raw: true }, cased: { caseConversion: true } }[field.mode!]) || {}
+        const mode = field.mode === 'raw'
+          ? { bibtex: `{${field.value}}` }
+          : field.mode === 'cased' ? { caseConversion: true } : {}
 
         switch (name) {
           case 'mr':
@@ -949,9 +946,11 @@ export class Entry {
             this.add({ name, value: field.value, ...mode })
             break
 
-          default:
-            this.add({ name, value: field.value, bibtexStrings, ...mode })
+          default: {
+            const bibstring = field.mode === 'raw' && bibtexStrings ? this.getBibString(field.value) : ''
+            this.add({ name, value: field.value, bibtexStrings, ...mode, ...(bibstring ? { bibtex: bibstring } : {}) })
             break
+          }
         }
       }
     }
@@ -1023,16 +1022,6 @@ export class Entry {
     if (this.item.$cacheable) Zotero.BetterBibTeX.Cache.store(this.item.itemID, ref, this.metadata)
 
     this.translation.bibtex.postfix!.add(this.metadata)
-  }
-
-  /*
-   * 'Encode' to raw LaTeX value
-   *
-   * @param {field} field to encode
-   * @return {String} unmodified `field.value`
-   */
-  protected enc_raw(f): string {
-    return f.value
   }
 
   /*
@@ -1239,7 +1228,7 @@ export class Entry {
       return f.value.map(elt => this.enc_literal({ ...f, bibtex: undefined, value: elt }, options)).filter(v => v !== undefined).join(f.sep || '')
     }
 
-    if (f.raw || options.raw) return String(f.value)
+    // raw: if (f.raw || options.raw) return String(f.value)
 
     const titlecase = f.caseConversion ?? this.titlecaseFields.has(f.name)
     const exportCaseProtection = f.caseConversion ?? this.caseProtectionFields.has(f.name)
@@ -1280,7 +1269,7 @@ export class Entry {
     const unicode = this.translation.unicode
     const tags = (f.value as Serialized.Tag[])
       .map(tag => (typeof tag === 'string' ? { tag } : tag))
-      .filter(tag => (this.translation.collected.preferences.automaticTags || (tag.type !== 1)) && tag.tag !== this.translation.collected.preferences.rawLaTag)
+      .filter(tag => (this.translation.collected.preferences.automaticTags || (tag.type !== 1)))
       .map(tag => ({ ...tag, tag: tag.tag.replace(/[#%]/g, '') }))
       .filter(tag => tag.tag)
     if (tags.length === 0) return undefined

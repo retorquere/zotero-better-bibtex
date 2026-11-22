@@ -177,18 +177,6 @@ You can use custom preferences per export directory:
 
 A preferences override will disable caching for that export.
 
-## rawImports
-
-default: `no`
-
-When you set this on, BBT will import bib files leaving any LaTeX commands as-is, and add the #LaTeX tag for raw re-exports.
-## rawLaTag
-
-default: `#LaTeX`
-
-When an item has this tag, all its fields will be assumed to hold raw LaTeX and will undergo no further transformation.
-If you set this to `*`, all items will be assumed to have raw LaTeX.
-
 ## relativeFilePaths
 
 default: `no`

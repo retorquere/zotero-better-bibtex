@@ -98,15 +98,6 @@ export class Exporter {
         }
       }
 
-      item.raw = this.translation.BetterTeX && this.translation.collected.preferences.rawLaTag === '*'
-      item.tags = item.tags.filter(tag => {
-        if (this.translation.BetterTeX && tag.tag === this.translation.collected.preferences.rawLaTag) {
-          item.raw = true
-          return false
-        }
-        return true
-      })
-
       yield item
     }
   }
