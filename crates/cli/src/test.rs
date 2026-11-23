@@ -578,6 +578,7 @@ fn clean(args: CleanArgs) -> Result<(), Box<dyn std::error::Error>> {
     let reference_prefs: serde_json::Value = serde_yaml::from_str(&fs::read_to_string("content/Preferences/preferences.yaml")?)?;
 
     if let Some(preferences) = debug_log.pointer_mut("/config/preferences").and_then(serde_json::Value::as_object_mut) {
+        preferences.remove("baseAttachmentPath");
         *preferences = std::mem::take(preferences)
             .into_iter()
             .filter_map(|(key, value)| {
