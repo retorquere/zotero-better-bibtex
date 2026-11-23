@@ -137,10 +137,6 @@ const fieldOrder = [
   return acc
 }, {})
 
-function property_sort(a: [string, string, string, string], b: [string, string, string, string]): number {
-  return strcmp.variant(a[0], b[0])
-}
-
 const enc_creators_marker = {
   initials: /[\u2063\u0097]/g, // invisible separator, end of guarded area
   relax: '\u200C', // zero-width non-joiner
@@ -495,17 +491,6 @@ export class Entry {
     // delete this.item.url
     // this.remove('url')
     return true
-  }
-
-  private valueish(value: number | string): string {
-    switch (typeof value) {
-      case 'number':
-        return `${value}`
-      case 'string':
-        return value.replace(this.re.nonwordish, '').toLowerCase()
-      default:
-        return ''
-    }
   }
 
   private get rawLaTeX(): boolean {
@@ -1636,55 +1621,6 @@ export class Entry {
     }
 
     report = report.concat(this.quality_report)
-
-    let used_values: Array<string | number> = Object.values(this.has)
-      .filter(field => typeof field.value === 'string' || typeof field.value === 'number')
-      .map(field => `${field.value}`)
-      .filter(value => value)
-    used_values = used_values.concat(used_values.map(value => this.valueish(value)))
-
-    const ignore_unused_props = [
-      'abstractNote',
-      'accessDate',
-      'autoJournalAbbreviation',
-      'citationKey',
-      'citekey',
-      'collections',
-      'date',
-      'dateAdded',
-      'dateModified',
-      'itemID',
-      'itemType',
-      'itemKey',
-      'key',
-      'libraryID',
-      'relations',
-      'rights',
-      'uri',
-      'version',
-    ]
-
-    const pretty = (k: string): string => {
-      if (k === 'numPages') return 'Number of pages'
-      const label = Schema.zotero.locales['en-US'].fields[k]
-      if (!label || label.includes('.')) return Schema.toLabel(k)
-      return label.replace(/ [A-Z]/g, c => c.toLowerCase())
-    }
-    const unused_data = [
-      ...Object.entries(this.item.extraFields.kv!).map(([k, v]) => ['', `extra: ${k}`, v]),
-      ...Object.entries(this.item).map(([k, v]) => [k, pretty(k), v]),
-    ]
-      .map(([k, label, v]): [string, string, string, string] => [k, label, v, this.valueish(v)])
-      .filter(([k, _label, v, vi]) => !ignore_unused_props.includes(k) && !used_values.includes(v) && (vi && !used_values.includes(vi)))
-      .sort(property_sort)
-
-    for (const [key, label, value, valueish] of unused_data) {
-      if (key === 'language' && this.has.langid) continue
-      if (key === 'libraryCatalog' && valueish.includes('arxiv') && this.item.arXiv) continue
-      report.push(`? unused ${label} (${JSON.stringify(value)})`)
-    }
-
-    if (!report.length) return ''
 
     report.unshift(`== ${this.translation.BetterBibTeX ? 'BibTeX' : 'BibLaTeX'} quality report for ${this.item.citationKey}:`)
     return report.map(line => `% ${line}\n`).join('')
