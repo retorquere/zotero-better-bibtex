@@ -601,11 +601,14 @@ export class Entry {
         field.bibtex = `${bibstring || field.value! as string}`
       }
       else {
-        switch (field.enc) {
-          case 'raw' as unknown as 'verbatim': // for postscripts
-            field.bibtex = typeof field.value === 'string' ? field.value : undefined
-            break
+        // field.enc === 'raw' is for legacy postscripts
+        const rawLaTag = this.translation.collected.preferences.rawLaTag
+        if ((field.enc === 'raw' as unknown as 'verbatim') || this.item.tags.find(tag => tag.tag === rawLaTag || rawLaTag === '*')) {
+          field.bibtex = typeof field.value === 'string' ? field.value : undefined
+          continue
+        }
 
+        switch (field.enc) {
           case 'extra':
             field.bibtex = this.enc_extra(field)
             break
@@ -1264,7 +1267,7 @@ export class Entry {
     const unicode = this.translation.unicode
     const tags = (f.value as Serialized.Tag[])
       .map(tag => (typeof tag === 'string' ? { tag } : tag))
-      .filter(tag => (this.translation.collected.preferences.automaticTags || (tag.type !== 1)))
+      .filter(tag => (this.translation.collected.preferences.automaticTags || (tag.type !== 1) || (tag.tag === this.translation.collected.preferences.rawLaTag)))
       .map(tag => ({ ...tag, tag: tag.tag.replace(/[#%]/g, '') }))
       .filter(tag => tag.tag)
     if (tags.length === 0) return undefined

@@ -186,6 +186,7 @@ export class Collected {
       acc[pref] = Zotero.getHiddenPref(`better-bibtex.${ pref }`) ?? dflt
       return acc
     }, {} as unknown as Preferences)
+    this.preferences.rawLaTag = Zotero.getHiddenPref('better-bibtex.rawLaTag')
     this.preferences.testing = Zotero.getHiddenPref('better-bibtex.testing') as boolean
     this.platform = Zotero.getHiddenPref('better-bibtex.platform') as string
   }
