@@ -20,7 +20,6 @@ export type Field = {
   verbatim?: string // Field name to use for a date value the date parser cannot parse.
   bare?: boolean // Leave the encoded value unbraced when it contains no whitespace.
   bibtexStrings?: boolean // Use a matching BibTeX string macro instead of the field value when available.
-  silentReplace?: boolean // Suppress replacement reports for this addition.
   orig?: { // Controls output of an original date extracted by the date parser.
     name?: string // Field name for the original date.
     verbatim?: string // Field name to use if the original date cannot be parsed.
@@ -179,6 +178,7 @@ export class Entry {
   public language!: string
   public english: boolean
   public date: DateParser.OptionalRichDate
+  private reportReplace = true
 
   public config: Config
 
@@ -655,7 +655,7 @@ export class Entry {
     }
 
     if (this.has[field.name]) {
-      if (!field.silentReplace && this.has[field.name].bibtex?.toLowerCase() !== field.bibtex?.toLowerCase()) {
+      if (this.reportReplace && this.has[field.name].bibtex?.toLowerCase() !== field.bibtex?.toLowerCase()) {
         this.quality_report.push(`replaced "${field.name}" (${JSON.stringify(this.has[field.name].bibtex)} => ${JSON.stringify(field.bibtex)})`)
       }
       // replaces the existing field with the new field, preserving the iteration order for the write-out
@@ -880,6 +880,7 @@ export class Entry {
       }
     }
 
+    this.reportReplace = false // these are explicit overrides
     const bibtexStrings = this.translation.collected.preferences.exportBibTeXStrings.startsWith('match')
     if (this.item.extraFields.tex) {
       // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
@@ -896,7 +897,6 @@ export class Entry {
         }
 
         const mode = {
-          silentReplace: true,
           ...(field.mode === 'raw'
             ? { bibtex: `{${field.value}}` }
             : field.mode === 'cased' ? { caseConversion: true } : {}),
@@ -918,7 +918,7 @@ export class Entry {
           case 'jstor':
           case 'hdl':
             if (this.translation.BetterBibLaTeX && !this.has.eprinttype) {
-              this.add({ name: 'eprinttype', value: this.eprintType[name] || name, silentReplace: true })
+              this.add({ name: 'eprinttype', value: this.eprintType[name] || name })
               this.add({ name: 'eprint', value: field.value, ...mode })
             }
             else {
@@ -927,7 +927,7 @@ export class Entry {
             break
           case 'googlebooksid':
             if (this.translation.BetterBibLaTeX && !this.has.eprinttype) {
-              this.add({ name: 'eprinttype', value: 'googlebooks', silentReplace: true })
+              this.add({ name: 'eprinttype', value: 'googlebooks' })
               this.add({ name: 'eprint', value: field.value, ...mode })
             }
             else {
@@ -946,6 +946,7 @@ export class Entry {
         }
       }
     }
+    this.reportReplace = true
 
     // sort before postscript so the postscript can affect field order
     const keys = Object.keys(this.has).sort((a, b) => {
@@ -969,6 +970,7 @@ export class Entry {
     }
 
     let allow: postscript.Allow = { cache: true, write: true }
+    this.reportReplace = false
     try {
       allow = this.postscript(this, this.item, this.translation, Zotero, this.extraFields)
     }
@@ -977,6 +979,7 @@ export class Entry {
       log.error('postscript error:', err)
       allow.cache = false
     }
+    this.reportReplace = true
     this.item.$cacheable = this.item.$cacheable && allow.cache
 
     if (this.translation.skipField) {
