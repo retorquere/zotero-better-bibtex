@@ -1257,7 +1257,7 @@ export class Entry {
     const unicode = this.translation.unicode
     const tags = (f.value as Serialized.Tag[])
       .map(tag => (typeof tag === 'string' ? { tag } : tag))
-      .filter(tag => (this.translation.collected.preferences.automaticTags || (tag.type !== 1) || (tag.tag === this.translation.collected.preferences.rawLaTag)))
+      .filter(tag => (this.translation.collected.preferences.automaticTags || tag.type !== 1) && tag.tag !== this.translation.collected.preferences.rawLaTag
       .map(tag => ({ ...tag, tag: tag.tag.replace(/[#%]/g, '') }))
       .filter(tag => tag.tag)
     if (tags.length === 0) return undefined
