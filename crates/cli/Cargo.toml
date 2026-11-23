@@ -10,9 +10,11 @@ path = "src/main.rs"
 [dependencies]
 any_ascii = "0.3.3"
 clap = { version = "4.6.8", features = ["derive"] }
+diff_match_patch = "0.3.2"
 dotenvy = "0.15.7"
 gherkin = "0.16.0"
 git2 = "0.21.0"
+json-patch = "5.0.0"
 octocrab = "0.54.9"
 regex = "1.13.1"
 rust-s3 = "0.38.0"
