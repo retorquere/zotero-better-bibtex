@@ -20,6 +20,7 @@ export type Field = {
   verbatim?: string // Field name to use for a date value the date parser cannot parse.
   bare?: boolean // Leave the encoded value unbraced when it contains no whitespace.
   bibtexStrings?: boolean // Use a matching BibTeX string macro instead of the field value when available.
+  silentReplace?: boolean // Suppress replacement reports for this addition.
   orig?: { // Controls output of an original date extracted by the date parser.
     name?: string // Field name for the original date.
     verbatim?: string // Field name to use if the original date cannot be parsed.
@@ -654,7 +655,7 @@ export class Entry {
     }
 
     if (this.has[field.name]) {
-      if (this.has[field.name].bibtex?.toLowerCase() !== field.bibtex?.toLowerCase()) {
+      if (!field.silentReplace && this.has[field.name].bibtex?.toLowerCase() !== field.bibtex?.toLowerCase()) {
         this.quality_report.push(`replaced "${field.name}" (${JSON.stringify(this.has[field.name].bibtex)} => ${JSON.stringify(field.bibtex)})`)
       }
       // replaces the existing field with the new field, preserving the iteration order for the write-out
@@ -894,9 +895,12 @@ export class Entry {
           continue
         }
 
-        const mode = field.mode === 'raw'
-          ? { bibtex: `{${field.value}}` }
-          : field.mode === 'cased' ? { caseConversion: true } : {}
+        const mode = {
+          silentReplace: true,
+          ...(field.mode === 'raw'
+            ? { bibtex: `{${field.value}}` }
+            : field.mode === 'cased' ? { caseConversion: true } : {}),
+        }
 
         switch (name) {
           case 'mr':
@@ -914,7 +918,7 @@ export class Entry {
           case 'jstor':
           case 'hdl':
             if (this.translation.BetterBibLaTeX && !this.has.eprinttype) {
-              this.add({ name: 'eprinttype', value: this.eprintType[name] || name })
+              this.add({ name: 'eprinttype', value: this.eprintType[name] || name, silentReplace: true })
               this.add({ name: 'eprint', value: field.value, ...mode })
             }
             else {
@@ -923,7 +927,7 @@ export class Entry {
             break
           case 'googlebooksid':
             if (this.translation.BetterBibLaTeX && !this.has.eprinttype) {
-              this.add({ name: 'eprinttype', value: 'googlebooks' })
+              this.add({ name: 'eprinttype', value: 'googlebooks', silentReplace: true })
               this.add({ name: 'eprint', value: field.value, ...mode })
             }
             else {
