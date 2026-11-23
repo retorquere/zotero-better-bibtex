@@ -160,6 +160,7 @@ Feature: Export
       | 1    | Inconsistent Citation Key #2953 |
       | 1    | Inconsistent date field formatting in BibLaTeX export #1493 |
       | 1    | inspireHep fetching broken #2201 |
+      | 1    | Interviewee is incorrectly mapped in biblatex export #3660 |
       | 1    | Issue getting shortjournal #3382 |
       | 1    | Issue of generating citekeys with parentheses  #2366 |
       | 1    | italics in title - capitalization #541 |
@@ -255,10 +256,10 @@ Feature: Export
 
     Examples:
       | refs | file |
-      | 1    | Wrong performance for exports Bibtex a becomes textbackslash a #3184 |
-      | 1    | Math parts in title #113 |
       | 1    | BBT yields error with quality report #1387 |
       | 4    | Handle HDL not included as eprint for biblatex #3250 |
+      | 1    | Math parts in title #113 |
+      | 1    | Wrong performance for exports Bibtex a becomes textbackslash a #3184 |
 
   @bibtex
   Scenario Outline: Export <refs> references for BibTeX to <file>

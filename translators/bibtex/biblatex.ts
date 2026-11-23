@@ -201,6 +201,7 @@ class Entry extends BaseEntry {
 
         case 'author':
         case 'inventor':
+        case 'interviewee':
         case 'interviewer':
         case 'programmer':
         case 'artist':

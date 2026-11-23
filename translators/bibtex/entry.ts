@@ -975,8 +975,8 @@ export class Entry {
       allow = this.postscript(this, this.item, this.translation, Zotero, this.extraFields)
     }
     catch (err) {
-      if (this.translation.collected.preferences.testing) throw err
       log.error('postscript error:', err)
+      this.quality_report.push(`postscript error: ${(err as Error).message}`)
       allow.cache = false
     }
     this.reportReplace = true

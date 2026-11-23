@@ -1,0 +1,74 @@
+---
+collections: {}
+config:
+  id: 36a3b0b5-bad0-4a04-b79b-441c7cef77db
+  label: BetterBibTeX JSON
+  options:
+    cache: true
+    exportDir: /Users/david/bib/bug
+    exportPath: /Users/david/bib/bug/bug-bbt.json
+    keepUpdated: false
+    worker: true
+  preferences:
+    DOIandURL: doi
+    citekeyFold: false
+    citekeyFormat: |-
+      authors(n = 2, etal = EtAl, sep = "-").lower + len + "-" + year + "-" + shorttitle.condense("-").lower;
+      shorttitle.lower + "-" + year
+    exportSort: "off"
+    fillKeyAfter: 1
+    postscript: |-
+      if (Translator.BetterTeX) {
+          final_paths = Object.values(tex.has["file"]["value"]).map(value => {
+              Zotero.debug(JSON.stringify(value))
+              if (value["contentType"] == "application/pdf"){
+                  itemKey = undefined
+                  if (value.hasOwnProperty("itemKey")) {
+                      itemKey = value["itemKey"]
+                  } else if (value.hasOwnProperty("key")) {
+                      itemKey = value["key"]
+                      }
+                  if (itemKey == undefined) {
+                      Zotero.debug("COULD NOT DETECT THE ITEM KEY")
+                  }
+                  path = `zotero://open-pdf/library/items/${itemKey}?${value["localPath"].split(itemKey)[1].substring(1)}`
+              } else {
+                  path = value["localPath"]
+              }
+              return path.replace(/([\\;])/g, "\\$1")
+          })
+          final_paths = final_paths.join(";")
+          Zotero.debug(final_paths)
+          tex.add({"name":"file", "value": final_paths})
+      }
+    resetKeyOnChange: true
+    verbatimFields: "url,doi,file,pdf,ids,eprint,verb?,groups,citeulike-linkout-?*,bdsk-url-?*,keywords"
+items:
+  - accessDate: "2025-01-16T08:12:57Z"
+    attachments: []
+    autoJournalAbbreviation: ""
+    citationKey: kroah-hartman-2020-computers-barely-work
+    creators:
+      - creatorType: interviewee
+        firstName: Greg
+        lastName: Kroah-Hartman
+      - creatorType: interviewer
+        firstName: Wendell
+        lastName: Wilson
+    date: 04.05.2020
+    dateAdded: "2025-01-16T08:12:57Z"
+    dateModified: "2026-11-17T12:00:03Z"
+    itemID: 6192
+    itemType: interview
+    key: 6XFM537P
+    language: en
+    medium: Video
+    notes: []
+    tags:
+      - tag: grau
+    title: Computers Barely Work - Interview with Linux Legend Greg Kroah-Hartman - YouTube
+    url: "https://www.youtube.com/watch?v=t9MjGziRw-c"
+    version: 23346
+version:
+  bbt: 9.0.77
+  zotero: 10.0.9
