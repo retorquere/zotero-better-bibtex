@@ -508,13 +508,18 @@ export class Entry {
     }
   }
 
+  private get rawLaTeX(): boolean {
+    const rawLaTag = this.translation.collected.preferences.rawLaTag
+    return !!this.item.raw || !!this.item.tags.find(tag => tag.tag === rawLaTag || rawLaTag === '*')
+  }
+
   /** normalize dashes, mainly for use in `pages` */
   public normalizeDashes(ranges: string | number): string {
     if (typeof ranges === 'number') return `${ranges}`
 
     ranges = (ranges || '').trim()
 
-    if (this.item.raw) return ranges
+    if (this.rawLaTeX) return ranges
 
     return ranges
       .replace(/\u2053/g, '~')
@@ -602,8 +607,7 @@ export class Entry {
       }
       else {
         // field.enc === 'raw' is for legacy postscripts
-        const rawLaTag = this.translation.collected.preferences.rawLaTag
-        if ((field.enc === 'raw' as unknown as any) || this.item.tags.find(tag => tag.tag === rawLaTag || rawLaTag === '*')) {
+        if ((field.enc === 'raw' as unknown as any) || (this.rawLaTeX && typeof field.value === 'string')) {
           field.bibtex = typeof field.value === 'string' ? field.value : undefined
         }
         else {
@@ -629,7 +633,7 @@ export class Entry {
               break
 
             case 'creators':
-              field.bibtex = this.enc_creators(field, this.item.raw)
+              field.bibtex = this.enc_creators(field, this.rawLaTeX)
               break
 
             case 'tags':
