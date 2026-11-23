@@ -24,12 +24,6 @@
 % Unexpected field 'location'
 % Unexpected field 'pubstate'
 % Unexpected field 'version'
-% ? unused Archive ("the archive")
-% ? unused Archive location ("the location in the archive")
-% ? unused Authority ("This is the organisation")
-% ? unused Call number ("the call number")
-% ? unused Committee ("This is the committee")
-% ? unused Library catalog ("the library catalogue")
 
 @dataset{MyDGS_annotated,
   title = {MY DGS – annotated. Public Corpus of German Sign Language},
