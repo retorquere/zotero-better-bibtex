@@ -246,7 +246,7 @@ Feature: Export
       | 1    | When exporting notes, also handle the blockquote tag #1656 |
       | 1    | Zotero's Manuscript 'Type' is mapped to both biblatex's 'type' and 'howpublished' #2114 |
 
-  @biblatex
+  @migrate-extra
   Scenario Outline: Export <refs> references for BibLaTeX to <file>
     When I import <refs> references from "export/<file>.json"
     And I select all items
@@ -254,6 +254,7 @@ Feature: Export
     Then an export using "Better BibLaTeX" should match "export/*.biblatex"
 
     Examples:
+      | refs | file |
       | 1    | Wrong performance for exports Bibtex a becomes textbackslash a #3184 |
       | 1    | Math parts in title #113 |
       | 1    | BBT yields error with quality report #1387 |
