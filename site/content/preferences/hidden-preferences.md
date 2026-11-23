@@ -182,6 +182,13 @@ A preferences override will disable caching for that export.
 default: `no`
 
 On import, preserve fields containing a backslash or at least two dollar signs as raw TeX in Extra (for example, `tex.title= ...`), alongside their normally imported values.
+## rawLaTag
+
+default: `#LaTeX`
+
+When an item has this tag, all its fields will be assumed to hold raw LaTeX and will undergo no further transformation.
+If you set this to `*`, all items will be assumed to have raw LaTeX.
+
 ## relativeFilePaths
 
 default: `no`

@@ -12,7 +12,7 @@ export type Field = {
   // Source value to encode; may be omitted when bibtex is supplied.
   value: string | String | string[] | number | Serialized.Attachment[] | Serialized.Tag[] | Serialized.Creator[] | undefined
   // How to encode value; defaults to the configured field encoding or literal.
-  enc?: 'url' | 'verbatim' | 'creators' | 'literal' | 'literal_list' | 'latex' | 'tags' | 'attachments' | 'date' | 'minimal' | 'bibtex' | 'biblatex' | 'extra' | 'note'
+  enc?: 'url' | 'verbatim' | 'creators' | 'literal' | 'literal_list' | 'tags' | 'attachments' | 'date' | 'minimal' | 'bibtex' | 'biblatex' | 'extra'
   // raw?: boolean
   caseConversion?: boolean
   sep?: string
@@ -148,7 +148,7 @@ const enc_creators_marker = {
 const isBibString = /^[a-z][-a-z0-9_]*$/i
 
 export type Config = {
-  fieldEncoding: Record<string, 'url' | 'verbatim' | 'creators' | 'literal' | 'literal_list' | 'tags' | 'attachments' | 'date' | 'extra' | 'note'>
+  fieldEncoding: Record<string, 'url' | 'verbatim' | 'creators' | 'literal' | 'literal_list' | 'tags' | 'attachments' | 'date' | 'extra'>
   exportCaseDefaults: Record<string, boolean>
   typeMap: {
     csl: Record<string, string | { type: string; subtype?: string }>
@@ -603,53 +603,52 @@ export class Entry {
       else {
         // field.enc === 'raw' is for legacy postscripts
         const rawLaTag = this.translation.collected.preferences.rawLaTag
-        if ((field.enc === 'raw' as unknown as 'verbatim') || this.item.tags.find(tag => tag.tag === rawLaTag || rawLaTag === '*')) {
+        if ((field.enc === 'raw' as unknown as any) || this.item.tags.find(tag => tag.tag === rawLaTag || rawLaTag === '*')) {
           field.bibtex = typeof field.value === 'string' ? field.value : undefined
-          continue
         }
+        else {
+          switch (field.enc) {
+            case 'extra':
+              field.bibtex = this.enc_extra(field)
+              break
 
-        switch (field.enc) {
-          case 'extra':
-            field.bibtex = this.enc_extra(field)
-            break
+            case 'literal_list':
+              field.bibtex = this.enc_literal_list(field, { raw: this.item.raw })
+              break
 
-          case 'literal_list':
-            field.bibtex = this.enc_literal_list(field, { raw: this.item.raw })
-            break
+            case 'literal':
+              field.bibtex = this.enc_literal(field, { raw: this.item.raw })
+              break
 
-          case 'literal':
-            field.bibtex = this.enc_literal(field, { raw: this.item.raw })
-            break
+            case 'url':
+              field.bibtex = this.enc_url(field)
+              break
 
-          case 'url':
-            field.bibtex = this.enc_url(field)
-            break
+            case 'verbatim':
+              field.bibtex = this.enc_verbatim(field)
+              break
 
-          case 'verbatim':
-            field.bibtex = this.enc_verbatim(field)
-            break
+            case 'creators':
+              field.bibtex = this.enc_creators(field, this.item.raw)
+              break
 
-          case 'creators':
-            field.bibtex = this.enc_creators(field, this.item.raw)
-            break
+            case 'tags':
+              field.bibtex = this.enc_tags(field)
+              break
 
-          case 'tags':
-            field.bibtex = this.enc_tags(field)
-            break
+            case 'attachments':
+              field.bibtex = this.enc_attachments(field)
+              break
 
-          case 'attachments':
-            field.bibtex = this.enc_attachments(field)
-            break
+            case 'minimal':
+            case 'bibtex':
+            case 'biblatex':
+              field.bibtex = this.enc_literal(field, { raw: this.item.raw })
+              break
 
-          case 'minimal':
-          case 'bibtex':
-          case 'biblatex':
-          case 'note':
-            field.bibtex = this.enc_literal(field, { raw: this.item.raw })
-            break
-
-          default:
-            throw new Error(`Unexpected field encoding: ${JSON.stringify(field.enc)}`)
+            default:
+              throw new Error(`Unexpected field encoding: ${JSON.stringify(field.enc)}`)
+          }
         }
 
         if (!field.bibtex) return undefined
@@ -666,7 +665,7 @@ export class Entry {
     }
 
     if (this.has[field.name]) {
-      this.quality_report.push(`duplicate "${field.name}" (${field.value || field.bibtex})`)
+      this.quality_report.push(`duplicate "${field.name}" (${JSON.stringify(this.has[field.name].value || this.has[field.name].bibtex)})`)
       // replaces the existing field with the new field, preserving the iteration order for the write-out
       for (const k of Object.keys(this.has[field.name])) delete this.has[field.name][k]
       Object.assign(this.has[field.name], field)
@@ -885,7 +884,7 @@ export class Entry {
       // if bibtexURL === 'note' is active, the note field will have been filled with an URL.
       // In all other cases, if this is attempting to overwrite the 'note' field, I want the test suite to throw an error
       if (!(this.translation.BetterBibTeX && this.translation.collected.preferences.bibtexURL === 'note')) {
-        this.add({ name: 'note', value: this.item.notes?.map((note: { note: string }) => note.note).join('</p><p>'), enc: 'note' })
+        this.add({ name: 'note', value: this.item.notes?.map((note: { note: string }) => note.note).join('</p><p>') })
       }
     }
 
