@@ -665,7 +665,9 @@ export class Entry {
     }
 
     if (this.has[field.name]) {
-      this.quality_report.push(`duplicate "${field.name}" (${JSON.stringify(this.has[field.name].value || this.has[field.name].bibtex)})`)
+      if (this.has[field.name].bibtex?.toLowerCase() !== field.bibtex?.toLowerCase()) {
+        this.quality_report.push(`replaced "${field.name}" (${JSON.stringify(this.has[field.name].bibtex)} => ${JSON.stringify(field.bibtex)})`)
+      }
       // replaces the existing field with the new field, preserving the iteration order for the write-out
       for (const k of Object.keys(this.has[field.name])) delete this.has[field.name][k]
       Object.assign(this.has[field.name], field)
