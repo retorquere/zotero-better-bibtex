@@ -1622,6 +1622,8 @@ export class Entry {
 
     report = report.concat(this.quality_report)
 
+    if (!report.length) return ''
+
     report.unshift(`== ${this.translation.BetterBibTeX ? 'BibTeX' : 'BibLaTeX'} quality report for ${this.item.citationKey}:`)
     return report.map(line => `% ${line}\n`).join('')
   }
