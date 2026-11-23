@@ -1,0 +1,58 @@
+config:
+  id: 36a3b0b5-bad0-4a04-b79b-441c7cef77db
+  label: BetterBibTeX JSON
+  preferences:
+    automaticTags: false
+    baseAttachmentPath: /Users/jdh/Documents/Academia/Library
+    citekeyFormat: "creatornames('%(F)s', space='-') + authEtAl2(creator='*', initials=false, sep='_')"
+    DOIandURL: doi
+    fillKeyAfter: 5
+    journalAbbreviation: auto
+    postscript: "\n"
+    quickCopyMode: pandoc
+    warnBulkModify: 0
+  options: {}
+version:
+  zotero: 10.0.6
+  bbt: 9.0.71
+collections: {}
+items:
+  -
+    key: 2ZHP64L5
+    version: 24251
+    itemType: journalArticle
+    title: Cosmological deixis and Amerindian perspectivism
+    date: '1998'
+    language: en
+    shortTitle: Cosmological deixis and amerindian perspectivism
+    url: www.jstor.org/stable/3034157
+    extra:
+      - "tex.date-added: 2013-07-27 04:33:21 +0000"
+      - "tex.date-modified: 2026-05-15 21:03:41 +0200"
+      - "tex.tags-dissertation: All; Chapter 1; Chapter 2"
+      - "tex.tags-papers: Narrative"
+      - "tex.tags-projects: SPA Roundtable"
+      - "tex.tags-teaching: Indigenous South America"
+      - "tex.tags-topics: Ontologies; Ontologies, Language; Narrative"
+    volume: '4'
+    pages: 469-488
+    publicationTitle: Journal of the Royal Anthropological Institute
+    issue: '3'
+    creators:
+      -
+        firstName: Eduardo
+        lastName: Viveiros de Castro
+        creatorType: author
+    tags:
+      -
+        tag: ontologies
+      -
+        tag: perspectivism
+      -
+        tag: Amerindians
+    dateAdded: 2026-07-01T23:46:16Z
+    dateModified: 2026-07-01T23:46:16Z
+    itemID: 11863
+    attachments: []
+    notes: []
+    autoJournalAbbreviation: J. R. Anthropol. Inst.

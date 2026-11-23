@@ -30,9 +30,7 @@
         }
       ],
       "date": "08 1995",
-      "extra": [
-        "Citation Key: HoukWise95"
-      ],
+      "extra": [],
       "issue": "2",
       "itemID": 1,
       "itemType": "journalArticle",
@@ -40,7 +38,8 @@
       "publicationTitle": "Cerebral Cortex",
       "title": "Distributed modular architectures linking basal ganglia, cerebellum, and cerebral cortex: Their role in planning and controlling action.",
       "url": "http://www.ncbi.nlm.nih.gov/pubmed/7620294",
-      "volume": "5"
+      "volume": "5",
+      "citationKey": "HoukWise95"
     }
   ]
 }

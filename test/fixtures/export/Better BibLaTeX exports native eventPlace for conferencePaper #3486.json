@@ -7,7 +7,7 @@
     },
     "preferences": {
       "citekeyFormat": "auth.lower + year",
-      "exportTitleCase": false
+      "exportTitlecase": "off"
     }
   },
   "items": [

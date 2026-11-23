@@ -1,0 +1,15 @@
+mybook:
+  type: Book
+  title: Hayagriva Test Book
+  author: Doe, Jane
+  date: 2020-05-01
+  language: en
+  publisher:
+    name: Test Press
+    location: Test City
+  serial-number:
+    doi: 10.1234/example.doi
+    isbn: 978-1-4028-9462-6
+  url:
+    value: https://example.org/book
+    date: 2021-02-03

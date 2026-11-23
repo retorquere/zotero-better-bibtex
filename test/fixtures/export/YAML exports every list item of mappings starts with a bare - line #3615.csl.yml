@@ -1,0 +1,20 @@
+---
+references:
+- id: Adams1985ReliabilityRubricsBtext
+  author:
+    - family: Adams
+      given: Robert
+  citation-key: Adams1985ReliabilityRubricsBtext
+  container-title: Medium Ævum
+  DOI: 10.2307/43628893
+  ISSN: 00258385 23981423
+  issue: '2'
+  issued:
+    - year: 1985
+  page: 208–31
+  title: The reliability of the rubrics in the B-text of *Piers Plowman*
+  title-short: Reliability of the Rubrics in the B-Text
+  type: article-journal
+  URL: https://www.jstor.org/stable/43628893
+  volume: '54'
+...

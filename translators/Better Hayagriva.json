@@ -1,0 +1,21 @@
+{
+  "translatorID": "8a2f0d30-0b73-4f2c-8b5b-7c1a9e3f2d4e",
+  "label": "Better Hayagriva",
+  "description": "imports/exports items in Hayagriva YAML format",
+  "creator": "Emiliano heyns",
+  "target": "yaml",
+  "minVersion": "4.0.27",
+  "maxVersion": "",
+  "displayOptions": {
+    "keepUpdated": false,
+    "worker": true
+  },
+  "configOptions": {
+    "getCollections": true,
+    "cached": true
+  },
+  "translatorType": 3,
+  "browserSupport": "gcsv",
+  "inRepository": false,
+  "priority": 799
+}

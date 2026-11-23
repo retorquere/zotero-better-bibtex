@@ -10,6 +10,13 @@ aliases:
 
 ## Fields
 
+### Treat the `extra` field as a note
+
+default: `no`
+
+Treat the Zotero `extra` field as a note.
+
+
 ### When merging items, also merge:
 
 #### their citation keys into an bib(la)tex `ids` field
@@ -46,8 +53,7 @@ When enabled, BBT will prepend the @strings section below to all Bib(La)TeX impo
 
 default: `No`
 
-When enabled, BBT will try to retain @string vars its exports unsurrounded by braces; when set to 'detect', single-word strings will be assumed to be externally-defined @string vars,
-when set to 'match', only @strings declared in the @strings section of the preferences will be preserved. If you don't know what this means, leave it off.
+When enabled, BBT will try to retain @string vars its exports unsurrounded by braces; when set to 'detect', single-word strings will be assumed to be externally-defined @string vars, when set to 'match', only @strings declared in the @strings section of the preferences will be preserved. If you don't know what this means, leave it off.
 
 
 Options:
@@ -56,5 +62,27 @@ Options:
 * Assume single-word fields to be @string vars
 * Match against the @string declarations below
 * Match against the @string declarations and their values below
+
+
+## Performance
+
+### Collect performance information during startup
+
+default: `no`
+
+Collect performance information during startup, to help diagnose slow starts. Always on for non-release builds.
+
+
+### Collect performance information while Zotero is running
+
+default: `No`
+
+Collect performance information while Zotero is running, to help diagnose slowdowns. "Yes, except during sync" pauses collection for the duration of a sync, since sync activity would otherwise dominate the collected information.
+
+Options:
+
+* No
+* Yes
+* Yes, except during sync
 
 

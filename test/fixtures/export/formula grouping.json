@@ -7,12 +7,12 @@
     },
     "preferences": {
       "DOIandURL": "doi",
-      "autoAbbrev": true,
       "automaticTags": false,
       "bibtexURL": "url",
       "citekeyFormat": "(auth + title).len",
       "keyConflictPolicy": "change",
-      "skipFields": "language, keywords, abstract, langid, file, copyright, ids, archiveprefix, shorttitle, issn, accessed, urldate"
+      "skipFields": "language, keywords, abstract, langid, file, copyright, ids, archiveprefix, shorttitle, issn, accessed, urldate",
+      "journalAbbreviation": "abbrev+auto"
     }
   },
   "items": [

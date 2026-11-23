@@ -8,7 +8,6 @@
     },
     "preferences": {
       "DOIandURL": "doi",
-      "autoAbbrev": true,
       "autoExport": "idle",
       "autoExportDelay": 42,
       "autoExportIdleWait": 3,
@@ -23,7 +22,8 @@
       "qualityReport": true,
       "quickCopyMode": "citekeys",
       "skipFields": "abstract",
-      "verbatimFields": "url,doi,file,eprint,verba,verbb,verbc"
+      "verbatimFields": "url,doi,file,eprint,verba,verbb,verbc",
+      "journalAbbreviation": "abbrev+auto"
     }
   },
   "items": [

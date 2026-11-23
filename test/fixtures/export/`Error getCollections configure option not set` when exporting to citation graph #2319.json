@@ -23,7 +23,7 @@
   },
   "items": [
     {
-      "abstractNote": "One in four commercial airline flights is delayed, inconveniencing travelers and causing large financial losses for carriers. The ability to accurately predict delays would make travelers\u2019 lives easier and save airlines money. In this work, we approach the problem of predicting flight delays using a Variational Long Short-Term Memory (LSTM) model. The model is trained to predict aggregate daily delays for U.S. airports using a combination of continuous and discrete variables, including weather, airport characteristics, and congestion. Monte Carlo Dropout, a Bayesian Deep Learning technique based on variational inference, is incorporated to provide planners with a well-calibrated prediction interval. We show that our Variational LSTM results in an average median absolute error of 5.8 minutes per day across 123 airports in the United States. Moreover, results show that predictive uncertainty is well explained through a calibration analysis.",
+      "abstractNote": "One in four commercial airline flights is delayed, inconveniencing travelers and causing large financial losses for carriers. The ability to accurately predict delays would make travelers’ lives easier and save airlines money. In this work, we approach the problem of predicting flight delays using a Variational Long Short-Term Memory (LSTM) model. The model is trained to predict aggregate daily delays for U.S. airports using a combination of continuous and discrete variables, including weather, airport characteristics, and congestion. Monte Carlo Dropout, a Bayesian Deep Learning technique based on variational inference, is incorporated to provide planners with a well-calibrated prediction interval. We show that our Variational LSTM results in an average median absolute error of 5.8 minutes per day across 123 airports in the United States. Moreover, results show that predictive uncertainty is well explained through a calibration analysis.",
       "citationKey": "Vandal2017",
       "creators": [
         {
@@ -49,7 +49,6 @@
       ],
       "date": "2017-10",
       "extra": [
-        "Citation Key: Vandal2017",
         "tex.crossref: PAPIs2017",
         "cites: Kendall2017",
         "cites: Kim2016b"
@@ -112,7 +111,6 @@
       ],
       "date": "2016-09",
       "extra": [
-        "Citation Key: Kim2016b",
         "tex.crossref: DASC2016"
       ],
       "itemID": 2,

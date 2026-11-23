@@ -10,7 +10,7 @@
       "DOIandURL": "doi",
       "bibtexURL": "url",
       "citekeyFormat": "authorsn(n=3,creator=\"*\",initials=false,sep=\" \").fold + year",
-      "exportTitleCase": false,
+      "exportTitlecase": "off",
       "itemObserverDelay": 100,
       "skipFields": "note,issn"
     }

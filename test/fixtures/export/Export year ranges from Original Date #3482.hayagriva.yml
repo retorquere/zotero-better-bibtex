@@ -1,0 +1,10 @@
+SchmittAnselmiCantuariensisArchiepiscopi1968:
+  type: book
+  title: S. Anselmi {Cantuariensis} archiepiscopi opera omnia
+  language: la
+  publisher:
+    name: F. Frommann
+    location: Stuttgart
+  date: 1968
+  editor:
+    - Schmitt, Franciscus Salesius

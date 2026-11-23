@@ -9,7 +9,6 @@ TIMESTAMP = datetime.now().isoformat()
 MAIN      = 'pandoc-zotero-live-citemarkers.lua'
 DEPLOYED  = '../site/content/exporting/zotero.lua'
 BIB       = os.path.join(os.getcwd(), 'biblio.bib')
-AMALG     = shutil.which('amalg.lua')
 
 HEADER = f'''
   print('zotero-live-citations {VERSION}')
@@ -29,7 +28,7 @@ rule bundle:
     with open(DEPLOYED, 'w') as deployed:
       print(HEADER, file=deployed)
       with tempfile.NamedTemporaryFile(mode='w+') as bundle:
-        shell('{AMALG} -o {bundle.name} -s {MAIN} lunajson lunajson.decoder lunajson.encoder lunajson.sax locator utils zotero')
+        shell('lua bundle.lua {MAIN} {bundle.name} lunajson lunajson.decoder lunajson.encoder lunajson.sax locator utils zotero')
         bundle.seek(0)
         print(bundle.read(), file=deployed)
 
@@ -61,7 +60,6 @@ rule rocks:
     shell("brew install luarocks")
     shell("luarocks install lunajson ")
     shell("luarocks install penlight")
-    shell("luarocks install amalg")
     shell("luarocks install lpeg")
 
 rule start:

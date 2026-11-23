@@ -48,7 +48,7 @@ conflicts between them in the zotero report.
 ## Configurable citekey generator
 
 BBT also implements a citekey generator for those entries that don't have a citekey set explicitly; the formatter pattern language used to follow
-the [JabRef key formatting syntax](https://help.jabref.org/en/BibtexKeyPatterns), but now uses a javascript-ish format. You can set your generator pattern in the Better BibTeX
+the JabRef key formatting syntax, but now uses a javascript-ish format. You can set your generator pattern in the Better BibTeX
 preferences (you can get there via the Zotero preferences, or by clicking the Better BibTeX "Preferences" button in the addons pane.
 
 Better BibTeX knows four kinds of "things" to build the citekey from:

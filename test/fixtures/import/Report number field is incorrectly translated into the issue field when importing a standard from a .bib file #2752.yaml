@@ -1,0 +1,45 @@
+config:
+  id: 36a3b0b5-bad0-4a04-b79b-441c7cef77db
+  label: BetterBibTeX JSON
+  preferences:
+    citekeyFormat: auth + year
+    fillKeyAfter: 1
+  options:
+    Items: true
+    Normalize: true
+    Preferences: true
+    YAML: false
+    exportFileData: false
+    exportNotes: true
+    keepUpdated: false
+    worker: true
+version:
+  zotero: 10.0.6
+  bbt: 9.0.71.emile.kiku.local
+collections: {}
+items:
+  -
+    key: SHPC869V
+    version: 0
+    itemType: standard
+    date: 1995-01
+    extra: 'Pages: 6'
+    number: mypreciousreportnumber
+    language: english
+    title: What a great report
+    citationKey: standard
+    creators:
+      -
+        name: A very well-known and serious institution
+        creatorType: author
+    tags: []
+    relations: {}
+    dateAdded: 2026-10-15T20:00:22Z
+    dateModified: 2026-10-15T20:00:22Z
+    uri: http://zotero.org/users/8230813/items/SHPC869V
+    itemID: 111
+    attachments: []
+    notes: []
+    autoJournalAbbreviation: ''
+    itemKey: SHPC869V
+    libraryID: 1

@@ -1,0 +1,50 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "preferences": {
+      "baseAttachmentPath": "C:\\Users\\scott\\OneDrive\\share\\ref\\obsidian\\Obsidian Share Vault\\lit\\lit_sources",
+      "bibtexURL": "url",
+      "citekeyFormat": "auth.capitalize + shortyear + shorttitle(3, 3).lower.capitalize(/\\s[a-z]/gi)",
+      "fillKeyAfter": 1,
+      "quickCopyMode": "citekeys"
+    },
+    "options": {}
+  },
+  "version": {
+    "zotero": "8.0.4",
+    "bbt": "9.0.12"
+  },
+  "collections": {},
+  "items": [
+    {
+      "key": "MRUCFQGD",
+      "version": 27448,
+      "itemType": "webpage",
+      "title": "Only 8% of \"moderates\" actually want moderation",
+      "abstractNote": "Two new studies reveal very few voters want a genuinely centrist political party — and moderation's electoral payoff is smaller, riskier, and less reliable than its advocates suggest",
+      "date": "2025-09-22",
+      "language": "en",
+      "url": "https://www.gelliottmorris.com/p/2026-04-07-only-8-percent-moderates-actually-want-moderation",
+      "accessDate": "2026-04-07T23:36:36Z",
+      "creators": [
+        {
+          "firstName": "G. Elliott",
+          "lastName": "Morris",
+          "creatorType": "author"
+        }
+      ],
+      "tags": [
+        {
+          "tag": "obsLitNote"
+        }
+      ],
+      "dateAdded": "2026-04-07T23:36:36Z",
+      "dateModified": "2026-04-08T01:44:36Z",
+      "itemID": 7061,
+      "attachments": [
+      ],
+      "notes": []
+    }
+  ]
+}

@@ -27,7 +27,7 @@ export class Postfix {
   public toString(): string {
     let postfix = ''
 
-    let preamble = []
+    let preamble: string[] = []
     if (this.declarePrefChars) preamble.push('\\ifdefined\\DeclarePrefChars\\DeclarePrefChars{\'’-}\\else\\fi')
     if (this.noopsort) preamble.push('\\providecommand{\\noopsort}[1]{}')
     if (preamble.length > 0) {

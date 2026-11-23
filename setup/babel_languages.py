@@ -146,7 +146,10 @@ for row in list(DB.execute('SELECT tag, count(*) FROM babel WHERE prio = 0 GROUP
 for row in list(DB.execute('SELECT tag FROM babel WHERE prio = 0 GROUP BY tag HAVING COUNT(*) > 1')):
   for l in list(DB.execute('SELECT tag, langid, prio FROM babel WHERE tag = ?', (row[0],))):
     print(l)
-DB.execute('INSERT INTO langmap (language, langid) SELECT tag, langid FROM babel WHERE prio = 0')
+
+#for row in DB.execute('SELECT tag, langid, COUNT(*) AS count FROM babel WHERE prio = 0 GROUP BY tag, langid HAVING COUNT(*) > 1'):
+#  print('duplicate selected babel row:', row)
+DB.execute('INSERT INTO langmap (language, langid) SELECT DISTINCT tag, langid FROM babel WHERE prio = 0')
 
 # set self-alias
 DB.execute('''
@@ -181,7 +184,7 @@ DB.execute('''
     GROUP BY langid
   )
   INSERT INTO langmap (language, langid)
-  SELECT alias.langid as tag, lang.langid as langid
+  SELECT DISTINCT alias.langid as tag, lang.langid as langid
   FROM groupcount
   JOIN babel alias ON alias.langid = groupcount.langid AND alias.prio <> 0
   JOIN babel lang ON lang.tag = alias.tag AND lang.prio = 0

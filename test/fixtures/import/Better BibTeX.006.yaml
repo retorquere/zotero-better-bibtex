@@ -1,0 +1,38 @@
+config:
+  id: 36a3b0b5-bad0-4a04-b79b-441c7cef77db
+  label: BetterBibTeX JSON
+  preferences:
+    citekeyFormat: auth + year
+    fillKeyAfter: 1
+  options:
+    Items: true
+    Normalize: true
+    Preferences: true
+    YAML: false
+    exportFileData: false
+    exportNotes: true
+    keepUpdated: false
+    worker: true
+version:
+  zotero: 10.0.6
+  bbt: 9.0.71.emile.kiku.local
+collections: {}
+items:
+  -
+    key: EWSQT29U
+    version: 0
+    itemType: journalArticle
+    title: 'non-braking space:  ; accented characters: ñ and ñ; tilde in URL: <a href="http://example.com/~user">http://example.com/~user</a>'
+    citationKey: test-ticket1661
+    creators: []
+    tags: []
+    relations: {}
+    dateAdded: 2026-10-14T12:54:55Z
+    dateModified: 2026-10-14T12:54:55Z
+    uri: http://zotero.org/users/8230813/items/EWSQT29U
+    itemID: 171
+    attachments: []
+    notes: []
+    autoJournalAbbreviation: ''
+    itemKey: EWSQT29U
+    libraryID: 1

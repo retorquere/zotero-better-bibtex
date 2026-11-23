@@ -1,0 +1,31 @@
+[
+  {
+    "citation-key": "marreEdge1992",
+    "director": [
+      {
+        "family": "Marre",
+        "given": "Jeremy"
+      }
+    ],
+    "id": "marreEdge1992",
+    "issued": {
+      "date-parts": [
+        [
+          "1992"
+        ]
+      ]
+    },
+    "language": "en",
+    "medium": "TV series episode",
+    "number": "Episode 3",
+    "publisher": "Channel 4",
+    "script-writer": [
+      {
+        "family": "Bailey",
+        "given": "Derek"
+      }
+    ],
+    "title": "On the edge",
+    "type": "video"
+  }
+]

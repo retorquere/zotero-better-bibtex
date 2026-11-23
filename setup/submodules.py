@@ -48,7 +48,7 @@ if Repository('.').head.shorthand == 'master' and os.environ.get('CI') != 'true'
         if section == 'submodule "submodules/zotero-utilities"':
           print('   ', run(os.path.join(root, module['path']), 'rm -rf resource/schema/global'))
           print('   ', run(os.path.join(root, module['path']), 'git checkout .'))
-        print(' ', run(os.path.join(root, module['path']), 'git pull'))
+        print(' ', run(os.path.join(root, module['path']), 'git pull --rebase'))
         print(' ', run(root, 'git add ' + module['path']))
 
   else:

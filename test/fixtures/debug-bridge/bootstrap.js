@@ -7,7 +7,7 @@ const {
 
 const AsyncFunction = Object.getPrototypeOf(async function(){}).constructor
 
-const { AddonManager } = ChromeUtils.import('resource://gre/modules/AddonManager.jsm')
+const { AddonManager } = ChromeUtils.importESModule('resource://gre/modules/AddonManager.sys.mjs')
 
 if (typeof Zotero == 'undefined') {
   var Zotero
@@ -121,7 +121,6 @@ class DebugBridge {
     log(`plugin management: disabling ${addonID}`)
     const addon = await AddonManager.getAddonByID(addonID)
     await addon.disable()
-    if (addonID === 'better-bibtex@iris-advies.com') await this.busyWait(() => !Zotero.BetterBibTeX)
     log(`plugin management: ${addonID} disabled`)
   }
   async install(xpi) {
@@ -132,15 +131,6 @@ class DebugBridge {
   async uninstall(xpi) {
     const addon = await AddonManager.getAddonByID(addonID)
     await addon.uninstall()
-  }
-
-  async busyWait(test, msecs = 5000) {
-    const start = Date.now()
-    const delay = 10
-    while (!test()) {
-      await Zotero.Promise.delay(delay)
-      if (Date.now() - start > msecs) throw new Error(`timeout after ${msecs}ms`)
-    }
   }
 }
 

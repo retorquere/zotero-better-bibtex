@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 
 import makedirs
-import translators
 import submodules
 import months
 import kuroshiro
@@ -11,7 +10,10 @@ import scannablecite
 import ftl2dtd
 import unicode
 import readme
+import csl_schema
 
 import shutil
 with open('submodules/zotero/chrome/content/zotero/osfile.mjs') as i, open('gen/osfile.js', 'w') as o:
   o.write(''.join([line for line in i.readlines() if 'Cu.reportError' not in line]))
+
+shutil.copyfile('node_modules/@retorquere/bibtex-parser/dist/bibtex_parser_bg.wasm', 'build/content/resource/bibtex_parser_bg.wasm')

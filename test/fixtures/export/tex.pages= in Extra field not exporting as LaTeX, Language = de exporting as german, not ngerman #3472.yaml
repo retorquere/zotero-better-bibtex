@@ -1,0 +1,99 @@
+---
+collections: {}
+config:
+  id: 36a3b0b5-bad0-4a04-b79b-441c7cef77db
+  label: BetterBibTeX JSON
+  options:
+    biblatexAPA: false
+    biblatexChicago: false
+    cache: true
+    exportFileData: false
+    exportNotes: true
+    includeAnnotations: false
+    useJournalAbbreviation: false
+    worker: true
+  preferences:
+    citekeyFormat: auth.lower + year
+    exportTitlecase: "off"
+    postscript: |
+      /*
+        This converts <number>-<number> in any number field in the bib-file
+        output into <number>--<number>.
+      
+        NOTE: After pasting code here, go to tab 'Automatic export' and
+        press 'Export now'. Otherwise the postscript does not seem to be
+        applied. This is only done when export is started. This could also
+        be done by modifying an entry since Automatic export is carried out
+        'On change' as specified in the 'Automatic export' section, i.e.
+        on changing the bibliographic entries.
+      */
+      if (false && Translator.BetterBibLaTeX && tex.has.number) {
+        tex.override({ name: 'number', value: tex.has.number.value.replace(/([0-9])-([0-9])/g, '$1--$2') })
+      }
+      
+      // Convert ranges of roman numerals in pages field, cf. for the regex https://stackoverflow.com/a/267405
+      if (Translator.BetterBibLaTeX && tex.has.pages) {
+        tex.override({
+          name: 'pages',
+          value: tex.has.pages.value
+            .replace(/((?=\w)M{0,4}(CM|CD|D?C{0,3})(XC|XL|L?X{0,3})(IX|IV|V?I{0,3}))-((?=\w)M{0,4}(CM|CD|D?C{0,3})(XC|XL|L?X{0,3})(IX|IV|V?I{0,3}))/g, '$1--$5'),
+          enc: 'raw',
+        })
+      }
+      
+      // Process reprints, so also new bibstring reprintas
+      // Related field contains the citation key of the related book with the reprint, relatedpages field contains any further information, e.g. pages, number
+      // We have to differentiate between two kinds of entries, entries that only have a related field, and entries that have related and relatedpages fields: 
+      if (Translator.BetterBibLaTeX && tex.has.related) {
+        tex.override({ name: 'addendum', value: tex.has.related.value.replace(/(.+)/g, '\\reprintas \\cite{$1}'), enc: 'raw' })
+      
+        if (tex.has.relatedpages) {
+          tex.override({
+            name: 'addendum',
+            value:  tex.has.related.value.replace(/(.+)/g, '\\reprintas \\cite{$1}') + '\\addcomma\\space ' + tex.has.relatedpages.value,
+            enc: 'raw'
+          })
+        }
+      
+        // Remove related field, so that is is not output; relatedpages filed is undefined in BibLaTeX so it will be ignored anyway
+        tex.remove('related')
+      }
+      
+      if (Translator.BetterBibLaTeX && tex.has.langid) {
+        tex.override({ name: 'langid', value:  tex.has.langid.value.replace(/^xgerman$/g, 'ngerman') })
+      }
+      
+      /* Code no longer used (Export book section as inbook; default in Zotero is incollection):
+      if (Translator.BetterBibLaTeX) {
+        if (zotero.itemType === 'bookSection') tex.entrytype = 'inbook'
+      }
+      */
+    qualityReport: true
+    verbatimFields: "url,doi,file,eprint,verba,verbb,verbc,groups"
+items:
+  - attachments: []
+    citationKey: KB1930eng-test
+    creators:
+      - creatorType: author
+        firstName: X
+        lastName: X
+    date: "1930"
+    dateAdded: "2026-03-12T13:00:02Z"
+    dateModified: "2026-03-12T13:02:03Z"
+    extra: |-
+      tex.shorthand: KB 1930
+      tex.pages= 31 (5), \ppno\space 321-338 \addsemicolon\space 31 (6), \ppno\space 401-418
+    issue: 1-9
+    itemID: 592
+    itemType: journalArticle
+    key: VP4DUY5T
+    language: de
+    notes: []
+    publicationTitle: Zeitung
+    tags:
+      - tag: CAS-engAdd
+    title: "Testeintrag: Muss ändern"
+    version: 3332
+version:
+  bbt: 9.0.7
+  zotero: 8.0.4

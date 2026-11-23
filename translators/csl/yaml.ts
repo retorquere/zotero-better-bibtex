@@ -1,32 +1,33 @@
-import YAML from 'js-yaml'
 import { Date as CSLDate, Data as CSLItem, LooseNumber } from 'csl-json'
 
 import type { Collected } from '../lib/collect'
 import { Translation } from '../lib/translator'
 
-import type { MarkupNode } from '../../typings/markup'
-
 import { CSLExporter } from './csl'
 import { log } from '../../content/logger'
 import { RichDate, century } from '../../content/dateparser'
-import { HTMLParser } from '../../content/text'
+import { parseFragment } from 'parse5'
+import type { Element, TextNode } from 'parse5/dist/tree-adapters/default.js'
 
 const htmlConverter = new class HTML {
-  private markdown: string
+  private markdown = ''
 
-  public convert(html) {
+  public convert(html: string): string {
     this.markdown = ''
-    this.walk(HTMLParser.parse(html, {}))
+    const doc = parseFragment(html, { sourceCodeLocationInfo: true })
+    this.walk(doc as Element)
     return this.markdown
   }
 
-  private walk(tag: MarkupNode) {
+  private walk(tag: Element | TextNode) {
     if (!tag) return
 
     if ([ '#text', 'pre', 'script' ].includes(tag.nodeName)) {
-      this.markdown += tag.value.replace(/([[*~^])/g, '\\$1')
+      this.markdown += (tag as TextNode).value.replace(/([[*~^])/g, '\\$1')
       return
     }
+
+    const attrs = Object.fromEntries((tag as Element).attrs?.map(a => [a.name, a.value]) ?? [])
 
     let span_attrs = ''
     switch (tag.nodeName) {
@@ -40,7 +41,7 @@ const htmlConverter = new class HTML {
 
       case 'a':
         /* zotero://open-pdf/0_5P2KA4XM/7 is actually a reference. */
-        if (tag.attr.href && tag.attr.href.length) this.markdown += '['
+        if (attrs.href?.length) this.markdown += '['
         break
 
       case 'sup':
@@ -53,14 +54,16 @@ const htmlConverter = new class HTML {
 
       case 'sc':
         this.markdown += '<span style="font-variant:small-caps;">'
-        tag.attr.style = 'font-variant:small-caps;'
+        attrs.style = 'font-variant:small-caps;'
         break
 
       case 'span':
-        for (const [ k, v ] of Object.entries(tag.attr)) {
-          span_attrs += ` ${ k }="${ v }"`
+        if (attrs && Object.keys(attrs).length > 0) {
+          for (const [ k, v ] of Object.entries(attrs)) {
+            span_attrs += ` ${ k }="${ v }"`
+          }
+          if (span_attrs) this.markdown += `<span${ span_attrs }>`
         }
-        if (span_attrs) this.markdown += `<span${ span_attrs }>`
         break
 
       case 'tbody':
@@ -74,8 +77,10 @@ const htmlConverter = new class HTML {
         log.error(`unexpected tag '${ tag.nodeName }'`)
     }
 
-    for (const child of tag.childNodes) {
-      this.walk(child)
+    if ((tag as Element).childNodes) {
+      for (const child of (tag as Element).childNodes) {
+        this.walk(child as Element | TextNode)
+      }
     }
 
     switch (tag.nodeName) {
@@ -96,7 +101,7 @@ const htmlConverter = new class HTML {
         break
 
       case 'a':
-        if (tag.attr.href && tag.attr.href.length) this.markdown += `](${ tag.attr.href })`
+        if (attrs.href?.length) this.markdown += `](${ attrs.href })`
         break
 
       case 'sc':
@@ -136,7 +141,7 @@ function date2csl(date): [LooseNumber, LooseNumber?, LooseNumber?] { // fudge fo
 }
 
 class Exporter extends CSLExporter {
-  public date2CSL(date: RichDate): CSLDate { // fudge for CSL-YAML dates
+  public date2CSL(date: RichDate): CSLDate | null { // fudge for CSL-YAML dates
     switch (date.type) {
       case 'date':
       case 'open':
@@ -159,10 +164,10 @@ class Exporter extends CSLExporter {
   }
 
   public serialize(csl: CSLItem): string {
-    for (const [ k, v ] of Object.entries(csl)) {
-      if (typeof v === 'string' && v.indexOf('<') >= 0) csl[k] = htmlConverter.convert(v)
-    }
-    return YAML.dump([csl], { skipInvalid: true }) as string
+    // CSL-YAML does not support HTML markup, and this (in/ac)cidentally fixes a problem that in no-worker mode, the objects contained something that makes js-yaml keel over and die.
+    // The roundtrip reliably removes that, even though I have no idea what "that" is.
+    csl = JSON.parse(JSON.stringify(csl, (_k: string, v: unknown): unknown => (typeof v === 'string' && v.includes('<')) ? htmlConverter.convert(v) : v)) as CSLItem
+    return Zotero.BetterBibTeX.yamlDump([csl])
   }
 
   public flush(items: string[]): string {
@@ -172,12 +177,8 @@ class Exporter extends CSLExporter {
 
 export function generateCSLYAML(collected: Collected): Translation {
   const translation = Translation.Export(collected)
+
   const exporter = new Exporter(translation)
   exporter.doExport()
   return translation
-}
-
-export function parseCSLYAML(input: string): any {
-  input = input.replace(/\n---[\r\n]*$/, '\n...\n')
-  return YAML.load(input)
 }

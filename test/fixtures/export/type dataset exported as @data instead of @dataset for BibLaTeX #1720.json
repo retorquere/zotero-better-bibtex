@@ -12,7 +12,7 @@
       "citekeyFold": false,
       "citekeyFormat": "auth(n=0,m=1,creator=\"*\",initials=false).fold.capitalize + year",
       "exportBraceProtection": false,
-      "exportTitleCase": false,
+      "exportTitlecase": "off",
       "itemObserverDelay": 100,
       "keyConflictPolicy": "change",
       "keyScope": "global",

@@ -4,6 +4,7 @@ import { Serialized } from '../../gen/typings/serialized'
 import { displayOptions, DisplayOptions } from '../../gen/translators'
 import type { Preferences } from '../../gen/preferences/meta'
 import { defaults } from '../../gen/preferences/meta'
+import { strcmp } from '../../content/string-compare'
 
 type CacheableItem = Serialized.Item & { $cacheable: boolean }
 type CacheableRegularItem = Serialized.RegularItem & { $cacheable: boolean }
@@ -19,7 +20,7 @@ type NestedCollection = {
 export class Items {
   private items: CacheableItem[] = []
   public map: Record<number | string, CacheableItem> = {}
-  public current: CacheableItem
+  public current!: CacheableItem
 
   constructor() {
     let item: CacheableItem
@@ -35,10 +36,10 @@ export class Items {
   public sort(sort: 'off' | 'id' | 'citekey'): void {
     switch (sort) {
       case 'id':
-        this.items.sort((a: { dateAdded?: string }, b: { dateAdded?: string }) => (a.dateAdded || '').localeCompare(b.dateAdded || ''))
+        this.items.sort((a: { dateAdded?: string }, b: { dateAdded?: string }) => strcmp.variant(a.dateAdded || '', b.dateAdded || ''))
         break
       case 'citekey':
-        this.items.sort((a: any, b: any) => this.sortkey(a).localeCompare(this.sortkey(b)))
+        this.items.sort((a: any, b: any) => strcmp.variant(this.sortkey(a), this.sortkey(b)))
         break
     }
   }
@@ -46,6 +47,7 @@ export class Items {
   public erase(): void {
     this.items = []
     this.map = {}
+    // @ts-expect-error this.current is always defined during a run, this is just memory cleanup
     this.current = null
   }
 
@@ -157,8 +159,8 @@ export function slurp(): string {
 
 export class Collected {
   public input = ''
-  public items: Items
-  public collections: Collections
+  public items!: Items
+  public collections!: Collections
   public preferences: Preferences
   public displayOptions: DisplayOptions = {}
   public platform: string
@@ -184,6 +186,7 @@ export class Collected {
       acc[pref] = Zotero.getHiddenPref(`better-bibtex.${ pref }`) ?? dflt
       return acc
     }, {} as unknown as Preferences)
+    this.preferences.rawLaTag = Zotero.getHiddenPref('better-bibtex.rawLaTag')
     this.preferences.testing = Zotero.getHiddenPref('better-bibtex.testing') as boolean
     this.platform = Zotero.getHiddenPref('better-bibtex.platform') as string
   }

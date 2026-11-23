@@ -12,7 +12,7 @@ export function doExport(): void {
 }
 
 export function detectImport(): boolean {
-  return Zotero.BetterBibTeX && Zotero.getHiddenPref('better-bibtex.import') && zotero_detectImport() as boolean
+  return !!(Zotero.BetterBibTeX && Zotero.getHiddenPref('better-bibtex.import') && zotero_detectImport())
 }
 
 export async function doImport(): Promise<void> {

@@ -2,7 +2,7 @@ import * as client from './client'
 import { File } from './file'
 
 import { Events } from './events'
-import type { CharMap } from 'unicode2latex'
+import type { CharMap } from '@retorquere/bibtex-parser'
 
 import { Preferences as $Preferences, PreferenceName, defaults } from '../gen/preferences/meta'
 import { PreferenceManager as PreferenceManagerBase } from '../gen/preferences'
@@ -81,7 +81,7 @@ export const Preference = new class PreferenceManager extends PreferenceManagerB
         }
       }
       catch (err) {
-        error = `could not set default for ${pref} to ${typeof value} ${JSON.stringify(value)} (${err.message})`
+        error = `could not set default for ${pref} to ${typeof value} ${JSON.stringify(value)} (${(err as any).message})`
       }
       if (error) {
         const v = Zotero.Prefs.get(`translators.better-bibtex.${ pref }`)
@@ -153,6 +153,7 @@ export const Preference = new class PreferenceManager extends PreferenceManagerB
     Zotero.Prefs.clear('translators.better-bibtex.caching')
     Zotero.Prefs.clear('translators.better-bibtex.citekeyFormatBackup')
 
+    this.move('autoAbbrev', 'journalAbbreviation', old => old ? 'abbrev+auto' : 'abbrev')
     this.move('autoPin', 'fillKeyAfter', old => old ? 2 : 0)
     this.move('autoPinDelay', 'fillKeyAfter', old => old as number)
     this.move('autoPinOverwrite', 'resetKeyOnChange', old => old as boolean)
@@ -160,8 +161,28 @@ export const Preference = new class PreferenceManager extends PreferenceManagerB
     this.move('suppressSentenceCase', 'importSentenceCase', old => old ? 'off' : 'on+guess')
     this.move('suppressBraceProtection', 'exportBraceProtection', old => !old)
     this.move('suppressTitleCase', 'exportTitleCase', old => !old)
+    const legacyTitlecasePref = `${this.prefix}exportTitleCase`
+    const titlecasePref = `${this.prefix}exportTitlecase`
+    const legacyTitlecase = Zotero.Prefs.get(legacyTitlecasePref) as boolean | undefined
+    if (typeof legacyTitlecase !== 'undefined') {
+      Zotero.Prefs.clear(legacyTitlecasePref)
+      // The new title-casing and case-protection settings are independent; only migrate title-casing.
+      if (!Services.prefs.prefHasUserValue(`extensions.zotero.${titlecasePref}`)) {
+        Zotero.Prefs.set(titlecasePref, legacyTitlecase ? '' : 'off')
+      }
+    }
     this.move('jieba', 'chinese', old => !!old)
     this.move('kuroshiro', 'japanese', old => !!old)
+
+    const verbatimFields = Zotero.Prefs.get(key = `${this.prefix}verbatimFields`) as string
+    if (verbatimFields?.includes('/')) {
+      const glob = verbatimFields
+        .trim()
+        .split(/\s*,\s*/)
+        .map(field => field.trim().match(/^\/(.+)\/$/) ? this.regex2glob(field.slice(1, -1)) : field)
+        .join(',')
+      if (glob !== verbatimFields) Zotero.Prefs.set(key, glob)
+    }
 
     // put this in a preference so that translators can access this.
     this.platform = client.platform
@@ -189,9 +210,31 @@ export const Preference = new class PreferenceManager extends PreferenceManagerB
     }
   }
 
+  /** Convert simple regexes to wildflower globs; leave unsupported syntax unchanged. */
+  private regex2glob(regex: string): string {
+    // Accept optional ^/$ anchors around word characters, hyphens, colons, dots, and
+    // simple classes such as [a-z0-9_]. Only dots and classes may have * or + suffixes.
+    // Accepted: ^verb[a-z]$, title.*, [0-9]+. Unchanged: (foo|bar), x{2}, foo?.
+    if (!/^\^?(?:[-\w:]|\.[*+]?|\[[\w-]+\][*+]?)+\$?$/.test(regex)) return regex
+
+    const glob = regex
+      // Remove only the leading ^ and trailing $ anchors.
+      // Examples: ^title$ -> title, ^title -> title, title$ -> title.
+      .replace(/^\^|\$$/g, '')
+      // Match a dot or class and capture its optional repetition suffix:
+      // one character becomes ?, zero-or-more becomes *, and one-or-more becomes ?*.
+      // Classes lose their character restrictions because wildflower has no classes.
+      // Examples: verb[a-z] -> verb?, file.* -> file*, [0-9]+ -> ?*, [a-z]* -> *.
+      .replace(/(?:\.|\[[\w-]+\])([*+]?)/g, (_token: string, repeat: string) => repeat === '*' ? '*' : repeat === '+' ? '?*' : '?')
+
+    // Unanchored ends retain substring matching; collapse runs of * into a single *.
+    // Examples: title -> *title*, ^title -> title*, title$ -> *title, .* -> *** -> *.
+    return `${ regex.startsWith('^') ? '' : '*' }${ glob }${ regex.endsWith('$') ? '' : '*' }`.replace(/\*+/g, '*')
+  }
+
   private move(ist: string, soll: string, convert: (v: any) => any) {
-    if (!ist.match(/[.]/)) ist = `translators.better-bibtex.${ ist }`
-    if (!soll.match(/[.]/)) soll = `translators.better-bibtex.${ soll }`
+    if (!ist.match(/[.]/)) ist = this.prefix + ist
+    if (!soll.match(/[.]/)) soll = this.prefix + soll
     const old = Zotero.Prefs.get(ist)
     if (typeof old === 'undefined') return
     Zotero.Prefs.clear(ist)
@@ -219,12 +262,18 @@ export const Preference = new class PreferenceManager extends PreferenceManagerB
 
   public async startup(dir: string) {
     // load from csv for easier editing
-    await this.loadFromCSV('charmap', PathUtils.join(dir, 'charmap.csv'), '{}', (rows: Record<string, string>[]) => JSON.stringify(
-      rows.reduce((acc: CharMap, row: { unicode: string; text: string; math: string }) => {
-        if (row.unicode && (row.math || row.text)) acc[row.unicode] = { text: row.text, math: row.math }
-        return acc
-      }, {})
-    ))
+    await this.loadFromCSV(
+      'charmap',
+      PathUtils.join(dir, 'charmap.csv'),
+      '{}',
+      (rows: { unicode: string; text: string; math: string }[]) =>
+        JSON.stringify(
+          rows.reduce((acc: CharMap, row: { unicode: string; text: string; math: string }) => {
+            if (row.unicode && (row.math || row.text)) acc[row.unicode] = { text: row.text, math: row.math }
+            return acc
+          }, {})
+        )
+    )
 
     for (const pref of Object.keys(defaults)) {
       if (pref !== 'platform' && pref !== 'testing') {

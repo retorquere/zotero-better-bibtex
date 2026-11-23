@@ -1,0 +1,11 @@
+[
+  {
+    "op": "remove",
+    "path": "/collections/coll:00000"
+  },
+  {
+    "op": "replace",
+    "path": "/collections/coll:00002/items",
+    "value": [5]
+  }
+]

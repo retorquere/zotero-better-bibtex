@@ -7,9 +7,9 @@
       "worker": true
     },
     "preferences": {
-      "autoAbbrev": true,
-      "exportTitleCase": false,
-      "skipFields": "abstract,file,month,day,keywords,copyright"
+      "exportTitlecase": "off",
+      "skipFields": "abstract,file,month,day,keywords,copyright",
+      "journalAbbreviation": "abbrev+auto"
     }
   },
   "items": [
@@ -26,7 +26,7 @@
         },
         {
           "creatorType": "author",
-          "firstName": "Francisco Perdig\u00f3n",
+          "firstName": "Francisco Perdigón",
           "lastName": "Romero"
         },
         {

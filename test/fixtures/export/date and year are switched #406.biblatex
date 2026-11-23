@@ -1,12 +1,11 @@
-
 @report{brato_stability_2014,
   title = {Stability {{Analysis}} and {{Clustering}} of {{Electrical Transmission Systems}}},
   author = {Brato, Sebastian and Surmann, Dirk and Krey, Sebastian and Götze, Jürgen and Ligges, Uwe and Weihs, Claus},
   date = {2014-02-11},
-  number = {2003/32864},
   institution = {Technische Universität Dortmund},
   location = {Eldorado},
-  url = {http://dx.doi.org/10.17877/DE290R-13190}
+  url = {http://dx.doi.org/10.17877/DE290R-13190},
+  eid = {2003/32864}
 }
 
 @article{michigami_development_1995,
@@ -37,5 +36,3 @@
   isbn = {978-0-13-014400-3},
   pagetotal = {470}
 }
-
-

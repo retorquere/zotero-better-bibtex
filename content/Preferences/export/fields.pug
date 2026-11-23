@@ -2,6 +2,14 @@ html:div
   label(bbt:preference='extensions.zotero.translators.better-bibtex.skipFields', data-l10n-id='better-bibtex_preferences_export_fields_skip')
   html:input(preference='extensions.zotero.translators.better-bibtex.skipFields', size='30', type='text')
 
+html:div
+  label(bbt:preference='extensions.zotero.translators.better-bibtex.journalAbbreviation', data-l10n-id='better-bibtex_preferences_auto-abbrev')
+  menulist(native='true', preference='extensions.zotero.translators.better-bibtex.journalAbbreviation', preference-editable='true')
+    menupopup
+      menuitem(data-l10n-id='better-bibtex_preferences_auto-abbrev_abbrev', value='abbrev')
+      menuitem(data-l10n-id='better-bibtex_preferences_auto-abbrev_auto', value='auto')
+      menuitem(data-l10n-id='better-bibtex_preferences_auto-abbrev_abbrev-plus-auto', value='abbrev+auto')
+
 groupbox.bbt-prefs-subsection
   label
     html:h2 BibTeX/BibLaTeX

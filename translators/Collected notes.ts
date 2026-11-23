@@ -1,8 +1,10 @@
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 
+import { strcmp } from '../content/string-compare'
 import { Translation } from './lib/translator'
 import { Collected } from './lib/collect'
 import type { Header } from '../gen/translators'
+import { RichDate, simplify } from '../content/dateparser'
 declare var ZOTERO_TRANSLATOR_INFO: Header // eslint-disable-line no-var
 
 declare const Zotero: any
@@ -35,7 +37,7 @@ type ExpandedCollection = {
 }
 
 function sorted(collections: ExpandedCollection[]) {
-  return collections.sort((a, b) => a.name.localeCompare(b.name, undefined, { sensitivity: 'base' }))
+  return collections.sort((a, b) => strcmp.base(a.name, b.name))
 }
 
 class Exporter {
@@ -65,7 +67,7 @@ class Exporter {
         items: (collection.items || []).map(itemID => items[itemID]).filter(item => item),
         // resolve collection IDs to collections
         collections: [],
-        root: !this.translation.collections[collection.parent],
+        root: !this.translation.collections[collection.parent as unknown as string],
       }
     }
 
@@ -165,7 +167,7 @@ class Exporter {
   }
 
   item(item) {
-    let notes = []
+    let notes: { note: string }[] = []
     let title = ''
 
     if (item.itemType === 'attachment') {
@@ -177,14 +179,8 @@ class Exporter {
 
       const creators = this.creators(item.creators.map(creator => this.creator(creator)).filter(v => v))
 
-      let date = null
-      if (item.date) {
-        date = Zotero.BetterBibTeX.parseDate(item.date)
-        if (date.from) date = date.from
-        date = typeof date.year === 'number' ? date.year : item.date
-      }
-
-      const author = [ creators, date ].filter(v => v).join(', ')
+      const date = simplify(Zotero.BetterBibTeX.parseDate(item.date) as RichDate)
+      const author = [ creators, date && ('year' in date) ? `${date.year}` : item.date ].filter(v => v).join(', ')
 
       if (item.title) title += `<i>${ escape.html(item.title) }</i>`
       if (author) title += ` (${ escape.html(author) })`

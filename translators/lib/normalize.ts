@@ -1,7 +1,8 @@
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 
-import stringify from 'safe-stable-stringify'
+import { strcmp } from '../../content/string-compare'
 import type { Serialized } from '../../gen/typings/serialized'
+import stringify from 'fast-json-stable-stringify'
 
 function rjust(str: string | number, width: number, padding: string): string {
   if (typeof str === 'number') str = `${ str }`
@@ -13,7 +14,7 @@ export type Library = {
   config: any
   preferences?: any
 
-  collections: Record<string, {
+  collections?: Record<string, {
     key: string
     name: string
     collections: string[]
@@ -26,7 +27,6 @@ export type Library = {
     title: string
     itemType: string
     date: string
-    citekey?: string
     citationKey?: string
     autoJournalAbbreviation?: string
     libraryID?: number
@@ -68,8 +68,12 @@ function strip(obj) {
   return obj
 }
 
+function asString(obj: Serialized.Collection | Library['items'][number]): string {
+  return stringify({ ...obj, key: '', parent: '', itemID: 0 })
+}
+
 export function normalize(library: Library, sort = true): void {
-  if (sort) library.items.sort((a, b) => key(a).localeCompare(key(b)))
+  if (sort) library.items.sort((a, b) => strcmp.variant(key(a), key(b)))
 
   for (const item of (library.items as any[])) {
     delete item.citekey
@@ -89,7 +93,7 @@ export function normalize(library: Library, sort = true): void {
     }
 
     if (item.tags?.length) {
-      item.tags = item.tags.map(tag => typeof tag === 'string' ? { tag } : tag).sort((a, b) => a.tag.localeCompare(b.tag))
+      item.tags = item.tags.map(tag => typeof tag === 'string' ? { tag } : tag).sort((a, b) => strcmp.variant(a.tag, b.tag))
     }
     else {
       delete item.tags
@@ -138,7 +142,7 @@ export function normalize(library: Library, sort = true): void {
   }
 
   // sort items and normalize their IDs
-  library.items.sort((a, b) => stringify({ ...a, itemID: 0 }).localeCompare(stringify({ ...b, itemID: 0 })))
+  library.items.sort((a, b) => strcmp.variant(asString(a), asString(b)))
   const itemIDs: Record<number, number> = library.items.reduce((acc, item, i) => {
     item.itemID = acc[item.itemID] = i + 1 // Zotero does not recognize items with itemID 0 in collections...
     return acc
@@ -146,13 +150,13 @@ export function normalize(library: Library, sort = true): void {
 
   if (library.collections && Object.keys(library.collections).length) {
     const collectionOrder: Serialized.Collection[] = Object.values(library.collections)
-      .sort((a: Serialized.Collection, b: Serialized.Collection): number => stringify({ ...a, key: '', parent: '' }).localeCompare(stringify({ ...b, key: '', parent: '' })))
+      .sort((a: Serialized.Collection, b: Serialized.Collection): number => strcmp.variant(asString(a), asString(b)))
     const collectionKeys: Record<string, string> = collectionOrder.reduce((acc: Record<string, string>, coll: Serialized.Collection, i: number): Record<string, string> => {
       coll.key = acc[coll.key] = `coll:${ rjust(i, 5, '0') }`
       return acc
     }, {})
     library.collections = collectionOrder.reduce((acc, coll) => {
-      if (!(coll.parent = collectionKeys[coll.parent])) delete coll.parent
+      if (coll.parent && !(coll.parent = collectionKeys[coll.parent])) delete coll.parent
 
       coll.items = coll.items.map(itemID => itemIDs[itemID]).filter(itemID => typeof itemID === 'number').sort()
 

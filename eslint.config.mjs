@@ -1,7 +1,6 @@
 import eslint from '@eslint/js'
 import tsPlugin from '@typescript-eslint/eslint-plugin'
 import globals from 'globals'
-import tseslint from 'typescript-eslint'
 
 import { fixupPluginRules } from '@eslint/compat'
 import { FlatCompat } from '@eslint/eslintrc'
@@ -9,6 +8,7 @@ import js from '@eslint/js'
 import stylistic from '@stylistic/eslint-plugin'
 import tsParser from '@typescript-eslint/parser'
 import _import from 'eslint-plugin-import'
+import { execSync } from 'node:child_process'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 
@@ -20,20 +20,41 @@ const compat = new FlatCompat({
   allConfig: js.configs.all,
 })
 
-import shell from 'shelljs'
-const branch = (process.env.GITHUB_REF && process.env.GITHUB_REF.startsWith('refs/heads/'))
-  ? process.env.GITHUB_REF.replace('refs/heads/', '')
-  : shell.exec('git rev-parse --abbrev-ref HEAD', { silent: true }).stdout.trim()
+const branch = process.env.GITHUB_REF_NAME
+  || ((process.env.GITHUB_REF && process.env.GITHUB_REF.startsWith('refs/heads/'))
+    ? process.env.GITHUB_REF.replace('refs/heads/', '')
+    : (() => {
+        try {
+          return execSync('git symbolic-ref --short HEAD', {
+            cwd: __dirname,
+            encoding: 'utf8',
+            stdio: ['ignore', 'pipe', 'ignore'],
+          }).trim()
+        }
+        catch {
+          try {
+            return execSync('git rev-parse --abbrev-ref HEAD', {
+              cwd: __dirname,
+              encoding: 'utf8',
+              stdio: ['ignore', 'pipe', 'ignore'],
+            }).trim()
+          }
+          catch {
+            return ''
+          }
+        }
+      })())
 
 const config = [
   {
     ignores: [
       'content/key-manager/compile.js',
-      'content/preferences.js',
+      'content/key-manager/kuromoji-worker.js',
+      'content/Preferences/ui.js',
       'content/public.ts',
       'eslint.config.mjs',
       'esbuild.js',
-      'site/**/*.{ts,js,mjs}',
+      'site/**/*.{ts,js,mjs,cjs,mts}',
       'build/**/*.{ts,js}',
       'headless/**/*.{ts,js}',
       'tmp/**/*.{ts,js}',
@@ -45,6 +66,7 @@ const config = [
       'setup/**/*.{ts,js}',
       'util/*.{js,ts,mjs}',
       'minitests/**/*.{ts,js}',
+      'crates/**/*.{ts,js,mjs}',
     ],
   },
   ...compat.extends(
@@ -85,10 +107,6 @@ const config = [
       }],
 
       '@stylistic/block-spacing': ['error', 'always'],
-
-      '@stylistic/brace-style': ['error', 'stroustrup', {
-        allowSingleLine: true,
-      }],
 
       '@stylistic/comma-spacing': ['error', {
         after: true,
@@ -194,7 +212,6 @@ const config = [
       }],
 
       '@stylistic/no-tabs': 'error',
-      '@stylistic/no-trailing-spaces': 'error',
       '@stylistic/no-whitespace-before-property': 'error',
       '@stylistic/object-curly-spacing': 'off',
       '@stylistic/operator-linebreak': ['error', 'before'],
@@ -235,23 +252,9 @@ const config = [
         words: true,
       }],
 
-      '@stylistic/spaced-comment': ['error', 'always', {
-        block: {
-          balanced: true,
-          exceptions: ['*'],
-          markers: ['!'],
-        },
-
-        line: {
-          exceptions: ['/', '#'],
-          markers: ['/'],
-        },
-      }],
-
       '@stylistic/template-curly-spacing': 'off',
       '@stylistic/template-tag-spacing': ['error', 'never'],
       '@stylistic/type-annotation-spacing': ['error', {}],
-      '@stylistic/type-generic-spacing': 'error',
       '@stylistic/type-named-tuple-spacing': 'error',
 
       '@stylistic/wrap-iife': ['error', 'any', {
@@ -329,7 +332,7 @@ const config = [
       '@typescript-eslint/no-misused-promises': 'error',
       '@typescript-eslint/no-namespace': 'error',
       '@typescript-eslint/no-non-null-asserted-optional-chain': 'error',
-      '@typescript-eslint/no-non-null-assertion': 'warn',
+      '@typescript-eslint/no-non-null-assertion': 'off',
       '@typescript-eslint/no-parameter-properties': 'off',
 
       '@typescript-eslint/no-shadow': ['error', {
@@ -468,6 +471,7 @@ const config = [
       'no-restricted-syntax': [branch === 'master' ? 'error' : 'warn',
         { selector: "CallExpression[callee.name='dump']", message: 'use of dump is not allowed' },
         { selector: "CallExpression[callee.name='$dump']", message: 'use of $dump is not allowed' },
+        { selector: "CallExpression[callee.object.name='timeit']", message: 'use of timeit is not allowed' },
         { selector: "CallExpression[callee.object.name='Zotero'][callee.property.name='debug']", message: 'use of Zotero.debug is not allowed' },
         { selector: "CallExpression[callee.object.name='Zotero'][callee.property.name='logError']", message: 'use of Zotero.logError is not allowed' },
         { selector: "CallExpression[callee.object.name='log'][callee.property.name='debug']", message: 'use of log.debug is not allowed' },

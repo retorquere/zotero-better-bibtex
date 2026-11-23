@@ -79,6 +79,7 @@ user_pref("extensions.zotero.reportTranslationFailure", false);
 user_pref("extensions.zotero.useDataDir", true);
 user_pref("extensions.zoteroMacWordIntegration.installed", true);
 user_pref("extensions.zoteroMacWordIntegration.version", "5.0.26.SA.5.0.85m3");
+user_pref("extensions.zoteroMacWordIntegration.installationWarning.dontAskAgainVersion", "10.0.0");
 user_pref("extensions.zoteroOpenOfficeIntegration.installed", true);
 user_pref("extensions.zoteroOpenOfficeIntegration.unopkgPaths", "{\"/Applications/LibreOffice.app/Contents/MacOS/unopkg\":true}");
 user_pref("extensions.zoteroOpenOfficeIntegration.version", "5.0.23.SA.5.0.90m3");

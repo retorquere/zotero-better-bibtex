@@ -2289,9 +2289,7 @@
         }
       ],
       "date": "Dec 4, 2013",
-      "extra": [
-        "Citation Key: ZoiaBlasonDOttavioEtAl13"
-      ],
+      "extra": [],
       "issue": "12",
       "itemID": 23563,
       "itemType": "journalArticle",
@@ -2337,7 +2335,8 @@
       ],
       "title": "The development of upper limb movements: from fetal to post-natal life",
       "url": "https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0080876",
-      "volume": "8"
+      "volume": "8",
+      "citationKey": "ZoiaBlasonDOttavioEtAl13"
     }
   ]
 }

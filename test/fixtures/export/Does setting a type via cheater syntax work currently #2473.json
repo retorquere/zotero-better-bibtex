@@ -9,14 +9,13 @@
   },
   "items": [
     {
-      "abstractNote": "Theaterauff\u00fchrung",
+      "abstractNote": "Theateraufführung",
       "citationKey": "nachwilliamshakespeareHamlet2001",
       "date": "10.5.2001",
       "extra": [
         "type: performance",
         "director: Schlingensief || Christoph",
-        "publisher-place: Schauspielhaus Z\u00fcrich, Pfauen",
-        "Citation Key: nachwilliamshakespeareHamlet2001"
+        "publisher-place: Schauspielhaus Zürich, Pfauen"
       ],
       "itemID": 1,
       "itemType": "artwork",

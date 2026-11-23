@@ -18,16 +18,15 @@
         }
       ],
       "date": "2009",
-      "extra": [
-        "Citation Key: Oliveira_2009"
-      ],
+      "extra": [],
       "issue": "29",
       "itemID": 1,
       "itemType": "journalArticle",
       "pages": "29",
       "publicationTitle": "Oil & Gas Journal",
       "title": "USGS monitoring ecological impacts",
-      "volume": "107"
+      "volume": "107",
+      "citationKey": "Oliveira_2009"
     }
   ]
 }

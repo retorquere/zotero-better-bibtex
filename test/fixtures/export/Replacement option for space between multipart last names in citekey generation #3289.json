@@ -7,7 +7,6 @@
       "fillKeyAfter": 10,
       "baseAttachmentPath": "/Users/jdh/Documents/Academia/Library",
       "citekeyFormat": "creatornames(template='%(F)s', space='.') + authEtAl2(creator = '*', initials = false, sep = '_') + '_' + year",
-      "citekeySearch": false,
       "DOIandURL": "doi",
       "keyScope": "global",
       "quickCopyMode": "pandoc"

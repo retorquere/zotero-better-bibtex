@@ -2,14 +2,17 @@ import { Path, File } from './file'
 
 import { Translators } from './translators'
 import { Preference } from './prefs'
-import { FilePickerHelper } from 'zotero-plugin-toolkit'
 import { findBinary } from './path-search'
 import { log } from './logger'
 import { alert } from './prompt'
 import { getItemsAsync } from './get-items-async'
 import { strcmp } from './string-compare'
+import { selectedLibraryID } from './library'
+import { selectedCollection } from './collection'
 
-import BBT from '../gen/version.cjs'
+const { FilePicker } = ChromeUtils.importESModule('chrome://zotero/content/modules/filePicker.mjs')
+
+import * as BBT from '../gen/build'
 
 type Parsed = {
   source: 'MarkDown' | 'BibTeX AUX'
@@ -18,7 +21,7 @@ type Parsed = {
 }
 
 type Target = {
-  collection?: any
+  collection?: Zotero.Collection
   libraryID?: number
   basename?: string
 }
@@ -35,7 +38,7 @@ const ext = {
 }
 
 export const AUXScanner = new class {
-  private pandoc: string
+  private pandoc?: string
   private filters: Record<'pandoc' | 'aux', [string, string][]> = {
     pandoc: [
       [ `AUX file (${ext.aux})`, ext.aux ],
@@ -48,7 +51,14 @@ export const AUXScanner = new class {
   public async pick(): Promise<string> {
     if (typeof this.pandoc !== 'string') this.pandoc = await findBinary('pandoc')
     const filters = this.pandoc ? this.filters.pandoc : this.filters.aux
-    return (await new FilePickerHelper(Zotero.getString('fileInterface.import'), 'open', filters).open()) || ''
+    const fp = new FilePicker
+    fp.init(Zotero.getMainWindow(), Zotero.getString('fileInterface.import'), fp.modeOpen)
+    for (const [label, filter] of filters) {
+      fp.appendFilter(label, filter)
+    }
+
+    const rv = await fp.show()
+    return rv === fp.returnOK || rv === fp.returnReplace ? (fp.file as string) || '' : ''
   }
 
   public async scan(path: string, options: { tag?: string; libraryID?: number; collection?: Collection } = {}) {
@@ -57,8 +67,7 @@ export const AUXScanner = new class {
     }
 
     const parsed = await this.parse(path)
-
-    if (!parsed || !parsed.citationKeys.length) return
+    if (!parsed) return
 
     let collection, libraryID
     if (typeof options.libraryID === 'number') {
@@ -70,9 +79,16 @@ export const AUXScanner = new class {
       libraryID = options.collection.libraryID
     }
     else {
-      const azp = Zotero.getActiveZoteroPane()
-      collection = azp.getSelectedCollection()
-      libraryID = collection ? collection.libraryID : azp.getSelectedLibraryID()
+      collection = selectedCollection()
+      libraryID = collection ? collection.libraryID : selectedLibraryID()
+    }
+
+    // In replace mode, an empty citation set should clear the selected collection.
+    if (!parsed.citationKeys.length) {
+      if (collection && options.collection?.replace) {
+        await this.saveToCollection(parsed.source, [], [], { collection })
+      }
+      return
     }
 
     const itemIDs: number[] = []
@@ -115,7 +131,7 @@ export const AUXScanner = new class {
     return decoder.decode(await IOUtils.read(path) as BufferSource)
   }
 
-  private async parse(path: string): Promise<Parsed> {
+  private async parse(path: string): Promise<Parsed | undefined> {
     try {
       if (path.match(/[.]aux$/i)) {
         return await this.parseAUX(path)
@@ -126,9 +142,8 @@ export const AUXScanner = new class {
       throw new Error(`Unsupported file type for ${ path }`)
     }
     catch (err) {
-      alert({ text: `AUX/Markdown scan failed: ${ err.message }` })
+      alert({ text: `AUX/Markdown scan failed: ${(err as any).message}` })
     }
-    return null
   }
 
   private async luaFilter(): Promise<string> {
@@ -152,7 +167,7 @@ export const AUXScanner = new class {
     const filter = await this.luaFilter()
     const output: string = PathUtils.join(Zotero.getTempDirectory().path, `citekeys_${ Zotero.Utilities.randomString() }.txt`)
     try {
-      await Zotero.Utilities.Internal.exec(this.pandoc, [ '--lua-filter', filter, '-t', 'markdown', '-o', output, md ])
+      await Zotero.Utilities.Internal.exec(this.pandoc!, [ '--lua-filter', filter, '-t', 'markdown', '-o', output, md ])
       const citekeys = await Zotero.File.getContentsAsync(output)
       if (typeof citekeys === 'string') {
         for (const citekey of citekeys.split(/\s+/)) {
@@ -171,20 +186,20 @@ export const AUXScanner = new class {
     return { source: 'MarkDown', citationKeys: [ ...citationKeys ] }
   }
 
-  public async parseAUX(aux: string): Promise<Parsed> {
-    const parsed: Record<string, boolean> = { [aux]: false }
+  public async parseAUX(source: string): Promise<Parsed> {
+    const parsed: Record<string, boolean> = { [source]: false }
     const citationKeys: Set<string> = new Set
     const bibs: Record<string, string> = {}
+    let aux: string | undefined = source
 
     while (aux = Object.keys(parsed).find(path => !parsed[path])) {
       parsed[aux] = true
       if (!await File.exists(aux)) {
-        log.info('aux scanner:', aux, 'does not exist')
         continue
       }
 
       const contents = await this.read(aux)
-      const parent = PathUtils.parent(aux)
+      const parent = PathUtils.parent(aux)!
 
       for (let [ , command, arg, arg2 ] of contents.matchAll(/(\\citation|\\abx@aux@cite|@cite|\\bibdata|\\@input)\s*\{(.*?)\}(?:\{(.*?)\})?/g)) {
         if (command === '\\abx@aux@cite' && arg.match(/^\d+$/) && arg2) arg = arg2
@@ -234,14 +249,15 @@ export const AUXScanner = new class {
       throw new Error('need either library + name or collection')
     }
 
-    const libraryID = typeof target.libraryID === 'number' ? target.libraryID : target.collection.libraryID
+    const libraryID = typeof target.libraryID === 'number' ? target.libraryID : target.collection?.libraryID
+    if (typeof libraryID !== 'number') throw new Error('Could not establish library')
 
     if (target.basename) {
       const siblings = new Set(
         (target.collection
           ? Zotero.Collections.getByParent(target.collection.id)
-          : Zotero.Collections.getByLibrary(target.libraryID)
-        ).map((coll: { name: string }) => coll.name)
+          : Zotero.Collections.getByLibrary(target.libraryID!)
+        ).map((coll: { name: string }) => coll.name) || []
       )
 
       let timestamp = ''
@@ -251,17 +267,23 @@ export const AUXScanner = new class {
         timestamp = (new Date).toLocaleDateString('nl', { year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric', hour12: false })
       }
 
+      const parentID = target.collection ? target.collection.id : undefined
       target.collection = new Zotero.Collection({
         name: target.basename + timestamp,
         libraryID,
-        parentID: target.collection ? target.collection.id : undefined,
+        parentID,
       })
       await target.collection.saveTx()
     }
     else {
       // saving into existing collection, remove items that are not cited
-      const obsolete = target.collection.getChildItems(true).filter(itemID => !itemIDs.includes(itemID))
-      if (obsolete.length) await Zotero.DB.executeTransaction(async () => { await target.collection.removeItems(obsolete) })
+      const obsolete = target.collection?.getChildItems(true).filter(itemID => !itemIDs.includes(itemID)) || []
+      if (obsolete.length) {
+        await Zotero.DB.executeTransaction(async () => {
+          if (!target.collection) throw new Error('could not establish target collection')
+          await target.collection.removeItems(obsolete)
+        })
+      }
     }
 
     if (missing_keys.length) {
@@ -279,7 +301,12 @@ export const AUXScanner = new class {
       itemIDs.push(item.id)
     }
 
-    if (itemIDs.length) await Zotero.DB.executeTransaction(async () => { await target.collection.addItems(itemIDs) })
+    if (itemIDs.length) {
+      await Zotero.DB.executeTransaction(async () => {
+        if (!target.collection) throw new Error('could not establish target collection')
+        await target.collection.addItems(itemIDs)
+      })
+    }
   }
 
   private async saveToTag(cited: number[], tag: string, _libraryID: number) {

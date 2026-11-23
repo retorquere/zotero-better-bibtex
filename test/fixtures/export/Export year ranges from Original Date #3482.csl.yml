@@ -1,17 +1,22 @@
 ---
 references:
-- id: SchmittAnselmiCantuariensisArchiepiscopi1968
+-
+  id: SchmittAnselmiCantuariensisArchiepiscopi1968
   citation-key: SchmittAnselmiCantuariensisArchiepiscopi1968
   editor:
-    - family: Schmitt
+    -
+      family: Schmitt
       given: Franciscus Salesius
   issued:
-    - year: 1968
+    -
+      year: 1968
   language: la
   number-of-volumes: 6 vols. in 2
   original-date:
-    - year: 1938
-    - year: 1961
+    -
+      year: 1938
+    -
+      year: 1961
   original-publisher: Seccovii
   publisher: F. Frommann
   publisher-place: Stuttgart

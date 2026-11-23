@@ -12,8 +12,10 @@ import { orchestrator } from './orchestrator'
 import { Server } from './server'
 import type { CitekeyRecord } from './key-manager'
 import { strcmp } from './string-compare'
+import { clone } from './object'
+import omit from 'lodash.omit'
 
-import BBT from '../gen/version.cjs'
+import * as BBT from '../gen/build'
 
 import { methods } from '../gen/api/json-rpc'
 
@@ -43,7 +45,7 @@ function byKey(citekey: string): (key: CitekeyRecord) => boolean {
 
 function find(library?: string | number): (citationKey: string) => number | undefined {
   if (typeof library === 'undefined') library = Zotero.Libraries.userLibraryID
-  const libraryID = library === '*' ? undefined : getLibrary(library)
+  const libraryID = library === '*' ? undefined : getLibraryID(library)
 
   return (citationKey: string): number | undefined => {
     const matchKey = byKey(citationKey)
@@ -117,18 +119,32 @@ export class NSUser {
    *
    * @param includeCollections Wether or not the result should include a list of collection for each library (default is false)
    */
-  public async groups(includeCollections?: boolean): Promise<{ id: number; name: string; collections: any[] }[]> {
+  public async groups(includeCollections?: boolean): Promise<{ id: number; name: string; collections: null | any[] }[]> {
     return Zotero.Libraries
-      .getAll().map(lib => ({
+      .getAll()
+      .map(lib => ({
         id: lib.libraryID,
         name: lib.name,
-        collections: includeCollections ? Zotero.Collections.getByLibrary(lib.libraryID, true) : undefined,
+        collections: includeCollections ? Zotero.Collections.getByLibrary(lib.libraryID, true) : null,
       }))
   }
 }
 
-function getLibrary(term: string | number): number {
-  return Library.get({ libraryID: term, group: term }, true).libraryID
+function isNumber(v: string | number | undefined) {
+  switch (typeof v) {
+    case 'number': return true
+    case 'string': return Boolean(v.match(/^\d+$/))
+    default: return false
+  }
+}
+function getLibraryID(term: string | number | undefined): number {
+  const library = Library.get([
+    { field: 'name', value: typeof term === 'string' ? term : undefined },
+    { field: 'libraryID', value: isNumber(term) ? term : undefined },
+    { field: 'groupID', value: isNumber(term) ? term : undefined },
+  ])
+  if (!library) throw new Error(`could not find library ${term}`)
+  return library.libraryID
 }
 
 export class NSItem {
@@ -156,13 +172,34 @@ export class NSItem {
     terms: string | ([string] | [string, string] | [string, string, string | number] | [string, string, string | number, boolean])[],
     library?: string | number
   ): Promise<any> {
-    const search = (new Zotero.Search)
+    const search = new Zotero.Search
 
-    if (!terms.length) { /* */ }
+    if (!terms.length) {
+      // empty string or empty array
+    }
     else if (typeof terms === 'string') {
       // Custom action for only string.
       // Similar behavior as quicksearch-titleCreateorYear, but search also in citationKey and ignore feeds and attachments
 
+      // Ignore Feeds
+      for (const feed of Zotero.Feeds.getAll()) {
+        search.addCondition('libraryID', 'isNot', feed.libraryID)
+      }
+
+      // Do not list attachments
+      search.addCondition('itemType', 'isNot', 'attachment')
+
+      if (typeof library !== 'undefined' && library !== '*') {
+        try {
+          search.addCondition('libraryID', 'is', getLibraryID(library))
+        }
+        catch {
+          throw new Error(`library ${ JSON.stringify(library) } not found`)
+        }
+      }
+
+      search.addCondition('groupStart', 'true', '')
+      search.addCondition('joinMode', 'any')
       // Credit #2740
       const fields = [
         // search the quicksearch-titleCreatorYear fields
@@ -175,29 +212,10 @@ export class NSItem {
         // plus the citationKey
         'citationKey',
       ]
-
-      search.addCondition('blockStart')
       for (const field of fields) {
         search.addCondition(field, 'contains', terms, false)
       }
-      search.addCondition('blockEnd')
-
-      // Ignore Feeds
-      for (const feed of Zotero.Feeds.getAll()) {
-        search.addCondition('libraryID', 'isNot', feed.libraryID, true)
-      }
-
-      // Do not list attachments
-      search.addCondition('itemType', 'isNot', 'attachment', true)
-
-      if (typeof library !== 'undefined' && library !== '*') {
-        try {
-          search.addCondition('libraryID', 'is', getLibrary(library), true)
-        }
-        catch {
-          throw new Error(`library ${ JSON.stringify(library) } not found`)
-        }
-      }
+      search.addCondition('groupEnd', 'true', '')
     }
     else {
       blk: for (const term of terms) {
@@ -206,7 +224,7 @@ export class NSItem {
           switch (term[0]) {
             case 'ignore_feeds': {
               for (const feed of Zotero.Feeds.getAll()) {
-                search.addCondition('libraryID', 'isNot', feed.libraryID, true)
+                search.addCondition('libraryID', 'isNot', feed.libraryID)
               }
               continue blk
             }
@@ -215,7 +233,7 @@ export class NSItem {
         // libraryId can be provided as Library Name
         else if ((term.length >= 3) && (term[0] === 'libraryID')) {
           try {
-            term[2] = getLibrary(term[2])
+            term[2] = getLibraryID(term[2])
           }
           catch {
             throw new Error(`library ${ JSON.stringify(term[2]) } not found`)
@@ -253,7 +271,7 @@ export class NSItem {
    */
   public async attachments(citekey: string, library?: string | number): Promise<any> {
     const citationKey = citekey.replace(/^@/, '')
-    const libraryID = library === '*' ? undefined : getLibrary(library)
+    const libraryID = library === '*' ? undefined : getLibraryID(library)
     const key = Zotero.BetterBibTeX.KeyManager.any(_ => _.citationKey === citationKey && (library === '*' || _.libraryID === libraryID))
 
     if (!key) throw { code: INVALID_PARAMETERS, message: `${ citekey } not found` }
@@ -316,7 +334,7 @@ export class NSItem {
         let col = (Zotero.Collections.getByLibraryAndKey(libraryID, key) || null)?.toJSON()
 
         if (col) {
-          col = structuredClone(col)
+          col = clone(col)
         }
         else {
           return ''
@@ -326,10 +344,7 @@ export class NSItem {
           col.parentCollection = recurseParents(libraryID, col.parentCollection)
         }
 
-        delete col.relations
-        delete col.version
-
-        seen[key] = col
+        seen[key] = omit(col, [ 'relations', 'version' ])
       }
 
       return seen[key]
@@ -339,10 +354,9 @@ export class NSItem {
     for (const key of keys) {
       const item = await getItemAsync(key.itemID)
       collections[key.citationKey] = item.getCollections().map(id => {
-        const col = structuredClone(Zotero.Collections.get(id).toJSON())
-
-        delete col.relations
-        delete col.version
+        const maybeCol = Zotero.Collections.get(id)
+        if (!maybeCol) return undefined
+        const col = clone(maybeCol.toJSON())
 
         seen[id] = col
 
@@ -350,7 +364,7 @@ export class NSItem {
           col.parentCollection = recurseParents(item.libraryID, col.parentCollection)
         }
 
-        return col
+        return omit(col, [ 'relations', 'version' ])
       })
     }
 
@@ -405,7 +419,7 @@ export class NSItem {
     if (((format as any).mode || 'bibliography') !== 'bibliography') throw new Error(`mode must be bibliograpy, not ${ (format as any).mode }`)
 
     const resolve = find(library)
-    const items = await getItemsAsync(citekeys.map(resolve).filter(_ => _))
+    const items = await getItemsAsync(citekeys.map(resolve).filter(itemID => typeof itemID === 'number'))
 
     const bibliography = Zotero.QuickCopy.getContentFromItems(items, { ...format, mode: 'bibliography' }, null, false)
     return bibliography[format.contentType || 'html']
@@ -420,7 +434,7 @@ export class NSItem {
     const keys = {}
 
     if (item_keys === 'selected') {
-      for (const item of Zotero.getActiveZoteroPane().getSelectedItems()) {
+      for (const item of (Zotero.getActiveZoteroPane()?.getSelectedItems() || [])) {
         if (item.isFeedItem) continue
         if (item.isRegularItem()) {
           keys[item.key] = Zotero.BetterBibTeX.KeyManager.any(_ => _.libraryID === item.libraryID && _.itemKey === item.key)?.citationKey || null
@@ -454,6 +468,69 @@ export class NSItem {
   }
 
   /**
+   * Regenerate citekeys from current item metadata. For each input citekey, the
+    * underlying item's key is recomputed using the configured `citekeyFormat`.
+   *
+   * Useful when items were created in two phases — initial record from partial
+   * metadata, enrichment landing later — and the key generated during phase one
+   * no longer matches what current metadata would produce.
+   *
+   * Returns an old → new mapping per input citekey. The value is `null` only
+   * when the input citekey cannot be resolved to an item. Otherwise the value
+   * is the resulting citekey — equal to the input if the recomputed key is
+   * unchanged, or the new citekey if it changed.
+   *
+   * Read-only library handling is deferred to #3430; until that lands, scope
+   * the call to a writeable library via `library` to avoid touching read-only
+   * items.
+   *
+   * Counterpart to the read-only `item.citationkey` lookup. Internally calls
+   * the same `KeyManager.fill(..., { replace: true })` path the `Regenerate
+   * BibTeX key` right-click menu item invokes.
+   *
+   * @param citekeys  Array of citekeys whose items should be regenerated.
+   * @param library   The libraryID to search in (optional). Pass `*` to search across your library and all groups.
+   */
+  public async regenerate_key(citekeys: string[], library?: string | number): Promise<Record<string, string | null>> {
+    if (typeof library === 'undefined') library = Zotero.Libraries.userLibraryID
+    const libraryID = library === '*' ? undefined : getLibraryID(library)
+
+    const result: Record<string, string | null> = {}
+    const resolved: { citekey: string; itemID: number; oldKey: string }[] = []
+
+    for (const citekey of citekeys) {
+      const matchKey = byKey(citekey)
+      const matched = Zotero.BetterBibTeX.KeyManager.any(_ => (library === '*' || _.libraryID === libraryID) && matchKey(_))
+      if (!matched) {
+        result[citekey] = null
+        continue
+      }
+      resolved.push({ citekey, itemID: matched.itemID, oldKey: matched.citationKey })
+    }
+
+    if (!resolved.length) return result
+
+    const items = await getItemsAsync(resolved.map(r => r.itemID))
+    const eligible = items.filter(item => !item.isFeedItem && item.isRegularItem())
+    const eligibleIDs = new Set(eligible.map(item => item.id))
+
+    for (const r of resolved) {
+      if (!eligibleIDs.has(r.itemID)) result[r.citekey] = r.oldKey
+    }
+
+    if (!eligible.length) return result
+
+    await Zotero.BetterBibTeX.KeyManager.fill(eligible.map(item => item.id), { replace: true })
+
+    for (const r of resolved) {
+      if (!eligibleIDs.has(r.itemID)) continue
+      result[r.citekey] = Zotero.BetterBibTeX.KeyManager.get(r.itemID)?.citationKey || r.oldKey
+    }
+
+    return result
+  }
+
+  /**
    * Generate an export for a list of citekeys
    *
    * @param citekeys      Array of citekeys
@@ -461,7 +538,7 @@ export class NSItem {
    * @param libraryID     ID of library to select the items from. When omitted, assume 'My Library'
    */
   public async export(citekeys: string[], translator: string, libraryID?: string | number): Promise<string> {
-    libraryID = getLibrary(libraryID)
+    libraryID = getLibraryID(libraryID)
     const keyMatch = byKeys(citekeys)
     const found = Zotero.BetterBibTeX.KeyManager.all(_ => _.libraryID === libraryID && keyMatch(_))
 
@@ -472,7 +549,7 @@ export class NSItem {
     for (const item of found) {
       status[item.citationKey] += 1
     }
-    const error = { missing: [], duplicates: []}
+    const error = { missing: [] as string[], duplicates: [] as string[] }
     for (const [ citekey, n ] of Object.entries(status)) {
       switch (n) {
         case 0:
@@ -512,7 +589,7 @@ export class NSItem {
     citekeys = [...(new Set(citekeys))]
     const result: { errors: Record<string, number>; items: Record<string, any> } = { errors: {}, items: {}}
 
-    const libraryIDs: Set<number> = new Set(Array.isArray(libraryID) ? libraryID.map(getLibrary) : [ getLibrary(libraryID) ])
+    const libraryIDs: Set<number> = new Set(Array.isArray(libraryID) ? libraryID.map(getLibraryID) : [ getLibraryID(libraryID) ])
     const itemIDs: number[] = []
 
     for (const citationKey of citekeys) {
@@ -576,7 +653,12 @@ export class NSItem {
         }
       }
 
-      citeproc.free()
+      try {
+        citeproc.free()
+      }
+      catch (err) {
+        log.error('pandoc_filter: soft error on citeproc.free()', err)
+      }
     }
     else {
       for (const item of items.map(i => Zotero.Utilities.Internal.itemToExportFormat(i, false, true))) {
@@ -672,9 +754,9 @@ const api = new class API {
       return { jsonrpc: '2.0', result: await method(...request.params), id: request.id || null }
     }
     catch (err) {
-      log.error('JSON-RPC:', err)
-      if (err.code) {
-        return { jsonrpc: '2.0', error: { code: err.code, message: err.message }, id: null }
+      log.error('JSON-RPC:', err, (err as any).stack)
+      if ((err as any).code) {
+        return { jsonrpc: '2.0', error: { code: (err as any).code, message: (err as any).message }, id: null }
       }
       else {
         return { jsonrpc: '2.0', error: { code: INTERNAL_ERROR, message: `${ err }` }, id: null }

@@ -171,7 +171,6 @@
       ],
       "date": "June 5, 2016",
       "extra": [
-        "Citation Key: Waskom2016",
         "DOI: 10.5281/zenodo.54844"
       ],
       "itemID": 1,
@@ -179,7 +178,8 @@
       "libraryCatalog": "DataCite",
       "publisher": "Zenodo",
       "shortTitle": "Seaborn",
-      "title": "Seaborn: V0.7.1 (June 2016)"
+      "title": "Seaborn: V0.7.1 (June 2016)",
+      "citationKey": "Waskom2016"
     }
   ]
 }

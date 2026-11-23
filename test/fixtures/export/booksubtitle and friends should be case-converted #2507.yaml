@@ -1,0 +1,61 @@
+---
+config:
+  id: 36a3b0b5-bad0-4a04-b79b-441c7cef77db
+  label: BetterBibTeX JSON
+  options:
+    exportNotes: true
+  preferences:
+    DOIandURL: doi
+    autoExportDelay: 2
+    automaticTags: false
+    biblatexExtractEprint: false
+    citekeyFormat: "authIni(n=1,sep=\" \").abbr.lower+shortyear+title.abbr.lower"
+    csquotes: “”
+    importBibTeXStrings: false
+    postscript: |-
+      if (Translator.BetterBibLaTeX) {
+          const split = (title) => {
+              const m = title.match(/^(.+)([?:;]) (.+?)$/)
+              return m && { main: m[1] + m[2].replace(/:/, ""), sub: m[3] }
+          }
+      
+          const add = (m, pre) => {
+              const params = { }
+              const { main, sub } = m
+              reference.add({ name: pre("title"), value: main, ...params })
+              reference.add({ name: pre("subtitle"), value: sub, ...params })
+          }
+      
+          if (reference.has.booktitle) {
+              const booktitle = split(reference.has.booktitle.value)
+              if (booktitle)
+                  add(booktitle, (name) => "book" + name)
+          }
+      
+          if (reference.has.title) {
+              const title = split(reference.has.title.value)
+              if (title && !title.title.match(/\((?!.*\))/))
+                  add(title, (name) => name)
+          }
+      }
+    warnBulkModify: 0
+    warnTitleCased: true
+items:
+  - citationKey: h69fnc
+    creators:
+      - creatorType: editor
+        firstName: Jonathan P.
+        lastName: Seldin
+      - creatorType: editor
+        firstName: J. Roger
+        lastName: Hindley
+      - creatorType: author
+        firstName: William A.
+        lastName: Howard
+    date: "1969"
+    itemID: 1
+    itemType: bookSection
+    place: New York
+    publicationTitle: "To H.B. Curry: Essays on combinatory logic, lambda calculus and formalism"
+    publisher: Academic Press
+    title: The formulae-as-types notion of construction

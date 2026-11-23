@@ -5,7 +5,7 @@ import { isEDTF } from './dateparser'
 
 const ismn_prefix = '9790'
 
-export function qualityReport(value: string, test: string, params = null): string {
+export function qualityReport(value: string, test: string, params?: string): string {
   switch (test) {
     case 'isbn':
       return isISBN(value.replace(/-/g, '')) ? '' : 'not a valid ISBN'
@@ -29,7 +29,7 @@ export function qualityReport(value: string, test: string, params = null): strin
       return isEDTF(value) ? '' : 'not a valid ETDF date'
 
     case 'pattern':
-      return (new RegExp(`^${ params }$`, 'i').test(value)) ? '' : `must match /^${ params }$/`
+      return (new RegExp(`^${params}$`, 'i').test(value)) ? '' : `must match /^${params}$/`
 
     default:
       throw new Error(`I don't know how to test for ${ test }`)

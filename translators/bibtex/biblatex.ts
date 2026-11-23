@@ -1,35 +1,13 @@
-import { Exporter as BibTeXExporter } from './exporter'
-import { Translation } from '../lib/translator'
 import { strToISO } from '../../content/dateparser'
-import { qualityReport } from '../../gen/biber-tool'
+import { allows, qualityReport } from '../../gen/biber-tool'
 import type { Collected } from '../lib/collect'
+import { Translation } from '../lib/translator'
+import { Exporter as BibTeXExporter } from './exporter'
 
-import { Entry as BaseEntry, Config } from './entry'
+import { Config, Entry as BaseEntry } from './entry'
 
 const config: Config = {
-  fieldEncoding: {
-    groups: 'verbatim', // blegh jabref field
-    url: 'url',
-    doi: 'verbatim',
-    eprint: 'verbatim',
-    eprintclass: 'verbatim',
-    crossref: 'raw',
-    xdata: 'raw',
-    xref: 'raw',
-    entrykey: 'raw',
-    childentrykey: 'raw',
-    verba: 'verbatim',
-    verbb: 'verbatim',
-    verbc: 'verbatim',
-    institution: 'literal_list',
-    publisher: 'literal_list',
-    origpublisher: 'literal_list',
-    organization: 'literal',
-    location: 'literal_list',
-    origlocation: 'literal_list',
-  },
-
-  caseConversion: {
+  exportCaseDefaults: {
     title: true,
     subtitle: true,
     series: true,
@@ -42,6 +20,28 @@ const config: Config = {
     mainsubtitle: true,
     eventtitle: true,
     eventsubtitle: true,
+  },
+
+  fieldEncoding: {
+    groups: 'verbatim', // blegh jabref field
+    url: 'url',
+    doi: 'verbatim',
+    eprint: 'verbatim',
+    eprintclass: 'verbatim',
+    crossref: 'verbatim',
+    xdata: 'verbatim',
+    xref: 'verbatim',
+    entrykey: 'verbatim',
+    childentrykey: 'verbatim',
+    verba: 'verbatim',
+    verbb: 'verbatim',
+    verbc: 'verbatim',
+    institution: 'literal_list',
+    publisher: 'literal_list',
+    origpublisher: 'literal_list',
+    organization: 'literal',
+    location: 'literal_list',
+    origlocation: 'literal_list',
   },
 
   typeMap: {
@@ -130,8 +130,8 @@ class CreatorTypeMap {
   public type: Record<string, string> = {}
   private registered: Record<string, string> = {}
   private static extension = {
-    editor: [ '', 'a', 'b', 'c' ],
-    name: [ 'a', 'b', 'c' ],
+    editor: ['', 'a', 'b', 'c'],
+    name: ['a', 'b', 'c'],
   }
 
   constructor(private hasEditor: boolean) {
@@ -141,7 +141,7 @@ class CreatorTypeMap {
     type = type.toLowerCase()
     if (!this.registered[type]) {
       for (const postfix of CreatorTypeMap.extension[base]) {
-        const candidate = `${ base }${ postfix }`
+        const candidate = `${base}${postfix}`
         if (this.hasEditor && candidate === 'editor' && type !== 'editor') continue
         if (this.type[candidate] && postfix !== 'c') continue
         this.type[candidate] = type
@@ -177,7 +177,7 @@ class Entry extends BaseEntry {
     }
 
     const creatorType = new CreatorTypeMap(!!this.item.creators.find(cr => cr.creatorType === 'editor'))
-    const video = [ 'video', 'movie' ].includes(this.entrytype)
+    const video = ['video', 'movie'].includes(this.entrytype)
     if (video) creatorType.register('editor', 'director')
 
     for (const creator of this.item.creators) {
@@ -201,6 +201,7 @@ class Entry extends BaseEntry {
 
         case 'author':
         case 'inventor':
+        case 'interviewee':
         case 'interviewer':
         case 'programmer':
         case 'artist':
@@ -250,14 +251,14 @@ class Entry extends BaseEntry {
       }
     }
 
-    for (const [ field, value ] of Object.entries(creators)) {
+    for (const [field, value] of Object.entries(creators)) {
       this.remove(field)
-      this.remove(`${ field }type`)
+      this.remove(`${field}type`)
 
       if (!value.length) continue
 
       this.add({ name: field, value, enc: 'creators' })
-      this.add({ name: `${ field }type`, value: creatorType.type[field] })
+      this.add({ name: `${field}type`, value: creatorType.type[field] })
     }
   }
 }
@@ -275,7 +276,7 @@ function looks_like_number_field(n: string): boolean {
   const ns: string[] = n.trim().split(/\s*-+|–|,|\/\s*/)
   switch (ns.length) {
     case 1:
-      return (looks_like_number(ns[0]) as boolean)
+      return looks_like_number(ns[0]) as boolean
 
     case 2:
       return (looks_like_number(ns[0]) as boolean) && (looks_like_number(ns[0]) === looks_like_number(ns[1]))
@@ -286,7 +287,7 @@ function looks_like_number_field(n: string): boolean {
 }
 
 const patent = new class {
-  private countries = [ 'de', 'eu', 'fr', 'uk', 'us' ]
+  private countries = ['de', 'eu', 'fr', 'uk', 'us']
   private prefix = { us: 'us', ep: 'eu', gb: 'uk', de: 'de', fr: 'fr' }
 
   public region(item): string {
@@ -297,7 +298,7 @@ const patent = new class {
       if (this.countries.includes(country)) return country
     }
 
-    for (const patentNumber of [ item.number, item.applicationNumber ]) {
+    for (const patentNumber of [item.number, item.applicationNumber]) {
       if (patentNumber) {
         const prefix: string = this.prefix[patentNumber.substr(0, 2).toLowerCase()]
         if (prefix) return prefix
@@ -311,7 +312,7 @@ const patent = new class {
   public number(item): string {
     if (item.itemType !== 'patent' || (!item.number && !item.applicationNumber)) return ''
 
-    for (const patentNumber of ([ item.number, item.applicationNumber ] as string[])) {
+    for (const patentNumber of ([item.number, item.applicationNumber] as string[])) {
       if (patentNumber) {
         const country = patentNumber.substr(0, 2).toLowerCase()
         if (this.prefix[country]) return patentNumber.substr(country.length)
@@ -326,8 +327,8 @@ const patent = new class {
 
     const region = this.region(item)
 
-    if (region && item.number) return `patent${ region }`
-    if (region && item.applicationNumber) return `patreq${ region }`
+    if (region && item.number) return `patent${region}`
+    if (region && item.applicationNumber) return `patreq${region}`
 
     return 'patent'
   }
@@ -338,7 +339,6 @@ export function generateBibLaTeX(collected: Collected): Translation {
   translation.bibtex = new BibTeXExporter(translation)
 
   Entry.installPostscript(translation)
-  translation.bibtex.prepare_strings()
 
   for (const item of translation.bibtex.items) {
     const entry = new Entry(item, config, translation)
@@ -349,16 +349,16 @@ export function generateBibLaTeX(collected: Collected): Translation {
     if (entry.entrytype === 'report' && item.type?.toLowerCase().includes('manual')) entry.entrytype = 'manual'
     // if (item.itemType === 'preprint' && entry.entrytype === 'online' && item.ISSN && item.publicationTitle) entry.entrytype = 'article'
 
-    entry.add({ name: 'pubstate', value: item.status || (item.itemType === 'preprint' && 'prepublished') })
+    entry.add({ name: 'pubstate', value: item.status || (item.itemType === 'preprint' ? 'prepublished' : undefined) })
 
     if (entry.entrytype === 'patent') {
-      if (item.country && !patent.region(item)) entry.add({ name: 'location', value: item.country || item.extraFields.kv['publisher-place'] })
+      if (item.country && !patent.region(item)) entry.add({ name: 'location', value: item.country || item.extraFields.kv!['publisher-place'] })
     }
     else if (entry.entrytype === 'unpublished' && item.itemType === 'presentation') {
       entry.add({ name: 'venue', value: item.place, enc: 'literal' })
     }
     else {
-      entry.add({ name: 'location', value: item.place || item.extraFields.kv['publisher-place'], enc: 'literal' })
+      entry.add({ name: 'location', value: item.place || item.extraFields.kv!['publisher-place'], enc: 'literal' })
       if (item.itemType === 'conferencePaper' && !entry.has.venue) {
         entry.add({ name: 'venue', value: item.eventPlace, enc: 'literal' })
       }
@@ -379,8 +379,8 @@ export function generateBibLaTeX(collected: Collected): Translation {
     entry.add({ name: 'isbn', value: item.ISBN })
     entry.add({ name: 'issn', value: item.ISSN })
 
-    entry.add({ name: 'url', value: item.url || item.extraFields.kv.url })
-    entry.add({ name: 'doi', value: (item.DOI || item.extraFields.kv.DOI || '').replace(/^https?:\/\/doi.org\//i, '') })
+    entry.add({ name: 'url', value: item.url || item.extraFields.kv!.url })
+    entry.add({ name: 'doi', value: (item.DOI || item.extraFields.kv!.DOI || '').replace(/^https?:\/\/doi.org\//i, '') })
 
     entry.add({ name: 'shorttitle', value: item.shortTitle })
     entry.add({ name: 'abstract', value: item.abstractNote?.replace(/\n+/g, ' ') })
@@ -388,24 +388,78 @@ export function generateBibLaTeX(collected: Collected): Translation {
     entry.add({ name: 'version', value: item.versionNumber })
 
     entry.add({ name: 'eventtitle', value: item.conferenceName })
-    entry.add({ name: 'eventtitle', value: item.meetingName, replace: true })
+    entry.add({ name: 'eventtitle', value: item.meetingName })
 
     entry.add({ name: 'pagetotal', value: item.numPages })
 
-    let number_added = ''
-    if (!item.number?.match(/arxiv/i) || !entry.has.eprint) {
-      number_added = entry.add({ name: 'number', value: patent.number(item) || entry.normalizeDashes(item.number || item.seriesNumber) })
-    }
-    entry.add({ name: !number_added && looks_like_number_field(item.issue) ? 'number' : 'issue', value: entry.normalizeDashes(item.issue) })
+    /*
+      eid field (literal)
 
-    const journalAbbreviation = item.journalAbbreviation || item.autoJournalAbbreviation
+      The electronic identifier of an @article or chapter-like section of a larger work often
+      called ‘article number’, ‘paper number’ or the like. This field may replace the pages
+      field for journals deviating from the classic pagination scheme of printed journals by
+      only enumerating articles or papers and not pages.
+
+      Not to be confused with number, which for @articles subdivides the volume.
+
+      number field (literal)
+
+      The number of a journal or the volume/number of a book in a series. See also issue
+      as well as §§ 2.3.7, 2.3.10, 2.3.11. With @patent entries, this is the number or record
+      token of a patent or patent request. Normally this field will be an integer or an
+      integer range, but it may also be a short designator that is not entirely numeric such
+      as “S1”, “Suppl. 2”, “3es”. In these cases the output should be scrutinised carefully.
+
+      Since number is—maybe counterintuitively given its name—a literal field, sorting
+      templates will not treat its contents as integers, but as literal strings, which means
+      that “11” may sort between “1” and “2”. If integer sorting is desired, the field can be
+      declared an integer field in a custom data model (see § 4.5.4). But then the sorting of
+      non-integer values is not well defined.
+      The ‘article number’ or ‘paper number’, which can be used instead of—or along
+      with—a page range to pinpoint a specific article within another work, goes into the
+      eid field.
+
+      issue field (literal)
+
+      The issue of a journal. This field is intended for journals whose individual issues are
+      identified by a designation such as ‘Spring’ or ‘Summer’ rather than the month or a
+      number. The placement of issue is similar to month and number. Integer ranges and
+      short designators are better written to the number field. See also month, number and
+      §§ 2.3.10 and 2.3.11.
+    */
+    if (!item.number?.match(/arxiv/i) || !entry.has.eprint) {
+      if (item.itemType === 'patent') {
+        entry.add({ name: 'number', value: patent.number(item) || entry.normalizeDashes(item.number) })
+      }
+      else {
+        entry.add({ name: 'number', value: entry.normalizeDashes(item.seriesNumber) })
+
+        entry.add({
+          name: allows(entry.entrytype, 'issue') && !(looks_like_number_field(item.issue) && !entry.has.number)
+            ? 'issue'
+            : 'number',
+          value: entry.normalizeDashes(item.issue),
+        })
+
+        entry.add({
+          name: allows(entry.entrytype, 'eid') || entry.has.number ? 'eid' : 'number',
+          value: entry.normalizeDashes(item.number),
+        })
+      }
+    }
+
+    const journalAbbreviation = {
+      abbrev: item.journalAbbreviation,
+      auto: item.autoJournalAbbreviation,
+      'abbrev+auto': item.journalAbbreviation || item.autoJournalAbbreviation,
+    }[translation.collected.preferences.journalAbbreviation] || ''
     switch (entry.entrytype) {
       case 'jurisdiction':
-        entry.add({ name: 'journaltitle', value: item.reporter || (item.publicationTitle !== item.title && item.publicationTitle), bibtexStrings: true })
+        entry.add({ name: 'journaltitle', value: item.reporter || (item.publicationTitle !== item.title ? item.publicationTitle : undefined), bibtexStrings: true })
         break
 
       case 'legislation':
-        entry.add({ name: 'journaltitle', value: item.code || (item.publicationTitle !== item.title && item.publicationTitle), bibtexStrings: true })
+        entry.add({ name: 'journaltitle', value: item.code || (item.publicationTitle !== item.title ? item.publicationTitle : undefined), bibtexStrings: true })
         break
 
       case 'incollection':
@@ -470,7 +524,7 @@ export function generateBibLaTeX(collected: Collected): Translation {
       })
       for (let i = 0; i < languages.length; i++) {
         entry.add({
-          name: i === 0 ? 'titleaddon' : `user${ String.fromCharCode('d'.charCodeAt(0) + i) }`,
+          name: i === 0 ? 'titleaddon' : `user${String.fromCharCode('d'.charCodeAt(0) + i)}`,
           // eslint-disable-next-line no-underscore-dangle
           value: item.multi._keys.title[languages[i]],
         })
@@ -540,7 +594,7 @@ export function generateBibLaTeX(collected: Collected): Translation {
 
     entry.add({ name: 'date', verbatim: 'year', orig: { name: 'origdate', verbatim: 'origdate' }, value: item.date, enc: 'date' })
     // #293 has both date="year [origyear]" and extra="original-date: origyear"
-    entry.add({ name: 'origdate', value: item.originalDate, enc: 'date', replace: true })
+    entry.add({ name: 'origdate', value: item.originalDate, enc: 'date' })
 
     // @ts-expect-error jurism
     entry.add({ name: 'eventdate', value: item.conferenceDate || item.eventDate, enc: 'date' })
@@ -571,23 +625,23 @@ export function generateBibLaTeX(collected: Collected): Translation {
     if (item.volumeTitle) { // #381
       if (entry.entrytype === 'book' && entry.has.title) {
         // @ts-expect-error jurism
-        entry.add({ name: 'maintitle', value: item.volumeTitle }); // ; to prevent chaining
-        [ entry.has.title.bibtex, entry.has.maintitle.bibtex ] = [ entry.has.maintitle.bibtex, entry.has.title.bibtex ]; // ; to prevent chaining
-        [ entry.has.title.value, entry.has.maintitle.value ] = [ entry.has.maintitle.value, entry.has.title.value ]
+        entry.add({ name: 'maintitle', value: item.volumeTitle }) // ; to prevent chaining
+        ;[entry.has.title.bibtex, entry.has.maintitle.bibtex] = [entry.has.maintitle.bibtex, entry.has.title.bibtex] // ; to prevent chaining
+        ;[entry.has.title.value, entry.has.maintitle.value] = [entry.has.maintitle.value, entry.has.title.value]
       }
 
-      if ([ 'incollection', 'chapter' ].includes(entry.entrytype) && entry.has.booktitle) {
+      if (['incollection', 'chapter'].includes(entry.entrytype) && entry.has.booktitle) {
         // @ts-expect-error jurism
-        entry.add({ name: 'maintitle', value: item.volumeTitle }); // ; to prevent chaining
-        [ entry.has.booktitle.bibtex, entry.has.maintitle.bibtex ] = [ entry.has.maintitle.bibtex, entry.has.booktitle.bibtex ]; // ; to preven chaining
-        [ entry.has.booktitle.value, entry.has.maintitle.value ] = [ entry.has.maintitle.value, entry.has.booktitle.value ]
+        entry.add({ name: 'maintitle', value: item.volumeTitle }) // ; to prevent chaining
+        ;[entry.has.booktitle.bibtex, entry.has.maintitle.bibtex] = [entry.has.maintitle.bibtex, entry.has.booktitle.bibtex] // ; to preven chaining
+        ;[entry.has.booktitle.value, entry.has.maintitle.value] = [entry.has.maintitle.value, entry.has.booktitle.value]
       }
     }
 
     entry.add({ name: 'pmid', value: item.PMID })
     entry.add({ name: 'pmcid', value: item.PMCID })
 
-    for (const eprinttype of [ 'pmid', 'arxiv', 'jstor', 'hdl', 'googlebooks' ]) {
+    for (const eprinttype of ['pmid', 'arxiv', 'jstor', 'hdl', 'googlebooks']) {
       if (entry.has.eprinttype) break
 
       if (entry.has[eprinttype]) {

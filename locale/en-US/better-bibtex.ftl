@@ -8,6 +8,8 @@ better-bibtex_aux-scan_title_aux = Tag cited items from AUX file
 better-bibtex_aux-scan_title_md = Tag cited items from Markdown file
 better-bibtex_aux-scanner =
   .label = Scan BibTeX AUX/Markdown file for references...
+better-bibtex_aux-scanner_replace-collection =
+  .label = Scan BibTeX AUX/Markdown file and replace items in this collection...
 better-bibtex_bulk-keys-confirm_warning = You are changing more than { $treshold } items in one go. Are you sure?
 better-bibtex_bulk-keys-confirm_stop_asking = OK, and don't ask me again
 
@@ -52,6 +54,10 @@ better-bibtex_error-report_include-cache =
   .label = cache
 better-bibtex_error-report_include-attachments = 
   .label = attachment metadata
+
+better-bibtex_error-report_profiling-active = Better BibTeX is currently collecting performance information.
+better-bibtex_error-report_stop-profiling =
+  .label = Stop collecting performance information
 
 better-bibtex_error-report_items = 
   .label = Items
@@ -102,13 +108,21 @@ better-bibtex_preferences_advanced_export_retain-cache_warning = By default, BBT
     
     If you have this on, and you experience any problem that is not the cache getting dropped on upgrade, you *must* clear the cache and reproduce the problem. When you change this setting, as with any setting change, the cache will be dropped.
 
-better-bibtex_preferences_advanced_export_title-case = 
-  .label = Apply title-casing to titles
+better-bibtex_preferences_advanced_export_title-case = Apply title-casing to titles
 
 
-better-bibtex_preferences_advanced_export_title-case_warning = If you're dead-set on ignoring both BibTeX/BibLaTeX best practice (see the BBT FAQ) and the Zotero recommendations on title/sentence casing, you can turn this off to suppress title casing for English items
+better-bibtex_preferences_advanced_export_title-case_warning = Leave empty to use the default title-casing rules for English items, or enter "off" to disable title-casing. To override individual fields, use a comma-separated list such as "-title,+booktitle". Prefix a field with "bibtex." or "biblatex." to restrict the override to that format, for example "-bibtex.title".
 better-bibtex_preferences_advanced_export_workers_cache = 
   .label = Enable caching for background exports
+
+better-bibtex_preferences_advanced_export_cache-touch = Update cache
+better-bibtex_preferences_advanced_export_cache-touch_drop =
+  .label = When exporting
+better-bibtex_preferences_advanced_export_cache-touch_fill =
+  .label = When items change
+
+better-bibtex_preferences_advanced_extra-field_as-note = 
+  .label = Treat the `extra` field as a note
 
 better-bibtex_preferences_advanced_extra-merge = When merging items, also merge:
 
@@ -177,8 +191,13 @@ better-bibtex_preferences_advanced_tab_postscript = postscript
 
 better-bibtex_preferences_advanced_tab_strings = @string definitions
 
-better-bibtex_preferences_auto-abbrev = 
-  .label = Automatically abbreviate journal title if none is set explicitly
+better-bibtex_preferences_auto-abbrev = Journal abbreviation mode
+better-bibtex_preferences_auto-abbrev_abbrev =
+  .label = always use the Zotero abbreviation field
+better-bibtex_preferences_auto-abbrev_auto =
+  .label = always use the auto-abbreviated value
+better-bibtex_preferences_auto-abbrev_abbrev-plus-auto =
+  .label = use Zotero abbreviation field, fallback to auto-abbreviation
 
 better-bibtex_collection-menu_auto-export =
   .label = Automatic export
@@ -242,8 +261,7 @@ better-bibtex_preferences_citekey_format_installed = Active citation key formula
 better-bibtex_preferences_citekey_dynamic =
   .label = Regenerate citation key when item changes
 
-better-bibtex_preferences_citekey_uniqueness = 
-  .label = Keeping citation keys unique
+better-bibtex_preferences_citekey_uniqueness = Keeping citation keys unique
 
 better-bibtex_preferences_citekey_uniqueness_case =
   .label = Ignore upper/lowercase when comparing for uniqueness
@@ -398,6 +416,20 @@ better-bibtex_preferences_rescan-citekeys =
 better-bibtex_preferences_reset-cache = 
   .label = Reset cache on next start
 
+better-bibtex_preferences_misc_performance = Performance
+
+better-bibtex_preferences_misc_performance_startup = 
+  .label = Collect performance information during startup
+
+better-bibtex_preferences_misc_performance_runtime = Collect performance information while Zotero is running
+
+better-bibtex_preferences_misc_performance_runtime_no =
+  .label = No
+better-bibtex_preferences_misc_performance_runtime_yes =
+  .label = Yes
+better-bibtex_preferences_misc_performance_runtime_except-sync =
+  .label = Yes, except during sync
+
 better-bibtex_preferences_tab_auto-export = Automatic export
 
 better-bibtex_preferences_tab_citekey = Citation keys
@@ -432,8 +464,10 @@ better-bibtex_zotero-pane_add-citation-links =
   .label = Citation Graph: add citation links...
 better-bibtex_zotero-pane_citekey_pin_inspire-hep =
   .label = Set BibTeX key from InspireHEP
-better-bibtex_zotero-pane_citekey_pin =
-  .label = Pin BibTeX key
+better-bibtex_zotero-pane_citekey_move_from_extra =
+  .label = Move Citation Key from extra to citation key field
+better-bibtex_zotero-pane_citekey_clear_from_extra =
+  .label = Clear Citation Key from extra
 better-bibtex_zotero-pane_citekey_refresh =
   .label = Regenerate BibTeX key
 better-bibtex_zotero-pane_citekey_fill =
@@ -443,13 +477,16 @@ better-bibtex_zotero-pane_bibtex_to_clipboard =
 better-bibtex_zotero-pane_biblatex_to_clipboard =
   .label = 🅱 copy BibLaTeX to clipboard
 better-bibtex_zotero-pane_column_citekey = { -citation-key }
+better-bibtex_zotero-pane_migrate-tex =
+  .label = Migrate TeX to extra
 better-bibtex_zotero-pane_patch-dates =
   .label = Copy date-added/date-modified from extra field
 better-bibtex_zotero-pane_sentence-case =
   .label = BBT Sentence-case
 better-bibtex_zotero-pane_show_collection-key =
   .label = Download Better BibTeX export...
-better-bibtex_zotero-pane_tag_duplicates = Tag duplicate citation keys
+better-bibtex_zotero-pane_tag_duplicates =
+  .label = Tag duplicate citation keys
 better-bibtex_zotero-pane_tex-studio =
   .label = Push entries to TeXstudio
 

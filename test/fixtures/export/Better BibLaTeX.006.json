@@ -10,12 +10,11 @@
   },
   "items": [
     {
-      "extra": [
-        "Citation Key: test-ticket1661"
-      ],
+      "extra": [],
       "itemID": 1,
       "itemType": "journalArticle",
-      "title": "non-breaking space: ; accented characters: ñ and ñ; tilde in URL: http://example.com/~user"
+      "title": "non-breaking space: ; accented characters: ñ and ñ; tilde in URL: http://example.com/~user",
+      "citationKey": "test-ticket1661"
     }
   ]
 }

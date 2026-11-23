@@ -31,13 +31,12 @@
         }
       ],
       "date": "2023",
-      "extra": [
-        "Citation Key: TheKey"
-      ],
+      "extra": [],
       "itemID": 2,
       "itemType": "document",
       "title": "TheTitle",
-      "url": "https://www.example.com/#foo"
+      "url": "https://www.example.com/#foo",
+      "citationKey": "TheKey"
     }
   ]
 }

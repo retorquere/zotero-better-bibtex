@@ -32,7 +32,7 @@ function date2csl(date: RichDate): [LooseNumber, LooseNumber?, LooseNumber?] {
 }
 
 class Exporter extends CSLExporter {
-  public date2CSL(date: RichDate): CSLDate {
+  public date2CSL(date: RichDate): CSLDate | null {
     switch (date.type) {
       case 'date':
       case 'open':

@@ -6,7 +6,6 @@
       "ascii": "",
       "asciiBibLaTeX": false,
       "asciiBibTeX": true,
-      "autoAbbrev": false,
       "autoAbbrevStyle": "",
       "autoExport": "immediate",
       "autoExportDelay": 5,
@@ -28,13 +27,11 @@
       "citeCommand": "cite",
       "citekeyFold": true,
       "citekeyFormat": "auth + year",
-      "citekeySearch": true,
       "citekeyUnsafeChars": "\\\"#%'(),={}~",
       "csquotes": "",
       "DOIandURL": "both",
       "exportBibTeXStrings": "off",
       "exportBraceProtection": true,
-      "exportTitleCase": true,
       "extraMergeCitekeys": false,
       "extraMergeCSL": false,
       "extraMergeTeX": false,
@@ -67,21 +64,19 @@
       "quickCopyOrgMode": "zotero",
       "quickCopyPandocBrackets": false,
       "quickCopySelectLink": "zotero",
-      "rawImports": false,
-      "rawLaTag": "#LaTeX",
       "relativeFilePaths": false,
       "separatorList": "and",
       "separatorNames": "and",
       "skipFields": "",
       "skipWords": "a,ab,aboard,about,above,across,after,against,al,along,amid,among,an,and,anti,around,as,at,before,behind,below,beneath,beside,besides,between,beyond,but,by,d,da,das,de,del,dell,dello,dei,degli,della,dell,delle,dem,den,der,des,despite,die,do,down,du,during,ein,eine,einem,einen,einer,eines,el,en,et,except,for,from,gli,i,il,in,inside,into,is,l,la,las,le,les,like,lo,los,near,nor,of,off,on,onto,or,over,past,per,plus,round,save,since,so,some,sur,than,the,through,to,toward,towards,un,una,unas,under,underneath,une,unlike,uno,unos,until,up,upon,versus,via,von,while,with,within,without,yet,zu,zum",
-      "startupProgress": "popup",
       "strings": "",
       "stringsOverride": "",
       "verbatimFields": "url,doi,file,pdf,ids,eprint,/^verb[a-z]$/,groups,/^citeulike-linkout-[0-9]+$/, /^bdsk-url-[0-9]+$/",
       "warnBulkModify": 10,
       "warnTitleCased": false,
       "chinese": false,
-      "japanese": false
+      "japanese": false,
+      "journalAbbreviation": "auto"
     },
     "options": {
       "exportNotes": true,
@@ -101,11 +96,11 @@
       "version": 0,
       "itemType": "videoRecording",
       "date": "1975",
-      "extra": "Citation Key: formanOneFlewCuckoo1975",
+      "extra": "",
       "title": "One flew over the cuckoo's nest",
       "creators": [
         {
-          "firstName": "Milo\u0161",
+          "firstName": "Miloš",
           "lastName": "Forman",
           "creatorType": "director"
         }
@@ -134,11 +129,11 @@
       "version": 0,
       "itemType": "tvBroadcast",
       "date": "1975",
-      "extra": "Citation Key: formanOneFlewCuckoo1975-epi",
+      "extra": "",
       "title": "One flew over the cuckoo's nest",
       "creators": [
         {
-          "firstName": "Milo\u0161",
+          "firstName": "Miloš",
           "lastName": "Forman",
           "creatorType": "director"
         }
@@ -167,11 +162,11 @@
       "version": 0,
       "itemType": "film",
       "date": "1975",
-      "extra": "Citation Key: formanOneFlewCuckoo1975-film",
+      "extra": "",
       "title": "One flew over the cuckoo's nest",
       "creators": [
         {
-          "firstName": "Milo\u0161",
+          "firstName": "Miloš",
           "lastName": "Forman",
           "creatorType": "director"
         }
@@ -200,11 +195,11 @@
       "version": 0,
       "itemType": "tvBroadcast",
       "date": "1975",
-      "extra": "Citation Key: formanOneFlewCuckoo1975-tv",
+      "extra": "",
       "title": "One flew over the cuckoo's nest",
       "creators": [
         {
-          "firstName": "Milo\u0161",
+          "firstName": "Miloš",
           "lastName": "Forman",
           "creatorType": "director"
         }

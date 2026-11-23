@@ -4,7 +4,8 @@ import { getItemsAsync } from './get-items-async'
 import type { Serialized } from '../gen/typings/serialized'
 
 import { JournalAbbrev } from './journal-abbrev'
-import { Preference } from './prefs'
+import { KeyManager } from './key-manager'
+import { clone } from './object'
 
 class Serializer {
   private attachment(serialized: Serialized.Attachment, att): Serialized.Attachment {
@@ -15,9 +16,7 @@ class Serializer {
     return serialized
   }
 
-  private async item(item: Zotero.Item, selectedLibraryID: number): Promise<Serialized.Item> {
-    if (item.libraryID !== selectedLibraryID) await item.loadAllData()
-
+  private async item(item: Zotero.Item): Promise<Serialized.Item> {
     let serialized: Serialized.Item = item.toJSON() as unknown as Serialized.Item
     serialized.uri = Zotero.URI.getItemURI(item)
     serialized.itemID = item.id
@@ -39,12 +38,12 @@ class Serializer {
         break
     }
 
-    return structuredClone(fix(serialized, item))
+    return clone(fix(serialized, item))
   }
 
   public async serialize(items: Zotero.Item[]): Promise<Serialized.Item[]> {
-    const selectedLibraryID = Zotero.getActiveZoteroPane().getSelectedLibraryID()
-    return Promise.all(items.map(item => this.item(item, selectedLibraryID)))
+    await Zotero.Items.loadDataTypes(items)
+    return Promise.all(items.map(item => this.item(item)))
   }
 }
 export const serializer = new Serializer
@@ -53,9 +52,12 @@ export function fix(serialized: Serialized.Item, item: Zotero.Item): Serialized.
   if (item.isRegularItem() && !item.isFeedItem) {
     const regular = <Serialized.RegularItem>serialized
 
-    if (!Zotero.BetterBibTeX.starting && Preference.autoAbbrev) {
+    if (!Zotero.BetterBibTeX.starting) {
       regular.autoJournalAbbreviation = JournalAbbrev.get(regular, 'auto') || ''
     }
+
+    // fetch for read-only items
+    if (!regular.citationKey) regular.citationKey = KeyManager.get(item.id)?.citationKey ?? ''
   }
 
   // come on -- these are used in the collections export but not provided on the items?!

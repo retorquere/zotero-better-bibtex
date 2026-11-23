@@ -1,0 +1,50 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "preferences": {
+      "citekeyFormat": "auth.lower + shorttitle(3, 3) + year",
+      "fillKeyAfter": 1,
+      "skipFields": "abstract"
+    },
+    "options": {}
+  },
+  "version": {
+    "zotero": "9.0.4",
+    "bbt": "9.0.29"
+  },
+  "collections": {},
+  "items": [
+    {
+      "key": "SI62ESV3",
+      "version": 32575,
+      "itemType": "tvBroadcast",
+      "title": "On the edge",
+      "date": "1992",
+      "language": "en",
+      "extra": "csl.type: video",
+      "citationKey": "marreEdge1992",
+      "creators": [
+        {
+          "firstName": "Jeremy",
+          "lastName": "Marre",
+          "creatorType": "director"
+        },
+        {
+          "firstName": "Derek",
+          "lastName": "Bailey",
+          "creatorType": "scriptwriter"
+        }
+      ],
+      "tags": [],
+      "dateAdded": "2022-11-11T16:30:42Z",
+      "dateModified": "2026-06-16T06:02:28Z",
+      "itemID": 116,
+      "attachments": [],
+      "notes": [],
+      "number": "Episode 3",
+      "medium": "TV series episode",
+      "publisher": "Channel 4"
+    }
+  ]
+}

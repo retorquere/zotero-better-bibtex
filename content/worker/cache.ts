@@ -1,6 +1,7 @@
 // import { DatabaseFactory, Database, ObjectStoreInterface } from '@idxdb/promised'
 import { DatabaseFactory, Database } from '@idxdb/promised'
 // import { SynchronousPromise } from 'synchronous-promise'
+import stringify from 'fast-json-stable-stringify'
 
 import type { Serialized } from '../../gen/typings/serialized'
 import { Cache as CacheInterface } from './interface'
@@ -30,12 +31,11 @@ export type CacheMetadata = {
 }
 
 import { log } from '../logger'
-import stringify from 'safe-stable-stringify'
 
 import { pick, unpick } from '../object'
 
 import { byLabel, DisplayOptions } from '../../gen/translators'
-import BBT from '../../gen/version.cjs'
+import * as BBT from '../../gen/build'
 // import { main as probe } from './cache-test'
 
 export const Context = new class {
@@ -65,9 +65,11 @@ async function allSettled(promises): Promise<string> {
     return rejected ? `${rejected}/${settled.length}` : ''
   }
   catch (err) {
-    return `[[${err.message}]]`
+    return `[[${(err as Error).message}]]`
   }
 }
+
+const bulkLookupThreshold = 1000
 
 export class ExportCache {
   public async touch(itemIDs: number[]): Promise<void> {
@@ -79,7 +81,7 @@ export class ExportCache {
     for (const itemID of itemIDs) {
       const cursor = index.openKeyCursor(itemID)
       while (!(await cursor.end())) {
-        deletes.push(store.delete(cursor.primaryKey))
+        deletes.push(store.delete(cursor.primaryKey!))
         cursor.continue()
       }
     }
@@ -93,23 +95,24 @@ export class ExportCache {
     const exportContextStore = tx.objectStore('ExportContext')
     const exportContextIndex = exportContextStore.index('context')
     const exportContext = await exportContextIndex.get<ExportContext, string>(path)
+    const deletes: Promise<void>[] = []
 
     if (exportContext) {
-      const deletes: Promise<void>[] = []
-
       const exportsStore = tx.objectStore('Export')
       const exportsIndex = exportsStore.index('context')
       const cursor = exportsIndex.openKeyCursor<[number, number], number>(exportContext.id)
 
       while (!(await cursor.end())) {
-        deletes.push(exportsStore.delete(cursor.primaryKey))
+        deletes.push(exportsStore.delete(cursor.primaryKey!))
         cursor.continue()
       }
 
       if (deleteContext) deletes.push(exportContextStore.delete<number>(exportContext.id))
     }
 
+    const rejected = await allSettled(deletes)
     await tx.commit()
+    if (rejected) log.error(`cache: failed to remove auto-export ${rejected} entries for ${path}`)
   }
 
   public async dropTranslator(translator: string): Promise<void> {
@@ -128,7 +131,7 @@ export class ExportCache {
       for (const contextID of contextIDs) {
         const cursor = exportsIndex.openKeyCursor<[number, number], number>(contextID)
         while (!(await cursor.end())) {
-          deletes.push(exportsStore.delete(cursor.primaryKey))
+          deletes.push(exportsStore.delete(cursor.primaryKey!))
           cursor.continue()
         }
       }
@@ -140,10 +143,10 @@ export class ExportCache {
     await tx.commit()
   }
 
-  public async load(translator: string, context: string): Promise<{ context: number; items: Map<number, ExportedItem> }> {
+  public async load(translator: string, context: string): Promise<{ context: number | false; items: Map<number, ExportedItem> }> {
     const tx = Cache.db.transaction([ 'Export', 'ExportContext' ], 'readwrite')
 
-    let contextID = -1
+    let contextID: number | false = false
     const items: Map<number, ExportedItem> = new Map
 
     try {
@@ -159,9 +162,11 @@ export class ExportCache {
       for (const entry of all) {
         items.set(entry.itemID, entry)
       }
+      await tx.commit()
     }
     catch (err) {
       log.error('failed to load export cache', context, err)
+      return { context: false, items: new Map }
     }
 
     return { context: contextID, items }
@@ -184,7 +189,7 @@ class SerializedCache {
   public async missing(itemIDs: number[]): Promise<number[]> {
     const tx = Cache.db.transaction(['Serialized', 'touched'], 'readwrite')
     const store = tx.objectStore('Serialized')
-    const cached = new Set(await store.getAllKeys())
+    const cached = new Set(await store.getAllKeys<number>())
     const touched = tx.objectStore('touched')
     const purge: Set<number> = new Set(await touched.getAllKeys())
 
@@ -210,12 +215,25 @@ class SerializedCache {
 
   public async fill(items: Serialized.Item[]): Promise<void> {
     if (items.length) {
-      const tx = Cache.db.transaction(['Serialized'], 'readwrite')
+      const tx = Cache.db.transaction(['Serialized', 'touched'], 'readwrite')
       const store = tx.objectStore('Serialized')
-      const puts = items.map(item => store.put(item))
+      const touched = tx.objectStore('touched')
+      const puts = items.flatMap(item => [ store.put(item), touched.delete(item.itemID) ])
       const rejected = await allSettled(puts)
       await tx.commit()
       if (rejected) log.error(`cache: failed to store ${rejected}`)
+    }
+  }
+
+  public async remove(itemIDs: number[]): Promise<void> {
+    if (itemIDs.length) {
+      const tx = Cache.db.transaction(['Serialized', 'touched'], 'readwrite')
+      const serialized = tx.objectStore('Serialized')
+      const touched = tx.objectStore('touched')
+      const deletes = itemIDs.flatMap(itemID => [ serialized.delete(itemID), touched.delete(itemID) ])
+      const rejected = await allSettled(deletes)
+      await tx.commit()
+      if (rejected) log.error(`cache: failed to remove ${rejected}`)
     }
   }
 
@@ -223,9 +241,11 @@ class SerializedCache {
     const tx = Cache.db.transaction('Serialized', 'readonly')
     const store = tx.objectStore('Serialized')
     const requested = new Set(ids)
-    const items: Serialized.Item[] = (await store.getAll<Serialized.Item, number>()).filter(item => requested.has(item.itemID))
+    const items: Serialized.Item[] = requested.size > bulkLookupThreshold
+      ? (await store.getAll<Serialized.Item, number>()).filter(item => requested.has(item.itemID))
+      : (await Promise.all([...requested].map(itemID => store.get<Serialized.Item, number>(itemID)))).filter((item): item is Serialized.Item => !!item)
 
-    if (ids.length !== items.length) log.error(`indexed: failed to fetch ${ ids.length - items.length } items`)
+    if (requested.size !== items.length) log.error(`indexed: failed to fetch ${ requested.size - items.length } items`)
     return items
   }
 
@@ -233,8 +253,9 @@ class SerializedCache {
     const tx = Cache.db.transaction('touched', 'readwrite')
     const store = tx.objectStore('touched')
     const puts = ids.map(id => store.put(true, id))
-    await Promise.all(puts)
+    const rejected = await allSettled(puts)
     await tx.commit()
+    if (rejected) log.error(`cache: failed to touch ${rejected} serialized items`)
   }
 
   public async purge(): Promise<void> {
@@ -280,7 +301,7 @@ class $Cache implements CacheInterface {
   public version = 11
   public name = 'BetterBibTeXCache'
 
-  public db: Database
+  public db!: Database
   public Serialized = new SerializedCache
   public Exports = new ExportCache
 
@@ -312,8 +333,8 @@ class $Cache implements CacheInterface {
       }])
     }
     catch (err) {
-      log.error(`cache: ${action} ${this.version} failed: ${err.message}`)
-      return null
+      log.error(`cache: ${action} ${this.version} failed: ${(err as Error).message}`)
+      throw err
     }
   }
 
@@ -343,8 +364,8 @@ class $Cache implements CacheInterface {
     }
     await tx.commit()
 
-    const expected = stringify(this.#schema, null, 2)
-    const found = stringify(schema, null, 2)
+    const expected = stringify(this.#schema)
+    const found = stringify(schema)
     log.info(`cache: schema: ${found}`)
     if (expected !== found) {
       log.error(`cache: schema mismatch!\nexpected:${expected}\nfound:${found}`)
@@ -364,7 +385,7 @@ class $Cache implements CacheInterface {
       }
     }
     catch (err) {
-      log.error(`failed to fetch metadata: ${err.message}`)
+      log.error(`failed to fetch metadata: ${(err as Error).message}`)
     }
 
     return metadata
@@ -391,7 +412,7 @@ class $Cache implements CacheInterface {
     const reasons = [
       {
         reason: `Zotero version changed from ${metadata.Zotero || 'none'} to ${Zotero.version}`,
-        test: metadata.Zotero && metadata.Zotero !== metadata.Zotero,
+        test: metadata.Zotero && metadata.Zotero !== Zotero.version,
       },
       {
         reason: `Better BibTeX version changed from ${metadata.BetterBibTeX || 'none'} to ${BBT.version}`,
@@ -430,31 +451,39 @@ class $Cache implements CacheInterface {
     return true
   }
 
-  public async touch(ids: number[]): Promise<void> {
-    if (ids.length) {
-      await this.Exports.touch(ids)
-      await this.Serialized.touch(ids)
-    }
+  public async updated(): Promise<void> {
     const tx = this.db.transaction('metadata', 'readwrite')
     const metadata = tx.objectStore('metadata')
     await metadata.put({ key: 'lastUpdated', value: Zotero.Date.dateToSQL((new Date), true) })
     await tx.commit()
   }
 
+  public async touch(ids: number[]): Promise<void> {
+    if (ids.length) {
+      await this.Exports.touch(ids)
+      await this.Serialized.touch(ids)
+    }
+    await this.updated()
+  }
+
   public close(): void {
     if (!this.available('close')) return
 
     this.db.close()
+
+    // @ts-expect-error TS2322: memory cleanup, but I don't want to assert all over the code
     this.db = null
   }
 
   public async count() {
     if (!this.available('count')) return 0
 
-    let count = 0
     const stores = this.db.objectStoreNames.filter(name => name !== 'metadata' && name !== 'touched')
+    if (!stores.length) return 0
+
+    const tx = this.db.transaction(stores, 'readonly')
+    let count = 0
     for (const name of stores) {
-      const tx = this.db.transaction(name, 'readonly')
       count += await tx.objectStore(name).count()
     }
     return count
@@ -462,7 +491,10 @@ class $Cache implements CacheInterface {
 
   public updateStats(hits: number, misses: number): void {
     // average over 10 runs
-    if (hits + misses) this.cacheRate[''] = this.cacheRate[''] + (hits - (this.cacheRate[''] * (hits + misses))) / 10
+    if (hits + misses) {
+      const rate = this.cacheRate[''] ?? 0
+      this.cacheRate[''] = rate + (hits - (rate * (hits + misses))) / 10
+    }
   }
 
   public async dump(): Promise<Record<string, any>> {
@@ -478,7 +510,7 @@ class $Cache implements CacheInterface {
             tables[name] = {}
             const cursor = store.openCursor<number, number, boolean>()
             while (!(await cursor.end())) {
-              tables[name][cursor.primaryKey] = cursor.value
+              tables[name][cursor.primaryKey!] = cursor.value
               cursor.continue()
             }
             break
@@ -494,7 +526,7 @@ class $Cache implements CacheInterface {
         }
       }
       catch (err) {
-        tables[name] = { error: err.message }
+        tables[name] = { error: (err as Error).message }
         log.error(`cache dump of ${name} failed:`, err)
       }
     }

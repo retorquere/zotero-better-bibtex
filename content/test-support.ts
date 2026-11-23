@@ -7,8 +7,8 @@ import { getItemAsync, getItemsAsync } from './get-items-async'
 import { AUXScanner } from './aux-scanner'
 import { defaults } from '../gen/preferences/meta'
 import { Preference } from './prefs'
-import * as memory from './memory'
 import { Cache } from './translators/worker'
+import { profiler } from './audit'
 
 // import { Bench } from 'tinybench'
 
@@ -17,8 +17,16 @@ const setatstart: string[] = [ 'testing', 'cache' ].filter(p => Preference[p] !=
 const idleService: any = Components.classes['@mozilla.org/widget/useridleservice;1'].getService(Components.interfaces.nsIUserIdleService)
 
 export class TestSupport {
-  public timedMemoryLog: any
-  public scenario: string
+  public scenario!: string
+  public libraryID: number = Zotero.Libraries.userLibraryID
+  public cjkLibrariesLoaded = false
+
+  public selectLibrary(library: string | number): void {
+    const libraryID = Zotero.Libraries.getAll().find(lib => lib.libraryID === library || lib.name === library)?.libraryID
+    if (typeof libraryID !== 'number') throw new Error(`library ${library} could not be found`)
+    this.libraryID = libraryID
+    log.info('testing: library selected:', { library, id: this.libraryID })
+  }
 
   public isIdle(): boolean {
     return idleService.idleTime > 1000
@@ -28,11 +36,6 @@ export class TestSupport {
     const start = Date.now()
     while (idleService.idleTime > 1000) await Zotero.Promise.delay(1000)
     return Date.now() - start
-  }
-
-  public memoryState(snapshot: string): memory.State {
-    const state = memory.state(snapshot)
-    return state
   }
 
   public autoExportRunning(): number {
@@ -54,7 +57,9 @@ export class TestSupport {
   }
 
   public async reset(scenario: string): Promise<void> {
+    this.scenario = scenario
     let error
+    this.libraryID = Zotero.Libraries.userLibraryID
     for (let i = 0; i < 3; i++) {
       try {
         if (i) log.error(JSON.stringify(scenario), 'reset attempt', i + 1)
@@ -67,6 +72,9 @@ export class TestSupport {
     }
     throw error
   }
+  public finished(scenario: string): void {
+    log.info(`finished ${scenario}`)
+  }
 
   public async attemptReset(): Promise<void> {
     await this.resetCache()
@@ -78,6 +86,9 @@ export class TestSupport {
     }
 
     Zotero.Prefs.set(`${ prefix }testing`, true)
+
+    // Reset CJK flag for next scenario
+    this.cjkLibrariesLoaded = false
 
     // Zotero DB access is *really* slow and times out even with chunked transactions. 3.5k items take ~ 50 seconds
     // to delete.
@@ -114,12 +125,21 @@ export class TestSupport {
       await Zotero.Tags.purge()
     })
 
-    if (Zotero.BetterBibTeX.KeyManager.all().length !== 0) throw new Error(`keystore has ${ Zotero.BetterBibTeX.KeyManager.all().length } entries after reset`)
+    if (Zotero.BetterBibTeX.KeyManager.all().length) {
+      log.error(`keystore has ${Zotero.BetterBibTeX.KeyManager.all().length} entries after reset`)
+      // @ts-expect-error TS2341
+      Zotero.BetterBibTeX.KeyManager.clear(Zotero.BetterBibTeX.KeyManager.all().map(k => k.itemID))
+    }
   }
 
   public async librarySize(): Promise<number> {
     const itemIDs: number[] = await Zotero.Items.getAll(Zotero.Libraries.userLibraryID, true, false, true)
     return itemIDs.length
+  }
+
+  public setPreference(pref: string, value: string | number | boolean): void {
+    if (pref.match(/[.](chinese|japanese|chineseSplitName)$/) && value) this.cjkLibrariesLoaded = true
+    Zotero.Prefs.set(pref, value)
   }
 
   public async importFile(path: string, createNewCollection: boolean, preferences: Record<string, number | boolean | string>, bibstyle?: string): Promise<number> {
@@ -129,12 +149,22 @@ export class TestSupport {
       if (['texmap', 'keyConflictPolicy'].includes(pref)) continue
       if (typeof defaults[pref] === 'undefined') throw new Error(`Unsupported preference ${ pref } in test case`)
       if (Array.isArray(value)) value = value.join(',')
+
+      // track when CJK libraries are loaded
+      if (['chinese', 'japanese', 'chineseSplitName'].includes(pref) && value) {
+        this.cjkLibrariesLoaded = true
+      }
+
       Zotero.Prefs.set(`translators.better-bibtex.${ pref }`, value)
     }
 
     if (!path) return 0
 
-    const before = await Zotero.Items.getAll(Zotero.Libraries.userLibraryID, true, false, true)
+    function regular(items: Zotero.Item[]): Zotero.Item[] {
+      return items.filter(item => !item.isFeedItem && item.isRegularItem())
+    }
+
+    const before = regular(await Zotero.Items.getAll(Zotero.Libraries.userLibraryID))
 
     if (path.endsWith('.aux')) {
       await AUXScanner.scan(path)
@@ -147,7 +177,7 @@ export class TestSupport {
 
     await Zotero.Promise.delay(Zotero.Prefs.get('translators.better-bibtex.itemObserverDelay') as number * 3)
 
-    const after = await Zotero.Items.getAll(Zotero.Libraries.userLibraryID, true, false, true)
+    const after = regular(await Zotero.Items.getAll(Zotero.Libraries.userLibraryID))
 
     if (bibstyle) {
       const items = await Zotero.Items.getAll(Zotero.Libraries.userLibraryID, true)
@@ -165,13 +195,13 @@ export class TestSupport {
     if (collectionName) {
       let name = collectionName
       if (name[0] === '/') name = name.substring(1) // don't do full path parsing right now
-      for (const collection of Zotero.Collections.getByLibrary(Zotero.Libraries.userLibraryID)) {
+      for (const collection of Zotero.Collections.getByLibrary(this.libraryID)) {
         if (collection.name === name) scope = { type: 'collection', collection }
       }
       if (!scope) throw new Error(`Collection '${ name }' not found`)
     }
     else {
-      scope = { type: 'library', id: Zotero.Libraries.userLibraryID }
+      scope = { type: 'library', id: this.libraryID }
     }
 
     const job = { translatorID, displayOptions: displayOptions as Record<string, boolean>, scope, path }
@@ -185,6 +215,7 @@ export class TestSupport {
     }
     catch (err) {
       log.error('json-rpc: export failed:', job, err)
+      throw err
     }
     finally {
       log.info(`performance: ${ translatorID } export took ${ Date.now() - start }`)
@@ -196,7 +227,7 @@ export class TestSupport {
   }
 
   public async select(ids: number[]): Promise<boolean> {
-    const zoteroPane = Zotero.getActiveZoteroPane()
+    const zoteroPane = Zotero.getActiveZoteroPane()!
     // zoteroPane.show()
 
     const sortedIDs = JSON.stringify(ids.slice().sort())
@@ -215,6 +246,12 @@ export class TestSupport {
       if (sortedIDs === JSON.stringify(selected.sort())) return true
     }
     throw new Error(`failed to select ${ ids }`)
+  }
+
+  public async migrateTeX(): Promise<void> {
+    const pane = Zotero.getActiveZoteroPane()
+    if (!pane) throw new Error('Cannot migrate TeX: no active Zotero pane')
+    await Zotero.BetterBibTeX.MenuHelper.migrateTeX(pane.getSelectedItems())
   }
 
   public async find(query: { contains: string; is: string }, expected = 1): Promise<number[]> {
@@ -236,14 +273,21 @@ export class TestSupport {
     return Array.from(new Set(ids))
   }
 
-  public async pick(format: string, citations: { id: number[]; uri: string; citationKey: string }[]): Promise<string> {
-    for (const citation of citations) {
+  public async pick(format: string, citations: { id: number[]; uri: string; citationKey: string }[], options: Record<string, string> = {}): Promise<string> {
+    const picked = citations.map(citation => {
       if (citation.id.length !== 1) throw new Error(`Expected 1 item, got ${ citation.id.length }`)
-      citation.citationKey = Zotero.BetterBibTeX.KeyManager.get(citation.id[0])?.citationKey || ''
-      citation.uri = Zotero.URI.getItemURI(await getItemAsync(citation.id[0]))
+      return {
+        ...citation,
+        id: citation.id[0],
+      }
+    })
+
+    for (const citation of picked) {
+      citation.citationKey = Zotero.BetterBibTeX.KeyManager.get(citation.id)?.citationKey || ''
+      citation.uri = Zotero.URI.getItemURI(await getItemAsync(citation.id))
     }
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-    return await CAYWFormatter[format](citations, {})
+    return await CAYWFormatter[format](picked, options)
   }
 
   public async pinCiteKey(itemID: number, action: string, citationKey?: string): Promise<void> {
@@ -324,7 +368,7 @@ export class TestSupport {
   }
 
   public async clearCollection(path: string): Promise<void> {
-    let collection = null
+    let collection: Zotero.Collection | undefined
 
     for (const name of path.split('/')) {
       const collections = collection ? Zotero.Collections.getByParent(collection.id) : Zotero.Collections.getByLibrary(Zotero.Libraries.userLibraryID)
@@ -339,12 +383,12 @@ export class TestSupport {
       if (!found) throw new Error(`${ path } not found`)
     }
 
-    const itemIDs = collection.getChildItems(true)
+    const itemIDs = collection!.getChildItems(true)
     if (!itemIDs.length) throw new Error(`${ path } is empty`)
     await Zotero.DB.executeTransaction(async () => {
-      await collection.removeItems(itemIDs)
+      await collection!.removeItems(itemIDs)
     })
-    if (collection.getChildItems(true).length) throw new Error(`${ path } not empty`)
+    if (collection!.getChildItems(true).length) throw new Error(`${ path } not empty`)
   }
 
   public citationKey(itemID: number): string {
@@ -369,6 +413,10 @@ export class TestSupport {
         }
       })
     })
+  }
+
+  public async profilerSnapshot(label: string): Promise<void> {
+    await profiler.split(label)
   }
 
   public editAutoExport(field: JobSetting, value: boolean | string): void {

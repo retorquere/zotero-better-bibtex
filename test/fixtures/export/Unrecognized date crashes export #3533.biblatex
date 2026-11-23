@@ -1,0 +1,13 @@
+@book{augustinus1486CivitateDei,
+  title = {De civitate dei [French] De la cité de dieu},
+  shorttitle = {De civitate dei [French] De la cite de dieu. Comm},
+  author = {Augustinus, Aurelius},
+  translator = {family=Preslles, given=Raoul, prefix=de, useprefix=true},
+  date = {1486/1487},
+  publisher = {{Pierre Gérard and Jean Du Pré (printer of Paris)}},
+  location = {Abbeville},
+  url = {https://data.cerl.org/istc/ia01247000},
+  urldate = {Wed Dec 09 2020 13:49:01 GMT+0100 (Central European Standard Time)},
+  langid = {frm},
+  keywords = {document,europe,history,imprimé,philosophy,publishing,writing}
+}

@@ -17,12 +17,13 @@ import * as l10n from './l10n'
 import { orchestrator } from './orchestrator'
 import { pick } from './object'
 import { uri } from './escape'
+import { strcmp } from './string-compare'
 
 const cmdMeta = /(["^&|<>()%!])/
 const cmdMetaOrSpace = /[\s"^&|<>()%!]/
 const cmdMetaInsideQuotes = /(["%!])/
 
-type Job = {
+export type Job = {
   enabled: boolean
   type: 'collection' | 'library'
   id: number
@@ -75,7 +76,7 @@ class Store extends ObservedMap<string, Job> {
     super(jobs)
   }
 
-  order = (a: Job, b: Job) => a.path.localeCompare(b.path, undefined, { sensitivity: 'base', usage: 'sort' })
+  order = (a: Job, b: Job) => strcmp.base(a.path, b.path)
 
   onChange(method: 'set' | 'delete' | 'clear', key?: string) {
     if (!key) throw new Error('do not clear the database')
@@ -104,7 +105,7 @@ function win_quote(s: string, forCmd = true): string {
     return s.replace(cmdMeta, '^$1')
   }
 
-  const parts = []
+  const parts: string[] = []
   parts.push('"')
   for (const match of s.matchAll(/(\\*)(["+])|(\\+)|([^\\"]+)/g)) {
     const [ , slashes, quotes, onlySlashes, text ] = match
@@ -128,16 +129,16 @@ function win_quote(s: string, forCmd = true): string {
 import { quote as posix_quote } from 'shell-quote'
 
 function quote(cmd: string[]): string {
-  return client.isWin ? cmd.map(s => win_quote(s)).join(' ') : <string>posix_quote(cmd)
+  return client.isWin ? cmd.map(s => win_quote(s)).join(' ') : posix_quote(cmd)
 }
 
 class Git {
   public enabled: boolean
-  public path: string
-  public bib: string
-  private root: Record<string, string>
+  public path!: string
+  public bib!: string
+  private root: Record<string, string> = {}
 
-  private git: string
+  private git?: string
 
   constructor(parent?: Git) {
     this.enabled = false
@@ -149,8 +150,6 @@ class Git {
 
   public async init() {
     this.git = await findBinary('git')
-    this.root = {}
-
     return this
   }
 
@@ -161,7 +160,7 @@ class Git {
     const gitdir = PathUtils.join(path, '.git')
     if ((await File.exists(gitdir)) && (await File.isDir(gitdir))) return path
 
-    const parent = PathUtils.parent(path)
+    const parent = PathUtils.parent(path)!
     if (parent === path) return '' // at root, and is not git repo. Who does this?
     return await this.findRoot(parent)
   }
@@ -171,7 +170,7 @@ class Git {
 
     if (!this.git) return repo
 
-    let config: string = null
+    let config: string | null = null
 
     const disabled = () => {
       this.root[bib] = ''
@@ -184,7 +183,7 @@ class Git {
 
       case 'always':
         try {
-          repo.path = PathUtils.parent(bib)
+          repo.path = PathUtils.parent(bib)!
         }
         catch (err) {
           log.error('git.repo:', err)
@@ -193,7 +192,7 @@ class Git {
         break
 
       case 'config':
-        if (typeof this.root[bib] === 'undefined') this.root[bib] = await this.findRoot(PathUtils.parent(bib))
+        if (typeof this.root[bib] === 'undefined') this.root[bib] = await this.findRoot(PathUtils.parent(bib)!)
         if (!this.root[bib]) return disabled()
         repo.path = this.root[bib]
 
@@ -205,7 +204,7 @@ class Git {
           if (enabled !== 'true' && enabled !== true) return disabled()
         }
         catch (err) {
-          log.error(`git.repo: error parsing config "${config}" (${err.message})`, err)
+          log.error(`git.repo: error parsing config "${config}" (${(err as any).message})`, err)
           return disabled()
         }
         break
@@ -225,7 +224,7 @@ class Git {
   }
 
   public async pull() {
-    if (!this.enabled) return
+    if (!this.enabled || !this.git) return
 
     try {
       await this.exec(this.git, [ '-C', this.path, 'checkout', this.bib ])
@@ -235,13 +234,13 @@ class Git {
       await this.exec(this.git, [ '-C', this.path, 'pull' ])
     }
     catch (err) {
-      flash('autoexport git pull failed', err.message, 1)
-      log.error(`could not pull in ${ this.path }: ${err.message}`, err)
+      flash('autoexport git pull failed', (err as any).message, 1)
+      log.error(`could not pull in ${ this.path }: ${(err as any).message}`, err)
     }
   }
 
   public async push(msg) {
-    if (!this.enabled) return
+    if (!this.enabled || !this.git) return
 
     try {
       await this.exec(this.git, [ '-C', this.path, 'add', this.bib ])
@@ -249,8 +248,8 @@ class Git {
       await this.exec(this.git, [ '-C', this.path, 'push' ])
     }
     catch (err) {
-      flash('autoexport git push failed', err.message, 1)
-      log.error(`could not push ${ this.bib } in ${ this.path }`, err.message)
+      flash('autoexport git push failed', (err as any).message, 1)
+      log.error(`could not push ${this.bib} in ${this.path}`, (err as any).message)
     }
   }
 
@@ -291,7 +290,6 @@ if (Preference.autoExportDelay < 1) Preference.autoExportDelay = 1
 if (Preference.autoExportIdleWait < 1) Preference.autoExportIdleWait = 1
 const queue = new class TaskQueue {
   private scheduler = new Scheduler<string>('autoExportDelay', 1000)
-  private held: Set<string>
 
   constructor() {
     this.pause('startup')
@@ -307,12 +305,7 @@ const queue = new class TaskQueue {
 
   public add(path: string) {
     this.cancel(path)
-    if (this.held) {
-      this.held.add(path)
-    }
-    else {
-      this.scheduler.schedule(path, this.run.bind(this, path))
-    }
+    this.scheduler.schedule(path, this.run.bind(this, path))
   }
 
   public cancel(path: string) {
@@ -375,7 +368,7 @@ const queue = new class TaskQueue {
 
         const root = scope.type === 'collection' ? scope.collection : false
 
-        const dir = PathUtils.parent(ae.path)
+        const dir = PathUtils.parent(ae.path)!
         const base = Path.basename(ae.path).replace(new RegExp(`${ ext.replace(/[-/\\^$*+?.()|[\]{}]/g, '\\$&') }$`), '')
 
         const autoExportPathReplace = {
@@ -385,13 +378,14 @@ const queue = new class TaskQueue {
         }
 
         for (const collection of collections) {
-          const output = PathUtils.join(dir, [base]
-            .concat(this.getCollectionPath(collection, root))
-            // eslint-disable-next-line no-control-regex
-            .map((p: string) => p.replace(/[<>:'"/\\|?*\u0000-\u001F]/g, ''))
-            .map((p: string) => p.replace(/ +/g, autoExportPathReplace.space || ''))
-            .map((p: string) => autoExportPathReplace.diacritics ? (fold2ascii.foldMaintaining(p) as string) : p)
-            .join(autoExportPathReplace.dirSep || '-') + ext
+          const output: string = PathUtils.join(dir,
+            [base]
+              .concat(this.getCollectionPath(collection, root))
+              // eslint-disable-next-line no-control-regex
+              .map((p: string) => p.replace(/[<>:'"/\\|?*\u0000-\u001F]/g, ''))
+              .map((p: string) => p.replace(/ +/g, autoExportPathReplace.space || ''))
+              .map((p: string) => autoExportPathReplace.diacritics ? (fold2ascii.foldMaintaining(p) as string) : p)
+              .join(autoExportPathReplace.dirSep || '-') + ext
           )
           jobs.push({
             ...jobs[0],
@@ -416,7 +410,8 @@ const queue = new class TaskQueue {
     AutoExport.status(path, 'done')
   }
 
-  private getCollectionPath(coll: { name: string; parentID: number }, root: number): string[] {
+  private getCollectionPath(coll, root: number): string[] {
+    if (!coll) return []
     let path: string[] = [coll.name]
     if (coll.parentID && coll.parentID !== root) path = this.getCollectionPath(Zotero.Collections.get(coll.parentID), root).concat(path)
     return path
@@ -521,6 +516,7 @@ export const AutoExport = new class $AutoExport {
       ae[option] = ae[option] ?? job[option] ?? displayOptions[option] ?? false
     }
 
+    // @ts-expect-error TS2783: 'created' is specified more than once, so this usage will be overwritten.
     this.db.set(ae.path, { created: Date.now(), ...ae, updated: Date.now() })
     queue.add(ae.path)
   }
@@ -589,7 +585,7 @@ export const AutoExport = new class $AutoExport {
   }
 
   public get(path: string): Job {
-    return this.db.get(path)
+    return this.db.get(path)!
   }
 
   public all(): Job[] {
@@ -597,7 +593,8 @@ export const AutoExport = new class $AutoExport {
   }
 
   public edit(path: string, setting: JobSetting, value: number | boolean | string): void {
-    const ae: Job = this.db.get(path)
+    const ae: Job = this.db.get(path)!
+    // @ts-expect-error TS2783: 'created' is specified more than once, so this usage will be overwritten.
     this.db.set(path, { created: Date.now(), ...ae, [setting]: value, updated: Date.now() })
     queue.add(ae.path)
   }

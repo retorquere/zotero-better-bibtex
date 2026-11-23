@@ -1,0 +1,17 @@
+@article{limComprehensiveReviewElectrochemical2014,
+  title = {A Comprehensive Review of Electrochemical Exfoliation of Graphite for Tunable Graphene Architecture: {{Mechanistic}} Insights, Design Principles, Functional Derivatives, and Emerging Applications},
+  shorttitle = {A Comprehensive Review of Electrochemical Exfoliation of Graphite for Tunable Graphene Architecture},
+  author = {Lim, Sungmook and Chang, Mincheol and Lee, Wonoh},
+  date = {/},
+  journaltitle = {Carbon},
+  shortjournal = {Carbon},
+  volume = {246},
+  pages = {120888},
+  issn = {00086223},
+  doi = {10.1016/j.carbon.2025.120888},
+  url = {https://linkinghub.elsevier.com/retrieve/pii/S0008622325009042},
+  urldate = {2025-10-09},
+  abstract = {Graphene has attracted considerable attention owing to its exceptional physical and chemical properties, which support a wide range of scientific and technological applications. Although numerous synthesis methods have been developed for scalable production, many conventional techniques involve high temperatures, hazardous reagents, or complex processing steps. As a more sustainable and efficient alternative, electrochemical exfoliation has emerged as a promising approach for graphene synthesis. This review provides a comprehensive overview of electrochemical exfoliation, including its fundamental principles, underlying mechanisms, and the tunability of graphene properties through controllable process parameters. Furthermore, its utility in the synthesis of graphene derivatives and composite materials is discussed, thereby broadening its applicability across various research domains. Recent advances in energy-related and sensing applications are examined, alongside current challenges and future perspectives for establishing electrochemical exfoliation as a practical and scalable method for producing high-quality graphene.},
+  langid = {english},
+  keywords = {Status: Unread}
+}

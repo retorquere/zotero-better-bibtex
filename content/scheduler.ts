@@ -12,7 +12,7 @@ export class Scheduler<T> {
   #delay: string | number
   private factor: number
   private job: Map<T, Job & { id: T }> = new Map
-  private held: Map<T, Handler> = null
+  private held: Map<T, Handler> | undefined
 
   constructor(delay: string | number, factor = 1) {
     this.#delay = delay
@@ -28,24 +28,25 @@ export class Scheduler<T> {
   }
 
   public get paused(): boolean {
-    return this.held !== null
+    return !!this.held
   }
 
   public set paused(paused: boolean) {
-    if (paused === this.paused) {
-      return
+    const make = {
+      paused,
+      running: !paused,
     }
 
-    if (paused) {
-      this.held = new Map
-    }
-    else {
+    if (this.held && make.running) {
       const held = this.held
-      this.held = null
+      this.held = undefined
 
       for (const [ id, handler ] of held.entries()) {
         this.schedule(id, handler)
       }
+    }
+    else if (!this.held && make.paused) {
+      this.held = new Map
     }
   }
 

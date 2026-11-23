@@ -28,12 +28,12 @@ const RE = new class {
     const Char = `\\p{Lu}${char}`
     const whitespace = ' \t\n\r\u00A0'
     const protectedWord = [
-      `[${char}]*[\\p{Lu}][-${Char}]*`,
+      `[${char}]*[\\p{Lu}][${Char}]*`,
     ].join('|')
     const L = '\\p{Lu}\\p{Ll}\\p{Lt}\\p{Lm}\\p{Lo}'
 
     this.leadingUnprotectedWord = new RegExp(`^([\\p{Lu}][${char}]*)[${whitespace}${P}]`, 'u')
-    this.protectedWords = new RegExp(`^(${protectedWord})(([${whitespace}])(${protectedWord}))*`, 'u')
+    this.protectedWords = new RegExp(`^(${protectedWord})((([-${whitespace}])(${protectedWord}))|(-\\d+))*`, 'u')
     this.unprotectedWord = new RegExp(`^[${Char}]+`, 'u')
     this.whitespace = new RegExp(`^[${whitespace}]+`)
 
@@ -73,7 +73,7 @@ export function titleCase(text: string): string {
   // restore single-letter "words". Shame firefox doesn't do lookbehind, but this will work
   text.replace(RE.titleCaseKeep, (match: string, offset: number) => {
     if (match[0] !== '<') {
-      const [ , punc, l ] = match.match(RE.singleLetter)
+      const [ , punc, l ] = match.match(RE.singleLetter) as RegExpMatchArray
       if (punc && (l === 'a' || l === 'A')) {
         match = match.toUpperCase()
       }
@@ -99,71 +99,51 @@ export function sentenceCase(text: string): string {
 
 export type HTMLParserOptions = {
   html?: boolean
-  caseConversion?: boolean
+  exportCaseProtection?: boolean
   exportBraceProtection?: boolean
   csquotes?: string
   exportTitleCase?: boolean
 }
 
-const CSQuotes = new class {
-  #cache: Record<string, { open: RegExp; close: RegExp }> = {}
-
-  public open(quotes: string): RegExp {
-    this.ensure(quotes)
-    return this.#cache[quotes].open
-  }
-
-  public close(quotes: string): RegExp {
-    this.ensure(quotes)
-    return this.#cache[quotes].close
-  }
-
-  private ensure(quotes) {
-    if (!this.#cache[quotes]) {
-      this.#cache[quotes] = {
-        open: this.regex(quotes, 0),
-        close: this.regex(quotes, 1),
-      }
-    }
-  }
-
-  private escape(text: string) {
-    return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&')
-  }
-
-  private regex(str: string, close: 0 | 1): RegExp {
-    let re = this.escape(Array.from(str).filter((_, i) => i % 2 === close).join(''))
-    if (close) {
-      re = `\\s*[${re}]`
-    }
-    else {
-      re = `[${re}]\\s*`
-    }
-    return new RegExp(re, 'g')
-  }
+type CSQuotes = {
+  re: RegExp
+  repl: string
 }
-
 export const HTMLParser = new class {
-  private options: HTMLParserOptions
-  private sentenceStart: boolean
+  private options!: HTMLParserOptions
+  private sentenceStart!: boolean
   private spuriousNode = new Set([ '#document-fragment', '#document', 'div', 'span' ])
-  private titleCased: string
-  private html: string
+  private titleCased!: string
+  private html!: string
   private ligatures = new RegExp(`[${ Object.keys(ligatures).join('') }]`, 'g')
+  private csquotes: Record<string, CSQuotes> = {}
 
   public parse(html: string, options: HTMLParserOptions): MarkupNode {
     this.html = html
 
     let doc: MarkupNode
 
-    this.options = { ...options, exportBraceProtection: options.caseConversion && options.exportBraceProtection }
+    this.options = { ...options, exportBraceProtection: options.exportCaseProtection && options.exportBraceProtection }
     this.sentenceStart = true
 
-    // add enquote tags.
+    // Mark preference-defined quote pairs so the Unicode translator can emit enquote commands.
     if (this.options.csquotes) {
-      this.html = this.html
-        .replace(CSQuotes.open(this.options.csquotes), '<span class="enquote">')
-        .replace(CSQuotes.close(this.options.csquotes), '</span>')
+      let action: CSQuotes | undefined = this.csquotes[this.options.csquotes]
+      if (!action) {
+        const re: string[] = []
+        let repl = '<span class="enquote">'
+        const pairs: string[] = this.options.csquotes.match(/../g) || []
+        for (const pair of pairs) {
+          re.push(`${pair[0]}\\s*([^${pair[1]}]*?)\\s*${pair[1]}`)
+          repl += `$${re.length}`
+        }
+        repl += '</span>'
+        action = this.csquotes[this.options.csquotes] = {
+          re: new RegExp(re.join('|'), 'g'),
+          repl: re.length ? repl : '',
+        }
+      }
+      if (action.repl) this.html = this.html.replace(action.re, action.repl)
     }
 
     if (!this.options.html) {
@@ -179,7 +159,7 @@ export const HTMLParser = new class {
 
     doc = this.walk(parseFragment(this.html, { sourceCodeLocationInfo: true }))
 
-    if (this.options.caseConversion) {
+    if (this.options.exportCaseProtection) {
       if (this.options.exportTitleCase) {
         this.titleCased = ''
         this.collectText(doc)
@@ -193,7 +173,7 @@ export const HTMLParser = new class {
         doc = unwrapped[0]
       }
       else {
-        doc = { nodeName: 'span', attr: {}, class: {}, childNodes: unwrapped }
+        doc = { nodeName: 'span', attr: {}, class: {}, childNodes: unwrapped } as unknown as MarkupNode
       }
       this.cleanupNocase(doc)
     }
@@ -207,7 +187,7 @@ export const HTMLParser = new class {
 
   private titleCase(node: MarkupNode) {
     if (node.nodeName === '#text') {
-      node.value = this.titleCased.substr(node.titleCased, node.value.length)
+      node.value = this.titleCased.substr(node.titleCased!, node.value.length)
       return
     }
 
@@ -234,7 +214,7 @@ export const HTMLParser = new class {
     if (node.nodeName === '#text') return [node]
 
     // unwrap and flatten
-    node.childNodes = [].concat(...node.childNodes.map(child => this.unwrapNocase(child)))
+    node.childNodes = node.childNodes.flatMap(child => this.unwrapNocase(child))
 
     // no nocase children? done
     if (node.nocase || !node.childNodes.find(child => child.nocase)) return [node]
@@ -255,8 +235,8 @@ export const HTMLParser = new class {
     })
   }
 
-  private cleanupNocase(node: MarkupNode, nocased = false): MarkupNode[] {
-    if (node.nodeName === '#text') return null
+  private cleanupNocase(node: MarkupNode, nocased = false): void {
+    if (node.nodeName === '#text') return
 
     if (nocased) delete node.nocase
 
@@ -292,7 +272,7 @@ export const HTMLParser = new class {
     text = text.replace(this.ligatures, (ligature: string) => (ligatures[ligature] as string))
     const l = childNodes.length
     if (l === 0 || (childNodes[l - 1].nodeName !== '#text')) {
-      childNodes.push({ nodeName: '#text', offset, value: text, attr: {}, class: {}})
+      childNodes.push({ nodeName: '#text', offset, value: text, childNodes: [], attr: {}, class: {}})
     }
     else {
       childNodes[l - 1].value += text
@@ -315,13 +295,13 @@ export const HTMLParser = new class {
     })
   }
 
-  private walk(node, isNocased = false) {
+  private walk(node, isNocased = false): MarkupNode {
     const normalized_node: MarkupNode = {
       nodeName: node.nodeName,
       childNodes: [],
       attr: {},
       class: {},
-    }
+    } as unknown as MarkupNode
     for (const { name, value } of (node.attrs || [])) {
       normalized_node.attr[name] = value
     }
@@ -383,7 +363,7 @@ export const HTMLParser = new class {
           continue
         }
 
-        if (!this.options.caseConversion || isNocased) {
+        if (!this.options.exportCaseProtection || isNocased) {
           this.plaintext(normalized_node.childNodes, child.value, child.sourceCodeLocation.startOffset)
           continue
         }
@@ -404,7 +384,7 @@ export const HTMLParser = new class {
             continue
           }
 
-          if (this.sentenceStart && (m = RE.leadingUnprotectedWord.exec(`${ text } `))) {
+          if (this.sentenceStart && (m = RE.leadingUnprotectedWord.exec(`${text} `))) {
             this.sentenceStart = false
             this.plaintext(normalized_node.childNodes, m[1], child.sourceCodeLocation.startOffset + (length - text.length))
             text = text.substring(m[1].length)
@@ -437,16 +417,17 @@ export const HTMLParser = new class {
   }
 }
 
-export function babelLanguage(language: string): string {
-  if (!language) return ''
-  const lc = language.toLowerCase()
+export function langCode(langcode: string): string {
+  if (!langcode) return ''
+
+  const lc = langcode.toLowerCase()
   // eslint-disable-next-line @typescript-eslint/no-unsafe-return
   return Language[lc]
     || Language[lc.replace(/[^a-z0-9]/, '-')]
     || Language[lc.replace(RE.notAlphaNum, '')]
-    || (!lc.match(RE.notAlphaNum) && Language[LanguagePrefixes.find((prefix: string) => lc.startsWith(prefix))])
+    || (!lc.match(RE.notAlphaNum) && Language[LanguagePrefixes.find((prefix: string) => lc.startsWith(prefix)) as string])
     || Language[lc.replace(/-.*/, '').replace(/[^a-z0-9]/, '-')]
-    || language
+    || langcode
 }
 
 const excelColumnCache: Map<number, string> = new Map
@@ -497,4 +478,8 @@ export function toEnglishOrdinal(n: number | string): string {
   else {
     return typeof n === 'string' ? n : ''
   }
+}
+
+export function padInt(num: number, length: number): string {
+  return num < 0 ? '-' + (-num + '').padStart(length, '0') : (num + '').padStart(length, '0')
 }

@@ -5,7 +5,6 @@
     "preferences": {
       "DOIandURL": "doi",
       "asciiBibLaTeX": true,
-      "autoAbbrev": true,
       "autoExportDelay": 2,
       "automaticTags": false,
       "baseAttachmentPath": "/Users/ccui/Library/Mobile Documents/com~apple~CloudDocs/Zotero/ss",
@@ -13,7 +12,8 @@
       "citekeyFormat": "auth.lower+shorttitle(10,10).abbr(2)+year",
       "import": false,
       "keyConflictPolicy": "change",
-      "skipFields": "abstract,keywords,langid,file,annotation,issn,isbn,month"
+      "skipFields": "abstract,keywords,langid,file,annotation,issn,isbn,month",
+      "journalAbbreviation": "abbrev+auto"
     }
   },
   "items": [

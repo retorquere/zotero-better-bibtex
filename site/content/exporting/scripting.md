@@ -80,7 +80,7 @@ The postscript should be a `javascript` snippet. You can access the data with fo
       - `url`: encode as verbatim url
   - `sep`: if `value` is an array, and `enc` is `latex`, encode each array element using `latex` and join the results with the string in `sep`. Defaults to an empty string.
   - `html`: boolean indicating whether the `value` is full HTML (really only useful for notes)
-  - `caseConversion`: boolean indicating whether the field should have title-casing applied.
+  - `exportCaseProtection`: boolean indicating whether export case-protection processing is applied.
 
   e.g. change the value of year in output `tex.add({name: 'year', value: "your_year_value"})`
 
@@ -174,7 +174,7 @@ if (Translator.BetterTeX && zotero.arXiv) {
 
 ### Custom field order
 
-Specify the ordering of the listing of fields in an exported Biblatex/Bibtex entry. Your postscript:
+Specify the ordering of the listing of fields in an exported BibLaTeX/BibTeX entry. Your postscript:
 
 ```javascript
 if (Translator.BetterTeX) {
@@ -190,7 +190,7 @@ if (Translator.BetterTeX) {
   }
 }
 ```
-In Zotero when using an Export Format of Better Biblatex we'll get something like the following entry ...
+In Zotero when using an Export Format of Better BibLaTeX we'll get something like the following entry ...
 
 <pre><code>@book{nietzsche_1974_gay,
   <u>author</u> = {Nietzsche, Friedrich Wilhelm},
@@ -209,7 +209,7 @@ In Zotero when using an Export Format of Better Biblatex we'll get something lik
 }
 </code></pre>
 
-Further details [Export to Biblatex/Bibtex. Custom field order. #512](https://github.com/retorquere/zotero-better-bibtex/issues/512).
+Further details [Export to BibLaTeX/BibTeX. Custom field order. #512](https://github.com/retorquere/zotero-better-bibtex/issues/512).
 
 ### Case-protect italicized text
 
@@ -323,7 +323,7 @@ export:
   urldate = {2021-04-08},
   type = {Letter}
 }
-% == BibLateX quality report for MillionDemiInfirmes1968:
+% == BibLaTeX quality report for MillionDemiInfirmes1968:
 % Unexpected field 'title'
 % Unexpected field 'type'
 % ? Unused archive: Archives de la Ville et l'Eurométropole de Strasbourg
@@ -357,7 +357,7 @@ you get
   library = {Archives de la Ville et l'Eurométropole de Strasbourg},
   number = {114 Z 1 248}
 }
-% == BibLateX quality report for MillionDemiInfirmes1968:
+% == BibLaTeX quality report for MillionDemiInfirmes1968:
 % Unexpected field 'number'
 % Missing required field 'author'
 ```

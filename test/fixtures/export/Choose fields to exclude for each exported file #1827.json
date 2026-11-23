@@ -21,7 +21,6 @@
       ],
       "date": "1972",
       "extra": [
-        "Citation Key: bentley_academic_2011",
         "tex.xref= welker_andreas_1999"
       ],
       "itemID": 1,
@@ -29,7 +28,7 @@
       "notes": [
         "<p>MR 46:7018</p>"
       ],
-      "pages": "247\u2013261",
+      "pages": "247–261",
       "publicationTitle": "Pacific Journal of Mathematics",
       "title": "A combinatorial problem; stability and order for models and theories in infinitary languages",
       "volume": "41"

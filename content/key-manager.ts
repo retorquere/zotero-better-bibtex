@@ -8,7 +8,7 @@ import { chinese } from './key-manager/chinese'
 import { Scheduler } from './scheduler'
 import { log } from './logger'
 import { flash } from './flash'
-import { Events, REASON_KEY_SAVE } from './events'
+import { Events } from './events'
 import { fetchAsync as fetchInspireHEP } from './inspire-hep'
 import { excelColumn, sentenceCase } from './text'
 import * as Extra from './extra'
@@ -22,7 +22,7 @@ import { Formatter } from './key-manager/formatter'
 
 import { Cache } from './translators/worker'
 
-import { sprintf } from 'sprintf-js'
+import { sprintf } from './sprintf'
 
 import * as l10n from './l10n'
 
@@ -41,8 +41,7 @@ const sql = {
     LEFT JOIN itemData id ON item.itemID = id.itemID AND id.fieldID = (SELECT fieldID FROM fields WHERE fieldName = 'citationKey')
     LEFT JOIN itemDataValues idv ON id.valueID = idv.valueID
     WHERE
-      lib.editable = 1
-      AND (id.itemID IS NULL OR idv.value = '')
+      (id.itemID IS NULL OR idv.value = '')
       AND item.itemID NOT IN (SELECT itemID FROM deletedItems)
       AND item.itemID NOT IN (SELECT itemID FROM feedItems)
       AND item.itemTypeID NOT IN (SELECT itemTypeID FROM itemTypes WHERE typeName IN ('attachment', 'note', 'annotation'))
@@ -80,6 +79,9 @@ class Progress {
   private progress: any
   private eta: ETA
 
+  /**
+   * Shows progress for both key generation and item persistence.
+   */
   constructor(total: number, message: string) {
     this.win = new Zotero.ProgressWindow({ closeOnClick: false })
     this.win.changeHeadline(`Better BibTeX: ${ message }`)
@@ -87,29 +89,56 @@ class Progress {
     this.progress = new this.win.ItemProgress(icon, message)
     this.win.show()
 
-    this.eta = new ETA(total, { autoStart: true })
+    this.eta = new ETA(total * 2, { autoStart: true })
   }
 
-  next() {
+  /**
+   * Updates the active phase and yields periodically so Zotero can repaint the window.
+   */
+  async next(phase: string, done: number, total: number) {
     this.eta.iterate()
 
-    if ((this.eta.done % 10) === 1) {
+    if (this.eta.done === 1 || (this.eta.done % 10) === 0) {
       this.progress.setProgress((this.eta.done * 100) / this.eta.count)
-      this.progress.setText(this.eta.format(`${ this.eta.done } / ${ this.eta.count }, {{etah}} remaining`))
+      this.progress.setText(this.eta.format(`${ phase }: ${ done } / ${ total }, {{etah}} remaining`))
+      await Zotero.Promise.delay(10)
     }
   }
 
+  /**
+   * Leaves a brief completion message before closing the progress window.
+   */
   done() {
     this.progress.setProgress(100)
     this.progress.setText('Ready')
-    this.win.close()
+    this.win.startCloseTimer(2000)
   }
 }
 
 import { Predicate, TrackedMap } from './object'
 
 class Keys extends TrackedMap<number, CitekeyRecord> {
-  #timer: ReturnType<typeof setInterval>
+  #timer: ReturnType<typeof setInterval> | undefined
+  // Monotonic mutation counter used by save() to detect changes that land while read-only.json is being written.
+  #generation = 0
+
+  override set(key: number, value: CitekeyRecord): this {
+    // Track structural changes so save() can detect writes that happen while the cache file is being flushed.
+    this.#generation += 1
+    return super.set(key, value)
+  }
+
+  override delete(key: number): boolean {
+    const deleted = super.delete(key)
+    if (deleted) this.#generation += 1
+    return deleted
+  }
+
+  override clear(filter?: Predicate<CitekeyRecord>): void {
+    const size = this.size
+    super.clear(filter)
+    if (this.size !== size) this.#generation += 1
+  }
 
   public get path() {
     return PathUtils.join(Zotero.BetterBibTeX.dir, 'read-only.json')
@@ -127,7 +156,7 @@ class Keys extends TrackedMap<number, CitekeyRecord> {
       log.error('failed to load read-only keys', err)
     }
 
-    for (const { itemID, itemKey, libraryID, citationKey } of await Zotero.DB.queryAsync(sql.load)) {
+    for (const { itemID, itemKey, libraryID, citationKey } of (await Zotero.DB.queryAsync(sql.load))!) {
       this.set(itemID, copy({ itemID, itemKey, libraryID, citationKey }))
     }
     this.resetDirty()
@@ -136,15 +165,21 @@ class Keys extends TrackedMap<number, CitekeyRecord> {
   }
 
   public async save(): Promise<void> {
-    if (this.isDirty) {
-      const mem: Map<number, boolean> = new Map
-      await IOUtils.writeJSON(this.path, this.values(_ => readonly(_.libraryID, mem)))
-      this.resetDirty()
+    while (this.isDirty) {
+      const generation = this.#generation
+      await IOUtils.writeJSON(this.path, this.values(key => {
+        // Cache rows can outlive their originating group library; skip rows whose library no longer exists.
+        const library = Zotero.Libraries.get(key.libraryID)
+        // Persist only read-only-library keys in read-only.json.
+        return !!library && readonly(library)
+      }))
+      // Only clear the dirty flag if nothing changed during the async write; otherwise loop and flush again.
+      if (this.#generation === generation) this.resetDirty()
     }
   }
 
-  public async flush(): Promise<void> { // eslint-disable-line @typescript-eslint/require-await
-    // await this.save()
+  public async flush(): Promise<void> {
+    await this.save()
     if (typeof this.#timer !== 'undefined') {
       clearInterval(this.#timer)
       this.#timer = undefined
@@ -158,22 +193,10 @@ export const KeyManager = new class _KeyManager {
 
   public autofill: Scheduler<number> = new Scheduler<number>('fillKeyAfter', 1000)
 
-  public async pin(ids: 'selected' | number | number[]): Promise<void> {
-    await this.fill(ids, { warn: true })
-    ids = this.expandSelection(ids)
-    await Cache.touch(ids)
-    const items = (await getItemsAsync(ids)).filter(item => !item.isFeedItem && item.isRegularItem())
-    for (const item of items) {
-      const citationKey = item.getField('citationKey')
-      if (citationKey) {
-        const { extra } = Extra.citationKey(item.getField('extra'))
-        item.setField('extra', `Citation Key: ${citationKey}\n${extra}`.trim())
-        await item.saveTx({ skipDateModifiedUpdate: true })
-        await Zotero.Promise.delay(10)
-      }
-    }
-  }
-
+  /**
+   * Generates missing or replacement citation keys and persists writable items.
+   * Bulk progress spans both the generation and persistence phases.
+   */
   public async fill(ids: 'selected' | number | number[], { warn = false, replace = false, inspireHEP = false }: { warn?: boolean; replace?: boolean; inspireHEP?: boolean } = {}): Promise<void> {
     ids = this.expandSelection(ids)
     const selected: Set<number> = new Set(ids)
@@ -182,10 +205,11 @@ export const KeyManager = new class _KeyManager {
     if (replace && warn && Preference.warnBulkModify && this.all(key => selected.has(key.itemID)).length > Preference.warnBulkModify) {
       const ignore = { value: false }
       const index = Services.prompt.confirmEx(
+        // @ts-expect-error TS2345 https://github.com/windingwind/zotero-types/issues/97
         null, // no parent
         'Better BibTeX for Zotero', // dialog title
         l10n.localize('better-bibtex_bulk-keys-confirm_warning', { treshold: Preference.warnBulkModify }),
-        Services.prompt.STD_OK_CANCEL_BUTTONS + Services.prompt.BUTTON_POS_2 * Services.prompt.BUTTON_TITLE_IS_STRING, // buttons
+        Services.prompt.STD_OK_CANCEL_BUTTONS! + Services.prompt.BUTTON_POS_2! * Services.prompt.BUTTON_TITLE_IS_STRING!,
         null, null, l10n.localize('better-bibtex_bulk-keys-confirm_stop_asking'), // button labels
         null, ignore // no checkbox
       )
@@ -211,37 +235,57 @@ export const KeyManager = new class _KeyManager {
     // clear before refresh so they can update without hitting "claimed keys" in the deleted set
     this.clear(items.map(item => item.id as number))
 
-    const progress: Progress = items.length > 10 ? new Progress(items.length, 'Refreshing citation keys') : null
+    const progress: Progress | undefined = items.length > 10 ? new Progress(items.length, 'Refreshing citation keys') : undefined
+    let refreshed = 0
     for (const item of items) {
-      if (!this.update(item, { replace, inspireHEP: inspireHEP ? (await fetchInspireHEP(item)) || '' : undefined })) {
-        this.store(item)
-        continue
-      }
-
-      const citationKey = item.getField('citationKey')
-      if (!citationKey) continue
-
-      // remove the new citekey from the aliases if present
-      const aliases = Extra.get(item.getField('extra'), 'zotero', { aliases: true })
-      if (aliases.extraFields.aliases.includes(citationKey)) {
-        aliases.extraFields.aliases = aliases.extraFields.aliases.filter(alias => alias !== citationKey)
-
-        if (aliases.extraFields.aliases.length) {
-          item.setField('extra', Extra.set(aliases.extra, { aliases: aliases.extraFields.aliases }))
+      try {
+        if (!this.update(item, { replace, inspireHEP: inspireHEP ? (await fetchInspireHEP(item)) || '' : undefined })) {
+          if (!readonly(item)) this.store(item)
+          continue
         }
-        else {
-          item.setField('extra', aliases.extra)
+
+        const citationKey = item.getField('citationKey')
+        if (!citationKey) continue
+
+        // remove the new citekey from the aliases if present
+        const aliases = Extra.get(item.getField('extra'), 'zotero', { aliases: true })
+        if (aliases.extraFields.aliases?.includes(citationKey)) {
+          aliases.extraFields.aliases = aliases.extraFields.aliases.filter(alias => alias !== citationKey)
+
+          if (aliases.extraFields.aliases.length) {
+            item.setField('extra', Extra.set(aliases.extra, { aliases: aliases.extraFields.aliases }))
+          }
+          else {
+            item.setField('extra', aliases.extra)
+          }
         }
       }
+      finally {
+        refreshed++
+        if (progress) await progress.next('Generating keys', refreshed, items.length)
+      }
+    }
 
-      progress?.next()
+    let saved = 0
+    for (const item of items) {
+      try {
+        if (!readonly(item)) { // keys for read-only items are cached only, never written back
+          await item.saveTx({ skipDateModifiedUpdate: true })
+          await Zotero.Promise.delay(10)
+        }
+      }
+      finally {
+        saved++
+        if (progress) await progress.next('Saving items', saved, items.length)
+      }
     }
     progress?.done()
+  }
 
-    for (const item of items) {
-      await item.saveTx({ skipDateModifiedUpdate: true })
-      await Zotero.Promise.delay(10)
-    }
+  // eslint-disable-next-line @typescript-eslint/unbound-method
+  #getField: ((this: Zotero.Item, field: string) => string) = Zotero.Item.prototype.getField // guaranteed to run before constructor
+  #getNativeKey(item: Zotero.Item): string {
+    return this.#getField.call(item, 'citationKey')
   }
 
   constructor() {
@@ -291,18 +335,50 @@ export const KeyManager = new class _KeyManager {
     }
   }
 
+  public async fillMissing() {
+    if (Preference.fillKeyAfter) {
+      const missing: number[] = await Zotero.DB.columnQueryAsync(sql.missing)
+      if (missing.length) {
+        await Zotero.DB.executeTransaction(async () => {
+          for (const item of await getItemsAsync(missing)) {
+            await this.update(item)?.save({ skipDateModifiedUpdate: true })
+          }
+        })
+      }
+    }
+  }
+
   private async start(): Promise<void> {
     await migrate()
     await this.#keys.load()
 
-    if (Preference.fillKeyAfter) {
-      const missing: number[] = await Zotero.DB.columnQueryAsync(sql.missing)
-      if (missing.length) {
-        void Zotero.DB.executeTransaction(async () => {
-          for (const item of await Zotero.Items.getAsync(missing)) {
-            await this.update(item)?.save({ skipDateModifiedUpdate: true })
-          }
-        })
+    Events.updateCitationKeys = async ({ items, reason, changed }) => {
+      if (reason?.startsWith('parent-') || reason === 'tagged') return
+
+      for (const item of items) {
+        if (item.deleted || !item.isRegularItem() || item.isFeedItem) {
+          this.#keys.delete(item.id)
+          continue
+        }
+
+        const nativeCitationKey = this.#getNativeKey(item) || ''
+        if (changed?.[item.id]?.includes('citationKey') && nativeCitationKey) {
+          this.store(item, nativeCitationKey)
+          continue
+        }
+
+        if (changed?.[item.id]?.includes('citationKey') && readonly(item)) {
+          this.#keys.delete(item.id)
+          this.update(item, { replace: true })
+          continue
+        }
+
+        if (this.update(item, { replace: Preference.resetKeyOnChange })) {
+          await item.saveTx({ skipDateModifiedUpdate: true, skipNotifier: true })
+        }
+        else if (!readonly(item)) {
+          this.store(item)
+        }
       }
     }
 
@@ -325,7 +401,7 @@ export const KeyManager = new class _KeyManager {
 
     Events.on('items-changed', ({ data: { items, action, reason } }) => {
       log.info('items-changed', { reason })
-      if (reason?.startsWith('parent-') || reason === 'tagged' || reason === REASON_KEY_SAVE) return
+      if (reason?.startsWith('parent-') || reason === 'tagged') return
 
       let warn_titlecase = 0 // should not be here
 
@@ -338,25 +414,7 @@ export const KeyManager = new class _KeyManager {
         return true
       })
 
-      const update = (item: Zotero.Item) => {
-        if (this.update(item, { replace: Preference.resetKeyOnChange })) {
-          item
-            .saveTx({ skipDateModifiedUpdate: true, notifierData: { [REASON_KEY_SAVE]: true } })
-            .catch(err => log.error('failed to update', item.id, ':', err))
-        }
-        else {
-          this.store(item)
-        }
-      }
       for (const item of items) {
-        if (Preference.testing) { // race condition for key assignment otherwise
-          update(item)
-        }
-        else {
-          this.autofill.schedule(item.id, () => {
-            update(item)
-          })
-        }
         if (!item.getField('citationKey')) this.#keys.delete(item.id)
 
         if (Preference.warnTitleCased) {
@@ -377,29 +435,53 @@ export const KeyManager = new class _KeyManager {
     this.started = true
   }
 
-  public update(item: Zotero.Item, { replace = false, inspireHEP = undefined }: { replace?: boolean; inspireHEP?: string } = {}): Zotero.Item {
-    if (item.isFeedItem || !item.isRegularItem()) return null
+  public update(item: Zotero.Item, { replace = false, inspireHEP = undefined }: { replace?: boolean; inspireHEP?: string } = {}): Zotero.Item | undefined {
+    // Feed/non-regular items never participate in citation-key generation.
+    if (item.isFeedItem || !item.isRegularItem()) return
 
-    if (typeof inspireHEP === 'string' && !inspireHEP) return null
+    // Empty InspireHEP lookups should not trigger fallback citekey regeneration.
+    if (typeof inspireHEP === 'string' && !inspireHEP) return
 
-    const current = item.getField('citationKey')
-    if (current && !replace) return null
+    if (readonly(item)) {
+      // Native keys on read-only items come from outside BBT and always take precedence over the cached shadow key.
+      const nativeKey = this.#getNativeKey(item) || ''
+      if (nativeKey) {
+        this.store(item, nativeKey)
+        return
+      }
+      // If a read-only item already has a cached key, keep serving it until a caller explicitly asks to regenerate.
+      if (!replace && this.#keys.get(item.id)?.citationKey) return
+      // Otherwise generate a new shadow key for export/UI use, but never write it back to Zotero.
+      replace = true
+    }
+
+    const current = this.#getNativeKey(item) || ''
+    // Respect existing native keys unless caller requested replacement.
+    if (current && !replace) return
 
     const proposed = inspireHEP || this.propose(item)
-    if (!proposed || proposed === current) return null
+    // No-op when generation failed or produced the same key.
+    if (!proposed || proposed === current) return
 
     this.store(item, proposed)
 
-    if (readonly(item.libraryID)) return null
+    if (readonly(item)) {
+      // Read-only keys are cache-only; never write generated keys into Zotero's citationKey field.
+      return
+    }
 
     item.setField('citationKey', proposed)
     return item
   }
 
-  public get(itemID: number): CitekeyRecord {
+  public get(itemID: number): CitekeyRecord | undefined {
     // I cannot prevent being called before the init is done because Zotero unlocks the UI *way* before I'm getting the
     // go-ahead to *start* my init.
     return this.#keys.get(itemID)
+  }
+
+  public async flush(): Promise<void> {
+    await this.#keys.flush()
   }
 
   public any(query: Predicate<CitekeyRecord>): CitekeyRecord | undefined { // eslint-disable-line id-blacklist
@@ -457,34 +539,68 @@ export const KeyManager = new class _KeyManager {
     }
   }
 
-  public async tagDuplicates(libraryID: number): Promise<void> {
+  public async tagDuplicates(libraryID?: number): Promise<void> {
     const tag = '#duplicate-citation-key'
 
-    const tagged = (await ZoteroDB.queryAsync(`
-      SELECT items.itemID
-      FROM items
-      JOIN itemTags ON itemTags.itemID = items.itemID
-      JOIN tags ON tags.tagID = itemTags.tagID
-      WHERE (items.libraryID = ? OR 'global' = ?) AND tags.name = ? AND items.itemID NOT IN (select itemID from deletedItems)
-    `, [ libraryID, Preference.keyScope, tag ])).map((item: { itemID: number }) => item.itemID)
-
-    const citekeys: Record<string, any[]> = {}
-    for (const item of this.all(key => Preference.keyScope === 'global' || key.libraryID === libraryID)) {
-      citekeys[item.citationKey] ??= []
-      citekeys[item.citationKey].push({ itemID: item.itemID, tagged: tagged.includes(item.itemID), duplicate: false })
-      if (citekeys[item.citationKey].length > 1) citekeys[item.citationKey].forEach(i => i.duplicate = true)
+    if (Preference.keyScope === 'library' && typeof libraryID !== 'number') {
+      flash('key scope is library, but no library provided')
+      return
     }
 
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-    const mistagged = Object.values(citekeys).reduce((acc, val) => acc.concat(val), []).filter(i => i.tagged !== i.duplicate).map(i => i.itemID)
-    for (const item of await getItemsAsync(mistagged)) {
-      if (tagged.includes(item.id)) {
+    const library = typeof libraryID === 'number'
+      ? `i.libraryID = ${libraryID} AND`
+      : ''
+
+    // outer SELECT tricks Zotero into treating it as a SELECT query
+    const q = `
+      SELECT * FROM (
+        WITH CitationKeys AS (
+          SELECT id.itemID, idv.value AS citationKey
+          FROM itemData id
+          JOIN fields f ON id.fieldID = f.fieldID
+          JOIN itemDataValues idv ON id.valueID = idv.valueID
+          WHERE f.fieldName = 'citationKey'
+        ),
+
+        Tagged AS (
+          SELECT DISTINCT itag.itemID
+          FROM itemTags itag
+          JOIN tags t ON itag.tagID = t.tagID
+          WHERE t.name = '${tag}'
+        )
+
+        SELECT
+          i.itemID,
+          ck.citationKey,
+          CASE
+            WHEN ck.citationKey IS NULL THEN 1
+            ELSE COUNT(ck.citationKey) OVER (PARTITION BY ck.citationKey)
+          END AS duplicates,
+          CASE
+            WHEN t.itemID IS NOT NULL THEN 1
+            ELSE 0
+          END AS tagged
+        FROM items i
+        JOIN itemTypes it ON i.itemTypeID = it.itemTypeID
+        LEFT JOIN feedItems fi ON i.itemID = fi.itemID
+        LEFT JOIN deletedItems di ON i.itemID = di.itemID
+        LEFT JOIN CitationKeys ck ON i.itemID = ck.itemID
+        LEFT JOIN Tagged t ON i.itemID = t.itemID
+        WHERE ${library}
+          di.itemID is NULL
+          AND fi.itemID IS NULL
+          AND it.typeName NOT IN ('attachment', 'note', 'annotation')
+      ) WHERE (tagged = 1 and duplicates = 1) OR (tagged = 0 and duplicates > 1)`
+
+    for (const { itemID, tagged } of await ZoteroDB.queryAsync(q)) {
+      const item = await Zotero.Items.getAsync(itemID)
+      if (!item) continue // should not happen, but pacifies typescript
+      if (tagged) {
         item.removeTag(tag)
       }
       else {
         item.addTag(tag)
       }
-
       await item.saveTx({ skipDateModifiedUpdate: true })
     }
   }
@@ -494,7 +610,7 @@ export const KeyManager = new class _KeyManager {
 
     if (ids === 'selected') {
       try {
-        return Zotero.getActiveZoteroPane().getSelectedItems(true)
+        return Zotero.getActiveZoteroPane()!.getSelectedItems(true)
       }
       catch (err) { // zoteroPane.getSelectedItems() doesn't test whether there's a selection and errors out if not
         log.error('Could not get selected items:', err)

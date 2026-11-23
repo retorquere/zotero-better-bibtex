@@ -6,11 +6,11 @@
       "exportNotes": true
     },
     "preferences": {
-      "autoAbbrev": true,
       "citekeyFormat": "authEtal2(sep=_).postfix(_) + journal(abbrev=\"off\").acronym + year\n",
       "keyScope": "global",
       "qualityReport": true,
-      "warnBulkModify": 0
+      "warnBulkModify": 0,
+      "journalAbbreviation": "abbrev+auto"
     }
   },
   "items": [

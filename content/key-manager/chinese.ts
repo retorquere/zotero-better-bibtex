@@ -1,47 +1,55 @@
 import { Preference } from '../prefs'
 import { Events } from '../events'
-// import { discard } from '../logger'
+import { log } from '../logger'
 
-import type { splitName as splitNameFunc, jieba as jiebaFunc, pinyin as pinyinFunc } from './chinese-optional'
+import type { splitName, Jieba, loadJieba, pinyin } from './chinese-optional'
 
-// Replace the console object with the empty shim
-export const chinese = new class {
-  // public window: Window
-  // public document: Document
-  // public console = discard
-
-  public jieba: typeof jiebaFunc
-  public pinyin: typeof pinyinFunc
-  public splitName: typeof splitNameFunc
+class Chinese {
+  #loaded = false
+  #loading = false
+  public jieba!: Jieba
+  public loadJieba!: typeof loadJieba
+  public pinyin!: typeof pinyin
+  public splitName!: typeof splitName
 
   constructor() {
-    // this should give jieba time to load the dicts
-    this.load()
+    // this should give jieba time to preload the dicts
+    void this.load()
   }
 
-  public get enabled(): this {
-    if (!Preference.chinese) return null
-    this.load()
-    return this
+  public get enabled(): Chinese | null {
+    void this.load()
+    return this.#loaded && Preference.chinese ? this : null
   }
 
-  public get loaded(): this {
-    return this.enabled
-  }
+  private async load(): Promise<void> {
+    if (!Preference.chinese || this.#loaded || this.#loading) return
 
-  private load() {
-    if (!this.jieba) {
+    this.#loading = true
+    try {
       Services.scriptloader.loadSubScriptWithOptions('chrome://zotero-better-bibtex/content/key-manager/chinese-optional.js', {
         target: this,
         charset: 'utf-8',
         // ignoreCache: true,
       })
+
+      await this.loadJieba()
+      this.#loaded = true
+      if (this.jieba.error) log.error('jieba.cut failed to load:', this.jieba.error) // the loader will have disabled `cut` already
+    }
+    catch (err) {
+      log.error('jieba.cut failed to load:', err)
+    }
+    finally {
+      this.#loading = false
     }
   }
 
   init() {
     Events.on('preference-changed', ({ data: pref }) => {
-      if (pref === 'chinese') this.load()
+      if (pref === 'chinese') void this.load()
     })
   }
 }
+
+export const chinese = new Chinese

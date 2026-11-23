@@ -9,7 +9,7 @@ import { DisplayOptions } from '../../gen/translators'
 import { regex as escapeRE } from '../../content/escape'
 import { Serialized } from '../../gen/typings/serialized'
 import type { Exporter as BibTeXExporter } from '../bibtex/exporter'
-import type { CharMap } from 'unicode2latex'
+import type { CharMap } from '@retorquere/bibtex-parser'
 import { log } from '../../content/logger'
 import type { Collected } from './collect'
 
@@ -20,8 +20,8 @@ export type Output = {
 
 class Override {
   private orig: Prefs.Preferences
-  private exportPath: string
-  private exportDir: string
+  private exportPath?: string
+  private exportDir?: string
 
   constructor(private collected: Collected) {
     this.orig = { ...this.collected.preferences }
@@ -30,15 +30,15 @@ class Override {
   }
 
   public override(preference: string, extension: string): boolean {
-    const override: string = this.orig[`${ preference }Override`]
-    if (!this.exportPath || !override) {
+    const override: string = this.orig[`${preference}Override`]
+    if (!this.exportDir || !this.exportPath || !override) {
       return false
     }
 
     const candidates: string[] = [
       Path.basename(this.exportPath).replace(/\.[^.]+$/, '') + extension,
       override,
-    ].map(filename => PathUtils.join(this.exportDir, filename))
+    ].map(filename => PathUtils.join(this.exportDir!, filename))
 
     for (const candidate of candidates) {
       try {
@@ -84,9 +84,9 @@ export class Translation {
   public importToExtra!: Record<string, 'plain' | 'force'>
   public skipFields!: string[]
   public skipField!: RegExp
-  public verbatimFields?: (string | RegExp)[]
-  public csquotes!: { open: string; close: string }
-  public export: { dir: string; path: string } = {
+  public verbatimFields?: string[]
+  public csquotes?: { open: string; close: string }
+  public export: { dir?: string; path?: string } = {
     dir: undefined,
     path: undefined,
   }
@@ -94,11 +94,19 @@ export class Translation {
   public charmap!: CharMap
 
   public BetterBibLaTeX?: boolean
+  public BibLaTeX?: boolean
   public BetterBibTeX?: boolean
+  public BibTeX?: boolean
   public BetterTeX: boolean
+  public TeX: boolean
   public BetterCSLJSON?: boolean
+  public CSLJSON?: boolean
   public BetterCSLYAML?: boolean
+  public CSLYAML?: boolean
+  public BetterHayagriva?: boolean
+  public Hayagriva?: boolean
   public BetterCSL?: boolean
+  public CSL?: boolean
   public BetterBibTeXCitationKeyQuickCopy?: boolean
   public BetterBibTeXJSON?: boolean
   public Citationgraph?: boolean
@@ -106,7 +114,7 @@ export class Translation {
   // public TeX: boolean
   // public CSL: boolean
 
-  public bibtex: BibTeXExporter
+  public bibtex!: BibTeXExporter
 
   public collections: Record<string, Serialized.Collection> = {} // keep because it is being used in postscripts
   public output: Output = {
@@ -127,23 +135,23 @@ export class Translation {
     sep: string
   }
 
-  public and: {
+  public and!: {
     list: {
-      re: any
+      re: RegExp
       repl: string
     }
     names: {
-      re: any
+      re: RegExp
       repl: string
     }
   }
 
-  public get exportDir(): string {
+  public get exportDir(): string | undefined {
     this.collected.items.current.$cacheable = false
     return this.export.dir
   }
 
-  public get exportPath(): string {
+  public get exportPath(): string | undefined {
     this.collected.items.current.$cacheable = false
     return this.export.path
   }
@@ -165,8 +173,8 @@ export class Translation {
     collected.items.sort(collected.preferences.exportSort)
 
     translation.export = {
-      dir: collected.displayOptions.exportDir,
-      path: collected.displayOptions.exportPath,
+      dir: collected.displayOptions.exportDir || '',
+      path: collected.displayOptions.exportPath || '',
     }
     if (translation.export.dir?.endsWith(translation.paths.sep)) translation.export.dir = translation.export.dir.slice(0, -1)
 
@@ -202,7 +210,11 @@ export class Translation {
     }
 
     if (collected.preferences.testing && collected.translator.configOptions?.cached) {
-      const allowedPreferences: Prefs.Preferences = (collected.translator.label === 'BetterBibTeX JSON' ? Object.keys(Prefs.defaults) : Prefs.affectedBy[collected.translator.label])
+      const allowedPreferences: Prefs.Preferences = (
+        collected.translator.label === 'BetterBibTeX JSON'
+          ? Object.keys(Prefs.defaults) as Prefs.PreferenceName[]
+          : Prefs.affectedBy[collected.translator.label]
+      )
         .concat(['testing'])
         .reduce((acc: any, pref: Prefs.PreferenceName) => {
           acc[pref] = collected.preferences[pref]
@@ -229,9 +241,10 @@ export class Translation {
   }
 
   private constructor(public collected: Collected, private mode: 'import' | 'export') {
-    this[collected.translator.label.replace(/[^a-z]/ig, '')] = true
-    this.BetterTeX = this.BetterBibTeX || this.BetterBibLaTeX
-    this.BetterCSL = this.BetterCSLJSON || this.BetterCSLYAML
+    const label = collected.translator.label
+    this[label.replace(/[^a-z]/ig, '')] = this[label.replace(/^Better /, '').replace(/[^a-z]/ig, '')] = true
+    this.TeX = this.BetterTeX = this.BetterBibTeX || this.BetterBibLaTeX || false
+    this.CSL = this.BetterCSL = this.BetterCSLJSON || this.BetterCSLYAML || false
 
     this.options = { ...collected.displayOptions } // for backwards compat
     this.preferences = { ...collected.preferences } // for backwards compat
@@ -277,7 +290,7 @@ export class Translation {
       })
     this.skipFields = this.collected.preferences.skipFields.toLowerCase().split(',').map(field => this.typefield(field)).filter((s: string) => s)
 
-    let m: RegExpMatchArray
+    let m: RegExpMatchArray | null
     if (this.skipFields.length) {
       this.skipField = new RegExp('^(' + this.skipFields.map(field => {
         if (m = field.match(/^(csl|tex|bibtex|biblatex)[.]([-a-z]+)[.]([-a-z]+)$/)) {
@@ -298,22 +311,23 @@ export class Translation {
 
     this.verbatimFields = this.collected.preferences.verbatimFields
       .toLowerCase()
-      .split(',')
-      .map(field => (m = field.trim().match(/^[/](.+)[/]$/)) ? new RegExp(m[1], 'i') : this.typefield(field))
-      .filter((s: string | RegExp) => s)
+      .split(/\s*,\s*/)
+      .filter(Boolean)
 
-    if (!this.verbatimFields.length) this.verbatimFields = null
-    this.csquotes = this.collected.preferences.csquotes ? { open: this.collected.preferences.csquotes[0], close: this.collected.preferences.csquotes[1] } : null
+    if (!this.verbatimFields.length) delete this.verbatimFields
+    this.csquotes = this.collected.preferences.csquotes
+      ? { open: this.collected.preferences.csquotes[0], close: this.collected.preferences.csquotes[1] }
+      : undefined
   }
 
   saveAttachments(): void {
     if (!this.output?.attachments.length) return
     for (const attachment of this.output.attachments) {
-      attachment.saveFile(attachment.defaultPath, true)
+      if (attachment.defaultPath) attachment.saveFile(attachment.defaultPath, true)
     }
   }
 
   isVerbatimField(field: string): boolean {
-    return !!this.verbatimFields.find(v => typeof v === 'string' ? v === field : field.match(v))
+    return this.verbatimFields?.find(v => typeof v === 'string' ? v === field : field.match(v)) as unknown as boolean
   }
 }

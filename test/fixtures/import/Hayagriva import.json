@@ -1,0 +1,37 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "preferences": {},
+    "options": {}
+  },
+  "version": {
+    "zotero": "8.0.4",
+    "bbt": "9.0.10"
+  },
+  "collections": {},
+  "items": [
+    {
+      "itemType": "book",
+      "title": "Hayagriva Test Book",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Jane",
+          "lastName": "Doe"
+        }
+      ],
+      "date": "2020-05-01",
+      "language": "en",
+      "place": "Test City",
+      "publisher": "Test Press",
+      "DOI": "10.1234/example.doi",
+      "ISBN": "978-1-4028-9462-6",
+      "url": "https://example.org/book",
+      "accessDate": "2021-02-03",
+      "extra": "Citation Key: mybook",
+      "citationKey": "mybook",
+      "itemID": 1
+    }
+  ]
+}

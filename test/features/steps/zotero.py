@@ -1,14 +1,11 @@
 import copy
 import bs4
 import sqlite3
-import uuid
 import json, jsonpatch
 import os, sys
 import redo
 import platform
-import configparser
 import glob
-from selenium import webdriver
 import toml
 import urllib
 import requests
@@ -17,6 +14,7 @@ from munch import *
 from steps.utils import terminate, running, nested_dict_iter, benchmark, ROOT, FIXTURES, EXPORTED, assert_equal_diff, serialize, html2md, clean_html
 from steps.library import load as cleanlib, sortbib
 import steps.utils as utils
+import steps.rdp as rdp
 import shutil
 import shlex
 import io
@@ -27,9 +25,13 @@ import time
 import datetime
 import jsonschema
 import traceback
+from types import SimpleNamespace
+import re
 
 from collections import OrderedDict
 from collections.abc import MutableMapping
+
+PLAINTEXT = [ '.dot', '.aux', '.pandoc', '.latex' ]
 
 class CompactEncoder(json.JSONEncoder):
   def __init__(self, *args, **kwargs):
@@ -84,34 +86,12 @@ import zipfile
 from ruamel.yaml import YAML
 yaml = YAML(typ='safe')
 yaml.default_flow_style = False
+yaml.constructor.add_constructor('tag:yaml.org,2002:timestamp', lambda loader, node: loader.construct_scalar(node))
 
 #with open(os.path.join(ROOT, 'schema', 'BetterBibTeX JSON.json')) as f:
 #  bbt_json_schema = json.load(f)
 #def validate_bbt_json(lib):
 #  jsonschema.validate(instance=lib, schema=bbt_json_schema)
-
-from selenium.webdriver.firefox.firefox_profile import AddonFormatError
-class FirefoxProfile(webdriver.FirefoxProfile):
-  def _addon_details(self, addon_path):
-    def parse_manifest_json(data):
-      manifest = json.loads(data)
-      return {
-        "id": manifest["applications"]["zotero"]["id"],
-        "version": manifest["version"],
-        "name": manifest["version"],
-        "unpack": False,
-      }
-
-    if zipfile.is_zipfile(addon_path):
-      compressed_file = zipfile.ZipFile(addon_path, "r")
-      if "manifest.json" in compressed_file.namelist():
-        return parse_manifest_json(compressed_file.read("manifest.json"))
-
-    if os.path.isdir(addon_path) and os.path.isfile(os.path.join(addon_path, 'manifest.json')):
-      with open(os.path.join(addon_path, 'manifest.json')) as f:
-        return parse_manifest_json(f.read())
-
-    return super()._addon_details(addon_path)
 
 def install_proxies(xpis, profile):
   for xpi in xpis:
@@ -144,9 +124,21 @@ def install_xpis(path, profile):
   if not os.path.exists(path): return
   utils.print(f'Installing xpis in {path}')
 
+  extensions = os.path.join(profile, 'extensions')
+  os.makedirs(extensions, exist_ok=True)
   for xpi in glob.glob(os.path.join(path, '*.xpi')):
     utils.print(f'installing {xpi}')
-    profile.add_extension(xpi)
+    with zipfile.ZipFile(xpi) as archive:
+      manifest = json.loads(archive.read('manifest.json'))
+      addon = os.path.join(extensions, manifest['applications']['zotero']['id'])
+      shutil.rmtree(addon, ignore_errors=True)
+      archive.extractall(addon)
+
+def write_preferences(profile, preferences):
+  with open(os.path.join(profile, 'prefs.js'), 'a') as prefs:
+    prefs.write('\n')
+    for preference, value in preferences.items():
+      prefs.write(f'user_pref({json.dumps(preference)}, {json.dumps(value)});\n')
 
 class Pinger():
   def __init__(self, every):
@@ -208,7 +200,7 @@ class Config:
 
   def update(self, **kwargs):
     for k, v in kwargs.items():
-      if not k in self.data[-1]: raise AttributeError(f"'{type(self)}' object has no attribute '{name}'")
+      if not k in self.data[-1]: raise AttributeError(f"'{type(self)}' object has no attribute '{k}'")
       if type(v) != type(self.data[-1][k]): raise ValueError(f'{type(self)}.{k} must be of type {self.data[-1][k]}')
       self.data[0][k] = v
 
@@ -226,12 +218,86 @@ class Config:
   def __str__(self):
     return str(self.data)
 
+class Normalized:
+  """
+  Context manager that canonicalizes nested Python data on entry.
+  - Dict keys are sorted.
+  - Lists, sets, and tuples are sorted by element (treated as sets).
+  - Can be converted directly to YAML via .to_yaml().
+  """
+
+  def __init__(self, data):
+    self._raw_data = data
+    self.data = None
+    self.yaml = YAML(typ='safe')
+    self.yaml.default_flow_style = False
+    self.yaml.constructor.add_constructor('tag:yaml.org,2002:timestamp', lambda loader, node: loader.construct_scalar(node))
+
+  def __enter__(self):
+    self.data = self._canonicalize(self._raw_data)
+    return self.data
+
+  def __exit__(self, exc_type, exc_val, exc_tb):
+    # Exception handling if needed; returns False to propagate exceptions normally
+    return False
+
+  @classmethod
+  def _canonicalize(cls, data):
+    if isinstance(data, dict):
+      return {
+        k: cls._canonicalize(v)
+        for k, v in sorted(
+          data.items(),
+          key=lambda item: cls._type_safe_key(cls._canonicalize(item[0])),
+        )
+      }
+    elif isinstance(data, (list, set, tuple)):
+      processed = [cls._canonicalize(item) for item in data]
+      return sorted(processed, key=cls._type_safe_key)
+    else:
+      return data
+
+  @classmethod
+  def _type_safe_key(cls, val):
+    """Generates a comparable key tuple to sort uncomparable types or nested dicts/lists."""
+    if isinstance(val, dict):
+      return (0, tuple(sorted((k, cls._type_safe_key(v)) for k, v in val.items())))
+    elif isinstance(val, list):
+      return (1, tuple(cls._type_safe_key(x) for x in val))
+    else:
+      return (2, type(val).__name__, val)
+
+  @classmethod
+  def to_yaml(cls, data, stream=None, **yaml_kwargs):
+    """Helper to dump data to YAML preserving explicit canonical dict/list ordering."""
+    yaml.sort_keys = yaml_kwargs.pop("sort_keys", False)
+    yaml.default_flow_style = yaml_kwargs.pop("default_flow_style", False)
+    for key, value in yaml_kwargs.items():
+      if hasattr(yaml, key):
+        setattr(yaml, key, value)
+
+    canonical_data = cls._canonicalize(data)
+    if stream is None:
+      stream = io.StringIO()
+      yaml.dump(canonical_data, stream=stream)
+      return stream.getvalue()
+    return yaml.dump(canonical_data, stream=stream)
+
 class Library:
-  def __init__(self, path=None, body=None, client=None, variant='', ext=None, name=None):
+  """Represents an input/export library fixture and its normalized comparison form.
+
+  The constructor resolves where content comes from (path/body), optionally applies
+  client- and beta-specific patches, parses by extension, and prepares normalized content used
+  by test assertions.
+  """
+
+  def __init__(self, path=None, body=None, client=None, variant='', ext=None, name=None, translator=None):
     show(f'Library.__init__({name})' if name else 'Library.__init__', locals())
     if path and not os.path.isabs(path):
       path = os.path.join(FIXTURES, path)
 
+    # Extension resolution priority:
+    # 1) explicit file path, 2) explicit ext argument, 3) unknown.
     if path:
       self.ext = self.suffix(path)
 
@@ -244,26 +310,43 @@ class Library:
       self.ext = None
 
     self.base = path
+    self.source = path
     self.body = body
     self.client = client
 
     self.data = None
+    self.parsed_as = None
     self.patch = None
     self.path = None
     self.exported = None
 
     if self.base:
+      # self.path is the expected output location, potentially rewritten when a
+      # fixture patch exists for this client/variant.
       self.path = self.base
 
+      # Prefer the combined client+variant patch, then beta-only, then plain client.
       patches = [ self.base + '.' + client + variant + '.patch' ]
+      if variant == '-beta': patches.append(self.base + '.beta.patch')
       if len(variant) > 0: patches.append(self.base + '.' + self.client + '.patch')
       self.patch = next((patch for patch in patches if os.path.exists(patch)), None)
       if self.patch:
+        # Preserve extension but switch fixture basename to the patched variant.
         self.path = self.base[:-len(self.ext)] + '.' + self.patch.split('.')[-2] + self.ext
 
     if not self.body and self.base:
-      assert os.path.exists(self.base), f'{json.dumps(self.base)} does not exist'
-      with open(self.base) as f:
+      # Compatibility fallback: if expected .json is missing, silently read
+      # sibling .yaml instead.
+      if not os.path.exists(self.base) and self.base.endswith('.json'):
+        for ext in ['.yml', '.yaml']:
+          yaml_fallback = self.base[:-len('.json')] + ext
+          if os.path.exists(yaml_fallback):
+            self.source = yaml_fallback
+            break
+
+      # Keep assertion message on original expected path for clearer failures.
+      assert os.path.exists(self.source), f'{json.dumps(self.base)} does not exist'
+      with open(self.source) as f:
         self.body = f.read()
 
     self.normalized = self.body
@@ -275,46 +358,81 @@ class Library:
     #  with open(self.base, 'w') as f:
     #    f.write(self.body)
 
-    if self.ext.endswith('.json') or self.ext == '.csl.yml':
+    # Data parsing/normalization strategy is selected by extension.
+    if self.ext.endswith('.json') or self.ext.endswith('.yml'):
       if self.ext.endswith('.json'):
-        try:
+        # Parse as YAML when source was silently switched to .yaml
+        if self.source and re.search('[.]ya?ml$', self.source):
+          self.data = yaml.load(io.StringIO(self.body))
+          self.parsed_as = 'yaml'
+        else:
           self.data = json.loads(self.body, object_pairs_hook=OrderedDict)
-        except:
-          raise ValueError(self.body)
+          self.parsed_as = 'json'
       else:
+        # .csl.y*ml fixtures are always parsed as YAML.
         self.data = yaml.load(io.StringIO(self.body))
+        self.parsed_as = 'yaml'
 
       if self.patch:
-        self.data = jsonpatch.JsonPatch(json.load(f)).apply(self.data)
+        # JSON patch mutates parsed data before normalization.
+        with open(self.patch) as patch:
+          self.data = jsonpatch.JsonPatch(json.load(patch)).apply(self.data)
 
-      if self.ext in ['.csl.json', '.csl.yml']:
-        self.data = sorted(self.data, key=lambda item: json.dumps(item, cls=CompactEncoder))
-        self.normalized = json.dumps(self.data, cls=CompactEncoder)
+      if self.ext in ['.csl.json', '.csl.yml', '.hayagriva.yml']:
+        # CSL-JSON stays list-based. For .csl.yml, preserve the legacy
+        # normalization for regular CSL-YAML fixtures and only use structural
+        # normalization for Hayagriva's top-level mapping shape.
+        if self.ext == '.csl.json':
+          #self.data = sorted(self.data, key=lambda item: json.dumps(item, cls=CompactEncoder))
+          #self.normalized = json.dumps(self.data, cls=CompactEncoder)
+          self.normalized = Normalized.to_yaml(self.data)
+        elif self.ext == '.hayagriva.yml' or (isinstance(self.data, dict) and 'references' not in self.data):
+          #normalized = io.StringIO()
+          #yaml.dump(json.loads(json.dumps(self.data, cls=CompactEncoder)), normalized)
+          #self.normalized = normalized.getvalue()
+          self.normalized = Normalized.to_yaml(self.data)
+        else:
+          #self.data = sorted(self.data, key=lambda item: json.dumps(item, cls=CompactEncoder))
+          #self.normalized = json.dumps(self.data, cls=CompactEncoder)
 
-        if self.ext == '.csl.yml':
-          normalized = io.StringIO()
-          # re-use the key sorting from json dumps
-          yaml.dump(json.loads(self.normalized), normalized)
-          self.normalized = normalized.getvalue()
+          #normalized = io.StringIO()
+          #yaml.dump(json.loads(self.normalized), normalized)
+          #self.normalized = normalized.getvalue()
+          self.normalized = Normalized.to_yaml(self.data)
 
-      elif self.ext == '.json':
-        if 'config' in self.data and 'preferences' in self.data['config']: self.data['config']['preferences'].pop('autoAbbrevStyle', None)
-        self.data['items'] = sorted(self.data['items'], key=lambda item: json.dumps(item, cls=CompactEncoder))
-        self.normalized = json.dumps(cleanlib(copy.deepcopy(self.data)), cls=CompactEncoder)
+      elif self.ext in [ '.json', '.yml' ]:
+        # BetterBibTeX JSON exports normalize preferences/items for stable diffs.
+        if self.data.get('config', {}).get('id', None) == '36a3b0b5-bad0-4a04-b79b-441c7cef77db':
+          if self.data.get('config', {}).get('preferences', None):
+            self.data['config']['preferences'].pop('autoAbbrevStyle', None)
+          self.data['items'] = sorted(self.data['items'], key=lambda item: json.dumps(item, cls=CompactEncoder))
+          self.normalized = json.dumps(cleanlib(copy.deepcopy(self.data)), cls=CompactEncoder)
 
     elif self.ext in ['.biblatex', '.bibtex', '.bib']:
+      # BibTeX-family exports normalize through deterministic bib sorting.
       if self.patch:
         dmp = diff_match_patch()
         self.body = dmp.patch_apply(dmp.patch_fromText(open(self.patch).read()), self.body)[0]
       self.normalized = sortbib(self.body)
 
     elif self.ext == '.html':
+      # HTML exports normalize by stripping unstable formatting details.
       self.normalized = clean_html(self.body).strip()
 
+    elif self.ext in PLAINTEXT:
+      pass ## keep normalized = body
+
+    else:
+      raise ValueError(f'Unsupported fixture extension {self.ext} for {self.base or self.source or self.path}')
+
   def suffix(self, path):
+    # Normalize recognized extension families and reject unsupported naming.
     suffixes = Path(path).suffixes
     if suffixes[-1] == '.yaml':
       raise ValueError(f'Use .yml, not .yaml, in {path}')
+
+    if len(suffixes) >= 2 and suffixes[-2] == '.hayagriva' and suffixes[-1] == '.yml':
+      return ''.join(suffixes[-2:])
 
     if len(suffixes) >= 2 and suffixes[-2] == '.csl' and suffixes[-1] in ['.json', '.yml']:
       return ''.join(suffixes[-2:])
@@ -340,7 +458,6 @@ class Zotero:
     self.legacy = userdata.get('legacy') == 'true'
     self.dev = userdata.get('dev') == 'true'
     self.bibliography = userdata.get('bibliography')
-    self.token = str(uuid.uuid4())
     self.import_at_start = userdata.get('import', None)
     if self.import_at_start:
       self.import_at_start = os.path.abspath(self.import_at_start)
@@ -386,27 +503,9 @@ class Zotero:
     return f'http://127.0.0.1:{self.port}/better-bibtex/export?{query}'
 
   def execute(self, script, **args):
-    headers = {
-      'Content-Type': 'application/json'
-    }
-    resp = requests.get(f'http://127.0.0.1:{self.port}/connector/ping')
-    resp.raise_for_status()
-    resp = requests.post(f'http://127.0.0.1:{self.port}/connector/ping', headers=headers, data='{}')
-    resp.raise_for_status()
-
-    for var, value in args.items():
-      script = f'const {var} = {json.dumps(value)};\n' + script
-
-    headers = {
-      'Authorization': f'Bearer {self.token}',
-      # 'Content-Type': 'application/javascript'
-      'Content-Type': 'text/plain',
-    }
-
     with Pinger(20):
-      resp = requests.post(f'http://127.0.0.1:{self.port}/debug-bridge/execute', headers=headers, data=script.encode('utf-8'))
-      resp.raise_for_status()
-      return resp.json()
+      with rdp.RDPConnection(port=6000, timeout=self.config.timeout) as conn:
+        return conn.execute(script, **args)
 
   def shutdown(self):
     if self.proc is None: return
@@ -452,7 +551,7 @@ class Zotero:
     self.profile = profile = self.create_profile()
     shutil.rmtree(os.path.join(profile.path, self.client, 'better-bibtex'), ignore_errors=True)
 
-    cmd = f'{shlex.quote(profile.binary)} -P {shlex.quote(profile.name)} -jsconsole -purgecaches -ZoteroDebugText {self.redir} {shlex.quote(profile.path + ".log")} 2>&1'
+    cmd = f'{shlex.quote(profile.binary)} -profile {shlex.quote(profile.path)} -jsconsole -purgecaches -ZoteroDebugText -start-debugger-server 6000 {self.redir} {shlex.quote(profile.path + ".log")} 2>&1'
     utils.print(f'Starting {self.client}: {cmd}')
     self.proc = subprocess.Popen(cmd, shell=True)
     utils.print(f'{self.client} started: {self.proc.pid}')
@@ -467,29 +566,29 @@ class Zotero:
 
         try:
           ready = self.execute("""
-            // debug bridge: startup detection
+            // rdp: startup detection
             if (!Zotero.BetterBibTeX) {
-              Zotero.debug('{better-bibtex:debug bridge}: startup: BetterBibTeX not loaded')
+              Zotero.debug('{better-bibtex:rdp}: startup: BetterBibTeX not loaded')
               return false;
             }
             if (!Zotero.BetterBibTeX.ready) {
               if (typeof Zotero.BetterBibTeX.ready === 'boolean') {
-                Zotero.debug('{better-bibtex:debug bridge}: startup: BetterBibTeX initialization error')
+                Zotero.debug('{better-bibtex:rdp}: startup: BetterBibTeX initialization error')
               } else {
-                Zotero.debug('{better-bibtex:debug bridge}: startup: BetterBibTeX not initialized')
+                Zotero.debug('{better-bibtex:rdp}: startup: BetterBibTeX not initialized')
               }
               return false;
             }
 
-            Zotero.debug('{better-bibtex:debug bridge}: startup: waiting for BetterBibTeX ready...')
+            Zotero.debug('{better-bibtex:rdp}: startup: waiting for BetterBibTeX ready...')
             await Zotero.BetterBibTeX.ready;
             if (testing && !Zotero.Prefs.get('translators.better-bibtex.testing')) throw new Error('translators.better-bibtex.testing not set!')
-            Zotero.debug('{better-bibtex:debug bridge}: startup: BetterBibTeX ready!');
+            Zotero.debug('{better-bibtex:rdp}: startup: BetterBibTeX ready!');
             return true;
           """, testing = self.testing)
           if ready: break
 
-        except requests.exceptions.RequestException:
+        except (requests.exceptions.RequestException, ConnectionRefusedError, OSError, RuntimeError):
           pass
 
     assert ready, f'{self.client} did not start'
@@ -576,18 +675,24 @@ class Zotero:
 
     if expected is None: return
 
-    expected = Library(path=expected, client=self.client, variant=self.variant, name='expected')
+    expected = Library(path=expected, client=self.client, variant=self.variant, name='expected', translator=self.translators.byId[translator].label)
     found = Library(path=output, body=found, client=self.client, variant=self.variant, ext=expected, name='found')
     found.save(expected.path)
 
-    if expected.ext in ['.csl.json', '.csl.yml', '.html', '.bib', '.bibtex', '.biblatex']:
+    if expected.ext in ['.csl.json', '.csl.yml', '.hayagriva.yml', '.html', '.bib', '.bibtex', '.biblatex']:
       assert_equal_diff(expected.normalized, found.normalized)
 
     elif expected.path.endswith('.json'):
-      def summary(items):
-        return [(item['itemType'], item.get('title', '')) for item in items['items']]
-      assert len(expected.data['items']) == len(found.data['items']), f"found {len(found.data['items'])}, expected {len(expected.data['items'])}, {summary(found.data)}, {summary(expected.data)}"
+      #def summary(items):
+      #  return [(item['itemType'], item.get('title', '')) for item in items['items']]
+      #assert len(expected.data['items']) == len(found.data['items']), f"found {len(found.data['items'])}, expected {len(expected.data['items'])}, {summary(found.data)}, {summary(expected.data)}"
       assert_equal_diff(expected.normalized, found.normalized)
+
+    elif expected.ext in PLAINTEXT:
+      pass
+
+    else:
+      raise ValueError(f'Unsupported expected extension {expected.ext} for {expected.path}')
 
     found.clean()
 
@@ -631,6 +736,17 @@ class Zotero:
 
     with tempfile.TemporaryDirectory() as d:
       references = input.path
+      converted = None
+
+      # If a .json fixture actually contains YAML, convert it to a temporary
+      # JSON file next to the original fixture so relative attachment paths keep
+      # resolving against the same directory.
+      if references.endswith('.json') and input.parsed_as == 'yaml':
+        with tempfile.NamedTemporaryFile(mode='w', suffix='.json', prefix=os.path.basename(references) + '.converted.', dir=os.path.dirname(references), delete=False) as f:
+          json.dump(input.data, f)
+          converted = f.name
+        references = converted
+
       if type(collection) is str:
         orig = references
         references = os.path.join(d, collection)
@@ -654,17 +770,21 @@ class Zotero:
 
       filename = references
       if not items: filename = None
-      return self.execute('''
-          const library = await Zotero.BetterBibTeX.TestSupport.importFile(filename, createNewCollection, preferences, bibliography)
-          await Zotero.BetterBibTeX.TestSupport.fill()
-          return library
-        ''',
-        filename = filename,
-        createNewCollection = (collection != False),
-        preferences = preferences,
-        localeDateOrder = localeDateOrder,
-        bibliography = bibliography
-      )
+      try:
+        return self.execute('''
+            const library = await Zotero.BetterBibTeX.TestSupport.importFile(filename, createNewCollection, preferences, bibliography)
+            await Zotero.BetterBibTeX.TestSupport.fill()
+            return library
+          ''',
+          filename = filename,
+          createNewCollection = (collection != False),
+          preferences = preferences,
+          localeDateOrder = localeDateOrder,
+          bibliography = bibliography
+        )
+      finally:
+        if converted and os.path.exists(converted):
+          os.remove(converted)
 
   def expand_expected(self, expected):
     base, ext = os.path.splitext(expected)
@@ -682,19 +802,35 @@ class Zotero:
 
     return [None, None]
 
+  def install_db(self, profile, name, download=True):
+    utils.print(f'install_db: {name} download={download}')
+    dbs = os.path.join(ROOT, 'test', 'db', self.config.db)
+    if not os.path.exists(dbs): os.makedirs(dbs)
+
+    db = os.path.join(dbs, f'{name}.sqlite')
+
+    downloaded = False
+    if not os.path.exists(db):
+      if not download:
+        return False
+
+      url = f'https://github.com/retorquere/zotero-better-bibtex/releases/download/test-database/{self.config.db}.{name}.sqlite'
+      utils.print(f'downloading {url}')
+      response = requests.get(url, allow_redirects=True)
+      if response.status_code == 404:
+        return False
+      response.raise_for_status()
+
+      with open(db, 'wb') as f:
+        f.write(response.content)
+      downloaded = True
+
+    utils.print(f'copying {db}')
+    shutil.copy(db, os.path.join(profile.path, self.client, os.path.basename(db)))
+    return downloaded
+
   def create_profile(self):
-    profile = Munch(
-      name='BBTTEST'
-    )
-
-    profile.path = os.path.expanduser(f'~/.{profile.name}')
-
-    profile.profiles = {
-      'Linux': os.path.expanduser(f'~/.{self.client}/zotero'),
-      # 'Darwin': os.path.expanduser('~/Library/Application Support/' + {'zotero': 'Zotero', 'jurism': 'Juris-M'}[self.client]),
-      'Darwin': os.path.expanduser('~/Library/Application Support/Zotero'),
-    }[platform.system()]
-    os.makedirs(profile.profiles, exist_ok = True)
+    profile = Munch(path=os.path.expanduser('~/.BBTTEST'))
 
     self.variant = ''
     if self.beta:
@@ -708,110 +844,71 @@ class Zotero:
       'Darwin': f'/Applications/{self.client.title()}{self.variant}.app/Contents/MacOS/{self.client}',
     }[platform.system()]
 
-    # create profile
-    profile.ini = os.path.join(profile.profiles, 'profiles.ini')
-    utils.print(f'profile.ini={profile.ini}')
-
-    ini = configparser.RawConfigParser()
-    ini.optionxform = str
-    if os.path.exists(profile.ini): ini.read(profile.ini)
-
-    if not ini.has_section('General'): ini.add_section('General')
-
-    profile.id = None
-    for p in ini.sections():
-      for k, v in ini.items(p):
-        if k == 'Name' and v == profile.name: profile.id = p
-
-    if not profile.id:
-      free = 0
-      while True:
-        profile.id = f'Profile{free}'
-        if not ini.has_section(profile.id): break
-        free += 1
-      ini.add_section(profile.id)
-      ini.set(profile.id, 'Name', profile.name)
-
-    ini.set(profile.id, 'IsRelative', 0)
-    ini.set(profile.id, 'Path', profile.path)
-    ini.set(profile.id, 'Default', None)
-    with open(profile.ini, 'w') as f:
-      ini.write(f, space_around_delimiters=False)
-
-    # layout profile
+    preferences = {}
     if self.config.profile:
-      profile.firefox = FirefoxProfile(os.path.join(ROOT, 'test/db', self.config.profile))
-      profile.firefox.set_preference('extensions.zotero.translators.better-bibtex.removeStock', False)
+      template = os.path.join(ROOT, 'test/db', self.config.profile)
+      preferences['extensions.zotero.translators.better-bibtex.removeStock'] = False
     else:
-      profile.firefox = FirefoxProfile(os.path.join(FIXTURES, 'profile', self.profiletemplate or self.client))
+      template = os.path.join(FIXTURES, 'profile', self.profiletemplate or self.client)
 
-    profile.firefox.set_preference('extensions.zotero.dataDir', os.path.join(profile.path, self.client))
-    profile.firefox.set_preference('extensions.zotero.useDataDir', True)
+    shutil.rmtree(profile.path, ignore_errors=True)
+    shutil.copytree(template, profile.path)
 
-    install_xpis(os.path.join(ROOT, 'xpi'), profile.firefox)
+    preferences['extensions.zotero.dataDir'] = os.path.join(profile.path, self.client)
+    preferences['extensions.zotero.useDataDir'] = True
 
-    install_xpis(os.path.join(ROOT, 'other-xpis'), profile.firefox)
-    if self.config.db: install_xpis(os.path.join(ROOT, 'test/db', self.config.db, 'xpis'), profile.firefox)
-    if self.config.profile: install_xpis(os.path.join(ROOT, 'test/db', self.config.profile, 'xpis'), profile.firefox)
+    install_xpis(os.path.join(ROOT, 'xpi'), profile.path)
+    install_xpis(os.path.join(ROOT, 'other-xpis'), profile.path)
+    if self.config.db: install_xpis(os.path.join(ROOT, 'test/db', self.config.db, 'xpis'), profile.path)
+    if self.config.profile: install_xpis(os.path.join(ROOT, 'test/db', self.config.profile, 'xpis'), profile.path)
 
-    profile.firefox.set_preference('extensions.zotero.debug.memoryInfo', True)
-    profile.firefox.set_preference('extensions.zotero.translators.better-bibtex.testing', self.testing)
-    profile.firefox.set_preference('extensions.zotero.translators.better-bibtex.logEvents', self.testing)
-    profile.firefox.set_preference('extensions.zotero.translators.better-bibtex.caching', self.caching)
-    profile.firefox.set_preference('extensions.zotero.translators.better-bibtex.scrubDatabase', True)
+    preferences['extensions.zotero.debug.memoryInfo'] = True
+    preferences['extensions.zotero.translators.better-bibtex.testing'] = self.testing
+    preferences['extensions.zotero.translators.better-bibtex.profiling'] = 60
+    preferences['extensions.zotero.translators.better-bibtex.profileDir'] = os.path.join(profile.path, self.client, 'better-bibtex', 'profiling')
+    preferences['extensions.zotero.translators.better-bibtex.logEvents'] = self.testing
+    preferences['extensions.zotero.translators.better-bibtex.caching'] = self.caching
+    preferences['extensions.zotero.translators.better-bibtex.scrubDatabase'] = True
     # don't nag about the Z7 beta for a day
-    profile.firefox.set_preference('extensions.zotero.hiddenNotices', json.dumps({ 'crossref-outage-2024-08-21': time.time() + 86400 }))
-    profile.firefox.set_preference('extensions.zotero.firstRunGuidanceShown.z7Banner', False)
+    preferences['extensions.zotero.hiddenNotices'] = json.dumps({ 'crossref-outage-2024-08-21': time.time() + 86400 })
+    preferences['extensions.zotero.firstRunGuidanceShown.z7Banner'] = False
 
-    profile.firefox.set_preference('extensions.zoteroMacWordIntegration.lastAttemptedVersion', '7.0.5.SOURCE')
-    profile.firefox.set_preference('extensions.zoteroMacWordIntegration.version', '7.0.5.SOURCE')
+    preferences['extensions.zoteroMacWordIntegration.lastAttemptedVersion'] = '7.0.5.SOURCE'
+    preferences['extensions.zoteroMacWordIntegration.version'] = '7.0.5.SOURCE'
 
-    profile.firefox.set_preference('intl.accept_languages', 'en-GB')
-    profile.firefox.set_preference('intl.locale.requested', 'en-GB')
+    preferences['intl.accept_languages'] = 'en-GB'
+    preferences['intl.locale.requested'] = 'en-GB'
 
-    profile.firefox.set_preference('extensions.zotero.debug-bridge.token', self.token)
-    profile.firefox.set_preference('dom.max_chrome_script_run_time', self.config.timeout)
+    preferences['dom.max_chrome_script_run_time'] = self.config.timeout
+
+    preferences['devtools.debugger.remote-enabled'] = True # Enables the remote debugging protocol server
+    preferences['devtools.chrome.enabled'] = True # Allows debugging browser internal/chrome code
+    preferences['devtools.debugger.prompt-connection'] = False # Suppresses the "Incoming connection" UI dialog
+    preferences['devtools.debugger.force-local'] = True # Binds the RDP server strictly to the local loopback interface (127.0.0.1)
+
     utils.print(f'dom.max_chrome_script_run_time={self.config.timeout}')
 
     with open(os.path.join(os.path.dirname(__file__), 'preferences.toml')) as f:
-      preferences = toml.load(f)
-      for p, v in nested_dict_iter(preferences['general']):
-        profile.firefox.set_preference(p, v)
+      configured = toml.load(f)
+      for p, v in nested_dict_iter(configured['general']):
+        preferences[p] = v
 
       if self.config.locale == 'fr':
-        for p, v in nested_dict_iter(preferences['fr']):
-          profile.firefox.firefox.set_preference(p, v)
+        for p, v in nested_dict_iter(configured['fr']):
+          preferences[p] = v
 
     if not self.config.first_run:
-      profile.firefox.set_preference('extensions.zotero.translators.better-bibtex.citekeyFormat', "[auth:lower][year] | [=forumPost/WebPage][Auth:lower:capitalize][Date:format-date=%Y-%m-%d.%H\\:%M\\:%S:prefix=.][PublicationTitle:lower:capitalize:prefix=.][shorttitle3_3:lower:capitalize:prefix=.][Pages:prefix=.p.][Volume:prefix=.Vol.][NumberofVolumes:prefix=de] | [Auth:lower:capitalize][date=%oY:prefix=.][PublicationTitle:lower:capitalize:prefix=.][shorttitle3_3:lower:capitalize:prefix=.][Pages:prefix=.p.][Volume:prefix=.Vol.][NumberofVolumes:prefix=de]")
+      preferences['extensions.zotero.translators.better-bibtex.citekeyFormat'] = "[auth:lower][year] | [=forumPost/WebPage][Auth:lower:capitalize][Date:format-date=%Y-%m-%d.%H\\:%M\\:%S:prefix=.][PublicationTitle:lower:capitalize:prefix=.][shorttitle3_3:lower:capitalize:prefix=.][Pages:prefix=.p.][Volume:prefix=.Vol.][NumberofVolumes:prefix=de] | [Auth:lower:capitalize][date=%oY:prefix=.][PublicationTitle:lower:capitalize:prefix=.][shorttitle3_3:lower:capitalize:prefix=.][Pages:prefix=.p.][Volume:prefix=.Vol.][NumberofVolumes:prefix=de]"
 
-    profile.firefox.update_preferences()
-
-    shutil.rmtree(profile.path, ignore_errors=True)
-    shutil.move(profile.firefox.path, profile.path)
+    write_preferences(profile.path, preferences)
     os.makedirs(f'{profile.path}/zotero', exist_ok=True)
-                    
-    profile.firefox = None
 
     if self.config.db:
       self.needs_restart = True
       utils.print(f'restarting using {self.config.db}')
-      dbs = os.path.join(ROOT, 'test', 'db', self.config.db)
-      if not os.path.exists(dbs): os.makedirs(dbs)
 
-      db_zotero = os.path.join(dbs, f'{self.client}.sqlite')
-      db_zotero_alt = os.path.join(dbs, self.client, f'{self.client}.sqlite')
-      if not os.path.exists(db_zotero) and not os.path.exists(db_zotero_alt):
-        urllib.request.urlretrieve(f'https://github.com/retorquere/zotero-better-bibtex/releases/download/test-database/{self.config.db}.zotero.sqlite', db_zotero)
-      if not os.path.exists(db_zotero): db_zotero = db_zotero_alt
-      shutil.copy(db_zotero, os.path.join(profile.path, self.client, os.path.basename(db_zotero)))
-
-      db_bbt = os.path.join(dbs, 'better-bibtex.sqlite')
-      db_bbt_alt = os.path.join(dbs, self.client, 'better-bibtex.sqlite')
-      if not os.path.exists(db_bbt) and not os.path.exists(db_bbt_alt):
-        urllib.request.urlretrieve(f'https://github.com/retorquere/zotero-better-bibtex/releases/download/test-database/{self.config.db}.better-bibtex.sqlite', db_bbt)
-      if not os.path.exists(db_bbt): db_bbt = db_bbt_alt
-      shutil.copy(db_bbt, os.path.join(profile.path, self.client, os.path.basename(db_bbt)))
+      downloaded = self.install_db(profile, 'zotero')
+      self.install_db(profile, 'better-bibtex', downloaded)
 
       # remove any auto-exports that may exist
       # db = sqlite3.connect(os.path.join(profile.path, self.client, os.path.basename(db_bbt)))
@@ -858,7 +955,7 @@ class Preferences:
         value = f.read()
 
     self.pref[key] = value
-    self.zotero.execute('Zotero.Prefs.set(pref, value)', pref=key, value=value)
+    self.zotero.execute('await Zotero.BetterBibTeX.TestSupport.setPreference(pref, value)', pref=key, value=value)
 
   def keys(self):
     return self.pref.keys()

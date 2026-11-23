@@ -1,0 +1,99 @@
+config:
+  id: 36a3b0b5-bad0-4a04-b79b-441c7cef77db
+  label: BetterBibTeX JSON
+  preferences:
+    citekeyFormat: auth.lower + shorttitle(3, 3) + year
+    fillKeyAfter: 1
+    journalAbbreviation: auto
+  options:
+    keepUpdated: false
+    worker: true
+    hayagriva: true
+    exportDir: /home/felix/Documents/Uni/Notes/Praktikum/Report
+    exportPath: /home/felix/Documents/Uni/Notes/Praktikum/Report/sources.yaml
+    cache: true
+version:
+  zotero: 9.0.4
+  bbt: 9.0.38
+collections: {}
+items:
+  - key: 6CB6V6H9
+    version: 2044
+    itemType: webpage
+    title: (PDF) Overcoming Exploration in Reinforcement Learning with Demonstrations
+    abstractNote: PDF | Exploration in environments with sparse rewards has been a persistent problem in reinforcement learning (RL). Many tasks are natural to specify... | Find, read and cite all the research you need on ResearchGate
+    language: en
+    url: https://www.researchgate.net/publication/320098321_Overcoming_Exploration_in_Reinforcement_Learning_with_Demonstrations
+    accessDate: '2026-07-07T13:26:41Z'
+    extra: 'DOI: 10.48550/arXiv.1709.10089'
+    DOI: 10.48550/arXiv.1709.10089
+    citationKey: PDFOvercomingExploration
+    creators: []
+    tags: []
+    dateAdded: '2026-07-07T13:26:41Z'
+    dateModified: '2026-07-14T08:40:39Z'
+    itemID: 156
+    attachments: []
+    notes: []
+    autoJournalAbbreviation: ''
+    publicationTitle: ResearchGate
+  - key: YH87RLIS
+    version: 1334
+    itemType: preprint
+    title: Hindsight Experience Replay
+    abstractNote: 'Dealing with sparse rewards is one of the biggest challenges in Reinforcement Learning (RL). We present a novel technique called Hindsight Experience Replay which allows sample-efficient learning from rewards which are sparse and binary and therefore avoid the need for complicated reward engineering. It can be combined with an arbitrary off-policy RL algorithm and may be seen as a form of implicit curriculum. We demonstrate our approach on the task of manipulating objects with a robotic arm. In particular, we run experiments on three different tasks: pushing, sliding, and pick-and-place, in each case using only binary rewards indicating whether or not the task is completed. Our ablation studies show that Hindsight Experience Replay is a crucial ingredient which makes training possible in these challenging environments. We show that our policies trained on a physics simulation can be deployed on a physical robot and successfully complete the task.'
+    date: '2018-02-23'
+    libraryCatalog: arXiv.org
+    url: http://arxiv.org/abs/1707.01495
+    accessDate: '2026-06-23T11:20:48Z'
+    extra: arXiv:1707.01495 [cs.LG]
+    DOI: 10.48550/arXiv.1707.01495
+    citationKey: andrychowiczHindsightExperienceReplay2018
+    creators:
+      - firstName: Marcin
+        lastName: Andrychowicz
+        creatorType: author
+      - firstName: Filip
+        lastName: Wolski
+        creatorType: author
+      - firstName: Alex
+        lastName: Ray
+        creatorType: author
+      - firstName: Jonas
+        lastName: Schneider
+        creatorType: author
+      - firstName: Rachel
+        lastName: Fong
+        creatorType: author
+      - firstName: Peter
+        lastName: Welinder
+        creatorType: author
+      - firstName: Bob
+        lastName: McGrew
+        creatorType: author
+      - firstName: Josh
+        lastName: Tobin
+        creatorType: author
+      - firstName: Pieter
+        lastName: Abbeel
+        creatorType: author
+      - firstName: Wojciech
+        lastName: Zaremba
+        creatorType: author
+    tags:
+      - tag: Computer Science - Artificial Intelligence
+        type: 1
+      - tag: Computer Science - Machine Learning
+        type: 1
+      - tag: Computer Science - Robotics
+        type: 1
+      - tag: Computer Science - Neural and Evolutionary Computing
+        type: 1
+    dateAdded: '2026-06-23T11:20:48Z'
+    dateModified: '2026-06-23T11:20:48Z'
+    itemID: 119
+    attachments: []
+    notes: []
+    autoJournalAbbreviation: ''
+    publisher: arXiv
+    number: arXiv:1707.01495

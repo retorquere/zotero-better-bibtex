@@ -37,9 +37,7 @@
         }
       ],
       "date": "September 2014",
-      "extra": [
-        "Citation Key: EmmerJaens14a"
-      ],
+      "extra": [],
       "itemID": 1,
       "itemType": "conferencePaper",
       "place": "Krakow",
@@ -50,7 +48,8 @@
         }
       ],
       "title": "taX - a Flexible Tool for Low-Order Duct Acoustic Simulation in Time and Frequency Domain",
-      "url": "http://www.fa2014.agh.edu.pl/fa2014_cd/"
+      "url": "http://www.fa2014.agh.edu.pl/fa2014_cd/",
+      "citationKey": "EmmerJaens14a"
     }
   ]
 }

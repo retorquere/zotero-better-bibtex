@@ -67,7 +67,6 @@
       ],
       "date": "2013-10-01",
       "extra": [
-        "Citation Key: Kundu2013",
         "PMID: 24038744",
         "arXiv: 1408.1149",
         "ISBN: 1301725110"
@@ -141,7 +140,8 @@
       ],
       "title": "Integrated strategy for improving functional connectivity mapping using multiecho fMRI.",
       "url": "http://www.ncbi.nlm.nih.gov/pubmed/24038744",
-      "volume": "110"
+      "volume": "110",
+      "citationKey": "Kundu2013"
     }
   ]
 }

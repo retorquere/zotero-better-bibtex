@@ -7,10 +7,10 @@
       "exportNotes": true
     },
     "preferences": {
-      "autoAbbrev": true,
       "bibtexURL": "url",
       "citekeyFormat": "auth(n=0,m=1,creator=\"*\",initials=false).fold + year",
-      "itemObserverDelay": 100
+      "itemObserverDelay": 100,
+      "journalAbbreviation": "abbrev+auto"
     }
   },
   "items": [

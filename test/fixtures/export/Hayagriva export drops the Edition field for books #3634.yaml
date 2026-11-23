@@ -1,0 +1,91 @@
+config:
+  id: 36a3b0b5-bad0-4a04-b79b-441c7cef77db
+  label: BetterBibTeX JSON
+  preferences:
+    baseAttachmentPath: C:\geymslan\haskoli\2026-2027\haust2026\lokaverkefni
+    biblatexExtendedNameFormat: false
+    biblatexUsePrefix: false
+    citekeyFormat: auth.lower + year
+    exportBraceProtection: false
+    exportTitlecase: off
+    fillKeyAfter: 1
+    skipFields: file
+    warnBulkModify: 0
+  options: {}
+version:
+  zotero: 10.0.6
+  bbt: 9.0.71
+collections: {}
+items:
+  -
+    key: GWUXNMI7
+    version: 129
+    itemType: book
+    title: Incropera's principles of heat and mass transfer
+    date: '2017'
+    citationKey: incropera2017
+    language: en
+    publisher: Wiley
+    place: Singapore
+    ISBN: 978-1-119-38291-1
+    edition: '8'
+    creators:
+      -
+        firstName: Frank P.
+        lastName: Incropera
+        creatorType: author
+      -
+        firstName: David P.
+        lastName: DeWitt
+        creatorType: author
+      -
+        firstName: Theodore L.
+        lastName: Bergman
+        creatorType: author
+      -
+        firstName: Adrienne S.
+        lastName: Lavine
+        creatorType: author
+    tags:
+      -
+        tag: Heat -- Transmission
+      -
+        tag: Mass transfer
+      -
+        tag: Varmaflutningur
+      -
+        tag: Varmafræði
+    dateAdded: 2026-10-15T09:38:14Z
+    dateModified: 2026-10-15T10:10:17Z
+    itemID: 38
+    attachments: []
+    notes: []
+    autoJournalAbbreviation: ''
+  -
+    key: SALYJH3T
+    version: 118
+    itemType: book
+    title: A heat transfer textbook
+    date: '2024'
+    citationKey: lienhard2024
+    url: https://ahtt.mit.edu/
+    accessDate: 2026-10-15
+    language: en
+    publisher: Phlogiston Press
+    place: Cambridge, Massachusetts
+    edition: '6'
+    creators:
+      -
+        firstName: John H., V
+        lastName: Lienhard
+        creatorType: author
+      -
+        firstName: John H., IV
+        lastName: Lienhard
+        creatorType: author
+    tags: []
+    dateAdded: 2026-10-15T09:54:44Z
+    dateModified: 2026-10-15T09:58:45Z
+    itemID: 40
+    notes: []
+    autoJournalAbbreviation: ''

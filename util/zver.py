@@ -5,13 +5,11 @@ import ruamel.yaml
 
 yaml = ruamel.yaml.YAML()
 
-
 versions = []
-for kind in ['release', 'beta']:
-  url = f'https://www.zotero.org/download/client/manifests/{ kind }/updates-linux-x86_64.json'
-  response = requests.get(url)
+for channel in ['release', 'beta']:
+  response = requests.get(f'https://www.zotero.org/download/client/version?channel={channel}')
   response.raise_for_status()
-  versions.append(response.json()[-1]['version'])
+  versions.append(response.json()['linux-x86_64'])
 versions = ' / '.join(versions)
 
 with open('.github/ISSUE_TEMPLATE/bug_feature.yml', 'r') as file:

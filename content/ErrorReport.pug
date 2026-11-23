@@ -41,6 +41,9 @@ window(xmlns='http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul' xml
     wizardpage(pageid='page-review' label=' ')
       tooltip(id='better-bibtex-error-report-info') &better-bibtex_error-report_review;
       label(id='better-bibtex-report-cache' data-l10n-id='better-bibtex_error-report_better-bibtex_cache' flex='1' readonly='true')
+      hbox(id='better-bibtex-error-report-stop-profiling' hidden align='center')
+        label &better-bibtex_error-report_profiling-active;
+        button(label='&better-bibtex_error-report_stop-profiling.label;' oncommand='window.ErrorReport.stopRuntimeProfiling()')
       checkbox(class='better-bibtex-error-report-facet' id='better-bibtex-error-report-include-errors' checked label='&better-bibtex_error-report_include-errors.label;')
       checkbox(class='better-bibtex-error-report-facet' id='better-bibtex-error-report-include-log' checked label='&better-bibtex_error-report_include-log.label;')
       html:fieldset

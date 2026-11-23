@@ -4,7 +4,7 @@ import { strcmp } from '../../content/string-compare'
 
 export class JabRef {
   public citekeys: Map<number, string>
-  private groups: string[]
+  private groups!: string[]
   private translation: Translation
 
   constructor(translation: Translation) {
@@ -46,7 +46,9 @@ export class JabRef {
     let group = [ `${ level } ${ this.translation.collected.preferences.jabrefFormat === 5 ? 'Static' : 'Explicit' }Group:${ this.quote(collection.name) }`, '0' ]
 
     if (this.translation.collected.preferences.jabrefFormat === 3) {
-      const items = ((collection.items || []).filter(id => this.citekeys.has(id)).map(id => this.quote(this.citekeys.get(id))))
+      const items = (collection.items || [])
+        .filter(id => this.citekeys.has(id))
+        .map(id => this.quote(this.citekeys.get(id)!))
       if (this.translation.collected.preferences.testing) items.sort()
       group = group.concat(items)
     }
@@ -70,7 +72,7 @@ export class JabRef {
 
   private quote(s: string, wrap = false): string {
     s = s.replace(/([\\;])/g, '\\$1')
-    if (wrap) s = s.match(/.{1,70}/g).join('\n')
+    if (wrap) s = s.match(/.{1,70}/g)?.join('\n') ?? s
     return s
   }
 }

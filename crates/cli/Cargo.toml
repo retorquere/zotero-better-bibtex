@@ -1,0 +1,26 @@
+[package]
+name = "cli"
+version.workspace = true
+edition.workspace = true
+
+[[bin]]
+name = "bbt"
+path = "src/main.rs"
+
+[dependencies]
+any_ascii = "0.3.3"
+clap = { version = "4.6.8", features = ["derive"] }
+diff_match_patch = "0.3.2"
+dotenvy = "0.15.7"
+gherkin = "0.16.0"
+git2 = "0.21.0"
+json-patch = "5.0.0"
+octocrab = "0.54.9"
+regex = "1.13.1"
+rust-s3 = "0.38.0"
+sanitize-filename = "0.6.0"
+saphyr = { version = "0.4.0", default-features = false }
+serde_json = "1"
+serde_yaml = "0.9.34"
+tokio = { version = "1.54.1", features = ["full"] }
+zip = "9.6.1"

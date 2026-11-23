@@ -5,10 +5,11 @@ import type { MarkupNode } from '../../typings/markup'
 
 import { log } from '../../content/logger'
 import { decodeHTMLAttribute } from 'entities'
-import { Transform } from 'unicode2latex'
+import { Transform } from '@retorquere/bibtex-parser'
 
 export type ConverterOptions = {
-  caseConversion?: boolean
+  exportCaseProtection?: boolean
+  exportTitleCase?: boolean
   html?: boolean
   creator?: boolean
   commandspacers?: boolean
@@ -22,12 +23,12 @@ export type TeX = { latex: string; raw: boolean; packages: string[] }
 
 export class HTMLConverter {
   private latex = ''
-  private tx: Transform
-  private txt: Transform
-  private txc: Transform
+  private tx!: Transform
+  private txt!: Transform
+  private txc!: Transform
   private stack: any[] = []
   private options: ConverterOptions = {}
-  private embraced: boolean
+  private embraced!: boolean
   private packages: Set<string> = new Set
   private translation: Translation
 
@@ -58,10 +59,10 @@ export class HTMLConverter {
 
     const ast: MarkupNode = HTMLParser.parse(source, {
       html: options.html,
-      caseConversion: options.caseConversion,
+      exportCaseProtection: options.exportCaseProtection,
       exportBraceProtection: this.translation.collected.preferences.exportBraceProtection,
       csquotes: this.translation.collected.preferences.csquotes,
-      exportTitleCase: this.translation.collected.preferences.exportTitleCase,
+      exportTitleCase: options.exportTitleCase !== false,
     })
     this.walk(ast)
 
@@ -119,7 +120,7 @@ export class HTMLConverter {
 
       case 'a':
         /* zotero://open-pdf/0_5P2KA4XM/7 is actually a reference. */
-        if (tag.attr.href && tag.attr.href.length) latex = `\\href{${ tag.attr.href.replace(/[{}]/g, '').replace(/([\\%#])/g, '\\$1') }}{\x1D}`
+        if (tag.attr?.href && tag.attr.href.length) latex = `\\href{${ tag.attr.href.replace(/[{}]/g, '').replace(/([\\%#])/g, '\\$1') }}{\x1D}`
         break
 
       case 'sup':
@@ -144,13 +145,6 @@ export class HTMLConverter {
         latex = '\n\\par\n\x1D\n\\par\n'
         break
 
-      case 'h1':
-      case 'h2':
-      case 'h3':
-      case 'h4':
-        latex = `\n\n\\${ 'sub'.repeat(parseInt(tag.nodeName[1]) - 1) }section{\x1D}\n\n`
-        break
-
       case 'ol':
         latex = '\n\n\\begin{enumerate}\n\x1D\n\n\\end{enumerate}\n'
         break
@@ -165,6 +159,10 @@ export class HTMLConverter {
       case 'sc':
       case 'nc':
         break // ignore, handled by the relax/nocase/smallcaps handler below
+
+      case 'address':
+        latex = '\x1D'
+        break // take only contents
 
       case 'header':
       case 'section':
@@ -194,7 +192,12 @@ export class HTMLConverter {
         break
 
       default:
-        log.error(`unexpected tag '${ tag.nodeName }' (${ Object.keys(tag) })`)
+        if (tag.nodeName.match(/^h\d+$/)) {
+          latex = `\n\n\\${ 'sub'.repeat(parseInt(tag.nodeName[1]) - 1) }section{\x1D}\n\n`
+        }
+        else {
+          log.error(`unexpected tag '${ tag.nodeName }' (${ Object.keys(tag) })`)
+        }
         break
     }
 
@@ -215,8 +218,10 @@ export class HTMLConverter {
     const [ prefix, postfix ] = latex.split('\x1D')
 
     this.latex += prefix
-    for (const child of tag.childNodes) {
-      this.walk(child, nocased || tag.nocase)
+    if (tag.childNodes) {
+      for (const child of tag.childNodes) {
+        this.walk(child, nocased || tag.nocase)
+      }
     }
     this.latex += postfix
 
@@ -227,7 +232,9 @@ export class HTMLConverter {
     /* holy mother of %^$#^%$@ the bib(la)tex case conversion rules are insane */
     /* https://github.com/retorquere/zotero-better-bibtex/issues/541 */
     /* https://github.com/plk/biblatex/issues/459 ... oy! */
-    if (!this.embraced) this.embraced = this.options.caseConversion && (((this.latex || latex)[0] !== '\\') || this.translation.BetterBibTeX)
+    if (!this.embraced) {
+      this.embraced = (this.options.exportCaseProtection && (((this.latex || latex)[0] !== '\\') || this.translation.BetterBibTeX)) as boolean
+    }
     if (!this.embraced || !condition) return latex
     return `{${ latex }}`
   }

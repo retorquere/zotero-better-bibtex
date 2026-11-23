@@ -1,0 +1,47 @@
+export type DisplayOptions = {
+<%~ Object.keys(it.displayOptions).sort().map(option => it.displayOptions[option]).join('\n') + '\n' %>
+
+  // pseudo options
+<%~ Object.keys(it.pseudoOptions).sort().map(option => it.pseudoOptions[option]).join('\n') + '\n' %>
+}
+
+export const displayOptions = [
+<%~ Object.keys(it.displayOptions).sort().map(option => `  '${ option }',`).join('\n') + '\n' %>
+
+  // pseudo options
+<%~ Object.keys(it.pseudoOptions).sort().map(option => `  '${ option }',`).join('\n') + '\n' %>
+]
+
+export const psuedoOptions = new Set([
+<%~ Object.keys(it.pseudoOptions).sort().map(option => `  '${ option }',`).join('\n') + '\n' %>
+])
+
+export type Header = {
+  translatorID: string
+  label: string
+  description: string
+  creator: string
+  minVersion: string
+  maxVersion: string
+  translatorType: number
+  inRepository: boolean
+  priority: number
+  target: string
+  browserSupport: string
+  configOptions: {
+    getCollections?: boolean
+    async?: boolean
+    cached?: boolean
+    hash: string
+  }
+  displayOptions?: DisplayOptions
+}
+
+import $headers from './translators.json'
+export const headers: Header[] = $headers
+export const byId: Record<string, Header> = {}
+export const byLabel: Record<string, Header> = {}
+export const bySlug: Record<string, Header> = {}
+for (const header of headers) {
+  byId[header.translatorID] = byLabel[header.label] = bySlug[header.label.replace(/ /g, '')] = header
+}

@@ -23,12 +23,12 @@
       ],
       "date": "../2004-01-01",
       "extra": [
-        "Citation Key: simpson_cool_book_0397",
         "tex.addendum= From ISO/DIS 8601-2:2016(e) Section 4.4 Enhanced time interval"
       ],
       "itemID": 19,
       "itemType": "book",
-      "title": "Cool book 0397"
+      "title": "Cool book 0397",
+      "citationKey": "simpson_cool_book_0397"
     },
     {
       "creators": [
@@ -39,12 +39,11 @@
         }
       ],
       "date": "1999-01-uu",
-      "extra": [
-        "Citation Key: simpson_cool_book_0140"
-      ],
+      "extra": [],
       "itemID": 20,
       "itemType": "book",
-      "title": "Cool book 0140"
+      "title": "Cool book 0140",
+      "citationKey": "simpson_cool_book_0140"
     },
     {
       "creators": [
@@ -55,12 +54,11 @@
         }
       ],
       "date": "1999-uu-uu",
-      "extra": [
-        "Citation Key: simpson_cool_book_0150"
-      ],
+      "extra": [],
       "itemID": 21,
       "itemType": "book",
-      "title": "Cool book 0150"
+      "title": "Cool book 0150",
+      "citationKey": "simpson_cool_book_0150"
     },
     {
       "creators": [
@@ -71,12 +69,11 @@
         }
       ],
       "date": "1999-uu",
-      "extra": [
-        "Citation Key: simpson_cool_book_0130"
-      ],
+      "extra": [],
       "itemID": 22,
       "itemType": "book",
-      "title": "Cool book 0130"
+      "title": "Cool book 0130",
+      "citationKey": "simpson_cool_book_0130"
     },
     {
       "creators": [
@@ -87,12 +84,11 @@
         }
       ],
       "date": "199u",
-      "extra": [
-        "Citation Key: simpson_cool_book_0110"
-      ],
+      "extra": [],
       "itemID": 23,
       "itemType": "book",
-      "title": "Cool book 0110"
+      "title": "Cool book 0110",
+      "citationKey": "simpson_cool_book_0110"
     },
     {
       "creators": [
@@ -103,12 +99,11 @@
         }
       ],
       "date": "19uu",
-      "extra": [
-        "Citation Key: simpson_cool_book_0120"
-      ],
+      "extra": [],
       "itemID": 24,
       "itemType": "book",
-      "title": "Cool book 0120"
+      "title": "Cool book 0120",
+      "citationKey": "simpson_cool_book_0120"
     },
     {
       "creators": [
@@ -120,12 +115,12 @@
       ],
       "date": "2004-01-01/..",
       "extra": [
-        "Citation Key: simpson_cool_book_0396",
         "tex.addendum= From ISO/DIS 8601-2:2016(e) Section 4.4 Enhanced time interval"
       ],
       "itemID": 25,
       "itemType": "book",
-      "title": "Cool book 0396"
+      "title": "Cool book 0396",
+      "citationKey": "simpson_cool_book_0396"
     },
     {
       "creators": [
@@ -136,12 +131,11 @@
         }
       ],
       "date": "2004-06-01/unknown",
-      "extra": [
-        "Citation Key: simpson_cool_book_0093"
-      ],
+      "extra": [],
       "itemID": 26,
       "itemType": "book",
-      "title": "Cool book 0093"
+      "title": "Cool book 0093",
+      "citationKey": "simpson_cool_book_0093"
     },
     {
       "creators": [
@@ -152,12 +146,11 @@
         }
       ],
       "date": "unknown/2006",
-      "extra": [
-        "Citation Key: simpson_cool_book_0092"
-      ],
+      "extra": [],
       "itemID": 27,
       "itemType": "book",
-      "title": "Cool book 0092"
+      "title": "Cool book 0092",
+      "citationKey": "simpson_cool_book_0092"
     },
     {
       "abstractNote": "Religious fundamentalism is a powerful force in Turkey where the military has a long history of intervening in politics to ensure the nation remains secular.",

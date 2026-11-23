@@ -25,7 +25,11 @@ function date2csl(date) {
   }
 }
 
-import { parse, strToISO } from '../content/dateparser'
-const value = "26 Mar 2026 10:00:00+AEDT"
-console.log(value)
-console.log('parse:', parse(value))
+import { start, parse, simplify } from '../content/dateparser'
+
+for (const value of process.argv.slice(2)) {
+  console.log(value)
+  console.log('  parsed:', parse(value))
+  console.log('  simplified:', simplify(parse(value)))
+  console.log('  start', start(parse(value)))
+}

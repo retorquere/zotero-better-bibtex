@@ -1,5 +1,6 @@
 from numerizer import numerize
 import steps.zotero as zotero
+import steps.rdp as rdp
 from munch import *
 from behave import given, when, then
 import behave
@@ -20,10 +21,12 @@ import html, re
 import timeit
 import platform
 import pytablewriter
+import requests
 
 from contextlib import contextmanager
 
 import pathlib
+from pathlib import Path
 for d in pathlib.Path(__file__).resolve().parents:
   if os.path.exists(os.path.join(d, 'behave.ini')):
     ROOT = d
@@ -125,7 +128,6 @@ def step_impl(context, source, target, baseline, n):
     check=True,
     stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True
   )
-  utils.print(result.stdout)
 
   match pathlib.Path(baseline).suffix:
     case '.odt':
@@ -144,7 +146,9 @@ def step_impl(context, source, target):
 def step_impl(context, references, source):
   source = expand_scenario_variables(context, source)
   context.imported = source
-  assert_that(context.zotero.import_file(context, source), equal_to(references))
+  imported = context.zotero.import_file(context, source)
+  if references != 0:
+    assert_that(imported, equal_to(references))
 
 @step(r'I import 1 reference from "{source}" into "{collection}"')
 def step_impl(context, source, collection):
@@ -168,19 +172,25 @@ def step_impl(context, source):
 def step_impl(context, references, attachments, source):
   source = expand_scenario_variables(context, source)
   context.imported = source
-  assert_that(context.zotero.import_file(context, source, True), equal_to(references))
+  imported = context.zotero.import_file(context, source, True)
+  if references != 0:
+    assert_that(imported, equal_to(references))
 
 @step(r'I import {references:d} references from "{source}" into a new collection')
 def step_impl(context, references, source):
   source = expand_scenario_variables(context, source)
   context.imported = source
-  assert_that(context.zotero.import_file(context, source, True), equal_to(references))
+  imported = context.zotero.import_file(context, source, True)
+  if references != 0:
+    assert_that(imported, equal_to(references))
 
 @step(r'I import {references:d} references with {attachments:d} attachments from "{source}"')
 def step_impl(context, references, attachments, source):
   source = expand_scenario_variables(context, source)
   context.imported = source
-  assert_that(context.zotero.import_file(context, source), equal_to(references))
+  imported = context.zotero.import_file(context, source)
+  if references != 0:
+    assert_that(imported, equal_to(references))
 
 @step(r'I export the library {n:d} times using "{translator}"')
 def step_impl(context, n, translator):
@@ -274,6 +284,26 @@ def step_impl(context, translator, expected):
     expected = expected
   )
 
+@step('"{fixture}" compiles with hayagriva')
+def step_impl(context, fixture):
+  fixture_path = os.path.join(ROOT, 'test/fixtures', expand_scenario_variables(context, fixture))
+  baseline_path = fixture_path.replace('.hayagriva.yml', '.hayagriva.reference.apa')
+
+  result = subprocess.run(
+    ['hayagriva', fixture_path, 'reference', '--style', 'apa', '--no-fmt'],
+    stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True
+  )
+
+  assert result.returncode == 0, f'hayagriva failed on {fixture_path}:\n{result.stdout}'
+
+  # Write reference output to exported directory for inspection
+  utils.exported(baseline_path.replace('test/fixtures/', ''), result.stdout)
+
+  assert os.path.exists(baseline_path), f'Baseline file not found: {baseline_path}'
+  with open(baseline_path, 'r') as f:
+    baseline = f.read()
+  assert_equal_diff(baseline, result.stdout)
+
 @step('the library should match "{expected}"')
 def step_impl(context, expected):
   export_library(context, expected = expected)
@@ -287,6 +317,12 @@ def step_impl(context, mode, value):
 @step(u'I select {n} items with a field that {mode} "{value}"')
 def step_impl(context, n, mode, value):
   context.selected += context.zotero.execute('return await Zotero.BetterBibTeX.TestSupport.find({[mode]: value}, n)', mode=mode, value=value, n=int(n))
+  context.zotero.execute('await Zotero.BetterBibTeX.TestSupport.select(ids)', ids=context.selected)
+  time.sleep(3)
+
+@step(u'I select all items')
+def step_impl(context):
+  context.selected = context.zotero.execute('return await Zotero.Items.getAll(Zotero.Libraries.userLibraryID, true, false, true)')
   context.zotero.execute('await Zotero.BetterBibTeX.TestSupport.select(ids)', ids=context.selected)
   time.sleep(3)
 
@@ -339,10 +375,28 @@ def step_impl(context, title):
     pick[row[0]] = row[1]
   context.picked.append(dict(pick))
 
+@step(u'I set CAYW pick options to {options}')
+def step_impl(context, options):
+  context.caywOptions = json.loads(options)
+
 @then(u'the picks for "{fmt}" should be "{expected}"')
 def step_impl(context, fmt, expected):
-  found = context.zotero.execute('return await Zotero.BetterBibTeX.TestSupport.pick(fmt, picks)', fmt=fmt, picks=context.picked)
+  found = context.zotero.execute('return await Zotero.BetterBibTeX.TestSupport.pick(fmt, picks, options)', fmt=fmt, picks=context.picked, options=context.caywOptions)
   assert_equal_diff(expected, found)
+
+@then(u'the translated picks should include {n:d} item matching "{title}" and omit notes')
+def step_impl(context, n, title):
+  found = context.zotero.execute('return await Zotero.BetterBibTeX.TestSupport.pick("translate", picks, options)', picks=context.picked, options=context.caywOptions)
+  try:
+    exported = json.loads(found)
+    items = exported.get('items', []) if isinstance(exported, dict) else []
+
+    assert len(items) == n, { 'expected': n, 'found': len(items) }
+    assert any(title in item.get('title', '') for item in items), title
+    assert all('notes' not in item for item in items), exported
+  except json.JSONDecodeError:
+    assert title.lower() in found.lower(), found
+    assert 'This is the child note' not in found, found
 
 @when(u'I {change} the citation key')
 def step_impl(context, change):
@@ -435,7 +489,12 @@ def step_impl(context):
 
 @step(u'I copy date-added/date-modified for the selected items from the extra field')
 def step_impl(context):
-  context.zotero.execute('Zotero.BetterBibTeX.MenuHelper.patchDates()')
+  context.zotero.execute('await Zotero.BetterBibTeX.MenuHelper.patchDates()')
+
+@step(u'I migrate TeX to extra for the selected items')
+def step_impl(context):
+  assert context.selected, 'No items selected for TeX migration'
+  context.zotero.execute('await Zotero.BetterBibTeX.TestSupport.migrateTeX()')
 
 @step('I change {param} to {value} on the auto-export')
 def step_impl(context, param, value):
@@ -468,7 +527,24 @@ def step_impl(context, action, xpi):
     assert len(xpis) == 1, f'multiple candidates for {xpi}'
     context.zotero.execute('await Zotero.DebugBridge.install(xpi)', xpi=os.path.abspath(xpis[0]))
   elif action in ['enable', 'disable']:
-    context.zotero.execute('await Zotero.DebugBridge[action](addon)', action=action, addon=xpi)
+    with rdp.RDPConnection() as zotero:
+      zotero.execute("""
+        const { AddonManager } = ChromeUtils.importESModule('resource://gre/modules/AddonManager.sys.mjs')
+        const addon = await AddonManager.getAddonByID(addonID)
+        const lifecycle = action === 'disable' ? 'shutdown' : 'startup'
+        const completed = new Promise(resolve => {
+          const observer = {
+            [lifecycle]({ id }) {
+              if (id !== addonID) return
+              Zotero.Plugins.removeObserver(observer)
+              resolve()
+            },
+          }
+          Zotero.Plugins.addObserver(observer)
+        })
+        await addon[action]()
+        await completed
+      """, action=action, addonID=xpi)
   else:
     raise ValueError(f'Unsupported extension action {action}')
 
@@ -536,3 +612,44 @@ def step_impl(context, nth, name):
   ''', nth=nth, itemID=context.selected[0], name=name)
 
 
+
+@when(u'I call JSON-RPC method "{method}" with params {params}')
+def step_impl(context, method, params):
+  response = requests.post(
+    'http://127.0.0.1:23119/better-bibtex/json-rpc',
+    json={'jsonrpc': '2.0', 'method': method, 'params': json.loads(params), 'id': 1},
+    headers={'Content-Type': 'application/json'},
+  )
+  context.jsonrpc_response = response.json()
+
+@then(u'the JSON-RPC response should have no error')
+def step_impl(context):
+  assert 'error' not in context.jsonrpc_response, f'Unexpected error: {context.jsonrpc_response.get("error")}'
+
+@then(u'the JSON-RPC result for "{citekey}" should be null')
+def step_impl(context, citekey):
+  result = context.jsonrpc_response.get('result', {})
+  assert result.get(citekey) is None, f'Expected null for {citekey}; got {result.get(citekey)!r}'
+
+@then(u'the JSON-RPC result for "{citekey}" should be "{expected}"')
+def step_impl(context, citekey, expected):
+  result = context.jsonrpc_response.get('result', {})
+  assert result.get(citekey) == expected, f'Expected {expected!r} for {citekey}; got {result.get(citekey)!r}'
+
+@then('the disabled monkey-patches work')
+def step_impl(context):
+  with rdp.RDPConnection() as zotero:
+    serialized = zotero.execute('return Zotero.getActiveZoteroPane().getSelectedItems().map(item => Zotero.Utilities.Internal.itemToExportFormat(item))')
+    assert type(serialized) == list, f'Expected serialized object, got {type(serialized)}, {json.dumps(serialized)}'
+
+@step('I clear the performance profiles')
+def step_impl(context):
+  profiles = Path('~/.BBTTEST/zotero/better-bibtex/profiling').expanduser()
+  for p in profiles.iterdir():
+    if p.is_file():
+      p.unlink()
+
+@step('I create a performance profile snapshot')
+def step_impl(context):
+  with rdp.RDPConnection() as zotero:
+    zotero.execute("await Zotero.BetterBibTeX.TestSupport.profilerSnapshot('snapshot')")

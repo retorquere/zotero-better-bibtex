@@ -1,4 +1,3 @@
-
 @inproceedings{Klassen2010,
   title = {Empirical {{Study}} of {{Support Vector Machine Kernels}} with {{Applications}} to {{Microarray Data}}},
   booktitle = {{{CATA}}},
@@ -8,9 +7,6 @@
   bibsource = {DBLP, http://dblp.uni-trier.de},
   crossref = {DBLP:conf/cata/2010},
   owner = {sstudent},
-  annotation = {svm liniowe najlepsze},
   groups = {klasyfikacja},
   file = {~/BBTTEST/storage/Klassen2010.pdf}
 }
-
-

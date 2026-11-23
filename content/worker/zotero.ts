@@ -18,13 +18,20 @@ const ctx: DedicatedWorkerGlobalScope = self as any
 import type { Message, Job } from '../translators/worker'
 import { generateBibLaTeX } from '../../translators/bibtex/biblatex'
 import { generateBibTeX } from '../../translators/bibtex/bibtex'
+import { Exporter } from '../../translators/bibtex/exporter'
 import { generateCSLJSON } from '../../translators/csl/json'
 import { generateCSLYAML } from '../../translators/csl/yaml'
+import { generateHayagriva } from '../../translators/lib/hayagriva'
 import { generateBBTJSON } from '../../translators/lib/bbtjson'
 import type { Collected } from '../../translators/lib/collect'
 
 import { DOMParser as XMLDOMParser } from '@xmldom/xmldom'
 import { Schema } from '../item-schema'
+
+import * as yaml from '../yaml'
+
+import init from '@retorquere/bibtex-parser'
+const ready = init({ module_or_path: 'chrome://zotero-better-bibtex/content/resource/bibtex_parser_bg.wasm' })
 
 declare var ZOTERO_TRANSLATOR_INFO: Header // eslint-disable-line no-var
 
@@ -147,9 +154,9 @@ import * as DateParser from '../../content/dateparser'
 import dateFormats from '../../submodules/zotero/resource/schema/dateFormats.json' with { type: 'json' }
 
 class Running {
-  public serialized: Serialized.Item[]
-  public exported: Map<number, ExportedItem>
-  public context: number | false
+  public serialized!: Serialized.Item[]
+  public exported!: Map<number, ExportedItem>
+  public context!: number | false
   public hits = 0
   public misses = 0
   public items: number
@@ -179,7 +186,7 @@ class Running {
     this.serialized = await Cache.Serialized.get(itemIDs)
   }
 
-  public fetch(itemID: number): ExportedItem {
+  public fetch(itemID: number): ExportedItem | undefined {
     const item = this.exported.get(itemID)
     if (item) {
       this.hits++
@@ -218,11 +225,11 @@ class WorkerZoteroBetterBibTeX {
   }
 
   public setProgress(percent: number) {
-    Zotero.send({ kind: 'progress', percent, translator: Zotero.running.job.translator, autoExport: Zotero.running.job.autoExport })
+    Zotero.send({ kind: 'progress', percent, translator: Zotero.running!.job.translator, autoExport: Zotero.running!.job.autoExport })
   }
 
-  public getContents(path: string): string {
-    if (!path) return null
+  public getContents(path: string): string | undefined {
+    if (!path) return
 
     try {
       const file = IOUtils.openFileForSyncReading(path)
@@ -245,10 +252,9 @@ class WorkerZoteroBetterBibTeX {
       return text
     }
     catch (err) {
-      if (!err.message?.includes('NS_ERROR_FILE_NOT_FOUND')) {
-        log.error(`getContents ${ path } error ${ err } ${ Object.keys(err) } ${ err.message }`)
+      if (!(err as Error).message?.includes('NS_ERROR_FILE_NOT_FOUND')) {
+        log.error(`getContents ${path} error ${err} ${Object.keys(err as Error)} ${(err as Error).message}`)
       }
-      return null
     }
   }
 
@@ -268,7 +274,15 @@ class WorkerZoteroBetterBibTeX {
   public generateBibTeX(collected: Collected) { return generateBibTeX(collected) }
   public generateCSLYAML(collected: Collected) { return generateCSLYAML(collected) }
   public generateCSLJSON(collected: Collected) { return generateCSLJSON(collected) }
+  public generateHayagriva(collected: Collected) { return generateHayagriva(collected) }
   public generateBBTJSON(collected: Collected) { return generateBBTJSON(collected) }
+
+  public yamlDump(data: any) {
+    return yaml.dump(data)
+  }
+  public yamlLoad(input: string) {
+    return yaml.load(input)
+  }
 }
 
 const WorkerZoteroUtilities = {
@@ -283,7 +297,7 @@ async function makeDirs(path) {
   await IOUtils.makeDirectory(path, { ignoreExisting: true, createAncestors: true })
 }
 
-async function saveFile(path, overwrite) {
+async function saveFile(this: Serialized.Attachment, path: string, overwrite: boolean): Promise<boolean> {
   if (!Zotero.exportDirectory) return false
 
   const protect = overwrite
@@ -299,7 +313,7 @@ async function saveFile(path, overwrite) {
       }
     }
 
-  if (!await File.exists(this.localPath)) return false
+  if (!await File.exists(this.localPath!)) return false
 
   try {
     this.path = PathUtils.join(Zotero.exportDirectory, path)
@@ -315,13 +329,13 @@ async function saveFile(path, overwrite) {
     await IOUtils.copy(this.localPath, this.path)
   }
   else if (this.linkMode === 'imported_url') {
-    const target = PathUtils.parent(this.path)
+    const target = PathUtils.parent(this.path)!
     await protect(target, this.localPath)
 
     await IOUtils.remove(target, { recursive: true, ignoreAbsent: true })
     await makeDirs(target)
 
-    const snapshot = PathUtils.parent(this.localPath)
+    const snapshot = PathUtils.parent(this.localPath!)!
     for (const src of await IOUtils.getChildren(snapshot)) {
       if (PathUtils.filename(src) === '.zotero-ft-cache') continue
       if (await File.isDir(src)) throw new Error(`Unexpected directory ${JSON.stringify(src)} in snapshot`)
@@ -393,9 +407,9 @@ class WorkerZoteroItemFields {
 class WorkerZotero {
   public worker = true
 
-  public output: string
-  public exportDirectory: string
-  public exportFile: string
+  public output!: string
+  public exportDirectory!: string
+  public exportFile!: string
   public version: string = client.version
 
   public running?: Running
@@ -433,7 +447,7 @@ class WorkerZotero {
         this.exportFile = job.output
         const ext = `.${ ZOTERO_TRANSLATOR_INFO.target }`
         if (!this.exportFile.endsWith(ext)) this.exportFile += ext
-        this.exportDirectory = PathUtils.parent(this.exportFile)
+        this.exportDirectory = PathUtils.parent(this.exportFile)!
       }
       await makeDirs(this.exportDirectory)
     }
@@ -444,13 +458,21 @@ class WorkerZotero {
 
     doExport()
 
-    if (this.exportFile) await IOUtils.writeUTF8(this.exportFile, this.output)
+    const output = this.output
+
+    if (this.exportFile) {
+      await IOUtils.writeUTF8(this.exportFile, output)
+    }
+
+    this.output = ''
+    this.running.serialized = []
+    this.running.exported.clear()
 
     await this.running.flush()
     const cacheRate = this.running.hits + this.running.misses ? this.running.hits / (this.running.hits + this.running.misses) : 0
     this.BetterBibTeX.setProgress(100)
-    this.running = null
-    return { output: Zotero.output, cacheRate }
+    this.running = undefined
+    return { output, cacheRate }
   }
 
   public send(message: Message) {
@@ -462,11 +484,11 @@ class WorkerZotero {
   }
 
   public getHiddenPref(pref) {
-    return this.running.job.preferences[pref.replace(/^better-bibtex\./, '')]
+    return this.running!.job.preferences[pref.replace(/^better-bibtex\./, '')]
   }
 
   public getOption(option) {
-    return this.running.job.options[option]
+    return this.running!.job.options[option]
   }
 
   public debug(message) {
@@ -484,12 +506,12 @@ class WorkerZotero {
   }
 
   public nextItem() {
-    this.BetterBibTeX.setProgress(this.running.progress)
-    return this.running.serialized.shift()
+    this.BetterBibTeX.setProgress(this.running!.progress)
+    return this.running!.serialized.shift()
   }
 
-  public nextCollection(): Serialized.Collection {
-    return this.running.job.data.collections.shift()
+  public nextCollection(): Serialized.Collection | undefined {
+    return this.running!.job.data.collections?.shift()
   }
 
   private patchAttachments(item): void {
@@ -514,7 +536,14 @@ export var Zotero = new WorkerZotero // eslint-disable-line no-var
 class WorkerServer extends WorkerServerBase implements ExporterInterface {
   public Cache = Cache
 
+  /** Keep parsed strings in the worker between export jobs. */
+  async setStrings(strings: Record<string, string>): Promise<void> { // eslint-disable-line @typescript-eslint/require-await
+    Exporter.setStrings(strings)
+  }
+
+  /** Initialize export dependencies before the worker accepts jobs. */
   async initialize(config: { CSL_MAPPINGS: any; dateFormatsJSON: any; lastUpdated: string }): Promise<void> {
+    await ready
     Zotero.Schema = { ...config.CSL_MAPPINGS }
     ZD.init(config.dateFormatsJSON)
     await Cache.open(config.lastUpdated)
@@ -527,7 +556,7 @@ class WorkerServer extends WorkerServerBase implements ExporterInterface {
       return await Zotero.start(job)
     }
     finally {
-      Zotero.running = null
+      Zotero.running = undefined
     }
   }
 

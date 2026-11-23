@@ -6,8 +6,8 @@ export const File = new class {
     try {
       return await IOUtils.exists(path)
     }
-    catch (e) {
-      if (e.message.includes('NS_ERROR_FILE_UNRECOGNIZED_PATH')) log.error(`${e.message}\n\n${e.stack}\n\n`)
+    catch (err) {
+      if ((err as any).message.includes('NS_ERROR_FILE_UNRECOGNIZED_PATH')) log.error(`${(err as any).message}\n\n${(err as any).stack}\n\n`)
       return false
     }
   }
@@ -17,7 +17,7 @@ export const File = new class {
       return (await IOUtils.stat(path)).type === 'regular'
     }
     catch (err) {
-      if (err.name !== 'NotFoundError') log.error(path, 'isFile', err)
+      if ((err as any).name !== 'NotFoundError') log.error(path, 'isFile', err)
       return false
     }
   }
@@ -26,7 +26,7 @@ export const File = new class {
     try {
       const stat = await IOUtils.stat(path)
       if (stat.type !== 'regular') return 0
-      return stat.lastModified
+      return stat.lastModified ?? 0
     }
     catch {
       return 0
@@ -38,14 +38,14 @@ export const File = new class {
       return (await IOUtils.stat(path)).type === 'directory'
     }
     catch (err) {
-      if (err.name !== 'NotFoundError') log.error(path, 'isDir', err)
+      if ((err as any).name !== 'NotFoundError') log.error(path, 'isDir', err)
       return false
     }
   }
 }
 
 export const Path = new class {
-  #home: string
+  #home!: string
   public get home(): string {
     // dynamic fetch because this does not work in workers, but it also isn't requested there
     return typeof this.#home === 'string' ? this.#home : (this.#home = FileUtils.getDir('Home', []).path as string)

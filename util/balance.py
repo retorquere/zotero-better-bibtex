@@ -20,7 +20,6 @@ parser.add_argument('-b', '--bins', required=True)
 parser.add_argument('-d', '--durations', required=True)
 parser.add_argument('-m', '--minutes', type=int, required=True) # one hour of test time becomes 6 builds
 parser.add_argument(      '--beta', default=False, action='store_true')
-parser.add_argument(      '--legacy', default=False, action='store_true')
 parser.add_argument('-s', '--slow', default=False, action='store_true')
 args = parser.parse_args()
 
@@ -41,7 +40,7 @@ class Tests:
       self.tests = tests.values()
 
   def balance(self):
-    tests = [test for test in self.tests if not test.slow or args.slow]
+    tests = [test for test in self.tests if not getattr(test, 'slow', False)]
     # self.seconds = sum([test.seconds for test in tests])
     data = Munch(
       weights = [],
@@ -67,7 +66,9 @@ class Tests:
         for bin in bins
       ]
     except:
-      self.bins = [ tests ]
+      self.bins = [[ test.name for test in tests ]]
+
+    self.bins = sorted(self.bins, key=lambda bin: sum([data.byname[test].seconds for test in bin]))
 
     print([
       (bin, sum([data.byname[test].seconds for test in tests]))

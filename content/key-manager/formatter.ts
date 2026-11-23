@@ -10,34 +10,35 @@ interface Term {
 
 import { Events } from '../events'
 
-import { log } from '../logger'
-import fold2ascii from 'fold-to-ascii'
 import rescape from '@stdlib/utils-escape-regexp-string'
+import fold2ascii from 'fold-to-ascii'
+import merge from 'lodash.merge'
 import { ucs2 } from 'punycode2'
+import { log } from '../logger'
 
 import * as CSL from 'citeproc'
 
-import { Preference } from '../prefs'
-import { JournalAbbrev } from '../journal-abbrev'
-import * as Extra from '../extra'
 import { buildCiteKey as zotero_buildCiteKey } from '../../gen/ZoteroBibTeX.mjs'
-import { babelLanguage } from '../text'
+import * as Extra from '../extra'
 import { fetchSync as fetchInspireHEP } from '../inspire-hep'
+import { JournalAbbrev } from '../journal-abbrev'
+import { Preference } from '../prefs'
+import { langCode } from '../text'
 
-import { compile, upgrade } from './compile'
 import * as DateParser from '../dateparser'
+import { compile, upgrade } from './compile'
 
 import { Schema } from '../../content/item-schema'
 
 import { parseFragment } from 'parse5'
 
-import { sprintf } from 'sprintf-js'
+import { sprintf } from '../sprintf'
 
-import { chinese } from './chinese'
-import { japanese } from './japanese'
-import { transliterate as arabic } from './arabic'
 import { transliterate } from 'transliteration'
+import { transliterate as arabic } from './arabic'
+import { chinese } from './chinese'
 import * as cyrillic from './cyrillic'
+import { japanese } from './japanese'
 
 import { listsync as csv2list } from '../load-csv'
 
@@ -88,7 +89,7 @@ const unaliasTransliterateMode = {
 export type TransliterateModeAlias = keyof typeof unaliasTransliterateMode
 export type TransliterateMode = (typeof unaliasTransliterateMode)[keyof typeof unaliasTransliterateMode]
 
-function skip() {
+function skip(): never {
   throw { next: true } // eslint-disable-line @typescript-eslint/only-throw-error
 }
 
@@ -125,7 +126,7 @@ function parseDate(d: string, o = ''): FormattableDate {
         return `${n}`
     }
   }
-  function assign(dp, prefix) {
+  function assign(dp: DateParser.OptionalRichDate, prefix: string): void {
     if (!dp?.type) return
 
     switch (dp.type) {
@@ -145,60 +146,91 @@ function parseDate(d: string, o = ''): FormattableDate {
         break
 
       case 'century':
-        Object.assign(parsed, { [`${prefix}Y`]: `${str(date.century)}xx` })
+        Object.assign(parsed, { [`${prefix}Y`]: `${str(dp.century)}xx` })
         break
 
       default:
-        throw new Error(`Unexpected parsed date ${ JSON.stringify({d, o, dp}) } => ${ JSON.stringify(date) }`)
+        throw new Error(`Unexpected parsed date ${JSON.stringify({ d, o, dp })} => ${JSON.stringify(date)}`)
     }
   }
 
   const date = DateParser.start(DateParser.parse(d, o))
-
-  assign(date, '')
-  assign(date.orig, 'o')
-  if (!parsed.Y) Object.assign(parsed, { Y: parsed.oY, y: parsed.oy, m: parsed.om, d: parsed.od })
-  if (!parsed.oY) Object.assign(parsed, { oY: parsed.Y, oy: parsed.y, om: parsed.m, od: parsed.d })
-  if (typeof date.hour === 'number') {
-    Object.assign(parsed, { H: str(date.hour), M: str(date.minute), S: str(date.seconds) })
+  if (date) {
+    assign(date, '')
+    if (date.orig) assign(date.orig, 'o')
+    if (!parsed.Y) Object.assign(parsed, { Y: parsed.oY, y: parsed.oy, m: parsed.om, d: parsed.od })
+    if (!parsed.oY) Object.assign(parsed, { oY: parsed.Y, oy: parsed.y, om: parsed.m, od: parsed.d })
+    if (date.type === 'date') {
+      Object.assign(parsed, { H: str(date.hour!), M: str(date.minute!), S: str(date.seconds!) })
+    }
   }
 
   return parsed
 }
 
 export type AuthorType = 'author' | 'editor' | 'translator' | 'collaborator' | '*'
-export type CreatorType
-  = 'primary'
-  | 'artist' | '-artist'
-  | 'attorneyAgent' | '-attorneyAgent'
-  | 'author' | '-author'
-  | 'bookAuthor' | '-bookAuthor'
-  | 'cartographer' | '-cartographer'
-  | 'castMember' | '-castMember'
-  | 'commenter' | '-commenter'
-  | 'composer' | '-composer'
-  | 'contributor' | '-contributor'
-  | 'cosponsor' | '-cosponsor'
-  | 'counsel' | '-counsel'
-  | 'director' | '-director'
-  | 'editor' | '-editor'
-  | 'guest' | '-guest'
-  | 'interviewee' | '-interviewee'
-  | 'interviewer' | '-interviewer'
-  | 'inventor' | '-inventor'
-  | 'performer' | '-performer'
-  | 'podcaster' | '-podcaster'
-  | 'presenter' | '-presenter'
-  | 'producer' | '-producer'
-  | 'programmer' | '-programmer'
-  | 'recipient' | '-recipient'
-  | 'reviewedAuthor' | '-reviewedAuthor'
-  | 'scriptwriter' | '-scriptwriter'
-  | 'seriesEditor' | '-seriesEditor'
-  | 'sponsor' | '-sponsor'
-  | 'testimonyBy' | '-testimonyBy'
-  | 'translator' | '-translator'
-  | 'wordsBy' | '-wordsBy'
+export type CreatorType =
+  | 'primary'
+  | 'artist'
+  | '-artist'
+  | 'attorneyAgent'
+  | '-attorneyAgent'
+  | 'author'
+  | '-author'
+  | 'bookAuthor'
+  | '-bookAuthor'
+  | 'cartographer'
+  | '-cartographer'
+  | 'castMember'
+  | '-castMember'
+  | 'commenter'
+  | '-commenter'
+  | 'composer'
+  | '-composer'
+  | 'contributor'
+  | '-contributor'
+  | 'cosponsor'
+  | '-cosponsor'
+  | 'counsel'
+  | '-counsel'
+  | 'director'
+  | '-director'
+  | 'editor'
+  | '-editor'
+  | 'guest'
+  | '-guest'
+  | 'interviewee'
+  | '-interviewee'
+  | 'interviewer'
+  | '-interviewer'
+  | 'inventor'
+  | '-inventor'
+  | 'performer'
+  | '-performer'
+  | 'podcaster'
+  | '-podcaster'
+  | 'presenter'
+  | '-presenter'
+  | 'producer'
+  | '-producer'
+  | 'programmer'
+  | '-programmer'
+  | 'recipient'
+  | '-recipient'
+  | 'reviewedAuthor'
+  | '-reviewedAuthor'
+  | 'scriptwriter'
+  | '-scriptwriter'
+  | 'seriesEditor'
+  | '-seriesEditor'
+  | 'sponsor'
+  | '-sponsor'
+  | 'testimonyBy'
+  | '-testimonyBy'
+  | 'translator'
+  | '-translator'
+  | 'wordsBy'
+  | '-wordsBy'
 // const creatorTypes: CreatorType[] = Object.keys(itemCreators[client.slug]) as CreatorType[]
 export type CreatorTypeArray = CreatorType[]
 export type CreatorTypeOrAll = CreatorType | '*'
@@ -275,20 +307,26 @@ class Item {
     this.itemKey = this.key = item.key
     this.itemType = Zotero.ItemTypes.getName(item.itemTypeID)
     this.primaryCreator = Schema.primaryCreator[this.itemType] || ''
+
+    const extra: string = this.item.getField('extra', false, true)
+    const zoteroFields = Extra.get(extra, 'zotero', { kv: true, tex: true })
+    const cslFields = Extra.get(extra, 'csl', { kv: true, tex: true })
+    this.extraFields = merge(cslFields.extraFields, zoteroFields.extraFields)
+    this.extra = zoteroFields.extra // arbitrary
+
     this.getField = function(name: string): string | number {
       if (!name) return ''
 
       switch (name) {
         case 'dateAdded':
         case 'dateModified':
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-return
           return this.item[name].replace(/ .*/, '')
+
         case 'title':
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-return
           return this.title
+
         default:
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-          return this.item.getField(name, false, true) || this.extraFields?.kv[name] || ''
+          return this.item.getField(name, false, true) || this.extraFields.kv![name] || ''
       }
     }
 
@@ -296,23 +334,19 @@ class Item {
     this.libraryID = item.libraryID
     this.title = item.getField('title', false, true)
 
-    this.language = babelLanguage((this.getField('language') as string) || '')
+    this.language = langCode((this.getField('language') as string) || '')
     const babelTag = this.babelTag() as TransliterateMode
     this.transliterateMode = unaliasTransliterateMode[babelTag] || babelTag
     // this.transliterateModeCJK = ['chinese', 'japanese'].includes(this.transliterateMode)
 
-    const extraFields = Extra.get(this.getField('extra') as string, 'zotero', { kv: true, tex: true })
-    this.extra = extraFields.extra
-    this.extraFields = extraFields.extraFields
-
-    for (const [ creatorType, creators ] of Object.entries(this.extraFields.creator || {})) {
+    for (const [creatorType, creators] of Object.entries(this.extraFields.creator || {})) {
       this.creators = this.creators.concat(creators.map(creator => Extra.zoteroCreator(creator, creatorType)))
     }
     for (const creator of this.creators) {
       creator.lastName = creator.lastName || creator.name
     }
 
-    this.date = parseDate(this.getField('date') as string, (this.getField('originalDate') as string) || this.extraFields.kv.originalDate)
+    this.date = parseDate(this.getField('date') as string, (this.getField('originalDate') as string) || this.extraFields.kv!.originalDate)
     this.title = stripHTML(this.title)
   }
 
@@ -330,7 +364,7 @@ const page_range_splitter = /[-\s,\u2013]/
 export class PatternFormatter {
   public citekey = ''
 
-  public generate: () => string
+  public generate!: () => string
 
   private re = {
     unsafechars_allow_spaces: /\s/g,
@@ -349,12 +383,12 @@ export class PatternFormatter {
    * three-letter month abbreviations. I assume these are the same ones that the
    * docs say are defined in some appendix of the LaTeX book. (I don't have the
    * LaTeX book.)
-  */
+   */
   private months = { 1: 'jan', 2: 'feb', 3: 'mar', 4: 'apr', 5: 'may', 6: 'jun', 7: 'jul', 8: 'aug', 9: 'sep', 10: 'oct', 11: 'nov', 12: 'dec' }
 
-  private item: Item
+  private item!: Item
 
-  private skipWords: Set<string>
+  private skipWords!: Set<string>
 
   private config = {
     creatorNames: {
@@ -385,10 +419,10 @@ export class PatternFormatter {
 
   public test(formula: string): string {
     try {
-      compile(`pinned; ${formula}`)
+      compile(formula)
     }
     catch (err) {
-      return err.message as string
+      return (err as any).message as string
     }
     return ''
   }
@@ -396,8 +430,8 @@ export class PatternFormatter {
   // private fold: boolean
   public update(formulas: string[]): string {
     const unsafechars = rescape(Preference.citekeyUnsafeChars + '\uFFFD')
-    this.re.unsafechars_allow_spaces = new RegExp(`[${ unsafechars }]`, 'g')
-    this.re.unsafechars = new RegExp(`[${ unsafechars }\\s]`, 'g')
+    this.re.unsafechars_allow_spaces = new RegExp(`[${unsafechars}]`, 'g')
+    this.re.unsafechars = new RegExp(`[${unsafechars}\\s]`, 'g')
     this.skipWords = new Set(Preference.skipWords.split(',').map((word: string) => word.trim().toLowerCase()).filter((word: string) => word))
 
     this.config.creatorNames.transliterate = Preference.citekeyFold
@@ -405,28 +439,28 @@ export class PatternFormatter {
     let error = ''
     const ts = Date.now()
     // the zero-width-space is a marker to re-save the current default so it doesn't get replaced when the default changes later, which would change new keys suddenly
-    for (const formula of [ ...formulas, Preference.default.citekeyFormat ]) {
-      log.info(`formula-update: ${ ts } trying: ${ formula }`)
+    for (const formula of [...formulas, Preference.default.citekeyFormat]) {
+      log.info(`formula-update: ${ts} trying: ${formula}`)
       if (!formula) continue
 
       try {
-        const formatter = compile(`pinned; ${formula}`, { logging: Preference.testing })
+        const formatter = compile(formula, { logging: Preference.testing })
         log.info('formula:', formula, '=>\n', formatter)
-        this.generate = (new Function(formatter) as () => string)
+        this.generate = new Function(formatter) as () => string
         Preference.citekeyFormat = upgrade(formula) // upgrade to semicolons
         if (!Preference.citekeyFormatEditing) Preference.citekeyFormatEditing = Preference.citekeyFormat
         return error
       }
       catch (err) {
-        if (!error) error = err.message
+        if (!error) error = (err as any).message
         log.error('CitekeyFormatter.update: Error parsing citekeyFormat ', formula)
-        log.error(err, err.location)
+        log.error(err, (err as any).location)
       }
     }
 
     // we should never get here
     log.error('CitekeyFormatter.update: no formula?!')
-    return `failed to install citekey formula: ${ error }`.trim()
+    return `failed to install citekey formula: ${error}`.trim()
   }
 
   public format(item: Zotero.Item): string {
@@ -485,12 +519,16 @@ export class PatternFormatter {
    */
   public $zotero(): string {
     this.$postfix('-%(n)s')
-    return zotero_buildCiteKey({
-      creators: this.item.creators,
-      title: this.item.getField('title'),
-      date: this.item.getField('date'),
-      dateAdded: this.item.getField('dateAdded'),
-    }, null, {}) as string
+    return zotero_buildCiteKey(
+      {
+        creators: this.item.creators,
+        title: this.item.getField('title'),
+        date: this.item.getField('date'),
+        dateAdded: this.item.getField('dateAdded'),
+      },
+      null,
+      {}
+    ) as string
   }
 
   /**
@@ -498,7 +536,7 @@ export class PatternFormatter {
    * @param id 'id': return itemID; 'key': return the item key
    */
   public $item(id: 'id' | 'key' = 'key'): string {
-    return id === 'id' ? `${ this.item.itemID }` : this.item.itemKey
+    return id === 'id' ? `${this.item.itemID}` : this.item.itemKey
   }
 
   /**
@@ -530,7 +568,7 @@ export class PatternFormatter {
       case 'undefined':
         return ''
       default:
-        throw new Error(`Unexpected value ${ JSON.stringify(value) } of type ${ typeof value } for item field ${ name }`)
+        throw new Error(`Unexpected value ${JSON.stringify(value)} of type ${typeof value} for item field ${name}`)
     }
   }
 
@@ -571,7 +609,7 @@ export class PatternFormatter {
    */
   public $creators(
     n: number | [number, number] = 0,
-    type: CreatorType | CreatorTypeArray | CreatorTypeCollection | '*' = [[ 'primary', 'editor', 'translator', '*' ]],
+    type: CreatorType | CreatorTypeArray | CreatorTypeCollection | '*' = [['primary', 'editor', 'translator', '*']],
     name: Template<'creator'> | '' = '',
     etal = '',
     sep = ' ',
@@ -588,10 +626,13 @@ export class PatternFormatter {
       include.push({ '*': types[0], primary }[type] || type)
     }
     else {
-      for (let t of type) {
-        if (Array.isArray(t)) t = t.map(candidate => ({ '*': types[0], primary }[candidate] || candidate) as CreatorType).find(candidate => types.includes(candidate))
-        if (!t) continue;
-        (t[0] === '-' ? exclude : include).push((t as string).replace(/^-/, ''))
+      let t: typeof type[number] | undefined
+      for (t of type) {
+        if (Array.isArray(t)) {
+          t = t.map(candidate => ({ '*': types[0], primary }[candidate] || candidate) as CreatorType).find(candidate => types.includes(candidate))
+        }
+        if (!t) continue
+        ;(t[0] === '-' ? exclude : include).push((t as string).replace(/^-/, ''))
       }
     }
 
@@ -611,16 +652,16 @@ export class PatternFormatter {
       }
       else {
         if (n >= creators.length) etal = ''
-        n = [ 1, n ]
+        n = [1, n]
       }
       creators = creators.slice(n[0] - 1, n[1])
-      if (etal && !etal.replace(/[a-z]/ig, '').length) etal = `${ sep }${ etal }`
+      if (etal && !etal.replace(/[a-z]/ig, '').length) etal = `${sep}${etal}`
     }
     return creators.join(sep) + etal
   }
   public $$creators(
     n: number | [number, number] = 0,
-    type: CreatorType | CreatorTypeArray | CreatorTypeCollection | '*' = [[ 'primary', 'editor', 'translator', '*' ]],
+    type: CreatorType | CreatorTypeArray | CreatorTypeCollection | '*' = [['primary', 'editor', 'translator', '*']],
     name: Template<'creator'> | '' = '',
     etal = '',
     sep = ' ',
@@ -722,7 +763,7 @@ export class PatternFormatter {
         return authors.map(auth => auth.substring(0, 1)).join(sep)
     }
 
-    return `${ authors.slice(0, 3).map(auth => auth.substring(0, 1)).join(sep) }+`
+    return `${authors.slice(0, 3).map(auth => auth.substring(0, 1)).join(sep)}+`
   }
 
   /**
@@ -747,7 +788,7 @@ export class PatternFormatter {
   public $authorIni(creator: AuthorType = '*', initials = false, sep = '.'): string {
     const authors = this.creators(creator, initials ? `${this.config.creatorNames.template}%(I)s` : this.config.creatorNames.template)
     if (!authors.length) return ''
-    const firstAuthor = authors.shift()
+    const firstAuthor = authors.shift()!
 
     return [firstAuthor.substring(0, 5)].concat(authors.map(name => name.substring(0, 1)).join(sep)).join(sep)
   }
@@ -912,11 +953,11 @@ export class PatternFormatter {
     if (!variables.length) return ''
 
     const value = variables
-      .map((varname: string) => this.item.extraFields.kv[varname] || this.item.extraFields.tex[varname]?.value || this.item.extraFields.tex[`tex.${ varname }`]?.value)
+      .map((varname: string) => this.item.extraFields.kv![varname] || this.item.extraFields.tex![varname]?.value || this.item.extraFields.tex![`tex.${varname}`]?.value)
       .find(val => val)
     if (value) return value
 
-    const extra: RegExpMatchArray = (this.item.extra || '')
+    const extra: RegExpMatchArray | null | undefined = (this.item.extra || '')
       .split('\n')
       .map((line: string) => line.match(/^([^:]+):\s*(.+)/i))
       .find(match => match && (variables.includes(match[1].trim().toLowerCase()) || variable.toLowerCase() === match[1].trim().toLowerCase()))
@@ -924,10 +965,13 @@ export class PatternFormatter {
   }
 
   /**
-   * A pinned citation key from the extra field. eg if you have `citation key: me` in the extra field, `me` would be used as the value. This is always prepended to your formula.
+   * Legacy compatibility formatter.
+   *
+   * Pinned citation keys in Extra are no longer supported, but existing
+   * formulas may still reference $pinned(). Keep this formatter as a no-op.
    */
   public $pinned(): string {
-    return this.item.extraFields.kv.citationKey || ''
+    return ''
   }
 
   /** the original year of the publication */
@@ -1007,7 +1051,7 @@ export class PatternFormatter {
       return `${parts}${mark}${name}`
     }
 
-    const creators = [ false, true ] // replace actual primary creator name with the text 'primary' for generic 'primary' matching
+    const creators = [false, true] // replace actual primary creator name with the text 'primary' for generic 'primary' matching
       .map(replace => (this.item.creators || []).map(cr => encode(cr, replace)).join(','))
       .map(cr => `${this.item.itemType}:${cr}`) // prefix item type
 
@@ -1020,7 +1064,7 @@ export class PatternFormatter {
   }
 
   private padYear(year: string, length: number): string {
-    return year ? year.replace(/[0-9]+/, y => y.length >= length ? y : (`0000${ y }`).slice(-length)) : ''
+    return year ? year.replace(/[0-9]+/, y => y.length >= length ? y : (`0000${y}`).slice(-length)) : ''
   }
 
   /**
@@ -1076,7 +1120,7 @@ export class PatternFormatter {
       return this._match(input, match)
     }
     catch (err) {
-      if (err.next) {
+      if ((err as any).next) {
         return passthrough ? input : ''
       }
       else {
@@ -1107,7 +1151,7 @@ export class PatternFormatter {
         if (!($input.length >= n)) skip()
         break
       default:
-        throw new Error(`Unexpected length comparison ${ relation }`)
+        throw new Error(`Unexpected length comparison ${relation}`)
     }
 
     return input
@@ -1148,7 +1192,7 @@ export class PatternFormatter {
       const pad = spec[1] !== '-'
       const field = spec.substring(pad ? 1 : 2)
       let repl: string = date[field]
-      if (typeof repl !== 'string') throw new Error(`:format-date: unsupported formatter ${ JSON.stringify(spec) }`)
+      if (typeof repl !== 'string') throw new Error(`:format-date: unsupported formatter ${JSON.stringify(spec)}`)
       if (!repl) return null
 
       if (pad) repl = this.padYear(repl, (field === 'Y' || field === 'oY') ? 4 : 2)
@@ -1234,14 +1278,14 @@ export class PatternFormatter {
       const acronyms: Record<string, string> = {}
 
       try {
-        for (const row of csv2list(PathUtils.join(Zotero.BetterBibTeX.dir, `${ list }.csv`))) {
+        for (const row of csv2list(PathUtils.join(Zotero.BetterBibTeX.dir, `${list}.csv`))) {
           if (row.length !== 2) {
-            log.error('unexpected row in', `${ list }.csv`, ':', row)
+            log.error('unexpected row in', `${list}.csv`, ':', row)
             continue
           }
           if (row[0] === 'full' && row[1] === 'acronym') continue
 
-          let [ full, acronym ] = row
+          let [full, acronym] = row
           full = full.trim().toLowerCase()
           acronym = acronym.trim()
           if (full && acronym) {
@@ -1337,8 +1381,8 @@ export class PatternFormatter {
   }
 
   /** uppercases the first letter of each word */
-  public _capitalize(input: string): string {
-    return input.replace(/((^|\s)[a-z])/g, m => m.toUpperCase())
+  public _capitalize(input: string, wordstart = /((?<=^|\s)[a-z])/g): string {
+    return input.replace(wordstart, m => m.toUpperCase())
   }
 
   private nopunct(text: string, dash = '-'): string {
@@ -1348,8 +1392,8 @@ export class PatternFormatter {
   }
 
   /** Removes punctuation
-    * @param dash replace dashes with given character
-    */
+   * @param dash replace dashes with given character
+   */
   public _nopunct(input: string, dash = '-'): string {
     return this.nopunct(input, dash)
   }
@@ -1365,11 +1409,12 @@ export class PatternFormatter {
   }
 
   /**
-    * word segmentation for Chinese items. Uses substantial memory, and adds about 7 seconds to BBTs startup time; must be enabled under Preferences -> Better BibTeX -> Advanced -> Citekeys
-    */
+   * word segmentation for Chinese items. Uses substantial memory, and adds about 7 seconds to BBTs startup time; must be enabled under Preferences -> Better BibTeX -> Advanced -> Citekeys
+   */
   public _jieba(input: string): string {
-    if (!chinese.enabled) return input
-    return chinese.jieba(input).join(' ').trim()
+    return chinese.enabled?.jieba.cut
+      ? chinese.jieba.cut!(input).join(' ').trim()
+      : input
   }
 
   /** word segmentation for Japanese items. Uses substantial memory; must be enabled under Preferences -> Better BibTeX -> Advanced -> Citekeys */
@@ -1393,7 +1438,7 @@ export class PatternFormatter {
    * @param mode specialized translateration modes for german, japanese or chinese.
    */
   public $transliterate(mode: TransliterateModeAlias): string {
-    this.item.transliterateMode = (unaliasTransliterateMode[mode] || mode) as TransliterateMode
+    this.item.transliterateMode = unaliasTransliterateMode[mode] || mode
     return ''
   }
   /**
@@ -1401,7 +1446,7 @@ export class PatternFormatter {
    * @param mode specialized translateration modes for german, japanese or chinese.
    */
   public _transliterate(input: string, mode?: TransliterateModeAlias): string {
-    return this.transliterate(input, (unaliasTransliterateMode[mode] || mode || this.item.transliterateMode) as TransliterateMode)
+    return this.transliterate(input, (unaliasTransliterateMode[mode as string] || mode || this.item.transliterateMode) as TransliterateMode)
   }
 
   private transliterate(str: string, mode?: TransliterateMode): string {
@@ -1411,7 +1456,7 @@ export class PatternFormatter {
 
     switch (mode) {
       case 'german':
-        str = str.normalize('NFC').replace(/[äöüÄÖÜ]/g, char => ({ ä: 'ae', ö: 'oe', ü: 'ue', Ä: 'Ae', Ö: 'Oe', Ü: 'Ue' }[char]))
+        str = str.normalize('NFC').replace(/[äöüÄÖÜ]/g, char => ({ ä: 'ae', ö: 'oe', ü: 'ue', Ä: 'Ae', Ö: 'Oe', Ü: 'Ue' }[char] || char))
         break
 
       case 'chinese':
@@ -1485,8 +1530,8 @@ export class PatternFormatter {
       .filter(word => word && !(ucs2.decode(word).length === 1 && !word.match(/^\d+$/) && !word.match(CJK)))
 
     // apply jieba.cut and flatten.
-    if (chinese.enabled && this.item.transliterateMode === 'chinese') {
-      words = [].concat(...words.map(word => chinese.jieba(word)))
+    if (chinese.enabled?.jieba.cut && this.item.transliterateMode === 'chinese') {
+      words = words.flatMap(word => chinese.jieba.cut!(word))
     }
 
     if (japanese.enabled && this.item.transliterateMode === 'japanese') {
@@ -1559,9 +1604,9 @@ export class PatternFormatter {
       vars.f = this.transliterate(vars.f)
       vars.g = this.transliterate(vars.g)
     }
-    let name = sprintf(template, vars) as string
+    let name = sprintf(template.toString(), vars)
     if (this.config.creatorNames.space.trim()) {
-      name = name.replace(/\s+/, this.config.creatorNames.space)
+      name = name.replace(/\s+/g, this.config.creatorNames.space)
     }
     return name
   }
@@ -1571,10 +1616,10 @@ export class PatternFormatter {
     const primary = this.item.primaryCreator
 
     const creators = {
-      editor: [],
-      author: [],
-      translator: [],
-      collaborator: [],
+      editor: [] as string[],
+      author: [] as string[],
+      translator: [] as string[],
+      collaborator: [] as string[],
     }
 
     for (const creator of this.item.creators) {
@@ -1609,7 +1654,7 @@ export class PatternFormatter {
       }
     }
 
-    const candidates: AuthorType[] = select === '*' ? [ 'author', 'editor', 'translator', 'collaborator' ] : [select]
+    const candidates: AuthorType[] = select === '*' ? ['author', 'editor', 'translator', 'collaborator'] : [select]
 
     for (const kind of candidates) {
       if (creators[kind].length) return creators[kind] as string[]
@@ -1630,19 +1675,19 @@ export class PatternFormatter {
     }
     else {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-      log.info('formula:', k.replace(/^([$_])/, (m, kind) => ({$: '', _: '  .'}[kind])), '=>', JSON.stringify(v))
+      log.info('formula:', k.replace(/^([$_])/, (m, kind) => ({ $: '', _: '  .' }[kind])), '=>', JSON.stringify(v))
     }
     return v
   }
 
   public formula_sequence(...e: (() => string)[]): string {
-    const final = e.pop()
+    const final = e.pop()!
     for (const attempt of e) {
       try {
         return attempt()
       }
       catch (err) {
-        if (!err.next) {
+        if (!(err as any).next) {
           log.error('formula: sequence element', err)
           throw err
         }
@@ -1652,13 +1697,13 @@ export class PatternFormatter {
   }
 
   public formula_and(...e: (() => string)[]): string {
-    const final = e.pop()
+    const final = e.pop()!
     for (const attempt of e) {
       try {
         if (!attempt()) return ''
       }
       catch (err) {
-        if (err.next) return ''
+        if ((err as any).next) return ''
         log.error('formula: or expression element', err)
         throw err
       }
@@ -1667,14 +1712,14 @@ export class PatternFormatter {
   }
 
   public formula_or(...e: (() => string)[]): string {
-    const final = e.pop()
+    const final = e.pop()!
     let res: string
     for (const attempt of e) {
       try {
         if (res = attempt()) return res
       }
       catch (err) {
-        if (!err.next) {
+        if (!(err as any).next) {
           log.error('formula: or expression element', err)
           throw err
         }

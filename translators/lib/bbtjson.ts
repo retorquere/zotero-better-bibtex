@@ -1,10 +1,12 @@
 import type { Collected } from './collect'
 import type { Library } from './normalize'
 
+import omit from 'lodash.omit'
+import { simplifyForExport, simplifyForImport } from '../../content/item-schema'
 import { log } from '../../content/logger'
+import * as BBT from '../../gen/build'
+import { Serialized } from '../../gen/typings/serialized'
 import { Translation } from './translator'
-import { simplifyForImport, simplifyForExport } from '../../content/item-schema'
-import BBT from '../../gen/version.cjs'
 
 import { citationKey as extract } from '../../content/extra'
 
@@ -13,8 +15,8 @@ import { citationKey as extract } from '../../content/extra'
 
 function addSelect(item: any, translation: Translation) {
   if (translation.collected.preferences.testing) return
-  const [ , kind, lib, key ] = item.uri.match(/^https?:\/\/zotero\.org\/(users|groups)\/((?:local\/)?[^/]+)\/items\/(.+)/)
-  item.select = (kind === 'users') ? `zotero://select/library/items/${ key }` : `zotero://select/groups/${ lib }/items/${ key }`
+  const [, kind, lib, key] = item.uri.match(/^https?:\/\/zotero\.org\/(users|groups)\/((?:local\/)?[^/]+)\/items\/(.+)/)
+  item.select = (kind === 'users') ? `zotero://select/library/items/${key}` : `zotero://select/groups/${lib}/items/${key}`
 }
 
 const validAttachmentFields = new Set([
@@ -34,12 +36,12 @@ const validAttachmentFields = new Set([
 export function generateBBTJSON(collected: Collected): Translation {
   const translation = Translation.Export(collected)
 
-  const preferences = { ...translation.collected.preferences }
-  delete preferences.citekeyFormatEditing
-  delete preferences.testing
-  delete preferences.platform
-  delete preferences.logEvents
-  delete preferences.scrubDatabase
+  const preferences = omit(translation.collected.preferences, [
+    'citekeyFormatEditing',
+    'testing',
+    'platform',
+    'logEvents',
+  ])
 
   const data = {
     config: {
@@ -53,7 +55,7 @@ export function generateBBTJSON(collected: Collected): Translation {
       bbt: BBT.version,
     },
     collections: translation.collections,
-    items: [],
+    items: [] as Serialized.Item[],
   }
 
   if (translation.collected.displayOptions.Items) {
@@ -74,8 +76,7 @@ export function generateBBTJSON(collected: Collected): Translation {
       addSelect(att, translation)
     }
 
-    for (const item of translation.collected.items) {
-      delete item.$cacheable
+    for (let item of translation.collected.items) {
       addSelect(item, translation)
 
       switch (item.itemType) {
@@ -88,9 +89,7 @@ export function generateBBTJSON(collected: Collected): Translation {
           break
 
         default:
-          delete item.collections
-
-          if (translation.collected.displayOptions.Normalize) simplifyForExport(item, {})
+          if (translation.collected.displayOptions.Normalize) item = simplifyForExport(item, { clone: false }) as typeof item
 
           for (const att of item.attachments || []) {
             handle(att)
@@ -98,11 +97,13 @@ export function generateBBTJSON(collected: Collected): Translation {
           break
       }
 
-      data.items.push(item)
+      data.items.push(omit(item, ['collections', '$cacheable']) as Serialized.Item)
     }
   }
 
-  translation.output.body = JSON.stringify(data, null, 2)
+  translation.output.body = translation.collected.displayOptions.YAML
+    ? Zotero.BetterBibTeX.yamlDump(data)
+    : JSON.stringify(data, null, 2)
 
   return translation
 }
@@ -111,9 +112,10 @@ export async function importBBTJSON(collected: Collected): Promise<void> {
   const data: Library = JSON.parse(collected.input)
   if (!data.items || !data.items.length) return
 
+  data.collections ??= {}
   if (data.config?.preferences) delete data.config.preferences.keyConflictPolicy
 
-  const items = new Set<number>
+  const items = (new Set<number>)
   for (const source of (data.items as any[])) {
     simplifyForImport(source)
 
@@ -140,7 +142,7 @@ export async function importBBTJSON(collected: Collected): Promise<void> {
     }
 
     // clear out junk data
-    for (const [ field, value ] of Object.entries(source)) {
+    for (const [field, value] of Object.entries(source)) {
       if ((value ?? '') === '') delete source[field]
     }
     // validate tests for strings
@@ -150,7 +152,7 @@ export async function importBBTJSON(collected: Collected): Promise<void> {
     source.extra = extra
 
     // marker so BBT-JSON can be imported without extra-field meddling
-    if (source.extra) source.extra = `\x1BBBT\x1B${ source.extra }`
+    if (source.extra) source.extra = `\x1BBBT\x1B${source.extra}`
 
     // const error = validItem(source)
     // if (error) throw new Error(error)
@@ -169,23 +171,23 @@ export async function importBBTJSON(collected: Collected): Promise<void> {
   }
   collected.progress(100)
 
-  const collections: any[] = Object.values(data.collections || {})
+  const collections: any[] = Object.values(data.collections)
   for (const collection of collections) {
     collection.zoteroCollection = collected.collection()
     collection.zoteroCollection.type = 'collection'
     collection.zoteroCollection.name = collection.name
     collection.zoteroCollection.children = collection.items.filter(id => {
       if (items.has(id)) return true
-      log.error(`Collection ${ collection.key } has non-existent item ${ id }`)
+      log.error(`Collection ${collection.key} has non-existent item ${id}`)
       return false
     }).map(id => ({ type: 'item', id }))
   }
   for (const collection of collections) {
     if (collection.parent && data.collections[collection.parent]) {
-      (data.collections[collection.parent] as unknown as any).zoteroCollection.children.push(collection.zoteroCollection)
+      ;(data.collections[collection.parent] as unknown as any).zoteroCollection.children.push(collection.zoteroCollection)
     }
     else {
-      if (collection.parent) log.error(`Collection ${ collection.key } has non-existent parent ${ collection.parent }`)
+      if (collection.parent) log.error(`Collection ${collection.key} has non-existent parent ${collection.parent}`)
       collection.parent = false
     }
   }

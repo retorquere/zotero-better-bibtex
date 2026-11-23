@@ -12,7 +12,6 @@
       "bibtexParticleNoOp": true,
       "biblatexUsePrefix": false,
       "citekeyFormat": "auth.lower + shorttitle(3, 3) + year;\nextra(\"ADS Bibcode\")",
-      "citekeySearch": false,
       "extraMergeTeX": true,
       "postscript": "if (Translator.BetterBibLaTeX) {\n  if (tex.has.title)\n    tex.add({ name: 'title', value: zotero.title.replace(/(\\$.*?\\$)/g, '<script>{$1}</script>') })\n\n  if (tex.has.shorttitle)\n    tex.add({ name: 'shorttitle', value: zotero.shorttitle.replace(/(\\$.*?\\$)/g, '<script>{$1}</script>') })\n\n  if (tex.has.issn || tex.has.doi || zotero.arXiv || tex.has.isbn)\n    delete tex.has.url\n\n  if (tex.has.doi) {\n    delete tex.has.issn\n    delete tex.has.issn\n  }\n\n  if (tex.has.doi && zotero.arxiv) {\n    delete tex.has.eprint\n    delete tex.has.eprinttype\n    delete zotero.arxiv\n  }\n\n  if (tex.has.doi && tex.has.isbn)\n    delete tex.has.doi\n}\n\nif (Translator.BetterBibTeX) {\n  if (tex.has.issn || tex.has.doi || zotero.arXiv || tex.has.isbn)\n    delete tex.has.url\n\n  if (tex.has.doi) {\n    delete tex.has.issn\n    delete tex.has.issn\n  }\n\n  if (tex.has.doi && zotero.arxiv) {\n    delete tex.has.eprint\n    delete zotero.arxiv\n  }\n\n  if (tex.has.doi && zotero.arxiv) {\n    delete tex.has.eprinttype\n    delete zotero.arxiv\n  }\n\n  if (tex.has.isbn)\n    delete tex.has.doi\n}\n",
       "skipFields": "file,keywords"

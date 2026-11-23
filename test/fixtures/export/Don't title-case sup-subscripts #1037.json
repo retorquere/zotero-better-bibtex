@@ -23,12 +23,11 @@
         }
       ],
       "date": "2018",
-      "extra": [
-        "Citation Key: ref1"
-      ],
+      "extra": [],
       "itemID": 1,
       "itemType": "journalArticle",
-      "title": "1 O<sub>abcde</sub>"
+      "title": "1 O<sub>abcde</sub>",
+      "citationKey": "ref1"
     },
     {
       "creators": [
@@ -39,12 +38,11 @@
         }
       ],
       "date": "2018",
-      "extra": [
-        "Citation Key: ref2"
-      ],
+      "extra": [],
       "itemID": 2,
       "itemType": "journalArticle",
-      "title": "2 O<sub>abcde</sub> test"
+      "title": "2 O<sub>abcde</sub> test",
+      "citationKey": "ref2"
     },
     {
       "creators": [
@@ -55,12 +53,11 @@
         }
       ],
       "date": "2018",
-      "extra": [
-        "Citation Key: ref3"
-      ],
+      "extra": [],
       "itemID": 3,
       "itemType": "journalArticle",
-      "title": "<span class=\"nocase\">O<sub>abcde</sub></span>"
+      "title": "<span class=\"nocase\">O<sub>abcde</sub></span>",
+      "citationKey": "ref3"
     },
     {
       "creators": [
@@ -71,12 +68,11 @@
         }
       ],
       "date": "2018",
-      "extra": [
-        "Citation Key: ref4"
-      ],
+      "extra": [],
       "itemID": 4,
       "itemType": "journalArticle",
-      "title": "O<sub>x</sub>"
+      "title": "O<sub>x</sub>",
+      "citationKey": "ref4"
     },
     {
       "creators": [
@@ -87,12 +83,11 @@
         }
       ],
       "date": "2018",
-      "extra": [
-        "Citation Key: ref5"
-      ],
+      "extra": [],
       "itemID": 5,
       "itemType": "journalArticle",
-      "title": "O<sub>x</sub> test"
+      "title": "O<sub>x</sub> test",
+      "citationKey": "ref5"
     },
     {
       "creators": [
@@ -103,12 +98,11 @@
         }
       ],
       "date": "2018",
-      "extra": [
-        "Citation Key: ref6"
-      ],
+      "extra": [],
       "itemID": 6,
       "itemType": "journalArticle",
-      "title": "<span class=\"nocase\">O<sub>x</sub></span>"
+      "title": "<span class=\"nocase\">O<sub>x</sub></span>",
+      "citationKey": "ref6"
     },
     {
       "creators": [
@@ -119,12 +113,11 @@
         }
       ],
       "date": "2018",
-      "extra": [
-        "Citation Key: ref7"
-      ],
+      "extra": [],
       "itemID": 7,
       "itemType": "journalArticle",
-      "title": "O<sub>7-x</sub>"
+      "title": "O<sub>7-x</sub>",
+      "citationKey": "ref7"
     },
     {
       "creators": [
@@ -135,12 +128,11 @@
         }
       ],
       "date": "2018",
-      "extra": [
-        "Citation Key: ref8"
-      ],
+      "extra": [],
       "itemID": 8,
       "itemType": "journalArticle",
-      "title": "O<sub>7-x</sub> test"
+      "title": "O<sub>7-x</sub> test",
+      "citationKey": "ref8"
     }
   ]
 }

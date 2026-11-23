@@ -11,7 +11,11 @@ import { Eta } from 'eta'
 const eta = new Eta({ autoEscape: true })
 import { simplifyForExport } from '../item-schema'
 
-import { Transform } from 'unicode2latex'
+import { Transform } from '@retorquere/bibtex-parser'
+
+function acceptsNotes<This, Args extends any[], Return>(formatter: (this: This, ...args: Args) => Return, _context: ClassMethodDecoratorContext<This, (this: This, ...args: Args) => Return>): void {
+  (formatter as typeof formatter & { acceptsNotes?: boolean }).acceptsNotes = true
+}
 
 function serialized(item) {
   if (item) {
@@ -44,7 +48,7 @@ function shortLabel(label: string, options): string {
     section: 'sec.',
     subsection: 'subsec.',
     Section: 'Sec.',
-    'sub verbo': 'sv.',
+    'sub-verbo': 'sv.',
     schedule: 'sch.',
     title: 'tit.',
     verse: 'vrs.',
@@ -52,8 +56,9 @@ function shortLabel(label: string, options): string {
   }[label] || label
 }
 
-const latextx = new Transform('minimal')
+let latextx: Transform | undefined
 function citation2latex(citation, options) {
+  latextx ??= new Transform('minimal')
   let formatted = ''
   // despite Mozilla's claim that trimStart === trimLeft, and that trimStart should be preferred, trimStart does not seem to exist in FF chrome code.
   const label = (`${ shortLabel(citation.label, { page: '', ...options }) } `).trimLeft()
@@ -156,7 +161,7 @@ export const Formatter = new class {
   }
 
   public async mmd(citations, _options) {
-    const formatted = []
+    const formatted: string[] = []
 
     for (const citation of citations) {
       if (citation.prefix) {
@@ -174,22 +179,31 @@ export const Formatter = new class {
   }
 
   public async pandoc(citations, options) {
-    const formatted = []
-    for (const citation of citations) {
-      let cite = ''
-      if (citation.prefix) cite += `${ citation.prefix } `
-      if (citation.suppressAuthor) cite += '-'
-      cite += `@${ citation.citationKey }`
-      if (citation.locator) cite += `, ${ shortLabel(citation.label, options) } ${ citation.locator }`.replace(/\s+/, ' ')
-      if (citation.suffix) cite += ` ${ citation.suffix }`
-      formatted.push(cite)
-    }
+    const formatted = citations
+      .map(citation => {
+        let cite = ''
+        if (citation.prefix) cite += `${citation.prefix} `
+        if (citation.suppressAuthor) cite += '-'
+        cite += citation.citationKey.match(/^[a-zA-Z0-9_](?:[a-zA-Z0-9_]*[:.#$%&\-+?<>~/]?[a-zA-Z0-9_]+)*$/) ? `@${citation.citationKey}` : `@{${citation.citationKey}}`
+        if (typeof citation.locator === 'number' || citation.locator) {
+          let locator = citation.locator + ''
+          const label = shortLabel(citation.label, options) || ''
+          if (label || !locator.match(/^\d+$/)) {
+            locator = `${label} ${locator}`.replace(/\s+/, ' ')
+            if (options.brackets) locator = `{${locator}}`
+          }
+          cite += `, ${locator}`
+        }
+        if (citation.suffix) cite += ` ${citation.suffix}`
+        return cite
+      })
+      .join('; ')
 
-    return `${ options.brackets ? '[' : '' }${ formatted.join('; ') }${ options.brackets ? ']' : '' }`
+    return options.brackets ? `[${formatted}]` : formatted
   }
 
   public async 'asciidoctor-bibtex'(citations, options) {
-    const formatted = []
+    const formatted: string[] = []
     for (const citation of citations) {
       let cite = citation.citationKey
       if (citation.locator) {
@@ -276,8 +290,9 @@ export const Formatter = new class {
     return eta.renderString(options.template, { items: citations })
   }
 
+  @acceptsNotes
   public async translate(citations, options) {
-    const items = await getItemsAsync(citations.map(citation => citation.id))
+    const items = citations.length ? await getItemsAsync(citations.map(citation => citation.id)) : []
 
     const label = (options.translator || 'biblatex').replace(/\s/g, '').toLowerCase().replace('better', '')
     const translatorID = Object.keys(Translators.byId).find(id => Translators.byId[id].label.replace(/\s/g, '').toLowerCase().replace('better', '') === label) || options.translator
@@ -288,14 +303,20 @@ export const Formatter = new class {
       worker: !options.worker || [ 'yes', 'y', 'true' ].includes((options.worker || '').toLowerCase()),
     }
 
-    return await Translators.queueJob({ translatorID, displayOptions, scope: { type: 'items', items }})
+    return items.length ? await Translators.queueJob({ translatorID, displayOptions, scope: { type: 'items', items }}) : ''
   }
 
+  @acceptsNotes
   public async json(citations, _options) {
     const items = await getItemsAsync(citations.map(cit => cit.id))
     for (const cit of citations) {
       cit.item = serialized(items.find(item => item.id === cit.id))
     }
+    return JSON.stringify(citations)
+  }
+
+  @acceptsNotes
+  public async pick(citations, _options) {
     return JSON.stringify(citations)
   }
 }

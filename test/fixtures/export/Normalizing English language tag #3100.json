@@ -1,0 +1,119 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "preferences": {
+      "DOIandURL": "doi",
+      "autoExportDelay": 300,
+      "extraMergeCSL": true,
+      "extraMergeTeX": true,
+      "itemObserverDelay": 100,
+      "keyConflictPolicy": "change",
+      "quickCopyMode": "pandoc",
+      "warnBulkModify": 0
+    }
+  },
+  "items": [
+    {
+      "DOI": "10.1484/j.jml.2.304214",
+      "accessDate": "2013-08-30T16:28:11Z",
+      "citationKey": "adamsVerseTranslationAbbo2004",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Anthony",
+          "lastName": "Adams"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "A. G.",
+          "lastName": "Rigg"
+        }
+      ],
+      "date": "2004",
+      "itemID": 1,
+      "itemType": "journalArticle",
+      "language": "eng",
+      "libraryCatalog": "MetaPress",
+      "pages": "1-68",
+      "publicationTitle": "The Journal of Medieval Latin",
+      "title": "A verse translation of Abbo of St. Germain's <span class=\"nocase\"><i>Bella Parisiacae urbis</i></span>",
+      "url": "http://dx.doi.org/10.1484/J.JML.2.304214",
+      "volume": "14"
+    },
+    {
+      "key": "NL5QYTBI",
+      "version": 58769,
+      "itemType": "bookSection",
+      "volume": "2",
+      "place": "Farnham",
+      "publisher": "Ashgate",
+      "pages": "453-477",
+      "ISBN": "978-0-7546-5033-1 978-1-4094-0951-9",
+      "date": "2011",
+      "extra": "volume-title: Genres and contexts",
+      "libraryCatalog": "BnF ISBN",
+      "language": "eng",
+      "title": "The hagiography of doubt and scepticism",
+      "citationKey": "kaldellisHagiographyDoubtScepticism2011",
+      "creators": [
+        {
+          "firstName": "Anthony",
+          "lastName": "Kaldellis",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "St\u00e9fanos",
+          "lastName": "Efthymi\u00e1dis",
+          "creatorType": "editor"
+        }
+      ],
+      "tags": [],
+      "dateAdded": "2026-04-29T18:06:57Z",
+      "dateModified": "2026-04-29T18:08:42Z",
+      "itemID": 74735,
+      "attachments": [],
+      "notes": [],
+      "publicationTitle": "The Ashgate research companion to Byzantine hagiography"
+    },
+    {
+      "key": "DJ6NRCMA",
+      "version": 52094,
+      "itemType": "book",
+      "series": "Bibliotheca scriptorum graecorum et romanorum teubneriana",
+      "place": "Berlin",
+      "publisher": "De Gruyter",
+      "ISBN": "978-3-11-019608-5",
+      "date": "2013",
+      "callNumber": "PA6804 .A2 2013",
+      "DOI": "10.1515/9783110262483",
+      "accessDate": "2013-10-19T15:12:00Z",
+      "seriesNumber": "2011",
+      "libraryCatalog": "Library of Congress ISBN",
+      "language": "la",
+      "abstractNote": "This critical edition of the Latin text of Vergil's Bucolica and Georgica is informed by recent research on the author's style as well as the oldest manuscript versions of his works.",
+      "title": "P. Vergilius Maro. Bucolica et Georgica",
+      "numPages": "220",
+      "citationKey": "ottavianoVergiliusMaroBucolica2013",
+      "creators": [
+        {
+          "firstName": "Silvia",
+          "lastName": "Ottaviano",
+          "creatorType": "editor"
+        },
+        {
+          "firstName": "Gian Biagio",
+          "lastName": "Conte",
+          "creatorType": "editor"
+        }
+      ],
+      "tags": [],
+      "dateAdded": "2013-10-19T15:12:00Z",
+      "dateModified": "2026-02-16T11:04:07Z",
+      "itemID": 2630,
+      "attachments": [
+      ],
+      "notes": []
+    }
+  ]
+}
