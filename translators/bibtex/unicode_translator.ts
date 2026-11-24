@@ -2,6 +2,7 @@ import { Translation } from '../lib/translator'
 import { titleCase } from '../../content/text'
 
 import { log } from '../../content/logger'
+import { regex as escapeRE } from '../../content/escape'
 import { decodeHTMLAttribute } from 'entities'
 import { Transform } from '@retorquere/bibtex-parser'
 import { parseFragment, serialize } from 'parse5'
@@ -19,7 +20,7 @@ const leadingWhitespace = new RegExp(`^[${whitespace}]+`)
 const ligatures: Record<string, string> = { ǳ: 'dz', ﬀ: 'ff', ﬁ: 'fi', ﬂ: 'fl', ﬃ: 'ffi', ﬄ: 'ffl', ﬆ: 'st', ĳ: 'ij', ǉ: 'lj', ǌ: 'nj' }
 const ligatureRE = new RegExp(`[${Object.keys(ligatures).join('')}]`, 'g')
 const spuriousNodes = new Set([ '#document-fragment', '#document', 'div', 'span' ])
-const quotePatterns: Record<string, { re: RegExp; repl: string }> = {}
+const quotePatterns = new Map<string, { re: RegExp; repl: string }>
 
 type Tag = {
   nodeName: string
@@ -140,15 +141,18 @@ export class HTMLConverter {
   private parse(source: string): Event[] {
     const csquotes = this.translation.collected.preferences.csquotes
     if (csquotes) {
-      let action = quotePatterns[csquotes]
+      let action = quotePatterns.get(csquotes)
       if (!action) {
         const patterns: string[] = []
         let repl = '<span class="enquote">'
         for (const pair of csquotes.match(/../g) || []) {
-          patterns.push(`${pair[0]}\\s*([^${pair[1]}]*?)\\s*${pair[1]}`)
+          const open = escapeRE(pair[0])
+          const close = escapeRE(pair[1])
+          patterns.push(`${open}\\s*([^${close}]*?)\\s*${close}`)
           repl += `$${patterns.length}`
         }
-        action = quotePatterns[csquotes] = { re: new RegExp(patterns.join('|'), 'g'), repl: patterns.length ? `${repl}</span>` : '' }
+        action = { re: new RegExp(patterns.join('|'), 'g'), repl: patterns.length ? `${repl}</span>` : '' }
+        quotePatterns.set(csquotes, action)
       }
       if (action.repl) source = source.replace(action.re, action.repl)
     }
