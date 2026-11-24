@@ -33,6 +33,7 @@ type Tag = {
   tt?: boolean
 }
 
+// Text offsets and lengths are UTF-16 code units, not UTF-8 bytes.
 type Event =
   | { kind: 'open'; tag: Tag; children: number; latex: string }
   | { kind: 'close' }
@@ -46,15 +47,31 @@ export type ConverterOptions = {
   exportTitleCase?: boolean
   html?: boolean
   creator?: boolean
+  /** Keep NUL command-boundary markers for resolution after the caller joins LaTeX fragments. */
   commandspacers?: boolean
 }
 
+/**
+ * The Unicode transformer can map a character such as `æ` to the TeX control word `\ae`.
+ * TeX reads following letters as part of that command, so naively converting `æther` to
+ * `\aether` would invoke the wrong command. Also, TeX consumes a space immediately after
+ * a control word, so `æ ther` cannot simply become `\ae ther` without losing the space.
+ *
+ * The transformer leaves a NUL after such commands because text nodes, markup and creator
+ * name parts can be converted separately: only after joining them is the next output
+ * character known. Resolve the marker using that context:
+ * - `\ae\0ther` becomes `\ae ther`; TeX consumes the space as a command delimiter.
+ * - `\ae\0 ther` becomes `\ae{} ther`; the empty group preserves the following space.
+ * - `\ae\0,` becomes `\ae,`; `;.,!?${}_^\/` are emitted without a spacer.
+ * Other non-whitespace characters receive a delimiter space; a final marker is removed.
+ */
 export function replace_command_spacers(latex: string): string {
   return latex.replace(/\0(\s)/g, '{}$1').replace(/\0([^;.,!?${}_^\\/])/g, ' $1').replace(/\0/g, '')
 }
 
 export type TeX = { latex: string; raw: boolean; packages: string[] }
 
+/** Convert Zotero's limited markup or full HTML to LaTeX, tracking case protection and required packages. */
 export class HTMLConverter {
   private latex = ''
   private tx!: Transform
@@ -67,6 +84,7 @@ export class HTMLConverter {
   private sentenceStart = true
   private titleText = ''
 
+  /** Configure the Unicode transformers for this translation and its export preferences. */
   constructor(translation: Translation) {
     this.translation = translation
 
@@ -78,11 +96,13 @@ export class HTMLConverter {
       packages: this.translation.collected.preferences.packages.trim().split(/\s*,\s*/),
     }
 
+    // Unicode exports use minimal escaping; BibTeX creators have separate name-escaping rules.
     const mode = translation.unicode ? 'minimal' : (translation.BetterBibTeX ? 'bibtex' : 'biblatex')
     this.txt = new Transform(mode, options)
     this.txc = mode === 'bibtex' ? new Transform('bibtex-creator', options) : this.txt
   }
 
+  /** Reset per-conversion state, build and render the event stream, and return LaTeX and used packages. */
   public tolatex(source: string, options: ConverterOptions): TeX {
     this.tx = options.creator ? this.txc : this.txt
 
@@ -100,6 +120,7 @@ export class HTMLConverter {
     const title = options.exportCaseProtection && options.exportTitleCase !== false ? titleCase(this.titleText) : ''
     const stack: { postfix: string; nocase: boolean }[] = []
     let nocased = false
+    // Open/close events maintain output order and the enclosing case-protection state.
     for (const event of stream) {
       switch (event.kind) {
         case 'text':
@@ -109,8 +130,9 @@ export class HTMLConverter {
           this.latex += event.value
           break
         case 'open': {
+          // With case protection enabled, suppress nested nocase markers; retain meaningful <pre> wrappers.
           const tag = this.options.exportCaseProtection && nocased && event.tag.nocase ? { ...event.tag, nocase: false } : event.tag
-          const spurious = spuriousNodes.has(tag.nodeName) && Object.keys(tag.attr).length === 0 && !tag.nocase && event.children === 1
+          const spurious = spuriousNodes.has(tag.nodeName) && Object.keys(tag.attr).length === 0 && !tag.nocase && !tag.tt && event.children === 1
           const postfix = spurious ? '' : this.open(tag, event.latex)
           stack.push({ postfix, nocase: nocased })
           nocased ||= !!tag.nocase
@@ -125,6 +147,7 @@ export class HTMLConverter {
       }
     }
 
+    // Creator parts retain markers until their caller has assembled and joined the names.
     if (!options.commandspacers) this.latex = replace_command_spacers(this.latex)
 
     this.latex = this.latex
@@ -138,9 +161,11 @@ export class HTMLConverter {
     return { latex: this.latex, raw: false, packages: [...this.packages] }
   }
 
+  /** Preprocess quotes and minimal markup, then turn the parse5 fragment into output events. */
   private parse(source: string): Event[] {
     const csquotes = this.translation.collected.preferences.csquotes
     if (csquotes) {
+      // Quote pairs are literal; cache their combined pattern and mark matches for LaTeX quotation.
       let action = quotePatterns.get(csquotes)
       if (!action) {
         const patterns: string[] = []
@@ -157,6 +182,7 @@ export class HTMLConverter {
       if (action.repl) source = source.replace(action.re, action.repl)
     }
 
+    // Pseudo-HTML preserves literal entities and treats tags outside the allowlist as text.
     if (!this.options.html) {
       source = source.replace(/&/g, '&amp;')
       source = source.replace(/<(\/?)([^<>]*)>/g, (match, close, body) => {
@@ -165,20 +191,27 @@ export class HTMLConverter {
       })
     }
 
-    const fragments = this.parseNode(parseFragment(source, { sourceCodeLocationInfo: true }), false, false)
+    // Case-protection hoisting can split the root into several sibling fragments.
+    const fragments = this.parseNode(parseFragment(source), false, false)
     if (fragments.length === 1) return this.events(fragments[0])
     return this.events({ tag: this.tag('span'), body: fragments.flatMap(fragment => this.events(fragment)), children: fragments.length })
   }
 
+  /** Wrap a fragment's body in open/close events; text and raw scripts already contain their events. */
   private events(fragment: Fragment): Event[] {
     if (fragment.tag.nodeName === '#text' || fragment.tag.nodeName === 'script') return fragment.body
     return [{ kind: 'open', tag: fragment.tag, children: fragment.children, latex: this.template(fragment.tag) }, ...fragment.body, { kind: 'close' }]
   }
 
+  /** Create the normalized tag representation used by the event stream. */
   private tag(nodeName: string): Tag {
     return { nodeName, attr: {}, class: {} }
   }
 
+  /**
+   * Normalize one parse5 node and its descendants into fragments.
+   * isNocased and noTitle describe the enclosing context, not the current node.
+   */
   private parseNode(node: DefaultTreeAdapterTypes.Node, isNocased: boolean, noTitle: boolean): Fragment[] {
     const tag = this.tag(node.nodeName)
     for (const { name, value } of ('attrs' in node ? node.attrs : [])) tag.attr[name] = value
@@ -191,9 +224,11 @@ export class HTMLConverter {
         tag.nodeName = 'span'
         break
       case 'script':
+        // Raw LaTeX is emitted without interpreting its contents as markup.
         if ('childNodes' in node) return this.raw(tag, serialize(node))
         break
       case 'pre':
+        // Pseudo-HTML and math pre blocks are raw; ordinary HTML pre blocks are monospaced.
         if ((!this.options.html || tag.class.math) && 'childNodes' in node) {
           tag.nodeName = 'script'
           return this.raw(tag, serialize(node))
@@ -202,6 +237,7 @@ export class HTMLConverter {
         tag.tt = true
         break
       case 'nc':
+        // Normalize Zotero's shorthand tags to the flags used by the renderer.
         tag.nodeName = 'span'
         tag.attr.nocase = 'nocase'
         break
@@ -214,12 +250,14 @@ export class HTMLConverter {
         break
     }
 
+    // Only the outermost explicit nocase marker needs to be emitted.
     if (tag.attr.nocase || tag.class.nocase) tag.nocase = !isNocased
     if (tag.attr.relax || tag.class.relax) tag.relax = true
     if (tag.class.enquote || tag.attr.enquote) tag.enquote = true
     if (!tag.attr.smallcaps && (tag.attr.style || '').match(/small-caps/i)) tag.attr.smallcaps = 'smallcaps'
     if (tag.class.smallcaps || tag.attr.smallcaps) tag.smallcaps = true
 
+    // Superscripts, subscripts, and protected content contribute to title context but are not title-cased.
     const children: Fragment[] = []
     const skipTitle = noTitle || !!tag.nocase || tag.nodeName === 'sup' || tag.nodeName === 'sub'
     for (const child of ('childNodes' in node ? node.childNodes : [])) {
@@ -228,6 +266,7 @@ export class HTMLConverter {
         continue
       }
 
+      // Already protected text, or text exported without case protection, needs no word splitting.
       if (!this.options.exportCaseProtection || isNocased) {
         this.plaintext(children, child.value, skipTitle)
         continue
@@ -236,11 +275,13 @@ export class HTMLConverter {
       let text: string = child.value
       let match: RegExpExecArray | null
       while (text) {
+        // Whitespace and sentence punctuation do not consume the initial-word exemption.
         if ((match = leadingWhitespace.exec(text)) || (match = /^[:?]/.exec(text))) {
           this.plaintext(children, match[0], skipTitle)
           text = text.substring(match[0].length)
           continue
         }
+        // A normally capitalized initial word is not automatically brace-protected.
         if (this.sentenceStart && (match = leadingUnprotectedWord.exec(`${text} `))) {
           this.sentenceStart = false
           this.plaintext(children, match[1], skipTitle)
@@ -248,6 +289,7 @@ export class HTMLConverter {
           continue
         }
         this.sentenceStart = false
+        // Preserve capitalized words when requested, and URLs even without automatic brace protection.
         if ((this.translation.collected.preferences.exportBraceProtection && (match = protectedWords.exec(text))) || (match = /^(https?|mailto):\/\/[^\s]+/.exec(text))) {
           const value = match[0]
           const protectedTag = this.tag('span')
@@ -266,6 +308,7 @@ export class HTMLConverter {
       }
     }
 
+    // Lift protected children outside their formatting parent, duplicating the parent around each sibling.
     if (this.options.exportCaseProtection && !tag.nocase && children.some(child => child.tag.nocase)) {
       return children.map(child => {
         if (child.tag.nocase) {
@@ -278,11 +321,13 @@ export class HTMLConverter {
     return [{ tag, body: children.flatMap(child => this.events(child)), children: children.length }]
   }
 
+  /** Emit raw LaTeX and reserve equal-length placeholder text for title-case offsets and context. */
   private raw(tag: Tag, value: string): Fragment[] {
     this.titleText += ''.padStart(value.length, 'latex')
     return [{ tag, body: [{ kind: 'raw', value }], children: 0 }]
   }
 
+  /** Expand ligatures, merge adjacent text events, and record their positions in the full title text. */
   private plaintext(children: Fragment[], text: string, noTitle: boolean): void {
     text = text.replace(ligatureRE, ligature => ligatures[ligature])
     const previous = children.at(-1)
@@ -300,6 +345,7 @@ export class HTMLConverter {
     this.titleText += text
   }
 
+  /** Map a tag to a LaTeX template; the control character marks where its children will be rendered. */
   private template(tag: Tag): string {
     let latex = '\x1D' // default to no-op
     switch (tag.nodeName) {
@@ -307,6 +353,7 @@ export class HTMLConverter {
       case 'em':
       case 'italic':
       case 'emphasis':
+        // BibLaTeX uses its bibliography-aware emphasis command.
         if (this.translation.BetterBibTeX) {
           latex = '\\emph{\x1D}'
         }
@@ -346,6 +393,7 @@ export class HTMLConverter {
       case 'div':
       case 'table':
       case 'tr':
+        // Block elements delimit their contents with paragraphs; cleanup removes redundant breaks.
         latex = '\n\\par\n\x1D\n\\par\n'
         break
 
@@ -400,6 +448,7 @@ export class HTMLConverter {
           latex = `\n\n\\${ 'sub'.repeat(parseInt(tag.nodeName[1]) - 1) }section{\x1D}\n\n`
         }
         else {
+          // Unknown tags retain their contents but are logged for diagnosis.
           log.error(`unexpected tag '${ tag.nodeName }' (${ Object.keys(tag) })`)
         }
         break
@@ -408,15 +457,18 @@ export class HTMLConverter {
     return latex
   }
 
+  /** Emit a tag's prefix and return its postfix after applying formatting and protection wrappers. */
   private open(tag: Tag, latex: string): string {
     // Line breaks on an empty line make LaTeX unhappy.
     if (tag.nodeName === 'br' && this.latex !== '' && this.latex.at(-1) !== '\n') latex = `\\\\${latex}`
     if (latex !== '\x1D') latex = this.embrace(latex, /^\\[a-z]+{\x1D}$/.test(latex)) // eslint-disable-line no-control-regex
+    // Wrapper order is significant: case protection encloses formatting, then relax and quotation.
     if (tag.smallcaps) latex = this.embrace(`\\textsc{${ latex }}`, true)
     if (tag.tt) latex = this.embrace(`\\texttt{${ latex }}`, true)
     if (tag.nocase) latex = `{{${ latex }}}`
     if (tag.relax) latex = `{\\relax ${ latex }}`
     if (tag.enquote) {
+      // Use BibLaTeX's bibliography-aware quote command when not exporting Better BibTeX.
       if (this.translation.BetterBibTeX) {
         latex = `\\enquote{${ latex }}`
       }
@@ -431,10 +483,12 @@ export class HTMLConverter {
     return postfix
   }
 
+  /** Add the extra braces needed for eligible formatting commands under Bib(La)TeX case conversion. */
   private embrace(latex: string, condition: boolean): string {
     /* holy mother of %^$#^%$@ the bib(la)tex case conversion rules are insane */
     /* https://github.com/retorquere/zotero-better-bibtex/issues/541 */
     /* https://github.com/plk/biblatex/issues/459 ... oy! */
+    // BibTeX allows the extra protection even when the output starts with a command.
     if (!this.embraced) {
       this.embraced = (this.options.exportCaseProtection && (((this.latex || latex)[0] !== '\\') || this.translation.BetterBibTeX)) as boolean
     }
@@ -442,8 +496,10 @@ export class HTMLConverter {
     return `{${ latex }}`
   }
 
+  /** Transform text to LaTeX, suppressing math braces inside nocase and collecting required packages. */
   private chars(text, nocased) {
     if (this.options.html) text = decodeHTMLAttribute(text)
+    // Retain command-boundary markers until all markup and adjacent text have been rendered.
     this.latex += this.tx.tolatex(text, { bracemath: !nocased, preservemacrospacers: true, packages: this.packages })
   }
 }
