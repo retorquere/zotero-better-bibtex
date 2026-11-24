@@ -59,7 +59,9 @@ export type ConverterOptions = {
  *
  * The transformer leaves a NUL after such commands because text nodes, markup and creator
  * name parts can be converted separately: only after joining them is the next output
- * character known. Resolve the marker using that context:
+ * character known. `{}` cannot serve as this temporary marker: it may be a genuine empty
+ * argument in a multi-argument macro, so it cannot safely be removed later. NUL is distinct
+ * from actual LaTeX and can be resolved using the assembled context:
  * - `\ae\0ther` becomes `\ae ther`; TeX consumes the space as a command delimiter.
  * - `\ae\0 ther` becomes `\ae{} ther`; the empty group preserves the following space.
  * - `\ae\0,` becomes `\ae,`; `;.,!?${}_^\/` are emitted without a spacer.
