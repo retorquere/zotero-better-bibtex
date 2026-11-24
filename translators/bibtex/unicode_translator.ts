@@ -3,7 +3,6 @@ import { titleCase } from '../../content/text'
 
 import { log } from '../../content/logger'
 import { regex as escapeRE } from '../../content/escape'
-import { decodeHTMLAttribute } from 'entities'
 import { Transform } from '@retorquere/bibtex-parser'
 import { parseFragment, serialize } from 'parse5'
 import type { DefaultTreeAdapterTypes } from 'parse5'
@@ -184,7 +183,7 @@ export class HTMLConverter {
       if (action.repl) source = source.replace(action.re, action.repl)
     }
 
-    // Pseudo-HTML preserves literal entities and treats tags outside the allowlist as text.
+    // Pseudo-HTML preserves literal entities and treats tags outside the allowlist as text for CSLs HTML subset
     if (!this.options.html) {
       source = source.replace(/&/g, '&amp;')
       source = source.replace(/<(\/?)([^<>]*)>/g, (match, close, body) => {
@@ -500,7 +499,6 @@ export class HTMLConverter {
 
   /** Transform text to LaTeX, suppressing math braces inside nocase and collecting required packages. */
   private chars(text, nocased) {
-    if (this.options.html) text = decodeHTMLAttribute(text)
     // Retain command-boundary markers until all markup and adjacent text have been rendered.
     this.latex += this.tx.tolatex(text, { bracemath: !nocased, preservemacrospacers: true, packages: this.packages })
   }

@@ -59,7 +59,7 @@ const config = [
       'headless/**/*.{ts,js}',
       'tmp/**/*.{ts,js}',
       'typings/**/*.{ts,js}',
-      'test/**/*.{ts,js}',
+      'test/**/*.{ts,js,mjs}',
       'gen/**/*.{cjs,d.ts,ts,js,mjs}',
       'setup/**/*.{ts,js,mjs}',
       'submodules/**/*.{mts,ts,js,mjs,tsx,cjs}',
