@@ -199,7 +199,7 @@ Feature: Export
       | 1    | preserve @strings between import-export #1162 |
       | 3    | Problems with Casing of Series Field with Non-English Series Titles #3539 |
       | 1    | Protect math sections #1148 |
-      | 1    | PSA new fields support #3360 |
+      | 1    | Interviewee is incorrectly mapped in biblatex export #3660 |
       | 1    | raw bibtex fields with colon in extra #2750 |
       | 1    | References with multiple notes fail to export #174 |
       | 1    | referencetype= does not work #278 |

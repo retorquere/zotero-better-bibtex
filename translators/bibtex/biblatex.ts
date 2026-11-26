@@ -201,8 +201,6 @@ class Entry extends BaseEntry {
 
         case 'author':
         case 'inventor':
-        case 'interviewee':
-        case 'interviewer':
         case 'programmer':
         case 'artist':
         case 'podcaster':
@@ -220,8 +218,10 @@ class Entry extends BaseEntry {
           break
 
         case 'editor':
-        case 'interviewer':
           creators.editor.push(creator)
+
+        case 'interviewer':
+          creators[creatorType.register('name', 'interviewer')].push(creator)
           break
 
         case 'assignee':

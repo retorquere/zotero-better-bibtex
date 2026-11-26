@@ -395,6 +395,8 @@ fn fmt(args: FormatArgs) -> Result<(), Box<dyn std::error::Error>> {
 /// Renames a test on disk
 fn rename(args: RenameArgs) -> Result<(), Box<dyn std::error::Error>> {
     let (feature_path, feature) = load_feature(&args.feature)?;
+    let issue = args.issue.or_else(issue_from_branch);
+
     write_feature(&feature_path, &feature)
 }
 
