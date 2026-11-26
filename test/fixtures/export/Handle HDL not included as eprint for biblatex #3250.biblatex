@@ -8,10 +8,6 @@
   institution = {University of Sydney},
   url = {https://hdl.handle.net/2123/31137}
 }
-% == BibLaTeX quality report for Elman2023:
-% ? unused Extra ("Accepted: 2023-04-24T06:25:00Z")
-% ? unused Language ("en")
-% ? unused Library catalog ("ses.library.usyd.edu.au")
 
 @thesis{Naaijkens2012,
   type = {phdthesis},
@@ -24,8 +20,6 @@
 }
 % == BibLaTeX quality report for Naaijkens2012:
 % ? Title looks like it was stored in title-case in Zotero
-% ? unused Extra ("Dissertation")
-% ? unused Library catalog ("repository.ubn.ru.nl")
 
 @article{Pare1993,
   title = {Universal Covering Categories},
@@ -38,10 +32,6 @@
   pages = {391--411},
   url = {http://hdl.handle.net/10077/4715}
 }
-% == BibLaTeX quality report for Pare1993:
-% ? unused ISSN ("0049-4704")
-% ? unused Language ("en")
-% ? unused Library catalog ("www.openstarts.units.it")
 
 @thesis{Stiegemann2019,
   type = {phdthesis},
@@ -54,5 +44,3 @@
 % == BibLaTeX quality report for Stiegemann2019:
 % Missing required field 'institution'
 % ? Title looks like it was stored in title-case in Zotero
-% ? unused Language ("eng")
-% ? unused Library catalog ("DOI.org (Datacite)")

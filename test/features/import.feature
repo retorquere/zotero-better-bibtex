@@ -24,6 +24,8 @@ Feature: Import
   Scenario: LaTeX commands in Zotero should be exported untouched #1380
     When I set preference .rawImports to true
     And I import 1 references from "import/*.bib"
+    And I select the item with a field that contains "Pearson Education France"
+    # And I migrate TeX to extra for the selected items
     Then the library should match "import/*.json"
     And an export using "Better BibLaTeX" should match "import/*.roundtrip.bib"
 

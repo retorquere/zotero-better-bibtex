@@ -30,11 +30,26 @@ pub(crate) enum Command {
     Fmt(FormatArgs),
     Rename(RenameArgs),
     Get(GetArgs),
+    Clean(CleanArgs),
+    /// Create a beta patch from the base and beta fixtures.
+    Diff(FixtureArgs),
+    /// Apply a beta patch to the base fixture, replacing the beta fixture.
+    Apply(FixtureArgs),
 }
 
 #[derive(Args)]
 pub(crate) struct GetArgs {
     debug_log: String,
+}
+
+#[derive(Args)]
+pub(crate) struct CleanArgs {
+    debug_log: String,
+}
+
+#[derive(Args)]
+pub(crate) struct FixtureArgs {
+    filename: PathBuf,
 }
 
 #[derive(Args)]
@@ -118,6 +133,9 @@ pub async fn run(command: Command) -> Result<(), Box<dyn std::error::Error>> {
         Command::Fmt(args) => fmt(args),
         Command::Rename(args) => rename(args),
         Command::Get(args) => get(args).await,
+        Command::Clean(args) => clean(args),
+        Command::Diff(args) => diff(&args.filename),
+        Command::Apply(args) => apply(&args.filename),
     }
 }
 
@@ -295,7 +313,7 @@ async fn add(args: AddArgs) -> Result<(), Box<dyn std::error::Error>> {
         preferences.remove("baseAttachmentPath");
     }
     fs::create_dir_all(&fixtures)?;
-    serde_yaml::to_writer(fs::File::create(fixtures.join(&title).with_extension("yml"))?, &library)?;
+    fs::write(fixtures.join(&title).with_extension("yml"), library_yaml(&library)?)?;
 
     fn create(fixtures: &PathBuf, title: &str, ext: &str,contents: &str) -> Result<(), Box<dyn std::error::Error>> {
         let filename = fixtures.join(title).with_extension(ext);
@@ -508,4 +526,275 @@ fn write_feature(path: &str, feature: &Feature) -> Result<(), Box<dyn std::error
     fs::write(path, feature_to_string(feature))?;
 
     Ok(())
+}
+
+/// Emits multiline values as literal blocks, including lines with trailing spaces.
+fn library_yaml(value: &serde_json::Value) -> Result<String, saphyr::EmitError> {
+    use saphyr::{Scalar, ScalarStyle, Yaml, YamlEmitter};
+
+    fn node(value: &serde_json::Value) -> Yaml<'_> {
+        match value {
+            serde_json::Value::Null => Yaml::Value(Scalar::Null),
+            serde_json::Value::Bool(value) => Yaml::Value(Scalar::Boolean(*value)),
+            serde_json::Value::Number(value) => {
+                Yaml::Representation(value.to_string().into(), ScalarStyle::Plain, None)
+            },
+            serde_json::Value::String(value) => {
+                Yaml::Value(Scalar::String(value.as_str().into()))
+            },
+            serde_json::Value::Array(values) => {
+                Yaml::Sequence(values.iter().map(node).collect())
+            },
+            serde_json::Value::Object(values) => Yaml::Mapping(
+                values.iter().map(|(key, value)| {
+                    (Yaml::Value(Scalar::String(key.as_str().into())), node(value))
+                }).collect(),
+            ),
+        }
+    }
+
+    let mut output = String::new();
+    let mut emitter = YamlEmitter::new(&mut output);
+    emitter.multiline(true);
+    emitter.dump(&node(value))?;
+    if !output.ends_with('\n') {
+        output.push('\n');
+    }
+    Ok(output)
+}
+
+fn fixture_paths(filename: &Path) -> io::Result<(&'static str, PathBuf, PathBuf)> {
+    let name = filename.file_name().and_then(|name| name.to_str()).ok_or_else(|| {
+        io::Error::new(io::ErrorKind::InvalidInput, "Expected a UTF-8 fixture filename")
+    })?;
+    let extension = [".csl.json", ".csl.yml", ".hayagriva.yml", ".json", ".yaml", ".yml", ".biblatex", ".bibtex", ".bib"]
+        .into_iter()
+        .find(|extension| name.ends_with(extension))
+        .ok_or_else(|| io::Error::new(io::ErrorKind::InvalidInput, format!("Unsupported fixture extension: {name}")))?;
+    let beta = filename.with_file_name(format!("{}.beta{extension}", &name[..name.len() - extension.len()]));
+    let mut patch_name = filename.as_os_str().to_os_string();
+    patch_name.push(".beta.patch");
+    Ok((extension, beta, PathBuf::from(patch_name)))
+}
+
+fn diff(filename: &Path) -> Result<(), Box<dyn std::error::Error>> {
+    let (extension, beta, patch_path) = fixture_paths(filename)?;
+    let source = fs::read_to_string(filename)?;
+    let target = fs::read_to_string(beta)?;
+
+    let output = if extension.ends_with(".json") || extension.ends_with(".yml") || extension.ends_with(".yaml") {
+        let (source, target): (serde_json::Value, serde_json::Value) = if extension.ends_with(".json") {
+            (serde_json::from_str(&source)?, serde_json::from_str(&target)?)
+        } else {
+            (serde_yaml::from_str(&source)?, serde_yaml::from_str(&target)?)
+        };
+        serde_json::to_string_pretty(&json_patch::diff(&source, &target))?
+    } else {
+        let mut dmp = diff_match_patch::Dmp::new();
+        let mut patches = dmp.patch_make1(&source, &target);
+        dmp.patch_to_text(&mut patches)
+    };
+
+    fs::write(&patch_path, output)?;
+    println!("{}", patch_path.display());
+    Ok(())
+}
+
+fn apply(filename: &Path) -> Result<(), Box<dyn std::error::Error>> {
+    let (extension, beta, patch_path) = fixture_paths(filename)?;
+    let source = fs::read_to_string(filename)?;
+    let patch = fs::read_to_string(patch_path)?;
+
+    let output = if extension.ends_with(".json") || extension.ends_with(".yml") || extension.ends_with(".yaml") {
+        let is_json = extension.ends_with(".json");
+        let mut source: serde_json::Value = if is_json {
+            serde_json::from_str(&source)?
+        } else {
+            serde_yaml::from_str(&source)?
+        };
+        let operations: Vec<json_patch::PatchOperation> = serde_json::from_str(&patch)?;
+        json_patch::patch(&mut source, &operations)?;
+        if is_json {
+            format!("{}\n", serde_json::to_string_pretty(&source)?)
+        } else {
+            library_yaml(&source)?
+        }
+    } else {
+        let mut dmp = diff_match_patch::Dmp::new();
+        let mut patches = dmp.patch_from_text(patch);
+        let (output, applied) = dmp.patch_apply(&mut patches, &source);
+        if applied.iter().any(|applied| !applied) {
+            return Err(io::Error::new(io::ErrorKind::InvalidData, "Could not apply every patch hunk").into());
+        }
+        output.into_iter().collect()
+    };
+
+    fs::write(&beta, output)?;
+    println!("{}", beta.display());
+    Ok(())
+}
+
+fn clean(args: CleanArgs) -> Result<(), Box<dyn std::error::Error>> {
+    let mut debug_log: serde_json::Value = if args.debug_log.ends_with(".yaml") {
+        serde_yaml::from_str(&fs::read_to_string(&args.debug_log)?)?
+    } else if args.debug_log.ends_with(".json") {
+        serde_json::from_slice(&fs::read(&args.debug_log)?)?
+    } else {
+        return Err("File must have .yaml or .json extension".into());
+    };
+
+    if !debug_log.is_object() {
+        return Err(std::io::Error::new(
+            std::io::ErrorKind::InvalidData,
+            format!("{} is not a library", args.debug_log),
+        ).into());
+    }
+
+    if debug_log.pointer("/config/id").and_then(serde_json::Value::as_str) != Some("36a3b0b5-bad0-4a04-b79b-441c7cef77db") {
+        return Err(std::io::Error::new(
+            std::io::ErrorKind::InvalidData,
+            format!("{} is not a library", args.debug_log),
+        ).into());
+    }
+
+    let reference_prefs: serde_json::Value = serde_yaml::from_str(&fs::read_to_string("content/Preferences/preferences.yaml")?)?;
+
+    if let Some(preferences) = debug_log.pointer_mut("/config/preferences").and_then(serde_json::Value::as_object_mut) {
+        preferences.remove("baseAttachmentPath");
+        *preferences = std::mem::take(preferences)
+            .into_iter()
+            .filter_map(|(key, value)| {
+                match reference_prefs.get(&key).and_then(|pref| pref.get("default")) {
+                    Some(default_value) if !values_have_same_type(&value, default_value) => {
+                        Some(Err(std::io::Error::new(
+                            std::io::ErrorKind::InvalidData,
+                            format!("Preference {} has mismatched type", key),
+                        )))
+                    }
+                    Some(default_value) if &value == default_value => None,
+                    _ => Some(Ok((key, value))),
+                }
+            })
+            .collect::<Result<_, _>>()?;
+    }
+
+    fs::write(Path::new(&args.debug_log).with_extension("yaml"), library_yaml(&debug_log)?)?;
+
+    Ok(())
+}
+
+fn values_have_same_type(a: &serde_json::Value, b: &serde_json::Value) -> bool {
+    match (a, b) {
+        (serde_json::Value::Null, serde_json::Value::Null) => true,
+        (serde_json::Value::Bool(_), serde_json::Value::Bool(_)) => true,
+        (serde_json::Value::Number(_), serde_json::Value::Number(_)) => true,
+        (serde_json::Value::String(_), serde_json::Value::String(_)) => true,
+        _ => false,
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::{apply, diff, library_yaml};
+    use serde_json::json;
+
+    #[test]
+    fn beta_patches_transform_fixtures() {
+        let dir = std::env::temp_dir().join(format!(
+            "bbt-patch-{}-{}",
+            std::process::id(),
+            std::time::SystemTime::now().duration_since(std::time::UNIX_EPOCH).unwrap().as_nanos()
+        ));
+        std::fs::create_dir(&dir).unwrap();
+        for (name, beta_name, source, target) in [
+            ("fixture.biblatex", "fixture.beta.biblatex", "@book{é, title={old}}\n", "@book{é, title={new 😀}}\n"),
+            ("fixture.csl.json", "fixture.beta.csl.json", r#"[{"a/b": [1, 2]}]"#, r#"[{"a/b": [2, 3], "title": "new"}]"#),
+            ("fixture.hayagriva.yml", "fixture.beta.hayagriva.yml", "entry:\n  title: old\n", "entry:\n  title: new\n"),
+            ("fixture.yaml", "fixture.beta.yaml", "entry:\n  title: old\n", "entry:\n  title: new\n"),
+        ] {
+            let filename = dir.join(name);
+            let beta = dir.join(beta_name);
+            std::fs::write(&filename, source).unwrap();
+            std::fs::write(&beta, target).unwrap();
+            diff(&filename).unwrap();
+            let patch_file = dir.join(format!("{name}.beta.patch"));
+            std::fs::remove_file(&beta).unwrap();
+            apply(&filename).unwrap();
+            let result = std::fs::read_to_string(&beta).unwrap();
+            if name.ends_with(".biblatex") {
+                assert_eq!(result, target);
+            } else {
+                let parse = |text| -> serde_json::Value {
+                    if name.ends_with(".json") {
+                        serde_json::from_str(text).unwrap()
+                    } else {
+                        serde_yaml::from_str(text).unwrap()
+                    }
+                };
+                assert_eq!(parse(&result), parse(target));
+            }
+            std::fs::remove_file(patch_file).unwrap();
+            std::fs::remove_file(beta).unwrap();
+            std::fs::remove_file(filename).unwrap();
+        }
+        let missing_beta = dir.join("missing.json");
+        std::fs::write(&missing_beta, "{}").unwrap();
+        assert!(diff(&missing_beta).is_err());
+        assert!(!dir.join("missing.json.beta.patch").exists());
+        assert!(apply(&missing_beta).is_err());
+        std::fs::remove_file(missing_beta).unwrap();
+        assert!(diff(&dir.join("unsupported.txt")).is_err());
+        assert!(apply(&dir.join("unsupported.txt")).is_err());
+
+        let filename = dir.join("conflict.bib");
+        let beta = dir.join("conflict.beta.bib");
+        let patch_file = dir.join("conflict.bib.beta.patch");
+        std::fs::write(&filename, "original content that will be replaced").unwrap();
+        std::fs::write(&beta, "replacement content").unwrap();
+        diff(&filename).unwrap();
+        std::fs::write(&filename, "completely unrelated text").unwrap();
+        assert!(apply(&filename).is_err());
+        assert_eq!(std::fs::read_to_string(&beta).unwrap(), "replacement content");
+        std::fs::remove_file(filename).unwrap();
+        std::fs::remove_file(beta).unwrap();
+        std::fs::remove_file(patch_file).unwrap();
+        std::fs::remove_dir(dir).unwrap();
+    }
+
+    #[test]
+    fn yaml_uses_literal_blocks_without_changing_values() {
+        for multiline in [
+            "first \nsecond",
+            "first\nsecond ",
+            "first\nsecond\n",
+            "first\nsecond\n\n",
+            "\n  indented\ntext",
+        ] {
+            let value = json!({
+                "multiline": multiline,
+                "single": "single line",
+                "nested": [{"text": multiline}],
+                "number": u64::MAX,
+                "float": 1.5,
+                "boolean": true,
+                "null": null,
+            });
+            let yaml = library_yaml(&value).unwrap();
+            assert!(yaml.contains("multiline: |"), "{yaml}");
+            assert!(yaml.contains("single: single line\n"), "{yaml}");
+            assert!(yaml.contains("text: |"), "{yaml}");
+            assert_eq!(serde_yaml::from_str::<serde_json::Value>(&yaml).unwrap(), value);
+        }
+    }
+
+    #[test]
+    fn yaml_formats_issue_3472_postscript_as_a_literal_block() {
+        let value: serde_json::Value = serde_yaml::from_str(include_str!(
+            "../../../test/fixtures/export/tex.pages= in Extra field not exporting as LaTeX, Language = de exporting as german, not ngerman #3472.yaml"
+        )).unwrap();
+        let yaml = library_yaml(&value).unwrap();
+
+        assert!(yaml.contains("postscript: |\n"), "{yaml}");
+        assert_eq!(serde_yaml::from_str::<serde_json::Value>(&yaml).unwrap(), value);
+    }
 }

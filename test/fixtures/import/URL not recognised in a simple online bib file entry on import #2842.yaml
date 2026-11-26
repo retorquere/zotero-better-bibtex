@@ -1,0 +1,44 @@
+---
+collections: {}
+config:
+  id: 36a3b0b5-bad0-4a04-b79b-441c7cef77db
+  label: BetterBibTeX JSON
+  options:
+    Items: true
+    Normalize: true
+    Preferences: true
+    YAML: false
+    exportFileData: false
+    exportNotes: true
+    keepUpdated: false
+    worker: true
+  preferences:
+    auxImport: true
+    citekeyFormat: auth + year
+    fillKeyAfter: 1
+    importSentenceCase: "off"
+    rawImports: true
+items:
+  - attachments: []
+    autoJournalAbbreviation: ""
+    citationKey: Gartner_CloudComputing
+    creators:
+      - creatorType: author
+        name: Gartner
+    date: 2013-08
+    dateAdded: "2026-11-23T16:27:17Z"
+    dateModified: "2026-11-23T16:27:17Z"
+    itemID: 115
+    itemKey: 9ENSDH4A
+    itemType: webpage
+    key: 9ENSDH4A
+    libraryID: 1
+    notes: []
+    relations: {}
+    tags: []
+    uri: "http://zotero.org/users/8230813/items/9ENSDH4A"
+    url: "https://web.archive.org/web/20130825054202/http://www.gartner.com/technology/reprints.do?id=1-1IMDMZ5&ct=130819&st=sb"
+    version: 0
+version:
+  bbt: 9.0.77.emile.kiku.local
+  zotero: 10.0.6

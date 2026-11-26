@@ -28,11 +28,11 @@ const config: Config = {
     doi: 'verbatim',
     eprint: 'verbatim',
     eprintclass: 'verbatim',
-    crossref: 'raw',
-    xdata: 'raw',
-    xref: 'raw',
-    entrykey: 'raw',
-    childentrykey: 'raw',
+    crossref: 'verbatim',
+    xdata: 'verbatim',
+    xref: 'verbatim',
+    entrykey: 'verbatim',
+    childentrykey: 'verbatim',
     verba: 'verbatim',
     verbb: 'verbatim',
     verbc: 'verbatim',
@@ -201,6 +201,8 @@ class Entry extends BaseEntry {
 
         case 'author':
         case 'inventor':
+        case 'interviewee':
+        case 'interviewer':
         case 'programmer':
         case 'artist':
         case 'podcaster':
@@ -388,7 +390,7 @@ export function generateBibLaTeX(collected: Collected): Translation {
     entry.add({ name: 'version', value: item.versionNumber })
 
     entry.add({ name: 'eventtitle', value: item.conferenceName })
-    entry.add({ name: 'eventtitle', value: item.meetingName, replace: true })
+    entry.add({ name: 'eventtitle', value: item.meetingName })
 
     entry.add({ name: 'pagetotal', value: item.numPages })
 
@@ -594,7 +596,7 @@ export function generateBibLaTeX(collected: Collected): Translation {
 
     entry.add({ name: 'date', verbatim: 'year', orig: { name: 'origdate', verbatim: 'origdate' }, value: item.date, enc: 'date' })
     // #293 has both date="year [origyear]" and extra="original-date: origyear"
-    entry.add({ name: 'origdate', value: item.originalDate, enc: 'date', replace: true })
+    entry.add({ name: 'origdate', value: item.originalDate, enc: 'date' })
 
     // @ts-expect-error jurism
     entry.add({ name: 'eventdate', value: item.conferenceDate || item.eventDate, enc: 'date' })

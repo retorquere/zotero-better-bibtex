@@ -320,6 +320,12 @@ def step_impl(context, n, mode, value):
   context.zotero.execute('await Zotero.BetterBibTeX.TestSupport.select(ids)', ids=context.selected)
   time.sleep(3)
 
+@step(u'I select all items')
+def step_impl(context):
+  context.selected = context.zotero.execute('return await Zotero.Items.getAll(Zotero.Libraries.userLibraryID, true, false, true)')
+  context.zotero.execute('await Zotero.BetterBibTeX.TestSupport.select(ids)', ids=context.selected)
+  time.sleep(3)
+
 @when(u'I remove all items from "{collection}"')
 def step_impl(context, collection):
   context.zotero.execute('await Zotero.BetterBibTeX.TestSupport.clearCollection(path)', path=collection)
@@ -484,6 +490,11 @@ def step_impl(context):
 @step(u'I copy date-added/date-modified for the selected items from the extra field')
 def step_impl(context):
   context.zotero.execute('await Zotero.BetterBibTeX.MenuHelper.patchDates()')
+
+@step(u'I migrate TeX to extra for the selected items')
+def step_impl(context):
+  assert context.selected, 'No items selected for TeX migration'
+  context.zotero.execute('await Zotero.BetterBibTeX.TestSupport.migrateTeX()')
 
 @step('I change {param} to {value} on the auto-export')
 def step_impl(context, param, value):

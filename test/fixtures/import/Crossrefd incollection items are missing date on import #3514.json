@@ -74,8 +74,6 @@
       "quickCopyOrgMode": "zotero",
       "quickCopyPandocBrackets": false,
       "quickCopySelectLink": "zotero",
-      "rawImports": false,
-      "rawLaTag": "#LaTeX",
       "relativeFilePaths": false,
       "remigrate": false,
       "resetKeyOnChange": false,

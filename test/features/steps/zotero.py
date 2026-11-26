@@ -1,7 +1,6 @@
 import copy
 import bs4
 import sqlite3
-import uuid
 import json, jsonpatch
 import os, sys
 import redo
@@ -15,6 +14,7 @@ from munch import *
 from steps.utils import terminate, running, nested_dict_iter, benchmark, ROOT, FIXTURES, EXPORTED, assert_equal_diff, serialize, html2md, clean_html
 from steps.library import load as cleanlib, sortbib
 import steps.utils as utils
+import steps.rdp as rdp
 import shutil
 import shlex
 import io
@@ -458,7 +458,6 @@ class Zotero:
     self.legacy = userdata.get('legacy') == 'true'
     self.dev = userdata.get('dev') == 'true'
     self.bibliography = userdata.get('bibliography')
-    self.token = str(uuid.uuid4())
     self.import_at_start = userdata.get('import', None)
     if self.import_at_start:
       self.import_at_start = os.path.abspath(self.import_at_start)
@@ -504,27 +503,9 @@ class Zotero:
     return f'http://127.0.0.1:{self.port}/better-bibtex/export?{query}'
 
   def execute(self, script, **args):
-    headers = {
-      'Content-Type': 'application/json'
-    }
-    resp = requests.get(f'http://127.0.0.1:{self.port}/connector/ping')
-    resp.raise_for_status()
-    resp = requests.post(f'http://127.0.0.1:{self.port}/connector/ping', headers=headers, data='{}')
-    resp.raise_for_status()
-
-    for var, value in args.items():
-      script = f'const {var} = {json.dumps(value)};\n' + script
-
-    headers = {
-      'Authorization': f'Bearer {self.token}',
-      # 'Content-Type': 'application/javascript'
-      'Content-Type': 'text/plain',
-    }
-
     with Pinger(20):
-      resp = requests.post(f'http://127.0.0.1:{self.port}/debug-bridge/execute', headers=headers, data=script.encode('utf-8'))
-      resp.raise_for_status()
-      return resp.json()
+      with rdp.RDPConnection(port=6000, timeout=self.config.timeout) as conn:
+        return conn.execute(script, **args)
 
   def shutdown(self):
     if self.proc is None: return
@@ -585,29 +566,29 @@ class Zotero:
 
         try:
           ready = self.execute("""
-            // debug bridge: startup detection
+            // rdp: startup detection
             if (!Zotero.BetterBibTeX) {
-              Zotero.debug('{better-bibtex:debug bridge}: startup: BetterBibTeX not loaded')
+              Zotero.debug('{better-bibtex:rdp}: startup: BetterBibTeX not loaded')
               return false;
             }
             if (!Zotero.BetterBibTeX.ready) {
               if (typeof Zotero.BetterBibTeX.ready === 'boolean') {
-                Zotero.debug('{better-bibtex:debug bridge}: startup: BetterBibTeX initialization error')
+                Zotero.debug('{better-bibtex:rdp}: startup: BetterBibTeX initialization error')
               } else {
-                Zotero.debug('{better-bibtex:debug bridge}: startup: BetterBibTeX not initialized')
+                Zotero.debug('{better-bibtex:rdp}: startup: BetterBibTeX not initialized')
               }
               return false;
             }
 
-            Zotero.debug('{better-bibtex:debug bridge}: startup: waiting for BetterBibTeX ready...')
+            Zotero.debug('{better-bibtex:rdp}: startup: waiting for BetterBibTeX ready...')
             await Zotero.BetterBibTeX.ready;
             if (testing && !Zotero.Prefs.get('translators.better-bibtex.testing')) throw new Error('translators.better-bibtex.testing not set!')
-            Zotero.debug('{better-bibtex:debug bridge}: startup: BetterBibTeX ready!');
+            Zotero.debug('{better-bibtex:rdp}: startup: BetterBibTeX ready!');
             return true;
           """, testing = self.testing)
           if ready: break
 
-        except requests.exceptions.RequestException:
+        except (requests.exceptions.RequestException, ConnectionRefusedError, OSError, RuntimeError):
           pass
 
     assert ready, f'{self.client} did not start'
@@ -898,7 +879,6 @@ class Zotero:
     preferences['intl.accept_languages'] = 'en-GB'
     preferences['intl.locale.requested'] = 'en-GB'
 
-    preferences['extensions.zotero.debug-bridge.token'] = self.token
     preferences['dom.max_chrome_script_run_time'] = self.config.timeout
 
     preferences['devtools.debugger.remote-enabled'] = True # Enables the remote debugging protocol server

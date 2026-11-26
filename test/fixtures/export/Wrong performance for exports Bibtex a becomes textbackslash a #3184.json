@@ -20,7 +20,6 @@
       "keyConflictPolicy": "change",
       "keyScope": "global",
       "rawImports": true,
-      "rawLaTag": "*",
       "skipFields": "file, abstract",
       "verbatimFields": "url,doi,file,pdf,ids,eprint,/^verb[a-z]$/,groups,/^citeulike-linkout-[0-9]+$/, /^bdsk-url-[0-9]+$/, keywords, publisher",
       "warnBulkModify": 2

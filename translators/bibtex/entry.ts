@@ -8,24 +8,30 @@ import { clone } from '../../content/object'
 import { Serialized } from '../../gen/typings/serialized'
 
 export type Field = {
-  name: string
-  verbatim?: string
-  value: string | string[] | number | Serialized.Attachment[] | Serialized.Tag[] | Serialized.Creator[] | undefined
-  enc?: 'raw' | 'url' | 'verbatim' | 'creators' | 'literal' | 'literal_list' | 'latex' | 'tags' | 'attachments' | 'date' | 'minimal' | 'bibtex' | 'biblatex' | 'extra'
-  orig?: { name?: string; verbatim?: string; inherit?: boolean }
-  bibtexStrings?: boolean
-  bare?: boolean
-  raw?: boolean
-
-  // kept as seperate booleans for backwards compat
-  replace?: boolean
-  fallback?: boolean
-
-  html?: boolean
+  name: string // Bib(La)TeX field name to emit.
+  // Source value to encode; may be omitted when bibtex is supplied.
+  value: string | String | string[] | number | Serialized.Attachment[] | Serialized.Tag[] | Serialized.Creator[] | undefined
+  // How to encode value; defaults to the configured field encoding or literal.
+  enc?: 'url' | 'verbatim' | 'creators' | 'literal' | 'literal_list' | 'tags' | 'attachments' | 'date' | 'minimal' | 'bibtex' | 'biblatex' | 'extra'
+  // raw?: boolean
   caseConversion?: boolean
+  sep?: string
 
-  bibtex?: string
+  verbatim?: string // Field name to use for a date value the date parser cannot parse.
+  bare?: boolean // Leave the encoded value unbraced when it contains no whitespace.
+  bibtexStrings?: boolean // Use a matching BibTeX string macro instead of the field value when available.
+  orig?: { // Controls output of an original date extracted by the date parser.
+    name?: string // Field name for the original date.
+    verbatim?: string // Field name to use if the original date cannot be parsed.
+    inherit?: boolean // Prefix the parent field and verbatim names with "orig" for the original date.
+  }
+
+  bibtex?: string // Pre-encoded Bib(La)TeX value; when supplied, bypasses encoding value.
+
+  juniorcomma?: boolean
 }
+
+type Creator = Serialized.Creator
 
 import fold2ascii from 'fold-to-ascii'
 import * as DateParser from '../../content/dateparser'
@@ -131,10 +137,6 @@ const fieldOrder = [
   return acc
 }, {})
 
-function property_sort(a: [string, string, string, string], b: [string, string, string, string]): number {
-  return strcmp.variant(a[0], b[0])
-}
-
 const enc_creators_marker = {
   initials: /[\u2063\u0097]/g, // invisible separator, end of guarded area
   relax: '\u200C', // zero-width non-joiner
@@ -142,7 +144,7 @@ const enc_creators_marker = {
 const isBibString = /^[a-z][-a-z0-9_]*$/i
 
 export type Config = {
-  fieldEncoding: Record<string, 'raw' | 'url' | 'verbatim' | 'creators' | 'literal' | 'literal_list' | 'tags' | 'attachments' | 'date' | 'extra'>
+  fieldEncoding: Record<string, 'url' | 'verbatim' | 'creators' | 'literal' | 'literal_list' | 'tags' | 'attachments' | 'date' | 'extra'>
   exportCaseDefaults: Record<string, boolean>
   typeMap: {
     csl: Record<string, string | { type: string; subtype?: string }>
@@ -176,10 +178,10 @@ export class Entry {
   public language!: string
   public english: boolean
   public date: DateParser.OptionalRichDate
+  private reportReplace = true
 
   public config: Config
 
-  private inPostscript = false
   private quality_report: string[] = []
   private extraFields: ParsedExtraFields
 
@@ -214,8 +216,7 @@ export class Entry {
       if (translation.collected.preferences.postscript.trim()) {
         Entry.prototype.postscript = postscript.postscript(
           'tex',
-          translation.collected.preferences.postscript,
-          'this.inPostscript' // workaround for https://github.com/Juris-M/zotero/issues/65
+          translation.collected.preferences.postscript
         )
       }
       else {
@@ -493,15 +494,9 @@ export class Entry {
     return true
   }
 
-  private valueish(value: number | string): string {
-    switch (typeof value) {
-      case 'number':
-        return `${value}`
-      case 'string':
-        return value.replace(this.re.nonwordish, '').toLowerCase()
-      default:
-        return ''
-    }
+  private get rawLaTeX(): boolean {
+    const rawLaTag = this.translation.collected.preferences.rawLaTag
+    return !!this.item.raw || !!this.item.tags.find(tag => tag.tag === rawLaTag || rawLaTag === '*')
   }
 
   /** normalize dashes, mainly for use in `pages` */
@@ -510,7 +505,7 @@ export class Entry {
 
     ranges = (ranges || '').trim()
 
-    if (this.item.raw) return ranges
+    if (this.rawLaTeX) return ranges
 
     return ranges
       .replace(/\u2053/g, '~')
@@ -539,21 +534,13 @@ export class Entry {
   public add(field: Field): string | undefined {
     if (!field.name) return undefined
 
-    if (this.translation.collected.preferences.testing && !this.inPostscript && field.name !== field.name.toLowerCase()) {
-      throw new Error(`Do not add mixed-case field ${field.name}`)
-    }
-
-    if (!field.value && !field.bibtex && this.inPostscript) {
-      delete this.has[field.name]
-      return undefined
-    }
+    if (!field.value && !field.bibtex) return undefined
 
     if (this.translation.skipField?.exec(`${this.translation.BetterBibTeX ? 'bibtex' : 'biblatex'}.${this.entrytype}.${field.name}`)) return undefined
 
-    // field.enc = field.raw ? 'raw' : (field.enc || this.config.fieldEncoding[field.name] || 'literal')
-    field.enc = field.enc || this.config.fieldEncoding[field.name] || (field.raw ? 'raw' : 'literal')
+    field.enc = field.enc || this.config.fieldEncoding[field.name] || 'literal'
 
-    if (field.enc === 'date') {
+    if (field.enc === 'date' && !field.bibtex) {
       if (!field.value) return undefined
 
       if (field.value === 'today') {
@@ -587,12 +574,6 @@ export class Entry {
       return field.name
     }
 
-    if (field.fallback && field.replace) throw new Error('pick fallback or replace, buddy')
-    if (field.fallback && this.has[field.name]) {
-      log.error(`add: fallback already filled for ${field.name}`)
-      return undefined
-    }
-
     // legacy field addition
     if (!field.name) {
       log.error(`add: empty legacy object ${field.name}`)
@@ -605,81 +586,59 @@ export class Entry {
       if (Array.isArray(field.value) && (field.value.length === 0)) return undefined
     }
 
-    if (this.has[field.name]) {
-      if (!Array.isArray(field.value) && this.has[field.name].value === field.value && this.has[field.name].enc === field.enc) return undefined
-
-      if (!this.inPostscript && !field.replace) {
-        const value = field.bibtex ? 'bibtex' : 'value'
-        throw new Error(`duplicate field '${field.name}' for ${this.item.citationKey}: old: ${this.has[field.name][value]}, new: ${field[value]! as string}`)
-      }
-
-      if (!field.replace) {
-        let v_old = this.has[field.name].value
-        let v_new = field.value
-        if (typeof v_old === 'string' && typeof v_new === 'string') {
-          v_old = v_old.toLowerCase()
-          v_new = v_new.toLowerCase()
-        }
-        if (v_old !== v_new) {
-          if (typeof v_old === 'string') v_old = v_old.replace(/[\r\n]+/g, ' ')
-          this.quality_report.push(`duplicate "${field.name}" ("${v_old}") ignored`)
-        }
-      }
-
-      delete this.has[field.name]
-    }
-
     if (!field.bibtex) {
       let bibstring = ''
       if ((typeof field.value === 'number') || (field.bibtexStrings && (bibstring = this.getBibString(field.value as string)))) {
         field.bibtex = `${bibstring || field.value! as string}`
       }
       else {
-        switch (field.enc) {
-          case 'extra':
-            field.bibtex = this.enc_extra(field)
-            break
+        // field.enc === 'raw' is for legacy postscripts
+        if ((field.enc === 'raw' as unknown as any) || (this.rawLaTeX && typeof field.value === 'string')) {
+          field.bibtex = typeof field.value === 'string' ? field.value : undefined
+        }
+        else {
+          switch (field.enc) {
+            case 'extra':
+              field.bibtex = this.enc_extra(field)
+              break
 
-          case 'literal_list':
-            field.bibtex = this.enc_literal_list(field, { raw: this.item.raw })
-            break
+            case 'literal_list':
+              field.bibtex = this.enc_literal_list(field, { raw: this.item.raw })
+              break
 
-          case 'literal':
-            field.bibtex = this.enc_literal(field, { raw: this.item.raw })
-            break
+            case 'literal':
+              field.bibtex = this.enc_literal(field, { raw: this.item.raw })
+              break
 
-          case 'raw':
-            field.bibtex = this.enc_raw(field)
-            break
+            case 'url':
+              field.bibtex = this.enc_url(field)
+              break
 
-          case 'url':
-            field.bibtex = this.enc_url(field)
-            break
+            case 'verbatim':
+              field.bibtex = this.enc_verbatim(field)
+              break
 
-          case 'verbatim':
-            field.bibtex = this.enc_verbatim(field)
-            break
+            case 'creators':
+              field.bibtex = this.enc_creators(field, this.rawLaTeX)
+              break
 
-          case 'creators':
-            field.bibtex = this.enc_creators(field, this.item.raw)
-            break
+            case 'tags':
+              field.bibtex = this.enc_tags(field)
+              break
 
-          case 'tags':
-            field.bibtex = this.enc_tags(field)
-            break
+            case 'attachments':
+              field.bibtex = this.enc_attachments(field)
+              break
 
-          case 'attachments':
-            field.bibtex = this.enc_attachments(field)
-            break
+            case 'minimal':
+            case 'bibtex':
+            case 'biblatex':
+              field.bibtex = this.enc_literal(field, { raw: this.item.raw })
+              break
 
-          case 'minimal':
-          case 'bibtex':
-          case 'biblatex':
-            field.bibtex = this.enc_literal(field, { raw: this.item.raw })
-            break
-
-          default:
-            throw new Error(`Unexpected field encoding: ${JSON.stringify(field.enc)}`)
+            default:
+              throw new Error(`Unexpected field encoding: ${JSON.stringify(field.enc)}`)
+          }
         }
 
         if (!field.bibtex) return undefined
@@ -695,7 +654,17 @@ export class Entry {
       }
     }
 
-    this.has[field.name] = field
+    if (this.has[field.name]) {
+      if (this.reportReplace && this.has[field.name].bibtex?.toLowerCase() !== field.bibtex?.toLowerCase()) {
+        this.quality_report.push(`replaced "${field.name}" (${JSON.stringify(this.has[field.name].bibtex)} => ${JSON.stringify(field.bibtex)})`)
+      }
+      // replaces the existing field with the new field, preserving the iteration order for the write-out
+      for (const k of Object.keys(this.has[field.name])) delete this.has[field.name][k]
+      Object.assign(this.has[field.name], field)
+    }
+    else {
+      this.has[field.name] = field
+    }
 
     return field.name
   }
@@ -740,23 +709,11 @@ export class Entry {
     return (this.item.creators || []).some(creator => creator.creatorType === type)
   }
 
-  public override(field: Field): void {
-    const itemtype_name = field.name.split('.')
-    let name
-    if (itemtype_name.length === 2) {
-      if (this.entrytype !== itemtype_name[0]) return
-      name = itemtype_name[1]
-    }
-    else {
-      name = field.name
-    }
+  public override(field: Field): void { // for postscripts
+    const [itemtype, fieldname] = field.name.split('.')
+    if (fieldname && itemtype !== this.entrytype) return
 
-    if ((typeof field.value === 'string') && (field.value.trim() === '')) {
-      this.remove(name)
-      return
-    }
-
-    this.add({ ...field, name, replace: (typeof field.replace !== 'boolean' && typeof field.fallback !== 'boolean') || field.replace })
+    this.add({ ...field, name: fieldname ?? field.name })
   }
 
   public langid(): string {
@@ -789,7 +746,6 @@ export class Entry {
 
       const type = Schema.type.zotero[key]
       let enc: Field['enc'] = ({ name: 'creator', text: 'literal' }[type] || type) as Field['enc']
-      const replace = type === 'date'
       // these are handled just like 'arXiv' and 'lccn', respectively
       if (['PMID', 'PMCID'].includes(key) && typeof value === 'string') {
         if (!this.item.extraFields.tex) this.item.extraFields.tex = {}
@@ -905,7 +861,7 @@ export class Entry {
       }
 
       if (name) {
-        this.override({ name, verbatim: name, orig: { inherit: true }, value, enc, replace, fallback: !replace })
+        this.add({ name, verbatim: name, orig: { inherit: true }, value, enc })
       }
       else {
         log.error(`Unmapped extra field ${key}=${value}`)
@@ -920,10 +876,11 @@ export class Entry {
       // if bibtexURL === 'note' is active, the note field will have been filled with an URL.
       // In all other cases, if this is attempting to overwrite the 'note' field, I want the test suite to throw an error
       if (!(this.translation.BetterBibTeX && this.translation.collected.preferences.bibtexURL === 'note')) {
-        this.add({ name: 'note', value: this.item.notes?.map((note: { note: string }) => note.note).join('</p><p>'), html: true })
+        this.add({ name: 'note', value: this.item.notes?.map((note: { note: string }) => note.note).join('</p><p>') })
       }
     }
 
+    this.reportReplace = false // these are explicit overrides
     const bibtexStrings = this.translation.collected.preferences.exportBibTeXStrings.startsWith('match')
     if (this.item.extraFields.tex) {
       // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
@@ -934,50 +891,62 @@ export class Entry {
           continue
         }
 
-        const mode = ({ raw: { raw: true }, cased: { caseConversion: true } }[field.mode!]) || {}
+        if (!field.value || (typeof field.value === 'string' && field.value.trim() === '')) {
+          delete this.has[name]
+          continue
+        }
+
+        const mode = {
+          ...(field.mode === 'raw'
+            ? { bibtex: `{${field.value}}` }
+            : field.mode === 'cased' ? { caseConversion: true } : {}),
+        }
 
         switch (name) {
           case 'mr':
-            this.override({ name: 'mrnumber', value: field.value, ...mode })
+            this.add({ name: 'mrnumber', value: field.value, ...mode })
             break
           case 'zbl':
-            this.override({ name: 'zmnumber', value: field.value, ...mode })
+            this.add({ name: 'zmnumber', value: field.value, ...mode })
             break
           case 'lccn':
           case 'pmcid':
-            this.override({ name, value: field.value, ...mode })
+            this.add({ name, value: field.value, ...mode })
             break
           case 'pmid':
           case 'arxiv':
           case 'jstor':
           case 'hdl':
             if (this.translation.BetterBibLaTeX && !this.has.eprinttype) {
-              this.override({ name: 'eprinttype', value: this.eprintType[name] || name })
-              this.override({ name: 'eprint', value: field.value, ...mode })
+              this.add({ name: 'eprinttype', value: this.eprintType[name] || name })
+              this.add({ name: 'eprint', value: field.value, ...mode })
             }
             else {
-              this.override({ name, value: field.value, ...mode })
+              this.add({ name, value: field.value, ...mode })
             }
             break
           case 'googlebooksid':
             if (this.translation.BetterBibLaTeX && !this.has.eprinttype) {
-              this.override({ name: 'eprinttype', value: 'googlebooks' })
-              this.override({ name: 'eprint', value: field.value, ...mode })
+              this.add({ name: 'eprinttype', value: 'googlebooks' })
+              this.add({ name: 'eprint', value: field.value, ...mode })
             }
             else {
-              this.override({ name: 'googlebooks', value: field.value, ...mode })
+              this.add({ name: 'googlebooks', value: field.value, ...mode })
             }
             break
           case 'xref':
-            this.override({ name, value: field.value, ...mode })
+            this.add({ name, value: field.value, ...mode })
             break
 
-          default:
-            this.override({ name, value: field.value, bibtexStrings, ...mode })
+          default: {
+            const bibstring = field.mode === 'raw' && bibtexStrings ? this.getBibString(field.value) : ''
+            this.add({ name, value: field.value, bibtexStrings, ...mode, ...(bibstring ? { bibtex: bibstring } : {}) })
             break
+          }
         }
       }
     }
+    this.reportReplace = true
 
     // sort before postscript so the postscript can affect field order
     const keys = Object.keys(this.has).sort((a, b) => {
@@ -1001,14 +970,16 @@ export class Entry {
     }
 
     let allow: postscript.Allow = { cache: true, write: true }
+    this.reportReplace = false
     try {
       allow = this.postscript(this, this.item, this.translation, Zotero, this.extraFields)
     }
     catch (err) {
-      if (this.translation.collected.preferences.testing) throw err
       log.error('postscript error:', err)
+      this.quality_report.push(`postscript error: ${(err as Error).message}`)
       allow.cache = false
     }
+    this.reportReplace = true
     this.item.$cacheable = this.item.$cacheable && allow.cache
 
     if (this.translation.skipField) {
@@ -1049,28 +1020,25 @@ export class Entry {
   }
 
   /*
-   * 'Encode' to raw LaTeX value
-   *
-   * @param {field} field to encode
-   * @return {String} unmodified `field.value`
-   */
-  protected enc_raw(f): string {
-    return f.value
-  }
-
-  /*
    * Encode to LaTeX url
    *
    * @param {field} field to encode
    * @return {String} field.value encoded as verbatim LaTeX string (minimal escaping). If in Better BibTeX, wraps return value in `\url{string}`
    */
-  protected enc_url(f): string {
+  protected enc_url(f: Field): string | undefined {
     if (this.translation.BetterBibTeX && this.translation.collected.preferences.bibtexURL.endsWith('-ish')) {
-      return (f.value || '').replace(/([#\\%&{}])/g, '\\$1')
+      if (typeof f.value !== 'string') {
+        if (f.value !== undefined) {
+          log.error(`enc_url called with non-string value for field ${f.name}: ${typeof f.value}`)
+        }
+        return undefined
+      }
+      return f.value.replace(/([#\\%&{}])/g, '\\$1')
     }
     else if (this.translation.BetterBibTeX && this.translation.collected.preferences.bibtexURL === 'note') {
       // https://github.com/retorquere/zotero-better-bibtex/issues/2617
-      return `\\url{${this.enc_verbatim(f).replace(/([\\%#])/g, '\\$1')}}`
+      const verbatim = this.enc_verbatim(f)
+      return verbatim ? `\\url{${verbatim.replace(/([\\%#])/g, '\\$1')}}` : undefined
     }
     else {
       return this.enc_verbatim(f)
@@ -1083,9 +1051,14 @@ export class Entry {
    * @param {field} field to encode
    * @return {String} field.value encoded as verbatim LaTeX string (minimal escaping).
    */
-  protected enc_verbatim(f): string {
-    let value: string = f.value || ''
-    // if (!this.translation.unicode) value = value.replace(/[^\x20-\x7E]/g, (chr => `\\%${`00${chr.charCodeAt(0).toString(16).slice(-2)}`}`))
+  protected enc_verbatim(f: Field): string | undefined {
+    if (typeof f.value !== 'string') {
+      if (f.value !== undefined) {
+        log.error(`enc_verbatim called with non-string value for field ${f.name}: ${typeof f.value}`)
+      }
+      return undefined
+    }
+    let value: string = f.value
 
     // remove unbalanced braces
     const braces: { c: string; pos: number }[] = []
@@ -1123,18 +1096,24 @@ export class Entry {
    * @param {field} field to encode. The 'value' must be an array of Zotero-serialized `creator` objects.
    * @return {String} field.value encoded as author-style value
    */
-  protected enc_creators(f, raw: boolean): string | undefined {
+  protected enc_creators(f: Field, raw: boolean): string | undefined {
+    if (!Array.isArray(f.value)) {
+      if (f.value !== undefined) {
+        log.error(`enc_creators called with non-array value for field ${f.name}: ${typeof f.value}`)
+      }
+      return undefined
+    }
     if (f.value.length === 0) return undefined
 
     const encoded: string[] = []
-    for (const creator of f.value) {
+    for (const creator of f.value as Creator[]) {
       let name
       if (creator.name && raw) {
         name = creator.name
       }
       else if (creator.name || (creator.lastName && (creator.fieldMode === 1))) {
         name = creator.name || creator.lastName
-        if (name !== 'others') name = raw ? `{${name}}` : this.enc_literal({ value: new String(this._enc_creators_scrub_name(name)) })
+        if (name !== 'others') name = raw ? `{${name}}` : this.enc_literal({ name: f.name, value: new String(this._enc_creators_scrub_name(name)) })
       }
       else if (raw) {
         name = [creator.lastName || '', creator.firstName || ''].join(', ')
@@ -1192,8 +1171,15 @@ export class Entry {
    * @param {field} field to encode.
    * @return {String} field.value encoded as latex
    */
-  protected enc_extra(f) {
-    return this.enc_literal({ value: f.value.replace(/\n/g, '\x0E') }).replace(/\x0E/g, newlines => newlines.length === 1 ? '\\\\\n' : '\n\n') // eslint-disable-line no-control-regex
+  protected enc_extra(f: Field): string | undefined {
+    if (!f.value) return undefined
+    if (typeof f.value !== 'string') {
+      log.error(`enc_extra called with non-string value for field ${f.name}: ${typeof f.value}`)
+      return undefined
+    }
+    const value = f.value.replace(/\n/g, '\x0E')
+    const result = this.enc_literal({ ...f, value })
+    return result ? String(result).replace(/\x0E/g, newlines => newlines.length === 1 ? '\\\\\n' : '\n\n') : undefined // eslint-disable-line no-control-regex
   }
 
   /*
@@ -1205,17 +1191,18 @@ export class Entry {
    * @param {field} field to encode.
    * @return {String} field.value encoded as list of literals
    */
-  protected enc_literal_list(f, options: { raw?: boolean } = {}) {
+  protected enc_literal_list(f: Field, options: { raw?: boolean } = {}): string | undefined {
     const list = Array.isArray(f.value) ? f.value : [f.value]
-    if (!list.length) return null
+    if (!list.length) return undefined
     return list
       .map(elt => typeof elt === 'string' ? elt : `${elt}`)
       .map(elt => this.enc_literal({ ...f, value: elt.match(/(^| )and( |$)/) ? new String(elt) : elt }, options))
+      .filter(v => v !== undefined)
       .join(' and ')
   }
 
   // legacy support
-  protected enc_latex(f, options: { raw?: boolean; creator?: boolean } = {}) {
+  protected enc_latex(f: Field, options: { raw?: boolean; creator?: boolean } = {}): string | undefined {
     return this.enc_literal(f, options)
   }
 
@@ -1227,22 +1214,22 @@ export class Entry {
    * @param {field} field to encode.
    * @return {String} field.value encoded as author-style value
    */
-  protected enc_literal(f, options: { raw?: boolean; creator?: boolean } = {}) {
-    if (typeof f.value === 'number') return f.value
-    if (!f.value) return null
+  protected enc_literal(f: Field, options: { raw?: boolean; creator?: boolean } = {}): string | undefined {
+    if (typeof f.value === 'number') return String(f.value)
+    if (!f.value) return undefined
 
     if (Array.isArray(f.value)) {
-      if (f.value.length === 0) return null
-      return f.value.map(elt => this.enc_literal({ ...f, bibtex: undefined, value: elt }, options)).join(f.sep || '')
+      if (f.value.length === 0) return undefined
+      return f.value.map(elt => this.enc_literal({ ...f, bibtex: undefined, value: elt }, options)).filter(v => v !== undefined).join(f.sep || '')
     }
 
-    if (f.raw || options.raw) return f.value
+    // raw: if (f.raw || options.raw) return String(f.value)
 
     const titlecase = f.caseConversion ?? this.titlecaseFields.has(f.name)
     const exportCaseProtection = f.caseConversion ?? this.caseProtectionFields.has(f.name)
     const { latex, packages, raw } = this.translation.bibtex
-      .text2latex(f.value, {
-        html: f.html,
+      .text2latex(String(f.value), {
+        html: f.name === 'note',
         exportCaseProtection: exportCaseProtection && this.english,
         exportTitleCase: titlecase,
         creator: options.creator,
@@ -1263,15 +1250,21 @@ export class Entry {
     if (exportCaseProtection && this.translation.BetterBibTeX && !this.english && this.translation.collected.preferences.exportBraceProtection) value = `{${value}}`
 
     if (f.value instanceof String && !raw) value = new String(`{${value}}`)
-    return value
+    return value as string | undefined
   }
 
-  protected enc_tags(f): string | undefined {
+  protected enc_tags(f: Field): string | undefined {
+    if (!Array.isArray(f.value)) {
+      if (f.value !== undefined) {
+        log.error(`enc_tags called with non-array value for field ${f.name}: ${typeof f.value}`)
+      }
+      return undefined
+    }
     const verbatim = this.translation.isVerbatimField(f.name)
     const unicode = this.translation.unicode
-    const tags = f.value
+    const tags = (f.value as Serialized.Tag[])
       .map(tag => (typeof tag === 'string' ? { tag } : tag))
-      .filter(tag => (this.translation.collected.preferences.automaticTags || (tag.type !== 1)) && tag.tag !== this.translation.collected.preferences.rawLaTag)
+      .filter(tag => (this.translation.collected.preferences.automaticTags || tag.type !== 1) && tag.tag !== this.translation.collected.preferences.rawLaTag)
       .map(tag => ({ ...tag, tag: tag.tag.replace(/[#%]/g, '') }))
       .filter(tag => tag.tag)
     if (tags.length === 0) return undefined
@@ -1279,10 +1272,12 @@ export class Entry {
     const encoded: Set<string> = new Set
     for (const tag of tags) {
       if (verbatim) {
-        encoded.add(this.enc_verbatim({ value: (unicode ? tag.tag : fold2ascii.foldReplacing(tag.tag)).replace(/[{,}]/g, '').trim() }))
+        const result = this.enc_verbatim({ name: f.name, value: (unicode ? tag.tag : fold2ascii.foldReplacing(tag.tag)).replace(/[{,}]/g, '').trim() })
+        if (result) encoded.add(result)
       }
       else {
-        encoded.add(this.enc_literal({ value: tag.tag.includes(',') ? new String(tag.tag) : tag.tag }))
+        const result = this.enc_literal({ name: f.name, value: tag.tag.includes(',') ? new String(tag.tag) : tag.tag })
+        if (result) encoded.add(result)
       }
     }
 
@@ -1305,51 +1300,55 @@ export class Entry {
     return `..${this.translation.paths.sep}`.repeat(from.length) + to.join(this.translation.paths.sep)
   }
 
-  protected enc_attachments(f, modify?: (path: string) => string): string | undefined {
-    if (!f.value || (f.value.length === 0)) return undefined
+  protected enc_attachments(f: Field, modify?: (path: string) => string): string | undefined {
+    if (!Array.isArray(f.value)) {
+      if (f.value !== undefined) {
+        log.error(`enc_attachments called with non-array value for field ${f.name}: ${typeof f.value}`)
+      }
+      return undefined
+    }
+    if (f.value.length === 0) return undefined
     const attachments: { title: string; mimetype: string; path: string }[] = []
 
     // #1939
     if (modify) this.item.$cacheable = false
 
-    for (const attachment of f.value) {
-      const att = {
-        title: attachment.title,
-        mimetype: attachment.contentType || '',
-        path: '',
-      }
+    for (const attachment of f.value as Serialized.Attachment[]) {
+      let title = attachment.title || ''
+      let mimetype = attachment.contentType || ''
+      let path = ''
 
       if (this.translation.collected.displayOptions.exportFileData) {
-        att.path = attachment.saveFile ? attachment.defaultPath : ''
+        path = (attachment.saveFile !== undefined) ? (attachment.defaultPath || '') : ''
       }
       else if (attachment.localPath) {
-        att.path = attachment.localPath
+        path = attachment.localPath
       }
 
-      if (!att.path) continue // amazon/googlebooks etc links show up as atachments without a path
-      // att.path = att.path.replace(/^storage:/, '')
-      att.path = att.path.replace(/(?:\s*[{}]+)+\s*/g, ' ')
+      if (!path) continue // amazon/googlebooks etc links show up as atachments without a path
+      // path = path.replace(/^storage:/, '')
+      path = path.replace(/(?:\s*[{}]+)+\s*/g, ' ')
 
-      if (this.translation.collected.displayOptions.exportFileData && attachment.saveFile) {
+      if (this.translation.collected.displayOptions.exportFileData && (attachment.saveFile !== undefined)) {
         this.translation.output.attachments.push(attachment)
         // attachment.saveFile(attachment.defaultPath, true)
       }
 
-      if (!att.title) att.title = att.path.replace(/.*[\\/]/, '') || 'attachment'
+      if (!title) title = path.replace(/.*[\\/]/, '') || 'attachment'
 
-      if (!att.mimetype && (att.path.slice(-4).toLowerCase() === '.pdf')) att.mimetype = 'application/pdf'
+      if (!mimetype && (path.slice(-4).toLowerCase() === '.pdf')) mimetype = 'application/pdf'
 
       if (this.translation.collected.preferences.relativeFilePaths && this.translation.export.dir) {
-        const relative = this.relPath(att.path)
-        if (relative !== att.path) {
+        const relative = this.relPath(path)
+        if (relative !== path) {
           this.item.$cacheable = false
-          att.path = relative
+          path = relative
         }
       }
-      if (this.translation.collected.preferences.testing) att.path = att.path.replace(/.*[.]BBTTEST\/(zotero|jurism)\//, '~/BBTTEST/').replace(/\/storage\/[^/]+\//, '/storage/')
+      if (this.translation.collected.preferences.testing) path = path.replace(/.*[.]BBTTEST\/(zotero|jurism)\//, '~/BBTTEST/').replace(/\/storage\/[^/]+\//, '/storage/')
 
-      if (modify) att.path = modify(att.path)
-      attachments.push(att)
+      if (modify) path = modify(path)
+      attachments.push({ title, mimetype, path })
     }
 
     if (attachments.length === 0) return undefined
@@ -1365,7 +1364,7 @@ export class Entry {
       return attachments.map(att => [att.title, att.path, att.mimetype].map(part => part.replace(/([\\{}:;])/g, '\\$1')).join(':')).join(';')
     }
     if (attachments.length > 1) return attachments.map(att => att.path.replace(/([\\{}:;])/g, '\\$1')).join(';')
-    return this.enc_verbatim({ value: attachments[0].path })
+    return this.enc_verbatim({ name: f.name, value: attachments[0].path })
   }
 
   private _enc_creators_pad_particle(particle: string, relax = false): string {
@@ -1629,53 +1628,6 @@ export class Entry {
     }
 
     report = report.concat(this.quality_report)
-
-    let used_values: Array<string | number> = Object.values(this.has)
-      .filter(field => typeof field.value === 'string' || typeof field.value === 'number')
-      .map(field => `${field.value}`)
-      .filter(value => value)
-    used_values = used_values.concat(used_values.map(value => this.valueish(value)))
-
-    const ignore_unused_props = [
-      'abstractNote',
-      'accessDate',
-      'autoJournalAbbreviation',
-      'citationKey',
-      'citekey',
-      'collections',
-      'date',
-      'dateAdded',
-      'dateModified',
-      'itemID',
-      'itemType',
-      'itemKey',
-      'key',
-      'libraryID',
-      'relations',
-      'rights',
-      'uri',
-      'version',
-    ]
-
-    const pretty = (k: string): string => {
-      if (k === 'numPages') return 'Number of pages'
-      const label = Schema.zotero.locales['en-US'].fields[k]
-      if (!label || label.includes('.')) return Schema.toLabel(k)
-      return label.replace(/ [A-Z]/g, c => c.toLowerCase())
-    }
-    const unused_data = [
-      ...Object.entries(this.item.extraFields.kv!).map(([k, v]) => ['', `extra: ${k}`, v]),
-      ...Object.entries(this.item).map(([k, v]) => [k, pretty(k), v]),
-    ]
-      .map(([k, label, v]): [string, string, string, string] => [k, label, v, this.valueish(v)])
-      .filter(([k, _label, v, vi]) => !ignore_unused_props.includes(k) && !used_values.includes(v) && (vi && !used_values.includes(vi)))
-      .sort(property_sort)
-
-    for (const [key, label, value, valueish] of unused_data) {
-      if (key === 'language' && this.has.langid) continue
-      if (key === 'libraryCatalog' && valueish.includes('arxiv') && this.item.arXiv) continue
-      report.push(`? unused ${label} (${JSON.stringify(value)})`)
-    }
 
     if (!report.length) return ''
 

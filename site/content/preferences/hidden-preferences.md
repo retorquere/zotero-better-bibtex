@@ -181,7 +181,7 @@ A preferences override will disable caching for that export.
 
 default: `no`
 
-When you set this on, BBT will import bib files leaving any LaTeX commands as-is, and add the #LaTeX tag for raw re-exports.
+On import, preserve fields containing a backslash or at least two dollar signs as raw TeX in Extra (for example, `tex.title= ...`), alongside their normally imported values.
 ## rawLaTag
 
 default: `#LaTeX`

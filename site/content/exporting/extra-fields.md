@@ -73,6 +73,8 @@ tex.corp= Black & Decker
 tex.formula: $\sum\limits_{i=1}^{n} -p(m_{i})\log_{2}(p(m_{i}))$
 ```
 
+For existing items containing TeX, select **Better BibTeX → Migrate TeX to extra** in the item context menu. This preserves the original TeX in `tex.*=` entries and converts the item fields and creator names.
+
 BBT will apply title-casing and case-protection rules for non-raw fields by including capitals in the prefix, eg
 
 ```

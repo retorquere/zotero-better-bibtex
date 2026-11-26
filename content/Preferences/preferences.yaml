@@ -302,6 +302,12 @@ patchDates:
     dateadded=dateAdded, date-added=dateAdded, datemodified=dateModified,
     date-modified=dateModified
 
+rawImports:
+  description: >-
+    On import, preserve fields containing a backslash or at least two dollar
+    signs as raw TeX in Extra (for example, `tex.title= ...`), alongside their
+    normally imported values.
+  default: false
 rawLaTag:
   description: >
     When an item has this tag, all its fields will be assumed to hold raw LaTeX
@@ -312,12 +318,6 @@ rawLaTag:
   affects:
     - Better BibLaTeX
     - Better BibTeX
-
-rawImports:
-  description: >-
-    When you set this on, BBT will import bib files leaving any LaTeX commands
-    as-is, and add the #LaTeX tag for raw re-exports.
-  default: false
 
 skipWords:
   description: list of words to skip in title when generating citation keys

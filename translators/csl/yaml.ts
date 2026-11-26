@@ -3,29 +3,31 @@ import { Date as CSLDate, Data as CSLItem, LooseNumber } from 'csl-json'
 import type { Collected } from '../lib/collect'
 import { Translation } from '../lib/translator'
 
-import type { MarkupNode } from '../../typings/markup'
-
 import { CSLExporter } from './csl'
 import { log } from '../../content/logger'
 import { RichDate, century } from '../../content/dateparser'
-import { HTMLParser } from '../../content/text'
+import { parseFragment } from 'parse5'
+import type { Element, TextNode } from 'parse5/dist/tree-adapters/default.js'
 
 const htmlConverter = new class HTML {
   private markdown = ''
 
   public convert(html: string): string {
     this.markdown = ''
-    this.walk(HTMLParser.parse(html, {}))
+    const doc = parseFragment(html, { sourceCodeLocationInfo: true })
+    this.walk(doc as Element)
     return this.markdown
   }
 
-  private walk(tag: MarkupNode) {
+  private walk(tag: Element | TextNode) {
     if (!tag) return
 
     if ([ '#text', 'pre', 'script' ].includes(tag.nodeName)) {
-      this.markdown += tag.value.replace(/([[*~^])/g, '\\$1')
+      this.markdown += (tag as TextNode).value.replace(/([[*~^])/g, '\\$1')
       return
     }
+
+    const attrs = Object.fromEntries((tag as Element).attrs?.map(a => [a.name, a.value]) ?? [])
 
     let span_attrs = ''
     switch (tag.nodeName) {
@@ -39,7 +41,7 @@ const htmlConverter = new class HTML {
 
       case 'a':
         /* zotero://open-pdf/0_5P2KA4XM/7 is actually a reference. */
-        if (tag.attr?.href && tag.attr.href.length) this.markdown += '['
+        if (attrs.href?.length) this.markdown += '['
         break
 
       case 'sup':
@@ -52,12 +54,12 @@ const htmlConverter = new class HTML {
 
       case 'sc':
         this.markdown += '<span style="font-variant:small-caps;">'
-        tag.attr.style = 'font-variant:small-caps;'
+        attrs.style = 'font-variant:small-caps;'
         break
 
       case 'span':
-        if (tag.attr) {
-          for (const [ k, v ] of Object.entries(tag.attr)) {
+        if (attrs && Object.keys(attrs).length > 0) {
+          for (const [ k, v ] of Object.entries(attrs)) {
             span_attrs += ` ${ k }="${ v }"`
           }
           if (span_attrs) this.markdown += `<span${ span_attrs }>`
@@ -75,9 +77,9 @@ const htmlConverter = new class HTML {
         log.error(`unexpected tag '${ tag.nodeName }'`)
     }
 
-    if (tag.childNodes) {
-      for (const child of tag.childNodes) {
-        this.walk(child)
+    if ((tag as Element).childNodes) {
+      for (const child of (tag as Element).childNodes) {
+        this.walk(child as Element | TextNode)
       }
     }
 
@@ -99,7 +101,7 @@ const htmlConverter = new class HTML {
         break
 
       case 'a':
-        if (tag.attr?.href && tag.attr.href.length) this.markdown += `](${ tag.attr.href })`
+        if (attrs.href?.length) this.markdown += `](${ attrs.href })`
         break
 
       case 'sc':

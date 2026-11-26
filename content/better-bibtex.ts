@@ -33,7 +33,7 @@ JSONRPCStartup()
 
 import { AUXScanner } from './aux-scanner'
 import * as Extra from './extra'
-import { HTMLParser, HTMLParserOptions, sentenceCase } from './text'
+import { sentenceCase } from './text'
 
 import { AutoExport, Job } from './auto-export'
 import { uri } from './escape'
@@ -265,16 +265,6 @@ Zotero.Translate.Export.prototype.Sandbox.BetterBibTeX = {
 Zotero.Translate.Import.prototype.Sandbox.BetterBibTeX = {
   clientName: Zotero.clientName,
   clientVersion: Zotero.version,
-
-  parseHTML(_sandbox: any, text: { toString: () => any }, options: HTMLParserOptions) {
-    options = {
-      ...options,
-      exportBraceProtection: Preference.exportBraceProtection,
-      csquotes: Preference.csquotes,
-      exportTitleCase: true,
-    }
-    return HTMLParser.parse(text.toString(), options)
-  },
 
   parseDate(_sandbox: any, date: string): RichDate {
     return DateParser.parse(date)
@@ -768,6 +758,15 @@ export class BetterBibTeX {
                   l10nID: 'better-bibtex_zotero-pane_patch-dates',
                   onShowing: itemsSelected,
                   onCommand: (_event, _context) => void Zotero.BetterBibTeX.MenuHelper.patchDates(),
+                },
+                {
+                  menuType: 'menuitem',
+                  l10nID: 'better-bibtex_zotero-pane_migrate-tex',
+                  onShowing: itemsSelected,
+                  onCommand: (_event, _context) => void Zotero.BetterBibTeX.MenuHelper.migrateTeX(selectedItems()).catch((err: Error) => {
+                    log.error('migrateTeX:', err)
+                    flash('Migrate TeX to extra failed', err.message)
+                  }),
                 },
                 {
                   menuType: 'menuitem',
