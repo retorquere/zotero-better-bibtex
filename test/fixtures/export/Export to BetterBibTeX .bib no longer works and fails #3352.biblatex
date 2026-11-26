@@ -2,6 +2,8 @@
   title = {Episteme},
   booktitle = {Wikipedia},
   editor = {{Wikipedia}},
+  namea = {{Wikipedia}},
+  nameatype = {interviewer},
   date = {2022-10-31T04:26:46Z},
   url = {https://en.wikipedia.org/w/index.php?title=Episteme&oldid=1119185332},
   urldate = {2022-12-18},

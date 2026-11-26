@@ -1,8 +1,9 @@
-
 @mvbook{descartes_oeuvres_1897,
   title = {Œuvres de Descartes},
   author = {Descartes, René},
   editor = {Adam, Charles and Tannery, Paul},
+  namea = {Adam, Charles and Tannery, Paul},
+  nameatype = {interviewer},
   date = {1897/1913},
   publisher = {Cerf},
   location = {Paris},
@@ -14,6 +15,8 @@
   title = {Œuvres de Descartes},
   author = {Descartes, René},
   editor = {Adam, Charles and Tannery, Paul},
+  namea = {Adam, Charles and Tannery, Paul},
+  nameatype = {interviewer},
   date = {1897/1913},
   publisher = {Cerf},
   location = {Paris},
@@ -25,11 +28,11 @@
   title = {Œuvres de Descartes},
   author = {Descartes, René},
   editor = {Adam, Charles and Tannery, Paul},
+  namea = {Adam, Charles and Tannery, Paul},
+  nameatype = {interviewer},
   date = {1897/1913},
   publisher = {Cerf},
   location = {Paris},
   langid = {french},
   volumes = {13}
 }
-
-

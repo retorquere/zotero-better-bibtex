@@ -3,6 +3,8 @@
   title = {A Report},
   author = {Author, Ann},
   editor = {Editrix, Emma and Editor, Ed},
+  namea = {Editrix, Emma and Editor, Ed},
+  nameatype = {interviewer},
   date = {2015},
   institution = {Institution},
   location = {Place},
@@ -14,6 +16,8 @@
   booktitle = {Oxford Dictionary of National Biography},
   author = {Blair, John},
   editor = {Matthew, H.C.G. and Harrison, Brian Howard},
+  namea = {Matthew, H.C.G. and Harrison, Brian Howard},
+  nameatype = {interviewer},
   date = {2004},
   publisher = {Oxford University Press},
   location = {Oxford},
@@ -33,7 +37,9 @@
 }
 
 @inreference{emptybook,
-  editor = {{Xxx}}
+  editor = {{Xxx}},
+  namea = {{Xxx}},
+  nameatype = {interviewer}
 }
 
 @video{friends:leia:dvd,

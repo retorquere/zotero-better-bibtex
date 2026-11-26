@@ -33,6 +33,8 @@
 @book{MuellerSchaefers2025VomText,
   title = {Vom Text zum Entstehungsmodell in der Pentateuchkritik},
   editor = {Müller, Reinhard and Schäfers, Kirsten M.},
+  namea = {Müller, Reinhard and Schäfers, Kirsten M.},
+  nameatype = {interviewer},
   date = {2025},
   series = {Forschungen zum Alten Testament},
   number = {186},

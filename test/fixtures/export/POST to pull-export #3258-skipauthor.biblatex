@@ -36,6 +36,8 @@
 @book{ma14,
   title = {Support {{Vector Machines Applications}}},
   editor = {Ma, Yunqian and Guo, Guodong},
+  namea = {Ma, Yunqian and Guo, Guodong},
+  nameatype = {interviewer},
   date = {2014},
   publisher = {Springer International Publishing},
   location = {Cham},

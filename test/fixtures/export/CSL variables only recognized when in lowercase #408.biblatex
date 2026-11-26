@@ -3,6 +3,8 @@
   booktitle = {Algorithms – {{ESA}} 2006},
   author = {Bonomi, Flavio and Mitzenmacher, Michael and Panigrahy, Rina and Singh, Sushil and Varghese, George},
   editor = {Azar, Yossi and Erlebach, Thomas},
+  namea = {Azar, Yossi and Erlebach, Thomas},
+  nameatype = {interviewer},
   date = {2006-09-11},
   series = {Lecture {{Notes}} in {{Computer Science}}},
   number = {4168},

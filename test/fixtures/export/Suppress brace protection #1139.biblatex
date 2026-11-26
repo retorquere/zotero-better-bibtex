@@ -1,7 +1,8 @@
-
 @book{Kreinath2011,
   title = {The Anthropology of Islam Reader},
   editor = {Kreinath, Jens},
+  namea = {Kreinath, Jens},
+  nameatype = {interviewer},
   date = 2011,
   publisher = {Routledge},
   location = {London ; New York},
@@ -11,5 +12,3 @@
   shorttitle = {The Anthropology of Islam Reader},
   booktitle = {The Anthropology of Islam Reader}
 }
-
-

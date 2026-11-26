@@ -3,6 +3,8 @@
   booktitle = {To {{H}}.{{B}}. {{Curry}}},
   author = {Howard, William A.},
   editor = {Seldin, Jonathan P. and Hindley, J. Roger},
+  namea = {Seldin, Jonathan P. and Hindley, J. Roger},
+  nameatype = {interviewer},
   date = {1969},
   publisher = {Academic Press},
   location = {New York},

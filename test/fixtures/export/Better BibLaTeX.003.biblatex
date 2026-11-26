@@ -1,4 +1,3 @@
-
 @inproceedings{author:06,
   title = {Some Publication Title},
   author = {Author, First and Author, Second},
@@ -9,7 +8,7 @@
 @book{conference:06,
   title = {Proceedings of the {{Xth}} Conference on {{XYZ}}},
   editor = {Editor, First and Editor, Second},
+  namea = {Editor, First and Editor, Second},
+  nameatype = {interviewer},
   date = {2006-10}
 }
-
-

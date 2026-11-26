@@ -1,9 +1,10 @@
-
 @incollection{Plato1901,
   title = {Republic},
   booktitle = {Clitophon, {{Republic}}, {{Timaeus}}, {{Critias}}},
   author = {{Plato}},
   editor = {Burnet, John},
+  namea = {Burnet, John},
+  nameatype = {interviewer},
   date = {1901},
   series = {Oxford Classical Texts},
   volume = {4},
@@ -18,6 +19,8 @@
   title = {Clitophon, {{Republic}}, {{Timaeus}}, {{Critias}}},
   author = {{Plato}},
   editor = {Burnet, John},
+  namea = {Burnet, John},
+  nameatype = {interviewer},
   date = {1902},
   series = {Oxford Classical Texts {{CSL-VAR}}},
   volume = {4},
@@ -26,5 +29,3 @@
   langid = {british},
   maintitle = {Opera}
 }
-
-

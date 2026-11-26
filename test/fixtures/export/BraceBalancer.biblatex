@@ -3,6 +3,8 @@
   booktitle = {The {{Stanford Encyclopedia}} of {{Philosophy}}},
   author = {Zangwill, Nick},
   editor = {Zalta, Edward N.},
+  namea = {Zalta, Edward N.},
+  nameatype = {interviewer},
   date = {2013},
   edition = {Summer 2013},
   url = {http://plato.stanford.edu/archives/sum2013/entries/aesthetic-judgment/},

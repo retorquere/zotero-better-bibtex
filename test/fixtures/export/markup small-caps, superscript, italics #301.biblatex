@@ -18,6 +18,8 @@
   booktitle = {Consulter, délibérer, décider : donner son avis au Moyen Âge (France-Espagne, \textsc{vii}\textsuperscript{e}-\textsc{xvi}\textsuperscript{e} siècles)},
   author = {Leveleux-Teixeira, Corinne},
   editor = {Charageat, Martine and Leveleux-Teixeira, Corinne},
+  namea = {Charageat, Martine and Leveleux-Teixeira, Corinne},
+  nameatype = {interviewer},
   date = {2010},
   series = {Méridiennes. Études médiévales ibériques},
   pages = {33--50},
