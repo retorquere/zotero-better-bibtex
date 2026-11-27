@@ -3,8 +3,6 @@
   editor = {Gentleman, Robert and Carey, Vincent J. and Huber, Wolfgang and Irizarry, Rafael A. and Dudoit, Sandrine},
   editora = {Wong, Wing and Gail, M. and Krickeberg, K. and Tsiatis, A. and Samet, J.},
   editoratype = {redactor},
-  namea = {Gentleman, Robert and Carey, Vincent J. and Huber, Wolfgang and Irizarry, Rafael A. and Dudoit, Sandrine},
-  nameatype = {interviewer},
   date = {2005},
   series = {Statistics for {{Biology}} and {{Health}}},
   publisher = {Springer New York},
