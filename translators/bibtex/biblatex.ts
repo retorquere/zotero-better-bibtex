@@ -219,6 +219,7 @@ class Entry extends BaseEntry {
 
         case 'editor':
           creators.editor.push(creator)
+          break
 
         case 'interviewer':
           creators[creatorType.register('name', 'interviewer')].push(creator)
